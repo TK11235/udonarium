@@ -1,0 +1,49 @@
+.draggable-panel{
+  box-sizing: border-box;
+  overflow: hidden;
+  position: absolute;
+
+  background: linear-gradient(-30deg, rgba(240,218,189, 0.9), rgba(255, 244, 232, 0.9));
+  border:solid 1px #999;
+  padding: 0px;
+
+  white-space: nowrap;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  -moz-user-drag: none;
+  -webkit-user-drag: none;
+
+  max-height: 100%;
+  max-width: 100%;
+}
+.title{
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 12px;
+  text-align: center;
+  padding: 2px 0px;
+  margin: 0 2px;
+  color: #444;
+  border-bottom: 1px solid #CCC;
+}
+ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+ul > li {
+  cursor: -moz-default;
+  cursor: -webkit-default;
+  cursor: default;
+
+  padding: 2px 8px;
+  font-size: 12px;
+  color: #444;
+}
+ul > li:hover {
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.8);
+}

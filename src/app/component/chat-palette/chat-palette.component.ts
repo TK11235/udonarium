@@ -1,0 +1,146 @@
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
+
+import { TextViewComponent } from '../text-view/text-view.component';
+
+import { ModalService } from '../../service/modal.service';
+import { PanelService, PanelOption } from '../../service/panel.service';
+import { PointerDeviceService } from '../../service/pointer-device.service';
+import { ChatMessageService } from '../../service/chat-message.service';
+
+import { ChatTab } from '../../class/chat-tab';
+import { ChatPalette } from '../../class/chat-palette';
+import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
+import { DiceBot } from '../../class/dice-bot';
+import { GameCharacter, GameCharacterContainer } from '../../class/game-character';
+import { Network, EventSystem } from '../../class/core/system/system';
+import { ObjectStore } from '../../class/core/synchronize-object/object-store';
+import { ImageFile } from '../../class/core/file-storage/image-file';
+
+@Component({
+  selector: 'chat-palette',
+  templateUrl: './chat-palette.component.html',
+  styleUrls: ['./chat-palette.component.css']
+})
+export class ChatPaletteComponent implements OnInit {
+  @Input() character: GameCharacter = null;
+
+  get palette(): ChatPalette { return this.character.chatPalette; }
+
+  private _gameType: string = '';
+  get gameType(): string { return this._gameType };
+  set gameType(gameType: string) {
+    this._gameType = gameType;
+    if (this.character.chatPalette) this.character.chatPalette.dicebot = gameType;
+  };
+  chatTabidentifier: string = '';
+  text: string = '';
+
+  isEdit: boolean = false;
+  editPalette: string = '';
+
+  private doubleClickTimer: NodeJS.Timer = null;
+
+  get diceBotInfos() { return DiceBot.diceBotInfos }
+
+  get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
+
+  constructor(
+    private ngZone: NgZone,
+    //private gameRoomService: GameRoomService,
+    //private contextMenuService: ContextMenuService,
+    //private modalService: ModalService,
+    public chatMessageService: ChatMessageService,
+    private panelService: PanelService,
+    private elementRef: ElementRef,
+    private changeDetector: ChangeDetectorRef,
+    private pointerDeviceService: PointerDeviceService
+  ) { }
+
+  ngOnInit() {
+    this.panelService.title = this.character.name + ' のチャットパレット';
+    this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
+    this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
+    // EventSystem.register(this);
+  }
+
+  ngOnDestroy() {
+    EventSystem.unregister(this);
+  }
+
+  selectPalette(line: string) {
+    if (this.doubleClickTimer && this.text === line) {
+      clearTimeout(this.doubleClickTimer);
+      this.doubleClickTimer = null;
+      this.sendChat();
+    } else {
+      this.text = line;
+      this.doubleClickTimer = setTimeout(() => { this.doubleClickTimer = null }, 400);
+    }
+  }
+
+  showDicebotHelp() {
+    DiceBot.getHelpMessage(this.gameType).then(help => {
+      let gameName: string = 'ダイスボット';
+      for (let diceBotInfo of DiceBot.diceBotInfos) {
+        if (diceBotInfo.script === this.gameType) {
+          gameName = 'ダイスボット<'+diceBotInfo.game+'＞'
+        }
+      }
+      gameName += 'の説明';
+
+      let coordinate = this.pointerDeviceService.pointers[0];
+      let option: PanelOption = { left: coordinate.x, top: coordinate.y, width: 600, height: 500 };
+      let textView = this.panelService.open(TextViewComponent, option);
+      textView.title = gameName;
+      textView.text =
+        '【ダイスボット】チャットにダイス用の文字を入力するとダイスロールが可能\n'
+        + '入力例）２ｄ６＋１　攻撃！\n'
+        + '出力例）2d6+1　攻撃！\n'
+        + '　　　　  diceBot: (2d6) → 7\n'
+        + '上記のようにダイス文字の後ろに空白を入れて発言する事も可能。\n'
+        + '以下、使用例\n'
+        + '　3D6+1>=9 ：3d6+1で目標値9以上かの判定\n'
+        + '　1D100<=50 ：D100で50％目標の下方ロールの例\n'
+        + '　3U6[5] ：3d6のダイス目が5以上の場合に振り足しして合計する(上方無限)\n'
+        + '　3B6 ：3d6のダイス目をバラバラのまま出力する（合計しない）\n'
+        + '　10B6>=4 ：10d6を振り4以上のダイス目の個数を数える\n'
+        + '　(8/2)D(4+6)<=(5*3)：個数・ダイス・達成値には四則演算も使用可能\n'
+        + '　C(10-4*3/2+2)：C(計算式）で計算だけの実行も可能\n'
+        + '　choice[a,b,c]：列挙した要素から一つを選択表示。ランダム攻撃対象決定などに\n'
+        + '　S3d6 ： 各コマンドの先頭に「S」を付けると他人結果の見えないシークレットロール\n'
+        + '　3d6/2 ： ダイス出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n'
+        + '　D66 ： D66ダイス。順序はゲームに依存。D66N：そのまま、D66S：昇順。\n'
+        + '===================================\n'
+        + help;
+      console.log('onChangeGameType done');
+    });
+  }
+
+  sendChat() {
+    if (!this.text.length) return;
+
+    let time = this.chatMessageService.getTime();
+    console.log('time:' + time);
+    let chatMessage: ChatMessageContext = {
+      from: Network.peerContext.id,
+      name: this.character.name,
+      text: this.palette.evaluate(this.text, this.character.rootDataElement),
+      timestamp: time,
+      tag: this.gameType,
+      imageIdentifier: this.character.imageFile ? this.character.imageFile.identifier : '',
+      responseIdentifier: '',
+    };
+
+    if (this.chatTab) this.chatTab.addMessage(chatMessage);
+    this.text = '';
+  }
+
+  toggleEditMode() {
+    this.isEdit = this.isEdit ? false : true;
+    if (this.isEdit) {
+      this.editPalette = this.palette.value + '';
+    } else {
+      this.palette.setPalette(this.editPalette);
+    }
+  }
+}

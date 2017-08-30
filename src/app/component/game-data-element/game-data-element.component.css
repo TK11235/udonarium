@@ -1,0 +1,88 @@
+.game-data-element{
+  margin-left: 10px;
+}
+.table {
+  display:table; 
+  /*padding-left: 10px;*/
+  /*border:1px solid #FF0000;*/
+  width :100%;
+  box-sizing: border-box;
+
+}
+.table-row {
+  padding-top: 10px;
+  display:table-row;
+  /*border:5px solid #00FF00;*/
+  /*border-bottom:1px dotted #888;*/
+  /*width :100%;*/
+  box-sizing: border-box;
+  }
+.table-cell {
+  display:table-cell;
+  vertical-align: bottom;
+  padding: 0.5em 0.0em 0.1em 0.5em;
+  /*border:1px solid #0000FF;*/
+  border-bottom:1px dotted #888;
+  box-sizing: border-box;
+}
+.table-cell_solid {
+  width :10px;
+  white-space: nowrap;
+}
+.table-cell_inner-table {
+  display:table-cell;
+  vertical-align: bottom;
+  padding: 0.2em 0.0em 0.1em 0.5em;
+  border: none;
+  /*border-bottom:1px solid #0ff;*/
+  box-sizing: border-box;
+}
+.table-cell_inner-table-title {
+  border-bottom: 1px solid #444;
+  border-left: 8px solid #444;
+  padding-left:8px;
+}
+.box {
+  display: inline-block;
+  margin: 10px;
+  /*border:1px solid #FFF;*/
+}
+.hidden-spacer {
+  visibility: hidden;
+  height: 0px;
+  /*background: #0FF;*/
+  max-width : 10em;
+  overflow: hidden;
+}
+
+input, button, textarea, select{
+/*.input {*/
+  background: none;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+
+  color: #444;
+  font-family: Cambria, Georgia;
+  font-size: 1.0rem;
+  padding: 2px;
+}
+
+input:hover, textarea:hover, select:hover  {
+  background: #EEE;
+}
+input:focus, textarea:focus, select:focus  {
+  background: #FFF;
+}
+button i {
+  font-size: 1.0rem;
+}
+
+button:hover  {
+  background: #444;
+  color: #CCC;
+}
+
+.table-cell button{
+  font-size: 0.5rem;
+}

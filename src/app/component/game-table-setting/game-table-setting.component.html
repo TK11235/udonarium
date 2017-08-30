@@ -1,0 +1,26 @@
+<div class="flex-container">
+  <div class="flex-item no-grow">
+    <div>
+      <button (click)="createGameTable()">新しいテーブルを作る</button>
+    </div>
+    <select style="width: 10em;" size="10" (change)="selectGameTable($event.target.value)" [ngModel]="viewTable.identifier">
+      <option *ngFor="let gameTable of getGameTables()" value="{{gameTable.identifier}}">{{gameTable.name}}</option>
+    </select>
+  </div>
+  <div class="flex-item">
+    <div><img height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'" (click)="openModal()"></div>
+    <div>Name : <input [(ngModel)]="tableName" placeholder="Name" /></div>
+    <div>
+      <input [(ngModel)]="tableWidth" type="range" min="{{minSize}}" max="{{maxSize}}" name="tableWidth" /> Width :
+      <input [(ngModel)]="tableWidth" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;">
+    </div>
+    <div>
+      <input [(ngModel)]="tableHeight" type="range" min="{{minSize}}" max="{{maxSize}}" name="tableHeight" /> Height :
+      <input [(ngModel)]="tableHeight" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;">
+    </div>
+    <div>
+      <button (click)="updateGameTableSettings()">変更</button>
+      <button (click)="save()">現在の状態を保存</button>
+    </div>
+  </div>
+</div>

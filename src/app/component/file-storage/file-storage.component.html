@@ -1,0 +1,7 @@
+<div id="drop-zone">ここに画像ファイルをドロップ<br>１ファイルにつき2MBまで</div>
+<div id="file-list">
+  <span *ngFor="let file of fileStorageService.images" class="image">
+    <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
+    <img *ngIf="file.url.length <= 0" src="images/loading.gif" alt="{{file.name}}">
+  </span>
+</div>

@@ -1,0 +1,29 @@
+<div *ngIf="!isConnected;else other_content">
+  <div>ルーム名 : <input [(ngModel)]="roomName" required minlength="1" maxlength="64" #roomNameValidation="ngModel" placeholder="ルームの名前は必須"
+    /></div>
+  <div>パスワード: <input [(ngModel)]="password" maxlength="32" #passwordValidation="ngModel" placeholder="空ならパスワードなし" /></div>
+  <hr/>
+  <div *ngIf="roomNameValidation.errors && (roomNameValidation.dirty || roomNameValidation.touched)">
+    <div [hidden]="!roomNameValidation.errors.required">
+      ルームの名前は必須です。
+    </div>
+    <div [hidden]="!roomNameValidation.errors.minlength">
+      ルームの名前は必須です。
+    </div>
+    <div [hidden]="!roomNameValidation.errors.maxlength">
+      ルーム名前の長さは32以内にしてください。
+    </div>
+  </div>
+  <div *ngIf="passwordValidation.errors && (passwordValidation.dirty || passwordValidation.touched)">
+    <div [hidden]="!passwordValidation.errors.maxlength">
+      パスワードの長さは32以内にしてください。
+    </div>
+  </div>
+  <div>
+    <button [disabled]="roomName.length < 1" (click)="createRoom()">新しいルームを作成</button>
+  </div>
+</div>
+<span style="font-size: 12px;">※作成したルームは参加者が0人になった時点で解散します。ルームの状態を次回に持ち越したい場合は必ず「保存」してください。</span>
+<ng-template #other_content>
+  <span style="font-size: 12px;">他のPeerとの接続したままルーム作成を行うことはできません。<br>別のルームに接続したい場合は、他のPeerとの接続を切ってください。<br>（※ページリロードで切断できます。）</span>
+</ng-template>

@@ -1,0 +1,54 @@
+<!--
+    <select [(ngModel)]="inventoryType">
+      <option value="table">テーブル</option>
+      <option value="common">共有インベントリ</option>
+      <option value="{{networkService.myPeerId}}">個人インベントリ</option>
+      <option value="graveyard">墓地</option>
+    </select>
+    -->
+<div class="flex-container">
+  <div class="flex-item" style="width: 200px;">
+    <ng-container *ngFor="let inventoryType of inventoryTypes">
+      <div *ngIf="inventoryType !== networkService.peerId">{{inventoryType}}</div>
+      <div *ngIf="inventoryType === networkService.peerId">{{networkService.peerContext.id}}</div>
+      <div *ngFor="let gameObject of getGameObjects(inventoryType)" (click)="selectGameObject(gameObject)" [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}">
+        <div style="display: inline-block;">
+          <div style="min-width:50px; min-height:50px; display: inline-block; vertical-align:text-top;">
+            <img *ngIf="gameObject.imageFile" height="50" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
+          </div>
+          <div style="display: inline-block; vertical-align:text-top;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
+            <div style="font-size: 0.8rem;">{{gameObject.name}}</div>
+            <div *ngIf="gameObject.detailDataElement">
+              <div *ngFor="let gameDataElement of gameObject.detailDataElement.getElementsByType('numberResource')" style="display: inline-block;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
+                <input style="width:90%; height: 5px;" (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" type="range"
+                  min="0" max="{{gameDataElement.value}}" />
+                <br> {{gameDataElement.name}}
+                <input class="input" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}" style="width:auto;" size="1"
+                  (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" />                /
+                <input class="input" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}" style="width:auto;" size="1"
+                  (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.value" placeholder="Value" />
+              </div>
+            </div>
+            <div *ngIf="selectedIdentifier === gameObject.identifier">
+              <select (change)="gameObject.setLocation($event.target.value)" [ngModel]="gameObject.location.name">
+                  <option value="table">テーブル</option>
+                  <option value="common">共有インベントリ</option>
+                  <option value="{{networkService.peerId}}">個人インベントリ</option>
+                  <option value="graveyard">墓地</option>
+                </select>
+              <button (click)="showDetail(gameObject)">詳細</button>
+              <button (click)="cloneGameObject(gameObject)">コピー</button>
+              <button *ngIf="inventoryType === 'graveyard'" (click)="deleteGameObject(gameObject)">削除</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
+    </ng-container>
+  </div>
+  <!--
+    <div class="flex-item" style="width: 400px;">
+      <game-character-sheet></game-character-sheet>
+    </div>
+    -->
+</div>

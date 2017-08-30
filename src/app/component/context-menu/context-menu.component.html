@@ -1,0 +1,8 @@
+<div class="draggable-panel" [style.left.px]="left" [style.top.px]="top" #draggablePanel>
+  <div *ngIf="0 < contextMenuService.title.length" class="title">{{contextMenuService.title}}</div>
+  <ul>
+    <li *ngFor="let action of contextMenuService.actions" (click)="doAction(action.action)">
+      {{action.name}}
+    </li>
+  </ul>
+</div>

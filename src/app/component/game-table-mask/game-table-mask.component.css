@@ -1,0 +1,58 @@
+.grab {
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.grabbing {
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+.game-char{
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  backface-visibility: hidden;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  
+  -moz-user-drag: none;
+  -webkit-user-drag: none;
+
+  /*z-index: -99999;*/
+}
+.lock-icon {
+  position: absolute;
+  background-color: #CCCCCC;
+  border-radius: 100%;
+  color: #444;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.block-1 {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border:solid 2px #CCCCCC;
+}
+.background-image {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+}
+.transition {
+  -webkit-transition: -webkit-transform 132ms linear;
+  transition: transform 132ms linear;
+}

@@ -1,0 +1,13 @@
+    <div [@flyInOut]="'in'" class="draggable-panel" [style.left.px]="left" [style.top.px]="top" [style.width.px]="width" [style.height.px]="height" #draggablePanel>
+      <div class="title">
+        <div class="title-button">
+          <button (click)="toggleFullScreen()"><i class="material-icons" style="font-size: 14px;">fullscreen</i></button>
+          <button (click)="close()"><i class="material-icons" style="font-size: 14px;">close</i></button>
+        </div>
+        {{panelService.title}}
+      </div>
+      <div class="scrollable-panel" #scrollablePanel>
+        <ng-content></ng-content>
+        <div #content></div>
+      </div>
+    </div>

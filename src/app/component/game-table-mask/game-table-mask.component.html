@@ -1,0 +1,12 @@
+<div #tableMask class="game-char" [ngClass]="{'grab': (!isDragging && !gameTableMask.isLock), 'grabbing': (isDragging && !gameTableMask.isLock), 'transition': !isDragging}"
+  [style.width.px]="gameTableMask.width * gridSize" [style.height.px]="gameTableMask.height * gridSize" (contextmenu)="onContextMenu($event)">
+  <ng-container *ngIf="gameTableMask.imageFile.url.length < 1">
+    <div class="block-1" [style.background-color]="'rgba(10, 10, 10,' + gameTableMask.opacity +')'"></div>
+  </ng-container>
+  <ng-container *ngIf="0 < gameTableMask.imageFile.url.length">
+    <div class="block-1">
+      <img class="background-image" [style.opacity]="gameTableMask.opacity" [src]="gameTableMask.imageFile.url | safe: 'resourceUrl'">
+    </div>
+  </ng-container>
+  <div *ngIf="gameTableMask.isLock" class="lock-icon"><i class="material-icons">lock</i></div>
+</div>

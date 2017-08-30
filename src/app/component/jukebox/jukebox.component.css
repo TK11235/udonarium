@@ -1,0 +1,14 @@
+.drop-zone {
+  border: 2px dashed #555;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  font: 20px bold 'Vollkorn';
+  color: #555;
+}
+
+.box {
+  border-bottom:1px dotted #888;
+}

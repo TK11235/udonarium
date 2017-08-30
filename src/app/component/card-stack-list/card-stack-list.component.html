@@ -1,0 +1,14 @@
+<div>
+  <button (click)="close(true)">シャッフルしてウィンドウを閉じる</button>
+  <hr/>
+  <div *ngFor="let card of cardStack.cards" class="box">
+    <div class="image contain" [style.background-image]="'url(' + card?.frontImage?.url + ')' | safe: 'style' "></div>
+    <div class="image contain" [style.background-image]="'url(' + card?.backImage?.url + ')' | safe: 'style' "></div>
+    <div style="display: inline-block;">
+      <button type="submit" (click)="drawCard(card)">山札から抜き出す</button>
+      <br>
+      <button (click)="up(card)">上へ</button>
+      <button (click)="down(card)">下へ</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div #gameChar class="game-char game-char_3d" [ngClass]="{'grab': !isDragging, 'grabbing': isDragging, 'transition': !isDragging}"
+  [style.width.px]="gameCharacter.size * gridSize" [style.height.px]="gameCharacter.size * gridSize" (contextmenu)="onContextMenu($event)">
+  <div [@flyInOut]="'in'" class="game-char_3d" style="width: 100%; height: 100%;">
+    <div class="block-1"></div>
+    <div class="block-2"></div>
+    <div class="game-char-image_3d game-char-image">
+      <div class="game-panel" style="display:none;" #gamePanel>
+        <!--
+            <div game-data-element [gameDataElement]="gameCharacter.rootGameDataElement"></div>
+            -->
+      </div>
+      <div style="position: absolute; bottom: 0px; left: 0px; right: 0px;" #gameCharImage>
+        <div class="title" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + gameCharacter.size * gridSize / 2 +'px)'}" style="position: absolute; top: -30px; background-color: #fcc; color: #CCC; background-color: rgba(30, 30, 30, 0.8);">
+          <span style="white-space: nowrap;">{{gameCharacter.name}}</span>
+        </div>
+        <img class="game-char-image2" *ngIf="0 < gameCharacter.imageFile.url.length" [src]="gameCharacter.imageFile.url | safe: 'resourceUrl'">
+      </div>
+    </div>
+    <!--
+    <div class="game-char-image_3d-2 game-char-image">
+      <div style="position: absolute; bottom: 0px; left: 0px; right: 0px;">
+        <img class="game-char-image2" *ngIf="0 < gameCharacter.imageFile.url.length" [src]="gameCharacter.imageFile.url | safe: 'resourceUrl'">
+      </div>
+    </div>
+    -->
+  </div>
+</div>

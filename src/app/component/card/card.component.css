@@ -1,0 +1,131 @@
+.grab {
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.grabbing {
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+.game-char{
+  position: absolute;
+  height: auto;
+  width: auto;
+  backface-visibility: hidden;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  
+  -moz-user-drag: none;
+  -webkit-user-drag: none;
+  min-width: 25px;
+  min-height: 25px;
+  /*border:solid 2px #CCCCCC;*/
+}
+.lock-icon {
+  position: absolute;
+  background-color: #CCCCCC;
+  border-radius: 100%;
+  color: #444;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.block-1 {
+  backface-visibility: hidden;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  /*border:solid 2px #CCCCCC;*/
+}
+.background-image {
+  /*backface-visibility: hidden;*/
+  display: block;
+  /*position: absolute;*/
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: auto;
+  width: 100%;
+}
+.transition {
+  -webkit-transition: -webkit-transform 132ms linear;
+  transition: transform 132ms linear;
+}
+.game-char_3d{
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.game-char-image2 {
+  /*filter: brightness(0.0);*/
+  /*filter: grayscale(100%);*/
+  /*filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.5));*/
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  position: absolute;
+  width: 100%;
+  height: auto;
+  filter: opacity(0.7);
+}
+.game-char-image_3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+
+  /*-webkit-transform: rotateX(-90deg) translateY(-50%);*/
+  transform: rotateX(-90deg) scale(0.7) translateY(-50%) ;
+}
+.title{
+  box-sizing: border-box;
+  font-size: 15px;
+  padding: 3px 9px;
+  border-radius: 24px;
+}
+.rotate-grab {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  border:solid 2px #CCCCCC;
+  cursor: -moz-default;
+  cursor: -webkit-default;
+  cursor: default;
+  z-index: 1;
+  padding: 0;
+  background-color: #CCCCCC;
+  border-radius: 100%;
+  color: #444;
+  font-size: 8px;
+  opacity: 0;
+}
+.rotate-grab:hover, .rotate-grab:active{
+  opacity: 1;
+}
+.left-top{
+  top: -7px;
+  left: -7px;
+}
+.left-bottom{
+  bottom: -7px;
+  left: -7px;
+}
+.right-bottom{
+  bottom: -7px;
+  right: -7px;
+}
+.right-top{
+  top: -7px;
+  right: -7px;
+}
