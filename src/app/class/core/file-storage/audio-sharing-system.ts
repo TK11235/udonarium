@@ -110,8 +110,8 @@ export class AudioSharingSystem {
         let randomRequest: { identifier: string, state: number, seed: number }[] = [];
 
         for (let item of request) {
-          let image: AudioFile = AudioStorage.instance.get(item.identifier);
-          if (item.state < image.state)
+          let audio: AudioFile = AudioStorage.instance.get(item.identifier);
+          if (item.state < audio.state)
             randomRequest.push({ identifier: item.identifier, state: item.state, seed: Math.random() });
         }
 
@@ -119,7 +119,7 @@ export class AudioSharingSystem {
           // 送信
           console.log('REQUEST_AUDIO_RESOURE Send!!! ' + event.data.receiver + ' -> ' + randomRequest);
 
-          let updateImages: AudioFileContext[] = [];
+          let updateAudios: AudioFileContext[] = [];
           let byteSize: number = 0;
 
           randomRequest.sort((a, b) => {
@@ -136,15 +136,15 @@ export class AudioSharingSystem {
 
           //for (let i = 0; i < randomRequest.length; i++) {
           let item: { identifier: string, state: number } = randomRequest[0];//randomRequest[i];
-          let image: AudioFile = AudioStorage.instance.get(item.identifier);
+          let audio: AudioFile = AudioStorage.instance.get(item.identifier);
 
-          let context: AudioFileContext = { identifier: image.identifier, name: image.name, type: '', blob: null, url: null };
+          let context: AudioFileContext = { identifier: audio.identifier, name: audio.name, type: '', blob: null, url: null };
 
-          if (image.state === AudioState.URL) {
-            context.url = image.url;
+          if (audio.state === AudioState.URL) {
+            context.url = audio.url;
           } else {
-            //context.blob = image.blob;
-            context.type = image.blob.type;
+            //context.blob = audio.blob;
+            context.type = audio.blob.type;
           }
 
           //if (0 < byteSize && context.blob && this.maxTransmissionSize < byteSize + context.blob.size) break;
@@ -152,7 +152,7 @@ export class AudioSharingSystem {
           console.log(item);
           console.log(context);
 
-          updateImages.push(context);
+          updateAudios.push(context);
           byteSize += context.blob ? context.blob.size : 100;
           // }
 
@@ -160,11 +160,11 @@ export class AudioSharingSystem {
             EventSystem.call('STOP_AUDIO_TRANSMISSION', { identifier: randomRequest[i].identifier }, event.data.receiver);
           }
 
-          this.startTransmission(updateImages[0].identifier, event.sendFrom);
-          EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: updateImages[0].identifier }, event.data.receiver);
-          let task = FileSharingTask.createSendTask(image, event.data.receiver);
+          this.startTransmission(updateAudios[0].identifier, event.sendFrom);
+          EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, event.data.receiver);
+          let task = FileSharingTask.createSendTask(audio, event.data.receiver);
           task.onfinish = (target) => {
-            EventSystem.call('UPDATE_AUDIO_RESOURE', updateImages, event.data.receiver);
+            EventSystem.call('UPDATE_AUDIO_RESOURE', updateAudios, event.data.receiver);
           }
         } else {
           // 中継
@@ -213,15 +213,15 @@ export class AudioSharingSystem {
         console.log('STOP_AUDIO_TRANSMISSION ' + identifier, Object.keys(this.tasks).length);
       })
       .on('UPDATE_AUDIO_RESOURE', event => {
-        let updateImages: AudioFileContext[] = event.data;
-        console.log('UPDATE_AUDIO_RESOURE AudioStorageService ' + event.sendFrom + ' -> ', updateImages);
-        for (let context of updateImages) {
+        let updateAudios: AudioFileContext[] = event.data;
+        console.log('UPDATE_AUDIO_RESOURE AudioStorageService ' + event.sendFrom + ' -> ', updateAudios);
+        for (let context of updateAudios) {
           if (context.blob) context.blob = new Blob([context.blob], { type: context.type });
           AudioStorage.instance.add(context);
         }
-        this.stopTransmission(updateImages[0].identifier);
+        this.stopTransmission(updateAudios[0].identifier);
         this.synchronize();
-        EventSystem.call('COMPLETE_AUDIO_TRANSMISSION', { fileIdentifier: updateImages[0].identifier }, event.sendFrom);
+        EventSystem.call('COMPLETE_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, event.sendFrom);
       })
       .on('START_AUDIO_TRANSMISSION', event => {
         console.log('START_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
