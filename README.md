@@ -16,6 +16,7 @@
 - ダイスボット（[BCDice](https://github.com/torgtaitai/BCDice)を[Opal](http://opalrb.org/)でJavaScriptにトランスパイル）
 - 画像ファイル共有
 - BGM再生
+- セーブデータ生成（ZIP形式）
 
 ルーム管理、チャット送受信、ダイスボット、ファイル管理、データ保存。それら全てをサーバサイドの支援無しにブラウザ上で完結させることを目指しています。
 
@@ -27,7 +28,7 @@
 このアプリケーションはサーバーサイドの処理を持たないのでCGIやデータベースを準備する必要はありません。
 
 唯一の準備として、外部サービスの[SkyWay](http://nttcom.github.io/skyway/)を利用するためのAPIキーが必要です。
-APIキーの情報は`config.yaml`に記述します。
+APIキーの情報は`assets/config.yaml`に記述します。
 
 後は、サーバに配置したアプリケーションの`index.html`にアクセスし、動作することを確認してみてください。
 
@@ -35,7 +36,7 @@ APIキーの情報は`config.yaml`に記述します。
 
 [Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)、および[Git](https://git-scm.com/)が必要です。
 
-開発環境のインストール手順は[Angular公式ページ](https://angular.io/)の[QuickStart](https://angular.io/guide/quickstart)が参考になります。
+開発環境のインストール手順は[Angular日本ユーザーグループが作成したAngularのハンズオン教材](https://github.com/ng-japan/hands-on/tree/master/courses/tutorial)、または[Angular公式ページ](https://angular.io/)の[QuickStart](https://angular.io/guide/quickstart)が参考になります。
 
 Windows環境でGitをインストールする場合、コマンドプロンプトからGitコマンドを実行可能に（インストーラーの画面で「Run Git from the Windows Command Prompt」を選択）することをお勧めします。
 
@@ -47,7 +48,7 @@ CLIツールとして[Angular CLI](https://github.com/angular/angular-cli)を利
 リポジトリのファイル一式をダウンロードした後の初回起動時のコマンドは以下の通りです。
 
 ```bash
-cd <ファイル一式のディレクトリの場所>
+cd ファイル一式のディレクトリの場所
 npm install
 ng serve
 ```
