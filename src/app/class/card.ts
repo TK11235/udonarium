@@ -83,21 +83,21 @@ export class Card extends TabletopObject {
   }
 
   moveToTop() {
-    let cards: any[] = ObjectStore.instance.getObjects(CardStack);
-    cards = cards.concat(ObjectStore.instance.getObjects(Card));
-    cards.sort((a, b) => {
+    let object: any[] = ObjectStore.instance.getObjects('card-stack');
+    object = object.concat(ObjectStore.instance.getObjects('card'));
+    object.sort((a, b) => {
       if (a.zindex < b.zindex) return -1;
       if (a.zindex > b.zindex) return 1;
       return 0;
     });
-    let last = cards[cards.length - 1];
+    let last = object[object.length - 1];
     if (last === this) return;
     let max = last.zindex;
     if (this.zindex <= max) this.zindex = max + 1;
 
-    if (cards.length * 16 < max) {
-      for (let i = 0; i < cards.length; i++) {
-        cards[i].zindex = i;
+    if (object.length * 16 < max) {
+      for (let i = 0; i < object.length; i++) {
+        object[i].zindex = i;
       }
     }
   }

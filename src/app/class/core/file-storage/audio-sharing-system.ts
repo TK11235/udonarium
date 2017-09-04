@@ -1,10 +1,8 @@
 import { EventSystem, Event, Network } from '../system/system';
-import { AudioStorage } from './audio-storage';
+import { AudioStorage, Catalog } from './audio-storage';
 import { FileSharingTask } from './file-sharing-task';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 import { MimeType } from './mime-type';
-
-type Catalog = { identifier: string, state: number }[];
 
 export class AudioSharingSystem {
   private static _instance: AudioSharingSystem
@@ -29,7 +27,7 @@ export class AudioSharingSystem {
       .on('OPEN_OTHER_PEER', -1, event => {
         if (event.sendFrom !== Network.peerId) return;
         console.log('OPEN_OTHER_PEER AudioStorageService !!!', event.data.peer);
-        this.synchronize();
+        AudioStorage.instance.synchronize();
       })
       .on('SYNCHRONIZE_AUDIO_LIST', event => {
         if (event.sendFrom === Network.peerId) return;
@@ -50,8 +48,8 @@ export class AudioSharingSystem {
           }
         }
 
-        if (request.length < 1 && otherCatalog.length < AudioSharingSystem.getCatalog().length) {
-          this.synchronize(event.sendFrom);
+        if (request.length < 1 && otherCatalog.length < AudioStorage.instance.getCatalog().length) {
+          AudioStorage.instance.synchronize(event.sendFrom);
         }
 
         if (request.length < 1 || this.isTransmission()) {
@@ -97,7 +95,7 @@ export class AudioSharingSystem {
           this.tasks[item.identifier] = null;
           delete this.tasks[item.identifier];
           console.warn('ファイル受信タイムアウト', task.identifier);
-          this.synchronize();
+          AudioStorage.instance.synchronize();
         }
         this.tasks[item.identifier] = task;
 
@@ -220,7 +218,7 @@ export class AudioSharingSystem {
           AudioStorage.instance.add(context);
         }
         this.stopTransmission(updateAudios[0].identifier);
-        this.synchronize();
+        AudioStorage.instance.synchronize();
         EventSystem.call('COMPLETE_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, event.sendFrom);
       })
       .on('START_AUDIO_TRANSMISSION', event => {
@@ -230,7 +228,7 @@ export class AudioSharingSystem {
       .on('COMPLETE_AUDIO_TRANSMISSION', event => {
         console.log('COMPLETE_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
         this.stopTransmission(event.data.fileIdentifier);
-        if (event.sendFrom !== Network.peerId) this.synchronize();
+        if (event.sendFrom !== Network.peerId) AudioStorage.instance.synchronize();
       })
       .on('TIMEOUT_AUDIO_TRANSMISSION', event => {
         console.log('TIMEOUT_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
@@ -240,20 +238,6 @@ export class AudioSharingSystem {
 
   private destroy() {
     EventSystem.unregister(this);
-  }
-
-  synchronize(peer?: string) {
-    clearTimeout(this.lazyTimer);
-    this.lazyTimer = null;
-    console.warn('synchronize要求 ' + peer);
-    EventSystem.call('SYNCHRONIZE_AUDIO_LIST', AudioSharingSystem.getCatalog(), peer);
-  }
-
-  lazySynchronize(ms: number, peer?: string) {
-    clearTimeout(this.lazyTimer);
-    this.lazyTimer = setTimeout(() => {
-      this.synchronize(peer);
-    }, ms);
   }
 
   private startTransmission(identifier: string, sendFrom: string) {
@@ -298,16 +282,6 @@ export class AudioSharingSystem {
     } else {
       return false;
     }
-  }
-
-  static getCatalog(): Catalog {
-    let catalog: Catalog = [];
-    for (let audio of AudioStorage.instance.audios) {
-      if (AudioState.COMPLETE <= audio.state) {
-        catalog.push({ identifier: audio.identifier, state: audio.state });
-      }
-    }
-    return catalog;
   }
 }
 

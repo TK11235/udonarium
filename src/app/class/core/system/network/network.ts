@@ -1,7 +1,4 @@
-import { ConnectionStore } from './connection-store';
-import { EventSystem } from '../event/event-system';
-import { EventContext } from '../event/event';
-
+import { ConnectionStore, ConnectionStoreCallback } from './connection-store';
 import { PeerContext, IPeerContext } from './peer-context';
 
 import 'skyway-peerjs/dist/peer.min.js';
@@ -16,57 +13,38 @@ declare module PeerJs {
 
 export class Network {
   private static _instance: Network
-  private key: string = '';
-  private httpRequestInterval: number = performance.now() + 500;
-  private listAllPeersCache: string[] = [];
-
-  private callbackBeforeunload: any = (e) => { this.destroy(); };
-
   static get instance(): Network {
     if (!Network._instance) Network._instance = new Network();
     return Network._instance;
   }
 
-  //peerId: string = '???';
-  get peerId(): string {
-    return this.peerContext ? this.peerContext.fullstring : '???';
-  }
-
+  private key: string = '';
+  get peerId(): string { return this.peerContext ? this.peerContext.fullstring : '???'; }
   peerContext: PeerContext;
-  get peerIds(): string[] {
-    return this.store ? this.store.peerIds.concat() : [];
-  }
-  get isConnected(): boolean {
-    return this.peer ? !this.peer.disconnected : false;
-  }
+  get peerIds(): string[] { return this.store ? this.store.peerIds.concat() : []; }
+  get isConnected(): boolean { return this.peer ? !this.peer.disconnected : false; }
+  get connections(): PeerJs.DataConnection[] { return this.store ? this.store.connections : []; }
+
   private peer: PeerJs.Peer;
   private store: ConnectionStore;
+  readonly callback: ConnectionStoreCallback = null;
 
-  get connections(): PeerJs.DataConnection[] {
-    return this.store ? this.store.connections : [];
-  }
-
-  private queue: EventContext[] = [];
+  private queue: any[] = [];
   private sendInterval: NodeJS.Timer = null;
   private sendCallback = () => { this.sendQueue(); }
 
+  private httpRequestInterval: number = performance.now() + 500;
+  private listAllPeersCache: string[] = [];
+  private callbackBeforeunload: any = (e) => { this.destroy(); };
+
   private constructor() {
     console.log('Network ready...');
-    EventSystem.instance.register(this)
-      .on('OTHER_PEERS', event => {
-        for (let peerId of event.data.otherPeers.concat()) {
-          if (this.store.find(peerId) === null && peerId !== this.peerId) {
-            console.log('connectingOtherPeers <' + peerId + '>');
-            this.connect(peerId);
-          }
-        }
-      });
+    this.callback = new ConnectionStoreCallback();
   }
 
   private destroy() {
     if (this.peer) this.peer.destroy();
     if (this.store) this.store.closeAll();
-    EventSystem.instance.unregister(this);
     Network._instance = null;
     this.peer = null;
     this.store = null;
@@ -124,7 +102,7 @@ export class Network {
     }
   }
 
-  send(data: EventContext) {
+  send(data: any) {
     this.queue.push(data);
     if (this.sendInterval === null) {
       this.sendInterval = setTimeout(this.sendCallback, 0);
@@ -132,18 +110,18 @@ export class Network {
   }
 
   private sendQueue() {
-    let broadcast: EventContext[] = [];
-    let unicast: { [sendTo: string]: EventContext[] } = {};
+    let broadcast: any[] = [];
+    let unicast: { [sendTo: string]: any[] } = {};
 
     let loop = this.queue.length < 2048 ? this.queue.length : 2048;
     //console.warn(this.queue.length);
     for (let i = 0; i < loop; i++) {
       let event = this.queue[i];
       if (event.sendTo == null) {
-        EventSystem.instance.trigger(event);
+        if (this.callback.onData) this.callback.onData(event.sendTo, [event]);
         broadcast[broadcast.length] = event;
       } else if (event.sendTo === this.peerId) {
-        EventSystem.instance.trigger(event);
+        if (this.callback.onData) this.callback.onData(event.sendTo, [event]);
       } else {
         if (!(event.sendTo in unicast)) unicast[event.sendTo] = [];
         unicast[event.sendTo][unicast[event.sendTo].length] = event;
@@ -174,7 +152,7 @@ export class Network {
     }
 
     if (this.store.find(peerId)) {
-      this.sendMessage('connectPeer() is Fail. <' + peerId + '> is already connecting.');
+      console.log('connectPeer() is Fail. <' + peerId + '> is already connecting.');
       return false;
     }
     if (peerId && peerId.length && peerId !== this.peerId) {
@@ -251,7 +229,7 @@ export class Network {
     peer.on('open', id => {
       console.log('My peer ID is: ' + id);
       if (!this.peerContext || this.peerContext.fullstring !== id) this.peerContext = new PeerContext(id);
-      EventSystem.instance.trigger('OPEN_PEER', { peer: this.peerId });
+      if (this.callback.onOpen) this.callback.onOpen(this.peerId);
     });
 
     peer.on('connection', conn => {
@@ -259,10 +237,10 @@ export class Network {
     });
 
     peer.on('error', err => {
-      this.sendMessage('<' + this.peerId + '> ' + err);
+      console.log('<' + this.peerId + '> ' + err);
       console.error(err);
       if (err.toString() === 'Error: Lost connection to server.') {
-        EventSystem.instance.trigger('LOST_CONNECTION_PEER', { peer: this.peerId });
+        if (this.callback.onClose) this.callback.onClose(this.peerId);
       } else if (-1 < err.toString().indexOf('Error: Could not connect to peer ')) {
         let peer = err.toString().substring('Error: Could not connect to peer '.length);
         this.store.close(this.store.find(peer));
@@ -275,62 +253,37 @@ export class Network {
     let store = new ConnectionStore(this.peerId);
 
     store.callback.willOpen = (peerId, sendFrom) => {
-      if (sendFrom !== this.peerId) {
-        this.sendMessage('Receive <' + peerId + '> connecting...');
-      } else {
-        this.sendMessage('Request <' + peerId + '> connecting...');
-      }
+      if (this.callback.willOpen) this.callback.willOpen(peerId, sendFrom);
     }
 
     store.callback.onTimeout = (peerId) => {
-      this.sendMessage('timeout peer connection... <' + peerId + '>');
+      if (this.callback.onTimeout) this.callback.onTimeout(peerId);
     }
 
     store.callback.onOpen = (peerId) => {
-      this.sendMessage('<' + peerId + '> is Open <DataConnection>');
-      EventSystem.instance.trigger('OPEN_OTHER_PEER', { peer: peerId });
-      EventSystem.instance.call('OTHER_PEERS', { otherPeers: this.store.peerIds });
-      //this.send([new eventSystem.Event('OTHER_PEERS', { otherPeers: this.store.peerIds }).toContext()]);
+      if (this.callback.onOpen) this.callback.onOpen(peerId);
     }
 
-    store.callback.onData = (peerId, data: EventContext[]) => {
-      for (let event of data) {
-        EventSystem.instance.trigger(event);
-      }
+    store.callback.onData = (peerId, data: any[]) => {
+      if (this.callback.onData) this.callback.onData(peerId, data);
     }
 
     store.callback.onClose = (peerId) => {
-      this.sendMessage('<' + peerId + '> is closed <DataConnection>');
-      EventSystem.instance.trigger('CLOSE_OTHER_PEER', { peer: peerId });
+      if (this.callback.onClose) this.callback.onClose(peerId);
     }
 
     store.callback.onError = (peerId, err) => {
-      this.sendMessage('<' + peerId + '> ' + err);
+      if (this.callback.onError) this.callback.onError(peerId, err);
     }
 
     store.callback.onDetectUnknownPeers = (peerIds) => {
-      console.warn('未接続のPeerを確認?', peerIds);
-      EventSystem.instance.trigger('OTHER_PEERS', { otherPeers: peerIds });
+      if (this.callback.onDetectUnknownPeers) this.callback.onDetectUnknownPeers(peerIds);
     }
 
     if (0 < this.queue.length && this.sendInterval === null) {
       this.sendInterval = setTimeout(this.sendCallback, 0);
     }
     return store;
-  }
-
-  private sendMessage(message: string) {
-    console.log(message);
-    let chatMessage = {
-      identifier: this.peerId + '_' + Math.random(),
-      responseIdentifier: '',
-      timestamp: '',
-      imageIdentifier: '',
-      tag: 'system',
-      sender: 'システム<' + this.peerId + '>',
-      text: message
-    };
-    //EventSystem.instance.trigger('BROADCAST_MESSAGE', chatMessage);
   }
 }
 

@@ -1,4 +1,4 @@
-import { EventSystem } from './event-system';
+import { Subject } from './subject';
 import { Event } from './event';
 
 export type Callback<T> = (event: Event<T>, listener?: Listener) => void;
@@ -17,6 +17,7 @@ interface EventMap {
 }
 
 export class Listener {
+  private _subject: Subject;
   private _target: any;
   private _eventName: string;
   private _priority: number = 0;
@@ -24,6 +25,7 @@ export class Listener {
   private _isOnlyOnce: boolean;
   private _isRegistered: boolean = false;
 
+  get subject() {return this._subject; }
   get target() { return this._target; }
   get eventName() { return this._eventName; }
   get priority() { return this._priority; }
@@ -31,11 +33,8 @@ export class Listener {
   get isOnlyOnce() { return this._isOnlyOnce; }
   get isRegistered() { return this._isRegistered; }
 
-  private get eventSystem(): EventSystem {
-    return EventSystem.instance;
-  }
-
-  constructor(target: any) {
+  constructor(subject: Subject, target: any) {
+    this._subject = subject;
     this._target = target;
   }
 
@@ -61,8 +60,9 @@ export class Listener {
   once<T>(eventName: string, callback: Callback<T>): Listener
   once<T>(eventName: string, priority: number, callback: Callback<T>): Listener
   once(...args: any[]): Listener {
+    let listener = this.on.apply(this, args);
     this._isOnlyOnce = true;
-    return this.on.apply(this, args);
+    return listener;
   }
 
   private register(eventName: string, priority: number, callback: Callback<any>): Listener {
@@ -71,13 +71,13 @@ export class Listener {
     this._priority = priority;
     this._callback = callback;
 
-    this.eventSystem.registerListener(this);
+    this.subject.registerListener(this);
     this._isRegistered = true;
-    return new Listener(this.target);
+    return new Listener(this.subject, this.target);
   }
 
   unregister(): this {
-    this.eventSystem.unregisterListener(this);
+    this.subject.unregisterListener(this);
     this._callback = null;
     this._isRegistered = false;
     return this;

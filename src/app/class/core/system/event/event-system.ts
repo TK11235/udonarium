@@ -1,19 +1,25 @@
+import { Subject } from './subject';
 import { Listener, Callback } from './listener';
 import { Event, EventContext } from './event';
 import { Network } from '../network/network';
 
-export class EventSystem {
+export class EventSystem implements Subject{
   private static _instance: EventSystem
   static get instance(): EventSystem {
-    if (!EventSystem._instance) EventSystem._instance = new EventSystem();
+    if (!EventSystem._instance) {
+      EventSystem._instance = new EventSystem();
+      EventSystem._instance.initializeNetworkEvent();
+    }
     return EventSystem._instance;
   }
 
   private listenersHash: { [eventName: string]: Listener[] } = {};
-  private constructor() { console.log('EventSystem ready...'); }
+  private constructor() {
+    console.log('EventSystem ready...');
+  }
 
-  register(target: any = this): Listener {
-    let listener: Listener = new Listener(target);
+  register(target: any): Listener {
+    let listener: Listener = new Listener(this, target);
     return listener;
   }
 
@@ -116,6 +122,76 @@ export class EventSystem {
       this.listenersHash[eventName] = [];
     }
     return this.listenersHash[eventName];
+  }
+
+  private initializeNetworkEvent() {
+    this.register(this)
+      .on('OTHER_PEERS', event => {
+        for (let peerId of event.data.otherPeers.concat()) {
+          if (Network.instance.connect(peerId)) console.log('connectingOtherPeers <' + peerId + '>');
+        }
+      });
+
+    let callback = Network.instance.callback;
+
+    callback.willOpen = (peerId, sendFrom) => {
+      if (sendFrom !== Network.instance.peerId) {
+        this.sendSystemMessage('Receive <' + peerId + '> connecting...');
+      } else {
+        this.sendSystemMessage('Request <' + peerId + '> connecting...');
+      }
+    }
+
+    callback.onTimeout = (peerId) => {
+      this.sendSystemMessage('timeout peer connection... <' + peerId + '>');
+    }
+
+    callback.onOpen = (peerId) => {
+      this.sendSystemMessage('<' + peerId + '> is Open <DataConnection>');
+      if (peerId === Network.instance.peerId) {
+        this.trigger('OPEN_PEER', { peer: peerId });
+      } else {
+        this.trigger('OPEN_OTHER_PEER', { peer: peerId });
+        this.call('OTHER_PEERS', { otherPeers: Network.instance.peerIds });
+      }
+    }
+
+    callback.onData = (peerId, data: EventContext[]) => {
+      for (let event of data) {
+        this.trigger(event);
+      }
+    }
+
+    callback.onClose = (peerId) => {
+      this.sendSystemMessage('<' + peerId + '> is closed <DataConnection>');
+      if (peerId === Network.instance.peerId) {
+        this.trigger('LOST_CONNECTION_PEER', { peer: peerId });
+      } else {
+        this.trigger('CLOSE_OTHER_PEER', { peer: peerId });
+      }
+    }
+
+    callback.onError = (peerId, err) => {
+      this.sendSystemMessage('<' + peerId + '> ' + err);
+    }
+
+    callback.onDetectUnknownPeers = (peerIds) => {
+      console.warn('未接続のPeerを確認?', peerIds);
+      this.trigger('OTHER_PEERS', { otherPeers: peerIds });
+    }
+  }
+
+  private sendSystemMessage(message: string) {
+    console.log(message);
+    let chatMessage = {
+      identifier: Network.instance.peerId + '_' + Math.random(),
+      responseIdentifier: '',
+      timestamp: '',
+      imageIdentifier: '',
+      tag: 'system',
+      sender: 'システム<' + Network.instance.peerId + '>',
+      text: message
+    };
   }
 }
 setTimeout(function () { EventSystem.instance; }, 0);

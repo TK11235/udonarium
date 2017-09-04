@@ -1,6 +1,8 @@
-import { AudioFile, AudioFileContext } from './audio-file';
+import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 import { AudioSharingSystem } from './audio-sharing-system';
 import { EventSystem } from '../system/system';
+
+export type Catalog = { identifier: string, state: number }[];
 
 export class AudioStorage {
   private static _instance: AudioStorage
@@ -8,6 +10,8 @@ export class AudioStorage {
     if (!AudioStorage._instance) AudioStorage._instance = new AudioStorage();
     return AudioStorage._instance;
   }
+
+  private lazyTimer: NodeJS.Timer;
 
   private static _audioContext: AudioContext
   static get audioContext(): AudioContext {
@@ -117,8 +121,7 @@ export class AudioStorage {
   }
 
   private _add(image: AudioFile): AudioFile {
-    //FileSharingSystem.instance.lazySynchronize(100);
-    AudioSharingSystem.instance.lazySynchronize(100);
+    this.lazySynchronize(100);
     if (this.update(image)) return this.hash[image.identifier];
     this.hash[image.identifier] = image;
     console.log('addNewFile()', image);
@@ -217,6 +220,30 @@ export class AudioStorage {
       }
       reader.readAsArrayBuffer(audio.blob);
     });
+  }
+
+  synchronize(peer?: string) {
+    clearTimeout(this.lazyTimer);
+    this.lazyTimer = null;
+    console.warn('synchronize要求 ' + peer);
+    EventSystem.call('SYNCHRONIZE_AUDIO_LIST', this.getCatalog(), peer);
+  }
+
+  lazySynchronize(ms: number, peer?: string) {
+    clearTimeout(this.lazyTimer);
+    this.lazyTimer = setTimeout(() => {
+      this.synchronize(peer);
+    }, ms);
+  }
+
+  getCatalog(): Catalog {
+    let catalog: Catalog = [];
+    for (let audio of AudioStorage.instance.audios) {
+      if (AudioState.COMPLETE <= audio.state) {
+        catalog.push({ identifier: audio.identifier, state: audio.state });
+      }
+    }
+    return catalog;
   }
 
   private initializeContext() {

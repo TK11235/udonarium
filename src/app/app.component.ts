@@ -30,6 +30,8 @@ import { MimeType } from './class/core/file-storage/mime-type';
 import { FileArchiver } from './class/core/file-storage/file-archiver';
 import { FileSharingSystem } from './class/core/file-storage/file-sharing-system';
 import { FileStorage } from './class/core/file-storage/file-storage';
+import { AudioSharingSystem } from './class/core/file-storage/audio-sharing-system';
+import { AudioStorage } from './class/core/file-storage/audio-storage';
 import { ImageFile } from './class/core/file-storage/image-file';
 import { ObjectNode } from './class/core/synchronize-object/object-node';
 import { ObjectFactory } from './class/core/synchronize-object/object-factory';
@@ -65,6 +67,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     FileArchiver.instance;
     FileSharingSystem.instance;
     FileStorage.instance;
+    AudioSharingSystem.instance;
+    AudioStorage.instance;
     ObjectFactory.instance;
     ObjectSerializer.instance;
     ObjectStore.instance;

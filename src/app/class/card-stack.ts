@@ -133,8 +133,8 @@ export class CardStack extends TabletopObject {
   }
 
   moveToTop() {
-    let object: any[] = ObjectStore.instance.getObjects(CardStack);
-    object = object.concat(ObjectStore.instance.getObjects(Card));
+    let object: any[] = ObjectStore.instance.getObjects('card-stack');
+    object = object.concat(ObjectStore.instance.getObjects('card'));
     object.sort((a, b) => {
       if (a.zindex < b.zindex) return -1;
       if (a.zindex > b.zindex) return 1;

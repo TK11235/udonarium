@@ -15,7 +15,7 @@ interface DataContainer {
   isRelay: boolean;
 }
 
-class ConnectionStoreCallback {
+export class ConnectionStoreCallback {
   willOpen: (peerId: string, sendFrom: string) => void;
   onTimeout: (peerId: string) => void;
   onOpen: (peerId: string) => void;

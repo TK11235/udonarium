@@ -1,9 +1,7 @@
 import { EventSystem, Event, Network } from '../system/system';
-import { FileStorage } from './file-storage';
+import { FileStorage, Catalog } from './file-storage';
 import { ImageFile, ImageContext, ImageState } from './image-file';
 import { MimeType } from './mime-type';
-
-type Catalog = { identifier: string, state: number }[];
 
 export class FileSharingSystem {
   private static _instance: FileSharingSystem
@@ -26,7 +24,7 @@ export class FileSharingSystem {
       .on('OPEN_OTHER_PEER', 1, event => {
         if (event.sendFrom !== Network.peerId) return;
         console.log('OPEN_OTHER_PEER FileStorageService !!!', event.data.peer);
-        this.synchronize();
+        FileStorage.instance.synchronize();
       })
       .on('XML_PARSE', event => {
         let xml: string = event.data.xml;
@@ -50,8 +48,8 @@ export class FileSharingSystem {
           }
         }
 
-        if (request.length < 1 && otherCatalog.length < FileSharingSystem.getCatalog().length) {
-          this.synchronize(event.sendFrom);
+        if (request.length < 1 && otherCatalog.length < FileStorage.instance.getCatalog().length) {
+          FileStorage.instance.synchronize(event.sendFrom);
         }
 
         if (request.length < 1 || this.isTransmission()) {
@@ -142,7 +140,7 @@ export class FileSharingSystem {
           FileStorage.instance.add(context);
         }
         this.stopTransmission(updateImages[0].identifier);
-        this.synchronize();
+        FileStorage.instance.synchronize();
         EventSystem.call('COMPLETE_FILE_TRANSMISSION', { fileIdentifier: updateImages[0].identifier }, event.sendFrom);
       })
       .on('START_FILE_TRANSMISSION', event => {
@@ -152,7 +150,7 @@ export class FileSharingSystem {
       .on('COMPLETE_FILE_TRANSMISSION', event => {
         console.log('COMPLETE_FILE_TRANSMISSION ' + event.data.fileIdentifier);
         this.stopTransmission(event.data.fileIdentifier);
-        if (event.sendFrom !== Network.peerId) this.synchronize();
+        if (event.sendFrom !== Network.peerId) FileStorage.instance.synchronize();
       })
       .on('TIMEOUT_FILE_TRANSMISSION', event => {
         console.log('TIMEOUT_FILE_TRANSMISSION ' + event.data.fileIdentifier);
@@ -162,19 +160,6 @@ export class FileSharingSystem {
 
   private destroy() {
     EventSystem.unregister(this);
-  }
-
-  synchronize(peer?: string) {
-    clearTimeout(this.lazyTimer);
-    this.lazyTimer = null;
-    EventSystem.call('SYNCHRONIZE_FILE_LIST', FileSharingSystem.getCatalog(), peer);
-  }
-
-  lazySynchronize(ms: number, peer?: string) {
-    clearTimeout(this.lazyTimer);
-    this.lazyTimer = setTimeout(() => {
-      this.synchronize(peer);
-    }, ms);
   }
 
   private startTransmission(identifier: string, sendFrom: string) {
@@ -219,16 +204,6 @@ export class FileSharingSystem {
     } else {
       return false;
     }
-  }
-
-  static getCatalog(): Catalog {
-    let catalog: Catalog = [];
-    for (let image of FileStorage.instance.images) {
-      if (ImageState.COMPLETE <= image.state) {
-        catalog.push({ identifier: image.identifier, state: image.state });
-      }
-    }
-    return catalog;
   }
 }
 

@@ -1,5 +1,8 @@
-import { ImageFile, ImageContext } from './image-file';
+import { EventSystem } from '../system/system';
+import { ImageFile, ImageContext, ImageState } from './image-file';
 import { FileSharingSystem } from './file-sharing-system';
+
+export type Catalog = { identifier: string, state: number }[];
 
 export class FileStorage {
   private static _instance: FileStorage
@@ -17,6 +20,8 @@ export class FileStorage {
     }
     return images;
   }
+
+  private lazyTimer: NodeJS.Timer;
 
   private constructor() {
     console.log('FileStorage ready...');
@@ -56,7 +61,7 @@ export class FileStorage {
   }
 
   private _add(image: ImageFile): ImageFile {
-    FileSharingSystem.instance.lazySynchronize(100);
+    this.lazySynchronize(100);
     if (this.update(image)) return this.imageHash[image.identifier];
     this.imageHash[image.identifier] = image;
     console.log('addNewFile()', image);
@@ -94,6 +99,29 @@ export class FileStorage {
     let image: ImageFile = this.imageHash[identifier];
     if (image) return image;
     return null;
+  }
+
+  synchronize(peer?: string) {
+    clearTimeout(this.lazyTimer);
+    this.lazyTimer = null;
+    EventSystem.call('SYNCHRONIZE_FILE_LIST', this.getCatalog(), peer);
+  }
+
+  lazySynchronize(ms: number, peer?: string) {
+    clearTimeout(this.lazyTimer);
+    this.lazyTimer = setTimeout(() => {
+      this.synchronize(peer);
+    }, ms);
+  }
+
+  getCatalog(): Catalog {
+    let catalog: Catalog = [];
+    for (let image of FileStorage.instance.images) {
+      if (ImageState.COMPLETE <= image.state) {
+        catalog.push({ identifier: image.identifier, state: image.state });
+      }
+    }
+    return catalog;
   }
 }
 setTimeout(function () { FileStorage.instance; }, 0);
