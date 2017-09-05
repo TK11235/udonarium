@@ -119,8 +119,8 @@ export class GameObjectInventoryComponent {
   }
 
   private isPrivateLocation(location: string): boolean {
-    for (let conn of Network.connections) {
-      if (conn.open && location === conn.peer) {
+    for (let conn of Network.peerContexts) {
+      if (conn.isOpen && location === conn.fullstring) {
         return true;
       }
     }

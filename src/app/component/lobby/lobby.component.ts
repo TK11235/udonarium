@@ -128,7 +128,7 @@ export class LobbyComponent implements OnInit {
   }
 
   private resetNetwork() {
-    if (Network.connections.length < 1) {
+    if (Network.peerContexts.length < 1) {
       Network.open();
       PeerCursor.myCursor.peerId = Network.peerId;
     }

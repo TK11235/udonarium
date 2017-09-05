@@ -2,11 +2,13 @@ import * as lzbase62 from 'lzbase62/lzbase62.min.js';
 //import * as lzbase62 from 'lzbase62';
 
 export interface IPeerContext {
+  fullstring: string;
   id: string;
   room: string;
   roomName: string;
   password: string;
   isPrivate: boolean;
+  isOpen: boolean;
 }
 
 export class PeerContext implements IPeerContext {
@@ -16,13 +18,11 @@ export class PeerContext implements IPeerContext {
   roomName: string = '';
   password: string = '';
   isPrivate: boolean = true;
+  isOpen: boolean = false;
 
-  get isRoom(): boolean {
-    return 0 < this.room.length ? true : false;
-  }
+  get isRoom(): boolean { return 0 < this.room.length ? true : false; }
 
   constructor(fullstring: string) {
-    let jsonObj: IPeerContext;
     this.parse(fullstring);
   }
 
@@ -41,6 +41,7 @@ export class PeerContext implements IPeerContext {
       console.warn(e);
     }
   }
+  
   static create(peerId: string): PeerContext
   static create(peerId: string, roomId: string, roomName: string, isPrivate: boolean, password: string): PeerContext
   static create(...args: any[]): PeerContext {
@@ -57,13 +58,6 @@ export class PeerContext implements IPeerContext {
   }
 
   private static _createRoom(peerId: string = '', roomId: string = '', roomName: string = '', isPrivate: boolean = false, password: string = ''): PeerContext {
-    let jsonObj: IPeerContext = {
-      id: peerId,
-      room: roomId,
-      roomName: roomName,
-      password: password,
-      isPrivate: isPrivate
-    };
     let fullstring: string = peerId + '-' + roomId + '-' + lzbase62.compress(roomName) + '-' + lzbase62.compress(password) + '-' + (isPrivate ? '1' : '0');
     try {
       console.log(fullstring);

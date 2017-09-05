@@ -50,7 +50,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private resetPeerIfNeeded() {
-    if (Network.connections.length < 1) {
+    if (Network.peerContexts.length < 1) {
       Network.open();
       PeerCursor.myCursor.peerId = Network.peerId;
     }
@@ -60,7 +60,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.help = '';
     let context = PeerContext.create(this.targetPeerId);
     if (context.isRoom) {
-      if (Network.connections.length) {
+      if (Network.peerContexts.length) {
         this.help = '入力されたPeer IDはルーム用のPeer IDのようですが、ルーム用Peer IDと通常のPeer IDを混在させることはできません。通常Peerとの接続を切ってください。（※ページリロードでPeer切断ができます）';
         return;
       }
