@@ -41,7 +41,7 @@ export class PeerContext implements IPeerContext {
       console.warn(e);
     }
   }
-  
+
   static create(peerId: string): PeerContext
   static create(peerId: string, roomId: string, roomName: string, isPrivate: boolean, password: string): PeerContext
   static create(...args: any[]): PeerContext {

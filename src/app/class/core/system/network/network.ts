@@ -17,7 +17,7 @@ export class Network {
 
   get isConnected(): boolean { return this.connection && this.connection.peerContext ? this.connection.peerContext.isOpen : false; }
 
-  callback: ConnectionCallback = new ConnectionCallback();;
+  readonly callback: ConnectionCallback = new ConnectionCallback();;
 
   private key: string = '';
   private connection: Connection;

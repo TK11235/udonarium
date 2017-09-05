@@ -1,9 +1,10 @@
 import { Subject } from './subject';
-import { Listener, Callback } from './listener';
+import { Callback } from './observer';
+import { Listener } from './listener';
 import { Event, EventContext } from './event';
 import { Network } from '../network/network';
 
-export class EventSystem implements Subject{
+export class EventSystem implements Subject {
   private static _instance: EventSystem
   static get instance(): EventSystem {
     if (!EventSystem._instance) {
@@ -18,15 +19,15 @@ export class EventSystem implements Subject{
     console.log('EventSystem ready...');
   }
 
-  register(target: any): Listener {
-    let listener: Listener = new Listener(this, target);
+  register(key: any): Listener {
+    let listener: Listener = new Listener(this, key);
     return listener;
   }
 
-  unregister(target: any)
-  unregister(target: any, eventName: string)
-  unregister(target: any, callback: Callback<any>)
-  unregister(target: any, eventName: string, callback: Callback<any>)
+  unregister(key: any)
+  unregister(key: any, eventName: string)
+  unregister(key: any, callback: Callback<any>)
+  unregister(key: any, eventName: string, callback: Callback<any>)
   unregister(...args: any[]) {
     if (args.length === 1) {
       return this._unregister(args[0], null, null);
@@ -41,12 +42,11 @@ export class EventSystem implements Subject{
     }
   }
 
-  private _unregister(target: any = this, eventName: string, callback: Callback<any>) {
+  private _unregister(key: any = this, eventName: string, callback: Callback<any>) {
     for (let eventName in this.listenersHash) {
       let listeners = this.getListeners(eventName);
       for (let listener of listeners.concat()) {
-        if (listener.isEqual(target, eventName, callback)) {
-          //this.unregisterListener(listener);
+        if (listener.isEqual(key, eventName, callback)) {
           listener.unregister();
         }
       }
@@ -183,6 +183,7 @@ export class EventSystem implements Subject{
 
   private sendSystemMessage(message: string) {
     console.log(message);
+    /*
     let chatMessage = {
       identifier: Network.instance.peerId + '_' + Math.random(),
       responseIdentifier: '',
@@ -192,6 +193,7 @@ export class EventSystem implements Subject{
       sender: 'システム<' + Network.instance.peerId + '>',
       text: message
     };
+    */
   }
 }
 setTimeout(function () { EventSystem.instance; }, 0);

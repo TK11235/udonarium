@@ -11,11 +11,11 @@ export class ConnectionCallback {
 }
 
 export interface Connection {
-  peerId: string;
-  peerIds: string[];
-  peerContext: IPeerContext;
-  peerContexts: IPeerContext[];
-  callback: ConnectionCallback;
+  readonly peerId: string;
+  readonly peerIds: string[];
+  readonly peerContext: IPeerContext;
+  readonly peerContexts: IPeerContext[];
+  readonly callback: ConnectionCallback;
 
   open(peerId: string)
   open(peerId: string, roomId: string, roomName: string, isPrivate: boolean, password: string)

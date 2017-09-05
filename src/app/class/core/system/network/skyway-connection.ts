@@ -20,11 +20,13 @@ interface DataContainer {
 
 export class SkyWayConnection implements Connection {
   get peerId(): string { return this.peerContext ? this.peerContext.fullstring : '???'; }
-  peerIds: string[] = [];
+
+  private _peerIds: string[] = [];
+  get peerIds(): string[] { return this._peerIds }
 
   peerContext: PeerContext;
-  peerContexts: PeerContext[] = [];
-  callback: ConnectionCallback = new ConnectionCallback();
+  readonly peerContexts: PeerContext[] = [];
+  readonly callback: ConnectionCallback = new ConnectionCallback();
 
   private key: string = '';
   private peer: PeerJs.Peer;
@@ -44,33 +46,7 @@ export class SkyWayConnection implements Connection {
     } else {
       this.peerContext = PeerContext.create(args[0], args[1], args[2], args[3], args[4]);
     }
-    let peer = new Peer(this.peerContext.fullstring, { key: this.key });// SkyWay
-
-    peer.on('open', id => {
-      console.log('My peer ID is: ' + id);
-      if (!this.peerContext || this.peerContext.fullstring !== id) {
-        this.peerContext = new PeerContext(id);
-      }
-      this.peerContext.isOpen = true;
-      console.log('My peer Context', this.peerContext);
-      if (this.callback.onOpen) this.callback.onOpen(this.peerId);
-    });
-
-    peer.on('connection', conn => {
-      this.openDataConnection(conn);
-    });
-
-    peer.on('error', err => {
-      console.log('<' + this.peerId + '> ' + err);
-      console.error(err);
-      if (err.toString() === 'Error: Lost connection to server.') {
-        if (this.callback.onClose) this.callback.onClose(this.peerId);
-      } else if (-1 < err.toString().indexOf('Error: Could not connect to peer ')) {
-        let peer = err.toString().substring('Error: Could not connect to peer '.length);
-        this.disconnect(peer);
-      }
-    });
-    this.peer = peer;
+    this.openPeer();
   }
 
   close() {
@@ -109,10 +85,7 @@ export class SkyWayConnection implements Connection {
       return false;
     }
 
-    if (peerId && peerId.length && peerId !== this.peerId) {
-      return true;
-    }
-
+    if (peerId && peerId.length && peerId !== this.peerId) return true;
     return false;
   }
 
@@ -133,7 +106,7 @@ export class SkyWayConnection implements Connection {
   send(data: any, sendTo?: string) {
     let container: DataContainer = {
       data: data,
-      peers: this.peerIds.concat(),
+      peers: this._peerIds.concat(),
       isRelay: false
     }
 
@@ -164,7 +137,7 @@ export class SkyWayConnection implements Connection {
 
   private onRelay(container: DataContainer) {
     let others: string[] = container.peers;
-    let peerIds: string[] = this.peerIds.concat();//this.peers.concat();
+    let peerIds: string[] = this._peerIds.concat();//this.peers.concat();
 
     if (!others || others.length < 1) return;
     // 自分の知らないPeerが含まれている
@@ -289,6 +262,39 @@ export class SkyWayConnection implements Connection {
     });
   }
 
+  private openPeer() {
+    if (this.peer) {
+      console.warn('It is already opened.');
+      this.close();
+    }
+    let peer = new Peer(this.peerContext.fullstring, { key: this.key });// SkyWay
+    peer.on('open', id => {
+      console.log('My peer ID is: ' + id);
+      if (!this.peerContext || this.peerContext.fullstring !== id) {
+        this.peerContext = new PeerContext(id);
+      }
+      this.peerContext.isOpen = true;
+      console.log('My peer Context', this.peerContext);
+      if (this.callback.onOpen) this.callback.onOpen(this.peerId);
+    });
+
+    peer.on('connection', conn => {
+      this.openDataConnection(conn);
+    });
+
+    peer.on('error', err => {
+      console.log('<' + this.peerId + '> ' + err);
+      console.error(err);
+      if (err.toString() === 'Error: Lost connection to server.') {
+        if (this.callback.onClose) this.callback.onClose(this.peerId);
+      } else if (-1 < err.toString().indexOf('Error: Could not connect to peer ')) {
+        let peer = err.toString().substring('Error: Could not connect to peer '.length);
+        this.disconnect(peer);
+      }
+    });
+    this.peer = peer;
+  }
+
   private openDataConnection(conn: PeerJs.DataConnection) {
     if (this.add(conn) === false) return;
 
@@ -358,7 +364,7 @@ export class SkyWayConnection implements Connection {
       return 0;
     });
 
-    this.peerIds = peers;
+    this._peerIds = peers;
 
     console.log('<update()>', peers);
     return peers;

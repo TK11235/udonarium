@@ -1,41 +1,27 @@
 import { Subject } from './subject';
+import { Observer, Callback, EventMap } from './observer';
 import { Event } from './event';
 
-export type Callback<T> = (event: Event<T>, listener?: Listener) => void;
-
-interface EventMap {
-  'OTHER_PEERS': { otherPeers: string[] };
-  'OPEN_OTHER_PEER': { peer: string };
-  'CLOSE_OTHER_PEER': { peer: string };
-  'UPDATE_GAME_OBJECT': {
-    aliasName: string;
-    identifier: string;
-    majorVersion: number;
-    minorVersion: number;
-    syncData: Object;
-  };
-}
-
-export class Listener {
+export class Listener implements Observer {
   private _subject: Subject;
-  private _target: any;
+  private _key: any;
   private _eventName: string;
   private _priority: number = 0;
   private _callback: Callback<any>;
   private _isOnlyOnce: boolean;
   private _isRegistered: boolean = false;
 
-  get subject() {return this._subject; }
-  get target() { return this._target; }
+  get subject() { return this._subject; }
+  get key() { return this._key; }
   get eventName() { return this._eventName; }
   get priority() { return this._priority; }
   get callback() { return this._callback; }
   get isOnlyOnce() { return this._isOnlyOnce; }
   get isRegistered() { return this._isRegistered; }
 
-  constructor(subject: Subject, target: any) {
+  constructor(subject: Subject, key: any) {
     this._subject = subject;
-    this._target = target;
+    this._key = key;
   }
 
   on<K extends keyof EventMap>(eventName: K, callback: Callback<EventMap[K]>): Listener
@@ -73,7 +59,7 @@ export class Listener {
 
     this.subject.registerListener(this);
     this._isRegistered = true;
-    return new Listener(this.subject, this.target);
+    return new Listener(this.subject, this.key);
   }
 
   unregister(): this {
@@ -85,13 +71,13 @@ export class Listener {
 
   trigger(event: Event<any>) {
     if (this.callback && this.isRegistered) {
-      this.callback.apply(this.target, [event, this]);
+      this.callback.apply(this.key, [event, this]);
       if (this.isOnlyOnce) this.unregister();
     }
   }
 
-  isEqual(target: any, eventName: string, callback: Callback<any>) {
-    let matchTarget = (target == null || target === this.target);
+  isEqual(key: any, eventName: string, callback: Callback<any>) {
+    let matchTarget = (key == null || key === this.key);
     let matchEventName = (eventName == null || eventName === this.eventName);
     let matchCallback = (callback == null || callback === this.callback);
 
