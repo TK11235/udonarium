@@ -65,13 +65,6 @@ export class Card extends TabletopObject {
     }
   }
 
-  shuffle() {
-    if (!this.parent) return;
-    this.majorIndex = Math.random() * this.parent.children.length;
-    this.minorIndex = Math.random();
-    this.update();
-  }
-
   faceUp() {
     this.state = CardState.FRONT;
     this.owner = '';

@@ -43,11 +43,14 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   @_SyncVar() protected majorIndex: number = 0;
   @_SyncVar() protected minorIndex: number = Math.random();
 
-  protected get index(): number { return this.majorIndex + this.minorIndex; }
+  get index(): number { return this.majorIndex + this.minorIndex; }
+  set index(index: number) {
+    this.majorIndex = index | 0;
+    this.minorIndex = index - this.majorIndex;
+    if (this.parent) this.parent.isNeedSort = true;
+  }
+
   get parent(): ObjectNode { return ObjectStore.instance.get<ObjectNode>(this.parentIdentifier); }
-
-  private isNeedSort: boolean = true;
-
   private _children: ObjectNode[] = [];
   get children(): ObjectNode[] {
     if (this.isNeedSort) {
@@ -63,6 +66,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
 
   // TODO 名前　親Nodeの存在が未知の状態であるNode
   private static unknownNodes: { [identifier: string]: ObjectNode[] } = {};
+  private isNeedSort: boolean = true;
 
   initialize(needUpdate: boolean = true) {
     super.initialize(needUpdate);
@@ -93,7 +97,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     }
   }
 
-  updateChildren(child: ObjectNode = this) {
+  private updateChildren(child: ObjectNode = this) {
     let index = this._children.indexOf(child);
 
     if (index < 0 && child.parent === this) this._children.push(child);
@@ -107,12 +111,11 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     let prevIndex = index - 1 < 0 ? 0 : index - 1;
     let nextIndex = this._children.length - 1 < index + 1 ? this._children.length - 1 : index + 1;
 
-    //console.log(prevIndex, index, nextIndex);
     if (this._children[prevIndex].index <= child.index && child.index <= this._children[nextIndex].index) return;
     this.isNeedSort = true;
   }
 
-  updateIndexs() {
+  private updateIndexs() {
     for (let i = 0; i < this._children.length; i++) {
       this._children[i].majorIndex = i;
       this._children[i].minorIndex = Math.random();

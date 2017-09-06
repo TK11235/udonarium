@@ -41,11 +41,12 @@ export class CardStack extends TabletopObject {
   get imageFile(): ImageFile { return this.topCard ? this.topCard.imageFile : null; }
 
   shuffle() {
+    let length = this.cardRoot.children.length;
     for (let card of this.cards) {
-      card.shuffle();
+      card.index = Math.random() * length;
       card.rotate = Math.floor(Math.random() * 2) * 180;
     }
-    this.cardRoot.updateChildren();
+    this.cardRoot.children;
     console.log('shuffle!!!!', this.cards.length, this.cards);
   }
 

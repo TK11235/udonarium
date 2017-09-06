@@ -37,7 +37,7 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
   get response(): ChatMessage { return ObjectStore.instance.get<ChatMessage>(this.responseIdentifier); }
   get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
 
-  protected get index(): number {
+  get index(): number {
     return this.minorIndex + this.timestamp;
   }
 }
