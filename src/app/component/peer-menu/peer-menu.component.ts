@@ -125,14 +125,14 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
     PeerCursor.myCursor.peerId = Network.peerId;
 
-    let listener = EventSystem.register(this)
-      .on('OPEN_PEER', 0, event => {
-        console.log('OPEN_PEER', event.data.peer);
-        EventSystem.unregisterListener(listener);
-        for (let context of conectPeers) {
-          Network.connect(context.fullstring);
-        }
-      });
+    let listener = EventSystem.register(this);
+    listener.on('OPEN_PEER', 0, event => {
+      console.log('OPEN_PEER', event.data.peer);
+      EventSystem.unregisterListener(listener);
+      for (let context of conectPeers) {
+        Network.connect(context.fullstring);
+      }
+    });
   }
 
   showLobby() {

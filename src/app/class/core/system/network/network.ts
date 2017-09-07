@@ -48,7 +48,6 @@ export class Network {
 
   private close() {
     if (this.connection) this.connection.close();
-    Network._instance = null;
     this.connection = null;
     window.removeEventListener('beforeunload', this.callbackBeforeunload, false);
     console.log('Network close...');
@@ -111,7 +110,7 @@ export class Network {
   }
 
   listAllPeers(): Promise<string[]> {
-    return this.connection.listAllPeers();
+    return this.connection ? this.connection.listAllPeers() : Promise.resolve([]);
   }
 
   private initializeConnection(): Connection {

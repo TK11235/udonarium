@@ -1,8 +1,10 @@
 import { PeerContext } from './peer-context';
 import { Connection, ConnectionCallback } from './connection';
 
+/*
 import 'skyway-peerjs/dist/peer.min.js'
 import { } from 'skyway';
+*/
 import { } from 'node';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
@@ -38,7 +40,7 @@ export class SkyWayConnection implements Connection {
   open(peerId: string)
   open(peerId: string, roomId: string, roomName: string, isPrivate: boolean, password: string)
   open(...args: any[]) {
-    console.log('createPeer', args);
+    console.log('open', args);
     if (args.length === 0) {
       this.peerContext = PeerContext.create(PeerContext.generateId());
     } else if (args.length === 1) {
@@ -71,17 +73,17 @@ export class SkyWayConnection implements Connection {
 
   private shouldConnect(peerId: string): boolean {
     if (!this.peerId) {
-      console.log('connectPeer() is Fail. IDが割り振られるまで待てや');
+      console.log('connect() is Fail. IDが割り振られるまで待てや');
       return false;
     }
 
     if (this.peerId === peerId) {
-      console.log('connectPeer() is Fail. ' + peerId + ' is me.');
+      console.log('connect() is Fail. ' + peerId + ' is me.');
       return false;
     }
 
     if (this.findDataConnection(peerId)) {
-      console.log('connectPeer() is Fail. <' + peerId + '> is already connecting.');
+      console.log('connect() is Fail. <' + peerId + '> is already connecting.');
       return false;
     }
 
@@ -190,9 +192,9 @@ export class SkyWayConnection implements Connection {
       console.log('add() is Fail. ' + conn.peer + ' is already connecting.');
       if (existConn !== conn) {
         if (existConn.metadata.sendFrom < conn.metadata.sendFrom) {
-          this.disconnect(conn);
+          this.closeDataConnection(conn);
         } else {
-          this.disconnect(existConn);
+          this.closeDataConnection(existConn);
           this.add(conn);
           return true;
         }
@@ -219,46 +221,10 @@ export class SkyWayConnection implements Connection {
         return;
       }
       this.httpRequestInterval = now + 6000;
-      let url = 'https://skyway.io/active/list/' + this.key;
-      let http = new XMLHttpRequest();
-
-      // If there's no ID we need to wait for one before trying to init socket.
-      http.open('get', url, true);
-      http.onerror = (event) => {
-        console.error(event);
-        this.listAllPeersCache = [];
-        resolve([]);
-      };
-      http.onreadystatechange = (event) => {
-        if (http.readyState !== 4) {
-          return;
-        }
-        if (http.status === 401) {
-          console.error(http.status);
-          this.listAllPeersCache = [];
-          resolve([]);
-        } else if (http.status !== 200) {
-          this.listAllPeersCache = [];
-          resolve([]);
-        } else {
-          let peerIds: string[] = null;
-          try {
-            peerIds = JSON.parse(http.responseText);
-            console.log('listAllPeers...OK.');
-            if (peerIds instanceof Array) {
-              this.listAllPeersCache = peerIds.concat();
-              resolve(peerIds);
-              return;
-            }
-          } catch (e) {
-            console.warn(e);
-          }
-          this.listAllPeersCache = [];
-          resolve([]);
-        }
-      };
-      console.log('listAllPeers...');
-      http.send(null);
+      this.peer.listAllPeers((list) => {
+        this.listAllPeersCache = list.concat();
+        resolve(list);
+      });
     });
   }
 
@@ -301,10 +267,23 @@ export class SkyWayConnection implements Connection {
     let sendFrom: string = conn.label;
     if (this.callback.willOpen) this.callback.willOpen(conn.peer, sendFrom);
 
-    let timeout: NodeJS.Timer = setTimeout(() => {
-      if (this.callback.onTimeout) this.callback.onTimeout(conn.peer);
-      this.disconnect(conn);
-    }, 15000);
+    let index = this.connections.indexOf(conn);
+    let context: PeerContext = null;
+    if (0 <= index) context = this.peerContexts[index];
+
+    let timeout: NodeJS.Timer = null;
+    if (sendFrom === this.peerId) {
+      // 送信側はタイムアウト処理の準備
+      timeout = setTimeout(() => {
+        if (this.callback.onTimeout) this.callback.onTimeout(conn.peer);
+        this.closeDataConnection(conn);
+      }, 15000);
+    } else {
+      // 受信側はisOpenをtrue
+      if (context) context.isOpen = true;
+      this.update();
+      if (this.callback.onOpen) this.callback.onOpen(conn.peer);
+    }
 
     conn.on('data', data => {
       this.onData(conn, data);
@@ -312,8 +291,7 @@ export class SkyWayConnection implements Connection {
     conn.on('open', () => {
       if (timeout !== null) clearTimeout(timeout);
       timeout = null;
-      let index = this.connections.indexOf(conn);
-      if (0 <= index) this.peerContexts[index].isOpen = true;
+      if (context) context.isOpen = true;
       this.update();
       if (this.callback.onOpen) this.callback.onOpen(conn.peer);
     });
