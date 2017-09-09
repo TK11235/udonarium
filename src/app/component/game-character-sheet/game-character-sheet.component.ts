@@ -20,6 +20,7 @@ import { FileStorage } from '../../class/core/file-storage/file-storage';
 import { FileArchiver } from '../../class/core/file-storage/file-archiver';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { MimeType } from '../../class/core/file-storage/mime-type';
+import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
 
 @Component({
   selector: 'game-character-sheet',
@@ -122,7 +123,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   }
 
   private getImageFiles(xml: string): File[] {
-    let xmlElement: Element = this.xml2element(xml);
+    let xmlElement: Element = XmlUtil.xml2element(xml);
     let files: File[] = [];
     if (!xmlElement) return files;
 
@@ -147,24 +148,6 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
       }
     }
     return files;
-  }
-
-  private xml2element(xml: string) {
-    let domParser: DOMParser = new DOMParser();
-    let xmlDocument: Document = null;
-    try {
-      xmlDocument = domParser.parseFromString(xml, 'application/xml');
-      if (xmlDocument.getElementsByTagName('parsererror').length) {
-        xmlDocument = null;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    if (!xmlDocument) {
-      console.error('XMLのパースに失敗しました');
-      return null;
-    }
-    return xmlDocument.documentElement;
   }
 
   setLocation(locationName: string) {

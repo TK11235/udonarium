@@ -2,6 +2,7 @@ import { EventSystem, Event, Network } from '../system/system';
 import { FileStorage, Catalog } from './file-storage';
 import { ImageFile, ImageContext, ImageState } from './image-file';
 import { MimeType } from './mime-type';
+import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
 
 export class FileSharingSystem {
   private static _instance: FileSharingSystem
@@ -208,7 +209,7 @@ export class FileSharingSystem {
 }
 
 function convertUrlImage(xml: string) {
-  let xmlElement: Element = xml2element(xml);
+  let xmlElement: Element = XmlUtil.xml2element(xml);
   let urls: string[] = [];
   if (!xmlElement) return;
 
@@ -230,24 +231,6 @@ function convertUrlImage(xml: string) {
   for (let url of urls) {
     FileStorage.instance.add(url)
   }
-}
-
-function xml2element(xml: string) {
-  let domParser: DOMParser = new DOMParser();
-  let xmlDocument: Document = null;
-  try {
-    xmlDocument = domParser.parseFromString(xml, 'application/xml');
-    if (xmlDocument.getElementsByTagName('parsererror').length) {
-      xmlDocument = null;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-  if (!xmlDocument) {
-    console.error('XMLのパースに失敗しました');
-    return null;
-  }
-  return xmlDocument.documentElement;
 }
 
 setTimeout(function () { FileSharingSystem.instance; }, 0);

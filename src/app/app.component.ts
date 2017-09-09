@@ -42,6 +42,7 @@ import { PeerCursor } from './class/peer-cursor';
 import { Jukebox } from './class/Jukebox';
 
 import * as Beautify from 'vkbeautify';
+import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
 
 @Component({
   selector: 'app-root',
@@ -206,7 +207,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   private getImageFiles(xml: string): File[] {
-    let xmlElement: Element = this.xml2element(xml);
+    let xmlElement: Element = XmlUtil.xml2element(xml);
     let files: File[] = [];
     if (!xmlElement) return files;
 
@@ -231,23 +232,5 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       }
     }
     return files;
-  }
-
-  private xml2element(xml: string) {
-    let domParser: DOMParser = new DOMParser();
-    let xmlDocument: Document = null;
-    try {
-      xmlDocument = domParser.parseFromString(xml, 'application/xml');
-      if (xmlDocument.getElementsByTagName('parsererror').length) {
-        xmlDocument = null;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    if (!xmlDocument) {
-      console.error('XMLのパースに失敗しました');
-      return null;
-    }
-    return xmlDocument.documentElement;
   }
 }

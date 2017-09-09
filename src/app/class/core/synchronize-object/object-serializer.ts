@@ -2,6 +2,7 @@ import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory } from './object-factory';
 import { EventSystem } from '../system/system';
 import { Attributes } from './attributes';
+import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
 
 export interface XmlAttributes extends GameObject {
   toAttributes(): Attributes;
@@ -74,7 +75,7 @@ export class ObjectSerializer {
   parseXml(xml: string | Element): GameObject {
     let xmlElement: Element = null;
     if (typeof xml === 'string') {
-      xmlElement = ObjectSerializer.xml2element(xml);
+      xmlElement = XmlUtil.xml2element(xml);
     } else {
       xmlElement = xml;
     }
@@ -134,24 +135,6 @@ export class ObjectSerializer {
       obj[key] = value;
     }
     return syncData;
-  }
-
-  private static xml2element(xml: string) {
-    let domParser: DOMParser = new DOMParser();
-    let xmlDocument: Document = null;
-    try {
-      xmlDocument = domParser.parseFromString(xml, 'application/xml');
-      if (xmlDocument.getElementsByTagName('parsererror').length) {
-        xmlDocument = null;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    if (!xmlDocument) {
-      console.error('XMLのパースに失敗しました');
-      return null;
-    }
-    return xmlDocument.documentElement;
   }
 
   private static parseInnerXml(element: Element): GameObject {
