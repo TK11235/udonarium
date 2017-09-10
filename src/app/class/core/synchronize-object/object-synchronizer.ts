@@ -14,22 +14,21 @@ export class ObjectSynchronizer {
     console.log('ObjectSynchronizer ready...');
     EventSystem.register(this)
       .on('OPEN_OTHER_PEER', 2, event => {
-        if (event.sendFrom !== Network.peerId) return;
+        if (!event.isSendFromSelf) return;
         console.log('OPEN_OTHER_PEER GameRoomService !!!', event.data.peer);
         ObjectStore.instance.synchronize();
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
-        if (event.sendFrom !== Network.peerId) return;
+        if (!event.isSendFromSelf) return;
         console.log('CLOSE_OTHER_PEER GameRoomService !!!', event.data.peer);
         EventSystem.call('DELETE_GAME_OBJECT', { identifier: event.data.peer });
       })
       .on('UPDATE_GAME_OBJECT', 0, event => {
-        //if (event.sendFrom === Network.peerId) return;
         let context: ObjectContext = event.data;
         let object: GameObject = ObjectStore.instance.get(context.identifier);
         if (object) {
           // Update
-          if (event.sendFrom === Network.peerId) return;
+          if (event.isSendFromSelf) return;
           if (context.majorVersion + context.minorVersion < object.version) {
             object.update(false);
           } else if (context.majorVersion + context.minorVersion > object.version) {

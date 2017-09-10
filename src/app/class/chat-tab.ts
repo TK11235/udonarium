@@ -14,7 +14,7 @@ export class ChatTab extends ObjectNode {
     super.initialize(needUpdate);
     EventSystem.register(this)
       .on<ChatMessageContext>('BROADCAST_MESSAGE', 200, event => {
-        if (event.sendFrom !== Network.peerId) return;
+        if (!event.isSendFromSelf) return;
         if (event.data.tabIdentifier !== this.identifier) return;
         let chat = new ChatMessage();
         let message = event.data;

@@ -25,12 +25,12 @@ export class AudioSharingSystem {
     });
     EventSystem.register(this)
       .on('OPEN_OTHER_PEER', -1, event => {
-        if (event.sendFrom !== Network.peerId) return;
+        if (!event.isSendFromSelf) return;
         console.log('OPEN_OTHER_PEER AudioStorageService !!!', event.data.peer);
         AudioStorage.instance.synchronize();
       })
       .on('SYNCHRONIZE_AUDIO_LIST', event => {
-        if (event.sendFrom === Network.peerId) return;
+        if (event.isSendFromSelf) return;
         console.log('SYNCHRONIZE_AUDIO_LIST ' + event.sendFrom);
 
         let otherCatalog: Catalog = event.data;
@@ -102,7 +102,7 @@ export class AudioSharingSystem {
         this.request([request[index]], event.sendFrom);
       })
       .on('REQUEST_AUDIO_RESOURE', event => {
-        if (event.sendFrom === Network.peerId) return;
+        if (event.isSendFromSelf) return;
 
         let request: Catalog = event.data.identifiers;
         let randomRequest: { identifier: string, state: number, seed: number }[] = [];
@@ -228,7 +228,7 @@ export class AudioSharingSystem {
       .on('COMPLETE_AUDIO_TRANSMISSION', event => {
         console.log('COMPLETE_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
         this.stopTransmission(event.data.fileIdentifier);
-        if (event.sendFrom !== Network.peerId) AudioStorage.instance.synchronize();
+        if (!event.isSendFromSelf) AudioStorage.instance.synchronize();
       })
       .on('TIMEOUT_AUDIO_TRANSMISSION', event => {
         console.log('TIMEOUT_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);

@@ -23,7 +23,7 @@ export class FileSharingSystem {
     });
     EventSystem.register(this)
       .on('OPEN_OTHER_PEER', 1, event => {
-        if (event.sendFrom !== Network.peerId) return;
+        if (!event.isSendFromSelf) return;
         console.log('OPEN_OTHER_PEER FileStorageService !!!', event.data.peer);
         FileStorage.instance.synchronize();
       })
@@ -32,7 +32,7 @@ export class FileSharingSystem {
         convertUrlImage(xml);
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
-        if (event.sendFrom === Network.peerId) return;
+        if (event.isSendFromSelf) return;
         console.log('SYNCHRONIZE_FILE_LIST FileStorageService ' + event.sendFrom);
 
         let otherCatalog: Catalog = event.data;
@@ -59,7 +59,7 @@ export class FileSharingSystem {
         this.request(request, event.sendFrom);
       })
       .on('REQUEST_FILE_RESOURE', event => {
-        if (event.sendFrom === Network.peerId) return;
+        if (event.isSendFromSelf) return;
 
         let request: Catalog = event.data.identifiers;
         let randomRequest: { identifier: string, state: number, seed: number }[] = [];
@@ -151,7 +151,7 @@ export class FileSharingSystem {
       .on('COMPLETE_FILE_TRANSMISSION', event => {
         console.log('COMPLETE_FILE_TRANSMISSION ' + event.data.fileIdentifier);
         this.stopTransmission(event.data.fileIdentifier);
-        if (event.sendFrom !== Network.peerId) FileStorage.instance.synchronize();
+        if (!event.isSendFromSelf) FileStorage.instance.synchronize();
       })
       .on('TIMEOUT_FILE_TRANSMISSION', event => {
         console.log('TIMEOUT_FILE_TRANSMISSION ' + event.data.fileIdentifier);

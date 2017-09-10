@@ -280,7 +280,7 @@ export class DiceBot extends GameObject {
     DiceBot.queue.add(() => DiceBot.loadScriptAsync('./assets/cgiDiceBot.js'));
     EventSystem.register(this)
       .on<ChatMessageContext>('BROADCAST_MESSAGE', 100, async event => {
-        if (event.sendFrom !== Network.peerId) return;
+        if (!event.isSendFromSelf) return;
         let chatMessage: ChatMessageContext = event.data;
         if (chatMessage.tag === 'system') return;
         console.log('BROADCAST_MESSAGE DiceBot...?');

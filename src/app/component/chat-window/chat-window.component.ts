@@ -82,7 +82,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.eventSystem.register(this)
       .on('BROADCAST_MESSAGE', -1000, event => {
-        if (event.sendFrom === Network.peerId) this.scrollToBottom(true);
+        if (event.isSendFromSelf) this.scrollToBottom(true);
         this.checkAutoScroll();
       })
       .on('UPDATE_GAME_OBJECT', -1000, event => {

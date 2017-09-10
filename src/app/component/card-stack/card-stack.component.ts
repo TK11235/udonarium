@@ -99,7 +99,7 @@ export class CardStackComponent implements OnInit {
   ngOnInit() {
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.sendFrom === Network.peerId || event.data.identifier !== this.cardStack.identifier) return;
+        if (event.isSendFromSelf || event.data.identifier !== this.cardStack.identifier) return;
         //console.log('UPDATE_GAME_OBJECT GameCharacterComponent ' + this.gameCharacter.identifier);
         //if (event.sender === NetworkProxy.myPeerId) return;
         this.isDragging = false;

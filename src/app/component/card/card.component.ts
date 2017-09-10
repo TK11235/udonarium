@@ -100,11 +100,11 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         } else if (event.data.aliasName === 'data') {
           this.changeDetector.markForCheck();
         }
-        if (event.sendFrom === Network.peerId || event.data.identifier !== this.card.identifier) return;
+        if (event.isSendFromSelf || event.data.identifier !== this.card.identifier) return;
         this.isDragging = false;
         this.setPosition(this.card.location.x, this.card.location.y);
       }).on('UPDATE_GAME_OBJECT', 1000, event => {
-        if (event.sendFrom === Network.peerId || event.data.aliasName !== 'card') return;
+        if (event.isSendFromSelf || event.data.aliasName !== 'card') return;
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!object) this.changeDetector.markForCheck();
       });

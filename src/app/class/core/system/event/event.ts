@@ -1,3 +1,5 @@
+import { Network } from '../network/network';
+
 export class Event<T> {
   isCancelled: boolean = false;
 
@@ -5,6 +7,8 @@ export class Event<T> {
     public eventName: string,
     public data: T,
     public sendFrom?: string) { }
+
+  get isSendFromSelf(): boolean { return this.sendFrom === Network.instance.peerId; }
 
   toContext(): EventContext {
     return {

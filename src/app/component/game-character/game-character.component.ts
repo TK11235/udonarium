@@ -99,7 +99,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   ngOnInit() {
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.sendFrom === Network.peerId || event.data.identifier !== this.gameCharacter.identifier) return;
+        if (event.isSendFromSelf || event.data.identifier !== this.gameCharacter.identifier) return;
         //console.log('UPDATE_GAME_OBJECT GameCharacterComponent ' + event.sendFrom, Network.peerId);
         //if (event.sender === NetworkProxy.myPeerId) return;
         this.isDragging = false;

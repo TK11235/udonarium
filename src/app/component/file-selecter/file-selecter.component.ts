@@ -28,7 +28,7 @@ export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     EventSystem.register(this).on('SYNCHRONIZE_FILE_LIST', 0, event => {
-      if (event.sendFrom === Network.peerId) {
+      if (event.isSendFromSelf) {
         console.log('FileStorageComponent changeDetector.markForCheck');
         this.changeDetector.markForCheck();
       }
