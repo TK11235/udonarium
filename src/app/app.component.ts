@@ -42,7 +42,7 @@ import { PeerCursor } from './class/peer-cursor';
 import { Jukebox } from './class/Jukebox';
 
 import * as Beautify from 'vkbeautify';
-import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
+import { XmlUtil } from './class/core/synchronize-object/xml-util';
 
 @Component({
   selector: 'app-root',

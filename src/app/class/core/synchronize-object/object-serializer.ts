@@ -2,7 +2,7 @@ import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory } from './object-factory';
 import { EventSystem } from '../system/system';
 import { Attributes } from './attributes';
-import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
+import { XmlUtil } from './xml-util';
 
 export interface XmlAttributes extends GameObject {
   toAttributes(): Attributes;

@@ -20,7 +20,7 @@ import { FileStorage } from '../../class/core/file-storage/file-storage';
 import { FileArchiver } from '../../class/core/file-storage/file-archiver';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { MimeType } from '../../class/core/file-storage/mime-type';
-import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
+import { XmlUtil } from '../../class/core/synchronize-object/xml-util';
 
 @Component({
   selector: 'game-character-sheet',
