@@ -64,8 +64,14 @@ export class FileSharingTask {
   }
 
   private sendChank(index: number) {
-    this.sendChankTimer = setTimeout(() => {
-      EventSystem.call('FILE_SEND_CHANK_' + this.file.identifier, { index: index, length: this.chanks.length, chank: this.chanks[index] }, this.sendTo);
+    this.sendChankTimer = setTimeout(async () => {
+      let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
+
+      /* hotfix issue #1 */
+      data.chank = <any>await blobToArrayBuffer(data.chank);
+      /* */
+      
+      EventSystem.call('FILE_SEND_CHANK_' + this.file.identifier, data, this.sendTo);
       if (index + 1 < this.chanks.length) {
         this.sendChank(index + 1);
       } else {
@@ -78,18 +84,17 @@ export class FileSharingTask {
 
   private initializeReceive() {
     this.setTimeout();
-    /*
-    let context = this.file.toContext();
-    context.name = '待機…';
-    this.file.apply(context);
-    */
     EventSystem.register(this)
       .on<ChankData>('FILE_SEND_CHANK_' + this.file.identifier, 0, event => {
         this.chanks[event.data.index] = event.data.chank;
         //this.chanks.push(event.data.chank);
+
+        /* */
         let context = this.file.toContext();
         context.name = (event.data.index * 100 / event.data.length).toFixed(1) + '%';
         this.file.apply(context);
+        /* */
+
         this.setTimeout();
       }).on('FILE_SEND_END_' + this.file.identifier, 0, event => {
         if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
@@ -105,13 +110,16 @@ export class FileSharingTask {
   private setTimeout() {
     clearTimeout(this.timeoutTimer);
     this.timeoutTimer = setTimeout(() => {
-      /*
-      let context = this.file.toContext();
-      context.name = 'タイムアウト'
-      this.file.apply(context);
-      if (this.ontimeout) this.ontimeout(this);
-      */
       this.cancel();
     }, 10 * 1000);
   }
+}
+
+async function blobToArrayBuffer(blob): Promise<ArrayBuffer> {
+  return new Promise<ArrayBuffer>((resolve, reject) => {
+    let reader = new FileReader();
+    reader.onload = event => { resolve(reader.result); }
+    reader.onabort = reader.onerror = () => { reject([]); }
+    reader.readAsArrayBuffer(blob);
+  });
 }

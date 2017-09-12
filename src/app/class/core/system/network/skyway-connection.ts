@@ -1,11 +1,11 @@
 import { PeerContext } from './peer-context';
 import { Connection, ConnectionCallback } from './connection';
-
 /*
 import 'skyway-peerjs/dist/peer.min.js'
 import { } from 'skyway';
 */
 import { } from 'node';
+import * as MessagePack from 'msgpack-lite';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare var Peer;
@@ -107,7 +107,7 @@ export class SkyWayConnection implements Connection {
 
   send(data: any, sendTo?: string) {
     let container: DataContainer = {
-      data: data,
+      data: MessagePack.encode(data),
       peers: this._peerIds.concat(),
       isRelay: false
     }
@@ -134,7 +134,7 @@ export class SkyWayConnection implements Connection {
 
   private onData(conn: PeerJs.DataConnection, container: DataContainer) {
     if (container.isRelay) this.onRelay(container);
-    if (this.callback.onData) this.callback.onData(conn.peer, container.data);
+    if (this.callback.onData) this.callback.onData(conn.peer, MessagePack.decode(new Buffer(container.data)));
   }
 
   private onRelay(container: DataContainer) {

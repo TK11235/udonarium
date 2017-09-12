@@ -1,8 +1,9 @@
+import { ArrayBuffer } from '@angular/http/src/static_request';
 import { EventSystem, Event, Network } from '../system/system';
 import { FileStorage, Catalog } from './file-storage';
 import { ImageFile, ImageContext, ImageState } from './image-file';
 import { MimeType } from './mime-type';
-import { XmlUtil } from 'app/class/core/synchronize-object/xml-util';
+import { XmlUtil } from '../synchronize-object/xml-util';
 
 export class FileSharingSystem {
   private static _instance: FileSharingSystem
@@ -58,7 +59,7 @@ export class FileSharingSystem {
         }
         this.request(request, event.sendFrom);
       })
-      .on('REQUEST_FILE_RESOURE', event => {
+      .on('REQUEST_FILE_RESOURE', async event => {
         if (event.isSendFromSelf) return;
 
         let request: Catalog = event.data.identifiers;
@@ -99,11 +100,11 @@ export class FileSharingSystem {
             if (image.state === ImageState.URL) {
               context.url = image.url;
             } else if (item.state === ImageState.NULL) {
-              context.thumbnail.blob = image.thumbnail.blob;
-              context.thumbnail.type = context.thumbnail.blob.type;
+              context.thumbnail.blob = image.thumbnail.blob;//
+              context.thumbnail.type = image.thumbnail.type;
             } else {
-              context.blob = image.blob;
-              context.type = context.blob.type;
+              context.blob = image.blob;//
+              context.type = image.blob.type;
             }
 
             //let updateImage: ImageFile = ImageFile.create(context);
@@ -118,6 +119,17 @@ export class FileSharingSystem {
 
           this.startTransmission(updateImages[0].identifier, event.sendFrom);
           EventSystem.call('START_FILE_TRANSMISSION', { fileIdentifier: updateImages[0].identifier }, event.data.receiver);
+
+          /* hotfix issue #1 */
+          for (let context of updateImages) {
+            if (context.thumbnail.blob) {
+              context.thumbnail.blob = <any>await blobToArrayBuffer(context.thumbnail.blob);
+            } else if (context.blob) {
+              context.blob = <any>await blobToArrayBuffer(context.blob);
+            }
+          }
+          /* */
+
           EventSystem.call('UPDATE_FILE_RESOURE', updateImages, event.data.receiver);
         } else {
           // 中継
@@ -231,6 +243,15 @@ function convertUrlImage(xml: string) {
   for (let url of urls) {
     FileStorage.instance.add(url)
   }
+}
+
+async function blobToArrayBuffer(blob): Promise<ArrayBuffer> {
+  return new Promise<ArrayBuffer>((resolve, reject) => {
+    let reader = new FileReader();
+    reader.onload = event => { resolve(reader.result); }
+    reader.onabort = reader.onerror = () => { reject([]); }
+    reader.readAsArrayBuffer(blob);
+  });
 }
 
 setTimeout(function () { FileSharingSystem.instance; }, 0);
