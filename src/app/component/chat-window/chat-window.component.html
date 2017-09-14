@@ -3,7 +3,7 @@
   <chat-tab *ngIf="chatTab" [chatTab]="chatTab" (onAddMessage)="scrollToBottom()"></chat-tab>
   <div *ngIf="!chatTab">※チャットタブの内容が更新されました。タブを選択しなおすか、ウィンドウを開きなおしてください。</div>
 </div>
-<div class="table">
+<div class="table" [ngClass]="{'direct-message': isDirect}">
   <div class="table-cell imagebox">
     <img class="image" *ngIf="gameCharacter && gameCharacter.imageFile != null && 0 < gameCharacter.imageFile?.url?.length" [src]="gameCharacter.imageFile?.url | safe: 'resourceUrl'"
     />
@@ -13,27 +13,26 @@
   <div class="table-cell">
     <div>
       <select style="width: 8em;" (change)="onSelectedTab($event.target.value)" [(ngModel)]="chatTabidentifier" [ngModelOptions]="{standalone: true}">
-          <option *ngFor="let chatTab of chatMessageService.chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
-        </select>
-      <select style="width: 12em;" (change)="onSelectedCharacter($event.target.value)">
-          <option value="{{myPeer?.identifier}}">{{myPeer?.name}}（あなた）</option>
-          <option *ngFor="let gameCharacter of gameCharacters" value="{{gameCharacter.identifier}}">{{gameCharacter.name}}</option>
-        </select>
+        <option *ngFor="let chatTab of chatMessageService.chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
+      </select>
       <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
-          <option value="">ダイスボット指定なし</option>
-          <!--
-          <option value="SwordWorld2.0">ソード・ワールド2.0</option>
-          <option value="Cthulhu">クトゥルフ</option>
-          <option value="KanColle">艦これRPG</option>
-          <option value="LogHorizon">ログ・ホライズン</option>
-          -->
-          <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
-        </select>
+        <option value="">ダイスボット指定なし</option>
+        <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
+      </select>
       <button (click)="showDicebotHelp()">?</button>
+      <br>
+      <select style="width: 12em;" (change)="onSelectedCharacter($event.target.value)">
+        <option value="{{myPeer?.identifier}}">{{myPeer?.name}}（あなた）</option>
+        <option *ngFor="let gameCharacter of gameCharacters" value="{{gameCharacter.identifier}}">{{gameCharacter.name}}</option>
+      </select> ＞
+      <select style="width: 10em;" [(ngModel)]="sendTo">
+        <option value="">全員</option>
+        <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（あなた）</ng-container></option>
+      </select>
     </div>
     <div>
       <form #chatWindowForm="ngForm">
-        <input [(ngModel)]="text" placeholder="message" [ngModelOptions]="{standalone: true}" style="width: 25em;">
+        <input [(ngModel)]="text" placeholder="message" [ngModelOptions]="{standalone: true}" class="chat-input">
         <button type="submit" (click)="sendChat()">SEND</button>
       </form>
     </div>

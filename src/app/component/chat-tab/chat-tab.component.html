@@ -1,5 +1,7 @@
 <div class="log" *ngIf="0 < chatMessages.length">
-  <chat-message *ngFor="let chatMessage of chatMessages" [chatMessage]="chatMessage" (onInit)="onMessageInit()"></chat-message>
+  <ng-container *ngFor="let chatMessage of chatMessages">
+    <chat-message *ngIf="chatMessage.isDisplayable" [chatMessage]="chatMessage" (onInit)="onMessageInit()"></chat-message>
+  </ng-container>
 </div>
 <div class="log" *ngIf="chatMessages.length < 1">
   <chat-message *ngFor="let chatMessage of sampleMessages" [chatMessage]="chatMessage" (onInit)="onMessageInit()"></chat-message>

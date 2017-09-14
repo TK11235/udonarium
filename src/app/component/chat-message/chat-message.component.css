@@ -13,6 +13,12 @@
   overflow-wrap:break-word;
   border-bottom:1px dotted #666;
 }
+
+.direct-message {
+  background-color: #555;
+  color: #CCC;
+}
+
 .message .image {
   padding: 0px;
   width: 50px;

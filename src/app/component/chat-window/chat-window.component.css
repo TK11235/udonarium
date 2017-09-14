@@ -10,8 +10,9 @@
   max-width: 100%;
   overflow: auto;
   */
-  margin: 0 0 70px 0;
+  margin: 0 0 90px 0;
   }
+
 .imagebox {
   display: inline-block;
   width: 50px;
@@ -34,11 +35,22 @@
   position : fixed;
   bottom : 0;
   display: table;
+  width: calc(100% - 30px);
   background-color: rgba(240,218,189, 0.8);
+  border-top:1px dotted #666;
 }
 .table .table-cell {
   display: table-cell;
 }
 .message .body {
   display: table-cell;
+}
+
+.chat-input {
+  width: calc(100% - 100px);
+}
+
+.direct-message {
+  background-color: #555;
+  color: #CCC;
 }

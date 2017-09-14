@@ -1,3 +1,4 @@
+import { Network } from './core/system/system';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
@@ -8,6 +9,7 @@ export interface ChatMessageContext {
   identifier?: string;
   tabIdentifier?: string;
   from?: string;
+  to?: string[];
   name?: string;
   text?: string;
   timestamp?: number;
@@ -20,6 +22,7 @@ export interface ChatMessageContext {
 @SyncObject('chat')
 export class ChatMessage extends ObjectNode implements ChatMessageContext {
   @SyncVar() from: string;
+  @SyncVar() to: string[];
   @SyncVar() name: string;
   @SyncVar() tag: string;
   @SyncVar() dicebot: string;
@@ -36,8 +39,8 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
 
   get response(): ChatMessage { return ObjectStore.instance.get<ChatMessage>(this.responseIdentifier); }
   get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
-
-  get index(): number {
-    return this.minorIndex + this.timestamp;
-  }
+  get index(): number { return this.minorIndex + this.timestamp; }
+  get isDirect(): boolean { return this.to != null && this.to.length ? true : false; }
+  get isMine(): boolean { return (this.to && -1 < this.to.indexOf(Network.peerId)) || this.from === Network.peerId ? true : false; }
+  get isDisplayable(): boolean { return this.isDirect ? this.isMine : true; }
 }

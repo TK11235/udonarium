@@ -43,6 +43,8 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   sender: string = 'Guest';
   text: string = '';
+  sendTo: string = '';
+  get isDirect(): boolean { return this.sendTo != null && this.sendTo.length ? true : false }
   //gameType: string = '';
   get gameType(): string { return this.chatMessageService.gameType; }
   set gameType(gameType: string) { this.chatMessageService.gameType = gameType; }
@@ -60,10 +62,9 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   //network = Network;
 
   get network() { return Network; };
-
   get diceBotInfos() { return DiceBot.diceBotInfos }
-
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }//this.objectStore.get<PeerCursor>(this.network.peerId); }
+  get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
     private ngZone: NgZone,
@@ -224,6 +225,22 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (this.gameCharacter) {
       chatMessage.imageIdentifier = (this.gameCharacter.imageFile ? this.gameCharacter.imageFile.identifier : '');
       chatMessage.name = this.gameCharacter.name;
+    }
+
+    if (this.sendTo != null && this.sendTo.length) {
+
+
+      let name = '';
+      let object = this.objectStore.get(this.sendTo);
+      if (object instanceof GameCharacter) {
+        name = object.name;
+        chatMessage.to = [object.identifier];
+      } else if (object instanceof PeerCursor) {
+        name = object.name;
+        chatMessage.to = [object.peerId];
+      }
+
+      chatMessage.name += ' > ' + name;
     }
 
     //this.eventSystem.call('BROADCAST_MESSAGE', chatMessage);
