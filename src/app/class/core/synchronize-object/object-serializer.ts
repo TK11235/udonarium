@@ -43,9 +43,15 @@ export class ObjectSerializer {
   }
 
   static toAttributes(syncData: Object): Attributes {
-    let attributes = {};//document.createElement('div').attributes;
+    let attributes = {};
     for (let syncVar in syncData) {
-      if (typeof syncData[syncVar] === 'object') {
+      if (Array.isArray(syncData[syncVar])) {
+        console.warn('Array', syncData[syncVar]);
+        let arrayAttributes = ObjectSerializer.array2attributes(syncData[syncVar], syncVar);
+        for (let name in arrayAttributes) {
+          attributes[name] = arrayAttributes[name];
+        }
+      } else if (typeof syncData[syncVar] === 'object') {
         let objAttributes = ObjectSerializer.object2attributes(syncData[syncVar], syncVar);
         for (let name in objAttributes) {
           attributes[name] = objAttributes[name];
@@ -58,8 +64,14 @@ export class ObjectSerializer {
   }
 
   private static object2attributes(obj: any, rootKey: string): Attributes {
-    let attributes = {};//document.createElement('div').attributes;
+    let attributes = {};
     for (let key in obj) {
+      if (Array.isArray(obj[key])) {
+        let arrayAttributes = ObjectSerializer.array2attributes(obj[key], key);
+        for (let name in arrayAttributes) {
+          attributes[name] = arrayAttributes[name];
+        }
+      }
       if (typeof obj[key] === 'object') {
         let childAttributes = ObjectSerializer.object2attributes(obj[key], key);
         for (let name in childAttributes) {
@@ -67,6 +79,28 @@ export class ObjectSerializer {
         }
       } else {
         attributes[rootKey + '.' + key] = obj[key];
+      }
+    }
+    return attributes;
+  }
+
+  private static array2attributes(array: Array<any>, rootKey: string): Attributes {
+    let attributes = {};
+    for (let i = 0; i < array.length; i++) {
+      let item = array[i];
+      let key = rootKey + '.' + i;
+      if (Array.isArray(item)) {
+        let arrayAttributes = ObjectSerializer.array2attributes(item, key);
+        for (let name in arrayAttributes) {
+          attributes[name] = arrayAttributes[name];
+        }
+      } else if (typeof item === 'object') {
+        let childAttributes = ObjectSerializer.object2attributes(item, key);
+        for (let name in childAttributes) {
+          attributes[name] = childAttributes[name];
+        }
+      } else {
+        attributes[key] = item;
       }
     }
     return attributes;
@@ -95,7 +129,7 @@ export class ObjectSerializer {
       gameObject.apply(context);
     }
 
-    //console.log('' + gameObject.identifier, gameObject);
+    console.log('' + gameObject.identifier, gameObject);
     gameObject.initialize();
     if ('parseInnerXml' in gameObject) {
       (<InnerXml>gameObject).parseInnerXml(xmlElement);
@@ -108,31 +142,39 @@ export class ObjectSerializer {
       let value = attributes[i].value;
       value = value.replace(/&#34;/g, '"');
       /* */
-      let split = attributes[i].name.split('.');
-      let key = split[0];
-      let obj = syncData;
+      let split: string[] = attributes[i].name.split('.');
+      let key: string | number = split[0];
+      let obj: Object | Array<any> = syncData;
+      let parentObj: Object | Array<any> = null;
+      //console.log('---------------------start obj is ', obj);
       if (1 < split.length) {
         for (let j = 0; j < split.length; j++) {
-          if (split.length <= j + 1) {
-            key = split[j];
-          } else {
-            if (obj[split[j]] === undefined) obj[split[j]] = {};
-            obj = obj[split[j]];
+          let index = parseInt(split[j]);
+          if (parentObj && !Number.isNaN(index) && !Array.isArray(obj) && Object.keys(parentObj).length) {
+            //console.log('A:key:' + key +  ' to Array', obj);
+            parentObj[key] = [];
+            obj = parentObj[key];
+            //console.log('B:key:' + key +  ' to Array', obj);
+          }
+          key = Number.isNaN(index) ? split[j] : index;
+          if (j + 1 < split.length) {
+            //console.log('A:key is ' + key + '<' + typeof key + '>...' + split[j], obj[key]);
+            if (obj[key] === undefined) obj[key] = typeof key === 'number' ? [] : {};
+            //console.log('B:key is ' + key + '<' + typeof key + '>...' + split[j], obj[key]);
+            parentObj = obj;
+            obj = obj[key];
           }
         }
       }
       /* */
       let type = typeof obj[key];
       if (type !== 'string' && obj[key] != null) {
-        //try {
         let json = JSON.parse(value);
         value = json;
-        //} catch (error) {
-        //  console.warn(error, value);
-        //}
       }
-      //console.log('value is ' + typeof obj[key], value);
       obj[key] = value;
+      //console.log('key is ' + key + '<' + typeof key + '> :value is ' + typeof obj[key], value);
+      //console.log('---------------------end obj is ', obj);
     }
     return syncData;
   }
