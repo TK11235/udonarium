@@ -16,6 +16,7 @@
 }
 .table {
   display: table;
+  width: 100%;
 }
 .table .table-cell {
   display: table-cell;

@@ -299,7 +299,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   private showChatPalette(gameObject: GameCharacter) {
-    let option: PanelOption = { left: 0, top: 0, width: 500, height: 400 };
+    let option: PanelOption = { left: 0, top: 0, width: 500, height: 350 };
     let component = this.panelService.open<ChatPaletteComponent>(ChatPaletteComponent, option);
     component.character = gameObject;
   }
