@@ -234,10 +234,10 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
       let object = this.objectStore.get(this.sendTo);
       if (object instanceof GameCharacter) {
         name = object.name;
-        chatMessage.to = [object.identifier];
+        chatMessage.to = object.identifier;
       } else if (object instanceof PeerCursor) {
         name = object.name;
-        chatMessage.to = [object.peerId];
+        chatMessage.to = object.peerId;
       }
 
       chatMessage.name += ' > ' + name;

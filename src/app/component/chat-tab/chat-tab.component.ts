@@ -19,7 +19,7 @@ export class ChatTabComponent implements OnInit {
     { from: 'System', responseIdentifier: '', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'ルームの状態を次回に持ち越したい場合は、必ず「保存」を実行してセーブデータ（zip）を生成してください。保存したzipの読み込みはブラウザ画面へのファイルドロップで行えます。' },
     { from: 'System', responseIdentifier: '', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: '動作推奨環境はデスクトップChromeです。今のところ、スマホからだと上手く操作できません。' },
     { from: 'System', responseIdentifier: '', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'チュートリアルは以上です。このチュートリアルは最初のチャットを入力すると非表示になります。' },
-    { from: 'System', to: ['???'], responseIdentifier: '', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'ところでこれは隠しメッセージです' },
+    { from: 'System', to: '???', responseIdentifier: '', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'ところでこれは隠しメッセージです' },
   ];
 
   get chatMessages(): ChatMessage[] {

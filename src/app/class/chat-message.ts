@@ -9,7 +9,7 @@ export interface ChatMessageContext {
   identifier?: string;
   tabIdentifier?: string;
   from?: string;
-  to?: string[];
+  to?: string;
   name?: string;
   text?: string;
   timestamp?: number;
@@ -22,7 +22,7 @@ export interface ChatMessageContext {
 @SyncObject('chat')
 export class ChatMessage extends ObjectNode implements ChatMessageContext {
   @SyncVar() from: string;
-  @SyncVar() to: string[];
+  @SyncVar() to: string;
   @SyncVar() name: string;
   @SyncVar() tag: string;
   @SyncVar() dicebot: string;
@@ -36,11 +36,19 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
     let num = timestamp ? +timestamp : 0;
     return Number.isNaN(num) ? 1 : num;
   }
-
+  private _to: string;
+  private _sendTo: string[] = [];
+  get sendTo(): string[] {
+    if (this._to !== this.to) {
+      this._to = this.to;
+      this._sendTo = 0 < this.to.length ? this.to.split(/\s+/) : [];
+    }
+    return this._sendTo;
+  }
   get response(): ChatMessage { return ObjectStore.instance.get<ChatMessage>(this.responseIdentifier); }
   get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
   get index(): number { return this.minorIndex + this.timestamp; }
-  get isDirect(): boolean { return this.to != null && this.to.length ? true : false; }
-  get isMine(): boolean { return (this.to && -1 < this.to.indexOf(Network.peerId)) || this.from === Network.peerId ? true : false; }
+  get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
+  get isMine(): boolean { return (-1 < this.sendTo.indexOf(Network.peerId)) || this.from === Network.peerId ? true : false; }
   get isDisplayable(): boolean { return this.isDirect ? this.isMine : true; }
 }

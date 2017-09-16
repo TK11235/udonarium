@@ -314,9 +314,11 @@ export class DiceBot extends GameObject {
             text: result
           };
 
-          if (chatMessage.to != null && chatMessage.to.length) {
-            diceBotMessage.to = chatMessage.to.concat();
-            diceBotMessage.to.push(chatMessage.from);
+          if (chatMessage.to != null && 0 < chatMessage.to.length) {
+            diceBotMessage.to = chatMessage.to;
+            if (chatMessage.to.indexOf(chatMessage.from) < 0) {
+              diceBotMessage.to += ' ' + chatMessage.from;
+            }
           }
 
           EventSystem.call('BROADCAST_MESSAGE', diceBotMessage);
