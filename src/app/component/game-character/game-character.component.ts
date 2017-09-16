@@ -273,6 +273,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
       { name: '詳細を表示', action: () => { this.showDetail(this.gameCharacter); } },
+      { name: 'チャットパレットを表示', action: () => {this.showChatPalette(this.gameCharacter) } },
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.gameCharacter.clone();
@@ -284,7 +285,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       },
       { name: '共有イベントリに移動', action: () => { this.gameCharacter.setLocation('common'); } },
       { name: '個人イベントリに移動', action: () => { this.gameCharacter.setLocation(Network.peerId); } },
-      { name: 'チャットパレットを表示', action: () => {this.showChatPalette(this.gameCharacter) } },
       { name: '墓場に移動', action: () => { this.gameCharacter.setLocation('graveyard'); } }
     ], this.gameCharacter.name);
   }
