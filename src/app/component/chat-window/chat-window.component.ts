@@ -228,8 +228,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (this.sendTo != null && this.sendTo.length) {
-
-
       let name = '';
       let object = this.objectStore.get(this.sendTo);
       if (object instanceof GameCharacter) {
@@ -239,7 +237,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         name = object.name;
         chatMessage.to = object.peerId;
       }
-
       chatMessage.name += ' > ' + name;
     }
 
