@@ -8,7 +8,7 @@
       <select style="width: 8em;" [(ngModel)]="chatTabidentifier" [ngModelOptions]="{standalone: true}">
         <option *ngFor="let chatTab of chatMessageService.chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
         </select>
-      <select style="width: 12em;" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
+      <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
         <option value="">ダイスボット指定なし</option>
         <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
       </select>
@@ -29,7 +29,7 @@
   </div>
 </div>
 <div *ngIf="!isEdit">
-  <select class="palette" style="width: 100%;" size="12" (click)="selectPalette($event.target.value)" (doubleclick)="sendChat()">
+  <select class="palette" style="width: 100%;" size="8" (click)="selectPalette($event.target.value)" (doubleclick)="sendChat()">
     <ng-container *ngIf="palette">
       <option *ngFor="let palette of palette.getPalette()" value="{{palette}}">{{palette}}</option>
     </ng-container>
@@ -37,7 +37,7 @@
 </div>
 <div *ngIf="isEdit" class="edit-info"><i class="material-icons" style="vertical-align: bottom; size:0.8rem;">info_outline</i> チャットパレット編集中です</div>
 <div *ngIf="isEdit">
-  <textarea class="palette" style="width: 100%; height: 12rem; resize: none;" [(ngModel)]="editPalette" placeholder="チャットパレット"></textarea>
+  <textarea class="palette" style="width: 100%; height: 10rem; resize: none;" [(ngModel)]="editPalette" placeholder="チャットパレット"></textarea>
 </div>
 <button type="submit" (click)="toggleEditMode()">
   <span *ngIf="!isEdit">チャットパレットの編集</span>

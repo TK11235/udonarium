@@ -82,12 +82,19 @@ export class ChatPaletteComponent implements OnInit {
     }
   }
 
+  onChangeGameType(gameType: string) {
+    console.log('onChangeGameType ready');
+    DiceBot.getHelpMessage(this.gameType).then(help => {
+      console.log('onChangeGameType done\n' + help);
+    });
+  }
+
   showDicebotHelp() {
     DiceBot.getHelpMessage(this.gameType).then(help => {
       let gameName: string = 'ダイスボット';
       for (let diceBotInfo of DiceBot.diceBotInfos) {
         if (diceBotInfo.script === this.gameType) {
-          gameName = 'ダイスボット<'+diceBotInfo.game+'＞'
+          gameName = 'ダイスボット<' + diceBotInfo.game + '＞'
         }
       }
       gameName += 'の説明';
