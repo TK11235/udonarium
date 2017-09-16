@@ -1,19 +1,24 @@
-<div class="table">
+<div class="table" [ngClass]="{'direct-message': isDirect}">
   <div class="table-cell imagebox">
     <img class="image" *ngIf="character && character.imageFile != null && 0 < character.imageFile.url.length" [src]="character.imageFile.url | safe: 'resourceUrl'"
     />
   </div>
   <div class="table-cell">
     <div>
-      <span>{{character.name}}</span>
       <select style="width: 8em;" [(ngModel)]="chatTabidentifier" [ngModelOptions]="{standalone: true}">
-          <option *ngFor="let chatTab of chatMessageService.chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
+        <option *ngFor="let chatTab of chatMessageService.chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
         </select>
       <select style="width: 12em;" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
-          <option value="">ダイスボット指定なし</option>
-          <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
-        </select>
+        <option value="">ダイスボット指定なし</option>
+        <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
+      </select>
       <button (click)="showDicebotHelp()">?</button>
+      <br>
+      <span>{{character.name}}</span> ＞
+      <select style="width: 10em;" [(ngModel)]="sendTo">
+        <option value="">全員</option>
+        <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（あなた）</ng-container></option>
+      </select>
     </div>
     <div>
       <form>

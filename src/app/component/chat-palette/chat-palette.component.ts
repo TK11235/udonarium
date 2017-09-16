@@ -10,6 +10,7 @@ import { ChatMessageService } from '../../service/chat-message.service';
 import { ChatTab } from '../../class/chat-tab';
 import { ChatPalette } from '../../class/chat-palette';
 import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
+import { PeerCursor } from '../../class/peer-cursor';
 import { DiceBot } from '../../class/dice-bot';
 import { GameCharacter, GameCharacterContainer } from '../../class/game-character';
 import { Network, EventSystem } from '../../class/core/system/system';
@@ -25,7 +26,8 @@ export class ChatPaletteComponent implements OnInit {
   @Input() character: GameCharacter = null;
 
   get palette(): ChatPalette { return this.character.chatPalette; }
-
+  sendTo: string = '';
+  get isDirect(): boolean { return this.sendTo != null && this.sendTo.length ? true : false }
   private _gameType: string = '';
   get gameType(): string { return this._gameType };
   set gameType(gameType: string) {
@@ -43,6 +45,8 @@ export class ChatPaletteComponent implements OnInit {
   get diceBotInfos() { return DiceBot.diceBotInfos }
 
   get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
+  get myPeer(): PeerCursor { return PeerCursor.myCursor; }
+  get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
     private ngZone: NgZone,
@@ -130,6 +134,19 @@ export class ChatPaletteComponent implements OnInit {
       imageIdentifier: this.character.imageFile ? this.character.imageFile.identifier : '',
       responseIdentifier: '',
     };
+
+    if (this.sendTo != null && this.sendTo.length) {
+      let name = '';
+      let object = ObjectStore.instance.get(this.sendTo);
+      if (object instanceof GameCharacter) {
+        name = object.name;
+        chatMessage.to = object.identifier;
+      } else if (object instanceof PeerCursor) {
+        name = object.name;
+        chatMessage.to = object.peerId;
+      }
+      chatMessage.name += ' > ' + name;
+    }
 
     if (this.chatTab) this.chatTab.addMessage(chatMessage);
     this.text = '';

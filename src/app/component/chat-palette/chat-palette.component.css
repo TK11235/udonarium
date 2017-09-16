@@ -31,3 +31,7 @@
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Verdana, Meiryo, sans-serif;
 }
+.direct-message {
+  background-color: #555;
+  color: #CCC;
+}
