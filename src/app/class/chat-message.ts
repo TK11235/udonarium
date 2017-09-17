@@ -2,6 +2,7 @@ import { Network } from './core/system/system';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
+import { InnerXml } from './core/synchronize-object/object-serializer';
 import { FileStorage } from './core/file-storage/file-storage';
 import { ImageFile } from './core/file-storage/image-file';
 
@@ -20,7 +21,7 @@ export interface ChatMessageContext {
 }
 
 @SyncObject('chat')
-export class ChatMessage extends ObjectNode implements ChatMessageContext {
+export class ChatMessage extends ObjectNode implements ChatMessageContext, InnerXml {
   @SyncVar() from: string;
   @SyncVar() to: string;
   @SyncVar() name: string;
@@ -51,4 +52,12 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
   get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
   get isMine(): boolean { return (-1 < this.sendTo.indexOf(Network.peerId)) || this.from === Network.peerId ? true : false; }
   get isDisplayable(): boolean { return this.isDirect ? this.isMine : true; }
+
+  innerXml(): string {
+    return this.isDirect ? '' : super.innerXml();
+  };
+
+  parseInnerXml(element: Element) {
+    return super.parseInnerXml(element);
+  };
 }
