@@ -136,7 +136,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     PanelService.defaultParentViewContainerRef = ModalService.defaultParentViewContainerRef = ContextMenuService.defaultParentViewContainerRef = this.modalLayerViewContainerRef;
     setTimeout(() => {
       this.panelService.open(PeerMenuComponent, { width: 500, height: 450, left: 100 });
-      this.panelService.open(ChatWindowComponent, { width: 700, height: 400, left: 0, top: 400 });
+      this.panelService.open(ChatWindowComponent, { width: 700, height: 400, left: 0, top: 450 });
     }, 0);
   }
 
