@@ -302,6 +302,7 @@ export class DiceBot extends GameObject {
           result = result.replace(/[＞]/g, function (s) {
             return '→';
           });
+          result = result.trim();
 
           let diceBotMessage: ChatMessageContext = {
             identifier: '',
