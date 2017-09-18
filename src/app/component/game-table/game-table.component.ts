@@ -73,10 +73,14 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   //private imageIdentifier: string = '';
+  /*
   get file(): ImageFile {
     let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
     return file ? file : ImageFile.Empty;
   }
+  */
+
+  bgImage: ImageFile = ImageFile.Empty;
 
   private isTransformMode: boolean = false;
 
@@ -214,15 +218,14 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        //if (event.sender === NetworkProxy.myPeerId || event.data.identifier !== this.gameTableObject.identifier) return;
+
         if (event.data.identifier !== this.gameTableObject.identifier) return;
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
-        //let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
-        //if (file) this.file = file;
-        //this.imageIdentifier = this.gameTableObject.imageIdentifier;
+        let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
+        if (file) this.bgImage = file;
+
         this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize);
-        //this.changeDetector.markForCheck();
       })
       .on('XML_PARSE', event => {
         let xml: string = event.data.xml;
@@ -240,7 +243,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       if (event.data.className === 'GameCharacter' || event.data.className === 'GameDataElement') this.changeDetector.markForCheck();
     });
     */
-
   }
 
   ngAfterViewInit() {
@@ -273,7 +275,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize);
     this.setTransform(0, 0, 0, 0, 0, 0);
     this.gameTableObject.update();
-
     /*
     setTimeout(() => {
       let data: GameTableDataContainer = {
@@ -286,6 +287,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       EventSystemProxy.callEvent(event);
     }, 5000);
     */
+    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
+    if (file) this.bgImage = file;
   }
 
   ngOnDestroy() {
