@@ -243,6 +243,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       if (event.data.className === 'GameCharacter' || event.data.className === 'GameDataElement') this.changeDetector.markForCheck();
     });
     */
+    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
+    if (file) this.bgImage = file;
   }
 
   ngAfterViewInit() {
@@ -287,8 +289,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       EventSystemProxy.callEvent(event);
     }, 5000);
     */
-    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
-    if (file) this.bgImage = file;
   }
 
   ngOnDestroy() {
