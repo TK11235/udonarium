@@ -102,8 +102,10 @@ export class AppConfigService {
     let historyIds: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       let peer: string = localStorage.key(i);
-      oldIds.push(peer);
-      Array.prototype.push.apply(historyIds, JSON.parse(localStorage.getItem(peer)));
+      if(peer.match(/^[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{8}/g)) {
+        oldIds.push(peer);
+        Array.prototype.push.apply(historyIds, JSON.parse(localStorage.getItem(peer)));
+      }
     }
     for (let historyId of historyIds) {
       let isMine: boolean = false;
