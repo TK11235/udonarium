@@ -1,11 +1,15 @@
 <button (click)="toggleEditMode()">編集切り替え</button>
-<ng-container *ngIf="!isCard">
+<ng-container *ngIf="!isCard && !isTerrain">
   <button (click)="openModal('imageIdentifier')">画像変更</button>
 </ng-container>
 <ng-container *ngIf="isCard">
   <button (click)="openModal('front')">表面の画像を変更</button>
   <button (click)="openModal('back')">裏面の画像を変更</button>
 </ng-container>
+<ng-container *ngIf="isTerrain">
+    <button (click)="openModal('floor')">床の画像を変更</button>
+    <button (click)="openModal('wall')">壁の画像を変更</button>
+  </ng-container>
 <button (click)="saveToXML()">保存</button>
 <select *ngIf="tabletopObject" (change)="setLocation($event.target.value)" [ngModel]="tabletopObject.location.name">
   <option value="table">テーブル</option>

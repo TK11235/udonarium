@@ -21,6 +21,7 @@ import { GameTable } from '../../class/game-table';
 import { GameCharacter } from '../../class/game-character';
 import { GameTableMask } from '../../class/game-table-mask';
 import { TableSelecter } from '../../class/table-selecter';
+import { Terrain } from '../../class/terrain';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
 import { Network, EventSystem } from '../../class/core/system/system';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
@@ -86,6 +87,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private mouseDownPositionX: number = 0;
   private mouseDownPositionY: number = 0;
+
+  get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   private viewPotisonX: number = 100;
   private viewPotisonY: number = 0;
@@ -237,6 +240,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           gameObject.location.y = pointer.y - 25;
           gameObject.update();
         }
+      }).on('DRAG_LOCKED_OBJECT', event => {
+        this.isTransformMode = true;
+        this.pointerDeviceService.isDragging = false;
+        $(this.gridCanvas.nativeElement).css('opacity', 0.0);
       });
     /*
     .on('UPDATE_GAME_OBJECT', -1000, event => {
@@ -332,6 +339,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     return ObjectStore.instance.getObjects(CardStack).filter((obj) => { return obj.location.name === 'table' });
   }
 
+  getTerrain(): Terrain[] {
+    return ObjectStore.instance.getObjects(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
+  }
+
   onMouseDown(e: any) {
     this.mouseDownPositionX = e.touches ? e.changedTouches[0].pageX : e.pageX;
     this.mouseDownPositionY = e.touches ? e.changedTouches[0].pageY : e.pageY;
@@ -342,13 +353,15 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (e.target === this.gameTableBase.nativeElement
       || e.target === this.gameTable.nativeElement
       || e.target === this.gameObjects.nativeElement
-      || e.target === this.gridCanvas.nativeElement) {
+      || e.target === this.gridCanvas.nativeElement
+    ) {
       //|| e.target === this.gameBackgroundImage.nativeElement
       //|| e.target === this.gameBackgroundImage.nativeElement) {
       this.isTransformMode = true;
       e.preventDefault();
     } else {
       this.isTransformMode = false;
+      this.pointerDeviceService.isDragging = true;
       $(this.gridCanvas.nativeElement).css('opacity', 1.0);
     }
 
@@ -379,6 +392,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   onMouseUp(e: any) {
     //console.log('onMouseUp');
 
+    this.pointerDeviceService.isDragging = false;
     $(this.gridCanvas.nativeElement).css('opacity', 0.0);
 
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
@@ -495,6 +509,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       this.contextMenuService.open(potison, [
         { name: 'キャラクターを作成', action: () => { this.createGameCharacter(potison); } },
         { name: 'マップマスクを作成', action: () => { this.createGameTableMask(potison); } },
+        { name: '地形を作成', action: () => { this.createTerrain(potison); } },
         {
           name: 'テーブル設定', action: () => {
             this.modalService.open(GameTableSettingComponent);
@@ -537,6 +552,22 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('createGameTableMask B', pointer);
     tableMask.location.x = pointer.x - 25;
     tableMask.location.y = pointer.y - 25;
+    tableMask.update();
+  }
+
+  createTerrain(potison: PointerCoordinate) {
+    console.log('createTerrain');
+
+    let url: string = './assets/images/tex.jpg';
+    let image: ImageFile = FileStorage.instance.get(url)
+    if (!image) image = FileStorage.instance.add(url);
+
+    let tableMask = Terrain.create('地形', 2, 2, 2, 100, image.identifier, image.identifier);
+    tableMask.location.name = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable.identifier;
+
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    tableMask.location.x = pointer.x - 50;
+    tableMask.location.y = pointer.y - 50;
     tableMask.update();
   }
 

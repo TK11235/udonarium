@@ -1,6 +1,7 @@
 import { Component, ComponentRef, ViewRef, ViewContainerRef, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 import { PanelService } from '../../service/panel.service';
+import { PointerDeviceService } from '../../service/pointer-device.service';
 
 /*
 import * as $ from 'jquery';
@@ -77,8 +78,11 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   private callbackOnDraggablePanelMouseDown: any = null;
   private callbackOnMouseUp: any = (e) => this.onMouseUp(e);
 
+  get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
+
   constructor(
-    public panelService: PanelService
+    public panelService: PanelService,
+    private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {

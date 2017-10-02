@@ -1,0 +1,40 @@
+<div #tableMask class="game-char" [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.depth * gridSize"
+  (contextmenu)="onContextMenu($event)"
+  [ngClass]="{'transition': !isDragging}">
+  <!--<ng-container *ngIf="terrain.imageFile.url.length < 1">
+    <div class="block-1 floor" [ngStyle]="{'transform': 'rotateZ(45deg) translateZ(' + terrain.height * gridSize +'px)'}" [style.background-color]="'rgba(10, 10, 10,' + terrain.opacity +')'">
+      <div class="block-1 wall wall-top" [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.height * gridSize"
+        [style.background-color]="'rgba(20, 20, 20,' + terrain.opacity +')'"></div>
+      <div class="block-1 wall wall-bottom" [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.height * gridSize"
+        [style.background-color]="'rgba(30, 30, 30,' + terrain.opacity +')'"></div>
+      <div class="block-1 wall wall-left" [style.width.px]="terrain.height * gridSize" [style.height.px]="terrain.height * gridSize"
+        [style.background-color]="'rgba(40, 40, 40,' + terrain.opacity +')'"></div>
+      <div class="block-1 wall wall-right" [style.width.px]="terrain.height * gridSize" [style.height.px]="terrain.height * gridSize"
+        [style.background-color]="'rgba(50, 50, 50,' + terrain.opacity +')'"></div>
+    </div>
+  </ng-container>
+  -->
+  <div class="block-1 floor" [ngStyle]="{'transform': 'rotateZ(' + terrain.rotate +'deg)'}" [ngClass]="{'grab': (!isDragging && !terrain.isLocked), 'grabbing': (isDragging && !terrain.isLocked), 'transition': !isDragging}">
+    <ng-container *ngIf="terrain.hasFloor && 0 < terrain?.floorImage?.url.length">
+      <div class="block-1 floor" [ngClass]="{'blinking': !terrain.isLocked}" [ngStyle]="{'transform': 'translateZ(' + terrain.height * gridSize +'px)'}"
+        [style.background-image]="'url(' + terrain.floorImage.url + ')' | safe: 'style'"></div>
+    </ng-container>
+    <ng-container *ngIf="terrain.hasWall && 0 < terrain?.wallImage?.url.length">
+      <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-top" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
+        [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+      <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-bottom" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
+        [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+      <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-left" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
+        [style.width.px]="terrain.depth * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+      <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-right" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
+        [style.width.px]="terrain.depth * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+    </ng-container>
+    <ng-container *ngIf="!terrain.isLocked">
+      <div class="rotate-grab left-top" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
+      <div class="rotate-grab left-bottom" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
+      <div class="rotate-grab right-bottom" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
+      <div class="rotate-grab right-top" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
+    </ng-container>
+  </div>
+  <!--<div *ngIf="terrain.isLocked" class="lock-icon"><i class="material-icons">lock</i></div>-->
+</div>

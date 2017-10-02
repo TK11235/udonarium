@@ -1,10 +1,11 @@
-<div class="game-room game-room_3d" #gameTableBase>
+<div class="game-room game-room_3d" [ngClass]="{'grabbing': isPointerDragging}" #gameTableBase>
   <div class="game-table game-table_3d game-3d" #gameTable id="app-game-table">
     <div class="game-objects game-objects_3d game-3d" [style.background-image]="'url(' + bgImage.url + ')' | safe: 'style'" #gameObjects>
       <!--<img class="game-background-image game-table_3d game-3d"  [src]=" file.url | safe: 'resourceUrl'" #gameBackgroundImage>-->
       <!--<img class="game-background-image" *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'"
         #gameBackgroundImage>-->
-      <canvas class="grid-canvas" width="2000" height="2000" #gridCanvas></canvas>
+      <canvas class="grid-canvas pointer-events-none" width="2000" height="2000" #gridCanvas></canvas>
+      <terrain class="game-3d" *ngFor="let terrain of getTerrain()" [terrain]="terrain"></terrain>
       <game-table-mask *ngFor="let gameTableMask of getGameTableMasks()" [gameTableMask]="gameTableMask"></game-table-mask>
       <card-stack *ngFor="let cardStack of getCardStacks()" [cardStack]="cardStack"></card-stack>
       <card *ngFor="let card of getCards()" [card]="card"></card>

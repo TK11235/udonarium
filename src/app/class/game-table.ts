@@ -1,5 +1,6 @@
 import { GameTableMask } from './game-table-mask';
 import { TabletopObject } from './tabletop-object';
+import { Terrain } from './terrain';
 
 import { Network, EventSystem } from './core/system/system';
 import { ObjectStore } from './core/synchronize-object/object-store';
@@ -29,6 +30,12 @@ export class GameTable extends GameObject implements InnerXml {
     for (let mask of masks) {
       if (mask.location.name === this.identifier) {
         xml += mask.toXml();
+      }
+    }
+    let terrains = ObjectStore.instance.getObjects<Terrain>(Terrain);
+    for (let terrain of terrains) {
+      if (terrain.location.name === this.identifier) {
+        xml += terrain.toXml();
       }
     }
     return xml;

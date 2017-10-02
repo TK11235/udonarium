@@ -5,7 +5,7 @@ import { GameCharacterSheetComponent } from '../game-character-sheet/game-charac
 import { ContextMenuService } from '../../service/context-menu.service';
 //import { ModalService } from '../../service/modal.service';
 import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
+import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
 import { ChatPaletteComponent } from '../chat-palette/chat-palette.component';
 
 import { ChatPalette } from '../../class/chat-palette';
@@ -56,11 +56,13 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private top: number = 0;
   private left: number = 0;
+  private depth: number = 0;
 
   private offsetTop: number = 0;
   private offsetLeft: number = 0;
   private startTop: number = 0;
   private startLeft: number = 0;
+  private startDepth: number = 0;
   private delta: number = 1.0;
 
   private callbackOnMouseDown: any = null;
@@ -76,6 +78,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private prevTop: number = 0;
   private prevLeft: number = 0;
+  private prevDepth: number = 0;
 
   gridSize: number = 50;
 
@@ -84,6 +87,8 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   private updateInterval: NodeJS.Timer = null;
 
   private allowOpenContextMenu: boolean = false;
+
+  get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   constructor(
     private ngZone: NgZone,
@@ -104,7 +109,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
         //if (event.sender === NetworkProxy.myPeerId) return;
         this.isDragging = false;
         //let container: GameCharacterContainer = event.data.syncData;
-        this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y);
+        this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
         //if (event.data.identifier === this.gameCharacter.identifier) this.changeDetector.markForCheck();
       });
   }
@@ -117,7 +122,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.$gameCharElement = $(this.gameChar.nativeElement);
 
-    this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y);
+    this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
 
     this.callbackOnMouseDown = (e) => this.onMouseDown(e);
     this.callbackOnMouseUp = (e) => this.onMouseUp(e);
@@ -151,10 +156,37 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     this.callbackOnDragstart = null;
   }
 
-  private calcLocalCoordinate() {
-    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
+  private calcLocalCoordinate(event: Event) {
+    /*
+    let coordinate: PointerCoordinate = this.pointerDeviceService.pointers[0];
+    coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
     this.top = coordinate.y;
     this.left = coordinate.x;
+    */
+    let isTerrain = true;
+    let isCharacter = false;
+    let node: HTMLElement = <HTMLElement>event.target;
+    while (node) {
+      if (node === this.dragAreaElement) break;
+      if (node === this.gameChar.nativeElement) {
+        isTerrain = false;
+        isCharacter = true;
+        break;
+      }
+      node = node.parentElement;
+    }
+    if (node == null) isTerrain = false;
+
+    let coordinate: PointerCoordinate = this.pointerDeviceService.pointers[0];
+    if (!isTerrain) {
+      coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
+      coordinate.z = isCharacter ? this.depth : 0;
+    } else {
+      coordinate = PointerDeviceService.convertLocalToLocal(coordinate, <HTMLElement>event.target, this.dragAreaElement);
+    }
+    this.top = coordinate.y;
+    this.left = coordinate.x;
+    this.depth = 0 < coordinate.z ? coordinate.z : 0;
   }
 
   private findDragAreaElement(parent: HTMLElement): HTMLElement {
@@ -179,9 +211,10 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onMouseDown(e: any) {
     console.log('GameCharacterComponent mousedown !!!');
-    this.calcLocalCoordinate();
+    /*
+    this.calcLocalCoordinate(e);
 
-    this.isDragging = true;
+
     this.allowOpenContextMenu = true;
 
     //this.changeDetector.markForCheck();
@@ -195,6 +228,8 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.prevTop = this.top;
     this.prevLeft = this.left;
+    */
+    this.allowOpenContextMenu = true;
 
     document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
     document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
@@ -219,7 +254,8 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.gameCharacter.location.x += deltaX < 12.5 ? -deltaX : 25 - deltaX;
     this.gameCharacter.location.y += deltaY < 12.5 ? -deltaY : 25 - deltaY;
-    this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y);
+    this.gameCharacter.posZ = this.depth;
+    this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
 
     if (this.updateInterval === null) {
       this.updateInterval = setTimeout(() => {
@@ -233,14 +269,32 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onMouseMove(e: any) {
     if (this.isDragging) {
-      this.calcLocalCoordinate();
-      if ((this.prevTop === this.top && this.prevLeft === this.left)) return;
+      this.calcLocalCoordinate(e);
+      if ((this.prevTop === this.top && this.prevLeft === this.left && this.prevDepth === this.depth)) return;
       this.allowOpenContextMenu = false;
       let size: number = this.gridSize * this.gameCharacter.size;
 
+      let distanceY = this.startTop - this.top;
+      let distanceX = this.startLeft - this.left;
+      let distanceZ = (this.startDepth - this.depth) * this.gridSize * 3;
+
+      let ratio: number = this.gameCharacter.size;
+      ratio = ratio < 0 ? 0.01 : ratio;
+      ratio = this.gridSize * 4 * 9 / (ratio + 2);
+
+      let distance = ratio / (Math.sqrt(distanceY * distanceY + distanceX * distanceX + distanceZ * distanceZ) + ratio);
+
+      if (distance < this.delta) {
+        this.delta = distance;
+      }
+      this.prevTop = this.top;
+      this.prevLeft = this.left;
+      this.prevDepth = this.depth;
+
       this.gameCharacter.location.x = this.left + (this.offsetLeft * this.delta) + (-(size / 2) * (1.0 - this.delta));
       this.gameCharacter.location.y = this.top + (this.offsetTop * this.delta) + (-(size / 2) * (1.0 - this.delta));
-      this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y);
+      this.gameCharacter.posZ = this.depth;
+      this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
 
       if (this.updateInterval === null) {
         this.updateInterval = setTimeout(() => {
@@ -248,18 +302,24 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
           this.updateInterval = null;
         }, 66);
       }
+    } else {
+      this.startDepth = this.depth;
+      this.prevDepth = this.depth;
+      this.calcLocalCoordinate(e);
 
-      let distanceY = this.startTop - this.top;
-      let distanceX = this.startLeft - this.left;
+      this.isDragging = true;
+      //this.allowOpenContextMenu = true;
+      //this.changeDetector.markForCheck();
 
-      let distance = (size * 4) / (Math.sqrt(distanceY * distanceY + distanceX * distanceX) + (size * 4));
+      this.offsetTop = this.gameCharacter.location.y - this.top;
+      this.offsetLeft = this.gameCharacter.location.x - this.left;
 
-      if (distance < this.delta) {
-        this.delta = distance;
-      }
+      this.delta = 1.0;
+      this.startTop = this.top;
+      this.startLeft = this.left;
+
       this.prevTop = this.top;
       this.prevLeft = this.left;
-
     }
   }
 
@@ -273,7 +333,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
       { name: '詳細を表示', action: () => { this.showDetail(this.gameCharacter); } },
-      { name: 'チャットパレットを表示', action: () => {this.showChatPalette(this.gameCharacter) } },
+      { name: 'チャットパレットを表示', action: () => { this.showChatPalette(this.gameCharacter) } },
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.gameCharacter.clone();
@@ -304,8 +364,8 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     component.character = gameObject;
   }
 
-  setPosition(x: number, y: number) {
-    if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateZ(0.01px) translateX(' + x + 'px) translateY(' + y + 'px)');
+  setPosition(x: number, y: number, z: number) {
+    if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateZ(' + (0.01 + z) + 'px) translateX(' + x + 'px) translateY(' + y + 'px)');
     //if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateX(' + x + 'px) translateY(' + y + 'px)');
   }
 }

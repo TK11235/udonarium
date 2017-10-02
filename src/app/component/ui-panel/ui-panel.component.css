@@ -58,3 +58,6 @@
   outline: none;
   color: #CCC;
 }
+.pointer-events-none {
+  pointer-events: none;
+}

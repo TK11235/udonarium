@@ -32,6 +32,7 @@ import { PeerMenuComponent } from './component/peer-menu/peer-menu.component';
 import { RoomSettingComponent } from './component/room-setting/room-setting.component';
 import { TextViewComponent } from './component/text-view/text-view.component';
 import { UIPanelComponent } from './component/ui-panel/ui-panel.component';
+import { TerrainComponent } from './component/terrain/terrain.component';
 import { SafePipe } from './pipe/safe.pipe';
 
 import { AppConfigService } from './service/app-config.service';
@@ -73,6 +74,7 @@ import { PointerDeviceService } from './service/pointer-device.service';
     SafePipe,
     ChatPaletteComponent,
     TextViewComponent,
+    TerrainComponent,
   ],
   imports: [
     BrowserModule,

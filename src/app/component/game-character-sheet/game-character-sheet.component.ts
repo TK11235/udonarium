@@ -12,6 +12,7 @@ import { GameTableMask } from '../../class/game-table-mask';
 import { DataElement } from '../../class/data-element';
 import { TabletopObject } from '../../class/tabletop-object';
 import { Card, CardState } from '../../class/card';
+import { Terrain } from '../../class/terrain';
 
 import { Network, EventSystem } from '../../class/core/system/system';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
@@ -37,6 +38,10 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   get isCard(): boolean {
     return this.tabletopObject instanceof Card;
+  }
+
+  get isTerrain(): boolean {
+    return this.tabletopObject instanceof Terrain;
   }
 
   constructor(

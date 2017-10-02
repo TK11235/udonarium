@@ -21,6 +21,8 @@ export class TabletopObject extends ObjectNode {
     y: 0
   };
 
+  @SyncVar() posZ: number = 0;
+
   private _imageFile: ImageFile = ImageFile.createEmpty('null');
   private _dataElements: { [name: string]: DataElement } = {};
 
