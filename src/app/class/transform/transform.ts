@@ -64,18 +64,33 @@ export class Transform {
     return this;
   }
 
-  globalToLocal(x: number, y: number): IPoint3D {
-    let ret: IPoint3D = { x: x, y: y, z: 0, w: 1 };
+  globalToLocal(x: number, y: number, z: number = 0): IPoint3D {
+    let ret: IPoint3D = { x: x, y: y, z: z, w: 1 };
     this.inverseSceneTransform.unproject(ret, ret);
     this.fromBorderBox(ret);
     return ret;
   }
 
   localToGlobal(x: number, y: number, z: number = 0): IPoint3D {
-    let ret: IPoint3D = { x: x, y: y, z: x, w: 1 };
+    let ret: IPoint3D = { x: x, y: y, z: z, w: 1 };
     this.sceneTransform.project(ret, ret);
     this.fromBorderBox(ret);
+    return ret;
+  }
 
+  localToLocal(x: number, y: number, z: number, to: HTMLElement): IPoint3D {
+    let local: IPoint3D = { x: x, y: y, z: z, w: 1 };
+    let transformer: Transform = new Transform(to);
+    let matrix = Matrix3D.multiply(this.sceneTransform, transformer.inverseSceneTransform);
+    let ret: IPoint3D = { x: 0, y: 0, z: 0, w: 1 };
+
+    ret.x = local.x * matrix.m11 + local.y * matrix.m21 + local.z * matrix.m31 + local.w * matrix.m41;
+    ret.y = local.x * matrix.m12 + local.y * matrix.m22 + local.z * matrix.m32 + local.w * matrix.m42;
+    ret.z = local.x * matrix.m13 + local.y * matrix.m23 + local.z * matrix.m33 + local.w * matrix.m43;
+    ret.w = local.x * matrix.m14 + local.y * matrix.m24 + local.z * matrix.m34 + local.w * matrix.m44;
+
+    transformer.clear();
+    this.toBorderBox(ret);
     return ret;
   }
 

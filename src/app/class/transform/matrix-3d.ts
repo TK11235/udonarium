@@ -229,6 +229,12 @@ export class Matrix3D {
     return this;
   }
 
+  getPosition(ret: IPoint3D = { x: 0, y: 0, z: 0, w: 1 }): IPoint3D {
+    ret.x = this.m41;
+    ret.y = this.m42;
+    ret.z = this.m43;
+    return ret;
+  }
   static makePosition(position: IPoint3D, ret = new Matrix3D()): Matrix3D {
     ret.identity();
     ret.setPosition(position);
@@ -370,5 +376,23 @@ export class Matrix3D {
     return ret;
   }
 
+  public toString(fractionalDigits: number = 3): string {
+    return "m11=" + this.m11.toFixed(fractionalDigits)
+      + "\tm21=" + this.m21.toFixed(fractionalDigits)
+      + "\tm31=" + this.m31.toFixed(fractionalDigits)
+      + "\tm41=" + this.m41.toFixed(fractionalDigits)
+      + "\nm12=" + this.m12.toFixed(fractionalDigits)
+      + "\tm22=" + this.m22.toFixed(fractionalDigits)
+      + "\tm32=" + this.m32.toFixed(fractionalDigits)
+      + "\tm42=" + this.m42.toFixed(fractionalDigits)
+      + "\nm13=" + this.m13.toFixed(fractionalDigits)
+      + "\tm23=" + this.m23.toFixed(fractionalDigits)
+      + "\tm33=" + this.m33.toFixed(fractionalDigits)
+      + "\tm43=" + this.m43.toFixed(fractionalDigits)
+      + "\nm14=" + this.m14.toFixed(fractionalDigits)
+      + "\tm24=" + this.m24.toFixed(fractionalDigits)
+      + "\tm34=" + this.m34.toFixed(fractionalDigits)
+      + "\tm44=" + this.m44.toFixed(fractionalDigits);
+  }
   private static MATRIX3D = new Matrix3D();
 }

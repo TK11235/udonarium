@@ -5,7 +5,8 @@ export var PointerDeviceProxy: PointerDeviceService = null;
 
 export interface PointerCoordinate {
   x: number,
-  y: number
+  y: number,
+  z?: number,
 }
 
 export interface PointerType extends String { }
@@ -20,7 +21,9 @@ export namespace PointerType {
 export class PointerDeviceService {
   private callbackOnPointerMove: any = null;
 
-  pointers: PointerCoordinate[] = [{ x: 0, y: 0 }];
+  isDragging: boolean = false;
+
+  pointers: PointerCoordinate[] = [{ x: 0, y: 0, z: 0 }];
   pointerType: PointerType = PointerType.UNKNOWN;
 
   get pointerX(): number {
@@ -72,7 +75,8 @@ export class PointerDeviceService {
     if (1 < this.pointers.length) Array.prototype.slice.call(this.pointers, 0, 1);
     this.pointers[0] = {
       x: e.pageX,
-      y: e.pageY
+      y: e.pageY,
+      z: 0
     };
     this.pointerType = PointerType.MOUSE;
   }
@@ -82,7 +86,8 @@ export class PointerDeviceService {
     for (let i; i < length; i++) {
       this.pointers[i] = {
         x: e.touches[i].pageX,
-        y: e.touches[i].pageY
+        y: e.touches[i].pageY,
+        z: 0
       };
     }
     this.pointerType = PointerType.TOUCH;
@@ -92,8 +97,23 @@ export class PointerDeviceService {
 
   public static convertToLocal(pointer: PointerCoordinate, element: HTMLElement = document.body): PointerCoordinate {
     let transformer: Transform = new Transform(element);
-    let localRayFrom = transformer.globalToLocal(pointer.x, pointer.y);
+    let ray = transformer.globalToLocal(pointer.x, pointer.y, pointer.z ? pointer.z : 0);
     transformer.clear();
-    return { x: localRayFrom.x, y: localRayFrom.y }
+    return { x: ray.x, y: ray.y, z: ray.z };
+  }
+
+  public static convertToGlobal(pointer: PointerCoordinate, element: HTMLElement = document.body): PointerCoordinate {
+    let transformer: Transform = new Transform(element);
+    let ray = transformer.localToGlobal(pointer.x, pointer.y, pointer.z ? pointer.z : 0);
+    transformer.clear();
+    return { x: ray.x, y: ray.y, z: ray.z };
+  }
+
+  public static convertLocalToLocal(pointer: PointerCoordinate, from: HTMLElement, to: HTMLElement): PointerCoordinate {
+    let transformer: Transform = new Transform(from);
+    let local = transformer.globalToLocal(pointer.x, pointer.y, pointer.z ? pointer.z : 0);
+    let ray = transformer.localToLocal(local.x, local.y, 0, to);
+    transformer.clear();
+    return { x: ray.x, y: ray.y, z: ray.z };
   }
 }
