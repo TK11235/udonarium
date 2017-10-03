@@ -303,6 +303,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
         }, 66);
       }
     } else {
+      this.depth = this.gameCharacter.posZ;
       this.startDepth = this.depth;
       this.prevDepth = this.depth;
       this.calcLocalCoordinate(e);
