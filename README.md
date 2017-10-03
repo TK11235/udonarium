@@ -10,6 +10,7 @@
 
 - ルーム機能（WebRTCを利用したブラウザ間通信）
 - マップ表示／マップマスク機能
+- 立体地形オブジェクト
 - コマ／カード管理
 - チャット送受信
 - チャットパレット
@@ -40,11 +41,9 @@ __正式版APIキーは以前のトライアル版APIキーとは別に扱われ
 
 ## 開発環境
 
-[Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)、および[Git](https://git-scm.com/)が必要です。
+[Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)が必要です。
 
 開発環境のインストール手順は[Angular日本ユーザーグループが作成したAngularのハンズオン教材](https://github.com/ng-japan/hands-on/tree/master/courses/tutorial)、または[Angular公式ページ](https://angular.io/)の[QuickStart](https://angular.io/guide/quickstart)が参考になります。
-
-Windows環境でGitをインストールする場合、コマンドプロンプトからGitコマンドを実行可能に（インストーラーの画面で「Run Git from the Windows Command Prompt」を選択）することをお勧めします。
 
 ### Angular CLI
 
@@ -73,7 +72,7 @@ WebRTC向けのシグナリングサーバとして[SkyWay](https://webrtc.ecl.n
 
 ## 今後の開発について
 
-まだ未完成であり、作業すべき課題が残されています。
+最低限必要となる機能は実装されていますが、作業すべき課題が残されています。
 
 - UIデザインおよび操作性の改善
 - モバイル向け対応
