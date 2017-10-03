@@ -318,16 +318,17 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
-      { name: '詳細を表示', action: () => { this.showDetail(this.terrain); } },
-      {
-        name: 'コピーを作る', action: () => {
-          let cloneObject = this.terrain.clone();
-          console.log('コピー', cloneObject);
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.update();
+      (this.terrain.isLocked ? {
+        name: '固定解除', action: () => {
+          this.terrain.isLocked = false;
+          this.terrain.update();
         }
-      },
+      } : {
+          name: '固定する', action: () => {
+            this.terrain.isLocked = true;
+            this.terrain.update();
+          }
+        }),
       (this.terrain.hasWall ? {
         name: '壁を非表示', action: () => {
           this.terrain.mode = TerrainViewState.FLOOR;
@@ -341,18 +342,17 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
             this.terrain.mode = TerrainViewState.ALL;
           }
         }),
-      (this.terrain.isLocked ? {
-        name: '固定解除', action: () => {
-          this.terrain.isLocked = false;
-          this.terrain.update();
+      { name: '地形設定を編集', action: () => { this.showDetail(this.terrain); } },
+      {
+        name: 'コピーを作る', action: () => {
+          let cloneObject = this.terrain.clone();
+          console.log('コピー', cloneObject);
+          cloneObject.location.x += this.gridSize;
+          cloneObject.location.y += this.gridSize;
+          cloneObject.update();
         }
-      } : {
-          name: '固定する', action: () => {
-            this.terrain.isLocked = true;
-            this.terrain.update();
-          }
-        }),
-      { name: 'この地形を削除', action: () => { this.terrain.destroy(); } },
+      },
+      { name: '削除する', action: () => { this.terrain.destroy(); } },
     ], this.terrain.name);
   }
 

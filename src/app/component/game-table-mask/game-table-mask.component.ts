@@ -262,16 +262,6 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
-      { name: '詳細を表示', action: () => { this.showDetail(this.gameTableMask); } },
-      {
-        name: 'コピーを作る', action: () => {
-          let cloneObject = this.gameTableMask.clone();
-          console.log('コピー', cloneObject);
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.update();
-        }
-      },
       (this.gameTableMask.isLock ? {
         name: '固定解除', action: () => {
           this.gameTableMask.isLock = false;
@@ -283,7 +273,17 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
             this.gameTableMask.update();
           }
         }),
-      { name: 'このマップマスクを削除', action: () => { this.gameTableMask.destroy(); } },
+      { name: 'マップマスクを編集', action: () => { this.showDetail(this.gameTableMask); } },
+      {
+        name: 'コピーを作る', action: () => {
+          let cloneObject = this.gameTableMask.clone();
+          console.log('コピー', cloneObject);
+          cloneObject.location.x += this.gridSize;
+          cloneObject.location.y += this.gridSize;
+          cloneObject.update();
+        }
+      },
+      { name: '削除する', action: () => { this.gameTableMask.destroy(); } },
     ], this.gameTableMask.name);
   }
 

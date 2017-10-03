@@ -431,7 +431,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }),
       { name: '重なったカードで山札を作る', action: () => { this.createStack(); } },
-      { name: '詳細を表示', action: () => { this.showDetail(this.card); } },
+      { name: 'カードを編集', action: () => { this.showDetail(this.card); } },
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.card.clone();
