@@ -36,6 +36,10 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   //private gameRoomService: GameRoomService,
   private networkService = Network;
 
+  get isCharacter(): boolean {
+    return this.tabletopObject instanceof GameCharacter;
+  }
+
   get isCard(): boolean {
     return this.tabletopObject instanceof Card;
   }

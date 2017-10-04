@@ -7,16 +7,18 @@
   <button (click)="openModal('back')">裏面の画像を変更</button>
 </ng-container>
 <ng-container *ngIf="isTerrain">
-    <button (click)="openModal('floor')">床の画像を変更</button>
-    <button (click)="openModal('wall')">壁の画像を変更</button>
-  </ng-container>
+  <button (click)="openModal('floor')">床の画像を変更</button>
+  <button (click)="openModal('wall')">壁の画像を変更</button>
+</ng-container>
 <button (click)="saveToXML()">保存</button>
-<select *ngIf="tabletopObject" (change)="setLocation($event.target.value)" [ngModel]="tabletopObject.location.name">
-  <option value="table">テーブル</option>
-  <option value="common">共有インベントリ</option>
-  <option value="{{networkService.peerId}}">個人インベントリ</option>
-  <option value="graveyard">墓地</option>
-</select>
+<ng-container *ngIf="isCharacter">
+  <select *ngIf="tabletopObject" (change)="setLocation($event.target.value)" [ngModel]="tabletopObject.location.name">
+    <option value="table">テーブル</option>
+    <option value="common">共有インベントリ</option>
+    <option value="{{networkService.peerId}}">個人インベントリ</option>
+    <option value="graveyard">墓地</option>
+  </select>
+</ng-container>
 <div *ngIf="tabletopObject" class="flex-container">
   <div *ngIf="0 < tabletopObject.imageFile.url.length" class="box main-image-box">
     <img class="main-image" [src]="tabletopObject.imageFile.url | safe: 'resourceUrl'" [alt]="tabletopObject.imageFile.name"
