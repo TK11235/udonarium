@@ -1,7 +1,8 @@
 import { GameTable } from './game-table';
 import { GameCharacter } from './game-character';
 import { EventSystem, Network } from './core/system/system';
-
+import { GameTableMask } from './game-table-mask';
+import { Terrain } from './terrain';
 import { TableSelecter } from './table-selecter';
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
@@ -31,6 +32,8 @@ export class Room extends GameObject implements InnerXml {
   parseInnerXml(element: Element) {
     let objects: GameObject[] = [];
     objects = objects.concat(ObjectStore.instance.getObjects(GameTable));
+    objects = objects.concat(ObjectStore.instance.getObjects(GameTableMask));
+    objects = objects.concat(ObjectStore.instance.getObjects(Terrain));
     objects = objects.concat(ObjectStore.instance.getObjects(GameCharacter));
     objects = objects.concat(ObjectStore.instance.getObjects(CardStack));
     objects = objects.concat(ObjectStore.instance.getObjects(Card));
