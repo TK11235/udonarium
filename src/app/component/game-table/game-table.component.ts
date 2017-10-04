@@ -225,9 +225,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         if (event.data.identifier !== this.gameTableObject.identifier) return;
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
-        let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
-        if (file) this.bgImage = file;
-
+        this.updateBackgroundImage();
         this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize);
       })
       .on('XML_PARSE', event => {
@@ -250,8 +248,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       if (event.data.className === 'GameCharacter' || event.data.className === 'GameDataElement') this.changeDetector.markForCheck();
     });
     */
-    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
-    if (file) this.bgImage = file;
+    this.updateBackgroundImage();
   }
 
   ngAfterViewInit() {
@@ -320,6 +317,24 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.callbackOnKeyDown = null;
 
     this.callbackOnContextMenu = null;
+  }
+
+  private updateBackgroundImage() {
+    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
+    if (file) {
+      this.bgImage = file;
+    } else {
+      let dummy = {};
+      EventSystem.register(dummy)
+        .on('SYNCHRONIZE_FILE_LIST', event => {
+          if (!event.isSendFromSelf) return;
+          let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
+          if (file) {
+            this.bgImage = file;
+            EventSystem.unregister(dummy);
+          }
+        });
+    }
   }
 
   // getTabletopCharactersだと遅い　何とかする
