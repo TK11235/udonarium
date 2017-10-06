@@ -46,6 +46,11 @@ export class AppConfigService {
 
   private async initDatabase() {
     console.log('initDatabase...');
+    if (!window.indexedDB) {
+      console.warn('このブラウザは安定板の IndexedDB をサポートしていません。IndexedDB の機能は利用できません。');
+      return;
+    }
+
     let db = new Database();
 
     let history = await db.getPeerHistory();
