@@ -45,9 +45,10 @@ export class ObjectStore {
     EventSystem.unregister(object);
     //let garbage = object.toContext();
     /* */
-    this.garbageHash[object.identifier] = { aliasName: object.identifier, timeStamp: performance.now() };
-
-    if (needCallEvent) EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
+    if (needCallEvent) {
+      this.garbageHash[object.identifier] = { aliasName: object.identifier, timeStamp: performance.now() };
+      EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
+    }
     return object;
   }
 
