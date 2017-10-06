@@ -271,19 +271,11 @@ export class SkyWayConnection implements Connection {
     let context: PeerContext = null;
     if (0 <= index) context = this.peerContexts[index];
 
-    let timeout: NodeJS.Timer = null;
-    if (sendFrom === this.peerId) {
-      // 送信側はタイムアウト処理の準備
-      timeout = setTimeout(() => {
-        if (this.callback.onTimeout) this.callback.onTimeout(conn.peer);
-        this.closeDataConnection(conn);
-      }, 15000);
-    } else {
-      // 受信側はisOpenをtrue
-      if (context) context.isOpen = true;
-      this.update();
-      if (this.callback.onOpen) this.callback.onOpen(conn.peer);
-    }
+    let timeout: NodeJS.Timer = setTimeout(() => {
+      if (this.callback.onTimeout) this.callback.onTimeout(conn.peer);
+      this.closeDataConnection(conn);
+      if (this.callback.onClose) this.callback.onClose(conn.peer);
+    }, 15000);
 
     conn.on('data', data => {
       this.onData(conn, data);
