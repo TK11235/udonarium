@@ -31,11 +31,24 @@ export class PeerCursor extends GameObject {
       document.body.addEventListener('mousemove', this.callcack);
       document.body.addEventListener('touchmove', this.callcack);
     } else {
+      EventSystem.register(this)
+        .on('CLOSE_OTHER_PEER', -1000, event => {
+          if (event.data.peer !== this.peerId) return;
+          this.removeCursorElement();
+          delete PeerCursor.hash[this.peerId];
+          ObjectStore.instance.delete(this, false);
+        });
       this.crerateCursorElement();
     }
   }
 
   destroy() {
+    this.removeCursorElement();
+    delete PeerCursor.hash[this.peerId];
+    super.destroy();
+  }
+
+  private removeCursorElement() {
     if (this.deleteTimer !== null) {
       clearTimeout(this.deleteTimer);
       this.deleteTimer = null;
@@ -47,8 +60,6 @@ export class PeerCursor extends GameObject {
 
     document.body.removeEventListener('mousemove', this.callcack);
     document.body.removeEventListener('touchmove', this.callcack);
-    delete PeerCursor.hash[this.peerId];
-    super.destroy();
   }
 
   static find(peerId): PeerCursor {

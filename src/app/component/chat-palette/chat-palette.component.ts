@@ -65,7 +65,13 @@ export class ChatPaletteComponent implements OnInit {
     this.panelService.title = this.character.name + ' のチャットパレット';
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
     this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
-    // EventSystem.register(this);
+    EventSystem.register(this)
+      .on('CLOSE_OTHER_PEER', event => {
+        let object = ObjectStore.instance.get(this.sendTo);
+        if (object instanceof PeerCursor && object.peerId === event.data.peer) {
+          this.sendTo = '';
+        }
+      });
   }
 
   ngOnDestroy() {

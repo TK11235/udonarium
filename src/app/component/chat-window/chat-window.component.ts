@@ -89,6 +89,11 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
       })
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         this.gameCharacters = this.objectStore.getObjects<GameCharacter>(GameCharacter);
+      }).on('CLOSE_OTHER_PEER', event => {
+        let object = this.objectStore.get(this.sendTo);
+        if (object instanceof PeerCursor && object.peerId === event.data.peer) {
+          this.sendTo = '';
+        }
       });
     this.updatePanelTitle();
   }
