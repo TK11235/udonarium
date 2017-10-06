@@ -94,7 +94,8 @@ export class LobbyComponent implements OnInit {
       if (input !== context.password) return;
     }
 
-    Network.open(PeerContext.generateId(), context.room, context.roomName, context.isPrivate, context.password);
+    let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
+    Network.open(peerId, context.room, context.roomName, context.isPrivate, context.password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let triedPeer: string[] = [];

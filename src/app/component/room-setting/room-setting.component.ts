@@ -48,7 +48,8 @@ export class RoomSettingComponent implements OnInit {
   }
 
   createRoom() {
-    Network.open(PeerContext.generateId(), PeerContext.generateId(), this.roomName, this.isPrivate, this.password);
+    let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
+    Network.open(peerId, PeerContext.generateId(), this.roomName, this.isPrivate, this.password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
     this.modalService.resolve();
