@@ -25,7 +25,7 @@
 <div *ngFor="let conn of networkService.peerContexts">
   <div>
     <span *ngIf="!conn.isOpen">[接続中]</span>
-    <span>他のPeer：{{conn.fullstring.substring(0, 17)}}</span>
+    <span>他のPeer：{{conn.fullstring.substring(0, 18)}}</span>
   </div>
 </div>
 <div>
