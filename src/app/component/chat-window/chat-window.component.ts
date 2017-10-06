@@ -13,6 +13,7 @@ import { GameCharacter } from '../../class/game-character';
 import { PeerCursor } from '../../class/peer-cursor';
 import { DiceBot } from '../../class/dice-bot';
 import { Network, EventSystem } from '../../class/core/system/system';
+import { PeerContext } from '../../class/core/system/network/peer-context';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 
 @Component({
@@ -235,10 +236,12 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         chatMessage.to = object.identifier;
       } else if (object instanceof PeerCursor) {
         name = object.name;
-        chatMessage.to = object.peerId;
+        let peer = PeerContext.create(object.peerId);
+        if (peer) chatMessage.to = peer.id;
       }
       chatMessage.name += ' > ' + name;
     }
+    console.log(chatMessage);
 
     //this.eventSystem.call('BROADCAST_MESSAGE', chatMessage);
     if (this.chatTab) this.chatTab.addMessage(chatMessage);

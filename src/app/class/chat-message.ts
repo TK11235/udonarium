@@ -50,7 +50,7 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext, Inner
   get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
   get index(): number { return this.minorIndex + this.timestamp; }
   get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
-  get isMine(): boolean { return (-1 < this.sendTo.indexOf(Network.peerId)) || this.from === Network.peerId ? true : false; }
+  get isMine(): boolean { return (-1 < this.sendTo.indexOf(Network.peerContext.id)) || this.from === Network.peerContext.id ? true : false; }
   get isDisplayable(): boolean { return this.isDirect ? this.isMine : true; }
 
   innerXml(): string {
