@@ -307,10 +307,10 @@ export class DiceBot extends GameObject {
           let diceBotMessage: ChatMessageContext = {
             identifier: '',
             tabIdentifier: chatMessage.tabIdentifier,
-            from: 'BCDice',
+            from: 'System-BCDice',
             timestamp: chatMessage.timestamp + 1,
             imageIdentifier: '',
-            tag: 'system',
+            tag: 'system dicebot',
             name: isSecret ? '<BCDice：シークレットダイス（未実装）>' : '<BCDice>',
             text: result
           };
