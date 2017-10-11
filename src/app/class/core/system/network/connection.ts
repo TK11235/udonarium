@@ -18,7 +18,7 @@ export interface Connection {
   readonly callback: ConnectionCallback;
 
   open(peerId: string)
-  open(peerId: string, roomId: string, roomName: string, isPrivate: boolean, password: string)
+  open(peerId: string, roomId: string, roomName: string, password: string)
   close()
   connect(peerId: string): boolean
   disconnect(peerId: string): boolean

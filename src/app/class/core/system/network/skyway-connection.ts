@@ -38,7 +38,7 @@ export class SkyWayConnection implements Connection {
   private httpRequestInterval: number = performance.now() + 500;
 
   open(peerId: string)
-  open(peerId: string, roomId: string, roomName: string, isPrivate: boolean, password: string)
+  open(peerId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
     console.log('open', args);
     if (args.length === 0) {
@@ -46,7 +46,7 @@ export class SkyWayConnection implements Connection {
     } else if (args.length === 1) {
       this.peerContext = PeerContext.create(args[0]);
     } else {
-      this.peerContext = PeerContext.create(args[0], args[1], args[2], args[3], args[4]);
+      this.peerContext = PeerContext.create(args[0], args[1], args[2], args[3]);
     }
     this.openPeer();
   }

@@ -20,7 +20,7 @@ import { PeerCursor } from '../../class/peer-cursor';
   //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LobbyComponent implements OnInit {
-  rooms: { room: string, roomName: string, isPrivate: boolean, peers: PeerContext[] }[] = [];
+  rooms: { room: string, roomName: string, peers: PeerContext[] }[] = [];
 
   isReloading: boolean = false;
 
@@ -70,16 +70,16 @@ export class LobbyComponent implements OnInit {
     let peerIds = await Network.listAllPeers();
     for (let id of peerIds) {
       let context = new PeerContext(id);
-      if (!context.isPrivate) {
-        //this.peers.push(context);
-        if (!(context.room in peersOfroom)) {
-          peersOfroom[context.room] = [];
+      if (context.isRoom) {
+        let roomIdentifier = context.room + context.roomName;
+        if (!(roomIdentifier in peersOfroom)) {
+          peersOfroom[roomIdentifier] = [];
         }
-        peersOfroom[context.room].push(context);
+        peersOfroom[roomIdentifier].push(context);
       }
     }
     for (let room in peersOfroom) {
-      this.rooms.push({ room: room, roomName: peersOfroom[room][0].roomName, isPrivate: peersOfroom[room][0].isPrivate, peers: peersOfroom[room] });
+      this.rooms.push({ room: room, roomName: peersOfroom[room][0].roomName, peers: peersOfroom[room] });
     }
     this.help = '接続可能なルームが見つかりませんでした。「新しいルームを作成する」で新規ルームを作成できます。';
     this.isReloading = false;
@@ -95,7 +95,7 @@ export class LobbyComponent implements OnInit {
     }
 
     let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
-    Network.open(peerId, context.room, context.roomName, context.isPrivate, context.password);
+    Network.open(peerId, context.room, context.roomName, context.password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let triedPeer: string[] = [];

@@ -65,7 +65,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      Network.open(Network.peerContext.id, context.room, context.roomName, context.isPrivate, context.password);
+      Network.open(Network.peerContext.id, context.room, context.roomName, context.password);
       PeerCursor.myCursor.peerId = Network.peerId;
 
       let dummy = {};
@@ -117,7 +117,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
         console.warn('Room is already closed...');
         return;
       }
-      Network.open(PeerContext.generateId(), conectPeers[0].room, conectPeers[0].roomName, conectPeers[0].isPrivate, conectPeers[0].password);
+      Network.open(PeerContext.generateId(), conectPeers[0].room, conectPeers[0].roomName, conectPeers[0].password);
     } else {
       console.warn('connectPeers ' + conectPeers.length);
       Network.open();

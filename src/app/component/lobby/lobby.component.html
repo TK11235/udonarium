@@ -22,7 +22,7 @@
     </div>
     -->
         <tr>
-          <td style="font-size:0.5rem; text-align: center; padding: 0 1em;">{{room.room}}</td>
+          <td style="font-size:0.5rem; text-align: center; padding: 0 1em;">{{room.peers[0]?.room}}</td>
           <td style="text-align: center; padding: 0 1em;">{{room.roomName}}</td>
           <td *ngIf="0 < room.peers[0].password.length" style="text-align: center; padding: 0 1em;"><i class="material-icons" style="vertical-align: middle; font-size:0.9rem;">lock</i></td>
           <td *ngIf="room.peers[0].password.length < 1" style="text-align: center; padding: 0 1em;">-</td>

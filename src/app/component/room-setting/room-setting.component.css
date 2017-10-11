@@ -14,3 +14,7 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.input {
+  width: 100%;
+}

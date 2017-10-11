@@ -1,3 +1,4 @@
+import { validate } from 'codelyzer/walkerFactory/walkerFn';
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
@@ -25,9 +26,8 @@ export class RoomSettingComponent implements OnInit {
   isPrivate: boolean = false;
 
   get peerId(): string { return Network.peerId; }
-  get isConnected(): boolean {
-    return Network.peerIds.length <= 1 ? false : true;
-  }
+  get isConnected(): boolean { return Network.peerIds.length <= 1 ? false : true; }
+  validateLength: boolean = false;
 
   constructor(
     private ngZone: NgZone,
@@ -41,15 +41,22 @@ export class RoomSettingComponent implements OnInit {
   ngOnInit() {
     this.modalService.title = this.panelService.title = 'ルーム作成'
     EventSystem.register(this);
+    this.calcPeerId(this.roomName, this.password);
   }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
   }
 
+  calcPeerId(roomName: string, password: string) {
+    let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
+    let context = PeerContext.create(peerId, PeerContext.generateId('***'), roomName, password);
+    this.validateLength = context.fullstring.length < 64 ? true : false;
+  }
+
   createRoom() {
     let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
-    Network.open(peerId, PeerContext.generateId(), this.roomName, this.isPrivate, this.password);
+    Network.open(peerId, PeerContext.generateId('***'), this.roomName, this.password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
     this.modalService.resolve();
