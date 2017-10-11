@@ -59,7 +59,9 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   connectPeer() {
     this.help = '';
     let context = PeerContext.create(this.targetPeerId);
-    if (context.isRoom) {
+    if (!context.isRoom) {
+      Network.connect(this.targetPeerId);
+    } else {
       if (Network.peerContexts.length) {
         this.help = '入力されたPeer IDはルーム用のPeer IDのようですが、ルーム用Peer IDと通常のPeer IDを混在させることはできません。通常Peerとの接続を切ってください。（※ページリロードでPeer切断ができます）';
         return;
@@ -70,18 +72,22 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let dummy = {};
       EventSystem.register(dummy)
-        .on('OPEN_OTHER_PEER', 0, event => {
-          console.log('接続成功！', event.data.peer);
-          this.resetPeerIfNeeded();
+        .on('OPEN_PEER', 0, event => {
+          Network.connect(this.targetPeerId);
           EventSystem.unregister(dummy);
-        })
-        .on('CLOSE_OTHER_PEER', 0, event => {
-          console.warn('接続失敗', event.data.peer);
-          this.resetPeerIfNeeded();
-          EventSystem.unregister(dummy);
+          EventSystem.register(dummy)
+            .on('OPEN_OTHER_PEER', 0, event => {
+              console.log('接続成功！', event.data.peer);
+              this.resetPeerIfNeeded();
+              EventSystem.unregister(dummy);
+            })
+            .on('CLOSE_OTHER_PEER', 0, event => {
+              console.warn('接続失敗', event.data.peer);
+              this.resetPeerIfNeeded();
+              EventSystem.unregister(dummy);
+            });
         });
     }
-    Network.connect(this.targetPeerId);
   }
 
   async connectPeerHistory() {
