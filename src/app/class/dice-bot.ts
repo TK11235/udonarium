@@ -310,7 +310,7 @@ export class DiceBot extends GameObject {
             from: 'System-BCDice',
             timestamp: chatMessage.timestamp + 1,
             imageIdentifier: '',
-            tag: 'system dicebot',
+            tag: 'system',
             name: isSecret ? '<BCDice：シークレットダイス（未実装）>' : '<BCDice>',
             text: result
           };
