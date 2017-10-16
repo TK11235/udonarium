@@ -1,4 +1,3 @@
-import { validate } from 'codelyzer/walkerFactory/walkerFn';
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
