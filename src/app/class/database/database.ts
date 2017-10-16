@@ -1,5 +1,3 @@
-import { timestamp } from 'rxjs/operator/timestamp';
-
 class PromiseQueue {
   private length: number = 0;
   private queue: Promise<any> = Promise.resolve();
@@ -44,7 +42,11 @@ export class Database {
       console.log('openDB');
       let request = indexedDB.open(dbName, version);
       request.onerror = (event) => {
-        console.error(event);
+        console.error(request.error, event);
+        if (request.error.name === 'VersionError') {
+          indexedDB.deleteDatabase(dbName);
+          this.openDB(dbName, version);
+        }
         // request.errorCode に対して行うこと!
         resolve();
       };
