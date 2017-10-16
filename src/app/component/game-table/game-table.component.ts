@@ -577,7 +577,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let image: ImageFile = FileStorage.instance.get(url)
     if (!image) image = FileStorage.instance.add(url);
 
-    let tableMask = Terrain.create('地形', 2, 2, 2, 100, image.identifier, image.identifier);
+    let tableMask = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
     tableMask.location.name = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable.identifier;
 
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);

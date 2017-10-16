@@ -77,7 +77,7 @@ export class Terrain extends TabletopObject {
     return image ? FileStorage.instance.get(<string>image.value) : null;
   }
 
-  static create(name: string, width: number, depth: number, height: number, opacity: number, wall: string, floor: string, identifier?: string): Terrain {
+  static create(name: string, width: number, depth: number, height: number, wall: string, floor: string, identifier?: string): Terrain {
     let object: Terrain = null;
 
     if (identifier) {
@@ -89,9 +89,8 @@ export class Terrain extends TabletopObject {
 
     object.commonDataElement.appendChild(DataElement.create('name', name, {}, 'name_' + object.identifier));
     object.commonDataElement.appendChild(DataElement.create('width', width, {}, 'width_' + object.identifier));
-    object.commonDataElement.appendChild(DataElement.create('height', width, {}, 'height_' + object.identifier));
-    object.commonDataElement.appendChild(DataElement.create('depth', width, {}, 'depth_' + object.identifier));
-    //object.commonDataElement.appendChild(DataElement.create('opacity', opacity, { type: 'numberResource', currentValue: opacity }, 'opacity_' + object.identifier));
+    object.commonDataElement.appendChild(DataElement.create('height', height, {}, 'height_' + object.identifier));
+    object.commonDataElement.appendChild(DataElement.create('depth', depth, {}, 'depth_' + object.identifier));
     object.imageDataElement.appendChild(DataElement.create('wall', wall, { type: 'image' }, 'wall_' + object.identifier));
     object.imageDataElement.appendChild(DataElement.create('floor', floor, { type: 'image' }, 'floor_' + object.identifier));
     object.initialize();
