@@ -58,7 +58,6 @@ export class Database {
         console.log('openDB onupgradeneeded');
         this.initializeDB(request.result);
         this.createStores();
-        resolve();
       };
       request.onsuccess = (event) => {
         console.log('openDB onsuccess');
@@ -70,6 +69,9 @@ export class Database {
 
   private createStores() {
     console.log('createStores');
+    if (this.db.objectStoreNames.contains('PeerHistory')) {
+      this.db.deleteObjectStore('PeerHistory');
+    }
     let objectStore = this.db.createObjectStore('PeerHistory', { keyPath: 'peerId' });
     objectStore.createIndex('timestamp', 'timestamp', { unique: false });
     // データを追加する前に objectStore の作成を完了させるため、 
