@@ -23,37 +23,35 @@
 
 ## サーバへの設置
 
-利用者自身がWebサーバを用意し、そのサーバにアプリケーションを設置して利用することができます。
+利用者自身でWebサーバを用意し、そのサーバにアプリケーションを設置して利用することができます。
 
-リポジトリからダウンロードできるリリース版ファイル一式、または開発環境からビルドした成果物をWebサーバに配置してください。  
+1. [リリース版ファイル（**udonarium.zip**）](../../releases/latest)をダウンロードして解凍し、Webサーバに配置してください。
+1. [SkyWay](https://webrtc.ecl.ntt.com/)のAPIキーを取得し、APIキー情報を`assets/config.yaml`に記述します。
+1. サーバに配置したアプリケーションの`index.html`にアクセスして動作することを確認してみてください。
+
 このアプリケーションはサーバーサイドの処理を持たないのでCGIやデータベースを準備する必要はありません。
-
-唯一の準備として、外部サービスの[SkyWay](https://webrtc.ecl.ntt.com/)を利用するためのAPIキーが必要です。
-APIキーの情報は`assets/config.yaml`に記述します。
 
 ***
 __※重要※__  
 __2017/9/7にSkyWay正式版が発表されました。__  
-__正式版APIキーは以前のトライアル版APIキーとは別に扱われます。そのため、既にトライアル版APIキーを取得している場合でも、改めて正式版APIキーを取得する必要があります。__
+__以前のトライアル版APIキーは利用できないため、正式版APIキーを取得して利用ください。__
 ***
-
-後は、サーバに配置したアプリケーションの`index.html`にアクセスし、動作することを確認してみてください。
 
 ## 開発環境
 
-[Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)が必要です。
+開発環境として[Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)が必要です。
 
-開発環境のインストール手順は[Angular日本ユーザーグループが作成したAngularのハンズオン教材](https://github.com/ng-japan/hands-on/tree/master/courses/tutorial)、または[Angular公式ページ](https://angular.io/)の[QuickStart](https://angular.io/guide/quickstart)が参考になります。
+インストール手順は[Angular日本ユーザーグループのハンズオン教材](https://github.com/ng-japan/hands-on/tree/master/courses/tutorial)、または[Angular公式ページ](https://angular.io/)の[QuickStart](https://angular.io/guide/quickstart)が参考になります。
 
 ### Angular CLI
 
 フロントエンドは[Angular](https://angular.io/)で実装されており、
 CLIツールとして[Angular CLI](https://github.com/angular/angular-cli)を利用しています。
 
-リポジトリのファイル一式をダウンロードした後の初回起動時のコマンドは以下の通りです。
+リポジトリからソースコードをダウンロードした後の初回起動時のコマンドは以下の通りです。
 
 ```bash
-cd ファイル一式のディレクトリの場所
+cd ソースコードを展開したディレクトリの場所
 npm install
 ng serve
 ```
