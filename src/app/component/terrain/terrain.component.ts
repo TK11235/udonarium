@@ -13,7 +13,7 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 
 @Component({
-  selector: 'terrain',
+  selector: 'terrain, [terrain]',
   templateUrl: './terrain.component.html',
   styleUrls: ['./terrain.component.css']
 })

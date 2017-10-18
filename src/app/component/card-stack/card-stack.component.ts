@@ -15,7 +15,7 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 
 @Component({
-  selector: 'card-stack',
+  selector: 'card-stack, [card-stack]',
   templateUrl: './card-stack.component.html',
   styleUrls: ['./card-stack.component.css'],
   animations: [

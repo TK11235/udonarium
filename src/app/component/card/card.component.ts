@@ -15,7 +15,7 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 
 @Component({
-  selector: 'card',
+  selector: 'card, [card]',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -116,7 +116,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
-    this.dragAreaElement = this.findDragAreaElement(this.elementRef.nativeElement);
+    this.dragAreaElement = this.findDragAreaElement(this.elementRef.nativeElement.parentElement);
 
     let element = this.elementRef.nativeElement;
 

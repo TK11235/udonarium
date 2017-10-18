@@ -13,7 +13,7 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 
 @Component({
-  selector: 'game-table-mask',
+  selector: 'game-table-mask, [game-table-mask]',
   templateUrl: './game-table-mask.component.html',
   styleUrls: ['./game-table-mask.component.css']
 })

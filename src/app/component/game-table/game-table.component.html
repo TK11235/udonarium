@@ -5,11 +5,11 @@
       <!--<img class="game-background-image" *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'"
         #gameBackgroundImage>-->
       <canvas class="grid-canvas pointer-events-none" width="2000" height="2000" #gridCanvas></canvas>
-      <terrain class="game-3d" *ngFor="let terrain of getTerrain()" [terrain]="terrain"></terrain>
-      <game-table-mask *ngFor="let gameTableMask of getGameTableMasks()" [gameTableMask]="gameTableMask"></game-table-mask>
-      <card-stack *ngFor="let cardStack of getCardStacks()" [cardStack]="cardStack"></card-stack>
-      <card *ngFor="let card of getCards()" [card]="card"></card>
-      <game-character class="game-3d" *ngFor="let gameCharacter of getTabletopCharacters()" [gameCharacter]="gameCharacter"></game-character>
+      <div terrain class="game-3d" *ngFor="let terrain of getTerrain()" [terrain]="terrain"></div>
+      <div game-table-mask class="game-3d" *ngFor="let gameTableMask of getGameTableMasks()" [gameTableMask]="gameTableMask"></div>
+      <div card-stack class="game-3d" *ngFor="let cardStack of getCardStacks()" [cardStack]="cardStack"></div>
+      <div card class="game-3d" *ngFor="let card of getCards()" [card]="card"></div>
+      <div game-character class="game-3d" *ngFor="let gameCharacter of getTabletopCharacters()" [gameCharacter]="gameCharacter"></div>
     </div>
   </div>
 </div>
