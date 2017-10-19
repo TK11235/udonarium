@@ -68,6 +68,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let table = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;
     if (table && table !== this._gameTableObject) {
       this._gameTableObject = table;
+      this.updateBackgroundImage();
       this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize);
     }
     return this._gameTableObject;
