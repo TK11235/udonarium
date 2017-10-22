@@ -54,6 +54,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('modalLayer', { read: ViewContainerRef }) modalLayerViewContainerRef: ViewContainerRef;
   private lazyUpdateTimer: NodeJS.Timer = null;
+  private openPanelCount: number = 0;
 
   constructor(
     private modalService: ModalService,
@@ -177,6 +178,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         break;
     }
     if (component) {
+      option.top = (this.openPanelCount % 10 + 1) * 20;
+      option.left = 100 + (this.openPanelCount % 20 + 1) * 5;
+      this.openPanelCount = this.openPanelCount + 1;
+      console.log('openPanelCount:', this.openPanelCount);
       this.panelService.open(component, option);
     }
   }
