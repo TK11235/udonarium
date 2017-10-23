@@ -407,7 +407,7 @@ export class DiceBot extends GameObject {
     });
   }
 
-  static loadScriptAsync(path: string) {
+  private static loadScriptAsync(path: string) {
     return new Promise<void>((resolve, reject) => {
       let head = document.head;
       let script = document.createElement('script');
@@ -434,7 +434,7 @@ export class DiceBot extends GameObject {
     });
   }
 
-  static loadExtratablesAsync(path: string, table: string) {
+  private static loadExtratablesAsync(path: string, table: string) {
     return new Promise<void>((resolve, reject) => {
       let http = new XMLHttpRequest();
       http.open('get', path, true);
