@@ -27,27 +27,9 @@ export class ObjectSynchronizer {
         let context: ObjectContext = event.data;
         let object: GameObject = ObjectStore.instance.get(context.identifier);
         if (object) {
-          // Update
-          if (event.isSendFromSelf) return;
-          if (context.majorVersion + context.minorVersion < object.version) {
-            object.update(false);
-          } else if (context.majorVersion + context.minorVersion > object.version) {
-            object.apply(context);
-          }
+          if (!event.isSendFromSelf) this.updateObject(object, context);
         } else {
-          // Create
-          let garbageIdentifier = ObjectStore.instance.getDeletedObject(context.identifier);
-          if (garbageIdentifier && ObjectStore.instance.isDeleted(garbageIdentifier, context)) {
-            EventSystem.call('DELETE_GAME_OBJECT', { identifier: garbageIdentifier });
-            return;
-          }
-          let newObject: GameObject = ObjectFactory.instance.create(context.aliasName, context.identifier);
-          if (!newObject) {
-            console.log(context.aliasName + ' is Unknown...?', context);
-            return;
-          }
-          newObject.apply(context);
-          newObject.initialize(false);
+          this.createObject(context);
         }
       })
       .on('DELETE_GAME_OBJECT', 0, event => {
@@ -61,6 +43,29 @@ export class ObjectSynchronizer {
 
   destroy() {
     EventSystem.unregister(this);
+  }
+
+  private updateObject(object: GameObject, context: ObjectContext) {
+    if (context.majorVersion + context.minorVersion < object.version) {
+      object.update(false);
+    } else if (context.majorVersion + context.minorVersion > object.version) {
+      object.apply(context);
+    }
+  }
+
+  private createObject(context: ObjectContext) {
+    let garbageIdentifier = ObjectStore.instance.getDeletedObject(context.identifier);
+    if (garbageIdentifier && ObjectStore.instance.isDeleted(garbageIdentifier, context)) {
+      EventSystem.call('DELETE_GAME_OBJECT', { identifier: garbageIdentifier });
+      return;
+    }
+    let newObject: GameObject = ObjectFactory.instance.create(context.aliasName, context.identifier);
+    if (!newObject) {
+      console.log(context.aliasName + ' is Unknown...?', context);
+      return;
+    }
+    newObject.apply(context);
+    newObject.initialize(false);
   }
 }
 setTimeout(function () { ObjectSynchronizer.instance; }, 0);
