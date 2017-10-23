@@ -1,5 +1,5 @@
 <div #tableMask class="game-char game-char_3d" [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}"
-  [style.width.px]="2 * gridSize" (contextmenu)="onContextMenu($event)" [ngStyle]="{'z-index' : card.zindex}">
+  [style.width.px]="card.size * gridSize" (contextmenu)="onContextMenu($event)" [ngStyle]="{'z-index' : card.zindex}">
   <div *ngIf="card && card.imageFile" class="block-1" [ngStyle]="{'transform': 'rotateZ(' + card.rotate +'deg)'}"
     [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}">
     <img *ngIf="card.isFront" class="background-image" [src]="card.frontImage.url | safe: 'resourceUrl'">
@@ -12,7 +12,7 @@
 
   </div>
   <img *ngIf="card.isHand && card.frontImage" class="game-char-image2 game-char_3d game-char-image_3d" [src]="card.frontImage.url | safe: 'resourceUrl'">
-  <div *ngIf="!card.isFront && card.hasOwner" class="title" [ngStyle]="{'transform': 'translateY(0%) translateX(-50%) translateX(' + 2 * gridSize / 2 +'px)'}"
+  <div *ngIf="!card.isFront && card.hasOwner" class="title" [ngStyle]="{'transform': 'translateY(0%) translateX(-50%) translateX(' + card.size * gridSize / 2 +'px)'}"
     style="position: absolute; top: 50%;background-color: #fcc; color: #CCC; background-color: rgba(30, 30, 30, 0.8);">
     <span style="white-space: nowrap;">{{card.ownerName}}</span>
   </div>

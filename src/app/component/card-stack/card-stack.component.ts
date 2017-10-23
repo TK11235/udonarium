@@ -40,6 +40,11 @@ export class CardStackComponent implements OnInit {
 
   animeState: string = 'inactive';
 
+  get size(): number {
+    let card = this.cardStack.topCard;
+    return (card ? card.size : 2);
+  }
+
   private dragAreaElement: HTMLElement = null;
 
   private top: number = 0;

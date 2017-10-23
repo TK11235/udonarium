@@ -95,7 +95,7 @@ export class Card extends TabletopObject {
     }
   }
 
-  static create(name: string, fornt: string, back: string, identifier?: string): Card {
+  static create(name: string, fornt: string, back: string, size: number = 2, identifier?: string): Card {
     let object: Card = null;
 
     if (identifier) {
@@ -106,6 +106,7 @@ export class Card extends TabletopObject {
     object.createDataElements();
 
     object.commonDataElement.appendChild(DataElement.create('name', name, {}, 'name_' + object.identifier));
+    object.commonDataElement.appendChild(DataElement.create('size', size, {}, 'size_' + object.identifier));
     object.imageDataElement.appendChild(DataElement.create('front', fornt, { type: 'image' }, 'front_' + object.identifier));
     object.imageDataElement.appendChild(DataElement.create('back', back, { type: 'image' }, 'back_' + object.identifier));
     object.initialize();
