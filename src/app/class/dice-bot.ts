@@ -389,31 +389,9 @@ export class DiceBot extends GameObject {
       DiceBot.loadedDiceBots[gameType] = false;
 
       let promises: Promise<void>[] = [];
+      let scriptPath = './assets/dicebot/' + gameType + '.js';
 
-      promises.push(new Promise<void>((resolve, reject) => {
-        let head = document.head;
-        let script = document.createElement('script');
-        script.src = './assets/dicebot/' + gameType + '.js';
-        head.appendChild(script);
-
-        script.onload = (e) => {
-          if (head && script.parentNode) head.removeChild(script);
-          console.log(gameType + ' is loading OK!!!');
-          resolve();
-        };
-
-        script.onabort = (e) => {
-          if (head && script.parentNode) head.removeChild(script);
-          console.error(e);
-          resolve();
-        }
-
-        script.onerror = (e) => {
-          if (head && script.parentNode) head.removeChild(script);
-          console.error(e);
-          resolve();
-        }
-      }));
+      promises.push(DiceBot.loadScriptAsync(scriptPath));
 
       for (let table of DiceBot.extratablesTables) {
         if (!table.indexOf(gameType)) {
