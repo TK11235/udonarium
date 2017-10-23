@@ -1,6 +1,6 @@
 <div #tableMask class="game-char game-char_3d" [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}"
-  [style.width.px]="card.size * gridSize" (contextmenu)="onContextMenu($event)" [ngStyle]="{'z-index' : card.zindex}">
-  <div *ngIf="card && card.imageFile" class="block-1" [ngStyle]="{'transform': 'rotateZ(' + card.rotate +'deg)'}"
+  [style.width.px]="card.size * gridSize" (contextmenu)="onContextMenu($event)" [ngStyle]="{'z-index' : card.zindex, 'pointer-events': 'none'}">
+  <div *ngIf="card && card.imageFile" class="block-1" [ngStyle]="{'transform': 'rotateZ(' + card.rotate +'deg)', 'pointer-events': 'auto'}"
     [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}">
     <img *ngIf="card.isFront" class="background-image" [src]="card.frontImage.url | safe: 'resourceUrl'">
     <img *ngIf="!card.isFront" class="background-image" [src]="card.backImage.url | safe: 'resourceUrl'">

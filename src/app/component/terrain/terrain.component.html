@@ -1,5 +1,6 @@
 <div #tableMask class="game-char" [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.depth * gridSize"
   (contextmenu)="onContextMenu($event)"
+  [ngStyle]="{'pointer-events': 'none'}"
   [ngClass]="{'transition': !isDragging}">
   <!--<ng-container *ngIf="terrain.imageFile.url.length < 1">
     <div class="block-1 floor" [ngStyle]="{'transform': 'rotateZ(45deg) translateZ(' + terrain.height * gridSize +'px)'}" [style.background-color]="'rgba(10, 10, 10,' + terrain.opacity +')'">
@@ -14,7 +15,7 @@
     </div>
   </ng-container>
   -->
-  <div class="block-1 floor" [ngStyle]="{'transform': 'rotateZ(' + terrain.rotate +'deg)'}" [ngClass]="{'grab': (!isDragging && !terrain.isLocked), 'grabbing': (isDragging && !terrain.isLocked), 'transition': !isDragging}">
+  <div class="block-1 floor" [ngStyle]="{'transform': 'rotateZ(' + terrain.rotate +'deg)', 'pointer-events': 'auto'}" [ngClass]="{'grab': (!isDragging && !terrain.isLocked), 'grabbing': (isDragging && !terrain.isLocked), 'transition': !isDragging}">
     <ng-container *ngIf="terrain.hasFloor && 0 < terrain?.floorImage?.url.length">
       <div class="block-1 floor" [ngClass]="{'blinking': !terrain.isLocked}" [ngStyle]="{'transform': 'translateZ(' + terrain.height * gridSize +'px)'}"
         [style.background-image]="'url(' + terrain.floorImage.url + ')' | safe: 'style'"></div>

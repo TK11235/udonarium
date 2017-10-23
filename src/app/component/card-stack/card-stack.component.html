@@ -1,6 +1,6 @@
 <div #tableMask class="game-char" [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging, 'null_size': cardStack.cards.length<1}"
-  [style.width.px]="size * gridSize" (contextmenu)="onContextMenu($event)" [ngStyle]="{'z-index' : cardStack.zindex}">
-  <div class="block-1 game-char_3d" [ngStyle]="{'transform': 'rotateZ(' + cardStack.rotate +'deg)'}" [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}">
+  [style.width.px]="size * gridSize" (contextmenu)="onContextMenu($event)" [ngStyle]="{'z-index' : cardStack.zindex, 'pointer-events': 'none'}">
+  <div class="block-1 game-char_3d" [ngStyle]="{'transform': 'rotateZ(' + cardStack.rotate +'deg)', 'pointer-events': 'auto'}" [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}">
     <ng-container *ngIf="cardStack && cardStack.imageFile">
       <div (@shuffle.start)="animationShuffleStarted($event)" (@shuffle.done)="animationShuffleDone($event)" [@shuffle]="animeState">
         <img class="background-image" [ngStyle]="{'transform': 'rotateZ(' + cardStack.topCard.rotate +'deg)'}" [src]="cardStack.imageFile.url | safe: 'resourceUrl'">
