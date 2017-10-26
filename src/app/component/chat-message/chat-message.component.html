@@ -1,15 +1,15 @@
 <div class="container">
-  <div class="message" [ngClass]="{'direct-message': chatMessage.isDirect}" [@flyInOut]="'in'">
+  <div class="message" [ngClass]="{'direct-message': chatMessage.isDirect, 'system-message':chatMessage.isSystem, 'dicebot-message': chatMessage.isDicebot}" [@flyInOut]="'in'">
     <div class="image">
       <img *ngIf="0 < imageFile?.url?.length" [src]="imageFile?.url | safe: 'resourceUrl'" />
     </div>
     <div class="body">
       <div class="title">
-        <span style="font-weight: bold;">{{chatMessage.name}}</span>
-        <span class='tip'>　From: {{chatMessage.from}}</span>
-        <span class='tip'>　{{chatMessage.timestamp | date:'y/M/d H:mm'}}</span>
+        <span class="msg-name" style="font-weight: bold;">{{chatMessage.name}}</span>
+        <span class='tip msg-from'>　From: {{chatMessage.from}}</span>
+        <span class='tip msg-timestamp'>　{{chatMessage.timestamp | date:'y/M/d H:mm'}}</span>
       </div>
-      <div class="text"><span>{{chatMessage.text}}</span></div>
+      <div class="text msg-text"><span>{{chatMessage.text}}</span></div>
     </div>
   </div>
 </div>
