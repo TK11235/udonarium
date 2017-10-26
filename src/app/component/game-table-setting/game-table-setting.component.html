@@ -19,7 +19,15 @@
       <input [(ngModel)]="tableHeight" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;">
     </div>
     <div>
-      <button (click)="updateGameTableSettings()">変更</button>
+      グリッド:<select (change)="changeGridType($event.target.value)" [ngModel]="tableGridType" name="tableGridType">
+        <option value="0">スクエア</option>
+        <option value="1">ヘクス（縦揃え）</option>
+        <option value="2">ヘクス（横揃え）</option>
+      </select>
+      常時:<input type="checkbox" (change)="changeGridShow($event.target.checked)" [ngModel]="tableGridShow" name="tableGridType" />
+    </div>
+    <hr/>
+    <div>
       <button (click)="save()">現在の状態を保存</button>
     </div>
   </div>
