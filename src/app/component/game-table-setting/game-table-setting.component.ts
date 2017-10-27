@@ -26,6 +26,8 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   _tableName: string = '';
   _tableWidth: number = 20;
   _tableHeight: number = 20;
+  _tableGridType: number = 0;
+  _tableGridShow: boolean = false;
   minSize: number = 1;
   maxSize: number = 100;
   tableBackgroundImage: ImageFile = ImageFile.createEmpty('null');
@@ -47,6 +49,10 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this._tableHeight = tableHeight;
     this.updateGameTableSettings();
   }
+
+  get tableGridShow(): boolean { return this._tableGridShow };
+
+  get tableGridType(): number { return this._tableGridType };
 
   get viewTable(): GameTable {
     return ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;
@@ -94,6 +100,8 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this._tableName = gameTable.name;
     this._tableHeight = gameTable.height;
     this._tableWidth = gameTable.width;
+    this._tableGridType = gameTable.gridType;
+    this._tableGridShow = gameTable.gridShow;
   }
 
   updateGameTableSettings() {
@@ -108,6 +116,8 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     gameTable.height = this.tableHeight;
     gameTable.imageIdentifier = this.tableBackgroundImage.identifier;
     gameTable.gridSize = 50;
+    gameTable.gridType = this.tableGridType;
+    gameTable.gridShow = this.tableGridShow;
     gameTable.update();
   }
 
@@ -154,6 +164,18 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
       if (file) this.tableBackgroundImage = file;
       this.viewTable.imageIdentifier = value;
     });
+  }
+
+  changeGridType(target: string) {
+    console.log('changeGridType',target);
+    this._tableGridType = Number(target);
+    this.updateGameTableSettings();
+  }
+
+  changeGridShow(target: boolean) {
+    console.log('changeGridShow',target);
+    this._tableGridShow = target;
+    this.updateGameTableSettings();
   }
 }
 

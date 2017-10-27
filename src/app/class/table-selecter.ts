@@ -27,6 +27,8 @@ export class TableSelecter extends GameObject {
           height: gameTable.height,
           imageIdentifier: gameTable.imageIdentifier,
           gridSize: gameTable.gridSize,
+          gridType: gameTable.gridType,
+          gridShow: gameTable.gridShow,
         }
         EventSystem.call('UPDATE_GAME_TABLE', data);
         gameTable.selected = true;

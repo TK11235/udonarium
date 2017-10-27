@@ -13,6 +13,8 @@ export interface GameTableDataContainer {
   height: number;
   gridSize: number;
   imageIdentifier: string;
+  gridType: number;
+  gridShow: boolean;
 }
 
 @SyncObject('game-table')
@@ -23,6 +25,8 @@ export class GameTable extends GameObject implements InnerXml {
   @SyncVar() gridSize: number = 50;
   @SyncVar() imageIdentifier: string = 'imageIdentifier';
   @SyncVar() selected: boolean = false;
+  @SyncVar() gridType: number = 0; // 0=square 1=hex(縦揃え) 2=hex(横揃え)
+  @SyncVar() gridShow: boolean = false; // true=常時グリッド表示
 
   innerXml(): string {
     let xml = '';

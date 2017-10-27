@@ -69,7 +69,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (table && table !== this._gameTableObject) {
       this._gameTableObject = table;
       this.updateBackgroundImage();
-      this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize);
+      this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize, this._gameTableObject.gridType, this._gameTableObject.gridShow);
     }
     return this._gameTableObject;
   }
@@ -227,7 +227,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
         this.updateBackgroundImage();
-        this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize);
+        this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this._gameTableObject.gridShow);
       })
       .on('XML_PARSE', event => {
         let xml: string = event.data.xml;
@@ -242,7 +242,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }).on('DRAG_LOCKED_OBJECT', event => {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
-        $(this.gridCanvas.nativeElement).css('opacity', 0.0);
+        let opacity: number = 0.0;
+        if(this.gameTableObject.gridShow == true){
+          opacity = 1.0;
+        }
+        $(this.gridCanvas.nativeElement).css('opacity', opacity);
       });
     /*
     .on('UPDATE_GAME_OBJECT', -1000, event => {
@@ -279,7 +283,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tick();
     */
 
-    this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize);
+    this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this._gameTableObject.gridShow);
     this.setTransform(0, 0, 0, 0, 0, 0);
     this.gameTableObject.update();
     /*
@@ -409,7 +413,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     //console.log('onMouseUp');
 
     this.pointerDeviceService.isDragging = false;
-    $(this.gridCanvas.nativeElement).css('opacity', 0.0);
+    let opacity: number = 0.0;
+    if(this.gameTableObject.gridShow == true){
+      opacity = 1.0;
+    }
+    $(this.gridCanvas.nativeElement).css('opacity', opacity);
 
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
     document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
@@ -627,7 +635,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     $(this.gameTable.nativeElement).css('transform', 'translateZ(' + this.viewPotisonZ + 'px) translateY(' + this.viewPotisonY + 'px) translateX(' + this.viewPotisonX + 'px) rotateY(' + this.viewRotateY + 'deg) rotateX(' + this.viewRotateX + 'deg) rotateZ(' + this.viewRotateZ + 'deg) ');
   }
 
-  private setGameTableGrid(width: number, height: number, gridSize: number = 50) {
+  private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: number = 0, gridShow: boolean = false) {
     let $gameTableElement = $(this.gameTable.nativeElement);
     $gameTableElement.css('width', width * gridSize);
     $gameTableElement.css('height', height * gridSize);
@@ -636,20 +644,67 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     canvasElement.width = width * gridSize;
     canvasElement.height = height * gridSize;
     let context: CanvasRenderingContext2D = canvasElement.getContext('2d');
-    context.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+    context.strokeStyle = 'rgba(0, 0, 0, 1.0)';
     context.lineWidth = 2;
-    for (let i = 0; i <= height; i++) {
-      context.beginPath();
-      context.moveTo(0, i * gridSize);
-      context.lineTo(width * gridSize, i * gridSize);
-      context.stroke();
+
+    $(this.gridCanvas.nativeElement).css('opacity',0);
+
+    // 座標描画用font設定
+    let fontSize: number = Math.floor(gridSize / 5);
+    context.font = 'bold ' + fontSize + 'px sans-serif';
+    context.textBaseline = 'top';
+    context.textAlign = 'center';
+
+    let gx: number; // グリッド用Rect描画開始位置(x)
+    let gy: number; // 同上(y)
+
+    if(gridType == 1){
+      // ヘクス縦揃え
+      for (let h = 0; h <= height; h++) {
+        for (let w = 0; w <= width; w++) {
+          if((w % 2) == 1){
+            gx = w * gridSize;
+            gy = h * gridSize;
+          }else{
+            gx = w * gridSize;
+            gy = h * gridSize + (gridSize / 2);
+          }
+          context.beginPath();
+          context.strokeRect(gx, gy, gridSize, gridSize);
+          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2) , gy + (gridSize / 2));
+        }
+      }
+    }else if(gridType == 2){
+      // ヘクス横揃え(どどんとふ互換)
+      for (let h = 0; h <= height; h++) {
+        for (let w = 0; w <= width; w++) {
+          if((h % 2) == 1){
+            gx = w * gridSize;
+            gy = h * gridSize;
+          }else{
+            gx = w * gridSize + (gridSize / 2);
+            gy = h * gridSize;
+          }
+          context.beginPath();
+          context.strokeRect(gx, gy, gridSize, gridSize);
+          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2) , gy + (gridSize / 2));
+        }
+      }
+    }else{
+      // スクエア(default)
+      for (let h = 0; h <= height; h++) {
+        for (let w = 0; w <= width; w++) {
+          gx = w * gridSize;
+          gy = h * gridSize;
+          context.beginPath();
+          context.strokeRect(gx, gy, gridSize, gridSize);
+          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2) , gy + (gridSize / 2));
+        }
+      }
     }
 
-    for (let i = 0; i <= width; i++) {
-      context.beginPath();
-      context.moveTo(i * gridSize, 0);
-      context.lineTo(i * gridSize, height * gridSize);
-      context.stroke();
+    if(gridShow){
+      $(this.gridCanvas.nativeElement).css('opacity',1.0);
     }
   }
 
