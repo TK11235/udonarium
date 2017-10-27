@@ -49,3 +49,11 @@
 .message .tip {
   font-size: 8px;
 }
+
+.dicebot-message .msg-text {
+  color:#22F;
+}
+
+.direct-message.dicebot-message .msg-text {
+  color:#CCF;
+}

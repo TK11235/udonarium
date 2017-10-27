@@ -52,6 +52,8 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext, Inner
   get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
   get isMine(): boolean { return (-1 < this.sendTo.indexOf(Network.peerContext.id)) || this.from === Network.peerContext.id ? true : false; }
   get isDisplayable(): boolean { return this.isDirect ? this.isMine : true; }
+  get isSystem(): boolean { return this.tag === 'system' ? true : false; }
+  get isDicebot(): boolean { return this.isSystem && this.from === 'System-BCDice' ? true : false; }
 
   innerXml(): string {
     return this.isDirect ? '' : super.innerXml();
