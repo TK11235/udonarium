@@ -7,7 +7,7 @@ import { PanelService } from '../../service/panel.service';
 
 import * as Beautify from 'vkbeautify';
 
-import { GameTable, GameTableDataContainer } from '../../class/game-table';
+import { GameTable, GameTableDataContainer, GridType } from '../../class/game-table';
 import { TableSelecter } from '../../class/table-selecter';
 import { Network, EventSystem } from '../../class/core/system/system';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
@@ -26,7 +26,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   _tableName: string = '';
   _tableWidth: number = 20;
   _tableHeight: number = 20;
-  _tableGridType: number = 0;
+  _tableGridType: GridType = GridType.SQUARE;
   _tableGridShow: boolean = false;
   minSize: number = 1;
   maxSize: number = 100;
@@ -52,7 +52,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
 
   get tableGridShow(): boolean { return this._tableGridShow };
 
-  get tableGridType(): number { return this._tableGridType };
+  get tableGridType(): GridType { return this._tableGridType };
 
   get viewTable(): GameTable {
     return ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;

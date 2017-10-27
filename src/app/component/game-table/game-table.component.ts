@@ -17,7 +17,7 @@ import { ChatPalette } from '../../class/chat-palette';
 import { Card } from '../../class/card';
 import { CardStack } from '../../class/card-stack';
 import { TabletopObject } from '../../class/tabletop-object';
-import { GameTable } from '../../class/game-table';
+import { GameTable, GridType } from '../../class/game-table';
 import { GameCharacter } from '../../class/game-character';
 import { GameTableMask } from '../../class/game-table-mask';
 import { TableSelecter } from '../../class/table-selecter';
@@ -635,7 +635,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     $(this.gameTable.nativeElement).css('transform', 'translateZ(' + this.viewPotisonZ + 'px) translateY(' + this.viewPotisonY + 'px) translateX(' + this.viewPotisonX + 'px) rotateY(' + this.viewRotateY + 'deg) rotateX(' + this.viewRotateX + 'deg) rotateZ(' + this.viewRotateZ + 'deg) ');
   }
 
-  private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: number = 0, gridShow: boolean = false) {
+  private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: GridType = GridType.SQUARE, gridShow: boolean = false) {
     let $gameTableElement = $(this.gameTable.nativeElement);
     $gameTableElement.css('width', width * gridSize);
     $gameTableElement.css('height', height * gridSize);
@@ -658,7 +658,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let gx: number; // グリッド用Rect描画開始位置(x)
     let gy: number; // 同上(y)
 
-    if (gridType == 1) {
+    if (gridType == GridType.HEX_VERTICAL) {
       // ヘクス縦揃え
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
@@ -674,7 +674,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
       }
-    } else if (gridType == 2) {
+    } else if (gridType == GridType.HEX_HORIZONTAL) {
       // ヘクス横揃え(どどんとふ互換)
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
