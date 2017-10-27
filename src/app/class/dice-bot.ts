@@ -326,7 +326,7 @@ export class DiceBot extends GameObject {
             text: '(シークレットダイス)'
           };
 
-          if( isSecret ){
+          if (isSecret) {
             EventSystem.call('BROADCAST_MESSAGE', diceBotMessageSecretBroadcast);
             chatMessage.to = chatMessage.from;
           }
