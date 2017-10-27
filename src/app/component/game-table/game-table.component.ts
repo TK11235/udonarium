@@ -242,10 +242,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }).on('DRAG_LOCKED_OBJECT', event => {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
-        let opacity: number = 0.0;
-        if (this.gameTableObject.gridShow == true) {
-          opacity = 1.0;
-        }
+        let opacity: number = this.gameTableObject.gridShow ? 1.0 : 0.0;
         $(this.gridCanvas.nativeElement).css('opacity', opacity);
       });
     /*
@@ -414,7 +411,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.pointerDeviceService.isDragging = false;
     let opacity: number = 0.0;
-    if (this.gameTableObject.gridShow == true) {
+    if (this.gameTableObject.gridShow === true) {
       opacity = 1.0;
     }
     $(this.gridCanvas.nativeElement).css('opacity', opacity);
@@ -658,11 +655,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let gx: number; // グリッド用Rect描画開始位置(x)
     let gy: number; // 同上(y)
 
-    if (gridType == GridType.HEX_VERTICAL) {
+    if (gridType === GridType.HEX_VERTICAL) {
       // ヘクス縦揃え
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
-          if ((w % 2) == 1) {
+          if ((w % 2) === 1) {
             gx = w * gridSize;
             gy = h * gridSize;
           } else {
@@ -674,11 +671,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
       }
-    } else if (gridType == GridType.HEX_HORIZONTAL) {
+    } else if (gridType === GridType.HEX_HORIZONTAL) {
       // ヘクス横揃え(どどんとふ互換)
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
-          if ((h % 2) == 1) {
+          if ((h % 2) === 1) {
             gx = w * gridSize;
             gy = h * gridSize;
           } else {
