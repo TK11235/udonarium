@@ -243,7 +243,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
         let opacity: number = 0.0;
-        if(this.gameTableObject.gridShow == true){
+        if (this.gameTableObject.gridShow == true) {
           opacity = 1.0;
         }
         $(this.gridCanvas.nativeElement).css('opacity', opacity);
@@ -414,7 +414,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.pointerDeviceService.isDragging = false;
     let opacity: number = 0.0;
-    if(this.gameTableObject.gridShow == true){
+    if (this.gameTableObject.gridShow == true) {
       opacity = 1.0;
     }
     $(this.gridCanvas.nativeElement).css('opacity', opacity);
@@ -647,7 +647,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     context.strokeStyle = 'rgba(0, 0, 0, 1.0)';
     context.lineWidth = 2;
 
-    $(this.gridCanvas.nativeElement).css('opacity',0);
+    $(this.gridCanvas.nativeElement).css('opacity', 0);
 
     // 座標描画用font設定
     let fontSize: number = Math.floor(gridSize / 5);
@@ -658,39 +658,39 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let gx: number; // グリッド用Rect描画開始位置(x)
     let gy: number; // 同上(y)
 
-    if(gridType == 1){
+    if (gridType == 1) {
       // ヘクス縦揃え
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
-          if((w % 2) == 1){
+          if ((w % 2) == 1) {
             gx = w * gridSize;
             gy = h * gridSize;
-          }else{
+          } else {
             gx = w * gridSize;
             gy = h * gridSize + (gridSize / 2);
           }
           context.beginPath();
           context.strokeRect(gx, gy, gridSize, gridSize);
-          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2) , gy + (gridSize / 2));
+          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
       }
-    }else if(gridType == 2){
+    } else if (gridType == 2) {
       // ヘクス横揃え(どどんとふ互換)
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
-          if((h % 2) == 1){
+          if ((h % 2) == 1) {
             gx = w * gridSize;
             gy = h * gridSize;
-          }else{
+          } else {
             gx = w * gridSize + (gridSize / 2);
             gy = h * gridSize;
           }
           context.beginPath();
           context.strokeRect(gx, gy, gridSize, gridSize);
-          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2) , gy + (gridSize / 2));
+          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
       }
-    }else{
+    } else {
       // スクエア(default)
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
@@ -698,13 +698,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           gy = h * gridSize;
           context.beginPath();
           context.strokeRect(gx, gy, gridSize, gridSize);
-          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2) , gy + (gridSize / 2));
+          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
       }
     }
 
-    if(gridShow){
-      $(this.gridCanvas.nativeElement).css('opacity',1.0);
+    if (gridShow) {
+      $(this.gridCanvas.nativeElement).css('opacity', 1.0);
     }
   }
 

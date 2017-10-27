@@ -167,13 +167,13 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   changeGridType(target: string) {
-    console.log('changeGridType',target);
+    console.log('changeGridType', target);
     this._tableGridType = Number(target);
     this.updateGameTableSettings();
   }
 
   changeGridShow(target: boolean) {
-    console.log('changeGridShow',target);
+    console.log('changeGridShow', target);
     this._tableGridShow = target;
     this.updateGameTableSettings();
   }
