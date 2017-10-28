@@ -311,7 +311,7 @@ export class DiceBot extends GameObject {
             timestamp: chatMessage.timestamp + 2,
             imageIdentifier: '',
             tag: 'system',
-            name: isSecret ? '<BCDice：シークレットダイス>' : '<BCDice：' + chatMessage.name + '>',
+            name: isSecret ? '<BCDice：シークレットダイス（仮実装）>' : '<BCDice：' + chatMessage.name + '>',
             text: result
           };
 
