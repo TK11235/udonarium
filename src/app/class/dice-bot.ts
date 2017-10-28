@@ -315,27 +315,27 @@ export class DiceBot extends GameObject {
             text: result
           };
 
-          let diceBotMessageSecretBroadcast: ChatMessageContext = {
-            identifier: '',
-            tabIdentifier: chatMessage.tabIdentifier,
-            from: 'System-BCDice',
-            timestamp: chatMessage.timestamp + 1,
-            imageIdentifier: '',
-            tag: 'system',
-            name: '<BCDice：' + chatMessage.name + '>',
-            text: '(シークレットダイス)'
-          };
-
-          if (isSecret) {
-            EventSystem.call('BROADCAST_MESSAGE', diceBotMessageSecretBroadcast);
-            chatMessage.to = chatMessage.from;
-          }
-
           if (chatMessage.to != null && 0 < chatMessage.to.length) {
             diceBotMessage.to = chatMessage.to;
             if (chatMessage.to.indexOf(chatMessage.from) < 0) {
               diceBotMessage.to += ' ' + chatMessage.from;
             }
+          }
+
+          if (isSecret) {
+            let secretDiceBotMessage: ChatMessageContext = {
+              identifier: '',
+              tabIdentifier: chatMessage.tabIdentifier,
+              from: 'System-BCDice',
+              timestamp: chatMessage.timestamp + 1,
+              imageIdentifier: '',
+              tag: 'system',
+              name: '<BCDice：' + chatMessage.name + '>',
+              text: '(シークレットダイス)'
+            };
+            secretDiceBotMessage.to = diceBotMessage.to;
+            diceBotMessage.to = chatMessage.from;
+            EventSystem.call('BROADCAST_MESSAGE', secretDiceBotMessage);
           }
 
           EventSystem.call('BROADCAST_MESSAGE', diceBotMessage);
