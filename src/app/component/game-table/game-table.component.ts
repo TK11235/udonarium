@@ -641,8 +641,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     canvasElement.width = width * gridSize;
     canvasElement.height = height * gridSize;
     let context: CanvasRenderingContext2D = canvasElement.getContext('2d');
-    context.strokeStyle = 'rgba(0, 0, 0, 1.0)';
-    context.lineWidth = 2;
+    context.strokeStyle = 'rgba(0, 0, 0, 0.9)';
+    context.lineWidth = 1;
 
     $(this.gridCanvas.nativeElement).css('opacity', 0);
 
