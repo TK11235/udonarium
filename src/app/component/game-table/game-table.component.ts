@@ -410,10 +410,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     //console.log('onMouseUp');
 
     this.pointerDeviceService.isDragging = false;
-    let opacity: number = 0.0;
-    if (this.gameTableObject.gridShow === true) {
-      opacity = 1.0;
-    }
+    let opacity: number = this.gameTableObject.gridShow ? 1.0 : 0.0;
     $(this.gridCanvas.nativeElement).css('opacity', opacity);
 
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
@@ -644,8 +641,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     context.strokeStyle = 'rgba(0, 0, 0, 0.9)';
     context.lineWidth = 1;
 
-    $(this.gridCanvas.nativeElement).css('opacity', 0);
-
     // 座標描画用font設定
     let fontSize: number = Math.floor(gridSize / 5);
     context.font = 'bold ' + fontSize + 'px sans-serif';
@@ -700,9 +695,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
 
-    if (gridShow) {
-      $(this.gridCanvas.nativeElement).css('opacity', 1.0);
-    }
+    let opacity: number = this.gameTableObject.gridShow ? 1.0 : 0.0;
+    $(this.gridCanvas.nativeElement).css('opacity', opacity);
   }
 
   private createTrump(potison: PointerCoordinate) {
