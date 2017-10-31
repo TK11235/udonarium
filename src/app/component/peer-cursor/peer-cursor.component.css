@@ -1,0 +1,63 @@
+.component {
+  position: absolute;
+  overflow: visible;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -moz-user-drag: none;
+  -webkit-user-drag: none;
+}
+
+.is-transition {
+  transition: transform 99ms linear, opacity 0.5s ease-out;
+}
+
+.peer-cursor {
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  border: solid 1px rgba(240, 218, 189);
+  border-radius: 50% 50% 5% 50%;
+  background-color: rgba(240, 218, 189, 0.9);
+  transform-origin: 100% 100%;
+  transform: translateX(-100%) translateY(-100%)  rotateX(-90deg) rotateZ(45deg);
+}
+
+.icon {
+  overflow: visible;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  background-position: top, center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: rotateZ(-45deg) scale(0.85);
+}
+
+.name {
+  box-sizing: border-box;
+  font-size: 7px;
+  padding: 2px 5px;
+  border-radius: 14px;
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+.is-center {
+  position: absolute;
+  left: 50%;
+  top: -26px;
+  transform: translateX(-50%);
+}
+
+.is-3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.is-pointer-events-none {
+  pointer-events: none;
+}

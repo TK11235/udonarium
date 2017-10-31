@@ -1,3 +1,4 @@
+import { PeerCursor } from '../../class/peer-cursor';
 import {
   Component, ChangeDetectionStrategy, ChangeDetectorRef,
   OnInit, OnDestroy, NgZone, ViewChild, AfterViewInit, ElementRef
@@ -360,6 +361,9 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     return ObjectStore.instance.getObjects(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
   }
 
+  getPeerCursor(): PeerCursor[] {
+    return ObjectStore.instance.getObjects(PeerCursor).filter((obj) => { return obj !== PeerCursor.myCursor });
+  }
   onMouseDown(e: any) {
     this.mouseDownPositionX = e.touches ? e.changedTouches[0].pageX : e.pageX;
     this.mouseDownPositionY = e.touches ? e.changedTouches[0].pageY : e.pageY;

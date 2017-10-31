@@ -4,14 +4,16 @@ import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
 import { FileStorage } from './core/file-storage/file-storage';
 import { ImageFile } from './core/file-storage/image-file';
+import { Transform, IPoint2D, IPoint3D } from './transform/transform';
 
 @SyncObject('PeerCursor')
 export class PeerCursor extends GameObject {
   @SyncVar() peerId: string = '';
   @SyncVar() name: string = '';
-  @SyncVar() left: number = 0;
-  @SyncVar() top: number = 0;
   @SyncVar() imageIdentifier: string = '';
+  @SyncVar() posX: number = 0;
+  @SyncVar() posY: number = 0;
+  @SyncVar() posZ: number = 0;
 
   static myCursor: PeerCursor = null;
   private static hash: { [peerId: string]: string } = {};
@@ -19,10 +21,11 @@ export class PeerCursor extends GameObject {
   get isMine(): boolean { return (PeerCursor.myCursor && PeerCursor.myCursor === this); }
   get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
 
-  private $cursorElement: JQuery = null;
   private updateInterval: NodeJS.Timer = null;
-  private deleteTimer: any = null;
   private callcack: any = (e) => this.onMouseMove(e);
+
+  private _x: number = 0;
+  private _y: number = 0;
 
   initialize(needUpdate: boolean = true) {
     super.initialize(needUpdate);
@@ -34,32 +37,17 @@ export class PeerCursor extends GameObject {
       EventSystem.register(this)
         .on('CLOSE_OTHER_PEER', -1000, event => {
           if (event.data.peer !== this.peerId) return;
-          this.removeCursorElement();
           delete PeerCursor.hash[this.peerId];
           ObjectStore.instance.delete(this, false);
         });
-      this.crerateCursorElement();
     }
   }
 
   destroy() {
-    this.removeCursorElement();
-    delete PeerCursor.hash[this.peerId];
-    super.destroy();
-  }
-
-  private removeCursorElement() {
-    if (this.deleteTimer !== null) {
-      clearTimeout(this.deleteTimer);
-      this.deleteTimer = null;
-    }
-    if (this.$cursorElement !== null) {
-      this.$cursorElement.remove();
-      this.$cursorElement = null;
-    }
-
     document.body.removeEventListener('mousemove', this.callcack);
     document.body.removeEventListener('touchmove', this.callcack);
+    delete PeerCursor.hash[this.peerId];
+    super.destroy();
   }
 
   static find(peerId): PeerCursor {
@@ -89,36 +77,14 @@ export class PeerCursor extends GameObject {
   private onMouseMove(e: any) {
     let x = e.touches ? e.changedTouches[0].pageX : e.pageX;
     let y = e.touches ? e.changedTouches[0].pageY : e.pageY;
-    if (x === this.left && y === this.top) return;
+    if (x === this._x && y === this._y) return;
+    this._x = x;
+    this._y = y;
     if (!this.updateInterval) {
       this.updateInterval = setTimeout(() => {
-        this.setPosition(x, y);
-        this.left = x;
-        this.top = y;
         this.updateInterval = null;
+        this.calcLocalCoordinate(this._x, this._y, e.target);
       }, 66);
-    }
-  }
-
-  private startDeleteTimer() {
-    if (this.deleteTimer !== null) clearTimeout(this.deleteTimer);
-
-    this.deleteTimer = setTimeout(() => {
-      this.$cursorElement.css('opacity', 0);
-
-      this.deleteTimer = setTimeout(() => {
-        this.$cursorElement.css('display', 'none');
-      }, 1000);
-
-    }, 3000);
-    this.$cursorElement.css('display', 'block');
-    this.$cursorElement.css('opacity', 1.0);
-  }
-
-  onUpdate() {
-    this.setPosition(this.left, this.top);
-    if (this.$cursorElement) {
-      this.startDeleteTimer();
     }
   }
 
@@ -129,27 +95,57 @@ export class PeerCursor extends GameObject {
       delete PeerCursor.hash[this.peerId];
     }
     super.apply(context);
-    this.onUpdate();
-  }
-
-  setPosition(left: number, top: number) {
-    if (this.$cursorElement) {
-      this.$cursorElement.html('■' + this.name);
-      this.$cursorElement.css('transform', 'translateX(' + left + 'px) translateY(' + top + 'px)');
-    }
   }
 
   isPeerAUdon() {
     return /u.*d.*o.*n/ig.exec(this.peerId) != null;
   }
 
-  private crerateCursorElement() {
-    this.$cursorElement = $('<div>');
-    this.$cursorElement.css('position', 'absolute');
-    this.$cursorElement.css('transition', 'transform 66ms linear, opacity 1.0s ease-out');
-    this.$cursorElement.css('white-space', 'nowrap');
-    this.$cursorElement.appendTo('#app-table-layer');
-    this.$cursorElement.html('■' + this.name);
-    this.startDeleteTimer();
+  private calcLocalCoordinate(x: number, y: number, target: HTMLElement) {
+    let isTerrain = true;
+    let node: HTMLElement = target;
+    let dragArea = document.getElementById('app-game-table');
+
+    while (node) {
+      if (node === dragArea) break;
+      node = node.parentElement;
+    }
+    if (node == null) isTerrain = false;
+
+    let coordinate: IPoint3D = { x: x, y: y, z: 0, w: 0 };
+    if (!isTerrain) {
+      coordinate = this.convertToLocal(coordinate, dragArea);
+      coordinate.z = 0;
+    } else {
+      coordinate = this.convertLocalToLocal(coordinate, target, dragArea);
+    }
+
+    this.posX = coordinate.x;
+    this.posY = coordinate.y;
+    this.posZ = coordinate.z;
+  }
+
+  private convertToLocal(pointer: IPoint2D, element: HTMLElement = document.body): IPoint3D {
+    let transformer: Transform = new Transform(element);
+    let ray = transformer.globalToLocal(pointer.x, pointer.y, 0);
+    transformer.clear();
+    return ray;
+  }
+
+  private convertLocalToLocal(pointer: IPoint3D, from: HTMLElement, to: HTMLElement): IPoint3D {
+    let transformer: Transform = new Transform(from);
+    let local = transformer.globalToLocal(pointer.x, pointer.y, pointer.z ? pointer.z : 0);
+    let ray = transformer.localToLocal(local.x, local.y, 0, to);
+    transformer.clear();
+    return ray;
+  }
+
+  private findDragAreaElement(parent: HTMLElement): HTMLElement {
+    if (parent.tagName === 'DIV') {
+      return parent;
+    } else if (parent.tagName !== 'BODY') {
+      return this.findDragAreaElement(parent.parentElement);
+    }
+    return null;
   }
 }

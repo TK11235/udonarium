@@ -1,0 +1,9 @@
+<div #cursor class="component is-3d is-transition is-pointer-events-none">
+  <div #opacity class="peer-cursor is-3d is-transition">
+    <div class="icon" [style.background-image]="'url(' + iconUrl + ')' | safe: 'style'">
+      <div class="name is-center">
+        <span style="white-space: nowrap;">{{name}}</span>
+      </div>
+    </div>
+  </div>
+</div>
