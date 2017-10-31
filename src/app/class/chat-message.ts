@@ -46,14 +46,24 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext, Inner
     }
     return this._sendTo;
   }
+  private _tag: string;
+  private _tags: string[] = [];
+  get tags(): string[] {
+    if (this._tag !== this.tag) {
+      this._tag = this.tag;
+      this._tags = 0 < this.tag.length ? this.tag.split(/\s+/) : [];
+    }
+    return this._tags;
+  }
   get response(): ChatMessage { return ObjectStore.instance.get<ChatMessage>(this.responseIdentifier); }
   get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
   get index(): number { return this.minorIndex + this.timestamp; }
   get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
   get isMine(): boolean { return (-1 < this.sendTo.indexOf(Network.peerContext.id)) || this.from === Network.peerContext.id ? true : false; }
   get isDisplayable(): boolean { return this.isDirect ? this.isMine : true; }
-  get isSystem(): boolean { return this.tag === 'system' ? true : false; }
+  get isSystem(): boolean { return this.tags.indexOf('system') ? true : false; }
   get isDicebot(): boolean { return this.isSystem && this.from === 'System-BCDice' ? true : false; }
+  get isSecret(): boolean { return -1 < this.tags.indexOf('secret') ? true : false; }
 
   innerXml(): string {
     return this.isDirect ? '' : super.innerXml();
