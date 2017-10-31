@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="message" [ngClass]="{'direct-message': chatMessage.isDirect, 'system-message':chatMessage.isSystem, 'dicebot-message': chatMessage.isDicebot}" [@flyInOut]="'in'">
+  <div class="message" [ngClass]="{'direct-message': chatMessage.isDirect, 'system-message':chatMessage.isSystem, 'dicebot-message': chatMessage.isDicebot}"
+    [@flyInOut]="'in'">
     <div class="image">
       <img *ngIf="0 < imageFile?.url?.length" [src]="imageFile?.url | safe: 'resourceUrl'" />
     </div>
@@ -9,7 +10,10 @@
         <span class='tip msg-from'>　From: {{chatMessage.from}}</span>
         <span class='tip msg-timestamp'>　{{chatMessage.timestamp | date:'y/M/d H:mm'}}</span>
       </div>
-      <div class="text msg-text"><span>{{chatMessage.text}}</span></div>
+      <div class="text msg-text">
+        <span>{{chatMessage.text}}</span>
+        <button *ngIf="chatMessage.isSecret" (click)="discloseMessage()">結果を公開</button>
+      </div>
     </div>
   </div>
 </div>

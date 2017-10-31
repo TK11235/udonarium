@@ -1,3 +1,4 @@
+import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
@@ -36,5 +37,16 @@ export class ChatMessageComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.onInit.emit();
+  }
+
+  discloseMessage() {
+    let originalMessage: ChatMessage = ObjectStore.instance.get<ChatMessage>(this.chatMessage.responseIdentifier);
+    this.chatMessage.tag = this.chatMessage.tag.replace('secret', '');
+    this.chatMessage.to = originalMessage.to;
+    this.chatMessage.name = '<Secret-BCDice：' + originalMessage.name + '>'
+    if (0 < originalMessage.to.length && this.chatMessage.to.indexOf(originalMessage.from) < 0) {
+      this.chatMessage.responseIdentifier = null;
+      this.chatMessage.to += ' ' + originalMessage.from;
+    }
   }
 }

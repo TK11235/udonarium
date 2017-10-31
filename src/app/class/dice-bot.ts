@@ -311,7 +311,7 @@ export class DiceBot extends GameObject {
             timestamp: chatMessage.timestamp + 2,
             imageIdentifier: '',
             tag: 'system',
-            name: isSecret ? '<BCDice：シークレットダイス（仮実装）>' : '<BCDice：' + chatMessage.name + '>',
+            name: isSecret ? '<Secret-BCDice：' + chatMessage.name + '>（非公開）' : '<BCDice：' + chatMessage.name + '>',
             text: result
           };
 
@@ -335,6 +335,8 @@ export class DiceBot extends GameObject {
             };
             secretDiceBotMessage.to = diceBotMessage.to;
             diceBotMessage.to = chatMessage.from;
+            diceBotMessage.responseIdentifier = event.data.identifier;
+            diceBotMessage.tag += ' secret';
             EventSystem.call('BROADCAST_MESSAGE', secretDiceBotMessage);
           }
 
