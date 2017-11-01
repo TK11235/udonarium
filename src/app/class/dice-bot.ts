@@ -281,8 +281,8 @@ export class DiceBot extends GameObject {
     EventSystem.register(this)
       .on<ChatMessageContext>('BROADCAST_MESSAGE', 100, async event => {
         if (!event.isSendFromSelf) return;
-        let chatMessage: ChatMessageContext = event.data;
-        if (chatMessage.tag === 'system') return;
+        let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.identifier);
+        if (!chatMessage || chatMessage.isSystem) return;
         console.log('BROADCAST_MESSAGE DiceBot...?');
         let text: string = chatMessage.text;
 
