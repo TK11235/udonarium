@@ -2,7 +2,6 @@ import { Network } from './core/system/system';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { InnerXml } from './core/synchronize-object/object-serializer';
 import { FileStorage } from './core/file-storage/file-storage';
 import { ImageFile } from './core/file-storage/image-file';
 
@@ -21,7 +20,7 @@ export interface ChatMessageContext {
 }
 
 @SyncObject('chat')
-export class ChatMessage extends ObjectNode implements ChatMessageContext, InnerXml {
+export class ChatMessage extends ObjectNode implements ChatMessageContext {
   @SyncVar() from: string;
   @SyncVar() to: string;
   @SyncVar() name: string;
@@ -64,12 +63,4 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext, Inner
   get isSystem(): boolean { return -1 < this.tags.indexOf('system') ? true : false; }
   get isDicebot(): boolean { return this.isSystem && this.from === 'System-BCDice' ? true : false; }
   get isSecret(): boolean { return -1 < this.tags.indexOf('secret') ? true : false; }
-
-  innerXml(): string {
-    return this.isDirect ? '' : super.innerXml();
-  };
-
-  parseInnerXml(element: Element) {
-    return super.parseInnerXml(element);
-  };
 }

@@ -42,8 +42,8 @@ export class ChatMessageComponent implements OnInit, AfterViewInit {
   discloseMessage() {
     let originalMessage: ChatMessage = ObjectStore.instance.get<ChatMessage>(this.chatMessage.responseIdentifier);
     this.chatMessage.tag = this.chatMessage.tag.replace('secret', '');
-    this.chatMessage.to = originalMessage.to;
     this.chatMessage.name = '<Secret-BCDice：' + originalMessage.name + '>'
+    this.chatMessage.to = originalMessage.to.length ? originalMessage.to : null;
     if (0 < originalMessage.to.length && this.chatMessage.to.indexOf(originalMessage.from) < 0) {
       this.chatMessage.responseIdentifier = null;
       this.chatMessage.to += ' ' + originalMessage.from;

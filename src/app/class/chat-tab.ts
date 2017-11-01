@@ -6,7 +6,7 @@ import { ObjectNode } from './core/synchronize-object/object-node';
 import { ChatMessage, ChatMessageContext } from './chat-message';
 
 @SyncObject('chat-tab')
-export class ChatTab extends ObjectNode {
+export class ChatTab extends ObjectNode implements InnerXml {
   @SyncVar() name: string = 'タブ';
   get chatMessages(): ChatMessage[] { return <ChatMessage[]>this.children; }
 
@@ -39,4 +39,18 @@ export class ChatTab extends ObjectNode {
     message.tabIdentifier = this.identifier;
     EventSystem.call('BROADCAST_MESSAGE', message);
   }
+
+  innerXml(): string {
+    let xml = '';
+    xml += (this.value + '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    for (let child of this.children) {
+      if (child instanceof ChatMessage && !child.isDisplayable) continue;
+      xml += ObjectSerializer.instance.toXml(child);
+    }
+    return xml;
+  };
+
+  parseInnerXml(element: Element) {
+    return super.parseInnerXml(element);
+  };
 }
