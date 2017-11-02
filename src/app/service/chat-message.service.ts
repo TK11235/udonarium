@@ -39,7 +39,7 @@ export class ChatMessageService {
         console.log('st: ' + st + '');
         console.log('timeOffset: ' + this.timeOffset);
         console.log('performanceOffset: ' + this.performanceOffset);
-        setTimeout(() => { this.calibrateTimeOffset }, 6 * 60 * 60 * 1000);
+        setTimeout(() => { this.calibrateTimeOffset(); }, 6 * 60 * 60 * 1000);
       },
       error => {
         console.error(error.status + ":" + error.statusText);
