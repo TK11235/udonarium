@@ -11,6 +11,7 @@ import { ChatMessage, ChatMessageContext } from '../class/chat-message';
 export class ChatMessageService {
 
   private timeOffset: number = Date.now();
+  private performanceOffset: number = performance.now();
 
   gameType: string = '';
 
@@ -33,10 +34,11 @@ export class ChatMessageService {
         let st: number = timeobj.st * 1000;
         let fixedTime = st + latency;
         this.timeOffset = fixedTime;
+        this.performanceOffset = endTime;
         console.log('latency: ' + latency + 'ms');
         console.log('st: ' + st + '');
-        console.log('now: ' + Date.now() + '');
-        console.log('offset: ' + this.timeOffset);
+        console.log('timeOffset: ' + this.timeOffset);
+        console.log('performanceOffset: ' + this.performanceOffset);
         setTimeout(() => { this.calibrateTimeOffset }, 6 * 60 * 60 * 1000);
       },
       error => {
@@ -46,6 +48,6 @@ export class ChatMessageService {
   }
 
   getTime(): number {
-    return Math.floor(this.timeOffset + performance.now());
+    return Math.floor(this.timeOffset + (performance.now() - this.performanceOffset));
   }
 }
