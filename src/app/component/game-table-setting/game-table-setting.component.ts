@@ -27,6 +27,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   _tableWidth: number = 20;
   _tableHeight: number = 20;
   _tableGridType: GridType = GridType.SQUARE;
+  _tableGridColor: string = '#000000e6';
   _tableGridShow: boolean = false;
   minSize: number = 1;
   maxSize: number = 100;
@@ -50,6 +51,12 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.updateGameTableSettings();
   }
 
+  get tableGridColor(): string { return this._tableGridColor };
+  set tableGridColor(tableGridColor: string) {
+    this._tableGridColor = tableGridColor;
+    this.updateGameTableSettings();
+  }
+
   get tableGridShow(): boolean { return this._tableGridShow };
 
   get tableGridType(): GridType { return this._tableGridType };
@@ -70,16 +77,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.update();
 
     EventSystem.register(this)
-      /*
-        .on('SELECT_FILE', 0, event => {
-          console.log('SELECT_FILE GameTableSettingComponent ' + event.data.fileIdentifier);
-  
-          let fileIdentifier: string = event.data.fileIdentifier;
-  
-          let file: ImageFile = FileStorage.instance.get(fileIdentifier);
-          if (file) this.tableBackgroundImage = file;
-  
-        })*/
       .on('SELECT_GAME_TABLE', -1000, event => {
         this.update();
       })
@@ -101,6 +98,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this._tableHeight = gameTable.height;
     this._tableWidth = gameTable.width;
     this._tableGridType = gameTable.gridType;
+    this._tableGridColor = gameTable.gridColor;
     this._tableGridShow = gameTable.gridShow;
   }
 
@@ -117,6 +115,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     gameTable.imageIdentifier = this.tableBackgroundImage.identifier;
     gameTable.gridSize = 50;
     gameTable.gridType = this.tableGridType;
+    gameTable.gridColor = this.tableGridColor;
     gameTable.gridShow = this.tableGridShow;
     gameTable.update();
   }

@@ -70,7 +70,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (table && table !== this._gameTableObject) {
       this._gameTableObject = table;
       this.updateBackgroundImage();
-      this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize, this._gameTableObject.gridType, this._gameTableObject.gridShow);
+      this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize, this._gameTableObject.gridType, this.gameTableObject.gridColor, this._gameTableObject.gridShow);
     }
     return this._gameTableObject;
   }
@@ -228,7 +228,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
         this.updateBackgroundImage();
-        this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this._gameTableObject.gridShow);
+        this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor, this._gameTableObject.gridShow);
       })
       .on('XML_PARSE', event => {
         let xml: string = event.data.xml;
@@ -281,7 +281,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tick();
     */
 
-    this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this._gameTableObject.gridShow);
+    this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor, this._gameTableObject.gridShow);
     this.setTransform(0, 0, 0, 0, 0, 0);
     this.gameTableObject.update();
     /*
@@ -633,7 +633,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     $(this.gameTable.nativeElement).css('transform', 'translateZ(' + this.viewPotisonZ + 'px) translateY(' + this.viewPotisonY + 'px) translateX(' + this.viewPotisonX + 'px) rotateY(' + this.viewRotateY + 'deg) rotateX(' + this.viewRotateX + 'deg) rotateZ(' + this.viewRotateZ + 'deg) ');
   }
 
-  private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: GridType = GridType.SQUARE, gridShow: boolean = false) {
+  private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: GridType = GridType.SQUARE, gridColor: string = '#000000e6', gridShow: boolean = false) {
     let $gameTableElement = $(this.gameTable.nativeElement);
     $gameTableElement.css('width', width * gridSize);
     $gameTableElement.css('height', height * gridSize);
@@ -642,7 +642,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     canvasElement.width = width * gridSize;
     canvasElement.height = height * gridSize;
     let context: CanvasRenderingContext2D = canvasElement.getContext('2d');
-    context.strokeStyle = 'rgba(0, 0, 0, 0.9)';
+    context.strokeStyle = gridColor;
+    context.fillStyle = context.strokeStyle;
     context.lineWidth = 1;
 
     // 座標描画用font設定

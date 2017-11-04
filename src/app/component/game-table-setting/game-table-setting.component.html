@@ -24,6 +24,10 @@
         <option value="1">ヘクス（縦揃え）</option>
         <option value="2">ヘクス（横揃え）</option>
       </select>
+      色:<select [(ngModel)]="tableGridColor" name="tableGridColor">
+        <option value="#000000e6">黒</option>
+        <option value="#dddddde6">白</option>
+      </select>
       常時:<input type="checkbox" (change)="changeGridShow($event.target.checked)" [ngModel]="tableGridShow" name="tableGridType" />
     </div>
     <hr/>

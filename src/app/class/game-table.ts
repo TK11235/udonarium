@@ -32,6 +32,7 @@ export class GameTable extends GameObject implements InnerXml {
   @SyncVar() imageIdentifier: string = 'imageIdentifier';
   @SyncVar() selected: boolean = false;
   @SyncVar() gridType: GridType = GridType.SQUARE; // 0=square 1=hex(縦揃え) 2=hex(横揃え)
+  @SyncVar() gridColor: string = '#000000e6';
   @SyncVar() gridShow: boolean = false; // true=常時グリッド表示
 
   innerXml(): string {
