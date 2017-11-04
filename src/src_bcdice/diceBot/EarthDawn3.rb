@@ -3,7 +3,8 @@
 require 'diceBot/EarthDawn'
 
 class EarthDawn3 < EarthDawn
-  
+  setPrefixes(['\d+e.*'])
+
   def initialize
     super
     @sendMode = 2
@@ -16,10 +17,6 @@ class EarthDawn3 < EarthDawn
   
   def gameType
     "EarthDawn3"
-  end
-  
-  def prefixs
-    ['\d+e.*']
   end
   
   def getHelpMessage

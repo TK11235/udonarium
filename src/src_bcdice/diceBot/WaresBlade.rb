@@ -6,10 +6,6 @@ class WaresBlade < DiceBot
     super
   end
   
-  def prefixs
-    []
-  end
-  
   def gameName
     'ワースブレイド'
   end

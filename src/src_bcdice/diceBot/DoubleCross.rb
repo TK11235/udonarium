@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class DoubleCross < DiceBot
-  
+  setPrefixes(['(\d+dx|ET)'])
+
   def initialize
     super
     @sendMode = 2
@@ -18,11 +19,7 @@ class DoubleCross < DiceBot
   def gameType
     "DoubleCross"
   end
-  
-  def prefixs
-     ['(\d+dx|ET)']
-  end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定コマンド　(xDX+y@c or xDXc+y)

@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class DarkSouls < DiceBot
+  setPrefixes(['(\d+)?(A)?DS([\+\-\d+]*)(\@\d+)?'])
 
   def initialize
     super
-  end
-
-
-  def prefixs
-     ['(\d+)?(A)?DS([\+\-\d+]*)(\@\d+)?']
   end
 
   def gameName
@@ -40,10 +36,16 @@ MESSAGETEXT
       case command.upcase
       
       when /(\d+)?(A)?DS([\+\-\d+]*)(\@(\d+))?$/i
-        diceCount = ($1 || 2).to_i
-        isActive = !$2.nil?
-        modify = getValue($3)
-        target = ($5 || 0).to_i
+        #TKfix メソッドをまたぐと$xの中身がnilになっている
+        reg1 = $1
+        reg2 = $2
+        reg3 = $3
+        reg5 = $5
+
+        diceCount = (reg1 || 2).to_i#($1 || 2).to_i
+        isActive = !reg2.nil?#!$2.nil?
+        modify = getValue(reg3)#getValue($3)
+        target = (reg5 || 0).to_i#($5 || 0).to_i
         
         checkRoll(diceCount, isActive, modify, target)
         

@@ -3,7 +3,8 @@
 require 'diceBot/SRS'
 
 class EtrianOdysseySRS < SRS
-  
+  setPrefixes(['2D6.*','EO.*','SQ.*'])
+
   def initialize
     super
     
@@ -17,10 +18,6 @@ class EtrianOdysseySRS < SRS
   
   def gameType
     "EtrianOdysseySRS"
-  end
-  
-  def prefixs
-    ['2D6.*','EO.*','SQ.*']
   end
  
   def getHelpMessage

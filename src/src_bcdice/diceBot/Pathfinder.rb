@@ -8,10 +8,6 @@ class Pathfinder < DungeonsAndDoragons
     super
   end
   
-  def prefixs
-    []
-  end
-  
   def gameName
     'Pathfinder'
   end

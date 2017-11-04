@@ -1,57 +1,54 @@
 # -*- coding: utf-8 -*-
 
 class KillDeathBusiness_Korean < DiceBot
-  
+  setPrefixes([
+    'HST',
+    'ST[1-2]?',
+    'DWT', 'DeathWT',
+    'RWT', 'RevengeWT',
+    'VWT', 'VictoryWT',
+    'PWT', 'PossesionWT',
+    'CWT', 'ControlWT',
+    'FWT', 'FlourishWT',
+    'IWT', 'IntensifyWT',
+    'HWT', 'HealthWT',
+    'SaWT', 'SafetyWT',
+    'LWT', 'LongevityWT',
+    'EWT', 'ExistWT',
+    'NAME[1-3]?', 'NAME[1-3]?',
+    'OSPT', 'OccultSPT',
+    'FSPT', 'FamilySPT',
+    'LoSPT', 'LoveSPT',
+    'JSPT', 'JusticeSPT',
+    'TSPT', 'TrainingSPT',
+    'BSPT', 'BeamSPT',
+    'CMT',
+    'EST', 'sErviceST',
+    'SOUL',
+    'STGT',
+    'HSAT[1-2]?',
+    'EXT[1-4]?',
+    'SKLT',
+    'SKLJ',
+    'ERT',
+    'WKT',
+    'PCDT',
+    'OHT',
+    'PCT1',
+    'PCT2',
+    'PCT3',
+    'PCT4',
+    'PCT5',
+    'PCT6',
+    'PCT7',
+    'JD.*',
+  ])
+
   def initialize
     super
     @sendMode = 2
     @sortType = 1
     @d66Type = 2
-  end
-  
-  def prefixs
-    [
-     'HST',
-     'ST[1-2]?',
-     'DWT', 'DeathWT',
-     'RWT', 'RevengeWT',
-     'VWT', 'VictoryWT',
-     'PWT', 'PossesionWT',
-     'CWT', 'ControlWT',
-     'FWT', 'FlourishWT',
-     'IWT', 'IntensifyWT',
-     'HWT', 'HealthWT',
-     'SaWT', 'SafetyWT',
-     'LWT', 'LongevityWT',
-     'EWT', 'ExistWT',
-     'NAME[1-3]?', 'NAME[1-3]?',
-     'OSPT', 'OccultSPT',
-     'FSPT', 'FamilySPT',
-	 'LoSPT', 'LoveSPT',
-     'JSPT', 'JusticeSPT',
-     'TSPT', 'TrainingSPT',
-     'BSPT', 'BeamSPT',
-     'CMT',
-     'EST', 'sErviceST',
-     'SOUL',
-     'STGT',
-     'HSAT[1-2]?',
-	 'EXT[1-4]?',
-     'SKLT',
-	 'SKLJ',
-	 'ERT',
-	 'WKT',
-	 'PCDT',
-	 'OHT',
-	 'PCT1',
-	 'PCT2',
-	 'PCT3',
-	 'PCT4',
-	 'PCT5',
-	 'PCT6',
-	 'PCT7',
-	 'JD.*',
-	]
   end
   
   def gameName

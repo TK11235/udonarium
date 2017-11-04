@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class Alsetto < DiceBot
+  setPrefixes(['\d+AL(C|G)?(\d+)?(x|\*)\d+', '\d+ALC?(\d+)?'])
 
   def initialize
     super
     @sortType = 1 #ダイスのソート有
-  end
-
-
-  def prefixs
-    ['\d+AL(C|G)?(\d+)?(x|\*)\d+', '\d+ALC?(\d+)?']
   end
 
   def gameName

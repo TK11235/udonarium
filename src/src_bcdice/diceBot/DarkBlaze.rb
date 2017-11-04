@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class DarkBlaze < DiceBot
-  
+  setPrefixes(['DB.*', 'BT.*'])
+
   def initialize
     super
     @sendMode = 2
@@ -13,11 +14,7 @@ class DarkBlaze < DiceBot
   def gameType
     "DarkBlaze"
   end
-  
-  def prefixs
-     ['DB.*', 'BT.*']
-  end
-  
+ 
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・行為判定　(DBxy#n)

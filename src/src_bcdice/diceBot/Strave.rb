@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 class Strave < DiceBot
+  setPrefixes([
+    'MP\d+', '\d+ST\d+(x|\*)\d+',
+     'AFF', 'IDT', 'AFV', 'IDV'
+  ])
 
   def initialize
     super
     @sortType = 1 #ダイスのソート有
-  end
-
-
-  def prefixs
-    ['MP\d+', '\d+ST\d+(x|\*)\d+',
-     'AFF', 'IDT', 'AFV', 'IDV']
   end
 
   def gameName

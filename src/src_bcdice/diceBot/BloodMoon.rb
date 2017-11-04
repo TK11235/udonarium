@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class BloodMoon < DiceBot
-  
+  setPrefixes(['ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT'])
+
   def initialize
     super
     @sendMode = 2
@@ -15,10 +16,6 @@ class BloodMoon < DiceBot
   
   def gameType
     "BloodMoon"
-  end
-  
-  def prefixs
-     ['ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT']
   end
   
   def getHelpMessage

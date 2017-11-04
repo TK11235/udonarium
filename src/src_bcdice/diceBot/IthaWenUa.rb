@@ -6,10 +6,6 @@ class IthaWenUa < DiceBot
     super
   end
   
-  def prefixs
-    []
-  end
-  
   def gameName
     'イサー・ウェン＝アー'
   end

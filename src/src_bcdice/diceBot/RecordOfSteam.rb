@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class RecordOfSteam < DiceBot
+  setPrefixes(['\d+S\d+.*'])
 
   def gameType
     "RecordOfSteam"
@@ -9,11 +10,6 @@ class RecordOfSteam < DiceBot
   def gameName
     "Record of Steam"
   end
-
-  def prefixs
-     ['\d+S\d+.*']
-  end
-
 
   def getHelpMessage
     return <<MESSAGETEXT

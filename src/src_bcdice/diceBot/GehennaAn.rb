@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class GehennaAn < DiceBot
-  
+  setPrefixes(['(\d+G\d+|\d+GA\d+)'])
+
   def initialize
     super
     @sendMode = 3
@@ -16,10 +17,6 @@ class GehennaAn < DiceBot
     "GehennaAn"
   end
   
-  def prefixs
-     ['(\d+G\d+|\d+GA\d+)']
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 戦闘判定と通常判定に対応。幸運の助け、連撃増加値(戦闘判定)、闘技チット(戦闘判定)を自動表示します。
@@ -31,7 +28,6 @@ class GehennaAn < DiceBot
 　幸運の助けを自動処理します。(連撃増加値、闘技チットを表示抑制します)
 INFO_MESSAGE_TEXT
   end
-  
   
   def changeText(string)
     string = string.gsub(/(\d+)GA(\d+)([\+\-][\+\-\d]+)/) {"#{$1}R6#{$3}>=#{$2}[1]"}

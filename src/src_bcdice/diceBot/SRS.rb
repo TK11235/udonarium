@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class SRS < DiceBot
-  
+  setPrefixes(['2D6.*'])
+
   def initialize
     super
     
@@ -15,10 +16,6 @@ class SRS < DiceBot
   
   def gameType
     "SRS"
-  end
-  
-  def prefixs
-    ['2D6.*']
   end
  
   def getHelpMessage

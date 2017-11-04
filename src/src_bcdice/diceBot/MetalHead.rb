@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class MetalHead < DiceBot
-  
+  setPrefixes(['AR','SR','HR<=.+','CC','ACT','ACL','ACS','CRC[A-Z]\d+'])
+
   def initialize
     super
-  end
-  
-  def prefixs
-    ['AR','SR','HR<=.+','CC','ACT','ACL','ACS','CRC[A-Z]\d+']
   end
   
   def gameName

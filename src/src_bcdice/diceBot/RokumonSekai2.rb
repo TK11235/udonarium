@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class RokumonSekai2 < DiceBot
-  
+  setPrefixes(['\d+RS'])
+
   def initialize
     super
     
@@ -14,10 +15,6 @@ class RokumonSekai2 < DiceBot
   
   def gameType
     "RokumonSekai2"
-  end
-
-  def prefixs
-     ['\d+RS']
   end
   
   def getHelpMessage

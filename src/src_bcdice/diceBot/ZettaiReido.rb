@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class ZettaiReido < DiceBot
-  
+  setPrefixes(['\d+\-2DR.*'])
+
   def initialize
     super
   end
@@ -11,10 +12,6 @@ class ZettaiReido < DiceBot
   
   def gameType
     "ZettaiReido"
-  end
-  
-  def prefixs
-     ['\d+\-2DR.*']
   end
   
   def getHelpMessage

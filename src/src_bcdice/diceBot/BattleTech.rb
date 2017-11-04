@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class BattleTech < DiceBot
+  setPrefixes(['\d*SRM\d+.+', '\d*LRM\d+.+', '\d*BT.+', 'CT', 'DW', 'CD\d+'])
   
   def initialize
     super
-  end
-  
-  
-  def prefixs
-    ['\d*SRM\d+.+', '\d*LRM\d+.+', '\d*BT.+', 'CT', 'DW', 'CD\d+']
   end
   
   def gameName
@@ -141,8 +137,8 @@ MESSAGETEXT
       hitCount += 1
       
       damages, damageText = getDamages(damageFunc, partTable, damages)
-      #TKfix <<
-      resultTexts.last = resultTexts.last + damageText
+      #resultTexts.last << damageText
+      resultTexts << damageText
     end
     
     totalResultText = resultTexts.join("\n")

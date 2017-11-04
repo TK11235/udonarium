@@ -17,10 +17,6 @@ class Arianrhod < DiceBot
     "Arianrhod"
   end
   
-  def prefixs
-    []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・クリティカル、ファンブルの自動判定を行います。(クリティカル時の追加ダメージも表示されます)

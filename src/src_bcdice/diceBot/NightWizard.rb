@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class NightWizard < DiceBot
+  setPrefixes(['\d+NW'])
   
   def initialize
     super

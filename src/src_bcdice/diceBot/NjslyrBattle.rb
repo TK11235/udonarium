@@ -10,10 +10,6 @@ class NjslyrBattle < DiceBot
     "NJSLYRBATTLE"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・カラテロール

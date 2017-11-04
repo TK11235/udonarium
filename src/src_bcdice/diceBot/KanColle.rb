@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 
 class KanColle < DiceBot
-  
+  setPrefixes([
+    'ET', 'ACT',
+    'EVNT', 'EVKT', 'EVAT', 'EVET', 'EVENT', 'EVST', 'ETHT', 'ETVT', 'ETGT', 'ETBT', 'ETMT', 'ETFT',
+    'DVT', 'DVTM', 'WP1T', 'WP2T', 'WP3T', 'WP4T', 'ITT', 'MHT', 'SNT', 'SPSNT',
+    'KTM', 'BT', 'KHT', 'KMT', 'KST', 'KSYT', 'KKT', 'KSNT', 'SNZ', 'RNT'
+  ])
+
   def initialize
     super
     @sendMode = 2
@@ -14,14 +20,6 @@ class KanColle < DiceBot
   
   def gameType
     "KanColle"
-  end
-  
-  def prefixs
-     ['ET', 'ACT',  
-      'EVNT', 'EVKT', 'EVAT', 'EVET', 'EVENT', 'EVST', 'ETHT', 'ETVT', 'ETGT', 'ETBT', 'ETMT', 'ETFT',
-      'DVT', 'DVTM', 'WP1T', 'WP2T', 'WP3T', 'WP4T', 'ITT', 'MHT', 'SNT', 'SPSNT',
-      'KTM', 'BT', 'KHT', 'KMT', 'KST', 'KSYT', 'KKT', 'KSNT', 'SNZ', 'RNT',
-      ]
   end
   
   def getHelpMessage

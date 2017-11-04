@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class BarnaKronika < DiceBot
-  
+  setPrefixes(['\d+BK', '\d+BA', '\d+BKC\d+', '\d+BAC\d+'])
+
   def initialize
     super
     @sendMode = 2
@@ -26,10 +27,6 @@ class BarnaKronika < DiceBot
   
   def gameType
     "BarnaKronika"
-  end
-  
-  def prefixs
-     ['\d+BK', '\d+BA', '\d+BKC\d+', '\d+BAC\d+']
   end
   
   def getHelpMessage

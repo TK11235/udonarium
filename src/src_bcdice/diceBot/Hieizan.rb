@@ -10,10 +10,6 @@ class Hieizan < DiceBot
     "Hieizan"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 大成功、自動成功、失敗、自動失敗、大失敗の自動判定を行います。

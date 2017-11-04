@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class ShinobiGami < DiceBot
-  
+  setPrefixes(['ST', 'FT', 'ET', 'WT', 'BT', 'CST', 'MST', 'IST','EST','DST','TST', 'NST', 'KST', 'TKST', 'GST', 'GWT', 'GAST', 'KYST', 'JBST', 'KFT', 'KWT', 'MT', 'RTT'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class ShinobiGami < DiceBot
   
   def gameType
     "ShinobiGami"
-  end
-  
-  def prefixs
-     ['ST', 'FT', 'ET', 'WT', 'BT', 'CST', 'MST', 'IST','EST','DST','TST', 'NST', 'KST', 'TKST', 'GST', 'GWT', 'GAST', 'KYST', 'JBST', 'KFT', 'KWT', 'MT', 'RTT']
   end
   
   def getHelpMessage

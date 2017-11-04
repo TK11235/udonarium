@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 
 class BladeOfArcana < DiceBot
-  
+  setPrefixes([
+    '\d+A\d*[CF]?\d*[CF]?\d*',
+    'CT3[\+\-]?',
+    'CTR[\+\-]?',
+    'DJV\-?',
+    'AKST[\+\-]?'
+  ])
+
   def initialize
     super
     @sendMode = 2
@@ -14,16 +21,6 @@ class BladeOfArcana < DiceBot
   
   def gameType
     "BladeOfArcana"
-  end
-  
-  def prefixs
-    [
-      '\d+A\d*[CF]?\d*[CF]?\d*',
-      'CT3[\+\-]?',
-      'CTR[\+\-]?',
-      'DJV\-?',
-      'AKST[\+\-]?',
-    ]
   end
   
   def getHelpMessage

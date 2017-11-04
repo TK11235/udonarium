@@ -6,11 +6,6 @@ class Nuekagami < DiceBot
     super
   end
   
-  
-  def prefixs
-    [] + @@tables.keys
-  end
-  
   def gameName
     '鵺鏡'
   end
@@ -297,4 +292,5 @@ MESSAGETEXT
 
 
   }
+  setPrefixes(@@tables.keys)
 end

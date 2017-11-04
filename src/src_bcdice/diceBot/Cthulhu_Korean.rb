@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Cthulhu_Korean < DiceBot
+  setPrefixes(['CC(B)?\(\d+\)', 'CC(B)?.*','RES(B)?.*', 'CBR(B)?\(\d+,\d+\)'])
 
   def initialize
     #$isDebug = true
@@ -16,10 +17,6 @@ class Cthulhu_Korean < DiceBot
   
   def gameType
     "Cthulhu:Korean"
-  end
-  
-  def prefixs
-     ['CC(B)?\(\d+\)', 'CC(B)?.*','RES(B)?.*', 'CBR(B)?\(\d+,\d+\)']
   end
   
   def getHelpMessage

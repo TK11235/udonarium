@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 
 class Garako < DiceBot
+  setPrefixes([
+    'PNM', 'PNF', 'ENM', 'ENF', 'NNM', 'NNF',
+    'RNM', 'RNF', 'BN1', 'BN2', 'TN1', 'TN2',
+    'IDI', 'MTV', 'HIT', '(C|E|F|A|L)DC\d+', 'GR.*',
+    'GCC', 'WCC', 'EVC', 'BSD'
+  ])
 
   def initialize
     super
-  end
-  
-  
-  def prefixs
-    ['PNM', 'PNF', 'ENM', 'ENF', 'NNM', 'NNF',
-     'RNM', 'RNF', 'BN1', 'BN2', 'TN1', 'TN2',
-     'IDI', 'MTV', 'HIT', '(C|E|F|A|L)DC\d+', 'GR.*',
-     'GCC', 'WCC', 'EVC', 'BSD',
-    ]
   end
   
   def gameName

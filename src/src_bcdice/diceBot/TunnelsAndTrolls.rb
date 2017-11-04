@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class TunnelsAndTrolls < DiceBot
+  setPrefixes(['(\d+H?BS)'])
 
   def initialize
     super
@@ -14,10 +15,6 @@ class TunnelsAndTrolls < DiceBot
 
   def gameType
     "Tunnels & Trolls"
-  end
-  
-  def prefixs
-     ['(\d+H?BS)']
   end
   
   def getHelpMessage

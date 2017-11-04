@@ -10,10 +10,6 @@ class RuneQuest < DiceBot
     "RuneQuest"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 クリティカル、エフェクティブ(効果的成功)、ファンブルの自動判定を行います。

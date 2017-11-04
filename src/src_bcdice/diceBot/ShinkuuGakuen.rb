@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 
 class ShinkuuGakuen < DiceBot
-  
+  setPrefixes([
+    'CRL.*', 'CSW.*', 'CLS.*', 'CSS.*', 'CSP.*', 'CAX.*', 'CCL.*', 'CMA.*', 'CBX.*', 'CPR.*', 'CST.*',
+     'RL.*', 'SW.*', 'LS.*', 'SS.*', 'SP.*', 'AX.*', 'CL.*', 'BW.*', 'MA.*', 'BX.*', 'PR.*', 'ST.*'
+  ])
+
   def gameName
     '真空学園'
   end
   
   def gameType
     "ShinkuuGakuen"
-  end
-  
-  def prefixs
-    ['CRL.*', 'CSW.*', 'CLS.*', 'CSS.*', 'CSP.*', 'CAX.*', 'CCL.*', 'CMA.*', 'CBX.*', 'CPR.*', 'CST.*',
-     'RL.*', 'SW.*', 'LS.*', 'SS.*', 'SP.*', 'AX.*', 'CL.*', 'BW.*', 'MA.*', 'BX.*', 'PR.*', 'ST.*']
-     
   end
   
   def getHelpMessage

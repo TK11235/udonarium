@@ -10,10 +10,6 @@ class Pendragon < DiceBot
     "Pendragon"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 クリティカル、成功、失敗、ファンブルの自動判定を行います。

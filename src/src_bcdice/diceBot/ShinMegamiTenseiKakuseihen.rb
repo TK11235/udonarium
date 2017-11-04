@@ -14,10 +14,6 @@ class ShinMegamiTenseiKakuseihen < DiceBot
     "SMTKakuseihen"
   end
   
-  def prefixs
-    []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定

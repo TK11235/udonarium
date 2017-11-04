@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class Nechronica < DiceBot
-  
+  setPrefixes(['(\d+NC|\d+NA)'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class Nechronica < DiceBot
   
   def gameType
     "Nechronica"
-  end
-  
-  def prefixs
-     ['(\d+NC|\d+NA)']
   end
   
   def getHelpMessage

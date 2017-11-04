@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class TherapieSein < DiceBot
+  setPrefixes(['(TS|OP)(\d+)?([\+\-]\d)*(\@\d+)?'])
 
   def initialize
     super
-  end
-
-
-  def prefixs
-     ['(TS|OP)(\d+)?([\+\-]\d)*(\@\d+)?']
   end
 
   def gameName

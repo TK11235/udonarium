@@ -571,5 +571,6 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 },},
     
   }
-  
+
+  setPrefixes(["CH.*", "B6T", "CNP"] + @@tables.keys)
 end

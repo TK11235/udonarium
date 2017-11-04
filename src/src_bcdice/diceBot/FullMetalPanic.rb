@@ -3,7 +3,8 @@
 require 'diceBot/MetallicGuadian'
 
 class FullMetalPanic < MetallicGuadian
-  
+  setPrefixes(['2D6.*','MG.*','FP.*'])
+
   def initialize
     super
   end
@@ -14,10 +15,6 @@ class FullMetalPanic < MetallicGuadian
   
   def gameType
     "FullMetalPanic"
-  end
-  
-  def prefixs
-    ['2D6.*','MG.*','FP.*']
   end
  
   def getHelpMessage

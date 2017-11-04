@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class Warhammer < DiceBot
-  
+  setPrefixes(['WH.*'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class Warhammer < DiceBot
   
   def gameType
     "Warhammer"
-  end
-  
-  def prefixs
-     ['WH.*']
   end
   
   def getHelpMessage

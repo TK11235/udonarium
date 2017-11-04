@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class MonotoneMusium < DiceBot
-  
+  setPrefixes(['2D6.*', 'ET','ET2', 'OT', 'DT', 'DT2', 'WDT', 'WDT2', 'OT2', 'DTO', 'DTS'])
+
   def initialize
     super
     
@@ -15,10 +16,6 @@ class MonotoneMusium < DiceBot
   
   def gameType
     "MonotoneMusium"
-  end
-  
-  def prefixs
-    ['2D6.*', 'ET','ET2', 'OT', 'DT', 'DT2', 'WDT', 'WDT2', 'OT2', 'DTO', 'DTS']
   end
   
   def getHelpMessage

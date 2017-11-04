@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
 class LiveraDoll < DiceBot
-  
+  setPrefixes(['(C|K|W|R|B|G|E)(L|D|O)\d+'])
+
   def initialize
     super
     
     @sortType = 3
-  end
-  
-  def prefixs
-    ['(C|K|W|R|B|G|E)(L|D|O)\d+',]
   end
   
   def gameName

@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class Airgetlamh < DiceBot
+  setPrefixes(['\d+AL\d+(x|\*)\d+'])
 
   def initialize
     super
     @sortType = 1 #ダイスのソート有
-  end
-  
-  
-  def prefixs
-    ['\d+AL\d+(x|\*)\d+',]
   end
   
   def gameName

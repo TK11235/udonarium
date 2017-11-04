@@ -7,11 +7,6 @@ class Dracurouge_Korean < DiceBot
     @d66Type = 1
   end
   
-  
-  def prefixs
-    ['DR.*', 'RT.*', 'CT\d+'] + @@tables.keys
-  end
-  
   def gameName
     '드라크루주'
   end
@@ -330,5 +325,5 @@ TEXT_BLOCK
 ],},
   }
   
-  
+  setPrefixes(['DR.*', 'RT.*', 'CT\d+'] + @@tables.keys)
 end

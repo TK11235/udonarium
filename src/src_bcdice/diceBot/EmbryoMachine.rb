@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class EmbryoMachine < DiceBot
-  
+  setPrefixes(['(EM\t+|HLT|MFT|SFT)'])
+
   def initialize
     super
     @sendMode = 2
@@ -13,10 +14,6 @@ class EmbryoMachine < DiceBot
   
   def gameType
     "EmbryoMachine"
-  end
-  
-  def prefixs
-     ['(EM\t+|HLT|MFT|SFT)']
   end
   
   def getHelpMessage

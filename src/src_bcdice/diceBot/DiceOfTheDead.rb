@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class DiceOfTheDead < DiceBot
-  
+  setPrefixes(['(ZMB|BIO).*'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class DiceOfTheDead < DiceBot
   
   def gameType
     "DiceOfTheDead"
-  end
-  
-  def prefixs
-    ['(ZMB|BIO).*']
   end
   
   def getHelpMessage

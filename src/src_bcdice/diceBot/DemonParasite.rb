@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class DemonParasite < DiceBot
+  setPrefixes(['(N|A|M|U|C|)?URGE\d+'])
 
   def initialize
     super
@@ -15,10 +16,6 @@ class DemonParasite < DiceBot
 
   def gameType
     "DemonParasite"
-  end
-  
-  def prefixs
-     ['(N|A|M|U|C|)?URGE\d+']
   end
   
   def getHelpMessage

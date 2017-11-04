@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class MagicaLogia < DiceBot
-  
+  setPrefixes(['WT', 'FCT', 'ST', 'FT', 'AT', 'BGT', 'DAT', 'FAT', 'WIT', 'RTT', 'TPT', 'TCT', 'PCT', 'MCT', 'ICT', 'SCT', 'XCT', 'WCT', 'CCT', 'BST', 'PT', 'XEST', 'IWST', 'MCST', 'WDST', 'LWST','MIT','MOT','MAT','MUT','MFT','MLT'])
+
   def initialize
     super
     @sendMode = 2
@@ -16,11 +17,7 @@ class MagicaLogia < DiceBot
   def gameType
     "MagicaLogia"
   end
-  
-  def prefixs
-    ['WT', 'FCT', 'ST', 'FT', 'AT', 'BGT', 'DAT', 'FAT', 'WIT', 'RTT', 'TPT', 'TCT', 'PCT', 'MCT', 'ICT', 'SCT', 'XCT', 'WCT', 'CCT', 'BST', 'PT', 'XEST', 'IWST', 'MCST', 'WDST', 'LWST','MIT','MOT','MAT','MUT','MFT','MLT',]
-  end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定

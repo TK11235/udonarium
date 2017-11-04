@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class Avandner < DiceBot
+  setPrefixes(['\d+AV\d+((x|\*)\d+(\+\d+)?)?(c\d+)?'])
 
   def initialize
     super
     @sortType = 1 #ダイスのソート有
-  end
-
-
-  def prefixs
-    ['\d+AV\d+((x|\*)\d+(\+\d+)?)?(c\d+)?']
   end
 
   def gameName

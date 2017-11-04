@@ -1,25 +1,17 @@
 # -*- coding: utf-8 -*-
 
 class HouraiGakuen < DiceBot
-  
-  
+  setPrefixes(['ROL.*', 'MED\(\d+,\d+\)', 'RES\(\d+,\d+\)' , 'INY.*' , 'HTK.*' , 'GOG.*'])
+
   #ゲームの名前
   def gameName
     '蓬莱学園の冒険!!'
   end
   
-  
   #チャット欄表示名
   def gameType
     "HouraiGakuen"
   end
-  
-  
-  #判定用前置文字
-  def prefixs
-    ['ROL.*', 'MED\(\d+,\d+\)', 'RES\(\d+,\d+\)' , 'INY.*' , 'HTK.*' , 'GOG.*']
-  end
-  
   
   #説明文
   def getHelpMessage

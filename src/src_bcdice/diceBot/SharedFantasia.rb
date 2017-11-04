@@ -2,7 +2,8 @@
 
 
 class SharedFantasia < DiceBot
-  
+  setPrefixes(['SF.*','ST.*'])
+
   def initialize
     #$isDebug = true
     super()
@@ -14,10 +15,6 @@ class SharedFantasia < DiceBot
   
   def gameType
     "SharedFantasia"
-  end
-  
-  def prefixs
-     ['SF.*','ST.*']
   end
   
   def getHelpMessage

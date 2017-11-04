@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
 
 class DeadlineHeroes < DiceBot
-  
+  setPrefixes([
+    'DLH\\d+([\\+\\-]\\d+)*',
+    'DC(L|S|C)\d+',
+    'RNC[JO]',
+    'HNC'
+  ])
+
   def gameName
     'デッドラインヒーローズ'
   end
   
   def gameType
     "DeadlineHeroes"
-  end
-  
-  def prefixs
-    [
-      'DLH\\d+([\\+\\-]\\d+)*',
-      'DC(L|S|C)\d+',
-      'RNC[JO]',
-      'HNC',
-    ]
   end
   
   def getHelpMessage

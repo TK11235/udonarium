@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 class CrashWorld < DiceBot
+  setPrefixes(['CW\d+'])
+
   def gameType
     "CrashWorld"
   end
 
   def gameName
     '墜落世界'
-  end
-  
-  def prefixs
-     ['CW\d+']
   end
   
   def getHelpMessage

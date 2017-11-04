@@ -16,10 +16,6 @@ class CthulhuTech < DiceBot
     "CthulhuTech"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 テストのダイス計算を実装。

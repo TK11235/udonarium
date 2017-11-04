@@ -3,7 +3,8 @@
 require 'diceBot/SRS'
 
 class Alshard < SRS
-  
+  setPrefixes(['2D6.*','AL.*'])
+
   def initialize
     super
 
@@ -16,10 +17,6 @@ class Alshard < SRS
   
   def gameType
     "Alshard"
-  end
-  
-  def prefixs
-    ['2D6.*','AL.*']
   end
  
   def getHelpMessage

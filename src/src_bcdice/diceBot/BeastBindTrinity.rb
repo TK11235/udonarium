@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class BeastBindTrinity < DiceBot
+  setPrefixes(['\d+BB', 'EMO'])
 
 #●前ver(1.43.01)からの変更・修正
 #・「達成値の下限が０になっていない」ルール上の見落としを修正。
@@ -20,10 +21,6 @@ class BeastBindTrinity < DiceBot
   
   def gameType
     "BeastBindTrinity"
-  end
-  
-  def prefixs
-     ['\d+BB', 'EMO']
   end
   
   def getHelpMessage

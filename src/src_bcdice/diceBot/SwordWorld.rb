@@ -2,7 +2,8 @@
 
 
 class SwordWorld < DiceBot
-  
+  setPrefixes(['K\d+.*'])
+
   def initialize
     rating_table = 0
     super()
@@ -14,10 +15,6 @@ class SwordWorld < DiceBot
   
   def gameType
     "SwordWorld"
-  end
-  
-  def prefixs
-     ['K\d+.*']
   end
   
   def getHelpMessage

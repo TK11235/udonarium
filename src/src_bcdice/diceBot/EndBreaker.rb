@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 
 class EndBreaker < DiceBot
-  
+  setPrefixes(['\d+EB', 'LDUT'])
+
   def initialize
     super
     
     @sendMode = 2
     @d66Type = 1
-  end
-  
-  
-  def prefixs
-    #ダイスボットで使用するコマンドを配列で列挙すること。
-    ['\d+EB', 'LDUT']
   end
   
   def gameName
@@ -31,7 +26,6 @@ class EndBreaker < DiceBot
   ・生死不明表 (LDUT)
 MESSAGETEXT
   end
-  
   
   def rollDiceCommand(command)
     

@@ -3,7 +3,8 @@
 require 'diceBot/NightWizard'
 
 class SevenFortressMobius < DiceBot
-  
+  setPrefixes(['\d*SFM'])
+
   def initialize
     super
     @nightWizardDiceBot = NightWizard.new
@@ -15,10 +16,6 @@ class SevenFortressMobius < DiceBot
   
   def gameType
     "SevenFortressMobius"
-  end
-  
-  def prefixs
-     ['\d*SFM']
   end
   
   def getHelpMessage

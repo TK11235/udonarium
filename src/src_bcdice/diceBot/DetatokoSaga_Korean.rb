@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 
 class DetatokoSaga_Korean < DiceBot
-  
+  setPrefixes([
+    '\d+DS.*', '\d+JD.*',
+    'SST', 'StrengthStigmaTable',
+    'WST', 'WillStigmaTable',
+    'SBET', 'StrengthBadEndTable',
+    'WBET', 'WillBadEndTable'
+  ])
+
   def initialize
     super
     @sendMode = 2
@@ -14,15 +21,6 @@ class DetatokoSaga_Korean < DiceBot
   
   def gameType
     "DetatokoSaga:Korean"
-  end
-  
-  def prefixs
-    ['\d+DS.*', '\d+JD.*',
-     'SST', 'StrengthStigmaTable',
-     'WST', 'WillStigmaTable',
-     'SBET', 'StrengthBadEndTable',
-     'WBET', 'WillBadEndTable',
-    ]
   end
   
   def getHelpMessage

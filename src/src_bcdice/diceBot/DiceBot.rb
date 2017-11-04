@@ -1,6 +1,57 @@
 # -*- coding: utf-8 -*-
 
 class DiceBot
+  # 空の接頭辞（反応するコマンド）
+  EMPTY_PREFIXES_PATTERN = (/(^|\s)(S)?()(\s|$)/i).freeze
+
+  # 接頭辞（反応するコマンド）の配列を返す
+  # @return [Array<String>]
+  def self.prefixes
+    @prefixes
+  end
+
+  # 接頭辞（反応するコマンド）の正規表現を返す
+  # @return [Regexp]
+  def self.prefixesPattern
+    @prefixesPattern
+  end
+
+  # 接頭辞（反応するコマンド）を設定する
+  # @param [Array<String>] prefixes 接頭辞のパターンの配列
+  # @return [self]
+  def self.setPrefixes(prefixes)
+    @prefixes = prefixes.
+      # 最適化が効くように内容の文字列を変更不可にする
+      map(&:freeze).
+      # 配列全体を変更不可にする
+      freeze
+    #Tkfix 正規表現オプション
+    #@prefixesPattern = (/(^|\s)(S)?(#{prefixes.join('|')})(\s|$)/i).freeze
+
+    pattern = "(^|\\s)(S)?(#{prefixes.join('|')})(\\s|$)"
+    @prefixesPattern = Regexp.new(pattern, Regexp::IGNORECASE).freeze
+
+    self
+  end
+
+  # 接頭辞（反応するコマンド）をクリアする
+  # @return [self]
+  def self.clearPrefixes
+    @prefixes = [].freeze
+    @prefixesPattern = EMPTY_PREFIXES_PATTERN
+
+    self
+  end
+
+  # 継承された際にダイスボットの接頭辞リストをクリアする
+  # @param [DiceBot] subclass DiceBotを継承したクラス
+  # @return [void]
+  def self.inherited(subclass)
+    subclass.clearPrefixes
+  end
+
+  clearPrefixes
+
   @@bcdice = nil
   
   @@DEFAULT_SEND_MODE = 2                  # デフォルトの送信形式(0=結果のみ,1=0+式,2=1+ダイス個別)
@@ -21,6 +72,13 @@ class DiceBot
     @fractionType = "omit"     #端数の処理 ("omit"=切り捨て, "roundUp"=切り上げ, "roundOff"=四捨五入)
     
     @gameType = 'DiceBot'
+
+    if !prefixs.empty? && self.class.prefixes.empty?
+      # 従来の方法（#prefixs）で接頭辞を設定していた場合でも
+      # クラス側に接頭辞が設定されるようにする
+      $stderr.puts("#{gameType}: #prefixs is deprecated. Please use .setPrefixes.")
+      self.class.setPrefixes(prefixs)
+    end
   end
   
   attr_accessor :rerollLimitCount
@@ -41,7 +99,7 @@ class DiceBot
     {
       'name' => gameName,
       'gameType' => gameType,
-      'prefixs' => prefixs,
+      'prefixs' => self.class.prefixes,
       'info' => getHelpMessage,
     }
   end
@@ -49,11 +107,16 @@ class DiceBot
   def gameName
     gameType
   end
-  
-  def prefixs
-    []
+
+  # 接頭辞（反応するコマンド）の配列を返す
+  # @return [Array<String>]
+  def prefixes
+    self.class.prefixes
   end
-  
+
+  # @deprecated 代わりに {#prefixes} を使ってください
+  alias prefixs prefixes
+
   def gameType
     @gameType
   end
@@ -134,12 +197,8 @@ class DiceBot
     debug('dice_command Begin string', string)
     secret_flg = false
     
-    prefixsRegText = prefixs.join('|')
-    #Tkfix 正規表現オプション
-    #unless( /(^|\s)(S)?(#{prefixsRegText})(\s|$)/i =~ string )
-    pattern = "(^|\\s)(S)?(#{prefixsRegText})(\\s|$)"
-    unless( Regexp.new(pattern, Regexp::IGNORECASE) =~ string )
-      debug('not match in prefixs')
+    unless self.class.prefixesPattern =~ string
+      debug('not match in prefixes')
       return '1', secret_flg 
     end
     
@@ -389,13 +448,13 @@ class DiceBot
     # get～DiceCommandResultという名前のメソッドを集めて実行、
     # 結果がnil以外の場合それを返して終了。
 
-    # TKfix public_methods(false)だと[]が返ってくる　正規表現の書き方も修正
+    # TKfix public_methods(false)だと[]が返ってくる
     #methodList = public_methods(false).select do |method|
-    #  method.to_s =~ /\Aget.+DiceCommandResult\z/
+    #  /^get.+DiceCommandResult$/ === method.to_s
     #end
 
     methodList = public_methods().select do |method|
-      method.to_s =~ /^get.+DiceCommandResult$/
+      /^get.+DiceCommandResult$/ === method.to_s
     end
 
     methodList.each do |method|

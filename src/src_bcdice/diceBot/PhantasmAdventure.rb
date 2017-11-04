@@ -14,10 +14,6 @@ class PhantasmAdventure < DiceBot
     "PhantasmAdventure"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 成功、失敗、決定的成功、決定的失敗の表示とクリティカル・ファンブル値計算の実装。

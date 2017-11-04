@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class CardRanker < DiceBot
+  setPrefixes(['RM', 'CM.*'])
+
   def initialize
     super
     @sendMode = 2;
@@ -13,10 +15,6 @@ class CardRanker < DiceBot
   
   def gameType
     "CardRanker"
-  end
-  
-  def prefixs
-     ['RM', 'CM.*']
   end
   
   def getHelpMessage

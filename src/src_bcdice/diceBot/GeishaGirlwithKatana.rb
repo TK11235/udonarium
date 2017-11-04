@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class GeishaGirlwithKatana < DiceBot
-  
-  def prefixs
-    #ダイスボットで使用するコマンドを配列で列挙すること。
-    ['GK(#\d+)?', 'GL']
-  end
+  setPrefixes(['GK(#\d+)?', 'GL'])
   
   def gameName
     'ゲイシャ・ガール・ウィズ・カタナ'

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class MonotoneMusium_Korean < DiceBot
-  
+  setPrefixes(['2D6.*', 'ET','ET2', 'OT', 'DT', 'DT2', 'WDT'])
+
   def initialize
     super
     
@@ -16,11 +17,7 @@ class MonotoneMusium_Korean < DiceBot
   def gameType
     "MonotoneMusium:Korean"
   end
-  
-  def prefixs
-    ['2D6.*', 'ET','ET2', 'OT', 'DT', 'DT2', 'WDT']
-  end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・판정

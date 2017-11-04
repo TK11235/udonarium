@@ -3,7 +3,8 @@
 require 'diceBot/SRS'
 
 class MetallicGuadian < SRS
-  
+  setPrefixes(['2D6.*','MG.*'])
+
   def initialize
     super
 
@@ -16,10 +17,6 @@ class MetallicGuadian < SRS
   
   def gameType
     "MetallicGuadian"
-  end
-  
-  def prefixs
-    ['2D6.*','MG.*']
   end
  
   def getHelpMessage

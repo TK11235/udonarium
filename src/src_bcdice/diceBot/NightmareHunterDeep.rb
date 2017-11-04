@@ -16,10 +16,6 @@ class NightmareHunterDeep < DiceBot
     "NightmareHunterDeep"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 加算ロール時に６の個数をカウントして、その４倍を自動的に加算します。

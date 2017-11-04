@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class StrangerOfSwordCity < DiceBot
+  setPrefixes(['\d+SR.*'])
 
   def initialize
     super
@@ -16,12 +17,6 @@ class StrangerOfSwordCity < DiceBot
 
   def gameType
     "StrangerOfSwordCity"
-  end
-
-  def prefixs
-    [
-     '\d+SR.*',
-    ]
   end
 
   def getHelpMessage

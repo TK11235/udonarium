@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 
 class FilledWith < DiceBot
-  
+  setPrefixes(['3FW.*', '[\+\-\d]*-3FW.*', 'LOT[NP]', 'HST', 'COOK[1-8]', 'RAND.*', 'RENC.*', 'RED.*', 'TRS.*', 'TRAP[ENHL]', 'ROP[ENHL]'])
+
   def initialize
     super
     @d66Type = 1;        #d66の差し替え
     # @fractionType = "omit";     #端数の処理 ("omit"=切り捨て, "roundUp"=切り上げ, "roundOff"=四捨五入)
-  end
-  
-  
-  def prefixs
-    #ダイスボットで使用するコマンドを配列で列挙すること。
-    ['3FW.*', '[\+\-\d]*-3FW.*', 'LOT[NP]', 'HST', 'COOK[1-8]', 'RAND.*', 'RENC.*', 'RED.*', 'TRS.*', 'TRAP[ENHL]', 'ROP[ENHL]']
   end
   
   def gameName

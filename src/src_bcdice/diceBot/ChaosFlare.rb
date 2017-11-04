@@ -21,10 +21,6 @@ class ChaosFlare < DiceBot
     "Chaos Flare"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 失敗、成功の判定。差分値の計算も行います。

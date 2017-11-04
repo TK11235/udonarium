@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class Satasupe < DiceBot
-  
+  setPrefixes(['(\d+R|SR\d+|TAGT|\w+IET|\w+IHT|F\w*T|F\w*T|A\w*T|G\w*A\w*T|A\w*T|R\w*FT|NPCT|KusaiMT|EnterT|BudTT|GetgT|GetzT|GetnT|GetkT|GETSST).*'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class Satasupe < DiceBot
   
   def gameType
     "Satasupe"
-  end
-  
-  def prefixs
-    ['(\d+R|SR\d+|TAGT|\w+IET|\w+IHT|F\w*T|F\w*T|A\w*T|G\w*A\w*T|A\w*T|R\w*FT|NPCT|KusaiMT|EnterT|BudTT|GetgT|GetzT|GetnT|GetkT|GETSST).*']
   end
   
   def getHelpMessage

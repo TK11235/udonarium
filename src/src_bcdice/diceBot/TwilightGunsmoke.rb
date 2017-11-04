@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 class TwilightGunsmoke < DiceBot
-  
+  setPrefixes([
+    '2D6.*', 'CT', 'OPR', 'OPC', 'EDR', 'EDC', 'RWL', 'RWB', 'RST',
+    'RUP', 'DCP', 'DBD', 'DCR', 'DNJ', 'DRB', 'DBS', 'DTR', 'DMK', 'DHL',
+    'DML', 'DZB', 'DMT', 'DHR', 'DKS', 'DFD'
+  ])
+
   def initialize
     super
     
@@ -15,13 +20,6 @@ class TwilightGunsmoke < DiceBot
   
   def gameType
     "TwilightGunsmoke"
-  end
-  
-  def prefixs
-    ['2D6.*', 'CT', 'OPR', 'OPC', 'EDR', 'EDC', 'RWL', 'RWB', 'RST',
-     'RUP', 'DCP', 'DBD', 'DCR', 'DNJ', 'DRB', 'DBS', 'DTR', 'DMK', 'DHL',
-     'DML', 'DZB', 'DMT', 'DHR', 'DKS', 'DFD',
-    ]
   end
  
   def getHelpMessage

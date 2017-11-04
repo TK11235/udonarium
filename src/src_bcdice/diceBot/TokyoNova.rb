@@ -6,10 +6,6 @@ class TokyoNova < DiceBot
     super
   end
   
-  def prefixs
-    []
-  end
-  
   def gameName
     'トーキョーＮ◎ＶＡ'
   end

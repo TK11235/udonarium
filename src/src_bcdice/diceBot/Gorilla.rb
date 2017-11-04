@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-
 class Gorilla < DiceBot
-  
+  setPrefixes(['G.*'])
+
   def initialize
     #$isDebug = true
     super()
@@ -13,10 +13,6 @@ class Gorilla < DiceBot
   
   def gameType
     "Gorilla"
-  end
-  
-  def prefixs
-     ['G.*']
   end
   
   def getHelpMessage

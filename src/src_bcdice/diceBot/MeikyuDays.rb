@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class MeikyuDays < DiceBot
-  
+  setPrefixes(['\d+MD', 'DRT', 'DNT', 'DBT', 'DHT', 'KST', 'CAT', 'CFT', 'FWT', 'T1T', 'T2T', 'T3T', 'T4T', 'MPT', 'APT', 'DCT', 'MCT', 'PCT', 'LCT'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class MeikyuDays < DiceBot
   
   def gameType
     "MeikyuDays"
-  end
-  
-  def prefixs
-     ['\d+MD', 'DRT', 'DNT', 'DBT', 'DHT', 'KST', 'CAT', 'CFT', 'FWT', 'T1T', 'T2T', 'T3T', 'T4T', 'MPT', 'APT', 'DCT', 'MCT', 'PCT', 'LCT']
   end
   
   def getHelpMessage

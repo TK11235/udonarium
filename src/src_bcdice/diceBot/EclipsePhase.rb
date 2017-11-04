@@ -13,10 +13,6 @@ class EclipsePhase < DiceBot
     "EclipsePhase"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 1D100<=m 方式の判定で成否、クリティカル・ファンブルを自動判定

@@ -2,20 +2,17 @@
 
 
 class GardenOrder < DiceBot
-  
+  setPrefixes([
+    'GO\d+(\/\d+)?(@\d+)?',
+    'DC(SL|BL|IM|BR|RF|EL).+'
+  ])
+
   def gameName
     'ガーデンオーダー'
   end
   
   def gameType
     "GardenOrder"
-  end
-  
-  def prefixs
-    [
-      'GO\d+(\/\d+)?(@\d+)?',
-      'DC(SL|BL|IM|BR|RF|EL).+',
-    ]
   end
   
   def getHelpMessage

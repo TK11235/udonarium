@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class ArsMagica < DiceBot
-  
+  setPrefixes(['ArS'])
+
   def initialize
     super
     @sendMode = 2;
@@ -13,10 +14,6 @@ class ArsMagica < DiceBot
   
   def gameType
     "ArsMagica"
-  end
-  
-  def prefixs
-    ['ArS']
   end
   
   def getHelpMessage

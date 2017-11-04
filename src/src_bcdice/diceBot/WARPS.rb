@@ -9,10 +9,6 @@ class WARPS < DiceBot
     "WARPS"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 失敗、成功度の自動判定を行います。

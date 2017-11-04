@@ -3,7 +3,8 @@
 require 'diceBot/SwordWorld'
 
 class SwordWorld2_0 < SwordWorld
-  
+  setPrefixes(['K\d+.*', 'Gr(\d+)?', 'FT', 'TT'])
+
   def initialize
     rating_table = 2
     super()
@@ -15,10 +16,6 @@ class SwordWorld2_0 < SwordWorld
   
   def gameType
     return "SwordWorld2.0"
-  end
-  
-  def prefixs
-     ['K\d+.*', 'Gr(\d+)?', 'FT', 'TT']
   end
   
   def getHelpMessage

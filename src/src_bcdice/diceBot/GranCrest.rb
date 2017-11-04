@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
 
 class GranCrest < DiceBot
-  
+  setPrefixes([
+    'MT',
+    'PFT',
+    'NFT',
+    'CT',
+    'TCT',
+    'ICT',
+    'PCT',
+    'OCT',
+    'BCT',
+    'CCT'
+  ])
+
   def initialize
     super
     @sendMode = 2
@@ -16,21 +28,6 @@ class GranCrest < DiceBot
   
   def gameType
     "GranCrest"
-  end
-
-  def prefixs
-    [
-     'MT',
-     'PFT',
-     'NFT',
-     'CT',
-     'TCT',
-     'ICT',
-     'PCT',
-     'OCT',
-     'BCT',
-     'CCT',
-    ]
   end
   
   def getHelpMessage

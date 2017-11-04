@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 
-def gameName
-  'Chill'
-end
 class Chill < DiceBot
+  setPrefixes(['SR\d+.*'])
+
   def gameType
     "Chill"
-  end
-  
-  def prefixs
-     ['SR\d+.*']
   end
   
   def getHelpMessage

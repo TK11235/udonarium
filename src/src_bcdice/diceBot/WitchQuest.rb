@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class WitchQuest < DiceBot
-  
-  def prefixs
-    ['WQ\d+', 'SET\d+']
-  end
+  setPrefixes(['WQ\d+', 'SET\d+'])
   
   def gameName
     'ウィッチクエスト'

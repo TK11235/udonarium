@@ -10,10 +10,6 @@ class JamesBond < DiceBot
     "JamesBond"
   end
   
-  def prefixs
-    []
-  end
-  
   def getHelpMessage
     info = <<INFO_MESSAGE_TEXT
 ・1D100の目標値判定で、効果レーティングを1～4で自動判定。

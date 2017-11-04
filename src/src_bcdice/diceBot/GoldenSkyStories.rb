@@ -1,13 +1,10 @@
 #--*-coding:utf-8-*--
 
 class GoldenSkyStories < DiceBot
-  
+  setPrefixes(['geta'])
+
   def initialize
     super
-  end
-  
-  def prefixs
-    ['geta']
   end
   
   def gameName

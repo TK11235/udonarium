@@ -15,10 +15,6 @@ class RoleMaster < DiceBot
     "RoleMaster"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 上方無限ロール(xUn)の境界値を96にセットします。

@@ -3,7 +3,11 @@
 require 'diceBot/GardenOrder'
 
 class AceKillerGene < GardenOrder
-  
+  setPrefixes([
+    '(AK|AKG)\d+(\/\d+)?(@\d+)?',
+    'DC(SL|BL|IM|BR|RF|EL).+'
+  ])
+
   def gameName
     'エースキラージーン'
   end
@@ -11,14 +15,7 @@ class AceKillerGene < GardenOrder
   def gameType
     "AceKillerGene"
   end
-  
-  def prefixs
-    [
-      '(AK|AKG)\d+(\/\d+)?(@\d+)?',
-      'DC(SL|BL|IM|BR|RF|EL).+',
-    ]
-  end
-  
+    
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・基本判定

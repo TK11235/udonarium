@@ -3,17 +3,14 @@
 require 'diceBot/Gundog'
 
 class GundogRevised < DiceBot
-  
+  setPrefixes(['(.DPT|.FT)(\+|\-)?\d*'])
+
   def gameName
     'ガンドッグ・リヴァイズド'
   end
   
   def gameType
     "GundogRevised"
-  end
-  
-  def prefixs
-     ['(.DPT|.FT)(\+|\-)?\d*']
   end
   
   def getHelpMessage

@@ -3,7 +3,26 @@
 # Last update 2013/11/07
 
 class GurpsFW < DiceBot
-  
+  setPrefixes([
+    'CRT',
+    'HCRT',
+    'FMB',
+    'MFMB',
+    'HIT',
+    'FEAR((\+)?\d*)',
+    'REACT((\+|\-)?\d*)',
+    'TRAP(E|N|H|L)',
+    'TRS((E|N|H|L)\d+)((\+|\-)?\d*)',
+    'RAND(E|N|H|L)[1-6]?',
+    'RENC(E|N|H|L)[1-6]?',
+    'AREA',
+    'DROP(N)?((\+)?\d)?',
+    'HST',
+    'KHST',
+    'RANDOP',
+    'LOT(N|P)'
+  ])
+
   def initialize
     super
     @sendMode = 2
@@ -16,28 +35,6 @@ class GurpsFW < DiceBot
   
   def gameType
     "GurpsFW"
-  end
-  
-  def prefixs
-    [
-	  'CRT',
-	  'HCRT',
-	  'FMB',
-	  'MFMB',
-	  'HIT',
-	  'FEAR((\+)?\d*)',
-	  'REACT((\+|\-)?\d*)',
-	  'TRAP(E|N|H|L)',
-	  'TRS((E|N|H|L)\d+)((\+|\-)?\d*)',
-	  'RAND(E|N|H|L)[1-6]?',
-	  'RENC(E|N|H|L)[1-6]?',
-	  'AREA',
-	  'DROP(N)?((\+)?\d)?',
-	  'HST',
-	  'KHST',
-	  'RANDOP',
-	  'LOT(N|P)',
-	]
   end
   
   def getHelpMessage

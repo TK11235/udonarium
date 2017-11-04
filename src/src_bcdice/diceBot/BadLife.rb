@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class BadLife < DiceBot
+  setPrefixes(['\d?(BAD|BL|GL).*', '[TDGKSB]RN', 'SKL'])
 
   def initialize
     super
-  end
-  
-  
-  def prefixs
-    ['\d?(BAD|BL|GL).*', '[TDGKSB]RN', 'SKL']
   end
   
   def gameName

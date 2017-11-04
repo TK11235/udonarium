@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class HarnMaster < DiceBot
-  
+  setPrefixes(['SHK\d+.*', 'SLH', 'SLHU', 'SLHD'])
+
   def initialize
     super
-  end
-  
-  
-  def prefixs
-    #ダイスボットで使用するコマンドを配列で列挙すること。
-    ['SHK\d+.*', 'SLH', 'SLHU', 'SLHD', ]
   end
   
   def gameName

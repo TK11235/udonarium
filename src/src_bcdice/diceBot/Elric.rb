@@ -9,10 +9,6 @@ class Elric < DiceBot
     "Elric!"
   end
   
-  def prefixs
-     []
-  end
-  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 貫通、クリティカル、ファンブルの自動判定を行います。

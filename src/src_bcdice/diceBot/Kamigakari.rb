@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 
 class Kamigakari < DiceBot
-  
+  setPrefixes(['RT', 'MT(\d*)'])
+
   def initialize
     super
     @sendMode = 2
     @sortType = 1
     @d66Type = 1
-  end
-  
-  def prefixs
-    [
-     'RT',
-     'MT(\d*)',
-	]
   end
   
   def gameName

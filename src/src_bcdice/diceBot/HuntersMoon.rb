@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class HuntersMoon < DiceBot
-  
+  setPrefixes(['(ET|CLT|SLT|HLT|FLT|DLT|MAT|SAT|SA2T|TST|THT|TAT|TBT|TLT|TET)\d*'])
+
   def initialize
     super
     @sendMode = 2;
@@ -16,10 +17,6 @@ class HuntersMoon < DiceBot
   
   def gameType
     "HuntersMoon"
-  end
-  
-  def prefixs
-     ['(ET|CLT|SLT|HLT|FLT|DLT|MAT|SAT|SA2T|TST|THT|TAT|TBT|TLT|TET)\d*']
   end
   
   def getHelpMessage

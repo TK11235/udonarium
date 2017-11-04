@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Cthulhu7th_ChineseTraditional < DiceBot
+  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR\(\d+\)' , 'FAR.*'])
 
   def initialize
     #$isDebug = true
@@ -15,10 +16,6 @@ class Cthulhu7th_ChineseTraditional < DiceBot
   
   def gameType
     "Cthulhu7th:ChineseTraditional"
-  end
-  
-  def prefixs
-     ['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR\(\d+\)' , 'FAR.*']
   end
   
   def getHelpMessage

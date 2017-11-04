@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class DungeonsAndDoragons < DiceBot
+  setPrefixes(['\d+e.*'])
   
   def initialize
     super

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class BloodCrusade < DiceBot
-  
+  setPrefixes(['RT', 'ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT'])
+
   def initialize
     super
     @sendMode = 2
@@ -15,10 +16,6 @@ class BloodCrusade < DiceBot
   
   def gameType
     "BloodCrusade"
-  end
-  
-  def prefixs
-     ['RT', 'ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT']
   end
   
   def getHelpMessage

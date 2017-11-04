@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class Utakaze < DiceBot
-  
+  setPrefixes(['\d*UK[@\d]*.*'])
+
   def initialize
     super
     @arrayDragonDiceName = ['', '風', '雨', '雲', '影', '月', '歌']
-  end
-  
-  def prefixs
-    ['\d*UK[@\d]*.*']
   end
   
   def gameName
@@ -65,15 +62,16 @@ MESSAGETEXT
     return result if( base < 1 )
     
     crit = 6 if( crit > 6 )
-    
-    result << "(#{base}d6)"
+    #TKfix <<
+    result = result +  "(#{base}d6)"
     
     _, diceText = roll(base, 6)
     
     diceList = diceText.split(/,/).collect{|i|i.to_i}.sort
     
-    result << " ＞ [#{diceList.join(',')}] ＞ "
-    result << getRollResultString(diceList, crit, diff)
+    #TKfix <<
+    result = result + " ＞ [#{diceList.join(',')}] ＞ "
+    result = result + getRollResultString(diceList, crit, diff)
     
     return result 
   end
@@ -86,22 +84,27 @@ MESSAGETEXT
     result = ""
     
     if( isDragonDice(crit) )
-      result << "龍のダイス「#{@arrayDragonDiceName[crit]}」(#{crit.to_s})を使用 ＞ "
+      #TKfix <<
+      result = result + "龍のダイス「#{@arrayDragonDiceName[crit]}」(#{crit.to_s})を使用 ＞ "
     end
     
     if( success )
-      result << "成功レベル:#{maxnum} (#{setCount}セット)"
+      #TKfix <<
+      result = result + "成功レベル:#{maxnum} (#{setCount}セット)"
       if( diff != 0 )
         diffSuccess = (maxnum >= diff)
         if( diffSuccess )
-          result << " ＞ 成功"
+          #TKfix <<
+          result = result + " ＞ 成功"
         else
-          result << " ＞ 失敗"
+          #TKfix <<
+          result = result + " ＞ 失敗"
         end
       end
       
     else
-      result << "失敗"
+      #TKfix <<
+      result = result + "失敗"
     end
     
     return result

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class LostRoyal < DiceBot
-  
+  setPrefixes(['LR\[[0-5],[0-5],[0-5],[0-5],[0-5],[0-5]\]', 'FC', 'WPC', 'EC', 'HR[1-2]'])
+
   def initialize
     super
     @sendMode = 2
@@ -15,10 +16,6 @@ class LostRoyal < DiceBot
   
   def gameType
     "LostRoyal"
-  end
-  
-  def prefixs
-    ['LR\[[0-5],[0-5],[0-5],[0-5],[0-5],[0-5]\]', 'FC', 'WPC', 'EC', 'HR[1-2]']
   end
   
   def getHelpMessage

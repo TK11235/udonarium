@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class EarthDawn < DiceBot
-  
+  setPrefixes(['\d+e.*'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class EarthDawn < DiceBot
   
   def gameType
     "EarthDawn"
-  end
-  
-  def prefixs
-    ['\d+e.*']
   end
   
   def getHelpMessage

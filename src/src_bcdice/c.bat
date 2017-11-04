@@ -1,3 +1,4 @@
+set RUBYOPT=-EUTF-8
 for /r ./dicebot %%i in (*.rb) do (
     opal -cO -I ./ -s 'kconv' %%i > dicebot/%%~ni.js
 )

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class Gurps < DiceBot
-  
+  setPrefixes(['\w*CRT', '\w*FMB', 'HIT', 'FEAR((\+)?\d*)', 'REACT((\+|\-)?\d*)', '[\d\+\-]+\-3[dD]6?[\d\+\-]*'])
+
   def initialize
     super
     @sendMode = 2
@@ -14,10 +15,6 @@ class Gurps < DiceBot
   
   def gameType
     "GURPS"
-  end
-  
-  def prefixs
-    ['\w*CRT', '\w*FMB', 'HIT', 'FEAR((\+)?\d*)', 'REACT((\+|\-)?\d*)', '[\d\+\-]+\-3[dD]6?[\d\+\-]*']
   end
   
   def getHelpMessage

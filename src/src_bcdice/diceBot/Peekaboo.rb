@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class Peekaboo < DiceBot
-  
+  setPrefixes(['SET', 'PSET', 'OET', 'IBT', 'SBT', 'NET'])
+
   def initialize
     super
     @sendMode = 2
@@ -15,10 +16,6 @@ class Peekaboo < DiceBot
   
   def gameType
     "Peekaboo"
-  end
-  
-  def prefixs
-    ['SET', 'PSET', 'OET', 'IBT', 'SBT', 'NET']
   end
   
   def getHelpMessage

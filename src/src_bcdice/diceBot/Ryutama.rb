@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class Ryutama < DiceBot
-  
+  setPrefixes(['R\d+.*'])
+
   def initialize
     super
     @validDiceTypes = [20, 12, 10, 8, 6, 4, 2]
@@ -12,10 +13,6 @@ class Ryutama < DiceBot
   
   def gameType
     "Ryutama"
-  end
-  
-  def prefixs
-     ['R\d+.*']
   end
   
   def getHelpMessage

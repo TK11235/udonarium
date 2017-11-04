@@ -3,7 +3,8 @@
 require 'diceBot/DemonParasite'
 
 class ParasiteBlood < DemonParasite
-  
+  setPrefixes(['(N|A|M|U|C|)?URGE\d+'])
+
   def gameName
     'パラサイトブラッド'
   end
@@ -11,11 +12,7 @@ class ParasiteBlood < DemonParasite
   def gameType
     "ParasiteBlood"
   end
-  
-  def prefixs
-     ['(N|A|M|U|C|)?URGE\d+']
-  end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・衝動表　(URGEx)
