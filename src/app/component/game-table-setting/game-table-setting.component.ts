@@ -75,6 +75,10 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.update();
 
     EventSystem.register(this)
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        if (event.isSendFromSelf || event.data.identifier !== this.viewTable.identifier) return;
+        this.update();
+      })
       .on('SELECT_GAME_TABLE', -1000, event => {
         this.update();
       })
