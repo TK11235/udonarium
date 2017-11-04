@@ -65,12 +65,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _gameTableObject: GameTable = null;
 
+  get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
   get gameTableObject(): GameTable {
-    let table = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;
+    let table = this.tableSelecter.viewTable;
     if (table && table !== this._gameTableObject) {
       this._gameTableObject = table;
       this.updateBackgroundImage();
-      this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize, this._gameTableObject.gridType, this.gameTableObject.gridColor, this._gameTableObject.gridShow);
+      this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize, this._gameTableObject.gridType, this.gameTableObject.gridColor);
     }
     return this._gameTableObject;
   }
@@ -228,7 +229,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
         this.updateBackgroundImage();
-        this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor, this._gameTableObject.gridShow);
+        this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
       })
       .on('XML_PARSE', event => {
         let xml: string = event.data.xml;
@@ -243,7 +244,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }).on('DRAG_LOCKED_OBJECT', event => {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
-        let opacity: number = this.gameTableObject.gridShow ? 1.0 : 0.0;
+        let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
         $(this.gridCanvas.nativeElement).css('opacity', opacity);
       });
     /*
@@ -281,7 +282,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tick();
     */
 
-    this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor, this._gameTableObject.gridShow);
+    this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
     this.gameTableObject.update();
     /*
@@ -414,7 +415,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     //console.log('onMouseUp');
 
     this.pointerDeviceService.isDragging = false;
-    let opacity: number = this.gameTableObject.gridShow ? 1.0 : 0.0;
+    let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     $(this.gridCanvas.nativeElement).css('opacity', opacity);
 
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
@@ -633,7 +634,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     $(this.gameTable.nativeElement).css('transform', 'translateZ(' + this.viewPotisonZ + 'px) translateY(' + this.viewPotisonY + 'px) translateX(' + this.viewPotisonX + 'px) rotateY(' + this.viewRotateY + 'deg) rotateX(' + this.viewRotateX + 'deg) rotateZ(' + this.viewRotateZ + 'deg) ');
   }
 
-  private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: GridType = GridType.SQUARE, gridColor: string = '#000000e6', gridShow: boolean = false) {
+  private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: GridType = GridType.SQUARE, gridColor: string = '#000000e6') {
     let $gameTableElement = $(this.gameTable.nativeElement);
     $gameTableElement.css('width', width * gridSize);
     $gameTableElement.css('height', height * gridSize);
@@ -700,7 +701,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
 
-    let opacity: number = this.gameTableObject.gridShow ? 1.0 : 0.0;
+    let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     $(this.gridCanvas.nativeElement).css('opacity', opacity);
   }
 

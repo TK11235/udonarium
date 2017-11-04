@@ -28,10 +28,10 @@
         <option value="#000000e6">黒</option>
         <option value="#dddddde6">白</option>
       </select>
-      常時:<input type="checkbox" (change)="changeGridShow($event.target.checked)" [ngModel]="tableGridShow" name="tableGridType" />
     </div>
     <hr/>
     <div>
+      グリッドを常に表示:<input type="checkbox" (change)="changeGridShow($event.target.checked)" [ngModel]="tableGridShow" name="tableGridType" />
       <button (click)="save()">現在の状態を保存</button>
     </div>
   </div>

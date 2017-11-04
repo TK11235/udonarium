@@ -7,6 +7,7 @@ import { GameObject } from './core/synchronize-object/game-object';
 @SyncObject('TableSelecter')
 export class TableSelecter extends GameObject {
   @SyncVar() viewTableIdentifier: string = '';
+  gridShow: boolean = false; // true=常時グリッド表示
 
   initialize(needUpdate: boolean = true) {
     super.initialize(needUpdate);
@@ -28,7 +29,6 @@ export class TableSelecter extends GameObject {
           imageIdentifier: gameTable.imageIdentifier,
           gridSize: gameTable.gridSize,
           gridType: gameTable.gridType,
-          gridShow: gameTable.gridShow,
         }
         EventSystem.call('UPDATE_GAME_TABLE', data);
         gameTable.selected = true;

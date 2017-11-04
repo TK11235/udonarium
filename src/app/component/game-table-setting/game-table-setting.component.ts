@@ -28,7 +28,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   _tableHeight: number = 20;
   _tableGridType: GridType = GridType.SQUARE;
   _tableGridColor: string = '#000000e6';
-  _tableGridShow: boolean = false;
   minSize: number = 1;
   maxSize: number = 100;
   tableBackgroundImage: ImageFile = ImageFile.createEmpty('null');
@@ -57,13 +56,12 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.updateGameTableSettings();
   }
 
-  get tableGridShow(): boolean { return this._tableGridShow };
+  get tableGridShow(): boolean { return this.tableSelecter.gridShow };
 
   get tableGridType(): GridType { return this._tableGridType };
 
-  get viewTable(): GameTable {
-    return ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;
-  }
+  get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
+  get viewTable(): GameTable { return ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable; }
 
   constructor(
     //private gameRoomService: GameRoomService,
@@ -99,7 +97,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this._tableWidth = gameTable.width;
     this._tableGridType = gameTable.gridType;
     this._tableGridColor = gameTable.gridColor;
-    this._tableGridShow = gameTable.gridShow;
   }
 
   updateGameTableSettings() {
@@ -116,7 +113,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     gameTable.gridSize = 50;
     gameTable.gridType = this.tableGridType;
     gameTable.gridColor = this.tableGridColor;
-    gameTable.gridShow = this.tableGridShow;
     gameTable.update();
   }
 
@@ -173,7 +169,8 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
 
   changeGridShow(target: boolean) {
     console.log('changeGridShow', target);
-    this._tableGridShow = target;
+    //this._tableGridShow = target;
+    this.tableSelecter.gridShow = target;
     this.updateGameTableSettings();
   }
 }
