@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$sub', '$===', '$to_i', '$debug', '$getCriticalResult', '$getDownResult', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$getXrmDamageTable', '$collect', '$*', '$get_table_by_2d6', '$raise', '$getBaseValue', '$getHitPart', '$times', '$getHitText', '$<<', '$+', '$getDamages', '$last=', '$last', '$join', '$>=', '$length', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$roll', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]', '$[]=', '$empty?', '$-', '$each', '$delete', '$inject', '$size', '$inspect', '$getPart', '$gsub', '$index', '$!', '$==', '$get_table_by_nD6', '$get_table_by_number', '$get_table_by_1d6']);
+  Opal.add_stubs(['$setPrefixes', '$sub', '$===', '$to_i', '$debug', '$getCriticalResult', '$getDownResult', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$getXrmDamageTable', '$collect', '$*', '$get_table_by_2d6', '$raise', '$getBaseValue', '$getHitPart', '$times', '$getHitText', '$<<', '$+', '$getDamages', '$join', '$>=', '$length', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$roll', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]', '$[]=', '$empty?', '$-', '$each', '$delete', '$inject', '$size', '$inspect', '$getPart', '$gsub', '$index', '$!', '$==', '$get_table_by_nD6', '$get_table_by_number', '$get_table_by_1d6']);
   return (function($base, $super) {
     function $BattleTech(){};
     var self = $BattleTech = $klass($base, $super, 'BattleTech', $BattleTech);
@@ -146,7 +146,7 @@ if (i == null) i = nil;
         };
         hitCount = $rb_plus(hitCount, 1);
         $d = self.$getDamages(damageFunc, partTable, damages), $c = Opal.to_ary($d), damages = ($c[0] == null ? nil : $c[0]), damageText = ($c[1] == null ? nil : $c[1]), $d;
-        return (($c = [$rb_plus(resultTexts.$last(), damageText)]), $d = resultTexts, $d['$last='].apply($d, $c), $c[$c.length-1]);}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13), $a).call($b);
+        return resultTexts['$<<'](damageText);}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13), $a).call($b);
       totalResultText = resultTexts.$join("\n");
       if ((($a = ($rb_ge(totalResultText.$length(), $gvars.SEND_STR_MAX))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         totalResultText = "..."};

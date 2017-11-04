@@ -6,6 +6,9 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
+  function $rb_plus(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
+  }
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
@@ -15,12 +18,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  function $rb_plus(lhs, rhs) {
-    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
-  }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$<<', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$isDragonDice', '$[]', '$to_s', '$!=', '$>=', '$getDiceCountHash', '$each', '$<=', '$size', '$*', '$inject', '$isNomalDice', '$==', '$[]=', '$+', '$new', '$!']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$+', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$isDragonDice', '$[]', '$to_s', '$!=', '$>=', '$getDiceCountHash', '$each', '$<<', '$<=', '$size', '$*', '$inject', '$isNomalDice', '$==', '$[]=', '$new', '$!']);
   return (function($base, $super) {
     function $Utakaze(){};
     var self = $Utakaze = $klass($base, $super, 'Utakaze', $Utakaze);
@@ -94,13 +94,13 @@
         return result};
       if ((($a = ($rb_gt(crit, 6))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         crit = 6};
-      result['$<<']("(" + (base) + "d6)");
+      result = $rb_plus(result, "(" + (base) + "d6)");
       $b = self.$roll(base, 6), $a = Opal.to_ary($b), _ = ($a[0] == null ? nil : $a[0]), diceText = ($a[1] == null ? nil : $a[1]), $b;
       diceList = ($a = ($b = diceText.$split(/,/)).$collect, $a.$$p = (TMP_7 = function(i){var self = TMP_7.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_7.$$s = self, TMP_7.$$arity = 1, TMP_7), $a).call($b).$sort();
-      result['$<<'](" ＞ [" + (diceList.$join(",")) + "] ＞ ");
-      result['$<<'](self.$getRollResultString(diceList, crit, diff));
+      result = $rb_plus(result, " ＞ [" + (diceList.$join(",")) + "] ＞ ");
+      result = $rb_plus(result, self.$getRollResultString(diceList, crit, diff));
       return result;
     }, TMP_8.$$arity = -3);
 
@@ -110,18 +110,18 @@ if (i == null) i = nil;
       $b = self.$getSuccessInfo(diceList, crit, diff), $a = Opal.to_ary($b), success = ($a[0] == null ? nil : $a[0]), maxnum = ($a[1] == null ? nil : $a[1]), setCount = ($a[2] == null ? nil : $a[2]), $b;
       result = "";
       if ((($a = (self.$isDragonDice(crit))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        result['$<<']("龍のダイス「" + (self.arrayDragonDiceName['$[]'](crit)) + "」(" + (crit.$to_s()) + ")を使用 ＞ ")};
+        result = $rb_plus(result, "龍のダイス「" + (self.arrayDragonDiceName['$[]'](crit)) + "」(" + (crit.$to_s()) + ")を使用 ＞ ")};
       if ((($a = (success)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        result['$<<']("成功レベル:" + (maxnum) + " (" + (setCount) + "セット)");
+        result = $rb_plus(result, "成功レベル:" + (maxnum) + " (" + (setCount) + "セット)");
         if ((($a = (diff['$!='](0))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
           diffSuccess = ($rb_ge(maxnum, diff));
           if ((($a = (diffSuccess)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-            result['$<<'](" ＞ 成功")
+            result = $rb_plus(result, " ＞ 成功")
             } else {
-            result['$<<'](" ＞ 失敗")
+            result = $rb_plus(result, " ＞ 失敗")
           };};
         } else {
-        result['$<<']("失敗")
+        result = $rb_plus(result, "失敗")
       };
       return result;
     }, TMP_9.$$arity = 3);
