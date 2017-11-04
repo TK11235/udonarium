@@ -121,6 +121,7 @@
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  position: absolute;
 }
 
 .pointer-events-none {
