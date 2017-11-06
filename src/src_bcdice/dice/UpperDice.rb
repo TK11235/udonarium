@@ -21,18 +21,30 @@ class UpperDice
     unless(/(^|\s)[sS]?(\d+[uU][\d\+\-uU]+)(\[(\d+)\])?([\+\-\d]*)(([<>=]+)(\d+))?(\@(\d+))?($|\s)/ =~ string)
       return output;
     end
+
+    #TKfix メソッドをまたぐと$xの中身がnilになっている
+    reg1 = $1
+    reg2 = $2
+    reg3 = $3
+    reg4 = $4
+    reg5 = $5
+    reg6 = $6
+    reg7 = $7
+    reg8 = $8
+    reg9 = $9
+    reg10 = $10
     
-    command = $2;
-    signOfInequalityText = $7
-    diff = $8.to_i;
-    upperTarget1 = $4
-    upperTarget2 = $10
+    command = reg2;
+    signOfInequalityText = reg7
+    diff = reg8.to_i;
+    upperTarget1 = reg4
+    upperTarget2 = reg10
     
-    modify = $5
+    modify = reg5
     debug('modify', modify)
     modify ||= ''
     
-    debug('p $...', [$1, $2, $3, $4, $5, $6, $7, $8, $9, $10])
+    debug('p $...', [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10])
     
     string = command
     

@@ -68,23 +68,33 @@ INFO_MESSAGE_TEXT
     
     return '1' unless(/(^|\s)S?(3[rR]6([\+\-\d]+)?(\[(\d+),(\d+)\])(([>=]+)(\d+))?)(\s|$)/i =~ string)
     
-    string = $2
+    #TKfix メソッドをまたぐと$xの中身がnilになっている
+    reg2 = $2
+    reg3 = $3
+    reg4 = $4
+    reg5 = $5
+    reg6 = $6
+    reg7 = $7
+    reg8 = $8
+    reg9 = $9
+    
+    string = reg2
     mod = 0
     abl = 1
     skl = 1
     signOfInequality = ""
     diff = 0
     
-    mod = parren_killer("(0#{$3})").to_i if($3)
+    mod = parren_killer("(0#{reg3})").to_i if(reg3)
     
-    if($4)
-      abl = $5.to_i
-      skl = $6.to_i
+    if(reg4)
+      abl = reg5.to_i
+      skl = reg6.to_i
     end
     
-    if($7)
-      signOfInequality = marshalSignOfInequality($8)
-      diff = $9.to_i
+    if(reg7)
+      signOfInequality = marshalSignOfInequality(reg8)
+      diff = reg9.to_i
     end
     
     total, out_str = get_dice(mod, abl, skl)

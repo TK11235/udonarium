@@ -160,12 +160,16 @@ INFO_MESSAGE_TEXT
     signOfInequality = $6
     signOfInequality ||= ""
     
+    #TKfix メソッドをまたぐと$xの中身がnilになっている
+    diff = $7.to_i
+    diff ||= 0
+
     debug("string", string)
     debug("diceCount", diceCount)
     debug("modifyText", modifyText)
     
-    diff = $7.to_i
-    diff ||= 0
+    #diff = $7.to_i
+    #diff ||= 0
     
     bonus = 0
     if( modifyText )

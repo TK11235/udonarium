@@ -86,11 +86,14 @@ INFO_MESSAGE_TEXT
     dice_n = 1
     dice_n = $3.to_i if($3)
     
+    #TKfix メソッドをまたぐと$xの中身がnilになっている
+    battleMode = $6.to_i
+
     modText = $4
     mod = parren_killer("(0#{modText})").to_i
     
     # 0=판정모드, 1=전투모드
-    battleMode = $6.to_i
+    #battleMode = $6.to_i
     isBattleMode = (battleMode == 1)
     debug("nechronica_check string", string)
     debug("isBattleMode", isBattleMode)
