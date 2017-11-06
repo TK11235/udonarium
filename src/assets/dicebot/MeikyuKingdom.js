@@ -162,11 +162,11 @@ if (i == null) i = nil;
       modifyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
       signOfInequality = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
       ((($a = signOfInequality) !== false && $a !== nil && $a != null) ? $a : signOfInequality = "");
+      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7)).$to_i();
+      ((($a = diff) !== false && $a !== nil && $a != null) ? $a : diff = 0);
       self.$debug("string", string);
       self.$debug("diceCount", diceCount);
       self.$debug("modifyText", modifyText);
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7)).$to_i();
-      ((($a = diff) !== false && $a !== nil && $a != null) ? $a : diff = 0);
       bonus = 0;
       if ((($a = (modifyText)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         bonus = self.$parren_killer("(0" + (modifyText) + ")").$to_i()};

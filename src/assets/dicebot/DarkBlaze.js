@@ -106,27 +106,35 @@
     }, TMP_12.$$arity = 8);
 
     Opal.defn(self, '$check_roll', TMP_13 = function $$check_roll(string, nick_e) {
-      var $a, $b, self = this, output = nil, mod = nil, abl = nil, skl = nil, signOfInequality = nil, diff = nil, total = nil, out_str = nil;
+      var $a, $b, self = this, output = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, reg9 = nil, mod = nil, abl = nil, skl = nil, signOfInequality = nil, diff = nil, total = nil, out_str = nil;
 
       output = "1";
       if ((($a = (/(^|\s)S?(3[rR]6([\+\-\d]+)?(\[(\d+),(\d+)\])(([>=]+)(\d+))?)(\s|$)/i['$=~'](string))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         } else {
         return "1"
       };
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
+      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
+      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
+      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
+      reg9 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9));
+      string = reg2;
       mod = 0;
       abl = 1;
       skl = 1;
       signOfInequality = "";
       diff = 0;
-      if ((($a = ((($b = $gvars['~']) === nil ? nil : $b['$[]'](3)))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        mod = self.$parren_killer("(0" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3))) + ")").$to_i()};
-      if ((($a = ((($b = $gvars['~']) === nil ? nil : $b['$[]'](4)))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        abl = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
-        skl = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)).$to_i();};
-      if ((($a = ((($b = $gvars['~']) === nil ? nil : $b['$[]'](7)))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        signOfInequality = self.$marshalSignOfInequality((($a = $gvars['~']) === nil ? nil : $a['$[]'](8)));
-        diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9)).$to_i();};
+      if ((($a = (reg3)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
+        mod = self.$parren_killer("(0" + (reg3) + ")").$to_i()};
+      if ((($a = (reg4)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
+        abl = reg5.$to_i();
+        skl = reg6.$to_i();};
+      if ((($a = (reg7)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
+        signOfInequality = self.$marshalSignOfInequality(reg8);
+        diff = reg9.$to_i();};
       $b = self.$get_dice(mod, abl, skl), $a = Opal.to_ary($b), total = ($a[0] == null ? nil : $a[0]), out_str = ($a[1] == null ? nil : $a[1]), $b;
       output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (out_str);
       if ((($a = (signOfInequality['$!='](""))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {

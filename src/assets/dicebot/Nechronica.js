@@ -108,7 +108,7 @@
     }, TMP_11.$$arity = 8);
 
     Opal.defn(self, '$nechronica_check', TMP_14 = function $$nechronica_check(string) {
-      var $a, $b, TMP_12, $c, TMP_13, self = this, output = nil, signOfInequality = nil, dice_n = nil, modText = nil, mod = nil, battleMode = nil, isBattleMode = nil, diff = nil, total_n = nil, _ = nil, dice_str = nil, n1 = nil, cnt_max = nil, n_max = nil, dice = nil, diceMax = nil, hit_loc = nil;
+      var $a, $b, TMP_12, $c, TMP_13, self = this, output = nil, signOfInequality = nil, dice_n = nil, battleMode = nil, modText = nil, mod = nil, isBattleMode = nil, diff = nil, total_n = nil, _ = nil, dice_str = nil, n1 = nil, cnt_max = nil, n_max = nil, dice = nil, diceMax = nil, hit_loc = nil;
 
       output = "1";
       self.$debug("nechronica_check string", string);
@@ -122,9 +122,9 @@
       dice_n = 1;
       if ((($a = ((($b = $gvars['~']) === nil ? nil : $b['$[]'](3)))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         dice_n = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i()};
+      battleMode = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)).$to_i();
       modText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
       mod = self.$parren_killer("(0" + (modText) + ")").$to_i();
-      battleMode = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)).$to_i();
       isBattleMode = (battleMode['$=='](1));
       self.$debug("nechronica_check string", string);
       self.$debug("isBattleMode", isBattleMode);

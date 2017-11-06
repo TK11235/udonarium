@@ -23162,7 +23162,7 @@ Opal.modules["dice/UpperDice"] = function(Opal) {
     }, TMP_1.$$arity = 2);
 
     Opal.defn(self, '$rollDice', TMP_3 = function $$rollDice(string) {
-      var $a, $b, TMP_2, $c, self = this, output = nil, command = nil, signOfInequalityText = nil, diff = nil, upperTarget1 = nil, upperTarget2 = nil, modify = nil, dice_a = nil, diceCommands = nil, bonusValues = nil, bonus = nil, diceDiff = nil, totalDiceString = nil, totalSuccessCount = nil, totalDiceCount = nil, maxDiceValue = nil, totalValue = nil, maxValue = nil;
+      var $a, $b, TMP_2, $c, self = this, output = nil, reg1 = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, reg9 = nil, reg10 = nil, command = nil, signOfInequalityText = nil, diff = nil, upperTarget1 = nil, upperTarget2 = nil, modify = nil, dice_a = nil, diceCommands = nil, bonusValues = nil, bonus = nil, diceDiff = nil, totalDiceString = nil, totalSuccessCount = nil, totalDiceCount = nil, maxDiceValue = nil, totalValue = nil, maxValue = nil;
       if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       self.$debug("udice begin string", string);
@@ -23172,15 +23172,25 @@ Opal.modules["dice/UpperDice"] = function(Opal) {
         } else {
         return output
       };
-      command = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      signOfInequalityText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8)).$to_i();
-      upperTarget1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      upperTarget2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](10));
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
+      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
+      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
+      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
+      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
+      reg9 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9));
+      reg10 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](10));
+      command = reg2;
+      signOfInequalityText = reg7;
+      diff = reg8.$to_i();
+      upperTarget1 = reg4;
+      upperTarget2 = reg10;
+      modify = reg5;
       self.$debug("modify", modify);
       ((($a = modify) !== false && $a !== nil && $a != null) ? $a : modify = "");
-      self.$debug("p $...", [(($a = $gvars['~']) === nil ? nil : $a['$[]'](1)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](7)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](8)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](9)), (($a = $gvars['~']) === nil ? nil : $a['$[]'](10))]);
+      self.$debug("p $...", [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10]);
       string = command;
       self.signOfInequality = self.bcdice.$getMarshaledSignOfInequality(signOfInequalityText);
       self.upper = self.$getAddRollUpperTarget(upperTarget1, upperTarget2);
