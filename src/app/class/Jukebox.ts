@@ -46,7 +46,7 @@ export class Jukebox extends GameObject {
       EventSystem.register(this)
         .on('UPDATE_AUDIO_RESOURE', -100, event => {
           this.stop();
-          this.play(this.audioIdentifier);
+          this.play(this.audioIdentifier, this.isLoop);
         });
       return;
     }
