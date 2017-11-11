@@ -10,7 +10,10 @@ export class ObjectSynchronizer {
     return ObjectSynchronizer._instance;
   }
 
-  private constructor() {
+  private constructor() { }
+
+  initialize() {
+    this.destroy();
     console.log('ObjectSynchronizer ready...');
     EventSystem.register(this)
       .on('OPEN_OTHER_PEER', 2, event => {

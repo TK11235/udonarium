@@ -66,15 +66,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     EventSystem;
     Network;
-    FileArchiver.instance;
-    FileSharingSystem.instance;
+    FileArchiver.instance.initialize();
+    FileSharingSystem.instance.initialize();
     FileStorage.instance;
-    AudioSharingSystem.instance;
+    AudioSharingSystem.instance.initialize();
     AudioStorage.instance;
     ObjectFactory.instance;
     ObjectSerializer.instance;
     ObjectStore.instance;
-    ObjectSynchronizer.instance;
+    ObjectSynchronizer.instance.initialize();
 
     appConfigService.initialize();
     pointerDeviceService.initialize();

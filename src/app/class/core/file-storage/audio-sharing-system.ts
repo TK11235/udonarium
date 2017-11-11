@@ -19,10 +19,14 @@ export class AudioSharingSystem {
   private lazyTimer: NodeJS.Timer;
 
   private constructor() {
-    console.log('AudioSharingSystem ready...');
     window.addEventListener('beforeunload', event => {
       this.destroy();
     });
+  }
+
+  initialize() {
+    console.log('AudioSharingSystem ready...');
+    this.destroy();
     EventSystem.register(this)
       .on('OPEN_OTHER_PEER', -1, event => {
         if (!event.isSendFromSelf) return;
