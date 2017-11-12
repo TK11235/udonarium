@@ -40,14 +40,14 @@ export class CardStack extends TabletopObject {
   get topCard(): Card { return 0 < this.cards.length ? this.cards[0] : null; }
   get imageFile(): ImageFile { return this.topCard ? this.topCard.imageFile : null; }
 
-  shuffle() {
+  shuffle(): Card[] {
     let length = this.cardRoot.children.length;
     for (let card of this.cards) {
       card.index = Math.random() * length;
       card.rotate = Math.floor(Math.random() * 2) * 180;
     }
-    this.cardRoot.children;
     console.log('shuffle!!!!', this.cards.length, this.cards);
+    return this.cards;
   }
 
   drawCard(): Card {
