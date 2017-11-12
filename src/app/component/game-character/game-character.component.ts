@@ -366,7 +366,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   setPosition(x: number, y: number, z: number) {
-    if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateZ(' + (0.01 + z) + 'px) translateX(' + x + 'px) translateY(' + y + 'px)');
+    if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateZ(' + z + 'px) translateX(' + x + 'px) translateY(' + y + 'px)');
     //if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateX(' + x + 'px) translateY(' + y + 'px)');
   }
 }

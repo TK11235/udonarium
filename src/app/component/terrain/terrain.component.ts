@@ -366,6 +366,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setPosition(x: number, y: number) {
-    if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateZ(0.01px) translateX(' + x + 'px) translateY(' + y + 'px)');
+    if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateX(' + x + 'px) translateY(' + y + 'px)');
   }
 }
