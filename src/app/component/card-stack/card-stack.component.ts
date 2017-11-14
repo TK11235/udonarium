@@ -517,7 +517,8 @@ export class CardStackComponent implements OnInit {
     console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     //this.modalService.open(GameCharacterSheetComponent);
-    let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
   }
@@ -527,7 +528,7 @@ export class CardStackComponent implements OnInit {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
 
     let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x, top: coordinate.y, width: 400, height: 600 };
+    let option: PanelOption = { left: coordinate.x - 200, top: coordinate.y - 300, width: 400, height: 600 };
 
     this.cardStack.owner = Network.peerId;
     let component = this.panelService.open<CardStackListComponent>(CardStackListComponent, option);
