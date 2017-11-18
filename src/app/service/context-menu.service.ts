@@ -16,7 +16,7 @@ export class ContextMenuService {
 
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
-  static UIPanelComponentClass: { new (...args: any[]): any } = null;
+  static UIPanelComponentClass: { new(...args: any[]): any } = null;
 
   private panelComponentRef: ComponentRef<any>
 
