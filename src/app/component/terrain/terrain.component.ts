@@ -65,6 +65,21 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   private updateInterval: NodeJS.Timer = null;
   private allowOpenContextMenu: boolean = false;
 
+  get height(): number {
+    let value = this.terrain.height;
+    return value < 0 ? 0 : value;
+  };
+
+  get width(): number {
+    let value = this.terrain.width;
+    return value < 0 ? 0 : value;
+  };
+
+  get depth(): number {
+    let value = this.terrain.depth;
+    return value < 0 ? 0 : value;
+  };
+
   constructor(
     private ngZone: NgZone,
     //private gameRoomService: GameRoomService,

@@ -17,18 +17,18 @@
   -->
   <div class="block-1 floor" [ngStyle]="{'transform': 'rotateZ(' + terrain.rotate +'deg)', 'pointer-events': 'auto'}" [ngClass]="{'grab': (!isDragging && !terrain.isLocked), 'grabbing': (isDragging && !terrain.isLocked), 'transition': !isDragging}">
     <ng-container *ngIf="terrain.hasFloor && 0 < terrain?.floorImage?.url.length">
-      <div class="block-1 floor" [ngClass]="{'blinking': !terrain.isLocked}" [ngStyle]="{'transform': 'translateZ(' + terrain.height * gridSize +'px)'}"
+      <div class="block-1 floor" [ngClass]="{'blinking': !terrain.isLocked}" [ngStyle]="{'transform': 'translateZ(' + height * gridSize +'px)'}"
         [style.background-image]="'url(' + terrain.floorImage.url + ')' | safe: 'style'"></div>
     </ng-container>
     <ng-container *ngIf="terrain.hasWall && 0 < terrain?.wallImage?.url.length">
       <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-top" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+        [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"></div>
       <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-bottom" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+        [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"></div>
       <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-left" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="terrain.depth * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+        [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
       <div [ngClass]="{'blinking': !terrain.isLocked}" class="floor wall-right" [style.background-image]="'url(' + terrain.wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="terrain.depth * gridSize" [style.height.px]="terrain.height * gridSize"></div>
+        [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
     </ng-container>
     <ng-container *ngIf="!terrain.isLocked">
       <div class="rotate-grab left-top" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
