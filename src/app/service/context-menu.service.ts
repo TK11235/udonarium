@@ -55,9 +55,8 @@ export class ContextMenuService {
       childPanelService.position.x = position.x;
       childPanelService.position.y = position.y;
     }
-    if (title) {
-      childPanelService.title = title;
-    }
+
+    childPanelService.title = title != null ? title : '';
 
     panelComponentRef.onDestroy(() => {
       childPanelService.panelComponentRef = null;
