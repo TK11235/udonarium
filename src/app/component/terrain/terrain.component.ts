@@ -347,9 +347,9 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
       (this.terrain.hasWall ? {
         name: '壁を非表示', action: () => {
           this.terrain.mode = TerrainViewState.FLOOR;
-          if (this.terrain.height * this.terrain.width === 0) {
+          if (this.terrain.depth * this.terrain.width === 0) {
             this.terrain.width = this.terrain.width <= 0 ? 1 : this.terrain.width;
-            this.terrain.height = this.terrain.height <= 0 ? 1 : this.terrain.height;
+            this.terrain.depth = this.terrain.depth <= 0 ? 1 : this.terrain.depth;
           }
         }
       } : {
