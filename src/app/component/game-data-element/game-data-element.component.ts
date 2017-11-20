@@ -76,18 +76,4 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   setElementType(type: string) {
     this.gameDataElement.setAttribute('type', type);
   }
-
-  //たぶん重い
-  isNumberResource(): boolean {
-    if (this.gameDataElement.attributes['type'] !== null && this.gameDataElement.attributes['type'] === 'numberResource')
-      return true;
-    else
-      return false;
-  }
-  isNote(): boolean {
-    if (this.gameDataElement.attributes['type'] !== null && this.gameDataElement.attributes['type'] === 'note')
-      return true;
-    else
-      return false;
-  }
 }
