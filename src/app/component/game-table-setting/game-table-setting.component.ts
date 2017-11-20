@@ -139,7 +139,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   save() {
     //let gameObjects = this.gameRoomService.getGameObjectsWithType<GameTable>('GameTable');
     //for (let identifier in gameObjects) {
-    let gameTable = this.viewTable.clone();//gameObjects[identifier];
+    let gameTable = this.viewTable;//gameObjects[identifier];
     gameTable.selected = true;
     let xml = gameTable.toXml();
 
