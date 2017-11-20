@@ -1,4 +1,4 @@
-<div #tableMask class="game-char" [style.width.px]="terrain.width * gridSize" [style.height.px]="terrain.depth * gridSize"
+<div #tableMask class="game-char" [style.width.px]="width * gridSize" [style.height.px]="depth * gridSize"
   (contextmenu)="onContextMenu($event)"
   [ngStyle]="{'pointer-events': 'none'}"
   [ngClass]="{'transition': !isDragging}">
