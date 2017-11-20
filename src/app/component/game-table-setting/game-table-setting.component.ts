@@ -153,7 +153,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
       files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
     }
 
-    FileArchiver.instance.save(files, 'map_' + gameTable.identifier);
+    FileArchiver.instance.save(files, 'map_' + gameTable.name);
   }
 
   openModal() {
