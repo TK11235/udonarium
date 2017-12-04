@@ -239,7 +239,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
 
   innerXml(): string {
     let xml = '';
-    xml += (this.value + '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    xml += (this.value + '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     for (let child of this.children) {
       xml += ObjectSerializer.instance.toXml(child);
     }
@@ -254,7 +254,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
         if (child instanceof ObjectNode) this.appendChild(child);
       }
     } else {
-      this.value = element.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>');;
+      this.value = element.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#34;/g, '"').replace(/&amp;/g, '&');
     }
   };
 
