@@ -42,7 +42,6 @@ export class ChatTab extends ObjectNode implements InnerXml {
 
   innerXml(): string {
     let xml = '';
-    xml += (this.value + '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     for (let child of this.children) {
       if (child instanceof ChatMessage && !child.isDisplayable) continue;
       xml += ObjectSerializer.instance.toXml(child);
