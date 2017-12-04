@@ -32,7 +32,7 @@ export class ObjectSerializer {
 
     let attrStr = '';
     for (let name in attributes) {
-      let attribute = (attributes[name] + '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      let attribute = XmlUtil.encodeEntityReference(attributes[name] + '');
       if (attribute == null) continue;
       attrStr += ' ' + name + '="' + attribute + '"';
     }
@@ -140,7 +140,7 @@ export class ObjectSerializer {
   static parseAttributes(syncData: Object, attributes: NamedNodeMap): Object {
     for (let i = 0; i < attributes.length; i++) {
       let value = attributes[i].value;
-      value = value.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#34;/g, '"').replace(/&amp;/g, '&');
+      value = XmlUtil.decodeEntityReference(value);
       /* */
       let split: string[] = attributes[i].name.split('.');
       let key: string | number = split[0];

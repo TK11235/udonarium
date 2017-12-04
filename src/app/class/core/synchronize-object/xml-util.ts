@@ -16,4 +16,12 @@ export namespace XmlUtil {
     }
     return xmlDocument.documentElement;
   }
+
+  export function encodeEntityReference(string: string): string {
+    return string.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  export function decodeEntityReference(string: string): string {
+    return string.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#34;/g, '"').replace(/&amp;/g, '&');
+  }
 }

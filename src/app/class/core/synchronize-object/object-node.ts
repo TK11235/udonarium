@@ -5,7 +5,7 @@ import { ObjectFactory, Type } from './object-factory';
 import { ObjectSerializer, XmlAttributes, InnerXml } from './object-serializer';
 import { Attributes } from './attributes';
 import { EventSystem } from '../system/system';
-
+import { XmlUtil } from './xml-util';
 
 //ERROR in Error encountered resolving symbol values statically. の対応 Export
 //循環参照回避
@@ -239,7 +239,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
 
   innerXml(): string {
     let xml = '';
-    xml += (this.value + '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    xml += XmlUtil.encodeEntityReference(this.value + '');
     for (let child of this.children) {
       xml += ObjectSerializer.instance.toXml(child);
     }
@@ -254,7 +254,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
         if (child instanceof ObjectNode) this.appendChild(child);
       }
     } else {
-      this.value = element.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#34;/g, '"').replace(/&amp;/g, '&');
+      this.value = XmlUtil.decodeEntityReference(element.innerHTML);
     }
   };
 
