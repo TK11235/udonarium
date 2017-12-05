@@ -254,7 +254,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.gameCharacter.location.x += deltaX < 12.5 ? -deltaX : 25 - deltaX;
     this.gameCharacter.location.y += deltaY < 12.5 ? -deltaY : 25 - deltaY;
-    this.gameCharacter.posZ = this.depth;
     this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
 
     if (this.updateInterval === null) {
