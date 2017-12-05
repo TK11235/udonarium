@@ -211,6 +211,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onMouseDown(e: any) {
     console.log('GameCharacterComponent mousedown !!!');
+    e.preventDefault();
     /*
     this.calcLocalCoordinate(e);
 
@@ -231,13 +232,17 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     */
     this.allowOpenContextMenu = true;
 
+    // TODO:もっと良い方法考える
+    if (e.button === 2) {
+      EventSystem.trigger('DRAG_LOCKED_OBJECT', {});
+      return;
+    }
+
     document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
     document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
 
     console.log('onSelectedGameCharacter', this.gameCharacter);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.gameCharacter.identifier, className: this.gameCharacter.aliasName });
-
-    e.preventDefault();
   }
 
   onMouseUp(e: any) {
