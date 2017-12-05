@@ -429,6 +429,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let x = e.touches ? e.changedTouches[0].pageX : e.pageX;
     let y = e.touches ? e.changedTouches[0].pageY : e.pageY;
 
+    if (this.mouseDownPositionX !== x || this.mouseDownPositionX !== y) {
+      this.contextMenuService.close();
+    }
+
     if (this.isTransformMode) {
       let transformX = 0;
       let transformY = 0;
