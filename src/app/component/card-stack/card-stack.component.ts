@@ -113,7 +113,7 @@ export class CardStackComponent implements OnInit {
         //if (event.data.identifier === this.gameCharacter.identifier) this.changeDetector.markForCheck();
       }).on('SHUFFLE_CARD_STACK', -1000, event => {
         if (event.data.identifier !== this.cardStack.identifier) return;
-        this.cardStack.shuffle();
+        if (event.isSendFromSelf) this.cardStack.shuffle();
         this.animeState = 'active';
       });
   }
