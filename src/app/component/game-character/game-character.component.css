@@ -10,6 +10,20 @@
   cursor: grabbing;
 }
 
+.is-3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.is-transition {
+  -webkit-transition: -webkit-transform 132ms linear;
+  transition: transform 132ms linear;
+}
+
+.is-pointer-events-none {
+  pointer-events: none;
+}
+
 .component {
   position: absolute;
   height: 50px;
@@ -47,16 +61,6 @@
   border-radius: 25px;
 }
 
-.is-3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
-
-.is-transition {
-  -webkit-transition: -webkit-transform 132ms linear;
-  transition: transform 132ms linear;
-}
-
 .upright-transform {
   bottom: 50%;
   left: 0;
@@ -68,6 +72,13 @@
 .is-fit-width {
   height: auto;
   width: 100%;
+}
+
+.fill-frame {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .image {
@@ -88,17 +99,6 @@
   border-radius: 24px;
   position: absolute;
   top: -30px;
-}
-
-.is-pointer-events-none {
-  pointer-events: none;
-}
-
-.fill-frame {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .is-nowrap {
