@@ -1,19 +1,14 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, HostListener, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
+import { ImageFile } from '../../class/core/file-storage/image-file';
+import { EventSystem, Network } from '../../class/core/system/system';
+import { GameCharacter } from '../../class/game-character';
 import { ContextMenuService } from '../../service/context-menu.service';
-
-import { PanelService, PanelOption } from '../../service/panel.service';
+import { PanelOption, PanelService } from '../../service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
 import { ChatPaletteComponent } from '../chat-palette/chat-palette.component';
-
-import { ChatPalette } from '../../class/chat-palette';
-import { GameCharacter, GameCharacterContainer } from '../../class/game-character';
-import { DataElement } from '../../class/data-element';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ImageFile } from '../../class/core/file-storage/image-file';
+import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 
 @Component({
   selector: 'game-character, [game-character]',
