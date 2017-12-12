@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, HostListener, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { ContextMenuService } from '../../service/context-menu.service';
-//import { ModalService } from '../../service/modal.service';
+
 import { PanelService, PanelOption } from '../../service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
 import { ChatPaletteComponent } from '../chat-palette/chat-palette.component';
@@ -15,18 +15,14 @@ import { Network, EventSystem } from '../../class/core/system/system';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 
-/*import * as $ from 'jquery';*/
-
 @Component({
   selector: 'game-character, [game-character]',
   templateUrl: './game-character.component.html',
   styleUrls: ['./game-character.component.css'],
   animations: [
-    trigger('flyInOut', [
+    trigger('bounceInOut', [
       state('in', style({ transform: 'scale3d(1, 1, 1)' })),
       transition('void => *', [
-        //style({ transform: 'scale3d(0, 0, 0)' }),
-        //animate(100)
         animate('600ms ease', keyframes([
           style({ transform: 'scale3d(0, 0, 0)', offset: 0 }),
           style({ transform: 'scale3d(1.5, 1.5, 1.5)', offset: 0.5 }),
@@ -42,62 +38,41 @@ import { ImageFile } from '../../class/core/file-storage/image-file';
   ]
 })
 export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit {
-
-  @ViewChild('gameChar') gameChar: ElementRef;
-  @ViewChild('gameCharImage') gameCharImage: ElementRef;
-  @ViewChild('gamePanel') gamePanel: ElementRef;
-
   @Input() gameCharacter: GameCharacter = null;
-  //@Input() top: number = 0;
-  //@Input() left: number = 0;
   @Input() is3D: boolean = false;
+
+  get name(): string { return this.gameCharacter.name; }
+  get size(): number { return this.gameCharacter.size; }
+  get imageFile(): ImageFile { return this.gameCharacter.imageFile; }
+  get posX(): number { return this.gameCharacter.location.x; }
+  set posX(posX: number) { this.gameCharacter.location.x = posX; this.setUpdateTimer(); }
+  get posY(): number { return this.gameCharacter.location.y; }
+  set posY(posY: number) { this.gameCharacter.location.y = posY; this.setUpdateTimer(); }
+  get posZ(): number { return this.gameCharacter.posZ; }
+  set posZ(posZ: number) { this.gameCharacter.posZ = posZ; this.setUpdateTimer(); }
 
   private dragAreaElement: HTMLElement = null;
 
-  private top: number = 0;
-  private left: number = 0;
-  private depth: number = 0;
+  private pointer: PointerCoordinate = { x: 0, y: 0, z: 0 };
+  private pointerOffset: PointerCoordinate = { x: 0, y: 0, z: 0 };
+  private pointerStart: PointerCoordinate = { x: 0, y: 0, z: 0 };
+  private pointerPrev: PointerCoordinate = { x: 0, y: 0, z: 0 };
 
-  private offsetTop: number = 0;
-  private offsetLeft: number = 0;
-  private startTop: number = 0;
-  private startLeft: number = 0;
-  private startDepth: number = 0;
   private delta: number = 1.0;
 
-  private callbackOnMouseDown: any = null;
-  private callbackOnMouseUp: any = null;
-  private callbackOnMouseMove: any = null;
-  private callbackOnPanelMouseDown: any = null;
+  private callbackOnMouseUp = (e) => this.onMouseUp(e);
+  private callbackOnMouseMove = (e) => this.onMouseMove(e);
 
-  private callbackOnDragstart: any = null;
-
-  private updateIntervalFlag: boolean = true;
-  private lastUpdateTimeStamp: number = 0;
   isDragging: boolean = false;
-
-  private prevTop: number = 0;
-  private prevLeft: number = 0;
-  private prevDepth: number = 0;
-
   gridSize: number = 50;
-
-  private $gameCharElement: JQuery = null;
-
   private updateInterval: NodeJS.Timer = null;
-
   private allowOpenContextMenu: boolean = false;
-
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   constructor(
-    private ngZone: NgZone,
-    //private gameRoomService: GameRoomService,
     private contextMenuService: ContextMenuService,
-    //private modalService: ModalService,
     private panelService: PanelService,
     private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
@@ -105,70 +80,27 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.isSendFromSelf || event.data.identifier !== this.gameCharacter.identifier) return;
-        //console.log('UPDATE_GAME_OBJECT GameCharacterComponent ' + event.sendFrom, Network.peerId);
-        //if (event.sender === NetworkProxy.myPeerId) return;
         this.isDragging = false;
-        //let container: GameCharacterContainer = event.data.syncData;
-        this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
-        //if (event.data.identifier === this.gameCharacter.identifier) this.changeDetector.markForCheck();
       });
   }
 
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
     this.dragAreaElement = this.findDragAreaElement(this.elementRef.nativeElement.parentElement);
-
-    let element = this.elementRef.nativeElement;
-
-    this.$gameCharElement = $(this.gameChar.nativeElement);
-
-    this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
-
-    this.callbackOnMouseDown = (e) => this.onMouseDown(e);
-    this.callbackOnMouseUp = (e) => this.onMouseUp(e);
-    this.callbackOnMouseMove = (e) => this.onMouseMove(e);
-    this.callbackOnPanelMouseDown = (e) => this.onPanelMouseDown(e);
-    this.callbackOnDragstart = (e) => this.onDragstart(e);
-
-    element.addEventListener('mousedown', this.callbackOnMouseDown, false);
-    //this.gameCharImage.nativeElement.addEventListener('mousedown', this.callbackOnMouseDown, false);
-    this.gamePanel.nativeElement.addEventListener('mousedown', this.callbackOnPanelMouseDown, false);
-    element.addEventListener('dragstart', this.callbackOnDragstart, false);
   }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    let element = this.elementRef.nativeElement;
-
-    element.removeEventListener('mousedown', this.callbackOnMouseDown, false);
-    //this.gameCharImage.nativeElement.removeEventListener('mousedown', this.callbackOnMouseDown, false);
-
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
-
-    this.gamePanel.nativeElement.removeEventListener('mousedown', this.callbackOnPanelMouseDown, false);
-    element.removeEventListener('dragstart', this.callbackOnDragstart, false);
-
-    this.callbackOnMouseDown = null;
-    this.callbackOnMouseUp = null;
-    this.callbackOnMouseMove = null;
-    this.callbackOnPanelMouseDown = null;
-    this.callbackOnDragstart = null;
+    this.removeMouseEventListeners();
   }
 
-  private calcLocalCoordinate(event: Event) {
-    /*
-    let coordinate: PointerCoordinate = this.pointerDeviceService.pointers[0];
-    coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
-    this.top = coordinate.y;
-    this.left = coordinate.x;
-    */
+  private calcLocalCoordinate(event: Event, pointer: PointerCoordinate): PointerCoordinate {
     let isTerrain = true;
     let isCharacter = false;
     let node: HTMLElement = <HTMLElement>event.target;
     while (node) {
       if (node === this.dragAreaElement) break;
-      if (node === this.gameChar.nativeElement) {
+      if (node === this.elementRef.nativeElement) {
         isTerrain = false;
         isCharacter = true;
         break;
@@ -178,15 +110,15 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     if (node == null) isTerrain = false;
 
     let coordinate: PointerCoordinate = this.pointerDeviceService.pointers[0];
-    if (!isTerrain) {
-      coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
-      coordinate.z = isCharacter ? this.depth : 0;
-    } else {
+
+    if (isTerrain) {
       coordinate = PointerDeviceService.convertLocalToLocal(coordinate, <HTMLElement>event.target, this.dragAreaElement);
+    } else {
+      coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
+      coordinate.z = isCharacter ? this.pointer.z : 0;
     }
-    this.top = coordinate.y;
-    this.left = coordinate.x;
-    this.depth = 0 < coordinate.z ? coordinate.z : 0;
+
+    return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
   }
 
   private findDragAreaElement(parent: HTMLElement): HTMLElement {
@@ -198,38 +130,18 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     return null;
   }
 
-  onDragstart(e) {
+  @HostListener('dragstart', ['$event'])
+  onDragstart(e: any) {
     console.log('Dragstart Cancel !!!!');
     e.stopPropagation();
     e.preventDefault();
   }
 
-  onPanelMouseDown(e: MouseEvent) {
-    e.stopPropagation();
-    this.isDragging = false;
-  }
-
+  @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
-    console.log('GameCharacterComponent mousedown !!!');
+    console.log('GameCharacterComponent mousedown !!!', this.gameCharacter);
     e.preventDefault();
-    /*
-    this.calcLocalCoordinate(e);
 
-
-    this.allowOpenContextMenu = true;
-
-    //this.changeDetector.markForCheck();
-
-    this.offsetTop = this.gameCharacter.location.y - this.top;
-    this.offsetLeft = this.gameCharacter.location.x - this.left;
-
-    this.delta = 1.0;
-    this.startTop = this.top;
-    this.startLeft = this.left;
-
-    this.prevTop = this.top;
-    this.prevLeft = this.left;
-    */
     this.allowOpenContextMenu = true;
 
     // TODO:もっと良い方法考える
@@ -238,102 +150,78 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       return;
     }
 
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
+    this.addMouseEventListeners();
 
-    console.log('onSelectedGameCharacter', this.gameCharacter);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.gameCharacter.identifier, className: this.gameCharacter.aliasName });
   }
 
   onMouseUp(e: any) {
-    //console.log('GameCharacterComponent mouseup !!!!');
+    e.preventDefault();
+
     setTimeout(() => { this.allowOpenContextMenu = false; }, 0);
     this.isDragging = false;
-    //this.changeDetector.markForCheck();
-
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
+    this.removeMouseEventListeners();
 
     let deltaX = this.gameCharacter.location.x % 25;
     let deltaY = this.gameCharacter.location.y % 25;
 
     this.gameCharacter.location.x += deltaX < 12.5 ? -deltaX : 25 - deltaX;
     this.gameCharacter.location.y += deltaY < 12.5 ? -deltaY : 25 - deltaY;
-    this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
 
-    if (this.updateInterval === null) {
-      this.updateInterval = setTimeout(() => {
-        this.gameCharacter.update();
-        this.updateInterval = null;
-      }, 66);
-    }
-
-    e.preventDefault();
+    this.setUpdateTimer();
   }
 
   onMouseMove(e: any) {
     if (this.isDragging) {
-      this.calcLocalCoordinate(e);
-      if ((this.prevTop === this.top && this.prevLeft === this.left && this.prevDepth === this.depth)) return;
+      this.pointer = this.calcLocalCoordinate(e, this.pointer);
+      if (this.pointerPrev.x === this.pointer.x
+        && this.pointerPrev.y === this.pointer.y
+        && this.pointerPrev.z === this.pointer.z) return;
+
       this.allowOpenContextMenu = false;
+
+      let distance = this.calcDistance(this.pointerStart, this.pointer);
+      if (distance < this.delta) this.delta = distance;
+
+      this.pointerPrev.x = this.pointer.x;
+      this.pointerPrev.y = this.pointer.y;
+      this.pointerPrev.z = this.pointer.z;
+
       let size: number = this.gridSize * this.gameCharacter.size;
+      this.gameCharacter.location.x = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(size / 2) * (1.0 - this.delta));
+      this.gameCharacter.location.y = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(size / 2) * (1.0 - this.delta));
+      this.gameCharacter.posZ = this.pointer.z;
 
-      let distanceY = this.startTop - this.top;
-      let distanceX = this.startLeft - this.left;
-      let distanceZ = (this.startDepth - this.depth) * this.gridSize * 3;
-
-      let ratio: number = this.gameCharacter.size;
-      ratio = ratio < 0 ? 0.01 : ratio;
-      ratio = this.gridSize * 4 * 9 / (ratio + 2);
-
-      let distance = ratio / (Math.sqrt(distanceY * distanceY + distanceX * distanceX + distanceZ * distanceZ) + ratio);
-
-      if (distance < this.delta) {
-        this.delta = distance;
-      }
-      this.prevTop = this.top;
-      this.prevLeft = this.left;
-      this.prevDepth = this.depth;
-
-      this.gameCharacter.location.x = this.left + (this.offsetLeft * this.delta) + (-(size / 2) * (1.0 - this.delta));
-      this.gameCharacter.location.y = this.top + (this.offsetTop * this.delta) + (-(size / 2) * (1.0 - this.delta));
-      this.gameCharacter.posZ = this.depth;
-      this.setPosition(this.gameCharacter.location.x, this.gameCharacter.location.y, this.gameCharacter.posZ);
-
-      if (this.updateInterval === null) {
-        this.updateInterval = setTimeout(() => {
-          this.gameCharacter.update();
-          this.updateInterval = null;
-        }, 66);
-      }
+      this.setUpdateTimer();
     } else {
-      this.depth = this.gameCharacter.posZ;
-      this.startDepth = this.depth;
-      this.prevDepth = this.depth;
-      this.calcLocalCoordinate(e);
+      this.pointer.z = this.gameCharacter.posZ;
+      this.pointerStart.z = this.pointerPrev.z = this.pointer.z;
+      this.pointer = this.calcLocalCoordinate(e, this.pointer);
 
       this.isDragging = true;
-      //this.allowOpenContextMenu = true;
-      //this.changeDetector.markForCheck();
 
-      this.offsetTop = this.gameCharacter.location.y - this.top;
-      this.offsetLeft = this.gameCharacter.location.x - this.left;
+      this.pointerOffset.x = this.gameCharacter.location.x - this.pointer.x;
+      this.pointerOffset.y = this.gameCharacter.location.y - this.pointer.y;
+
+      this.pointerStart.x = this.pointerPrev.x = this.pointer.x;
+      this.pointerStart.y = this.pointerPrev.y = this.pointer.y;
 
       this.delta = 1.0;
-      this.startTop = this.top;
-      this.startLeft = this.left;
-
-      this.prevTop = this.top;
-      this.prevLeft = this.left;
     }
   }
 
+  @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
     console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
 
+    this.isDragging = false;
+    this.removeMouseEventListeners();
+
     if (this.allowOpenContextMenu === false) return;
+    this.allowOpenContextMenu = false;
+
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
@@ -354,10 +242,38 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     ], this.gameCharacter.name);
   }
 
+  private calcDistance(start: PointerCoordinate, now: PointerCoordinate): number {
+    let distanceY = start.y - now.y;
+    let distanceX = start.x - now.x;
+    let distanceZ = (start.z - now.z) * this.gridSize * 3;
+
+    let ratio: number = this.gameCharacter.size;
+    ratio = ratio < 0 ? 0.01 : ratio;
+    ratio = this.gridSize * 4 * 9 / (ratio + 2);
+
+    return ratio / (Math.sqrt(distanceY * distanceY + distanceX * distanceX + distanceZ * distanceZ) + ratio);
+  }
+
+  private setUpdateTimer() {
+    if (this.updateInterval === null) {
+      this.updateInterval = setTimeout(() => {
+        this.gameCharacter.update();
+        this.updateInterval = null;
+      }, 66);
+    }
+  }
+
+  private addMouseEventListeners() {
+    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
+    document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
+  }
+
+  private removeMouseEventListeners() {
+    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
+    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
+  }
+
   private showDetail(gameObject: GameCharacter) {
-    //console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
-    //EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    //this.modalService.open(GameCharacterSheetComponent);
     let coordinate = this.pointerDeviceService.pointers[0];
     let option: PanelOption = { left: coordinate.x - 400, top: coordinate.y - 300, width: 800, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
@@ -369,10 +285,5 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 500, height: 350 };
     let component = this.panelService.open<ChatPaletteComponent>(ChatPaletteComponent, option);
     component.character = gameObject;
-  }
-
-  setPosition(x: number, y: number, z: number) {
-    if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateZ(' + z + 'px) translateX(' + x + 'px) translateY(' + y + 'px)');
-    //if (this.$gameCharElement) this.$gameCharElement.css('transform', 'translateX(' + x + 'px) translateY(' + y + 'px)');
   }
 }
