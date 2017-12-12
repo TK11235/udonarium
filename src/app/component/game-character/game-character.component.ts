@@ -39,12 +39,17 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   get name(): string { return this.gameCharacter.name; }
   get size(): number { return this.gameCharacter.size; }
   get imageFile(): ImageFile { return this.gameCharacter.imageFile; }
-  get posX(): number { return this.gameCharacter.location.x; }
-  set posX(posX: number) { this.gameCharacter.location.x = posX; this.setUpdateTimer(); }
-  get posY(): number { return this.gameCharacter.location.y; }
-  set posY(posY: number) { this.gameCharacter.location.y = posY; this.setUpdateTimer(); }
-  get posZ(): number { return this.gameCharacter.posZ; }
-  set posZ(posZ: number) { this.gameCharacter.posZ = posZ; this.setUpdateTimer(); }
+
+  private _posX: number = 0;
+  private _posY: number = 0;
+  private _posZ: number = 0;
+
+  get posX(): number { return this._posX; }
+  set posX(posX: number) { this._posX = posX; this.setUpdateTimer(); }
+  get posY(): number { return this._posY; }
+  set posY(posY: number) { this._posY = posY; this.setUpdateTimer(); }
+  get posZ(): number { return this._posZ; }
+  set posZ(posZ: number) { this._posZ = posZ; this.setUpdateTimer(); }
 
   private dragAreaElement: HTMLElement = null;
 
@@ -72,10 +77,12 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   ngOnInit() {
+    this.setPosition(this.gameCharacter);
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.isSendFromSelf || event.data.identifier !== this.gameCharacter.identifier) return;
         this.isDragging = false;
+        this.setPosition(this.gameCharacter);
       });
   }
 
@@ -249,10 +256,18 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     return null;
   }
 
+  private setPosition(object: GameCharacter) {
+    this._posX = object.location.x;
+    this._posY = object.location.y;
+    this._posZ = object.posZ;
+  }
+
   private setUpdateTimer() {
     if (this.updateInterval === null) {
       this.updateInterval = setTimeout(() => {
-        this.gameCharacter.update();
+        this.gameCharacter.location.x = this.posX;
+        this.gameCharacter.location.y = this.posY;
+        this.gameCharacter.posZ = this.posZ;
         this.updateInterval = null;
       }, 66);
     }
