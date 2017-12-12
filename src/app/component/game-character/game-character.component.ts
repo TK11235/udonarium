@@ -94,42 +94,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     this.removeMouseEventListeners();
   }
 
-  private calcLocalCoordinate(event: Event, pointer: PointerCoordinate): PointerCoordinate {
-    let isTerrain = true;
-    let isCharacter = false;
-    let node: HTMLElement = <HTMLElement>event.target;
-    while (node) {
-      if (node === this.dragAreaElement) break;
-      if (node === this.elementRef.nativeElement) {
-        isTerrain = false;
-        isCharacter = true;
-        break;
-      }
-      node = node.parentElement;
-    }
-    if (node == null) isTerrain = false;
-
-    let coordinate: PointerCoordinate = this.pointerDeviceService.pointers[0];
-
-    if (isTerrain) {
-      coordinate = PointerDeviceService.convertLocalToLocal(coordinate, <HTMLElement>event.target, this.dragAreaElement);
-    } else {
-      coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
-      coordinate.z = isCharacter ? this.pointer.z : 0;
-    }
-
-    return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
-  }
-
   @HostListener('dragstart', ['$event'])
   onDragstart(e: any) {
     console.log('Dragstart Cancel !!!!');
@@ -252,6 +216,42 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     ratio = this.gridSize * 4 * 9 / (ratio + 2);
 
     return ratio / (Math.sqrt(distanceY * distanceY + distanceX * distanceX + distanceZ * distanceZ) + ratio);
+  }
+
+  private calcLocalCoordinate(event: Event, pointer: PointerCoordinate): PointerCoordinate {
+    let isTerrain = true;
+    let isCharacter = false;
+    let node: HTMLElement = <HTMLElement>event.target;
+    while (node) {
+      if (node === this.dragAreaElement) break;
+      if (node === this.elementRef.nativeElement) {
+        isTerrain = false;
+        isCharacter = true;
+        break;
+      }
+      node = node.parentElement;
+    }
+    if (node == null) isTerrain = false;
+
+    let coordinate: PointerCoordinate = this.pointerDeviceService.pointers[0];
+
+    if (isTerrain) {
+      coordinate = PointerDeviceService.convertLocalToLocal(coordinate, <HTMLElement>event.target, this.dragAreaElement);
+    } else {
+      coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
+      coordinate.z = isCharacter ? this.pointer.z : 0;
+    }
+
+    return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
+  }
+
+  private findDragAreaElement(parent: HTMLElement): HTMLElement {
+    if (parent.tagName === 'DIV') {
+      return parent;
+    } else if (parent.tagName !== 'BODY') {
+      return this.findDragAreaElement(parent.parentElement);
+    }
+    return null;
   }
 
   private setUpdateTimer() {
