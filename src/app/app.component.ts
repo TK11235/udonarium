@@ -115,7 +115,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           this.lazyUpdateTimer = setTimeout(() => {
             this.lazyUpdateTimer = null;
             this.ngZone.run(() => { });
-          }, 100);
+          }, 33);
         }
       }).on<AppConfig>('LOAD_CONFIG', 0, event => {
         console.log('LOAD_CONFIG !!!', event.data);
