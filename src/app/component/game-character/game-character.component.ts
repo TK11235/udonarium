@@ -146,7 +146,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       this.pointerPrev.y = this.pointer.y;
       this.pointerPrev.z = this.pointer.z;
 
-      let size: number = this.gridSize * this.gameCharacter.size;
+      let size: number = this.gridSize * this.size;
       this.posX = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(size / 2) * (1.0 - this.delta));
       this.posY = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(size / 2) * (1.0 - this.delta));
       this.posZ = this.pointer.z;
@@ -198,7 +198,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       { name: '共有イベントリに移動', action: () => { this.gameCharacter.setLocation('common'); } },
       { name: '個人イベントリに移動', action: () => { this.gameCharacter.setLocation(Network.peerId); } },
       { name: '墓場に移動', action: () => { this.gameCharacter.setLocation('graveyard'); } }
-    ], this.gameCharacter.name);
+    ], this.name);
   }
 
   private calcDistance(start: PointerCoordinate, now: PointerCoordinate): number {
@@ -206,7 +206,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     let distanceX = start.x - now.x;
     let distanceZ = (start.z - now.z) * this.gridSize * 3;
 
-    let ratio: number = this.gameCharacter.size;
+    let ratio: number = this.size;
     ratio = ratio < 0 ? 0.01 : ratio;
     ratio = this.gridSize * 4 * 9 / (ratio + 2);
 
