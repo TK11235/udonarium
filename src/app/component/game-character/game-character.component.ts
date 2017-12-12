@@ -121,11 +121,11 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     this.isDragging = false;
     this.removeMouseEventListeners();
 
-    let deltaX = this.gameCharacter.location.x % 25;
-    let deltaY = this.gameCharacter.location.y % 25;
+    let deltaX = this.posX % 25;
+    let deltaY = this.posY % 25;
 
-    this.gameCharacter.location.x += deltaX < 12.5 ? -deltaX : 25 - deltaX;
-    this.gameCharacter.location.y += deltaY < 12.5 ? -deltaY : 25 - deltaY;
+    this.posX += deltaX < 12.5 ? -deltaX : 25 - deltaX;
+    this.posY += deltaY < 12.5 ? -deltaY : 25 - deltaY;
 
     this.setUpdateTimer();
   }
@@ -147,20 +147,20 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       this.pointerPrev.z = this.pointer.z;
 
       let size: number = this.gridSize * this.gameCharacter.size;
-      this.gameCharacter.location.x = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(size / 2) * (1.0 - this.delta));
-      this.gameCharacter.location.y = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(size / 2) * (1.0 - this.delta));
-      this.gameCharacter.posZ = this.pointer.z;
+      this.posX = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(size / 2) * (1.0 - this.delta));
+      this.posY = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(size / 2) * (1.0 - this.delta));
+      this.posZ = this.pointer.z;
 
       this.setUpdateTimer();
     } else {
-      this.pointer.z = this.gameCharacter.posZ;
+      this.pointer.z = this.posZ;
       this.pointerStart.z = this.pointerPrev.z = this.pointer.z;
       this.pointer = this.calcLocalCoordinate(e, this.pointer);
 
       this.isDragging = true;
 
-      this.pointerOffset.x = this.gameCharacter.location.x - this.pointer.x;
-      this.pointerOffset.y = this.gameCharacter.location.y - this.pointer.y;
+      this.pointerOffset.x = this.posX - this.pointer.x;
+      this.pointerOffset.y = this.posY - this.pointer.y;
 
       this.pointerStart.x = this.pointerPrev.x = this.pointer.x;
       this.pointerStart.y = this.pointerPrev.y = this.pointer.y;
