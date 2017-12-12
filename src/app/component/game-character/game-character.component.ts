@@ -11,7 +11,7 @@ import { ChatPaletteComponent } from '../chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 
 @Component({
-  selector: 'game-character, [game-character]',
+  selector: 'game-character',
   templateUrl: './game-character.component.html',
   styleUrls: ['./game-character.component.css'],
   animations: [
