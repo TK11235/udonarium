@@ -9,7 +9,7 @@ import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-d
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 
 @Component({
-  selector: 'game-table-mask, [game-table-mask]',
+  selector: 'game-table-mask',
   templateUrl: './game-table-mask.component.html',
   styleUrls: ['./game-table-mask.component.css']
 })
@@ -48,8 +48,6 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   private callbackOnMouseUp = (e) => this.onMouseUp(e);
   private callbackOnMouseMove = (e) => this.onMouseMove(e);
 
-  private updateIntervalFlag: boolean = true;
-  private lastUpdateTimeStamp: number = 0;
   isDragging: boolean = false;
   gridSize: number = 50;
 
