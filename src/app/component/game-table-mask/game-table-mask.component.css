@@ -10,6 +10,11 @@
   cursor: grabbing;
 }
 
+.is-transition {
+  -webkit-transition: -webkit-transform 132ms linear;
+  transition: transform 132ms linear;
+}
+
 .component {
   position: absolute;
   height: 50px;
@@ -21,6 +26,10 @@
   
   -moz-user-drag: none;
   -webkit-user-drag: none;
+}
+
+.image {
+  display: block;
 }
 
 .lock-icon {
@@ -40,21 +49,12 @@
   margin: auto;
 }
 
-.is-fit-full {
-  height: 100%;
-  width: 100%;
-}
-
 .border {
   box-sizing: border-box;
   border: solid 2px #CCCCCC;
 }
 
-.image {
-  display: block;
-}
-
-.is-transition {
-  -webkit-transition: -webkit-transform 132ms linear;
-  transition: transform 132ms linear;
+.is-fit-full {
+  height: 100%;
+  width: 100%;
 }

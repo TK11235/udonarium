@@ -17,8 +17,6 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   @Input() gameTableMask: GameTableMask = null;
   @Input() is3D: boolean = false;
 
-  private dragAreaElement: HTMLElement = null;
-
   get name(): string { return this.gameTableMask.name; }
   get width(): number { return this.gameTableMask.width; }
   get height(): number { return this.gameTableMask.height; }
@@ -38,12 +36,14 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   get posZ(): number { return this._posZ; }
   set posZ(posZ: number) { this._posZ = posZ; this.setUpdateTimer(); }
 
-  private delta: number = 1.0;
+  private dragAreaElement: HTMLElement = null;
 
   private pointer: PointerCoordinate = { x: 0, y: 0, z: 0 };
   private pointerOffset: PointerCoordinate = { x: 0, y: 0, z: 0 };
   private pointerStart: PointerCoordinate = { x: 0, y: 0, z: 0 };
   private pointerPrev: PointerCoordinate = { x: 0, y: 0, z: 0 };
+
+  private delta: number = 1.0;
 
   private callbackOnMouseUp = (e) => this.onMouseUp(e);
   private callbackOnMouseMove = (e) => this.onMouseMove(e);
@@ -51,7 +51,6 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   private updateIntervalFlag: boolean = true;
   private lastUpdateTimeStamp: number = 0;
   isDragging: boolean = false;
-
   gridSize: number = 50;
 
   private updateInterval: NodeJS.Timer = null;
@@ -82,20 +81,6 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   ngOnDestroy() {
     EventSystem.unregister(this);
     this.removeMouseEventListeners();
-  }
-
-  private calcLocalCoordinate(pointer: PointerCoordinate): PointerCoordinate {
-    let coordinate = PointerDeviceService.convertToLocal(pointer, this.dragAreaElement);
-    return { x: coordinate.x, y: coordinate.y, z: coordinate.z };
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
   }
 
   @HostListener('dragstart', ['$event'])
@@ -196,6 +181,26 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     ], this.name);
   }
 
+  private calcLocalCoordinate(pointer: PointerCoordinate): PointerCoordinate {
+    let coordinate = PointerDeviceService.convertToLocal(pointer, this.dragAreaElement);
+    return { x: coordinate.x, y: coordinate.y, z: coordinate.z };
+  }
+
+  private findDragAreaElement(parent: HTMLElement): HTMLElement {
+    if (parent.tagName === 'DIV') {
+      return parent;
+    } else if (parent.tagName !== 'BODY') {
+      return this.findDragAreaElement(parent.parentElement);
+    }
+    return null;
+  }
+
+  private setPosition(object: GameTableMask) {
+    this._posX = object.location.x;
+    this._posY = object.location.y;
+    this._posZ = object.posZ;
+  }
+
   private setUpdateTimer() {
     if (this.updateInterval === null) {
       this.updateInterval = setTimeout(() => {
@@ -205,13 +210,6 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
         this.updateInterval = null;
       }, 66);
     }
-  }
-
-  private showDetail(gameObject: GameTableMask) {
-    let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x - 200, top: coordinate.y - 150, width: 400, height: 300 };
-    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
-    component.tabletopObject = gameObject;
   }
 
   private addMouseEventListeners() {
@@ -224,9 +222,10 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
   }
 
-  private setPosition(object: GameTableMask) {
-    this._posX = object.location.x;
-    this._posY = object.location.y;
-    this._posZ = object.posZ;
+  private showDetail(gameObject: GameTableMask) {
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 200, top: coordinate.y - 150, width: 400, height: 300 };
+    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
+    component.tabletopObject = gameObject;
   }
 }
