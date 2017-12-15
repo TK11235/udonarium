@@ -1,16 +1,12 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, HostListener, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
-import { ContextMenuService } from '../../service/context-menu.service';
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService, PointerCoordinate } from '../../service/pointer-device.service';
-
-import { GameTableMask } from '../../class/game-table-mask';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ImageFile } from '../../class/core/file-storage/image-file';
+import { EventSystem } from '../../class/core/system/system';
+import { GameTableMask } from '../../class/game-table-mask';
+import { ContextMenuService } from '../../service/context-menu.service';
+import { PanelOption, PanelService } from '../../service/panel.service';
+import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
+import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 
 @Component({
   selector: 'game-table-mask, [game-table-mask]',
