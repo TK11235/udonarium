@@ -133,8 +133,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.posX += deltaX < 12.5 ? -deltaX : 25 - deltaX;
     this.posY += deltaY < 12.5 ? -deltaY : 25 - deltaY;
-
-    this.setUpdateTimer();
   }
 
   onMouseMove(e: any) {
@@ -157,8 +155,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       this.posX = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(size / 2) * (1.0 - this.delta));
       this.posY = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(size / 2) * (1.0 - this.delta));
       this.posZ = this.pointer.z;
-
-      this.setUpdateTimer();
     } else {
       this.pointer.z = this.posZ;
       this.pointerStart.z = this.pointerPrev.z = this.pointer.z;
