@@ -37,7 +37,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   @Input() is3D: boolean = false;
 
   get name(): string { return this.gameCharacter.name; }
-  get size(): number { return this.gameCharacter.size; }
+  get size(): number { return this.adjustMinBounds(this.gameCharacter.size); }
   get imageFile(): ImageFile { return this.gameCharacter.imageFile; }
 
   private _posX: number = 0;
@@ -277,6 +277,10 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   private removeMouseEventListeners() {
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
     document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
+  }
+
+  private adjustMinBounds(value: number, min: number = 0): number {
+    return value < min ? min : value;
   }
 
   private showDetail(gameObject: GameCharacter) {
