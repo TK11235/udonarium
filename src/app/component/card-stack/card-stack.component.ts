@@ -81,8 +81,6 @@ export class CardStackComponent implements OnInit {
   private callbackOnRotateMouseMove = (e) => this.onRotateMouseMove(e);
   private callbackOnRotateMouseUp = (e) => this.onRotateMouseUp(e);
 
-  private updateIntervalFlag: boolean = true;
-  private lastUpdateTimeStamp: number = 0;
   isDragging: boolean = false;
 
   gridSize: number = 50;
