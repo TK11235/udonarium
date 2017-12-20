@@ -1,14 +1,16 @@
-.grab {
+.is-grab {
   cursor: -moz-grab;
   cursor: -webkit-grab;
   cursor: grab;
 }
-.grabbing {
+
+.is-grabbing {
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
-.game-char{
+
+.component {
   position: absolute;
   height: auto;
   width: auto;
@@ -20,36 +22,32 @@
   -moz-user-drag: none;
   -webkit-user-drag: none;
 }
-.null_size {
+
+.is-pointer-events-none {
+  pointer-events: none;
+}
+
+.is-pointer-events-auto {
+  pointer-events: auto;
+}
+
+.is-zero-card {
   height: 100px;
   width: 100px;
 }
-.lock-icon {
-  position: absolute;
-  background-color: #CCCCCC;
-  border-radius: 100%;
-  color: #444;
-  width: 25px;
-  height: 25px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
-.block-1 {
+
+.component-content {
   height: 100%;
   width: 100%;
   margin-left: -5px;
-  /*box-sizing: border-box;*/
   border: solid 5px #CCCCCC;
   border-radius: 5px;
   background-color: #CCCCCC;
   backface-visibility: hidden;
 }
-.background-image {
+
+.card-image {
   display: block;
-  /*position: absolute;*/
   top: 0;
   left: 0;
   bottom: 0;
@@ -58,44 +56,35 @@
   height: auto;
   width: 100%;
 }
-.transition {
+
+.is-transition {
   -webkit-transition: -webkit-transform 132ms linear;
   transition: transform 132ms linear;
 }
-.game-char_3d{
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
-.game-char-image2 {
-  /*filter: brightness(0.0);*/
-  /*filter: grayscale(100%);*/
-  /*filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.5));*/
-  display: block;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  position: absolute;
-  width: 100%;
-  height: auto;
-  filter: opacity(0.7);
-}
-.game-char-image_3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
 
-  /*-webkit-transform: rotateX(-90deg) translateY(-50%);*/
-  transform: rotateX(-90deg) scale(0.7) translateY(-50%) ;
+.is-3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
-.title{
+
+.name-tag {
   box-sizing: border-box;
   font-size: 15px;
   padding: 3px 9px;
   border-radius: 24px;
+  position: absolute;
+  top: 50%
 }
+
+.is-nowrap {
+  white-space: nowrap;
+}
+
+.is-black-background {
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
 .rotate-grab {
   position: absolute;
   width: 28px;
@@ -113,63 +102,27 @@
   font-size: 8px;
   opacity: 0;
 }
-.rotate-grab:hover, .rotate-grab:active{
+
+.rotate-grab:hover, .rotate-grab:active {
   opacity: 1;
 }
-.left-top{
+
+.of-left-top {
   top: -14px;
   left: -14px;
 }
-.left-bottom{
+
+.of-left-bottom {
   bottom: -14px;
   left: -14px;
 }
-.right-bottom{
+
+.of-right-bottom {
   bottom: -14px;
   right: -14px;
 }
-.right-top{
+
+.of-right-top {
   top: -14px;
   right: -14px;
-}
-.card-side-top {
-  top: 0px;
-  right: 0px;
-  position: absolute;
-  width:100%; 
-  height: 30px;
-  background-color: #AAA;
-
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transform-origin: 50% 100%;
-  transform: translateY(-100%) rotateX(90deg);
-}
-
-.card-side-bottom {
-  bottom: 0px;
-  right: 0px;
-  position: absolute;
-  width: 100%; 
-  height: 30px;
-  background-color: #AAA;
-
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transform-origin: 50% 0%;
-  transform: translateY(100%) rotateX(-90deg);
-}
-
-.card-side-right {
-  bottom: 0px;
-  right: 0px;
-  position: absolute;
-  width:30px; 
-  height: 100%;
-  background-color: #DDD;
-
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transform-origin: 0% 50%;
-  transform: translateX(100%) rotateY(90deg);
 }
