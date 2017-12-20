@@ -28,7 +28,6 @@ import { GameCharacterSheetComponent } from '../game-character-sheet/game-charac
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
-
   @ViewChild('root') rootElementRef: ElementRef;
 
   @Input() card: Card = null;
@@ -74,6 +73,8 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private delta: number = 1.0;
 
+  private startRotate: number = 0;
+
   private callbackOnMouseUp: any = (e) => this.onMouseUp(e);
   private callbackOnMouseMove: any = (e) => this.onMouseMove(e);
 
@@ -81,7 +82,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   private callbackOnRotateMouseUp: any = (e) => this.onRotateMouseUp(e);
 
   private _isDragging: boolean = false;
-
   get isDragging(): boolean { return this._isDragging };
   set isDragging(isDragging) {
     if (this._isDragging != isDragging) this.changeDetector.markForCheck();
@@ -94,8 +94,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
-
-  private startRotate: number = 0;
 
   private allowOpenContextMenu: boolean = false;
 
@@ -154,21 +152,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.unregister(this);
     this.removeMouseEventListeners();
     this.removeRotateEventListeners();
-  }
-
-  private calcLocalCoordinate() {
-    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
-    this.pointer.y = coordinate.y;
-    this.pointer.x = coordinate.x;
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
   }
 
   @HostListener('carddrop', ['$event'])
@@ -375,6 +358,41 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  private calcRotate(pointer: PointerCoordinate, startRotate: number): number {
+    let div: HTMLDivElement = this.rootElementRef.nativeElement;
+    let centerX = div.clientWidth / 2 + this.posX;
+    let centerY = div.clientHeight / 2 + this.posY;
+    let x = pointer.x - centerX;
+    let y = pointer.y - centerY;
+    let rad = Math.atan2(y, x);
+    return (rad * 180 / Math.PI) - startRotate;
+  }
+
+  private calcLocalCoordinate() {
+    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
+    this.pointer.y = coordinate.y;
+    this.pointer.x = coordinate.x;
+  }
+
+  private findDragAreaElement(parent: HTMLElement): HTMLElement {
+    if (parent.tagName === 'DIV') {
+      return parent;
+    } else if (parent.tagName !== 'BODY') {
+      return this.findDragAreaElement(parent.parentElement);
+    }
+    return null;
+  }
+
+  private dispatchCardDropEvent() {
+    let element: HTMLElement = this.elementRef.nativeElement;
+    let parent = element.parentElement;
+    let children = parent.children;
+    let event = new CustomEvent('carddrop', { detail: this.card, bubbles: true });
+    for (let i = 0; i < children.length; i++) {
+      children[i].dispatchEvent(event);
+    }
+  }
+
   private addMouseEventListeners() {
     document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
     document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
@@ -395,39 +413,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     document.body.removeEventListener('mousemove', this.callbackOnRotateMouseMove, false);
   }
 
-  private adjustMinBounds(value: number, min: number = 0): number {
-    return value < min ? min : value;
-  }
-
-  private showDetail(gameObject: Card) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
-    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
-    component.tabletopObject = gameObject;
-  }
-
-  private dispatchCardDropEvent() {
-    let element: HTMLElement = this.elementRef.nativeElement;
-    let parent = element.parentElement;
-    let children = parent.children;
-    let event = new CustomEvent('carddrop', { detail: this.card, bubbles: true });
-    for (let i = 0; i < children.length; i++) {
-      children[i].dispatchEvent(event);
-    }
-  }
-
-  calcRotate(pointer: PointerCoordinate, startRotate: number): number {
-    let div: HTMLDivElement = this.rootElementRef.nativeElement;
-    let centerX = div.clientWidth / 2 + this.posX;
-    let centerY = div.clientHeight / 2 + this.posY;
-    let x = pointer.x - centerX;
-    let y = pointer.y - centerY;
-    let rad = Math.atan2(y, x);
-    return (rad * 180 / Math.PI) - startRotate;
-  }
-
   private setPosition(object: Card) {
     this._posX = object.location.x;
     this._posY = object.location.y;
@@ -444,5 +429,18 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         this.updateInterval = null;
       }, 66);
     }
+  }
+
+  private adjustMinBounds(value: number, min: number = 0): number {
+    return value < min ? min : value;
+  }
+
+  private showDetail(gameObject: Card) {
+    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
+    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
+    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
+    component.tabletopObject = gameObject;
   }
 }
