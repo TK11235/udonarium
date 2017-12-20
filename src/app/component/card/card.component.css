@@ -1,14 +1,16 @@
-.grab {
+.is-grab {
   cursor: -moz-grab;
   cursor: -webkit-grab;
   cursor: grab;
 }
-.grabbing {
+
+.is-grabbing {
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
-.game-char{
+
+.component {
   position: absolute;
   height: auto;
   width: auto;
@@ -16,37 +18,29 @@
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-  
   -moz-user-drag: none;
   -webkit-user-drag: none;
   min-width: 25px;
   min-height: 25px;
-  /*border:solid 2px #CCCCCC;*/
 }
-.lock-icon {
-  position: absolute;
-  background-color: #CCCCCC;
-  border-radius: 100%;
-  color: #444;
-  width: 25px;
-  height: 25px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+
+.is-pointer-events-none {
+  pointer-events: none;
 }
-.block-1 {
+
+.is-pointer-events-auto {
+  pointer-events: auto;
+}
+
+.component-content {
   backface-visibility: hidden;
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  /*border:solid 2px #CCCCCC;*/
 }
-.background-image {
-  /*backface-visibility: hidden;*/
+
+.card-image {
   display: block;
-  /*position: absolute;*/
   top: 0;
   left: 0;
   bottom: 0;
@@ -55,44 +49,45 @@
   height: auto;
   width: 100%;
 }
-.transition {
+
+.is-transition {
   -webkit-transition: -webkit-transform 132ms linear;
   transition: transform 132ms linear;
 }
-.game-char_3d{
+
+.is-3d {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
-.game-char-image2 {
-  /*filter: brightness(0.0);*/
-  /*filter: grayscale(100%);*/
-  /*filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.5));*/
-  display: block;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  position: absolute;
-  width: 100%;
-  height: auto;
+
+.is-translucent {
   filter: opacity(0.7);
 }
-.game-char-image_3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
 
-  /*-webkit-transform: rotateX(-90deg) translateY(-50%);*/
+.upright-transform {
+  position: absolute;
+  backface-visibility: visible;
   transform: rotateX(-90deg) scale(0.7) translateY(-50%) ;
 }
-.title{
+
+.name-tag {
   box-sizing: border-box;
   font-size: 15px;
   padding: 3px 9px;
   border-radius: 24px;
+  position: absolute;
+  top: 50%
 }
+
+.is-nowrap {
+  white-space: nowrap;
+}
+
+.is-black-background {
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
 .rotate-grab {
   position: absolute;
   width: 28px;
@@ -110,22 +105,27 @@
   font-size: 8px;
   opacity: 0;
 }
-.rotate-grab:hover, .rotate-grab:active{
+
+.rotate-grab:hover, .rotate-grab:active {
   opacity: 1;
 }
-.left-top{
+
+.of-left-top {
   top: -7px;
   left: -7px;
 }
-.left-bottom{
+
+.of-left-bottom {
   bottom: -7px;
   left: -7px;
 }
-.right-bottom{
+
+.of-right-bottom {
   bottom: -7px;
   right: -7px;
 }
-.right-top{
+
+.of-right-top {
   top: -7px;
   right: -7px;
 }
