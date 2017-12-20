@@ -1,18 +1,16 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 
-import { CardStackListComponent } from '../card-stack-list/card-stack-list.component';
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
+import { Card } from '../../class/card';
+import { CardStack } from '../../class/card-stack';
+import { ImageFile } from '../../class/core/file-storage/image-file';
+import { EventSystem, Network } from '../../class/core/system/system';
 import { ContextMenuService } from '../../service/context-menu.service';
 import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService, PointerCoordinate } from '../../service/pointer-device.service';
-
-import { CardStack } from '../../class/card-stack';
-import { Card, CardState } from '../../class/card';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ImageFile } from '../../class/core/file-storage/image-file';
+import { PanelOption, PanelService } from '../../service/panel.service';
+import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
+import { CardStackListComponent } from '../card-stack-list/card-stack-list.component';
+import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 
 @Component({
   selector: 'card-stack',
