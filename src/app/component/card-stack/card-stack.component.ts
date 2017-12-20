@@ -41,6 +41,10 @@ export class CardStackComponent implements OnInit {
   set rotate(rotate: number) { this.cardStack.rotate = rotate; }
   get zindex(): number { return this.cardStack.zindex; }
   get cards(): Card[] { return this.cardStack.cards; }
+  get size(): number {
+    let card = this.cardStack.topCard;
+    return (card ? card.size : 2);
+  }
 
   get hasOwner(): boolean { return this.cardStack.hasOwner; }
   get ownerName(): string { return this.cardStack.ownerName; }
@@ -49,11 +53,6 @@ export class CardStackComponent implements OnInit {
   get imageFile(): ImageFile { return this.cardStack.imageFile; }
 
   animeState: string = 'inactive';
-
-  get size(): number {
-    let card = this.cardStack.topCard;
-    return (card ? card.size : 2);
-  }
 
   private _posX: number = 0;
   private _posY: number = 0;
@@ -75,6 +74,8 @@ export class CardStackComponent implements OnInit {
 
   private delta: number = 1.0;
 
+  private startRotate: number = 0;
+
   private callbackOnMouseUp = (e) => this.onMouseUp(e);
   private callbackOnMouseMove = (e) => this.onMouseMove(e);
 
@@ -89,8 +90,6 @@ export class CardStackComponent implements OnInit {
 
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
-
-  private startRotate: number = 0;
 
   private allowOpenContextMenu: boolean = false;
 
@@ -132,21 +131,6 @@ export class CardStackComponent implements OnInit {
 
   animationShuffleDone(event: any) {
     this.animeState = 'inactive';
-  }
-
-  private calcLocalCoordinate() {
-    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
-    this.pointer.y = coordinate.y;
-    this.pointer.x = coordinate.x;
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
   }
 
   @HostListener('carddrop', ['$event'])
@@ -408,6 +392,21 @@ export class CardStackComponent implements OnInit {
     }
   }
 
+  private calcLocalCoordinate() {
+    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
+    this.pointer.y = coordinate.y;
+    this.pointer.x = coordinate.x;
+  }
+
+  private findDragAreaElement(parent: HTMLElement): HTMLElement {
+    if (parent.tagName === 'DIV') {
+      return parent;
+    } else if (parent.tagName !== 'BODY') {
+      return this.findDragAreaElement(parent.parentElement);
+    }
+    return null;
+  }
+
   private setUpdateTimer() {
     if (this.updateInterval === null) {
       this.updateInterval = setTimeout(() => {
@@ -459,6 +458,12 @@ export class CardStackComponent implements OnInit {
     document.body.removeEventListener('mousemove', this.callbackOnRotateMouseMove, false);
   }
 
+  private setPosition(object: CardStack) {
+    this._posX = object.location.x;
+    this._posY = object.location.y;
+    this._posZ = object.posZ;
+  }
+
   private showDetail(gameObject: CardStack) {
     console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
@@ -478,11 +483,5 @@ export class CardStackComponent implements OnInit {
     this.cardStack.owner = Network.peerId;
     let component = this.panelService.open<CardStackListComponent>(CardStackListComponent, option);
     component.cardStack = gameObject;
-  }
-
-  private setPosition(object: CardStack) {
-    this._posX = object.location.x;
-    this._posY = object.location.y;
-    this._posZ = object.posZ;
   }
 }
