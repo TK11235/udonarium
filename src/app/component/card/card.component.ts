@@ -22,7 +22,7 @@ import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-d
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 
 @Component({
-  selector: 'card, [card]',
+  selector: 'card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
