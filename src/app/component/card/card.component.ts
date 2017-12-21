@@ -95,7 +95,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
 
-  private allowOpenContextMenu: boolean = false;
+  private isAllowedToOpenContextMenu: boolean = false;
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -206,7 +206,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onDoubleClick(e);
     this.card.moveToTop();
     console.log('GameCharacterComponent mousedown !!!');
-    this.allowOpenContextMenu = true;
+    this.isAllowedToOpenContextMenu = true;
 
     this.calcLocalCoordinate();
 
@@ -229,7 +229,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onMouseUp(e: any) {
     //console.log('GameCharacterComponent mouseup !!!!');
-    setTimeout(() => { this.allowOpenContextMenu = false; }, 0);
+    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
     this.isDragging = false;
 
     this.removeMouseEventListeners();
@@ -248,7 +248,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.isDragging) {
       this.calcLocalCoordinate();
       if ((this.pointerPrev.y === this.pointer.y && this.pointerPrev.x === this.pointer.x)) return;
-      this.allowOpenContextMenu = false;
+      this.isAllowedToOpenContextMenu = false;
 
       let width: number = this.gridSize * 2;//this.card.width;
       let height: number = this.gridSize * 3;//this.card.height;
@@ -271,7 +271,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onRotateMouseDown(e: MouseEvent) {
     this.isDragging = true;
-    this.allowOpenContextMenu = true;
+    this.isAllowedToOpenContextMenu = true;
     e.stopPropagation();
     console.log('onRotateMouseDown!!!!');
     this.calcLocalCoordinate();
@@ -283,13 +283,13 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     e.stopPropagation();
     this.calcLocalCoordinate();
     let angle = this.calcRotate(this.pointer, this.startRotate);
-    if (this.rotate !== angle) this.allowOpenContextMenu = false;
+    if (this.rotate !== angle) this.isAllowedToOpenContextMenu = false;
     this.rotate = angle;
   }
 
   onRotateMouseUp(e: MouseEvent) {
     this.isDragging = false;
-    setTimeout(() => { this.allowOpenContextMenu = false; }, 0);
+    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
     e.stopPropagation();
     this.removeRotateEventListeners();
 
@@ -305,7 +305,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.removeMouseEventListeners();
     this.removeRotateEventListeners();
 
-    if (this.allowOpenContextMenu === false) return;
+    if (this.isAllowedToOpenContextMenu === false) return;
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [

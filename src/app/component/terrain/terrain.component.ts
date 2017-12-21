@@ -71,7 +71,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   gridSize: number = 50;
 
   private updateInterval: NodeJS.Timer = null;
-  private allowOpenContextMenu: boolean = false;
+  private isAllowedToOpenContextMenu: boolean = false;
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -112,7 +112,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('GameCharacterComponent mousedown !!!');
     e.preventDefault();
 
-    this.allowOpenContextMenu = true;
+    this.isAllowedToOpenContextMenu = true;
     this.calcLocalCoordinate();
 
     this.isDragging = true;
@@ -139,7 +139,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onMouseUp(e: any) {
     //console.log('GameCharacterComponent mouseup !!!!');
-    setTimeout(() => { this.allowOpenContextMenu = false; }, 0);
+    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
     this.isDragging = false;
 
     this.removeMouseEventListeners();
@@ -155,7 +155,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onMouseMove(e: any) {
     if (this.startDragPoint.x !== this.pointerDeviceService.pointers[0].x || this.startDragPoint.y !== this.pointerDeviceService.pointers[0].y) {
-      this.allowOpenContextMenu = false;
+      this.isAllowedToOpenContextMenu = false;
     }
     if (this.isDragging) {
       if (this.isLocked) return;
@@ -183,7 +183,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onRotateMouseDown(e: MouseEvent) {
     this.isDragging = true;
-    this.allowOpenContextMenu = true;
+    this.isAllowedToOpenContextMenu = true;
     e.stopPropagation();
     console.log('onRotateMouseDown!!!!');
     this.calcLocalCoordinate();
@@ -196,14 +196,14 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.calcLocalCoordinate();
     let angle = this.calcRotate(this.pointer, this.startRotate);
     if (this.rotate !== angle) {
-      this.allowOpenContextMenu = false;
+      this.isAllowedToOpenContextMenu = false;
     }
     this.rotate = angle;
   }
 
   onRotateMouseUp(e: MouseEvent) {
     this.isDragging = false;
-    setTimeout(() => { this.allowOpenContextMenu = false; }, 0);
+    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
     e.stopPropagation();
     this.removeRotateEventListeners();
 
@@ -219,7 +219,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.removeMouseEventListeners();
     this.removeRotateEventListeners();
 
-    if (this.allowOpenContextMenu === false) return;
+    if (this.isAllowedToOpenContextMenu === false) return;
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [

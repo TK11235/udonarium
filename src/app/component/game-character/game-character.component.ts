@@ -66,7 +66,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   isDragging: boolean = false;
   gridSize: number = 50;
   private updateInterval: NodeJS.Timer = null;
-  private allowOpenContextMenu: boolean = false;
+  private isAllowedToOpenContextMenu: boolean = false;
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   constructor(
@@ -108,7 +108,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     console.log('GameCharacterComponent mousedown !!!', this.gameCharacter);
     e.preventDefault();
 
-    this.allowOpenContextMenu = true;
+    this.isAllowedToOpenContextMenu = true;
 
     // TODO:もっと良い方法考える
     if (e.button === 2) {
@@ -124,7 +124,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   onMouseUp(e: any) {
     e.preventDefault();
 
-    setTimeout(() => { this.allowOpenContextMenu = false; }, 0);
+    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
     this.isDragging = false;
     this.removeMouseEventListeners();
 
@@ -142,7 +142,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
         && this.pointerPrev.y === this.pointer.y
         && this.pointerPrev.z === this.pointer.z) return;
 
-      this.allowOpenContextMenu = false;
+      this.isAllowedToOpenContextMenu = false;
 
       let distance = this.calcDistance(this.pointerStart, this.pointer);
       if (distance < this.delta) this.delta = distance;
@@ -181,8 +181,8 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     this.isDragging = false;
     this.removeMouseEventListeners();
 
-    if (this.allowOpenContextMenu === false) return;
-    this.allowOpenContextMenu = false;
+    if (this.isAllowedToOpenContextMenu === false) return;
+    this.isAllowedToOpenContextMenu = false;
 
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);

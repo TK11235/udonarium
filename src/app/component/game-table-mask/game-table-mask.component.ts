@@ -52,7 +52,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   gridSize: number = 50;
 
   private updateInterval: NodeJS.Timer = null;
-  private allowOpenContextMenu: boolean = false;
+  private isAllowedToOpenContextMenu: boolean = false;
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -91,7 +91,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
     console.log('GameCharacterComponent mousedown !!!');
-    this.allowOpenContextMenu = true;
+    this.isAllowedToOpenContextMenu = true;
     this.pointer = this.calcLocalCoordinate(this.pointerDeviceService.pointers[0]);
 
     this.isDragging = true;
@@ -117,7 +117,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onMouseUp(e: any) {
-    setTimeout(() => { this.allowOpenContextMenu = false; }, 0);
+    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
     this.isDragging = false;
 
     this.removeMouseEventListeners();
@@ -135,7 +135,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     if (this.isDragging && !this.isLock) {
       this.pointer = this.calcLocalCoordinate(this.pointerDeviceService.pointers[0]);
       if ((this.pointerPrev.y === this.pointer.y && this.pointerPrev.x === this.pointer.x)) return;
-      this.allowOpenContextMenu = false;
+      this.isAllowedToOpenContextMenu = false;
 
       let width: number = this.gridSize * this.width;
       let height: number = this.gridSize * this.height;
@@ -157,7 +157,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     this.isDragging = false;
     this.removeMouseEventListeners();
 
-    if (this.allowOpenContextMenu === false) return;
+    if (this.isAllowedToOpenContextMenu === false) return;
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [

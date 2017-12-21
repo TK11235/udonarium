@@ -113,7 +113,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private _tabletopCharacterIdentifiers: string[] = [];
   private _tabletopCharacters: GameCharacter[] = [];
 
-  private allowOpenContextMenu: boolean = true;
+  private isAllowedToOpenContextMenu: boolean = true;
 
   constructor(
     private ngZone: NgZone,
@@ -369,8 +369,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mouseDownPositionX = e.touches ? e.changedTouches[0].pageX : e.pageX;
     this.mouseDownPositionY = e.touches ? e.changedTouches[0].pageY : e.pageY;
 
-    this.allowOpenContextMenu = true;
-    console.log('onMouseDown allowOpenContextMenu', this.allowOpenContextMenu);
+    this.isAllowedToOpenContextMenu = true;
+    console.log('onMouseDown isAllowedToOpenContextMenu', this.isAllowedToOpenContextMenu);
 
     if (e.target === this.gameTableBase.nativeElement
       || e.target === this.gameTable.nativeElement
@@ -453,7 +453,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.mouseDownPositionX !== x || this.mouseDownPositionY !== y) {
         //$('#app-ui-layer').css('opacity', 0.2);
-        this.allowOpenContextMenu = false;
+        this.isAllowedToOpenContextMenu = false;
       }
 
       this.mouseDownPositionX = x;
@@ -530,7 +530,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     e.stopPropagation();
     e.preventDefault();
 
-    if (this.allowOpenContextMenu) {
+    if (this.isAllowedToOpenContextMenu) {
       let potison = this.pointerDeviceService.pointers[0];
       console.log('mouseCursor A', potison);
       this.contextMenuService.open(potison, [
