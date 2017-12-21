@@ -1,14 +1,16 @@
-.grab {
+.is-grab {
   cursor: -moz-grab;
   cursor: -webkit-grab;
   cursor: grab;
 }
-.grabbing {
+
+.is-grabbing {
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
-.game-char{
+
+.component {
   position: absolute;
   height: 50px;
   width: 50px;
@@ -19,71 +21,33 @@
   
   -moz-user-drag: none;
   -webkit-user-drag: none;
+}
 
+.is-3d {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  /*z-index: -99999;*/
 }
-.lock-icon {
-  position: absolute;
-  background-color: #CCCCCC;
-  border-radius: 100%;
-  color: #444;
-  width: 25px;
-  height: 25px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
-.block-1 {
-  height: 100%;
-  width: 100%;
-  /*
-  box-sizing: border-box;
-  border:solid 2px #CCCCCC;
-  */
-}
-.background-image {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
+
+.component-content {
   height: 100%;
   width: 100%;
 }
-.transition {
+
+.is-transition {
   -webkit-transition: -webkit-transform 132ms linear;
   transition: transform 132ms linear;
 }
 
-.floor {
+.texture {
   position: absolute;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
   backface-visibility: hidden;
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
 }
 
-.floor-tile {
-  transform: rotateZ(180deg);
-}
-
-.wall {
-  position: absolute;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.wall-top {
+.of-wall-top {
   top: 0px;
   left: 0px;
 
@@ -92,7 +56,7 @@
   filter: brightness(0.3);
 }
 
-.wall-bottom {
+.of-wall-bottom {
   bottom: 0px;
   left: 0px;
 
@@ -101,7 +65,7 @@
   filter: brightness(1.0);
 }
 
-.wall-left {
+.of-wall-left {
   top: 0px;
   left: 0px;
 
@@ -110,7 +74,7 @@
   filter: brightness(0.5);
 }
 
-.wall-right {
+.of-wall-right {
   top: 0px;
   right: 0px;
 
@@ -119,8 +83,12 @@
   filter: brightness(0.8);
 }
 
-.pointer-events-none {
+.is-pointer-events-none {
   pointer-events: none;
+}
+
+.is-pointer-events-auto {
+  pointer-events: auto;
 }
 
 .rotate-grab {
@@ -140,27 +108,32 @@
   font-size: 8px;
   opacity: 1;
 }
+
 .rotate-grab:hover, .rotate-grab:active{
   opacity: 1;
 }
-.left-top{
+
+.of-left-top {
   top: -14px;
   left: -14px;
 }
-.left-bottom{
+
+.of-left-bottom {
   bottom: -14px;
   left: -14px;
 }
-.right-bottom{
+
+.of-right-bottom {
   bottom: -14px;
   right: -14px;
 }
-.right-top{
+
+.of-right-top {
   top: -14px;
   right: -14px;
 }
 
-.blinking{
+.blinking-animation {
 	-webkit-animation:blink 1.0s linear infinite alternate;
   -moz-animation:blink 1.0s linear infinite alternate;
    animation:blink 1.0s linear infinite alternate;
