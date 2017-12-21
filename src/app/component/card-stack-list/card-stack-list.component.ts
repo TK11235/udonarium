@@ -61,7 +61,7 @@ export class CardStackListComponent implements OnInit {
     card.location.name = this.cardStack.location.name;
     card.rotate += this.cardStack.rotate;
     if (360 < card.rotate) card.rotate -= 360;
-    card.moveToTop();
+    card.toTopmost();
     card.update();
   }
 

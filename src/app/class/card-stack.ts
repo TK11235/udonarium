@@ -58,7 +58,7 @@ export class CardStack extends TabletopObject {
       card.location.y = this.location.y;
       card.rotate += this.rotate;
       if (360 < card.rotate) card.rotate -= 360;
-      card.moveToTop();
+      card.toTopmost();
       card.update();
     }
     console.log('drawCard', card, this.topCard);
@@ -133,7 +133,7 @@ export class CardStack extends TabletopObject {
     return <Card>this.cardRoot.appendChild(card);
   }
 
-  moveToTop() {
+  toTopmost() {
     let object: any[] = ObjectStore.instance.getObjects('card-stack');
     object = object.concat(ObjectStore.instance.getObjects('card'));
     object.sort((a, b) => {

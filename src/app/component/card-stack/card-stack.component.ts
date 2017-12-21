@@ -198,7 +198,7 @@ export class CardStackComponent implements OnInit {
   onMouseDown(e: any) {
     console.log('GameCharacterComponent mousedown !!!');
     this.onDoubleClick(e);
-    this.cardStack.moveToTop();
+    this.cardStack.toTopmost();
     this.calcLocalCoordinate();
     this.isAllowedToOpenContextMenu = true;
 
@@ -354,7 +354,7 @@ export class CardStackComponent implements OnInit {
     for (let card of cards.reverse()) {
       card.location.x += 25 - (Math.random() * 50);
       card.location.y += 25 - (Math.random() * 50);
-      card.moveToTop();
+      card.toTopmost();
       card.update();
     }
     console.log('breakStack', cards, this.cardStack.cards);

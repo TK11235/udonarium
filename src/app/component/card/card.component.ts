@@ -204,7 +204,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
     this.onDoubleClick(e);
-    this.card.moveToTop();
+    this.card.toTopmost();
     console.log('GameCharacterComponent mousedown !!!');
     this.isAllowedToOpenContextMenu = true;
 

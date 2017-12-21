@@ -75,7 +75,7 @@ export class Card extends TabletopObject {
     this.owner = '';
   }
 
-  moveToTop() {
+  toTopmost() {
     let object: any[] = ObjectStore.instance.getObjects('card-stack');
     object = object.concat(ObjectStore.instance.getObjects('card'));
     object.sort((a, b) => {
