@@ -531,6 +531,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
 
     if (this.isAllowedToOpenContextMenu) {
+      this.isAllowedToOpenContextMenu = false;
       let potison = this.pointerDeviceService.pointers[0];
       console.log('mouseCursor A', potison);
       this.contextMenuService.open(potison, [

@@ -220,6 +220,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.removeRotateEventListeners();
 
     if (this.isAllowedToOpenContextMenu === false) return;
+    this.isAllowedToOpenContextMenu = false;
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
