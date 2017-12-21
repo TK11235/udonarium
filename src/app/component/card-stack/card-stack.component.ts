@@ -269,7 +269,7 @@ export class CardStackComponent implements OnInit {
     e.stopPropagation();
     console.log('onRotateMouseDown!!!!');
     this.calcLocalCoordinate();
-    this.startRotate = this.startRotate = this.calcRotate(this.pointer, this.rotate);
+    this.startRotate = this.calcRotate(this.pointer, this.rotate);
     this.addRotateEventListeners();
   }
 
