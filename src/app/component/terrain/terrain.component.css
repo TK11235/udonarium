@@ -10,6 +10,24 @@
   cursor: grabbing;
 }
 
+.is-3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.is-transition {
+  -webkit-transition: -webkit-transform 132ms linear;
+  transition: transform 132ms linear;
+}
+
+.is-pointer-events-none {
+  pointer-events: none;
+}
+
+.is-pointer-events-auto {
+  pointer-events: auto;
+}
+
 .component {
   position: absolute;
   height: 50px;
@@ -23,19 +41,9 @@
   -webkit-user-drag: none;
 }
 
-.is-3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
-
 .component-content {
   height: 100%;
   width: 100%;
-}
-
-.is-transition {
-  -webkit-transition: -webkit-transform 132ms linear;
-  transition: transform 132ms linear;
 }
 
 .texture {
@@ -83,20 +91,12 @@
   filter: brightness(0.8);
 }
 
-.is-pointer-events-none {
-  pointer-events: none;
-}
-
-.is-pointer-events-auto {
-  pointer-events: auto;
-}
-
 .rotate-grab {
   position: absolute;
   width: 28px;
   height: 28px;
   box-sizing: border-box;
-  border:solid 2px #CCCCCC;
+  border: solid 2px #CCCCCC;
   cursor: -moz-default;
   cursor: -webkit-default;
   cursor: default;
@@ -109,7 +109,7 @@
   opacity: 1;
 }
 
-.rotate-grab:hover, .rotate-grab:active{
+.rotate-grab:hover, .rotate-grab:active {
   opacity: 1;
 }
 
@@ -134,19 +134,22 @@
 }
 
 .blinking-animation {
-	-webkit-animation:blink 1.0s linear infinite alternate;
-  -moz-animation:blink 1.0s linear infinite alternate;
-   animation:blink 1.0s linear infinite alternate;
+	-webkit-animation: blink 1.0s linear infinite alternate;
+  -moz-animation: blink 1.0s linear infinite alternate;
+   animation: blink 1.0s linear infinite alternate;
 }
-@-webkit-keyframes blink{
-  0% {opacity:0.9;}
-  100% {opacity:0.5;}
+
+@-webkit-keyframes blink {
+  0% { opacity:0.9; }
+  100% { opacity:0.5; }
 }
-@-moz-keyframes blink{
-  0% {opacity:0.9;}
-  100% {opacity:0.5;}
+
+@-moz-keyframes blink {
+  0% { opacity:0.9; }
+  100% { opacity:0.5; }
 }
-@keyframes blink{
-  0% {opacity:0.9;}
-  100% {opacity:0.5;}
+
+@keyframes blink {
+  0% { opacity:0.9; }
+  100% { opacity:0.5; }
 }

@@ -14,11 +14,28 @@ import { GameCharacterSheetComponent } from '../game-character-sheet/game-charac
   styleUrls: ['./terrain.component.css']
 })
 export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
-
   @ViewChild('root') rootElementRef: ElementRef;
 
   @Input() terrain: Terrain = null;
   @Input() is3D: boolean = false;
+
+  get name(): string { return this.terrain.name; }
+  get rotate(): number { return this.terrain.rotate; }
+  set rotate(rotate: number) { this.terrain.rotate = rotate; }
+  get mode(): TerrainViewState { return this.terrain.mode; }
+  set mode(mode: TerrainViewState) { this.terrain.mode = mode; }
+
+  get isLocked(): boolean { return this.terrain.isLocked; }
+  set isLocked(isLocked: boolean) { this.terrain.isLocked = isLocked; }
+  get hasWall(): boolean { return this.terrain.hasWall; }
+  get hasFloor(): boolean { return this.terrain.hasFloor; }
+
+  get wallImage(): ImageFile { return this.terrain.wallImage; }
+  get floorImage(): ImageFile { return this.terrain.floorImage; }
+
+  get height(): number { return this.adjustMinBounds(this.terrain.height); }
+  get width(): number { return this.adjustMinBounds(this.terrain.width); }
+  get depth(): number { return this.adjustMinBounds(this.terrain.depth); }
 
   private _posX: number = 0;
   private _posY: number = 0;
@@ -40,39 +57,21 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private delta: number = 1.0;
 
+  private startDragPoint: PointerCoordinate = { x: 0, y: 0 };
+  private startRotate: number = 0;
+
   private callbackOnMouseUp = (e) => this.onMouseUp(e);;
   private callbackOnMouseMove = (e) => this.onMouseMove(e);;
 
   private callbackOnRotateMouseMove = (e) => this.onRotateMouseMove(e);
   private callbackOnRotateMouseUp = (e) => this.onRotateMouseUp(e);
-  private startRotate: number = 0;
 
   isDragging: boolean = false;
-
-  private startDragPoint: PointerCoordinate = { x: 0, y: 0 };
 
   gridSize: number = 50;
 
   private updateInterval: NodeJS.Timer = null;
   private allowOpenContextMenu: boolean = false;
-
-  get name(): string { return this.terrain.name; }
-  get rotate(): number { return this.terrain.rotate; }
-  set rotate(rotate: number) { this.terrain.rotate = rotate; }
-  get mode(): TerrainViewState { return this.terrain.mode; }
-  set mode(mode: TerrainViewState) { this.terrain.mode = mode; }
-
-  get isLocked(): boolean { return this.terrain.isLocked; }
-  set isLocked(isLocked: boolean) { this.terrain.isLocked = isLocked; }
-  get hasWall(): boolean { return this.terrain.hasWall; }
-  get hasFloor(): boolean { return this.terrain.hasFloor; }
-
-  get wallImage(): ImageFile { return this.terrain.wallImage; }
-  get floorImage(): ImageFile { return this.terrain.floorImage; }
-
-  get height(): number { return this.adjustMinBounds(this.terrain.height); }
-  get width(): number { return this.adjustMinBounds(this.terrain.width); }
-  get depth(): number { return this.adjustMinBounds(this.terrain.depth); }
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -101,21 +100,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.removeRotateEventListeners();
   }
 
-  private calcLocalCoordinate() {
-    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
-    this.pointer.y = coordinate.y;
-    this.pointer.x = coordinate.x;
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
-  }
-
   @HostListener('dragstart', ['$event'])
   onDragstart(e) {
     console.log('Dragstart Cancel !!!!');
@@ -126,6 +110,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
     console.log('GameCharacterComponent mousedown !!!');
+    e.preventDefault();
 
     this.allowOpenContextMenu = true;
     this.calcLocalCoordinate();
@@ -143,8 +128,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     console.log('onSelectedGameCharacter', this.terrain.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.terrain.identifier, className: 'GameCharacter' });
-
-    e.preventDefault();
 
     this.startDragPoint = this.pointerDeviceService.pointers[0];
 
@@ -280,19 +263,19 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     ], this.name);
   }
 
-  private showDetail(gameObject: Terrain) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 150, width: 500, height: 300 };
-    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
-    component.tabletopObject = gameObject;
+  private calcLocalCoordinate() {
+    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
+    this.pointer.y = coordinate.y;
+    this.pointer.x = coordinate.x;
   }
 
-  private setPosition(object: Terrain) {
-    this._posX = object.location.x;
-    this._posY = object.location.y;
-    this._posZ = object.posZ;
+  private findDragAreaElement(parent: HTMLElement): HTMLElement {
+    if (parent.tagName === 'DIV') {
+      return parent;
+    } else if (parent.tagName !== 'BODY') {
+      return this.findDragAreaElement(parent.parentElement);
+    }
+    return null;
   }
 
   private calcRotate(pointer: PointerCoordinate, startRotate: number): number {
@@ -303,6 +286,12 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     let y = pointer.y - centerY;
     let rad = Math.atan2(y, x);
     return (rad * 180 / Math.PI) - startRotate;
+  }
+
+  private setPosition(object: Terrain) {
+    this._posX = object.location.x;
+    this._posY = object.location.y;
+    this._posZ = object.posZ;
   }
 
   private setUpdateTimer() {
@@ -338,5 +327,14 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   private removeRotateEventListeners() {
     document.body.removeEventListener('mouseup', this.callbackOnRotateMouseUp, false);
     document.body.removeEventListener('mousemove', this.callbackOnRotateMouseMove, false);
+  }
+
+  private showDetail(gameObject: Terrain) {
+    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
+    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 150, width: 500, height: 300 };
+    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
+    component.tabletopObject = gameObject;
   }
 }
