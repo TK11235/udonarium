@@ -37,7 +37,8 @@ export class CardStack extends TabletopObject {
   }
 
   get cards(): Card[] { return this.cardRoot ? <Card[]>this.cardRoot.children.concat() : []; }
-  get topCard(): Card { return 0 < this.cards.length ? this.cards[0] : null; }
+  get topCard(): Card { return this.isEmpty ? null : this.cards[0]; }
+  get isEmpty(): boolean { return this.cards.length < 1 }
   get imageFile(): ImageFile { return this.topCard ? this.topCard.imageFile : null; }
 
   shuffle(): Card[] {
