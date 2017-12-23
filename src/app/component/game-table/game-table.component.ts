@@ -735,7 +735,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           image = FileStorage.instance.add(url);
         }
         let card = Card.create('サンプルカード', url, back);
-        cardStack.placeToBottom(card);
+        cardStack.putOnBottom(card);
 
       }
     }
@@ -747,7 +747,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         image = FileStorage.instance.add(url);
       }
       let card = Card.create('サンプルカード', url, back);
-      cardStack.placeToBottom(card);
+      cardStack.putOnBottom(card);
     }
   }
 }

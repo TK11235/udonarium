@@ -170,7 +170,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       if (distance < 25) {
         cardStack.location.x = this.posX;
         cardStack.location.y = this.posY;
-        cardStack.placeToBottom(this.card);
+        cardStack.putOnBottom(this.card);
       }
     }
   }
@@ -355,7 +355,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     for (let card of cards) {
       let distance: number = Math.sqrt((card.location.x - this.posX) ** 2 + (card.location.y - this.posY) ** 2);
-      if (distance < 100) cardStack.placeToBottom(card);
+      if (distance < 100) cardStack.putOnBottom(card);
     }
   }
 
