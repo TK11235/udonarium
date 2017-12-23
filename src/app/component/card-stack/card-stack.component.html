@@ -1,4 +1,4 @@
-<div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging, 'is-zero-card': cards.length<1}"
+<div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging, 'is-empty': isEmpty}"
   [style.width.px]="size * gridSize" [ngStyle]="{'z-index' : zindex, 'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px)'}">
   <div class="component-content is-3d is-pointer-events-auto" [ngStyle]="{'transform': 'rotateZ(' + rotate +'deg)'}" [ngClass]="{'is-grab': (!isDragging), 'is-grabbing': (isDragging), 'is-transition': !isDragging}">
     <div *ngIf="imageFile" (@shuffle.start)="animationShuffleStarted($event)" (@shuffle.done)="animationShuffleDone($event)"

@@ -41,6 +41,7 @@ export class CardStackComponent implements OnInit {
   set rotate(rotate: number) { this.cardStack.rotate = rotate; }
   get zindex(): number { return this.cardStack.zindex; }
   get cards(): Card[] { return this.cardStack.cards; }
+  get isEmpty(): boolean { return this.cardStack.isEmpty; }
   get size(): number {
     let card = this.cardStack.topCard;
     return (card ? card.size : 2);
