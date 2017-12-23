@@ -80,24 +80,20 @@ export class CardStack extends TabletopObject {
   }
 
   faceUp() {
-    if (!this.topCard) return;
-    this.topCard.faceUp();
+    if (this.topCard) this.topCard.faceUp();
   }
 
   faceDown() {
-    if (!this.topCard) return;
-    this.topCard.faceDown();
+    if (this.topCard) this.topCard.faceDown();
   }
 
   faceUpAll() {
-    if (this.cards.length < 1) return;
     for (let card of this.cards) {
       card.faceUp();
     }
   }
 
   faceDownAll() {
-    if (this.cards.length < 1) return;
     for (let card of this.cards) {
       card.faceDown();
     }
