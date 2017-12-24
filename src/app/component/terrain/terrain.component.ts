@@ -60,8 +60,8 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   private startDragPoint: PointerCoordinate = { x: 0, y: 0 };
   private startRotate: number = 0;
 
-  private callbackOnMouseUp = (e) => this.onMouseUp(e);;
-  private callbackOnMouseMove = (e) => this.onMouseMove(e);;
+  private callbackOnMouseUp = (e) => this.onMouseUp(e);
+  private callbackOnMouseMove = (e) => this.onMouseMove(e);
 
   private callbackOnRotateMouseMove = (e) => this.onRotateMouseMove(e);
   private callbackOnRotateMouseUp = (e) => this.onRotateMouseUp(e);

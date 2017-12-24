@@ -61,7 +61,7 @@ export class AudioStorage {
   private static _rootNode: AudioNode
   static get rootNode(): AudioNode {
     if (!AudioStorage._rootNode) {
-      AudioStorage._rootNode = AudioStorage.masterGainNode;;
+      AudioStorage._rootNode = AudioStorage.masterGainNode;
 
     }
     return AudioStorage._rootNode;
@@ -70,7 +70,7 @@ export class AudioStorage {
   private static _auditionNode: AudioNode
   static get auditionNode(): AudioNode {
     if (!AudioStorage._auditionNode) {
-      AudioStorage._auditionNode = AudioStorage.auditionGainNode;;
+      AudioStorage._auditionNode = AudioStorage.auditionGainNode;
 
     }
     return AudioStorage._auditionNode;
