@@ -157,7 +157,7 @@ export class CardStackComponent implements OnInit {
         cardStack.location.name = this.cardStack.location.name;
         cardStack.location.x = this.posX;
         cardStack.location.y = this.posY;
-        for (let card of cards.reverse()) cardStack.putOnBottom(card);
+        for (let card of cards) cardStack.putOnBottom(card);
         this.cardStack.location.name = '';
         this.cardStack.update();
         this.cardStack.destroy();
