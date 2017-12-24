@@ -21,20 +21,27 @@ export class AudioStorage {
     return AudioStorage._audioContext;
   }//
 
-  static get volume(): number { return AudioStorage.masterGainNode.gain.value; }
-  static set volume(volume: number) { AudioStorage.masterGainNode.gain.value = volume; }
+  private static _volume: number = 0.5;
+  static get volume(): number { return AudioStorage._volume; }
+  static set volume(volume: number) {
+    AudioStorage._volume = volume;
+    AudioStorage.masterGainNode.gain.setTargetAtTime(AudioStorage._volume, AudioStorage.audioContext.currentTime, 0.1);
+  }
 
-  static get auditionVolume(): number { return AudioStorage.auditionGainNode.gain.value; }
-  static set auditionVolume(auditionVolume: number) { AudioStorage.auditionGainNode.gain.value = auditionVolume; }
+  private static _auditionVolume: number = 0.5;
+  static get auditionVolume(): number { return AudioStorage._auditionVolume; }
+  static set auditionVolume(auditionVolume: number) {
+    AudioStorage._auditionVolume = auditionVolume;
+    AudioStorage.auditionGainNode.gain.setTargetAtTime(AudioStorage._auditionVolume, AudioStorage.audioContext.currentTime, 0.1);
+  }
 
   private static _masterGainNode: GainNode
   private static get masterGainNode(): GainNode {
     if (!AudioStorage._masterGainNode) {
       let masterGain = AudioStorage.audioContext.createGain();
-      masterGain.gain.value = 0.5;
+      masterGain.gain.setValueAtTime(AudioStorage._volume, AudioStorage.audioContext.currentTime);
       masterGain.connect(AudioStorage.audioContext.destination);
       AudioStorage._masterGainNode = masterGain;
-
     }
     return AudioStorage._masterGainNode;
   }
@@ -43,7 +50,7 @@ export class AudioStorage {
   private static get auditionGainNode(): GainNode {
     if (!AudioStorage._auditionGainNode) {
       let auditionGain = AudioStorage.audioContext.createGain();
-      auditionGain.gain.value = 0.5;
+      auditionGain.gain.setValueAtTime(AudioStorage._auditionVolume, AudioStorage.audioContext.currentTime);
       auditionGain.connect(AudioStorage.audioContext.destination);
       AudioStorage._auditionGainNode = auditionGain;
 
