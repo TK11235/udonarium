@@ -208,7 +208,7 @@ export class SkyWayConnection implements Connection {
   }
 
   setApiKey(key: string) {
-    if (this.key !== key) console.log('Key Change ', key);
+    if (this.key !== key) console.log('Key Change');
     this.key = key;
   }
 
