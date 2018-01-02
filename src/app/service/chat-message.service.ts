@@ -43,6 +43,7 @@ export class ChatMessageService {
       },
       error => {
         console.error(error.status + ":" + error.statusText);
+        setTimeout(() => { this.calibrateTimeOffset(); }, 6 * 60 * 60 * 1000);
       }
     );
   }
