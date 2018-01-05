@@ -1,7 +1,7 @@
 import { PeerCursor } from '../../class/peer-cursor';
 import {
   Component, ChangeDetectionStrategy, ChangeDetectorRef,
-  OnInit, OnDestroy, NgZone, ViewChild, AfterViewInit, ElementRef
+  OnInit, OnDestroy, NgZone, ViewChild, AfterViewInit, ElementRef, HostListener
 } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
@@ -29,37 +29,14 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { FileStorage } from '../../class/core/file-storage/file-storage';
 import { ImageFile, ImageContext } from '../../class/core/file-storage/image-file';
 
-/*import * as $ from 'jquery';*/
-
 @Component({
   selector: 'game-table',
   templateUrl: './game-table.component.html',
-  styleUrls: ['./game-table.component.css'],
-  animations: [
-    trigger('flyInOut', [
-      state('in', style({ transform: 'scale3d(1, 1, 1)' })),
-      transition('void => *', [
-        //style({ transform: 'scale3d(0, 0, 0)' }),
-        //animate(100)
-        animate('600ms ease', keyframes([
-          style({ transform: 'scale3d(0, 0, 0)', offset: 0 }),
-          style({ transform: 'scale3d(1.5, 1.5, 1.5)', offset: 0.5 }),
-          style({ transform: 'scale3d(0.75, 0.75, 0.75)', offset: 0.75 }),
-          style({ transform: 'scale3d(1.125, 1.125, 1.125)', offset: 0.875 }),
-          style({ transform: 'scale3d(1.0, 1.0, 1.0)', offset: 1.0 })
-        ]))
-      ]),
-      transition('* => void', [
-        animate(100, style({ transform: 'scale3d(0, 0, 0)' }))
-      ])
-    ])
-  ]
+  styleUrls: ['./game-table.component.css']
 })
 export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
-
-  @ViewChild('gameTableBase') gameTableBase: ElementRef;
+  @ViewChild('root') rootElementRef: ElementRef;
   @ViewChild('gameTable') gameTable: ElementRef;
-  //@ViewChild('gameBackgroundImage') gameBackgroundImage: ElementRef;
   @ViewChild('gameObjects') gameObjects: ElementRef;
   @ViewChild('gridCanvas') gridCanvas: ElementRef;
 
@@ -75,14 +52,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return this._gameTableObject;
   }
-
-  //private imageIdentifier: string = '';
-  /*
-  get file(): ImageFile {
-    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
-    return file ? file : ImageFile.Empty;
-  }
-  */
 
   bgImage: ImageFile = ImageFile.Empty;
 
@@ -101,26 +70,19 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private viewRotateY: number = 0;
   private viewRotateZ: number = 10;
 
-  private callbackOnMouseDown: any = null;
-  private callbackOnMouseUp: any = null;
-  private callbackOnMouseMove: any = null;
-  private callbackOnWheel: any = null;
-  private callbackOnKeyDown: any = null;
-  private callbackOnContextMenu: any = null;
+  private callbackOnMouseDown = (e) => this.onMouseDown(e);
+  private callbackOnMouseUp = (e) => this.onMouseUp(e);
+  private callbackOnMouseMove = (e) => this.onMouseMove(e);
+  private callbackOnContextMenu = (e) => this.onContextMenu(e);
 
   private buttonCode: number = 0;
-
-  private _tabletopCharacterIdentifiers: string[] = [];
-  private _tabletopCharacters: GameCharacter[] = [];
 
   private isAllowedToOpenContextMenu: boolean = true;
 
   constructor(
     private ngZone: NgZone,
-    //private gameRoomService: GameRoomService,
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService,
     private modalService: ModalService,
     private panelService: PanelService
@@ -128,103 +90,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     console.log('きどう');
-    let testCharacter: GameCharacter = null;
-    let testFile: ImageFile = null;
-
-    let tableSelecter = new TableSelecter('tableSelecter');
-    tableSelecter.initialize();
-
-    /*
-    this.gameTableObject = new GameTable('gameTable');
-    testFile = FileStorageProxy.addUrl('images/field001.gif', 'testTableBackgroundImage_image');
-    this.gameTableObject.syncData.imageIdentifier = testFile.identifier;
-    this.gameTableObject.initialize();
-    this.file = testFile;
-    */
-
-    let gameTable = new GameTable('gameTable');
-    let fileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
-    fileContext.url = './assets/images/BG10a_80.jpg';
-    testFile = FileStorage.instance.add(fileContext);
-    gameTable.name = '最初のテーブル';
-    gameTable.imageIdentifier = testFile.identifier;
-    gameTable.width = 20;
-    gameTable.height = 15;
-    gameTable.initialize();
-    //this.imageIdentifier = testFile.identifier;
-
-    tableSelecter.viewTableIdentifier = gameTable.identifier;
-
-    testCharacter = new GameCharacter('testCharacter_1');
-    fileContext = ImageFile.createEmpty('testCharacter_1_image').toContext();
-    fileContext.url = './assets/images/mon_052.gif';
-    testFile = FileStorage.instance.add(fileContext);
-    //testCharacter.syncData.imageIdentifier = testFile.identifier;
-    testCharacter.location.x = 5 * 50;
-    testCharacter.location.y = 9 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターA', 1, testFile.identifier);
-
-    testCharacter = new GameCharacter('testCharacter_2');
-    testCharacter.location.x = 8 * 50;
-    testCharacter.location.y = 8 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターB', 1, testFile.identifier);
-
-    testCharacter = new GameCharacter('testCharacter_3');
-    fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
-    fileContext.url = './assets/images/mon_128.gif';
-    testFile = FileStorage.instance.add(fileContext);
-    //testCharacter.syncData.imageIdentifier = testFile.identifier;
-    testCharacter.location.x = 4 * 50;
-    testCharacter.location.y = 2 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターC', 3, testFile.identifier);
-
-    testCharacter = new GameCharacter('testCharacter_4');
-    fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
-    fileContext.url = './assets/images/mon_150.gif';
-    testFile = FileStorage.instance.add(fileContext);
-    //testCharacter.syncData.imageIdentifier = testFile.identifier;
-    testCharacter.location.x = 6 * 50;
-    testCharacter.location.y = 11 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターA', 1, testFile.identifier);
-
-    testCharacter = new GameCharacter('testCharacter_5');
-    fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
-    fileContext.url = './assets/images/mon_211.gif';
-    testFile = FileStorage.instance.add(fileContext);
-    //testCharacter.syncData.imageIdentifier = testFile.identifier;
-    testCharacter.location.x = 12 * 50;
-    testCharacter.location.y = 12 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターB', 1, testFile.identifier);
-
-    testCharacter = new GameCharacter('testCharacter_6');
-    fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
-    fileContext.url = './assets/images/mon_135.gif';
-    testFile = FileStorage.instance.add(fileContext);
-    //testCharacter.syncData.imageIdentifier = testFile.identifier;
-    testCharacter.initialize();
-    testCharacter.location.x = 5 * 50;
-    testCharacter.location.y = 13 * 50;
-    testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
-
-    //this.createTrump();
-    //document.body.addEventListener('mousemove', this.callcack);
-    //document.body.addEventListener('touchmove', this.callcack);
-
-    /*
-    var element = document.getElementById('game-table');
-    var $char1 = $('#game-char-1-dodai');
-    element.addEventListener('mousemove', (e) => this.onMove(e), true);
-    element.addEventListener('touchmove', (e) => this.onMove(e), true);
-    */
-
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-
         if (event.data.identifier !== this.gameTableObject.identifier) return;
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
@@ -233,7 +100,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       })
       .on('XML_PARSE', event => {
         let xml: string = event.data.xml;
-        //console.log('XML_PARSE', xml);
+        //console.log('XML_PARSE', xml); todo:立体地形の上にドロップした時の挙動
         let gameObject = ObjectSerializer.instance.parseXml(xml);
         if (gameObject instanceof TabletopObject) {
           let pointer = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.gameObjects.nativeElement);
@@ -245,82 +112,25 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
         let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-        $(this.gridCanvas.nativeElement).css('opacity', opacity);
+        this.gridCanvas.nativeElement.style.opacity = opacity;
       });
-    /*
-    .on('UPDATE_GAME_OBJECT', -1000, event => {
-      if (event.data.className === 'GameCharacter' || event.data.className === 'GameDataElement') this.changeDetector.markForCheck();
-    });
-    */
+    this.makeDefaultTable();
+    this.makeDefaultTabletopObjects();
     this.updateBackgroundImage();
   }
 
   ngAfterViewInit() {
-    let gameTableElement = this.gameTableBase.nativeElement;
-
-    //$gameTableElement.css('background-image', 'url(' + this.tableBackgroundImageURI + ')');
-
-    this.callbackOnMouseDown = (e) => this.onMouseDown(e);
-    this.callbackOnMouseUp = (e) => this.onMouseUp(e);
-    this.callbackOnMouseMove = (e) => this.onMouseMove(e);
-
-    this.callbackOnWheel = (e) => this.onWheel(e);
-    this.callbackOnKeyDown = (e) => this.onKeydown(e);
-
-    this.callbackOnContextMenu = (e) => this.onContextMenu(e);
-
-    //gameTableElement.addEventListener('mousemove', (e) => this.onMove(e), true);
-    //gameTableElement.addEventListener('touchmove', (e) => this.onMove(e), true);
-
-    gameTableElement.addEventListener('mousedown', this.callbackOnMouseDown, true);
-    this.elementRef.nativeElement.addEventListener('wheel', this.callbackOnWheel, false);
-    document.addEventListener('keydown', this.callbackOnKeyDown, false);
+    this.elementRef.nativeElement.addEventListener('mousedown', this.callbackOnMouseDown, true);
     this.gameObjects.nativeElement.addEventListener('contextmenu', this.callbackOnContextMenu, false);
-
-    /*
-    this.context = canvas.getContext("2d");
-    this.tick();
-    */
-
     this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
-    this.gameTableObject.update();
-    /*
-    setTimeout(() => {
-      let data: GameTableDataContainer = {
-        width: 40,
-        height: 10,
-        imageIdentifier: FileStorageProxy.getFile('testCharacter_3_image').identifier,
-        gridSize: this.gridSize,
-      }
-      let event: EventData = new EventData('UPDATE_GAME_TABLE', data);
-      EventSystemProxy.callEvent(event);
-    }, 5000);
-    */
   }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-
-    let gameTableElement = this.gameTableBase.nativeElement;
-    gameTableElement.removeEventListener('mousedown', this.callbackOnMouseDown, true);
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
-    document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
-
-    this.elementRef.nativeElement.removeEventListener('wheel', this.callbackOnWheel, false);
-    document.removeEventListener('keydown', this.callbackOnKeyDown, false);
-
+    this.removeMouseEventListeners();
+    this.elementRef.nativeElement.removeEventListener('mousedown', this.callbackOnMouseDown, true);
     this.gameObjects.nativeElement.removeEventListener('contextmenu', this.callbackOnContextMenu, false);
-
-    this.callbackOnMouseDown = null;
-    this.callbackOnMouseUp = null;
-    this.callbackOnMouseMove = null;
-
-    this.callbackOnWheel = null;
-    this.callbackOnKeyDown = null;
-
-    this.callbackOnContextMenu = null;
   }
 
   private updateBackgroundImage() {
@@ -365,69 +175,43 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   getPeerCursor(): PeerCursor[] {
     return ObjectStore.instance.getObjects(PeerCursor).filter((obj) => { return obj !== PeerCursor.myCursor });
   }
+
   onMouseDown(e: any) {
-    this.mouseDownPositionX = e.touches ? e.changedTouches[0].pageX : e.pageX;
-    this.mouseDownPositionY = e.touches ? e.changedTouches[0].pageY : e.pageY;
+    this.mouseDownPositionX = this.pointerDeviceService.pointerX;
+    this.mouseDownPositionY = this.pointerDeviceService.pointerY;
 
     this.isAllowedToOpenContextMenu = true;
     console.log('onMouseDown isAllowedToOpenContextMenu', this.isAllowedToOpenContextMenu);
 
-    if (e.target === this.gameTableBase.nativeElement
+    if (e.target === this.rootElementRef.nativeElement
       || e.target === this.gameTable.nativeElement
       || e.target === this.gameObjects.nativeElement
       || e.target === this.gridCanvas.nativeElement
     ) {
-      //|| e.target === this.gameBackgroundImage.nativeElement
-      //|| e.target === this.gameBackgroundImage.nativeElement) {
       this.isTransformMode = true;
       e.preventDefault();
     } else {
       this.isTransformMode = false;
       this.pointerDeviceService.isDragging = true;
-      $(this.gridCanvas.nativeElement).css('opacity', 1.0);
+      this.gridCanvas.nativeElement.style.opacity = 1.0;
     }
 
     this.buttonCode = e.button;
-    switch (this.buttonCode) {
-      case 0:
-        console.log('Left button clicked.');
-        break;
 
-      case 1:
-        console.log('Middle button clicked.');
-        break;
-
-      case 2:
-        console.log('Right button clicked.');
-        break;
-
-      default:
-        console.log('Unexpected code: ' + this.buttonCode);
-    }
-
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
-    document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
-    //e.preventDefault();
+    this.addMouseEventListeners();
   }
 
   onMouseUp(e: any) {
-    //console.log('onMouseUp');
-
     this.pointerDeviceService.isDragging = false;
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-    $(this.gridCanvas.nativeElement).css('opacity', opacity);
+    this.gridCanvas.nativeElement.style.opacity = opacity;
 
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
-    document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
-    //e.preventDefault();
-    //$('#app-ui-layer').css('opacity', 1.0);
+    this.removeMouseEventListeners();
   }
 
   onMouseMove(e: any) {
-    let x = e.touches ? e.changedTouches[0].pageX : e.pageX;
-    let y = e.touches ? e.changedTouches[0].pageY : e.pageY;
+    let x = this.pointerDeviceService.pointerX;
+    let y = this.pointerDeviceService.pointerY;
 
     if (this.mouseDownPositionX !== x || this.mouseDownPositionX !== y) {
       this.contextMenuService.close();
@@ -452,19 +236,18 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       if (this.mouseDownPositionX !== x || this.mouseDownPositionY !== y) {
-        //$('#app-ui-layer').css('opacity', 0.2);
         this.isAllowedToOpenContextMenu = false;
       }
 
       this.mouseDownPositionX = x;
       this.mouseDownPositionY = y;
 
-      //console.log('onMouseMove', x, y);
       this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
       return;
     }
   }
 
+  @HostListener('wheel', ['$event'])
   onWheel(e: WheelEvent) {
     console.log('onWheel', e.deltaY);
     let transformX = 0;
@@ -484,6 +267,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
 
+  @HostListener('document:keydown', ['$event'])
   onKeydown(e: KeyboardEvent) {
     console.log('onKeydown', e.keyCode);
     let transformX = 0;
@@ -529,6 +313,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
+    this.removeMouseEventListeners();
 
     if (this.isAllowedToOpenContextMenu) {
       this.isAllowedToOpenContextMenu = false;
@@ -565,7 +350,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private showDetail(gameObject: GameCharacter) {
     console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    //this.modalService.open(GameCharacterSheetComponent);
     let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
@@ -604,47 +388,18 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.viewRotateY += rotateY;
     this.viewRotateZ += rotateZ;
 
-    let ax = -this.viewRotateX * Math.PI / 180.0;
-    let ay = -this.viewRotateY * Math.PI / 180.0;
-    let az = -this.viewRotateZ * Math.PI / 180.0;
+    this.viewPotisonX += transformX;
+    this.viewPotisonY += transformY;
+    this.viewPotisonZ += transformZ;
 
-    let x = transformX;
-    let y = transformY;
-    let z = transformZ;
-    let x2, x3, y2, y3, z2, z3;
-
-    /*
-        //--Y Axis Rotation
-        z2 = z * Math.cos(ay) - x * Math.sin(ay);
-        x2 = z * Math.sin(ay) + x * Math.cos(ay);
-        y2 = y;
-        //--X Axis Rotation
-        y3 = y2 * Math.cos(ax) - z2 * Math.sin(ax);
-        z3 = y2 * Math.sin(ax) + z2 * Math.cos(ax);
-        x3 = x2;
-        //--Z Axis Rotation
-        x = x3 * Math.cos(az) - y3 * Math.sin(az);
-        y = x3 * Math.sin(az) + y3 * Math.cos(az);
-        z = z3;
-    */
-
-    this.viewPotisonX += x;
-    this.viewPotisonY += y;
-    this.viewPotisonZ += z;
-    //$(this.gameTable.nativeElement).css('transform-origin',''+this.viewPotisonX+'px '+ this.viewPotisonY+'px '+ this.viewPotisonZ+'px'); 
-    //$(this.gameTable.nativeElement).css('transform-origin',''+this.viewPotisonX+'px '+ this.viewPotisonY+'px 0'); 
-
-    //$(this.gameTable.nativeElement).css('transform', 'rotateY(' + this.viewRotateY + 'deg) rotateX(' + this.viewRotateX + 'deg) rotateZ(' + this.viewRotateZ + 'deg) translateZ(' + this.viewPotisonZ + 'px) translateY(' + this.viewPotisonY + 'px) translateX(' + this.viewPotisonX + 'px) ');
-
-    $(this.gameTable.nativeElement).css('transform', 'translateZ(' + this.viewPotisonZ + 'px) translateY(' + this.viewPotisonY + 'px) translateX(' + this.viewPotisonX + 'px) rotateY(' + this.viewRotateY + 'deg) rotateX(' + this.viewRotateX + 'deg) rotateZ(' + this.viewRotateZ + 'deg) ');
+    this.gameTable.nativeElement.style.transform = 'translateZ(' + this.viewPotisonZ + 'px) translateY(' + this.viewPotisonY + 'px) translateX(' + this.viewPotisonX + 'px) rotateY(' + this.viewRotateY + 'deg) rotateX(' + this.viewRotateX + 'deg) rotateZ(' + this.viewRotateZ + 'deg) ';
   }
 
   private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: GridType = GridType.SQUARE, gridColor: string = '#000000e6') {
-    let $gameTableElement = $(this.gameTable.nativeElement);
-    $gameTableElement.css('width', width * gridSize);
-    $gameTableElement.css('height', height * gridSize);
+    this.gameTable.nativeElement.style.width = width * gridSize + 'px';
+    this.gameTable.nativeElement.style.height = height * gridSize + 'px';
 
-    let canvasElement: HTMLCanvasElement = this.gridCanvas.nativeElement;// document.getElementById('line');
+    let canvasElement: HTMLCanvasElement = this.gridCanvas.nativeElement;
     canvasElement.width = width * gridSize;
     canvasElement.height = height * gridSize;
     let context: CanvasRenderingContext2D = canvasElement.getContext('2d');
@@ -661,10 +416,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let gx: number; // グリッド用Rect描画開始位置(x)
     let gy: number; // 同上(y)
 
-    if (gridType === GridType.HEX_VERTICAL) {
-      // ヘクス縦揃え
-      for (let h = 0; h <= height; h++) {
-        for (let w = 0; w <= width; w++) {
+    let calcGridPosition: { (w: number, h: number): void };
+
+    switch (gridType) {
+      case GridType.HEX_VERTICAL: // ヘクス縦揃え
+        calcGridPosition = (w, h) => {
           if ((w % 2) === 1) {
             gx = w * gridSize;
             gy = h * gridSize;
@@ -672,15 +428,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
             gx = w * gridSize;
             gy = h * gridSize + (gridSize / 2);
           }
-          context.beginPath();
-          context.strokeRect(gx, gy, gridSize, gridSize);
-          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
-      }
-    } else if (gridType === GridType.HEX_HORIZONTAL) {
-      // ヘクス横揃え(どどんとふ互換)
-      for (let h = 0; h <= height; h++) {
-        for (let w = 0; w <= width; w++) {
+        break;
+      case GridType.HEX_HORIZONTAL: // ヘクス横揃え(どどんとふ互換)
+        calcGridPosition = (w, h) => {
           if ((h % 2) === 1) {
             gx = w * gridSize;
             gy = h * gridSize;
@@ -688,26 +439,27 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
             gx = w * gridSize + (gridSize / 2);
             gy = h * gridSize;
           }
-          context.beginPath();
-          context.strokeRect(gx, gy, gridSize, gridSize);
-          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
-      }
-    } else {
-      // スクエア(default)
-      for (let h = 0; h <= height; h++) {
-        for (let w = 0; w <= width; w++) {
+        break;
+      default: // スクエア(default)
+        calcGridPosition = (w, h) => {
           gx = w * gridSize;
           gy = h * gridSize;
-          context.beginPath();
-          context.strokeRect(gx, gy, gridSize, gridSize);
-          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
         }
+        break;
+    }
+
+    for (let h = 0; h <= height; h++) {
+      for (let w = 0; w <= width; w++) {
+        calcGridPosition(w, h);
+        context.beginPath();
+        context.strokeRect(gx, gy, gridSize, gridSize);
+        context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
       }
     }
 
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-    $(this.gridCanvas.nativeElement).css('opacity', opacity);
+    this.gridCanvas.nativeElement.style.opacity = opacity;
   }
 
   private createTrump(potison: PointerCoordinate) {
@@ -750,11 +502,91 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       cardStack.putOnBottom(card);
     }
   }
-}
 
-export interface GameTableDataContainer {
-  width: number;
-  height: number;
-  imageIdentifier: string;
-  gridSize: number;
+  private addMouseEventListeners() {
+    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
+    document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
+    document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
+  }
+
+  private removeMouseEventListeners() {
+    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
+    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
+    document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
+  }
+
+  private makeDefaultTable() {
+    let tableSelecter = new TableSelecter('tableSelecter');
+    tableSelecter.initialize();
+
+    let gameTable = new GameTable('gameTable');
+    let testFile: ImageFile = null;
+    let fileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
+    fileContext.url = './assets/images/BG10a_80.jpg';
+    testFile = FileStorage.instance.add(fileContext);
+    gameTable.name = '最初のテーブル';
+    gameTable.imageIdentifier = testFile.identifier;
+    gameTable.width = 20;
+    gameTable.height = 15;
+    gameTable.initialize();
+
+    tableSelecter.viewTableIdentifier = gameTable.identifier;
+  }
+
+  private makeDefaultTabletopObjects() {
+    let testCharacter: GameCharacter = null;
+    let testFile: ImageFile = null;
+    let fileContext: ImageContext = null;
+
+    testCharacter = new GameCharacter('testCharacter_1');
+    fileContext = ImageFile.createEmpty('testCharacter_1_image').toContext();
+    fileContext.url = './assets/images/mon_052.gif';
+    testFile = FileStorage.instance.add(fileContext);
+    testCharacter.location.x = 5 * 50;
+    testCharacter.location.y = 9 * 50;
+    testCharacter.initialize();
+    testCharacter.createTestGameDataElement('モンスターA', 1, testFile.identifier);
+
+    testCharacter = new GameCharacter('testCharacter_2');
+    testCharacter.location.x = 8 * 50;
+    testCharacter.location.y = 8 * 50;
+    testCharacter.initialize();
+    testCharacter.createTestGameDataElement('モンスターB', 1, testFile.identifier);
+
+    testCharacter = new GameCharacter('testCharacter_3');
+    fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
+    fileContext.url = './assets/images/mon_128.gif';
+    testFile = FileStorage.instance.add(fileContext);
+    testCharacter.location.x = 4 * 50;
+    testCharacter.location.y = 2 * 50;
+    testCharacter.initialize();
+    testCharacter.createTestGameDataElement('モンスターC', 3, testFile.identifier);
+
+    testCharacter = new GameCharacter('testCharacter_4');
+    fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
+    fileContext.url = './assets/images/mon_150.gif';
+    testFile = FileStorage.instance.add(fileContext);
+    testCharacter.location.x = 6 * 50;
+    testCharacter.location.y = 11 * 50;
+    testCharacter.initialize();
+    testCharacter.createTestGameDataElement('キャラクターA', 1, testFile.identifier);
+
+    testCharacter = new GameCharacter('testCharacter_5');
+    fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
+    fileContext.url = './assets/images/mon_211.gif';
+    testFile = FileStorage.instance.add(fileContext);
+    testCharacter.location.x = 12 * 50;
+    testCharacter.location.y = 12 * 50;
+    testCharacter.initialize();
+    testCharacter.createTestGameDataElement('キャラクターB', 1, testFile.identifier);
+
+    testCharacter = new GameCharacter('testCharacter_6');
+    fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
+    fileContext.url = './assets/images/mon_135.gif';
+    testFile = FileStorage.instance.add(fileContext);
+    testCharacter.initialize();
+    testCharacter.location.x = 5 * 50;
+    testCharacter.location.y = 13 * 50;
+    testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
+  }
 }

@@ -1,24 +1,15 @@
-.grabbing {
+.is-grabbing {
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-.game-room {
+.component {
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-
   -moz-user-drag: none;
   -webkit-user-drag: none;
-
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
 
   height: 100%;
   width: 100%;
@@ -26,44 +17,17 @@
   overflow: hidden;
 }
 
-.game-room_3d {
+.is-perspective {
   -webkit-perspective: 1000px;
   perspective: 1000px;
 }
 
-.game-table {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
+.component-content {
   height: 2000px;
   width: 2000px;
-  /*
-  background-image: url("./images/paper.jpg");
-  background-size: cover;
-  */
-  /*
-  -webkit-transition: 0.1s ease-out;
-  -moz-transition: 0.1s ease-out;
-  -o-transition: 0.1s ease-out;
-  transition: 0.1s ease-out;
-  */
-  /*border: solid 90px;*/
 }
 
-.game-background-image {
-  /*
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-  user-drag: none;
-  */
-
+.is-fill {
   display: block;
   position: absolute;
   top: 0;
@@ -71,34 +35,9 @@
   bottom: 0;
   right: 0;
   margin: auto;
-  height: 100%;
-  width: 100%;
 }
 
-.game-table_3d {
-  backface-visibility: hidden;
-  -webkit-transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-  transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-}
-
-.game-table_3d_false {
-  -webkit-animation: upyourscache1464488448477 30s infinite linear;
-  animation: upyourscache1464488448477 30s infinite linear;
-}
-
-.grid-canvas{
-  /*
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-  user-drag: none;
-  */
-
-  position: absolute;
-  top : 0;
-  left :0;
+.grid-canvas {
   opacity: 0.0;
 
   -webkit-transition: 0.3s ease-out;
@@ -109,39 +48,20 @@
   backface-visibility: hidden;
 }
 
-.game-objects{
-  height:100%;
+.game-table {
+  height: 100%;
   width: 100%;
-  /*border: solid 90px;*/
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
-.game-3d {
+.is-3d {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   position: absolute;
 }
 
-.pointer-events-none {
+.is-pointer-events-none {
   pointer-events: none;
-}
-
-@-webkit-keyframes upyourscache1464488448477 {
-  0% {
-    -webkit-transform: translateY(0px) rotateX(0deg) rotateY(0) rotateZ(0);
-  }
-  100% {
-    -webkit-transform: translateY(0px) rotateX(0deg) rotateY(0) rotateZ(360deg);
-  }
-}
-
-@keyframes upyourscache1464488448477 {
-  0% {
-    transform: translateY(0px) translateZ(0px) rotateX(60deg) rotateY(0) rotateZ(0);
-  }
-  100% {
-    transform: translateY(0px) translateZ(0px) rotateX(60deg) rotateY(0) rotateZ(360deg);
-  }
 }
