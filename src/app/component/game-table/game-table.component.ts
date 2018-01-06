@@ -164,11 +164,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isAllowedToOpenContextMenu = true;
     console.log('onMouseDown isAllowedToOpenContextMenu', this.isAllowedToOpenContextMenu);
 
-    if (e.target === this.rootElementRef.nativeElement
-      || e.target === this.gameTable.nativeElement
-      || e.target === this.gameObjects.nativeElement
-      || e.target === this.gridCanvas.nativeElement
-    ) {
+    if (e.target.contains(this.gameObjects.nativeElement)) {
       this.isTransformMode = true;
       e.preventDefault();
     } else {
