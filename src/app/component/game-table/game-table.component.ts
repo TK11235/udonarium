@@ -129,7 +129,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.elementRef.nativeElement.addEventListener('mousedown', this.callbackOnMouseDown, true);
-    this.gameObjects.nativeElement.addEventListener('contextmenu', this.callbackOnContextMenu, false);
     this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
   }
@@ -138,7 +137,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.unregister(this);
     this.removeMouseEventListeners();
     this.elementRef.nativeElement.removeEventListener('mousedown', this.callbackOnMouseDown, true);
-    this.gameObjects.nativeElement.removeEventListener('contextmenu', this.callbackOnContextMenu, false);
   }
 
   private updateBackgroundImage() {
@@ -292,6 +290,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
 
+  @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
     console.log('onContextMenu');
     e.stopPropagation();
