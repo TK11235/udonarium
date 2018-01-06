@@ -1,33 +1,25 @@
-import { PeerCursor } from '../../class/peer-cursor';
-import {
-  Component, ChangeDetectionStrategy, ChangeDetectorRef,
-  OnInit, OnDestroy, NgZone, ViewChild, AfterViewInit, ElementRef, HostListener
-} from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { ContextMenuService } from '../../service/context-menu.service';
-import { PointerDeviceService, PointerCoordinate } from '../../service/pointer-device.service';
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-
-import { GameTableSettingComponent } from '../game-table-setting/game-table-setting.component';
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
-import { ChatPaletteComponent } from '../chat-palette/chat-palette.component';
-
-import { ChatPalette } from '../../class/chat-palette';
 import { Card } from '../../class/card';
 import { CardStack } from '../../class/card-stack';
-import { TabletopObject } from '../../class/tabletop-object';
-import { GameTable, GridType } from '../../class/game-table';
-import { GameCharacter } from '../../class/game-character';
-import { GameTableMask } from '../../class/game-table-mask';
-import { TableSelecter } from '../../class/table-selecter';
-import { Terrain } from '../../class/terrain';
-import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { FileStorage } from '../../class/core/file-storage/file-storage';
-import { ImageFile, ImageContext } from '../../class/core/file-storage/image-file';
+import { ImageContext, ImageFile } from '../../class/core/file-storage/image-file';
+import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
+import { ObjectStore } from '../../class/core/synchronize-object/object-store';
+import { EventSystem } from '../../class/core/system/system';
+import { GameCharacter } from '../../class/game-character';
+import { GameTable, GridType } from '../../class/game-table';
+import { GameTableMask } from '../../class/game-table-mask';
+import { PeerCursor } from '../../class/peer-cursor';
+import { TableSelecter } from '../../class/table-selecter';
+import { TabletopObject } from '../../class/tabletop-object';
+import { Terrain } from '../../class/terrain';
+import { ContextMenuService } from '../../service/context-menu.service';
+import { ModalService } from '../../service/modal.service';
+import { PanelOption, PanelService } from '../../service/panel.service';
+import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
+import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
+import { GameTableSettingComponent } from '../game-table-setting/game-table-setting.component';
 
 @Component({
   selector: 'game-table',
