@@ -4,6 +4,32 @@
   cursor: grabbing;
 }
 
+.is-perspective {
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+.is-fill {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.is-3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  position: absolute;
+}
+
+.is-pointer-events-none {
+  pointer-events: none;
+}
+
 .component {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -17,24 +43,9 @@
   overflow: hidden;
 }
 
-.is-perspective {
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
-}
-
 .component-content {
   height: 2000px;
   width: 2000px;
-}
-
-.is-fill {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
 }
 
 .grid-canvas {
@@ -53,15 +64,4 @@
   width: 100%;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-}
-
-.is-3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  position: absolute;
-}
-
-.is-pointer-events-none {
-  pointer-events: none;
 }
