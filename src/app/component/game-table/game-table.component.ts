@@ -79,6 +79,14 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private isAllowedToOpenContextMenu: boolean = true;
 
+  // 毎回filterする方法だと遅い　何とかする
+  get tabletopCharacters(): GameCharacter[] { return ObjectStore.instance.getObjects(GameCharacter).filter((obj) => { return obj.location.name === 'table' }); }
+  get gameTableMasks(): GameTableMask[] { return ObjectStore.instance.getObjects(GameTableMask).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
+  get cards(): Card[] { return ObjectStore.instance.getObjects(Card).filter((obj) => { return obj.location.name === 'table' }); }
+  get cardStacks(): CardStack[] { return ObjectStore.instance.getObjects(CardStack).filter((obj) => { return obj.location.name === 'table' }); }
+  get terrains(): Terrain[] { return ObjectStore.instance.getObjects(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
+  get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor).filter((obj) => { return obj !== PeerCursor.myCursor }); }
+
   constructor(
     private ngZone: NgZone,
     private contextMenuService: ContextMenuService,
@@ -87,31 +95,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: ModalService,
     private panelService: PanelService
   ) { }
-
-  // getTabletopCharactersだと遅い　何とかする
-  getTabletopCharacters(): GameCharacter[] {
-    return ObjectStore.instance.getObjects(GameCharacter).filter((obj) => { return obj.location.name === 'table' });
-  }
-
-  getGameTableMasks(): GameTableMask[] {
-    return ObjectStore.instance.getObjects(GameTableMask).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
-  }
-
-  getCards(): Card[] {
-    return ObjectStore.instance.getObjects(Card).filter((obj) => { return obj.location.name === 'table' });
-  }
-
-  getCardStacks(): CardStack[] {
-    return ObjectStore.instance.getObjects(CardStack).filter((obj) => { return obj.location.name === 'table' });
-  }
-
-  getTerrain(): Terrain[] {
-    return ObjectStore.instance.getObjects(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
-  }
-
-  getPeerCursor(): PeerCursor[] {
-    return ObjectStore.instance.getObjects(PeerCursor).filter((obj) => { return obj !== PeerCursor.myCursor });
-  }
 
   ngOnInit() {
     console.log('きどう');
