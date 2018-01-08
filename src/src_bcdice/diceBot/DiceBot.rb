@@ -435,7 +435,9 @@ class DiceBot
   
   def getTableValue(data)
     if( data.kind_of?( Proc ) )
-      return data.call()
+      # TKfix Procオブジェクトで一旦ブロック化しないとOpalで変換したときに正常に処理されない
+      lambdaBlock = lambda{ return data.call() }
+      return lambdaBlock.call()
     end
     
     return data
