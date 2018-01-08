@@ -17,12 +17,12 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$freeze', '$map', '$to_proc', '$join', '$new', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$puts', '$gameType', '$setPrefixes', '$attr_accessor', '$attr_reader', '$gameName', '$getHelpMessage', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$getDiceListFromDiceText', '$collect', '$to_i', '$split', '$each', '$>=', '$kind_of?', '$call', '$select', '$===', '$public_methods', '$send']);
+  Opal.add_stubs(['$freeze', '$map', '$to_proc', '$join', '$new', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$puts', '$gameType', '$setPrefixes', '$attr_accessor', '$attr_reader', '$gameName', '$getHelpMessage', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$getDiceListFromDiceText', '$collect', '$to_i', '$split', '$each', '$>=', '$kind_of?', '$lambda', '$call', '$select', '$===', '$public_methods', '$send']);
   return (function($base, $super) {
     function $DiceBot(){};
     var self = $DiceBot = $klass($base, $super, 'DiceBot', $DiceBot);
 
-    var def = self.$$proto, $scope = self.$$scope, TMP_1, TMP_2, TMP_3, TMP_4, TMP_5, TMP_6, TMP_7, TMP_8, TMP_9, TMP_10, TMP_11, TMP_12, TMP_13, TMP_14, TMP_15, TMP_16, TMP_17, TMP_18, TMP_19, TMP_20, TMP_21, TMP_22, TMP_23, TMP_24, TMP_25, TMP_26, TMP_27, TMP_28, TMP_29, TMP_30, TMP_31, TMP_32, TMP_33, TMP_34, TMP_35, TMP_36, TMP_37, TMP_38, TMP_39, TMP_40, TMP_41, TMP_42, TMP_43, TMP_44, TMP_45, TMP_46, TMP_47, TMP_48, TMP_49, TMP_50, TMP_51, TMP_52, TMP_53, TMP_54, TMP_55, TMP_56, TMP_57, TMP_58, TMP_59, TMP_61, TMP_63, TMP_64, TMP_67;
+    var def = self.$$proto, $scope = self.$$scope, TMP_1, TMP_2, TMP_3, TMP_4, TMP_5, TMP_6, TMP_7, TMP_8, TMP_9, TMP_10, TMP_11, TMP_12, TMP_13, TMP_14, TMP_15, TMP_16, TMP_17, TMP_18, TMP_19, TMP_20, TMP_21, TMP_22, TMP_23, TMP_24, TMP_25, TMP_26, TMP_27, TMP_28, TMP_29, TMP_30, TMP_31, TMP_32, TMP_33, TMP_34, TMP_35, TMP_36, TMP_37, TMP_38, TMP_39, TMP_40, TMP_41, TMP_42, TMP_43, TMP_44, TMP_45, TMP_46, TMP_47, TMP_48, TMP_49, TMP_50, TMP_51, TMP_52, TMP_53, TMP_54, TMP_55, TMP_56, TMP_57, TMP_58, TMP_59, TMP_61, TMP_63, TMP_65, TMP_68;
 
     def.gameType = def.sortType = def.diceText = nil;
     Opal.cdecl($scope, 'EMPTY_PREFIXES_PATTERN', (/(^|\s)(S)?()(\s|$)/i).$freeze());
@@ -551,32 +551,37 @@ if (item == null) item = nil;
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
     }, TMP_63.$$arity = -3);
 
-    Opal.defn(self, '$getTableValue', TMP_64 = function $$getTableValue(data) {
-      var $a, self = this;
+    Opal.defn(self, '$getTableValue', TMP_65 = function $$getTableValue(data) {try {
+
+      var $a, $b, TMP_64, self = this, lambdaBlock = nil;
 
       if ((($a = (data['$kind_of?']($scope.get('Proc')))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        return data.$call()};
+        lambdaBlock = ($a = ($b = self).$lambda, $a.$$p = (TMP_64 = function(){var self = TMP_64.$$s || this;
+
+        Opal.ret(data.$call())}, TMP_64.$$s = self, TMP_64.$$arity = 0, TMP_64), $a).call($b);
+        return lambdaBlock.$call();};
       return data;
-    }, TMP_64.$$arity = 1);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_65.$$arity = 1);
 
-    return (Opal.defn(self, '$analyzeDiceCommandResultMethod', TMP_67 = function $$analyzeDiceCommandResultMethod(command) {try {
+    return (Opal.defn(self, '$analyzeDiceCommandResultMethod', TMP_68 = function $$analyzeDiceCommandResultMethod(command) {try {
 
-      var $a, $b, TMP_65, $c, TMP_66, self = this, methodList = nil;
+      var $a, $b, TMP_66, $c, TMP_67, self = this, methodList = nil;
 
-      methodList = ($a = ($b = self.$public_methods()).$select, $a.$$p = (TMP_65 = function(method){var self = TMP_65.$$s || this;
+      methodList = ($a = ($b = self.$public_methods()).$select, $a.$$p = (TMP_66 = function(method){var self = TMP_66.$$s || this;
 if (method == null) method = nil;
-      return /^get.+DiceCommandResult$/['$==='](method.$to_s())}, TMP_65.$$s = self, TMP_65.$$arity = 1, TMP_65), $a).call($b);
-      ($a = ($c = methodList).$each, $a.$$p = (TMP_66 = function(method){var self = TMP_66.$$s || this, $d, result = nil;
+      return /^get.+DiceCommandResult$/['$==='](method.$to_s())}, TMP_66.$$s = self, TMP_66.$$arity = 1, TMP_66), $a).call($b);
+      ($a = ($c = methodList).$each, $a.$$p = (TMP_67 = function(method){var self = TMP_67.$$s || this, $d, result = nil;
 if (method == null) method = nil;
       result = self.$send(method, command);
         if ((($d = result['$nil?']()) !== nil && $d != null && (!$d.$$is_boolean || $d == true))) {
           return nil
           } else {
           Opal.ret(result)
-        };}, TMP_66.$$s = self, TMP_66.$$arity = 1, TMP_66), $a).call($c);
+        };}, TMP_67.$$s = self, TMP_67.$$arity = 1, TMP_67), $a).call($c);
       return nil;
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, TMP_67.$$arity = 1), nil) && 'analyzeDiceCommandResultMethod';
+    }, TMP_68.$$arity = 1), nil) && 'analyzeDiceCommandResultMethod';
   })($scope.base, null)
 })(Opal);
 
