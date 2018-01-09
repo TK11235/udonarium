@@ -44,6 +44,8 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   private pointerPrev: PointerCoordinate = { x: 0, y: 0, z: 0 };
 
   private delta: number = 1.0;
+  
+  private startDragPoint: PointerCoordinate = { x: 0, y: 0 };
 
   private callbackOnMouseUp = (e) => this.onMouseUp(e);
   private callbackOnMouseMove = (e) => this.onMouseMove(e);
@@ -108,6 +110,8 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     console.log('onSelectedGameCharacter', this.gameTableMask.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.gameTableMask.identifier, className: 'GameCharacter' });
 
+    this.startDragPoint = this.pointerDeviceService.pointers[0];
+
     e.preventDefault();
 
     // TODO:もっと良い方法考える
@@ -132,11 +136,12 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onMouseMove(e: any) {
+    if (this.startDragPoint.x !== this.pointerDeviceService.pointers[0].x || this.startDragPoint.y !== this.pointerDeviceService.pointers[0].y) {
+      this.isAllowedToOpenContextMenu = false;
+    }
     if (this.isDragging && !this.isLock) {
       this.pointer = this.calcLocalCoordinate(this.pointerDeviceService.pointers[0]);
       if ((this.pointerPrev.y === this.pointer.y && this.pointerPrev.x === this.pointer.x)) return;
-      this.isAllowedToOpenContextMenu = false;
-
       let width: number = this.gridSize * this.width;
       let height: number = this.gridSize * this.height;
 
