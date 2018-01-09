@@ -345,7 +345,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     cardStack.rotate = this.rotate;
     cardStack.update();
 
-    let cards: Card[] = ObjectStore.instance.getObjects(Card).filter((obj) => { return obj.location.name === this.card.location.name });
+    let cards: Card[] = ObjectStore.instance.getObjects<Card>(Card).filter((obj) => { return obj.location.name === this.card.location.name });
 
     cards.sort((a, b) => {
       if (a.zindex < b.zindex) return 1;

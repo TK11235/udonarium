@@ -38,7 +38,7 @@ export class TableSelecter extends GameObject {
 
   get viewTable(): GameTable {
     let table: GameTable = ObjectStore.instance.get<GameTable>(this.viewTableIdentifier);
-    if (!table) table = ObjectStore.instance.getObjects(GameTable)[0];
+    if (!table) table = ObjectStore.instance.getObjects<GameTable>(GameTable)[0];
     return table;
   }
 }

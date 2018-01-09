@@ -72,12 +72,12 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private isAllowedToOpenContextMenu: boolean = true;
 
   // 毎回filterする方法だと遅い　何とかする
-  get tabletopCharacters(): GameCharacter[] { return ObjectStore.instance.getObjects(GameCharacter).filter((obj) => { return obj.location.name === 'table' }); }
-  get gameTableMasks(): GameTableMask[] { return ObjectStore.instance.getObjects(GameTableMask).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
-  get cards(): Card[] { return ObjectStore.instance.getObjects(Card).filter((obj) => { return obj.location.name === 'table' }); }
-  get cardStacks(): CardStack[] { return ObjectStore.instance.getObjects(CardStack).filter((obj) => { return obj.location.name === 'table' }); }
-  get terrains(): Terrain[] { return ObjectStore.instance.getObjects(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
-  get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor).filter((obj) => { return obj !== PeerCursor.myCursor }); }
+  get tabletopCharacters(): GameCharacter[] { return ObjectStore.instance.getObjects<GameCharacter>(GameCharacter).filter((obj) => { return obj.location.name === 'table' }); }
+  get gameTableMasks(): GameTableMask[] { return ObjectStore.instance.getObjects<GameTableMask>(GameTableMask).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
+  get cards(): Card[] { return ObjectStore.instance.getObjects<Card>(Card).filter((obj) => { return obj.location.name === 'table' }); }
+  get cardStacks(): CardStack[] { return ObjectStore.instance.getObjects<CardStack>(CardStack).filter((obj) => { return obj.location.name === 'table' }); }
+  get terrains(): Terrain[] { return ObjectStore.instance.getObjects<Terrain>(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
+  get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects<PeerCursor>(PeerCursor).filter((obj) => { return obj !== PeerCursor.myCursor }); }
 
   constructor(
     private ngZone: NgZone,
