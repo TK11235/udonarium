@@ -239,6 +239,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:keydown', ['$event'])
   onKeydown(e: KeyboardEvent) {
     console.log('onKeydown', e.keyCode);
+    if (document.body !== document.activeElement) return;
     let transformX = 0;
     let transformY = 0;
     let transformZ = 0;
