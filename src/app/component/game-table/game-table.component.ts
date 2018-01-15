@@ -167,6 +167,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.buttonCode = e.button;
 
+    this.removeSelectionRanges();
+    this.removeFocus();
     this.addMouseEventListeners();
   }
 
@@ -471,6 +473,19 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       let card = Card.create('サンプルカード', url, back);
       cardStack.putOnBottom(card);
+    }
+  }
+
+  private removeSelectionRanges() {
+    let selection = window.getSelection();
+    if (!selection.isCollapsed) {
+      selection.removeAllRanges();
+    }
+  }
+
+  private removeFocus() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
     }
   }
 
