@@ -1,7 +1,7 @@
 <!--<h2>チャットシステム</h2>-->
 <div class="log">
   <chat-tab *ngIf="chatTab" [chatTab]="chatTab" (onAddMessage)="scrollToBottom()"></chat-tab>
-  <div *ngIf="!chatTab">※チャットタブの内容が更新されました。タブを選択しなおすか、ウィンドウを開きなおしてください。</div>
+  <div *ngIf="!chatTab">※チャットタブの内容が更新されました。チャットタブを選択しなおすか、このチャットウィンドウを開きなおしてください。</div>
 </div>
 <div class="table" [ngClass]="{'direct-message': isDirect}">
   <div class="table-cell imagebox">
