@@ -145,7 +145,13 @@ export class FileArchiver {
       zip.file(file.name, file);
     }
 
-    zip.generateAsync({ type: 'blob' }).then(blob => {
+    zip.generateAsync({
+      type: 'blob',
+      compression: 'DEFLATE',
+      compressionOptions: {
+        level: 6
+      }
+    }).then(blob => {
       let a = document.createElement('a');
       a.href = window.URL.createObjectURL(blob);
       a.target = '_blank';
