@@ -20,7 +20,7 @@
   </select>
 </ng-container>
 <div *ngIf="tabletopObject" class="flex-container">
-  <div *ngIf="0 < tabletopObject.imageFile.url.length" class="box main-image-box">
+  <div *ngIf="0 < tabletopObject.imageFile?.url.length" class="box main-image-box">
     <img class="main-image" [src]="tabletopObject.imageFile.url | safe: 'resourceUrl'" [alt]="tabletopObject.imageFile.name"
     />
   </div>
