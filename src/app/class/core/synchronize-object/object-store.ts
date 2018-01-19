@@ -126,9 +126,9 @@ export class ObjectStore {
     this.updateInterval = null;
   }
 
-  synchronize() {
+  synchronize(to: string) {
     for (let identifier in this.identifierHash) {
-      this.identifierHash[identifier].update(false);
+      EventSystem.call('UPDATE_GAME_OBJECT', this.identifierHash[identifier].toContext(), to);
     }
   }
 

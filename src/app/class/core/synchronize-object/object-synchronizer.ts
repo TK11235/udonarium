@@ -19,7 +19,7 @@ export class ObjectSynchronizer {
       .on('OPEN_OTHER_PEER', 2, event => {
         if (!event.isSendFromSelf) return;
         console.log('OPEN_OTHER_PEER GameRoomService !!!', event.data.peer);
-        ObjectStore.instance.synchronize();
+        ObjectStore.instance.synchronize(event.data.peer);
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
         if (!event.isSendFromSelf) return;
