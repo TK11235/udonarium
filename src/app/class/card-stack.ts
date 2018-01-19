@@ -42,6 +42,7 @@ export class CardStack extends TabletopObject {
   get imageFile(): ImageFile { return this.topCard ? this.topCard.imageFile : null; }
 
   shuffle(): Card[] {
+    if (!this.cardRoot) return;
     let length = this.cardRoot.children.length;
     for (let card of this.cards) {
       card.index = Math.random() * length;
@@ -106,6 +107,7 @@ export class CardStack extends TabletopObject {
   }
 
   putOnTop(card: Card): Card {
+    if (!this.cardRoot) return;
     if (!this.topCard) return this.putOnBottom(card);
     card.owner = '';
     card.zindex = 0;
@@ -119,6 +121,7 @@ export class CardStack extends TabletopObject {
   }
 
   putOnBottom(card: Card): Card {
+    if (!this.cardRoot) return;
     card.owner = '';
     card.zindex = 0;
     let delta = Math.abs(card.rotate - this.rotate);
