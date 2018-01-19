@@ -57,9 +57,8 @@ export class ObjectSynchronizer {
   }
 
   private createObject(context: ObjectContext) {
-    let garbageIdentifier = ObjectStore.instance.getDeletedObject(context.identifier);
-    if (garbageIdentifier && ObjectStore.instance.isDeleted(garbageIdentifier, context)) {
-      EventSystem.call('DELETE_GAME_OBJECT', { identifier: garbageIdentifier });
+    if (ObjectStore.instance.isDeleted(context.identifier, context)) {
+      EventSystem.call('DELETE_GAME_OBJECT', { identifier: context.identifier });
       return;
     }
     let newObject: GameObject = ObjectFactory.instance.create(context.aliasName, context.identifier);
