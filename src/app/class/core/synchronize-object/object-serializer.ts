@@ -129,7 +129,6 @@ export class ObjectSerializer {
       gameObject.apply(context);
     }
 
-    console.log('' + gameObject.identifier, gameObject);
     gameObject.initialize();
     if ('parseInnerXml' in gameObject) {
       (<InnerXml>gameObject).parseInnerXml(xmlElement);
