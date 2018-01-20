@@ -69,7 +69,7 @@ export class Network {
   send(data: any) {
     this.queue.push(data);
     if (this.sendInterval === null) {
-      this.sendInterval = setTimeout(this.sendCallback, 0);
+      this.sendInterval = setInterval(this.sendCallback, 0);
     }
   }
 
@@ -98,9 +98,9 @@ export class Network {
       for (let sendTo in unicast) this.connection.send(unicast[sendTo], sendTo);
     }
 
-    this.sendInterval = null;
-    if (this.queue.length) {
-      this.sendInterval = setTimeout(this.sendCallback, 0);
+    if (this.queue.length < 1) {
+      clearInterval(this.sendInterval);
+      this.sendInterval = null;
     }
   }
 
