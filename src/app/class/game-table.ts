@@ -52,7 +52,6 @@ export class GameTable extends GameObject implements InnerXml {
 
   parseInnerXml(element: Element) {
     for (let i = 0; i < element.children.length; i++) {
-      console.log('GameTable.parseInnerXml() [' + i + ']', element.children[i]);
       let object = ObjectSerializer.instance.parseXml(element.children[i]);
       if (object instanceof TabletopObject) {
         object.location.name = this.identifier;

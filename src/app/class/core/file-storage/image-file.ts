@@ -172,7 +172,6 @@ export class ImageFile {
         let wordArray = WordArray.create(reader.result);
         let hash: string = SHA256(<any>wordArray, 'key').toString();
         
-        console.log('calHashAsync => ' + hash);
         resolve(hash);
       }
       reader.onabort = reader.onerror = () => {
