@@ -6,6 +6,7 @@ import { } from 'skyway';
 */
 import { } from 'node';
 import * as MessagePack from 'msgpack-lite';
+import * as JSZip from 'jszip/dist/jszip.min.js';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare var Peer;
@@ -18,6 +19,7 @@ interface DataContainer {
   data: any;
   peers: string[];
   isRelay: boolean;
+  isCompression?: boolean;
 }
 
 export class SkyWayConnection implements Connection {
@@ -36,6 +38,8 @@ export class SkyWayConnection implements Connection {
 
   private listAllPeersCache: string[] = [];
   private httpRequestInterval: number = performance.now() + 500;
+
+  private queue: Promise<any> = Promise.resolve();
 
   open(peerId: string)
   open(peerId: string, roomId: string, roomName: string, password: string)
@@ -112,11 +116,18 @@ export class SkyWayConnection implements Connection {
       isRelay: false
     }
 
-    if (sendTo) {
-      this.sendUnicast(container, sendTo);
-    } else {
-      this.sendBroadcast(container);
-    }
+    this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
+      if (3 * 1024 < container.data.length) {
+        container.isCompression = true;
+        container.data = await this.compressAsync(container.data);
+      }
+      if (sendTo) {
+        this.sendUnicast(container, sendTo);
+      } else {
+        this.sendBroadcast(container);
+      }
+      return resolve();
+    }));
   }
 
   private sendUnicast(container: DataContainer, sendTo: string) {
@@ -134,7 +145,18 @@ export class SkyWayConnection implements Connection {
 
   private onData(conn: PeerJs.DataConnection, container: DataContainer) {
     if (container.isRelay) this.onRelay(container);
-    if (this.callback.onData) this.callback.onData(conn.peer, MessagePack.decode(new Buffer(container.data)));
+    if (this.callback.onData) {
+      this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
+        let data: Uint8Array;
+        if (container.isCompression) {
+          data = await this.decompressAsync(container.data);
+        } else {
+          data = new Uint8Array(container.data);
+        }
+        this.callback.onData(conn.peer, MessagePack.decode(data));
+        return resolve();
+      }));
+    }
   }
 
   private onRelay(container: DataContainer) {
@@ -338,5 +360,51 @@ export class SkyWayConnection implements Connection {
 
     console.log('<update()>', peers);
     return peers;
+  }
+
+  private async compressAsync(data: Buffer): Promise<Uint8Array> {
+    let files: File[] = [];
+    files.push(new File([data], 'data.pack', { type: 'application/octet-stream' }));
+
+    let zip = new JSZip();
+    let length = files.length;
+    for (let i = 0; i < length; i++) {
+      let file = files[i]
+      zip.file(file.name, file);
+    }
+
+    let uint8array: Uint8Array = await zip.generateAsync({
+      type: 'uint8array',
+      compression: 'DEFLATE',
+      compressionOptions: {
+        level: 2
+      }
+    });
+
+    console.log('compress...' + data.length + ' -> ' + uint8array.length + '(' + (uint8array.length / data.length) + ')');
+    return uint8array;
+  }
+
+  private async decompressAsync(data: Buffer | ArrayBuffer | Uint8Array): Promise<Uint8Array> {
+    let zip = new JSZip();
+    try {
+      zip = await zip.loadAsync(data);
+    } catch (reason) {
+      console.warn(reason);
+      return null;
+    }
+    let uint8array: Uint8Array = await new Promise<Uint8Array>(
+      async (resolve, reject) => {
+        zip.forEach(async (relativePath, zipEntry) => {
+          try {
+            uint8array = await zipEntry.async('uint8array');
+            resolve(uint8array);
+            console.log('decompress...', uint8array);
+          } catch (reason) {
+            console.warn(reason);
+          }
+        });
+      });
+    return uint8array;
   }
 }
