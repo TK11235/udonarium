@@ -110,6 +110,7 @@ export class SkyWayConnection implements Connection {
   }
 
   send(data: any, sendTo?: string) {
+    if (this.connections.length < 1) return;
     let container: DataContainer = {
       data: MessagePack.encode(data),
       peers: this._peerIds.concat(),
