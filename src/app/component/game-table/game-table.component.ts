@@ -77,7 +77,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get cards(): Card[] { return ObjectStore.instance.getObjects<Card>(Card).filter((obj) => { return obj.location.name === 'table' }); }
   get cardStacks(): CardStack[] { return ObjectStore.instance.getObjects<CardStack>(CardStack).filter((obj) => { return obj.location.name === 'table' }); }
   get terrains(): Terrain[] { return ObjectStore.instance.getObjects<Terrain>(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
-  get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects<PeerCursor>(PeerCursor).filter((obj) => { return obj !== PeerCursor.myCursor }); }
+  get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects<PeerCursor>(PeerCursor); }
 
   constructor(
     private ngZone: NgZone,
