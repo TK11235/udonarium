@@ -20,6 +20,7 @@ import { PanelOption, PanelService } from '../../service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { GameTableSettingComponent } from '../game-table-setting/game-table-setting.component';
+import { TextNote } from '../../class/text-note';
 
 @Component({
   selector: 'game-table',
@@ -78,6 +79,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get cardStacks(): CardStack[] { return ObjectStore.instance.getObjects<CardStack>(CardStack).filter((obj) => { return obj.location.name === 'table' }); }
   get terrains(): Terrain[] { return ObjectStore.instance.getObjects<Terrain>(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
   get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects<PeerCursor>(PeerCursor); }
+  get textNotes(): TextNote[] { return ObjectStore.instance.getObjects<TextNote>(TextNote); }
 
   constructor(
     private ngZone: NgZone,
@@ -300,6 +302,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         { name: 'マップマスクを作成', action: () => { this.createGameTableMask(potison); } },
         { name: '地形を作成', action: () => { this.createTerrain(potison); } },
         {
+          name: '共有メモを作成', action: () => {
+            this.createTextNote(potison);
+          }
+        },
+        {
           name: 'テーブル設定', action: () => {
             this.modalService.open(GameTableSettingComponent);
           }
@@ -357,6 +364,15 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     tableMask.location.x = pointer.x - 50;
     tableMask.location.y = pointer.y - 50;
     tableMask.update();
+  }
+
+  createTextNote(potison: PointerCoordinate) {
+    console.log('createTextNote');
+    let textNote = TextNote.create('共有メモ', 'テキストを入力してください', 5, 4, 3);
+
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    textNote.location.x = pointer.x - 100;
+    textNote.location.y = pointer.y;
   }
 
   setTransform(transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number) {
@@ -577,5 +593,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 13 * 50;
     testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
+
+    let textNote = TextNote.create('サンプルメモ', 'これはサンプルです', 5, 4, 3, 'sample_memo');
   }
 }

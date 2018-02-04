@@ -1,0 +1,19 @@
+<div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging}" [style.width.px]="width * gridSize"
+  [style.height.px]="0" [ngStyle]="{'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px) translateZ(' + posZ + 'px)'}">
+  <div class="component-content is-3d" 
+    [ngStyle]="{'transform': 'rotateZ(' + rotate +'deg)'}" 
+    [ngClass]="{'is-grab': (!isDragging), 'is-grabbing': (isDragging), 'is-transition': !isDragging, 'is-pointer-events-none': isDragging || isPointerDragging, 'is-pointer-events-auto': !isDragging && !isPointerDragging}">
+    <div class="upright-transform is-3d is-bg-color is-bg-texture"
+      [style.background-image]="'url(' + imageFile?.url + ')' | safe: 'style'" [style.width.px]="width * gridSize" [style.min-height.px]="height * gridSize">
+      <div *ngIf="title.length" class="title is-black-background is-pointer-events-none">{{title}}</div>
+      <textarea (input)="calcFitHeight();" #textArea [ngClass]="{'is-pointer-events-none': !isSelected, 'is-pointer-events-auto': isSelected, 'is-outline-text': !isSelected}"
+        [style.font-size.px]="fontSize + 9" [(ngModel)]="text" spellcheck="false"></textarea>
+    </div>
+    <div class="rotate-grab of-left-top" (mousedown)="onRotateMouseDown($event)">
+      <i class="material-icons">autorenew</i>
+    </div>
+    <div class="rotate-grab of-right-top" (mousedown)="onRotateMouseDown($event)">
+      <i class="material-icons">autorenew</i>
+    </div>
+  </div>
+</div>

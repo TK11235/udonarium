@@ -5,6 +5,9 @@
       <terrain class="is-3d" *ngFor="let terrain of terrains" [terrain]="terrain"></terrain>
       <game-table-mask class="is-3d" *ngFor="let mask of gameTableMasks" [gameTableMask]="mask"></game-table-mask>
       <div class="is-3d">
+        <text-note class="is-3d" *ngFor="let textNote of textNotes" [textNote]="textNote" [ngStyle]="{'z-index' : textNote.zindex}"></text-note>
+      </div>
+      <div class="is-3d">
         <card-stack class="is-3d" *ngFor="let cardStack of cardStacks" [cardStack]="cardStack" [ngStyle]="{'z-index' : cardStack.zindex}"></card-stack>
         <card class="is-3d" *ngFor="let card of cards" [card]="card" [ngStyle]="{'z-index' : card.zindex}"></card>
       </div>
