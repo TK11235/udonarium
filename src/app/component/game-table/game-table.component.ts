@@ -167,8 +167,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.buttonCode = e.button;
 
-    this.removeSelectionRanges();
-    this.removeFocus();
+    if (!document.activeElement.contains(e.target)) {
+      this.removeSelectionRanges();
+      this.removeFocus();
+    }
     this.addMouseEventListeners();
   }
 
@@ -282,7 +284,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostListener('contextmenu', ['$event'])
-  onContextMenu(e: Event) {
+  onContextMenu(e: any) {
+    if (!document.activeElement.contains(this.gameObjects.nativeElement)) return;
     console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
