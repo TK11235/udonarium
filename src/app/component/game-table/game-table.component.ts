@@ -593,7 +593,5 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 13 * 50;
     testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
-
-    let textNote = TextNote.create('サンプルメモ', 'これはサンプルです', 5, 4, 3, 'sample_memo');
   }
 }
