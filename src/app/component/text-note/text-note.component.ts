@@ -161,9 +161,10 @@ export class TextNoteComponent implements OnInit {
       this.pointerPrev.y = this.pointer.y;
       this.pointerPrev.z = this.pointer.z;
 
-      let widthSize: number = this.gridSize * this.width;
+      let widthSize: number = 0;
+      let heightSize: number = 0;
       this.posX = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(widthSize / 2) * (1.0 - this.delta));
-      this.posY = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(0 / 2) * (1.0 - this.delta));
+      this.posY = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(heightSize / 2) * (1.0 - this.delta));
       this.posZ = this.pointer.z;
     } else {
       this.pointer.z = this.posZ;
@@ -187,14 +188,14 @@ export class TextNoteComponent implements OnInit {
     this.isAllowedToOpenContextMenu = true;
     e.stopPropagation();
     console.log('onRotateMouseDown!!!!');
-    this.pointer = this.calcLocalCoordinate(e, this.pointer);
+    this.pointer = PointerDeviceService.convertLocalToLocal(this.pointerDeviceService.pointers[0], this.rootElementRef.nativeElement, this.dragAreaElement);
     this.startRotate = this.calcRotate(this.pointer, this.rotate);
     this.addRotateEventListeners();
   }
 
   onRotateMouseMove(e: MouseEvent) {
     e.stopPropagation();
-    this.pointer = this.calcLocalCoordinate(e, this.pointer);
+    this.pointer = PointerDeviceService.convertLocalToLocal(this.pointerDeviceService.pointers[0], this.rootElementRef.nativeElement, this.dragAreaElement);
     let angle = this.calcRotate(this.pointer, this.startRotate);
     if (this.rotate !== angle) {
       this.isAllowedToOpenContextMenu = false;
@@ -289,11 +290,8 @@ export class TextNoteComponent implements OnInit {
   }
 
   private calcRotate(pointer: PointerCoordinate, startRotate: number): number {
-    let div: HTMLDivElement = this.rootElementRef.nativeElement;
-    let centerX = div.clientWidth / 2 + this.posX;
-    let centerY = div.clientHeight / 2 + this.posY;
-    let x = pointer.x - centerX;
-    let y = pointer.y - centerY;
+    let x = pointer.x - this.posX;
+    let y = pointer.y - this.posY;
     let rad = Math.atan2(y, x);
     return (rad * 180 / Math.PI) - startRotate;
   }

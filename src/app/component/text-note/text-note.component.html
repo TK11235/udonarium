@@ -1,7 +1,8 @@
-<div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging}" [style.width.px]="width * gridSize"
-  [style.height.px]="0" [ngStyle]="{'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px) translateZ(' + posZ + 'px)'}">
-  <div class="component-content is-3d" 
-    [ngStyle]="{'transform': 'rotateZ(' + rotate +'deg)'}" 
+<div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging}"
+  [ngStyle]="{'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px) translateZ(' + posZ + 'px)'}">
+  <div class="component-content is-3d"
+    [style.width.px]="width * gridSize"
+    [ngStyle]="{'transform': 'translateX(-50%) rotateZ(' + rotate +'deg)'}" 
     [ngClass]="{'is-grab': (!isDragging), 'is-grabbing': (isDragging), 'is-transition': !isDragging, 'is-pointer-events-none': isDragging || isPointerDragging, 'is-pointer-events-auto': !isDragging && !isPointerDragging}">
     <div class="upright-transform is-3d is-bg-color is-bg-texture"
       [style.background-image]="'url(' + imageFile?.url + ')' | safe: 'style'" [style.width.px]="width * gridSize" [style.min-height.px]="height * gridSize">
