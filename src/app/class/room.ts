@@ -10,6 +10,7 @@ import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
 import { CardStack } from './card-stack';
 import { Card } from './card';
+import { TextNote } from './text-note';
 
 @SyncObject('room')
 export class Room extends GameObject implements InnerXml {
@@ -21,6 +22,7 @@ export class Room extends GameObject implements InnerXml {
     let objects: GameObject[] = [];
     objects = objects.concat(ObjectStore.instance.getObjects(GameTable));
     objects = objects.concat(ObjectStore.instance.getObjects(GameCharacter));
+    objects = objects.concat(ObjectStore.instance.getObjects(TextNote));
     objects = objects.concat(ObjectStore.instance.getObjects(CardStack));
     objects = objects.concat(ObjectStore.instance.getObjects(Card));
     for (let object of objects) {
@@ -35,6 +37,7 @@ export class Room extends GameObject implements InnerXml {
     objects = objects.concat(ObjectStore.instance.getObjects(GameTableMask));
     objects = objects.concat(ObjectStore.instance.getObjects(Terrain));
     objects = objects.concat(ObjectStore.instance.getObjects(GameCharacter));
+    objects = objects.concat(ObjectStore.instance.getObjects(TextNote));
     objects = objects.concat(ObjectStore.instance.getObjects(CardStack));
     objects = objects.concat(ObjectStore.instance.getObjects(Card));
     for (let object of objects) {
