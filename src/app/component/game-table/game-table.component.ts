@@ -371,7 +371,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let textNote = TextNote.create('共有メモ', 'テキストを入力してください', 5, 4, 3);
 
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    textNote.location.x = pointer.x - 100;
+    textNote.location.x = pointer.x;
     textNote.location.y = pointer.y;
   }
 
