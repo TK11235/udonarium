@@ -291,7 +291,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
-    this.removeMouseEventListeners();
 
     if (this.isAllowedToOpenContextMenu) {
       this.isAllowedToOpenContextMenu = false;
