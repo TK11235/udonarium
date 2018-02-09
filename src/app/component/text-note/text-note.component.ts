@@ -117,6 +117,13 @@ export class TextNoteComponent implements OnInit {
     e.preventDefault();
     this.textNote.toTopmost();
     this.isAllowedToOpenContextMenu = true;
+
+    // TODO:もっと良い方法考える
+    if (e.button === 2) {
+      EventSystem.trigger('DRAG_LOCKED_OBJECT', {});
+      return;
+    }
+
     this.addMouseEventListeners();
 
     this.startDragPoint = this.pointerDeviceService.pointers[0];
