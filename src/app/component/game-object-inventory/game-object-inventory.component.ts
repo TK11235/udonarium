@@ -13,6 +13,7 @@ import { GameTableMask } from '../../class/game-table-mask';
 import { Network, EventSystem } from '../../class/core/system/system';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { GameObject } from '../../class/core/synchronize-object/game-object';
+import { DataElement } from '../../class/data-element';
 
 @Component({
   selector: 'game-object-inventory',
@@ -41,7 +42,8 @@ export class GameObjectInventoryComponent {
     this.panelService.title = 'インベントリ';
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) this.changeDetector.markForCheck();
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (object instanceof TabletopObject || object instanceof DataElement) this.changeDetector.markForCheck();
       })
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         if (ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) {
