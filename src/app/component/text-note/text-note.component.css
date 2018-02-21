@@ -98,7 +98,7 @@ textarea {
 }
 
 textarea:focus {
-  background: #FFFFFFC9;
+  background: rgba(255, 255, 255, 0.75);
 }
 
 .is-black-background {
