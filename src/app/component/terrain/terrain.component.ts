@@ -124,8 +124,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pointerStart.y = this.pointerPrev.y = this.pointer.y;
     this.pointerStart.x = this.pointerPrev.x = this.pointer.x;
 
-    this.addMouseEventListeners();
-
     console.log('onSelectedGameCharacter', this.terrain.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.terrain.identifier, className: 'GameCharacter' });
 
@@ -134,6 +132,8 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO:もっと良い方法考える
     if (this.isLocked) {
       EventSystem.trigger('DRAG_LOCKED_OBJECT', {});
+    } else {
+      this.addMouseEventListeners();
     }
   }
 

@@ -105,8 +105,6 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     this.pointerStart.y = this.pointerPrev.y = this.pointer.y;
     this.pointerStart.x = this.pointerPrev.x = this.pointer.x;
 
-    this.addMouseEventListeners();
-
     console.log('onSelectedGameCharacter', this.gameTableMask.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.gameTableMask.identifier, className: 'GameCharacter' });
 
@@ -117,6 +115,8 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     // TODO:もっと良い方法考える
     if (this.isLock) {
       EventSystem.trigger('DRAG_LOCKED_OBJECT', {});
+    } else {
+      this.addMouseEventListeners();
     }
   }
 
