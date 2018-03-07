@@ -93,7 +93,8 @@ MESSAGETEXT
     sixCount = countTargetDice(diceList, 6)
     
     gloryDiceCount = (oneCount / 2) + (sixCount / 2)
-    return gloryDiceCount
+    #return gloryDiceCount
+    return gloryDiceCount.floor # Rubyでは常に整数が返るが、JSだと実数になる可能性がある
   end
   
   
