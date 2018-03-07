@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$getConductResult', '$nil?', '$getResistResult', '$getReactionResult', '$getCorruptionResult', '$getTableResult', '$===', '$to_i', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$/', '$count', '$select', '$rindex', '$<=', '$each_with_index', '$to_s', '$[]=', '$[]', '$upcase', '$getReactionTable', '$get_table_by_d66', '$<', '$getReactionTextFull', '$index', '$getReactionTex', '$-', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$getConductResult', '$nil?', '$getResistResult', '$getReactionResult', '$getCorruptionResult', '$getTableResult', '$===', '$to_i', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$/', '$floor', '$count', '$select', '$rindex', '$<=', '$each_with_index', '$to_s', '$[]=', '$[]', '$upcase', '$getReactionTable', '$get_table_by_d66', '$<', '$getReactionTextFull', '$index', '$getReactionTex', '$-', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$setPrefixes', '$keys']);
   return (function($base, $super) {
     function $Dracurouge_Korean(){};
     var self = $Dracurouge_Korean = $klass($base, $super, 'Dracurouge_Korean', $Dracurouge_Korean);
@@ -134,7 +134,7 @@ if (i == null) i = nil;
       oneCount = self.$countTargetDice(diceList, 1);
       sixCount = self.$countTargetDice(diceList, 6);
       gloryDiceCount = $rb_plus(($rb_divide(oneCount, 2)), ($rb_divide(sixCount, 2)));
-      return gloryDiceCount;
+      return gloryDiceCount.$floor();
     }, TMP_10.$$arity = 1);
 
     Opal.defn(self, '$countTargetDice', TMP_12 = function $$countTargetDice(diceList, target) {
