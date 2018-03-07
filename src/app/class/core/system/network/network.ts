@@ -25,7 +25,7 @@ export class Network {
   private queue: any[] = [];
   private sendInterval: NodeJS.Timer = null;
   private sendCallback = () => { this.sendQueue(); }
-  private callbackBeforeunload: any = (e) => { this.close(); };
+  private callbackUnload: any = (e) => { this.close(); };
 
   private constructor() {
     console.log('Network ready...');
@@ -43,13 +43,13 @@ export class Network {
     this.connection = this.initializeConnection();
     this.connection.open.apply(this.connection, args);
 
-    window.addEventListener('beforeunload', this.callbackBeforeunload, false);
+    window.addEventListener('unload', this.callbackUnload, false);
   }
 
   private close() {
     if (this.connection) this.connection.close();
     this.connection = null;
-    window.removeEventListener('beforeunload', this.callbackBeforeunload, false);
+    window.removeEventListener('unload', this.callbackUnload, false);
     console.log('Network close...');
   }
 
