@@ -108,6 +108,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           let pointer = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.gameObjects.nativeElement);
           gameObject.location.x = pointer.x - 25;
           gameObject.location.y = pointer.y - 25;
+          this.placeToTabletop(gameObject);
           gameObject.update();
         }
       }).on('DRAG_LOCKED_OBJECT', event => {
@@ -316,6 +317,18 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       ], this.gameTableObject.name);
+    }
+  }
+
+  private placeToTabletop(gameObject: TabletopObject) {
+    switch (gameObject.aliasName) {
+      case GameTableMask.aliasName:
+      case Terrain.aliasName:
+        gameObject.setLocation(this.gameTableObject.identifier);
+        break;
+      default: 'table'
+        gameObject.setLocation('table');
+        break;
     }
   }
 
