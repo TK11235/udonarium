@@ -88,7 +88,7 @@ MESSAGETEXT
     sixCount = countTargetDice(diceList, 6)
 
     #gloryDiceCount = (oneCount / 2) + (sixCount / 2) 
-    gloryDiceCount = (oneCount / 2).floor + (sixCount / 2).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+    gloryDiceCount = ((oneCount / 2).floor) + ((sixCount / 2).floor) # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     return gloryDiceCount
   end
 
