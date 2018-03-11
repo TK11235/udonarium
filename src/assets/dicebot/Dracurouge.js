@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$/', '$floor', '$count', '$select', '$rindex', '$<=', '$nil?', '$each_with_index', '$to_s', '$[]=', '$[]', '$getReactionText', '$getReactionInfoBlood', '$getReactionInfoStyle', '$getHeresyReactionInfoBlood', '$getHeresyReactionInfoStyle', '$checkTypeText', '$<', '$-', '$*', '$getReactionTextFull', '$find', '$getReactionTex', '$include?', '$each', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$get_table_by_d66', '$getSourceSceneTable', '$getTitleD66TableResult', '$getPassionTable', '$getConfermentTable', '$getYearTableResult', '$getConfermentAfterTable', '$getElderPastTable', '$getOriginalSinTable', '$getRecentStateTable', '$getPeacefulPastTable', '$getYear', '$gsub', '$getD6xResult', '$length', '$parren_killer', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$floor', '$/', '$count', '$select', '$rindex', '$<=', '$nil?', '$each_with_index', '$to_s', '$[]=', '$[]', '$getReactionText', '$getReactionInfoBlood', '$getReactionInfoStyle', '$getHeresyReactionInfoBlood', '$getHeresyReactionInfoStyle', '$checkTypeText', '$<', '$-', '$*', '$getReactionTextFull', '$find', '$getReactionTex', '$include?', '$each', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$get_table_by_d66', '$getSourceSceneTable', '$getTitleD66TableResult', '$getPassionTable', '$getConfermentTable', '$getYearTableResult', '$getConfermentAfterTable', '$getElderPastTable', '$getOriginalSinTable', '$getRecentStateTable', '$getPeacefulPastTable', '$getYear', '$gsub', '$getD6xResult', '$length', '$parren_killer', '$setPrefixes', '$keys']);
   return (function($base, $super) {
     function $Dracurouge(){};
     var self = $Dracurouge = $klass($base, $super, 'Dracurouge', $Dracurouge);
@@ -111,8 +111,8 @@ if (i == null) i = nil;
 
       oneCount = self.$countTargetDice(diceList, 1);
       sixCount = self.$countTargetDice(diceList, 6);
-      gloryDiceCount = $rb_plus(($rb_divide(oneCount, 2)), ($rb_divide(sixCount, 2)));
-      return gloryDiceCount.$floor();
+      gloryDiceCount = $rb_plus((($rb_divide(oneCount, 2)).$floor()), (($rb_divide(sixCount, 2)).$floor()));
+      return gloryDiceCount;
     }, TMP_10.$$arity = 1);
 
     Opal.defn(self, '$countTargetDice', TMP_12 = function $$countTargetDice(diceList, target) {
