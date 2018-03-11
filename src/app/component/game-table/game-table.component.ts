@@ -326,7 +326,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       case Terrain.aliasName:
         gameObject.setLocation(this.gameTableObject.identifier);
         break;
-      default: 'table'
+      default:
         gameObject.setLocation('table');
         break;
     }
