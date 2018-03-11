@@ -13,9 +13,14 @@
       </select>
     </div>
     <div class="table-cell table-cell_solid">
-      <div class="hidden-spacer" style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{gameDataElement.name}}</div>
-      <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 0.9rem;" size="1" (change)="gameDataElement.update()"
-        [(ngModel)]="gameDataElement.name" placeholder="Value" />
+      <ng-container *ngIf="isTagLocked">
+        <div style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{gameDataElement.name}}</div>
+      </ng-container>
+      <ng-container *ngIf="!isTagLocked">
+          <div class="hidden-spacer" style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{gameDataElement.name}}</div>
+          <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 0.9rem;" size="1" (change)="gameDataElement.update()"
+            [(ngModel)]="gameDataElement.name" placeholder="Value" />
+        </ng-container>
     </div>
     <div class="table-cell">
       <ng-container [ngSwitch]="gameDataElement.attributes['type']">
@@ -52,12 +57,17 @@
     <div class="table-cell table-cell_inner-table" style="padding:0; width:0;"></div>
     <div class="table-cell_inner-table">
       <div class="table-cell_inner-table-title">
-        <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 1.0rem; font-weight: bold;" size="1"
-          (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.name" placeholder="Value" />
+        <ng-container *ngIf="isTagLocked">
+          <div style="padding: 2px; font-family: Cambria, Georgia; font-size: 1.0rem; font-weight: bold;">{{gameDataElement.name}}</div>
+        </ng-container>
+        <ng-container *ngIf="!isTagLocked">
+          <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 1.0rem; font-weight: bold;" size="1"
+           (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.name" placeholder="Value" />
+        </ng-container>
       </div>
       <div class="table" *ngIf="0 < gameDataElement.children.length">
         <div game-data-element class="table-row" *ngFor="let childElement of gameDataElement.children" [gameDataElement]="childElement"
-          [isEdit]="isEdit"></div>
+          [isEdit]="isEdit" [isTagLocked]="isTagLocked"></div>
       </div>
     </div>
   </ng-container>

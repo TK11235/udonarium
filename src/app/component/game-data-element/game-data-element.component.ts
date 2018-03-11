@@ -18,6 +18,8 @@ import { GameObject } from '../../class/core/synchronize-object/game-object';
 export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() gameDataElement: DataElement = null;
   @Input() isEdit: boolean = false;
+  @Input() isTagLocked: boolean = false;
+  @Input() isValueLocked: boolean = false;
   // gameDataElement.currentValueだと遅い　何とかする
 
   constructor(
