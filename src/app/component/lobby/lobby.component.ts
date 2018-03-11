@@ -49,6 +49,7 @@ export class LobbyComponent implements OnInit {
       .on('OTHER_PEERS', event => {
         this.changeTitle();
       });
+      this.reload();
   }
 
   private changeTitle() {
