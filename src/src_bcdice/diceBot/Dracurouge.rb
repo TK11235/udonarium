@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 
 class Dracurouge < DiceBot
-  
   def initialize
     super
     @d66Type = 1
   end
-  
+
   def gameName
     'ドラクルージュ'
   end
-  
+
   def gameType
     "Dracurouge"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・行い判定（DRx+y）
@@ -33,80 +32,76 @@ class Dracurouge < DiceBot
 　　　　A：アヴァローム　N：ノスフェラス、G：ゲイズヴァルト、K：カインシルト
 　道　F：領主、G：近衛、R：遍歴、W：賢者、J：狩人、N：夜獣
 　　　E：将軍、B：僧正、H：空駆、K：船長、L：寵童、V：仲立、U：技師、D：博士
-　例）RT（一括表示）、RTDF（ドラクの領主）、RTAL（アヴァロームの寵童）
+　　　S：星読、G2：後見
+　例）RT（一括表示）、RTDF（ドラクの領主）、RTAG2（アヴァロームの後見人）
 ・異端の反応表（HRTxy）x：血統、y：道　xy省略で一括表示
 　血統　L：異端卿、V：ヴルコラク、N：ナハツェーラ、K：カルンシュタイン
 　　　　G：グリマルキン、S：ストリガ、M：メリュジーヌ、F：フォーン
-　　　　H：ホムンクルス、E：エナメルム
+　　　　H：ホムンクルス、E：エナメルム、S2：サングィナリエ、A：アールヴ
+　　　　V2：ヴィーヴル、L2：ルーガルー、A2：アルラウネ、F2：フリッガ
 　道　W：野伏、N：流浪、S：密使、H：魔女、F：剣士、X：検体
-　例）HRT（一括表示）、HRTVW（ヴルコラクの野伏）、HRTHX（ホムンクルスの検体）
+　例）HRT（一括表示）、HRTVW（ヴルコラクの野伏）、HRTF2X（フリッガの検体）
 ・D66ダイスあり
 MESSAGETEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     debug('rollDiceCommand')
-    
+
     # get～DiceCommandResultという名前のメソッドを集めて実行、
     # 結果がnil以外の場合それを返して終了。
     return analyzeDiceCommandResultMethod(command)
   end
-  
-  
+
   def getConductDiceCommandResult(command)
     return nil unless /^DR(\d*)(\+(\d+))?$/ === command
-    
+
     diceCount = $1.to_i
     diceCount = 4 if diceCount == 0
     thirstyPoint = $3.to_i
-    
+
     diceList = rollDiceList(diceCount)
-    
+
     gloryDiceCount = getGloryDiceCount(diceList)
     gloryDiceCount.times{ diceList << 10 }
-    
+
     diceList, calculationProcess = getThirstyAddedResult(diceList, thirstyPoint)
     thirstyPointMarker = (thirstyPoint == 0 ? "" : "+#{thirstyPoint}")
-    
+
     result = "(#{command}) ＞ #{diceCount}D6#{thirstyPointMarker} ＞ "
     result += "[ #{calculationProcess} ] ＞ " unless calculationProcess.empty?
     result += "[ #{diceList.join(', ')} ]"
     return result
   end
-  
-  
+
   def rollDiceList(diceCount)
     _, str = roll(diceCount, 6)
     diceList = str.split(/,/).collect{|i|i.to_i}.sort
-    
+
     return diceList
   end
-  
-  
+
   def getGloryDiceCount(diceList)
     oneCount = countTargetDice(diceList, 1)
     sixCount = countTargetDice(diceList, 6)
-    
-    gloryDiceCount = (oneCount / 2) + (sixCount / 2)
-    #return gloryDiceCount
-    return gloryDiceCount.floor # Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+
+    #gloryDiceCount = (oneCount / 2) + (sixCount / 2) 
+    gloryDiceCount = (oneCount / 2).floor + (sixCount / 2).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+    return gloryDiceCount
   end
-  
-  
+
   def countTargetDice(diceList, target)
     diceList.select{|i|i == target}.count
   end
-  
-  
+
   def getThirstyAddedResult(diceList, thirstyPoint)
-    return diceList, '' if thirstyPoint == 0 
-    
+    return diceList, '' if thirstyPoint == 0
+
     targetIndex = diceList.rindex{|i| i <= 6}
     return diceList, '' if targetIndex.nil?
-    
+
     textList = []
-    
+
     diceList.each_with_index do |item, index|
       if targetIndex == index
         textList << "#{item}+#{thirstyPoint}"
@@ -114,109 +109,100 @@ MESSAGETEXT
         textList << item.to_s
       end
     end
-    
+
     diceList[targetIndex] += thirstyPoint
-    
+
     return diceList, textList.join(', ')
   end
-  
-  
-  
+
   def getResistDiceCommandResult(command)
-    return nil unless /^DRR(\d+)$/ === command 
-    
+    return nil unless /^DRR(\d+)$/ === command
+
     diceCount = $1.to_i
     diceCount = 4 if diceCount == 0
-    
+
     diceList = rollDiceList(diceCount)
-    
+
     result = "(#{command}) ＞ #{diceCount}D6 ＞ [ #{diceList.join(', ')} ]"
     return result
   end
-  
-  
-  
+
   def getReactionDiceCommandResult(command)
-    return nil unless /^RT((\w)(\w))?/ === command
+    return nil unless /^RT((\w\d*)(\w\d*))?/ === command
     typeText1 = $2
     typeText2 = $3
-    
+
     name = "反応表"
-    
+
     return getReactionText(name, typeText1, typeText2, getReactionInfoBlood, getReactionInfoStyle)
   end
-  
-  
+
   def getHeresyReactionDiceCommandResult(command)
-    return nil unless /^HRT((\w)(\w))?/ === command
+    return nil unless /^HRT((\w\d*)(\w\d*))?/ === command
     typeText1 = $2
     typeText2 = $3
-    
+
     name = "異端の反応表"
-    
+
     return getReactionText(name, typeText1, typeText2, getHeresyReactionInfoBlood, getHeresyReactionInfoStyle)
   end
-  
-  
+
   def getReactionText(name, typeText1, typeText2, infos1, infos2)
-    
+
     return nil unless checkTypeText(typeText1, infos1)
     return nil unless checkTypeText(typeText2, infos2)
-    
+
     ten_value, = roll(1, 6)
     one_value, = roll(1, 6)
     number = "#{ten_value}#{one_value}"
-    
+
     isBefore = (ten_value < 4 )
     infos = isBefore ? infos1 : infos2
 
     typeText = (isBefore ? typeText1 : typeText2)
-    
+
     index = (one_value - 1) + (isBefore ? (ten_value - 1) : (ten_value - 4)) * 6
     debug("index", index)
-    
+
     resultText = ''
-    if typeText.nil? 
+    if typeText.nil?
       resultText = getReactionTextFull(infos, index)
     else
       info = infos.find{|i| i[:type] == typeText }
       return nil if info.nil?
-      
+
       resultText = getReactionTex(info, index)
     end
-    
+
     return "#{name}(#{number}) ＞ #{resultText}"
   end
-  
-  
+
   def checkTypeText(typeText, infos)
     return true if typeText.nil?
-    
+
     keys = infos.collect{|i| i[:type] }
     return keys.include?(typeText)
   end
-  
-  
+
   def getReactionTextFull(infos, index)
     resultTexts = []
-    
+
     infos.each do |info|
       resultTexts << getReactionTex(info, index)
     end
-    
+
     return resultTexts.join('／')
   end
-  
+
   def getReactionTex(info, index)
     typeName = info[:name]
     text = info[:table][index]
-    
+
     return "#{typeName}：#{text}"
   end
-  
-  
+
   def getReactionInfoBlood
-    infos = 
+    infos =
       [
        { :type => "D",
          :name => "ドラク",
@@ -397,14 +383,14 @@ MESSAGETEXT
 }},
 
       ]
-    
+
     return infos
   end
-  
+
   def getReactionInfoStyle
     infos =
       [
-       { :type => "F", 
+       { :type => "F",
          :name => "領主",
          :table => %w{
 相手の目を覗き心を探る
@@ -624,7 +610,7 @@ MESSAGETEXT
 異郷の様々な情景を具現化して見せる
 遥か遠い奇妙な島や海域について語る
 }},
-      
+
        { :type => "L",
          :name => "寵童",
          :table => %w{
@@ -713,14 +699,58 @@ MESSAGETEXT
 誰かに研究への協力を頼みこむ
 己なりに知的な言葉で誰かを賛辞する
 }},
+       { :type => "S",
+         :name => "星読",
+         :table => %w{
+空に同調しすぎて、一瞬だけ具現化が解ける
+目を開き空を見上げたまま、仰向けに横たわる
+じっと空を見上げたまま、反応しなくなる
+星辰の変化に驚愕し、奇声をあげてしまう
+ほんやりと空の星を見上げる
+星を掴もうとするように両手を広げ、空を見上げる
+目を見開き、じっと空の星を集中して見つめる
+星辰について感覚的な言葉を並べ続ける
+ぶつぶつと星の在り方について呟き、計算する
+手近な誰かに、星辰の在り様を細かく説明する
+思わぬ星の動きを見つけ、興奮する
+誰かに、興味深い星が宿っていることに気づく
+誰かに、星の定めた運命を予言する
+誰かに、その運命を変えると宣言する
+空を指差し、その先にある星を輝かせる
+空に手を軽く振り、風を起こして雲をどかす
+空に手を軽く振り、雲で特定の星を隠す
+空に手を差し出し、紅月をさらに輝かせる
+}},
+       { :type => "G2",
+         :name => "後見",
+         :table => %w{
+己の過去に搦めて、誰かを説教してしまう
+庇護対象の未熟さに、小さな溜息をつく
+少し離れた場所から庇護対象を見守る
+昂り、出しゃばってしまいそうな己を抑える
+庇護対象の背後に、黙って控える
+誰かと語らいつつ、庇護対象を時折うかがう
+若き騎士らの様子を、まぶしそうに見守る
+己の紋章を撫でて、若き日々に思いを馳せる
+そっと、庇護対象を背後から抱き寄せる
+顎に手を当て、軽く考え込む
+会話に入り込めない者を話に誘う
+他の者らを紹介させ合い、縁を取り持つ
+誰かに、庇護対象の良き逸話を話す
+ふと、自身の騎士道の果てが近づいたと感じる
+民らの様子を、注意深く観察する
+庇護対象の成長に、、思わず顔をほころばせる
+庇護対象に、控えめな助言を与える
+庇護対象に微笑みかけ、わずかに褒める
+}},
       ]
-    
+
     return infos
 
   end
-  
+
   def getHeresyReactionInfoBlood
-    infos = 
+    infos =
       [
        { :type => "L",
          :name => "異端卿",
@@ -942,11 +972,143 @@ MESSAGETEXT
 無言でただそっと、誰かに寄り添う
 断片的に、かつての魂の記憶が蘇る
 }},
+       { :type => "S2",
+         :name => "サングィナリエ",
+         :table => %w{
+怒りや欲望で、顔が怪物のように醜くゆがむ
+衝動的に誰かを抱き寄せ、首筋に顔を寄せる
+騎士を嘲るように見て、鼻で笑う
+渇きと共に、口の端から紅い唾液が垂れる
+足元から真紅の血だまりが広がり、場を覆う
+目が光り、誰かの首筋を舐めるように見る
+騎士道の偽善性を説き、嘲笑う
+誰かの首筋を、じいっと凝視する
+胸に手を当て、深呼吸して己を落ち着かせる
+誰かの血の味を口の中に思い出し、ほくそ笑む
+切なげなため息をつき、舌なめずりする
+誰かに、慇懃無礼な皮肉めいた誉め言葉を送る
+マントをひるがえして誰かに近づくか、傍から退く
+目が異様な光を灯す、民がいるなら陶然となる
+わざとらしく衣装についた埃を払ってみせる
+高らかに、サングィナリエの血統を名乗る
+騎士の在り方について、異端の論を披露する
+余裕のある不敵な笑みを浮かべる
+}},
+       { :type => "A",
+         :name => "アールヴ",
+         :table => %w{
+平然と場の空気を無視した発言をする
+他の誰かが褒められて様子に、嫉妬する
+ハミングで、妖精の歌を口ずさむ
+好奇心も露に、誰かに話しかける
+肩にとまった小鳥と語らう
+野の花をそっと愛でて、微笑む
+誰かに、剣での立ち合いを求める
+流れるような動きで誰かに近づき、手を取る
+妖精の美酒を手元に出し、誰かの盃に注ぐ
+周囲に小さな妖精たちが、光の点となって舞う
+妖精郷の歌や舞を披露してみせる
+様々な人々との談笑にふける
+誰かに愛の言葉を捧げ、口説き始める
+誰かについて、惜しみない称賛を語る
+少し奇妙な言い回しで、誰かを賛辞する
+騎士道について、熱く語る
+己の属する妖精郷の宮廷に、誰かを誘う
+誰かの振る舞いに嘆息し、大いに感動を覚える
+}},
+       { :type => "V2",
+         :name => "ヴィーヴル",
+         :table => %w{
+周囲の者は、圧迫感と居心地の悪さを感じる
+誰かに、理不尽な我儘を言う
+つまらなさそうに他の者達の様子を眺める
+話題を断ち切り、己の目的を率直に遂げんとす
+傲慢とも取れる目で誰かを見下ろし、品定めする
+威嚇するように、腕に翼を大きく広げる
+誰かを子供扱いし、わざと挑発してからかう
+幻に包まれたように、その姿が一瞬だけ揺らぐ
+表情を変えずとも、ぞわりと龍体の色が変わる
+浮かんだまま、遠い目をする
+他の者達の絆の強さを、見定めようと観察する
+誰かに髪の手入れを求める
+各地の様々な事象について、次々と質問する
+真祖と龍と月について、滔々と語り始める
+誰かの行いを諫め、戒める
+誰かを龍の翼で包むように抱きしめ、褒める
+誰かを慈しむように撫で、いたわる
+その姿が一瞬、巨大な龍に見える
+}},
+       { :type => "L2",
+         :name => "ルーガルー",
+         :table => %w{
+巨大な狼の姿となって、警戒も露にうなる
+怒りを耐えるように、拳をきつく握りしめる
+苛立たしげに、狼の口から牙を剥きだしてうなる
+怒りを抑えるが、獣毛が逆立つ
+疲労や緊張から、獣のように呼吸が荒くなる
+疲れ、乾いた笑みを浮かべる
+周囲の些細な音に警戒し、耳を動かす
+誰かを睨みつけ、威圧する
+狼の鼻先が、ひくひくと動く
+鋭い視線を無表情で巡らせ、状況を把握する
+目を閉じ、腕を組んで、じっと立ち続ける
+1人遠く、故郷の方角へと視線を向けて佇む
+決意した顔で、正面から誰かと向かい合う
+沈痛な面持ちで空を見上げ、うなる
+自然の在り様について、言葉少なに語る
+たとえ屋内であろうと、野の風が吹く
+誰かの美しさに、思わず目を奪われる
+目を閉じて、故郷たる自然に思いを馳せる
+}},
+       { :type => "A2",
+         :name => "アルラウネ",
+         :table => %w{
+不満を漏らしたり、軽い我儘を言ったりする
+そっと誰かの耳元に何かを囁く
+己の髪に指を絡め、梳いたり弄ったりする
+感じ取った未来を口にしかけるが、やめてしまう
+1悪戯っほい、謎めいた笑みを浮かべる
+誰かに己の身をすりつけるように、絡みつく
+瞬時に予知し、落ちかけた品を受け止める
+わずかに動くごとに、周囲を花の香りが包む
+舞うような足取りで、誰かに密着するよう近づく
+煽情的な仕草をしつつ、妖しい流し目を送る
+誰かに甘えるようにもたれかかる
+誰かの運命について、断片的に口にする
+足元に妖しくも美しい花畑が具現化される
+具現化した蔓と葉が、その肢体に絡みつく
+周囲に無数の花弁を具現化しつつ、舞う
+より華麗で美しい衣装をまとう
+未来について、曖昧な予言を口にする
+己に咲く花を摘み、誰かに手渡す（瞬時に再生）
+}},
+       { :type => "F2",
+         :name => "フリッガ",
+         :table => %w{
+その影が巨大な蜘蛛となって、蠢く
+他の騎士や異端にとにかく謝る
+居心地悪そうに、隅にいる
+ほがらかな笑顔だが、目は笑っていない
+恋の話題に、自虐的な笑みしか浮かばない
+己に口い聞かせるように、独り言を言う
+会話に入ろうとするが、やめてしまう
+申し訳なさそうな顔で、うつむいてしまう
+無意識に、己の腹をいとおしげに撫でる
+誰かの腕や袖をしっかりと掴んで、離さない
+誰かを思いつめた目で、じっと見つめている
+目を潤ませ、熱い溜息をつく
+他の騎士に手を伸ばしかけて、止める
+具現化した糸を、誰かの指とつなぐ
+困ったような、泣き笑いの微笑みを浮かべる
+誰かにびったりと密着して離れない
+そっと相手の唇に指を当て、言葉を封じる
+誰かに、狂気の如き恋心を抱き始める
+}},
       ]
-    
+
     return infos
   end
-  
+
   def getHeresyReactionInfoStyle
     infos =
       [
@@ -1083,20 +1245,19 @@ MESSAGETEXT
 誰かに、己の苦しみからの助けを求める
 }},
       ]
-    
+
     return infos
 
   end
-  
-  
+
   def getCorruptionDiceCommandResult(command)
-    
+
     return nil unless /^CT(\d+)$/ === command
-    
+
     modify = $1.to_i
-    
+
     name = "堕落表"
-    table = 
+    table =
     [
      [ 0, "あなたは完全に堕落した。この時点であなたは［壁の華］となり、人狼、黒山羊、夜獣卿のいずれかとなる。その［幕］の終了後にセッションから退場する。247ページの「消滅・完全なる堕落」も参照すること。"],
      [ 1, "あなたの肉体は精神にふさわしい変異を起こす……。「堕落の兆し表」を2回振って特徴を得る。このセッション終了後、【道】を「夜獣」にすること。（既に「夜獣」なら【道】は変わらない）"],
@@ -1107,25 +1268,25 @@ MESSAGETEXT
      [ 8, "荒ぶる心を鎮める……幸いにも何も起きなかった。"],
      [99, "あなたは荒れ狂う感情を抑え、己を律した！　【渇き】が1減少する！"],
     ]
-    
+
     number, number_text = roll(2, 6)
     index = (number - modify)
     debug('index', index)
     text = get_table_by_number(index, table)
-    
+
     return "2D6[#{number_text}]-#{modify} ＞  #{name}(#{index}) ＞ #{text}"
   end
-  
+
   def getTableDiceCommandResult(command)
-  
+
     info = @@tables[command]
     return nil if info.nil?
-    
+
     name = info[:name]
     type = info[:type]
     table = info[:table]
-    
-    text, number = 
+
+    text, number =
       case type
       when '2D6'
         get_table_by_2d6(table)
@@ -1136,153 +1297,136 @@ MESSAGETEXT
       else
         nil
       end
-    
+
     return nil if( text.nil? )
-    
+
     return "#{name}(#{number}) ＞ #{text}"
   end
-  
-  
+
   def getSourceSceneDiceCommandResult(command)
     return nil unless /^ST$/ === command
-    
+
     name = "原風景表"
     table = getSourceSceneTable
     return getTitleD66TableResult(name, table)
   end
-  
-  
+
   def getPassionDiceCommandResult(command)
     return nil unless /^PN$/ === command
-    
+
     name = "受難表"
     table = getPassionTable
     return getTitleD66TableResult(name, table)
   end
-  
-  
+
   def getTitleD66TableResult(name, table)
     debug("getTitleD66TableResult")
     item, index = get_table_by_d66(table)
     return nil if item.nil?
-    
+
     title, text, = item
-    
+
     return "#{name}(#{index}) ＞ #{title}：#{text}"
   end
-  
-  
 
   def getConfermentDiceCommandResult(command)
     return nil unless /^CO$/ === command
-    
+
     name = "叙勲表"
     table = getConfermentTable
     yearTitle = "叙勲年齢"
-    
+
     return getYearTableResult(name, table, yearTitle)
   end
-  
-  
+
   def getConfermentAfterDiceCommandResult(command)
     return nil unless /^CA$/ === command
-    
+
     name = "叙勲後表"
     table = getConfermentAfterTable
     yearTitle = "騎士歴"
-    
+
     return getYearTableResult(name, table, yearTitle)
   end
-  
-  
-    
+
   def getElderPastDiceCommandResult(command)
     return nil unless /^EP$/ === command
-    
+
     name = "遥か過去表"
     table = getElderPastTable
     yearTitle = "騎士歴"
-    
+
     return getYearTableResult(name, table, yearTitle)
   end
-  
-  
+
   def getOriginalSinDiceCommandResult(command)
     return nil unless /^OS$/ === command
-    
+
     name = "原罪表"
     table = getOriginalSinTable
     yearTitle = "外見年齢"
-    
+
     return getYearTableResult(name, table, yearTitle)
   end
-  
-  
+
   def getRecentStateDiceCommandResult(command)
     return nil unless /^RS$/ === command
-    
+
     name = "近況表"
     table = getRecentStateTable
     yearTitle = "活動年数"
-    
+
     return getYearTableResult(name, table, yearTitle)
   end
-  
-  
+
   def getPeacefulPastDiceCommandResult(command)
     return nil unless /^PP$/ === command
-    
+
     name = "平和な過去表"
     table = getPeacefulPastTable
     yearTitle = "外見年齢"
-    
+
     return getYearTableResult(name, table, yearTitle)
   end
-  
-  
-  
+
   def getYearTableResult(name, table, yearTitle)
     item, index = get_table_by_d66(table)
     return nil if item.nil?
-    
+
     title, text, yearText, = item
     year, calculateText = getYear(yearText)
-    
+
     return "#{name}(#{index}) ＞ #{title}：#{text} ＞ #{yearTitle}：#{yearText} ＞ #{calculateText} ＞ #{yearTitle}：#{year}年"
   end
-  
-  
+
   def getYear(yearText)
     text = yearText.gsub(/(\d+)D(6+)/){ getD6xResult($1.to_i, $2.length) }
     text = "(#{text})"
-    
+
     year = parren_killer( text.gsub(/×/, "*") )
     return year, text
   end
-  
-  
+
   def getD6xResult(count, dice6Count)
     total = 0
-    
+
     count.times do |i|
       number = 0
-      
+
       dice6Count.times do |i|
       number *= 10
         dice, = roll(1, 6)
         number += dice
       end
-      
+
       total += number
     end
-    
+
     return total.to_s
   end
-  
-  
-  
+
   def getSourceSceneTable
-    table = 
+    table =
       [
        ["虐待", "あの地獄のような日々で、貴卿がされてきたことを思えば……騎士となっても、人を見る目は暗い。"],
        ["野良犬の如く", "孤児だった貴卿はひたすら盗み殺し騙して。手段を問わず生き抜いた。騎士の前には罪人として突き出された。"],
@@ -1323,10 +1467,9 @@ MESSAGETEXT
       ]
     return table
   end
-  
-  
+
   def getConfermentTable
-    table = 
+    table =
       [
        ["堕落の血", "貴卿は堕落者に襲われ、その結果……騎士となった。貴卿に流れるは堕落した血なのだ。", "7+1D6×1D6"],
        ["忌まわしの血", "乱心した主は堕落の間際、公爵の許しも得ず貴卿を叙勲した。残された貴卿には……疑いの目が向けられた。", "7+1D6×1D6"],
@@ -1367,9 +1510,9 @@ MESSAGETEXT
       ]
     return table
   end
-  
+
   def getConfermentAfterTable
-    table = 
+    table =
       [
        ["滅亡", "貴卿の領地は敵に滅ぼされた。守るべき民は絶え、名誉は失われた。彼の者らを許すわけにはいかない。", "2D6×10"],
        ["冤罪", "貴卿は身に覚えのない罪を背負っている。何者かの陰謀が貴卿を絡めとり、罪を負わせたのだ。", "1D6×1D6"],
@@ -1408,12 +1551,12 @@ MESSAGETEXT
        ["高名", "数多の決闘や馬上試合で実力を示してきた。あなたは実力ある騎士として名を馳せている。", "2D6×5"],
        ["伝説", "貴卿は未だ偉業わずかなれど、その逸話は伝説の域。すでに吟遊詩人らの歌にさえ歌われている。", "1D6×1D6"],
       ]
-    
+
     return table
   end
-  
+
   def getElderPastTable
-    table = 
+    table =
       [
        ["古き罪人", "地獄が生まれるより前。誰もが忘れた牢に閉じ込められていた罪人……それが貴卿だ。幾百年を経て、ついに牢は破られた。", "1D66+1300"],
        ["地獄漏れ", "貴卿は不徳と堕落を重ね、地獄へと幽閉された……はずだ。しかし、気づけば外におり、数百年が過ぎていた……。", "1D666"],
@@ -1452,12 +1595,12 @@ MESSAGETEXT
        ["太陽竜討伐", "彼の恐るべき太陽竜討伐に参加し、華々しき活躍を飾った。その一方で貴卿は、多くの犠牲者らも目にしている。", "1D66+1300"],
        ["最初の騎士", "貴卿こそは、真祖百年の喪が明けし時、始祖その人より最初期に叙勲されたる騎士。常夜全ての歴史の生き証人だ。", "1D66+1833"],
       ]
-    
+
     return table
   end
-  
+
   def getOriginalSinTable
-    table = 
+    table =
       [
        ["虐待", "あの地獄のような日々で、御身がされてきたことを思えば……誰も彼も、常夜国すべて等しく呪うしかない。", "7+1D6×1D6"],
        ["野良犬の如く", "孤児だった御身は盗み殺し騙して。手段を問わず生き抜いた。罪人として捕まらず、逃げ延びたは天運か。", "7+1D6×1D6"],
@@ -1498,9 +1641,9 @@ MESSAGETEXT
       ]
     return table
   end
-  
+
   def getPassionTable
-    table = 
+    table =
       [
        ["地獄", "騎士らによって、御身は一度は地獄に封じられた。何とか脱出できたのは、幸運以外のなにものでもあるまい。"],
        ["暴発する殺意", "殺すつもりなどなかったのに。ふとした口論から、かっとなって……一人の民をその手で、殺めてしまった。"],
@@ -1541,10 +1684,9 @@ MESSAGETEXT
       ]
     return table
   end
-  
-  
+
   def getRecentStateTable
-    table = 
+    table =
       [
        ["悪夢", "眠りにつくたび、受難の記憶が蘇る。御身の心は晴れず、忌まわしい悪夢がつきまとい続けているのだ。", "2D6×10"],
        ["血の昂ぶり", "戦った後は体が火照り昂ぶり、どうしようもなく疼く。堕落の日は遠くない……御身には確信がある。", "1D6×1D6"],
@@ -1585,10 +1727,9 @@ MESSAGETEXT
       ]
     return table
   end
-  
-  
+
   def getPeacefulPastTable
-    table = 
+    table =
       [
        ["乱暴者", "短気で、気性が荒く、ついつい手が出て乱暴を働いてしまう。故郷での評判はあまりよくない。今はどうだろう？", "8+2D6"],
        ["孤児", "親兄弟もなく、ただ一人で知恵を働かせて生きて来た。自由だが、厳しい環境の中で御身の魂は磨かれてきたのだ。", "6+2D6"],
@@ -1629,9 +1770,7 @@ MESSAGETEXT
       ]
     return table
   end
-  
 
-  
   @@tables =
     {
     'CS' => {
@@ -1650,7 +1789,7 @@ MESSAGETEXT
 突き出した犬歯
 目に見える変化はない……
 },},
-    
+
     'ECS' => {
       :name => "拡張・堕落の兆し表",
       :type => 'D66',
@@ -1692,7 +1831,7 @@ MESSAGETEXT
 月光欲：屋根があると不快感を感じる。なるべく月光を浴びられる場所でいたい。宮廷でも庭園やバルコニーを好むだろう。
 幸運：自覚するような兆しはないようだが……己を戒めねばなるまい。貴卿は今や堕落の瀬戸際にいると自覚せよ。
 },},
-    
+
     'BT' => {
       :name => "絆内容決定表：ルージュ／ノワール",
       :type => '1D6',
@@ -1705,6 +1844,6 @@ MESSAGETEXT
 主(Obey)　相手を主と仰ぎ、忠誠を誓う。／仇(Vendetta)　相手を怨み、仇と狙う。
 },},
   }
-  
+
   setPrefixes(['DR.*', 'RT.*', 'HRT.*', 'CT\d+', "ST", "CO", "CA", "EP", "OS", "PN", "RS", "PP"] + @@tables.keys)
 end
