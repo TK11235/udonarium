@@ -467,5 +467,81 @@ class DiceBot
     return nil
   end
   
+
+  def get_table_by_nDx_extratable(table, count, diceType)
+    number, diceText = roll(count, diceType)
+    text = getTableValue(table[number - count])
+    return text, number, diceText
+  end
+  
+  def getTableCommandResult(command, tables, isPrintDiceText = true)
+
+    info = tables[command]
+    return nil if info.nil?
+
+    name = info[:name]
+    type = info[:type].upcase
+    table = info[:table]
+
+    if type == 'D66' and @d66Type == 2
+      type = 'D66S'
+    end
+    
+    
+    text, number, diceText =
+      case type
+      when /(\d+)D6/
+        count = $1.to_i
+        limit = 6 * count - (count - 1)
+        table = getTableInfoFromExtraTableText(table, limit)
+        get_table_by_nDx_extratable(table, count, 6)
+      when 'D66', 'D66N'
+        table = getTableInfoFromExtraTableText(table, 36)
+        item, value = get_table_by_d66(table)
+        value = value.to_i
+        output = item[1]
+        diceText = (value / 10).to_s  + "," + (value % 10).to_s
+        [output, value, diceText]
+      when 'D66S'
+        table = getTableInfoFromExtraTableText(table, 21)
+        output, value = get_table_by_d66_swap(table)
+        value = value.to_i
+        diceText = (value / 10).to_s  + "," + (value % 10).to_s
+        [output, value, diceText]
+      else
+        raise "invalid dice Type #{command}"
+      end
+
+    # text.gsub!("\\n", "\n")
+    text = text.gsub("\\n", "\n") # TKfix !
+    text = @@bcdice.rollTableMessageDiceText(text)
+    
+    return nil if( text.nil? )
+
+    return "#{name}(#{number}[#{diceText}]) ＞ #{text}" if isPrintDiceText and (not diceText.nil?)
+    return "#{name}(#{number}) ＞ #{text}"
+  end
+  
+  def getTableInfoFromExtraTableText(text, count = nil)
+    if text.kind_of?(String)
+      text = text.split(/\n/)
+    end
+
+    newTable = text.map do |item|
+      if item.kind_of?(String) and  /^(\d+):(.*)/ === item
+        [$1.to_i, $2]
+      else
+        item
+      end
+    end
+
+    unless count.nil?
+      if newTable.size != count
+        raise "invalid table size:#{newTable.size}\n#{newTable.inspect}"
+      end
+    end
+    
+    return newTable
+  end
   
 end
