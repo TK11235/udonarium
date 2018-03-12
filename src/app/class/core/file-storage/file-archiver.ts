@@ -95,8 +95,6 @@ export class FileArchiver {
     if (file.type.indexOf('audio/') < 0) return;
     console.log(file.name + ' type:' + file.type);
     if (10 * 1024 * 1024 < file.size) return;
-    //await FileStorage.instance.addAsync(file);
-    console.warn('handleAudio() is not implemented. test play....');
     let audio = await AudioStorage.instance.addAsync(file);
   }
 
