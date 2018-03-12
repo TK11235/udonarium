@@ -76,7 +76,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private shouldConnect(peerId: string): boolean {
-    if (!this.peerId) {
+    if (!this.peer || !this.peerId) {
       console.log('connect() is Fail. IDが割り振られるまで待てや');
       return false;
     }
@@ -237,6 +237,7 @@ export class SkyWayConnection implements Connection {
 
   listAllPeers(): Promise<string[]> {
     return new Promise((resolve, reject) => {
+      if (!this.peer) return resolve([]);
       let now = performance.now();
       if (now < this.httpRequestInterval) {
         console.warn('httpRequestInterval... ' + (this.httpRequestInterval - now));
