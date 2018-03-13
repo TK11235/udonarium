@@ -1,5 +1,5 @@
 <div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging}" [style.width.px]="width * gridSize"
-  [style.height.px]="depth * gridSize" [ngStyle]="{'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px)'}">
+  [style.height.px]="depth * gridSize" [ngStyle]="{'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px) translateZ(-0.15px)'}">
   <div class="component-content is-3d is-pointer-events-auto" [ngStyle]="{'transform': 'rotateZ(' + rotate +'deg)'}"
     [ngClass]="{'is-grab': (!isDragging && !isLocked), 'is-grabbing': (isDragging && !isLocked), 'is-transition': !isDragging}">
     <ng-container *ngIf="hasFloor && 0 < floorImage?.url.length">
