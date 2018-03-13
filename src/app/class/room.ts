@@ -24,7 +24,7 @@ export class Room extends GameObject implements InnerXml {
     objects = objects.concat(ObjectStore.instance.getObjects(GameCharacter));
     objects = objects.concat(ObjectStore.instance.getObjects(TextNote));
     objects = objects.concat(ObjectStore.instance.getObjects(CardStack));
-    objects = objects.concat(ObjectStore.instance.getObjects(Card));
+    objects = objects.concat(ObjectStore.instance.getObjects(Card).filter((obj) => { return obj.parent === null }));
     for (let object of objects) {
       xml += object.toXml();
     }
