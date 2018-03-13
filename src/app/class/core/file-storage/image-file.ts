@@ -92,13 +92,15 @@ export class ImageFile {
   }
 
   private static async _createAsync(blob: Blob, name?: string): Promise<ImageFile> {
+    let safeBlob = await ImageFile.blobToSafeBlob(blob); // ローカルから読み込んだファイルは一度FileReaderを通さないと表示できない
+
     let imageFile = new ImageFile();
     imageFile.context.name = name;
-    imageFile.context.blob = blob;
-    imageFile.context.url = window.URL.createObjectURL(blob);
+    imageFile.context.blob = safeBlob;
+    imageFile.context.url = window.URL.createObjectURL(safeBlob);
 
     try {
-      imageFile.context.identifier = await ImageFile.calHashAsync(blob);
+      imageFile.context.identifier = await ImageFile.calHashAsync(safeBlob);
       imageFile.context.thumbnail = await ImageFile.createThumbnailAsync(imageFile.context);
     } catch (e) {
       throw e;
@@ -211,6 +213,15 @@ export class ImageFile {
         reject();
       }
       image.src = context.url;
+    });
+  }
+
+  static async blobToSafeBlob(blob): Promise<Blob> {
+    return new Promise<Blob>((resolve, reject) => {
+      let reader = new FileReader();
+      reader.onload = event => { resolve(new Blob([reader.result], { type: blob.type })); }
+      reader.onabort = reader.onerror = () => { reject([]); }
+      reader.readAsArrayBuffer(blob);
     });
   }
 
