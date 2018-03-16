@@ -290,8 +290,8 @@ export class CardStackComponent implements OnInit {
     e.stopPropagation();
     this.removeRotateEventListeners();
 
-    this.rotate = this.rotate < 0 ? this.rotate - 22.5 : this.rotate + 22.5;
-    this.rotate -= (this.rotate) % 45;
+    this.rotate = this.rotate < 0 ? this.rotate - 7.5 : this.rotate + 7.5;
+    this.rotate -= (this.rotate) % 15;
   }
 
   @HostListener('contextmenu', ['$event'])
