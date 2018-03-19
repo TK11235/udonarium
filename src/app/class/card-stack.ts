@@ -14,6 +14,7 @@ export class CardStack extends TabletopObject {
   @SyncVar() rotate: number = 0;
   @SyncVar() zindex: number = 0;
   @SyncVar() owner: string = '';
+  @SyncVar() isShowTotal: boolean = true;
 
   private get cardRoot(): ObjectNode {
     for (let node of this.children) {

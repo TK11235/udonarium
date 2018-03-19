@@ -40,6 +40,7 @@ export class CardStackComponent implements OnInit {
   get rotate(): number { return this.cardStack.rotate; }
   set rotate(rotate: number) { this.cardStack.rotate = rotate; }
   get zindex(): number { return this.cardStack.zindex; }
+  get isShowTotal(): boolean { return this.cardStack.isShowTotal; }
   get cards(): Card[] { return this.cardStack.cards; }
   get isEmpty(): boolean { return this.cardStack.isEmpty; }
   get size(): number {
@@ -326,6 +327,10 @@ export class CardStackComponent implements OnInit {
           EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
         }
       },
+      (this.isShowTotal
+        ? { name: '枚数を非表示にする', action: () => { this.cardStack.isShowTotal = false; } }
+        : { name: '枚数を表示する', action: () => { this.cardStack.isShowTotal = true; } }
+      ),
       { name: 'カード一覧', action: () => { this.showStackList(this.cardStack); } },
       { name: '山札を人数分に分割する', action: () => { this.splitStack(Network.peerIds.length); } },
       { name: '山札を崩す', action: () => { this.breakStack(); } },
