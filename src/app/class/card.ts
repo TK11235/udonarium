@@ -25,12 +25,7 @@ export class Card extends TabletopObject {
   get isFront(): boolean { return this.state === CardState.FRONT; }
   get isVisible(): boolean { return this.isHand || this.isFront; }
 
-  get size(): number {
-    let element = this.getElement('size', this.commonDataElement);
-    let num = element ? +element.value : 2;
-    return Number.isNaN(num) ? 2 : num;
-  }
-
+  get size(): number { return this.getCommonValue('size', 2); }
   get hasOwner(): boolean {
     return PeerCursor.find(this.owner) != null;
   }
@@ -40,22 +35,9 @@ export class Card extends TabletopObject {
     return object ? object.name : '';
   }
 
-  get name(): string {
-    let element = this.getElement('name', this.commonDataElement);
-    return element ? <string>element.value : '';
-  }
-
-  get frontImage(): ImageFile {
-    if (!this.imageDataElement) return null;
-    let image = this.getElement('front', this.imageDataElement);
-    return image ? FileStorage.instance.get(<string>image.value) : null;
-  }
-
-  get backImage(): ImageFile {
-    if (!this.imageDataElement) return null;
-    let image = this.getElement('back', this.imageDataElement);
-    return image ? FileStorage.instance.get(<string>image.value) : null;
-  }
+  get name(): string { return this.getCommonValue('name', ''); }
+  get frontImage(): ImageFile { return this.getImageFile('front'); }
+  get backImage(): ImageFile { return this.getImageFile('back'); }
 
   get imageFile(): ImageFile {
     if (this.isVisible) {

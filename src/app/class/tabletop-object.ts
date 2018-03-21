@@ -96,6 +96,36 @@ export class TabletopObject extends ObjectNode {
     return this._dataElements[name] ? this._dataElements[name] : null;
   }
 
+  protected getCommonValue<T extends string | number>(elementName: string, defaultValue: T): T {
+    let element = this.getElement(elementName, this.commonDataElement);
+    if (!element) return defaultValue;
+
+    if (typeof defaultValue === 'number') {
+      let number: number = +element.value;
+      return <T>(Number.isNaN(number) ? defaultValue : number);
+    } else {
+      return <T>(element.value + '');
+    }
+  }
+
+  protected setCommonValue(elementName: string, value: any) {
+    let element = this.getElement(elementName, this.commonDataElement);
+    if (!element) { return; }
+    element.value = value;
+  }
+
+  protected getImageFile(elementName: string) {
+    if (!this.imageDataElement) return null;
+    let image = this.getElement(elementName, this.imageDataElement);
+    return image ? FileStorage.instance.get(<string>image.value) : null;
+  }
+
+  protected setImageFile(elementName: string, imageFile: ImageFile) {
+    let image = imageFile ? this.getElement(elementName, this.imageDataElement) : null;
+    if (!image) return;
+    image.value = imageFile.identifier;
+  }
+
   setLocation(location: string) {
     this.location.name = location;
     this.update();

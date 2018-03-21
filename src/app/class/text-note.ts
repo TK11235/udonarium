@@ -9,39 +9,11 @@ export class TextNote extends TabletopObject {
   @SyncVar() zindex: number = 0;
   @SyncVar() password: string = '';
 
-  get width(): number {
-    let element = this.getElement('width', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  get height(): number {
-    let element = this.getElement('height', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  get fontSize(): number {
-    let element = this.getElement('fontsize', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  get title(): string {
-    let element = this.getElement('title', this.commonDataElement);
-    return element ? <string>element.value : '';
-  }
-
-  get text(): string {
-    let element = this.getElement('text', this.commonDataElement);
-    return element ? <string>element.value : '';
-  }
-
-  set text(text: string) {
-    let element = this.getElement('text', this.commonDataElement);
-    if (!element) return;
-    element.value = text;
-  }
+  get width(): number { return this.getCommonValue('width', 1); }
+  get height(): number { return this.getCommonValue('height', 1); }
+  get fontSize(): number { return this.getCommonValue('fontsize', 1); }
+  get title(): string { return this.getCommonValue('title', ''); }
+  get text(): string { return this.getCommonValue('text', ''); }
 
   toTopmost() {
     let object: any[] = ObjectStore.instance.getObjects('text-note');

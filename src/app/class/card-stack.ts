@@ -32,10 +32,7 @@ export class CardStack extends TabletopObject {
     return object ? object.name : '';
   }
 
-  get name(): string {
-    let element = this.getElement('name', this.commonDataElement);
-    return element ? <string>element.value : '';
-  }
+  get name(): string { return this.getCommonValue('name', ''); }
 
   get cards(): Card[] { return this.cardRoot ? <Card[]>this.cardRoot.children.concat() : []; }
   get topCard(): Card { return this.isEmpty ? null : this.cards[0]; }

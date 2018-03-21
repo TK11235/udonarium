@@ -6,17 +6,8 @@ import { ChatPalette } from './chat-palette';
 
 @SyncObject('character')
 export class GameCharacter extends TabletopObject {
-
-  get size(): number {
-    let element = this.getElement('size', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  get name(): string {
-    let element = this.getElement('name', this.commonDataElement);
-    return element ? <string>element.value : '???';
-  }
+  get name(): string { return this.getCommonValue('name', ''); }
+  get size(): number { return this.getCommonValue('size', 1); }
 
   get chatPalette(): ChatPalette {
     for (let child of this.children) {

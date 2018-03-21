@@ -21,61 +21,17 @@ export class Terrain extends TabletopObject {
   get hasWall(): boolean { return this.mode & TerrainViewState.WALL ? true : false; }
   get hasFloor(): boolean { return this.mode & TerrainViewState.FLOOR ? true : false; }
 
-  get width(): number {
-    let element = this.getElement('width', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
+  get width(): number { return this.getCommonValue('width', 1); }
+  set width(width: number) { this.setCommonValue('width', width); }
+  get height(): number { return this.getCommonValue('height', 1); }
+  set height(height: number) { this.setCommonValue('height', height); }
+  get depth(): number { return this.getCommonValue('depth', 1); }
+  set depth(depth: number) { this.setCommonValue('depth', depth); }
+  get name(): string { return this.getCommonValue('name', ''); }
+  set name(name: string) { this.setCommonValue('name', name); }
 
-  set width(width: number) {
-    let element = this.getElement('width', this.commonDataElement);
-    element.value = width;
-  }
-
-  get height(): number {
-    let element = this.getElement('height', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  set height(height: number) {
-    let element = this.getElement('height', this.commonDataElement);
-    element.value = height;
-  }
-
-  get depth(): number {
-    let element = this.getElement('depth', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  set depth(depth: number) {
-    let element = this.getElement('depth', this.commonDataElement);
-    element.value = depth;
-  }
-
-  get opacity(): number {
-    let element = this.getElement('opacity', this.commonDataElement);
-    let num = element ? <number>element.currentValue / <number>element.value : 1;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  get name(): string {
-    let element = this.getElement('name', this.commonDataElement);
-    return element ? <string>element.value : '';
-  }
-
-  get wallImage(): ImageFile {
-    if (!this.imageDataElement) return null;
-    let image = this.getElement('wall', this.imageDataElement);
-    return image ? FileStorage.instance.get(<string>image.value) : null;
-  }
-
-  get floorImage(): ImageFile {
-    if (!this.imageDataElement) return null;
-    let image = this.getElement('floor', this.imageDataElement);
-    return image ? FileStorage.instance.get(<string>image.value) : null;
-  }
+  get wallImage(): ImageFile { return this.getImageFile('wall'); }
+  get floorImage(): ImageFile { return this.getImageFile('floor'); }
 
   static create(name: string, width: number, depth: number, height: number, wall: string, floor: string, identifier?: string): Terrain {
     let object: Terrain = null;

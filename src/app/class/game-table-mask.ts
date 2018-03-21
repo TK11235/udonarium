@@ -8,27 +8,13 @@ import { ObjectNode } from './core/synchronize-object/object-node';
 export class GameTableMask extends TabletopObject {
   @SyncVar() isLock: boolean = false;
 
-  get width(): number {
-    let element = this.getElement('width', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  get height(): number {
-    let element = this.getElement('height', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
+  get name(): string { return this.getCommonValue('name', ''); }
+  get width(): number { return this.getCommonValue('width', 1); }
+  get height(): number { return this.getCommonValue('height', 1); }
   get opacity(): number {
     let element = this.getElement('opacity', this.commonDataElement);
     let num = element ? <number>element.currentValue / <number>element.value : 1;
     return Number.isNaN(num) ? 1 : num;
-  }
-
-  get name(): string {
-    let element = this.getElement('name', this.commonDataElement);
-    return element ? <string>element.value : '';
   }
 
   static create(name: string, width: number, height: number, opacity: number, identifier?: string): GameTableMask {
