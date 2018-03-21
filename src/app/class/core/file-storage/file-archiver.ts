@@ -153,4 +153,3 @@ export class FileArchiver {
     }).then(blob => saveAs(blob, zipName + '.zip'));
   }
 }
-setTimeout(function () { FileArchiver.instance; }, 0);

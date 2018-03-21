@@ -70,4 +70,3 @@ export class ObjectSynchronizer {
     newObject.initialize(false);
   }
 }
-setTimeout(function () { ObjectSynchronizer.instance; }, 0);

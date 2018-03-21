@@ -39,4 +39,3 @@ export class ObjectFactory {
     return '';
   }
 }
-setTimeout(function () { ObjectFactory.instance; }, 0);

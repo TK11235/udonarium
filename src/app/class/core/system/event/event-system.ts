@@ -183,17 +183,5 @@ export class EventSystem implements Subject {
 
   private sendSystemMessage(message: string) {
     console.log(message);
-    /*
-    let chatMessage = {
-      identifier: Network.instance.peerId + '_' + Math.random(),
-      responseIdentifier: '',
-      timestamp: '',
-      imageIdentifier: '',
-      tag: 'system',
-      sender: 'システム<' + Network.instance.peerId + '>',
-      text: message
-    };
-    */
   }
 }
-setTimeout(function () { EventSystem.instance; }, 0);

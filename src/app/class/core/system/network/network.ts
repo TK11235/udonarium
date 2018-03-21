@@ -130,5 +130,3 @@ export class Network {
     return store;
   }
 }
-
-setTimeout(function () { Network.instance; }, 0);

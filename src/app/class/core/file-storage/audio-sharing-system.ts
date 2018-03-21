@@ -288,5 +288,3 @@ export class AudioSharingSystem {
     }
   }
 }
-
-setTimeout(function () { AudioSharingSystem.instance; }, 0);

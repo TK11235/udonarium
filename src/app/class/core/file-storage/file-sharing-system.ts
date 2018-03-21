@@ -256,5 +256,3 @@ async function blobToArrayBuffer(blob): Promise<ArrayBuffer> {
     reader.readAsArrayBuffer(blob);
   });
 }
-
-setTimeout(function () { FileSharingSystem.instance; }, 0);

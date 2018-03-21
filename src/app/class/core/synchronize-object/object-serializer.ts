@@ -182,4 +182,3 @@ export class ObjectSerializer {
     return null;
   }
 }
-setTimeout(function () { ObjectSerializer.instance; }, 0);

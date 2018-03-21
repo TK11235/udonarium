@@ -160,4 +160,3 @@ export class ObjectStore {
     }
   }
 }
-setTimeout(function () { ObjectStore.instance; }, 0);

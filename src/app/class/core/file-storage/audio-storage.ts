@@ -266,4 +266,3 @@ export class AudioStorage {
     document.addEventListener('click', callback);
   }
 }
-setTimeout(function () { AudioStorage.instance; }, 0);

@@ -124,4 +124,3 @@ export class FileStorage {
     return catalog;
   }
 }
-setTimeout(function () { FileStorage.instance; }, 0);
