@@ -18,9 +18,6 @@ export class Terrain extends TabletopObject {
   @SyncVar() mode: TerrainViewState = TerrainViewState.ALL;
   @SyncVar() rotate: number = 0;
 
-  get hasWall(): boolean { return this.mode & TerrainViewState.WALL ? true : false; }
-  get hasFloor(): boolean { return this.mode & TerrainViewState.FLOOR ? true : false; }
-
   get width(): number { return this.getCommonValue('width', 1); }
   set width(width: number) { this.setCommonValue('width', width); }
   get height(): number { return this.getCommonValue('height', 1); }
@@ -32,6 +29,9 @@ export class Terrain extends TabletopObject {
 
   get wallImage(): ImageFile { return this.getImageFile('wall'); }
   get floorImage(): ImageFile { return this.getImageFile('floor'); }
+
+  get hasWall(): boolean { return this.mode & TerrainViewState.WALL ? true : false; }
+  get hasFloor(): boolean { return this.mode & TerrainViewState.FLOOR ? true : false; }
 
   static create(name: string, width: number, depth: number, height: number, wall: string, floor: string, identifier?: string): Terrain {
     let object: Terrain = null;

@@ -21,21 +21,8 @@ export class Card extends TabletopObject {
   @SyncVar() owner: string = '';
   @SyncVar() zindex: number = 0;
 
-  get isHand(): boolean { return Network.peerId === this.owner; }
-  get isFront(): boolean { return this.state === CardState.FRONT; }
-  get isVisible(): boolean { return this.isHand || this.isFront; }
-
-  get size(): number { return this.getCommonValue('size', 2); }
-  get hasOwner(): boolean {
-    return PeerCursor.find(this.owner) != null;
-  }
-
-  get ownerName(): string {
-    let object = PeerCursor.find(this.owner);
-    return object ? object.name : '';
-  }
-
   get name(): string { return this.getCommonValue('name', ''); }
+  get size(): number { return this.getCommonValue('size', 2); }
   get frontImage(): ImageFile { return this.getImageFile('front'); }
   get backImage(): ImageFile { return this.getImageFile('back'); }
 
@@ -46,6 +33,16 @@ export class Card extends TabletopObject {
       return this.backImage;
     }
   }
+
+  get ownerName(): string {
+    let object = PeerCursor.find(this.owner);
+    return object ? object.name : '';
+  }
+
+  get hasOwner(): boolean { return PeerCursor.find(this.owner) != null; }
+  get isHand(): boolean { return Network.peerId === this.owner; }
+  get isFront(): boolean { return this.state === CardState.FRONT; }
+  get isVisible(): boolean { return this.isHand || this.isFront; }
 
   faceUp() {
     this.state = CardState.FRONT;

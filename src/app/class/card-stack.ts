@@ -16,24 +16,19 @@ export class CardStack extends TabletopObject {
   @SyncVar() owner: string = '';
   @SyncVar() isShowTotal: boolean = true;
 
+  get name(): string { return this.getCommonValue('name', ''); }
+  get ownerName(): string {
+    let object = PeerCursor.find(this.owner);
+    return object ? object.name : '';
+  }
+  get hasOwner(): boolean { return PeerCursor.find(this.owner) != null; }
+
   private get cardRoot(): ObjectNode {
     for (let node of this.children) {
       if (node.getAttribute('name') === 'cardRoot') return node;
     }
     return null;
   }
-
-  get hasOwner(): boolean {
-    return PeerCursor.find(this.owner) != null;//ObjectStore.instance.get<PeerCursor>(this.owner) != null;
-  }
-
-  get ownerName(): string {
-    let object = PeerCursor.find(this.owner);//ObjectStore.instance.get<PeerCursor>(this.owner);
-    return object ? object.name : '';
-  }
-
-  get name(): string { return this.getCommonValue('name', ''); }
-
   get cards(): Card[] { return this.cardRoot ? <Card[]>this.cardRoot.children.concat() : []; }
   get topCard(): Card { return this.isEmpty ? null : this.cards[0]; }
   get isEmpty(): boolean { return this.cards.length < 1 }
