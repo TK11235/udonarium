@@ -48,21 +48,6 @@ export class TabletopObject extends ObjectNode {
     return this._imageFile;
   }
 
-  static createTabletopObject(name: string, identifier?: string): TabletopObject {
-
-    let gameObject: TabletopObject = new TabletopObject(identifier);
-    gameObject.createDataElements();
-
-    /* debug */
-    console.log('serializeToXmlString\n' + gameObject.rootDataElement.toXml());
-    let domParser: DOMParser = new DOMParser();
-    let xmlDocument: Document = domParser.parseFromString(gameObject.rootDataElement.toXml(), 'application/xml');
-    console.log(xmlDocument);
-    /* debug */
-
-    return gameObject;
-  }
-
   protected createDataElements() {
     this.initialize();
     let aliasName: string = this.aliasName;

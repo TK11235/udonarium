@@ -51,13 +51,6 @@ export class Terrain extends TabletopObject {
     object.imageDataElement.appendChild(DataElement.create('floor', floor, { type: 'image' }, 'floor_' + object.identifier));
     object.initialize();
 
-    /* debug */
-    console.log('serializeToXmlString\n' + object.rootDataElement.toXml());
-    let domParser: DOMParser = new DOMParser();
-    let gameCharacterXMLDocument: Document = domParser.parseFromString(object.rootDataElement.toXml(), 'application/xml');
-    console.log(gameCharacterXMLDocument);
-    /* debug */
-
     return object;
   }
 }
