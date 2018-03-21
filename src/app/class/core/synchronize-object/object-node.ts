@@ -123,8 +123,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   }
 
   appendChild(child: ObjectNode): ObjectNode {
-    if (this.hasParent(child)) return null;
-
+    if (child.contains(this)) return null;
     if (child.parent) child.parent.removeChild(child);
 
     let lastIndex = 0 < this.children.length ? this.children[this.children.length - 1].majorIndex + 1 : 0;
@@ -142,7 +141,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   }
 
   insertBefore(child: ObjectNode, reference: ObjectNode): ObjectNode {
-    if (this.hasParent(child)) return null;
+    if (child.contains(this)) return null;
     if (child === reference && child.parent === this) return child;
 
     if (child.parent) child.parent.removeChild(child);
@@ -180,34 +179,15 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     return child;
   }
 
-  hasParent(object: ObjectNode): boolean {
-    return this._hasParent(object, this);
-  }
-
-  private _hasParent(object: ObjectNode, start: ObjectNode): boolean {
-    let parent = this.parent;
-    if (parent === start) {
-      console.error('あ やっべ、循環参照', object);
-      return true;
-    }
-    if (!parent || !object) return false;
-    if (parent === object) return true;
-    return parent ? parent._hasParent(object, start) : false;
-  }
-
-  hasChild(object: ObjectNode): boolean {
-    return this._hasChild(object, this);
-  }
-
-  private _hasChild(object: ObjectNode, start: ObjectNode): boolean {
-    for (let child of this.children) {
-      if (child === start) {
-        console.error('あ やっべ、循環参照', object);
-        return true;
+  contains(child: ObjectNode): boolean {
+    let parent = child.parent;
+    while (parent) {
+      if (parent === child) {
+        console.error('あ やっべ、循環参照', child);
+        return false;
       }
-      if (child === object || child._hasChild(object, start)) {
-        return true;
-      }
+      if (parent === this) return true;
+      parent = parent.parent;
     }
     return false;
   }
