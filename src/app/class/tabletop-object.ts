@@ -24,7 +24,7 @@ export class TabletopObject extends ObjectNode {
   @SyncVar() posZ: number = 0;
 
   private _imageFile: ImageFile = ImageFile.createEmpty('null');
-  private _dataElements: { [name: string]: DataElement } = {};
+  private _dataElements: { [name: string]: string } = {};
 
   // GameDataElement getter/setter
   get rootDataElement(): DataElement {
@@ -66,19 +66,13 @@ export class TabletopObject extends ObjectNode {
   }
 
   getElement(name: string, from: DataElement = this.rootDataElement): DataElement {
-    //if (!from) return null;
-    /*
-    if (this._dataElements[name] && this._dataElements[name].parent && this._dataElements[name].parent.identifier !== from.identifier) {
-      this._dataElements[name] = null;
+    if (!from) return null;
+    let element: DataElement = this._dataElements[name] ? ObjectStore.instance.get(this._dataElements[name]) : null;
+    if (!element || !from.contains(element)) {
+      element = from.getFirstElementByName(name);
+      this._dataElements[name] = element ? element.identifier : null;
     }
-    */
-    if (!this._dataElements[name] && from) {
-      let element: DataElement = from.getFirstElementByName(name);
-      if (element) {
-        this._dataElements[name] = element;
-      }
-    }
-    return this._dataElements[name] ? this._dataElements[name] : null;
+    return element;
   }
 
   protected getCommonValue<T extends string | number>(elementName: string, defaultValue: T): T {
