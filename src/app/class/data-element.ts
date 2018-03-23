@@ -48,9 +48,12 @@ export class DataElement extends ObjectNode {
   }
 
   getFirstElementByName(name: string): DataElement {
-    let children: DataElement[] = this.getElementsByName(name);
-    if (0 < children.length) {
-      return children[0];
+    for (let child of this.children) {
+      if (child instanceof DataElement) {
+        if (child.getAttribute('name') === name) return child;
+        let match = child.getFirstElementByName(name);
+        if (match) return match;
+      }
     }
     return null;
   }
