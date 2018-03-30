@@ -385,6 +385,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
     textNote.location.x = pointer.x;
     textNote.location.y = pointer.y;
+    textNote.update();
   }
 
   setTransform(transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number) {
