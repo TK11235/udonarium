@@ -1,4 +1,4 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef, } from "@angular/core";
+import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef, NgZone, } from "@angular/core";
 import { Transform } from '../class/transform/transform';
 
 export var PointerDeviceProxy: PointerDeviceService = null;
@@ -34,20 +34,24 @@ export class PointerDeviceService {
     return this.pointers[0].y;
   }
 
-  constructor() {
+  constructor(
+    public ngZone: NgZone
+  ) {
     if (PointerDeviceProxy === null) {
       PointerDeviceProxy = this;
     }
   }
 
   initialize() {
-    this.callbackOnPointerMove = (e) => this.onPointerMove(e);
-    document.body.addEventListener('mousedown', this.callbackOnPointerMove, true);
-    document.body.addEventListener('touchdown', this.callbackOnPointerMove, true);
-    document.body.addEventListener('mousemove', this.callbackOnPointerMove, true);
-    document.body.addEventListener('touchmove', this.callbackOnPointerMove, true);
-    document.body.addEventListener('mouseup', this.callbackOnPointerMove, true);
-    document.body.addEventListener('touchup', this.callbackOnPointerMove, true);
+    this.ngZone.runOutsideAngular(() => {
+      this.callbackOnPointerMove = (e) => this.onPointerMove(e);
+      document.body.addEventListener('mousedown', this.callbackOnPointerMove, true);
+      document.body.addEventListener('touchdown', this.callbackOnPointerMove, true);
+      document.body.addEventListener('mousemove', this.callbackOnPointerMove, true);
+      document.body.addEventListener('touchmove', this.callbackOnPointerMove, true);
+      document.body.addEventListener('mouseup', this.callbackOnPointerMove, true);
+      document.body.addEventListener('touchup', this.callbackOnPointerMove, true);
+    });
   }
 
   destroy() {
