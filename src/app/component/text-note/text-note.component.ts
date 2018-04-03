@@ -24,6 +24,7 @@ export class TextNoteComponent implements OnInit {
 
   get title(): string { return this.textNote.title; }
   get text(): string { this.calcFitHeightIfNeeded(); return this.textNote.text; }
+  set text(text: string) { this.calcFitHeightIfNeeded(); this.textNote.text = text; }
   get fontSize(): number { this.calcFitHeightIfNeeded(); return this.textNote.fontSize; }
   get imageFile(): ImageFile { return this.textNote.imageFile; }
   get rotate(): number { return this.textNote.rotate; }

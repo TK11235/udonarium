@@ -14,6 +14,7 @@ export class TextNote extends TabletopObject {
   get fontSize(): number { return this.getCommonValue('fontsize', 1); }
   get title(): string { return this.getCommonValue('title', ''); }
   get text(): string { return this.getCommonValue('text', ''); }
+  set text(text: string) { this.setCommonValue('text', text); }
 
   toTopmost() {
     let object: any[] = ObjectStore.instance.getObjects('text-note');
