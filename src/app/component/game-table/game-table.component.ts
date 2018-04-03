@@ -523,8 +523,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private addMouseEventListeners() {
     document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
-    document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
+    this.ngZone.runOutsideAngular(() => {
+      document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
+      document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
+    });
   }
 
   private removeMouseEventListeners() {
