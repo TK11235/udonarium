@@ -46,7 +46,7 @@ export class ObjectStore {
     //let garbage = object.toContext();
     /* */
     if (needCallEvent) {
-      this.garbageHash[object.identifier] = { aliasName: object.identifier, timeStamp: performance.now() };
+      this.garbageHash[object.identifier] = { aliasName: object.aliasName, timeStamp: performance.now() };
       EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
     }
     return object;
