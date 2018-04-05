@@ -7,6 +7,8 @@ import { ContextMenuService } from '../../service/context-menu.service';
 import { PanelOption, PanelService } from '../../service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
+import { MovableOption } from '../../directive/movable.directive';
+import { RotableOption } from '../../directive/rotable.directive';
 
 @Component({
   selector: 'terrain',
@@ -14,14 +16,10 @@ import { GameCharacterSheetComponent } from '../game-character-sheet/game-charac
   styleUrls: ['./terrain.component.css']
 })
 export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root') rootElementRef: ElementRef;
-
   @Input() terrain: Terrain = null;
   @Input() is3D: boolean = false;
 
   get name(): string { return this.terrain.name; }
-  get rotate(): number { return this.terrain.rotate; }
-  set rotate(rotate: number) { this.terrain.rotate = rotate; }
   get mode(): TerrainViewState { return this.terrain.mode; }
   set mode(mode: TerrainViewState) { this.terrain.mode = mode; }
 
@@ -37,41 +35,10 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   get width(): number { return this.adjustMinBounds(this.terrain.width); }
   get depth(): number { return this.adjustMinBounds(this.terrain.depth); }
 
-  private _posX: number = 0;
-  private _posY: number = 0;
-  private _posZ: number = 0;
-
-  get posX(): number { return this._posX; }
-  set posX(posX: number) { this._posX = posX; this.setUpdateTimer(); }
-  get posY(): number { return this._posY; }
-  set posY(posY: number) { this._posY = posY; this.setUpdateTimer(); }
-  get posZ(): number { return this._posZ; }
-  set posZ(posZ: number) { this._posZ = posZ; this.setUpdateTimer(); }
-
-  private dragAreaElement: HTMLElement = null;
-
-  private pointer: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerOffset: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerStart: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerPrev: PointerCoordinate = { x: 0, y: 0, z: 0 };
-
-  private delta: number = 1.0;
-
-  private startDragPoint: PointerCoordinate = { x: 0, y: 0 };
-  private startRotate: number = 0;
-
-  private callbackOnMouseUp = (e) => this.onMouseUp(e);
-  private callbackOnMouseMove = (e) => this.onMouseMove(e);
-
-  private callbackOnRotateMouseMove = (e) => this.onRotateMouseMove(e);
-  private callbackOnRotateMouseUp = (e) => this.onRotateMouseUp(e);
-
-  isDragging: boolean = false;
-
   gridSize: number = 50;
 
-  private updateInterval: NodeJS.Timer = null;
-  private isAllowedToOpenContextMenu: boolean = false;
+  movableOption: MovableOption = {};
+  rotableOption: RotableOption = {};
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -81,23 +48,19 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.setPosition(this.terrain);
-    EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.isSendFromSelf || event.data.identifier !== this.terrain.identifier) return;
-        this.isDragging = false;
-        this.setPosition(this.terrain);
-      });
+    this.movableOption = {
+      tabletopObject: this.terrain,
+      transformCssOffset: 'translateZ(-0.15px)'
+    };
+    this.rotableOption = {
+      tabletopObject: this.terrain
+    };
   }
 
-  ngAfterViewInit() {
-    this.dragAreaElement = this.findDragAreaElement(this.elementRef.nativeElement);
-  }
+  ngAfterViewInit() { }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    this.removeMouseEventListeners();
-    this.removeRotateEventListeners();
   }
 
   @HostListener('dragstart', ['$event'])
@@ -108,28 +71,9 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostListener('mousedown', ['$event'])
-  onMouseDown(e: any) {
-    console.log('GameCharacterComponent mousedown !!!');
+  onDragMouseDown(e: any) {
+    console.log('TerrainComponent mousedown !!!');
     e.preventDefault();
-
-    this.isAllowedToOpenContextMenu = true;
-    this.calcLocalCoordinate();
-
-    this.isDragging = true;
-
-    this.pointerOffset.y = this.posY - this.pointer.y;
-    this.pointerOffset.x = this.posX - this.pointer.x;
-
-    this.delta = 1.0;
-    this.pointerStart.y = this.pointerPrev.y = this.pointer.y;
-    this.pointerStart.x = this.pointerPrev.x = this.pointer.x;
-
-    this.addMouseEventListeners();
-
-    console.log('onSelectedGameCharacter', this.terrain.identifier);
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.terrain.identifier, className: 'GameCharacter' });
-
-    this.startDragPoint = this.pointerDeviceService.pointers[0];
 
     // TODO:もっと良い方法考える
     if (this.isLocked) {
@@ -137,90 +81,14 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onMouseUp(e: any) {
-    //console.log('GameCharacterComponent mouseup !!!!');
-    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
-    this.isDragging = false;
-
-    this.removeMouseEventListeners();
-    e.preventDefault();
-
-    if (this.isLocked) return;
-    let deltaX = this.posX % 25;
-    let deltaY = this.posY % 25;
-
-    this.posX += deltaX < 12.5 ? -deltaX : 25 - deltaX;
-    this.posY += deltaY < 12.5 ? -deltaY : 25 - deltaY;
-  }
-
-  onMouseMove(e: any) {
-    if (this.startDragPoint.x !== this.pointerDeviceService.pointers[0].x || this.startDragPoint.y !== this.pointerDeviceService.pointers[0].y) {
-      this.isAllowedToOpenContextMenu = false;
-    }
-    if (this.isDragging) {
-      if (this.isLocked) return;
-      this.calcLocalCoordinate();
-      if ((this.pointerPrev.y === this.pointer.y && this.pointerPrev.x === this.pointer.x)) return;
-
-      let width: number = this.gridSize * this.width;
-      let height: number = this.gridSize * this.height;
-
-      this.posX = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(width / 2) * (1.0 - this.delta));
-      this.posY = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(height / 2) * (1.0 - this.delta));
-
-      let distanceY = this.pointerStart.y - this.pointer.y;
-      let distanceX = this.pointerStart.x - this.pointer.x;
-
-      let distance = 9999;//(size * 4) / (Math.sqrt(distanceY * distanceY + distanceX * distanceX) + (size * 4));
-
-      if (distance < this.delta) {
-        this.delta = distance;
-      }
-      this.pointerPrev.y = this.pointer.y;
-      this.pointerPrev.x = this.pointer.x;
-    }
-  }
-
-  onRotateMouseDown(e: MouseEvent) {
-    this.isDragging = true;
-    this.isAllowedToOpenContextMenu = true;
-    e.stopPropagation();
-    console.log('onRotateMouseDown!!!!');
-    this.calcLocalCoordinate();
-    this.startRotate = this.calcRotate(this.pointer, this.rotate);
-    this.addRotateEventListeners();
-  }
-
-  onRotateMouseMove(e: MouseEvent) {
-    e.stopPropagation();
-    this.calcLocalCoordinate();
-    let angle = this.calcRotate(this.pointer, this.startRotate);
-    if (this.rotate !== angle) {
-      this.isAllowedToOpenContextMenu = false;
-    }
-    this.rotate = angle;
-  }
-
-  onRotateMouseUp(e: MouseEvent) {
-    this.isDragging = false;
-    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
-    e.stopPropagation();
-    this.removeRotateEventListeners();
-
-    this.rotate = this.rotate < 0 ? this.rotate - 7.5 : this.rotate + 7.5;
-    this.rotate -= (this.rotate) % 15;
-  }
-
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
+    console.log('Terrein onContextMenu', this.pointerDeviceService.isAllowedToOpenContextMenu);
     e.stopPropagation();
     e.preventDefault();
-    this.removeMouseEventListeners();
-    this.removeRotateEventListeners();
 
-    if (this.isAllowedToOpenContextMenu === false) return;
-    this.isAllowedToOpenContextMenu = false;
+    if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
+
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
@@ -264,70 +132,8 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     ], this.name);
   }
 
-  private calcLocalCoordinate() {
-    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
-    this.pointer.y = coordinate.y;
-    this.pointer.x = coordinate.x;
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
-  }
-
-  private calcRotate(pointer: PointerCoordinate, startRotate: number): number {
-    let div: HTMLDivElement = this.rootElementRef.nativeElement;
-    let centerX = div.clientWidth / 2 + this.posX;
-    let centerY = div.clientHeight / 2 + this.posY;
-    let x = pointer.x - centerX;
-    let y = pointer.y - centerY;
-    let rad = Math.atan2(y, x);
-    return (rad * 180 / Math.PI) - startRotate;
-  }
-
-  private setPosition(object: Terrain) {
-    this._posX = object.location.x;
-    this._posY = object.location.y;
-    this._posZ = object.posZ;
-  }
-
-  private setUpdateTimer() {
-    if (this.updateInterval === null) {
-      this.updateInterval = setTimeout(() => {
-        this.terrain.location.x = this.posX;
-        this.terrain.location.y = this.posY;
-        this.terrain.posZ = this.posZ;
-        this.updateInterval = null;
-      }, 66);
-    }
-  }
-
   private adjustMinBounds(value: number, min: number = 0): number {
     return value < min ? min : value;
-  }
-
-  private addMouseEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
-  }
-
-  private removeMouseEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
-  }
-
-  private addRotateEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnRotateMouseUp, false);
-    document.body.addEventListener('mousemove', this.callbackOnRotateMouseMove, false);
-  }
-
-  private removeRotateEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnRotateMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnRotateMouseMove, false);
   }
 
   private showDetail(gameObject: Terrain) {

@@ -1,5 +1,6 @@
-<div class="component is-3d" [ngClass]="{'is-grab': !isDragging, 'is-grabbing': isDragging, 'is-transition': !isDragging, 'is-pointer-events-none': isPointerDragging}"
-  [style.width.px]="size * gridSize" [style.height.px]="size * gridSize" [ngStyle]="{'transform': 'translateZ(' + posZ + 'px) translateX(' + posX + 'px) translateY(' + posY + 'px)'}">
+<div class="component is-3d is-grab"
+  [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
+  appMovable [movable.option]="movableOption" [movable.disable]="isLock">
   <div class="component-content is-3d" [@bounceInOut]="'in'">
     <div class="pedestal-inner"></div>
     <div class="pedestal-outer"></div>

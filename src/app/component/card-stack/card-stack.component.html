@@ -1,20 +1,22 @@
-<div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging, 'is-empty': isEmpty}"
-  [style.width.px]="size * gridSize" [ngStyle]="{'z-index' : zindex, 'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px)'}">
-  <div class="component-content is-3d is-pointer-events-auto" [ngStyle]="{'transform': 'rotateZ(' + rotate +'deg)'}" [ngClass]="{'is-grab': (!isDragging), 'is-grabbing': (isDragging), 'is-transition': !isDragging}">
+<div class="component is-3d is-pointer-events-none" [ngClass]="{'is-empty': isEmpty}"
+  [style.width.px]="size * gridSize"
+  appMovable [movable.option]="movableOption">
+  <div class="component-content is-3d is-pointer-events-auto is-grab"
+    appRotable [rotable.option]="rotableOption" [rotable.disable]="isLocked">
     <div *ngIf="imageFile" (@shuffle.start)="animationShuffleStarted($event)" (@shuffle.done)="animationShuffleDone($event)"
       [@shuffle]="animeState">
       <img class="card-image" [ngStyle]="{'transform': 'rotateZ(' + topCard.rotate +'deg)'}" [src]="imageFile.url | safe: 'resourceUrl'">
     </div>
-    <div class="rotate-grab of-left-top" (mousedown)="onRotateMouseDown($event)">
+    <div class="rotate-grab of-left-top">
       <i class="material-icons">autorenew</i>
     </div>
-    <div class="rotate-grab of-left-bottom" (mousedown)="onRotateMouseDown($event)">
+    <div class="rotate-grab of-left-bottom">
       <i class="material-icons">autorenew</i>
     </div>
-    <div class="rotate-grab of-right-bottom" (mousedown)="onRotateMouseDown($event)">
+    <div class="rotate-grab of-right-bottom">
       <i class="material-icons">autorenew</i>
     </div>
-    <div class="rotate-grab of-right-top" (mousedown)="onRotateMouseDown($event)">
+    <div class="rotate-grab of-right-top">
       <i class="material-icons">autorenew</i>
     </div>
   </div>

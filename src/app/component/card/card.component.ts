@@ -20,6 +20,8 @@ import { ContextMenuService } from '../../service/context-menu.service';
 import { PanelOption, PanelService } from '../../service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
+import { MovableOption } from '../../directive/movable.directive';
+import { RotableOption } from '../../directive/rotable.directive';
 
 @Component({
   selector: 'card',
@@ -28,8 +30,6 @@ import { GameCharacterSheetComponent } from '../game-character-sheet/game-charac
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root') rootElementRef: ElementRef;
-
   @Input() card: Card = null;
   @Input() is3D: boolean = false;
 
@@ -53,49 +53,15 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   get frontImage(): ImageFile { return this.card.frontImage; }
   get backImage(): ImageFile { return this.card.backImage; }
 
-  private _posX: number = 0;
-  private _posY: number = 0;
-  private _posZ: number = 0;
-
-  get posX(): number { return this._posX; }
-  set posX(posX: number) { this._posX = posX; this.setUpdateTimer(); }
-  get posY(): number { return this._posY; }
-  set posY(posY: number) { this._posY = posY; this.setUpdateTimer(); }
-  get posZ(): number { return this._posZ; }
-  set posZ(posZ: number) { this._posZ = posZ; this.setUpdateTimer(); }
-
-  private dragAreaElement: HTMLElement = null;
-
-  private pointer: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerOffset: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerStart: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerPrev: PointerCoordinate = { x: 0, y: 0, z: 0 };
-
-  private delta: number = 1.0;
-
-  private startRotate: number = 0;
-
-  private callbackOnMouseUp: any = (e) => this.onMouseUp(e);
-  private callbackOnMouseMove: any = (e) => this.onMouseMove(e);
-
-  private callbackOnRotateMouseMove: any = (e) => this.onRotateMouseMove(e);
-  private callbackOnRotateMouseUp: any = (e) => this.onRotateMouseUp(e);
-
-  private _isDragging: boolean = false;
-  get isDragging(): boolean { return this._isDragging };
-  set isDragging(isDragging) {
-    if (this._isDragging != isDragging) this.changeDetector.markForCheck();
-    this._isDragging = isDragging;
-  };
-
   gridSize: number = 50;
 
-  private updateInterval: NodeJS.Timer = null;
+  movableOption: MovableOption = {};
+  rotableOption: RotableOption = {};
 
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
 
-  private isAllowedToOpenContextMenu: boolean = false;
+  private callbackOnMouseUp = (e) => this.onMouseUp(e);
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -106,7 +72,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.setPosition(this.card);
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.data.identifier === this.card.identifier) {
@@ -115,8 +80,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           this.changeDetector.markForCheck();
         }
         if (event.isSendFromSelf || event.data.identifier !== this.card.identifier) return;
-        this.isDragging = false;
-        this.setPosition(this.card);
       }).on('UPDATE_GAME_OBJECT', 1000, event => {
         if (event.isSendFromSelf || event.data.aliasName !== 'card') return;
         let object = ObjectStore.instance.get(event.data.identifier);
@@ -142,16 +105,19 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
     }
+    this.movableOption = {
+      tabletopObject: this.card
+    };
+    this.rotableOption = {
+      tabletopObject: this.card
+    };
   }
 
-  ngAfterViewInit() {
-    this.dragAreaElement = this.findDragAreaElement(this.elementRef.nativeElement);
-  }
+  ngAfterViewInit() { }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
     this.removeMouseEventListeners();
-    this.removeRotateEventListeners();
   }
 
   @HostListener('carddrop', ['$event'])
@@ -165,11 +131,11 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
-      let distance: number = Math.sqrt((cardStack.location.x - this.posX) ** 2 + (cardStack.location.y - this.posY) ** 2);
+      let distance: number = Math.sqrt((cardStack.location.x - this.card.location.x) ** 2 + (cardStack.location.y - this.card.location.y) ** 2);
       //console.log('onCardDrop CardStack fire', this.card.name, distance);
       if (distance < 25) {
-        cardStack.location.x = this.posX;
-        cardStack.location.y = this.posY;
+        cardStack.location.x = this.card.location.x;
+        cardStack.location.y = this.card.location.y;
         cardStack.putOnBottom(this.card);
       }
     }
@@ -206,95 +172,17 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onDoubleClick(e);
     this.card.toTopmost();
     console.log('GameCharacterComponent mousedown !!!');
-    this.isAllowedToOpenContextMenu = true;
-
-    this.calcLocalCoordinate();
-
-    this.isDragging = true;
-
-    this.pointerOffset.y = this.posY - this.pointer.y;
-    this.pointerOffset.x = this.posX - this.pointer.x;
-
-    this.delta = 1.0;
-    this.pointerStart.y = this.pointerPrev.y = this.pointer.y;
-    this.pointerStart.x = this.pointerPrev.x = this.pointer.x;
 
     this.addMouseEventListeners();
-
-    console.log('onSelectedGameCharacter', this.card.identifier);
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.card.identifier, className: 'GameCharacter' });
 
     e.preventDefault();
   }
 
   onMouseUp(e: any) {
-    //console.log('GameCharacterComponent mouseup !!!!');
-    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
-    this.isDragging = false;
-
-    this.removeMouseEventListeners();
-    this.dispatchCardDropEvent();
-
-    let deltaX = this.posX % 25;
-    let deltaY = this.posY % 25;
-
-    this.posX += deltaX < 12.5 ? -deltaX : 25 - deltaX;
-    this.posY += deltaY < 12.5 ? -deltaY : 25 - deltaY;
-
+    console.log('onMouseUp Card !!!!');
     e.preventDefault();
-  }
-
-  onMouseMove(e: any) {
-    if (this.isDragging) {
-      this.calcLocalCoordinate();
-      if ((this.pointerPrev.y === this.pointer.y && this.pointerPrev.x === this.pointer.x)) return;
-      this.isAllowedToOpenContextMenu = false;
-
-      let width: number = this.gridSize * 2;//this.card.width;
-      let height: number = this.gridSize * 3;//this.card.height;
-
-      this.posX = this.pointer.x + (this.pointerOffset.x * this.delta) + (-(width / 2) * (1.0 - this.delta));
-      this.posY = this.pointer.y + (this.pointerOffset.y * this.delta) + (-(height / 2) * (1.0 - this.delta));
-
-      let distanceY = this.pointerStart.y - this.pointer.y;
-      let distanceX = this.pointerStart.x - this.pointer.x;
-
-      let distance = 9999;//(size * 4) / (Math.sqrt(distanceY * distanceY + distanceX * distanceX) + (size * 4));
-
-      if (distance < this.delta) {
-        this.delta = distance;
-      }
-      this.pointerPrev.y = this.pointer.y;
-      this.pointerPrev.x = this.pointer.x;
-    }
-  }
-
-  onRotateMouseDown(e: MouseEvent) {
-    this.isDragging = true;
-    this.isAllowedToOpenContextMenu = true;
-    e.stopPropagation();
-    console.log('onRotateMouseDown!!!!');
-    this.calcLocalCoordinate();
-    this.startRotate = this.calcRotate(this.pointer, this.rotate);
-    this.addRotateEventListeners();
-  }
-
-  onRotateMouseMove(e: MouseEvent) {
-    e.stopPropagation();
-    this.calcLocalCoordinate();
-    let angle = this.calcRotate(this.pointer, this.startRotate);
-    if (this.rotate !== angle) this.isAllowedToOpenContextMenu = false;
-    this.rotate = angle;
-  }
-
-  onRotateMouseUp(e: MouseEvent) {
-    this.isDragging = false;
-    setTimeout(() => { this.isAllowedToOpenContextMenu = false; }, 0);
-    e.stopPropagation();
-    this.removeRotateEventListeners();
-
-    this.rotate = this.rotate < 0 ? this.rotate - 7.5 : this.rotate + 7.5;
-    this.rotate -= (this.rotate) % 15;
+    this.dispatchCardDropEvent();
+    this.removeMouseEventListeners();
   }
 
   @HostListener('contextmenu', ['$event'])
@@ -303,10 +191,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     e.stopPropagation();
     e.preventDefault();
     this.removeMouseEventListeners();
-    this.removeRotateEventListeners();
-
-    if (this.isAllowedToOpenContextMenu === false) return;
-    this.isAllowedToOpenContextMenu = false;
+    if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let potison = this.pointerDeviceService.pointers[0];
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
@@ -337,10 +222,18 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     ], this.name);
   }
 
+  private addMouseEventListeners() {
+    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
+  }
+
+  private removeMouseEventListeners() {
+    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
+  }
+
   private createStack() {
     let cardStack = CardStack.create('山札');
-    cardStack.location.x = this.posX;
-    cardStack.location.y = this.posY;
+    cardStack.location.x = this.card.location.x;
+    cardStack.location.y = this.card.location.y;
     cardStack.location.name = this.card.location.name;
     cardStack.rotate = this.rotate;
     cardStack.update();
@@ -354,81 +247,19 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     for (let card of cards) {
-      let distance: number = Math.sqrt((card.location.x - this.posX) ** 2 + (card.location.y - this.posY) ** 2);
+      let distance: number = Math.sqrt((card.location.x - this.card.location.x) ** 2 + (card.location.y - this.card.location.y) ** 2);
       if (distance < 100) cardStack.putOnBottom(card);
     }
   }
 
-  private calcRotate(pointer: PointerCoordinate, startRotate: number): number {
-    let div: HTMLDivElement = this.rootElementRef.nativeElement;
-    let centerX = div.clientWidth / 2 + this.posX;
-    let centerY = div.clientHeight / 2 + this.posY;
-    let x = pointer.x - centerX;
-    let y = pointer.y - centerY;
-    let rad = Math.atan2(y, x);
-    return (rad * 180 / Math.PI) - startRotate;
-  }
-
-  private calcLocalCoordinate() {
-    let coordinate = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
-    this.pointer.y = coordinate.y;
-    this.pointer.x = coordinate.x;
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
-  }
-
   private dispatchCardDropEvent() {
+    console.log('dispatchCardDropEvent');
     let element: HTMLElement = this.elementRef.nativeElement;
     let parent = element.parentElement;
     let children = parent.children;
     let event = new CustomEvent('carddrop', { detail: this.card, bubbles: true });
     for (let i = 0; i < children.length; i++) {
       children[i].dispatchEvent(event);
-    }
-  }
-
-  private addMouseEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
-  }
-
-  private removeMouseEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
-  }
-
-  private addRotateEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnRotateMouseUp, false);
-    document.body.addEventListener('mousemove', this.callbackOnRotateMouseMove, false);
-  }
-
-  private removeRotateEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnRotateMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnRotateMouseMove, false);
-  }
-
-  private setPosition(object: Card) {
-    this._posX = object.location.x;
-    this._posY = object.location.y;
-    this._posZ = object.posZ;
-  }
-
-  private setUpdateTimer() {
-    this.changeDetector.markForCheck();
-    if (this.updateInterval === null) {
-      this.updateInterval = setTimeout(() => {
-        this.card.location.x = this.posX;
-        this.card.location.y = this.posY;
-        this.card.posZ = this.posZ;
-        this.updateInterval = null;
-      }, 66);
     }
   }
 

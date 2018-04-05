@@ -1,7 +1,8 @@
-<div #root class="component is-3d is-pointer-events-none" [ngClass]="{'is-transition': !isDragging}" [style.width.px]="width * gridSize"
-  [style.height.px]="depth * gridSize" [ngStyle]="{'transform': 'translateX(' + posX + 'px) translateY(' + posY + 'px) translateZ(-0.15px)'}">
-  <div class="component-content is-3d is-pointer-events-auto" [ngStyle]="{'transform': 'rotateZ(' + rotate +'deg)'}"
-    [ngClass]="{'is-grab': (!isDragging && !isLocked), 'is-grabbing': (isDragging && !isLocked), 'is-transition': !isDragging}">
+<div class="component is-3d is-pointer-events-none"
+  [style.width.px]="width * gridSize" [style.height.px]="depth * gridSize"
+  appMovable [movable.option]="movableOption" [movable.disable]="isLocked">
+  <div class="component-content is-3d is-pointer-events-auto" [ngClass]="{'is-grab': !isLocked}"
+    appRotable [rotable.option]="rotableOption" [rotable.disable]="isLocked">
     <ng-container *ngIf="hasFloor && 0 < floorImage?.url.length">
       <div class="texture" [ngClass]="{'blinking-animation': !isLocked}" [ngStyle]="{'transform': 'translateZ(' + height * gridSize +'px)'}"
         [style.background-image]="'url(' + floorImage.url + ')' | safe: 'style'"></div>
@@ -17,16 +18,16 @@
         [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
     </ng-container>
     <ng-container *ngIf="!isLocked">
-      <div class="rotate-grab of-left-top" (mousedown)="onRotateMouseDown($event)">
+      <div class="rotate-grab of-left-top">
         <i class="material-icons">autorenew</i>
       </div>
-      <div class="rotate-grab of-left-bottom" (mousedown)="onRotateMouseDown($event)">
+      <div class="rotate-grab of-left-bottom">
         <i class="material-icons">autorenew</i>
       </div>
-      <div class="rotate-grab of-right-bottom" (mousedown)="onRotateMouseDown($event)">
+      <div class="rotate-grab of-right-bottom">
         <i class="material-icons">autorenew</i>
       </div>
-      <div class="rotate-grab of-right-top" (mousedown)="onRotateMouseDown($event)">
+      <div class="rotate-grab of-right-top">
         <i class="material-icons">autorenew</i>
       </div>
     </ng-container>
