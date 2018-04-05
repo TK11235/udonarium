@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild, NgZone } from '@angular/core';
 
 import { PointerDeviceService, PointerCoordinate } from '../../service/pointer-device.service';
 import { EventSystem } from '../../class/core/system/system';
@@ -32,6 +32,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private elementRef: ElementRef,
+    private ngZone: NgZone,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
@@ -48,8 +49,10 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.isMine) {
-      document.body.addEventListener('mousemove', this.callcack);
-      document.body.addEventListener('touchmove', this.callcack);
+      this.ngZone.runOutsideAngular(() => {
+        document.body.addEventListener('mousemove', this.callcack);
+        document.body.addEventListener('touchmove', this.callcack);
+      });
     } else {
       this.cursorElement = this.cursorElementRef.nativeElement;
       this.opacityElement = this.opacityElementRef.nativeElement;
