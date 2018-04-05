@@ -94,10 +94,10 @@ export class ObjectStore {
     return <T[]>this.classHash[aliasName];
   }
 
-  getDeletedObject(identifier: string): string {
+  getDeletedObject(identifier: string): DeletedObjectContext {
     this.garbageCollection(10 * 60 * 1000);
     let garbage = this.garbageHash[identifier];
-    return garbage ? garbage.aliasName : null;
+    return garbage ? garbage : null;
   }
 
   update(identifier: string)
