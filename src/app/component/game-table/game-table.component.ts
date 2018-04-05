@@ -21,11 +21,15 @@ import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-d
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { GameTableSettingComponent } from '../game-table-setting/game-table-setting.component';
 import { TextNote } from '../../class/text-note';
+import { TabletopService, } from '../../service/tabletop.service';
 
 @Component({
   selector: 'game-table',
   templateUrl: './game-table.component.html',
-  styleUrls: ['./game-table.component.css']
+  styleUrls: ['./game-table.component.css'],
+  providers: [
+    TabletopService,
+  ],
 })
 export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('root') rootElementRef: ElementRef;
@@ -93,6 +97,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef,
     private pointerDeviceService: PointerDeviceService,
+    private tabletopService: TabletopService,
     private modalService: ModalService,
     private panelService: PanelService
   ) { }
@@ -150,6 +155,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.elementRef.nativeElement.addEventListener('mousedown', this.callbackOnMouseDown, true);
     this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
+    this.tabletopService.dragAreaElement = this.gameObjects.nativeElement;
   }
 
   ngOnDestroy() {

@@ -43,7 +43,7 @@ import { ContextMenuService } from './service/context-menu.service';
 import { ModalService } from './service/modal.service';
 import { PanelService } from './service/panel.service';
 import { PointerDeviceService } from './service/pointer-device.service';
-
+import { TabletopService } from './service/tabletop.service';
 
 @NgModule({
   declarations: [
@@ -94,6 +94,7 @@ import { PointerDeviceService } from './service/pointer-device.service';
     ModalService,
     PanelService,
     PointerDeviceService,
+    TabletopService,
   ],
   entryComponents: [
     ModalComponent,
