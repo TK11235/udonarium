@@ -111,12 +111,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
     EventSystem.register(this)
-      .on('*', () => {
-        if (this.lazyUpdateTimer === null) {
+      .on('*', event => {
+        if (!event.isSendFromSelf && this.lazyUpdateTimer === null) {
           this.lazyUpdateTimer = setTimeout(() => {
             this.lazyUpdateTimer = null;
             this.ngZone.run(() => { });
-          }, 33);
+          }, 100);
         }
       }).on<AppConfig>('LOAD_CONFIG', 0, event => {
         console.log('LOAD_CONFIG !!!', event.data);
