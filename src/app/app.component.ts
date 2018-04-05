@@ -146,7 +146,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   open(componentName: string) {
-    let component: { new (...args: any[]): any } = null;
+    let component: { new(...args: any[]): any } = null;
     let option: PanelOption = { width: 450, height: 600, left: 100 }
     switch (componentName) {
       case 'PeerMenuComponent':
