@@ -2,6 +2,11 @@ import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory, Type } from './object-factory';
 import { EventSystem } from '../system/system';
 
+interface DeletedObjectContext {
+  aliasName: string;
+  timeStamp: number;
+}
+
 export class ObjectStore {
   private static _instance: ObjectStore
   static get instance(): ObjectStore {
@@ -12,7 +17,7 @@ export class ObjectStore {
   private identifierHash: { [identifier: string]: GameObject } = {};
   private classHash: { [aliasName: string]: GameObject[] } = {};
   //private garbageHash: { [identifier: string]: { context: ObjectContext, timeStamp: number } } = {};
-  private garbageHash: { [identifier: string]: { aliasName: string, timeStamp: number } } = {};
+  private garbageHash: { [identifier: string]: DeletedObjectContext } = {};
 
   private queue: { [identifier: string]: ObjectContext } = {};
   private updateInterval: NodeJS.Timer = null;
