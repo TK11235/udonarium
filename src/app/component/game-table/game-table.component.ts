@@ -72,14 +72,21 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private isAllowedToOpenContextMenu: boolean = true;
 
-  // 毎回filterする方法だと遅い　何とかする
-  get tabletopCharacters(): GameCharacter[] { return ObjectStore.instance.getObjects<GameCharacter>(GameCharacter).filter((obj) => { return obj.location.name === 'table' }); }
-  get gameTableMasks(): GameTableMask[] { return ObjectStore.instance.getObjects<GameTableMask>(GameTableMask).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
-  get cards(): Card[] { return ObjectStore.instance.getObjects<Card>(Card).filter((obj) => { return obj.location.name === 'table' }); }
-  get cardStacks(): CardStack[] { return ObjectStore.instance.getObjects<CardStack>(CardStack).filter((obj) => { return obj.location.name === 'table' }); }
-  get terrains(): Terrain[] { return ObjectStore.instance.getObjects<Terrain>(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier }); }
-  get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects<PeerCursor>(PeerCursor); }
-  get textNotes(): TextNote[] { return ObjectStore.instance.getObjects<TextNote>(TextNote); }
+  private needUpdateList: { [aliasName: string]: boolean } = {};
+  private _tabletopCharacters: GameCharacter[] = [];
+  private _gameTableMasks: GameTableMask[] = [];
+  private _cards: Card[] = [];
+  private _cardStacks: CardStack[] = [];
+  private _terrains: Terrain[] = [];
+  private _peerCursors: PeerCursor[] = [];
+  private _textNotes: TextNote[] = [];
+  get tabletopCharacters(): GameCharacter[] { this.updateTabletopObjects(); return this._tabletopCharacters; }
+  get gameTableMasks(): GameTableMask[] { this.updateTabletopObjects(); return this._gameTableMasks; }
+  get cards(): Card[] { this.updateTabletopObjects(); return this._cards; }
+  get cardStacks(): CardStack[] { this.updateTabletopObjects(); return this._cardStacks; }
+  get terrains(): Terrain[] { this.updateTabletopObjects(); return this._terrains; }
+  get peerCursors(): PeerCursor[] { this.updateTabletopObjects(); return this._peerCursors; }
+  get textNotes(): TextNote[] { this.updateTabletopObjects(); return this._textNotes; }
 
   constructor(
     private ngZone: NgZone,
@@ -92,13 +99,30 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     console.log('きどう');
+    this.resetUpdateList();
+
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
+        if (this.needUpdateList[event.data.aliasName] === true) {
+          this.needUpdateList[event.data.aliasName] = false;
+        }
         if (event.data.identifier !== this.gameTableObject.identifier) return;
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
+        this.needUpdateList[GameTableMask.aliasName] = false;
+        this.needUpdateList[Terrain.aliasName] = false;
+
         this.updateBackgroundImage();
         this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
+      })
+      .on('DELETE_GAME_OBJECT', 1000, event => {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        let garbage = object ? object : ObjectStore.instance.getDeletedObject(event.data.identifier);
+        if (garbage == null || garbage.aliasName.length < 1) {
+          this.resetUpdateList();
+        } else if (this.needUpdateList[garbage.aliasName] === true) {
+          this.needUpdateList[garbage.aliasName] = false;
+        }
       })
       .on('XML_PARSE', event => {
         let xml: string = event.data.xml;
@@ -329,6 +353,54 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       default:
         gameObject.setLocation('table');
         break;
+    }
+  }
+
+  private resetUpdateList() {
+    this.needUpdateList[GameCharacter.aliasName] = false;
+    this.needUpdateList[GameTableMask.aliasName] = false;
+    this.needUpdateList[Card.aliasName] = false;
+    this.needUpdateList[CardStack.aliasName] = false;
+    this.needUpdateList[Terrain.aliasName] = false;
+    this.needUpdateList[PeerCursor.aliasName] = false;
+    this.needUpdateList[TextNote.aliasName] = false;
+  }
+
+  private updateTabletopObjects() {
+    if (!this.needUpdateList[GameCharacter.aliasName]) {
+      console.log('GameCharacter update...');
+      this.needUpdateList[GameCharacter.aliasName] = true;
+      this._tabletopCharacters = ObjectStore.instance.getObjects<GameCharacter>(GameCharacter).filter((obj) => { return obj.location.name === 'table' });
+    }
+    if (!this.needUpdateList[GameTableMask.aliasName]) {
+      console.log('GameTableMask update...');
+      this.needUpdateList[GameTableMask.aliasName] = true;
+      this._gameTableMasks = ObjectStore.instance.getObjects<GameTableMask>(GameTableMask).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
+    }
+    if (!this.needUpdateList[Card.aliasName]) {
+      console.log('Card update...');
+      this.needUpdateList[Card.aliasName] = true;
+      this._cards = ObjectStore.instance.getObjects<Card>(Card).filter((obj) => { return obj.location.name === 'table' });
+    }
+    if (!this.needUpdateList[CardStack.aliasName]) {
+      console.log('CardStack update...');
+      this.needUpdateList[CardStack.aliasName] = true;
+      this._cardStacks = ObjectStore.instance.getObjects<CardStack>(CardStack).filter((obj) => { return obj.location.name === 'table' });
+    }
+    if (!this.needUpdateList[Terrain.aliasName]) {
+      console.log('Terrain update...');
+      this.needUpdateList[Terrain.aliasName] = true;
+      this._terrains = ObjectStore.instance.getObjects<Terrain>(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
+    }
+    if (!this.needUpdateList[PeerCursor.aliasName]) {
+      console.log('PeerCursor update...');
+      this.needUpdateList[PeerCursor.aliasName] = true;
+      this._peerCursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
+    }
+    if (!this.needUpdateList[TextNote.aliasName]) {
+      console.log('TextNote update...');
+      this.needUpdateList[TextNote.aliasName] = true;
+      this._textNotes = ObjectStore.instance.getObjects<TextNote>(TextNote);
     }
   }
 
