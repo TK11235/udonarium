@@ -44,6 +44,8 @@ import { ModalService } from './service/modal.service';
 import { PanelService } from './service/panel.service';
 import { PointerDeviceService } from './service/pointer-device.service';
 import { TabletopService } from './service/tabletop.service';
+import { MovableDirective } from './directive/movable.directive';
+import { RotableDirective } from './directive/rotable.directive';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { TabletopService } from './service/tabletop.service';
     TerrainComponent,
     PeerCursorComponent,
     TextNoteComponent,
+    MovableDirective,
+    RotableDirective,
   ],
   imports: [
     BrowserModule,
