@@ -2,7 +2,7 @@
   [style.width.px]="size * gridSize"
   appMovable [movable.option]="movableOption">
   <div class="component-content is-3d is-pointer-events-auto is-grab"
-    appRotable [rotable.option]="rotableOption" [rotable.disable]="isLocked">
+    appRotable [rotable.option]="rotableOption">
     <div *ngIf="imageFile" (@shuffle.start)="animationShuffleStarted($event)" (@shuffle.done)="animationShuffleDone($event)"
       [@shuffle]="animeState">
       <img class="card-image" [ngStyle]="{'transform': 'rotateZ(' + topCard.rotate +'deg)'}" [src]="imageFile.url | safe: 'resourceUrl'">

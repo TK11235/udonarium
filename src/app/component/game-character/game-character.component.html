@@ -1,6 +1,6 @@
 <div class="component is-3d is-grab"
   [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
-  appMovable [movable.option]="movableOption" [movable.disable]="isLock">
+  appMovable [movable.option]="movableOption">
   <div class="component-content is-3d" [@bounceInOut]="'in'">
     <div class="pedestal-inner"></div>
     <div class="pedestal-outer"></div>
