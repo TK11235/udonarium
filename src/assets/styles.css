@@ -33,6 +33,23 @@ button:disabled {
   color: #aaa; 
   cursor: auto;
 }
+
+button.danger {
+  background-color: rgb(207, 82, 82);
+  color: #eee; 
+  border: solid 1px rgb(184, 59, 59);
+}
+
+button.danger:hover {
+  background-color: rgb(160, 32, 32);
+  color: #f5f5f5; 
+}
+
+button.danger:disabled {
+  background-color: rgb(224, 131, 131);
+  border: solid 1px rgb(187, 55, 55);
+  color: #eee; 
+}
 /* everywhere else */
 /*
 * { 

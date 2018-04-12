@@ -37,20 +37,18 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('gameObjects') gameObjects: ElementRef;
   @ViewChild('gridCanvas') gridCanvas: ElementRef;
 
-  private _gameTableObject: GameTable = null;
+  private _emptyTable: GameTable = new GameTable('');
 
   get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
   get gameTableObject(): GameTable {
     let table = this.tableSelecter.viewTable;
-    if (table && table !== this._gameTableObject) {
-      this._gameTableObject = table;
-      this.updateBackgroundImage();
-      this.setGameTableGrid(this._gameTableObject.width, this._gameTableObject.height, this._gameTableObject.gridSize, this._gameTableObject.gridType, this.gameTableObject.gridColor);
-    }
-    return this._gameTableObject;
+    return table ? table : this._emptyTable;
   }
 
-  bgImage: ImageFile = ImageFile.Empty;
+  get bgImage(): ImageFile {
+    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
+    return file ? file : ImageFile.Empty;
+  }
 
   private isTransformMode: boolean = false;
 
@@ -111,7 +109,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.needUpdateList[event.data.aliasName] === true) {
           this.needUpdateList[event.data.aliasName] = false;
         }
-        if (event.data.identifier !== this.gameTableObject.identifier) return;
+        if (event.data.identifier !== this.gameTableObject.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
 
         this.needUpdateList[GameTableMask.aliasName] = false;
