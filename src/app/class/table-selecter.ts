@@ -15,24 +15,9 @@ export class TableSelecter extends GameObject {
       .on('SELECT_GAME_TABLE', 0, event => {
         console.log('SELECT_GAME_TABLE ' + this.identifier);
 
-        this.viewTable.selected = false;
+        if (this.viewTable) this.viewTable.selected = false;
         this.viewTableIdentifier = event.data.identifier;
-        //this.update();
-
-        let gameTable = this.viewTable;
-
-        if (!gameTable) return;
-
-        let data: GameTableDataContainer = {
-          width: gameTable.width,
-          height: gameTable.height,
-          imageIdentifier: gameTable.imageIdentifier,
-          gridSize: gameTable.gridSize,
-          gridType: gameTable.gridType,
-        }
-        EventSystem.call('UPDATE_GAME_TABLE', data);
-        gameTable.selected = true;
-        //gameTable.update();
+        if (this.viewTable) this.viewTable.selected = true;
       });
   }
 

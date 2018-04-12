@@ -115,7 +115,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.needUpdateList[GameTableMask.aliasName] = false;
         this.needUpdateList[Terrain.aliasName] = false;
 
-        this.updateBackgroundImage();
         this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
@@ -146,7 +145,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     this.makeDefaultTable();
     this.makeDefaultTabletopObjects();
-    this.updateBackgroundImage();
   }
 
   ngAfterViewInit() {
@@ -160,24 +158,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.unregister(this);
     this.removeMouseEventListeners();
     this.elementRef.nativeElement.removeEventListener('mousedown', this.callbackOnMouseDown, true);
-  }
-
-  private updateBackgroundImage() {
-    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
-    if (file) {
-      this.bgImage = file;
-    } else {
-      let dummy = {};
-      EventSystem.register(dummy)
-        .on('SYNCHRONIZE_FILE_LIST', event => {
-          if (!event.isSendFromSelf) return;
-          let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
-          if (file) {
-            this.bgImage = file;
-            EventSystem.unregister(dummy);
-          }
-        });
-    }
   }
 
   onMouseDown(e: any) {
