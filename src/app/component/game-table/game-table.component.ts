@@ -381,7 +381,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.needUpdateList[GameTableMask.aliasName]) {
       console.log('GameTableMask update...');
       this.needUpdateList[GameTableMask.aliasName] = true;
-      this._gameTableMasks = ObjectStore.instance.getObjects<GameTableMask>(GameTableMask).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
+      let viewTable = this.tableSelecter.viewTable;
+      this._gameTableMasks = viewTable ? viewTable.masks : [];
     }
     if (!this.needUpdateList[Card.aliasName]) {
       console.log('Card update...');
@@ -396,7 +397,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.needUpdateList[Terrain.aliasName]) {
       console.log('Terrain update...');
       this.needUpdateList[Terrain.aliasName] = true;
-      this._terrains = ObjectStore.instance.getObjects<Terrain>(Terrain).filter((obj) => { return obj.location.name === this.gameTableObject.identifier });
+      let viewTable = this.tableSelecter.viewTable;
+      this._terrains = viewTable ? viewTable.terrains : [];
     }
     if (!this.needUpdateList[PeerCursor.aliasName]) {
       console.log('PeerCursor update...');
@@ -430,8 +432,12 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createGameTableMask(potison: PointerCoordinate) {
     console.log('createGameTableMask A');
+    let viewTable = this.tableSelecter.viewTable;
+    if (!viewTable) return;
+
     let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
-    tableMask.location.name = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable.identifier;
+    //tableMask.location.name = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable.identifier;
+    viewTable.appendChild(tableMask);
 
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
     console.log('createGameTableMask B', pointer);
@@ -447,13 +453,16 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let image: ImageFile = FileStorage.instance.get(url)
     if (!image) image = FileStorage.instance.add(url);
 
-    let tableMask = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
-    tableMask.location.name = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable.identifier;
+    let viewTable = this.tableSelecter.viewTable;
+    if (!viewTable) return;
+
+    let terrain = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
+    viewTable.appendChild(terrain);
 
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    tableMask.location.x = pointer.x - 50;
-    tableMask.location.y = pointer.y - 50;
-    tableMask.update();
+    terrain.location.x = pointer.x - 50;
+    terrain.location.y = pointer.y - 50;
+    terrain.update();
   }
 
   createTextNote(potison: PointerCoordinate) {

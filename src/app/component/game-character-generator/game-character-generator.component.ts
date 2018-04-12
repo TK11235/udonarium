@@ -63,9 +63,10 @@ export class GameCharacterGeneratorComponent implements OnInit, OnDestroy, After
     GameCharacter.createGameCharacter(this.name, this.size, this.tableBackgroundImage.identifier);
   }
   createGameTableMask() {
+    let viewTable = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;
+    if (!viewTable) return;
     let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
-    tableMask.location.name = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable.identifier;
-    //this.gameRoomService.getGameObjectWithType<TableSelecter>(TableSelecter, 'tableSelecter').viewTable
+    viewTable.appendChild(tableMask);
   }
 
   createGameCharacterForXML(xml: string) {

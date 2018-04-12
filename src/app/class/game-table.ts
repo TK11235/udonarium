@@ -1,12 +1,9 @@
-import { GameTableMask } from './game-table-mask';
-import { TabletopObject } from './tabletop-object';
-import { Terrain } from './terrain';
-
-import { Network, EventSystem } from './core/system/system';
-import { ObjectStore } from './core/synchronize-object/object-store';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
-import { GameObject } from './core/synchronize-object/game-object';
-import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
+import { ObjectNode } from './core/synchronize-object/object-node';
+import { InnerXml } from './core/synchronize-object/object-serializer';
+import { EventSystem } from './core/system/system';
+import { GameTableMask } from './game-table-mask';
+import { Terrain } from './terrain';
 
 export enum GridType {
   SQUARE = 0,
@@ -23,7 +20,7 @@ export interface GameTableDataContainer {
 }
 
 @SyncObject('game-table')
-export class GameTable extends GameObject implements InnerXml {
+export class GameTable extends ObjectNode implements InnerXml {
   @SyncVar() name: string = 'テーブル';
   @SyncVar() width: number = 20;
   @SyncVar() height: number = 20;
@@ -33,31 +30,28 @@ export class GameTable extends GameObject implements InnerXml {
   @SyncVar() gridType: GridType = GridType.SQUARE; // 0=square 1=hex(縦揃え) 2=hex(横揃え)
   @SyncVar() gridColor: string = '#000000e6';
 
+  get terrains(): Terrain[] {
+    let terrains: Terrain[] = [];
+    this.children.forEach(object => {
+      if (object instanceof Terrain) terrains.push(object);
+    });
+    return terrains;
+  }
+
+  get masks(): GameTableMask[] {
+    let masks: GameTableMask[] = [];
+    this.children.forEach(object => {
+      if (object instanceof GameTableMask) masks.push(object);
+    });
+    return masks;
+  }
+
   innerXml(): string {
-    let xml = '';
-    let masks = ObjectStore.instance.getObjects<GameTableMask>(GameTableMask);
-    for (let mask of masks) {
-      if (mask.location.name === this.identifier) {
-        xml += mask.toXml();
-      }
-    }
-    let terrains = ObjectStore.instance.getObjects<Terrain>(Terrain);
-    for (let terrain of terrains) {
-      if (terrain.location.name === this.identifier) {
-        xml += terrain.toXml();
-      }
-    }
-    return xml;
+    return super.innerXml();
   }
 
   parseInnerXml(element: Element) {
-    for (let i = 0; i < element.children.length; i++) {
-      let object = ObjectSerializer.instance.parseXml(element.children[i]);
-      if (object instanceof TabletopObject) {
-        object.location.name = this.identifier;
-        object.update();
-      }
-    }
-    if (this.selected) EventSystem.call('SELECT_GAME_TABLE', { identifier: this.identifier }, Network.peerId);
+    super.parseInnerXml(element);
+    if (this.selected) EventSystem.trigger('SELECT_GAME_TABLE', { identifier: this.identifier });
   }
 }
