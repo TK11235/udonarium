@@ -122,6 +122,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         console.log('LOAD_CONFIG !!!', event.data);
         Network.setApiKey(event.data.webrtc.key);
         Network.open();
+      }).on<AppConfig>('FILE_LOADED', 0, event => {
+        this.lazyUpdateTimer = setTimeout(() => {
+          this.lazyUpdateTimer = null;
+          this.ngZone.run(() => { });
+        }, 100);
       })
       .on('OPEN_PEER', 0, event => {
         console.log('OPEN_PEER', event.data.peer);

@@ -82,6 +82,7 @@ export class FileArchiver {
       await this.handleAudio(files[i]);
       this.handleText(files[i]);
       await this.handleZip(files[i]);
+      EventSystem.trigger('FILE_LOADED', { file: files[i] });
     }
   }
 
