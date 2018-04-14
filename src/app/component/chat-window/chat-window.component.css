@@ -54,3 +54,59 @@
   background-color: #555;
   color: #CCC;
 }
+
+.chat-tab {
+  margin: 2px 0px;
+  user-select: none;
+}
+
+.chat-tab input[type="radio"] {
+  display: none;
+}
+
+.chat-tab input[type="radio"] + span {
+  outline: 0;
+  font-size: 12px;
+  background-color: transparent;
+  color: #444; 
+  border: solid 1px #555;
+  padding: 2px 8px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.chat-tab input[type="radio"] + span:hover {
+  background-color: #888;
+  color: #eee;
+  border: solid 1px #555;
+}
+
+.chat-tab input[type="radio"]:checked + span {
+  background: #555;
+  color: #CCC;
+}
+
+.tab-setting {
+  background-color: transparent;
+  color: #444; 
+  border: solid 1px #555;
+  padding: 2px 4px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tab-setting:hover {
+  background-color: #888;
+  color: #eee;
+  border: solid 1px #555;
+}
+
+.small-font {
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.material-icons {
+  vertical-align: middle;
+  font-size: 0.9rem;
+}

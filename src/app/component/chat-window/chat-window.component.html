@@ -11,10 +11,15 @@
     />
   </div>
   <div class="table-cell">
+    <form>
+      <div class="chat-tab">
+        <label *ngFor="let chatTab of chatMessageService.chatTabs">
+          <input name="chat-tab" type="radio" value="{{chatTab.identifier}}" ng-control="options" [(ngModel)]="chatTabidentifier">
+          <span>{{chatTab.name}}</span>
+        </label>
+      </div>
+    </form>
     <div>
-      <select style="width: 8em;" (change)="onSelectedTab($event.target.value)" [(ngModel)]="chatTabidentifier" [ngModelOptions]="{standalone: true}">
-        <option *ngFor="let chatTab of chatMessageService.chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
-      </select>
       <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
         <option value="">ダイスボット指定なし</option>
         <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
