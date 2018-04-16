@@ -55,8 +55,8 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
 
   get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
 
-  private selectedTable: GameTable = null;
-  private selectedTableXml: string = '';
+  selectedTable: GameTable = null;
+  selectedTableXml: string = '';
 
   get isEmpty(): boolean { return this.tableSelecter ? (this.tableSelecter.viewTable ? false : true) : true; }
   get isDeleted(): boolean {
