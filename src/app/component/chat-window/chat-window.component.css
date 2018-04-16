@@ -2,6 +2,13 @@
   -webkit-animation: anime1 1.3s infinite ease-in-out;
   animation: anime1 1.3s infinite ease-in-out;
 }
+.component {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+}
 .log {
   /*
   display: inline-block;
@@ -10,9 +17,8 @@
   max-width: 100%;
   overflow: auto;
   */
-  margin: 0 0 90px 0;
+  /*margin: 0 0 120px 0;*/
   }
-
 .imagebox {
   display: inline-block;
   width: 50px;
@@ -29,15 +35,22 @@
   max-height:100%;
   vertical-align: bottom;
 }
-.table {
-  box-sizing: border-box;
-  padding : 10px;
-  position : fixed;
+.sticky-bottom {
+  position: sticky;
   bottom : 0;
-  display: table;
-  width: calc(100% - 30px);
+  width: 100%;
   background-color: rgba(240,218,189, 0.8);
   border-top:1px dotted #666;
+  margin-bottom: 0;
+}
+.table {
+  box-sizing: border-box;
+  padding : 5px;
+  /*position : fixed;*/
+  /*bottom : 0;*/
+  display: table;
+  /*width: calc(100% - 30px);*/
+  width: 100%;
 }
 .table .table-cell {
   display: table-cell;
@@ -56,7 +69,7 @@
 }
 
 .chat-tab {
-  margin: 2px 0px;
+  padding : 5px;
   user-select: none;
 }
 
@@ -64,24 +77,27 @@
   display: none;
 }
 
-.chat-tab input[type="radio"] + span {
+.chat-tab input[type="radio"] + div {
+  display: inline-block;
+  vertical-align: middle;
   outline: 0;
   font-size: 12px;
   background-color: transparent;
   color: #444; 
   border: solid 1px #555;
   padding: 2px 8px;
+  margin: 2px;
   border-radius: 100px;
   cursor: pointer;
 }
 
-.chat-tab input[type="radio"] + span:hover {
+.chat-tab input[type="radio"] + div:hover {
   background-color: #888;
   color: #eee;
   border: solid 1px #555;
 }
 
-.chat-tab input[type="radio"]:checked + span {
+.chat-tab input[type="radio"]:checked + div {
   background: #555;
   color: #CCC;
 }
@@ -108,5 +124,5 @@
 
 .material-icons {
   vertical-align: middle;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
 }
