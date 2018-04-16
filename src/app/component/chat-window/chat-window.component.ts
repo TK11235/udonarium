@@ -15,6 +15,7 @@ import { DiceBot } from '../../class/dice-bot';
 import { Network, EventSystem } from '../../class/core/system/system';
 import { PeerContext } from '../../class/core/system/network/peer-context';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
+import { ChatTabSettingComponent } from '../chat-tab-setting/chat-tab-setting.component';
 
 @Component({
   selector: 'chat-window',
@@ -80,7 +81,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.sender = this.network.peerId;
     console.log(this.chatMessageService.chatTabs);
-    this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
+    this.chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
 
     this.eventSystem.register(this)
       .on('BROADCAST_MESSAGE', -1000, event => {
@@ -252,5 +253,12 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.chatTab) this.chatTab.addMessage(chatMessage);
     //this.scrollToBottom(true);
     this.text = "";
+  }
+
+  showTabSetting() {
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 500, height: 350 };
+    let component = this.panelService.open<ChatTabSettingComponent>(ChatTabSettingComponent, option);
+    component.selectedTab = this.chatTab;
   }
 }

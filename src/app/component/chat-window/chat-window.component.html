@@ -11,6 +11,7 @@
         <input name="chat-tab" type="radio" value="{{chatTab.identifier}}" ng-control="options" [(ngModel)]="chatTabidentifier">
         <div>{{chatTab.name}}</div>
       </label>
+      <button class="tab-setting small-font" (click)="showTabSetting()"><i class="material-icons small-font">settings</i>タブ設定</button>
     </div>
   </form>
 <div class="table" [ngClass]="{'direct-message': isDirect}">
