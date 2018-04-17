@@ -10,6 +10,7 @@ import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-d
 import { ChatPaletteComponent } from '../chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { MovableOption } from '../../directive/movable.directive';
+import { RotableOption } from '../../directive/rotable.directive';
 
 @Component({
   selector: 'game-character',
@@ -40,10 +41,13 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   get name(): string { return this.gameCharacter.name; }
   get size(): number { return this.adjustMinBounds(this.gameCharacter.size); }
   get imageFile(): ImageFile { return this.gameCharacter.imageFile; }
+  get rotate(): number { return this.gameCharacter.rotate; }
+  set rotate(rotate: number) { this.gameCharacter.rotate = rotate; }
 
   gridSize: number = 50;
 
   movableOption: MovableOption = {};
+  rotableOption: RotableOption = {};
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -56,6 +60,9 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     this.movableOption = {
       tabletopObject: this.gameCharacter,
       colideLayers: ['terrain']
+    };
+    this.rotableOption = {
+      tabletopObject: this.gameCharacter
     };
   }
 

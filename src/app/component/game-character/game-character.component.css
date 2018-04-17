@@ -101,6 +101,16 @@
   top: -30px;
 }
 
+.rotate-frame {
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
 .is-nowrap {
   white-space: nowrap;
 }
@@ -108,4 +118,31 @@
 .is-black-background {
   color: #CCC;
   background-color: rgba(30, 30, 30, 0.8);
+}
+
+.rotate-grab {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  border:solid 2px #CCCCCC;
+  cursor: -moz-default;
+  cursor: -webkit-default;
+  cursor: default;
+  z-index: 1;
+  padding: 0;
+  background-color: #CCCCCC;
+  border-radius: 100%;
+  color: #444;
+  font-size: 8px;
+  opacity: 0;
+}
+
+.rotate-grab:hover, .rotate-grab:active {
+  opacity: 1;
+}
+
+.of-left-top {
+  top: -7px;
+  left: -7px;
 }
