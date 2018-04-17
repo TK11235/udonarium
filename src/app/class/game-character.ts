@@ -1,4 +1,4 @@
-import { SyncObject } from './core/synchronize-object/anotation';
+import { SyncObject,SyncVar } from './core/synchronize-object/anotation';
 import { GameObject } from './core/synchronize-object/game-object';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
@@ -6,6 +6,7 @@ import { ChatPalette } from './chat-palette';
 
 @SyncObject('character')
 export class GameCharacter extends TabletopObject {
+  @SyncVar() rotate: number = 0;
   get name(): string { return this.getCommonValue('name', ''); }
   get size(): number { return this.getCommonValue('size', 1); }
 
