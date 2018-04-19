@@ -39,7 +39,8 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnInit() {
     this.movableOption = {
-      tabletopObject: this.gameTableMask
+      tabletopObject: this.gameTableMask,
+      colideLayers: ['terrain']
     };
    }
 
