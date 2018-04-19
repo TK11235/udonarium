@@ -194,19 +194,13 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   stickToGrid(gridSize: number = 25) {
-    let deltaX = this.posX % gridSize;
-    let deltaY = this.posY % gridSize;
+    this.posX = this.calcStickNum(this.posX, gridSize);
+    this.posY = this.calcStickNum(this.posY, gridSize);
+  }
 
-    if (0 < this.posX) {
-      this.posX += deltaX < gridSize / 2 ? -deltaX : gridSize - deltaX;
-    } else {
-      this.posX -= deltaX > -gridSize / 2 ? deltaX : -deltaX - gridSize;
-    }
-    if (0 < this.posY) {
-      this.posY += deltaY < gridSize / 2 ? -deltaY : gridSize - deltaY;
-    } else {
-      this.posY -= deltaY > -gridSize / 2 ? deltaY : -deltaY - gridSize;
-    }
+  private calcStickNum(num: number, interval: number): number {
+    num = num < 0 ? num - interval / 2 : num + interval / 2;
+    return num - (num % interval);
   }
 
   private setPosition(object: TabletopObject) {
