@@ -136,7 +136,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     let x = pointer.x - centerX;
     let y = pointer.y - centerY;
     let rad = Math.atan2(y, x);
-    return (rad * 180 / Math.PI) - rotateOffset;
+    return ((rad * 180 / Math.PI) - rotateOffset) % 360;
   }
 
   stickToPolygonal(polygonal: number = 24) {
