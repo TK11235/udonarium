@@ -182,8 +182,10 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private calcDistanceRatio(start: PointerCoordinate, now: PointerCoordinate): number {
-    let ratio: number = Math.sqrt(this.width * this.width + this.height * this.height);
-    ratio = ratio < 0 ? 0.01 : ratio * 3;
+    let width = this.collidableElements[0].clientWidth;
+    let height = this.collidableElements[0].clientHeight;
+    let ratio: number = Math.sqrt(width * width + height * height);
+    ratio = ratio < 1 ? 1 : ratio * 3;
 
     let distanceY = start.y - now.y;
     let distanceX = start.x - now.x;
@@ -223,18 +225,29 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private findCollidableElements() {
+    this.collidableElements = [];
     if (getComputedStyle(this.transformElement).pointerEvents !== 'none') {
       this.collidableElements = [this.transformElement];
       return;
     }
+    this.findNestedCollidableElements(this.transformElement);
+  }
 
+  private findNestedCollidableElements(element: HTMLElement) {
     // TODO:不完全
-    let children = this.transformElement.children;
+    let children = element.children;
     for (let i = 0; i < children.length; i++) {
       let child = children[i]
       if (!(child instanceof HTMLElement)) continue;
       if (getComputedStyle(child).pointerEvents !== 'none') {
         this.collidableElements.push(child);
+      }
+    }
+    if (this.collidableElements.length < 1) {
+      for (let i = 0; i < children.length; i++) {
+        let child = children[i]
+        if (!(child instanceof HTMLElement)) continue;
+        this.findNestedCollidableElements(child);
       }
     }
   }
