@@ -131,11 +131,12 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
-      let distance: number = Math.sqrt((cardStack.location.x - this.card.location.x) ** 2 + (cardStack.location.y - this.card.location.y) ** 2);
+      let distance: number = Math.sqrt((cardStack.location.x - this.card.location.x) ** 2 + (cardStack.location.y - this.card.location.y) ** 2 + (cardStack.posZ - this.card.posZ) ** 2);
       //console.log('onCardDrop CardStack fire', this.card.name, distance);
       if (distance < 25) {
         cardStack.location.x = this.card.location.x;
         cardStack.location.y = this.card.location.y;
+        cardStack.posZ = this.card.posZ;
         cardStack.putOnBottom(this.card);
       }
     }

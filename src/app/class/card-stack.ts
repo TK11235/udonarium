@@ -51,6 +51,7 @@ export class CardStack extends TabletopObject {
       card.location.name = this.location.name;
       card.location.x = this.location.x;
       card.location.y = this.location.y;
+      card.posZ = this.posZ;
       card.rotate += this.rotate;
       if (360 < card.rotate) card.rotate -= 360;
       card.toTopmost();
@@ -67,6 +68,7 @@ export class CardStack extends TabletopObject {
       card.location.name = this.location.name;
       card.location.x = this.location.x;
       card.location.y = this.location.y;
+      card.posZ = this.posZ;
       card.rotate += this.rotate;
       if (360 < card.rotate) card.rotate -= 360;
     }

@@ -116,18 +116,19 @@ export class CardStackComponent implements OnInit {
 
     if (e.detail instanceof Card) {
       let card: Card = e.detail;
-      let distance: number = Math.sqrt((card.location.x - this.cardStack.location.x) ** 2 + (card.location.y - this.cardStack.location.y) ** 2);
+      let distance: number = Math.sqrt((card.location.x - this.cardStack.location.x) ** 2 + (card.location.y - this.cardStack.location.y) ** 2 + (card.posZ - this.cardStack.posZ) ** 2);
       console.log('onCardDrop Card fire', this.name, distance);
       if (distance < 50) this.cardStack.putOnTop(card);
     } else if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
-      let distance: number = Math.sqrt((cardStack.location.x - this.cardStack.location.x) ** 2 + (cardStack.location.y - this.cardStack.location.y) ** 2);
+      let distance: number = Math.sqrt((cardStack.location.x - this.cardStack.location.x) ** 2 + (cardStack.location.y - this.cardStack.location.y) ** 2 + (cardStack.posZ - this.cardStack.posZ) ** 2);
       console.log('onCardDrop CardStack fire', this.cardStack.name, distance);
       if (distance < 25) {
         let cards: Card[] = this.cardStack.drawCardAll();
         cardStack.location.name = this.cardStack.location.name;
         cardStack.location.x = this.cardStack.location.x;
         cardStack.location.y = this.cardStack.location.y;
+        cardStack.posZ = this.cardStack.posZ;
         for (let card of cards) cardStack.putOnBottom(card);
         this.cardStack.location.name = '';
         this.cardStack.update();
