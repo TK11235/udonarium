@@ -73,6 +73,10 @@
   user-select: none;
 }
 
+.chat-tab label {
+  display: inline-block;
+}
+
 .chat-tab input[type="radio"] {
   display: none;
 }
