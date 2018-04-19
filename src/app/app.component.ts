@@ -160,7 +160,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         break;
       case 'ChatWindowComponent':
         component = ChatWindowComponent;
-        option.width = 600;
+        option.width = 700;
         break;
       case 'GameTableSettingComponent':
         component = GameTableSettingComponent;
