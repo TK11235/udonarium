@@ -352,39 +352,32 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private updateTabletopObjects() {
     if (!this.needUpdateList[GameCharacter.aliasName]) {
-      console.log('GameCharacter update...');
       this.needUpdateList[GameCharacter.aliasName] = true;
       this._tabletopCharacters = ObjectStore.instance.getObjects<GameCharacter>(GameCharacter).filter((obj) => { return obj.location.name === 'table' });
     }
     if (!this.needUpdateList[GameTableMask.aliasName]) {
-      console.log('GameTableMask update...');
       this.needUpdateList[GameTableMask.aliasName] = true;
       let viewTable = this.tableSelecter.viewTable;
       this._gameTableMasks = viewTable ? viewTable.masks : [];
     }
     if (!this.needUpdateList[Card.aliasName]) {
-      console.log('Card update...');
       this.needUpdateList[Card.aliasName] = true;
       this._cards = ObjectStore.instance.getObjects<Card>(Card).filter((obj) => { return obj.location.name === 'table' });
     }
     if (!this.needUpdateList[CardStack.aliasName]) {
-      console.log('CardStack update...');
       this.needUpdateList[CardStack.aliasName] = true;
       this._cardStacks = ObjectStore.instance.getObjects<CardStack>(CardStack).filter((obj) => { return obj.location.name === 'table' });
     }
     if (!this.needUpdateList[Terrain.aliasName]) {
-      console.log('Terrain update...');
       this.needUpdateList[Terrain.aliasName] = true;
       let viewTable = this.tableSelecter.viewTable;
       this._terrains = viewTable ? viewTable.terrains : [];
     }
     if (!this.needUpdateList[PeerCursor.aliasName]) {
-      console.log('PeerCursor update...');
       this.needUpdateList[PeerCursor.aliasName] = true;
       this._peerCursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
     }
     if (!this.needUpdateList[TextNote.aliasName]) {
-      console.log('TextNote update...');
       this.needUpdateList[TextNote.aliasName] = true;
       this._textNotes = ObjectStore.instance.getObjects<TextNote>(TextNote);
     }
