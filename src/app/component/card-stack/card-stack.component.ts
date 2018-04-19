@@ -83,7 +83,8 @@ export class CardStackComponent implements OnInit {
         this.animeState = 'active';
       });
     this.movableOption = {
-      tabletopObject: this.cardStack
+      tabletopObject: this.cardStack,
+      colideLayers: ['terrain']
     };
     this.rotableOption = {
       tabletopObject: this.cardStack

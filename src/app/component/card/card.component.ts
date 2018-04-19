@@ -106,7 +106,8 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
     this.movableOption = {
-      tabletopObject: this.card
+      tabletopObject: this.card,
+      colideLayers: ['terrain']
     };
     this.rotableOption = {
       tabletopObject: this.card
