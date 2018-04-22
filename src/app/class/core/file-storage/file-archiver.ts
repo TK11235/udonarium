@@ -68,9 +68,12 @@ export class FileArchiver {
     event.stopPropagation();
     event.preventDefault();
 
-    let dataTransfer = event.dataTransfer;
     console.log('onDrop', event.dataTransfer);
-    this.load(dataTransfer.files);
+    let files = event.dataTransfer.files
+    setTimeout(() => {
+      // 他のDOM Eventより後に実行する
+      this.load(files);
+    }, 16);
   };
 
   async load(files: File[])
