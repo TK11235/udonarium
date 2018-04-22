@@ -83,7 +83,7 @@ export class FileArchiver {
     for (let i = 0; i < length; i++) {
       await this.handleImage(files[i]);
       await this.handleAudio(files[i]);
-      this.handleText(files[i]);
+      await this.handleText(files[i]);
       await this.handleZip(files[i]);
       EventSystem.trigger('FILE_LOADED', { file: files[i] });
     }
@@ -103,17 +103,23 @@ export class FileArchiver {
     let audio = await AudioStorage.instance.addAsync(file);
   }
 
-  private handleText(file: File) {
-    if (file.type.indexOf('text/') < 0) return;
-    console.log(file.name + ' type:' + file.type);
-    if (10 * 1024 * 1024 < file.size) return;
+  private handleText(file: File): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (file.type.indexOf('text/') < 0) return resolve();
+      console.log(file.name + ' type:' + file.type);
+      if (10 * 1024 * 1024 < file.size) return resolve();
 
-    let reader = new FileReader();
-    reader.onload = (event) => {
-      let xml: string = reader.result;
-      EventSystem.trigger('XML_PARSE', { xml: xml });
-    }
-    reader.readAsText(file);
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        let xml: string = reader.result;
+        EventSystem.trigger('XML_PARSE', { xml: xml });
+        resolve();
+      }
+      reader.onabort = reader.onerror = () => {
+        resolve();
+      }
+      reader.readAsText(file);
+    });
   }
 
   private async handleZip(file: File) {
