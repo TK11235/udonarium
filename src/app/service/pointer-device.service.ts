@@ -118,38 +118,37 @@ export class PointerDeviceService {
   }
 
   private onPointerUp(e: any) {
-    if (e.touches) {
-      this.onTouchMove(e);
-    } else {
-      this.onMouseMove(e);
-    }
+    this.onPointerMove(e);
     this._isPointerDown = false;
     //this._isDragging = false;
   }
 
   private onContextMenu(e: any) {
     this.onPointerUp(e);
+    if (e.touches) this._isAllowedToOpenContextMenu = true;
   }
 
   protected addEventListeners() {
     this.ngZone.runOutsideAngular(() => {
       document.body.addEventListener('mousedown', this.callbackOnPointerDown, true);
-      document.body.addEventListener('touchdown', this.callbackOnPointerDown, true);
+      document.body.addEventListener('touchstart', this.callbackOnPointerDown, true);
       document.body.addEventListener('mousemove', this.callbackOnPointerMove, true);
       document.body.addEventListener('touchmove', this.callbackOnPointerMove, true);
       document.body.addEventListener('mouseup', this.callbackOnPointerUp, true);
-      document.body.addEventListener('touchup', this.callbackOnPointerUp, true);
+      document.body.addEventListener('touchend', this.callbackOnPointerUp, true);
+      document.body.addEventListener('touchcancel', this.callbackOnPointerUp, true);
       document.body.addEventListener('contextmenu', this.callbackOnContextMenu, true);
     });
   }
 
   protected removeEventListeners() {
     document.body.removeEventListener('mousedown', this.callbackOnPointerDown, true);
-    document.body.removeEventListener('touchdown', this.callbackOnPointerDown, true);
+    document.body.removeEventListener('touchstart', this.callbackOnPointerDown, true);
     document.body.removeEventListener('mousemove', this.callbackOnPointerMove, true);
     document.body.removeEventListener('touchmove', this.callbackOnPointerMove, true);
     document.body.removeEventListener('mouseup', this.callbackOnPointerUp, true);
-    document.body.removeEventListener('touchup', this.callbackOnPointerUp, true);
+    document.body.removeEventListener('touchend', this.callbackOnPointerUp, true);
+    document.body.removeEventListener('touchcancel', this.callbackOnPointerUp, true);
     document.body.removeEventListener('contextmenu', this.callbackOnContextMenu, true);
   }
 
