@@ -167,7 +167,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isAllowedToOpenContextMenu = true;
     console.log('onMouseDown isAllowedToOpenContextMenu', this.isAllowedToOpenContextMenu);
 
-    if (e.target.contains(this.gameObjects.nativeElement)) {
+    if (e.target.contains(this.gameObjects.nativeElement) || e.button === 2) {
       this.isTransformMode = true;
       e.preventDefault();
     } else {
@@ -197,10 +197,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let x = this.pointerDeviceService.pointerX;
     let y = this.pointerDeviceService.pointerY;
 
-    if (this.mouseDownPositionX !== x || this.mouseDownPositionX !== y) {
-      this.contextMenuService.close();
-    }
-
     if (this.isTransformMode) {
       let transformX = 0;
       let transformY = 0;
@@ -221,6 +217,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.mouseDownPositionX !== x || this.mouseDownPositionY !== y) {
         this.isAllowedToOpenContextMenu = false;
+      }
+
+      if (!this.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
+        this.ngZone.run(() => { this.contextMenuService.close(); });
       }
 
       this.mouseDownPositionX = x;
