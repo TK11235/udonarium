@@ -1,5 +1,5 @@
 <div class="component is-3d is-pointer-events-none"
-  appMovable [movable.option]="movableOption">
+  appMovable [movable.option]="movableOption" [movable.disable]="isSelected">
   <div class="is-3d" appRotable [rotable.option]="rotableOption">
   <div class="component-content is-3d is-pointer-events-auto"
     [style.width.px]="width * gridSize">
