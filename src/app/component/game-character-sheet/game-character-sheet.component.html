@@ -21,8 +21,8 @@
 </ng-container>
 <div *ngIf="tabletopObject" class="flex-container">
   <div *ngIf="0 < tabletopObject.imageFile?.url.length" class="box main-image-box">
-    <img class="main-image" [src]="tabletopObject.imageFile.url | safe: 'resourceUrl'" [alt]="tabletopObject.imageFile.name"
-    />
+    <img *ngIf="!tabletopObject.flip" class="main-image" [src]="tabletopObject.imageFile.url | safe: 'resourceUrl'" [alt]="tabletopObject.imageFile.name" />
+    <img *ngIf="tabletopObject.flip" class="main-image flip" [src]="tabletopObject.imageFile.url | safe: 'resourceUrl'" [alt]="tabletopObject.imageFile.name" />
   </div>
   <ng-container *ngIf="tabletopObject.commonDataElement">
     <div class="flex-item">

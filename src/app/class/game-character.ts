@@ -8,7 +8,8 @@ import { ChatPalette } from './chat-palette';
 export class GameCharacter extends TabletopObject {
   get name(): string { return this.getCommonValue('name', ''); }
   get size(): number { return this.getCommonValue('size', 1); }
-
+  get flip(): boolean { return Boolean(this.getCommonValue('flip', 0)); }
+  
   get chatPalette(): ChatPalette {
     for (let child of this.children) {
       if (child instanceof ChatPalette) return child;
@@ -22,23 +23,24 @@ export class GameCharacter extends TabletopObject {
     this.update();
   }
 
-  static createGameCharacter(name: string, size: number, imageIdentifier: string): GameCharacter {
+  static createGameCharacter(name: string, size: number, flip:boolean, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
     //gameCharacter.syncData.imageIdentifier = imageIdentifier;
     //gameCharacter.syncData.name = name;
     //gameCharacter.syncData.size = size;
     gameCharacter.initialize();
-    gameCharacter.createTestGameDataElement(name, size, imageIdentifier);
+    gameCharacter.createTestGameDataElement(name, size, flip, imageIdentifier);
 
     return gameCharacter;
   }
 
-  createTestGameDataElement(name: string, size: number, imageIdentifier: string) {
+  createTestGameDataElement(name: string, size: number, flip:boolean, imageIdentifier: string) {
     this.createDataElements();
 
     let nameElement: DataElement = DataElement.create('name', name, {}, 'name_' + this.identifier);
     let sizeElement: DataElement = DataElement.create('size', size, {}, 'size_' + this.identifier);
+    let flipElement: DataElement = DataElement.create('flip', Number(flip), { 'type': 'bool' }, 'flip_' + this.identifier);
 
     if (this.imageDataElement.getFirstElementByName('imageIdentifier')) {
       this.imageDataElement.getFirstElementByName('imageIdentifier').value = imageIdentifier;
@@ -51,6 +53,7 @@ export class GameCharacter extends TabletopObject {
 
     this.commonDataElement.appendChild(nameElement);
     this.commonDataElement.appendChild(sizeElement);
+    this.commonDataElement.appendChild(flipElement);
 
     this.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(hpElement);
@@ -107,6 +110,7 @@ export class GameCharacter extends TabletopObject {
 export interface GameCharacterContainer {
   name: string;
   size: number;
+  flip: boolean;
   imageIdentifier: string;
   dataElementIdentifier: string;
   location: GameObjectLocationContainer;

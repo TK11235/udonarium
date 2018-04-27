@@ -92,6 +92,10 @@
   vertical-align: bottom;
 }
 
+.flip {
+  transform: scaleX(-1);
+}
+
 .name-tag {
   box-sizing: border-box;
   font-size: 15px;

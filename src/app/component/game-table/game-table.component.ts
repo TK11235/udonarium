@@ -386,7 +386,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createGameCharacter(potison: PointerCoordinate) {
     console.log('mouseCursor B', potison);
-    let gameObject = GameCharacter.createGameCharacter('新しいキャラクター', 1, '');
+    let gameObject = GameCharacter.createGameCharacter('新しいキャラクター', 1, false, '');
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
     gameObject.location.x = pointer.x - 25;
     gameObject.location.y = pointer.y - 25;
@@ -624,13 +624,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 9 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターA', 1, testFile.identifier);
+    testCharacter.createTestGameDataElement('モンスターA', 1, false, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_2');
     testCharacter.location.x = 8 * 50;
     testCharacter.location.y = 8 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターB', 1, testFile.identifier);
+    testCharacter.createTestGameDataElement('モンスターB', 1, false, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_3');
     fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
@@ -639,7 +639,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter.location.x = 4 * 50;
     testCharacter.location.y = 2 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターC', 3, testFile.identifier);
+    testCharacter.createTestGameDataElement('モンスターC', 3, false, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_4');
     fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
@@ -648,7 +648,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter.location.x = 6 * 50;
     testCharacter.location.y = 11 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターA', 1, testFile.identifier);
+    testCharacter.createTestGameDataElement('キャラクターA', 1, false, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_5');
     fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
@@ -657,7 +657,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter.location.x = 12 * 50;
     testCharacter.location.y = 12 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターB', 1, testFile.identifier);
+    testCharacter.createTestGameDataElement('キャラクターB', 1, false, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_6');
     fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
@@ -666,6 +666,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter.initialize();
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 13 * 50;
-    testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
+    testCharacter.createTestGameDataElement('キャラクターC', 1, false, testFile.identifier);
   }
 }

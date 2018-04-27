@@ -9,7 +9,8 @@
         <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
           <span>{{name}}</span>
         </div>
-        <img class="image" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'">
+        <img class="image" *ngIf="0 < imageFile.url.length && !flip" [src]="imageFile.url | safe: 'resourceUrl'">
+        <img class="image flip" *ngIf="0 < imageFile.url.length && flip" [src]="imageFile.url | safe: 'resourceUrl'">
       </div>
     </div>
   </div>
