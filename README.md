@@ -14,7 +14,7 @@
 - コマ／カード管理
 - チャット送受信
 - チャットパレット
-- ダイスボット（[BCDice](https://github.com/torgtaitai/BCDice)を[Opal](http://opalrb.org/)でJavaScriptにトランスパイル）
+- ダイスボット（[BCDice](https://github.com/torgtaitai/BCDice)を[Opal](http://opalrb.com/)でJavaScriptにトランスパイル）
 - 画像ファイル共有
 - BGM再生
 - セーブデータ生成（ZIP形式）
