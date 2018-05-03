@@ -99,7 +99,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     e.stopPropagation();
     this._isGrabbing = true;
     this._isDragging = false;
-    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.tabletopService.dragAreaElement);
+    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.transformElement.parentElement);
     this.rotateOffset = this.calcRotate(pointer, this.rotate);
     this.addEventListeners();
     this.setAnimatedTransition(false);
@@ -108,7 +108,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   protected onMouseMove(e: PointerEvent) {
     if (this.isDisable) return this.cancel();
     e.stopPropagation();
-    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.tabletopService.dragAreaElement);
+    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.transformElement.parentElement);
     let angle = this.calcRotate(pointer, this.rotateOffset);
     if (this.rotate !== angle) {
       this._isDragging = true;
@@ -131,8 +131,8 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private calcRotate(pointer: PointerCoordinate, rotateOffset: number): number {
-    let centerX = this.transformElement.clientWidth / 2 + this.tabletopObject.location.x;
-    let centerY = this.transformElement.clientHeight / 2 + this.tabletopObject.location.y;
+    let centerX = this.transformElement.clientWidth / 2 ;
+    let centerY = this.transformElement.clientHeight / 2 ;
     let x = pointer.x - centerX;
     let y = pointer.y - centerY;
     let rad = Math.atan2(y, x);
