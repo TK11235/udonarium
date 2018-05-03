@@ -54,7 +54,14 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   gameCharacters: GameCharacter[] = [];
   gameCharacter: GameCharacter = null;
-  chatTabidentifier: string = '';
+
+  private _chatTabidentifier: string = '';
+  get chatTabidentifier(): string { return this._chatTabidentifier; }
+  set chatTabidentifier(chatTabidentifier: string) {
+    this._chatTabidentifier = chatTabidentifier;
+    this.updatePanelTitle();
+  }
+
   get chatTab(): ChatTab { return this.objectStore.get<ChatTab>(this.chatTabidentifier); }
   maxLogLength: number = 1000;
   isAutoScroll: boolean = true;
