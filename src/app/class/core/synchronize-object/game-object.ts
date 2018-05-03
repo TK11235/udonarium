@@ -14,19 +14,14 @@ export interface ObjectContext {
 
 export class GameObject {
   private context: ObjectContext = {
-    aliasName: (<any>this.constructor).aliasName,
+    aliasName: (<typeof GameObject>this.constructor).aliasName,
     identifier: '',
     majorVersion: 0,
     minorVersion: 0,
     syncData: {}
   }
 
-  private static _aliasName: string = null;
-  static get aliasName() {
-    if (this._aliasName === null) this._aliasName = ObjectFactory.instance.getAlias(this);
-    return this._aliasName;
-  }
-
+  static get aliasName() { return ObjectFactory.instance.getAlias(this); }
   get aliasName() { return this.context.aliasName; }
   get identifier() { return this.context.identifier; }
   get version() { return this.context.majorVersion + this.context.minorVersion; }
