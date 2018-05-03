@@ -18,7 +18,7 @@ declare module PeerJs {
 interface DataContainer {
   data: any;
   peers: string[];
-  isRelay: boolean;
+  ttl: number;
   isCompression?: boolean;
 }
 
@@ -114,7 +114,7 @@ export class SkyWayConnection implements Connection {
     let container: DataContainer = {
       data: MessagePack.encode(data),
       peers: this._peerIds.concat(),
-      isRelay: false
+      ttl: 0
     }
 
     this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
@@ -132,20 +132,20 @@ export class SkyWayConnection implements Connection {
   }
 
   private sendUnicast(container: DataContainer, sendTo: string) {
-    container.isRelay = false;
+    container.ttl = 0;
     let conn = this.findDataConnection(sendTo);
     if (conn && conn.open) conn.send(container);
   }
 
   private sendBroadcast(container: DataContainer) {
-    container.isRelay = true;
+    container.ttl = 1;
     for (let conn of this.connections) {
       if (conn.open) conn.send(container);
     }
   }
 
   private onData(conn: PeerJs.DataConnection, container: DataContainer) {
-    if (container.isRelay) this.onRelay(container);
+    if (0 < container.ttl) this.onRelay(container);
     if (this.callback.onData) {
       this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
         let data: Uint8Array;
@@ -163,6 +163,7 @@ export class SkyWayConnection implements Connection {
   private onRelay(container: DataContainer) {
     let others: string[] = container.peers;
     let peerIds: string[] = this._peerIds.concat();//this.peers.concat();
+    container.ttl--;
 
     if (!others || others.length < 1) return;
     // 自分の知らないPeerが含まれている
