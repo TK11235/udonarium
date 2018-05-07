@@ -490,11 +490,12 @@ class DiceBot
     
     text, number, diceText =
       case type
-      when /(\d+)D6/
+      when /(\d+)D(\d+)/
         count = $1.to_i
-        limit = 6 * count - (count - 1)
+        diceType = $2.to_i
+        limit = diceType * count - (count - 1)
         table = getTableInfoFromExtraTableText(table, limit)
-        get_table_by_nDx_extratable(table, count, 6)
+        get_table_by_nDx_extratable(table, count, diceType)
       when 'D66', 'D66N'
         table = getTableInfoFromExtraTableText(table, 36)
         item, value = get_table_by_d66(table)

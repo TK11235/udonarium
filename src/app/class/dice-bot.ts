@@ -72,6 +72,7 @@ export class DiceBot extends GameObject {
     { script: 'Cthulhu', game: 'クトゥルフ' },
     { script: 'Cthulhu7th', game: 'クトゥルフ第7版' },
     { script: 'CthulhuTech', game: 'クトゥルフテック' },
+    { script: 'KurayamiCrying', game: 'クラヤミクライン' },
     { script: 'GranCrest', game: 'グランクレスト' },
     { script: 'GeishaGirlwithKatana', game: 'ゲイシャ・ガール・ウィズ・カタナ' },
     { script: 'GehennaAn', game: 'ゲヘナ・アナスタシス' },
