@@ -25,6 +25,7 @@ export class GameCharacterGeneratorComponent implements OnInit, OnDestroy, After
 
   name: string = "ゲームキャラクター";
   size: number = 1;
+  flip: boolean = false;
   xml: string = '';
 
   minSize: number = 1;
@@ -60,7 +61,7 @@ export class GameCharacterGeneratorComponent implements OnInit, OnDestroy, After
   }
 
   createGameCharacter() {
-    GameCharacter.createGameCharacter(this.name, this.size, this.tableBackgroundImage.identifier);
+    GameCharacter.createGameCharacter(this.name, this.size, this.flip, this.tableBackgroundImage.identifier);
   }
   createGameTableMask() {
     let viewTable = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;

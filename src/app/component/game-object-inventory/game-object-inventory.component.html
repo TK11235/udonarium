@@ -14,7 +14,8 @@
       <div *ngFor="let gameObject of getGameObjects(inventoryType)" (click)="selectGameObject(gameObject)" [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}">
         <div style="display: inline-block;">
           <div style="min-width:50px; min-height:50px; display: inline-block; vertical-align:text-top;">
-            <img *ngIf="gameObject.imageFile" height="50" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
+            <img *ngIf="gameObject.imageFile && !gameObject.flip" height="50" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
+            <img class="flip" *ngIf="gameObject.imageFile && gameObject.flip" height="50" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
           </div>
           <div style="display: inline-block; vertical-align:text-top;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
             <div style="font-size: 0.8rem;">{{gameObject.name}}</div>

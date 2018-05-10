@@ -46,3 +46,7 @@
 .input_selected {
   color: #CCC;
 }
+
+.flip {
+  transform: scaleX(-1);
+}

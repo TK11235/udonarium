@@ -1,6 +1,8 @@
 <button (click)="openModal()">画像を選ぶ</button>
 <div>
-  <img height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'">
+  <img *ngIf="!flip" height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'">
+  <img *ngIf="flip" style="transform:scaleX(-1);" height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'">
+  <input type="checkbox" [(ngModel)]="flip" />反転
 </div>
 <input [(ngModel)]="name" placeholder="Name" name="name" />
 <div>

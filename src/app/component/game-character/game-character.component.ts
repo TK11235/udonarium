@@ -39,6 +39,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   get name(): string { return this.gameCharacter.name; }
   get size(): number { return this.adjustMinBounds(this.gameCharacter.size); }
+  get flip(): boolean { return this.gameCharacter.flip; }
   get imageFile(): ImageFile { return this.gameCharacter.imageFile; }
 
   gridSize: number = 50;
