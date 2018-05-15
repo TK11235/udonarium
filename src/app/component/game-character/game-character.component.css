@@ -62,7 +62,7 @@
 }
 
 .upright-transform {
-  bottom: 50%;
+  bottom: 0;
   left: 0;
   right: 0;
   position: absolute;
@@ -105,11 +105,18 @@
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.rotate-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
   width: 100%;
   height: auto;
-  vertical-align: bottom;
 }
+
 
 .is-nowrap {
   white-space: nowrap;
@@ -138,11 +145,14 @@
   opacity: 0;
 }
 
-.rotate-grab:hover, .rotate-grab:active {
-  opacity: 1;
+.of-top {
+  top: -55px;
 }
 
-.of-left-top {
-  top: -7px;
-  left: -7px;
+.of-bottom {
+  bottom: -30px;
+}
+
+.grab-group:hover .rotate-grab, .grab-group:active .rotate-grab {
+  opacity: 1;
 }
