@@ -37,6 +37,8 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   private _rotate: number = 0;
   get rotate(): number { return this._rotate; }
   set rotate(rotate: number) { this._rotate = rotate; this.setUpdateTimer(); }
+  @Input('rotable.value') set value(value: number) { this._rotate = value; this.updateTransformCss(); }
+  @Output('rotable.valueChange') valueChange: EventEmitter<number> = new EventEmitter();
 
   private get isAllowedToRotate(): boolean {
     if (!this.grabbingElement || !this.transformElement) return false;
@@ -67,17 +69,20 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   ngOnInit() { }
 
   ngAfterViewInit() {
-    EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.isSendFromSelf || event.data.identifier !== this.tabletopObject.identifier) return;
-        this.cancel();
-        this.setRotate(this.tabletopObject);
-      });
     this.transformElement = this.elementRef.nativeElement;
-    this.setRotate(this.tabletopObject);
+    if (this.tabletopObject) {
+      EventSystem.register(this)
+        .on('UPDATE_GAME_OBJECT', -1000, event => {
+          if (event.isSendFromSelf || event.data.identifier !== this.tabletopObject.identifier) return;
+          this.cancel();
+          this.setRotate(this.tabletopObject);
+        });
+      this.setRotate(this.tabletopObject);
+    }
     this.tabletopService.ngZone.runOutsideAngular(() => {
       this.transformElement.addEventListener('mousedown', this.callbackOnMouseDown, false);
     });
+    this.cancel();
   }
 
   ngOnDestroy() {
@@ -145,9 +150,10 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private setUpdateTimer() {
-    if (this.updateTimer === null && this.tabletopObject) {
+    if (this.updateTimer === null) {
       this.updateTimer = setTimeout(() => {
-        this.tabletopObject.rotate = this.rotate;
+        this.valueChange.emit(this.rotate);
+        if (this.tabletopObject) this.tabletopObject.rotate = this.rotate;
         this.updateTimer = null;
       }, 66);
     }
@@ -155,7 +161,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private setRotate(object: RotableTabletopObject) {
-    this._rotate = object.rotate;
+    if (object) this._rotate = object.rotate;
     this.updateTransformCss();
   }
 
