@@ -1,7 +1,8 @@
 <div class="component is-3d is-grab is-pointer-events-none"
   [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
   appMovable [movable.option]="movableOption">
-  <div appRotable [rotable.option]="rotableOption" class="component-content is-3d is-pointer-events-auto" [@bounceInOut]="'in'">
+  <div class="component-content is-3d" [@bounceInOut]="'in'">
+  <div appRotable [rotable.option]="rotableOption" class="component-content is-3d is-pointer-events-auto">
     <div class="pedestal-inner"></div>
     <div class="pedestal-outer is-3d"></div>
     <div class="pedestal-grab rotate-grab">
@@ -28,5 +29,6 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </div>
