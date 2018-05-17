@@ -160,6 +160,17 @@
   background-color: rgba(30, 30, 30, 0.8);
 }
 
+.fornt-tag {
+ backface-visibility: hidden;
+}
+
+.back-tag {
+  position: absolute;
+  top: 3px;
+  backface-visibility: hidden;
+  transform: rotateY(-180deg)
+}
+
 .rotate-grab-icon {
   position: absolute;
   width: 28px;

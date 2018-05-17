@@ -12,10 +12,11 @@
       </div>
     </div>
     <div class="upright-transform is-fit-width is-3d">
-      <div class="rotate-frame" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize" appRotable [(rotable.value)]="roll">
-        <div class="rotate-inner">
-          <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-            <span>{{name}}</span>
+      <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize" appRotable [(rotable.value)]="roll">
+        <div class="rotate-inner is-3d">
+          <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background is-3d" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+            <div class="fornt-tag is-3d">{{name}}</div>
+            <div class="back-tag is-3d">{{name}}</div>
           </div>
           <img class="image" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'">
           <div class="grab-group">
