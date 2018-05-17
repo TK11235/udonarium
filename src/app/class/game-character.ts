@@ -7,6 +7,8 @@ import { ChatPalette } from './chat-palette';
 @SyncObject('character')
 export class GameCharacter extends TabletopObject {
   @SyncVar() rotate: number = 0;
+  @SyncVar() roll: number = 0;
+
   get name(): string { return this.getCommonValue('name', ''); }
   get size(): number { return this.getCommonValue('size', 1); }
 
