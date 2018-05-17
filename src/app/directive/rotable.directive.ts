@@ -78,6 +78,8 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
           this.setRotate(this.tabletopObject);
         });
       this.setRotate(this.tabletopObject);
+    } else {
+      this.updateTransformCss();
     }
     this.tabletopService.ngZone.runOutsideAngular(() => {
       this.transformElement.addEventListener('mousedown', this.callbackOnMouseDown, false);
