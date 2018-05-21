@@ -37,6 +37,8 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   private _rotate: number = 0;
   get rotate(): number { return this._rotate; }
   set rotate(rotate: number) { this._rotate = rotate; this.setUpdateTimer(); }
+  @Input('rotable.value') set value(value: number) { this._rotate = value; this.updateTransformCss(); }
+  @Output('rotable.valueChange') valueChange: EventEmitter<number> = new EventEmitter();
 
   private get isAllowedToRotate(): boolean {
     if (!this.grabbingElement || !this.transformElement) return false;
@@ -67,17 +69,22 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   ngOnInit() { }
 
   ngAfterViewInit() {
-    EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.isSendFromSelf || event.data.identifier !== this.tabletopObject.identifier) return;
-        this.cancel();
-        this.setRotate(this.tabletopObject);
-      });
     this.transformElement = this.elementRef.nativeElement;
-    this.setRotate(this.tabletopObject);
+    if (this.tabletopObject) {
+      EventSystem.register(this)
+        .on('UPDATE_GAME_OBJECT', -1000, event => {
+          if (event.isSendFromSelf || event.data.identifier !== this.tabletopObject.identifier) return;
+          this.cancel();
+          this.setRotate(this.tabletopObject);
+        });
+      this.setRotate(this.tabletopObject);
+    } else {
+      this.updateTransformCss();
+    }
     this.tabletopService.ngZone.runOutsideAngular(() => {
       this.transformElement.addEventListener('mousedown', this.callbackOnMouseDown, false);
     });
+    this.cancel();
   }
 
   ngOnDestroy() {
@@ -99,7 +106,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     e.stopPropagation();
     this._isGrabbing = true;
     this._isDragging = false;
-    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.tabletopService.dragAreaElement);
+    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.transformElement.parentElement);
     this.rotateOffset = this.calcRotate(pointer, this.rotate);
     this.addEventListeners();
     this.setAnimatedTransition(false);
@@ -108,7 +115,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   protected onMouseMove(e: PointerEvent) {
     if (this.isDisable) return this.cancel();
     e.stopPropagation();
-    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.tabletopService.dragAreaElement);
+    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.transformElement.parentElement);
     let angle = this.calcRotate(pointer, this.rotateOffset);
     if (this.rotate !== angle) {
       this._isDragging = true;
@@ -131,8 +138,8 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private calcRotate(pointer: PointerCoordinate, rotateOffset: number): number {
-    let centerX = this.transformElement.clientWidth / 2 + this.tabletopObject.location.x;
-    let centerY = this.transformElement.clientHeight / 2 + this.tabletopObject.location.y;
+    let centerX = this.transformElement.clientWidth / 2;
+    let centerY = this.transformElement.clientHeight / 2;
     let x = pointer.x - centerX;
     let y = pointer.y - centerY;
     let rad = Math.atan2(y, x);
@@ -145,9 +152,10 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private setUpdateTimer() {
-    if (this.updateTimer === null && this.tabletopObject) {
+    if (this.updateTimer === null) {
       this.updateTimer = setTimeout(() => {
-        this.tabletopObject.rotate = this.rotate;
+        this.valueChange.emit(this.rotate);
+        if (this.tabletopObject) this.tabletopObject.rotate = this.rotate;
         this.updateTimer = null;
       }, 66);
     }
@@ -155,7 +163,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private setRotate(object: RotableTabletopObject) {
-    this._rotate = object.rotate;
+    if (object) this._rotate = object.rotate;
     this.updateTransformCss();
   }
 

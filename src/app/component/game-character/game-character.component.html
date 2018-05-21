@@ -1,16 +1,35 @@
-<div class="component is-3d is-grab"
+<div class="component is-3d is-grab is-pointer-events-none"
   [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
   appMovable [movable.option]="movableOption">
   <div class="component-content is-3d" [@bounceInOut]="'in'">
+  <div appRotable [rotable.option]="rotableOption" class="component-content is-3d is-pointer-events-auto">
     <div class="pedestal-inner"></div>
-    <div class="pedestal-outer"></div>
-    <div class="upright-transform is-fit-width is-3d">
-      <div class="fill-frame">
-        <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-          <span>{{name}}</span>
-        </div>
-        <img class="image" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'">
+    <div class="pedestal-outer is-3d"></div>
+    <div class="pedestal-grab rotate-grab">
+      <div class="pedestal-grab-border">
+        <div class="material-icons of-front">autorenew</div>
+        <div class="material-icons of-back">autorenew</div>
       </div>
     </div>
+    <div class="upright-transform is-fit-width is-3d">
+      <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize" appRotable [(rotable.value)]="roll">
+        <div class="rotate-inner is-3d">
+          <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background is-3d" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+            <div class="fornt-tag is-3d">{{name}}</div>
+            <div class="back-tag is-3d">{{name}}</div>
+          </div>
+          <img class="image" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'">
+          <div class="grab-group">
+            <div class="rotate-grab rotate-grab-icon of-top" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+              <i class="material-icons">autorenew</i>
+            </div>
+            <div class="rotate-grab rotate-grab-icon of-bottom" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+              <i class="material-icons">autorenew</i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
