@@ -17,7 +17,7 @@ declare module PeerJs {
 
 interface DataContainer {
   data: any;
-  peers: string[];
+  peers?: string[];
   ttl: number;
   isCompression?: boolean;
 }
@@ -40,6 +40,8 @@ export class SkyWayConnection implements Connection {
   private httpRequestInterval: number = performance.now() + 500;
 
   private queue: Promise<any> = Promise.resolve();
+
+  private relayingPeerIds: Map<string, string[]> = new Map();
 
   open(peerId: string)
   open(peerId: string, roomId: string, roomName: string, password: string)
@@ -113,7 +115,6 @@ export class SkyWayConnection implements Connection {
     if (this.connections.length < 1) return;
     let container: DataContainer = {
       data: MessagePack.encode(data),
-      peers: this._peerIds.concat(),
       ttl: 0
     }
 
@@ -145,7 +146,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private onData(conn: PeerJs.DataConnection, container: DataContainer) {
-    if (0 < container.ttl) this.onRelay(container);
+    if (0 < container.ttl) this.onRelay(conn, container);
     if (this.callback.onData) {
       this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
         let data: Uint8Array;
@@ -160,18 +161,31 @@ export class SkyWayConnection implements Connection {
     }
   }
 
-  private onRelay(container: DataContainer) {
+  private onRelay(conn: PeerJs.DataConnection, container: DataContainer) {
     container.ttl--;
-    if (!container.peers || container.peers.length < 1) return;
 
-    let diff = this.diffArray(this._peerIds, container.peers);
-    let relayingPeerIds: string[] = diff.diff1;
-    let unknownPeerIds: string[] = diff.diff2;
+    let canUpdate: boolean = container.peers && 0 < container.peers.length;
+    let hasRelayingList: boolean = this.relayingPeerIds.has(conn.peer);
+
+    if (!canUpdate && !hasRelayingList) return;
+
+    let relayingPeerIds: string[] = [];
+    let unknownPeerIds: string[] = [];
+
+    if (canUpdate) {
+      let diff = this.diffArray(this._peerIds, container.peers);
+      relayingPeerIds = diff.diff1;
+      unknownPeerIds = diff.diff2;
+      this.relayingPeerIds.set(conn.peer, relayingPeerIds);
+      container.peers = container.peers.concat(relayingPeerIds);
+    } else if (hasRelayingList) {
+      relayingPeerIds = this.relayingPeerIds.get(conn.peer);
+    }
 
     for (let peerId of relayingPeerIds) {
       let conn = this.findDataConnection(peerId);
       if (conn && conn.open) {
-        console.log('<' + peerId + '> is 転送しなきゃ・・・ ', container);
+        console.log('<' + peerId + '> 転送しなきゃ・・・');
         conn.send(container);
       }
     }
@@ -304,6 +318,7 @@ export class SkyWayConnection implements Connection {
       this.connections.splice(index, 1);
       this.peerContexts.splice(index, 1);
     }
+    this.relayingPeerIds.delete(conn.peer);
     console.log('<close()> Peer:' + conn.peer + ' length:' + this.connections.length + ':' + this.peerContexts.length);
     this.update();
   }
@@ -351,7 +366,18 @@ export class SkyWayConnection implements Connection {
     this._peerIds = peers;
 
     console.log('<update()>', peers);
+    this.notifyPeerList();
     return peers;
+  }
+
+  private notifyPeerList() {
+    if (this.connections.length < 1) return;
+    let container: DataContainer = {
+      data: MessagePack.encode([]),
+      peers: this._peerIds,
+      ttl: 1
+    }
+    this.sendBroadcast(container);
   }
 
   private async compressAsync(data: Buffer): Promise<Uint8Array> {
