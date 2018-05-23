@@ -161,52 +161,39 @@ export class SkyWayConnection implements Connection {
   }
 
   private onRelay(container: DataContainer) {
-    let others: string[] = container.peers;
-    let peerIds: string[] = this._peerIds.concat();//this.peers.concat();
     container.ttl--;
+    if (!container.peers || container.peers.length < 1) return;
 
-    if (!others || others.length < 1) return;
-    // 自分の知らないPeerが含まれている
-    let unknownPeers = [];
-    let knownPeers = [];
-    for (let other of others) {
-      let isUnknown = true;
-      let length = peerIds.length;
-      for (let i = 0; i < length; i++) {
-        if (other === peerIds[i]) {
-          isUnknown = false;
-          knownPeers.push(peerIds.splice(i, 1));
-          break;
-        }
-      }
-      if (isUnknown) {
-        if (this.peerId !== other && this.findDataConnection(other) === null) {
-          unknownPeers.push(other);
-        }
+    let otherPeerIds: string[] = container.peers;
+    let peerIds: string[] = this._peerIds;
+
+    let relayingPeerIds: string[] = [];
+    let unknownPeerIds: string[] = [];
+
+    let containsSelf: boolean = false;
+    let containsOther: boolean = false;
+
+    for (let peerId of peerIds.concat(otherPeerIds)) {
+      containsSelf = peerIds.includes(peerId);
+      containsOther = otherPeerIds.includes(peerId);
+      if (containsSelf && !containsOther) {
+        relayingPeerIds.push(peerId);
+        let conn = this.findDataConnection(peerId);
+        if (conn && conn.open) container.peers.push(peerId);
+      } else if (!containsSelf && containsOther) {
+        unknownPeerIds.push(peerId);
       }
     }
 
-    if (unknownPeers.length) {
-      if (this.callback.onDetectUnknownPeers) this.callback.onDetectUnknownPeers(unknownPeers);
-    }
-
-    if (peerIds.length < 1) return;
-
-    // 送信宛先に含まれていないPeerを知っている
-    for (let peerId of peerIds) {
+    for (let peerId of relayingPeerIds) {
       let conn = this.findDataConnection(peerId);
-      if (conn) {
-        container.peers.push(peerId)
+      if (conn && conn.open) {
+        console.log('<' + peerId + '> is 転送しなきゃ・・・ ', container);
+        conn.send(container);
       }
     }
-    for (let peerId of peerIds) {
-      let conn = this.findDataConnection(peerId);
-      if (conn) {
-        if (conn.open) {
-          console.log('<' + peerId + '> is 転送しなきゃ・・・ ', container);
-          conn.send(container);
-        }
-      }
+    if (unknownPeerIds.length && this.callback.onDetectUnknownPeers) {
+      this.callback.onDetectUnknownPeers(unknownPeerIds);
     }
   }
 
