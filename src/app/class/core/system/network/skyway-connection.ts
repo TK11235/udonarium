@@ -164,26 +164,9 @@ export class SkyWayConnection implements Connection {
     container.ttl--;
     if (!container.peers || container.peers.length < 1) return;
 
-    let otherPeerIds: string[] = container.peers;
-    let peerIds: string[] = this._peerIds;
-
-    let relayingPeerIds: string[] = [];
-    let unknownPeerIds: string[] = [];
-
-    let containsSelf: boolean = false;
-    let containsOther: boolean = false;
-
-    for (let peerId of peerIds.concat(otherPeerIds)) {
-      containsSelf = peerIds.includes(peerId);
-      containsOther = otherPeerIds.includes(peerId);
-      if (containsSelf && !containsOther) {
-        relayingPeerIds.push(peerId);
-        let conn = this.findDataConnection(peerId);
-        if (conn && conn.open) container.peers.push(peerId);
-      } else if (!containsSelf && containsOther) {
-        unknownPeerIds.push(peerId);
-      }
-    }
+    let diff = this.diffArray(this._peerIds, container.peers);
+    let relayingPeerIds: string[] = diff.diff1;
+    let unknownPeerIds: string[] = diff.diff2;
 
     for (let peerId of relayingPeerIds) {
       let conn = this.findDataConnection(peerId);
@@ -332,6 +315,25 @@ export class SkyWayConnection implements Connection {
       }
     }
     return null;
+  }
+
+  private diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
+    let diff1: T[] = [];
+    let diff2: T[] = [];
+
+    let includesInArray1: boolean = false;
+    let includesInArray2: boolean = false;
+
+    for (let item of array1.concat(array2)) {
+      includesInArray1 = array1.includes(item);
+      includesInArray2 = array2.includes(item);
+      if (includesInArray1 && !includesInArray2) {
+        diff1.push(item);
+      } else if (!includesInArray1 && includesInArray2) {
+        diff2.push(item);
+      }
+    }
+    return { diff1: diff1, diff2: diff2 };
   }
 
   private update(): string[] {
