@@ -77,7 +77,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.updateInterval = setTimeout(() => {
         this.updateInterval = null;
         this.calcLocalCoordinate(this._x, this._y, e.target);
-      }, 66);
+      }, 100);
     }
   }
 
