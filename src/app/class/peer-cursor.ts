@@ -11,9 +11,6 @@ export class PeerCursor extends GameObject {
   @SyncVar() peerId: string = '';
   @SyncVar() name: string = '';
   @SyncVar() imageIdentifier: string = '';
-  @SyncVar() posX: number = 0;
-  @SyncVar() posY: number = 0;
-  @SyncVar() posZ: number = 0;
 
   static myCursor: PeerCursor = null;
   private static hash: { [peerId: string]: string } = {};

@@ -39,9 +39,9 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     if (!this.isMine) {
       EventSystem.register(this)
-        .on('UPDATE_GAME_OBJECT', -1000, event => {
-          if (event.data.identifier !== this.cursor.identifier) return;
-          this.setPosition(this.cursor.posX, this.cursor.posY, this.cursor.posZ);
+        .on('CURSOR_MOVE', event => {
+          if (event.sendFrom !== this.cursor.peerId) return;
+          this.setPosition(event.data[0], event.data[1], event.data[2]);
           this.resetFadeOut();
         });
     }
@@ -56,7 +56,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.cursorElement = this.cursorElementRef.nativeElement;
       this.opacityElement = this.opacityElementRef.nativeElement;
-      this.setPosition(this.cursor.posX, this.cursor.posY, this.cursor.posZ);
+      this.setPosition(0, 0, 0);
       this.resetFadeOut();
     }
   }
@@ -100,9 +100,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
       coordinate = PointerDeviceService.convertLocalToLocal(coordinate, target, dragArea);
     }
 
-    this.cursor.posX = coordinate.x;
-    this.cursor.posY = coordinate.y;
-    this.cursor.posZ = coordinate.z;
+    EventSystem.call('CURSOR_MOVE', [coordinate.x, coordinate.y, coordinate.z]);
   }
 
   private findDragAreaElement(parent: HTMLElement): HTMLElement {
