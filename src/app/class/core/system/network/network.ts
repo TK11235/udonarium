@@ -9,7 +9,7 @@ export class Network {
     return Network._instance;
   }
 
-  get peerId(): string { return this.peerContext ? this.peerContext.fullstring : '???'; }
+  get peerId(): string { return this.connection ? this.connection.peerId : '???'; }
   get peerIds(): string[] { return this.connection ? this.connection.peerIds.concat() : []; }
 
   get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peerContexts.concat() : []; }
