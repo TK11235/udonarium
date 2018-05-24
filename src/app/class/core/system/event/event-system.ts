@@ -125,13 +125,6 @@ export class EventSystem implements Subject {
   }
 
   private initializeNetworkEvent() {
-    this.register(this)
-      .on('OTHER_PEERS', event => {
-        for (let peerId of event.data.otherPeers.concat()) {
-          if (Network.instance.connect(peerId)) console.log('connectingOtherPeers <' + peerId + '>');
-        }
-      });
-
     let callback = Network.instance.callback;
 
     callback.willOpen = (peerId, sendFrom) => {

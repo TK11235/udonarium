@@ -189,6 +189,9 @@ export class SkyWayConnection implements Connection {
       }
     }
     if (unknownPeerIds.length && this.callback.onDetectUnknownPeers) {
+      for (let peerId of unknownPeerIds) {
+        if (this.connect(peerId)) console.log('auto connect to unknown Peer <' + peerId + '>');
+      }
       this.callback.onDetectUnknownPeers(unknownPeerIds);
     }
   }
