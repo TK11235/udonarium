@@ -68,7 +68,6 @@ export class SkyWayConnection implements Connection {
     if (!this.shouldConnect(peerId)) return false;
 
     let conn: PeerJs.DataConnection = this.peer.connect(peerId, {
-      label: this.peerId,
       reliable: true,
       metadata: { sendFrom: this.peerId }
     });
@@ -155,7 +154,7 @@ export class SkyWayConnection implements Connection {
         } else {
           data = new Uint8Array(container.data);
         }
-        this.callback.onData(conn.peer, MessagePack.decode(data));
+        this.callback.onData(conn.remoteId, MessagePack.decode(data));
         return resolve();
       }));
     }
@@ -165,7 +164,7 @@ export class SkyWayConnection implements Connection {
     container.ttl--;
 
     let canUpdate: boolean = container.peers && 0 < container.peers.length;
-    let hasRelayingList: boolean = this.relayingPeerIds.has(conn.peer);
+    let hasRelayingList: boolean = this.relayingPeerIds.has(conn.remoteId);
 
     if (!canUpdate && !hasRelayingList) return;
 
@@ -176,10 +175,10 @@ export class SkyWayConnection implements Connection {
       let diff = this.diffArray(this._peerIds, container.peers);
       relayingPeerIds = diff.diff1;
       unknownPeerIds = diff.diff2;
-      this.relayingPeerIds.set(conn.peer, relayingPeerIds);
+      this.relayingPeerIds.set(conn.remoteId, relayingPeerIds);
       container.peers = container.peers.concat(relayingPeerIds);
     } else if (hasRelayingList) {
-      relayingPeerIds = this.relayingPeerIds.get(conn.peer);
+      relayingPeerIds = this.relayingPeerIds.get(conn.remoteId);
     }
 
     for (let peerId of relayingPeerIds) {
@@ -195,9 +194,9 @@ export class SkyWayConnection implements Connection {
   }
 
   private add(conn: PeerJs.DataConnection): boolean {
-    let existConn = this.findDataConnection(conn.peer);
+    let existConn = this.findDataConnection(conn.remoteId);
     if (existConn !== null) {
-      console.log('add() is Fail. ' + conn.peer + ' is already connecting.');
+      console.log('add() is Fail. ' + conn.remoteId + ' is already connecting.');
       if (existConn !== conn) {
         if (existConn.metadata.sendFrom < conn.metadata.sendFrom) {
           this.closeDataConnection(conn);
@@ -210,8 +209,8 @@ export class SkyWayConnection implements Connection {
       return false;
     }
     this.connections.push(conn);
-    this.peerContexts.push(new PeerContext(conn.peer));
-    console.log('<add()> Peer:' + conn.peer + ' length:' + this.connections.length);
+    this.peerContexts.push(new PeerContext(conn.remoteId));
+    console.log('<add()> Peer:' + conn.remoteId + ' length:' + this.connections.length);
     return true;
   }
 
@@ -273,17 +272,17 @@ export class SkyWayConnection implements Connection {
   private openDataConnection(conn: PeerJs.DataConnection) {
     if (this.add(conn) === false) return;
 
-    let sendFrom: string = conn.label;
-    if (this.callback.willOpen) this.callback.willOpen(conn.peer, sendFrom);
+    let sendFrom: string = conn.metadata.sendFrom;
+    if (this.callback.willOpen) this.callback.willOpen(conn.remoteId, sendFrom);
 
     let index = this.connections.indexOf(conn);
     let context: PeerContext = null;
     if (0 <= index) context = this.peerContexts[index];
 
     let timeout: NodeJS.Timer = setTimeout(() => {
-      if (this.callback.onTimeout) this.callback.onTimeout(conn.peer);
+      if (this.callback.onTimeout) this.callback.onTimeout(conn.remoteId);
       this.closeDataConnection(conn);
-      if (this.callback.onClose) this.callback.onClose(conn.peer);
+      if (this.callback.onClose) this.callback.onClose(conn.remoteId);
     }, 15000);
 
     conn.on('data', data => {
@@ -294,19 +293,19 @@ export class SkyWayConnection implements Connection {
       timeout = null;
       if (context) context.isOpen = true;
       this.update();
-      if (this.callback.onOpen) this.callback.onOpen(conn.peer);
+      if (this.callback.onOpen) this.callback.onOpen(conn.remoteId);
     });
     conn.on('close', () => {
       if (timeout !== null) clearTimeout(timeout);
       timeout = null;
       this.closeDataConnection(conn);
-      if (this.callback.onClose) this.callback.onClose(conn.peer);
+      if (this.callback.onClose) this.callback.onClose(conn.remoteId);
     });
     conn.on('error', err => {
       if (timeout !== null) clearTimeout(timeout);
       timeout = null;
       this.closeDataConnection(conn);
-      if (this.callback.onError) this.callback.onError(conn.peer, err);
+      if (this.callback.onError) this.callback.onError(conn.remoteId, err);
     });
   }
 
@@ -314,18 +313,18 @@ export class SkyWayConnection implements Connection {
     conn.close();
     let index = this.connections.indexOf(conn);
     if (0 <= index) {
-      console.log(conn.peer + ' is えんいー' + 'index:' + index + ' length:' + this.connections.length);
+      console.log(conn.remoteId + ' is えんいー' + 'index:' + index + ' length:' + this.connections.length);
       this.connections.splice(index, 1);
       this.peerContexts.splice(index, 1);
     }
-    this.relayingPeerIds.delete(conn.peer);
-    console.log('<close()> Peer:' + conn.peer + ' length:' + this.connections.length + ':' + this.peerContexts.length);
+    this.relayingPeerIds.delete(conn.remoteId);
+    console.log('<close()> Peer:' + conn.remoteId + ' length:' + this.connections.length + ':' + this.peerContexts.length);
     this.update();
   }
 
   private findDataConnection(peerId: string): PeerJs.DataConnection {
     for (let conn of this.connections) {
-      if (conn.peer === peerId) {
+      if (conn.remoteId === peerId) {
         return conn;
       }
     }
@@ -354,7 +353,7 @@ export class SkyWayConnection implements Connection {
   private update(): string[] {
     let peers: string[] = [];
     for (let conn of this.connections) {
-      if (conn.open) peers.push(conn.peer);
+      if (conn.open) peers.push(conn.remoteId);
     }
     peers.push(this.peerId);
     peers.sort(function (a, b) {
