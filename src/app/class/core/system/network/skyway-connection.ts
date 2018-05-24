@@ -19,7 +19,7 @@ interface DataContainer {
   data: any;
   peers?: string[];
   ttl: number;
-  isCompression?: boolean;
+  isCompressed?: boolean;
 }
 
 export class SkyWayConnection implements Connection {
@@ -120,7 +120,7 @@ export class SkyWayConnection implements Connection {
 
     this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
       if (3 * 1024 < container.data.length) {
-        container.isCompression = true;
+        container.isCompressed = true;
         container.data = await this.compressAsync(container.data);
       }
       if (sendTo) {
@@ -150,7 +150,7 @@ export class SkyWayConnection implements Connection {
     if (this.callback.onData) {
       this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
         let data: Uint8Array;
-        if (container.isCompression) {
+        if (container.isCompressed) {
           data = await this.decompressAsync(container.data);
         } else {
           data = new Uint8Array(container.data);
