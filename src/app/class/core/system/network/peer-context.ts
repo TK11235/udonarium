@@ -2,12 +2,12 @@ import * as lzbase62 from 'lzbase62/lzbase62.min.js';
 //import * as lzbase62 from 'lzbase62';
 
 export interface IPeerContext {
-  fullstring: string;
-  id: string;
-  room: string;
-  roomName: string;
-  password: string;
-  isOpen: boolean;
+  readonly fullstring: string;
+  readonly id: string;
+  readonly room: string;
+  readonly roomName: string;
+  readonly password: string;
+  readonly isOpen: boolean;
 }
 
 export class PeerContext implements IPeerContext {
