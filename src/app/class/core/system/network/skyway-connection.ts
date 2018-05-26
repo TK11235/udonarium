@@ -68,7 +68,6 @@ export class SkyWayConnection implements Connection {
     if (!this.shouldConnect(peerId)) return false;
 
     let conn: PeerJs.DataConnection = this.peer.connect(peerId, {
-      reliable: true,
       metadata: { sendFrom: this.peerId }
     });
 
