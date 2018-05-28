@@ -1,16 +1,18 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, OnChanges, ChangeDetectorRef } from '@angular/core';
 
 import { ChatMessageService } from '../../service/chat-message.service';
 
 import { ChatTab } from '../../class/chat-tab';
 import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
+import { EventSystem } from '../../class/core/system/system';
 
 @Component({
   selector: 'chat-tab',
   templateUrl: './chat-tab.component.html',
-  styleUrls: ['./chat-tab.component.css']
+  styleUrls: ['./chat-tab.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatTabComponent implements OnInit {
+export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
   maxMessages: number = 1000;
 
   sampleMessages: ChatMessageContext[] = [
@@ -22,18 +24,25 @@ export class ChatTabComponent implements OnInit {
     { from: 'System', responseIdentifier: '', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'チュートリアルは以上です。このチュートリアルは最初のチャットを入力すると非表示になります。' },
   ];
 
+  private needUpdate = true;
+  private _chatMessages: ChatMessage[] = [];
   get chatMessages(): ChatMessage[] {
     if (!this.chatTab) return [];
-    let length = this.chatTab.chatMessages.length;
-    if (length < this.maxMessages) return this.chatTab.chatMessages;
-    return this.chatTab.chatMessages.slice(length - this.maxMessages, length);
-
+    if (this.needUpdate) {
+      let length = this.chatTab.chatMessages.length;
+      this._chatMessages = length <= this.maxMessages
+        ? this.chatTab.chatMessages
+        : this.chatTab.chatMessages.slice(length - this.maxMessages, length);
+      this.needUpdate = false;
+    }
+    return this._chatMessages;
   }
 
   @Input() chatTab: ChatTab;
   @Output() onAddMessage: EventEmitter<null> = new EventEmitter();
 
   constructor(
+    private changeDetector: ChangeDetectorRef,
     private chatMessageService: ChatMessageService
   ) { }
 
@@ -54,6 +63,22 @@ export class ChatTabComponent implements OnInit {
       messages.push(message);
     }
     this.sampleMessages = messages;
+
+    EventSystem.register(this)
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        if (event.data.aliasName === ChatMessage.aliasName) {
+          if (!this.needUpdate) this.changeDetector.markForCheck();
+          this.needUpdate = true;
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    EventSystem.unregister(this);
+  }
+
+  ngOnChanges() {
+    this.needUpdate = true;
   }
 
   onMessageInit() {
