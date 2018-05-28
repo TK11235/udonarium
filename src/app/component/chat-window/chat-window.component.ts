@@ -65,6 +65,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   get chatTab(): ChatTab { return this.objectStore.get<ChatTab>(this.chatTabidentifier); }
   maxLogLength: number = 1000;
   isAutoScroll: boolean = true;
+  scrollToBottomTimer: NodeJS.Timer = null;
 
   eventSystem = EventSystem;
   objectStore = ObjectStore.instance;
@@ -129,10 +130,13 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (isForce || this.isAutoScroll) {
       //console.log('scrollToBottom!!!!!!');
-      setTimeout(() => {
-        //console.log('scrollToBottom scrollHeight2', this.panelService.scrollablePanel.scrollHeight);
-        this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
-      }, 0);
+      if (this.scrollToBottomTimer == null) {
+        this.scrollToBottomTimer = setTimeout(() => {
+          this.scrollToBottomTimer = null;
+          //console.log('scrollToBottom scrollHeight2', this.panelService.scrollablePanel.scrollHeight);
+          this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
+        }, 0);
+      }
     }
   }
 
