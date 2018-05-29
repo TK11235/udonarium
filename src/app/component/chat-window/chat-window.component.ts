@@ -58,6 +58,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   private _chatTabidentifier: string = '';
   get chatTabidentifier(): string { return this._chatTabidentifier; }
   set chatTabidentifier(chatTabidentifier: string) {
+    if (this._chatTabidentifier !== chatTabidentifier) this.scrollToBottom(true);
     this._chatTabidentifier = chatTabidentifier;
     this.updatePanelTitle();
   }
@@ -92,9 +93,12 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
 
     this.eventSystem.register(this)
-      .on('BROADCAST_MESSAGE', -1000, event => {
-        if (event.isSendFromSelf) this.scrollToBottom(true);
-        this.checkAutoScroll();
+      .on<ChatMessageContext>('BROADCAST_MESSAGE', -1000, event => {
+        if (event.isSendFromSelf && event.data.tabIdentifier === this.chatTabidentifier) {
+          this.scrollToBottom(true);
+        } else {
+          this.checkAutoScroll();
+        }
       })
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         this.gameCharacters = this.objectStore.getObjects<GameCharacter>(GameCharacter);
@@ -119,24 +123,16 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // @TODO やり方はもう少し考えた方がいいい
   scrollToBottom(isForce: boolean = false) {
-    if (!this.panelService.scrollablePanel) return;
-    /*
-    console.log('scrollToBottom scrollTop', this.panelService.scrollablePanel.scrollTop);
-    console.log('scrollToBottom scrollHeight', this.panelService.scrollablePanel.scrollHeight);
-    console.log('scrollToBottom offsetHeight', this.panelService.scrollablePanel.offsetHeight);
-    console.log('scrollToBottom clientHeight', this.panelService.scrollablePanel.clientHeight);
-    */
-    let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+    if (!this.panelService.scrollablePanel || this.scrollToBottomTimer != null) return;
 
-    if (isForce || this.isAutoScroll) {
-      //console.log('scrollToBottom!!!!!!');
-      if (this.scrollToBottomTimer == null) {
-        this.scrollToBottomTimer = setTimeout(() => {
-          this.scrollToBottomTimer = null;
-          //console.log('scrollToBottom scrollHeight2', this.panelService.scrollablePanel.scrollHeight);
-          this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
-        }, 0);
-      }
+    if (isForce) {
+      this.isAutoScroll = true;
+    }
+    if (this.isAutoScroll) {
+      this.scrollToBottomTimer = setTimeout(() => {
+        this.scrollToBottomTimer = null;
+        this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
+      }, 0);
     }
   }
 
