@@ -38,6 +38,11 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
     return this._chatMessages;
   }
 
+  get hasMany(): boolean {
+    if (!this.chatTab) return false;
+    return this.maxMessages < this.chatTab.chatMessages.length;
+  };
+
   @Input() chatTab: ChatTab;
   @Output() onAddMessage: EventEmitter<null> = new EventEmitter();
 
@@ -79,6 +84,18 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges() {
     this.needUpdate = true;
+    this.maxMessages = 1000;
+  }
+
+  moreMessages() {
+    this.maxMessages += 500;
+    if (this.chatTab && this.chatTab.chatMessages.length < this.maxMessages) this.maxMessages = this.chatTab.chatMessages.length;
+    this.changeDetector.markForCheck();
+    this.needUpdate = true;
+
+    EventSystem.trigger('BROADCAST_MESSAGE', {
+      from: '', name: '', text: '', timestamp: 0, tag: '', imageIdentifier: '', responseIdentifier: '',
+    });
   }
 
   onMessageInit() {
