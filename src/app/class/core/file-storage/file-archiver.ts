@@ -6,6 +6,7 @@ import { EventSystem } from '../system/system';
 import { saveAs } from 'file-saver';
 
 import * as JSZip from 'jszip/dist/jszip.min.js';
+import { XmlUtil } from '../synchronize-object/xml-util';
 //import * as JSZip from 'jszip';
 
 export class FileArchiver {
@@ -111,8 +112,8 @@ export class FileArchiver {
 
       let reader = new FileReader();
       reader.onload = (event) => {
-        let xml: string = reader.result;
-        EventSystem.trigger('XML_PARSE', { xml: xml });
+        let xmlElement: Element = XmlUtil.xml2element(reader.result);
+        if (xmlElement) EventSystem.trigger('XML_LOADED', { xmlElement: xmlElement });
         resolve();
       }
       reader.onabort = reader.onerror = () => {

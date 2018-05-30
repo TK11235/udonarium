@@ -126,10 +126,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           this.needUpdateList[garbage.aliasName] = false;
         }
       })
-      .on('XML_PARSE', event => {
-        let xml: string = event.data.xml;
-        //console.log('XML_PARSE', xml); todo:立体地形の上にドロップした時の挙動
-        let gameObject = ObjectSerializer.instance.parseXml(xml);
+      .on('XML_LOADED', event => {
+        let xmlElement: Element = event.data.xmlElement;
+        // todo:立体地形の上にドロップした時の挙動
+        let gameObject = ObjectSerializer.instance.parseXml(xmlElement);
         if (gameObject instanceof TabletopObject) {
           let pointer = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.gameObjects.nativeElement);
           gameObject.location.x = pointer.x - 25;

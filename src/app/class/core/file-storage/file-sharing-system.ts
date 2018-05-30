@@ -3,7 +3,6 @@ import { EventSystem, Event, Network } from '../system/system';
 import { FileStorage, Catalog } from './file-storage';
 import { ImageFile, ImageContext, ImageState } from './image-file';
 import { MimeType } from './mime-type';
-import { XmlUtil } from '../synchronize-object/xml-util';
 
 export class FileSharingSystem {
   private static _instance: FileSharingSystem
@@ -31,9 +30,8 @@ export class FileSharingSystem {
         console.log('OPEN_OTHER_PEER FileStorageService !!!', event.data.peer);
         FileStorage.instance.synchronize();
       })
-      .on('XML_PARSE', event => {
-        let xml: string = event.data.xml;
-        convertUrlImage(xml);
+      .on('XML_LOADED', event => {
+        convertUrlImage(event.data.xmlElement);
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         if (event.isSendFromSelf) return;
@@ -223,10 +221,8 @@ export class FileSharingSystem {
   }
 }
 
-function convertUrlImage(xml: string) {
-  let xmlElement: Element = XmlUtil.xml2element(xml);
+function convertUrlImage(xmlElement: Element) {
   let urls: string[] = [];
-  if (!xmlElement) return;
 
   let imageElements = xmlElement.querySelectorAll('*[type="image"]');
   for (let i = 0; i < imageElements.length; i++) {
