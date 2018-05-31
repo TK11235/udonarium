@@ -230,7 +230,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
       timestamp: time,
       tag: this.gameType,
       imageIdentifier: '',
-      responseIdentifier: '',
     };
 
     if (this.sender === this.network.peerId || !this.gameCharacter) {

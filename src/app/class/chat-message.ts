@@ -8,6 +8,7 @@ import { ImageFile } from './core/file-storage/image-file';
 export interface ChatMessageContext {
   identifier?: string;
   tabIdentifier?: string;
+  originFrom?: string;
   from?: string;
   to?: string;
   name?: string;
@@ -16,18 +17,17 @@ export interface ChatMessageContext {
   tag?: string;
   dicebot?: string;
   imageIdentifier?: string;
-  responseIdentifier?: string;
 }
 
 @SyncObject('chat')
 export class ChatMessage extends ObjectNode implements ChatMessageContext {
+  @SyncVar() originFrom: string;
   @SyncVar() from: string;
   @SyncVar() to: string;
   @SyncVar() name: string;
   @SyncVar() tag: string;
   @SyncVar() dicebot: string;
   @SyncVar() imageIdentifier: string;
-  @SyncVar() responseIdentifier: string;
 
   get tabIdentifier(): string { return this.parent.identifier; }
   get text(): string { return <string>this.value }
@@ -54,12 +54,12 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
     }
     return this._tags;
   }
-  get response(): ChatMessage { return ObjectStore.instance.get<ChatMessage>(this.responseIdentifier); }
   get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
   get index(): number { return this.minorIndex + this.timestamp; }
   get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
-  get isMine(): boolean { return (-1 < this.sendTo.indexOf(Network.peerContext.id)) || this.from === Network.peerContext.id ? true : false; }
-  get isDisplayable(): boolean { return this.isDirect ? this.isMine : true; }
+  get isSendFromSelf(): boolean { return this.from === Network.peerContext.id || this.originFrom === Network.peerContext.id; }
+  get isRelatedToMe(): boolean { return (-1 < this.sendTo.indexOf(Network.peerContext.id)) || this.isSendFromSelf ? true : false; }
+  get isDisplayable(): boolean { return this.isDirect ? this.isRelatedToMe : true; }
   get isSystem(): boolean { return -1 < this.tags.indexOf('system') ? true : false; }
   get isDicebot(): boolean { return this.isSystem && this.from === 'System-BCDice' ? true : false; }
   get isSecret(): boolean { return -1 < this.tags.indexOf('secret') ? true : false; }
