@@ -22,7 +22,7 @@ import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
       ])
     ])
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 
 export class ChatMessageComponent implements OnInit, AfterViewInit {

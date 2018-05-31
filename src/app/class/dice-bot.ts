@@ -296,53 +296,7 @@ export class DiceBot extends GameObject {
 
         try {
           let rollResult = await DiceBot.diceRollAsync(text, gameType);
-          let result: string = rollResult.result;
-          let isSecret: boolean = rollResult.isSecret;
-
-          if (result.length < 1) return;
-
-          result = result.replace(/[＞]/g, function (s) {
-            return '→';
-          });
-          result = result.trim();
-
-          let diceBotMessage: ChatMessageContext = {
-            identifier: '',
-            tabIdentifier: chatMessage.tabIdentifier,
-            from: 'System-BCDice',
-            timestamp: chatMessage.timestamp + 2,
-            imageIdentifier: '',
-            tag: 'system',
-            name: isSecret ? '<Secret-BCDice：' + chatMessage.name + '>（非公開）' : '<BCDice：' + chatMessage.name + '>',
-            text: result
-          };
-
-          if (chatMessage.to != null && 0 < chatMessage.to.length) {
-            diceBotMessage.to = chatMessage.to;
-            if (chatMessage.to.indexOf(chatMessage.from) < 0) {
-              diceBotMessage.to += ' ' + chatMessage.from;
-            }
-          }
-
-          if (isSecret) {
-            let secretDiceBotMessage: ChatMessageContext = {
-              identifier: '',
-              tabIdentifier: chatMessage.tabIdentifier,
-              from: 'System-BCDice',
-              timestamp: chatMessage.timestamp + 1,
-              imageIdentifier: '',
-              tag: 'system',
-              name: '<BCDice：' + chatMessage.name + '>',
-              text: '(シークレットダイス)'
-            };
-            secretDiceBotMessage.to = diceBotMessage.to;
-            diceBotMessage.to = chatMessage.from;
-            diceBotMessage.responseIdentifier = event.data.identifier;
-            diceBotMessage.tag += ' secret';
-            EventSystem.call('BROADCAST_MESSAGE', secretDiceBotMessage);
-          }
-
-          EventSystem.call('BROADCAST_MESSAGE', diceBotMessage);
+          this.sendResultMessage(rollResult, chatMessage);
         } catch (e) {
           console.error(e);
         }
@@ -350,7 +304,39 @@ export class DiceBot extends GameObject {
       });
   }
 
-  static diceRollAsync(message: string, gameType: string): Promise<{ result: string, isSecret: boolean }> {
+  private sendResultMessage(rollResult: DiceRollResult, originalMessage: ChatMessage) {
+    let result: string = rollResult.result;
+    let isSecret: boolean = rollResult.isSecret;
+
+    if (result.length < 1) return;
+
+    result = result.replace(/[＞]/g, function (s) {
+      return '→';
+    });
+    result = result.trim();
+
+    let diceBotMessage: ChatMessageContext = {
+      identifier: '',
+      tabIdentifier: originalMessage.tabIdentifier,
+      originFrom: originalMessage.from,
+      from: 'System-BCDice',
+      timestamp: originalMessage.timestamp + 1,
+      imageIdentifier: '',
+      tag: isSecret ? 'system secret' : 'system',
+      name: isSecret ? '<Secret-BCDice：' + originalMessage.name + '>' : '<BCDice：' + originalMessage.name + '>',
+      text: result
+    };
+
+    if (originalMessage.to != null && 0 < originalMessage.to.length) {
+      diceBotMessage.to = originalMessage.to;
+      if (originalMessage.to.indexOf(originalMessage.from) < 0) {
+        diceBotMessage.to += ' ' + originalMessage.from;
+      }
+    }
+    EventSystem.call('BROADCAST_MESSAGE', diceBotMessage);
+  }
+
+  static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult> {
     DiceBot.queue.add(() => DiceBot.loadDiceBotAsync(gameType));
     return DiceBot.queue.add(() => {
       if ('Opal' in window === false) {
@@ -486,9 +472,7 @@ interface DiceBotInfo {
   game: string;
 }
 
-interface DiceBotStackContainer {
-  originalString: string;
-  operater: string;
-  calculationResult: number;
-  diplayResult: string;
+interface DiceRollResult {
+  result: string;
+  isSecret: boolean;
 }
