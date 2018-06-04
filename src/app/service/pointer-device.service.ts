@@ -1,4 +1,5 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef, NgZone, } from "@angular/core";
+import { Injectable, NgZone } from '@angular/core';
+
 import { Transform } from '../class/transform/transform';
 
 export var PointerDeviceProxy: PointerDeviceService = null;

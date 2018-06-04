@@ -1,5 +1,4 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef, } from "@angular/core";
-import { UIPanelComponent } from '../component/ui-panel/ui-panel.component';
+import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 
 declare var Type: FunctionConstructor;
 interface Type<T> extends Function {
