@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from "@angular/http"
 
 import { Network, EventSystem } from '../class/core/system/system';
 import { ObjectStore } from '../class/core/synchronize-object/object-store';
@@ -15,7 +14,7 @@ export class ChatMessageService {
 
   gameType: string = '';
 
-  constructor(private http: Http) {
+  constructor() {
     this.calibrateTimeOffset();
   }
 
@@ -25,12 +24,15 @@ export class ChatMessageService {
 
   private calibrateTimeOffset() {
     let sendTime = performance.now();
-    let httpGet = this.http.get('https://ntp-a1.nict.go.jp/cgi-bin/json');
-    httpGet.subscribe(
-      res => {
+    fetch('https://ntp-a1.nict.go.jp/cgi-bin/json')
+      .then(response => {
+        if (response.ok) return response.json();
+        throw new Error('Network response was not ok.');
+      })
+      .then(jsonObj => {
         let endTime = performance.now();
         let latency = (endTime - sendTime) / 2;
-        let timeobj = res.json();
+        let timeobj = jsonObj;
         let st: number = timeobj.st * 1000;
         let fixedTime = st + latency;
         this.timeOffset = fixedTime;
@@ -40,12 +42,11 @@ export class ChatMessageService {
         console.log('timeOffset: ' + this.timeOffset);
         console.log('performanceOffset: ' + this.performanceOffset);
         setTimeout(() => { this.calibrateTimeOffset(); }, 6 * 60 * 60 * 1000);
-      },
-      error => {
-        console.error(error.status + ":" + error.statusText);
+      })
+      .catch(error => {
+        console.warn('There has been a problem with your fetch operation: ', error.message);
         setTimeout(() => { this.calibrateTimeOffset(); }, 6 * 60 * 60 * 1000);
-      }
-    );
+      });
   }
 
   getTime(): number {
