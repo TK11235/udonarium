@@ -1,5 +1,4 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef, } from "@angular/core";
-//import { ModalComponent } from '../component/modal/modal.component';
+import { Injectable, ViewContainerRef, ComponentFactoryResolver, Injector, ComponentRef, } from "@angular/core";
 
 /*
 thanks
@@ -85,11 +84,8 @@ export class ModalService {
       const childModalService: ModalService = new ModalService(this.componentFactoryResolver);
       childModalService.modalContext = new ModalContext(_resolve, _reject, option);
 
-      const providers = ReflectiveInjector.resolve([
-        { provide: ModalService, useValue: childModalService }
-      ]);
       const parentInjector = parentViewContainerRef.injector;//parentViewContainerRef.parentInjector;
-      const injector = ReflectiveInjector.fromResolvedProviders(providers, parentInjector);
+      const injector = Injector.create([{ provide: ModalService, useValue: childModalService }], parentInjector);
 
       // componentRef作成
       /* 基本コード */
