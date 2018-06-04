@@ -2,7 +2,7 @@ import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } 
 
 declare var Type: FunctionConstructor;
 interface Type<T> extends Function {
-  new (...args: any[]): T;
+  new(...args: any[]): T;
 }
 
 export interface PanelOption {
@@ -20,7 +20,7 @@ export class PanelService {
 
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
-  static UIPanelComponentClass: { new (...args: any[]): any } = null;
+  static UIPanelComponentClass: { new(...args: any[]): any } = null;
 
   private panelComponentRef: ComponentRef<any>
   title: string = '無名のパネル';

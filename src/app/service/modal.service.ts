@@ -8,7 +8,7 @@ http://qiita.com/alclimb/items/1c740a432c10b6dc700a
 
 declare var Type: FunctionConstructor;
 interface Type<T> extends Function {
-  new (...args: any[]): T;
+  new(...args: any[]): T;
 }
 
 class ModalContext {
@@ -32,12 +32,12 @@ class ModalContext {
 export class ModalService {
   private modalContext: ModalContext = null;
   private count = 0;
-  
+
   title: string = '無名のモーダル';
 
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
-  static ModalComponentClass: { new (...args: any[]): any } = null;
+  static ModalComponentClass: { new(...args: any[]): any } = null;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver
@@ -51,7 +51,7 @@ export class ModalService {
     return this.count > 0;
   }
 
-  open<T>(childComponent: { new (...args: any[]) }, option?, parentViewContainerRef?: ViewContainerRef): Promise<T> {
+  open<T>(childComponent: { new(...args: any[]) }, option?, parentViewContainerRef?: ViewContainerRef): Promise<T> {
     if (this.isShow) return;
     if (!parentViewContainerRef) {
       parentViewContainerRef = ModalService.defaultParentViewContainerRef;
