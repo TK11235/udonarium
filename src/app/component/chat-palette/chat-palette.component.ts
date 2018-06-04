@@ -146,7 +146,6 @@ export class ChatPaletteComponent implements OnInit {
       timestamp: time,
       tag: this.gameType,
       imageIdentifier: this.character.imageFile ? this.character.imageFile.identifier : '',
-      responseIdentifier: '',
     };
 
     if (this.sendTo != null && this.sendTo.length) {
