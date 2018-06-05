@@ -107,6 +107,9 @@
   color: #444;
   font-size: 8px;
   opacity: 1;
+
+  transform-style: preserve-3d;
+  transform: translateZ(0.3px);
 }
 
 .rotate-grab:hover, .rotate-grab:active {
