@@ -50,7 +50,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.movableOption = {
       tabletopObject: this.terrain,
-      transformCssOffset: 'translateZ(-0.15px)',
       colideLayers: ['terrain']
     };
     this.rotableOption = {

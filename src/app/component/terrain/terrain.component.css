@@ -109,7 +109,7 @@
   opacity: 1;
 
   transform-style: preserve-3d;
-  transform: translateZ(0.3px);
+  transform: translateZ(0.1px);
 }
 
 .rotate-grab:hover, .rotate-grab:active {

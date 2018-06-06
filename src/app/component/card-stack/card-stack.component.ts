@@ -84,6 +84,7 @@ export class CardStackComponent implements OnInit {
       });
     this.movableOption = {
       tabletopObject: this.cardStack,
+      transformCssOffset: 'translateZ(0.15px)',
       colideLayers: ['terrain']
     };
     this.rotableOption = {

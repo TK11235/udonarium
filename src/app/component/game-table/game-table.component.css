@@ -50,7 +50,7 @@
 
 .grid-canvas {
   opacity: 0.0;
-
+  transform: translateZ(0.15px);
   -webkit-transition: 0.3s ease-out;
   -moz-transition: 0.3s ease-out;
   -o-transition: 0.3s ease-out;
@@ -69,7 +69,6 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  transform: translateZ(-0.3px);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }

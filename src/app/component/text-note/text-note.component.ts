@@ -58,6 +58,7 @@ export class TextNoteComponent implements OnInit {
   ngOnInit() {
     this.movableOption = {
       tabletopObject: this.textNote,
+      transformCssOffset: 'translateZ(0.15px)',
       colideLayers: ['terrain']
     };
     this.rotableOption = {
