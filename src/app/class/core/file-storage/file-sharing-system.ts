@@ -18,9 +18,6 @@ export class FileSharingSystem {
 
   private constructor() {
     console.log('FileSharingSystem ready...');
-    window.addEventListener('beforeunload', event => {
-      this.destroy();
-    });
   }
 
   initialize() {

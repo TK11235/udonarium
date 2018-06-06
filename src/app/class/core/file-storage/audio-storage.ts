@@ -88,9 +88,6 @@ export class AudioStorage {
 
   private constructor() {
     console.log('AudioStorage ready...');
-    window.addEventListener('beforeunload', event => {
-      this.destroy();
-    });
     this.initializeContext();
   }
 

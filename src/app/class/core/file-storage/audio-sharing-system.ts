@@ -18,11 +18,7 @@ export class AudioSharingSystem {
 
   private lazyTimer: NodeJS.Timer;
 
-  private constructor() {
-    window.addEventListener('beforeunload', event => {
-      this.destroy();
-    });
-  }
+  private constructor() { }
 
   initialize() {
     console.log('AudioSharingSystem ready...');

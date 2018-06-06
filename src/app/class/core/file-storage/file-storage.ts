@@ -25,9 +25,6 @@ export class FileStorage {
 
   private constructor() {
     console.log('FileStorage ready...');
-    window.addEventListener('beforeunload', event => {
-      this.destroy();
-    });
   }
 
   private destroy() {

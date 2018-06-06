@@ -22,9 +22,6 @@ export class FileArchiver {
 
   private constructor() {
     console.log('FileArchiver ready...');
-    window.addEventListener('beforeunload', event => {
-      this.destroy();
-    });
   }
 
   initialize() {
