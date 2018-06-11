@@ -57,7 +57,7 @@ export class ObjectSynchronizer {
   }
 
   private createObject(context: ObjectContext) {
-    if (ObjectStore.instance.isDeleted(context.identifier, context)) {
+    if (ObjectStore.instance.isDeleted(context.identifier)) {
       EventSystem.call('DELETE_GAME_OBJECT', { identifier: context.identifier });
       return;
     }

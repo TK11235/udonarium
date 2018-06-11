@@ -131,7 +131,7 @@ export class ObjectStore {
     }
   }
 
-  isDeleted(identifier: string, compare?: ObjectContext) {
+  isDeleted(identifier: string) {
     let garbage = this.getDeletedObject(identifier);
     if (!garbage) return false;
     return true;
