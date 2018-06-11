@@ -16,7 +16,6 @@ export class ObjectStore {
 
   private identifierHash: { [identifier: string]: GameObject } = {};
   private classHash: { [aliasName: string]: GameObject[] } = {};
-  //private garbageHash: { [identifier: string]: { context: ObjectContext, timeStamp: number } } = {};
   private garbageHash: { [identifier: string]: DeletedObjectContext } = {};
 
   private queue: { [identifier: string]: ObjectContext } = {};
@@ -27,7 +26,6 @@ export class ObjectStore {
   private constructor() { console.log('ObjectStore ready...'); };
 
   add(object: GameObject) {
-    //console.log('addGameObject() ' + object.identifier);
     if (this.identifierHash[object.identifier] != null) return;
     this.identifierHash[object.identifier] = object;
     let objects = this._getObjects(object.aliasName);
@@ -36,7 +34,6 @@ export class ObjectStore {
 
   delete(object: GameObject, needCallEvent: boolean = true): GameObject {
     if (!this.identifierHash[object.identifier]) return null;
-    //console.warn('deleteGameObject()', object.identifier);
 
     let objects = this._getObjects(object.aliasName);
     let index = objects.indexOf(object);
@@ -45,11 +42,8 @@ export class ObjectStore {
 
     this.garbageCollection(10 * 60 * 1000);
 
-    //let garbage: ObjectContext = object.destroy();
-    /* */
     EventSystem.unregister(object);
-    //let garbage = object.toContext();
-    /* */
+
     if (needCallEvent) {
       this.garbageHash[object.identifier] = { aliasName: object.aliasName, timeStamp: performance.now() };
       EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
@@ -157,7 +151,7 @@ export class ObjectStore {
   }
 
   private _garbageCollection(ms: number) {
-    let nowDate = performance.now();//Date.now();
+    let nowDate = performance.now();
     for (let identifier in this.garbageHash) {
       if (this.garbageHash[identifier].timeStamp + ms < nowDate) {
         delete this.garbageHash[identifier];
