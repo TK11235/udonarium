@@ -331,7 +331,9 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private placeToTabletop(gameObject: TabletopObject) {
     switch (gameObject.aliasName) {
       case GameTableMask.aliasName:
+        if (gameObject instanceof GameTableMask) gameObject.isLock = false;
       case Terrain.aliasName:
+        if (gameObject instanceof Terrain) gameObject.isLocked = false;
         if (!this.tableSelecter || !this.tableSelecter.viewTable) return;
         this.tableSelecter.viewTable.appendChild(gameObject);
         break;
