@@ -1,23 +1,16 @@
-import { Component, ViewContainerRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
+import { FileStorage } from '../../class/core/file-storage/file-storage';
+import { ImageFile } from '../../class/core/file-storage/image-file';
+import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
+import { ObjectStore } from '../../class/core/synchronize-object/object-store';
+import { EventSystem, Network } from '../../class/core/system/system';
+import { GameTable, GridType } from '../../class/game-table';
+import { TableSelecter } from '../../class/table-selecter';
 import { ModalService } from '../../service/modal.service';
 import { PanelService } from '../../service/panel.service';
-
-import * as Beautify from 'vkbeautify';
-
-import { GameTable, GameTableDataContainer, GridType } from '../../class/game-table';
-import { TableSelecter } from '../../class/table-selecter';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
-import { FileArchiver } from '../../class/core/file-storage/file-archiver';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { MimeType } from '../../class/core/file-storage/mime-type';
-import { XmlUtil } from '../../class/core/synchronize-object/xml-util';
-import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
 import { SaveDataService } from '../../service/save-data.service';
+import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
 
 @Component({
   selector: 'game-table-setting',

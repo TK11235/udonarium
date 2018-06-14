@@ -1,28 +1,15 @@
-import { Component, ViewContainerRef, ChangeDetectionStrategy, ChangeDetectorRef, Input, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-//import { NgForm } from '@angular/forms';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
+import { Card } from '../../class/card';
+import { EventSystem, Network } from '../../class/core/system/system';
+import { DataElement } from '../../class/data-element';
+import { GameCharacter } from '../../class/game-character';
+import { TabletopObject } from '../../class/tabletop-object';
+import { Terrain } from '../../class/terrain';
 import { ModalService } from '../../service/modal.service';
 import { PanelService } from '../../service/panel.service';
-import * as Beautify from 'vkbeautify';
-//import { JSZip } from 'jszip';
-
-import { GameCharacter } from '../../class/game-character';
-import { GameTableMask } from '../../class/game-table-mask';
-import { DataElement } from '../../class/data-element';
-import { TabletopObject } from '../../class/tabletop-object';
-import { Card, CardState } from '../../class/card';
-import { Terrain } from '../../class/terrain';
-
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ObjectFactory } from '../../class/core/synchronize-object/object-factory';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
-import { FileArchiver } from '../../class/core/file-storage/file-archiver';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { MimeType } from '../../class/core/file-storage/mime-type';
-import { XmlUtil } from '../../class/core/synchronize-object/xml-util';
 import { SaveDataService } from '../../service/save-data.service';
+import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
 
 @Component({
   selector: 'game-character-sheet',

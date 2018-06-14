@@ -1,48 +1,34 @@
-import { NgZone, Component, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { ModalService } from './service/modal.service';
-import { PanelService, PanelOption } from './service/panel.service';
-import { PointerDeviceService } from './service/pointer-device.service';
-import { ContextMenuService } from './service/context-menu.service';
-import { AppConfigService, AppConfig } from './service/app-config.service';
-
-import { ModalComponent } from './component/modal/modal.component';
-import { UIPanelComponent } from './component/ui-panel/ui-panel.component';
-import { PeerMenuComponent } from './component/peer-menu/peer-menu.component';
-import { GameObjectInventoryComponent } from './component/game-object-inventory/game-object-inventory.component';
-import { ChatWindowComponent } from './component/chat-window/chat-window.component';
-import { GameTableSettingComponent } from './component/game-table-setting/game-table-setting.component';
-import { FileStorageComponent } from './component/file-storage/file-storage.component';
-import { GameCharacterSheetComponent } from './component/game-character-sheet/game-character-sheet.component';
-import { GameCharacterGeneratorComponent } from './component/game-character-generator/game-character-generator.component';
-import { ChatPaletteComponent } from './component/chat-palette/chat-palette.component';
-import { JukeboxComponent } from './component/jukebox/jukebox.component'
-import { LobbyComponent } from './component/lobby/lobby.component';
-import { TextViewComponent } from './component/text-view/text-view.component';
-
-import { ChatMessage } from './class/chat-message';
-import { ChatTabList } from './class/chat-tab-list';
 import { ChatTab } from './class/chat-tab';
-import { DiceBot } from './class/dice-bot';
-import { Room } from './class/room';
-import { EventSystem, Network } from './class/core/system/system';
-import { MimeType } from './class/core/file-storage/mime-type';
+import { AudioSharingSystem } from './class/core/file-storage/audio-sharing-system';
+import { AudioStorage } from './class/core/file-storage/audio-storage';
 import { FileArchiver } from './class/core/file-storage/file-archiver';
 import { FileSharingSystem } from './class/core/file-storage/file-sharing-system';
 import { FileStorage } from './class/core/file-storage/file-storage';
-import { AudioSharingSystem } from './class/core/file-storage/audio-sharing-system';
-import { AudioStorage } from './class/core/file-storage/audio-storage';
 import { ImageFile } from './class/core/file-storage/image-file';
-import { ObjectNode } from './class/core/synchronize-object/object-node';
 import { ObjectFactory } from './class/core/synchronize-object/object-factory';
 import { ObjectSerializer } from './class/core/synchronize-object/object-serializer';
 import { ObjectStore } from './class/core/synchronize-object/object-store';
 import { ObjectSynchronizer } from './class/core/synchronize-object/object-synchronizer';
-import { PeerCursor } from './class/peer-cursor';
+import { EventSystem, Network } from './class/core/system/system';
+import { DiceBot } from './class/dice-bot';
 import { Jukebox } from './class/Jukebox';
-
-import * as Beautify from 'vkbeautify';
-import { XmlUtil } from './class/core/synchronize-object/xml-util';
+import { PeerCursor } from './class/peer-cursor';
+import { ChatWindowComponent } from './component/chat-window/chat-window.component';
+import { FileStorageComponent } from './component/file-storage/file-storage.component';
+import { GameCharacterGeneratorComponent } from './component/game-character-generator/game-character-generator.component';
+import { GameCharacterSheetComponent } from './component/game-character-sheet/game-character-sheet.component';
+import { GameObjectInventoryComponent } from './component/game-object-inventory/game-object-inventory.component';
+import { GameTableSettingComponent } from './component/game-table-setting/game-table-setting.component';
+import { JukeboxComponent } from './component/jukebox/jukebox.component';
+import { PeerMenuComponent } from './component/peer-menu/peer-menu.component';
+import { TextViewComponent } from './component/text-view/text-view.component';
+import { AppConfig, AppConfigService } from './service/app-config.service';
+import { ContextMenuService } from './service/context-menu.service';
+import { ModalService } from './service/modal.service';
+import { PanelOption, PanelService } from './service/panel.service';
+import { PointerDeviceService } from './service/pointer-device.service';
 import { SaveDataService } from './service/save-data.service';
 
 @Component({
