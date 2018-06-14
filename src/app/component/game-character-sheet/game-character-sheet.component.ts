@@ -38,8 +38,6 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    //private gameRoomService: GameRoomService,
-    //private networkService: NetworkService,
     private viewContainerRef: ViewContainerRef,
     private saveDataService: SaveDataService,
     private modalService: ModalService,
@@ -52,31 +50,11 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
       this.panelService.title += ' - ' + this.tabletopObject.name;
     }
     EventSystem.register(this)
-      /*
-      .on('SELECT_TABLETOP_OBJECT', 0, event => {
-        console.log('SELECT_TABLETOP_OBJECT GameCharacterSheetComponent <' + event.data.className + '>' + event.data.identifier);
-
-        //if (GameRoomService.getClass(event.data.className).prototype instanceof TabletopObject) {
-        this.tabletopObject = <TabletopObject>ObjectStore.instance.get(event.data.identifier);
-        //}
-        this.panelService.title = 'キャラクターシート';
-        if (this.tabletopObject instanceof GameCharacter && 0 < this.tabletopObject.name.length) {
-          this.panelService.title += ' - ' + this.tabletopObject.name;
-        }
-      })
-      */.on('DELETE_GAME_OBJECT', -1000, event => {
+      .on('DELETE_GAME_OBJECT', -1000, event => {
         if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) {
           this.tabletopObject = null;
         }
       });
-    /*
-    if (!this.tabletopObject) {
-      let gameObject = ObjectStore.instance.get(this.gameRoomService.selectedIdentifier);
-      if (gameObject instanceof TabletopObject) {
-        this.tabletopObject = gameObject;
-      }
-    }
-    */
   }
 
   ngAfterViewInit() {

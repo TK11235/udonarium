@@ -62,7 +62,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   constructor(
-    //private gameRoomService: GameRoomService,
     private viewContainerRef: ViewContainerRef,
     private modalService: ModalService,
     private saveDataService: SaveDataService,
