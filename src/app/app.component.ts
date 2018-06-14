@@ -180,6 +180,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   save() {
-    this.saveDataService.saveRoom();
+    let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
+      ? Network.peerContext.roomName
+      : 'ルームデータ';
+    this.saveDataService.saveRoom(roomName);
   }
 }
