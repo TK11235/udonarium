@@ -37,7 +37,6 @@ import { SaveDataService } from './service/save-data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
-  title = 'Unreal Dice Online';//'TRPG Tool-X';
 
   @ViewChild('modalLayer', { read: ViewContainerRef }) modalLayerViewContainerRef: ViewContainerRef;
   private lazyUpdateTimer: NodeJS.Timer = null;
