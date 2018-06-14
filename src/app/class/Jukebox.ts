@@ -51,7 +51,7 @@ export class Jukebox extends GameObject {
         });
       return;
     }
-    this.createBufferSourceAsync(audio).then(() => {
+    AudioStorage.instance.createBufferSourceAsync(audio).then(() => {
       if (audio.buffer) {
         let source = AudioStorage.audioContext.createBufferSource();
         source.buffer = audio.buffer;
@@ -83,17 +83,6 @@ export class Jukebox extends GameObject {
       this.source = null;
       console.log('Jukebox has stoped. ');
     }
-  }
-
-  private async createBufferSourceAsync(audio: AudioFile): Promise<void> {
-    if (!audio || audio.buffer) return;
-    try {
-      let decodedData = await AudioStorage.audioContext.decodeAudioData(await FileReaderUtil.readAsArrayBufferAsync(audio.blob));
-      audio.buffer = decodedData;
-    } catch (reason) {
-      console.warn(reason);
-    }
-    return;
   }
 
   // override

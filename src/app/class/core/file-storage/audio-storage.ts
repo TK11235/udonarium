@@ -202,8 +202,17 @@ export class AudioStorage {
     }
   }
 
-  private async createBufferSourceAsync(identifier: string): Promise<{}> {
-    let audio = this.get(identifier);
+  async createBufferSourceAsync(identifier: string): Promise<{}>
+  async createBufferSourceAsync(audio: AudioFile): Promise<{}>
+  async createBufferSourceAsync(arg: any): Promise<{}> {
+    if (typeof arg === 'string') {
+      return this._createBufferSourceAsync(this.get(arg));
+    } else {
+      return this._createBufferSourceAsync(arg);
+    }
+  }
+
+  private async _createBufferSourceAsync(audio: AudioFile): Promise<{}> {
     if (!audio || audio.buffer) return;
     try {
       let decodedData = await AudioStorage.audioContext.decodeAudioData(await FileReaderUtil.readAsArrayBufferAsync(audio.blob));
