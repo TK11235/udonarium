@@ -22,6 +22,7 @@ import { FileArchiver } from '../../class/core/file-storage/file-archiver';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { MimeType } from '../../class/core/file-storage/mime-type';
 import { XmlUtil } from '../../class/core/synchronize-object/xml-util';
+import { SaveDataService } from '../../service/save-data.service';
 
 @Component({
   selector: 'game-character-sheet',
@@ -53,6 +54,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
     //private gameRoomService: GameRoomService,
     //private networkService: NetworkService,
     private viewContainerRef: ViewContainerRef,
+    private saveDataService: SaveDataService,
     private modalService: ModalService,
     private panelService: PanelService
   ) { }
@@ -114,52 +116,10 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   saveToXML() {
     if (!this.tabletopObject) return;
 
-    let files: File[] = [];
-    let xml: string = this.tabletopObject.toXml();
-    xml = Beautify.xml(xml, 2);
-
     let element = this.tabletopObject.getElement('name', this.tabletopObject.commonDataElement);
-    let name: string = element ? <string>element.value : '';
+    let objectName: string = element ? <string>element.value : '';
 
-    files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
-
-    /*
-    let image = this.tabletopObject.imageFile;
-    if (image.blob) {
-      files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
-    }
-    */
-    files = files.concat(this.getImageFiles(xml));
-
-    FileArchiver.instance.save(files, 'xml_' + name);
-  }
-
-  private getImageFiles(xml: string): File[] {
-    let xmlElement: Element = XmlUtil.xml2element(xml);
-    let files: File[] = [];
-    if (!xmlElement) return files;
-
-    let images: { [identifier: string]: ImageFile } = {};
-    let imageElements = xmlElement.querySelectorAll('*[type="image"]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].innerHTML;
-      images[identifier] = FileStorage.instance.get(identifier);
-    }
-
-    imageElements = xmlElement.querySelectorAll('*[imageIdentifier]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].getAttribute('imageIdentifier');
-      images[identifier] = FileStorage.instance.get(identifier);
-    }
-    for (let identifier in images) {
-      let image = images[identifier];
-      if (image && image.blob) {
-        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
-      }
-    }
-    return files;
+    this.saveDataService.saveGameObject(this.tabletopObject, 'xml_' + objectName);
   }
 
   setLocation(locationName: string) {

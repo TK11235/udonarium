@@ -17,6 +17,7 @@ import { ImageFile } from '../../class/core/file-storage/image-file';
 import { MimeType } from '../../class/core/file-storage/mime-type';
 import { XmlUtil } from '../../class/core/synchronize-object/xml-util';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
+import { SaveDataService } from '../../service/save-data.service';
 
 @Component({
   selector: 'game-table-setting',
@@ -71,6 +72,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     //private gameRoomService: GameRoomService,
     private viewContainerRef: ViewContainerRef,
     private modalService: ModalService,
+    private saveDataService: SaveDataService,
     private panelService: PanelService
   ) { }
 
@@ -114,15 +116,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   save() {
     if (!this.selectedTable) return;
     this.selectedTable.selected = true;
-    let xml = this.selectedTable.toXml();
-
-    xml = Beautify.xml(xml, 2);
-    console.log(xml);
-
-    let files: File[] = [new File([xml], 'data.xml', { type: 'text/plain' })];
-
-    files = files.concat(this.getImageFiles(xml));
-    FileArchiver.instance.save(files, 'map_' + this.selectedTable.name);
+    this.saveDataService.saveGameObject(this.selectedTable, 'map_' + this.selectedTable.name);
   }
 
   delete() {
@@ -147,34 +141,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
       if (!this.selectedTable || !value) return;
       this.selectedTable.imageIdentifier = value;
     });
-  }
-
-  private getImageFiles(xml: string): File[] {
-    let xmlElement: Element = XmlUtil.xml2element('<root>' + xml + '</root>');
-    let files: File[] = [];
-    if (!xmlElement) return files;
-
-    let images: { [identifier: string]: ImageFile } = {};
-    let imageElements = xmlElement.querySelectorAll('*[type="image"]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].innerHTML;
-      images[identifier] = FileStorage.instance.get(identifier);
-    }
-
-    imageElements = xmlElement.querySelectorAll('*[imageIdentifier]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].getAttribute('imageIdentifier');
-      images[identifier] = FileStorage.instance.get(identifier);
-    }
-    for (let identifier in images) {
-      let image = images[identifier];
-      if (image && image.blob) {
-        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
-      }
-    }
-    return files;
   }
 }
 

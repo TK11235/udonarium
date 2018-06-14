@@ -43,6 +43,7 @@ import { Jukebox } from './class/Jukebox';
 
 import * as Beautify from 'vkbeautify';
 import { XmlUtil } from './class/core/synchronize-object/xml-util';
+import { SaveDataService } from './service/save-data.service';
 
 @Component({
   selector: 'app-root',
@@ -61,6 +62,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private panelService: PanelService,
     private pointerDeviceService: PointerDeviceService,
     private appConfigService: AppConfigService,
+    private saveDataService: SaveDataService,
     private ngZone: NgZone
   ) {
 
@@ -193,55 +195,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   save() {
-    let files: File[] = [];
-    let roomXml = this.getRoomXml();
-    let chatXml = this.getChatXml();
-    files.push(new File([roomXml], 'data.xml', { type: 'text/plain' }));
-    files.push(new File([chatXml], 'chat.xml', { type: 'text/plain' }));
-
-    files = files.concat(this.getImageFiles(roomXml));
-    files = files.concat(this.getImageFiles(chatXml));
-
-    FileArchiver.instance.save(files, 'ルームデータ');
-  }
-
-  private getRoomXml(): string {
-    let xml = new Room().toXml();
-    xml = Beautify.xml(xml, 2);
-    return xml;
-  }
-
-  private getChatXml(): string {
-    let xml = new ChatTabList().toXml();
-    xml = Beautify.xml(xml, 2);
-    return xml;
-  }
-
-  private getImageFiles(xml: string): File[] {
-    let xmlElement: Element = XmlUtil.xml2element(xml);
-    let files: File[] = [];
-    if (!xmlElement) return files;
-
-    let images: { [identifier: string]: ImageFile } = {};
-    let imageElements = xmlElement.querySelectorAll('*[type="image"]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].innerHTML;
-      images[identifier] = FileStorage.instance.get(identifier);
-    }
-
-    imageElements = xmlElement.querySelectorAll('*[imageIdentifier]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].getAttribute('imageIdentifier');
-      images[identifier] = FileStorage.instance.get(identifier);
-    }
-    for (let identifier in images) {
-      let image = images[identifier];
-      if (image && image.blob) {
-        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
-      }
-    }
-    return files;
+    this.saveDataService.saveRoom();
   }
 }
