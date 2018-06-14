@@ -1,6 +1,7 @@
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 import { AudioSharingSystem } from './audio-sharing-system';
 import { EventSystem } from '../system/system';
+import { FileReaderUtil } from './file-reader-util';
 
 export type Catalog = { identifier: string, state: number }[];
 
@@ -202,28 +203,15 @@ export class AudioStorage {
   }
 
   private async createBufferSourceAsync(identifier: string): Promise<{}> {
-    return new Promise((resolve, reject) => {
-      let audio = this.get(identifier);
-      if (!audio || audio.buffer) {
-        resolve();
-        return;
-      }
-      console.log('createBufferSourceAsync...');
-      let reader = new FileReader();
-      reader.onload = event => {
-        AudioStorage.audioContext.decodeAudioData(reader.result).then((decodedData) => {
-          audio.buffer = decodedData;
-          resolve();
-        }).catch(reason => {
-          console.warn(reason);
-          resolve();
-        });
-      }
-      reader.onabort = reader.onerror = () => {
-        resolve();
-      }
-      reader.readAsArrayBuffer(audio.blob);
-    });
+    let audio = this.get(identifier);
+    if (!audio || audio.buffer) return;
+    try {
+      let decodedData = await AudioStorage.audioContext.decodeAudioData(await FileReaderUtil.readAsArrayBufferAsync(audio.blob));
+      audio.buffer = decodedData;
+    } catch (reason) {
+      console.warn(reason);
+    }
+    return;
   }
 
   synchronize(peer?: string) {

@@ -7,6 +7,7 @@ import { Network, EventSystem } from './core/system/system';
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
+import { FileReaderUtil } from './core/file-storage/file-reader-util';
 
 @SyncObject('jukebox')
 export class Jukebox extends GameObject {
@@ -84,28 +85,15 @@ export class Jukebox extends GameObject {
     }
   }
 
-  private async createBufferSourceAsync(audio: AudioFile): Promise<{}> {
-    return new Promise((resolve, reject) => {
-      if (!audio || audio.buffer) {
-        resolve();
-        return;
-      }
-      console.log('createBufferSourceAsync...');
-      let reader = new FileReader();
-      reader.onload = event => {
-        AudioStorage.audioContext.decodeAudioData(reader.result).then((decodedData) => {
-          audio.buffer = decodedData;
-          resolve();
-        }).catch(reason => {
-          console.warn(reason);
-          resolve();
-        });
-      }
-      reader.onabort = reader.onerror = () => {
-        resolve();
-      }
-      reader.readAsArrayBuffer(audio.blob);
-    });
+  private async createBufferSourceAsync(audio: AudioFile): Promise<void> {
+    if (!audio || audio.buffer) return;
+    try {
+      let decodedData = await AudioStorage.audioContext.decodeAudioData(await FileReaderUtil.readAsArrayBufferAsync(audio.blob));
+      audio.buffer = decodedData;
+    } catch (reason) {
+      console.warn(reason);
+    }
+    return;
   }
 
   // override

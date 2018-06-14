@@ -2,6 +2,7 @@ import * as CryptoJS from 'crypto-js/core.js';
 //import * as CryptoJS from 'crypto-js/crypto-js.js';
 import * as WordArray from 'crypto-js/lib-typedarrays.js';
 import * as SHA256 from 'crypto-js/sha256.js';
+import { FileReaderUtil } from './file-reader-util';
 
 //import { SHA256 } from 'crypto-js';
 //import * as CryptoJS from 'crypto-js';
@@ -92,7 +93,7 @@ export class ImageFile {
   }
 
   private static async _createAsync(blob: Blob, name?: string): Promise<ImageFile> {
-    let arrayBuffer = await ImageFile.blobToArrayBuffer(blob); // ローカルから読み込んだファイルは一度FileReaderを通さないと表示できない
+    let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob); // ローカルから読み込んだファイルは一度FileReaderを通さないと表示できない
 
     let imageFile = new ImageFile();
     imageFile.context.identifier = ImageFile.calcHash(arrayBuffer);
@@ -196,15 +197,6 @@ export class ImageFile {
         reject();
       }
       image.src = context.url;
-    });
-  }
-
-  static async blobToArrayBuffer(blob): Promise<ArrayBuffer> {
-    return new Promise<ArrayBuffer>((resolve, reject) => {
-      let reader = new FileReader();
-      reader.onload = event => { resolve(reader.result); }
-      reader.onabort = reader.onerror = () => { reject([]); }
-      reader.readAsArrayBuffer(blob);
     });
   }
 

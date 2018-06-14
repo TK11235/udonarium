@@ -1,6 +1,7 @@
 import * as CryptoJS from 'crypto-js/core.js';
 import * as WordArray from 'crypto-js/lib-typedarrays.js';
 import * as SHA256 from 'crypto-js/sha256.js';
+import { FileReaderUtil } from './file-reader-util';
 
 export enum AudioState {
   NULL = 0,
@@ -122,21 +123,10 @@ export class AudioFile {
     }
   }
 
-  private static calHashAsync(blob: Blob): Promise<string> {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      reader.onload = event => {
-
-        let wordArray = WordArray.create(reader.result);
-        let hash: string = SHA256(<any>wordArray, 'key').toString();
-
-        console.log('calHashAsync => ' + hash);
-        resolve(hash);
-      }
-      reader.onabort = reader.onerror = () => {
-        reject();
-      }
-      reader.readAsArrayBuffer(blob);
-    });
+  private static async calHashAsync(blob: Blob): Promise<string> {
+    let wordArray = WordArray.create(await FileReaderUtil.readAsArrayBufferAsync(blob));
+    let hash: string = SHA256(<any>wordArray, 'key').toString();
+    console.log('calHashAsync => ' + hash);
+    return hash;
   }
 }

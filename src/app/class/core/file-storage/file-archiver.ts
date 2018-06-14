@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 
 import * as JSZip from 'jszip/dist/jszip.min.js';
 import { XmlUtil } from '../synchronize-object/xml-util';
+import { FileReaderUtil } from './file-reader-util';
 //import * as JSZip from 'jszip';
 
 export class FileArchiver {
@@ -101,23 +102,15 @@ export class FileArchiver {
     let audio = await AudioStorage.instance.addAsync(file);
   }
 
-  private handleText(file: File): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (file.type.indexOf('text/') < 0) return resolve();
-      console.log(file.name + ' type:' + file.type);
-      if (10 * 1024 * 1024 < file.size) return resolve();
-
-      let reader = new FileReader();
-      reader.onload = (event) => {
-        let xmlElement: Element = XmlUtil.xml2element(reader.result);
-        if (xmlElement) EventSystem.trigger('XML_LOADED', { xmlElement: xmlElement });
-        resolve();
-      }
-      reader.onabort = reader.onerror = () => {
-        resolve();
-      }
-      reader.readAsText(file);
-    });
+  private async handleText(file: File): Promise<void> {
+    if (file.type.indexOf('text/') < 0) return;
+    console.log(file.name + ' type:' + file.type);
+    try {
+      let xmlElement: Element = XmlUtil.xml2element(await FileReaderUtil.readAsTextAsync(file));
+      if (xmlElement) EventSystem.trigger('XML_LOADED', { xmlElement: xmlElement });
+    } catch (reason) {
+      console.warn(reason);
+    }
   }
 
   private async handleZip(file: File) {

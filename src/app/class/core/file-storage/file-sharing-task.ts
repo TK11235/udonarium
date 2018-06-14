@@ -1,5 +1,6 @@
 import { EventSystem } from '../system/system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
+import { FileReaderUtil } from './file-reader-util';
 
 interface ChankData {
   index: number;
@@ -68,9 +69,9 @@ export class FileSharingTask {
       let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
 
       /* hotfix issue #1 */
-      data.chank = <any>await blobToArrayBuffer(data.chank);
+      data.chank = <any>await FileReaderUtil.readAsArrayBufferAsync(data.chank);
       /* */
-      
+
       EventSystem.call('FILE_SEND_CHANK_' + this.file.identifier, data, this.sendTo);
       if (index + 1 < this.chanks.length) {
         this.sendChank(index + 1);
@@ -113,13 +114,4 @@ export class FileSharingTask {
       this.cancel();
     }, 10 * 1000);
   }
-}
-
-async function blobToArrayBuffer(blob): Promise<ArrayBuffer> {
-  return new Promise<ArrayBuffer>((resolve, reject) => {
-    let reader = new FileReader();
-    reader.onload = event => { resolve(reader.result); }
-    reader.onabort = reader.onerror = () => { reject([]); }
-    reader.readAsArrayBuffer(blob);
-  });
 }

@@ -3,6 +3,7 @@ import { EventSystem, Event, Network } from '../system/system';
 import { FileStorage, Catalog } from './file-storage';
 import { ImageFile, ImageContext, ImageState } from './image-file';
 import { MimeType } from './mime-type';
+import { FileReaderUtil } from './file-reader-util';
 
 export class FileSharingSystem {
   private static _instance: FileSharingSystem
@@ -121,9 +122,9 @@ export class FileSharingSystem {
           /* hotfix issue #1 */
           for (let context of updateImages) {
             if (context.thumbnail.blob) {
-              context.thumbnail.blob = <any>await blobToArrayBuffer(context.thumbnail.blob);
+              context.thumbnail.blob = <any>await FileReaderUtil.readAsArrayBufferAsync(context.thumbnail.blob);
             } else if (context.blob) {
-              context.blob = <any>await blobToArrayBuffer(context.blob);
+              context.blob = <any>await FileReaderUtil.readAsArrayBufferAsync(context.blob);
             }
           }
           /* */
@@ -239,13 +240,4 @@ function convertUrlImage(xmlElement: Element) {
   for (let url of urls) {
     FileStorage.instance.add(url)
   }
-}
-
-async function blobToArrayBuffer(blob): Promise<ArrayBuffer> {
-  return new Promise<ArrayBuffer>((resolve, reject) => {
-    let reader = new FileReader();
-    reader.onload = event => { resolve(reader.result); }
-    reader.onabort = reader.onerror = () => { reject([]); }
-    reader.readAsArrayBuffer(blob);
-  });
 }
