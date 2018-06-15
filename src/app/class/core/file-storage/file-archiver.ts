@@ -69,10 +69,7 @@ export class FileArchiver {
 
     console.log('onDrop', event.dataTransfer);
     let files = event.dataTransfer.files
-    setTimeout(() => {
-      // 他のDOM Eventより後に実行する
-      this.load(files);
-    }, 16);
+    this.load(files);
   };
 
   async load(files: File[])

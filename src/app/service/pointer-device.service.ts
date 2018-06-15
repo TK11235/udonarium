@@ -138,6 +138,7 @@ export class PointerDeviceService {
       document.body.addEventListener('mouseup', this.callbackOnPointerUp, true);
       document.body.addEventListener('touchend', this.callbackOnPointerUp, true);
       document.body.addEventListener('touchcancel', this.callbackOnPointerUp, true);
+      document.body.addEventListener('drop', this.callbackOnPointerUp, true);
       document.body.addEventListener('contextmenu', this.callbackOnContextMenu, true);
     });
   }
@@ -150,6 +151,7 @@ export class PointerDeviceService {
     document.body.removeEventListener('mouseup', this.callbackOnPointerUp, true);
     document.body.removeEventListener('touchend', this.callbackOnPointerUp, true);
     document.body.removeEventListener('touchcancel', this.callbackOnPointerUp, true);
+    document.body.removeEventListener('drop', this.callbackOnPointerUp, true);
     document.body.removeEventListener('contextmenu', this.callbackOnContextMenu, true);
   }
 
