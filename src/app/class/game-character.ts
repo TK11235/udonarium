@@ -20,7 +20,6 @@ export class GameCharacter extends TabletopObject {
   }
 
   setLocation(location: string) {
-    //this.syncData.location.locationName = location;
     this.location.name = location;
     this.update();
   }
@@ -28,9 +27,6 @@ export class GameCharacter extends TabletopObject {
   static createGameCharacter(name: string, size: number, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
-    //gameCharacter.syncData.imageIdentifier = imageIdentifier;
-    //gameCharacter.syncData.name = name;
-    //gameCharacter.syncData.size = size;
     gameCharacter.initialize();
     gameCharacter.createTestGameDataElement(name, size, imageIdentifier);
 
@@ -85,13 +81,8 @@ export class GameCharacter extends TabletopObject {
     testElement.appendChild(DataElement.create('Lv9', '薙ぎ払い', {}, 'Lv9' + this.identifier));
     testElement.appendChild(DataElement.create('自動', '治癒適正', {}, '自動' + this.identifier));
 
-    //console.log('serializeToXmlString\n' + this.rootDataElement.toXml());
-
     let domParser: DOMParser = new DOMParser();
     let gameCharacterXMLDocument: Document = domParser.parseFromString(this.rootDataElement.toXml(), 'application/xml');
-    //console.log(gameCharacterXMLDocument);
-
-    //console.log('serializeToJson\n' + GameDataElement.serializeToJson(this.rootDataElement));
 
     let palette: ChatPalette = new ChatPalette('ChatPalette_' + this.identifier);
     palette.setPalette(`チャットパレット入力例：

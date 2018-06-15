@@ -66,7 +66,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     });
     appConfigService.initialize();
     pointerDeviceService.initialize();
-    //Network.open();
 
     let diceBot: DiceBot = new DiceBot('DiceBot');
     diceBot.initialize();
@@ -74,20 +73,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let jukebox: Jukebox = new Jukebox('Jukebox');
     jukebox.initialize();
 
-    //let chatTabList: ChatTabList = new ChatTabList('MainTabList');
-    //chatTabList.initialize();
 
     let chatTab: ChatTab = new ChatTab('MainTab');
     chatTab.name = 'メインタブ';
     chatTab.initialize();
-    //chatTabList.appendChild(chatTab);
 
     chatTab = new ChatTab('SubTab');
     chatTab.name = 'サブタブ';
     chatTab.initialize();
-    //chatTabList.appendChild(chatTab);
-    //let tabletopIndexer = new ObjectNode('TabletopIndexer');
-    //tabletopIndexer.initialize();
 
     let fileContext = ImageFile.createEmpty('none_icon').toContext();
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';
