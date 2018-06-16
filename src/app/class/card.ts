@@ -23,6 +23,7 @@ export class Card extends TabletopObject {
 
   get name(): string { return this.getCommonValue('name', ''); }
   get size(): number { return this.getCommonValue('size', 2); }
+  set size(size: number) { this.setCommonValue('size', size); }
   get frontImage(): ImageFile { return this.getImageFile('front'); }
   get backImage(): ImageFile { return this.getImageFile('back'); }
 

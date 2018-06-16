@@ -225,6 +225,7 @@ export class CardStackComponent implements OnInit {
         : { name: '枚数を表示する', action: () => { this.cardStack.isShowTotal = true; } }
       ),
       { name: 'カード一覧', action: () => { this.showStackList(this.cardStack); } },
+      { name: 'カードサイズを揃える', action: () => { this.cardStack.fitEveryCardSizeToTopCard(); } },
       { name: '山札を人数分に分割する', action: () => { this.splitStack(Network.peerIds.length); } },
       { name: '山札を崩す', action: () => { this.breakStack(); } },
       { name: '詳細を表示', action: () => { this.showDetail(this.cardStack); } },
