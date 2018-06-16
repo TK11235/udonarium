@@ -101,6 +101,12 @@ export class CardStack extends TabletopObject {
     }
   }
 
+  fitEveryCardSizeToTopCard(): void {
+    for (const card of this.cards) {
+      card.size = this.topCard.size;
+    }
+  }
+
   putOnTop(card: Card): Card {
     if (!this.cardRoot) return;
     if (!this.topCard) return this.putOnBottom(card);
