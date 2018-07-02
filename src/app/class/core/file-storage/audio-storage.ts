@@ -249,14 +249,11 @@ export class AudioStorage {
 
   private initializeContext() {
     let callback = () => {
-      let context = AudioStorage.audioContext;
-      let buf = context.createBuffer(1, 1, 22050);
-      let src = context.createBufferSource();
-      src.buffer = buf;
-      src.connect(context.destination);
-      src.start(0);
-      document.removeEventListener('click', callback);
+      AudioStorage.audioContext.resume();
+      document.removeEventListener('touchend', callback);
+      document.removeEventListener('mouseup', callback);
     }
-    document.addEventListener('click', callback);
+    document.addEventListener('touchend', callback);
+    document.addEventListener('mouseup', callback);
   }
 }
