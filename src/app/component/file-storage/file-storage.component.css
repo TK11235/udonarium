@@ -5,8 +5,9 @@
   border-radius: 5px;
   padding: 25px;
   text-align: center;
-  font: 20px bold 'Vollkorn';
+  font: 24px bold 'Vollkorn';
   color: #555;
+  cursor: pointer;
 }
 
 .image {

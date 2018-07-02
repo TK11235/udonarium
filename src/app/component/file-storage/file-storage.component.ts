@@ -5,6 +5,7 @@ import { ModalService } from '../../service/modal.service';
 import { FileStorage } from '../../class/core/file-storage/file-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { Network, EventSystem } from '../../class/core/system/system';
+import { FileArchiver } from '../../class/core/file-storage/file-archiver';
 
 @Component({
   selector: 'file-storage',
@@ -36,6 +37,11 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
+  }
+
+  handleFileSelect(event: Event) {
+    let files = (<HTMLInputElement>event.target).files;
+    if (files.length) FileArchiver.instance.load(files);
   }
 
   onSelectedFile(file: ImageFile) {

@@ -1,4 +1,15 @@
-<div id="drop-zone">ここに画像ファイルをドロップ<br>１ファイルにつき2MBまで</div>
+<label>
+  <div id="drop-zone">
+    <div>
+      <i class="material-icons outline" style="font-size: 64px; color: #444;">add_photo_alternate</i>
+    </div>
+    <div>ここに画像をドロップ</div>
+    <div style="font-size: 12px;">またはここをクリックして選択</div>
+    <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple accept="image/*"/>
+    <div style="font-size: 12px;">
+      <br>１ファイルにつき2MBまで</div>
+  </div>
+</label>
 <div id="file-list">
   <span *ngFor="let file of fileStorageService.images" class="image">
     <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
