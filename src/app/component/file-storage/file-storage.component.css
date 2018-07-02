@@ -1,4 +1,4 @@
-#drop-zone {
+.drop-zone {
   border: 2px dashed #555;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -6,8 +6,16 @@
   padding: 25px;
   text-align: center;
   font: 24px bold 'Vollkorn';
-  color: #555;
+  color: #444;
   cursor: pointer;
+}
+
+.large-font {
+  font-size: 64px;
+}
+
+.small-font {
+  font-size: 12px;
 }
 
 .image {
