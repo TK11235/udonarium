@@ -14,7 +14,18 @@
   <div *ngIf="audios.length < 1" >アップロードされた音楽ファイルはここに表示されます。</div>
 </div>
 
-<div class="drop-zone">ここに音楽ファイルをドロップ<br>１ファイルにつき10MBまで</div>
+<label>
+  <div class="drop-zone">
+    <div>
+      <i class="material-icons large-font">playlist_add</i>
+    </div>
+    <div>ここに音楽をドロップ</div>
+    <div class="small-font">またはここをクリックして選択</div>
+    <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple accept="image/*,audio/*,application/zip"/>
+    <div class="small-font">
+      <br>１ファイルにつき10MBまで</div>
+  </div>
+</label>
 <div style="font-size: 12px;">※「試聴」は自分のスピーカーだけで音楽を1回再生します。</div>
 <div style="font-size: 12px;">※「BGM」はルーム内の全員で1つの音楽をループ再生します。</div>
 <div style="font-size: 12px;">※現行バージョンのセーブデータ（zip）には音楽ファイルは含まれません。（毎回アップロードが必要です）</div>

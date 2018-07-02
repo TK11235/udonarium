@@ -10,6 +10,7 @@ import { Network, EventSystem } from '../../class/core/system/system';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 
 import { Jukebox } from '../../class/Jukebox';
+import { FileArchiver } from '../../class/core/file-storage/file-archiver';
 
 @Component({
   selector: 'app-jukebox',
@@ -55,5 +56,10 @@ export class JukeboxComponent implements OnInit {
 
   stopBGM(audio: AudioFile) {
     if (this.jukebox.audio === audio) this.jukebox.stop();
+  }
+
+  handleFileSelect(event: Event) {
+    let files = (<HTMLInputElement>event.target).files;
+    if (files.length) FileArchiver.instance.load(files);
   }
 }
