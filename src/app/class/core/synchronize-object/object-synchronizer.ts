@@ -1,7 +1,8 @@
 import { EventSystem, Network } from '../system/system';
 import { ObjectFactory } from './object-factory';
 import { GameObject, ObjectContext } from './game-object';
-import { ObjectStore } from './object-store';
+import { ObjectStore, CatalogItem } from './object-store';
+import { SynchronizeRequest, SynchronizeTask } from './synchronize-task';
 
 export class ObjectSynchronizer {
   private static _instance: ObjectSynchronizer
@@ -9,6 +10,9 @@ export class ObjectSynchronizer {
     if (!ObjectSynchronizer._instance) ObjectSynchronizer._instance = new ObjectSynchronizer();
     return ObjectSynchronizer._instance;
   }
+
+  private requestMap: Map<string, SynchronizeRequest> = new Map();
+  private tasks: SynchronizeTask[] = [];
 
   private constructor() { }
 
@@ -19,7 +23,29 @@ export class ObjectSynchronizer {
       .on('OPEN_OTHER_PEER', 2, event => {
         if (!event.isSendFromSelf) return;
         console.log('OPEN_OTHER_PEER GameRoomService !!!', event.data.peer);
-        ObjectStore.instance.synchronize(event.data.peer);
+        EventSystem.call('SYNCHRONIZE_GAME_OBJECT', ObjectStore.instance.getCatalog(), event.data.peer);
+      })
+      .on('REQUEST_SYNCHRONIZE_GAME_OBJECT', 0, event => {
+        if (event.isSendFromSelf) return;
+        EventSystem.call('SYNCHRONIZE_GAME_OBJECT', ObjectStore.instance.getCatalog(), event.data.peer);
+      })
+      .on<CatalogItem[]>('SYNCHRONIZE_GAME_OBJECT', 0, event => {
+        if (event.isSendFromSelf) return;
+        console.log('SYNCHRONIZE_GAME_OBJECT ' + event.sendFrom);
+        let catalog: CatalogItem[] = event.data;
+        for (let item of catalog) {
+          if (ObjectStore.instance.isDeleted(item.identifier)) {
+            EventSystem.call('DELETE_GAME_OBJECT', { identifier: item.identifier }, event.sendFrom);
+          } else {
+            this.addRequestMap(item, event.sendFrom);
+          }
+        }
+        this.synchronize();
+      })
+      .on('REQUEST_GAME_OBJECT', 0, event => {
+        if (event.isSendFromSelf) return;
+        let object: GameObject = ObjectStore.instance.get(event.data);
+        if (object) EventSystem.call('UPDATE_GAME_OBJECT', object.toContext(), event.sendFrom);
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
         if (!event.isSendFromSelf) return;
@@ -68,5 +94,59 @@ export class ObjectSynchronizer {
     }
     newObject.apply(context);
     newObject.initialize(false);
+  }
+
+  private addRequestMap(item: CatalogItem, sendFrom: string) {
+    let request = this.requestMap.get(item.identifier);
+    if (request) {
+      if (request.version < item.version) {
+        this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom] });
+      } else if (request.version === item.version) {
+        request.holderIds.push(sendFrom);
+      }
+    } else {
+      this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom] });
+    }
+  }
+
+  private synchronize() {
+    if (this.requestMap.size < 1 || 0 < this.tasks.length) return;
+
+    let requests: SynchronizeRequest[] = this.makeRequestList();
+
+    if (requests.length < 1) return;
+    let task = SynchronizeTask.create(requests);
+    this.tasks.push(task);
+
+    task.onfinish = task => {
+      this.tasks.splice(this.tasks.indexOf(task), 1);
+      if (this.requestMap.size < 1) EventSystem.call('REQUEST_SYNCHRONIZE_GAME_OBJECT', {});
+      this.synchronize();
+    }
+
+    task.ontimeout = (task, remainedRequests) => {
+      console.log('GameObject synchronize タイムアウト');
+      remainedRequests.forEach(request => this.requestMap.set(request.identifier, request));
+      task.onfinish(task);
+    }
+  }
+
+  private makeRequestList(maxRequest: number = 512): SynchronizeRequest[] {
+    let entries = this.requestMap.entries();
+    let requests: SynchronizeRequest[] = [];
+
+    while (requests.length < maxRequest) {
+      let item = entries.next();
+      if (item.done) break;
+
+      let identifier = item.value[0];
+      let request = item.value[1];
+
+      let gameObject = ObjectStore.instance.get(request.identifier);
+      if (!gameObject || gameObject.version < request.version) requests.push(request);
+
+      this.requestMap.delete(identifier);
+    }
+    return requests;
   }
 }

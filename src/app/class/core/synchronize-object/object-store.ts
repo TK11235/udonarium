@@ -7,6 +7,8 @@ interface DeletedObjectContext {
   timeStamp: number;
 }
 
+export type CatalogItem = { identifier: string, version: number };
+
 export class ObjectStore {
   private static _instance: ObjectStore
   static get instance(): ObjectStore {
@@ -125,16 +127,18 @@ export class ObjectStore {
     this.updateInterval = null;
   }
 
-  synchronize(to: string) {
-    for (let identifier in this.identifierHash) {
-      EventSystem.call('UPDATE_GAME_OBJECT', this.identifierHash[identifier].toContext(), to);
-    }
-  }
-
   isDeleted(identifier: string) {
     let garbage = this.getDeletedObject(identifier);
     if (!garbage) return false;
     return true;
+  }
+
+  getCatalog(): CatalogItem[] {
+    let catalog: CatalogItem[] = [];
+    for (let identifier in this.identifierHash) {
+      catalog.push({ identifier: identifier, version: this.identifierHash[identifier].version });
+    }
+    return catalog;
   }
 
   private garbageCollection(garbage: ObjectContext)
