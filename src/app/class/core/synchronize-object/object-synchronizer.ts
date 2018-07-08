@@ -23,11 +23,11 @@ export class ObjectSynchronizer {
       .on('OPEN_OTHER_PEER', 2, event => {
         if (!event.isSendFromSelf) return;
         console.log('OPEN_OTHER_PEER GameRoomService !!!', event.data.peer);
-        EventSystem.call('SYNCHRONIZE_GAME_OBJECT', ObjectStore.instance.getCatalog(), event.data.peer);
+        this.sendCatalog(event.data.peer);
       })
       .on('REQUEST_SYNCHRONIZE_GAME_OBJECT', 0, event => {
         if (event.isSendFromSelf) return;
-        EventSystem.call('SYNCHRONIZE_GAME_OBJECT', ObjectStore.instance.getCatalog(), event.data.peer);
+        this.sendCatalog(event.data.peer);
       })
       .on<CatalogItem[]>('SYNCHRONIZE_GAME_OBJECT', 0, event => {
         if (event.isSendFromSelf) return;
@@ -94,6 +94,15 @@ export class ObjectSynchronizer {
     }
     newObject.apply(context);
     newObject.initialize(false);
+  }
+
+  private sendCatalog(sendTo: string) {
+    let catalog = ObjectStore.instance.getCatalog();
+    let interval = setInterval(() => {
+      let count = catalog.length < 1024 ? catalog.length : 1024;
+      EventSystem.call('SYNCHRONIZE_GAME_OBJECT', catalog.splice(0, count), sendTo);
+      if (catalog.length < 1) clearInterval(interval);
+    });
   }
 
   private addRequestMap(item: CatalogItem, sendFrom: string) {
