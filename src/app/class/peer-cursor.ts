@@ -25,7 +25,7 @@ export class PeerCursor extends GameObject {
         .on('CLOSE_OTHER_PEER', -1000, event => {
           if (event.data.peer !== this.peerId) return;
           delete PeerCursor.hash[this.peerId];
-          ObjectStore.instance.delete(this, false);
+          ObjectStore.instance.remove(this);
         });
     }
   }

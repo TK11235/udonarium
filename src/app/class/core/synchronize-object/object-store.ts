@@ -34,7 +34,7 @@ export class ObjectStore {
     objects.push(object);
   }
 
-  delete(object: GameObject, needCallEvent: boolean = true): GameObject {
+  remove(object: GameObject, shouldUnregister: boolean = true): GameObject {
     if (!this.identifierHash[object.identifier]) return null;
 
     let objects = this._getObjects(object.aliasName);
@@ -42,14 +42,18 @@ export class ObjectStore {
     if (-1 < index) objects.splice(index, 1);
     delete this.identifierHash[object.identifier];
 
+    if (shouldUnregister) EventSystem.unregister(object);
+
+    return object;
+  }
+
+  delete(object: GameObject, shouldBroadcast: boolean = true): GameObject {
+    if (this.remove(object) === null) return null;
+
     this.garbageCollection(10 * 60 * 1000);
+    this.garbageHash[object.identifier] = { aliasName: object.aliasName, timeStamp: performance.now() };
+    if (shouldBroadcast) EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
 
-    EventSystem.unregister(object);
-
-    if (needCallEvent) {
-      this.garbageHash[object.identifier] = { aliasName: object.aliasName, timeStamp: performance.now() };
-      EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
-    }
     return object;
   }
 
