@@ -44,8 +44,12 @@ export class ObjectSynchronizer {
       })
       .on('REQUEST_GAME_OBJECT', 0, event => {
         if (event.isSendFromSelf) return;
-        let object: GameObject = ObjectStore.instance.get(event.data);
-        if (object) EventSystem.call('UPDATE_GAME_OBJECT', object.toContext(), event.sendFrom);
+        if (ObjectStore.instance.isDeleted(event.data)) {
+          EventSystem.call('DELETE_GAME_OBJECT', { identifier: event.data }, event.sendFrom);
+        } else {
+          let object: GameObject = ObjectStore.instance.get(event.data);
+          if (object) EventSystem.call('UPDATE_GAME_OBJECT', object.toContext(), event.sendFrom);
+        }
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
         if (!event.isSendFromSelf) return;
