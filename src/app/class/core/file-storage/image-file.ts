@@ -151,9 +151,8 @@ export class ImageFile {
 
   private createURLs() {
     if (this.state === ImageState.URL) return;
-    this.revokeURLs();
-    if (this.context.blob) this.context.url = window.URL.createObjectURL(this.context.blob);
-    if (this.context.thumbnail.blob) this.context.thumbnail.url = window.URL.createObjectURL(this.context.thumbnail.blob);
+    if (this.context.blob && this.context.url === '') this.context.url = window.URL.createObjectURL(this.context.blob);
+    if (this.context.thumbnail.blob && this.context.thumbnail.url === '') this.context.thumbnail.url = window.URL.createObjectURL(this.context.thumbnail.blob);
   }
 
   private revokeURLs() {
