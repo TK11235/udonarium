@@ -9,7 +9,7 @@ interface ChankData {
 }
 
 // 試験実装中
-export class FileSharingTask {
+export class AudioSharingTask {
   private file: AudioFile;
   private sendTo: string = '';
   private chanks: Blob[] = [];
@@ -18,8 +18,8 @@ export class FileSharingTask {
 
   get identifier(): string { return this.file.identifier; }
 
-  onfinish: (task: FileSharingTask) => void;
-  ontimeout: (task: FileSharingTask) => void;
+  onfinish: (task: AudioSharingTask) => void;
+  ontimeout: (task: AudioSharingTask) => void;
 
   private timeoutTimer: NodeJS.Timer;
 
@@ -28,14 +28,14 @@ export class FileSharingTask {
     this.sendTo = sendTo;
   }
 
-  static createSendTask(file: AudioFile, sendTo: string): FileSharingTask {
-    let task = new FileSharingTask(file, sendTo);
+  static createSendTask(file: AudioFile, sendTo: string): AudioSharingTask {
+    let task = new AudioSharingTask(file, sendTo);
     task.initializeSend();
     return task;
   }
 
-  static createReceiveTask(file: AudioFile): FileSharingTask {
-    let task = new FileSharingTask(file);
+  static createReceiveTask(file: AudioFile): AudioSharingTask {
+    let task = new AudioSharingTask(file);
     task.initializeReceive();
     return task;
   }

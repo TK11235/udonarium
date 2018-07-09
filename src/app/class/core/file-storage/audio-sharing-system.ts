@@ -1,6 +1,6 @@
 import { EventSystem, Event, Network } from '../system/system';
 import { AudioStorage, Catalog } from './audio-storage';
-import { FileSharingTask } from './audio-sharing-task';
+import { AudioSharingTask } from './audio-sharing-task';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 import { MimeType } from './mime-type';
 
@@ -12,7 +12,7 @@ export class AudioSharingSystem {
   }
 
   private transmissionTimers: { [fileIdentifier: string]: NodeJS.Timer } = {};
-  private tasks: { [fileIdentifier: string]: FileSharingTask } = {};
+  private tasks: { [fileIdentifier: string]: AudioSharingTask } = {};
   private maxTransmissionSize: number = 1024 * 1024 * 0.5;
   private maxTransmission: number = 1;
 
@@ -83,7 +83,7 @@ export class AudioSharingSystem {
         */
         let item = request[index];
         let audio: AudioFile = AudioStorage.instance.get(item.identifier);
-        let task = FileSharingTask.createReceiveTask(audio);
+        let task = AudioSharingTask.createReceiveTask(audio);
         task.onfinish = () => {
           task.cancel();
           this.tasks[item.identifier] = null;
@@ -160,7 +160,7 @@ export class AudioSharingSystem {
 
           this.startTransmission(updateAudios[0].identifier, event.sendFrom);
           EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, event.data.receiver);
-          let task = FileSharingTask.createSendTask(audio, event.data.receiver);
+          let task = AudioSharingTask.createSendTask(audio, event.data.receiver);
           task.onfinish = (target) => {
             EventSystem.call('UPDATE_AUDIO_RESOURE', updateAudios, event.data.receiver);
           }
