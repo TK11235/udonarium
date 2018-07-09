@@ -1,6 +1,6 @@
 import { EventSystem, Event, Network } from '../system/system';
 import { AudioStorage, Catalog } from './audio-storage';
-import { FileSharingTask } from './file-sharing-task';
+import { FileSharingTask } from './audio-sharing-task';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 import { MimeType } from './mime-type';
 
