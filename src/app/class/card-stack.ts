@@ -114,7 +114,6 @@ export class CardStack extends TabletopObject {
     let delta = Math.abs(card.rotate - this.rotate);
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
-    //card.rotate = this.rotate;
     card.location.name = this.identifier;
     card.update();
     return <Card>this.cardRoot.insertBefore(card, this.topCard);
@@ -127,7 +126,6 @@ export class CardStack extends TabletopObject {
     let delta = Math.abs(card.rotate - this.rotate);
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
-    //card.rotate = this.rotate;
     card.location.name = this.identifier;
     card.update();
     return <Card>this.cardRoot.appendChild(card);

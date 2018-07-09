@@ -51,7 +51,6 @@ export class TabletopObject extends ObjectNode {
   protected createDataElements() {
     this.initialize();
     let aliasName: string = this.aliasName;
-    //console.log('rootDataElement??1', this, this.rootDataElement);
     if (!this.rootDataElement) {
       let rootElement = DataElement.create(aliasName, '', {}, aliasName + '_' + this.identifier);
       this.appendChild(rootElement);

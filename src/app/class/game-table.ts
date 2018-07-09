@@ -27,7 +27,7 @@ export class GameTable extends ObjectNode implements InnerXml {
   @SyncVar() gridSize: number = 50;
   @SyncVar() imageIdentifier: string = 'imageIdentifier';
   @SyncVar() selected: boolean = false;
-  @SyncVar() gridType: GridType = GridType.SQUARE; // 0=square 1=hex(縦揃え) 2=hex(横揃え)
+  @SyncVar() gridType: GridType = GridType.SQUARE;
   @SyncVar() gridColor: string = '#000000e6';
 
   get terrains(): Terrain[] {

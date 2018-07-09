@@ -88,8 +88,6 @@ export class AudioSharingTask {
     EventSystem.register(this)
       .on<ChankData>('FILE_SEND_CHANK_' + this.file.identifier, 0, event => {
         this.chanks[event.data.index] = event.data.chank;
-        //this.chanks.push(event.data.chank);
-
         /* */
         let context = this.file.toContext();
         context.name = (event.data.index * 100 / event.data.length).toFixed(1) + '%';

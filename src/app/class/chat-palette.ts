@@ -44,7 +44,6 @@ export class ChatPalette extends ObjectNode {
     this.value = paletteSource;
     this.isAnalized = false;
     this.update();
-    //this.parse(this.value);
   }
 
   evaluate(line: PaletteLine, extendVariables?: DataElement): string
@@ -102,8 +101,6 @@ export class ChatPalette extends ObjectNode {
     this.isAnalized = true;
   }
 
-  // /^(\/\/|／／)(.+?)\s*(=|＝)\s*(.+?)\s*$/m;
-  // /^\s*\/\/([^=\{\}]+)\s*=\s*(.+)/
   private parseVariable(palette: string): PaletteVariable {
     palette = palette.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
       return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);

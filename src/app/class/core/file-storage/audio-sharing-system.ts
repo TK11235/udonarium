@@ -60,27 +60,6 @@ export class AudioSharingSystem {
         let max = request.length - 1;
 
         let index = Math.floor(Math.random() * (max + 1 - min)) + min;
-
-        /*
-        for (let item of request) {
-          let audio: AudioFile = AudioStorage.instance.get(item.identifier);
-          let task = FileSharingTask.createReceiveTask(audio);
-          task.onfinish = () => {
-            task.cancel();
-            this.tasks[item.identifier] = null;
-            delete this.tasks[item.identifier];
-            console.warn('ファイル受信完了', task.identifier);
-          }
-          task.ontimeout = () => {
-            task.cancel();
-            this.tasks[item.identifier] = null;
-            delete this.tasks[item.identifier];
-            console.warn('ファイル受信タイムアウト', task.identifier);
-            this.synchronize();
-          }
-          this.tasks[item.identifier] = task;
-        }
-        */
         let item = request[index];
         let audio: AudioFile = AudioStorage.instance.get(item.identifier);
         let task = AudioSharingTask.createReceiveTask(audio);
@@ -132,8 +111,7 @@ export class AudioSharingSystem {
             return 0;
           });
 
-          //for (let i = 0; i < randomRequest.length; i++) {
-          let item: { identifier: string, state: number } = randomRequest[0];//randomRequest[i];
+          let item: { identifier: string, state: number } = randomRequest[0];
           let audio: AudioFile = AudioStorage.instance.get(item.identifier);
 
           let context: AudioFileContext = { identifier: audio.identifier, name: audio.name, type: '', blob: null, url: null };
@@ -141,18 +119,14 @@ export class AudioSharingSystem {
           if (audio.state === AudioState.URL) {
             context.url = audio.url;
           } else {
-            //context.blob = audio.blob;
             context.type = audio.blob.type;
           }
-
-          //if (0 < byteSize && context.blob && this.maxTransmissionSize < byteSize + context.blob.size) break;
 
           console.log(item);
           console.log(context);
 
           updateAudios.push(context);
           byteSize += context.blob ? context.blob.size : 100;
-          // }
 
           for (let i = 1; i < randomRequest.length; i++) {
             EventSystem.call('STOP_AUDIO_TRANSMISSION', { identifier: randomRequest[i].identifier }, event.data.receiver);
@@ -183,29 +157,12 @@ export class AudioSharingSystem {
         }
       })
       .on('STOP_AUDIO_TRANSMISSION', event => {
-        /*
-        let request: Catalog = event.data.identifiers;
-
-        for (let item of request) {
-          let task = this.tasks[item.identifier];
-          if (task) task.cancel();
-          this.tasks[item.identifier] = null;
-          delete this.tasks[item.identifier];
-        }
-        */
-
         let identifier: string = event.data.identifier;
         let task = this.tasks[identifier];
         if (task) {
           task.cancel();
           this.tasks[identifier] = null;
           delete this.tasks[identifier];
-          /*
-          let audio: AudioFile = AudioStorage.instance.get(identifier);
-          let context = audio.toContext();
-          context.name = 'キャンセル';
-          audio.apply(context);
-          */
         }
 
         console.log('STOP_AUDIO_TRANSMISSION ' + identifier, Object.keys(this.tasks).length);

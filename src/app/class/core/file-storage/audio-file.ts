@@ -103,7 +103,6 @@ export class AudioFile {
 
   apply(context: AudioFileContext) {
     if (!this.context.identifier && context.identifier) this.context.identifier = context.identifier;
-    //if (!this.context.name && context.name) this.context.name = context.name;
     if (context.name) this.context.name = context.name;
     if (!this.context.blob && context.blob) this.context.blob = context.blob;
     if (!this.context.type && context.type) this.context.type = context.type;

@@ -20,7 +20,7 @@ export class AudioStorage {
       AudioStorage._audioContext = new AudioContext();
     }
     return AudioStorage._audioContext;
-  }//
+  }
 
   private static _volume: number = 0.5;
   static get volume(): number { return AudioStorage._volume; }

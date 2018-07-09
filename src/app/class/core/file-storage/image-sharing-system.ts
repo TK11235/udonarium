@@ -106,7 +106,6 @@ export class FileSharingSystem {
               context.type = image.blob.type;
             }
 
-            //let updateImage: ImageFile = ImageFile.create(context);
             if (0 < byteSize && context.blob && maxSize < byteSize + context.blob.size) break;
 
             console.log(item);
