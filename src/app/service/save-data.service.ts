@@ -3,7 +3,7 @@ import * as Beautify from 'vkbeautify';
 
 import { ChatTabList } from '../class/chat-tab-list';
 import { FileArchiver } from '../class/core/file-storage/file-archiver';
-import { FileStorage } from '../class/core/file-storage/file-storage';
+import { FileStorage } from '../class/core/file-storage/image-storage';
 import { ImageFile } from '../class/core/file-storage/image-file';
 import { MimeType } from '../class/core/file-storage/mime-type';
 import { XmlUtil } from '../class/core/synchronize-object/xml-util';

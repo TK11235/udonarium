@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { FileStorage } from '../../class/core/file-storage/file-storage';
+import { FileStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';

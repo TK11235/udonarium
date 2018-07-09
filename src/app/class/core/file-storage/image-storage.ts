@@ -1,6 +1,6 @@
 import { EventSystem } from '../system/system';
 import { ImageFile, ImageContext, ImageState } from './image-file';
-import { FileSharingSystem } from './file-sharing-system';
+import { FileSharingSystem } from './image-sharing-system';
 
 export type Catalog = { identifier: string, state: number }[];
 

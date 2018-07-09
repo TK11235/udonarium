@@ -4,7 +4,7 @@ import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
-import { FileStorage } from './core/file-storage/file-storage';
+import { FileStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
 
 export interface TabletopLocation {

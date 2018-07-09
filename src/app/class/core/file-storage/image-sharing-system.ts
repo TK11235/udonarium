@@ -1,6 +1,6 @@
 import { ArrayBuffer } from '@angular/http/src/static_request';
 import { EventSystem, Event, Network } from '../system/system';
-import { FileStorage, Catalog } from './file-storage';
+import { FileStorage, Catalog } from './image-storage';
 import { ImageFile, ImageContext, ImageState } from './image-file';
 import { MimeType } from './mime-type';
 import { FileReaderUtil } from './file-reader-util';

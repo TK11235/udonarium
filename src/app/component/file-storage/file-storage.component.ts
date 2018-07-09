@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { FileArchiver } from '../../class/core/file-storage/file-archiver';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
+import { FileStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { EventSystem, Network } from '../../class/core/system/system';
 import { PanelService } from '../../service/panel.service';

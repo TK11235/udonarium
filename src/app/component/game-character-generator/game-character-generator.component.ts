@@ -13,7 +13,7 @@ import { Network, EventSystem } from '../../class/core/system/system';
 
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
+import { FileStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 
 @Component({

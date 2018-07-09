@@ -1,4 +1,4 @@
-import { FileStorage } from './file-storage';
+import { FileStorage } from './image-storage';
 import { AudioStorage } from './audio-storage';
 import { Base64 } from './base64';
 import { MimeType } from './mime-type';

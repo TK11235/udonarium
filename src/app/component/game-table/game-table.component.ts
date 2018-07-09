@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, 
 
 import { Card } from '../../class/card';
 import { CardStack } from '../../class/card-stack';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
+import { FileStorage } from '../../class/core/file-storage/image-storage';
 import { ImageContext, ImageFile } from '../../class/core/file-storage/image-file';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
