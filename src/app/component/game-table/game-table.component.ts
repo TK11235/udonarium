@@ -110,7 +110,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           this.needUpdateList[event.data.aliasName] = false;
         }
         if (event.data.identifier !== this.gameTableObject.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
-        console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier, this.gameTableObject);
+        console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier);
 
         this.needUpdateList[GameTableMask.aliasName] = false;
         this.needUpdateList[Terrain.aliasName] = false;
