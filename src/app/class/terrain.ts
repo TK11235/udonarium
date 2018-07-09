@@ -1,7 +1,6 @@
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
 import { ImageFile } from './core/file-storage/image-file';
-import { FileStorage } from './core/file-storage/image-storage';
 
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 

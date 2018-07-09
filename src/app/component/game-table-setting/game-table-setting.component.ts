@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { FileStorage } from '../../class/core/file-storage/image-storage';
+import { ImageStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
@@ -22,7 +22,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   maxSize: number = 100;
   get tableBackgroundImage(): ImageFile {
     if (!this.selectedTable) return ImageFile.Empty;
-    let file = FileStorage.instance.get(this.selectedTable.imageIdentifier);
+    let file = ImageStorage.instance.get(this.selectedTable.imageIdentifier);
     return file ? file : ImageFile.Empty;
   }
 

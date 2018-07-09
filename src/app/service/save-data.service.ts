@@ -3,7 +3,7 @@ import * as Beautify from 'vkbeautify';
 
 import { ChatTabList } from '../class/chat-tab-list';
 import { FileArchiver } from '../class/core/file-storage/file-archiver';
-import { FileStorage } from '../class/core/file-storage/image-storage';
+import { ImageStorage } from '../class/core/file-storage/image-storage';
 import { ImageFile } from '../class/core/file-storage/image-file';
 import { MimeType } from '../class/core/file-storage/mime-type';
 import { XmlUtil } from '../class/core/synchronize-object/xml-util';
@@ -52,14 +52,14 @@ export class SaveDataService {
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].innerHTML;
-      images[identifier] = FileStorage.instance.get(identifier);
+      images[identifier] = ImageStorage.instance.get(identifier);
     }
 
     imageElements = xmlElement.querySelectorAll('*[imageIdentifier]');
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].getAttribute('imageIdentifier');
-      images[identifier] = FileStorage.instance.get(identifier);
+      images[identifier] = ImageStorage.instance.get(identifier);
     }
     for (let identifier in images) {
       let image = images[identifier];

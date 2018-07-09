@@ -13,7 +13,7 @@ import { Network, EventSystem } from '../../class/core/system/system';
 
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
-import { FileStorage } from '../../class/core/file-storage/image-storage';
+import { ImageStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 
 @Component({
@@ -47,7 +47,7 @@ export class GameCharacterGeneratorComponent implements OnInit, OnDestroy, After
 
         let fileIdentifier: string = event.data.fileIdentifier;
 
-        let file: ImageFile = FileStorage.instance.get(fileIdentifier);
+        let file: ImageFile = ImageStorage.instance.get(fileIdentifier);
         if (file) this.tableBackgroundImage = file;
 
       });

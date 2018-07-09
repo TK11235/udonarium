@@ -2,7 +2,6 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
-import { FileStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
 

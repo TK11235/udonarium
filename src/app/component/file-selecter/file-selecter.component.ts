@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestro
 
 import { PanelService } from '../../service/panel.service';
 import { ModalService } from '../../service/modal.service';
-import { FileStorage } from '../../class/core/file-storage/image-storage';
+import { ImageStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { Network, EventSystem } from '../../class/core/system/system';
 
@@ -14,7 +14,7 @@ import { Network, EventSystem } from '../../class/core/system/system';
 })
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  fileStorageService = FileStorage.instance;
+  fileStorageService = ImageStorage.instance;
   constructor(
     //private fileStorageService: FileStorageService,
     private changeDetector: ChangeDetectorRef,

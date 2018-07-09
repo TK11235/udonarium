@@ -2,7 +2,6 @@ import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { EventSystem } from './core/system/system';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { FileStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
 import { TabletopObject } from './tabletop-object';
 import { Card } from './card';

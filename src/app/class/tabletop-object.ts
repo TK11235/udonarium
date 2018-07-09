@@ -4,7 +4,7 @@ import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
-import { FileStorage } from './core/file-storage/image-storage';
+import { ImageStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
 
 export interface TabletopLocation {
@@ -42,7 +42,7 @@ export class TabletopObject extends ObjectNode {
     if (!this.imageDataElement) return this._imageFile;
     let imageIdElement: DataElement = this.imageDataElement.getFirstElementByName('imageIdentifier');
     if (imageIdElement && this._imageFile.identifier !== imageIdElement.value) {
-      let file: ImageFile = FileStorage.instance.get(<string>imageIdElement.value);
+      let file: ImageFile = ImageStorage.instance.get(<string>imageIdElement.value);
       if (file) this._imageFile = file;
     }
     return this._imageFile;
@@ -96,7 +96,7 @@ export class TabletopObject extends ObjectNode {
   protected getImageFile(elementName: string) {
     if (!this.imageDataElement) return null;
     let image = this.getElement(elementName, this.imageDataElement);
-    return image ? FileStorage.instance.get(<string>image.value) : null;
+    return image ? ImageStorage.instance.get(<string>image.value) : null;
   }
 
   protected setImageFile(elementName: string, imageFile: ImageFile) {

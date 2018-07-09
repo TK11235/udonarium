@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, 
 
 import { Card } from '../../class/card';
 import { CardStack } from '../../class/card-stack';
-import { FileStorage } from '../../class/core/file-storage/image-storage';
+import { ImageStorage } from '../../class/core/file-storage/image-storage';
 import { ImageContext, ImageFile } from '../../class/core/file-storage/image-file';
 import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
@@ -46,7 +46,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get bgImage(): ImageFile {
-    let file: ImageFile = FileStorage.instance.get(this.gameTableObject.imageIdentifier);
+    let file: ImageFile = ImageStorage.instance.get(this.gameTableObject.imageIdentifier);
     return file ? file : ImageFile.Empty;
   }
 
@@ -424,8 +424,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('createTerrain');
 
     let url: string = './assets/images/tex.jpg';
-    let image: ImageFile = FileStorage.instance.get(url)
-    if (!image) image = FileStorage.instance.add(url);
+    let image: ImageFile = ImageStorage.instance.get(url)
+    if (!image) image = ImageStorage.instance.add(url);
 
     let viewTable = this.tableSelecter.viewTable;
     if (!viewTable) return;
@@ -539,8 +539,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let image: ImageFile;
 
     let back: string = './assets/images/trump/z02.gif';
-    if (!FileStorage.instance.get(back)) {
-      image = FileStorage.instance.add(back);
+    if (!ImageStorage.instance.get(back)) {
+      image = ImageStorage.instance.add(back);
     }
 
     let names: string[] = ['c', 'd', 'h', 's'];
@@ -549,8 +549,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       for (let i = 1; i <= 13; i++) {
         let trump: string = name + (('00' + i).slice(-2));
         let url: string = './assets/images/trump/' + trump + '.gif';
-        if (!FileStorage.instance.get(url)) {
-          image = FileStorage.instance.add(url);
+        if (!ImageStorage.instance.get(url)) {
+          image = ImageStorage.instance.add(url);
         }
         let card = Card.create('サンプルカード', url, back);
         cardStack.putOnBottom(card);
@@ -561,8 +561,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 1; i <= 2; i++) {
       let trump: string = 'x' + (('00' + i).slice(-2));
       let url: string = './assets/images/trump/' + trump + '.gif';
-      if (!FileStorage.instance.get(url)) {
-        image = FileStorage.instance.add(url);
+      if (!ImageStorage.instance.get(url)) {
+        image = ImageStorage.instance.add(url);
       }
       let card = Card.create('サンプルカード', url, back);
       cardStack.putOnBottom(card);
@@ -604,7 +604,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let testFile: ImageFile = null;
     let fileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
     fileContext.url = './assets/images/BG10a_80.jpg';
-    testFile = FileStorage.instance.add(fileContext);
+    testFile = ImageStorage.instance.add(fileContext);
     gameTable.name = '最初のテーブル';
     gameTable.imageIdentifier = testFile.identifier;
     gameTable.width = 20;
@@ -622,7 +622,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter = new GameCharacter('testCharacter_1');
     fileContext = ImageFile.createEmpty('testCharacter_1_image').toContext();
     fileContext.url = './assets/images/mon_052.gif';
-    testFile = FileStorage.instance.add(fileContext);
+    testFile = ImageStorage.instance.add(fileContext);
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 9 * 50;
     testCharacter.initialize();
@@ -637,7 +637,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter = new GameCharacter('testCharacter_3');
     fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
     fileContext.url = './assets/images/mon_128.gif';
-    testFile = FileStorage.instance.add(fileContext);
+    testFile = ImageStorage.instance.add(fileContext);
     testCharacter.location.x = 4 * 50;
     testCharacter.location.y = 2 * 50;
     testCharacter.initialize();
@@ -646,7 +646,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter = new GameCharacter('testCharacter_4');
     fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
     fileContext.url = './assets/images/mon_150.gif';
-    testFile = FileStorage.instance.add(fileContext);
+    testFile = ImageStorage.instance.add(fileContext);
     testCharacter.location.x = 6 * 50;
     testCharacter.location.y = 11 * 50;
     testCharacter.initialize();
@@ -655,7 +655,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter = new GameCharacter('testCharacter_5');
     fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
     fileContext.url = './assets/images/mon_211.gif';
-    testFile = FileStorage.instance.add(fileContext);
+    testFile = ImageStorage.instance.add(fileContext);
     testCharacter.location.x = 12 * 50;
     testCharacter.location.y = 12 * 50;
     testCharacter.initialize();
@@ -664,7 +664,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     testCharacter = new GameCharacter('testCharacter_6');
     fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
     fileContext.url = './assets/images/mon_135.gif';
-    testFile = FileStorage.instance.add(fileContext);
+    testFile = ImageStorage.instance.add(fileContext);
     testCharacter.initialize();
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 13 * 50;

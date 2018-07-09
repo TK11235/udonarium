@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { FileArchiver } from '../../class/core/file-storage/file-archiver';
-import { FileStorage } from '../../class/core/file-storage/image-storage';
+import { ImageStorage } from '../../class/core/file-storage/image-storage';
 import { ImageFile } from '../../class/core/file-storage/image-file';
 import { EventSystem, Network } from '../../class/core/system/system';
 import { PanelService } from '../../service/panel.service';
@@ -14,7 +14,7 @@ import { PanelService } from '../../service/panel.service';
 })
 export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  fileStorageService = FileStorage.instance;
+  fileStorageService = ImageStorage.instance;
   constructor(
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService

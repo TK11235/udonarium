@@ -4,11 +4,11 @@ import { FileSharingSystem } from './image-sharing-system';
 
 export type Catalog = { identifier: string, state: number }[];
 
-export class FileStorage {
-  private static _instance: FileStorage
-  static get instance(): FileStorage {
-    if (!FileStorage._instance) FileStorage._instance = new FileStorage();
-    return FileStorage._instance;
+export class ImageStorage {
+  private static _instance: ImageStorage
+  static get instance(): ImageStorage {
+    if (!ImageStorage._instance) ImageStorage._instance = new ImageStorage();
+    return ImageStorage._instance;
   }
 
   private imageHash: { [identifier: string]: ImageFile } = {};
@@ -24,7 +24,7 @@ export class FileStorage {
   private lazyTimer: NodeJS.Timer;
 
   private constructor() {
-    console.log('FileStorage ready...');
+    console.log('ImageStorage ready...');
   }
 
   private destroy() {
@@ -113,7 +113,7 @@ export class FileStorage {
 
   getCatalog(): Catalog {
     let catalog: Catalog = [];
-    for (let image of FileStorage.instance.images) {
+    for (let image of this.images) {
       if (ImageState.COMPLETE <= image.state) {
         catalog.push({ identifier: image.identifier, state: image.state });
       }

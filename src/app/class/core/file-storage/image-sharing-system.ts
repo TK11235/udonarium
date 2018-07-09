@@ -1,6 +1,6 @@
 import { ArrayBuffer } from '@angular/http/src/static_request';
 import { EventSystem, Event, Network } from '../system/system';
-import { FileStorage, Catalog } from './image-storage';
+import { ImageStorage, Catalog } from './image-storage';
 import { ImageFile, ImageContext, ImageState } from './image-file';
 import { MimeType } from './mime-type';
 import { FileReaderUtil } from './file-reader-util';
@@ -25,32 +25,32 @@ export class FileSharingSystem {
     EventSystem.register(this)
       .on('OPEN_OTHER_PEER', 1, event => {
         if (!event.isSendFromSelf) return;
-        console.log('OPEN_OTHER_PEER FileStorageService !!!', event.data.peer);
-        FileStorage.instance.synchronize();
+        console.log('OPEN_OTHER_PEER ImageStorageService !!!', event.data.peer);
+        ImageStorage.instance.synchronize();
       })
       .on('XML_LOADED', event => {
         convertUrlImage(event.data.xmlElement);
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         if (event.isSendFromSelf) return;
-        console.log('SYNCHRONIZE_FILE_LIST FileStorageService ' + event.sendFrom);
+        console.log('SYNCHRONIZE_FILE_LIST ImageStorageService ' + event.sendFrom);
 
         let otherCatalog: Catalog = event.data;
         let request: Catalog = [];
 
         for (let item of otherCatalog) {
-          let image: ImageFile = FileStorage.instance.get(item.identifier);
+          let image: ImageFile = ImageStorage.instance.get(item.identifier);
           if (image === null) {
             image = ImageFile.createEmpty(item.identifier);
-            FileStorage.instance.add(image);
+            ImageStorage.instance.add(image);
           }
           if (image.state < ImageState.COMPLETE) {
             request.push({ identifier: item.identifier, state: image.state });
           }
         }
 
-        if (request.length < 1 && otherCatalog.length < FileStorage.instance.getCatalog().length) {
-          FileStorage.instance.synchronize(event.sendFrom);
+        if (request.length < 1 && otherCatalog.length < ImageStorage.instance.getCatalog().length) {
+          ImageStorage.instance.synchronize(event.sendFrom);
         }
 
         if (request.length < 1 || this.isTransmission()) {
@@ -65,14 +65,14 @@ export class FileSharingSystem {
         let randomRequest: { identifier: string, state: number, seed: number }[] = [];
 
         for (let item of request) {
-          let image: ImageFile = FileStorage.instance.get(item.identifier);
+          let image: ImageFile = ImageStorage.instance.get(item.identifier);
           if (item.state < image.state)
             randomRequest.push({ identifier: item.identifier, state: item.state, seed: Math.random() });
         }
 
         if (this.isTransmission() === false && 0 < randomRequest.length) {
           // 送信
-          console.log('REQUEST_FILE_RESOURE FileStorageService Send!!! ' + event.data.receiver + ' -> ' + randomRequest);
+          console.log('REQUEST_FILE_RESOURE ImageStorageService Send!!! ' + event.data.receiver + ' -> ' + randomRequest);
 
           let updateImages: ImageContext[] = [];
           let byteSize: number = 0;
@@ -92,7 +92,7 @@ export class FileSharingSystem {
 
           for (let i = 0; i < randomRequest.length; i++) {
             let item: { identifier: string, state: number } = randomRequest[i];
-            let image: ImageFile = FileStorage.instance.get(item.identifier);
+            let image: ImageFile = ImageStorage.instance.get(item.identifier);
 
             let context: ImageContext = { identifier: image.identifier, name: image.name, type: '', blob: null, url: null, thumbnail: { type: '', blob: null, url: null, } };
 
@@ -137,7 +137,7 @@ export class FileSharingSystem {
           if (-1 < index) candidatePeers.splice(index, 1);
 
           for (let peer of candidatePeers) {
-            console.log('REQUEST_FILE_RESOURE FileStorageService Relay!!! ' + peer + ' -> ' + event.data.identifiers);
+            console.log('REQUEST_FILE_RESOURE ImageStorageService Relay!!! ' + peer + ' -> ' + event.data.identifiers);
             EventSystem.call(event, peer);
             break;
           }
@@ -145,14 +145,14 @@ export class FileSharingSystem {
       })
       .on('UPDATE_FILE_RESOURE', event => {
         let updateImages: ImageContext[] = event.data;
-        console.log('UPDATE_FILE_RESOURE FileStorageService ' + event.sendFrom + ' -> ', updateImages);
+        console.log('UPDATE_FILE_RESOURE ImageStorageService ' + event.sendFrom + ' -> ', updateImages);
         for (let context of updateImages) {
           if (context.blob) context.blob = new Blob([context.blob], { type: context.type });
           if (context.thumbnail.blob) context.thumbnail.blob = new Blob([context.thumbnail.blob], { type: context.thumbnail.type });
-          FileStorage.instance.add(context);
+          ImageStorage.instance.add(context);
         }
         this.stopTransmission(updateImages[0].identifier);
-        FileStorage.instance.synchronize();
+        ImageStorage.instance.synchronize();
         EventSystem.call('COMPLETE_FILE_TRANSMISSION', { fileIdentifier: updateImages[0].identifier }, event.sendFrom);
       })
       .on('START_FILE_TRANSMISSION', event => {
@@ -162,7 +162,7 @@ export class FileSharingSystem {
       .on('COMPLETE_FILE_TRANSMISSION', event => {
         console.log('COMPLETE_FILE_TRANSMISSION ' + event.data.fileIdentifier);
         this.stopTransmission(event.data.fileIdentifier);
-        if (!event.isSendFromSelf) FileStorage.instance.synchronize();
+        if (!event.isSendFromSelf) ImageStorage.instance.synchronize();
       })
       .on('TIMEOUT_FILE_TRANSMISSION', event => {
         console.log('TIMEOUT_FILE_TRANSMISSION ' + event.data.fileIdentifier);
@@ -225,7 +225,7 @@ function convertUrlImage(xmlElement: Element) {
   let imageElements = xmlElement.querySelectorAll('*[type="image"]');
   for (let i = 0; i < imageElements.length; i++) {
     let url = imageElements[i].innerHTML;
-    if (!FileStorage.instance.get(url) && 0 < MimeType.type(url).length) {
+    if (!ImageStorage.instance.get(url) && 0 < MimeType.type(url).length) {
       urls.push(url);
     }
   }
@@ -233,11 +233,11 @@ function convertUrlImage(xmlElement: Element) {
   imageElements = xmlElement.querySelectorAll('*[imageIdentifier]');
   for (let i = 0; i < imageElements.length; i++) {
     let url = imageElements[i].getAttribute('imageIdentifier');
-    if (!FileStorage.instance.get(url) && 0 < MimeType.type(url).length) {
+    if (!ImageStorage.instance.get(url) && 0 < MimeType.type(url).length) {
       urls.push(url);
     }
   }
   for (let url of urls) {
-    FileStorage.instance.add(url)
+    ImageStorage.instance.add(url)
   }
 }

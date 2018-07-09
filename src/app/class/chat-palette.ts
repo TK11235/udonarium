@@ -2,7 +2,7 @@ import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { ObjectContext } from './core/synchronize-object/game-object';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { FileStorage } from './core/file-storage/image-storage';
+import { ImageStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
 import { DataElement } from './data-element';
 

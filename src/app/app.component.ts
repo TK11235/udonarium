@@ -5,7 +5,7 @@ import { AudioSharingSystem } from './class/core/file-storage/audio-sharing-syst
 import { AudioStorage } from './class/core/file-storage/audio-storage';
 import { FileArchiver } from './class/core/file-storage/file-archiver';
 import { FileSharingSystem } from './class/core/file-storage/image-sharing-system';
-import { FileStorage } from './class/core/file-storage/image-storage';
+import { ImageStorage } from './class/core/file-storage/image-storage';
 import { ImageFile } from './class/core/file-storage/image-file';
 import { ObjectFactory } from './class/core/synchronize-object/object-factory';
 import { ObjectSerializer } from './class/core/synchronize-object/object-serializer';
@@ -56,7 +56,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       Network;
       FileArchiver.instance.initialize();
       FileSharingSystem.instance.initialize();
-      FileStorage.instance;
+      ImageStorage.instance;
       AudioSharingSystem.instance.initialize();
       AudioStorage.instance;
       ObjectFactory.instance;
@@ -84,7 +84,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     let fileContext = ImageFile.createEmpty('none_icon').toContext();
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';
-    let noneIconImage = FileStorage.instance.add(fileContext);
+    let noneIconImage = ImageStorage.instance.add(fileContext);
 
     PeerCursor.createMyCursor();
     PeerCursor.myCursor.name = 'プレイヤー';

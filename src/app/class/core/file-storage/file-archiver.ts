@@ -1,4 +1,4 @@
-import { FileStorage } from './image-storage';
+import { ImageStorage } from './image-storage';
 import { AudioStorage } from './audio-storage';
 import { Base64 } from './base64';
 import { MimeType } from './mime-type';
@@ -89,7 +89,7 @@ export class FileArchiver {
     if (file.type.indexOf('image/') < 0) return;
     console.log(file.name + ' type:' + file.type);
     if (2 * 1024 * 1024 < file.size) return;
-    await FileStorage.instance.addAsync(file);
+    await ImageStorage.instance.addAsync(file);
   }
 
   private async handleAudio(file: File) {

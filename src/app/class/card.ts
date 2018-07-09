@@ -3,7 +3,6 @@ import { GameObject } from './core/synchronize-object/game-object';
 import { DataElement } from './data-element';
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { TabletopObject } from './tabletop-object';
-import { FileStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
 import { PeerCursor } from './peer-cursor';
 import { EventSystem, Network } from './core/system/system';

@@ -2,7 +2,7 @@ import { Network, EventSystem } from './core/system/system';
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
-import { FileStorage } from './core/file-storage/image-storage';
+import { ImageStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
 import { Transform, IPoint2D, IPoint3D } from './transform/transform';
 
@@ -16,7 +16,7 @@ export class PeerCursor extends GameObject {
   private static hash: { [peerId: string]: string } = {};
 
   get isMine(): boolean { return (PeerCursor.myCursor && PeerCursor.myCursor === this); }
-  get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
+  get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
 
   initialize(needUpdate: boolean = true) {
     super.initialize(needUpdate);

@@ -2,7 +2,7 @@ import { Network } from './core/system/system';
 import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { FileStorage } from './core/file-storage/image-storage';
+import { ImageStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
 
 export interface ChatMessageContext {
@@ -54,7 +54,7 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
     }
     return this._tags;
   }
-  get image(): ImageFile { return FileStorage.instance.get(this.imageIdentifier); }
+  get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
   get index(): number { return this.minorIndex + this.timestamp; }
   get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
   get isSendFromSelf(): boolean { return this.from === Network.peerContext.id || this.originFrom === Network.peerContext.id; }
