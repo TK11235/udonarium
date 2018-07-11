@@ -25,10 +25,6 @@ export class ObjectSynchronizer {
         console.log('OPEN_OTHER_PEER GameRoomService !!!', event.data.peer);
         this.sendCatalog(event.data.peer);
       })
-      .on('REQUEST_SYNCHRONIZE_GAME_OBJECT', 0, event => {
-        if (event.isSendFromSelf) return;
-        this.sendCatalog(event.data.peer);
-      })
       .on<CatalogItem[]>('SYNCHRONIZE_GAME_OBJECT', 0, event => {
         if (event.isSendFromSelf) return;
         console.log('SYNCHRONIZE_GAME_OBJECT ' + event.sendFrom);
@@ -133,7 +129,6 @@ export class ObjectSynchronizer {
 
     task.onfinish = task => {
       this.tasks.splice(this.tasks.indexOf(task), 1);
-      if (this.requestMap.size < 1) EventSystem.call('REQUEST_SYNCHRONIZE_GAME_OBJECT', {});
       this.synchronize();
     }
 
