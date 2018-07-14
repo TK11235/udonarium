@@ -109,12 +109,12 @@ export class ObjectSynchronizer {
     let request = this.requestMap.get(item.identifier);
     if (request) {
       if (request.version < item.version) {
-        this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom] });
+        this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom], ttl: 2 });
       } else if (request.version === item.version) {
         request.holderIds.push(sendFrom);
       }
     } else {
-      this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom] });
+      this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom], ttl: 2 });
     }
   }
 

@@ -4,6 +4,7 @@ export interface SynchronizeRequest {
   identifier: string;
   version: number;
   holderIds: string[];
+  ttl: number;
 }
 
 export class SynchronizeTask {
@@ -30,6 +31,7 @@ export class SynchronizeTask {
 
   private initialize(requests: SynchronizeRequest[]) {
     for (let request of requests) {
+      request.ttl--;
       this.requestMap.set(request.identifier, request);
       EventSystem.call('REQUEST_GAME_OBJECT', request.identifier, this.randomChoice(request.holderIds));
     }
@@ -75,7 +77,7 @@ export class SynchronizeTask {
   private resetTimeout() {
     clearTimeout(this.timeoutTimer);
     this.timeoutTimer = setTimeout(() => {
-      if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()));
+      if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()).filter(request => 0 <= request.ttl));
       this.cancel();
     }, 10 * 1000);
   }
