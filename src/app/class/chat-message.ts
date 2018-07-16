@@ -1,5 +1,5 @@
 import { Network } from './core/system/system';
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { ImageStorage } from './core/file-storage/image-storage';

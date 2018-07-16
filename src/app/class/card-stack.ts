@@ -1,4 +1,4 @@
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { EventSystem } from './core/system/system';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';

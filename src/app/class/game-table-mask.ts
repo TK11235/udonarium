@@ -1,7 +1,7 @@
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
 
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 
 @SyncObject('table-mask')

@@ -1,4 +1,4 @@
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
 import { DataElement } from './data-element';
 import { ObjectStore } from './core/synchronize-object/object-store';

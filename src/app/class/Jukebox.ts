@@ -5,7 +5,7 @@ import { AudioFile, AudioFileContext } from './core/file-storage/audio-file';
 import { AudioStorage } from './core/file-storage/audio-storage';
 import { Network, EventSystem } from './core/system/system';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
 import { FileReaderUtil } from './core/file-storage/file-reader-util';
 

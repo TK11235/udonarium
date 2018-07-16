@@ -2,7 +2,7 @@ import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
 import { ImageFile } from './core/file-storage/image-file';
 
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 
 export enum TerrainViewState {
   NULL = 0,

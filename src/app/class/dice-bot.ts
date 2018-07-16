@@ -1,7 +1,7 @@
 import { ChatMessage, ChatMessageContext } from './chat-message';
 import { Network, EventSystem } from './core/system/system';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject } from './core/synchronize-object/anotation';
+import { SyncObject } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
 import { ChatTab } from './chat-tab';
 

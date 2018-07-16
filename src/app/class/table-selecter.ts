@@ -1,7 +1,7 @@
 import { GameTable, GameTableDataContainer } from './game-table';
 import { EventSystem } from './core/system/system';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
 
 @SyncObject('TableSelecter')

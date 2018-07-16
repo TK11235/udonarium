@@ -5,7 +5,7 @@ import { GameTableMask } from './game-table-mask';
 import { Terrain } from './terrain';
 import { TableSelecter } from './table-selecter';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
 import { CardStack } from './card-stack';

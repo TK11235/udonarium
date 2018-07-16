@@ -1,4 +1,4 @@
-import { SyncObject, SyncVar } from './anotation';
+import { SyncObject, SyncVar } from './decorator';
 import { GameObject, ObjectContext } from './game-object';
 import { ObjectStore } from './object-store';
 import { ObjectFactory, Type } from './object-factory';
