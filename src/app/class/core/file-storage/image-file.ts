@@ -1,12 +1,4 @@
-import * as CryptoJS from 'crypto-js/core.js';
-//import * as CryptoJS from 'crypto-js/crypto-js.js';
-import * as WordArray from 'crypto-js/lib-typedarrays.js';
-import * as SHA256 from 'crypto-js/sha256.js';
 import { FileReaderUtil } from './file-reader-util';
-
-//import { SHA256 } from 'crypto-js';
-//import * as CryptoJS from 'crypto-js';
-//import * as CryptoJS from 'crypto-js/crypto-js.js';
 
 export enum ImageState {
   NULL = 0,
@@ -96,7 +88,7 @@ export class ImageFile {
     let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob); // ローカルから読み込んだファイルは一度FileReaderを通さないと表示できない
 
     let imageFile = new ImageFile();
-    imageFile.context.identifier = ImageFile.calcHash(arrayBuffer);
+    imageFile.context.identifier = await FileReaderUtil.calcSHA256Async(arrayBuffer);
     imageFile.context.name = name;
     imageFile.context.blob = new Blob([arrayBuffer], { type: blob.type });
     imageFile.context.url = window.URL.createObjectURL(imageFile.context.blob);
@@ -159,11 +151,6 @@ export class ImageFile {
     if (this.state === ImageState.URL) return;
     window.URL.revokeObjectURL(this.context.url);
     window.URL.revokeObjectURL(this.context.thumbnail.url);
-  }
-
-  private static calcHash(arrayBuffer: ArrayBuffer): string {
-    let wordArray = WordArray.create(arrayBuffer);
-    return SHA256(<any>wordArray, 'key').toString();
   }
 
   private static createThumbnailAsync(context: ImageContext): Promise<ThumbnailContext> {
