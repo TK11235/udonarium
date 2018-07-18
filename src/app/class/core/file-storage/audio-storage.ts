@@ -104,47 +104,47 @@ export class AudioStorage {
   async addAsync(file: File): Promise<AudioFile>
   async addAsync(blob: Blob): Promise<AudioFile>
   async addAsync(arg: any): Promise<AudioFile> {
-    let image: AudioFile = await AudioFile.createAsync(arg);
+    let audio: AudioFile = await AudioFile.createAsync(arg);
 
-    return this._add(image);
+    return this._add(audio);
   }
 
   add(url: string): AudioFile
-  add(image: AudioFile): AudioFile
+  add(audio: AudioFile): AudioFile
   add(context: AudioFileContext): AudioFile
   add(arg: any): AudioFile {
-    let image: AudioFile
+    let audio: AudioFile
     if (typeof arg === 'string') {
-      image = AudioFile.create(arg);
+      audio = AudioFile.create(arg);
     } else if (arg instanceof AudioFile) {
-      image = arg;
+      audio = arg;
     } else {
       if (this.update(arg)) return this.hash[arg.identifier];
-      image = AudioFile.create(arg);
+      audio = AudioFile.create(arg);
     }
-    return this._add(image);
+    return this._add(audio);
   }
 
-  private _add(image: AudioFile): AudioFile {
+  private _add(audio: AudioFile): AudioFile {
     this.lazySynchronize(100);
-    if (this.update(image)) return this.hash[image.identifier];
-    this.hash[image.identifier] = image;
-    console.log('addNewFile()', image);
-    return image;
+    if (this.update(audio)) return this.hash[audio.identifier];
+    this.hash[audio.identifier] = audio;
+    console.log('addNewFile()', audio);
+    return audio;
   }
 
-  private update(image: AudioFile): boolean
-  private update(image: AudioFileContext): boolean
-  private update(image: any): boolean {
+  private update(audio: AudioFile): boolean
+  private update(audio: AudioFileContext): boolean
+  private update(audio: any): boolean {
     let context: AudioFileContext;
-    if (image instanceof AudioFile) {
-      context = image.toContext();
+    if (audio instanceof AudioFile) {
+      context = audio.toContext();
     } else {
-      context = image;
+      context = audio;
     }
-    let updatingImage: AudioFile = this.hash[image.identifier];
+    let updatingImage: AudioFile = this.hash[audio.identifier];
     if (updatingImage) {
-      updatingImage.apply(image);
+      updatingImage.apply(audio);
       return true;
     }
     return false;
@@ -161,8 +161,8 @@ export class AudioStorage {
   }
 
   get(identifier: string): AudioFile {
-    let image: AudioFile = this.hash[identifier];
-    if (image) return image;
+    let audio: AudioFile = this.hash[identifier];
+    if (audio) return audio;
     return null;
   }
 
