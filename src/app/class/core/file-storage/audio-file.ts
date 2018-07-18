@@ -32,6 +32,7 @@ export class AudioFile {
   private _isPlaying: boolean = false;
   get isPlaying(): boolean { return this._isPlaying };
   set isPlaying(isPlaying: boolean) { this._isPlaying = isPlaying };
+  get isReady(): boolean { return AudioState.NULL < this.state; }
 
   buffer: AudioBuffer = null;
   source: AudioBufferSourceNode = null;

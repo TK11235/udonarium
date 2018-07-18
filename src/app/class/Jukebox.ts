@@ -43,7 +43,7 @@ export class Jukebox extends GameObject {
     if (!this.isPlaying) return;
     let audio = AudioStorage.instance.get(this.audioIdentifier);
     EventSystem.unregister(this, 'UPDATE_AUDIO_RESOURE');
-    if (!audio || !audio.blob) {
+    if (!audio || !audio.isReady) {
       EventSystem.register(this)
         .on('UPDATE_AUDIO_RESOURE', -100, event => {
           this.stop();
