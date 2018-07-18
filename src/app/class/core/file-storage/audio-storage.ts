@@ -215,12 +215,35 @@ export class AudioStorage {
   private async _createBufferSourceAsync(audio: AudioFile): Promise<{}> {
     if (!audio || audio.buffer) return;
     try {
-      let decodedData = await AudioStorage.audioContext.decodeAudioData(await FileReaderUtil.readAsArrayBufferAsync(audio.blob));
+      let decodedData = await AudioStorage.audioContext.decodeAudioData(await this.getArrayBufferAsync(audio));
       audio.buffer = decodedData;
     } catch (reason) {
       console.warn(reason);
     }
     return;
+  }
+
+  private getArrayBufferAsync(audio: AudioFile): Promise<ArrayBuffer> {
+    return new Promise((resolve, reject) => {
+      if (audio.blob) {
+        resolve(FileReaderUtil.readAsArrayBufferAsync(audio.blob));
+      } else if (0 < audio.url.length) {
+        fetch(audio.url)
+          .then(response => {
+            if (response.ok) return response.arrayBuffer();
+            reject(new Error('Network response was not ok.'));
+          })
+          .then(arrayBuffer => {
+            resolve(arrayBuffer);
+          })
+          .catch(error => {
+            console.warn('There has been a problem with your fetch operation: ', error.message);
+            reject(error);
+          });
+      } else {
+        reject(new Error('えっ なにそれ怖い'));
+      }
+    });
   }
 
   synchronize(peer?: string) {
