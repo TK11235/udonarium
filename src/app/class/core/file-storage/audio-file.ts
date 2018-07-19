@@ -97,6 +97,7 @@ export class AudioFile {
 
   destroy() {
     if (this.source) this.source.stop();
+    this.revokeURLs();
   }
 
   apply(context: AudioFileContext) {
@@ -108,6 +109,17 @@ export class AudioFile {
       if (this.state !== AudioState.URL) window.URL.revokeObjectURL(this.context.url);
       this.context.url = context.url;
     }
+    this.createURLs();
+  }
+
+  private createURLs() {
+    if (this.state === AudioState.URL) return;
+    if (this.context.blob && this.context.url === '') this.context.url = window.URL.createObjectURL(this.context.blob);
+  }
+
+  private revokeURLs() {
+    if (this.state === AudioState.URL) return;
+    window.URL.revokeObjectURL(this.context.url);
   }
 
   toContext(): AudioFileContext {
