@@ -1,7 +1,5 @@
-import { AudioFile, AudioFileContext, AudioState } from './audio-file';
-import { AudioSharingSystem } from './audio-sharing-system';
 import { EventSystem } from '../system/system';
-import { FileReaderUtil } from './file-reader-util';
+import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 
 export type Catalog = { identifier: string, state: number }[];
 
@@ -13,70 +11,6 @@ export class AudioStorage {
   }
 
   private lazyTimer: NodeJS.Timer;
-
-  private static _audioContext: AudioContext
-  static get audioContext(): AudioContext {
-    if (!AudioStorage._audioContext) {
-      AudioStorage._audioContext = new AudioContext();
-    }
-    return AudioStorage._audioContext;
-  }
-
-  private static _volume: number = 0.5;
-  static get volume(): number { return AudioStorage._volume; }
-  static set volume(volume: number) {
-    AudioStorage._volume = volume;
-    AudioStorage.masterGainNode.gain.setTargetAtTime(AudioStorage._volume, AudioStorage.audioContext.currentTime, 0.1);
-  }
-
-  private static _auditionVolume: number = 0.5;
-  static get auditionVolume(): number { return AudioStorage._auditionVolume; }
-  static set auditionVolume(auditionVolume: number) {
-    AudioStorage._auditionVolume = auditionVolume;
-    AudioStorage.auditionGainNode.gain.setTargetAtTime(AudioStorage._auditionVolume, AudioStorage.audioContext.currentTime, 0.1);
-  }
-
-  private static _masterGainNode: GainNode
-  private static get masterGainNode(): GainNode {
-    if (!AudioStorage._masterGainNode) {
-      let masterGain = AudioStorage.audioContext.createGain();
-      masterGain.gain.setValueAtTime(AudioStorage._volume, AudioStorage.audioContext.currentTime);
-      masterGain.connect(AudioStorage.audioContext.destination);
-      AudioStorage._masterGainNode = masterGain;
-    }
-    return AudioStorage._masterGainNode;
-  }
-
-  private static _auditionGainNode: GainNode
-  private static get auditionGainNode(): GainNode {
-    if (!AudioStorage._auditionGainNode) {
-      let auditionGain = AudioStorage.audioContext.createGain();
-      auditionGain.gain.setValueAtTime(AudioStorage._auditionVolume, AudioStorage.audioContext.currentTime);
-      auditionGain.connect(AudioStorage.audioContext.destination);
-      AudioStorage._auditionGainNode = auditionGain;
-
-    }
-    return AudioStorage._auditionGainNode;
-  }
-
-  private static _rootNode: AudioNode
-  static get rootNode(): AudioNode {
-    if (!AudioStorage._rootNode) {
-      AudioStorage._rootNode = AudioStorage.masterGainNode;
-
-    }
-    return AudioStorage._rootNode;
-  }
-
-  private static _auditionNode: AudioNode
-  static get auditionNode(): AudioNode {
-    if (!AudioStorage._auditionNode) {
-      AudioStorage._auditionNode = AudioStorage.auditionGainNode;
-
-    }
-    return AudioStorage._auditionNode;
-  }
-
   private hash: { [identifier: string]: AudioFile } = {};
 
   get audios(): AudioFile[] {
@@ -89,15 +23,11 @@ export class AudioStorage {
 
   private constructor() {
     console.log('AudioStorage ready...');
-    this.initializeContext();
   }
 
   private destroy() {
     for (let identifier in this.hash) {
       this.delete(identifier);
-    }
-    if (AudioStorage._audioContext) {
-      AudioStorage._audioContext.close();
     }
   }
 
@@ -166,86 +96,6 @@ export class AudioStorage {
     return null;
   }
 
-  play(identifier: string, isLoop: boolean = false) {
-    let audio = this.get(identifier);
-    if (!audio) return;
-    this.createBufferSourceAsync(identifier).then(() => {
-      this.stop(identifier);
-      if (audio.buffer) {
-        audio.isPlaying = true;
-        let source = AudioStorage.audioContext.createBufferSource();
-        source.buffer = audio.buffer;
-        source.onended = () => {
-          console.log('audio has finished playing. ' + audio.name);
-          this.stop(audio.identifier);
-        }
-        source.connect(AudioStorage.auditionNode);
-        source.loop = isLoop;
-        source.start(0);
-        audio.source = source;
-        EventSystem.call('PLAY_AUDIO', { identifier: audio.identifier });
-        console.log('audio has started. ' + audio.name);
-      }
-    });
-  }
-
-  stop(identifier: string) {
-    let audio = this.get(identifier);
-    if (!audio) return;
-    if (audio.source) {
-      audio.isPlaying = false;
-      audio.source.onended = null;
-      audio.source.stop(0);
-      audio.source = null;
-      EventSystem.call('STOP_AUDIO', { identifier: audio.identifier });
-      console.log('audio has stoped. ' + audio.name);
-    }
-  }
-
-  async createBufferSourceAsync(identifier: string): Promise<{}>
-  async createBufferSourceAsync(audio: AudioFile): Promise<{}>
-  async createBufferSourceAsync(arg: any): Promise<{}> {
-    if (typeof arg === 'string') {
-      return this._createBufferSourceAsync(this.get(arg));
-    } else {
-      return this._createBufferSourceAsync(arg);
-    }
-  }
-
-  private async _createBufferSourceAsync(audio: AudioFile): Promise<{}> {
-    if (!audio || audio.buffer) return;
-    try {
-      let decodedData = await AudioStorage.audioContext.decodeAudioData(await this.getArrayBufferAsync(audio));
-      audio.buffer = decodedData;
-    } catch (reason) {
-      console.warn(reason);
-    }
-    return;
-  }
-
-  private getArrayBufferAsync(audio: AudioFile): Promise<ArrayBuffer> {
-    return new Promise((resolve, reject) => {
-      if (audio.blob) {
-        resolve(FileReaderUtil.readAsArrayBufferAsync(audio.blob));
-      } else if (0 < audio.url.length) {
-        fetch(audio.url)
-          .then(response => {
-            if (response.ok) return response.arrayBuffer();
-            reject(new Error('Network response was not ok.'));
-          })
-          .then(arrayBuffer => {
-            resolve(arrayBuffer);
-          })
-          .catch(error => {
-            console.warn('There has been a problem with your fetch operation: ', error.message);
-            reject(error);
-          });
-      } else {
-        reject(new Error('えっ なにそれ怖い'));
-      }
-    });
-  }
-
   synchronize(peer?: string) {
     clearTimeout(this.lazyTimer);
     this.lazyTimer = null;
@@ -268,15 +118,5 @@ export class AudioStorage {
       }
     }
     return catalog;
-  }
-
-  private initializeContext() {
-    let callback = () => {
-      AudioStorage.audioContext.resume();
-      document.removeEventListener('touchend', callback);
-      document.removeEventListener('mouseup', callback);
-    }
-    document.addEventListener('touchend', callback);
-    document.addEventListener('mouseup', callback);
   }
 }
