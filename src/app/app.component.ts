@@ -30,6 +30,7 @@ import { ModalService } from './service/modal.service';
 import { PanelOption, PanelService } from './service/panel.service';
 import { PointerDeviceService } from './service/pointer-device.service';
 import { SaveDataService } from './service/save-data.service';
+import { AudioPlayer } from './class/core/file-storage/audio-player';
 
 @Component({
   selector: 'app-root',
@@ -86,6 +87,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';
     let noneIconImage = ImageStorage.instance.add(fileContext);
 
+    AudioPlayer.resumeAudioContext();
     PeerCursor.createMyCursor();
     PeerCursor.myCursor.name = 'プレイヤー';
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
