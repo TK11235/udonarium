@@ -8,6 +8,7 @@ import { ObjectStore } from './core/synchronize-object/object-store';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
 import { FileReaderUtil } from './core/file-storage/file-reader-util';
+import { AudioPlayer } from './core/file-storage/audio-player';
 
 @SyncObject('jukebox')
 export class Jukebox extends GameObject {
@@ -18,15 +19,12 @@ export class Jukebox extends GameObject {
 
   get audio(): AudioFile { return AudioStorage.instance.get(this.audioIdentifier); }
 
-  private source: AudioBufferSourceNode = null;
+  private audioPlayer: AudioPlayer = new AudioPlayer();
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
-    EventSystem.register(this)
-      .on('PLAY_BGM', 0, event => {
-      })
-      .on('STOP_BGM', 0, event => {
-      });
+  // override
+  destroy() {
+    super.destroy();
+    this._stop();
   }
 
   play(identifier: string, isLoop: boolean = false) {
@@ -41,7 +39,7 @@ export class Jukebox extends GameObject {
 
   private _play() {
     if (!this.isPlaying) return;
-    let audio = AudioStorage.instance.get(this.audioIdentifier);
+    let audio = this.audio;
     EventSystem.unregister(this, 'UPDATE_AUDIO_RESOURE');
     if (!audio || !audio.isReady) {
       EventSystem.register(this)
@@ -51,38 +49,18 @@ export class Jukebox extends GameObject {
         });
       return;
     }
-    AudioStorage.instance.createBufferSourceAsync(audio).then(() => {
-      if (audio.buffer) {
-        let source = AudioStorage.audioContext.createBufferSource();
-        source.buffer = audio.buffer;
-        source.onended = () => {
-          console.log('Jukebox has finished playing. ');
-          this.stop();
-        }
-        source.connect(AudioStorage.rootNode);
-        source.loop = this.isLoop;
-        source.start(0);
-        this.source = source;
-        console.log('Jukebox has started. ');
-      }
-    });
+    this.audioPlayer.loop = true;
+    this.audioPlayer.play(audio);
   }
 
   stop() {
-    if (this.source) {
-      this.audioIdentifier = '';
-      this.isPlaying = false;
-    }
+    this.audioIdentifier = '';
+    this.isPlaying = false;
     this._stop();
   }
 
   private _stop() {
-    if (this.source) {
-      this.source.onended = null;
-      this.source.stop(0);
-      this.source = null;
-      console.log('Jukebox has stoped. ');
-    }
+    this.audioPlayer.stop();
   }
 
   // override

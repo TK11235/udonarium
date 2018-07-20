@@ -11,6 +11,7 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 
 import { Jukebox } from '../../class/Jukebox';
 import { FileArchiver } from '../../class/core/file-storage/file-archiver';
+import { AudioPlayer, VolumeType } from '../../class/core/file-storage/audio-player';
 
 @Component({
   selector: 'app-jukebox',
@@ -19,14 +20,16 @@ import { FileArchiver } from '../../class/core/file-storage/file-archiver';
 })
 export class JukeboxComponent implements OnInit {
 
-  get volume(): number { return AudioStorage.volume; }
-  set volume(volume: number) { AudioStorage.volume = volume; }
+  get volume(): number { return AudioPlayer.volume; }
+  set volume(volume: number) { AudioPlayer.volume = volume; }
 
-  get auditionVolume(): number { return AudioStorage.auditionVolume; }
-  set auditionVolume(auditionVolume: number) { AudioStorage.auditionVolume = auditionVolume; }
-  
+  get auditionVolume(): number { return AudioPlayer.auditionVolume; }
+  set auditionVolume(auditionVolume: number) { AudioPlayer.auditionVolume = auditionVolume; }
+
   get audios(): AudioFile[] { return AudioStorage.instance.audios; }
   get jukebox(): Jukebox { return ObjectStore.instance.get<Jukebox>('Jukebox'); }
+
+  private auditionPlayer: AudioPlayer = new AudioPlayer();
 
   constructor(
     private modalService: ModalService,
@@ -35,19 +38,21 @@ export class JukeboxComponent implements OnInit {
 
   ngOnInit() {
     this.modalService.title = this.panelService.title = 'ジュークボックス'
+    this.auditionPlayer.volumeType = VolumeType.AUDITION;
     EventSystem.register(this);
   }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
+    this.stop();
   }
 
   play(audio: AudioFile) {
-    AudioStorage.instance.play(audio.identifier);
+    this.auditionPlayer.play(audio);
   }
 
-  stop(audio: AudioFile) {
-    AudioStorage.instance.stop(audio.identifier);
+  stop() {
+    this.auditionPlayer.stop();
   }
 
   playBGM(audio: AudioFile) {
