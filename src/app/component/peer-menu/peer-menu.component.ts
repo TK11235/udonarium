@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, NgZone } from '@angular/core';
 
 import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
 import { LobbyComponent } from '../lobby/lobby.component';
@@ -30,6 +30,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     //private networkService: NetworkService,
     //private gameRoomService: GameRoomService,
+    private ngZone: NgZone,
     private modalService: ModalService,
     private panelService: PanelService,
     public appConfigService: AppConfigService
@@ -39,8 +40,16 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.panelService.title = 'Peer情報';
   }
 
-  ngAfterViewInit() { }
-  ngOnDestroy() { }
+  ngAfterViewInit() {
+    EventSystem.register(this)
+      .on('OPEN_PEER', event => {
+        this.ngZone.run(() => { });
+      });
+  }
+
+  ngOnDestroy() {
+    EventSystem.unregister(this);
+  }
 
   changeIcon() {
     this.modalService.open<string>(FileSelecterComponent).then(value => {
