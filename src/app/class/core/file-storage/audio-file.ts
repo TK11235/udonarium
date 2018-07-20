@@ -28,15 +28,7 @@ export class AudioFile {
   get name(): string { return this.context.name };
   get blob(): Blob { return this.context.blob; };
   get url(): string { return this.context.url; };
-
-  private _isPlaying: boolean = false;
-  get isPlaying(): boolean { return this._isPlaying };
-  set isPlaying(isPlaying: boolean) { this._isPlaying = isPlaying };
   get isReady(): boolean { return AudioState.NULL < this.state; }
-
-  buffer: AudioBuffer = null;
-  source: AudioBufferSourceNode = null;
-
   get state(): AudioState {
     if (!this.url && !this.blob) return AudioState.NULL;
     if (this.url && !this.blob) return AudioState.URL;
@@ -96,7 +88,6 @@ export class AudioFile {
   }
 
   destroy() {
-    if (this.source) this.source.stop();
     this.revokeURLs();
   }
 
