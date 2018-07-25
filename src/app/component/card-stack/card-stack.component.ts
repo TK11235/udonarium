@@ -78,9 +78,7 @@ export class CardStackComponent implements OnInit {
   ngOnInit() {
     EventSystem.register(this)
       .on('SHUFFLE_CARD_STACK', -1000, event => {
-        if (event.data.identifier !== this.cardStack.identifier) return;
-        if (event.isSendFromSelf) this.cardStack.shuffle();
-        this.animeState = 'active';
+        if (event.data.identifier === this.cardStack.identifier) this.animeState = 'active';
       });
     this.movableOption = {
       tabletopObject: this.cardStack,
@@ -217,6 +215,7 @@ export class CardStackComponent implements OnInit {
       { name: 'すべて正位置にする', action: () => { this.cardStack.uprightAll(); } },
       {
         name: 'シャッフル', action: () => {
+          this.cardStack.shuffle();
           EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
         }
       },

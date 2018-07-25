@@ -85,8 +85,8 @@ export class CardStackListComponent implements OnInit {
 
   close(needShuffle: boolean = false) {
     if (needShuffle) {
+      this.cardStack.shuffle();
       EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
-      //this.cardStack.shuffle();
     }
     this.panelService.close();
   }
