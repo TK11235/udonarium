@@ -39,7 +39,7 @@
     </div>
     <div>
       <form #chatWindowForm="ngForm">
-        <input [(ngModel)]="text" placeholder="message" [ngModelOptions]="{standalone: true}" class="chat-input">
+        <textarea [(ngModel)]="text" placeholder="message" [ngModelOptions]="{standalone: true}" class="chat-input" (keydown.enter)="sendChat()"></textarea>
         <button type="submit" (click)="sendChat()">SEND</button>
       </form>
     </div>
