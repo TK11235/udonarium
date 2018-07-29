@@ -50,6 +50,10 @@
   font-size: 8px;
 }
 
+.msg-text {
+  white-space: pre-wrap;
+}
+
 .dicebot-message .msg-text {
   /*color:#22F;*/
 }
