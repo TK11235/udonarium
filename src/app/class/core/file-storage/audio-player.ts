@@ -56,17 +56,9 @@ export class AudioPlayer {
   private get audioElm(): HTMLAudioElement {
     if (!this._audioElm) {
       this._audioElm = new Audio();
-      this._audioElm.onplay = () => {
-        console.log('AudioPlayer has started. ' + this.audio.name);
-      }
-      this._audioElm.onpause = () => {
-        console.log('AudioPlayer has pause. ' + this.audio.name);
-        this.mediaElementSource.disconnect();
-      }
-      this._audioElm.onended = () => {
-        console.log('AudioPlayer has finished playing. ' + this.audio.name);
-        this.mediaElementSource.disconnect();
-      }
+      this._audioElm.onplay = () => { }
+      this._audioElm.onpause = () => { this.mediaElementSource.disconnect(); }
+      this._audioElm.onended = () => { this.mediaElementSource.disconnect(); }
     }
     return this._audioElm;
   }
