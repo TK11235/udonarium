@@ -129,18 +129,22 @@ export class AudioPlayer {
     }
   }
 
-  private static getArrayBufferAsync(audio: AudioFile): Promise<ArrayBuffer> {
+  private static async getArrayBufferAsync(audio: AudioFile): Promise<ArrayBuffer> {
+    return FileReaderUtil.readAsArrayBufferAsync(await AudioPlayer.getBlobAsync(audio));
+  }
+
+  private static getBlobAsync(audio: AudioFile): Promise<Blob> {
     return new Promise((resolve, reject) => {
       if (audio.blob) {
-        resolve(FileReaderUtil.readAsArrayBufferAsync(audio.blob));
+        resolve(audio.blob);
       } else if (0 < audio.url.length) {
         fetch(audio.url)
           .then(response => {
-            if (response.ok) return response.arrayBuffer();
+            if (response.ok) return response.blob();
             reject(new Error('Network response was not ok.'));
           })
-          .then(arrayBuffer => {
-            resolve(arrayBuffer);
+          .then(blob => {
+            resolve(blob);
           })
           .catch(error => {
             console.warn('There has been a problem with your fetch operation: ', error.message);
