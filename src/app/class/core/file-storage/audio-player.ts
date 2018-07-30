@@ -92,6 +92,13 @@ export class AudioPlayer {
     this.audio = audio;
   }
 
+  static play(audio: AudioFile, volume: number = 1.0): AudioPlayer {
+    let audioPlayer = new AudioPlayer(audio);
+    audioPlayer.volume = volume;
+    audioPlayer.play();
+    return audioPlayer;
+  }
+
   play(audio: AudioFile = this.audio) {
     this.stop();
     this.audio = audio;
