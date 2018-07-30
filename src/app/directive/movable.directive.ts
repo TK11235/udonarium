@@ -30,7 +30,9 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
   @Input('movable.disable') isDisable: boolean = false;
   @Output('movable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
+  @Output('movable.ondragstart') ondragstart: EventEmitter<PointerEvent> = new EventEmitter();
   @Output('movable.ondrag') ondrag: EventEmitter<PointerEvent> = new EventEmitter();
+  @Output('movable.ondragend') ondragend: EventEmitter<PointerEvent> = new EventEmitter();
   @Output('movable.onend') onend: EventEmitter<PointerEvent> = new EventEmitter();
 
   private _posX: number = 0;
@@ -136,13 +138,14 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   protected onMouseMove(e: PointerEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
-    this.ondrag.emit(e);
     if (!this._isGrabbing) return this.cancel();
 
     this.pointer = this.calcLocalCoordinate(<HTMLElement>e.target);
     if (this.pointerPrev.x === this.pointer.x && this.pointerPrev.y === this.pointer.y && this.pointerPrev.z === this.pointer.z) return;
 
+    if (!this.isDragging) this.ondragstart.emit(e);
     this._isDragging = true;
+    this.ondrag.emit(e);
 
     let ratio = this.calcDistanceRatio(this.pointerStart, this.pointer);
     if (ratio < this.ratio) this.ratio = ratio;
@@ -159,6 +162,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   protected onMouseUp(e: PointerEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
+    if (this.isDragging) this.ondragend.emit(e);
     this.cancel();
     this.stickToGrid();
     this.onend.emit(e);

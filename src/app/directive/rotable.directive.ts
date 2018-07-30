@@ -31,7 +31,9 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
   @Input('rotable.disable') isDisable: boolean = false;
   @Output('rotable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
+  @Output('rotable.ondragstart') ondragstart: EventEmitter<PointerEvent> = new EventEmitter();
   @Output('rotable.ondrag') ondrag: EventEmitter<PointerEvent> = new EventEmitter();
+  @Output('rotable.ondragend') ondragend: EventEmitter<PointerEvent> = new EventEmitter();
   @Output('rotable.onend') onend: EventEmitter<PointerEvent> = new EventEmitter();
 
   private _rotate: number = 0;
@@ -103,6 +105,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     if (this.isDisable || !this.isAllowedToRotate || e.button === 2) return this.cancel();
     console.log('onRotateMouseDown!!!!');
     e.stopPropagation();
+    this.onstart.emit(e);
     this._isGrabbing = true;
     this._isDragging = false;
     let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.transformElement.parentElement);
@@ -117,7 +120,9 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.transformElement.parentElement);
     let angle = this.calcRotate(pointer, this.rotateOffset);
     if (this.rotate !== angle) {
+      if (!this.isDragging) this.ondragstart.emit(e);
       this._isDragging = true;
+      this.ondrag.emit(e);
       this.rotate = angle;
     }
   }
@@ -125,8 +130,10 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   protected onMouseUp(e: PointerEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
+    if (this.isDragging) this.ondragend.emit(e);
     this.cancel();
     this.stickToPolygonal();
+    this.onend.emit(e);
   }
 
   protected onContextMenu(e: PointerEvent) {
