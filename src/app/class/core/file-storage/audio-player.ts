@@ -1,4 +1,4 @@
-import { AudioFile } from './audio-file';
+import { AudioFile, AudioState } from './audio-file';
 import { FileReaderUtil } from './file-reader-util';
 
 export enum VolumeType {
@@ -84,6 +84,8 @@ export class AudioPlayer {
   set loop(loop) { this.audioElm.loop = loop; }
   get paused(): boolean { return this.audioElm.paused; }
 
+  private static cacheMap: Map<string, { url: string, blob: Blob }> = new Map();
+
   constructor(audio?: AudioFile) {
     this.audio = audio;
   }
@@ -92,9 +94,26 @@ export class AudioPlayer {
     this.stop();
     this.audio = audio;
     if (!this.audio) return;
+
+    let url = this.audio.url;
+
+    if (audio.state === AudioState.URL) {
+      if (AudioPlayer.cacheMap.has(audio.identifier)) {
+        url = AudioPlayer.cacheMap.get(audio.identifier).url;
+      } else {
+        let cache = { url: url, blob: null }
+        AudioPlayer.cacheMap.set(audio.identifier, cache);
+        AudioPlayer.getBlobAsync(audio).then(blob => {
+          cache.url = URL.createObjectURL(blob);
+          cache.blob = blob;
+          AudioPlayer.cacheMap.set(audio.identifier, cache);
+        });
+      }
+    }
+
     this.mediaElementSource.connect(this.getConnectingAudioNode());
-    this.audioElm.src = this.audio.url;
-    this.audioElm.play();
+    this.audioElm.src = url;
+    this.audioElm.play().catch(reason => { console.warn(reason); });
   }
 
   pause() {
