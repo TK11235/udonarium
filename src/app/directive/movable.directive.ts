@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, OnDestroy, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { EventSystem } from '../class/core/system/system';
 import { TabletopObject } from '../class/tabletop-object';
