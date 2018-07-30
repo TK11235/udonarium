@@ -80,6 +80,8 @@ export class AudioPlayer {
   audio: AudioFile;
   volumeType: VolumeType = VolumeType.MASTER;
 
+  get volume(): number { return this.audioElm.volume; }
+  set volume(volume) { this.audioElm.volume = volume; }
   get loop(): boolean { return this.audioElm.loop; }
   set loop(loop) { this.audioElm.loop = loop; }
   get paused(): boolean { return this.audioElm.paused; }
