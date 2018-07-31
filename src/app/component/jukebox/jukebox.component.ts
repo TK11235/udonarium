@@ -26,7 +26,7 @@ export class JukeboxComponent implements OnInit {
   get auditionVolume(): number { return AudioPlayer.auditionVolume; }
   set auditionVolume(auditionVolume: number) { AudioPlayer.auditionVolume = auditionVolume; }
 
-  get audios(): AudioFile[] { return AudioStorage.instance.audios; }
+  get audios(): AudioFile[] { return AudioStorage.instance.audios.filter(audio => !audio.isHidden); }
   get jukebox(): Jukebox { return ObjectStore.instance.get<Jukebox>('Jukebox'); }
 
   private auditionPlayer: AudioPlayer = new AudioPlayer();

@@ -35,6 +35,8 @@ export class AudioFile {
     return AudioState.COMPLETE;
   }
 
+  isHidden: boolean = false;
+
   private constructor() { }
 
   static createEmpty(identifier: string): AudioFile {
