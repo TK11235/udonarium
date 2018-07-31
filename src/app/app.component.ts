@@ -30,7 +30,9 @@ import { ModalService } from './service/modal.service';
 import { PanelOption, PanelService } from './service/panel.service';
 import { PointerDeviceService } from './service/pointer-device.service';
 import { SaveDataService } from './service/save-data.service';
+import { AudioFile } from './class/core/file-storage/audio-file';
 import { AudioPlayer } from './class/core/file-storage/audio-player';
+import { SoundEffect, PresetSound } from './class/sound-effect';
 
 @Component({
   selector: 'app-root',
@@ -74,6 +76,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let jukebox: Jukebox = new Jukebox('Jukebox');
     jukebox.initialize();
 
+    let soundEffect: SoundEffect = new SoundEffect('SoundEffect');
+    soundEffect.initialize();
 
     let chatTab: ChatTab = new ChatTab('MainTab');
     chatTab.name = 'メインタブ';
@@ -88,6 +92,31 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let noneIconImage = ImageStorage.instance.add(fileContext);
 
     AudioPlayer.resumeAudioContext();
+    let audio: AudioFile = null;
+    PresetSound.cardDraw = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/card-turn-over1.mp3').identifier;
+    PresetSound.cardPick = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/shoulder-touch1.mp3').identifier;
+    PresetSound.cardPut = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/book-stack1.mp3').identifier;
+    PresetSound.cardShuffle = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/card-open1.mp3').identifier;
+    PresetSound.dice1 = AudioStorage.instance.add('./assets/sounds/on-jin/spo_ge_saikoro_teburu01.mp3').identifier;
+    PresetSound.dice2 = AudioStorage.instance.add('./assets/sounds/on-jin/spo_ge_saikoro_teburu02.mp3').identifier;
+    PresetSound.pick = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/shoulder-touch1.mp3').identifier;
+    PresetSound.put = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/book-stack1.mp3').identifier;
+    PresetSound.switch = AudioStorage.instance.add('./assets/sounds/tm2/tm2_switch001.wav').identifier;
+    PresetSound.lock = AudioStorage.instance.add('./assets/sounds/tm2/tm2_pon002.wav').identifier;
+    PresetSound.delete = AudioStorage.instance.add('./assets/sounds/tm2/tm2_swing003.wav').identifier;
+
+    AudioStorage.instance.get(PresetSound.cardDraw).isHidden = true;
+    AudioStorage.instance.get(PresetSound.cardPick).isHidden = true;
+    AudioStorage.instance.get(PresetSound.cardPut).isHidden = true;
+    AudioStorage.instance.get(PresetSound.cardShuffle).isHidden = true;
+    AudioStorage.instance.get(PresetSound.dice1).isHidden = true;
+    AudioStorage.instance.get(PresetSound.dice2).isHidden = true;
+    AudioStorage.instance.get(PresetSound.pick).isHidden = true;
+    AudioStorage.instance.get(PresetSound.put).isHidden = true;
+    AudioStorage.instance.get(PresetSound.switch).isHidden = true;
+    AudioStorage.instance.get(PresetSound.lock).isHidden = true;
+    AudioStorage.instance.get(PresetSound.delete).isHidden = true;
+
     PeerCursor.createMyCursor();
     PeerCursor.myCursor.name = 'プレイヤー';
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
