@@ -11,6 +11,7 @@ import { TextNote } from '../../class/text-note';
 import { TabletopObject } from '../../class/tabletop-object';
 import { MovableOption } from '../../directive/movable.directive';
 import { RotableOption } from '../../directive/rotable.directive';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'text-note',
@@ -131,10 +132,24 @@ export class TextNoteComponent implements OnInit {
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();
+          SoundEffect.play(PresetSound.put);
         }
       },
-      { name: '削除する', action: () => { this.textNote.destroy(); } },
+      {
+        name: '削除する', action: () => {
+          this.textNote.destroy();
+          SoundEffect.play(PresetSound.delete);
+        }
+      },
     ], this.title);
+  }
+
+  onMove() {
+    SoundEffect.play(PresetSound.pick);
+  }
+
+  onMoved() {
+    SoundEffect.play(PresetSound.put);
   }
 
   calcFitHeightIfNeeded() {

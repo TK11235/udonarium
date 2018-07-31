@@ -10,6 +10,7 @@ import { Card, CardState } from '../../class/card';
 import { Network, EventSystem } from '../../class/core/system/system';
 import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 import { ImageFile } from '../../class/core/file-storage/image-file';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'card-stack-list',
@@ -87,6 +88,7 @@ export class CardStackListComponent implements OnInit {
     if (needShuffle) {
       this.cardStack.shuffle();
       EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
+      SoundEffect.play(PresetSound.cardShuffle);
     }
     this.panelService.close();
   }

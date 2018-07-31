@@ -22,6 +22,7 @@ import { GameCharacterSheetComponent } from '../game-character-sheet/game-charac
 import { GameTableSettingComponent } from '../game-table-setting/game-table-setting.component';
 import { TextNote } from '../../class/text-note';
 import { TabletopService, } from '../../service/tabletop.service';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'game-table',
@@ -136,6 +137,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           gameObject.location.y = pointer.y - 25;
           this.placeToTabletop(gameObject);
           gameObject.update();
+          SoundEffect.play(PresetSound.put);
         }
       }).on('DRAG_LOCKED_OBJECT', event => {
         this.isTransformMode = true;
@@ -306,12 +308,28 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       let potison = this.pointerDeviceService.pointers[0];
       console.log('mouseCursor A', potison);
       this.contextMenuService.open(potison, [
-        { name: 'キャラクターを作成', action: () => { this.createGameCharacter(potison); } },
-        { name: 'マップマスクを作成', action: () => { this.createGameTableMask(potison); } },
-        { name: '地形を作成', action: () => { this.createTerrain(potison); } },
+        {
+          name: 'キャラクターを作成', action: () => {
+            this.createGameCharacter(potison);
+            SoundEffect.play(PresetSound.put);
+          }
+        },
+        {
+          name: 'マップマスクを作成', action: () => {
+            this.createGameTableMask(potison);
+            SoundEffect.play(PresetSound.put);
+          }
+        },
+        {
+          name: '地形を作成', action: () => {
+            this.createTerrain(potison);
+            SoundEffect.play(PresetSound.lock);
+          }
+        },
         {
           name: '共有メモを作成', action: () => {
             this.createTextNote(potison);
+            SoundEffect.play(PresetSound.put);
           }
         },
         {
@@ -322,6 +340,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         {
           name: 'トランプの山札を作る', action: () => {
             this.createTrump(potison);
+            SoundEffect.play(PresetSound.cardPut);
           }
         }
       ], this.gameTableObject.name);

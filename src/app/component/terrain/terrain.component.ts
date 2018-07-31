@@ -9,6 +9,7 @@ import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-d
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { MovableOption } from '../../directive/movable.directive';
 import { RotableOption } from '../../directive/rotable.directive';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'terrain',
@@ -97,11 +98,13 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
           name: '固定解除', action: () => {
             this.isLocked = false;
             this.terrain.update();
+            SoundEffect.play(PresetSound.switch);
           }
         } : {
           name: '固定する', action: () => {
             this.isLocked = true;
             this.terrain.update();
+            SoundEffect.play(PresetSound.switch);
           }
         }),
       (this.hasWall
@@ -127,10 +130,24 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
           cloneObject.location.y += this.gridSize;
           cloneObject.isLocked = false;
           if (this.terrain.parent) this.terrain.parent.appendChild(cloneObject);
+          SoundEffect.play(PresetSound.lock);
         }
       },
-      { name: '削除する', action: () => { this.terrain.destroy(); } },
+      {
+        name: '削除する', action: () => {
+          this.terrain.destroy();
+          SoundEffect.play(PresetSound.delete);
+        }
+      },
     ], this.name);
+  }
+
+  onMove() {
+    SoundEffect.play(PresetSound.lock);
+  }
+
+  onMoved() {
+    SoundEffect.play(PresetSound.lock);
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

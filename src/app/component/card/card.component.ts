@@ -22,6 +22,7 @@ import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-d
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { MovableOption } from '../../directive/movable.directive';
 import { RotableOption } from '../../directive/rotable.directive';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'card',
@@ -160,6 +161,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log('onDoubleClick !!!!');
       this.state = this.isVisible && !this.isHand ? CardState.BACK : CardState.FRONT;
       this.owner = '';
+      SoundEffect.play(PresetSound.cardDraw);
     }
   }
 
@@ -199,18 +201,39 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
       (!this.isVisible || this.isHand
-        ? { name: '表にする', action: () => { this.card.faceUp(); } }
-        : { name: '裏にする', action: () => { this.card.faceDown(); } }
+        ? {
+          name: '表にする', action: () => {
+            this.card.faceUp();
+            SoundEffect.play(PresetSound.cardDraw);
+          }
+        }
+        : {
+          name: '裏にする', action: () => {
+            this.card.faceDown();
+            SoundEffect.play(PresetSound.cardDraw);
+          }
+        }
       ),
       (this.isHand
-        ? { name: '裏にする', action: () => { this.card.faceDown(); } }
+        ? {
+          name: '裏にする', action: () => {
+            this.card.faceDown();
+            SoundEffect.play(PresetSound.cardDraw);
+          }
+        }
         : {
           name: '自分だけ見る', action: () => {
+            SoundEffect.play(PresetSound.cardDraw);
             this.card.faceDown();
             this.owner = Network.peerId;
           }
         }),
-      { name: '重なったカードで山札を作る', action: () => { this.createStack(); } },
+      {
+        name: '重なったカードで山札を作る', action: () => {
+          this.createStack();
+          SoundEffect.play(PresetSound.cardPut);
+        }
+      },
       { name: 'カードを編集', action: () => { this.showDetail(this.card); } },
       {
         name: 'コピーを作る', action: () => {
@@ -219,10 +242,24 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();
+          SoundEffect.play(PresetSound.cardPut);
         }
       },
-      { name: '削除する', action: () => { this.card.destroy(); } },
+      {
+        name: '削除する', action: () => {
+          this.card.destroy();
+          SoundEffect.play(PresetSound.delete);
+        }
+      },
     ], this.name);
+  }
+
+  onMove() {
+    SoundEffect.play(PresetSound.cardPick);
+  }
+
+  onMoved() {
+    SoundEffect.play(PresetSound.cardPut);
   }
 
   private addMouseEventListeners() {

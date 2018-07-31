@@ -8,6 +8,7 @@ import { PanelOption, PanelService } from '../../service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { MovableOption } from '../../directive/movable.directive';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'game-table-mask',
@@ -43,9 +44,9 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
       transformCssOffset: 'translateZ(0.15px)',
       colideLayers: ['terrain']
     };
-   }
+  }
 
-  ngAfterViewInit() {  }
+  ngAfterViewInit() { }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
@@ -80,8 +81,18 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     console.log('mouseCursor', potison);
     this.contextMenuService.open(potison, [
       (this.isLock
-        ? { name: '固定解除', action: () => { this.isLock = false; } }
-        : { name: '固定する', action: () => { this.isLock = true; } }
+        ? {
+          name: '固定解除', action: () => {
+            this.isLock = false;
+            SoundEffect.play(PresetSound.switch);
+          }
+        }
+        : {
+          name: '固定する', action: () => {
+            this.isLock = true;
+            SoundEffect.play(PresetSound.switch);
+          }
+        }
       ),
       { name: 'マップマスクを編集', action: () => { this.showDetail(this.gameTableMask); } },
       {
@@ -92,10 +103,24 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
           cloneObject.location.y += this.gridSize;
           cloneObject.isLock = false;
           if (this.gameTableMask.parent) this.gameTableMask.parent.appendChild(cloneObject);
+          SoundEffect.play(PresetSound.put);
         }
       },
-      { name: '削除する', action: () => { this.gameTableMask.destroy(); } },
+      {
+        name: '削除する', action: () => {
+          this.gameTableMask.destroy();
+          SoundEffect.play(PresetSound.delete);
+        }
+      },
     ], this.name);
+  }
+
+  onMove() {
+    SoundEffect.play(PresetSound.pick);
+  }
+
+  onMoved() {
+    SoundEffect.play(PresetSound.put);
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

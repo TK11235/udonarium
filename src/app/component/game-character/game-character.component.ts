@@ -11,6 +11,7 @@ import { ChatPaletteComponent } from '../chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { MovableOption } from '../../directive/movable.directive';
 import { RotableOption } from '../../directive/rotable.directive';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'game-character',
@@ -114,12 +115,36 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();
+          SoundEffect.play(PresetSound.put);
         }
       },
-      { name: '共有イベントリに移動', action: () => { this.gameCharacter.setLocation('common'); } },
-      { name: '個人イベントリに移動', action: () => { this.gameCharacter.setLocation(Network.peerId); } },
-      { name: '墓場に移動', action: () => { this.gameCharacter.setLocation('graveyard'); } }
+      {
+        name: '共有イベントリに移動', action: () => {
+          this.gameCharacter.setLocation('common');
+          SoundEffect.play(PresetSound.put);
+        }
+      },
+      {
+        name: '個人イベントリに移動', action: () => {
+          this.gameCharacter.setLocation(Network.peerId);
+          SoundEffect.play(PresetSound.put);
+        }
+      },
+      {
+        name: '墓場に移動', action: () => {
+          this.gameCharacter.setLocation('graveyard');
+          SoundEffect.play(PresetSound.delete);
+        }
+      }
     ], this.name);
+  }
+
+  onMove() {
+    SoundEffect.play(PresetSound.pick);
+  }
+
+  onMoved() {
+    SoundEffect.play(PresetSound.put);
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

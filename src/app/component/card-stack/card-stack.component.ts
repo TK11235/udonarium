@@ -13,6 +13,7 @@ import { CardStackListComponent } from '../card-stack-list/card-stack-list.compo
 import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
 import { MovableOption } from '../../directive/movable.directive';
 import { RotableOption } from '../../directive/rotable.directive';
+import { SoundEffect, PresetSound } from '../../class/sound-effect';
 
 @Component({
   selector: 'card-stack',
@@ -156,6 +157,7 @@ export class CardStackComponent implements OnInit {
         card.location.x += 100 + (Math.random() * 50);
         card.location.y += 25 + (Math.random() * 50);
         card.update();
+        SoundEffect.play(PresetSound.cardDraw);
       }
     }
   }
@@ -205,17 +207,44 @@ export class CardStackComponent implements OnInit {
             card.location.x += 100 + (Math.random() * 50);
             card.location.y += 25 + (Math.random() * 50);
             card.update();
+            SoundEffect.play(PresetSound.cardDraw);
           }
         }
       },
-      { name: '一番上を表にする', action: () => { this.cardStack.faceUp(); } },
-      { name: '一番上を裏にする', action: () => { this.cardStack.faceDown(); } },
-      { name: 'すべて表にする', action: () => { this.cardStack.faceUpAll(); } },
-      { name: 'すべて裏にする', action: () => { this.cardStack.faceDownAll(); } },
-      { name: 'すべて正位置にする', action: () => { this.cardStack.uprightAll(); } },
+      {
+        name: '一番上を表にする', action: () => {
+          this.cardStack.faceUp();
+          SoundEffect.play(PresetSound.cardDraw);
+        }
+      },
+      {
+        name: '一番上を裏にする', action: () => {
+          this.cardStack.faceDown();
+          SoundEffect.play(PresetSound.cardDraw);
+        }
+      },
+      {
+        name: 'すべて表にする', action: () => {
+          this.cardStack.faceUpAll();
+          SoundEffect.play(PresetSound.cardDraw);
+        }
+      },
+      {
+        name: 'すべて裏にする', action: () => {
+          this.cardStack.faceDownAll();
+          SoundEffect.play(PresetSound.cardDraw);
+        }
+      },
+      {
+        name: 'すべて正位置にする', action: () => {
+          this.cardStack.uprightAll();
+          SoundEffect.play(PresetSound.cardDraw);
+        }
+      },
       {
         name: 'シャッフル', action: () => {
           this.cardStack.shuffle();
+          SoundEffect.play(PresetSound.cardShuffle);
           EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
         }
       },
@@ -225,8 +254,18 @@ export class CardStackComponent implements OnInit {
       ),
       { name: 'カード一覧', action: () => { this.showStackList(this.cardStack); } },
       { name: 'カードサイズを揃える', action: () => { if (this.cardStack.topCard) this.cardStack.unifyCardsSize(this.cardStack.topCard.size); } },
-      { name: '山札を人数分に分割する', action: () => { this.splitStack(Network.peerIds.length); } },
-      { name: '山札を崩す', action: () => { this.breakStack(); } },
+      {
+        name: '山札を人数分に分割する', action: () => {
+          this.splitStack(Network.peerIds.length);
+          SoundEffect.play(PresetSound.cardDraw);
+        }
+      },
+      {
+        name: '山札を崩す', action: () => {
+          this.breakStack();
+          SoundEffect.play(PresetSound.cardShuffle);
+        }
+      },
       { name: '詳細を表示', action: () => { this.showDetail(this.cardStack); } },
       {
         name: 'コピーを作る', action: () => {
@@ -236,6 +275,7 @@ export class CardStackComponent implements OnInit {
           cloneObject.location.y += this.gridSize;
           cloneObject.owner = '';
           cloneObject.update();
+          SoundEffect.play(PresetSound.cardPut);
         }
       },
       {
@@ -243,9 +283,18 @@ export class CardStackComponent implements OnInit {
           this.cardStack.location.name = 'graveyard';
           this.cardStack.update();
           this.cardStack.destroy();
+          SoundEffect.play(PresetSound.delete);
         }
       },
     ], this.name);
+  }
+
+  onMove() {
+    SoundEffect.play(PresetSound.cardPick);
+  }
+
+  onMoved() {
+    SoundEffect.play(PresetSound.cardPut);
   }
 
   private breakStack() {

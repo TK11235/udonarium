@@ -1,7 +1,7 @@
 <div class="component is-3d is-pointer-events-none is-grab" [style.width.px]="size * gridSize"
-  appMovable [movable.option]="movableOption">
+  appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
   <div *ngIf="imageFile" class="component-content is-pointer-events-auto"
-    appRotable [rotable.option]="rotableOption">
+    appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
     <img *ngIf="isFront" class="card-image" [src]="frontImage.url | safe: 'resourceUrl'">
     <img *ngIf="!isFront" class="card-image" [src]="backImage.url | safe: 'resourceUrl'">
     <div class="rotate-grab of-left-top">
