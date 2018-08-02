@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 import { TextViewComponent } from '../text-view/text-view.component';
@@ -43,6 +43,8 @@ import { ChatTabSettingComponent } from '../chat-tab-setting/chat-tab-setting.co
 })
 
 export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('textArea') textAreaElementRef: ElementRef;
+
   sender: string = 'Guest';
   text: string = '';
   sendTo: string = '';
@@ -260,7 +262,10 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     //this.eventSystem.call('BROADCAST_MESSAGE', chatMessage);
     if (this.chatTab) this.chatTab.addMessage(chatMessage);
     //this.scrollToBottom(true);
-    this.text = "";
+    this.text = '';
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.value = '';
+    this.calcFitHeight();
   }
 
   showTabSetting() {
@@ -268,5 +273,13 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 500, height: 350 };
     let component = this.panelService.open<ChatTabSettingComponent>(ChatTabSettingComponent, option);
     component.selectedTab = this.chatTab;
+  }
+
+  calcFitHeight() {
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.style.height = '';
+    if (textArea.scrollHeight >= textArea.offsetHeight) {
+      textArea.style.height = textArea.scrollHeight + 'px';
+    }
   }
 }

@@ -60,7 +60,21 @@
 }
 
 .chat-input {
+  font-family: Arial;
+  font-size: 13px;
+
   width: calc(100% - 100px);
+  height: calc(1em + 4px);
+  min-height: calc(1em + 7px);
+  max-height: calc(6em + 7px);
+  resize: none;
+  overflow: auto;
+
+  padding: 1px;
+  margin: 5px;
+
+  word-break: break-all;
+  vertical-align: bottom;
 }
 
 .direct-message {
