@@ -54,7 +54,9 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   set gameType(gameType: string) { this.chatMessageService.gameType = gameType; }
   gameHelp: string = '';
 
-  gameCharacters: GameCharacter[] = [];
+  private _gameCharacters: GameCharacter[] = [];
+  get gameCharacters(): GameCharacter[] { return this._gameCharacters.filter(character => this.isAccessibleCharacter(character)); }
+  set gameCharacters(gameCharacters: GameCharacter[]) { this._gameCharacters = gameCharacters; }
   gameCharacter: GameCharacter = null;
 
   private _chatTabidentifier: string = '';
@@ -280,6 +282,23 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     textArea.style.height = '';
     if (textArea.scrollHeight >= textArea.offsetHeight) {
       textArea.style.height = textArea.scrollHeight + 'px';
+    }
+  }
+
+  private isAccessibleCharacter(gameCharacter: GameCharacter): boolean {
+    switch (gameCharacter.location.name) {
+      case 'table':
+      case this.myPeer.peerId:
+        return true;
+      case 'graveyard':
+        return false;
+      default:
+        for (const conn of Network.peerContexts) {
+          if (conn.isOpen && gameCharacter.location.name === conn.fullstring) {
+            return false;
+          }
+        }
+        return true;
     }
   }
 }
