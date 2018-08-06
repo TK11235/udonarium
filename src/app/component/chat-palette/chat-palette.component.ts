@@ -42,6 +42,9 @@ export class ChatPaletteComponent implements OnInit {
   isEdit: boolean = false;
   editPalette: string = '';
 
+  private writingEventInterval: NodeJS.Timer = null;
+  private previousWritingLength: number = 0;
+
   private doubleClickTimer: NodeJS.Timer = null;
 
   get diceBotInfos() { return DiceBot.diceBotInfos }
@@ -170,6 +173,7 @@ export class ChatPaletteComponent implements OnInit {
 
     if (this.chatTab) this.chatTab.addMessage(chatMessage);
     this.text = '';
+    this.previousWritingLength = this.text.length;
     let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
     textArea.value = '';
     this.calcFitHeight();
@@ -185,6 +189,21 @@ export class ChatPaletteComponent implements OnInit {
   }
 
   onInput() {
+    if (this.writingEventInterval === null && this.previousWritingLength <= this.text.length) {
+      let sendTo: string = null;
+      if (this.isDirect) {
+        let object = ObjectStore.instance.get(this.sendTo);
+        if (object instanceof PeerCursor) {
+          let peer = PeerContext.create(object.peerId);
+          if (peer) sendTo = peer.id;
+        }
+      }
+      EventSystem.call('WRITING_A_MESSAGE', this.chatTabidentifier, sendTo);
+      this.writingEventInterval = setTimeout(() => {
+        this.writingEventInterval = null;
+      }, 200);
+    }
+    this.previousWritingLength = this.text.length;
     this.calcFitHeight();
   }
 

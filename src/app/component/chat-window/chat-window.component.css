@@ -77,6 +77,11 @@
   vertical-align: bottom;
 }
 
+.writing-info {
+  font-size: 8px;
+  height: 1.3em;
+}
+
 .direct-message {
   background-color: #555;
   color: #CCC;

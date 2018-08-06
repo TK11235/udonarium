@@ -74,6 +74,11 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   objectStore = ObjectStore.instance;
   //network = Network;
 
+  private writingEventInterval: NodeJS.Timer = null;
+  private previousWritingLength: number = 0;
+  writingPeers: Map<string, NodeJS.Timer> = new Map();
+  writingPeerNames: string[] = [];
+
   get network() { return Network; };
   get diceBotInfos() { return DiceBot.diceBotInfos }
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }//this.objectStore.get<PeerCursor>(this.network.peerId); }
@@ -101,6 +106,11 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
           this.checkAutoScroll();
         }
+        if (this.writingPeers.has(event.sendFrom)) {
+          clearTimeout(this.writingPeers.get(event.sendFrom));
+          this.writingPeers.delete(event.sendFrom);
+          this.updateWritingPeerNames();
+        }
       })
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         this.gameCharacters = this.objectStore.getObjects<GameCharacter>(GameCharacter);
@@ -109,6 +119,17 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         if (object instanceof PeerCursor && object.peerId === event.data.peer) {
           this.sendTo = '';
         }
+      })
+      .on<string>('WRITING_A_MESSAGE', event => {
+        if (event.isSendFromSelf || event.data !== this.chatTabidentifier) return;
+        if (this.writingPeers.has(event.sendFrom)) clearTimeout(this.writingPeers.get(event.sendFrom));
+        this.writingPeers.set(event.sendFrom, setTimeout(() => {
+          this.ngZone.run(() => {
+            this.writingPeers.delete(event.sendFrom);
+            this.updateWritingPeerNames();
+          });
+        }, 2000));
+        this.updateWritingPeerNames();
       });
     this.updatePanelTitle();
   }
@@ -121,6 +142,13 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.eventSystem.unregister(this);
+  }
+
+  private updateWritingPeerNames() {
+    this.writingPeerNames = Array.from(this.writingPeers.keys()).map(peerId => {
+      let peer = PeerCursor.find(peerId);
+      return peer ? peer.name : '';
+    });
   }
 
   // @TODO やり方はもう少し考えた方がいいい
@@ -263,6 +291,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.chatTab) this.chatTab.addMessage(chatMessage);
     //this.scrollToBottom(true);
     this.text = '';
+    this.previousWritingLength = this.text.length;
     let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
     textArea.value = '';
     this.calcFitHeight();
@@ -273,6 +302,25 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 500, height: 350 };
     let component = this.panelService.open<ChatTabSettingComponent>(ChatTabSettingComponent, option);
     component.selectedTab = this.chatTab;
+  }
+
+  onInput(event: Event) {
+    if (this.writingEventInterval === null && this.previousWritingLength <= this.text.length) {
+      let sendTo: string = null;
+      if (this.isDirect) {
+        let object = this.objectStore.get(this.sendTo);
+        if (object instanceof PeerCursor) {
+          let peer = PeerContext.create(object.peerId);
+          if (peer) sendTo = peer.id;
+        }
+      }
+      this.eventSystem.call('WRITING_A_MESSAGE', this.chatTabidentifier, sendTo);
+      this.writingEventInterval = setTimeout(() => {
+        this.writingEventInterval = null;
+      }, 200);
+    }
+    this.previousWritingLength = this.text.length;
+    this.calcFitHeight();
   }
 
   calcFitHeight() {

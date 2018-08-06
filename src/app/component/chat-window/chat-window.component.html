@@ -39,9 +39,15 @@
     </div>
     <div>
       <form #chatWindowForm="ngForm">
-        <textarea #textArea [(ngModel)]="text" placeholder="Enterで送信  Shift+Enterで改行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="calcFitHeight()" (keydown.enter)="sendChat($event)"></textarea>
+        <textarea #textArea [(ngModel)]="text" placeholder="Enterで送信  Shift+Enterで改行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
         <button type="submit" (click)="sendChat($event)">SEND</button>
       </form>
+    </div>
+    <div class="writing-info">
+      <ng-container *ngIf="0 < writingPeerNames.length" >
+        <span *ngFor="let peerName of writingPeerNames; index as i">{{peerName}}<span *ngIf="writingPeerNames.length !== (i + 1)">, </span></span>
+        <span> が入力中...</span>
+      </ng-container>
     </div>
   </div>
 </div>
