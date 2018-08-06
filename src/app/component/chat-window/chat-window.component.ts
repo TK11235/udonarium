@@ -262,7 +262,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendChat(event: Event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
 
     if (!this.text.length) return;
 
@@ -319,7 +319,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     component.selectedTab = this.chatTab;
   }
 
-  onInput(event: Event) {
+  onInput() {
     if (this.writingEventInterval === null && this.previousWritingLength <= this.text.length) {
       let sendTo: string = null;
       if (this.isDirect) {

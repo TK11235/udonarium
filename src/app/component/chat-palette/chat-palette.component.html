@@ -24,7 +24,7 @@
       <form>
         <!--<input [(ngModel)]="text" placeholder="message" [ngModelOptions]="{standalone: true}" style="width: 25em;">-->
         <textarea #textArea [(ngModel)]="text" placeholder="Enterで送信  Shift+Enterで改行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
-        <button type="submit" (click)="sendChat()">SEND</button>
+        <button type="submit" (click)="sendChat(null)">SEND</button>
       </form>
     </div>
   </div>
