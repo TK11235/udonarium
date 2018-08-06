@@ -54,9 +54,17 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   set gameType(gameType: string) { this.chatMessageService.gameType = gameType; }
   gameHelp: string = '';
 
+  private shouldUpdateCharacterList: boolean = true;
   private _gameCharacters: GameCharacter[] = [];
-  get gameCharacters(): GameCharacter[] { return this._gameCharacters.filter(character => this.isAccessibleCharacter(character)); }
-  set gameCharacters(gameCharacters: GameCharacter[]) { this._gameCharacters = gameCharacters; }
+  get gameCharacters(): GameCharacter[] {
+    if (this.shouldUpdateCharacterList) {
+      this._gameCharacters = this.objectStore
+        .getObjects<GameCharacter>(GameCharacter)
+        .filter(character => this.isAccessibleCharacter(character));
+    }
+    return this._gameCharacters;
+  }
+
   gameCharacter: GameCharacter = null;
 
   private _chatTabidentifier: string = '';
@@ -115,7 +123,8 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       })
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        this.gameCharacters = this.objectStore.getObjects<GameCharacter>(GameCharacter);
+        if (event.data.aliasName !== GameCharacter.aliasName) return;
+        this.shouldUpdateCharacterList = true;
         if (this.gameCharacter && !this.isAccessibleCharacter(this.gameCharacter)) {
           this.gameCharacter = null;
           this.sender = this.myPeer.identifier;
