@@ -99,7 +99,6 @@ export class AudioStorage {
   synchronize(peer?: string) {
     clearTimeout(this.lazyTimer);
     this.lazyTimer = null;
-    console.warn('synchronize要求 ' + peer);
     EventSystem.call('SYNCHRONIZE_AUDIO_LIST', this.getCatalog(), peer);
   }
 
