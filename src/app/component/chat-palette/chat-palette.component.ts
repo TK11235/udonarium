@@ -24,6 +24,7 @@ import { ImageFile } from '../../class/core/file-storage/image-file';
   styleUrls: ['./chat-palette.component.css']
 })
 export class ChatPaletteComponent implements OnInit {
+  @ViewChild('textArea') textAreaElementRef: ElementRef;
   @Input() character: GameCharacter = null;
 
   get palette(): ChatPalette { return this.character.chatPalette; }
@@ -82,9 +83,12 @@ export class ChatPaletteComponent implements OnInit {
     if (this.doubleClickTimer && this.text === line) {
       clearTimeout(this.doubleClickTimer);
       this.doubleClickTimer = null;
-      this.sendChat();
+      this.sendChat(null);
     } else {
       this.text = line;
+      let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+      textArea.value = this.text;
+      this.onInput();
       this.doubleClickTimer = setTimeout(() => { this.doubleClickTimer = null }, 400);
     }
   }
@@ -134,7 +138,9 @@ export class ChatPaletteComponent implements OnInit {
     });
   }
 
-  sendChat() {
+  sendChat(event: Event) {
+    if (event) event.preventDefault();
+
     if (!this.text.length) return;
 
     let time = this.chatMessageService.getTime();
@@ -164,6 +170,9 @@ export class ChatPaletteComponent implements OnInit {
 
     if (this.chatTab) this.chatTab.addMessage(chatMessage);
     this.text = '';
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.value = '';
+    this.calcFitHeight();
   }
 
   toggleEditMode() {
@@ -172,6 +181,18 @@ export class ChatPaletteComponent implements OnInit {
       this.editPalette = this.palette.value + '';
     } else {
       this.palette.setPalette(this.editPalette);
+    }
+  }
+
+  onInput() {
+    this.calcFitHeight();
+  }
+
+  calcFitHeight() {
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.style.height = '';
+    if (textArea.scrollHeight >= textArea.offsetHeight) {
+      textArea.style.height = textArea.scrollHeight + 'px';
     }
   }
 }
