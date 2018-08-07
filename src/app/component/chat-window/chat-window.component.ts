@@ -58,6 +58,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   private _gameCharacters: GameCharacter[] = [];
   get gameCharacters(): GameCharacter[] {
     if (this.shouldUpdateCharacterList) {
+      this.shouldUpdateCharacterList = false;
       this._gameCharacters = this.objectStore
         .getObjects<GameCharacter>(GameCharacter)
         .filter(character => this.allowsChat(character));
