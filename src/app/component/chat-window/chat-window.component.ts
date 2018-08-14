@@ -267,7 +267,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (!this.text.length) return;
 
-    if (event.keyCode !== 13) return;
+    if (event && event.keyCode !== 13) return;
 
     if (!this.sender.length) this.sender = this.network.peerId;
 
