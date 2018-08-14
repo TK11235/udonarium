@@ -262,10 +262,12 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  sendChat(event: Event) {
+  sendChat(event: KeyboardEvent) {
     if (event) event.preventDefault();
 
     if (!this.text.length) return;
+
+    if (event.keyCode !== 13) return;
 
     if (!this.sender.length) this.sender = this.network.peerId;
 
