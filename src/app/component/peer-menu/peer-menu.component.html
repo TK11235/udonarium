@@ -34,8 +34,8 @@
     <button (click)="connectPeer()" [disabled]="!networkService.isConnected">他のPeerと接続</button><br>
   </ng-container>
   <button *ngIf="networkService.peerIds.length <= 1 && 0 < appConfigService.peerHistory.length && !appConfigService.isOpen"
-    (click)="connectPeerHistory()">前回接続していたPeerに再接続</button><br>
-  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()">ルーム機能を使う</button>
+    (click)="connectPeerHistory()" [disabled]="!networkService.isConnected">前回接続していたPeerに再接続</button><br>
+  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isConnected">ルーム機能を使う</button>
 </div>
 <div><span style="font-size: 12px;">{{help}}</span></div>
 <ng-container *ngIf="networkService.peerId.length <= 18">
