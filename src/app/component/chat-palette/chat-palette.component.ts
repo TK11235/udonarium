@@ -141,10 +141,12 @@ export class ChatPaletteComponent implements OnInit {
     });
   }
 
-  sendChat(event: Event) {
+  sendChat(event: KeyboardEvent) {
     if (event) event.preventDefault();
 
     if (!this.text.length) return;
+
+    if (event && event.keyCode !== 13) return;
 
     let time = this.chatMessageService.getTime();
     console.log('time:' + time);
