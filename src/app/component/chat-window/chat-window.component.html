@@ -45,7 +45,7 @@
     </div>
     <div class="writing-info">
       <ng-container *ngIf="0 < writingPeerNames.length" >
-        <span *ngFor="let peerName of writingPeerNames; index as i">{{peerName}}<span *ngIf="writingPeerNames.length !== (i + 1)">, </span></span>
+        <span *ngFor="let peerName of writingPeerNames; index as i" style="font-weight: bold;">{{peerName}}<span *ngIf="writingPeerNames.length !== (i + 1)">, </span></span>
         <span> が入力中...</span>
       </ng-container>
     </div>
