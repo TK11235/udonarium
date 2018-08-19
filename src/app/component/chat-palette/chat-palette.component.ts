@@ -91,7 +91,6 @@ export class ChatPaletteComponent implements OnInit {
       this.text = line;
       let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
       textArea.value = this.text;
-      this.onInput();
       this.doubleClickTimer = setTimeout(() => { this.doubleClickTimer = null }, 400);
     }
   }
