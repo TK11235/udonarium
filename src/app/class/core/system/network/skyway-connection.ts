@@ -259,14 +259,25 @@ export class SkyWayConnection implements Connection {
     });
 
     peer.on('error', err => {
-      console.log('<' + this.peerId + '> ' + err);
-      console.error(err);
-      if (err.toString() === 'Error: Lost connection to server.') {
-        if (this.callback.onClose) this.callback.onClose(this.peerId);
-      } else if (-1 < err.toString().indexOf('Error: Could not connect to peer ')) {
-        let peer = err.toString().substring('Error: Could not connect to peer '.length);
-        this.disconnect(peer);
+      console.error('<' + this.peerId + '> ' + err.type + ' => ' + err.message);
+      let errorMessage = this.getSkyWayErrorMessage(err.type);
+      errorMessage += ': ' + err.message;
+      switch (err.type) {
+        case 'peer-unavailable':
+        case 'invalid-id':
+        case 'invalid-key':
+        case 'list-error':
+        case 'server-error':
+          break;
+        case 'disconnected':
+        case 'socket-error':
+        default:
+          if (this.peerContext && this.peerContext.isOpen) {
+            if (this.callback.onClose) this.callback.onClose(this.peerId);
+          }
+          break;
       }
+      if (this.callback.onError) this.callback.onError(this.peerId, errorMessage);
     });
     this.peer = peer;
   }
@@ -425,5 +436,26 @@ export class SkyWayConnection implements Connection {
         });
       });
     return uint8array;
+  }
+
+  private getSkyWayErrorMessage(errType: string): string {
+    switch (errType) {
+      case 'peer-unavailable':
+        return 'そのPeer IDは存在しません。'
+      case 'invalid-id':
+        return 'Peer IDが不正です。'
+      case 'invalid-key':
+        return 'SkyWay APIキーが無効です。';
+      case 'list-error':
+        return 'SkyWay APIキーのREST APIが許可されてません。';
+      case 'server-error':
+        return 'SkyWayのシグナリングサーバからPeer一覧を取得できませんでした。';
+      case 'disconnected':
+        return 'SkyWayのシグナリングサーバに接続されていません。';
+      case 'socket-error':
+        return 'SkyWayのシグナリングサーバとの接続が失われました。';
+      default:
+        return 'SkyWayに関する不明なエラーが発生しました(' + errType + ')';
+    }
   }
 }
