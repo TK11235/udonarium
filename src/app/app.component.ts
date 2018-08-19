@@ -144,10 +144,16 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         PeerCursor.myCursor.peerId = event.data.peer;
       }).on('CLOSE_OTHER_PEER', 0, event => {
         //
-      }).on('LOST_CONNECTION_PEER', 0, async event => {
+      }).on('LOST_CONNECTION_PEER', 0, event => {
         console.log('LOST_CONNECTION_PEER', event.data.peer);
-        await this.modalService.open(TextViewComponent, { title: 'Peer情報の再取得', text: 'Peer情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
-        Network.open();
+        this.ngZone.run(async () => {
+          if (1 < Network.peerIds.length) {
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'ネットワーク接続に何らかの異常が発生しました。\nこの表示以後、接続が不安定であれば、ページリロードと再接続を試みてください。' });
+          } else {
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'Peer情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
+            Network.open();
+          }
+        });
       });
   }
   ngAfterViewInit() {
