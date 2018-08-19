@@ -29,10 +29,11 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
   get chatMessages(): ChatMessage[] {
     if (!this.chatTab) return [];
     if (this.needUpdate) {
-      let length = this.chatTab.chatMessages.length;
+      let chatMessages = this.chatTab.chatMessages;
+      let length = chatMessages.length;
       this._chatMessages = length <= this.maxMessages
-        ? this.chatTab.chatMessages
-        : this.chatTab.chatMessages.slice(length - this.maxMessages, length);
+        ? chatMessages
+        : chatMessages.slice(length - this.maxMessages);
       this.needUpdate = false;
     }
     return this._chatMessages;
