@@ -28,7 +28,7 @@ class DeadlineHeroes < DiceBot
 　x：チャートの種類。肉体：DCL、精神：DCS、環境：DCC
 　Y=マイナス値
 　例）DCL5：ライフが -5 の判定
-　　　DCC3：サニティーが -3 の判定
+　　　DCS3：サニティーが -3 の判定
 　　　DCC0：クレジット 0 の判定
 ・ヒーローネームチャート（HNC）
 ・リアルネームチャート　日本（RNCJ）、海外（RNCO）

@@ -41,7 +41,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_3 = function $$getHelpMessage() {
       var self = this;
 
-      return "・行為判定（DLHx）\n　x：成功率\n　例）DLH80\n　クリティカル、ファンブルの自動的判定を行います。\n　「DLH50+20-30」のように加減算記述も可能。\n　成功率は上限100％、下限０％\n・デスチャート(DCxY)\n　x：チャートの種類。肉体：DCL、精神：DCS、環境：DCC\n　Y=マイナス値\n　例）DCL5：ライフが -5 の判定\n　　　DCC3：サニティーが -3 の判定\n　　　DCC0：クレジット 0 の判定\n・ヒーローネームチャート（HNC）\n・リアルネームチャート　日本（RNCJ）、海外（RNCO）\n";
+      return "・行為判定（DLHx）\n　x：成功率\n　例）DLH80\n　クリティカル、ファンブルの自動的判定を行います。\n　「DLH50+20-30」のように加減算記述も可能。\n　成功率は上限100％、下限０％\n・デスチャート(DCxY)\n　x：チャートの種類。肉体：DCL、精神：DCS、環境：DCC\n　Y=マイナス値\n　例）DCL5：ライフが -5 の判定\n　　　DCS3：サニティーが -3 の判定\n　　　DCC0：クレジット 0 の判定\n・ヒーローネームチャート（HNC）\n・リアルネームチャート　日本（RNCJ）、海外（RNCO）\n";
     }, TMP_3.$$arity = 0);
 
     Opal.defn(self, '$rollDiceCommand', TMP_4 = function $$rollDiceCommand(command) {
