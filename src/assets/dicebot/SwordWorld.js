@@ -21,14 +21,14 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars;
+  var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$>=', '$<=', '$!=', '$==', '$rating', '$getGratestFortuneFromString', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$loop', '$rollDice', '$min', '$*', '$[]', '$<<', '$getResultText', '$isSW2_0Mode', '$===', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$to_s', '$sendMode', '$join', '$getAddText']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$>=', '$<=', '$!=', '$==', '$rating', '$getRatingCommandStrings', '$new', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$loop', '$rollDice', '$getAdditionalDiceValue', '$min', '$*', '$[]', '$<<', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$to_s', '$sendMode', '$join', '$getAddText', '$===']);
   return (function($base, $super) {
     function $SwordWorld(){};
     var self = $SwordWorld = $klass($base, $super, 'SwordWorld', $SwordWorld);
 
-    var def = self.$$proto, $scope = self.$$scope, TMP_1, TMP_2, TMP_3, TMP_4, TMP_5, TMP_10, TMP_11, TMP_12, TMP_14, TMP_15, TMP_16, TMP_17, TMP_18, TMP_19, TMP_20, TMP_21, TMP_23, TMP_24, TMP_25, TMP_26, TMP_27;
+    var def = self.$$proto, $scope = self.$$scope, TMP_1, TMP_2, TMP_3, TMP_4, TMP_5, TMP_10, TMP_11, TMP_12, TMP_13, TMP_15, TMP_16, TMP_17, TMP_18, TMP_19, TMP_20, TMP_21, TMP_22, TMP_23, TMP_25, TMP_26, TMP_27, TMP_28, TMP_29;
 
     def.rating_table = nil;
     self.$setPrefixes(["K\\d+.*"]);
@@ -90,7 +90,13 @@
       return string;
     }, TMP_10.$$arity = 1);
 
-    Opal.defn(self, '$check_2D6', TMP_11 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$getRatingCommandStrings', TMP_11 = function $$getRatingCommandStrings() {
+      var self = this;
+
+      return "cmCM";
+    }, TMP_11.$$arity = 0);
+
+    Opal.defn(self, '$check_2D6', TMP_12 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
       var $a, self = this;
 
       if ((($a = ($rb_ge(dice_n, 12))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
@@ -104,26 +110,27 @@
       if ((($a = ($rb_ge(totalValue, diff))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return " ＞ 成功"};
       return " ＞ 失敗";
-    }, TMP_11.$$arity = 8);
+    }, TMP_12.$$arity = 8);
 
-    Opal.defn(self, '$rollDiceCommand', TMP_12 = function $$rollDiceCommand(command) {
+    Opal.defn(self, '$rollDiceCommand', TMP_13 = function $$rollDiceCommand(command) {
       var self = this;
 
       return self.$rating(command);
-    }, TMP_12.$$arity = 1);
+    }, TMP_13.$$arity = 1);
 
-    Opal.defn(self, '$rating', TMP_14 = function $$rating(string) {
-      var $a, $b, TMP_13, self = this, isGratestFortune = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
+    Opal.defn(self, '$rating', TMP_15 = function $$rating(string) {
+      var $a, $b, TMP_14, self = this, commands = nil, pattern = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
       if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       self.$debug("rating string", string);
-      if ((($a = (/(^|\s)[sS]?(((k|K)[\d\+\-]+)([cmCM]\[([\d\+\-]+)\])*([\d\+\-]*)([cmrCMR]\[([\d\+\-]+)\]|gf|GF)*)($|\s)/['$=~'](string))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
+      commands = self.$getRatingCommandStrings();
+      pattern = "(^|\\s)[sS]?(((k|K)[\\d\\+\\-]+)([" + (commands) + "]\\[([\\d\\+\\-]+)\\])*([\\d\\+\\-]*)([cmrCMR]\\[([\\d\\+\\-]+)\\]|gf|GF)*)($|\\s)";
+      if ((($a = ($scope.get('Regexp').$new(pattern)['$=~'](string))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         } else {
         self.$debug("not matched");
         return "1";
       };
       string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      $b = self.$getGratestFortuneFromString(string), $a = Opal.to_ary($b), isGratestFortune = ($a[0] == null ? nil : $a[0]), string = ($a[1] == null ? nil : $a[1]), $b;
       $b = self.$getRateUpFromString(string), $a = Opal.to_ary($b), rateUp = ($a[0] == null ? nil : $a[0]), string = ($a[1] == null ? nil : $a[1]), $b;
       $b = self.$getCriticalFromString(string), $a = Opal.to_ary($b), crit = ($a[0] == null ? nil : $a[0]), string = ($a[1] == null ? nil : $a[1]), $b;
       $b = self.$getDiceChangesFromString(string), $a = Opal.to_ary($b), firstDiceChanteTo = ($a[0] == null ? nil : $a[0]), firstDiceChangeModify = ($a[1] == null ? nil : $a[1]), string = ($a[2] == null ? nil : $a[2]), $b;
@@ -148,8 +155,7 @@
         output = $rb_plus(output, "m[" + (firstDiceChanteTo) + "]")};
       if ((($a = (rateUp['$!='](0))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         output = $rb_plus(output, "r[" + (rateUp) + "]")};
-      if ((($a = (isGratestFortune)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        output = $rb_plus(output, "gf")};
+      $b = self.$getAdditionalString(string, output), $a = Opal.to_ary($b), output = ($a[0] == null ? nil : $a[0]), values = ($a[1] == null ? nil : $a[1]), $b;
       self.$debug("output", output);
       if ((($a = (addValue['$!='](0))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         if ((($a = ($rb_gt(addValue, 0))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
@@ -164,15 +170,16 @@
       diceOnlyTotal = 0;
       totalValue = 0;
       round = 0;
-      (function(){var $brk = Opal.new_brk(); try {return ($a = ($b = self).$loop, $a.$$p = (TMP_13 = function(){var self = TMP_13.$$s || this, $c, $d, diceText = nil, currentKey = nil, rateValue = nil;
+      (function(){var $brk = Opal.new_brk(); try {return ($a = ($b = self).$loop, $a.$$p = (TMP_14 = function(){var self = TMP_14.$$s || this, $c, $d, diceText = nil, currentKey = nil, rateValue = nil;
 
-      $d = self.$rollDice(isGratestFortune), $c = Opal.to_ary($d), dice = ($c[0] == null ? nil : $c[0]), diceText = ($c[1] == null ? nil : $c[1]), $d;
+      $d = self.$rollDice(values), $c = Opal.to_ary($d), dice = ($c[0] == null ? nil : $c[0]), diceText = ($c[1] == null ? nil : $c[1]), $d;
         if ((($c = (firstDiceChanteTo['$!='](0))) !== nil && $c != null && (!$c.$$is_boolean || $c == true))) {
           dice = firstDiceChanteTo;
           firstDiceChanteTo = 0;
         } else if ((($c = (firstDiceChangeModify['$!='](0))) !== nil && $c != null && (!$c.$$is_boolean || $c == true))) {
           dice = $rb_plus(dice, firstDiceChangeModify.$to_i());
           firstDiceChangeModify = 0;};
+        dice = $rb_plus(dice, self.$getAdditionalDiceValue(dice, values));
         if ((($c = ($rb_lt(dice, 2))) !== nil && $c != null && (!$c.$$is_boolean || $c == true))) {
           dice = 2};
         if ((($c = ($rb_gt(dice, 12))) !== nil && $c != null && (!$c.$$is_boolean || $c == true))) {
@@ -196,14 +203,27 @@
           Opal.brk(nil, $brk)
           } else {
           return nil
-        };}, TMP_13.$$s = self, TMP_13.$$brk = $brk, TMP_13.$$arity = 0, TMP_13), $a).call($b)
+        };}, TMP_14.$$s = self, TMP_14.$$brk = $brk, TMP_14.$$arity = 0, TMP_14), $a).call($b)
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       limitLength = $rb_minus($gvars.SEND_STR_MAX, output.$length());
       output = $rb_plus(output, self.$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, crit, limitLength));
       return output;
-    }, TMP_14.$$arity = 1);
+    }, TMP_15.$$arity = 1);
 
-    Opal.defn(self, '$getCriticalFromString', TMP_15 = function $$getCriticalFromString(string) {
+    Opal.defn(self, '$getAdditionalString', TMP_16 = function $$getAdditionalString(string, output) {
+      var self = this, values = nil;
+
+      values = $hash2([], {});
+      return [output, values];
+    }, TMP_16.$$arity = 2);
+
+    Opal.defn(self, '$getAdditionalDiceValue', TMP_17 = function $$getAdditionalDiceValue(dice, values) {
+      var self = this;
+
+      return 0;
+    }, TMP_17.$$arity = 2);
+
+    Opal.defn(self, '$getCriticalFromString', TMP_18 = function $$getCriticalFromString(string) {
       var $a, self = this, crit = nil, regexp = nil;
 
       crit = 10;
@@ -214,9 +234,9 @@
           crit = 3};
         string = string.$gsub(regexp, "");};
       return [crit, string];
-    }, TMP_15.$$arity = 1);
+    }, TMP_18.$$arity = 1);
 
-    Opal.defn(self, '$getDiceChangesFromString', TMP_16 = function $$getDiceChangesFromString(string) {
+    Opal.defn(self, '$getDiceChangesFromString', TMP_19 = function $$getDiceChangesFromString(string) {
       var $a, self = this, firstDiceChanteTo = nil, firstDiceChangeModify = nil, regexp = nil;
 
       firstDiceChanteTo = 0;
@@ -231,45 +251,22 @@
         };
         string = string.$gsub(regexp, "");};
       return [firstDiceChanteTo, firstDiceChangeModify, string];
-    }, TMP_16.$$arity = 1);
+    }, TMP_19.$$arity = 1);
 
-    Opal.defn(self, '$getRateUpFromString', TMP_17 = function $$getRateUpFromString(string) {
-      var $a, self = this, rateUp = nil, regexp = nil;
+    Opal.defn(self, '$getRateUpFromString', TMP_20 = function $$getRateUpFromString(string) {
+      var self = this, rateUp = nil;
 
       rateUp = 0;
-      if ((($a = (self.$isSW2_0Mode())) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        } else {
-        return [rateUp, string]
-      };
-      regexp = /r\[(\d+)\]/i;
-      if ((($a = (regexp['$==='](string))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        rateUp = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-        string = string.$gsub(regexp, "");};
       return [rateUp, string];
-    }, TMP_17.$$arity = 1);
+    }, TMP_20.$$arity = 1);
 
-    Opal.defn(self, '$getGratestFortuneFromString', TMP_18 = function $$getGratestFortuneFromString(string) {
-      var $a, self = this, isGratestFortune = nil, regexp = nil;
-
-      isGratestFortune = false;
-      if ((($a = (self.$isSW2_0Mode())) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        } else {
-        return [isGratestFortune, string]
-      };
-      regexp = /gf/i;
-      if ((($a = (regexp['$==='](string))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        isGratestFortune = true;
-        string = string.$gsub(regexp, "");};
-      return [isGratestFortune, string];
-    }, TMP_18.$$arity = 1);
-
-    Opal.defn(self, '$isSW2_0Mode', TMP_19 = function $$isSW2_0Mode() {
+    Opal.defn(self, '$isSW2_0Mode', TMP_21 = function $$isSW2_0Mode() {
       var self = this;
 
       return false;
-    }, TMP_19.$$arity = 0);
+    }, TMP_21.$$arity = 0);
 
-    Opal.defn(self, '$getKeyAndAddValueFromString', TMP_20 = function $$getKeyAndAddValueFromString(string) {
+    Opal.defn(self, '$getKeyAndAddValueFromString', TMP_22 = function $$getKeyAndAddValueFromString(string) {
       var $a, $b, self = this, key = nil, addValue = nil;
 
       key = nil;
@@ -282,17 +279,17 @@
         key = string
       };
       return [key, addValue];
-    }, TMP_20.$$arity = 1);
+    }, TMP_22.$$arity = 1);
 
-    Opal.defn(self, '$getSW2_0_RatingTable', TMP_21 = function $$getSW2_0_RatingTable() {
+    Opal.defn(self, '$getSW2_0_RatingTable', TMP_23 = function $$getSW2_0_RatingTable() {
       var self = this, rate_sw2_0 = nil;
 
       rate_sw2_0 = ["*,0,0,0,1,2,2,3,3,4,4", "*,0,0,0,1,2,3,3,3,4,4", "*,0,0,0,1,2,3,4,4,4,4", "*,0,0,1,1,2,3,4,4,4,5", "*,0,0,1,2,2,3,4,4,5,5", "*,0,1,1,2,2,3,4,5,5,5", "*,0,1,1,2,3,3,4,5,5,5", "*,0,1,1,2,3,4,4,5,5,6", "*,0,1,2,2,3,4,4,5,6,6", "*,0,1,2,3,3,4,4,5,6,7", "*,1,1,2,3,3,4,5,5,6,7", "*,1,2,2,3,3,4,5,6,6,7", "*,1,2,2,3,4,4,5,6,6,7", "*,1,2,3,3,4,4,5,6,7,7", "*,1,2,3,4,4,4,5,6,7,8", "*,1,2,3,4,4,5,5,6,7,8", "*,1,2,3,4,4,5,6,7,7,8", "*,1,2,3,4,5,5,6,7,7,8", "*,1,2,3,4,5,6,6,7,7,8", "*,1,2,3,4,5,6,7,7,8,9", "*,1,2,3,4,5,6,7,8,9,10", "*,1,2,3,4,6,6,7,8,9,10", "*,1,2,3,5,6,6,7,8,9,10", "*,2,2,3,5,6,7,7,8,9,10", "*,2,3,4,5,6,7,7,8,9,10", "*,2,3,4,5,6,7,8,8,9,10", "*,2,3,4,5,6,8,8,9,9,10", "*,2,3,4,6,6,8,8,9,9,10", "*,2,3,4,6,6,8,9,9,10,10", "*,2,3,4,6,7,8,9,9,10,10", "*,2,4,4,6,7,8,9,10,10,10", "*,2,4,5,6,7,8,9,10,10,11", "*,3,4,5,6,7,8,10,10,10,11", "*,3,4,5,6,8,8,10,10,10,11", "*,3,4,5,6,8,9,10,10,11,11", "*,3,4,5,7,8,9,10,10,11,12", "*,3,5,5,7,8,9,10,11,11,12", "*,3,5,6,7,8,9,10,11,12,12", "*,3,5,6,7,8,10,10,11,12,13", "*,4,5,6,7,8,10,11,11,12,13", "*,4,5,6,7,9,10,11,11,12,13", "*,4,6,6,7,9,10,11,12,12,13", "*,4,6,7,7,9,10,11,12,13,13", "*,4,6,7,8,9,10,11,12,13,14", "*,4,6,7,8,10,10,11,12,13,14", "*,4,6,7,9,10,10,11,12,13,14", "*,4,6,7,9,10,10,12,13,13,14", "*,4,6,7,9,10,11,12,13,13,15", "*,4,6,7,9,10,12,12,13,13,15", "*,4,6,7,10,10,12,12,13,14,15", "*,4,6,8,10,10,12,12,13,15,15", "*,5,7,8,10,10,12,12,13,15,15", "*,5,7,8,10,11,12,12,13,15,15", "*,5,7,9,10,11,12,12,14,15,15", "*,5,7,9,10,11,12,13,14,15,16", "*,5,7,10,10,11,12,13,14,16,16", "*,5,8,10,10,11,12,13,15,16,16", "*,5,8,10,11,11,12,13,15,16,17", "*,5,8,10,11,12,12,13,15,16,17", "*,5,9,10,11,12,12,14,15,16,17", "*,5,9,10,11,12,13,14,15,16,18", "*,5,9,10,11,12,13,14,16,17,18", "*,5,9,10,11,13,13,14,16,17,18", "*,5,9,10,11,13,13,15,17,17,18", "*,5,9,10,11,13,14,15,17,17,18", "*,5,9,10,12,13,14,15,17,18,18", "*,5,9,10,12,13,15,15,17,18,19", "*,5,9,10,12,13,15,16,17,19,19", "*,5,9,10,12,14,15,16,17,19,19", "*,5,9,10,12,14,16,16,17,19,19", "*,5,9,10,12,14,16,17,18,19,19", "*,5,9,10,13,14,16,17,18,19,20", "*,5,9,10,13,15,16,17,18,19,20", "*,5,9,10,13,15,16,17,19,20,21", "*,6,9,10,13,15,16,18,19,20,21", "*,6,9,10,13,16,16,18,19,20,21", "*,6,9,10,13,16,17,18,19,20,21", "*,6,9,10,13,16,17,18,20,21,22", "*,6,9,10,13,16,17,19,20,22,23", "*,6,9,10,13,16,18,19,20,22,23", "*,6,9,10,13,16,18,20,21,22,23", "*,6,9,10,13,17,18,20,21,22,23", "*,6,9,10,14,17,18,20,21,22,24", "*,6,9,11,14,17,18,20,21,23,24", "*,6,9,11,14,17,19,20,21,23,24", "*,6,9,11,14,17,19,21,22,23,24", "*,7,10,11,14,17,19,21,22,23,25", "*,7,10,12,14,17,19,21,22,24,25", "*,7,10,12,14,18,19,21,22,24,25", "*,7,10,12,15,18,19,21,22,24,26", "*,7,10,12,15,18,19,21,23,25,26", "*,7,11,13,15,18,19,21,23,25,26", "*,7,11,13,15,18,20,21,23,25,27", "*,8,11,13,15,18,20,22,23,25,27", "*,8,11,13,16,18,20,22,23,25,28", "*,8,11,14,16,18,20,22,23,26,28", "*,8,11,14,16,19,20,22,23,26,28", "*,8,12,14,16,19,20,22,24,26,28", "*,8,12,15,16,19,20,22,24,27,28", "*,8,12,15,17,19,20,22,24,27,29", "*,8,12,15,18,19,20,22,24,27,30"];
       return rate_sw2_0;
-    }, TMP_21.$$arity = 0);
+    }, TMP_23.$$arity = 0);
 
-    Opal.defn(self, '$getNewRates', TMP_23 = function $$getNewRates(rate_sw2_0) {
-      var $a, $b, TMP_22, self = this, rate_3 = nil, rate_4 = nil, rate_5 = nil, rate_6 = nil, rate_7 = nil, rate_8 = nil, rate_9 = nil, rate_10 = nil, rate_11 = nil, rate_12 = nil, zeroArray = nil, newRates = nil;
+    Opal.defn(self, '$getNewRates', TMP_25 = function $$getNewRates(rate_sw2_0) {
+      var $a, $b, TMP_24, self = this, rate_3 = nil, rate_4 = nil, rate_5 = nil, rate_6 = nil, rate_7 = nil, rate_8 = nil, rate_9 = nil, rate_10 = nil, rate_11 = nil, rate_12 = nil, zeroArray = nil, newRates = nil;
 
       rate_3 = [];
       rate_4 = [];
@@ -305,7 +302,7 @@
       rate_11 = [];
       rate_12 = [];
       zeroArray = [];
-      ($a = ($b = rate_sw2_0).$each, $a.$$p = (TMP_22 = function(rateText){var self = TMP_22.$$s || this, rate_arr = nil;
+      ($a = ($b = rate_sw2_0).$each, $a.$$p = (TMP_24 = function(rateText){var self = TMP_24.$$s || this, rate_arr = nil;
 if (rateText == null) rateText = nil;
       rate_arr = rateText.$split(/,/);
         zeroArray.$push(0);
@@ -318,28 +315,21 @@ if (rateText == null) rateText = nil;
         rate_9.$push(rate_arr['$[]'](7).$to_i());
         rate_10.$push(rate_arr['$[]'](8).$to_i());
         rate_11.$push(rate_arr['$[]'](9).$to_i());
-        return rate_12.$push(rate_arr['$[]'](10).$to_i());}, TMP_22.$$s = self, TMP_22.$$arity = 1, TMP_22), $a).call($b);
+        return rate_12.$push(rate_arr['$[]'](10).$to_i());}, TMP_24.$$s = self, TMP_24.$$arity = 1, TMP_24), $a).call($b);
       if ((($a = (self.rating_table['$=='](1))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         rate_12['$[]='](31, rate_12['$[]='](32, rate_12['$[]='](33, 10)))};
       newRates = [zeroArray, zeroArray, zeroArray, rate_3, rate_4, rate_5, rate_6, rate_7, rate_8, rate_9, rate_10, rate_11, rate_12];
       return newRates;
-    }, TMP_23.$$arity = 1);
+    }, TMP_25.$$arity = 1);
 
-    Opal.defn(self, '$rollDice', TMP_24 = function $$rollDice(isGratestFortune) {
+    Opal.defn(self, '$rollDice', TMP_26 = function $$rollDice(values) {
       var $a, $b, self = this, dice = nil, diceText = nil;
 
-      if ((($a = (isGratestFortune)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
-        } else {
-        $b = self.$roll(2, 6), $a = Opal.to_ary($b), dice = ($a[0] == null ? nil : $a[0]), diceText = ($a[1] == null ? nil : $a[1]), $b;
-        return [dice, diceText];
-      };
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), dice = ($a[0] == null ? nil : $a[0]), diceText = ($a[1] == null ? nil : $a[1]), $b;
-      dice = $rb_times(dice, 2);
-      diceText = "" + (diceText) + "," + (diceText);
+      $b = self.$roll(2, 6), $a = Opal.to_ary($b), dice = ($a[0] == null ? nil : $a[0]), diceText = ($a[1] == null ? nil : $a[1]), $b;
       return [dice, diceText];
-    }, TMP_24.$$arity = 1);
+    }, TMP_26.$$arity = 1);
 
-    Opal.defn(self, '$getResultText', TMP_25 = function $$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, crit, limitLength) {
+    Opal.defn(self, '$getResultText', TMP_27 = function $$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, crit, limitLength) {
       var $a, self = this, output = nil, totalText = nil, rateResultsText = nil, addText = nil, roundText = nil;
 
       output = "";
@@ -367,9 +357,9 @@ if (rateText == null) rateText = nil;
       if ((($a = ($rb_gt(output.$length(), limitLength))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         output = "... ＞ " + (roundText) + (totalText)};
       return output;
-    }, TMP_25.$$arity = 9);
+    }, TMP_27.$$arity = 9);
 
-    Opal.defn(self, '$getAddText', TMP_26 = function $$getAddText(addValue) {
+    Opal.defn(self, '$getAddText', TMP_28 = function $$getAddText(addValue) {
       var $a, self = this, addText = nil, operator = nil;
 
       addText = "";
@@ -382,9 +372,9 @@ if (rateText == null) rateText = nil;
       }; return nil; })());
       addText = $rb_plus(addText, "" + (operator) + (addValue));
       return addText;
-    }, TMP_26.$$arity = 1);
+    }, TMP_28.$$arity = 1);
 
-    return (Opal.defn(self, '$setRatingTable', TMP_27 = function $$setRatingTable(tnick) {
+    return (Opal.defn(self, '$setRatingTable', TMP_29 = function $$setRatingTable(tnick) {
       var $a, self = this, mode_str = nil, pre_mode = nil, $case = nil;
 
       mode_str = "";
@@ -410,7 +400,7 @@ if (rateText == null) rateText = nil;
       if ((($a = (self.rating_table['$=='](pre_mode))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return "1"};
       return "RatingTableを" + (mode_str) + "に変更しました";
-    }, TMP_27.$$arity = 1), nil) && 'setRatingTable';
+    }, TMP_29.$$arity = 1), nil) && 'setRatingTable';
   })($scope.base, $scope.get('DiceBot'))
 })(Opal);
 
