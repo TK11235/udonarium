@@ -80,11 +80,47 @@ INFO_MESSAGE_TEXT
     end
   end
   
-  def isSW2_0Mode
-    true
+  def getRateUpFromString(string)
+    rateUp = 0
+     regexp = /r\[(\d+)\]/i
+     if( regexp === string )
+      rateUp = $1.to_i
+      string = string.gsub(regexp, '')
+    end
+     return rateUp, string
+  end
+   def getAdditionalString(string, output)
+     output, values = super(string, output)
+    
+    isGratestFortune, string = getGratestFortuneFromString(string)
+    
+    values['isGratestFortune'] = isGratestFortune
+    output += "gf" if( isGratestFortune )
+    
+    return output, values
   end
   
+  def rollDice(values)
+    
+    unless values['isGratestFortune']
+      return super(values)
+    end
+     dice, diceText = roll(1, 6)
+     dice *= 2
+    diceText = "#{diceText},#{diceText}"
+     return dice, diceText
+  end
   
+  def getGratestFortuneFromString(string)
+    isGratestFortune = false
+     regexp = /gf/i
+     if( regexp === string )
+      isGratestFortune = true
+      string = string.gsub(regexp, '')
+    end
+     return isGratestFortune, string
+  end
+
   def is2dCritical
     true
   end

@@ -54,6 +54,10 @@ INFO_MESSAGE_TEXT
     return string
   end
   
+  def getRatingCommandStrings
+    "cmCM"
+  end
+
   def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
     if(dice_n >= 12)
       return " ＞ 自動的成功";
@@ -82,14 +86,18 @@ INFO_MESSAGE_TEXT
   def rating(string)     # レーティング表
     debug("rating string", string)
     
-    unless(/(^|\s)[sS]?(((k|K)[\d\+\-]+)([cmCM]\[([\d\+\-]+)\])*([\d\+\-]*)([cmrCMR]\[([\d\+\-]+)\]|gf|GF)*)($|\s)/ =~ string)
+    commands = getRatingCommandStrings
+
+    #Tkfix 正規表現オプション
+    #unless(/(^|\s)[sS]?(((k|K)[\d\+\-]+)([#{commands}]\[([\d\+\-]+)\])*([\d\+\-]*)([cmrCMR]\[([\d\+\-]+)\]|gf|GF)*)($|\s)/ =~ string)
+    pattern = "(^|\\s)[sS]?(((k|K)[\\d\\+\\-]+)([#{commands}]\\[([\\d\\+\\-]+)\\])*([\\d\\+\\-]*)([cmrCMR]\\[([\\d\\+\\-]+)\\]|gf|GF)*)($|\\s)"
+    unless(Regexp.new(pattern) =~ string)
       debug("not matched")
       return '1'
     end
     
     string = $2
     
-    isGratestFortune, string = getGratestFortuneFromString(string)
     rateUp, string = getRateUpFromString(string)
     crit, string = getCriticalFromString(string)
     firstDiceChanteTo, firstDiceChangeModify, string = getDiceChangesFromString(string)
@@ -117,8 +125,9 @@ INFO_MESSAGE_TEXT
     output += "m[#{firstDiceChangeModify}]" if( firstDiceChangeModify != 0 )
     output += "m[#{firstDiceChanteTo}]" if( firstDiceChanteTo != 0)
     output += "r[#{rateUp}]" if( rateUp != 0 )
-    output += "gf" if( isGratestFortune )
     
+    output, values = getAdditionalString(string, output)
+
     debug('output', output)
     
     if( addValue != 0 )
@@ -139,7 +148,7 @@ INFO_MESSAGE_TEXT
     #TKfix end while -> loop do
     #begin
     loop do
-      dice, diceText = rollDice(isGratestFortune)
+      dice, diceText = rollDice(values)
       
       if( firstDiceChanteTo != 0 )
         dice = firstDiceChanteTo
@@ -149,6 +158,8 @@ INFO_MESSAGE_TEXT
         firstDiceChangeModify = 0;
       end
       
+      dice += getAdditionalDiceValue(dice, values)
+
       dice = 2 if(dice < 2)
       dice = 12 if(dice > 12)
       
@@ -177,6 +188,14 @@ INFO_MESSAGE_TEXT
     return output
   end
   
+  def getAdditionalString(string, output)
+    values = {}
+    return output, values
+  end
+  
+  def  getAdditionalDiceValue(dice, values)
+    0
+  end
   
   def getCriticalFromString(string)
     crit = 10
@@ -214,34 +233,8 @@ INFO_MESSAGE_TEXT
   
   def getRateUpFromString(string)
     rateUp = 0
-    
-    return rateUp, string unless( isSW2_0Mode )
-    
-    regexp = /r\[(\d+)\]/i
-    
-    if( regexp === string )
-      rateUp = $1.to_i
-      string = string.gsub(regexp, '')
-    end
-    
     return rateUp, string
   end
-  
-  def getGratestFortuneFromString(string)
-    isGratestFortune = false
-    
-    return isGratestFortune, string unless( isSW2_0Mode )
-    
-    regexp = /gf/i
-    
-    if( regexp === string )
-      isGratestFortune = true
-      string = string.gsub(regexp, '')
-    end
-    
-    return isGratestFortune, string
-  end
-  
   
   def isSW2_0Mode
     false
@@ -421,17 +414,8 @@ INFO_MESSAGE_TEXT
   end
   
   
-  def rollDice(isGratestFortune)
-    unless( isGratestFortune )
-      dice, diceText = roll(2, 6)
-      return dice, diceText
-    end
-    
-    dice, diceText = roll(1, 6)
-
-    dice *= 2
-    diceText = "#{diceText},#{diceText}"
-    
+  def rollDice(values)
+    dice, diceText = roll(2, 6)
     return dice, diceText
   end
   

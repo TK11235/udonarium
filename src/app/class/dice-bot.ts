@@ -97,6 +97,7 @@ export class DiceBot extends GameObject {
     { script: 'SevenFortressMobius', game: 'セブン＝フォートレス メビウス' },
     { script: 'SwordWorld', game: 'ソードワールド' },
     { script: 'SwordWorld2_0', game: 'ソードワールド2.0' },
+    { script: 'SwordWorld2_5', game: 'ソードワールド2.5' },
     { script: 'DarkSouls', game: 'ダークソウルTRPG' },
     { script: 'DarkDaysDrive', game: 'ダークデイズドライブ' },
     { script: 'DarkBlaze', game: 'ダークブレイズ' },
