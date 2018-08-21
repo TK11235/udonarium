@@ -4,7 +4,6 @@ import { Connection, ConnectionCallback } from './connection';
 import 'skyway-peerjs/dist/peer.min.js'
 import { } from 'skyway';
 */
-import { } from 'node';
 import * as MessagePack from 'msgpack-lite';
 import * as JSZip from 'jszip/dist/jszip.min.js';
 
