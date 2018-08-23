@@ -27,7 +27,7 @@ export class SoundEffect extends GameObject {
   initialize(needUpdate: boolean = true) {
     super.initialize(needUpdate);
     EventSystem.register(this)
-      .on<string>('SOUND_EFFECT', 100, event => {
+      .on<string>('SOUND_EFFECT', event => {
         AudioPlayer.play(AudioStorage.instance.get(event.data), 0.5);
       })
       .on<ChatMessageContext>('BROADCAST_MESSAGE', -1000, event => {
