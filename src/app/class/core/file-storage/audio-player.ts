@@ -141,7 +141,7 @@ export class AudioPlayer {
     if (!audio) return null;
     let decodedData: AudioBuffer = null;
     try {
-      let decodedData: AudioBuffer = await AudioPlayer.audioContext.decodeAudioData(await this.getArrayBufferAsync(audio));
+      decodedData = await AudioPlayer.audioContext.decodeAudioData(await this.getArrayBufferAsync(audio));
     } catch (reason) {
       console.warn(reason);
     } finally {
