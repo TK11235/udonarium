@@ -7,10 +7,10 @@ import { TabletopService } from '../service/tabletop.service';
 import { Grabbable } from './grabbable';
 
 export interface MovableOption {
-  tabletopObject?: TabletopObject;
-  layerName?: string;
-  colideLayers?: string[];
-  transformCssOffset?: string;
+  readonly tabletopObject?: TabletopObject;
+  readonly layerName?: string;
+  readonly colideLayers?: string[];
+  readonly transformCssOffset?: string;
 }
 
 @Directive({

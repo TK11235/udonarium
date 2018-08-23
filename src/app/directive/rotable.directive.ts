@@ -11,9 +11,9 @@ export interface RotableTabletopObject extends TabletopObject {
 }
 
 export interface RotableOption {
-  tabletopObject?: RotableTabletopObject;
-  grabbingSelecter?: string;
-  transformCssOffset?: string;
+  readonly tabletopObject?: RotableTabletopObject;
+  readonly grabbingSelecter?: string;
+  readonly transformCssOffset?: string;
 }
 
 @Directive({
