@@ -63,7 +63,7 @@ export class ObjectSynchronizer {
       })
       .on('DELETE_GAME_OBJECT', 0, event => {
         let context: ObjectContext = event.data;
-        let object = ObjectStore.instance.get(event.data.identifier);
+        let object = ObjectStore.instance.get(context.identifier);
         if (object !== null) {
           ObjectStore.instance.delete(object, false);
         }
