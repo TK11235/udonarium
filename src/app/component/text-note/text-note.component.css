@@ -114,14 +114,14 @@ textarea:focus {
   font-size: 24px;
   color: #444;
   text-shadow: 
-  #f0dabd 0px 0px 0.5px, 
-  #f0dabd 0px 0px 0.5px, 
-  #f0dabd 0px 0px 0.5px, 
-  #f0dabd 0px 0px 0.5px, 
-  #f0dabd 0px 0px 0.5px, 
-  #f0dabd 0px 0px 0.5px,
-  #f0dabd 0px 0px 0.5px,
-  #f0dabd 0px 0px 0.5px;
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px,
+  #f2f2f2 0px 0px 0.5px,
+  #f2f2f2 0px 0px 0.5px;
 }
 
 .rotate-grab {
