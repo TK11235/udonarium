@@ -65,7 +65,7 @@ button.danger:disabled {
   
    body {
     margin: 0;
-    background-color: #FAFAFA;
+    background-color: hsl(0, 0%, 97%);
   }
   
   .sk-cube-grid {
