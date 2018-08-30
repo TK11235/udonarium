@@ -102,4 +102,8 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
   onMessageInit() {
     this.onAddMessage.emit();
   }
+
+  trackByChatMessage(index: number, message: ChatMessage) {
+    return message.identifier;
+  }
 }
