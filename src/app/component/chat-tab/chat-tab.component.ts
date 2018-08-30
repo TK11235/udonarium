@@ -13,7 +13,7 @@ import { EventSystem } from '../../class/core/system/system';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
-  maxMessages: number = 1000;
+  maxMessages: number = 200;
 
   sampleMessages: ChatMessageContext[] = [
     { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'WebRTC(SkyWay)を利用してブラウザ間通信を行うTRPGオンセツールです。接続したPeer間で通信を行い、コマや画像ファイルなどを同期します。' },
@@ -85,11 +85,11 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges() {
     this.needUpdate = true;
-    this.maxMessages = 1000;
+    this.maxMessages = 200;
   }
 
   moreMessages() {
-    this.maxMessages += 500;
+    this.maxMessages += 100;
     if (this.chatTab && this.chatTab.chatMessages.length < this.maxMessages) this.maxMessages = this.chatTab.chatMessages.length;
     this.changeDetector.markForCheck();
     this.needUpdate = true;
