@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, OnChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, OnChanges, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 
 import { ChatMessageService } from '../../service/chat-message.service';
 
 import { ChatTab } from '../../class/chat-tab';
 import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
 import { EventSystem } from '../../class/core/system/system';
+import { PanelService } from '../../service/panel.service';
 
 @Component({
   selector: 'chat-tab',
@@ -12,8 +13,9 @@ import { EventSystem } from '../../class/core/system/system';
   styleUrls: ['./chat-tab.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
+export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
   maxMessages: number = 200;
+  preScrollHeight: number = -1;
 
   sampleMessages: ChatMessageContext[] = [
     { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'WebRTC(SkyWay)を利用してブラウザ間通信を行うTRPGオンセツールです。接続したPeer間で通信を行い、コマや画像ファイルなどを同期します。' },
@@ -49,6 +51,7 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private changeDetector: ChangeDetectorRef,
+    private panelService: PanelService,
     private chatMessageService: ChatMessageService
   ) { }
 
@@ -88,6 +91,13 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
     this.maxMessages = 200;
   }
 
+  ngAfterViewChecked() {
+    if (0 <= this.preScrollHeight) {
+      this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight - this.preScrollHeight;
+      this.preScrollHeight = -1;
+    }
+  }
+
   moreMessages() {
     this.maxMessages += 100;
     if (this.chatTab && this.chatTab.chatMessages.length < this.maxMessages) this.maxMessages = this.chatTab.chatMessages.length;
@@ -97,6 +107,8 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges {
     EventSystem.trigger('BROADCAST_MESSAGE', {
       from: '', name: '', text: '', timestamp: 0, tag: '', imageIdentifier: '', responseIdentifier: '',
     });
+
+    this.preScrollHeight = this.panelService.scrollablePanel.scrollHeight;
   }
 
   onMessageInit() {
