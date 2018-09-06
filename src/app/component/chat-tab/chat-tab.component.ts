@@ -15,7 +15,7 @@ import { PanelService } from '../../service/panel.service';
 })
 export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
   maxMessages: number = 200;
-  preScrollHeight: number = -1;
+  preScrollBottom: number = -1;
 
   sampleMessages: ChatMessageContext[] = [
     { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'WebRTC(SkyWay)を利用してブラウザ間通信を行うTRPGオンセツールです。接続したPeer間で通信を行い、コマや画像ファイルなどを同期します。' },
@@ -92,9 +92,9 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterView
   }
 
   ngAfterViewChecked() {
-    if (0 <= this.preScrollHeight) {
-      this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight - this.preScrollHeight;
-      this.preScrollHeight = -1;
+    if (0 <= this.preScrollBottom) {
+      this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight - this.preScrollBottom;
+      this.preScrollBottom = -1;
     }
   }
 
@@ -108,7 +108,7 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterView
       from: '', name: '', text: '', timestamp: 0, tag: '', imageIdentifier: '', responseIdentifier: '',
     });
 
-    this.preScrollHeight = this.panelService.scrollablePanel.scrollHeight;
+    this.preScrollBottom = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.scrollTop;
   }
 
   onMessageInit() {
