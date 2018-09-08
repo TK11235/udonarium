@@ -1,7 +1,7 @@
 .image {
   padding: 0px;
-  width: 128px;
-  height: 128px;
+  width: 150px;
+  height: 150px;
   display: table-cell;
   vertical-align: top;
 }
@@ -18,4 +18,14 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.my_peer {
+  display: flex;
+}
+
+.my_peer_id {
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
 }

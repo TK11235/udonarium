@@ -1,15 +1,19 @@
-<div *ngIf="myPeer">
-  <button (click)="changeIcon()">アイコンを変更する</button>
-  <div *ngIf="myPeer.image" class="image contain" [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' "
-    (click)="changeIcon()">
-    <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
+<div *ngIf="myPeer" class="my_peer">
+  <div>
+    <div *ngIf="myPeer.image" class="image contain" [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' "
+      (click)="changeIcon()">
+      <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
+    </div>
+    <button (click)="changeIcon()">アイコンを変更する</button>
   </div>
-  <span>あなたのニックネーム：  <input [(ngModel)]="myPeer.name"  placeholder="ニックネーム" /></span>
-</div>
-<div>
-  <span>あなたのPeer ID：<span *ngIf="networkService.isConnected" style="font-weight: bold;">{{networkService.peerContext.id}}</span>
-  <span *ngIf="!networkService.isConnected" style="font-weight: bold;">???</span>
-  </span>
+  <div>
+    <span>あなたのニックネーム：  <input [(ngModel)]="myPeer.name"  placeholder="ニックネーム" /></span>
+    <div>
+      <span>あなたのPeer ID：<input *ngIf="networkService.isConnected" class="my_peer_id" readonly value="{{networkService.peerContext.id}}">
+      <span *ngIf="!networkService.isConnected" style="font-weight: bold;">???</span>
+      </span>
+    </div>
+  </div>
 </div>
 <!--<div>host ID:{{networkService.hostPeerID}}</div>-->
 <ng-container *ngIf="18 < networkService.peerId.length">
