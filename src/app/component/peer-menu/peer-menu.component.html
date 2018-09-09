@@ -34,11 +34,12 @@
 <ng-container *ngIf="connectionMethodNormal">
   <div>
     <ng-container *ngIf="networkService.peerId.length <= 18">
-      <input [(ngModel)]="targetPeerId" placeholder="Peer ID" name="targetPeerId" />
-      <button (click)="connectPeer()" [disabled]="!networkService.isConnected">他のPeerと接続</button><br>
+      <input [(ngModel)]="targetPeerId" placeholder="接続したい相手のPeer ID" name="targetPeerId" />
+      <button (click)="connectPeer()" [disabled]="!networkService.isConnected">接続</button><br>
     </ng-container>
   </div>
-  <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※他の人のPeer IDを入力して「他のPeerと接続」を押すと接続できます。</div>
+  <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※Peer ID指定接続を使用する場合は、お互いのIDをユドナリウム外で共有してください。</div>
+  <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※Peer IDはリロードすると変わります。</div>
 </ng-container>
 
 <ng-container *ngIf="connectionMethodRoom && !(18 < networkService.peerId.length)">
