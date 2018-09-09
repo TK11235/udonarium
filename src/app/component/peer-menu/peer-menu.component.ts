@@ -24,6 +24,9 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   gameRoomService = ObjectStore.instance;
   help: string = '';
 
+  connectionMethodNormal = true;
+  connectionMethodRoom = false;
+
   //get myPeer(): PeerCursor { return this.getPeerCursor(this.networkService.peerId); }
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }
 
@@ -103,6 +106,11 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.help = '';
     let conectPeers: PeerContext[] = [];
     let room: string = '';
+    if (18 < this.networkService.peerId.length) {
+      this.selectConnectionMethodRoom();
+    } else {
+      this.selectConnectionMethodNormal();
+    }
 
     for (let peer of this.appConfigService.peerHistory) {
       let context = PeerContext.create(peer);
@@ -148,6 +156,16 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
         Network.connect(context.fullstring);
       }
     });
+  }
+
+  selectConnectionMethodNormal() {
+    this.connectionMethodRoom = false;
+    this.connectionMethodNormal = true;
+  }
+
+  selectConnectionMethodRoom() {
+    this.connectionMethodNormal = false;
+    this.connectionMethodRoom = true;
   }
 
   showLobby() {
