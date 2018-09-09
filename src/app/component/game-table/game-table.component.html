@@ -3,17 +3,17 @@
     <div id="app-game-table" class="game-table is-3d"#gameObjects>
       <div class="background-image is-pointer-events-none" [style.background-image]="'url(' + bgImage.url + ')' | safe: 'style'" ></div>
       <canvas class="grid-canvas is-fill is-pointer-events-none" #gridCanvas></canvas>
-      <terrain class="is-3d" *ngFor="let terrain of terrains" [terrain]="terrain"></terrain>
-      <game-table-mask class="is-3d" *ngFor="let mask of gameTableMasks" [gameTableMask]="mask"></game-table-mask>
+      <terrain class="is-3d" *ngFor="let terrain of terrains; trackBy: trackByGameObject" [terrain]="terrain"></terrain>
+      <game-table-mask class="is-3d" *ngFor="let mask of gameTableMasks; trackBy: trackByGameObject" [gameTableMask]="mask"></game-table-mask>
       <div class="is-3d">
-        <text-note class="is-3d" *ngFor="let textNote of textNotes" [textNote]="textNote" [ngStyle]="{'z-index' : textNote.zindex}"></text-note>
+        <text-note class="is-3d" *ngFor="let textNote of textNotes; trackBy: trackByGameObject" [textNote]="textNote" [ngStyle]="{'z-index' : textNote.zindex}"></text-note>
       </div>
       <div class="is-3d">
-        <card-stack class="is-3d" *ngFor="let cardStack of cardStacks" [cardStack]="cardStack" [ngStyle]="{'z-index' : cardStack.zindex}"></card-stack>
-        <card class="is-3d" *ngFor="let card of cards" [card]="card" [ngStyle]="{'z-index' : card.zindex}"></card>
+        <card-stack class="is-3d" *ngFor="let cardStack of cardStacks; trackBy: trackByGameObject" [cardStack]="cardStack" [ngStyle]="{'z-index' : cardStack.zindex}"></card-stack>
+        <card class="is-3d" *ngFor="let card of cards; trackBy: trackByGameObject" [card]="card" [ngStyle]="{'z-index' : card.zindex}"></card>
       </div>
-      <game-character class="is-3d" *ngFor="let character of tabletopCharacters" [gameCharacter]="character"></game-character>
-      <peer-cursor class="is-3d" *ngFor="let cursor of peerCursors" [cursor]="cursor"></peer-cursor>
+      <game-character class="is-3d" *ngFor="let character of tabletopCharacters; trackBy: trackByGameObject" [gameCharacter]="character"></game-character>
+      <peer-cursor class="is-3d" *ngFor="let cursor of peerCursors; trackBy: trackByGameObject" [cursor]="cursor"></peer-cursor>
     </div>
   </div>
 </div>

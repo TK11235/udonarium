@@ -23,6 +23,7 @@ import { GameTableSettingComponent } from '../game-table-setting/game-table-sett
 import { TextNote } from '../../class/text-note';
 import { TabletopService, } from '../../service/tabletop.service';
 import { SoundEffect, PresetSound } from '../../class/sound-effect';
+import { GameObject } from '../../class/core/synchronize-object/game-object';
 
 @Component({
   selector: 'game-table',
@@ -613,6 +614,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
     document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
     document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
+  }
+
+  trackByGameObject(index: number, gameObject: GameObject) {
+    return gameObject.identifier;
   }
 
   private makeDefaultTable() {
