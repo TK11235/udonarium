@@ -159,7 +159,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     PanelService.defaultParentViewContainerRef = ModalService.defaultParentViewContainerRef = ContextMenuService.defaultParentViewContainerRef = this.modalLayerViewContainerRef;
     setTimeout(() => {
-      this.panelService.open(PeerMenuComponent, { width: 500, height: 450, left: 100 });
+      this.panelService.open(PeerMenuComponent, { width: 700, height: 450, left: 100 });
       this.panelService.open(ChatWindowComponent, { width: 700, height: 400, left: 0, top: 450 });
     }, 0);
   }
@@ -174,6 +174,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     switch (componentName) {
       case 'PeerMenuComponent':
         component = PeerMenuComponent;
+        option.width = 700;
         break;
       case 'ChatWindowComponent':
         component = ChatWindowComponent;

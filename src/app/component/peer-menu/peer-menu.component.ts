@@ -168,10 +168,6 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.connectionMethodRoom = true;
   }
 
-  showLobby() {
-    this.modalService.open(LobbyComponent, { width: 700, height: 400, left: 0, top: 400 });
-  }
-
   findPeerName(peerId: string) {
     const peerCursor = PeerCursor.find(peerId);
     return peerCursor ? peerCursor.name : '';

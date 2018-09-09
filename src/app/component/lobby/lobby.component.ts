@@ -41,22 +41,7 @@ export class LobbyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.changeTitle();
-    EventSystem.register(this)
-      .on('OPEN_PEER', 0, event => {
-        this.changeTitle();
-      })
-      .on('OTHER_PEERS', event => {
-        this.changeTitle();
-      });
-      this.reload();
-  }
-
-  private changeTitle() {
-    this.modalService.title = this.panelService.title = 'ロビー';
-    if (Network.peerContext.roomName.length) {
-      this.modalService.title = this.panelService.title = '＜' + Network.peerContext.roomName + '/' + Network.peerContext.room + '＞'
-    }
+    this.reload();
   }
 
   ngOnDestroy() {

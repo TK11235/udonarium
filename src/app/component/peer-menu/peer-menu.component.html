@@ -42,7 +42,7 @@
 </ng-container>
 
 <ng-container *ngIf="connectionMethodRoom && !(18 < networkService.peerId.length)">
-  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isConnected">ルーム機能を使う</button>
+  <lobby></lobby>
 </ng-container>
 
 <!--<div>host ID:{{networkService.hostPeerID}}</div>-->
@@ -63,6 +63,7 @@
 </div>
 
 <ng-container *ngIf="18 < networkService.peerId.length">
+  <div style="font-size: 12px;">※別のルームに接続したい場合は、他のPeerとの接続を切ってください。（※ページリロードで切断できます。）</div>
   <div style="font-size: 12px;">※ルーム機能を利用している時はPeer ID指定接続を利用できません。</div>
 </ng-container>
 
