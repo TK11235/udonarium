@@ -77,7 +77,7 @@ export class Network {
     let broadcast: any[] = [];
     let unicast: { [sendTo: string]: any[] } = {};
 
-    let loop = this.queue.length < 2048 ? this.queue.length : 2048;
+    let loop = this.queue.length < 128 ? this.queue.length : 128;
     //console.warn(this.queue.length);
     for (let i = 0; i < loop; i++) {
       let event = this.queue[i];
