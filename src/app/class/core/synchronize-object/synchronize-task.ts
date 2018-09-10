@@ -80,6 +80,6 @@ export class SynchronizeTask {
       if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()).filter(request => 0 <= request.ttl));
       if (this.onfinish) this.onfinish(this);
       this.cancel();
-    }, 10 * 1000);
+    }, 30 * 1000);
   }
 }
