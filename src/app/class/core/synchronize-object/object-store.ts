@@ -45,14 +45,32 @@ export class ObjectStore {
     return object;
   }
 
-  delete(object: GameObject, shouldBroadcast: boolean = true): GameObject {
-    if (this.remove(object) === null) return null;
+  delete(object: GameObject, shouldBroadcast?: boolean): GameObject
+  delete(identifier: string, shouldBroadcast?: boolean): GameObject
+  delete(arg: any, shouldBroadcast: boolean = true) {
+    let object: GameObject = null;
+    let identifier: string = null;
+    if (typeof arg === 'string') {
+      object = this.get(arg);
+      identifier = arg;
+    } else {
+      object = arg;
+      identifier = arg.identifier;
+    }
+    this.markForDelete(identifier);
+    return object == null ? null : this._delete(object, shouldBroadcast);
+  }
 
-    this.garbageCollection(10 * 60 * 1000);
-    this.garbageMap.set(object.identifier, performance.now());
+  private _delete(object: GameObject, shouldBroadcast: boolean): GameObject {
+    if (this.remove(object) === null) return null;
     if (shouldBroadcast) EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
 
     return object;
+  }
+
+  private markForDelete(identifier: string) {
+    this.garbageMap.set(identifier, performance.now());
+    this.garbageCollection(10 * 60 * 1000);
   }
 
   get<T extends GameObject>(identifier: string): T {
