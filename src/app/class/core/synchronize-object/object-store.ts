@@ -2,10 +2,8 @@ import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory, Type } from './object-factory';
 import { EventSystem } from '../system/system';
 
-interface DeletedObjectContext {
-  aliasName: string;
-  timeStamp: number;
-}
+type ObjectIdentifier = string;
+type TimeStamp = number;
 
 export type CatalogItem = { identifier: string, version: number };
 
@@ -18,7 +16,7 @@ export class ObjectStore {
 
   private identifierHash: { [identifier: string]: GameObject } = {};
   private classHash: { [aliasName: string]: GameObject[] } = {};
-  private garbageHash: { [identifier: string]: DeletedObjectContext } = {};
+  private garbageMap: Map<ObjectIdentifier, TimeStamp> = new Map();
 
   private queue: { [identifier: string]: ObjectContext } = {};
   private updateInterval: NodeJS.Timer = null;
@@ -51,7 +49,7 @@ export class ObjectStore {
     if (this.remove(object) === null) return null;
 
     this.garbageCollection(10 * 60 * 1000);
-    this.garbageHash[object.identifier] = { aliasName: object.aliasName, timeStamp: performance.now() };
+    this.garbageMap.set(object.identifier, performance.now());
     if (shouldBroadcast) EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
 
     return object;
@@ -94,12 +92,6 @@ export class ObjectStore {
     return <T[]>this.classHash[aliasName];
   }
 
-  getDeletedObject(identifier: string): DeletedObjectContext {
-    this.garbageCollection(10 * 60 * 1000);
-    let garbage = this.garbageHash[identifier];
-    return garbage ? garbage : null;
-  }
-
   update(identifier: string)
   update(context: ObjectContext)
   update(arg: any) {
@@ -132,9 +124,8 @@ export class ObjectStore {
   }
 
   isDeleted(identifier: string) {
-    let garbage = this.getDeletedObject(identifier);
-    if (!garbage) return false;
-    return true;
+    let timeStamp = this.garbageMap.get(identifier);
+    return timeStamp != null;
   }
 
   getCatalog(): CatalogItem[] {
@@ -154,16 +145,22 @@ export class ObjectStore {
         this._garbageCollection(arg);
       }
     } else {
-      delete this.garbageHash[arg.identifier];
+      this.garbageMap.delete(arg.identifier);
     }
   }
 
   private _garbageCollection(ms: number) {
     let nowDate = performance.now();
-    for (let identifier in this.garbageHash) {
-      if (this.garbageHash[identifier].timeStamp + ms < nowDate) {
-        delete this.garbageHash[identifier];
-      }
+    let entries = this.garbageMap.entries();
+    while (true) {
+      let item = entries.next();
+      if (item.done) break;
+
+      let identifier = item.value[0];
+      let timeStamp = item.value[1];
+
+      if (timeStamp + ms < nowDate) continue;
+      this.garbageMap.delete(identifier);
     }
   }
 }
