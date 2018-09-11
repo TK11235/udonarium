@@ -120,8 +120,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        let garbage = object ? object : ObjectStore.instance.getDeletedObject(event.data.identifier);
+        let garbage = ObjectStore.instance.get(event.data.identifier);
         if (garbage == null || garbage.aliasName.length < 1) {
           this.resetUpdateList();
         } else if (this.needUpdateList[garbage.aliasName] === true) {
