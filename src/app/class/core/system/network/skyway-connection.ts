@@ -1,5 +1,6 @@
 import { PeerContext } from './peer-context';
 import { Connection, ConnectionCallback } from './connection';
+import { setZeroTimeout } from '../util/zero-timeout';
 /*
 import 'skyway-peerjs/dist/peer.min.js'
 import { } from 'skyway';
@@ -115,17 +116,19 @@ export class SkyWayConnection implements Connection {
       ttl: 0
     }
 
-    this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
-      if (1 * 1024 < container.data.length) {
-        container.isCompressed = true;
-        container.data = await this.compressAsync(container.data);
-      }
-      if (sendTo) {
-        this.sendUnicast(container, sendTo);
-      } else {
-        this.sendBroadcast(container);
-      }
-      return resolve();
+    this.queue = this.queue.then(() => new Promise((resolve, reject) => {
+      setZeroTimeout(async () => {
+        if (1 * 1024 < container.data.length) {
+          container.isCompressed = true;
+          container.data = await this.compressAsync(container.data);
+        }
+        if (sendTo) {
+          this.sendUnicast(container, sendTo);
+        } else {
+          this.sendBroadcast(container);
+        }
+        return resolve();
+      });
     }));
   }
 
@@ -145,15 +148,17 @@ export class SkyWayConnection implements Connection {
   private onData(conn: PeerJs.DataConnection, container: DataContainer) {
     if (0 < container.ttl) this.onRelay(conn, container);
     if (this.callback.onData) {
-      this.queue = this.queue.then(() => new Promise(async (resolve, reject) => {
-        let data: Uint8Array;
-        if (container.isCompressed) {
-          data = await this.decompressAsync(container.data);
-        } else {
-          data = new Uint8Array(container.data);
-        }
-        this.callback.onData(conn.remoteId, MessagePack.decode(data));
-        return resolve();
+      this.queue = this.queue.then(() => new Promise((resolve, reject) => {
+        setZeroTimeout(async () => {
+          let data: Uint8Array;
+          if (container.isCompressed) {
+            data = await this.decompressAsync(container.data);
+          } else {
+            data = new Uint8Array(container.data);
+          }
+          this.callback.onData(conn.remoteId, MessagePack.decode(data));
+          return resolve();
+        });
       }));
     }
   }
