@@ -23,7 +23,13 @@ export class TableSelecter extends GameObject {
 
   get viewTable(): GameTable {
     let table: GameTable = ObjectStore.instance.get<GameTable>(this.viewTableIdentifier);
-    if (!table) table = ObjectStore.instance.getObjects<GameTable>(GameTable)[0];
+    if (!table) {
+      table = ObjectStore.instance.getObjects<GameTable>(GameTable)[0];
+      if (table && (this.viewTableIdentifier.length < 1 || ObjectStore.instance.isDeleted(this.viewTableIdentifier))) {
+        this.viewTableIdentifier = table.identifier;
+        EventSystem.trigger('SELECT_GAME_TABLE', { identifier: table.identifier });
+      }
+    }
     return table;
   }
 }
