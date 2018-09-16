@@ -122,22 +122,16 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
     EventSystem.register(this)
-      .on('*', event => {
-        if (!event.isSendFromSelf && this.lazyUpdateTimer === null) {
-          this.lazyUpdateTimer = setTimeout(() => {
-            this.lazyUpdateTimer = null;
-            this.ngZone.run(() => { });
-          }, 100);
-        }
-      }).on<AppConfig>('LOAD_CONFIG', 0, event => {
+      .on('UPDATE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(); })
+      .on('DELETE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(); })
+      .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.sendFrom) this.lazyNgZoneUpdate(); })
+      .on('SYNCHRONIZE_FILE_LIST', event => { if (event.sendFrom) this.lazyNgZoneUpdate(); })
+      .on<AppConfig>('LOAD_CONFIG', 0, event => {
         console.log('LOAD_CONFIG !!!', event.data);
         Network.setApiKey(event.data.webrtc.key);
         Network.open();
-      }).on<AppConfig>('FILE_LOADED', 0, event => {
-        this.lazyUpdateTimer = setTimeout(() => {
-          this.lazyUpdateTimer = null;
-          this.ngZone.run(() => { });
-        }, 100);
+      }).on<File>('FILE_LOADED', 0, event => {
+        this.lazyNgZoneUpdate();
       })
       .on('OPEN_PEER', 0, event => {
         console.log('OPEN_PEER', event.data.peer);
@@ -214,5 +208,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       ? Network.peerContext.roomName
       : 'ルームデータ';
     this.saveDataService.saveRoom(roomName);
+  }
+
+  private lazyNgZoneUpdate() {
+    if (this.lazyUpdateTimer !== null) return;
+    this.lazyUpdateTimer = setTimeout(() => {
+      this.lazyUpdateTimer = null;
+      this.ngZone.run(() => { });
+    }, 100);
   }
 }
