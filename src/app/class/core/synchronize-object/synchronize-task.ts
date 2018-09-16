@@ -8,6 +8,9 @@ export interface SynchronizeRequest {
 }
 
 export class SynchronizeTask {
+  private static key: any = {};
+  private static tasksMap: Map<string, SynchronizeTask[]> = new Map();
+
   onsynchronize: (task: SynchronizeTask, identifier: string) => void;
   onfinish: (task: SynchronizeTask) => void;
   ontimeout: (task: SynchronizeTask, remainedRequests: SynchronizeRequest[]) => void;
@@ -18,13 +21,23 @@ export class SynchronizeTask {
   private constructor() { }
 
   static create(requests: SynchronizeRequest[]): SynchronizeTask {
+    if (SynchronizeTask.tasksMap.size < 1) {
+      EventSystem.register(SynchronizeTask.key)
+        .on('UPDATE_GAME_OBJECT', event => {
+          if (event.isSendFromSelf) return;
+          SynchronizeTask.onUpdate(event.data.identifier);
+        })
+        .on('DELETE_GAME_OBJECT', event => {
+          if (event.isSendFromSelf) return;
+          SynchronizeTask.onUpdate(event.data.identifier);
+        });
+    }
     let task = new SynchronizeTask();
     task.initialize(requests);
     return task;
   }
 
   private cancel() {
-    EventSystem.unregister(this);
     clearTimeout(this.timeoutTimer);
     this.onfinish = this.ontimeout = null;
   }
@@ -33,6 +46,10 @@ export class SynchronizeTask {
     for (let request of requests) {
       request.ttl--;
       this.requestMap.set(request.identifier, request);
+      let tasks: SynchronizeTask[] = SynchronizeTask.tasksMap.get(request.identifier);
+      if (tasks == null) tasks = [];
+      tasks.push(this);
+      SynchronizeTask.tasksMap.set(request.identifier, tasks);
       EventSystem.call('REQUEST_GAME_OBJECT', request.identifier, this.randomChoice(request.holderIds));
     }
 
@@ -45,13 +62,17 @@ export class SynchronizeTask {
     }
 
     this.resetTimeout();
-    EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => {
-        if (!event.isSendFromSelf && this.requestMap.has(event.data.identifier)) this.onUpdate(event.data.identifier);
-      })
-      .on('DELETE_GAME_OBJECT', event => {
-        if (!event.isSendFromSelf && this.requestMap.has(event.data.identifier)) this.onUpdate(event.data.identifier);
-      });
+  }
+
+  private static onUpdate(identifier: string) {
+    if (!SynchronizeTask.tasksMap.has(identifier)) return;
+    let tasks = SynchronizeTask.tasksMap.get(identifier);
+    for (let task of tasks.concat()) {
+      task.onUpdate(identifier);
+      if (task.requestMap.size < 1) tasks.splice(tasks.indexOf(task), 1);
+    }
+    if (tasks.length < 1) SynchronizeTask.tasksMap.delete(identifier);
+    if (SynchronizeTask.tasksMap.size < 1) EventSystem.unregister(SynchronizeTask.key);
   }
 
   private onUpdate(identifier: string) {
