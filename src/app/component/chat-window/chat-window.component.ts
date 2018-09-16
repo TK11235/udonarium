@@ -306,7 +306,14 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(chatMessage);
 
     //this.eventSystem.call('BROADCAST_MESSAGE', chatMessage);
-    if (this.chatTab) this.chatTab.addMessage(chatMessage);
+    if (this.chatTab) {
+      let latestTimeStamp: number = 0 < this.chatTab.chatMessages.length
+        ? this.chatTab.chatMessages[this.chatTab.chatMessages.length - 1].timestamp
+        : chatMessage.timestamp;
+      if (chatMessage.timestamp <= latestTimeStamp) chatMessage.timestamp = latestTimeStamp + 1;
+
+      this.chatTab.addMessage(chatMessage);
+    }
     //this.scrollToBottom(true);
     this.text = '';
     this.previousWritingLength = this.text.length;
