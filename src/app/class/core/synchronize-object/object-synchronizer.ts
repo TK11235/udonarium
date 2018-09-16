@@ -96,7 +96,7 @@ export class ObjectSynchronizer {
   private sendCatalog(sendTo: string) {
     let catalog = ObjectStore.instance.getCatalog();
     let interval = setInterval(() => {
-      let count = catalog.length < 256 ? catalog.length : 256;
+      let count = catalog.length < 2048 ? catalog.length : 2048;
       EventSystem.call('SYNCHRONIZE_GAME_OBJECT', catalog.splice(0, count), sendTo);
       if (catalog.length < 1) clearInterval(interval);
     });
