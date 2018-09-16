@@ -169,8 +169,13 @@ export class ObjectStore {
 
   private _garbageCollection(ms: number) {
     let nowDate = performance.now();
+
+    let checkLength = this.garbageMap.size - 100000;
+    if (checkLength < 1) return;
+
     let entries = this.garbageMap.entries();
-    while (true) {
+    while (checkLength < 1) {
+      checkLength--;
       let item = entries.next();
       if (item.done) break;
 
