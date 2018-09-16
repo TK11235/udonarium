@@ -160,7 +160,7 @@ export class ObjectStore {
   private garbageCollection(arg: any) {
     if (typeof arg === 'number') {
       if (this.garbageCollectionInterval === null) {
-        this.garbageCollectionInterval = setTimeout(() => { this.garbageCollectionInterval = null }, 100);
+        this.garbageCollectionInterval = setTimeout(() => { this.garbageCollectionInterval = null }, 1000);
         this._garbageCollection(arg);
       }
     } else {
