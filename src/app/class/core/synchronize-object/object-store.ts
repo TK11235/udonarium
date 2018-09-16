@@ -1,6 +1,7 @@
 import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory, Type } from './object-factory';
 import { EventSystem } from '../system/system';
+import { setZeroTimeout } from '../system/util/zero-timeout';
 
 type ObjectIdentifier = string;
 type TimeStamp = number;
@@ -19,7 +20,7 @@ export class ObjectStore {
   private garbageMap: Map<ObjectIdentifier, TimeStamp> = new Map();
 
   private queue: { [identifier: string]: ObjectContext } = {};
-  private updateInterval: NodeJS.Timer = null;
+  private updateInterval: number = null;
   private garbageCollectionInterval: NodeJS.Timer = null;
   private updateCallback = () => { this.updateQueue(); }
 
@@ -132,7 +133,7 @@ export class ObjectStore {
     EventSystem.call('UPDATE_GAME_OBJECT', context);
     this.queue[context.identifier] = context;
     if (this.updateInterval === null) {
-      this.updateInterval = setTimeout(this.updateCallback, 0);
+      this.updateInterval = setZeroTimeout(this.updateCallback);
     }
   }
 

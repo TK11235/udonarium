@@ -1,6 +1,7 @@
 import { Connection, ConnectionCallback } from './connection';
 import { SkyWayConnection } from './skyway-connection';
 import { IPeerContext } from './peer-context';
+import { setZeroTimeout } from '../util/zero-timeout';
 
 export class Network {
   private static _instance: Network
@@ -23,7 +24,7 @@ export class Network {
   private connection: Connection;
 
   private queue: any[] = [];
-  private sendInterval: NodeJS.Timer = null;
+  private sendInterval: number = null;
   private sendCallback = () => { this.sendQueue(); }
   private callbackUnload: any = (e) => { this.close(); };
 
@@ -69,7 +70,7 @@ export class Network {
   send(data: any) {
     this.queue.push(data);
     if (this.sendInterval === null) {
-      this.sendInterval = setInterval(this.sendCallback, 0);
+      this.sendInterval = setZeroTimeout(this.sendCallback);
     }
   }
 
@@ -97,9 +98,9 @@ export class Network {
       if (broadcast.length) this.connection.send(broadcast);
       for (let sendTo in unicast) this.connection.send(unicast[sendTo], sendTo);
     }
-
-    if (this.queue.length < 1) {
-      clearInterval(this.sendInterval);
+    if (0 < this.queue.length) {
+      this.sendInterval = setZeroTimeout(this.sendCallback);
+    } else {
       this.sendInterval = null;
     }
   }
@@ -125,7 +126,7 @@ export class Network {
     store.callback.onError = (peerId, err) => { if (this.callback.onError) this.callback.onError(peerId, err); }
     store.callback.onDetectUnknownPeers = (peerIds) => { if (this.callback.onDetectUnknownPeers) this.callback.onDetectUnknownPeers(peerIds); }
 
-    if (0 < this.queue.length && this.sendInterval === null) { this.sendInterval = setTimeout(this.sendCallback, 0); }
+    if (0 < this.queue.length && this.sendInterval === null) this.sendInterval = setZeroTimeout(this.sendCallback);
 
     return store;
   }
