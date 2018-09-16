@@ -57,10 +57,11 @@ export class SynchronizeTask {
   private onUpdate(identifier: string) {
     this.requestMap.delete(identifier);
     if (this.onsynchronize) this.onsynchronize(this, identifier);
-    this.resetTimeout();
     if (this.requestMap.size < 1) {
       if (this.onfinish) this.onfinish(this);
       this.cancel();
+    } else {
+      this.resetTimeout();
     }
   }
 
