@@ -62,12 +62,12 @@ export class FileSharingSystem {
         if (event.isSendFromSelf) return;
 
         let request: Catalog = event.data.identifiers;
-        let randomRequest: { identifier: string, state: number, seed: number }[] = [];
+        let randomRequest: { identifier: string, state: number }[] = [];
 
         for (let item of request) {
           let image: ImageFile = ImageStorage.instance.get(item.identifier);
           if (item.state < image.state)
-            randomRequest.push({ identifier: item.identifier, state: item.state, seed: Math.random() });
+            randomRequest.push({ identifier: item.identifier, state: item.state });
         }
 
         if (this.isTransmission() === false && 0 < randomRequest.length) {
@@ -78,11 +78,11 @@ export class FileSharingSystem {
           let byteSize: number = 0;
           let maxSize = 1024 * 1024 * 0.5;
 
-          randomRequest.sort((a, b) => {
-            if (a.seed < b.seed) return -1;
-            if (a.seed > b.seed) return 1;
-            return 0;
-          });
+          // Fisher-Yates
+          for (let i = randomRequest.length - 1; 0 <= i; i--) {
+            let rand = Math.floor(Math.random() * (i + 1));
+            [randomRequest[i], randomRequest[rand]] = [randomRequest[rand], randomRequest[i]];
+          }
 
           randomRequest.sort((a, b) => {
             if (a.state < b.state) return -1;
