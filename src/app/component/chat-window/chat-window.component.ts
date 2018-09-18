@@ -138,14 +138,14 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
       })
       .on<string>('WRITING_A_MESSAGE', event => {
         if (event.isSendFromSelf || event.data !== this.chatTabidentifier) return;
-        if (this.writingPeers.has(event.sendFrom)) clearTimeout(this.writingPeers.get(event.sendFrom));
-        this.writingPeers.set(event.sendFrom, setTimeout(() => {
-          this.ngZone.run(() => {
+        this.ngZone.run(() => {
+          if (this.writingPeers.has(event.sendFrom)) clearTimeout(this.writingPeers.get(event.sendFrom));
+          this.writingPeers.set(event.sendFrom, setTimeout(() => {
             this.writingPeers.delete(event.sendFrom);
             this.updateWritingPeerNames();
-          });
-        }, 2000));
-        this.updateWritingPeerNames();
+          }, 2000));
+          this.updateWritingPeerNames();
+        });
       });
     this.updatePanelTitle();
   }
