@@ -116,7 +116,7 @@ export class ObjectSynchronizer {
   }
 
   private synchronize() {
-    while (0 < this.requestMap.size && this.tasks.length < 1024) this.runSynchronizeTask();
+    while (0 < this.requestMap.size && this.tasks.length < 32) this.runSynchronizeTask();
   }
 
   private runSynchronizeTask() {
@@ -137,7 +137,7 @@ export class ObjectSynchronizer {
     }
   }
 
-  private makeRequestList(maxRequest: number = 1): SynchronizeRequest[] {
+  private makeRequestList(maxRequest: number = 32): SynchronizeRequest[] {
     let entries = this.requestMap.entries();
     let requests: SynchronizeRequest[] = [];
 
