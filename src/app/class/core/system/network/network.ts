@@ -19,6 +19,7 @@ export class Network {
   get isConnected(): boolean { return this.connection && this.connection.peerContext ? this.connection.peerContext.isOpen : false; }
 
   readonly callback: ConnectionCallback = new ConnectionCallback();
+  get bandwidthUsage(): number { return this.connection ? this.connection.bandwidthUsage : 0; }
 
   private key: string = '';
   private connection: Connection;

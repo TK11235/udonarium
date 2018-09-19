@@ -31,6 +31,7 @@ export class SkyWayConnection implements Connection {
   peerContext: PeerContext;
   readonly peerContexts: PeerContext[] = [];
   readonly callback: ConnectionCallback = new ConnectionCallback();
+  bandwidthUsage: number = 0;
 
   private key: string = '';
   private peer: PeerJs.Peer;
@@ -116,6 +117,8 @@ export class SkyWayConnection implements Connection {
       ttl: 0
     }
 
+    let byteLength = container.data.length;
+    this.bandwidthUsage += byteLength;
     this.queue = this.queue.then(() => new Promise((resolve, reject) => {
       setZeroTimeout(async () => {
         if (1 * 1024 < container.data.length) {
@@ -127,6 +130,7 @@ export class SkyWayConnection implements Connection {
         } else {
           this.sendBroadcast(container);
         }
+        this.bandwidthUsage -= byteLength;
         return resolve();
       });
     }));
@@ -148,6 +152,8 @@ export class SkyWayConnection implements Connection {
   private onData(conn: PeerJs.DataConnection, container: DataContainer) {
     if (0 < container.ttl) this.onRelay(conn, container);
     if (this.callback.onData) {
+      let byteLength = container.data.byteLength;
+      this.bandwidthUsage += byteLength;
       this.queue = this.queue.then(() => new Promise((resolve, reject) => {
         setZeroTimeout(async () => {
           let data: Uint8Array;
@@ -157,6 +163,7 @@ export class SkyWayConnection implements Connection {
             data = new Uint8Array(container.data);
           }
           this.callback.onData(conn.remoteId, MessagePack.decode(data));
+          this.bandwidthUsage -= byteLength;
           return resolve();
         });
       }));
