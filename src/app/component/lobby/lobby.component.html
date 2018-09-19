@@ -1,7 +1,7 @@
 <div *ngIf="!isConnected;else other_content">
   <button (click)="reload()" [disabled]="isReloading">一覧を更新</button>
   <button (click)="showRoomSetting()">新しいルームを作成する</button>
-  <hr/>
+
   <ng-container *ngIf="rooms.length">
     <table style="font-size:12px; border: 0; border-spacing: 0;">
       <tr>
@@ -32,6 +32,5 @@
       </ng-container>
     </table>
   </ng-container>
-  <span *ngIf="rooms.length < 1" style="font-size: 12px;">{{help}}</span>
+  <div *ngIf="rooms.length < 1" style="font-size: 12px;">{{help}}</div>
 </div>
-<ng-template #other_content><span style="font-size: 12px;">別のルームに接続したい場合は、他のPeerとの接続を切ってください。<br>（※ページリロードで切断できます。）</span></ng-template>

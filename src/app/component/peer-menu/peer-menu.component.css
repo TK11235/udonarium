@@ -1,7 +1,7 @@
 .image {
   padding: 0px;
-  width: 128px;
-  height: 128px;
+  width: 150px;
+  height: 150px;
   display: table-cell;
   vertical-align: top;
 }
@@ -18,4 +18,45 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.my-peer {
+  display: flex;
+}
+
+.my-peer_id {
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+}
+
+.connection-method {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom:1px dotted #666;
+}
+
+.connection-method_button {
+  display: inline-block;
+  vertical-align: middle;
+  outline: 0;
+  font-size: 12px;
+  background-color: transparent;
+  color: #444;
+  border: solid 1px #555;
+  padding: 2px 8px;
+  margin: 2px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.connection-method_button:hover {
+  background-color: #888;
+  color: #eee;
+  border: solid 1px #555;
+}
+
+.connection-method_button[disabled] {
+  background: #555;
+  color: #CCC;
 }
