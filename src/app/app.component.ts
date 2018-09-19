@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 
 import { ChatTab } from './class/chat-tab';
 import { AudioSharingSystem } from './class/core/file-storage/audio-sharing-system';
@@ -42,6 +42,7 @@ import { SoundEffect, PresetSound } from './class/sound-effect';
 export class AppComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('modalLayer', { read: ViewContainerRef }) modalLayerViewContainerRef: ViewContainerRef;
+  @ViewChild('networkIndicator') networkIndicatorElementRef: ElementRef;
   private lazyUpdateTimer: NodeJS.Timer = null;
   private openPanelCount: number = 0;
 
@@ -121,7 +122,27 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     PeerCursor.myCursor.name = 'プレイヤー';
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
+    let timer = null;
+    let needRepeat = false;
+    let func = () => {
+      if (needRepeat) {
+        timer = setTimeout(func, 650);
+        needRepeat = false;
+      } else {
+        timer = null;
+        this.networkIndicatorElementRef.nativeElement.style.display = 'none';
+      }
+    };
     EventSystem.register(this)
+      .on('*', event => {
+        if (needRepeat || Network.bandwidthUsage < 3 * 1024) return;
+        if (timer === null) {
+          this.networkIndicatorElementRef.nativeElement.style.display = 'block';
+          timer = setTimeout(func, 650);
+        } else {
+          needRepeat = true;
+        }
+      })
       .on('UPDATE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(); })
       .on('DELETE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(); })
       .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(); })
