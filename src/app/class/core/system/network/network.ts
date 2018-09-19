@@ -78,19 +78,19 @@ export class Network {
   private sendQueue() {
     let broadcast: any[] = [];
     let unicast: { [sendTo: string]: any[] } = {};
+    let echocast: any[] = [];
 
     let loop = this.queue.length < 128 ? this.queue.length : 128;
     //console.warn(this.queue.length);
     for (let i = 0; i < loop; i++) {
       let event = this.queue[i];
       if (event.sendTo == null) {
-        if (this.callback.onData) this.callback.onData(event.sendTo, [event]);
-        broadcast[broadcast.length] = event;
+        broadcast.push(event);
       } else if (event.sendTo === this.peerId) {
-        if (this.callback.onData) this.callback.onData(event.sendTo, [event]);
+        echocast.push(event);
       } else {
         if (!(event.sendTo in unicast)) unicast[event.sendTo] = [];
-        unicast[event.sendTo][unicast[event.sendTo].length] = event;
+        unicast[event.sendTo].push(event);
       }
     }
     this.queue.splice(0, loop);
@@ -99,6 +99,13 @@ export class Network {
       if (broadcast.length) this.connection.send(broadcast);
       for (let sendTo in unicast) this.connection.send(unicast[sendTo], sendTo);
     }
+
+    // 自分自身への送信
+    if (this.callback.onData) {
+      this.callback.onData(null, broadcast);
+      this.callback.onData(this.peerId, echocast);
+    }
+
     if (0 < this.queue.length) {
       this.sendInterval = setZeroTimeout(this.sendCallback);
     } else {
