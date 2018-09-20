@@ -165,7 +165,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           if (1 < Network.peerIds.length) {
             await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'ネットワーク接続に何らかの異常が発生しました。\nこの表示以後、接続が不安定であれば、ページリロードと再接続を試みてください。' });
           } else {
-            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'Peer情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: '接続情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
             Network.open();
           }
         });
