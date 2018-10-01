@@ -165,6 +165,7 @@ export class DiceBot extends GameObject {
     { script: 'RoleMaster', game: 'ロールマスター' },
     { script: 'LostRoyal', game: 'ロストロイヤル' },
     { script: 'WaresBlade', game: 'ワースブレイド' },
+    { script: 'WorldOfDarkness', game: 'ワールドオブダークネス' },
     { script: 'WARPS', game: 'ワープス' },
     { script: 'Hieizan', game: '比叡山炎上' },
     { script: 'InfiniteFantasia', game: '無限のファンタジア' },
