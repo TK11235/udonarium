@@ -83,6 +83,7 @@ export class DiceBot extends GameObject {
     { script: 'Avandner', game: '黒絢のアヴァンドナー' },
     { script: 'Gorilla', game: 'ゴリラTRPG' },
     { script: 'ColossalHunter', game: 'コロッサルハンター' },
+    { script: 'Postman', game: '壊れた世界のポストマン' },
     { script: 'Satasupe', game: 'サタスペ' },
     { script: 'SharedFantasia', game: 'Shared†Fantasia' },
     { script: 'JamesBond', game: 'ジェームズ・ボンド007' },
