@@ -92,6 +92,7 @@ export class DiceBot extends GameObject {
     { script: 'ShadowRun', game: 'シャドウラン' },
     { script: 'ShadowRun4', game: 'シャドウラン第４版' },
     { script: 'ShoujoTenrankai', game: '少女展爛会' },
+    { script: 'Alter_raise', game: '心衝想機TRPGアルトレイズ' },
     { script: 'ShinkuuGakuen', game: '真空学園' },
     { script: 'ShinMegamiTenseiKakuseihen', game: '真・女神転生TRPG　覚醒編' },
     { script: 'SRS', game: 'Standard RPG System' },
