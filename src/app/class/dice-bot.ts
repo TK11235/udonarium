@@ -41,6 +41,7 @@ export class DiceBot extends GameObject {
     { script: 'Airgetlamh', game: '朱の孤塔のエアゲトラム' },
     { script: 'Amadeus', game: 'アマデウス' },
     { script: 'Arianrhod', game: 'アリアンロッド' },
+    { script: 'OrgaRain', game: '在りて遍くオルガレイン' },
     { script: 'Alshard', game: 'アルシャード' },
     { script: 'ArsMagica', game: 'アルスマギカ' },
     { script: 'IthaWenUa', game: 'イサー・ウェン＝アー' },
