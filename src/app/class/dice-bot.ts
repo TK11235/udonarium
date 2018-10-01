@@ -70,6 +70,7 @@ export class DiceBot extends GameObject {
     { script: 'GundogZero', game: 'ガンドッグ・ゼロ' },
     { script: 'GundogRevised', game: 'ガンドッグ・リヴァイズド' },
     { script: 'KillDeathBusiness', game: 'キルデスビジネス' },
+    { script: 'StellarKnights', game: '銀剣のステラナイツ' },
     { script: 'Cthulhu', game: 'クトゥルフ' },
     { script: 'Cthulhu7th', game: 'クトゥルフ第7版' },
     { script: 'CthulhuTech', game: 'クトゥルフテック' },
