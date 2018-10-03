@@ -16,6 +16,9 @@ export class AudioSharingTask {
   private chankSize: number = 14 * 1024;
   private sendChankTimer: NodeJS.Timer;
 
+  private sentChankLength = 0;
+  private completedChankLength = 0;
+
   get identifier(): string { return this.file.identifier; }
 
   onfinish: (task: AudioSharingTask) => void;
@@ -60,7 +63,19 @@ export class AudioSharingTask {
       offset += this.chankSize;
     }
     let blob = new Blob(this.chanks, { type: this.file.blob.type });
-    console.warn('ファイル末尾 ', this.chanks);
+    console.log('チャンク分割 ' + this.file.identifier, this.chanks.length);
+
+    EventSystem.register(this)
+      .on<number>('FILE_MORE_CHANK_' + this.file.identifier, 0, event => {
+        if (this.sendTo !== event.sendFrom) return;
+        this.completedChankLength = event.data;
+        if (this.sendChankTimer == null) {
+          clearTimeout(this.timeoutTimer);
+          this.sendChank(this.sentChankLength);
+        }
+      });
+
+    this.sentChankLength = this.completedChankLength = 0;
     this.sendChank(0);
   }
 
@@ -73,12 +88,18 @@ export class AudioSharingTask {
       /* */
 
       EventSystem.call('FILE_SEND_CHANK_' + this.file.identifier, data, this.sendTo);
-      if (index + 1 < this.chanks.length) {
+      this.sentChankLength = index;
+      if (this.completedChankLength + 16 <= index + 1) {
+        console.log('waitSendChank... ', this.completedChankLength);
+        this.sendChankTimer = null;
+        this.setTimeout();
+      } else if (index + 1 < this.chanks.length) {
         this.sendChank(index + 1);
       } else {
         EventSystem.call('FILE_SEND_END_' + this.file.identifier, { type: this.file.blob.type }, this.sendTo);
         console.warn('ファイル送信完了', this.file);
         if (this.onfinish) this.onfinish(this);
+        this.cancel();
       }
     }, 0);
   }
@@ -95,6 +116,9 @@ export class AudioSharingTask {
         /* */
 
         this.setTimeout();
+        if ((event.data.index + 1) % 8 === 0) {
+          EventSystem.call('FILE_MORE_CHANK_' + this.file.identifier, event.data.index + 1, event.sendFrom);
+        }
       }).on('FILE_SEND_END_' + this.file.identifier, 0, event => {
         if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
         EventSystem.unregister(this);
