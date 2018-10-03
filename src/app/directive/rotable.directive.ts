@@ -102,7 +102,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
 
   protected onMouseDown(e: PointerEvent) {
     this.grabbingElement = <HTMLElement>e.target;
-    if (this.isDisable || !this.isAllowedToRotate || e.button === 2) return this.cancel();
+    if (this.isDisable || !this.isAllowedToRotate || e.button === 1 || e.button === 2) return this.cancel();
     console.log('onRotateMouseDown!!!!');
     e.stopPropagation();
     this.onstart.emit(e);

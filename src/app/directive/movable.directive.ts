@@ -104,7 +104,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     this.callSelectedEvent();
     if (this.collidableElements.length < 1) this.findCollidableElements(); // 稀にcollidableElementsの取得に失敗している
 
-    if (this.isDisable || e.button === 2) return this.cancel();
+    if (this.isDisable || e.button === 1 || e.button === 2) return this.cancel();
     e.preventDefault();
     this.onstart.emit(e);
 
