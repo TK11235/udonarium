@@ -138,6 +138,9 @@ export class AudioSharingSystem {
           task.onfinish = (target) => {
             EventSystem.call('UPDATE_AUDIO_RESOURE', updateAudios, event.data.receiver);
           }
+          task.ontimeout = (target) => {
+            EventSystem.call('TIMEOUT_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, Network.peerId);
+          }
         } else {
           // 中継
           let candidatePeers: string[] = event.data.candidatePeers;

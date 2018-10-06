@@ -133,6 +133,8 @@ export class AudioSharingTask {
   private setTimeout() {
     clearTimeout(this.timeoutTimer);
     this.timeoutTimer = setTimeout(() => {
+      if (this.ontimeout) this.ontimeout(this);
+      if (this.onfinish) this.onfinish(this);
       this.cancel();
     }, 10 * 1000);
   }
