@@ -30,7 +30,6 @@ export class Jukebox extends GameObject {
   play(identifier: string, isLoop: boolean = false) {
     let audio = AudioStorage.instance.get(identifier);
     if (!audio) return;
-    this.stop();
     this.audioIdentifier = identifier;
     this.isPlaying = true;
     this.isLoop = isLoop;
@@ -44,7 +43,6 @@ export class Jukebox extends GameObject {
     if (!audio || !audio.isReady) {
       EventSystem.register(this)
         .on('UPDATE_AUDIO_RESOURE', -100, event => {
-          this.stop();
           this.play(this.audioIdentifier, this.isLoop);
         });
       return;
