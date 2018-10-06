@@ -11,12 +11,8 @@ export class AudioSharingSystem {
     return AudioSharingSystem._instance;
   }
 
-  private transmissionTimers: { [fileIdentifier: string]: NodeJS.Timer } = {};
   private taskMap: Map<string, AudioSharingTask> = new Map();
-  private maxTransmissionSize: number = 1024 * 1024 * 0.5;
   private maxTransmission: number = 1;
-
-  private lazyTimer: NodeJS.Timer;
 
   private constructor() { }
 
@@ -36,7 +32,7 @@ export class AudioSharingSystem {
         let otherCatalog: Catalog = event.data;
         let request: Catalog = [];
 
-        console.warn('SYNCHRONIZE_AUDIO_LIST active tasks ', this.taskMap.size);
+        console.log('SYNCHRONIZE_AUDIO_LIST active tasks ', this.taskMap.size);
         for (let item of otherCatalog) {
           let audio: AudioFile = AudioStorage.instance.get(item.identifier);
           if (audio === null) {
@@ -55,116 +51,43 @@ export class AudioSharingSystem {
         if (request.length < 1 || this.isTransmission()) {
           return;
         }
-
-        let min = 0;
-        let max = request.length - 1;
-
-        let index = Math.floor(Math.random() * (max + 1 - min)) + min;
-        let item = request[index];
-        let audio: AudioFile = AudioStorage.instance.get(item.identifier);
-        let task = AudioSharingTask.createReceiveTask(audio);
-        task.onfinish = () => {
-          task.cancel();
-          this.taskMap.delete(item.identifier);
-          console.warn('ファイル受信完了', task.identifier);
-        }
-        task.ontimeout = () => {
-          task.cancel();
-          this.taskMap.delete(item.identifier);
-          console.warn('ファイル受信タイムアウト', task.identifier);
-          AudioStorage.instance.synchronize();
-        }
-        this.taskMap.set(item.identifier, task);
-
+        let index = Math.floor(Math.random() * request.length);
         this.request([request[index]], event.sendFrom);
       })
       .on('REQUEST_AUDIO_RESOURE', event => {
         if (event.isSendFromSelf) return;
 
         let request: Catalog = event.data.identifiers;
-        let randomRequest: { identifier: string, state: number, seed: number }[] = [];
+        let randomRequest: Catalog = [];
 
         for (let item of request) {
           let audio: AudioFile = AudioStorage.instance.get(item.identifier);
-          if (item.state < audio.state)
-            randomRequest.push({ identifier: item.identifier, state: item.state, seed: Math.random() });
+          if (item.state < audio.state) randomRequest.push({ identifier: item.identifier, state: item.state });
         }
 
         if (this.isTransmission() === false && 0 < randomRequest.length) {
           // 送信
           console.log('REQUEST_AUDIO_RESOURE Send!!! ' + event.data.receiver + ' -> ' + randomRequest);
-
-          let updateAudios: AudioFileContext[] = [];
-          let byteSize: number = 0;
-
-          randomRequest.sort((a, b) => {
-            if (a.seed < b.seed) return -1;
-            if (a.seed > b.seed) return 1;
-            return 0;
-          });
-
-          randomRequest.sort((a, b) => {
-            if (a.state < b.state) return -1;
-            if (a.state > b.state) return 1;
-            return 0;
-          });
-
-          let item: { identifier: string, state: number } = randomRequest[0];
-          let audio: AudioFile = AudioStorage.instance.get(item.identifier);
-
-          let context: AudioFileContext = { identifier: audio.identifier, name: audio.name, type: '', blob: null, url: null };
-
-          if (audio.state === AudioState.URL) {
-            context.url = audio.url;
-          } else {
-            context.type = audio.blob.type;
-          }
-
-          console.log(item);
-          console.log(context);
-
-          updateAudios.push(context);
-          byteSize += context.blob ? context.blob.size : 100;
-
-          for (let i = 1; i < randomRequest.length; i++) {
-            EventSystem.call('STOP_AUDIO_TRANSMISSION', { identifier: randomRequest[i].identifier }, event.data.receiver);
-          }
-
-          this.startTransmission(updateAudios[0].identifier, event.sendFrom);
-          EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, event.data.receiver);
-          let task = AudioSharingTask.createSendTask(audio, event.data.receiver);
-          task.onfinish = (target) => {
-            EventSystem.call('UPDATE_AUDIO_RESOURE', updateAudios, event.data.receiver);
-          }
-          task.ontimeout = (target) => {
-            EventSystem.call('TIMEOUT_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, Network.peerId);
-          }
+          let index = Math.floor(Math.random() * randomRequest.length);
+          let item: { identifier: string, state: number } = randomRequest[index];
+          this.startSendTransmission(item.identifier, event.data.receiver);
         } else {
           // 中継
           let candidatePeers: string[] = event.data.candidatePeers;
           let index = candidatePeers.indexOf(Network.peerId);
           if (-1 < index) candidatePeers.splice(index, 1);
 
-          if (candidatePeers.length < 1) {
-            console.log('STOP_AUDIO_TRANSMISSION AudioStorageService STOP!!! ' + event.data.receiver + ' -> ' + event.data.identifiers);
-            let request: Catalog = event.data.identifiers;
-            for (let i = 0; i < request.length; i++) {
-              EventSystem.call('STOP_AUDIO_TRANSMISSION', { identifier: request[i].identifier }, event.data.receiver);
-            }
-          } else {
-            console.log('REQUEST_AUDIO_RESOURE AudioStorageService Relay!!! ' + candidatePeers[0] + ' -> ' + event.data.identifiers);
-            EventSystem.call(event, candidatePeers[0]);
+          for (let peer of candidatePeers) {
+            console.log('REQUEST_AUDIO_RESOURE AudioStorageService Relay!!! ' + peer + ' -> ' + event.data.identifiers);
+            EventSystem.call(event, peer);
           }
+          console.log('REQUEST_FILE_RESOURE ImageStorageService あぶれた...' + event.data.receiver, randomRequest.length, this.taskMap);
         }
       })
       .on('STOP_AUDIO_TRANSMISSION', event => {
         let identifier: string = event.data.identifier;
-        let task = this.taskMap.get(identifier);
-        if (task) {
-          task.cancel();
-          this.taskMap.delete(identifier);
-        }
-
+        this.stopTransmission(identifier);
+        AudioStorage.instance.synchronize();
         console.log('STOP_AUDIO_TRANSMISSION ' + identifier, this.taskMap.size);
       })
       .on('UPDATE_AUDIO_RESOURE', event => {
@@ -174,56 +97,65 @@ export class AudioSharingSystem {
           if (context.blob) context.blob = new Blob([context.blob], { type: context.type });
           AudioStorage.instance.add(context);
         }
-        this.stopTransmission(updateAudios[0].identifier);
-        AudioStorage.instance.synchronize();
-        EventSystem.call('COMPLETE_AUDIO_TRANSMISSION', { fileIdentifier: updateAudios[0].identifier }, event.sendFrom);
       })
       .on('START_AUDIO_TRANSMISSION', event => {
-        console.log('START_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
-        this.startTransmission(event.data.fileIdentifier, event.sendFrom);
-      })
-      .on('COMPLETE_AUDIO_TRANSMISSION', event => {
-        console.log('COMPLETE_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
-        this.stopTransmission(event.data.fileIdentifier);
-        if (!event.isSendFromSelf) AudioStorage.instance.synchronize();
-      })
-      .on('TIMEOUT_AUDIO_TRANSMISSION', event => {
-        console.log('TIMEOUT_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
-        this.stopTransmission(event.data.fileIdentifier);
-      })
+        console.log('START_AUDIO_TRANSMISSION ' + event.data.fileIdentifier, this.isTransmission());
+        let identifier: string = event.data.fileIdentifier;
+        if (this.isTransmission() || this.taskMap.has(identifier)) {
+          EventSystem.call('STOP_AUDIO_TRANSMISSION', { identifier: identifier }, event.sendFrom);
+        } else {
+          this.startReceiveTransmission(identifier);
+        }
+      });
   }
 
   private destroy() {
     EventSystem.unregister(this);
   }
 
-  private startTransmission(identifier: string, sendFrom: string) {
+  private startSendTransmission(identifier: string, sendTo: string) {
+    let audio: AudioFile = AudioStorage.instance.get(identifier);
+
+    EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: audio.identifier }, sendTo);
+    let task = AudioSharingTask.createSendTask(audio, sendTo);
+    this.taskMap.set(audio.identifier, task);
+
+    task.onfinish = (target) => {
+      this.stopTransmission(task.identifier);
+      let context: AudioFileContext = { identifier: audio.identifier, name: audio.name, type: null, blob: null, url: null };
+      EventSystem.call('UPDATE_AUDIO_RESOURE', [context], sendTo);
+      AudioStorage.instance.synchronize();
+    }
+    task.ontimeout = (target) => {
+      this.stopTransmission(task.identifier);
+      AudioStorage.instance.synchronize();
+    }
+  }
+
+  private startReceiveTransmission(identifier: string) {
     this.stopTransmission(identifier);
+    if (this.taskMap.has(identifier)) return;
 
-    this.transmissionTimers[identifier] = setTimeout(() => {
-      EventSystem.call('TIMEOUT_AUDIO_TRANSMISSION', { fileIdentifier: identifier }, Network.peerId);
-      this.stopTransmission(identifier);
-    }, 30 * 1000);
-
-    EventSystem.register(this.transmissionTimers[identifier])
-      .on('CLOSE_OTHER_PEER', 0, event => {
-        console.warn('送信キャンセル', event.data.peer);
-        EventSystem.call('TIMEOUT_AUDIO_TRANSMISSION', { fileIdentifier: identifier }, Network.peerId);
-        this.stopTransmission(identifier);
-      });
-    console.log('startFileTransmission => ', Object.keys(this.transmissionTimers).length);
+    let audio: AudioFile = AudioStorage.instance.get(identifier);
+    let task = AudioSharingTask.createReceiveTask(audio);
+    this.taskMap.set(identifier, task);
+    task.onfinish = () => {
+      this.stopTransmission(task.identifier);
+      AudioStorage.instance.synchronize();
+    }
+    task.ontimeout = () => {
+      this.stopTransmission(task.identifier);
+      AudioStorage.instance.synchronize();
+    }
+    console.log('startFileTransmission => ', this.taskMap.size);
   }
 
   private stopTransmission(identifier: string) {
-    if (!this.transmissionTimers[identifier]) return;
+    let task = this.taskMap.get(identifier);
+    if (task) { task.cancel(); }
+    this.taskMap.delete(identifier);
 
-    EventSystem.unregister(this.transmissionTimers[identifier]);
-    clearTimeout(this.transmissionTimers[identifier]);
-
-    this.transmissionTimers[identifier] = null;
-    delete this.transmissionTimers[identifier];
-
-    console.log('stopFileTransmission => ', Object.keys(this.transmissionTimers).length);
+    console.log('stopFileTransmission => ', this.taskMap.size);
   }
 
   private request(request: Catalog, peer: string) {
@@ -234,7 +166,7 @@ export class AudioSharingSystem {
   }
 
   private isTransmission(): boolean {
-    if (this.maxTransmission <= Object.keys(this.transmissionTimers).length) {
+    if (this.maxTransmission <= this.taskMap.size) {
       return true;
     } else {
       return false;
