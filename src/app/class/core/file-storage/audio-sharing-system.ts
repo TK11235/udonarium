@@ -1,8 +1,7 @@
-import { EventSystem, Event, Network } from '../system/system';
-import { AudioStorage, Catalog } from './audio-storage';
-import { AudioSharingTask } from './audio-sharing-task';
+import { EventSystem, Network } from '../system/system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
-import { MimeType } from './mime-type';
+import { AudioSharingTask } from './audio-sharing-task';
+import { AudioStorage, Catalog } from './audio-storage';
 
 export class AudioSharingSystem {
   private static _instance: AudioSharingSystem

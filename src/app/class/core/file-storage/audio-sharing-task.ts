@@ -1,5 +1,5 @@
 import { EventSystem } from '../system/system';
-import { AudioFile, AudioFileContext, AudioState } from './audio-file';
+import { AudioFile } from './audio-file';
 import { FileReaderUtil } from './file-reader-util';
 
 interface ChankData {
