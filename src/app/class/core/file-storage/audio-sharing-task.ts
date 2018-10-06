@@ -5,14 +5,14 @@ import { FileReaderUtil } from './file-reader-util';
 interface ChankData {
   index: number;
   length: number;
-  chank: Blob;
+  chank: ArrayBuffer;
 }
 
 // 試験実装中
 export class AudioSharingTask {
   private file: AudioFile;
   private sendTo: string = '';
-  private chanks: Blob[] = [];
+  private chanks: ArrayBuffer[] = [];
   private chankSize: number = 14 * 1024;
   private sendChankTimer: NodeJS.Timer;
 
@@ -50,19 +50,20 @@ export class AudioSharingTask {
     this.onfinish = this.ontimeout = null;
   }
 
-  private initializeSend() {
+  private async initializeSend() {
     let offset = 0;
-    while (offset < this.file.blob.size) {
-      let chank: Blob = null;
-      if (offset + this.chankSize < this.file.blob.size) {
-        chank = this.file.blob.slice(offset, offset + this.chankSize);
+    let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(this.file.blob);
+    let byteLength = arrayBuffer.byteLength;
+    while (offset < byteLength) {
+      let chank: ArrayBuffer = null;
+      if (offset + this.chankSize < byteLength) {
+        chank = arrayBuffer.slice(offset, offset + this.chankSize);
       } else {
-        chank = this.file.blob.slice(offset, this.file.blob.size);
+        chank = arrayBuffer.slice(offset, byteLength);
       }
       this.chanks.push(chank);
       offset += this.chankSize;
     }
-    let blob = new Blob(this.chanks, { type: this.file.blob.type });
     console.log('チャンク分割 ' + this.file.identifier, this.chanks.length);
 
     EventSystem.register(this)
@@ -82,11 +83,6 @@ export class AudioSharingTask {
   private sendChank(index: number) {
     this.sendChankTimer = setTimeout(async () => {
       let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
-
-      /* hotfix issue #1 */
-      data.chank = <any>await FileReaderUtil.readAsArrayBufferAsync(data.chank);
-      /* */
-
       EventSystem.call('FILE_SEND_CHANK_' + this.file.identifier, data, this.sendTo);
       this.sentChankLength = index;
       if (this.completedChankLength + 16 <= index + 1) {
