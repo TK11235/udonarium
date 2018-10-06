@@ -74,6 +74,13 @@ export class AudioSharingTask {
           clearTimeout(this.timeoutTimer);
           this.sendChank(this.sentChankLength);
         }
+      })
+      .on('CLOSE_OTHER_PEER', 0, event => {
+        if (event.sendFrom !== this.sendTo) return;
+        console.warn('送信キャンセル', this, event.data.peer);
+        if (this.ontimeout) this.ontimeout(this);
+        if (this.onfinish) this.onfinish(this);
+        this.cancel();
       });
 
     this.sentChankLength = this.completedChankLength = 0;
