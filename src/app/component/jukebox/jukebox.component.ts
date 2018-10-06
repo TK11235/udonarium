@@ -30,16 +30,21 @@ export class JukeboxComponent implements OnInit {
   get jukebox(): Jukebox { return ObjectStore.instance.get<Jukebox>('Jukebox'); }
 
   private auditionPlayer: AudioPlayer = new AudioPlayer();
+  private lazyUpdateTimer: NodeJS.Timer = null;
 
   constructor(
     private modalService: ModalService,
-    private panelService: PanelService
+    private panelService: PanelService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
     this.modalService.title = this.panelService.title = 'ジュークボックス'
     this.auditionPlayer.volumeType = VolumeType.AUDITION;
-    EventSystem.register(this);
+    EventSystem.register(this)
+      .on('*', event => {
+        if (event.eventName.startsWith('FILE_')) this.lazyNgZoneUpdate();
+      });
   }
 
   ngOnDestroy() {
@@ -66,5 +71,13 @@ export class JukeboxComponent implements OnInit {
   handleFileSelect(event: Event) {
     let files = (<HTMLInputElement>event.target).files;
     if (files.length) FileArchiver.instance.load(files);
+  }
+
+  private lazyNgZoneUpdate() {
+    if (this.lazyUpdateTimer !== null) return;
+    this.lazyUpdateTimer = setTimeout(() => {
+      this.lazyUpdateTimer = null;
+      this.ngZone.run(() => { });
+    }, 100);
   }
 }
