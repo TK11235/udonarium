@@ -72,9 +72,9 @@ export class AudioStorage {
     } else {
       context = audio;
     }
-    let updatingImage: AudioFile = this.hash[audio.identifier];
-    if (updatingImage) {
-      updatingImage.apply(audio);
+    let updateAudio: AudioFile = this.hash[audio.identifier];
+    if (updateAudio) {
+      updateAudio.apply(audio);
       return true;
     }
     return false;
