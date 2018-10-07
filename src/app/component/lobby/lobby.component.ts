@@ -104,6 +104,7 @@ export class LobbyComponent implements OnInit {
       .on('OPEN_PEER', 0, event => {
         console.log('LobbyComponent OPEN_PEER', event.data.peer);
         EventSystem.unregister(triedPeer);
+        ObjectStore.instance.clearDeleteHistory();
         for (let peer of peerContexts) {
           Network.connect(peer.fullstring);
         }

@@ -69,6 +69,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.help = '';
     let context = PeerContext.create(this.targetPeerId);
     if (!context.isRoom) {
+      ObjectStore.instance.clearDeleteHistory();
       Network.connect(this.targetPeerId);
     } else {
       if (Network.peerContexts.length) {
@@ -82,6 +83,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       let dummy = {};
       EventSystem.register(dummy)
         .on('OPEN_PEER', 0, event => {
+          ObjectStore.instance.clearDeleteHistory();
           Network.connect(this.targetPeerId);
           EventSystem.unregister(dummy);
           EventSystem.register(dummy)
@@ -144,6 +146,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     listener.on('OPEN_PEER', 0, event => {
       console.log('OPEN_PEER', event.data.peer);
       EventSystem.unregisterListener(listener);
+      ObjectStore.instance.clearDeleteHistory();
       for (let context of conectPeers) {
         Network.connect(context.fullstring);
       }
