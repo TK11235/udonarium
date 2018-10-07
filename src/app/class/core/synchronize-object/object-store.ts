@@ -155,6 +155,10 @@ export class ObjectStore {
     return catalog;
   }
 
+  clearDeleteHistory() {
+    this.garbageMap.clear();
+  }
+
   private garbageCollection(garbage: ObjectContext)
   private garbageCollection(ms: number)
   private garbageCollection(arg: any) {
