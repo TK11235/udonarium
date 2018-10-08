@@ -76,7 +76,7 @@ export class AudioSharingTask {
         }
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
-        if (event.sendFrom !== this.sendTo) return;
+        if (event.data.peer !== this.sendTo) return;
         console.warn('送信キャンセル', this, event.data.peer);
         if (this.ontimeout) this.ontimeout(this);
         if (this.onfinish) this.onfinish(this);
