@@ -74,6 +74,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.isSendFromSelf || event.data.identifier !== this.tabletopObject.identifier) return;
         this.cancel();
+        this.stopTransition();
         this.setPosition(this.tabletopObject);
       });
     if (this.layerName.length < 1 && this.tabletopObject) this.layerName = this.tabletopObject.aliasName;
@@ -265,6 +266,10 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   private setAnimatedTransition(isEnable: boolean) {
     if (!this.transformElement) return;
     this.transformElement.style.transition = isEnable ? 'transform 132ms linear' : '';
+  }
+
+  private stopTransition() {
+    this.transformElement.style.transform = window.getComputedStyle(this.transformElement).transform;
   }
 
   private updateTransformCss() {

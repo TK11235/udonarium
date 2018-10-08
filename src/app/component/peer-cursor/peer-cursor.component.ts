@@ -42,6 +42,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
       EventSystem.register(this)
         .on('CURSOR_MOVE', event => {
           if (event.sendFrom !== this.cursor.peerId) return;
+          this.stopTransition();
           this.setPosition(event.data[0], event.data[1], event.data[2]);
           this.resetFadeOut();
         });
@@ -125,6 +126,10 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fadeOutTimer = setTimeout(() => {
       this.opacityElement.style.opacity = '0.0';
     }, 3000);
+  }
+
+  private stopTransition() {
+    this.cursorElement.style.transform = window.getComputedStyle(this.cursorElement).transform;
   }
 
   private setPosition(x: number, y: number, z: number) {
