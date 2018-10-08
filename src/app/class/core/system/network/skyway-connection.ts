@@ -422,7 +422,6 @@ export class SkyWayConnection implements Connection {
       }
     });
 
-    console.log('compress...' + data.length + ' -> ' + uint8array.length + '(' + (uint8array.length / data.length) + ')');
     return uint8array;
   }
 
@@ -440,7 +439,6 @@ export class SkyWayConnection implements Connection {
           try {
             uint8array = await zipEntry.async('uint8array');
             resolve(uint8array);
-            console.log('decompress... ' + uint8array.length);
           } catch (reason) {
             console.warn(reason);
           }
