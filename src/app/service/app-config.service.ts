@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Network, EventSystem } from '../class/core/system/system';
-import { Database } from '../class/database/database';
+
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { Database } from '@udonarium/database/database';
 
 import * as yaml from 'js-yaml/dist/js-yaml.min.js';
-//import * as yaml from 'js-yaml';
 
 export interface AppConfig {
   webrtc: {

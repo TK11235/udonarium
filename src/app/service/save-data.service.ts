@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import * as Beautify from 'vkbeautify';
 
-import { ChatTabList } from '../class/chat-tab-list';
-import { FileArchiver } from '../class/core/file-storage/file-archiver';
-import { ImageStorage } from '../class/core/file-storage/image-storage';
-import { ImageFile } from '../class/core/file-storage/image-file';
-import { MimeType } from '../class/core/file-storage/mime-type';
-import { XmlUtil } from '../class/core/synchronize-object/xml-util';
-import { Room } from '../class/room';
-import { GameObject } from '../class/core/synchronize-object/game-object';
+import { ChatTabList } from '@udonarium/chat-tab-list';
+import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { MimeType } from '@udonarium/core/file-storage/mime-type';
+import { GameObject } from '@udonarium/core/synchronize-object/game-object';
+import { XmlUtil } from '@udonarium/core/synchronize-object/xml-util';
+import { Room } from '@udonarium/room';
+
+import * as Beautify from 'vkbeautify';
 
 @Injectable({
   providedIn: 'root'

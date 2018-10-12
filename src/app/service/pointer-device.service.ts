@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 
-import { Transform } from '../class/transform/transform';
+import { Transform } from '@udonarium/transform/transform';
 
 export var PointerDeviceProxy: PointerDeviceService = null;
 

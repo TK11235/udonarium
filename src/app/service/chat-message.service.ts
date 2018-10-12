@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Network, EventSystem } from '../class/core/system/system';
-import { ObjectStore } from '../class/core/synchronize-object/object-store';
-import { ChatTabList } from '../class/chat-tab-list';
-import { ChatTab } from '../class/chat-tab';
-import { ChatMessage, ChatMessageContext } from '../class/chat-message';
+import { ChatTab } from '@udonarium/chat-tab';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 
 @Injectable()
 export class ChatMessageService {
