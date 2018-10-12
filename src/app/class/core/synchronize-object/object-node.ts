@@ -1,10 +1,8 @@
-import { SyncObject, SyncVar } from './decorator';
-import { GameObject, ObjectContext } from './game-object';
-import { ObjectStore } from './object-store';
-import { ObjectFactory, Type } from './object-factory';
-import { ObjectSerializer, XmlAttributes, InnerXml } from './object-serializer';
 import { Attributes } from './attributes';
-import { EventSystem } from '../system/system';
+import { GameObject, ObjectContext } from './game-object';
+import { ObjectFactory, Type } from './object-factory';
+import { InnerXml, ObjectSerializer, XmlAttributes } from './object-serializer';
+import { ObjectStore } from './object-store';
 import { XmlUtil } from './xml-util';
 
 //ERROR in Error encountered resolving symbol values statically. の対応 Export

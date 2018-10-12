@@ -1,11 +1,9 @@
-import { DataElement } from './data-element';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
-import { GameObject } from './core/synchronize-object/game-object';
-import { ObjectNode } from './core/synchronize-object/object-node';
-import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
-import { ImageStorage } from './core/file-storage/image-storage';
 import { ImageFile } from './core/file-storage/image-file';
+import { ImageStorage } from './core/file-storage/image-storage';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
+import { ObjectNode } from './core/synchronize-object/object-node';
+import { ObjectStore } from './core/synchronize-object/object-store';
+import { DataElement } from './data-element';
 
 export interface TabletopLocation {
   name: string;

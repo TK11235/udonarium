@@ -1,12 +1,9 @@
-import { PeerContext } from './peer-context';
-import { Connection, ConnectionCallback } from './connection';
-import { setZeroTimeout } from '../util/zero-timeout';
-/*
-import 'skyway-peerjs/dist/peer.min.js'
-import { } from 'skyway';
-*/
-import * as MessagePack from 'msgpack-lite';
 import * as JSZip from 'jszip/dist/jszip.min.js';
+import * as MessagePack from 'msgpack-lite';
+
+import { setZeroTimeout } from '../util/zero-timeout';
+import { Connection, ConnectionCallback } from './connection';
+import { PeerContext } from './peer-context';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare var Peer;

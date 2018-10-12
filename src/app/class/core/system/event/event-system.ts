@@ -1,8 +1,8 @@
-import { Subject } from './subject';
-import { Callback } from './observer';
-import { Listener } from './listener';
-import { Event, EventContext } from './event';
 import { Network } from '../network/network';
+import { Event, EventContext } from './event';
+import { Listener } from './listener';
+import { Callback } from './observer';
+import { Subject } from './subject';
 
 export class EventSystem implements Subject {
   private static _instance: EventSystem

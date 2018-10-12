@@ -1,7 +1,7 @@
-import { EventSystem, Network } from '../system/system';
-import { ObjectFactory } from './object-factory';
+import { EventSystem } from '../system/system';
 import { GameObject, ObjectContext } from './game-object';
-import { ObjectStore, CatalogItem } from './object-store';
+import { ObjectFactory } from './object-factory';
+import { CatalogItem, ObjectStore } from './object-store';
 import { SynchronizeRequest, SynchronizeTask } from './synchronize-task';
 
 export class ObjectSynchronizer {

@@ -1,10 +1,9 @@
-import { Network, EventSystem } from './core/system/system';
-import { ObjectStore } from './core/synchronize-object/object-store';
+import { ImageFile } from './core/file-storage/image-file';
+import { ImageStorage } from './core/file-storage/image-storage';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
-import { ImageStorage } from './core/file-storage/image-storage';
-import { ImageFile } from './core/file-storage/image-file';
-import { Transform, IPoint2D, IPoint3D } from './transform/transform';
+import { ObjectStore } from './core/synchronize-object/object-store';
+import { EventSystem, Network } from './core/system/system';
 
 @SyncObject('PeerCursor')
 export class PeerCursor extends GameObject {

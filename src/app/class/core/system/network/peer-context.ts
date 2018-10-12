@@ -1,5 +1,4 @@
 import * as lzbase62 from 'lzbase62/lzbase62.min.js';
-//import * as lzbase62 from 'lzbase62';
 
 export interface IPeerContext {
   readonly fullstring: string;

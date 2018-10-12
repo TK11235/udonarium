@@ -1,6 +1,6 @@
-import { Subject } from './subject';
-import { Observer, Callback, EventMap } from './observer';
 import { Event } from './event';
+import { Callback, EventMap, Observer } from './observer';
+import { Subject } from './subject';
 
 export class Listener implements Observer {
   private _subject: Subject;

@@ -1,7 +1,7 @@
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
-import { TabletopObject } from './tabletop-object';
-import { DataElement } from './data-element';
 import { ObjectStore } from './core/synchronize-object/object-store';
+import { DataElement } from './data-element';
+import { TabletopObject } from './tabletop-object';
 
 @SyncObject('text-note')
 export class TextNote extends TabletopObject {

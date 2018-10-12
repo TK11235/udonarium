@@ -1,8 +1,6 @@
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
-
-import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
-import { ObjectNode } from './core/synchronize-object/object-node';
 
 @SyncObject('table-mask')
 export class GameTableMask extends TabletopObject {

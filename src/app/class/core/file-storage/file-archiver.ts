@@ -1,14 +1,12 @@
-import { ImageStorage } from './image-storage';
-import { AudioStorage } from './audio-storage';
-import { Base64 } from './base64';
-import { MimeType } from './mime-type';
-import { EventSystem } from '../system/system';
 import { saveAs } from 'file-saver';
-
 import * as JSZip from 'jszip/dist/jszip.min.js';
+
 import { XmlUtil } from '../synchronize-object/xml-util';
+import { EventSystem } from '../system/system';
+import { AudioStorage } from './audio-storage';
 import { FileReaderUtil } from './file-reader-util';
-//import * as JSZip from 'jszip';
+import { ImageStorage } from './image-storage';
+import { MimeType } from './mime-type';
 
 export class FileArchiver {
   private static _instance: FileArchiver

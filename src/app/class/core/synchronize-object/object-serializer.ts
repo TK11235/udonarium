@@ -1,7 +1,6 @@
+import { Attributes } from './attributes';
 import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory } from './object-factory';
-import { EventSystem } from '../system/system';
-import { Attributes } from './attributes';
 import { XmlUtil } from './xml-util';
 
 export interface XmlAttributes extends GameObject {

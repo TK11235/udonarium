@@ -1,9 +1,8 @@
-import { Network } from './core/system/system';
+import { ImageFile } from './core/file-storage/image-file';
+import { ImageStorage } from './core/file-storage/image-storage';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { ImageStorage } from './core/file-storage/image-storage';
-import { ImageFile } from './core/file-storage/image-file';
+import { Network } from './core/system/system';
 
 export interface ChatMessageContext {
   identifier?: string;

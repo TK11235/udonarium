@@ -1,8 +1,8 @@
-import { UUID } from './uuid';
-import { ObjectFactory } from './object-factory';
-import { ObjectStore } from './object-store';
-import { ObjectSerializer } from './object-serializer';
 import { EventSystem } from '../system/system';
+import { ObjectFactory } from './object-factory';
+import { ObjectSerializer } from './object-serializer';
+import { ObjectStore } from './object-store';
+import { UUID } from './uuid';
 
 export interface ObjectContext {
   aliasName: string;

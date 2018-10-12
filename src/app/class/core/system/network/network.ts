@@ -1,7 +1,7 @@
-import { Connection, ConnectionCallback } from './connection';
-import { SkyWayConnection } from './skyway-connection';
-import { IPeerContext } from './peer-context';
 import { setZeroTimeout } from '../util/zero-timeout';
+import { Connection, ConnectionCallback } from './connection';
+import { IPeerContext } from './peer-context';
+import { SkyWayConnection } from './skyway-connection';
 
 export class Network {
   private static _instance: Network

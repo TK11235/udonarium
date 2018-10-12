@@ -1,9 +1,6 @@
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectContext } from './core/synchronize-object/game-object';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { ImageStorage } from './core/file-storage/image-storage';
-import { ImageFile } from './core/file-storage/image-file';
 import { DataElement } from './data-element';
 
 export interface PaletteLine {

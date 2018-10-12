@@ -1,5 +1,5 @@
-import { Observer, Callback } from './observer';
 import { Event, EventContext } from './event';
+import { Callback, Observer } from './observer';
 
 export interface Subject {
   register(key: any): Observer;

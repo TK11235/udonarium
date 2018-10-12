@@ -1,5 +1,5 @@
-import { ObjectFactory, Type } from './object-factory';
 import { GameObject } from './game-object';
+import { ObjectFactory, Type } from './object-factory';
 import { ObjectNode } from './object-node';
 
 export function SyncObject(alias: string) {

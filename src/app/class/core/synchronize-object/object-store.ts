@@ -1,7 +1,7 @@
-import { GameObject, ObjectContext } from './game-object';
-import { ObjectFactory, Type } from './object-factory';
 import { EventSystem } from '../system/system';
 import { setZeroTimeout } from '../system/util/zero-timeout';
+import { GameObject, ObjectContext } from './game-object';
+import { Type } from './object-factory';
 
 type ObjectIdentifier = string;
 type TimeStamp = number;

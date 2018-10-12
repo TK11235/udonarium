@@ -1,12 +1,11 @@
+import { Card } from './card';
+import { ImageFile } from './core/file-storage/image-file';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
-import { EventSystem } from './core/system/system';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { ImageFile } from './core/file-storage/image-file';
-import { TabletopObject } from './tabletop-object';
-import { Card } from './card';
 import { DataElement } from './data-element';
 import { PeerCursor } from './peer-cursor';
+import { TabletopObject } from './tabletop-object';
 
 @SyncObject('card-stack')
 export class CardStack extends TabletopObject {

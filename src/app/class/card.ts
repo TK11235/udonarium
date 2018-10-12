@@ -1,12 +1,10 @@
-import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
-import { GameObject } from './core/synchronize-object/game-object';
-import { DataElement } from './data-element';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { TabletopObject } from './tabletop-object';
 import { ImageFile } from './core/file-storage/image-file';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
+import { ObjectStore } from './core/synchronize-object/object-store';
+import { Network } from './core/system/system';
+import { DataElement } from './data-element';
 import { PeerCursor } from './peer-cursor';
-import { EventSystem, Network } from './core/system/system';
-import { CardStack } from './card-stack';
+import { TabletopObject } from './tabletop-object';
 
 export enum CardState {
   FRONT,

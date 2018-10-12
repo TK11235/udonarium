@@ -1,5 +1,5 @@
-import { IPoint3D, IPoint2D } from './transform';
 import { CSSNumber } from './css-number';
+import { IPoint2D, IPoint3D } from './transform';
 
 export interface IMatrix3D {
   m11: number;

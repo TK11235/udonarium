@@ -1,11 +1,9 @@
-import { Network, EventSystem } from './core/system/system';
+import { ChatTab } from './chat-tab';
 import { SyncObject } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { ChatMessage, ChatMessageContext } from './chat-message';
-import { ChatTab} from './chat-tab';
+import { InnerXml } from './core/synchronize-object/object-serializer';
+import { ObjectStore } from './core/synchronize-object/object-store';
 
 @SyncObject('chat-tab-list')
 export class ChatTabList extends ObjectNode implements InnerXml {

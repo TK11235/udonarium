@@ -1,11 +1,11 @@
+import { ChatMessage, ChatMessageContext } from './chat-message';
 import { AudioFile } from './core/file-storage/audio-file';
 import { AudioPlayer } from './core/file-storage/audio-player';
 import { AudioStorage } from './core/file-storage/audio-storage';
 import { SyncObject } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
-import { EventSystem } from './core/system/system';
-import { ChatMessageContext, ChatMessage } from './chat-message';
 import { ObjectStore } from './core/synchronize-object/object-store';
+import { EventSystem } from './core/system/system';
 
 export class PresetSound {
   static dice1: string = '';
