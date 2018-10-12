@@ -1,9 +1,8 @@
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
+import { ChatMessage } from '@udonarium/chat-message';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
 
 @Component({
   selector: 'chat-message',

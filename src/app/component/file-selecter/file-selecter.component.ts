@@ -1,10 +1,11 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
-import { PanelService } from '../../service/panel.service';
-import { ModalService } from '../../service/modal.service';
-import { ImageStorage } from '../../class/core/file-storage/image-storage';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { Network, EventSystem } from '../../class/core/system/system';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'file-selector',

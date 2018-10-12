@@ -1,17 +1,15 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { Component, NgZone, OnInit } from '@angular/core';
 
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
+import { AudioFile } from '@udonarium/core/file-storage/audio-file';
+import { AudioPlayer, VolumeType } from '@udonarium/core/file-storage/audio-player';
+import { AudioStorage } from '@udonarium/core/file-storage/audio-storage';
+import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem } from '@udonarium/core/system/system';
+import { Jukebox } from '@udonarium/Jukebox';
 
-import { AudioStorage } from '../../class/core/file-storage/audio-storage';
-import { AudioFile } from '../../class/core/file-storage/audio-file';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-
-import { Jukebox } from '../../class/Jukebox';
-import { FileArchiver } from '../../class/core/file-storage/file-archiver';
-import { AudioPlayer, VolumeType } from '../../class/core/file-storage/audio-player';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'app-jukebox',

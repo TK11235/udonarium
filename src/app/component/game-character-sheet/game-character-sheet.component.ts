@@ -1,15 +1,16 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { Card } from '../../class/card';
-import { EventSystem, Network } from '../../class/core/system/system';
-import { DataElement } from '../../class/data-element';
-import { GameCharacter } from '../../class/game-character';
-import { TabletopObject } from '../../class/tabletop-object';
-import { Terrain } from '../../class/terrain';
-import { ModalService } from '../../service/modal.service';
-import { PanelService } from '../../service/panel.service';
-import { SaveDataService } from '../../service/save-data.service';
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
+import { Card } from '@udonarium/card';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { DataElement } from '@udonarium/data-element';
+import { GameCharacter } from '@udonarium/game-character';
+import { TabletopObject } from '@udonarium/tabletop-object';
+import { Terrain } from '@udonarium/terrain';
+
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
+import { SaveDataService } from 'service/save-data.service';
 
 @Component({
   selector: 'game-character-sheet',

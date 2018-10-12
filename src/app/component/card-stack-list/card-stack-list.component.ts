@@ -1,16 +1,12 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit } from '@angular/core';
 
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
+import { Card } from '@udonarium/card';
+import { CardStack } from '@udonarium/card-stack';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
-import { CardStack } from '../../class/card-stack';
-import { Card, CardState } from '../../class/card';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { SoundEffect, PresetSound } from '../../class/sound-effect';
+import { PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'card-stack-list',

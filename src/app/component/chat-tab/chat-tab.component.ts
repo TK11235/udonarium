@@ -1,11 +1,22 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, OnChanges, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 
-import { ChatMessageService } from '../../service/chat-message.service';
+import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
+import { ChatTab } from '@udonarium/chat-tab';
+import { EventSystem } from '@udonarium/core/system/system';
 
-import { ChatTab } from '../../class/chat-tab';
-import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
-import { EventSystem } from '../../class/core/system/system';
-import { PanelService } from '../../service/panel.service';
+import { ChatMessageService } from 'service/chat-message.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'chat-tab',

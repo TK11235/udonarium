@@ -1,14 +1,15 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { EventSystem } from '../../class/core/system/system';
-import { GameTableMask } from '../../class/game-table-mask';
-import { ContextMenuService } from '../../service/context-menu.service';
-import { PanelOption, PanelService } from '../../service/panel.service';
-import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
-import { MovableOption } from '../../directive/movable.directive';
-import { SoundEffect, PresetSound } from '../../class/sound-effect';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { EventSystem } from '@udonarium/core/system/system';
+import { GameTableMask } from '@udonarium/game-table-mask';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
+
+import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { MovableOption } from 'directive/movable.directive';
+import { ContextMenuService } from 'service/context-menu.service';
+import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'game-table-mask',

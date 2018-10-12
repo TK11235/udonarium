@@ -1,19 +1,15 @@
-import { Component, ViewContainerRef, ChangeDetectionStrategy, ChangeDetectorRef, Input, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-//import { NgForm } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewContainerRef } from '@angular/core';
 
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
+import { GameObject } from '@udonarium/core/synchronize-object/game-object';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { DataElement } from '@udonarium/data-element';
+import { GameCharacter } from '@udonarium/game-character';
+import { TabletopObject } from '@udonarium/tabletop-object';
 
-import { Card } from '../../class/card';
-import { CardStack } from '../../class/card-stack';
-import { TabletopObject } from '../../class/tabletop-object';
-import { GameCharacter } from '../../class/game-character';
-import { GameTableMask } from '../../class/game-table-mask';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { GameObject } from '../../class/core/synchronize-object/game-object';
-import { DataElement } from '../../class/data-element';
+import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { ModalService } from 'service/modal.service';
+import { PanelOption, PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'game-object-inventory',

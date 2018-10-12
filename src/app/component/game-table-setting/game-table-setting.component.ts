@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { ImageStorage } from '../../class/core/file-storage/image-storage';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { EventSystem, Network } from '../../class/core/system/system';
-import { GameTable, GridType } from '../../class/game-table';
-import { TableSelecter } from '../../class/table-selecter';
-import { ModalService } from '../../service/modal.service';
-import { PanelService } from '../../service/panel.service';
-import { SaveDataService } from '../../service/save-data.service';
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { GameTable, GridType } from '@udonarium/game-table';
+import { TableSelecter } from '@udonarium/table-selecter';
+
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
+import { SaveDataService } from 'service/save-data.service';
 
 @Component({
   selector: 'game-table-setting',

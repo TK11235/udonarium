@@ -1,14 +1,7 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-//import { EventSystemProxy, EventData } from './event-system.service';
-//import { NetworkProxy } from './network.service';
-//import { GameRoomService } from './game-room.service';
-import { GameCharacter, GameCharacterContainer } from '../../class/game-character';
-//import { FileStorageProxy, FileDataContainer } from './file-storage.service';
-import { DataElement } from '../../class/data-element';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { GameObject } from '../../class/core/synchronize-object/game-object';
+import { EventSystem } from '@udonarium/core/system/system';
+import { DataElement } from '@udonarium/data-element';
 
 @Component({
   selector: 'game-data-element, [game-data-element]',

@@ -1,12 +1,8 @@
-import { Component, ComponentRef, ViewRef, ViewContainerRef, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
-import { PanelService } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
-/*
-import * as $ from 'jquery';
-import { } from 'jqueryui';
-*/
+import { PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'ui-panel',

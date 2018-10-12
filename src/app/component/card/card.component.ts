@@ -8,21 +8,21 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 
-import { Card, CardState } from '../../class/card';
-import { CardStack } from '../../class/card-stack';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { EventSystem, Network } from '../../class/core/system/system';
-import { ContextMenuService } from '../../service/context-menu.service';
-import { PanelOption, PanelService } from '../../service/panel.service';
-import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
-import { MovableOption } from '../../directive/movable.directive';
-import { RotableOption } from '../../directive/rotable.directive';
-import { SoundEffect, PresetSound } from '../../class/sound-effect';
+import { Card, CardState } from '@udonarium/card';
+import { CardStack } from '@udonarium/card-stack';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
+
+import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { MovableOption } from 'directive/movable.directive';
+import { RotableOption } from 'directive/rotable.directive';
+import { ContextMenuService } from 'service/context-menu.service';
+import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'card',

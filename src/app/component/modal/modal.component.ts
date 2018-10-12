@@ -1,6 +1,7 @@
-import { Component, ViewContainerRef, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
-import { ModalService } from '../../service/modal.service';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+
+import { ModalService } from 'service/modal.service';
 
 @Component({
   selector: 'modal',

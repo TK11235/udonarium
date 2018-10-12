@@ -1,29 +1,30 @@
 import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { Card } from '../../class/card';
-import { CardStack } from '../../class/card-stack';
-import { ImageStorage } from '../../class/core/file-storage/image-storage';
-import { ImageContext, ImageFile } from '../../class/core/file-storage/image-file';
-import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { EventSystem } from '../../class/core/system/system';
-import { GameCharacter } from '../../class/game-character';
-import { GameTable, GridType } from '../../class/game-table';
-import { GameTableMask } from '../../class/game-table-mask';
-import { PeerCursor } from '../../class/peer-cursor';
-import { TableSelecter } from '../../class/table-selecter';
-import { TabletopObject } from '../../class/tabletop-object';
-import { Terrain } from '../../class/terrain';
-import { ContextMenuService } from '../../service/context-menu.service';
-import { ModalService } from '../../service/modal.service';
-import { PanelOption, PanelService } from '../../service/panel.service';
-import { PointerCoordinate, PointerDeviceService } from '../../service/pointer-device.service';
-import { GameCharacterSheetComponent } from '../game-character-sheet/game-character-sheet.component';
-import { GameTableSettingComponent } from '../game-table-setting/game-table-setting.component';
-import { TextNote } from '../../class/text-note';
-import { TabletopService, } from '../../service/tabletop.service';
-import { SoundEffect, PresetSound } from '../../class/sound-effect';
-import { GameObject } from '../../class/core/synchronize-object/game-object';
+import { Card } from '@udonarium/card';
+import { CardStack } from '@udonarium/card-stack';
+import { ImageContext, ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { GameObject } from '@udonarium/core/synchronize-object/game-object';
+import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem } from '@udonarium/core/system/system';
+import { GameCharacter } from '@udonarium/game-character';
+import { GameTable, GridType } from '@udonarium/game-table';
+import { GameTableMask } from '@udonarium/game-table-mask';
+import { PeerCursor } from '@udonarium/peer-cursor';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
+import { TableSelecter } from '@udonarium/table-selecter';
+import { TabletopObject } from '@udonarium/tabletop-object';
+import { Terrain } from '@udonarium/terrain';
+import { TextNote } from '@udonarium/text-note';
+
+import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
+import { ContextMenuService } from 'service/context-menu.service';
+import { ModalService } from 'service/modal.service';
+import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { TabletopService } from 'service/tabletop.service';
 
 @Component({
   selector: 'game-table',

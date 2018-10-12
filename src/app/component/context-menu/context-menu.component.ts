@@ -1,7 +1,6 @@
-import { Component, ComponentRef, ViewRef, ViewContainerRef, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { ContextMenuService } from '../../service/context-menu.service';
+import { ContextMenuService } from 'service/context-menu.service';
 
 @Component({
   selector: 'context-menu',

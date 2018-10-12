@@ -1,21 +1,20 @@
-import { Component, OnInit, OnDestroy, NgZone, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { TextViewComponent } from '../text-view/text-view.component';
+import { ChatMessageContext } from '@udonarium/chat-message';
+import { ChatTab } from '@udonarium/chat-tab';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { DiceBot } from '@udonarium/dice-bot';
+import { GameCharacter } from '@udonarium/game-character';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
-import { ChatMessageService } from '../../service/chat-message.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
-
-import { ChatTab } from '../../class/chat-tab';
-import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
-import { GameCharacter } from '../../class/game-character';
-import { PeerCursor } from '../../class/peer-cursor';
-import { DiceBot } from '../../class/dice-bot';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { PeerContext } from '../../class/core/system/network/peer-context';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ChatTabSettingComponent } from '../chat-tab-setting/chat-tab-setting.component';
+import { ChatTabSettingComponent } from 'component/chat-tab-setting/chat-tab-setting.component';
+import { TextViewComponent } from 'component/text-view/text-view.component';
+import { ChatMessageService } from 'service/chat-message.service';
+import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'chat-window',

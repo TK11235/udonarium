@@ -1,12 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ChatMessageService } from '../../service/chat-message.service';
-import { ChatTab } from '../../class/chat-tab';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ModalService } from '../../service/modal.service';
-import { PanelService } from '../../service/panel.service';
-import { EventSystem } from '../../class/core/system/system';
-import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
-import { FileArchiver } from '../../class/core/file-storage/file-archiver';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { ChatTab } from '@udonarium/chat-tab';
+import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
+import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem } from '@udonarium/core/system/system';
+
+import { ChatMessageService } from 'service/chat-message.service';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 import * as Beautify from 'vkbeautify';
 

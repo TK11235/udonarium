@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, NgZone } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
-import { LobbyComponent } from '../lobby/lobby.component';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { EventSystem, Network } from '@udonarium/core/system/system';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
-import { PanelService } from '../../service/panel.service';
-import { ModalService } from '../../service/modal.service';
-import { AppConfigService } from '../../service/app-config.service';
-
-import { PeerContext } from '../../class/core/system/network/peer-context';
-import { PeerCursor } from '../../class/peer-cursor';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { LobbyComponent } from 'component/lobby/lobby.component';
+import { AppConfigService } from 'service/app-config.service';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'peer-menu',

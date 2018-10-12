@@ -1,20 +1,17 @@
-import { Component, ViewContainerRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem } from '@udonarium/core/system/system';
+import { GameCharacter } from '@udonarium/game-character';
+import { GameTableMask } from '@udonarium/game-table-mask';
+import { TableSelecter } from '@udonarium/table-selecter';
 
-import { ModalService } from '../../service/modal.service';
-import { PanelService } from '../../service/panel.service';
-import { TableSelecter } from '../../class/table-selecter';
-
-import { GameTable, GameTableDataContainer } from '../../class/game-table';
-import { GameCharacter } from '../../class/game-character';
-import { GameTableMask } from '../../class/game-table-mask';
-import { Network, EventSystem } from '../../class/core/system/system';
-
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ObjectSerializer } from '../../class/core/synchronize-object/object-serializer';
-import { ImageStorage } from '../../class/core/file-storage/image-storage';
-import { ImageFile } from '../../class/core/file-storage/image-file';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'game-character-generator',

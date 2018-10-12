@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild, NgZone } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { PointerDeviceService, PointerCoordinate } from '../../service/pointer-device.service';
-import { EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { PeerCursor } from '../../class/peer-cursor';
+import { EventSystem } from '@udonarium/core/system/system';
+import { PeerCursor } from '@udonarium/peer-cursor';
+
+import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'peer-cursor, [peer-cursor]',
