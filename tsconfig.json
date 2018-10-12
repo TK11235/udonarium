@@ -16,6 +16,23 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@udonarium/*": [
+        "src/app/class/*"
+      ],
+      "directive/*": [
+        "src/app/directive/*"
+      ],
+      "component/*": [
+        "src/app/component/*"
+      ],
+      "pipe/*": [
+        "src/app/pipe/*"
+      ],
+      "service/*": [
+        "src/app/service/*"
+      ]
+    },
   }
 }
