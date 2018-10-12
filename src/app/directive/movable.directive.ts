@@ -1,9 +1,11 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
-import { EventSystem } from '../class/core/system/system';
-import { TabletopObject } from '../class/tabletop-object';
-import { PointerCoordinate, PointerDeviceService } from '../service/pointer-device.service';
-import { TabletopService } from '../service/tabletop.service';
+import { EventSystem } from '@udonarium/core/system/system';
+import { TabletopObject } from '@udonarium/tabletop-object';
+
+import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { TabletopService } from 'service/tabletop.service';
+
 import { Grabbable } from './grabbable';
 
 export interface MovableOption {

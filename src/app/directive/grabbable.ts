@@ -1,6 +1,7 @@
-import { EventSystem } from '../class/core/system/system';
-import { TabletopObject } from '../class/tabletop-object';
-import { TabletopService } from '../service/tabletop.service';
+import { EventSystem } from '@udonarium/core/system/system';
+import { TabletopObject } from '@udonarium/tabletop-object';
+
+import { TabletopService } from 'service/tabletop.service';
 
 export abstract class Grabbable {
   protected _isDragging: boolean = false;
