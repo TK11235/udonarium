@@ -15,9 +15,6 @@ export interface PanelOption {
 
 @Injectable()
 export class PanelService {
-  //private context: PanelContext = null;
-  private count = 0;
-
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
   static UIPanelComponentClass: { new(...args: any[]): any } = null;
@@ -46,17 +43,7 @@ export class PanelService {
     }
     let panelComponentRef: ComponentRef<any>;
 
-    //const childPanelService: PanelService = new PanelService(this.componentFactoryResolver);
-    //childPanelService.context = new PanelContext();
-
-    /*
-    const providers = ReflectiveInjector.resolve([
-      { provide: PanelService, useValue: childPanelService }
-    ]);
-    */
-
-    //const parentInjector = parentViewContainerRef.injector;
-    const injector = parentViewContainerRef.injector;//ReflectiveInjector.fromResolvedProviders(providers, parentInjector);
+    const injector = parentViewContainerRef.injector;
 
     const panelComponentFactory = this.componentFactoryResolver.resolveComponentFactory(PanelService.UIPanelComponentClass);
     const bodyComponentFactory = this.componentFactoryResolver.resolveComponentFactory(childComponent);
@@ -78,10 +65,6 @@ export class PanelService {
       childPanelService.panelComponentRef = null;
     });
 
-    //childPanelService.context.panelComponentRef = panelComponentRef;
-
-
-    //panelComponentRef.instance.panelService = childPanelService;
     return <T>bodyComponentRef.instance;
   }
 

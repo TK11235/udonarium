@@ -11,9 +11,6 @@ interface ContextMenuAction {
 
 @Injectable()
 export class ContextMenuService {
-  //private context: PanelContext = null;
-  private count = 0;
-
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
   static UIPanelComponentClass: { new(...args: any[]): any } = null;

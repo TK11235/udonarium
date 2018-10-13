@@ -38,9 +38,7 @@ export class AppConfigService {
   }
 
   initialize() {
-    //this.initIndexDB();
     this.initAppConfig();
-    //this.initLocalStorage();
     this.initDatabase();
   }
 
@@ -100,53 +98,6 @@ export class AppConfigService {
       console.warn(e);
     }
     EventSystem.trigger('LOAD_CONFIG', AppConfigService.appConfig);
-  }
-
-  private initLocalStorage() {
-    let oldIds: string[] = [];
-    let historyIds: string[] = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      let peer: string = localStorage.key(i);
-      oldIds.push(peer);
-      Array.prototype.push.apply(historyIds, JSON.parse(localStorage.getItem(peer)));
-    }
-    for (let historyId of historyIds) {
-      let isMine: boolean = false;
-      for (let oldId of oldIds) {
-        if (historyId === oldId) {
-          isMine = true;
-          break;
-        }
-      }
-      if (!isMine) this.peerHistory.push(historyId);
-    }
-
-    for (let i = 0; i < localStorage.length; i++) {
-      console.log('履歴: ' + localStorage.key(i), localStorage.getItem(localStorage.key(i)));
-    }
-    console.log('最終履歴: ', this.peerHistory);
-    EventSystem.register(this)
-      .on('OPEN_OTHER_PEER', -1000, () => {
-        console.log('AppConfigService OPEN_OTHER_PEER', Network.peerIds);
-        if (!this.isOpen) {
-          localStorage.clear();
-          this.isOpen = true;
-        }
-        localStorage.setItem(Network.peerId, JSON.stringify(Network.peerIds));
-      })
-      .on('CLOSE_OTHER_PEER', -1000, () => {
-        console.log('AppConfigService CLOSE_OTHER_PEER', Network.peerIds);
-      });
-  }
-
-  private initIndexDB() {
-    let request = window.indexedDB.open('AppConfigDataBase', 1);
-    request.onerror = function (event) {
-      // request.errorCode に対して行うこと!
-    };
-    request.onsuccess = function (event) {
-      // request.result に対して行うこと!
-    };
   }
 
   private loadYaml(): Promise<string> {

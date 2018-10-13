@@ -59,7 +59,6 @@ export class PointerDeviceService {
 
   private onPointerDown(e: any) {
     this._isPointerDown = true;
-    //this._isDragging = false;
     this._isAllowedToOpenContextMenu = true;
     if (e.touches) {
       this.onTouchDown(e);
@@ -97,7 +96,6 @@ export class PointerDeviceService {
     if (1 < this.pointers.length) Array.prototype.slice.call(this.pointers, 0, 1);
     let pointer: PointerCoordinate = { x: e.pageX, y: e.pageY, z: 0 };
     if (pointer.x !== this.pointers[0].x || pointer.y !== this.pointers[0].y || pointer.z !== this.pointers[0].z) {
-      //this._isDragging = this._isPointerDown;
       this._isAllowedToOpenContextMenu = false;
     }
     this.pointers[0] = pointer;
@@ -109,7 +107,6 @@ export class PointerDeviceService {
     for (let i = 0; i < length; i++) {
       let pointer: PointerCoordinate = { x: e.touches[i].pageX, y: e.touches[i].pageY, z: 0 };
       if (this.pointers[i] !== null && (pointer.x !== this.pointers[i].x || pointer.y !== this.pointers[i].y || pointer.z !== this.pointers[i].z)) {
-        //this._isDragging = this._isPointerDown;
         this._isAllowedToOpenContextMenu = false;
       }
       this.pointers[i] = pointer;
@@ -121,7 +118,6 @@ export class PointerDeviceService {
   private onPointerUp(e: any) {
     this.onPointerMove(e);
     this._isPointerDown = false;
-    //this._isDragging = false;
   }
 
   private onContextMenu(e: any) {
