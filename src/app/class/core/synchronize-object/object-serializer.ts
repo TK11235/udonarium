@@ -139,40 +139,36 @@ export class ObjectSerializer {
     for (let i = 0; i < attributes.length; i++) {
       let value = attributes[i].value;
       value = XmlUtil.decodeEntityReference(value);
-      /* */
+
       let split: string[] = attributes[i].name.split('.');
       let key: string | number = split[0];
       let obj: Object | Array<any> = syncData;
       let parentObj: Object | Array<any> = null;
-      //console.log('---------------------start obj is ', obj);
+
       if (1 < split.length) {
+        // 階層構造の解析 foo.bar.0="abc" 等
+        // 処理として実装こそしているが、xmlの仕様としては良くないので使用するべきではない.
         for (let j = 0; j < split.length; j++) {
           let index = parseInt(split[j]);
           if (parentObj && !Number.isNaN(index) && !Array.isArray(obj) && Object.keys(parentObj).length) {
-            //console.log('A:key:' + key +  ' to Array', obj);
             parentObj[key] = [];
             obj = parentObj[key];
-            //console.log('B:key:' + key +  ' to Array', obj);
           }
           key = Number.isNaN(index) ? split[j] : index;
           if (j + 1 < split.length) {
-            //console.log('A:key is ' + key + '<' + typeof key + '>...' + split[j], obj[key]);
             if (obj[key] === undefined) obj[key] = typeof key === 'number' ? [] : {};
-            //console.log('B:key is ' + key + '<' + typeof key + '>...' + split[j], obj[key]);
             parentObj = obj;
             obj = obj[key];
           }
         }
       }
-      /* */
+
       let type = typeof obj[key];
       if (type !== 'string' && obj[key] != null) {
         let json = JSON.parse(value);
         value = json;
       }
       obj[key] = value;
-      //console.log('key is ' + key + '<' + typeof key + '> :value is ' + typeof obj[key], value);
-      //console.log('---------------------end obj is ', obj);
     }
     return syncData;
   }
