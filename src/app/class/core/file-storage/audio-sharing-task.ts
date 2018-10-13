@@ -122,7 +122,8 @@ export class AudioSharingTask {
         if ((event.data.index + 1) % 8 === 0) {
           EventSystem.call('FILE_MORE_CHANK_' + this.file.identifier, event.data.index + 1, event.sendFrom);
         }
-      }).on('FILE_SEND_END_' + this.file.identifier, 0, event => {
+      })
+      .on('FILE_SEND_END_' + this.file.identifier, 0, event => {
         if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
         EventSystem.unregister(this);
         let context = this.file.toContext();

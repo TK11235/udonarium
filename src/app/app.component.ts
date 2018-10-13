@@ -152,15 +152,18 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         console.log('LOAD_CONFIG !!!', event.data);
         Network.setApiKey(event.data.webrtc.key);
         Network.open();
-      }).on<File>('FILE_LOADED', 0, event => {
+      })
+      .on<File>('FILE_LOADED', 0, event => {
         this.lazyNgZoneUpdate();
       })
       .on('OPEN_PEER', 0, event => {
         console.log('OPEN_PEER', event.data.peer);
         PeerCursor.myCursor.peerId = event.data.peer;
-      }).on('CLOSE_OTHER_PEER', 0, event => {
+      })
+      .on('CLOSE_OTHER_PEER', 0, event => {
         //
-      }).on('LOST_CONNECTION_PEER', 0, event => {
+      })
+      .on('LOST_CONNECTION_PEER', 0, event => {
         console.log('LOST_CONNECTION_PEER', event.data.peer);
         this.ngZone.run(async () => {
           if (1 < Network.peerIds.length) {

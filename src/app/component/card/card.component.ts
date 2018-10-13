@@ -81,7 +81,8 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           this.changeDetector.markForCheck();
         }
         if (event.isSendFromSelf || event.data.identifier !== this.card.identifier) return;
-      }).on('UPDATE_GAME_OBJECT', 1000, event => {
+      })
+      .on('UPDATE_GAME_OBJECT', 1000, event => {
         if (event.isSendFromSelf || event.data.aliasName !== 'card') return;
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!object) this.changeDetector.markForCheck();

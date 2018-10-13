@@ -140,7 +140,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           gameObject.update();
           SoundEffect.play(PresetSound.put);
         }
-      }).on('DRAG_LOCKED_OBJECT', event => {
+      })
+      .on('DRAG_LOCKED_OBJECT', event => {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
         let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
