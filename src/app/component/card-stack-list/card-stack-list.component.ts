@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
@@ -6,7 +6,6 @@ import { EventSystem, Network } from '@udonarium/core/system/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
 import { PanelService } from 'service/panel.service';
-import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'card-stack-list',
@@ -20,19 +19,12 @@ export class CardStackListComponent implements OnInit {
   owner: string = Network.peerId;
 
   constructor(
-    private ngZone: NgZone,
-    //private gameRoomService: GameRoomService,
-    //private contextMenuService: ContextMenuService,
-    //private modalService: ModalService,
     private panelService: PanelService,
-    private elementRef: ElementRef,
     private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
     this.panelService.title = this.cardStack.name + ' のカード一覧';
-    //this.cardStack = this.modalService.option instanceof CardStack ? this.modalService.option : this.cardStack;
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.data.aliasName === Card.aliasName) this.changeDetector.markForCheck();

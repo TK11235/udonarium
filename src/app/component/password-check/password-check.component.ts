@@ -1,16 +1,14 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { EventSystem, Network } from '@udonarium/core/system/system';
 
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
-import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'password-check',
   templateUrl: './password-check.component.html',
-  styleUrls: ['./password-check.component.css'],
-  //changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./password-check.component.css']
 })
 export class PasswordCheckComponent implements OnInit {
   password: string = '';
@@ -24,12 +22,8 @@ export class PasswordCheckComponent implements OnInit {
   }
 
   constructor(
-    private ngZone: NgZone,
     private panelService: PanelService,
-    private modalService: ModalService,
-    private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService
+    private modalService: ModalService
   ) {
     this.needPassword = modalService.option.password ? modalService.option.password : '';
   }

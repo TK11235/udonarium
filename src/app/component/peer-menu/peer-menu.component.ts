@@ -23,12 +23,9 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   gameRoomService = ObjectStore.instance;
   help: string = '';
 
-  //get myPeer(): PeerCursor { return this.getPeerCursor(this.networkService.peerId); }
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }
 
   constructor(
-    //private networkService: NetworkService,
-    //private gameRoomService: GameRoomService,
     private ngZone: NgZone,
     private modalService: ModalService,
     private panelService: PanelService,

@@ -12,7 +12,6 @@ import { GameCharacterSheetComponent } from 'component/game-character-sheet/game
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuService } from 'service/context-menu.service';
-import { ModalService } from 'service/modal.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -71,7 +70,6 @@ export class CardStackComponent implements OnInit {
 
   constructor(
     private contextMenuService: ContextMenuService,
-    private modalService: ModalService,
     private panelService: PanelService,
     private elementRef: ElementRef,
     private pointerDeviceService: PointerDeviceService

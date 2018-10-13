@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
@@ -63,7 +63,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   constructor(
-    private viewContainerRef: ViewContainerRef,
     private modalService: ModalService,
     private saveDataService: SaveDataService,
     private panelService: PanelService

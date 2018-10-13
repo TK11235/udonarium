@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { PeerContext } from '@udonarium/core/system/network/peer-context';
@@ -9,13 +9,11 @@ import { PasswordCheckComponent } from 'component/password-check/password-check.
 import { RoomSettingComponent } from 'component/room-setting/room-setting.component';
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
-import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'lobby',
   templateUrl: './lobby.component.html',
   styleUrls: ['./lobby.component.css'],
-  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LobbyComponent implements OnInit {
   rooms: { room: string, roomName: string, peers: PeerContext[] }[] = [];
@@ -30,12 +28,8 @@ export class LobbyComponent implements OnInit {
     return Network.peerIds.length <= 1 ? false : true;
   }
   constructor(
-    private ngZone: NgZone,
     private panelService: PanelService,
-    private modalService: ModalService,
-    private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -85,7 +79,6 @@ export class LobbyComponent implements OnInit {
   }
 
   async connect(peerContexts: PeerContext[]) {
-    //Network.connect(peer);
     let context = peerContexts[0];
 
     if (context.password.length) {

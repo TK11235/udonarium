@@ -40,9 +40,6 @@ export class TextNoteComponent implements OnInit {
 
   gridSize: number = 50;
 
-  private doubleClickTimer: NodeJS.Timer = null;
-  private doubleClickPoint = { x: 0, y: 0 };
-
   private calcFitHeightTimer: NodeJS.Timer = null;
 
   movableOption: MovableOption = {};
@@ -52,7 +49,6 @@ export class TextNoteComponent implements OnInit {
     private ngZone: NgZone,
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
-    private elementRef: ElementRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
@@ -96,7 +92,6 @@ export class TextNoteComponent implements OnInit {
   }
 
   onMouseUp(e: any) {
-    //if (!this.movable.isDragging && !this.rotable.isDragging) {
     if (this.pointerDeviceService.isAllowedToOpenContextMenu) {
       console.log('this.textAreaElementRef.nativeElement.focus() !!!!');
       let selection = window.getSelection();
@@ -176,12 +171,10 @@ export class TextNoteComponent implements OnInit {
 
   private addMouseEventListeners() {
     document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    //document.body.addEventListener('mousemove', this.callbackOnMouseMove, false);
   }
 
   private removeMouseEventListeners() {
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    //document.body.removeEventListener('mousemove', this.callbackOnMouseMove, false);
   }
 
   private showDetail(gameObject: TabletopObject) {

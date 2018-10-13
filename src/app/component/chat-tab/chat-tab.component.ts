@@ -15,7 +15,6 @@ import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
 import { EventSystem } from '@udonarium/core/system/system';
 
-import { ChatMessageService } from 'service/chat-message.service';
 import { PanelService } from 'service/panel.service';
 
 @Component({
@@ -62,8 +61,7 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterView
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private panelService: PanelService,
-    private chatMessageService: ChatMessageService
+    private panelService: PanelService
   ) { }
 
   ngOnInit() {

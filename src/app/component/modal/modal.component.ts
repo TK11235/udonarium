@@ -34,10 +34,7 @@ import { ModalService } from 'service/modal.service';
 export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
 
-  //modalService: ModalService;
-
   constructor(
-    private viewContainerRef: ViewContainerRef,
     public modalService: ModalService) { }
 
   ngOnInit() { }

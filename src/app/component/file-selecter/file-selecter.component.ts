@@ -17,7 +17,6 @@ export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fileStorageService = ImageStorage.instance;
   constructor(
-    //private fileStorageService: FileStorageService,
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
     private modalService: ModalService

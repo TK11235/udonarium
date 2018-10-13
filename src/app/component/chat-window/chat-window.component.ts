@@ -24,8 +24,6 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     trigger('flyInOut', [
       state('in', style({ transform: 'scale3d(1, 1, 1)' })),
       transition('void => *', [
-        //style({ transform: 'scale3d(0, 0, 0)' }),
-        //animate(100)
         animate('600ms ease', keyframes([
           style({ transform: 'scale3d(0, 0, 0)', offset: 0 }),
           style({ transform: 'scale3d(1.5, 1.5, 1.5)', offset: 0.5 }),
@@ -48,7 +46,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   text: string = '';
   sendTo: string = '';
   get isDirect(): boolean { return this.sendTo != null && this.sendTo.length ? true : false }
-  //gameType: string = '';
   get gameType(): string { return this.chatMessageService.gameType; }
   set gameType(gameType: string) { this.chatMessageService.gameType = gameType; }
   gameHelp: string = '';
@@ -82,7 +79,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   eventSystem = EventSystem;
   objectStore = ObjectStore.instance;
-  //network = Network;
 
   private writingEventInterval: NodeJS.Timer = null;
   private previousWritingLength: number = 0;
@@ -91,14 +87,11 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get network() { return Network; };
   get diceBotInfos() { return DiceBot.diceBotInfos }
-  get myPeer(): PeerCursor { return PeerCursor.myCursor; }//this.objectStore.get<PeerCursor>(this.network.peerId); }
+  get myPeer(): PeerCursor { return PeerCursor.myCursor; }
   get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
     private ngZone: NgZone,
-    //private eventSystem: EventSystem,
-    //private objectStore: objectStore,
-    //private network: Network,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
     private pointerDeviceService: PointerDeviceService
@@ -202,7 +195,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSelectedTab(identifier: string) {
-    //this.chatTabidentifier = identifier;
     this.updatePanelTitle();
   }
 
@@ -305,7 +297,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     console.log(chatMessage);
 
-    //this.eventSystem.call('BROADCAST_MESSAGE', chatMessage);
     if (this.chatTab) {
       let latestTimeStamp: number = 0 < this.chatTab.chatMessages.length
         ? this.chatTab.chatMessages[this.chatTab.chatMessages.length - 1].timestamp
@@ -314,7 +305,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.chatTab.addMessage(chatMessage);
     }
-    //this.scrollToBottom(true);
     this.text = '';
     this.previousWritingLength = this.text.length;
     let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;

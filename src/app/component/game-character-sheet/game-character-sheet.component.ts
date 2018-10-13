@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Card } from '@udonarium/card';
 import { EventSystem, Network } from '@udonarium/core/system/system';
@@ -22,8 +22,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   @Input() tabletopObject: TabletopObject = null;
   private isEdit: boolean = false;
 
-  //private gameRoomService: GameRoomService,
-  private networkService = Network;
+  networkService = Network;
 
   get isCharacter(): boolean {
     return this.tabletopObject instanceof GameCharacter;
@@ -38,8 +37,6 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   }
 
   constructor(
-    private changeDetector: ChangeDetectorRef,
-    private viewContainerRef: ViewContainerRef,
     private saveDataService: SaveDataService,
     private modalService: ModalService,
     private panelService: PanelService

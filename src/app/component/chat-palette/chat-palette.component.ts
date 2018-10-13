@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 import { ChatMessageContext } from '@udonarium/chat-message';
 import { ChatPalette } from '@udonarium/chat-palette';
@@ -51,14 +51,8 @@ export class ChatPaletteComponent implements OnInit {
   get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
-    private ngZone: NgZone,
-    //private gameRoomService: GameRoomService,
-    //private contextMenuService: ContextMenuService,
-    //private modalService: ModalService,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 

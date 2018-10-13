@@ -68,7 +68,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   private isFullScreen: boolean = false;
 
   private $draggablePanel: JQuery;
-  private $scrollablePanel: JQuery;
 
   private callbackOnScrollablePanelMouseDown: any = null;
   private callbackOnDraggablePanelMouseDown: any = null;
@@ -88,7 +87,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     // TODO ウィンドウタイトルって下側のほうがいい？
     this.$draggablePanel = $(this.draggablePanel.nativeElement);
-    this.$scrollablePanel = $(this.scrollablePanel.nativeElement);
 
     this.$draggablePanel.draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', stack: '.draggable-panel', opacity: 0.7 });
     this.$draggablePanel.resizable({ handles: 'all', minHeight: 100, minWidth: 100 });
@@ -165,8 +163,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   private onMouseUp(e: any) {
     console.log('onMouseUp');
     this.$draggablePanel.draggable('option', 'handle', false);
-    //this.$draggablePanel.draggable('option', 'handle', '.draggable-panel');
-    //this.$scrollablePanel.draggable('option', 'handle', true);
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
   }
 

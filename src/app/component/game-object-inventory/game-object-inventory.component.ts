@@ -8,7 +8,6 @@ import { GameCharacter } from '@udonarium/game-character';
 import { TabletopObject } from '@udonarium/tabletop-object';
 
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
-import { ModalService } from 'service/modal.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 
 @Component({
@@ -18,19 +17,13 @@ import { PanelOption, PanelService } from 'service/panel.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameObjectInventoryComponent {
-  //private inventoryType: string = 'table';
   inventoryTypes: string[] = ['table', 'common', 'graveyard'];
-  private gameObjectsChach: { [inventoryType: string]: GameObject[] } = { 'table': [], 'common': [], 'graveyard': [] };
 
-  private selectedIdentifier: string = '';
-  private networkService = Network;
+  selectedIdentifier: string = '';
+  networkService = Network;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    //private gameRoomService: GameRoomService,
-    //private networkService: NetworkService,
-    private viewContainerRef: ViewContainerRef,
-    private modalService: ModalService,
     private panelService: PanelService
   ) { }
 
@@ -60,9 +53,6 @@ export class GameObjectInventoryComponent {
   getGameObjects(inventoryType: string) {
     let identifiersArray: TabletopObject[][] = [];
     identifiersArray[0] = ObjectStore.instance.getObjects(GameCharacter);
-    //identifiersArray[1] = ObjectStore.instance.getObjects(Card);
-    //identifiersArray[2] = ObjectStore.instance.getObjects(CardStack);
-    //identifiersArray[1] = ObjectStore.instance.getObjects(GameTableMask);
     let gameObjects: GameObject[] = [];
 
     for (let identifiers of identifiersArray) {
@@ -100,7 +90,6 @@ export class GameObjectInventoryComponent {
 
   private showDetail(gameObject: TabletopObject) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    //this.modalService.open(GameCharacterSheetComponent);
     let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;

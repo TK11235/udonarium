@@ -32,9 +32,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private _y: number = 0;
 
   constructor(
-    private elementRef: ElementRef,
-    private ngZone: NgZone,
-    private pointerDeviceService: PointerDeviceService
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { EventSystem, Network } from '@udonarium/core/system/system';
@@ -6,13 +6,11 @@ import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
-import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'room-setting',
   templateUrl: './room-setting.component.html',
-  styleUrls: ['./room-setting.component.css'],
-  //changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./room-setting.component.css']
 })
 export class RoomSettingComponent implements OnInit {
   peers: PeerContext[] = [];
@@ -27,12 +25,8 @@ export class RoomSettingComponent implements OnInit {
   validateLength: boolean = false;
 
   constructor(
-    private ngZone: NgZone,
     private panelService: PanelService,
-    private modalService: ModalService,
-    private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {

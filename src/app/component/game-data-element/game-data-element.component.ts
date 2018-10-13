@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { EventSystem } from '@udonarium/core/system/system';
 import { DataElement } from '@udonarium/data-element';
@@ -13,12 +13,8 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   @Input() isEdit: boolean = false;
   @Input() isTagLocked: boolean = false;
   @Input() isValueLocked: boolean = false;
-  // gameDataElement.currentValueだと遅い　何とかする
 
   constructor(
-    private ngZone: NgZone,
-    //private gameRoomService: GameRoomService,
-    private elementRef: ElementRef,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -36,7 +32,6 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    //console.log('GameDataElementComponent ngOnDestroy <>' + this.gameDataElement.identifier);
   }
 
   ngAfterViewInit() {

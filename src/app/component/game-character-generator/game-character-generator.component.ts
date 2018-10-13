@@ -30,7 +30,6 @@ export class GameCharacterGeneratorComponent implements OnInit, OnDestroy, After
   tableBackgroundImage: ImageFile = ImageFile.createEmpty('null');
 
   constructor(
-    //private gameRoomService: GameRoomService,
     private viewContainerRef: ViewContainerRef,
     private modalService: ModalService,
     private panelService:PanelService
