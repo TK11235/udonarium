@@ -69,8 +69,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       ObjectStore.instance;
       ObjectSynchronizer.instance.initialize();
     });
-    appConfigService.initialize();
-    pointerDeviceService.initialize();
+    this.appConfigService.initialize();
+    this.pointerDeviceService.initialize();
 
     let diceBot: DiceBot = new DiceBot('DiceBot');
     diceBot.initialize();

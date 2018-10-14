@@ -1,3 +1,4 @@
+import { Attributes } from './core/synchronize-object/attributes';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 
@@ -57,8 +58,4 @@ export class DataElement extends ObjectNode {
     }
     return null;
   }
-}
-
-interface Attributes {
-  [attribute: string]: number | string;
 }

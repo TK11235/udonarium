@@ -28,6 +28,16 @@ class PromiseQueue {
   }
 }
 
+interface DiceBotInfo {
+  script: string;
+  game: string;
+}
+
+interface DiceRollResult {
+  result: string;
+  isSecret: boolean;
+}
+
 @SyncObject('dice-bot')
 export class DiceBot extends GameObject {
   private static loadedDiceBots: { [gameType: string]: boolean } = {};
@@ -472,14 +482,4 @@ export class DiceBot extends GameObject {
       http.send(null);
     });
   }
-}
-
-interface DiceBotInfo {
-  script: string;
-  game: string;
-}
-
-interface DiceRollResult {
-  result: string;
-  isSecret: boolean;
 }
