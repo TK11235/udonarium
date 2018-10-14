@@ -96,17 +96,3 @@ export class GameCharacter extends TabletopObject {
     this.update();
   }
 }
-
-export interface GameCharacterContainer {
-  name: string;
-  size: number;
-  imageIdentifier: string;
-  dataElementIdentifier: string;
-  location: GameObjectLocationContainer;
-}
-
-export interface GameObjectLocationContainer {
-  locationName: string;
-  x: number;
-  y: number;
-}
