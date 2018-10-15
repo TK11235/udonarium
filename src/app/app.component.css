@@ -58,28 +58,10 @@ nav ul a, nav ul a:hover, nav ul a:active, nav ul a:visited {
 .networkIndicator {
   display: none;
   z-index: 9999;
-  background-color: rgba(247, 247, 247, 0.6);
-  backface-visibility: hidden;
   pointer-events: none;
   position: absolute;
   top: 3px;
   right: 3px;
   height: 30px;
   width: 30px;
-}
-
-.networkIndicator .sk-cube-grid {
-  font-size: 8px;
-  color: #444;
-  height: 30px;
-  width: 30px;
-}
-
-.networkIndicator .sk-cube {
-  background-color: #555;
-}
-
-.networkIndicator .sk-title {
-  padding: 2px 0;
-  background-color: rgba(247, 247, 247, 0.6);
 }

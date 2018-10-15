@@ -27,6 +27,7 @@ import { GameTableComponent } from 'component/game-table/game-table.component';
 import { JukeboxComponent } from 'component/jukebox/jukebox.component';
 import { LobbyComponent } from 'component/lobby/lobby.component';
 import { ModalComponent } from 'component/modal/modal.component';
+import { NetworkIndicatorComponent } from 'component/network-indicator/network-indicator.component';
 import { PasswordCheckComponent } from 'component/password-check/password-check.component';
 import { PeerCursorComponent } from 'component/peer-cursor/peer-cursor.component';
 import { PeerMenuComponent } from 'component/peer-menu/peer-menu.component';
@@ -88,6 +89,7 @@ import { AppComponent } from './app.component';
     TextNoteComponent,
     MovableDirective,
     RotableDirective,
+    NetworkIndicatorComponent,
   ],
   imports: [
     BrowserModule,
