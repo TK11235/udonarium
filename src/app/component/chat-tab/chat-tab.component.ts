@@ -24,7 +24,7 @@ import { PanelService } from 'service/panel.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
-  maxMessages: number = 200;
+  maxMessages: number = 20;
   preScrollBottom: number = -1;
 
   sampleMessages: ChatMessageContext[] = [
@@ -55,6 +55,8 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterView
     if (!this.chatTab) return false;
     return this.maxMessages < this.chatTab.chatMessages.length;
   };
+
+  private callbackOnScroll: any = (e) => this.onScroll(e);
 
   @Input() chatTab: ChatTab;
   @Output() onAddMessage: EventEmitter<null> = new EventEmitter();
@@ -91,13 +93,20 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterView
       });
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false);
+    });
+  }
+
   ngOnDestroy() {
     EventSystem.unregister(this);
+    this.panelService.scrollablePanel.removeEventListener('scroll', this.callbackOnScroll, false);
   }
 
   ngOnChanges() {
     this.needUpdate = true;
-    this.maxMessages = 200;
+    this.maxMessages = 20;
   }
 
   ngAfterViewChecked() {
@@ -107,9 +116,12 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterView
     }
   }
 
-  moreMessages() {
-    this.maxMessages += 100;
-    if (this.chatTab && this.chatTab.chatMessages.length < this.maxMessages) this.maxMessages = this.chatTab.chatMessages.length;
+  moreMessages(length: number = 100) {
+    if (!this.hasMany) return;
+
+    this.maxMessages += length;
+    let maxLength = this.chatTab.chatMessages.length;
+    if (this.chatTab && maxLength < this.maxMessages) this.maxMessages = maxLength;
     this.changeDetector.markForCheck();
     this.needUpdate = true;
 
@@ -126,5 +138,10 @@ export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterView
 
   trackByChatMessage(index: number, message: ChatMessage) {
     return message.identifier;
+  }
+
+  private onScroll(e: Event) {
+    if (200 < this.panelService.scrollablePanel.scrollTop) return;
+    this.moreMessages(4);
   }
 }
