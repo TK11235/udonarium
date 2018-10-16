@@ -23,6 +23,8 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   gameRoomService = ObjectStore.instance;
   help: string = '';
 
+  private isChangedNickname: boolean = false;
+
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }
 
   constructor(
@@ -156,5 +158,15 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   findPeerName(peerId: string) {
     const peerCursor = PeerCursor.find(peerId);
     return peerCursor ? peerCursor.name : '';
+  }
+
+  onChangeNickname(): void {
+    this.isChangedNickname = true;
+  }
+
+  onBlurNickname(): void {
+    if (this.isChangedNickname) {
+      EventSystem.call('CHANGE_NICKNAME', this.myPeer.name, this.myPeer.peerId);
+    }
   }
 }
