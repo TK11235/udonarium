@@ -20,8 +20,9 @@
             <div style="font-size: 0.8rem;">{{gameObject.name}}</div>
             <div *ngIf="gameObject.detailDataElement">
               <div *ngFor="let gameDataElement of gameObject.detailDataElement.getElementsByType('numberResource')" style="display: inline-block;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
-                <input style="width:90%; height: 5px;" (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" type="range"
-                  min="0" max="{{gameDataElement.value}}" />
+                <input type="range" [style]="'font-size: 0.8em; min-width: 100px; width: 100%; --min: 0; --max: ' + gameDataElement.value + '; --val:' + gameDataElement.currentValue +';' | safe: 'style'"
+                  min="0" max="{{gameDataElement.value}}" [ngStyle]="{'background-color':'green'}" (change)="gameDataElement.update()"
+                  [(ngModel)]="gameDataElement.currentValue" />
                 <br> {{gameDataElement.name}}
                 <input class="input" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}" style="width:auto;" size="1"
                   (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" />                /
