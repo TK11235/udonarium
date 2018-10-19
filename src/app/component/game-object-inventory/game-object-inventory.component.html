@@ -1,11 +1,3 @@
-<!--
-    <select [(ngModel)]="inventoryType">
-      <option value="table">テーブル</option>
-      <option value="common">共有インベントリ</option>
-      <option value="{{networkService.myPeerId}}">個人インベントリ</option>
-      <option value="graveyard">墓地</option>
-    </select>
-    -->
 <div class="flex-container">
   <div class="flex-item" style="width: 200px;">
     <ng-container *ngFor="let inventoryType of inventoryTypes">
@@ -47,9 +39,4 @@
       <hr/>
     </ng-container>
   </div>
-  <!--
-    <div class="flex-item" style="width: 400px;">
-      <game-character-sheet></game-character-sheet>
-    </div>
-    -->
 </div>
