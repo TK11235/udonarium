@@ -1,14 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system/system';
 import { DataElement } from '@udonarium/data-element';
 import { GameCharacter } from '@udonarium/game-character';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TabletopObject } from '@udonarium/tabletop-object';
 
+import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'game-object-inventory',
@@ -24,7 +28,9 @@ export class GameObjectInventoryComponent {
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private panelService: PanelService
+    private panelService: PanelService,
+    private contextMenuService: ContextMenuService,
+    private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
@@ -84,15 +90,75 @@ export class GameObjectInventoryComponent {
     return gameObjects;
   }
 
+  onContextMenu(e: Event, gameObject: GameCharacter) {
+    if (document.activeElement instanceof HTMLInputElement && document.activeElement.getAttribute('type') !== 'range') return;
+    console.log('onContextMenu');
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
+
+    this.selectGameObject(gameObject);
+
+    let potison = this.pointerDeviceService.pointers[0];
+    console.log('mouseCursor', potison);
+
+    let actions: ContextMenuAction[] = [];
+
+    actions.push({ name: '詳細を表示', action: () => { this.showDetail(gameObject); } });
+    actions.push({ name: 'チャットパレットを表示', action: () => { this.showChatPalette(gameObject) } });
+    actions.push({
+      name: 'コピーを作る', action: () => {
+        this.cloneGameObject(gameObject);
+        SoundEffect.play(PresetSound.put);
+      }
+    });
+    let locations = [
+      { name: 'table', alias: 'テーブルに移動' },
+      { name: 'common', alias: '共有イベントリに移動' },
+      { name: Network.peerId, alias: '個人イベントリに移動' },
+      { name: 'graveyard', alias: '墓場に移動' }
+    ];
+
+    for (let location of locations) {
+      if (gameObject.location.name === location.name) continue;
+      actions.push({
+        name: location.alias, action: () => {
+          gameObject.setLocation(location.name);
+          SoundEffect.play(PresetSound.put);
+        }
+      });
+    }
+
+    if (gameObject.location.name === 'graveyard') {
+      actions.push({
+        name: '削除する', action: () => {
+          this.deleteGameObject(gameObject);
+          SoundEffect.play(PresetSound.delete);
+        }
+      });
+    }
+
+    this.contextMenuService.open(potison, actions, gameObject.name);
+  }
+
   private cloneGameObject(gameObject: TabletopObject) {
     gameObject.clone();
   }
 
   private showDetail(gameObject: TabletopObject) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 800, top: coordinate.y - 300, width: 800, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
+  }
+
+  private showChatPalette(gameObject: GameCharacter) {
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 500, height: 350 };
+    let component = this.panelService.open<ChatPaletteComponent>(ChatPaletteComponent, option);
+    component.character = gameObject;
   }
 
   private selectGameObject(gameObject: GameObject) {

@@ -4,7 +4,7 @@ interface ContextMenuPoint {
   x: number,
   y: number
 }
-interface ContextMenuAction {
+export interface ContextMenuAction {
   name: string,
   action: Function
 }
