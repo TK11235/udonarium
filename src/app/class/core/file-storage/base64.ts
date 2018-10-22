@@ -20,7 +20,7 @@ export namespace Base64 {
     return new Promise((resolve, reject) => {
       let reader = new FileReader();
       reader.onload = (event) => {
-        resolve(reader.result);
+        resolve(reader.result as string);
       }
       reader.onabort = reader.onerror = () => {
         reject();

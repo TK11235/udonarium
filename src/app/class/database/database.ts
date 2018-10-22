@@ -117,7 +117,7 @@ export class Database {
       let store = transaction.objectStore('PeerHistory');
 
       transaction.oncomplete = (event) => {
-        console.log('addPeerHistory done.', IDBTransaction.READ_WRITE);
+        console.log('addPeerHistory done.', 'readwrite');
         resolve();
       };
 
@@ -141,7 +141,7 @@ export class Database {
       let transaction = this.db.transaction(['PeerHistory'], 'readwrite');
       let store = transaction.objectStore('PeerHistory');
       transaction.oncomplete = (event) => {
-        console.log('addPeerHistory done.', IDBTransaction.READ_WRITE);
+        console.log('addPeerHistory done.', 'readwrite');
         resolve();
       };
 
