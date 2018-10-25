@@ -1,7 +1,8 @@
 import { EventSystem, Network } from '../system/system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
-import { AudioSharingTask } from './audio-sharing-task';
 import { AudioStorage, Catalog } from './audio-storage';
+import { BufferSharingTask } from './buffer-sharing-task';
+import { FileReaderUtil } from './file-reader-util';
 
 export class AudioSharingSystem {
   private static _instance: AudioSharingSystem
@@ -10,7 +11,7 @@ export class AudioSharingSystem {
     return AudioSharingSystem._instance;
   }
 
-  private taskMap: Map<string, AudioSharingTask> = new Map();
+  private taskMap: Map<string, BufferSharingTask<AudioFileContext>> = new Map();
   private maxTransmission: number = 1;
 
   private constructor() { }
@@ -69,7 +70,8 @@ export class AudioSharingSystem {
           console.log('REQUEST_AUDIO_RESOURE Send!!! ' + event.data.receiver + ' -> ' + randomRequest);
           let index = Math.floor(Math.random() * randomRequest.length);
           let item: { identifier: string, state: number } = randomRequest[index];
-          this.startSendTransmission(item.identifier, event.data.receiver);
+          let audio: AudioFile = AudioStorage.instance.get(item.identifier);
+          this.startSendTransmission(audio, event.data.receiver);
         } else {
           // 中継
           let candidatePeers: string[] = event.data.candidatePeers;
@@ -112,20 +114,22 @@ export class AudioSharingSystem {
     EventSystem.unregister(this);
   }
 
-  private startSendTransmission(identifier: string, sendTo: string) {
-    let audio: AudioFile = AudioStorage.instance.get(identifier);
+  private async startSendTransmission(audio: AudioFile, sendTo: string) {
+    this.taskMap.set(audio.identifier, null);
 
     EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: audio.identifier }, sendTo);
-    let task = AudioSharingTask.createSendTask(audio, sendTo);
+
+    let context = audio.toContext();
+    context.blob = <any>await FileReaderUtil.readAsArrayBufferAsync(context.blob);
+
+    let task = await BufferSharingTask.createSendTask(context, sendTo, audio.identifier);
     this.taskMap.set(audio.identifier, task);
 
-    task.onfinish = (target) => {
+    task.onfinish = () => {
       this.stopTransmission(task.identifier);
-      let context: AudioFileContext = { identifier: audio.identifier, name: audio.name, type: null, blob: null, url: null };
-      EventSystem.call('UPDATE_AUDIO_RESOURE', [context], sendTo);
       AudioStorage.instance.synchronize();
     }
-    task.ontimeout = (target) => {
+    task.ontimeout = () => {
       this.stopTransmission(task.identifier);
       AudioStorage.instance.synchronize();
     }
@@ -136,10 +140,18 @@ export class AudioSharingSystem {
     if (this.taskMap.has(identifier)) return;
 
     let audio: AudioFile = AudioStorage.instance.get(identifier);
-    let task = AudioSharingTask.createReceiveTask(audio);
+    let task = BufferSharingTask.createReceiveTask<AudioFileContext>(identifier);
     this.taskMap.set(identifier, task);
-    task.onfinish = () => {
+
+    task.onprogress = (task, loded, total) => {
+      let context = audio.toContext();
+      context.name = (loded * 100 / total).toFixed(1) + '%';
+      audio.apply(context);
+    }
+    task.onfinish = (task, data) => {
+      audio.apply(data);
       this.stopTransmission(task.identifier);
+      EventSystem.trigger('UPDATE_AUDIO_RESOURE', [data]);
       AudioStorage.instance.synchronize();
     }
     task.ontimeout = () => {
