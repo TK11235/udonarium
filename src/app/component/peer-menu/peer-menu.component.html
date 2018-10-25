@@ -33,8 +33,6 @@
     <input [(ngModel)]="targetPeerId" placeholder="接続したい相手のID" name="targetPeerId" />
     <button (click)="connectPeer()" [disabled]="!networkService.isConnected">プライベート接続</button><br>
   </ng-container>
-  <button *ngIf="networkService.peerIds.length <= 1 && 0 < appConfigService.peerHistory.length && !appConfigService.isOpen"
-    (click)="connectPeerHistory()" [disabled]="!networkService.isConnected">前回接続していた相手（またはルーム）に再接続</button><br>
   <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isConnected">ロビー（ルーム一覧）を表示</button>
 </div>
 <div><span style="font-size: 12px;">{{help}}</span></div>
