@@ -93,7 +93,7 @@ export class BufferSharingTask<T> {
   }
 
   private sendChank(index: number) {
-    this.sendChankTimer = setTimeout(async () => {
+    this.sendChankTimer = setTimeout(() => {
       let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
       EventSystem.call('FILE_SEND_CHANK_' + this.identifier, data, this.sendTo);
       this.sentChankLength = index;
