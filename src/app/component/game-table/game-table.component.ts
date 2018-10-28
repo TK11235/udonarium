@@ -340,7 +340,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
         {
-          name: 'トランプの山札を作る', action: () => {
+          name: 'カードデッキを作る', action: () => {
             this.createTrump(potison);
             SoundEffect.play(PresetSound.cardPut);
           }
