@@ -41,6 +41,10 @@ export class GameObjectInventoryComponent {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (object instanceof TabletopObject || object instanceof DataElement) this.changeDetector.markForCheck();
       })
+      .on('DELETE_GAME_OBJECT', 1000, event => {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (object instanceof TabletopObject || object instanceof DataElement) this.changeDetector.markForCheck();
+      })
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         if (ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) {
           this.selectedIdentifier = event.data.identifier;
@@ -183,6 +187,7 @@ export class GameObjectInventoryComponent {
 
   private deleteGameObject(gameObject: GameObject) {
     gameObject.destroy();
+    this.changeDetector.markForCheck();
   }
 
   private isPrivateLocation(location: string): boolean {
