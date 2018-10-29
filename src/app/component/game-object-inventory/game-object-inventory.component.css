@@ -146,3 +146,108 @@ input[type='range']::-ms-thumb {
 input[type='range']::-ms-tooltip {
   display: none;
 }
+
+.tab {
+  padding : 5px;
+  user-select: none;
+}
+
+.tab {
+  padding : 0px;
+  border: solid 1px #555;
+  border-radius: 0.3em;
+  overflow: hidden;
+
+  display: flex;
+  flex-flow:  row nowrap;
+  justify-content: space-around;
+  align-items: stretch;
+
+  text-align: center;
+
+  margin: 0px; 
+  max-width: 500px;
+
+  background-color: rgba(240,218,189, 0.5);
+}
+
+.tab label {
+  display: inline-block;
+  flex: 1 0 auto;
+  flex-grow: 1;
+}
+
+.tab label:hover {
+  background-color: #888;
+  color: #eee;
+  border-color: #555;
+}
+
+.tab label:checked {
+  background: #555;
+  color: #CCC;
+}
+
+.tab input[type="radio"] {
+  display: none;
+}
+
+.tab input[type="radio"] + div {
+  vertical-align: middle;
+  outline: 0;
+  font-size: 0.6em;
+  background-color: transparent;
+  color: #444; 
+  
+  box-sizing: border-box;
+
+  /*
+  border-top: solid 1px #555;
+  border-bottom: solid 1px #555;
+  border-left: solid 1px #555;
+  */
+  
+  /*
+  border: solid 1px #555;
+  border-radius: 100px;
+  margin: 2px; 
+  */
+
+  margin: 0px; 
+  padding: 2px 8px;
+
+  cursor: pointer;
+}
+
+/*
+.tab label:first-child input[type="radio"] + div {
+  border-left: solid 1px #555;
+  border-radius: 100px 0 0 100px / 100px 0 0 100px;
+}
+
+.tab label:last-child input[type="radio"] + div {
+  border-right: solid 1px #555;
+  border-radius: 0 100px 100px 0 / 0 100px 100px 0;
+}
+*/
+
+.tab input[type="radio"] + div {
+  /*height: 100%;*/
+  /*width: 100%;*/
+}
+
+.tab input[type="radio"] + div:hover {
+  background-color: #888;
+  color: #eee;
+  border-color: #555;
+}
+
+.tab input[type="radio"]:checked + div {
+  background: #555;
+  color: #CCC;
+}
+
+.is-sticky-top {
+  position: sticky;
+  top : 0;
+}

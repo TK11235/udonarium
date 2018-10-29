@@ -1,37 +1,41 @@
 <div class="flex-container">
   <div class="flex-item" style="width: 200px;">
-    <ng-container *ngFor="let inventoryType of inventoryTypes">
-      <div *ngIf="inventoryType !== networkService.peerId">{{inventoryType}}</div>
-      <div *ngIf="inventoryType === networkService.peerId">{{networkService.peerContext.id}}</div>
-      <div (contextmenu)="onContextMenu($event, gameObject)" *ngFor="let gameObject of getGameObjects(inventoryType)"
-        (click)="selectGameObject(gameObject)" [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}">
-        <div style="display: inline-block;">
-          <div style="font-size: 14px; display: inline-block; vertical-align:text-top;">
-            <div style="font-size: 0.8em; font-weight: bold; padding: 0 0.25em;">{{gameObject.name}} <button style="font-size: 0.8em; padding: 2px 5px;"
-                *ngIf="selectedIdentifier === gameObject.identifier" (click)="onContextMenu($event, gameObject)">?</button></div>
-            <div style="display: table; table-layout: fixed;">
-              <div style="min-width:32px; min-height:32px; display: table-cell; vertical-align:top;">
-                <img *ngIf="gameObject.imageFile" height="32" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
-              </div>
-              <div style="display: table-cell;;">
-                <div *ngIf="gameObject.detailDataElement">
-                  <div *ngFor="let gameDataElement of gameObject.detailDataElement.getElementsByType('numberResource')"
-                    style="display: inline-block; padding: 0 0.25em;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
-                    <input type="range" [style]="'font-size: 0.8em; min-width: 100px; width: 100%; --min: 0; --max: ' + gameDataElement.value + '; --val:' + gameDataElement.currentValue +';' | safe: 'style'"
-                      min="0" max="{{gameDataElement.value}}" [ngStyle]="{'background-color':'green'}" (change)="gameDataElement.update()"
-                      [(ngModel)]="gameDataElement.currentValue" />
-                    <br><span style="font-size: 1.0em;">{{gameDataElement.name}}</span>
-                    <input class="input" type="number" style="font-size: 1em; font-weight: bold; width: 4em; text-align: right;"
-                      size="1" (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue"
-                      placeholder="Value" /><span style="font-size: 0.8em;">/ {{gameDataElement.value}}</span>
-                  </div>
+    <form class="is-sticky-top">
+      <div class="tab">
+        <label *ngFor="let inventoryType of inventoryTypes">
+          <input name="tab" type="radio" value="{{inventoryType}}" ng-control="options" [(ngModel)]="selectTab">
+          <div>{{getTabTitle(inventoryType)}} ({{getGameObjects(inventoryType).length}})</div>
+        </label>
+      </div>
+    </form>
+    <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}インベントリは空です</div>
+    <div (contextmenu)="onContextMenu($event, gameObject)" *ngFor="let gameObject of getGameObjects(selectTab)" (click)="selectGameObject(gameObject)"
+      [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}">
+      <div style="display: inline-block;">
+        <div style="font-size: 14px; display: inline-block; vertical-align:text-top;">
+          <div style="font-size: 0.8em; font-weight: bold; padding: 0 0.25em;">{{gameObject.name}} <button style="font-size: 0.8em; padding: 2px 5px;"
+              *ngIf="selectedIdentifier === gameObject.identifier" (click)="onContextMenu($event, gameObject)">?</button></div>
+          <div style="display: table; table-layout: fixed;">
+            <div style="min-width:32px; min-height:32px; display: table-cell; vertical-align:top;">
+              <img *ngIf="gameObject.imageFile" height="32" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
+            </div>
+            <div style="display: table-cell;;">
+              <div *ngIf="gameObject.detailDataElement">
+                <div *ngFor="let gameDataElement of gameObject.detailDataElement.getElementsByType('numberResource')"
+                  style="display: inline-block; padding: 0 0.25em;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
+                  <input type="range" [style]="'font-size: 0.8em; min-width: 100px; width: 100%; --min: 0; --max: ' + gameDataElement.value + '; --val:' + gameDataElement.currentValue +';' | safe: 'style'"
+                    min="0" max="{{gameDataElement.value}}" [ngStyle]="{'background-color':'green'}" (change)="gameDataElement.update()"
+                    [(ngModel)]="gameDataElement.currentValue" />
+                  <br><span style="font-size: 1.0em;">{{gameDataElement.name}}</span>
+                  <input class="input" type="number" style="font-size: 1em; font-weight: bold; width: 4em; text-align: right;"
+                    size="1" (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" /><span
+                    style="font-size: 0.8em;">/ {{gameDataElement.value}}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <hr />
-    </ng-container>
+    </div>
   </div>
 </div>

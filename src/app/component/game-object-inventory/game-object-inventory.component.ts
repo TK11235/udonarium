@@ -23,6 +23,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 export class GameObjectInventoryComponent {
   inventoryTypes: string[] = ['table', 'common', 'graveyard'];
 
+  selectTab: string = 'table';
   selectedIdentifier: string = '';
   networkService = Network;
 
@@ -54,6 +55,19 @@ export class GameObjectInventoryComponent {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
+  }
+
+  getTabTitle(inventoryType: string) {
+    switch (inventoryType) {
+      case 'table':
+        return 'テーブル';
+      case Network.peerId:
+        return '個人';
+      case 'graveyard':
+        return '墓場';
+      default:
+        return '共有';
+    }
   }
 
   getGameObjects(inventoryType: string) {
