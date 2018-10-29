@@ -24,11 +24,11 @@
                 <div *ngFor="let gameDataElement of gameObject.detailDataElement.getElementsByType('numberResource')"
                   style="display: inline-block; padding: 0 0.25em;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
                   <input type="range" [style]="'font-size: 0.8em; min-width: 100px; width: 100%; --min: 0; --max: ' + gameDataElement.value + '; --val:' + gameDataElement.currentValue +';' | safe: 'style'"
-                    min="0" max="{{gameDataElement.value}}" [ngStyle]="{'background-color':'green'}" (change)="gameDataElement.update()"
+                    min="0" max="{{gameDataElement.value}}" [ngStyle]="{'background-color':'green'}"
                     [(ngModel)]="gameDataElement.currentValue" />
                   <br><span style="font-size: 1.0em;">{{gameDataElement.name}}</span>
                   <input class="input" type="number" style="font-size: 1em; font-weight: bold; width: 4em; text-align: right;"
-                    size="1" (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" /><span
+                    size="1" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" /><span
                     style="font-size: 0.8em;">/ {{gameDataElement.value}}</span>
                 </div>
               </div>
