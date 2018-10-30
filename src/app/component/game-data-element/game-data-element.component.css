@@ -51,8 +51,10 @@
   visibility: hidden;
   height: 0px;
   /*background: #0FF;*/
-  max-width : 10em;
+  max-width : 20em;
   overflow: hidden;
+  padding: 2px;
+  box-sizing: border-box;
 }
 
 input, button, textarea, select{
@@ -64,8 +66,9 @@ input, button, textarea, select{
 
   color: #444;
   font-family: Cambria, Georgia;
-  font-size: 1.0rem;
+  font-size: 1.0em;
   padding: 2px;
+  box-sizing: border-box;
 }
 
 input:hover, textarea:hover, select:hover  {
