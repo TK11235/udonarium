@@ -443,13 +443,7 @@ export class DiceBot extends GameObject {
         resolve();
       };
 
-      script.onabort = (e) => {
-        if (head && script.parentNode) head.removeChild(script);
-        console.error(e);
-        resolve();
-      }
-
-      script.onerror = (e) => {
+      script.onabort = script.onerror = (e) => {
         if (head && script.parentNode) head.removeChild(script);
         console.error(e);
         resolve();
