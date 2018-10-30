@@ -78,7 +78,7 @@ export class BufferSharingTask<T> {
         this.completedChankLength = event.data;
         if (this.sendChankTimer == null) {
           clearTimeout(this.timeoutTimer);
-          this.sendChank(this.sentChankLength);
+          this.sendChank(this.sentChankLength + 1);
         }
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
@@ -93,22 +93,20 @@ export class BufferSharingTask<T> {
   }
 
   private sendChank(index: number) {
-    this.sendChankTimer = setTimeout(() => {
-      let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
-      EventSystem.call('FILE_SEND_CHANK_' + this.identifier, data, this.sendTo);
-      this.sentChankLength = index;
-      if (this.completedChankLength + 16 <= index + 1) {
-        this.sendChankTimer = null;
-        this.resetTimeout();
-      } else if (index + 1 < this.chanks.length) {
-        this.sendChank(index + 1);
-      } else {
-        EventSystem.call('FILE_SEND_END_' + this.identifier, null, this.sendTo);
-        console.log('バッファ送信完了', this.identifier);
-        if (this.onfinish) this.onfinish(this, this.data);
-        this.cancel();
-      }
-    });
+    let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
+    EventSystem.call('FILE_SEND_CHANK_' + this.identifier, data, this.sendTo);
+    this.sentChankLength = index;
+    if (this.completedChankLength + 16 <= index + 1) {
+      this.sendChankTimer = null;
+      this.resetTimeout();
+    } else if (index + 1 < this.chanks.length) {
+      this.sendChankTimer = setTimeout(() => { this.sendChank(this.sentChankLength + 1); });
+    } else {
+      EventSystem.call('FILE_SEND_END_' + this.identifier, null, this.sendTo);
+      console.log('バッファ送信完了', this.identifier);
+      if (this.onfinish) this.onfinish(this, this.data);
+      this.cancel();
+    }
   }
 
   private initializeReceive() {
