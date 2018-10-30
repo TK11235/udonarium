@@ -1,11 +1,7 @@
 <ng-container *ngIf="gameDataElement">
   <ng-container *ngIf="gameDataElement.children.length < 1">
     <div *ngIf="isEdit" class="table-cell table-cell_solid">
-      <button (click)="addElement()"><i class="material-icons">add_circle</i></button>
-      <button (click)="upElement()"><i class="material-icons">arrow_upward</i></button>
-      <br>
-      <button (click)="deleteElement()"><i class="material-icons">remove_circle_outline</i></button>
-      <button (click)="downElement()"><i class="material-icons">arrow_downward</i></button>
+      <ng-container *ngTemplateOutlet="editButtons"></ng-container>
       <select (change)="setElementType($event.target.value)" [ngModel]="gameDataElement.type">
           <option value="">通常</option>
           <option value="numberResource">リソース</option>
@@ -47,11 +43,7 @@
   </ng-container>
   <ng-container *ngIf="0 < gameDataElement.children.length">
     <div *ngIf="isEdit" class="table-cell table-cell_solid" style="vertical-align: top;">
-      <button (click)="addElement()"><i class="material-icons">add_circle</i></button>
-      <button (click)="upElement()"><i class="material-icons">arrow_upward</i></button>
-      <br>
-      <button (click)="deleteElement()"><i class="material-icons">remove_circle_outline</i></button>
-      <button (click)="downElement()"><i class="material-icons">arrow_downward</i></button>
+      <ng-container *ngTemplateOutlet="editButtons"></ng-container>
     </div>
     <div class="table-cell table-cell_inner-table" style="padding:0; width:0;"></div>
     <div class="table-cell_inner-table">
@@ -71,3 +63,10 @@
     </div>
   </ng-container>
 </ng-container>
+<ng-template #editButtons>
+  <button (click)="addElement()"><i class="material-icons">add_circle</i></button>
+  <button (click)="upElement()"><i class="material-icons">arrow_upward</i></button>
+  <br>
+  <button (click)="deleteElement()"><i class="material-icons">remove_circle_outline</i></button>
+  <button (click)="downElement()"><i class="material-icons">arrow_downward</i></button>
+</ng-template>
