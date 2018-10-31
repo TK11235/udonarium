@@ -19,17 +19,16 @@
             <div style="min-width:32px; min-height:32px; display: table-cell; vertical-align:top;">
               <img *ngIf="gameObject.imageFile" height="32" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
             </div>
-            <div style="display: table-cell;;">
+            <div style="display: table-cell;">
               <div *ngIf="gameObject.detailDataElement">
                 <div *ngFor="let gameDataElement of gameObject.detailDataElement.getElementsByType('numberResource')"
                   style="display: inline-block; padding: 0 0.25em;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
                   <input type="range" [style]="'font-size: 0.8em; min-width: 100px; width: 100%; --min: 0; --max: ' + gameDataElement.value + '; --val:' + gameDataElement.currentValue +';' | safe: 'style'"
-                    min="0" max="{{gameDataElement.value}}" [ngStyle]="{'background-color':'green'}"
-                    [(ngModel)]="gameDataElement.currentValue" />
+                    min="0" max="{{gameDataElement.value}}" [ngStyle]="{'background-color':'green'}" [(ngModel)]="gameDataElement.currentValue" />
                   <br><span style="font-size: 1.0em;">{{gameDataElement.name}}</span>
                   <input class="input" type="number" style="font-size: 1em; font-weight: bold; width: 4em; text-align: right;"
-                    size="1" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" /><span
-                    style="font-size: 0.8em;">/ {{gameDataElement.value}}</span>
+                    size="1" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" /><span style="font-size: 0.8em;">/
+                    {{gameDataElement.value}}</span>
                 </div>
               </div>
             </div>
