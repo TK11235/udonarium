@@ -5,7 +5,9 @@ import { CardStack } from '@udonarium/card-stack';
 import { EventSystem, Network } from '@udonarium/core/system/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
-import { PanelService } from 'service/panel.service';
+import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+
+import { PanelOption, PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'card-stack-list',
@@ -79,5 +81,15 @@ export class CardStackListComponent implements OnInit {
       SoundEffect.play(PresetSound.cardShuffle);
     }
     this.panelService.close();
+  }
+
+  private showDetail(gameObject: Card) {
+    let coordinate = {
+      x: this.panelService.left,
+      y: this.panelService.top
+    };
+    let option: PanelOption = { left: coordinate.x + 10, top: coordinate.y + 20, width: 600, height: 600 };
+    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
+    component.tabletopObject = gameObject;
   }
 }
