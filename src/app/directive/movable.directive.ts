@@ -1,7 +1,9 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { EventSystem } from '@udonarium/core/system/system';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { TabletopObject } from '@udonarium/tabletop-object';
+import { TableSelecter } from '@udonarium/table-selecter';
 
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
@@ -163,19 +165,23 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   protected onMouseUp(e: PointerEvent) {
+    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
+
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     if (this.isDragging) this.ondragend.emit(e);
     this.cancel();
-    this.stickToGrid();
+    if (tableSelecter.gridStick) this.stickToGrid();
     this.onend.emit(e);
   }
 
   protected onContextMenu(e: PointerEvent) {
+    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
+
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     this.cancel();
-    this.stickToGrid();
+    if (tableSelecter.gridStick) this.stickToGrid();
   }
 
   private calcLocalCoordinate(target: HTMLElement): PointerCoordinate {
