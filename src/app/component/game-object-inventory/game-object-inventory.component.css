@@ -168,7 +168,7 @@ input[type='range']::-ms-tooltip {
   margin: 0px; 
   max-width: 500px;
 
-  background-color: rgba(240,218,189, 0.5);
+  background-color: rgba(240,218,189, 0.9);
 }
 
 .tab label {
