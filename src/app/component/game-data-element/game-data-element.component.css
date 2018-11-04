@@ -49,11 +49,11 @@
 }
 .hidden-spacer {
   visibility: hidden;
-  height: 0px;
+  height: 0;
   /*background: #0FF;*/
   max-width : 20em;
   overflow: hidden;
-  padding: 2px;
+  padding: 0 3px;
   box-sizing: border-box;
 }
 
