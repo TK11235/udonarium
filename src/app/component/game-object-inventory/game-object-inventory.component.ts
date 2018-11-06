@@ -4,6 +4,7 @@ import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system/system';
 import { DataElement } from '@udonarium/data-element';
+import { DataSummarySetting, SortOrder } from '@udonarium/data-summary-setting';
 import { GameCharacter } from '@udonarium/game-character';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TabletopObject } from '@udonarium/tabletop-object';
@@ -28,14 +29,18 @@ export class GameObjectInventoryComponent {
   networkService = Network;
 
   isEdit: boolean = false;
-  sortTag: string = 'name';
-  sortOrder: string = 'ASC';
-  get sortOrderName(): string { return this.sortOrder === 'ASC' ? '昇順' : '降順'; }
 
-  inventoryTagSetting: string = 'HP MP 敏捷度 生命力 精神力';
-  get inventoryTagList(): string[] {
-    return this.inventoryTagSetting.split(/\s+/)
-  }
+  private get summarySetting(): DataSummarySetting { return DataSummarySetting.instance; }
+
+  get sortTag(): string { return this.summarySetting.sortTag; }
+  set sortTag(sortTag: string) { this.summarySetting.sortTag = sortTag; }
+  get sortOrder(): SortOrder { return this.summarySetting.sortOrder; }
+  set sortOrder(sortOrder: SortOrder) { this.summarySetting.sortOrder = sortOrder; }
+  get dataTag(): string { return this.summarySetting.dataTag; }
+  set dataTag(dataTag: string) { this.summarySetting.dataTag = dataTag; }
+  get dataTags(): string[] { return this.summarySetting.dataTags; }
+
+  get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '昇順' : '降順'; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -49,7 +54,7 @@ export class GameObjectInventoryComponent {
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
-        if (object instanceof TabletopObject || object instanceof DataElement) this.changeDetector.markForCheck();
+        if (object instanceof TabletopObject || object instanceof DataElement || object instanceof DataSummarySetting) this.changeDetector.markForCheck();
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
         this.changeDetector.markForCheck();
@@ -134,7 +139,7 @@ export class GameObjectInventoryComponent {
   }
 
   getInventoryTags(data: DataElement): DataElement[] {
-    return this.inventoryTagList.map(tag => data.getFirstElementByName(tag));
+    return this.dataTags.map(tag => data.getFirstElementByName(tag));
   }
 
   onContextMenu(e: Event, gameObject: GameCharacter) {
