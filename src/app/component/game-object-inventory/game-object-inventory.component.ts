@@ -27,6 +27,16 @@ export class GameObjectInventoryComponent {
   selectedIdentifier: string = '';
   networkService = Network;
 
+  isEdit: boolean = false;
+  sortTag: string = 'name';
+  sortOrder: string = 'ASC';
+  get sortOrderName(): string { return this.sortOrder === 'ASC' ? '昇順' : '降順'; }
+
+  inventoryTagSetting: string = 'HP MP 敏捷度 生命力 精神力';
+  get inventoryTagList(): string[] {
+    return this.inventoryTagSetting.split(/\s+/)
+  }
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
@@ -42,8 +52,7 @@ export class GameObjectInventoryComponent {
         if (object instanceof TabletopObject || object instanceof DataElement) this.changeDetector.markForCheck();
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (object instanceof TabletopObject || object instanceof DataElement) this.changeDetector.markForCheck();
+        this.changeDetector.markForCheck();
       })
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         if (ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) {
@@ -77,7 +86,7 @@ export class GameObjectInventoryComponent {
   getGameObjects(inventoryType: string) {
     let identifiersArray: TabletopObject[][] = [];
     identifiersArray[0] = ObjectStore.instance.getObjects(GameCharacter);
-    let gameObjects: GameObject[] = [];
+    let gameObjects: TabletopObject[] = [];
 
     for (let identifiers of identifiersArray) {
       for (let identifier of identifiers) {
@@ -105,7 +114,27 @@ export class GameObjectInventoryComponent {
         }
       }
     }
+
+    let sortTag = this.sortTag.length ? this.sortTag.trim() : '';
+    let sortOrder = this.sortOrder === 'ASC' ? -1 : 1;
+    if (sortTag.length) {
+      gameObjects = gameObjects.sort((a, b) => {
+        let aElm = a.rootDataElement.getFirstElementByName(sortTag);
+        let bElm = b.rootDataElement.getFirstElementByName(sortTag);
+        if (!aElm && !bElm) return 0;
+        if (!bElm) return -1;
+        if (!aElm) return 1;
+        if (aElm.value < bElm.value) return sortOrder;
+        if (aElm.value > bElm.value) return sortOrder * -1;
+        return 0;
+      });
+    }
+
     return gameObjects;
+  }
+
+  getInventoryTags(data: DataElement): DataElement[] {
+    return this.inventoryTagList.map(tag => data.getFirstElementByName(tag));
   }
 
   onContextMenu(e: Event, gameObject: GameCharacter) {
@@ -158,6 +187,10 @@ export class GameObjectInventoryComponent {
     }
 
     this.contextMenuService.open(potison, actions, gameObject.name);
+  }
+
+  toggleEdit() {
+    this.isEdit = !this.isEdit;
   }
 
   private cloneGameObject(gameObject: TabletopObject) {

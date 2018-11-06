@@ -1,36 +1,35 @@
-.flex-container {
-  display: -webkit-flex; /* Safari */
-  display: flex;
-
-  -webkit-flex-flow: row wrap; /* Safari */
-  flex-flow:  row wrap;
-
-  -webkit-justify-content: flex-start; /* Safari */
-  justify-content: flex-start;
-
-  -webkit-align-items: stretch; /* Safari */
-  align-items: stretch;
-
+.component {
   width: 100%;
 }
-.flex-item {
-  margin: 0px;
-  padding: 0px;
-  -webkit-flex: 1 0 auto; /* Safari */
-  flex: 1 0 auto;
-  min-width: 25px; 
-}
+
 .box {
   border: transparent 2px solid;
   border-left: transparent 6px solid;
-  margin: 0;
-  padding: 5px;
+  margin-top: 2px;
+  padding: 2px;
+  padding-bottom: 3px;
   box-sizing: border-box;
+
+  border-bottom: 1px dotted #666;
 }
 .selected {
+  padding: 2px;
   border: 2px dotted #666;
   border-left: 6px solid #444;
 }
+
+.hidden-spacer {
+  visibility: hidden;
+  height: 0;
+  /*background: #0FF;*/
+  min-width:1em; 
+  max-width : 12em;
+  overflow: hidden;
+  padding: 0 2px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
 .input {
   background: none;
   border: none;
@@ -38,13 +37,14 @@
   outline: none;
   color: #444;
   padding: 2px;
+  box-sizing: border-box;
 }
 
-input:hover {
+.input:hover {
   background: #EEE;
 }
 
-input:focus {
+.input:focus {
   background: #FFF;
 }
 
@@ -250,4 +250,99 @@ input[type='range']::-ms-tooltip {
 .is-sticky-top {
   position: sticky;
   top : 0;
+}
+
+.tab-setting {
+  background-color: transparent;
+  color: #444; 
+  border: solid 1px #555;
+  padding: 2px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tab-setting:hover {
+  background-color: #888;
+  color: #eee;
+  border: solid 1px #555;
+}
+
+.small-font {
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.material-icons {
+  vertical-align: middle;
+  font-size: 1.0rem;
+}
+
+.table-cell {
+  display: table-cell;
+}
+
+.image-box {
+  min-width: 32px;
+  min-height: 32px;
+  vertical-align:top;
+}
+
+.inventory-object {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.object-name {
+  font-size: 0.8em;
+  font-weight: bold;
+  padding: 0 0.25em;
+}
+
+.object-tags-box {
+  display: table;
+  table-layout: fixed;
+}
+
+.object-tag {
+  display: inline-block;
+  padding: 0 0.25em;
+  vertical-align: middle;
+}
+
+.resource-tag {
+  text-align: center;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.resource-value {
+  font-weight: bold;
+  width: 4em;
+  text-align: right;
+}
+
+.tag-name {
+  font-size: 0.8em;
+  text-align: left;
+  vertical-align: bottom;
+  min-width:1em;
+  max-width: 12em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tag-value-box{
+  display: table-cell;
+  width: 10px;
+}
+
+.tag-value {
+  font-size: 1.0em;
+  font-weight: bold;
+  width: 100%;
+  min-width: 1em;
+  max-width: 12em;
+  text-align: center;
 }
