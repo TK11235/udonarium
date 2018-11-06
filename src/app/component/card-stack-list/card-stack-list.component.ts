@@ -54,6 +54,7 @@ export class CardStackListComponent implements OnInit {
     if (360 < card.rotate) card.rotate -= 360;
     card.toTopmost();
     card.update();
+    SoundEffect.play(PresetSound.cardDraw);
   }
 
   up(card: Card) {
