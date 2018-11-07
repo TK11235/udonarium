@@ -40,14 +40,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('scrollablePanel') scrollablePanel: ElementRef;
   @ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
 
-  /*
-  @Input() title: string = '無名のパネル';
-  @Input() left: number = 0;
-  @Input() top: number = 0;
-  @Input() width: number = 100;
-  @Input() height: number = 100;
-  */
-
   @Input() set title(title: string) { this.panelService.title = title; }
   @Input() set left(left: number) { this.panelService.left = left; }
   @Input() set top(top: number) { this.panelService.top = top; }

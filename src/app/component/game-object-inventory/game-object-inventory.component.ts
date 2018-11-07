@@ -26,7 +26,6 @@ export class GameObjectInventoryComponent {
 
   selectTab: string = 'table';
   selectedIdentifier: string = '';
-  networkService = Network;
 
   isEdit: boolean = false;
 
