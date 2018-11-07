@@ -29,7 +29,6 @@ export class GameTable extends ObjectNode implements InnerXml {
   @SyncVar() selected: boolean = false;
   @SyncVar() gridType: GridType = GridType.SQUARE;
   @SyncVar() gridColor: string = '#000000e6';
-  @SyncVar() gridStick: boolean = true;
 
   get terrains(): Terrain[] {
     let terrains: Terrain[] = [];

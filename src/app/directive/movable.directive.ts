@@ -165,23 +165,23 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   protected onMouseUp(e: PointerEvent) {
-    let viewTable = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;
+    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
 
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     if (this.isDragging) this.ondragend.emit(e);
     this.cancel();
-    if (viewTable.gridStick) this.stickToGrid();
+    if (tableSelecter.gridStick) this.stickToGrid();
     this.onend.emit(e);
   }
 
   protected onContextMenu(e: PointerEvent) {
-    let viewTable = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable;
+    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
 
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     this.cancel();
-    if (viewTable.gridStick) this.stickToGrid();
+    if (tableSelecter.gridStick) this.stickToGrid();
   }
 
   private calcLocalCoordinate(target: HTMLElement): PointerCoordinate {
