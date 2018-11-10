@@ -40,10 +40,12 @@
       </div>
       <hr/>
       <div>
-        グリッドを常に表示:
-        <input type="checkbox" [(ngModel)]="tableGridShow" name="tableGridShow" />
-        スナップ:
-        <input type="checkbox" [(ngModel)]="tableGridStick" name="tableGridStick" />
+        <label>グリッドを常に表示:
+          <input type="checkbox" [(ngModel)]="tableGridShow" name="tableGridShow" />
+        </label>
+        <label>スナップ:
+          <input type="checkbox" [(ngModel)]="tableGridStick" name="tableGridStick" />
+        </label>
         <ng-container *ngIf="!isDeleted">
           <button (click)="save()">保存</button>
           <button class="danger" (click)="delete()" [attr.disabled]="getGameTables().length <= 1 ? '' : null">削除</button>
