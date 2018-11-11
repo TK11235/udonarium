@@ -155,6 +155,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   stickToPolygonal(polygonal: number = 24) {
+    if (polygonal <= 1) return;
     this.rotate = this.rotate < 0 ? this.rotate - (180 / polygonal) : this.rotate + (180 / polygonal);
     this.rotate -= (this.rotate) % (360 / polygonal);
   }

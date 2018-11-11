@@ -215,6 +215,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private calcStickNum(num: number, interval: number): number {
+    if (interval <= 0) return num;
     num = num < 0 ? num - interval / 2 : num + interval / 2;
     return num - (num % interval);
   }
