@@ -89,7 +89,7 @@ export class BufferSharingTask<T> {
         this.cancel();
       });
     this.sentChankLength = this.completedChankLength = 0;
-    this.sendChank(0);
+    setTimeout(() => this.sendChank(0));
   }
 
   private sendChank(index: number) {
