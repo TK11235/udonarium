@@ -21,7 +21,6 @@
 .hidden-spacer {
   visibility: hidden;
   height: 0;
-  /*background: #0FF;*/
   min-width:1em; 
   max-width : 12em;
   overflow: hidden;
@@ -201,39 +200,10 @@ input[type='range']::-ms-tooltip {
   
   box-sizing: border-box;
 
-  /*
-  border-top: solid 1px #555;
-  border-bottom: solid 1px #555;
-  border-left: solid 1px #555;
-  */
-  
-  /*
-  border: solid 1px #555;
-  border-radius: 100px;
-  margin: 2px; 
-  */
-
   margin: 0px; 
   padding: 2px 8px;
 
   cursor: pointer;
-}
-
-/*
-.tab label:first-child input[type="radio"] + div {
-  border-left: solid 1px #555;
-  border-radius: 100px 0 0 100px / 100px 0 0 100px;
-}
-
-.tab label:last-child input[type="radio"] + div {
-  border-right: solid 1px #555;
-  border-radius: 0 100px 100px 0 / 0 100px 100px 0;
-}
-*/
-
-.tab input[type="radio"] + div {
-  /*height: 100%;*/
-  /*width: 100%;*/
 }
 
 .tab input[type="radio"] + div:hover {
