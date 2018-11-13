@@ -189,7 +189,14 @@ export class FileSharingSystem {
       let item: { identifier: string, state: number } = catalog[i];
       let image: ImageFile = ImageStorage.instance.get(item.identifier);
 
-      let context: ImageContext = { identifier: image.identifier, name: image.name, type: '', blob: null, url: null, thumbnail: { type: '', blob: null, url: null, } };
+      let context: ImageContext = {
+        identifier: image.identifier,
+        name: image.name,
+        type: '',
+        blob: null,
+        url: null,
+        thumbnail: { type: '', blob: null, url: null, }
+      };
 
       if (image.state === ImageState.URL) {
         context.url = image.url;

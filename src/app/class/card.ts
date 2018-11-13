@@ -24,13 +24,7 @@ export class Card extends TabletopObject {
   get frontImage(): ImageFile { return this.getImageFile('front'); }
   get backImage(): ImageFile { return this.getImageFile('back'); }
 
-  get imageFile(): ImageFile {
-    if (this.isVisible) {
-      return this.frontImage;
-    } else {
-      return this.backImage;
-    }
-  }
+  get imageFile(): ImageFile { return this.isVisible ? this.frontImage : this.backImage; }
 
   get ownerName(): string {
     let object = PeerCursor.find(this.owner);
