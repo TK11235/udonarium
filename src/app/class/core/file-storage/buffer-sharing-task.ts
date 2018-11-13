@@ -96,16 +96,16 @@ export class BufferSharingTask<T> {
     let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
     EventSystem.call('FILE_SEND_CHANK_' + this.identifier, data, this.sendTo);
     this.sentChankLength = index;
-    if (this.completedChankLength + 16 <= index + 1) {
-      this.sendChankTimer = null;
-      this.resetTimeout();
-    } else if (index + 1 < this.chanks.length) {
-      this.sendChankTimer = setTimeout(() => { this.sendChank(this.sentChankLength + 1); });
-    } else {
+    if (this.chanks.length <= index + 1) {
       EventSystem.call('FILE_SEND_END_' + this.identifier, null, this.sendTo);
       console.log('バッファ送信完了', this.identifier);
       if (this.onfinish) this.onfinish(this, this.data);
       this.cancel();
+    } else if (this.completedChankLength + 16 <= index + 1) {
+      this.sendChankTimer = null;
+      this.resetTimeout();
+    } else {
+      this.sendChankTimer = setTimeout(() => { this.sendChank(this.sentChankLength + 1); }, 0);
     }
   }
 
