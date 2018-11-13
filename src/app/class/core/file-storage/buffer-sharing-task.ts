@@ -18,8 +18,8 @@ export class BufferSharingTask<T> {
   private data: T;
   private arrayBuffer: ArrayBuffer;
   private chanks: ArrayBuffer[] = [];
-  private chankSize: number = 14 * 1024;
-  private sendChankTimer: number;
+  private chankSize: number = 8 * 1024;
+  private sendChankTimer: NodeJS.Timer;
 
   private sentChankLength = 0;
   private completedChankLength = 0;
@@ -101,7 +101,7 @@ export class BufferSharingTask<T> {
       console.log('バッファ送信完了', this.identifier);
       if (this.onfinish) this.onfinish(this, this.data);
       this.cancel();
-    } else if (this.completedChankLength + 16 <= index + 1) {
+    } else if (this.completedChankLength + 8 <= index + 1) {
       this.sendChankTimer = null;
       this.resetTimeout();
     } else {
@@ -117,8 +117,8 @@ export class BufferSharingTask<T> {
         this.chanks[event.data.index] = event.data.chank;
         if (this.onprogress) this.onprogress(this, event.data.index, event.data.length);
         this.resetTimeout();
-        if ((event.data.index + 1) % 8 === 0) {
-          EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index + 1, event.sendFrom);
+        if ((event.data.index + 1) % 4 === 0) {
+          EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index, event.sendFrom);
         }
       })
       .on('FILE_SEND_END_' + this.identifier, 0, event => {
