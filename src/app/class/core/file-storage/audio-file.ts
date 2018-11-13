@@ -76,6 +76,7 @@ export class AudioFile {
     let audio = new AudioFile();
     audio.context.name = name;
     audio.context.blob = blob;
+    audio.context.type = blob.type;
     audio.context.url = window.URL.createObjectURL(blob);
 
     try {
