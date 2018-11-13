@@ -111,6 +111,7 @@ export class BufferSharingTask<T> {
 
   private initializeReceive() {
     this.resetTimeout();
+    let startTime = performance.now();
     EventSystem.register(this)
       .on<ChankData>('FILE_SEND_CHANK_' + this.identifier, 0, event => {
         this.chanks[event.data.index] = event.data.chank;
@@ -125,8 +126,12 @@ export class BufferSharingTask<T> {
         if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
         EventSystem.unregister(this);
 
-        var sumLength = 0;
+        let sumLength = 0;
         this.chanks.forEach(chank => sumLength += chank.byteLength);
+
+        let time = performance.now() - startTime;
+        let rate = sumLength / time;
+        console.log(`転送速度: ${rate.toFixed(0)}byte/s`);
 
         let uint8Array = new Uint8Array(sumLength);
         let pos = 0;
