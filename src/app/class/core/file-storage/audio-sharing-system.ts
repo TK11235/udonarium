@@ -119,8 +119,20 @@ export class AudioSharingSystem {
 
     EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: audio.identifier }, sendTo);
 
-    let context = audio.toContext();
-    context.blob = <any>await FileReaderUtil.readAsArrayBufferAsync(context.blob);
+    let context: AudioFileContext = {
+      identifier: audio.identifier,
+      name: audio.name,
+      blob: null,
+      type: '',
+      url: null
+    };
+
+    if (audio.state === AudioState.URL) {
+      context.url = audio.url;
+    } else {
+      context.blob = <any>await FileReaderUtil.readAsArrayBufferAsync(audio.blob);
+      context.type = audio.blob.type;
+    }
 
     let task = await BufferSharingTask.createSendTask(context, sendTo, audio.identifier);
     this.taskMap.set(audio.identifier, task);
@@ -149,7 +161,6 @@ export class AudioSharingSystem {
       audio.apply(context);
     }
     task.onfinish = (task, data) => {
-      audio.apply(data);
       this.stopTransmission(task.identifier);
       EventSystem.trigger('UPDATE_AUDIO_RESOURE', [data]);
       AudioStorage.instance.synchronize();
