@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
 
 @Component({
   selector: 'context-menu',
@@ -17,6 +17,11 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   get top() { return this.contextMenuService.position.y; }
 
   private $draggablePanelElement: JQuery;
+
+  lastSelectMenu: ContextMenuAction;
+  parentMenu: ContextMenuAction;
+  subMenu: ContextMenuAction[];
+  subMenuTimer: NodeJS.Timer;
 
   private callbackOnDraggablePanelMouseDown: any = null;
   private callbackOnOutsideClick: any = null;
@@ -54,7 +59,6 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setForeground();
   }
 
-  //@HostListener('document:mousedown', ['$event'])
   private onOutsideClick(event) {
     if (!$(event.target).closest(this.$draggablePanelElement).length) {
       this.close();
@@ -111,10 +115,29 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 0);
   }
 
-  doAction(func: Function) {
+  doAction(action: ContextMenuAction) {
     console.log('ContextMenu action');
-    if (func) func();
-    this.close();
+    this.showSubMenu(action);
+    if (action.action != null) {
+      action.action();
+      this.close();
+    }
+  }
+
+  showSubMenu(action: ContextMenuAction) {
+    this.lastSelectMenu = action;
+    this.hideSubMenu();
+    if (action.subActions == null || action.subActions.length < 1) return;
+    this.parentMenu = action;
+    this.subMenu = action.subActions;
+    clearTimeout(this.subMenuTimer);
+  }
+
+  hideSubMenu() {
+    clearTimeout(this.subMenuTimer);
+    this.subMenuTimer = setTimeout(() => {
+      this.subMenu = null;
+    }, 1200);
   }
 
   close() {

@@ -6,7 +6,8 @@ interface ContextMenuPoint {
 }
 export interface ContextMenuAction {
   name: string,
-  action: Function
+  action: Function,
+  subActions?: ContextMenuAction[]
 }
 
 @Injectable()
