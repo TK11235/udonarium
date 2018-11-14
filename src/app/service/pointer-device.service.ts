@@ -33,6 +33,8 @@ export class PointerDeviceService {
   pointers: PointerCoordinate[] = [{ x: 0, y: 0, z: 0 }];
   pointerType: PointerType = PointerType.UNKNOWN;
 
+  private contextMenuStartPostion: PointerCoordinate = { x: 0, y: 0, z: 0 };
+
   get pointerX(): number {
     return this.pointers[0].x;
   }
@@ -65,6 +67,7 @@ export class PointerDeviceService {
     } else {
       this.onMouseDown(e);
     }
+    this.contextMenuStartPostion = this.pointers[0];
   }
 
   private onMouseDown(e: MouseEvent) {
@@ -95,9 +98,7 @@ export class PointerDeviceService {
   private onMouseMove(e: MouseEvent) {
     if (1 < this.pointers.length) Array.prototype.slice.call(this.pointers, 0, 1);
     let pointer: PointerCoordinate = { x: e.pageX, y: e.pageY, z: 0 };
-    if (pointer.x !== this.pointers[0].x || pointer.y !== this.pointers[0].y || pointer.z !== this.pointers[0].z) {
-      this._isAllowedToOpenContextMenu = false;
-    }
+    if (this._isAllowedToOpenContextMenu) this.preventContextMenuIfNeeded(pointer);
     this.pointers[0] = pointer;
     this.pointerType = PointerType.MOUSE;
   }
@@ -106,9 +107,7 @@ export class PointerDeviceService {
     let length = e.touches.length;
     for (let i = 0; i < length; i++) {
       let pointer: PointerCoordinate = { x: e.touches[i].pageX, y: e.touches[i].pageY, z: 0 };
-      if (this.pointers[i] !== null && (pointer.x !== this.pointers[i].x || pointer.y !== this.pointers[i].y || pointer.z !== this.pointers[i].z)) {
-        this._isAllowedToOpenContextMenu = false;
-      }
+      if (this._isAllowedToOpenContextMenu) this.preventContextMenuIfNeeded(pointer);
       this.pointers[i] = pointer;
     }
     this.pointerType = PointerType.TOUCH;
@@ -123,6 +122,13 @@ export class PointerDeviceService {
   private onContextMenu(e: any) {
     this.onPointerUp(e);
     if (e.touches) this._isAllowedToOpenContextMenu = true;
+  }
+
+  private preventContextMenuIfNeeded(pointer: PointerCoordinate, threshold: number = 3) {
+    let distance = (pointer.x - this.contextMenuStartPostion.x) ** 2
+      + (pointer.y - this.contextMenuStartPostion.y) ** 2
+      + (pointer.z - this.contextMenuStartPostion.z) ** 2;
+    if (threshold ** 2 < distance) this._isAllowedToOpenContextMenu = false;
   }
 
   protected addEventListeners() {
