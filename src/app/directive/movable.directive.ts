@@ -76,7 +76,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   ngAfterViewInit() {
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.isSendFromSelf || event.data.identifier !== this.tabletopObject.identifier) return;
+        if ((event.isSendFromSelf && this.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
         this.cancel();
         this.stopTransition();
         this.setPosition(this.tabletopObject);
@@ -275,6 +275,10 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   private setAnimatedTransition(isEnable: boolean) {
     if (!this.transformElement) return;
     this.transformElement.style.transition = isEnable ? 'transform 132ms linear' : '';
+  }
+
+  private shouldTransition(object: TabletopObject): boolean {
+    return object.location.x !== this.posX || object.location.y !== this.posY || object.posZ !== this.posZ;
   }
 
   private stopTransition() {
