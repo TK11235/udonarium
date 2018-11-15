@@ -8,7 +8,7 @@ import { ContextMenuAction, ContextMenuService } from 'service/context-menu.serv
   styleUrls: ['./context-menu.component.css']
 })
 export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('draggablePanel') draggablePanel: ElementRef;
+  @ViewChild('root') panelElementRef: ElementRef;
 
   @Input() set left(left: number) { this.contextMenuService.position.x = left; }
   @Input() set top(top: number) { this.contextMenuService.position.y = top; }
@@ -16,15 +16,13 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   get left() { return this.contextMenuService.position.x; }
   get top() { return this.contextMenuService.position.y; }
 
-  private $draggablePanelElement: JQuery;
+  private $panelElement: JQuery;
 
   lastSelectMenu: ContextMenuAction;
   parentMenu: ContextMenuAction;
   subMenu: ContextMenuAction[];
   subMenuTimer: NodeJS.Timer;
 
-  private callbackOnDraggablePanelMouseDown: any = null;
-  private callbackOnOutsideClick: any = null;
   constructor(
     public contextMenuService: ContextMenuService
   ) { }
@@ -33,34 +31,20 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-    // TODO ウィンドウタイトルって下側のほうがいい？ 
-    this.$draggablePanelElement = $(this.draggablePanel.nativeElement);
-
-    this.callbackOnDraggablePanelMouseDown = (e) => this.onDraggablePanelMouseDown(e);
-    this.callbackOnOutsideClick = (e) => this.onOutsideClick(e);
-
-    this.draggablePanel.nativeElement.addEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
-    document.body.addEventListener('mousedown', this.callbackOnOutsideClick, true);
+  ngAfterViewInit() { 
+    this.$panelElement = $(this.panelElementRef.nativeElement);
 
     this.setForeground();
     this.adjustPosition();
   }
 
   ngOnDestroy() {
-    this.draggablePanel.nativeElement.removeEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
-    document.body.removeEventListener('mousedown', this.callbackOnOutsideClick, true);
-    this.callbackOnDraggablePanelMouseDown = null;
-    this.callbackOnOutsideClick = null;
+
   }
 
-  private onDraggablePanelMouseDown(e: MouseEvent) {
-    console.log('onDraggablePanelMouseDown');
-    this.setForeground();
-  }
-
-  private onOutsideClick(event) {
-    if (!$(event.target).closest(this.$draggablePanelElement).length) {
+  @HostListener('document:mousedown', ['$event'])
+  onOutsideClick(event) {
+    if (!$(event.target).closest(this.$panelElement).length) {
       this.close();
     }
   }
@@ -84,11 +68,11 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     $stacks.each(function () {
       $(this).css('zIndex', parseInt($(this).css('zIndex')) - bottomZindex);
     });
-    this.$draggablePanelElement.css('zIndex', topZIndex + 1);
+    this.$panelElement.css('zIndex', topZIndex + 1);
   }
 
   private adjustPosition() {
-    let $panel = $(this.draggablePanel.nativeElement);
+    let $panel = $(this.panelElementRef.nativeElement);
 
     let offsetLeft = $panel.offset().left;
     let offsetTop = $panel.offset().top;

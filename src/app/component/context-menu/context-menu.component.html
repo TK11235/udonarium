@@ -1,4 +1,4 @@
-<div class="draggable-panel is-max-limit" [style.left.px]="left" [style.top.px]="top" #draggablePanel (mouseleave)="hideSubMenu()">
+<div class="draggable-panel is-max-limit" #root [style.left.px]="left" [style.top.px]="top" (mouseleave)="hideSubMenu()">
   <div *ngIf="0 < contextMenuService.title.length" class="title">{{contextMenuService.title}}</div>
   <ul>
     <li *ngFor="let action of contextMenuService.actions" (click)="doAction(action)" (mouseenter)="showSubMenu(action)">
