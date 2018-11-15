@@ -1,4 +1,14 @@
-import { Component, ElementRef, HostListener, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { EventSystem } from '@udonarium/core/system/system';
@@ -18,7 +28,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   templateUrl: './text-note.component.html',
   styleUrls: ['./text-note.component.css']
 })
-export class TextNoteComponent implements OnInit {
+export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('textArea') textAreaElementRef: ElementRef;
 
   @Input() textNote: TextNote = null;

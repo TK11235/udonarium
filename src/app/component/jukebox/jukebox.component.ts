@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { AudioFile } from '@udonarium/core/file-storage/audio-file';
 import { AudioPlayer, VolumeType } from '@udonarium/core/file-storage/audio-player';
@@ -16,7 +16,7 @@ import { PanelService } from 'service/panel.service';
   templateUrl: './jukebox.component.html',
   styleUrls: ['./jukebox.component.css']
 })
-export class JukeboxComponent implements OnInit {
+export class JukeboxComponent implements OnInit, OnDestroy {
 
   get volume(): number { return AudioPlayer.volume; }
   set volume(volume: number) { AudioPlayer.volume = volume; }

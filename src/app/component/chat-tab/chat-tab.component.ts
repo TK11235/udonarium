@@ -1,5 +1,6 @@
 import {
   AfterViewChecked,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -23,7 +24,7 @@ import { PanelService } from 'service/panel.service';
   styleUrls: ['./chat-tab.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatTabComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
+export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges, AfterViewChecked {
   maxMessages: number = 20;
   preScrollBottom: number = -1;
 

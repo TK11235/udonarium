@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
@@ -15,7 +15,7 @@ import { PanelOption, PanelService } from 'service/panel.service';
   styleUrls: ['./card-stack-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardStackListComponent implements OnInit {
+export class CardStackListComponent implements OnInit, OnDestroy {
   @Input() cardStack: CardStack = null;
 
   owner: string = Network.peerId;

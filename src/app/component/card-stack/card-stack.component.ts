@@ -1,5 +1,5 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
@@ -34,7 +34,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class CardStackComponent implements OnInit {
+export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() cardStack: CardStack = null;
   @Input() is3D: boolean = false;
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { ChatMessageContext } from '@udonarium/chat-message';
 import { ChatPalette } from '@udonarium/chat-palette';
@@ -20,7 +20,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   templateUrl: './chat-palette.component.html',
   styleUrls: ['./chat-palette.component.css']
 })
-export class ChatPaletteComponent implements OnInit {
+export class ChatPaletteComponent implements OnInit, OnDestroy {
   @ViewChild('textArea') textAreaElementRef: ElementRef;
   @Input() character: GameCharacter = null;
 

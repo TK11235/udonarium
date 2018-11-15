@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
@@ -21,7 +21,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./game-object-inventory.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameObjectInventoryComponent {
+export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDestroy{
   inventoryTypes: string[] = ['table', 'common', 'graveyard'];
 
   selectTab: string = 'table';

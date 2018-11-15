@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { EventSystem, Network } from '@udonarium/core/system/system';
@@ -12,7 +12,7 @@ import { PanelService } from 'service/panel.service';
   templateUrl: './room-setting.component.html',
   styleUrls: ['./room-setting.component.css']
 })
-export class RoomSettingComponent implements OnInit {
+export class RoomSettingComponent implements OnInit, OnDestroy {
   peers: PeerContext[] = [];
   isReloading: boolean = false;
 

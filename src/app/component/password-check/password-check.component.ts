@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { EventSystem, Network } from '@udonarium/core/system/system';
 
@@ -10,7 +10,7 @@ import { PanelService } from 'service/panel.service';
   templateUrl: './password-check.component.html',
   styleUrls: ['./password-check.component.css']
 })
-export class PasswordCheckComponent implements OnInit {
+export class PasswordCheckComponent implements OnInit, OnDestroy {
   password: string = '';
   help: string = '';
 
