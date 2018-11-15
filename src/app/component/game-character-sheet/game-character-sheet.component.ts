@@ -3,6 +3,7 @@ import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/cor
 import { Card } from '@udonarium/card';
 import { EventSystem, Network } from '@udonarium/core/system/system';
 import { DataElement } from '@udonarium/data-element';
+import { DiceSymbol } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { Terrain } from '@udonarium/terrain';
@@ -34,6 +35,18 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   get isTerrain(): boolean {
     return this.tabletopObject instanceof Terrain;
+  }
+
+  get isDiceSymbol(): boolean {
+    return this.tabletopObject instanceof DiceSymbol;
+  }
+
+  get isVisibleDice(): boolean {
+    return this.tabletopObject instanceof DiceSymbol && this.tabletopObject.isVisible;
+  }
+
+  get diceFace(): string {
+    return this.tabletopObject instanceof DiceSymbol && this.tabletopObject.face;
   }
 
   constructor(

@@ -1,5 +1,5 @@
 <button (click)="toggleEditMode()">編集切り替え</button>
-<ng-container *ngIf="!isCard && !isTerrain">
+<ng-container *ngIf="!isCard && !isTerrain && !isDiceSymbol">
   <button (click)="openModal('imageIdentifier')">画像変更</button>
 </ng-container>
 <ng-container *ngIf="isCard">
@@ -9,6 +9,9 @@
 <ng-container *ngIf="isTerrain">
   <button (click)="openModal('floor')">床の画像を変更</button>
   <button (click)="openModal('wall')">壁の画像を変更</button>
+</ng-container>
+<ng-container *ngIf="isDiceSymbol">
+  <button (click)="openModal(diceFace)" [disabled]="!isVisibleDice">ダイス目の画像を変更</button>
 </ng-container>
 <button (click)="saveToXML()">保存</button>
 <ng-container *ngIf="isCharacter">
