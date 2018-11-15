@@ -44,6 +44,7 @@ import { SaveDataService } from 'service/save-data.service';
 export class AppComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('modalLayer', { read: ViewContainerRef }) modalLayerViewContainerRef: ViewContainerRef;
+  private immediateUpdateTimer: NodeJS.Timer = null;
   private lazyUpdateTimer: NodeJS.Timer = null;
   private openPanelCount: number = 0;
 
@@ -126,17 +127,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(); })
-      .on('DELETE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(); })
-      .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(); })
-      .on('SYNCHRONIZE_FILE_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(); })
+      .on('UPDATE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(event.isSendFromSelf); })
+      .on('DELETE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(event.isSendFromSelf); })
+      .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
+      .on('SYNCHRONIZE_FILE_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
       .on<AppConfig>('LOAD_CONFIG', 0, event => {
         console.log('LOAD_CONFIG !!!', event.data);
         Network.setApiKey(event.data.webrtc.key);
         Network.open();
       })
       .on<File>('FILE_LOADED', 0, event => {
-        this.lazyNgZoneUpdate();
+        this.lazyNgZoneUpdate(false);
       })
       .on('OPEN_PEER', 0, event => {
         console.log('OPEN_PEER', event.data.peer);
@@ -217,11 +218,27 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.saveDataService.saveRoom(roomName);
   }
 
-  private lazyNgZoneUpdate() {
-    if (this.lazyUpdateTimer !== null) return;
-    this.lazyUpdateTimer = setTimeout(() => {
-      this.lazyUpdateTimer = null;
-      this.ngZone.run(() => { });
-    }, 100);
+  private lazyNgZoneUpdate(isImmediate: boolean) {
+    if (isImmediate) {
+      if (this.immediateUpdateTimer !== null) return;
+      this.immediateUpdateTimer = setTimeout(() => {
+        this.immediateUpdateTimer = null;
+        if (this.lazyUpdateTimer != null) {
+          clearTimeout(this.lazyUpdateTimer);
+          this.lazyUpdateTimer = null;
+        }
+        this.ngZone.run(() => { });
+      }, 0);
+    } else {
+      if (this.lazyUpdateTimer !== null) return;
+      this.lazyUpdateTimer = setTimeout(() => {
+        this.lazyUpdateTimer = null;
+        if (this.immediateUpdateTimer != null) {
+          clearTimeout(this.immediateUpdateTimer);
+          this.immediateUpdateTimer = null;
+        }
+        this.ngZone.run(() => { });
+      }, 100);
+    }
   }
 }
