@@ -8,6 +8,7 @@ import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system/system';
+import { DiceSymbol, DiceType } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
 import { GameTable, GridType } from '@udonarium/game-table';
 import { GameTableMask } from '@udonarium/game-table-mask';
@@ -83,6 +84,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private _terrains: Terrain[] = [];
   private _peerCursors: PeerCursor[] = [];
   private _textNotes: TextNote[] = [];
+  private _diceSymbols: DiceSymbol[] = [];
   get tabletopCharacters(): GameCharacter[] { this.updateTabletopObjects(); return this._tabletopCharacters; }
   get gameTableMasks(): GameTableMask[] { this.updateTabletopObjects(); return this._gameTableMasks; }
   get cards(): Card[] { this.updateTabletopObjects(); return this._cards; }
@@ -90,6 +92,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get terrains(): Terrain[] { this.updateTabletopObjects(); return this._terrains; }
   get peerCursors(): PeerCursor[] { this.updateTabletopObjects(); return this._peerCursors; }
   get textNotes(): TextNote[] { this.updateTabletopObjects(); return this._textNotes; }
+  get diceSymbols(): DiceSymbol[] { this.updateTabletopObjects(); return this._diceSymbols; }
 
   constructor(
     private ngZone: NgZone,
@@ -325,14 +328,61 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
         {
-          name: 'テーブル設定', action: () => {
-            this.modalService.open(GameTableSettingComponent);
+          name: 'トランプの山札を作成', action: () => {
+            this.createTrump(potison);
+            SoundEffect.play(PresetSound.cardPut);
           }
         },
         {
-          name: 'トランプの山札を作る', action: () => {
-            this.createTrump(potison);
-            SoundEffect.play(PresetSound.cardPut);
+          name: 'ダイスを作成', action: null, subActions: [
+            {
+              name: 'D4', action: () => {
+                this.createDiceSymbol(potison, 'D4', DiceType.D4, '4_dice');
+                SoundEffect.play(PresetSound.put);
+              }
+            },
+            {
+              name: 'D6', action: () => {
+                this.createDiceSymbol(potison, 'D6', DiceType.D6, '6_dice');
+                SoundEffect.play(PresetSound.put);
+              }
+            },
+            {
+              name: 'D8', action: () => {
+                this.createDiceSymbol(potison, 'D8', DiceType.D8, '8_dice');
+                SoundEffect.play(PresetSound.put);
+              }
+            },
+            {
+              name: 'D10', action: () => {
+                this.createDiceSymbol(potison, 'D10', DiceType.D10, '10_dice');
+                SoundEffect.play(PresetSound.put);
+              }
+            },
+            {
+              name: 'D10 (00-90)', action: () => {
+                this.createDiceSymbol(potison, 'D10', DiceType.D10_10TIMES, '100_dice');
+                SoundEffect.play(PresetSound.put);
+              }
+            },
+            {
+              name: 'D12', action: () => {
+                this.createDiceSymbol(potison, 'D12', DiceType.D12, '12_dice');
+                SoundEffect.play(PresetSound.put);
+              }
+            },
+            {
+              name: 'D20', action: () => {
+                this.createDiceSymbol(potison, 'D20', DiceType.D20, '20_dice');
+                SoundEffect.play(PresetSound.put);
+              }
+            }
+
+          ]
+        },
+        {
+          name: 'テーブル設定', action: () => {
+            this.modalService.open(GameTableSettingComponent);
           }
         }
       ], this.gameTableObject.name);
@@ -362,6 +412,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.needUpdateList[Terrain.aliasName] = false;
     this.needUpdateList[PeerCursor.aliasName] = false;
     this.needUpdateList[TextNote.aliasName] = false;
+    this.needUpdateList[DiceSymbol.aliasName] = false;
   }
 
   private updateTabletopObjects() {
@@ -394,6 +445,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.needUpdateList[TextNote.aliasName]) {
       this.needUpdateList[TextNote.aliasName] = true;
       this._textNotes = ObjectStore.instance.getObjects<TextNote>(TextNote);
+    }
+    if (!this.needUpdateList[DiceSymbol.aliasName]) {
+      this.needUpdateList[DiceSymbol.aliasName] = true;
+      this._diceSymbols = ObjectStore.instance.getObjects<DiceSymbol>(DiceSymbol);
     }
   }
 
@@ -458,6 +513,24 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     textNote.location.x = pointer.x;
     textNote.location.y = pointer.y;
     textNote.update();
+  }
+
+  createDiceSymbol(potison: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string) {
+    console.log('createDiceSymbol');
+    let diceSymbol = DiceSymbol.create(name, diceType, 1);
+    let image: ImageFile = null;
+
+    diceSymbol.faces.forEach(face => {
+      let url: string = `./assets/images/dice/${imagePathPrefix}/${imagePathPrefix}[${face}].png`;
+      image = ImageStorage.instance.get(url)
+      if (!image) { image = ImageStorage.instance.add(url); }
+      diceSymbol.imageDataElement.getFirstElementByName(face).value = image.identifier;
+    });
+
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    diceSymbol.location.x = pointer.x - 25;
+    diceSymbol.location.y = pointer.y - 25;
+    diceSymbol.update();
   }
 
   setTransform(transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number) {

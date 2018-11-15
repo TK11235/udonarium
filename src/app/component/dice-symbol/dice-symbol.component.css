@@ -1,0 +1,242 @@
+.is-grab {
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.is-grabbing {
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+.is-3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.is-transition {
+  -webkit-transition: -webkit-transform 132ms linear;
+  transition: transform 132ms linear;
+}
+
+.is-pointer-events-none {
+  pointer-events: none;
+}
+
+.is-pointer-events-auto {
+  pointer-events: auto;
+}
+
+.component {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -moz-user-drag: none;
+  -webkit-user-drag: none;
+}
+
+.component-content {
+  width: 100%;
+  height: 100%;
+}
+
+.pedestal-grab {
+  z-index: -1;
+  backface-visibility: hidden;
+  position: absolute;
+  top: -22px;
+  left: -6px;
+  height: calc(100% + 44px);
+  width: calc(100% + 12px);
+  cursor: default;
+  border-radius: 37px;
+  opacity: 0;
+}
+
+.pedestal-grab-border {
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-top: solid 28px #999;
+  border-left: solid 12px #999;
+  border-right: solid 12px #CCC;
+  border-bottom: solid 28px #CCC;
+  border-radius: 22px;
+}
+
+.pedestal-outer:hover + .pedestal-grab, .pedestal-grab:hover, .pedestal-grab:active, {
+  opacity: 1;
+}
+
+.pedestal-inner {
+  backface-visibility: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border:solid 6px rgb(216, 139, 75);
+  border-radius: 5px;
+}
+
+.is-gray-border {
+  border-color: #999;
+}
+
+.pedestal-outer {
+  backface-visibility: hidden;
+  transform: translateZ(0.01px);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border:solid 2px #212121;
+  border-radius: 5px;
+}
+
+.upright-transform {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  transform: rotateX(-90deg) translateY(-50%);
+}
+
+.is-fit-width {
+  height: auto;
+  width: 100%;
+}
+
+.fill-frame {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.image {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+.is-black-mask {
+  filter: brightness(0);
+ }
+
+ .is-harf-black-mask {
+  filter: brightness(0.5);
+ }
+
+.name-tag {
+  box-sizing: border-box;
+  font-size: 15px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  position: absolute;
+  top: -30px;
+}
+
+.owner-tag {
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  position: absolute;
+  top: -55px;
+}
+
+.rotate-frame {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.rotate-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  height: auto;
+}
+
+.is-nowrap {
+  white-space: nowrap;
+}
+
+.is-black-background {
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+.fornt-tag {
+ backface-visibility: hidden;
+}
+
+.back-tag {
+  position: absolute;
+  top: 3px;
+  backface-visibility: hidden;
+  transform: rotateY(-180deg)
+}
+
+.rotate-grab-icon {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  border:solid 2px #CCCCCC;
+  cursor: -moz-default;
+  cursor: -webkit-default;
+  cursor: default;
+  z-index: 1;
+  padding: 0;
+  background-color: #CCCCCC;
+  border-radius: 100%;
+  color: #444;
+  opacity: 0;
+}
+
+.of-top {
+  top: -42px;
+}
+
+.of-bottom {
+  bottom: -30px;
+}
+
+.of-front {
+  position: absolute;
+  width: 24px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  color: #444;
+}
+
+.of-back {
+  position: absolute;
+  width: 24px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: #444;
+}
+
+.grab-group:hover .rotate-grab, .grab-group:active .rotate-grab, .rotate-grab:hover, .rotate-grab:active {
+  opacity: 1;
+}

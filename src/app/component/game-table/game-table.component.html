@@ -12,6 +12,7 @@
         <card-stack class="is-3d" *ngFor="let cardStack of cardStacks; trackBy: trackByGameObject" [cardStack]="cardStack" [ngStyle]="{'z-index' : cardStack.zindex}"></card-stack>
         <card class="is-3d" *ngFor="let card of cards; trackBy: trackByGameObject" [card]="card" [ngStyle]="{'z-index' : card.zindex}"></card>
       </div>
+      <dice-symbol class="is-3d" *ngFor="let diceSymbol of diceSymbols; trackBy: trackByGameObject" [diceSymbol]="diceSymbol"></dice-symbol>
       <game-character class="is-3d" *ngFor="let character of tabletopCharacters; trackBy: trackByGameObject" [gameCharacter]="character"></game-character>
       <peer-cursor class="is-3d" *ngFor="let cursor of peerCursors; trackBy: trackByGameObject" [cursor]="cursor"></peer-cursor>
     </div>
