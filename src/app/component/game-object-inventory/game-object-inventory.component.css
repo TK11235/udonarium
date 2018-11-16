@@ -21,6 +21,7 @@
 .hidden-spacer {
   visibility: hidden;
   height: 0;
+  font-size: 1.0em;
   min-width:1em; 
   max-width : 12em;
   overflow: hidden;
@@ -291,6 +292,7 @@ input[type='range']::-ms-tooltip {
   font-weight: bold;
   width: 4em;
   text-align: right;
+  font-family: inherit;
 }
 
 .tag-name {
@@ -315,4 +317,5 @@ input[type='range']::-ms-tooltip {
   min-width: 1em;
   max-width: 12em;
   text-align: center;
+  font-family: inherit;
 }
