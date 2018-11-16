@@ -128,13 +128,24 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
         if (!aElm && !bElm) return 0;
         if (!bElm) return -1;
         if (!aElm) return 1;
-        if (aElm.value < bElm.value) return sortOrder;
-        if (aElm.value > bElm.value) return sortOrder * -1;
+
+        let aValue = this.convertToSortableValue(aElm.value);
+        let bValue = this.convertToSortableValue(bElm.value);
+        if (aValue < bValue) return sortOrder;
+        if (aValue > bValue) return sortOrder * -1;
         return 0;
       });
     }
 
     return gameObjects;
+  }
+
+  private convertToSortableValue(value: number | string): number | string {
+    let resultStr: string = (value + '').trim().replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
+      return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+    let resultNum = +resultStr;
+    return Number.isNaN(resultNum) ? resultStr : resultNum;
   }
 
   getInventoryTags(data: DataElement): DataElement[] {
