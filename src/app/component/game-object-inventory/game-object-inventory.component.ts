@@ -44,6 +44,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '昇順' : '降順'; }
 
+  private lazyMarkTimer: NodeJS.Timer = null;
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
@@ -56,7 +58,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
-        if (object instanceof TabletopObject || object instanceof DataElement || object instanceof DataSummarySetting) this.changeDetector.markForCheck();
+        if (object instanceof TabletopObject || object instanceof DataElement || object instanceof DataSummarySetting) this.lazyMarkForCheck();
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
         this.changeDetector.markForCheck();
@@ -248,6 +250,14 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       }
     }
     return false;
+  }
+
+  private lazyMarkForCheck() {
+    if (this.lazyMarkTimer !== null) return;
+    this.lazyMarkTimer = setTimeout(() => {
+      this.lazyMarkTimer = null;
+      this.changeDetector.markForCheck();
+    }, 16);
   }
 
   trackByGameObject(index: number, gameObject: GameObject) {
