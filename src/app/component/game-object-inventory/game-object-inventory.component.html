@@ -28,7 +28,7 @@
       </select>
     </div>
     <div style="font-size: 12px; padding-top: 6px;">表示項目</div>
-    <input style="width: 100%; box-sizing: border-box;" [(ngModel)]="dataTag" placeholder="Space区切りでタグ名 ex.HP MP" />
+    <input style="width: 100%; box-sizing: border-box;" [(ngModel)]="dataTag" placeholder="スペース区切りでタグ名 スラッシュで改行 ex.「HP MP / メモ」" />
     <div style="padding-top: 6px;">
       <button class="tab-setting small-font" (click)="toggleEdit()"><i class="material-icons small-font">settings</i>完了</button>
     </div>
@@ -68,7 +68,8 @@
   </div>
 </ng-template>
 <ng-template #dataElmTag let-dataElm="dataElm">
-  <div *ngIf="dataElm" class="object-tag">
+  <ng-container *ngIf="dataElm?.name === newLineString"><br></ng-container>
+  <div *ngIf="dataElm && dataElm.name !== newLineString" class="object-tag">
     <ng-container [ngSwitch]="dataElm.attributes['type']">
       <ng-container *ngSwitchCase="'numberResource'">
         <div class="resource-tag">

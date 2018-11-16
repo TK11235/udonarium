@@ -29,6 +29,9 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   isEdit: boolean = false;
 
+  newLineString: string = '/';
+  private newLineDataElement: DataElement = DataElement.create(this.newLineString);
+
   private get summarySetting(): DataSummarySetting { return DataSummarySetting.instance; }
 
   get sortTag(): string { return this.summarySetting.sortTag; }
@@ -149,7 +152,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   }
 
   getInventoryTags(data: DataElement): DataElement[] {
-    return this.dataTags.map(tag => data.getFirstElementByName(tag));
+    return this.dataTags.map(tag => tag === this.newLineString ? this.newLineDataElement : data.getFirstElementByName(tag));
   }
 
   onContextMenu(e: Event, gameObject: GameCharacter) {
