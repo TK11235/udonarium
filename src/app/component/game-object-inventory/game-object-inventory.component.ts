@@ -235,4 +235,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     }
     return false;
   }
+
+  trackByGameObject(index: number, gameObject: GameObject) {
+    return gameObject ? gameObject.identifier : index;
+  }
 }
