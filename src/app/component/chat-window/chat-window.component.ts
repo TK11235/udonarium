@@ -179,7 +179,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   checkAutoScroll() {
     if (!this.panelService.scrollablePanel) return;
     let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
-    if (top <= this.panelService.scrollablePanel.scrollTop) {
+    if (top - 150 <= this.panelService.scrollablePanel.scrollTop) {
       this.isAutoScroll = true;
     } else {
       this.isAutoScroll = false;
