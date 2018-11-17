@@ -33,7 +33,7 @@
   <div *ngIf="isEdit" class="edit-info"><i class="material-icons" style="vertical-align: bottom; size:0.8rem;">info_outline</i> チャットパレット編集中です</div>
 </div>
 <div *ngIf="!isEdit">
-  <select class="palette" style="width: 100%;" [size]="paletteSize" (click)="selectPalette($event.target.value)" (doubleclick)="sendChat()">
+  <select class="palette" style="width: 100%; overflow: hidden;" [size]="paletteSize" (click)="selectPalette($event.target.value)" (doubleclick)="sendChat()">
     <ng-container *ngIf="palette">
       <option *ngFor="let palette of palette.getPalette()" value="{{palette}}">{{palette}}</option>
     </ng-container>
