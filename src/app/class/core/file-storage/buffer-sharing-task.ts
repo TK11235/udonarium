@@ -130,8 +130,8 @@ export class BufferSharingTask<T> {
         this.chanks.forEach(chank => sumLength += chank.byteLength);
 
         let time = performance.now() - startTime;
-        let rate = sumLength / time;
-        console.log(`転送速度: ${rate.toFixed(0)}byte/s`);
+        let rate = (sumLength / 1024 / 1024) / (time / 1000);
+        console.log(`${(time / 1000).toFixed(2)}秒 転送速度: ${rate.toFixed(2)}MB/s`);
 
         let uint8Array = new Uint8Array(sumLength);
         let pos = 0;
