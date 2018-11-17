@@ -21,7 +21,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./game-object-inventory.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDestroy{
+export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDestroy {
   inventoryTypes: string[] = ['table', 'common', 'graveyard'];
 
   selectTab: string = 'table';
