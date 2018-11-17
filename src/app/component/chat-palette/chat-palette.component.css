@@ -53,3 +53,20 @@
   word-break: break-all;
   vertical-align: bottom;
 }
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: rgba(240, 218, 189, 0.8);
+  border-bottom: 1px dotted #666;
+  margin-top: 0px;
+}
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(240, 218, 189, 0.8);
+  border-top: 1px dotted #666;
+  margin-bottom: 0;
+}

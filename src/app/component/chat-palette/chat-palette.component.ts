@@ -39,6 +39,8 @@ export class ChatPaletteComponent implements OnInit {
   isEdit: boolean = false;
   editPalette: string = '';
 
+  get paletteSize(): number { return this.palette.getPalette().length > 5 ? this.palette.getPalette().length : 5; }
+
   private writingEventInterval: NodeJS.Timer = null;
   private previousWritingLength: number = 0;
 
