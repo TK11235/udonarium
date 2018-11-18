@@ -1,5 +1,5 @@
 <div class="draggable-panel submenu-panel" #root (mouseleave)="hideSubMenu()">
-  <div *ngIf="0 < contextMenuService.title.length" class="title">{{title}}</div>
+  <div *ngIf="0 < title.length" class="title">{{title}}</div>
   <ul>
     <li *ngFor="let action of subActions" (click)="doAction(action)" (mouseenter)="showSubMenu(action)">
       <div class="menu-title">{{action.name}}</div>
