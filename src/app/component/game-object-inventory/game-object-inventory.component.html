@@ -73,11 +73,11 @@
     <ng-container [ngSwitch]="dataElm.attributes['type']">
       <ng-container *ngSwitchCase="'numberResource'">
         <div class="resource-tag">
-          <div style="font-size: 0.8em; display: inline-block;">{{dataElm.name}}</div>
+          <div style="font-size: 0.8em; display: inline-block; margin-right: 0.5em;">{{dataElm.name}}</div>
           <input class="input resource-value" type="number" size="1" [(ngModel)]="dataElm.currentValue" placeholder="Value" />
         </div>
         <div class="resource-tag">
-          <input type="range" [style]="'font-size: 0.8em; min-width: 1em; width:' + (dataElm.name.length + 5) + 'em; --min: 0; --max: ' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
+          <input type="range" [style]="'font-size: 0.8em; min-width: 1em; width:' + (dataElm.name.length + 4.5) + 'em; --min: 0; --max: ' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
             min="0" max="{{dataElm.value}}" [ngStyle]="{'background-color':'green'}" [(ngModel)]="dataElm.currentValue" />
         </div>
       </ng-container>
