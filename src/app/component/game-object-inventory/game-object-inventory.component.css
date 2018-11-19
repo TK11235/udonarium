@@ -261,9 +261,19 @@ input[type='range']::-ms-tooltip {
 }
 
 .image-box {
-  min-width: 32px;
-  min-height: 32px;
-  vertical-align:top;
+  padding: 0px;
+  width: 32px;
+  height: 32px;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.image-box img{
+  width: auto;
+  height: auto;
+  max-width:100%;
+  max-height:100%;
+  vertical-align: bottom;
 }
 
 .inventory-object {
