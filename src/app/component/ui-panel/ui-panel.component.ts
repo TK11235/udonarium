@@ -61,8 +61,8 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private $draggablePanel: JQuery;
 
-  private callbackOnScrollablePanelMouseDown: any = null;
-  private callbackOnDraggablePanelMouseDown: any = null;
+  private callbackOnScrollablePanelMouseDown = (e) => this.onScrollablePanelMouseDown(e);
+  private callbackOnDraggablePanelMouseDown = (e) => this.onDraggablePanelMouseDown(e);
   private callbackOnMouseUp: any = (e) => this.onMouseUp(e);
 
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
@@ -83,9 +83,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.$draggablePanel.draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', stack: '.draggable-panel', opacity: 0.7 });
     this.$draggablePanel.resizable({ handles: 'all', minHeight: 100, minWidth: 100 });
 
-    this.callbackOnScrollablePanelMouseDown = (e) => this.onScrollablePanelMouseDown(e);
-    this.callbackOnDraggablePanelMouseDown = (e) => this.onDraggablePanelMouseDown(e);
-
     this.scrollablePanel.nativeElement.addEventListener('mousedown', this.callbackOnScrollablePanelMouseDown, false);
     this.draggablePanel.nativeElement.addEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
 
@@ -103,8 +100,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.scrollablePanel.nativeElement.removeEventListener('mousedown', this.callbackOnScrollablePanelMouseDown, false);
     this.draggablePanel.nativeElement.removeEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
-    this.callbackOnScrollablePanelMouseDown = null;
-    this.callbackOnDraggablePanelMouseDown = null;
   }
 
   private adjustPosition() {
