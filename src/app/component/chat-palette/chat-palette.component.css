@@ -34,9 +34,6 @@
   width: 100%;
   height: 100%;
 }
-.palette option {
-  height: 20px;
-}
 .direct-message {
   background-color: #555;
   color: #CCC;
