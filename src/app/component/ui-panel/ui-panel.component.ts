@@ -1,5 +1,15 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 
 import { PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
@@ -68,6 +78,7 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   constructor(
+    private ngZone: NgZone,
     public panelService: PanelService,
     private pointerDeviceService: PointerDeviceService
   ) { }
@@ -77,7 +88,12 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // TODO ウィンドウタイトルって下側のほうがいい？
+    this.ngZone.runOutsideAngular(() => {
+      this.initDraggablePanel();
+    });
+  }
+
+  private initDraggablePanel() {
     this.$draggablePanel = $(this.draggablePanel.nativeElement);
 
     this.$draggablePanel.draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', stack: '.draggable-panel', opacity: 0.7 });
