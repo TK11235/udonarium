@@ -39,8 +39,6 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   isEdit: boolean = false;
   editPalette: string = '';
 
-  get paletteSize(): number { return this.palette.getPalette().length > 2 ? this.palette.getPalette().length : 2; }
-
   private writingEventInterval: NodeJS.Timer = null;
   private previousWritingLength: number = 0;
 
