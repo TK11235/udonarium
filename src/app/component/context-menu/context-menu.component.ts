@@ -18,10 +18,11 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private $panelElement: JQuery;
 
-  lastSelectMenu: ContextMenuAction;
   parentMenu: ContextMenuAction;
   subMenu: ContextMenuAction[];
-  subMenuTimer: NodeJS.Timer;
+
+  showSubMenuTimer: NodeJS.Timer;
+  hideSubMenuTimer: NodeJS.Timer;
 
   constructor(
     public contextMenuService: ContextMenuService
@@ -31,7 +32,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  ngAfterViewInit() { 
+  ngAfterViewInit() {
     this.$panelElement = $(this.panelElementRef.nativeElement);
 
     this.setForeground();
@@ -109,17 +110,19 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showSubMenu(action: ContextMenuAction) {
-    this.lastSelectMenu = action;
     this.hideSubMenu();
+    clearTimeout(this.showSubMenuTimer);
     if (action.subActions == null || action.subActions.length < 1) return;
-    this.parentMenu = action;
-    this.subMenu = action.subActions;
-    clearTimeout(this.subMenuTimer);
+    this.showSubMenuTimer = setTimeout(() => {
+      this.parentMenu = action;
+      this.subMenu = action.subActions;
+      clearTimeout(this.hideSubMenuTimer);
+    }, 250);
   }
 
   hideSubMenu() {
-    clearTimeout(this.subMenuTimer);
-    this.subMenuTimer = setTimeout(() => {
+    clearTimeout(this.hideSubMenuTimer);
+    this.hideSubMenuTimer = setTimeout(() => {
       this.subMenu = null;
     }, 1200);
   }
