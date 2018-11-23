@@ -30,6 +30,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _x: number = 0;
   private _y: number = 0;
+  private _target: HTMLElement;
 
   constructor(
     private ngZone: NgZone
@@ -78,11 +79,12 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     if (x === this._x && y === this._y) return;
     this._x = x;
     this._y = y;
+    this._target = e.target;
     if (!this.updateInterval && this.isAllowedToUpdate) {
       this.isAllowedToUpdate = false;
       this.updateInterval = setTimeout(() => {
         this.updateInterval = null;
-        this.calcLocalCoordinate(this._x, this._y, e.target);
+        this.calcLocalCoordinate(this._x, this._y, this._target);
       }, 100);
     }
   }
