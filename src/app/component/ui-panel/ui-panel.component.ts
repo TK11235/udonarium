@@ -91,6 +91,8 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ngZone.runOutsideAngular(() => {
       this.initDraggablePanel();
     });
+    this.setForeground();
+    this.adjustPosition();
   }
 
   private initDraggablePanel() {
@@ -108,9 +110,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.preHeight = this.height;
 
     this.panelService.scrollablePanel = this.scrollablePanel.nativeElement;
-
-    this.setForeground();
-    this.adjustPosition();
   }
 
   ngOnDestroy() {
