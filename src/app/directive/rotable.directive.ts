@@ -134,7 +134,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     e.preventDefault();
     if (this.isDragging) this.ondragend.emit(e);
     this.cancel();
-    this.stickToPolygonal();
+    this.snapToPolygonal();
     this.onend.emit(e);
   }
 
@@ -142,7 +142,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     this.cancel();
-    this.stickToPolygonal();
+    this.snapToPolygonal();
   }
 
   private calcRotate(pointer: PointerCoordinate, rotateOffset: number): number {
@@ -154,7 +154,7 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
     return ((rad * 180 / Math.PI) - rotateOffset) % 360;
   }
 
-  stickToPolygonal(polygonal: number = 24) {
+  snapToPolygonal(polygonal: number = 24) {
     if (polygonal <= 1) return;
     this.rotate = this.rotate < 0 ? this.rotate - (180 / polygonal) : this.rotate + (180 / polygonal);
     this.rotate -= (this.rotate) % (360 / polygonal);

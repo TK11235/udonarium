@@ -171,7 +171,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     e.preventDefault();
     if (this.isDragging) this.ondragend.emit(e);
     this.cancel();
-    if (tableSelecter.gridStick) this.stickToGrid();
+    if (tableSelecter.gridSnap) this.snapToGrid();
     this.onend.emit(e);
   }
 
@@ -181,7 +181,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     this.cancel();
-    if (tableSelecter.gridStick) this.stickToGrid();
+    if (tableSelecter.gridSnap) this.snapToGrid();
   }
 
   private calcLocalCoordinate(target: HTMLElement): PointerCoordinate {
@@ -209,12 +209,12 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     return ratio / (distance + ratio);
   }
 
-  stickToGrid(gridSize: number = 25) {
-    this.posX = this.calcStickNum(this.posX, gridSize);
-    this.posY = this.calcStickNum(this.posY, gridSize);
+  snapToGrid(gridSize: number = 25) {
+    this.posX = this.calcSnapNum(this.posX, gridSize);
+    this.posY = this.calcSnapNum(this.posY, gridSize);
   }
 
-  private calcStickNum(num: number, interval: number): number {
+  private calcSnapNum(num: number, interval: number): number {
     if (interval <= 0) return num;
     num = num < 0 ? num - interval / 2 : num + interval / 2;
     return num - (num % interval);

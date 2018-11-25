@@ -45,9 +45,9 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.tableSelecter.update();
   }
 
-  get tableGridStick(): boolean { return this.tableSelecter.gridStick; }
-  set tableGridStick(tableGridStick: boolean) {
-    this.tableSelecter.gridStick = tableGridStick;
+  get tableGridSnap(): boolean { return this.tableSelecter.gridSnap; }
+  set tableGridSnap(tableGridSnap: boolean) {
+    this.tableSelecter.gridSnap = tableGridSnap;
     this.tableSelecter.update();
   }
 
