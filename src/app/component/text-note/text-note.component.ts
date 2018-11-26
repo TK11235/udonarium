@@ -187,11 +187,13 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
   }
 
-  private showDetail(gameObject: TabletopObject) {
+  private showDetail(gameObject: TextNote) {
     console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x - 350, top: coordinate.y - 200, width: 700, height: 400 };
+    let title = '共有メモ設定';
+    if (gameObject.title.length) title += ' - ' + gameObject.title;
+    let option: PanelOption = { title: title, left: coordinate.x - 350, top: coordinate.y - 200, width: 700, height: 400 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
   }

@@ -10,7 +10,6 @@ import { Terrain } from '@udonarium/terrain';
 
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 import { ModalService } from 'service/modal.service';
-import { PanelService } from 'service/panel.service';
 import { SaveDataService } from 'service/save-data.service';
 
 @Component({
@@ -51,15 +50,10 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   constructor(
     private saveDataService: SaveDataService,
-    private modalService: ModalService,
-    private panelService: PanelService
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
-    this.panelService.title = 'キャラクターシート';
-    if (this.tabletopObject instanceof GameCharacter && 0 < this.tabletopObject.name.length) {
-      this.panelService.title += ' - ' + this.tabletopObject.name;
-    }
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', -1000, event => {
         if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) {

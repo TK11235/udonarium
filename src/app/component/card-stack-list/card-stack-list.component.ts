@@ -84,12 +84,14 @@ export class CardStackListComponent implements OnInit, OnDestroy {
     this.panelService.close();
   }
 
-  private showDetail(gameObject: Card) {
+  showDetail(gameObject: Card) {
     let coordinate = {
       x: this.panelService.left,
       y: this.panelService.top
     };
-    let option: PanelOption = { left: coordinate.x + 10, top: coordinate.y + 20, width: 600, height: 600 };
+    let title = 'カード設定';
+    if (gameObject.name.length) title += ' - ' + gameObject.name;
+    let option: PanelOption = { title: title, left: coordinate.x + 10, top: coordinate.y + 20, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
   }
