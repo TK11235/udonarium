@@ -46,7 +46,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   }
 
   get diceFace(): string {
-    return this.tabletopObject instanceof DiceSymbol && this.tabletopObject.face;
+    return this.tabletopObject instanceof DiceSymbol ? this.tabletopObject.face : '';
   }
 
   constructor(
