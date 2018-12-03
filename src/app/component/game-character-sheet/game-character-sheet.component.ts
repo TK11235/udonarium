@@ -1,12 +1,8 @@
 import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { Card } from '@udonarium/card';
 import { EventSystem, Network } from '@udonarium/core/system/system';
 import { DataElement } from '@udonarium/data-element';
-import { DiceSymbol } from '@udonarium/dice-symbol';
-import { GameCharacter } from '@udonarium/game-character';
 import { TabletopObject } from '@udonarium/tabletop-object';
-import { Terrain } from '@udonarium/terrain';
 
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 import { ModalService } from 'service/modal.service';
@@ -23,30 +19,6 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   private isEdit: boolean = false;
 
   networkService = Network;
-
-  get isCharacter(): boolean {
-    return this.tabletopObject instanceof GameCharacter;
-  }
-
-  get isCard(): boolean {
-    return this.tabletopObject instanceof Card;
-  }
-
-  get isTerrain(): boolean {
-    return this.tabletopObject instanceof Terrain;
-  }
-
-  get isDiceSymbol(): boolean {
-    return this.tabletopObject instanceof DiceSymbol;
-  }
-
-  get isVisibleDice(): boolean {
-    return this.tabletopObject instanceof DiceSymbol && this.tabletopObject.isVisible;
-  }
-
-  get diceFace(): string {
-    return this.tabletopObject instanceof DiceSymbol ? this.tabletopObject.face : '';
-  }
 
   constructor(
     private saveDataService: SaveDataService,
@@ -96,7 +68,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
     this.tabletopObject.setLocation(locationName);
   }
 
-  openModal(name: string) {
+  openModal(name: string = '') {
     this.modalService.open<string>(FileSelecterComponent).then(value => {
       if (!this.tabletopObject || !this.tabletopObject.imageDataElement || !value) return;
       let element = this.tabletopObject.imageDataElement.getFirstElementByName(name);
