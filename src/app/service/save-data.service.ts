@@ -59,11 +59,16 @@ export class SaveDataService {
       images[identifier] = ImageStorage.instance.get(identifier);
     }
 
-    imageElements = xmlElement.querySelectorAll('*[imageIdentifier]');
+    imageElements = xmlElement.querySelectorAll('*[imageIdentifier], *[distanceviewImageIdentifier]');
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].getAttribute('imageIdentifier');
       images[identifier] = ImageStorage.instance.get(identifier);
+
+      let distanceview = imageElements[i].getAttribute('distanceviewImageIdentifier');
+      if (distanceview) {
+        images[distanceview] = ImageStorage.instance.get(distanceview);
+      }
     }
     for (let identifier in images) {
       let image = images[identifier];

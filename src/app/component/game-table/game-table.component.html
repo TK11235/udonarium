@@ -1,3 +1,4 @@
+<div class="distanceview-image is-pointer-events-none" [style.background-image]="'url(' + distanceviewImage.url + ')' | safe: 'style'" ></div>
 <div class="component is-fill is-perspective" [ngClass]="{'is-grabbing': isPointerDragging}" #root>
   <div class="component-content is-fill is-3d" #gameTable>
     <div id="app-game-table" class="game-table is-3d"#gameObjects>

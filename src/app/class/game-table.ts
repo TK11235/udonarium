@@ -16,6 +16,7 @@ export interface GameTableDataContainer {
   height: number;
   gridSize: number;
   imageIdentifier: string;
+  distanceviewImageIdentifier: string;
   gridType: GridType;
 }
 
@@ -26,6 +27,7 @@ export class GameTable extends ObjectNode implements InnerXml {
   @SyncVar() height: number = 20;
   @SyncVar() gridSize: number = 50;
   @SyncVar() imageIdentifier: string = 'imageIdentifier';
+  @SyncVar() distanceviewImageIdentifier: string = 'imageIdentifier';
   @SyncVar() selected: boolean = false;
   @SyncVar() gridType: GridType = GridType.SQUARE;
   @SyncVar() gridColor: string = '#000000e6';

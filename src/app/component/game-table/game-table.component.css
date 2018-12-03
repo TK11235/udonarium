@@ -72,3 +72,11 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+
+.distanceview-image {
+  backface-visibility: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
