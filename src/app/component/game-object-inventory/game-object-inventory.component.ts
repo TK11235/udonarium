@@ -134,8 +134,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
         if (!bElm) return -1;
         if (!aElm) return 1;
 
-        let aValue = this.convertToSortableValue(aElm.value);
-        let bValue = this.convertToSortableValue(bElm.value);
+        let aValue = this.convertToSortableValue(aElm);
+        let bValue = this.convertToSortableValue(bElm);
         if (aValue < bValue) return sortOrder;
         if (aValue > bValue) return sortOrder * -1;
         return 0;
@@ -145,7 +145,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     return gameObjects;
   }
 
-  private convertToSortableValue(value: number | string): number | string {
+  private convertToSortableValue(dataElement: DataElement): number | string {
+    let value = dataElement.isNumberResource ? dataElement.currentValue : dataElement.value;
     let resultStr: string = (value + '').trim().replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
       return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
     });
