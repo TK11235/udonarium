@@ -27,6 +27,12 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     return file ? file : ImageFile.Empty;
   }
 
+  get tableDistanceviewImage(): ImageFile {
+    if (!this.selectedTable) return ImageFile.Empty;
+    let file = ImageStorage.instance.get(this.selectedTable.distanceviewImageIdentifier);
+    return file ? file : ImageFile.Empty;
+  }
+
   get tableName(): string { return this.selectedTable.name; }
   set tableName(tableName: string) { if (this.isEditable) this.selectedTable.name = tableName; }
 
@@ -133,11 +139,19 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     }
   }
 
-  openModal() {
+  openBgImageModal() {
     if (this.isDeleted) return;
     this.modalService.open<string>(FileSelecterComponent).then(value => {
       if (!this.selectedTable || !value) return;
       this.selectedTable.imageIdentifier = value;
+    });
+  }
+
+  openDistanceViewImageModal() {
+    if (this.isDeleted) return;
+    this.modalService.open<string>(FileSelecterComponent).then(value => {
+      if (!this.selectedTable || !value) return;
+      this.selectedTable.distanceviewImageIdentifier = value;
     });
   }
 }

@@ -26,3 +26,7 @@
   -webkit-flex-grow: 0; /* Safari */
   flex-grow: 0;
 }
+
+.images-select {
+  display: flex;
+}

@@ -9,8 +9,19 @@
   </div>
   <div class="flex-item">
     <ng-container *ngIf="!isEmpty || selectedTable">
-      <div>
-        <img height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'" (click)="openModal()">
+      <div class="images-select">
+        <div>
+          背景
+          <div (click)="openBgImageModal()">
+            <img height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'">
+          </div>
+        </div>
+        <div>
+          遠景
+          <div (click)="openDistanceViewImageModal()">
+            <img height="120" [src]="tableDistanceviewImage.url | safe: 'resourceUrl'">
+          </div>
+        </div>
       </div>
       <div>Name :
         <input [(ngModel)]="tableName" placeholder="Name" [attr.disabled]="!isEditable ? '' : null" />

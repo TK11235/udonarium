@@ -54,6 +54,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     return file ? file : ImageFile.Empty;
   }
 
+  get distanceviewImage(): ImageFile {
+    let file: ImageFile = ImageStorage.instance.get(this.gameTableObject.distanceviewImageIdentifier);
+    return file ? file: ImageFile.Empty;
+  }
+
   private isTransformMode: boolean = false;
 
   private mouseDownPositionX: number = 0;
@@ -725,12 +730,17 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     tableSelecter.initialize();
 
     let gameTable = new GameTable('gameTable');
-    let testFile: ImageFile = null;
-    let fileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
-    fileContext.url = './assets/images/BG10a_80.jpg';
-    testFile = ImageStorage.instance.add(fileContext);
+    let testBgFile: ImageFile = null;
+    let bgFileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
+    bgFileContext.url = './assets/images/BG10a_80.jpg';
+    testBgFile = ImageStorage.instance.add(bgFileContext);
+    let testDistanceFile: ImageFile = null;
+    let distanceFileContext = ImageFile.createEmpty('testTableDistanceviewImage_image').toContext();
+    distanceFileContext.url = './assets/images/BG00a1_80.jpg';
+    testDistanceFile = ImageStorage.instance.add(distanceFileContext);
     gameTable.name = '最初のテーブル';
-    gameTable.imageIdentifier = testFile.identifier;
+    gameTable.imageIdentifier = testBgFile.identifier;
+    gameTable.distanceviewImageIdentifier = testDistanceFile.identifier;
     gameTable.width = 20;
     gameTable.height = 15;
     gameTable.initialize();
