@@ -72,9 +72,7 @@ export class ObjectSynchronizer {
   }
 
   private updateObject(object: GameObject, context: ObjectContext) {
-    if (context.majorVersion + context.minorVersion < object.version) {
-      object.update(false);
-    } else if (context.majorVersion + context.minorVersion > object.version) {
+    if (context.majorVersion + context.minorVersion > object.version) {
       object.apply(context);
     }
   }
