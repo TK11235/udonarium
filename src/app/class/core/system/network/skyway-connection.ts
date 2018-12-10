@@ -310,6 +310,7 @@ export class SkyWayConnection implements Connection {
       this.onData(conn, data);
     });
     conn.on('open', () => {
+      exchangeSkyWayImplementation(conn);
       if (timeout !== null) clearTimeout(timeout);
       timeout = null;
       if (context) context.isOpen = true;
@@ -463,5 +464,38 @@ export class SkyWayConnection implements Connection {
       default:
         return 'SkyWayに関する不明なエラーが発生しました(' + errType + ')';
     }
+  }
+}
+
+/* 
+SkyWay の DataConnection._startSendLoop() を取り替える.
+setInterval() に由来する遅延を解消するが skyway-js-sdk の更新次第で動作しなくなるので注意.
+
+https://github.com/skyway/skyway-js-sdk/blob/master/src/peer/dataConnection.js
+*/
+function exchangeSkyWayImplementation(conn: PeerJs.DataConnection) {
+  if (conn._dc && conn._sendBuffer) {
+    conn._startSendLoop = startSendLoopZeroTimeout;
+  }
+}
+
+function startSendLoopZeroTimeout() {
+  if (!this.sendInterval) {
+    this.sendInterval = setZeroTimeout(sendBuffertZeroTimeout.bind(this));
+  }
+}
+
+function sendBuffertZeroTimeout() {
+  const currMsg = this._sendBuffer.shift();
+  try {
+    this._dc.send(currMsg);
+  } catch (error) {
+    this._sendBuffer.push(currMsg);
+  }
+
+  if (this._sendBuffer.length === 0) {
+    this.sendInterval = undefined;
+  } else {
+    this.sendInterval = setZeroTimeout(sendBuffertZeroTimeout.bind(this));
   }
 }
