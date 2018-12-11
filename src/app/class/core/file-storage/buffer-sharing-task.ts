@@ -2,6 +2,7 @@ import * as MessagePack from 'msgpack-lite';
 
 import { EventSystem } from '../system/system';
 import { FileReaderUtil } from './file-reader-util';
+import { setZeroTimeout } from '../system/util/zero-timeout';
 
 interface ChankData {
   index: number;
@@ -19,7 +20,7 @@ export class BufferSharingTask<T> {
   private arrayBuffer: ArrayBuffer;
   private chanks: ArrayBuffer[] = [];
   private chankSize: number = 8 * 1024;
-  private sendChankTimer: NodeJS.Timer;
+  private sendChankTimer: number;
 
   private sentChankLength = 0;
   private completedChankLength = 0;
@@ -89,7 +90,7 @@ export class BufferSharingTask<T> {
         this.cancel();
       });
     this.sentChankLength = this.completedChankLength = 0;
-    setTimeout(() => this.sendChank(0));
+    setZeroTimeout(() => this.sendChank(0));
   }
 
   private sendChank(index: number) {
@@ -105,7 +106,7 @@ export class BufferSharingTask<T> {
       this.sendChankTimer = null;
       this.resetTimeout();
     } else {
-      this.sendChankTimer = setTimeout(() => { this.sendChank(this.sentChankLength + 1); }, 0);
+      this.sendChankTimer = setZeroTimeout(() => { this.sendChank(this.sentChankLength + 1); });
     }
   }
 
