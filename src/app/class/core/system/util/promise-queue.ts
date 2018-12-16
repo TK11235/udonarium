@@ -1,7 +1,7 @@
 export class PromiseQueue {
   private queue: Promise<any> = Promise.resolve();
 
-  _length: number = 0;
+  private _length: number = 0;
   get length(): number { return this._length; }
 
   constructor(readonly name: string = 'Queue') { }
