@@ -58,8 +58,8 @@
         <img *ngIf="gameObject.imageFile" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
       </div>
       <div class="table-cell">
-        <div *ngIf="gameObject.detailDataElement">
-          <ng-container *ngFor="let dataElm of getInventoryTags(gameObject.rootDataElement); trackBy: trackByGameObject">
+        <div *ngIf="gameObject.rootDataElement">
+          <ng-container *ngFor="let dataElm of getInventoryTags(gameObject); trackBy: trackByGameObject">
             <ng-container *ngTemplateOutlet="dataElmTag; context:{ dataElm: dataElm}"></ng-container>
           </ng-container>
         </div>

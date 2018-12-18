@@ -24,7 +24,10 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDestroy {
   inventoryTypes: string[] = ['table', 'common', 'graveyard'];
 
-  selectTab: string = 'table';
+  private _selectTab: string = 'table';
+  get selectTab(): string { return this._selectTab; }
+  set selectTab(selectTab: string) { this._selectTab = selectTab; this.isNeedUpdateDataElement = true; }
+
   selectedIdentifier: string = '';
 
   isEdit: boolean = false;
@@ -44,7 +47,40 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '昇順' : '降順'; }
 
-  private lazyMarkTimer: NodeJS.Timer = null;
+  private _tabletopObjectMap: Map<string, TabletopObject[]> = new Map();
+  get tabletopObjectMap(): Map<string, TabletopObject[]> {
+    if (this.isNeedUpdateInventory) {
+      this.updateTabletopObjectMap();
+      this.isNeedUpdateInventory = false;
+    }
+    if (this.isNeedSortInventory) {
+      this.sortTabletopObjectMap();
+      this.isNeedSortInventory = false;
+    }
+    return this._tabletopObjectMap;
+  }
+
+  private locationHash: { [identifier: string]: string } = {};
+
+  private _dataElementMap: Map<string, DataElement[]> = new Map();
+  get dataElementMap(): Map<string, DataElement[]> {
+    if (this.isNeedUpdateDataElement) {
+      this._dataElementMap.clear();
+      let caches = this.tabletopObjectMap.get(this.selectTab);
+      if (caches == null) caches = [];
+      for (let object of caches) {
+        if (!object.rootDataElement) continue;
+        let elements = this.dataTags.map(tag => tag === this.newLineString ? this.newLineDataElement : object.rootDataElement.getFirstElementByName(tag));
+        this._dataElementMap.set(object.identifier, elements);
+      }
+      this.isNeedUpdateDataElement = false;
+    }
+    return this._dataElementMap;
+  }
+
+  private isNeedUpdateInventory: boolean = true;
+  private isNeedUpdateDataElement: boolean = true;
+  private isNeedSortInventory: boolean = true;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -58,9 +94,33 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
-        if (object instanceof TabletopObject || object instanceof DataElement || object instanceof DataSummarySetting) this.lazyMarkForCheck();
+        if (!object) return;
+
+        if (object instanceof GameCharacter) {
+          let preLocation = this.locationHash[object.identifier];
+          if (object.location.name !== preLocation) {
+            this.locationHash[object.identifier] = object.location.name;
+            this.isNeedUpdateInventory = this.isNeedUpdateDataElement = this.isNeedSortInventory = true;
+          }
+          this.changeDetector.markForCheck();
+        } else if (object instanceof DataElement) {
+          if (this.dataTags.includes(object.name)) {
+            this.isNeedUpdateDataElement = true;
+          }
+          if (this.sortTag === object.name) {
+            this.isNeedSortInventory = true;
+          }
+          if (!this.isNeedUpdateDataElement && 0 < object.children.length) {
+            this.isNeedUpdateDataElement = true;
+          }
+          this.changeDetector.markForCheck();
+        } else if (object instanceof DataSummarySetting) {
+          this.isNeedUpdateDataElement = this.isNeedSortInventory = true;
+          this.changeDetector.markForCheck();
+        }
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
+        this.isNeedUpdateInventory = this.isNeedUpdateDataElement = this.isNeedSortInventory = true;
         this.changeDetector.markForCheck();
       })
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
@@ -93,56 +153,65 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   }
 
   getGameObjects(inventoryType: string) {
-    let identifiersArray: TabletopObject[][] = [];
-    identifiersArray[0] = ObjectStore.instance.getObjects(GameCharacter);
-    let gameObjects: TabletopObject[] = [];
+    return this.tabletopObjectMap.get(inventoryType);
+  }
 
-    for (let identifiers of identifiersArray) {
-      for (let identifier of identifiers) {
-        switch (identifier.location.name) {
-          case 'table':
-            if (inventoryType === 'table') {
-              gameObjects.push(identifier);
-            }
-            break;
-          case Network.peerId:
-            if (inventoryType === Network.peerId) {
-              gameObjects.push(identifier);
-            }
-            break;
-          case 'graveyard':
-            if (inventoryType === 'graveyard') {
-              gameObjects.push(identifier);
-            }
-            break;
-          default:
-            if (inventoryType === 'common' && !this.isPrivateLocation(identifier.location.name)) {
-              gameObjects.push(identifier);
-            }
-            break;
-        }
+  private updateTabletopObjectMap() {
+    let allTabletopObjects: TabletopObject[] = ObjectStore.instance.getObjects(GameCharacter);
+    this._tabletopObjectMap.clear();
+    this.inventoryTypes.forEach(inventoryType => this._tabletopObjectMap.set(inventoryType, []));
+    this.locationHash = {};
+
+    for (let object of allTabletopObjects) {
+      this.locationHash[object.identifier] = object.location.name;
+      let caches: TabletopObject[];
+      switch (object.location.name) {
+        case 'table':
+          caches = this._tabletopObjectMap.get('table');
+          caches.push(object);
+          this._tabletopObjectMap.set('table', caches);
+          break;
+        case Network.peerId:
+          caches = this._tabletopObjectMap.get(Network.peerId);
+          caches.push(object);
+          this._tabletopObjectMap.set(Network.peerId, caches);
+          break;
+        case 'graveyard':
+          caches = this._tabletopObjectMap.get('graveyard');
+          caches.push(object);
+          this._tabletopObjectMap.set('graveyard', caches);
+          break;
+        default:
+          caches = this._tabletopObjectMap.get('common');
+          if (!this.isPrivateLocation(object.location.name)) {
+            caches.push(object);
+            this._tabletopObjectMap.set('common', caches);
+          }
+          break;
       }
     }
+  }
 
+  private sortTabletopObjectMap() {
     let sortTag = this.sortTag.length ? this.sortTag.trim() : '';
     let sortOrder = this.sortOrder === 'ASC' ? -1 : 1;
     if (sortTag.length) {
-      gameObjects = gameObjects.sort((a, b) => {
-        let aElm = a.rootDataElement.getFirstElementByName(sortTag);
-        let bElm = b.rootDataElement.getFirstElementByName(sortTag);
-        if (!aElm && !bElm) return 0;
-        if (!bElm) return -1;
-        if (!aElm) return 1;
+      this._tabletopObjectMap.forEach(caches => {
+        caches.sort((a, b) => {
+          let aElm = a.rootDataElement.getFirstElementByName(sortTag);
+          let bElm = b.rootDataElement.getFirstElementByName(sortTag);
+          if (!aElm && !bElm) return 0;
+          if (!bElm) return -1;
+          if (!aElm) return 1;
 
-        let aValue = this.convertToSortableValue(aElm);
-        let bValue = this.convertToSortableValue(bElm);
-        if (aValue < bValue) return sortOrder;
-        if (aValue > bValue) return sortOrder * -1;
-        return 0;
+          let aValue = this.convertToSortableValue(aElm);
+          let bValue = this.convertToSortableValue(bElm);
+          if (aValue < bValue) return sortOrder;
+          if (aValue > bValue) return sortOrder * -1;
+          return 0;
+        });
       });
     }
-
-    return gameObjects;
   }
 
   private convertToSortableValue(dataElement: DataElement): number | string {
@@ -154,8 +223,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     return Number.isNaN(resultNum) ? resultStr : resultNum;
   }
 
-  getInventoryTags(data: DataElement): DataElement[] {
-    return this.dataTags.map(tag => tag === this.newLineString ? this.newLineDataElement : data.getFirstElementByName(tag));
+  getInventoryTags(gameObject: GameCharacter): DataElement[] {
+    return this.dataElementMap.get(gameObject.identifier);
   }
 
   onContextMenu(e: Event, gameObject: GameCharacter) {
@@ -253,14 +322,6 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       }
     }
     return false;
-  }
-
-  private lazyMarkForCheck() {
-    if (this.lazyMarkTimer !== null) return;
-    this.lazyMarkTimer = setTimeout(() => {
-      this.lazyMarkTimer = null;
-      this.changeDetector.markForCheck();
-    }, 16);
   }
 
   trackByGameObject(index: number, gameObject: GameObject) {
