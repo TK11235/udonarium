@@ -6,6 +6,7 @@ import { TabletopObject } from '@udonarium/tabletop-object';
 
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 import { SaveDataService } from 'service/save-data.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   constructor(
     private saveDataService: SaveDataService,
+    private panelService: PanelService,
     private modalService: ModalService
   ) { }
 
@@ -29,7 +31,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', -1000, event => {
         if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) {
-          this.tabletopObject = null;
+          this.panelService.close();
         }
       });
   }
