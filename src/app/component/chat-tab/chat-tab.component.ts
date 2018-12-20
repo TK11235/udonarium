@@ -14,6 +14,7 @@ import {
 
 import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system/system';
 
 import { PanelService } from 'service/panel.service';
@@ -87,9 +88,11 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.data.aliasName === ChatMessage.aliasName) {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (object && object instanceof ChatMessage && object.parent === this.chatTab) {
           if (!this.needUpdate) this.changeDetector.markForCheck();
           this.needUpdate = true;
+          this.maxMessages += 1;
         }
       });
   }
