@@ -18,7 +18,10 @@
         </div>
         <div>
           遠景
-          <div (click)="openDistanceViewImageModal()">
+          <div *ngIf="!tableDistanceviewImage.url">
+            <button (click)="openDistanceViewImageModal()">遠景画像を追加</button>
+          </div>
+          <div *ngIf="tableDistanceviewImage.url" (click)="openDistanceViewImageModal()">
             <img height="120" [src]="tableDistanceviewImage.url | safe: 'resourceUrl'">
           </div>
         </div>
