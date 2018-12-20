@@ -78,5 +78,16 @@
   position: absolute;
   height: 100%;
   width: 100%;
+  background-color: #fff;
   background-size: cover;
+  filter: opacity(70%);
+}
+
+.distanceview-image::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(10px) contrast(90%) brightness(110%) opacity(50%);
 }
