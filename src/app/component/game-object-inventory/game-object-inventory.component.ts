@@ -128,6 +128,9 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
           this.selectedIdentifier = event.data.identifier;
           this.changeDetector.markForCheck();
         }
+      })
+      .on('SYNCHRONIZE_FILE_LIST', event => {
+        if (event.isSendFromSelf) this.changeDetector.markForCheck();
       });
     this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
   }
