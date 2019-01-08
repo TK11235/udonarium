@@ -10,7 +10,7 @@ import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system/system';
 import { DiceSymbol, DiceType } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
-import { GameTable, GridType } from '@udonarium/game-table';
+import { GameTable, GridType, FilterType } from '@udonarium/game-table';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
@@ -57,6 +57,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get distanceviewImage(): ImageFile {
     let file: ImageFile = ImageStorage.instance.get(this.gameTableObject.distanceviewImageIdentifier);
     return file ? file: ImageFile.Empty;
+  }
+
+  get distanceviewFilterType(): FilterType {
+    return this.gameTableObject.distanceViewFilterType
   }
 
   private isTransformMode: boolean = false;

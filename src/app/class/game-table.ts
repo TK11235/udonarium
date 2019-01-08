@@ -11,12 +11,19 @@ export enum GridType {
   HEX_HORIZONTAL = 2,
 }
 
+export enum FilterType {
+  NONE = '',
+  WHITE = 'white',
+  BLACK = 'black',
+}
+
 export interface GameTableDataContainer {
   width: number;
   height: number;
   gridSize: number;
   imageIdentifier: string;
   distanceviewImageIdentifier: string;
+  distanceViewFilterType: FilterType;
   gridType: GridType;
 }
 
@@ -28,6 +35,7 @@ export class GameTable extends ObjectNode implements InnerXml {
   @SyncVar() gridSize: number = 50;
   @SyncVar() imageIdentifier: string = 'imageIdentifier';
   @SyncVar() distanceviewImageIdentifier: string = 'imageIdentifier';
+  @SyncVar() distanceViewFilterType: FilterType = FilterType.WHITE;
   @SyncVar() selected: boolean = false;
   @SyncVar() gridType: GridType = GridType.SQUARE;
   @SyncVar() gridColor: string = '#000000e6';

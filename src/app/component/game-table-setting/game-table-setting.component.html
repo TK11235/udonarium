@@ -49,6 +49,14 @@
           <option value="#dddddde6">白</option>
         </select>
       </div>
+      <div>
+        遠景フィルタ
+        <select [(ngModel)]="tableDistanceviewFilter" name="tableDistanceviewFilter" [attr.disabled]="!isEditable ? '' : null">
+          <option value="">なし</option>
+          <option value="white">ホワイト</option>
+          <option value="black">ブラック</option>
+        </select>
+      </div>
       <hr/>
       <div>
         <label>グリッドを常に表示:
