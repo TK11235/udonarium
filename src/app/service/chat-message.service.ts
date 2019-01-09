@@ -21,7 +21,7 @@ export class ChatMessageService {
 
   private calibrateTimeOffset() {
     let sendTime = performance.now();
-    fetch('https://ntp-a1.nict.go.jp/cgi-bin/json')
+    fetch('http://ntp-a1.nict.go.jp/cgi-bin/json')
       .then(response => {
         if (response.ok) return response.json();
         throw new Error('Network response was not ok.');
