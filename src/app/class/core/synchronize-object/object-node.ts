@@ -1,45 +1,17 @@
 import { Attributes } from './attributes';
+import { defineSyncObject as SyncObject, defineSyncVariable as SyncVar } from './decorator-core';
 import { GameObject, ObjectContext } from './game-object';
-import { ObjectFactory, Type } from './object-factory';
 import { InnerXml, ObjectSerializer, XmlAttributes } from './object-serializer';
 import { ObjectStore } from './object-store';
 import { XmlUtil } from './xml-util';
 
-//ERROR in Error encountered resolving symbol values statically. の対応 Export
-//循環参照回避
-export function _SyncObject(alias: string) {
-  return <T extends GameObject>(constructor: Type<T>) => {
-    ObjectFactory.instance.register(constructor, alias);
-  }
-}
-//循環参照回避
-export function _SyncVar() {
-  return <T extends GameObject>(target: T, key: string | symbol) => {
-    function getter() {
-      return this.context.syncData[key];
-    }
-
-    function setter(value: any) {
-      this.context.syncData[key] = value;
-      this.update();
-    }
-
-    Object.defineProperty(target, key, {
-      get: getter,
-      set: setter,
-      enumerable: true,
-      configurable: true
-    });
-  }
-}
-
-@_SyncObject('node')
+@SyncObject('node')
 export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
-  @_SyncVar() value: number | string = '';
-  @_SyncVar() attributes: Attributes = {};
-  @_SyncVar() private parentIdentifier: string = '';
-  @_SyncVar() protected majorIndex: number = 0;
-  @_SyncVar() protected minorIndex: number = Math.random();
+  @SyncVar() value: number | string = '';
+  @SyncVar() attributes: Attributes = {};
+  @SyncVar() private parentIdentifier: string = '';
+  @SyncVar() protected majorIndex: number = 0;
+  @SyncVar() protected minorIndex: number = Math.random();
 
   get index(): number { return this.majorIndex + this.minorIndex; }
   set index(index: number) {
