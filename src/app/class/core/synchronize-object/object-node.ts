@@ -8,7 +8,7 @@ import { XmlUtil } from './xml-util';
 @SyncObject('node')
 export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   @SyncVar() value: number | string = '';
-  @SyncVar() attributes: Attributes = {};
+  @SyncVar() protected attributes: Attributes = {};
   @SyncVar() private parentIdentifier: string = '';
   @SyncVar() protected majorIndex: number = 0;
   @SyncVar() protected minorIndex: number = Math.random();
