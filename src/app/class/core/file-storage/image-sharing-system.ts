@@ -1,5 +1,5 @@
 import { UUID } from '../synchronize-object/uuid';
-import { EventSystem, Network } from '../system/system';
+import { EventSystem, Network } from '../system';
 import { BufferSharingTask } from './buffer-sharing-task';
 import { FileReaderUtil } from './file-reader-util';
 import { ImageContext, ImageFile, ImageState } from './image-file';

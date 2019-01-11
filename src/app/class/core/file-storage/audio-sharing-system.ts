@@ -1,4 +1,4 @@
-import { EventSystem, Network } from '../system/system';
+import { EventSystem, Network } from '../system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 import { AudioStorage, Catalog } from './audio-storage';
 import { BufferSharingTask } from './buffer-sharing-task';

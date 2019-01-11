@@ -1,4 +1,4 @@
-import { EventSystem, Network } from '../system/system';
+import { EventSystem, Network } from '../system';
 
 export interface SynchronizeRequest {
   identifier: string;

@@ -1,4 +1,4 @@
-import { EventSystem } from '../system/system';
+import { EventSystem } from '../system';
 import { ObjectFactory } from './object-factory';
 import { ObjectSerializer } from './object-serializer';
 import { ObjectStore } from './object-store';

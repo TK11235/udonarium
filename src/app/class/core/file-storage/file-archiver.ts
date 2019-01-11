@@ -2,7 +2,7 @@ import { saveAs } from 'file-saver';
 import * as JSZip from 'jszip/dist/jszip.min.js';
 
 import { XmlUtil } from '../synchronize-object/xml-util';
-import { EventSystem } from '../system/system';
+import { EventSystem } from '../system';
 import { AudioStorage } from './audio-storage';
 import { FileReaderUtil } from './file-reader-util';
 import { ImageStorage } from './image-storage';

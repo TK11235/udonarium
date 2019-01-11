@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { EventSystem, Network } from '@udonarium/core/system/system';
+import { EventSystem, Network } from '@udonarium/core/system';
 import { Database } from '@udonarium/database/database';
 
 import * as yaml from 'js-yaml/dist/js-yaml.min.js';

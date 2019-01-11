@@ -3,7 +3,7 @@ import { AudioPlayer } from './core/file-storage/audio-player';
 import { AudioStorage } from './core/file-storage/audio-storage';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
-import { EventSystem } from './core/system/system';
+import { EventSystem } from './core/system';
 
 @SyncObject('jukebox')
 export class Jukebox extends GameObject {

@@ -1,4 +1,4 @@
-import { EventSystem } from '../system/system';
+import { EventSystem } from '../system';
 import { ImageContext, ImageFile, ImageState } from './image-file';
 
 export type Catalog = { identifier: string, state: number }[];

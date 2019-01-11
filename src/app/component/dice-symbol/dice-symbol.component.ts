@@ -2,7 +2,7 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
 import { Component, HostListener, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ChatMessageContext } from '@udonarium/chat-message';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { EventSystem, Network } from '@udonarium/core/system/system';
+import { EventSystem, Network } from '@udonarium/core/system';
 import { DiceSymbol } from '@udonarium/dice-symbol';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TabletopObject } from '@udonarium/tabletop-object';

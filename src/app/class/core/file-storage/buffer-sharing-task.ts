@@ -1,6 +1,6 @@
 import * as MessagePack from 'msgpack-lite';
 
-import { EventSystem } from '../system/system';
+import { EventSystem } from '../system';
 import { FileReaderUtil } from './file-reader-util';
 import { setZeroTimeout } from '../system/util/zero-timeout';
 

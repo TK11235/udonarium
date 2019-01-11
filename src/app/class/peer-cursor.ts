@@ -3,7 +3,7 @@ import { ImageStorage } from './core/file-storage/image-storage';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { EventSystem, Network } from './core/system/system';
+import { EventSystem, Network } from './core/system';
 
 @SyncObject('PeerCursor')
 export class PeerCursor extends GameObject {

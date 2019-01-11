@@ -1,7 +1,7 @@
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { InnerXml } from './core/synchronize-object/object-serializer';
-import { EventSystem } from './core/system/system';
+import { EventSystem } from './core/system';
 import { GameTableMask } from './game-table-mask';
 import { Terrain } from './terrain';
 

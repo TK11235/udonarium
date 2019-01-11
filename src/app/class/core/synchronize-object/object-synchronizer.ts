@@ -1,4 +1,4 @@
-import { EventSystem } from '../system/system';
+import { EventSystem } from '../system';
 import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory } from './object-factory';
 import { CatalogItem, ObjectStore } from './object-store';

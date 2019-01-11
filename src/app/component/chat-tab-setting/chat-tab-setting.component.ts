@@ -4,7 +4,7 @@ import { ChatTab } from '@udonarium/chat-tab';
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
-import { EventSystem } from '@udonarium/core/system/system';
+import { EventSystem } from '@udonarium/core/system';
 
 import { ChatMessageService } from 'service/chat-message.service';
 import { ModalService } from 'service/modal.service';

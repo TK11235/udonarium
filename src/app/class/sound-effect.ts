@@ -5,7 +5,7 @@ import { AudioStorage } from './core/file-storage/audio-storage';
 import { SyncObject } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectStore } from './core/synchronize-object/object-store';
-import { EventSystem } from './core/system/system';
+import { EventSystem } from './core/system';
 
 export class PresetSound {
   static dice1: string = '';

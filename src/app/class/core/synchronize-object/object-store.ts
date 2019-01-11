@@ -1,4 +1,4 @@
-import { EventSystem } from '../system/system';
+import { EventSystem } from '../system';
 import { setZeroTimeout } from '../system/util/zero-timeout';
 import { GameObject, ObjectContext } from './game-object';
 import { Type } from './object-factory';

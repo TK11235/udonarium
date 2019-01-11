@@ -2,7 +2,7 @@ import { ImageFile } from './core/file-storage/image-file';
 import { ImageStorage } from './core/file-storage/image-storage';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { Network } from './core/system/system';
+import { Network } from './core/system';
 
 export interface ChatMessageContext {
   identifier?: string;

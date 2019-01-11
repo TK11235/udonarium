@@ -1,4 +1,4 @@
-import { EventSystem } from '../system/system';
+import { EventSystem } from '../system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 
 export type Catalog = { identifier: string, state: number }[];

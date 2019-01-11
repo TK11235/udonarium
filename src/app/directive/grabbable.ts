@@ -1,4 +1,4 @@
-import { EventSystem } from '@udonarium/core/system/system';
+import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
 
 import { TabletopService } from 'service/tabletop.service';
