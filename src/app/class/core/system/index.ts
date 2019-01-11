@@ -1,9 +1,8 @@
-import { Event as b } from './event/event';
-import { EventSystem as a } from './event/event-system';
-import { Listener as c } from './event/listener';
-import { Network as d } from './network/network';
+import { EventSystem as _EventSystem } from './event/event-system';
+import { Network as _Network } from './network/network';
 
-export const EventSystem = a.instance;
-export const Event = b;
-export const Listener = c;
-export const Network = d.instance;
+export { Event } from './event/event';
+export { Listener } from './event/listener';
+
+export const EventSystem = _EventSystem.instance;
+export const Network = _Network.instance;
