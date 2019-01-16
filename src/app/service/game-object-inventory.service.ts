@@ -46,40 +46,34 @@ export class GameObjectInventoryService {
           let preLocation = this.locationHash[object.identifier];
           if (object.location.name !== preLocation) {
             this.locationHash[object.identifier] = object.location.name;
-            this.needUpdateObjects();
-            this.needUpdateDataElement();
-            this.needNeedSort();
+            this.refresh();
           }
-          this.callInventoryUpdate();
         } else if (object instanceof DataElement) {
           if (!this.containsInGameCharacter(object)) return;
 
           let preElementName = this.elementNameHash[object.identifier];
           if ((this.dataTags.includes(preElementName) || this.dataTags.includes(object.name)) && object.name !== preElementName) {
             this.elementNameHash[object.identifier] = object.name;
-            this.needUpdateDataElement();
+            this.refreshDataElements();
           }
           if (this.sortTag === object.name) {
-            this.needNeedSort();
+            this.refreshSort();
           }
           if (0 < object.children.length) {
-            this.needUpdateDataElement();
-            this.needNeedSort();
+            this.refreshDataElements();
+            this.refreshSort();
           }
           this.callInventoryUpdate();
         } else if (object instanceof DataSummarySetting) {
-          this.needUpdateDataElement();
-          this.needNeedSort();
+          this.refreshDataElements();
+          this.refreshSort();
           this.callInventoryUpdate();
         }
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
         delete this.locationHash[event.data.identifier];
         delete this.elementNameHash[event.data.identifier];
-        this.needUpdateObjects();
-        this.needUpdateDataElement();
-        this.needNeedSort();
-        this.callInventoryUpdate();
+        this.refresh();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         if (event.isSendFromSelf) this.callInventoryUpdate();
@@ -96,25 +90,32 @@ export class GameObjectInventoryService {
     return false;
   }
 
-  private needUpdateObjects() {
-    this.tableInventory.isNeedUpdateObjects = true;
-    this.commonInventory.isNeedUpdateObjects = true;
-    this.privateInventory.isNeedUpdateObjects = true;
-    this.graveyardInventory.isNeedUpdateObjects = true;
+  private refresh() {
+    this.refreshObjects();
+    this.refreshDataElements();
+    this.refreshSort();
+    this.callInventoryUpdate();
   }
 
-  private needUpdateDataElement() {
-    this.tableInventory.isNeedUpdateElement = true;
-    this.commonInventory.isNeedUpdateElement = true;
-    this.privateInventory.isNeedUpdateElement = true;
-    this.graveyardInventory.isNeedUpdateElement = true;
+  private refreshObjects() {
+    this.tableInventory.refreshObjects();
+    this.commonInventory.refreshObjects();
+    this.privateInventory.refreshObjects();
+    this.graveyardInventory.refreshObjects();
   }
 
-  private needNeedSort() {
-    this.tableInventory.isNeedSort = true;
-    this.commonInventory.isNeedSort = true;
-    this.privateInventory.isNeedSort = true;
-    this.graveyardInventory.isNeedSort = true;
+  private refreshDataElements() {
+    this.tableInventory.refreshDataElements();
+    this.commonInventory.refreshDataElements();
+    this.privateInventory.refreshDataElements();
+    this.graveyardInventory.refreshDataElements();
+  }
+
+  private refreshSort() {
+    this.tableInventory.refreshSort();
+    this.commonInventory.refreshSort();
+    this.privateInventory.refreshSort();
+    this.graveyardInventory.refreshSort();
   }
 
   private callInventoryUpdate() {
@@ -151,28 +152,28 @@ class ObjectInventory {
 
   private _tabletopObjects: TabletopObject[] = [];
   get tabletopObjects(): TabletopObject[] {
-    if (this.isNeedUpdateObjects) {
+    if (this.needsRefreshObjects) {
       this._tabletopObjects = this.searchTabletopObjects();
-      this.isNeedUpdateObjects = false;
+      this.needsRefreshObjects = false;
     }
-    if (this.isNeedSort) {
+    if (this.needsSort) {
       this._tabletopObjects = this.sortTabletopObjects(this._tabletopObjects);
-      this.isNeedSort = false;
+      this.needsSort = false;
     }
     return this._tabletopObjects;
   }
 
   get length(): number {
-    if (this.isNeedUpdateObjects) {
+    if (this.needsRefreshObjects) {
       this._tabletopObjects = this.searchTabletopObjects();
-      this.isNeedUpdateObjects = false;
+      this.needsRefreshObjects = false;
     }
     return this._tabletopObjects.length;
   }
 
   private _dataElementMap: Map<ObjectIdentifier, DataElement[]> = new Map();
   get dataElementMap(): Map<ObjectIdentifier, DataElement[]> {
-    if (this.isNeedUpdateElement) {
+    if (this.needsRefreshElements) {
       this._dataElementMap.clear();
       let caches = this.tabletopObjects;
       for (let object of caches) {
@@ -180,18 +181,30 @@ class ObjectInventory {
         let elements = this.dataTags.map(tag => tag === this.newLineString ? this.newLineDataElement : object.rootDataElement.getFirstElementByName(tag));
         this._dataElementMap.set(object.identifier, elements);
       }
-      this.isNeedUpdateElement = false;
+      this.needsRefreshElements = false;
     }
     return this._dataElementMap;
   }
 
-  isNeedUpdateObjects: boolean = true;
-  isNeedUpdateElement: boolean = true;
-  isNeedSort: boolean = true;
+  private needsRefreshObjects: boolean = true;
+  private needsRefreshElements: boolean = true;
+  private needsSort: boolean = true;
 
   constructor(
     readonly classifier: (object: TabletopObject) => boolean
   ) { }
+
+  refreshObjects() {
+    this.needsRefreshObjects = true;
+  }
+
+  refreshDataElements() {
+    this.needsRefreshElements = true;
+  }
+
+  refreshSort() {
+    this.needsSort = true;
+  }
 
   private searchTabletopObjects() {
     let objects: TabletopObject[] = ObjectStore.instance.getObjects(GameCharacter);
