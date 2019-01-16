@@ -48,6 +48,7 @@ import { AppConfigService } from 'service/app-config.service';
 import { ChatMessageService } from 'service/chat-message.service';
 import { ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
+import { GameObjectInventoryService } from 'service/game-object-inventory.service';
 import { PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
@@ -107,6 +108,7 @@ import { AppComponent } from './app.component';
     ChatMessageService,
     ContextMenuService,
     ModalService,
+    GameObjectInventoryService,
     PanelService,
     PointerDeviceService,
     TabletopService,

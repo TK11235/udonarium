@@ -12,7 +12,7 @@
     <div class="tab">
       <label *ngFor="let inventoryType of inventoryTypes">
         <input name="tab" type="radio" value="{{inventoryType}}" ng-control="options" [(ngModel)]="selectTab">
-        <div>{{getTabTitle(inventoryType)}} ({{getGameObjects(inventoryType).length}})</div>
+        <div>{{getTabTitle(inventoryType)}} ({{getInventory(inventoryType).length}})</div>
       </label>
     </div>
   </form>
