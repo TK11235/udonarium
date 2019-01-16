@@ -183,7 +183,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         break;
       case 'GameTableSettingComponent':
         component = GameTableSettingComponent;
-        option = { width: 630, height: 350, left: 100 };
+        option = { width: 630, height: 400, left: 100 };
         break;
       case 'FileStorageComponent':
         component = FileStorageComponent;
