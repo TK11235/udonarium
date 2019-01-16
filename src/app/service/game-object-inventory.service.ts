@@ -38,6 +38,9 @@ export class GameObjectInventoryService {
 
   private initialize() {
     EventSystem.register(this)
+      .on('OPEN_PEER', event => { this.refresh(); })
+      .on('OPEN_OTHER_PEER', event => { this.refresh(); })
+      .on('CLOSE_OTHER_PEER', event => { this.refresh(); })
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!object) return;
