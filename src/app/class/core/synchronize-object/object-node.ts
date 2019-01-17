@@ -17,14 +17,14 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   set index(index: number) {
     this.majorIndex = index | 0;
     this.minorIndex = index - this.majorIndex;
-    if (this.parent) this.parent.isNeedSort = true;
+    if (this.parent) this.parent.needsSort = true;
   }
 
   get parent(): ObjectNode { return ObjectStore.instance.get<ObjectNode>(this.parentIdentifier); }
   private _children: ObjectNode[] = [];
   get children(): ObjectNode[] {
-    if (this.isNeedSort) {
-      this.isNeedSort = false;
+    if (this.needsSort) {
+      this.needsSort = false;
       this._children.sort((a, b) => {
         if (a.index < b.index) return -1;
         if (a.index > b.index) return 1;
@@ -36,7 +36,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
 
   // TODO 名前　親Nodeの存在が未知の状態であるNode
   private static unknownNodes: { [identifier: string]: ObjectNode[] } = {};
-  private isNeedSort: boolean = true;
+  private needsSort: boolean = true;
 
   initialize(needUpdate: boolean = true) {
     super.initialize(needUpdate);
@@ -82,7 +82,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     let nextIndex = this._children.length - 1 < index + 1 ? this._children.length - 1 : index + 1;
 
     if (this._children[prevIndex].index <= child.index && child.index <= this._children[nextIndex].index) return;
-    this.isNeedSort = true;
+    this.needsSort = true;
   }
 
   private updateIndexs() {
