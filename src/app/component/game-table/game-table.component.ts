@@ -2,20 +2,17 @@ import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, 
 
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
-import { ImageContext, ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
-import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
-import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { DiceSymbol, DiceType } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
-import { GameTable, GridType, FilterType } from '@udonarium/game-table';
+import { FilterType, GameTable, GridType } from '@udonarium/game-table';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TableSelecter } from '@udonarium/table-selecter';
-import { TabletopObject } from '@udonarium/tabletop-object';
 import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
 
@@ -51,7 +48,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get distanceviewImage(): ImageFile {
     let file: ImageFile = ImageStorage.instance.get(this.gameTableObject.distanceviewImageIdentifier);
-    return file ? file: ImageFile.Empty;
+    return file ? file : ImageFile.Empty;
   }
 
   get distanceviewFilterType(): FilterType {
@@ -380,7 +377,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!viewTable) return;
 
     let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
-    //tableMask.location.name = ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable.identifier;
     viewTable.appendChild(tableMask);
 
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
@@ -523,12 +519,9 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     cardStack.location.y = pointer.y - 25;
     cardStack.update();
 
-    let fileContext: ImageContext;
-    let image: ImageFile;
-
     let back: string = './assets/images/trump/z02.gif';
     if (!ImageStorage.instance.get(back)) {
-      image = ImageStorage.instance.add(back);
+      ImageStorage.instance.add(back);
     }
 
     let names: string[] = ['c', 'd', 'h', 's'];
@@ -538,7 +531,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         let trump: string = name + (('00' + i).slice(-2));
         let url: string = './assets/images/trump/' + trump + '.gif';
         if (!ImageStorage.instance.get(url)) {
-          image = ImageStorage.instance.add(url);
+          ImageStorage.instance.add(url);
         }
         let card = Card.create('サンプルカード', url, back);
         cardStack.putOnBottom(card);
@@ -550,7 +543,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       let trump: string = 'x' + (('00' + i).slice(-2));
       let url: string = './assets/images/trump/' + trump + '.gif';
       if (!ImageStorage.instance.get(url)) {
-        image = ImageStorage.instance.add(url);
+        ImageStorage.instance.add(url);
       }
       let card = Card.create('サンプルカード', url, back);
       cardStack.putOnBottom(card);
