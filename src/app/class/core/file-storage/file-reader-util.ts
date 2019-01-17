@@ -37,6 +37,6 @@ export namespace FileReaderUtil {
 
   function _calcSHA256(arrayBuffer: ArrayBuffer): string {
     let wordArray = WordArray.create(arrayBuffer);
-    return SHA256(<any>wordArray, 'key').toString();
+    return SHA256(<any>wordArray).toString();
   }
 }
