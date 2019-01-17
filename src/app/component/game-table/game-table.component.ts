@@ -41,13 +41,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('gameObjects') gameObjects: ElementRef;
   @ViewChild('gridCanvas') gridCanvas: ElementRef;
 
-  private _emptyTable: GameTable = new GameTable('');
-
-  get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
-  get gameTableObject(): GameTable {
-    let table = this.tableSelecter.viewTable;
-    return table ? table : this._emptyTable;
-  }
+  get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
+  get gameTableObject(): GameTable { return this.tabletopService.currentTable; }
 
   get bgImage(): ImageFile {
     let file: ImageFile = ImageStorage.instance.get(this.gameTableObject.imageIdentifier);
@@ -85,25 +80,14 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private buttonCode: number = 0;
 
-  private needUpdateList: { [aliasName: string]: boolean } = {};
-  private _tabletopCharacters: GameCharacter[] = [];
-  private _gameTableMasks: GameTableMask[] = [];
-  private _cards: Card[] = [];
-  private _cardStacks: CardStack[] = [];
-  private _terrains: Terrain[] = [];
-  private _peerCursors: PeerCursor[] = [];
-  private _textNotes: TextNote[] = [];
-  private _diceSymbols: DiceSymbol[] = [];
-  get tabletopCharacters(): GameCharacter[] { this.updateTabletopObjects(); return this._tabletopCharacters; }
-  get gameTableMasks(): GameTableMask[] { this.updateTabletopObjects(); return this._gameTableMasks; }
-  get cards(): Card[] { this.updateTabletopObjects(); return this._cards; }
-  get cardStacks(): CardStack[] { this.updateTabletopObjects(); return this._cardStacks; }
-  get terrains(): Terrain[] { this.updateTabletopObjects(); return this._terrains; }
-  get peerCursors(): PeerCursor[] { this.updateTabletopObjects(); return this._peerCursors; }
-  get textNotes(): TextNote[] { this.updateTabletopObjects(); return this._textNotes; }
-  get diceSymbols(): DiceSymbol[] { this.updateTabletopObjects(); return this._diceSymbols; }
-
-  private locationHash: { [aliasName: string]: { [identifier: string]: string } } = {};
+  get tabletopCharacters(): GameCharacter[] { return this.tabletopService.characters; }
+  get gameTableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
+  get cards(): Card[] { return this.tabletopService.cards; }
+  get cardStacks(): CardStack[] { return this.tabletopService.cardStacks; }
+  get terrains(): Terrain[] { return this.tabletopService.terrains; }
+  get textNotes(): TextNote[] { return this.tabletopService.textNotes; }
+  get diceSymbols(): DiceSymbol[] { return this.tabletopService.diceSymbols; }
+  get peerCursors(): PeerCursor[] { return this.tabletopService.peerCursors; }
 
   constructor(
     private ngZone: NgZone,
@@ -117,47 +101,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     console.log('きどう');
-    this.resetUpdateList();
 
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (this.needUpdateList[event.data.aliasName] === true) {
-          let object = ObjectStore.instance.get(event.data.identifier);
-          if (!object || !(object instanceof TabletopObject)) {
-            this.needUpdateList[event.data.aliasName] = false;
-          } else if (this.locationHash[object.aliasName] && this.locationHash[object.aliasName][object.identifier] !== object.location.name) {
-            this.needUpdateList[event.data.aliasName] = false;
-            this.locationHash[object.aliasName][object.identifier] = object.location.name;
-          }
-        }
         if (event.data.identifier !== this.gameTableObject.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier);
 
-        this.needUpdateList[GameTableMask.aliasName] = false;
-        this.needUpdateList[Terrain.aliasName] = false;
-
         this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
-      })
-      .on('DELETE_GAME_OBJECT', 1000, event => {
-        let garbage = ObjectStore.instance.get(event.data.identifier);
-        if (garbage == null || garbage.aliasName.length < 1) {
-          this.resetUpdateList();
-        } else if (this.needUpdateList[garbage.aliasName] === true) {
-          this.needUpdateList[garbage.aliasName] = false;
-        }
-      })
-      .on('XML_LOADED', event => {
-        let xmlElement: Element = event.data.xmlElement;
-        // todo:立体地形の上にドロップした時の挙動
-        let gameObject = ObjectSerializer.instance.parseXml(xmlElement);
-        if (gameObject instanceof TabletopObject) {
-          let pointer = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.gameObjects.nativeElement);
-          gameObject.location.x = pointer.x - 25;
-          gameObject.location.y = pointer.y - 25;
-          this.placeToTabletop(gameObject);
-          gameObject.update();
-          SoundEffect.play(PresetSound.put);
-        }
       })
       .on('DRAG_LOCKED_OBJECT', event => {
         this.isTransformMode = true;
@@ -403,97 +353,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       ], this.gameTableObject.name);
-    }
-  }
-
-  private placeToTabletop(gameObject: TabletopObject) {
-    switch (gameObject.aliasName) {
-      case GameTableMask.aliasName:
-        if (gameObject instanceof GameTableMask) gameObject.isLock = false;
-      case Terrain.aliasName:
-        if (gameObject instanceof Terrain) gameObject.isLocked = false;
-        if (!this.tableSelecter || !this.tableSelecter.viewTable) return;
-        this.tableSelecter.viewTable.appendChild(gameObject);
-        break;
-      default:
-        gameObject.setLocation('table');
-        break;
-    }
-  }
-
-  private resetUpdateList() {
-    this.needUpdateList[GameCharacter.aliasName] = false;
-    this.needUpdateList[GameTableMask.aliasName] = false;
-    this.needUpdateList[Card.aliasName] = false;
-    this.needUpdateList[CardStack.aliasName] = false;
-    this.needUpdateList[Terrain.aliasName] = false;
-    this.needUpdateList[PeerCursor.aliasName] = false;
-    this.needUpdateList[TextNote.aliasName] = false;
-    this.needUpdateList[DiceSymbol.aliasName] = false;
-
-    this.locationHash[GameCharacter.aliasName] = {};
-    this.locationHash[GameTableMask.aliasName] = {};
-    this.locationHash[Card.aliasName] = {};
-    this.locationHash[CardStack.aliasName] = {};
-    this.locationHash[Terrain.aliasName] = {};
-    this.locationHash[TextNote.aliasName] = {};
-    this.locationHash[DiceSymbol.aliasName] = {};
-  }
-
-  private updateTabletopObjects() {
-    if (!this.needUpdateList[GameCharacter.aliasName]) {
-      this.locationHash[GameCharacter.aliasName] = {};
-      this.needUpdateList[GameCharacter.aliasName] = true;
-      this._tabletopCharacters = ObjectStore.instance.getObjects<GameCharacter>(GameCharacter).filter((obj) => {
-        this.locationHash[GameCharacter.aliasName][obj.identifier] = obj.location.name;
-        return obj.location.name === 'table';
-      });
-    }
-    if (!this.needUpdateList[GameTableMask.aliasName]) {
-      this.locationHash[GameTableMask.aliasName] = {};
-      this.needUpdateList[GameTableMask.aliasName] = true;
-      let viewTable = this.tableSelecter.viewTable;
-      this._gameTableMasks = viewTable ? viewTable.masks : [];
-      this._gameTableMasks.forEach(obj => this.locationHash[GameTableMask.aliasName][obj.identifier] = obj.location.name);
-    }
-    if (!this.needUpdateList[Card.aliasName]) {
-      this.locationHash[Card.aliasName] = {};
-      this.needUpdateList[Card.aliasName] = true;
-      this._cards = ObjectStore.instance.getObjects<Card>(Card).filter((obj) => {
-        this.locationHash[Card.aliasName][obj.identifier] = obj.location.name;
-        return obj.location.name === 'table';
-      });
-    }
-    if (!this.needUpdateList[CardStack.aliasName]) {
-      this.locationHash[CardStack.aliasName] = {};
-      this.needUpdateList[CardStack.aliasName] = true;
-      this._cardStacks = ObjectStore.instance.getObjects<CardStack>(CardStack).filter((obj) => {
-        this.locationHash[CardStack.aliasName][obj.identifier] = obj.location.name;
-        return obj.location.name === 'table';
-      });
-    }
-    if (!this.needUpdateList[Terrain.aliasName]) {
-      this.locationHash[Terrain.aliasName] = {};
-      this.needUpdateList[Terrain.aliasName] = true;
-      let viewTable = this.tableSelecter.viewTable;
-      this._terrains = viewTable ? viewTable.terrains : [];
-      this._terrains.forEach(obj => this.locationHash[Terrain.aliasName][obj.identifier] = obj.location.name);
-    }
-    if (!this.needUpdateList[PeerCursor.aliasName]) {
-      this.needUpdateList[PeerCursor.aliasName] = true;
-      this._peerCursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
-    }
-    if (!this.needUpdateList[TextNote.aliasName]) {
-      this.locationHash[TextNote.aliasName] = {};
-      this.needUpdateList[TextNote.aliasName] = true;
-      this._textNotes = ObjectStore.instance.getObjects<TextNote>(TextNote);
-      this._textNotes.forEach(obj => this.locationHash[TextNote.aliasName][obj.identifier] = obj.location.name);
-    }
-    if (!this.needUpdateList[DiceSymbol.aliasName]) {
-      this.locationHash[DiceSymbol.aliasName] = {};
-      this.needUpdateList[DiceSymbol.aliasName] = true;
-      this._diceSymbols = ObjectStore.instance.getObjects<DiceSymbol>(DiceSymbol);
-      this._diceSymbols.forEach(obj => this.locationHash[DiceSymbol.aliasName][obj.identifier] = obj.location.name);
     }
   }
 
