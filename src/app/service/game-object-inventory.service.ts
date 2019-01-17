@@ -29,8 +29,8 @@ export class GameObjectInventoryService {
   privateInventory: ObjectInventory = new ObjectInventory(object => { return object.location.name === Network.peerId; });
   graveyardInventory: ObjectInventory = new ObjectInventory(object => { return object.location.name === 'graveyard'; });
 
-  private locationHash: Map<ObjectIdentifier, LocationName> = new Map();
-  private elementNameHash: Map<ObjectIdentifier, ElementName> = new Map();
+  private locationMap: Map<ObjectIdentifier, LocationName> = new Map();
+  private tagNameMap: Map<ObjectIdentifier, ElementName> = new Map();
 
   constructor() {
     this.initialize();
@@ -46,17 +46,17 @@ export class GameObjectInventoryService {
         if (!object) return;
 
         if (object instanceof GameCharacter) {
-          let preLocation = this.locationHash[object.identifier];
-          if (object.location.name !== preLocation) {
-            this.locationHash[object.identifier] = object.location.name;
+          let prevLocation = this.locationMap.get(object.identifier);
+          if (object.location.name !== prevLocation) {
+            this.locationMap.set(object.identifier, object.location.name);
             this.refresh();
           }
         } else if (object instanceof DataElement) {
           if (!this.containsInGameCharacter(object)) return;
 
-          let preElementName = this.elementNameHash[object.identifier];
-          if ((this.dataTags.includes(preElementName) || this.dataTags.includes(object.name)) && object.name !== preElementName) {
-            this.elementNameHash[object.identifier] = object.name;
+          let prevName = this.tagNameMap.get(object.identifier);
+          if ((this.dataTags.includes(prevName) || this.dataTags.includes(object.name)) && object.name !== prevName) {
+            this.tagNameMap.set(object.identifier, object.name);
             this.refreshDataElements();
           }
           if (this.sortTag === object.name) {
@@ -74,8 +74,8 @@ export class GameObjectInventoryService {
         }
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
-        delete this.locationHash[event.data.identifier];
-        delete this.elementNameHash[event.data.identifier];
+        this.locationMap.delete(event.data.identifier);
+        this.tagNameMap.delete(event.data.identifier);
         this.refresh();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
