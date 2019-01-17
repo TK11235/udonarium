@@ -39,20 +39,20 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('gridCanvas') gridCanvas: ElementRef;
 
   get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
-  get gameTableObject(): GameTable { return this.tabletopService.currentTable; }
+  get currentTable(): GameTable { return this.tabletopService.currentTable; }
 
   get bgImage(): ImageFile {
-    let file: ImageFile = ImageStorage.instance.get(this.gameTableObject.imageIdentifier);
+    let file: ImageFile = ImageStorage.instance.get(this.currentTable.imageIdentifier);
     return file ? file : ImageFile.Empty;
   }
 
   get distanceviewImage(): ImageFile {
-    let file: ImageFile = ImageStorage.instance.get(this.gameTableObject.distanceviewImageIdentifier);
+    let file: ImageFile = ImageStorage.instance.get(this.currentTable.distanceviewImageIdentifier);
     return file ? file : ImageFile.Empty;
   }
 
   get distanceviewFilterType(): FilterType {
-    return this.gameTableObject.distanceViewFilterType
+    return this.currentTable.distanceViewFilterType
   }
 
   private isTransformMode: boolean = false;
@@ -77,8 +77,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private buttonCode: number = 0;
 
-  get tabletopCharacters(): GameCharacter[] { return this.tabletopService.characters; }
-  get gameTableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
+  get characters(): GameCharacter[] { return this.tabletopService.characters; }
+  get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
   get cards(): Card[] { return this.tabletopService.cards; }
   get cardStacks(): CardStack[] { return this.tabletopService.cardStacks; }
   get terrains(): Terrain[] { return this.tabletopService.terrains; }
@@ -101,10 +101,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.data.identifier !== this.gameTableObject.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
-        console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.gameTableObject.identifier);
+        if (event.data.identifier !== this.currentTable.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
+        console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.currentTable.identifier);
 
-        this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
+        this.setGameTableGrid(this.currentTable.width, this.currentTable.height, this.currentTable.gridSize, this.currentTable.gridType, this.currentTable.gridColor);
       })
       .on('DRAG_LOCKED_OBJECT', event => {
         this.isTransformMode = true;
@@ -118,7 +118,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.elementRef.nativeElement.addEventListener('mousedown', this.callbackOnMouseDown, true);
-    this.setGameTableGrid(this.gameTableObject.width, this.gameTableObject.height, this.gameTableObject.gridSize, this.gameTableObject.gridType, this.gameTableObject.gridColor);
+    this.setGameTableGrid(this.currentTable.width, this.currentTable.height, this.currentTable.gridSize, this.currentTable.gridType, this.currentTable.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
     this.tabletopService.dragAreaElement = this.gameObjects.nativeElement;
   }
@@ -349,7 +349,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
             this.modalService.open(GameTableSettingComponent);
           }
         }
-      ], this.gameTableObject.name);
+      ], this.currentTable.name);
     }
   }
 

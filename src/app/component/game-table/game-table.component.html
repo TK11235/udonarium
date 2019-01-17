@@ -7,7 +7,7 @@
       <div class="background-image is-pointer-events-none" [style.background-image]="'url(' + bgImage.url + ')' | safe: 'style'" ></div>
       <canvas class="grid-canvas is-fill is-pointer-events-none" #gridCanvas></canvas>
       <terrain class="is-3d" *ngFor="let terrain of terrains; trackBy: trackByGameObject" [terrain]="terrain"></terrain>
-      <game-table-mask class="is-3d" *ngFor="let mask of gameTableMasks; trackBy: trackByGameObject" [gameTableMask]="mask"></game-table-mask>
+      <game-table-mask class="is-3d" *ngFor="let mask of tableMasks; trackBy: trackByGameObject" [gameTableMask]="mask"></game-table-mask>
       <div class="is-3d">
         <text-note class="is-3d" *ngFor="let textNote of textNotes; trackBy: trackByGameObject" [textNote]="textNote" [ngStyle]="{'z-index' : textNote.zindex}"></text-note>
       </div>
@@ -16,7 +16,7 @@
         <card class="is-3d" *ngFor="let card of cards; trackBy: trackByGameObject" [card]="card" [ngStyle]="{'z-index' : card.zindex}"></card>
       </div>
       <dice-symbol class="is-3d" *ngFor="let diceSymbol of diceSymbols; trackBy: trackByGameObject" [diceSymbol]="diceSymbol"></dice-symbol>
-      <game-character class="is-3d" *ngFor="let character of tabletopCharacters; trackBy: trackByGameObject" [gameCharacter]="character"></game-character>
+      <game-character class="is-3d" *ngFor="let character of characters; trackBy: trackByGameObject" [gameCharacter]="character"></game-character>
       <peer-cursor class="is-3d" *ngFor="let cursor of peerCursors; trackBy: trackByGameObject" [cursor]="cursor"></peer-cursor>
     </div>
   </div>
