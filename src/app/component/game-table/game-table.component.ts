@@ -353,87 +353,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  createGameCharacter(potison: PointerCoordinate) {
-    console.log('mouseCursor B', potison);
-    let gameObject = GameCharacter.createGameCharacter('新しいキャラクター', 1, '');
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    gameObject.location.x = pointer.x - 25;
-    gameObject.location.y = pointer.y - 25;
-    gameObject.update();
-    this.showDetail(gameObject);
-  }
-
-  private showDetail(gameObject: GameCharacter) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
-    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
-    component.tabletopObject = gameObject;
-  }
-
-  createGameTableMask(potison: PointerCoordinate) {
-    console.log('createGameTableMask A');
-    let viewTable = this.tableSelecter.viewTable;
-    if (!viewTable) return;
-
-    let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
-    viewTable.appendChild(tableMask);
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    console.log('createGameTableMask B', pointer);
-    tableMask.location.x = pointer.x - 25;
-    tableMask.location.y = pointer.y - 25;
-    tableMask.update();
-  }
-
-  createTerrain(potison: PointerCoordinate) {
-    console.log('createTerrain');
-
-    let url: string = './assets/images/tex.jpg';
-    let image: ImageFile = ImageStorage.instance.get(url)
-    if (!image) image = ImageStorage.instance.add(url);
-
-    let viewTable = this.tableSelecter.viewTable;
-    if (!viewTable) return;
-
-    let terrain = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
-    viewTable.appendChild(terrain);
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    terrain.location.x = pointer.x - 50;
-    terrain.location.y = pointer.y - 50;
-    terrain.update();
-  }
-
-  createTextNote(potison: PointerCoordinate) {
-    console.log('createTextNote');
-    let textNote = TextNote.create('共有メモ', 'テキストを入力してください', 5, 4, 3);
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    textNote.location.x = pointer.x;
-    textNote.location.y = pointer.y;
-    textNote.update();
-  }
-
-  createDiceSymbol(potison: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string) {
-    console.log('createDiceSymbol');
-    let diceSymbol = DiceSymbol.create(name, diceType, 1);
-    let image: ImageFile = null;
-
-    diceSymbol.faces.forEach(face => {
-      let url: string = `./assets/images/dice/${imagePathPrefix}/${imagePathPrefix}[${face}].png`;
-      image = ImageStorage.instance.get(url)
-      if (!image) { image = ImageStorage.instance.add(url); }
-      diceSymbol.imageDataElement.getFirstElementByName(face).value = image.identifier;
-    });
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    diceSymbol.location.x = pointer.x - 25;
-    diceSymbol.location.y = pointer.y - 25;
-    diceSymbol.update();
-  }
-
-  setTransform(transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number) {
+  private setTransform(transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number) {
     this.viewRotateX += rotateX;
     this.viewRotateY += rotateY;
     this.viewRotateZ += rotateZ;
@@ -512,6 +432,117 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.gridCanvas.nativeElement.style.opacity = opacity;
   }
 
+  private showDetail(gameObject: GameCharacter) {
+    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
+    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
+    let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
+    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
+    component.tabletopObject = gameObject;
+  }
+
+  private removeSelectionRanges() {
+    let selection = window.getSelection();
+    if (!selection.isCollapsed) {
+      selection.removeAllRanges();
+    }
+  }
+
+  private removeFocus() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }
+
+  private addMouseEventListeners() {
+    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
+    this.ngZone.runOutsideAngular(() => {
+      document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
+      document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
+    });
+  }
+
+  private removeMouseEventListeners() {
+    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
+    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
+    document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
+  }
+
+  trackByGameObject(index: number, gameObject: GameObject) {
+    return gameObject.identifier;
+  }
+
+  private createGameCharacter(potison: PointerCoordinate) {
+    console.log('mouseCursor B', potison);
+    let gameObject = GameCharacter.createGameCharacter('新しいキャラクター', 1, '');
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    gameObject.location.x = pointer.x - 25;
+    gameObject.location.y = pointer.y - 25;
+    gameObject.update();
+    this.showDetail(gameObject);
+  }
+
+  private createGameTableMask(potison: PointerCoordinate) {
+    console.log('createGameTableMask A');
+    let viewTable = this.tableSelecter.viewTable;
+    if (!viewTable) return;
+
+    let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
+    viewTable.appendChild(tableMask);
+
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    console.log('createGameTableMask B', pointer);
+    tableMask.location.x = pointer.x - 25;
+    tableMask.location.y = pointer.y - 25;
+    tableMask.update();
+  }
+
+  private createTerrain(potison: PointerCoordinate) {
+    console.log('createTerrain');
+
+    let url: string = './assets/images/tex.jpg';
+    let image: ImageFile = ImageStorage.instance.get(url)
+    if (!image) image = ImageStorage.instance.add(url);
+
+    let viewTable = this.tableSelecter.viewTable;
+    if (!viewTable) return;
+
+    let terrain = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
+    viewTable.appendChild(terrain);
+
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    terrain.location.x = pointer.x - 50;
+    terrain.location.y = pointer.y - 50;
+    terrain.update();
+  }
+
+  private createTextNote(potison: PointerCoordinate) {
+    console.log('createTextNote');
+    let textNote = TextNote.create('共有メモ', 'テキストを入力してください', 5, 4, 3);
+
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    textNote.location.x = pointer.x;
+    textNote.location.y = pointer.y;
+    textNote.update();
+  }
+
+  private createDiceSymbol(potison: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string) {
+    console.log('createDiceSymbol');
+    let diceSymbol = DiceSymbol.create(name, diceType, 1);
+    let image: ImageFile = null;
+
+    diceSymbol.faces.forEach(face => {
+      let url: string = `./assets/images/dice/${imagePathPrefix}/${imagePathPrefix}[${face}].png`;
+      image = ImageStorage.instance.get(url)
+      if (!image) { image = ImageStorage.instance.add(url); }
+      diceSymbol.imageDataElement.getFirstElementByName(face).value = image.identifier;
+    });
+
+    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
+    diceSymbol.location.x = pointer.x - 25;
+    diceSymbol.location.y = pointer.y - 25;
+    diceSymbol.update();
+  }
+
   private createTrump(potison: PointerCoordinate) {
     let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
     let cardStack = CardStack.create('トランプ山札');
@@ -548,36 +579,5 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       let card = Card.create('サンプルカード', url, back);
       cardStack.putOnBottom(card);
     }
-  }
-
-  private removeSelectionRanges() {
-    let selection = window.getSelection();
-    if (!selection.isCollapsed) {
-      selection.removeAllRanges();
-    }
-  }
-
-  private removeFocus() {
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-  }
-
-  private addMouseEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    this.ngZone.runOutsideAngular(() => {
-      document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
-      document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
-    });
-  }
-
-  private removeMouseEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
-    document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
-  }
-
-  trackByGameObject(index: number, gameObject: GameObject) {
-    return gameObject.identifier;
   }
 }
