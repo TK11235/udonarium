@@ -22,6 +22,6 @@ export namespace XmlUtil {
   }
 
   export function decodeEntityReference(string: string): string {
-    return string.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#34;/g, '"').replace(/&amp;/g, '&');
+    return string.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
   }
 }
