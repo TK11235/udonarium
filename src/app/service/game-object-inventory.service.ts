@@ -209,7 +209,7 @@ class ObjectInventory {
     this.needsSort = true;
   }
 
-  private searchTabletopObjects() {
+  private searchTabletopObjects(): TabletopObject[] {
     let objects: TabletopObject[] = ObjectStore.instance.getObjects(GameCharacter);
     let caches: TabletopObject[] = [];
     for (let object of objects) {
@@ -218,7 +218,7 @@ class ObjectInventory {
     return caches;
   }
 
-  private sortTabletopObjects(objects: TabletopObject[]) {
+  private sortTabletopObjects(objects: TabletopObject[]): TabletopObject[] {
     let sortTag = this.sortTag.length ? this.sortTag.trim() : '';
     let sortOrder = this.sortOrder === 'ASC' ? -1 : 1;
     if (sortTag.length < 1) return objects;
