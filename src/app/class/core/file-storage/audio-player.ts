@@ -126,6 +126,7 @@ export class AudioPlayer {
     this.pause();
     this.audioElm.currentTime = 0;
     this.audioElm.src = '';
+    this.audioElm.load();
     this.mediaElementSource.disconnect();
   }
 
