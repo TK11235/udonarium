@@ -41,18 +41,18 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
   get currentTable(): GameTable { return this.tabletopService.currentTable; }
 
-  get bgImage(): ImageFile {
+  get tableImage(): ImageFile {
     let file: ImageFile = ImageStorage.instance.get(this.currentTable.imageIdentifier);
     return file ? file : ImageFile.Empty;
   }
 
-  get distanceviewImage(): ImageFile {
-    let file: ImageFile = ImageStorage.instance.get(this.currentTable.distanceviewImageIdentifier);
+  get backgroundImage(): ImageFile {
+    let file: ImageFile = ImageStorage.instance.get(this.currentTable.backgroundImageIdentifier);
     return file ? file : ImageFile.Empty;
   }
 
-  get distanceviewFilterType(): FilterType {
-    return this.currentTable.distanceViewFilterType
+  get backgroundFilterType(): FilterType {
+    return this.currentTable.backgroundFilterType
   }
 
   private isTransformMode: boolean = false;

@@ -29,7 +29,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
 
   get tableDistanceviewImage(): ImageFile {
     if (!this.selectedTable) return ImageFile.Empty;
-    let file = ImageStorage.instance.get(this.selectedTable.distanceviewImageIdentifier);
+    let file = ImageStorage.instance.get(this.selectedTable.backgroundImageIdentifier);
     return file ? file : ImageFile.Empty;
   }
 
@@ -60,8 +60,8 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   get tableGridType(): GridType { return this.selectedTable.gridType; }
   set tableGridType(gridType: GridType) { if (this.isEditable) this.selectedTable.gridType = Number(gridType); }
 
-  get tableDistanceviewFilter(): FilterType { return this.selectedTable.distanceViewFilterType; }
-  set tableDistanceviewFilter(filterType: FilterType) { if (this.isEditable) this.selectedTable.distanceViewFilterType = filterType; }
+  get tableDistanceviewFilter(): FilterType { return this.selectedTable.backgroundFilterType; }
+  set tableDistanceviewFilter(filterType: FilterType) { if (this.isEditable) this.selectedTable.backgroundFilterType = filterType; }
 
   get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
 
@@ -154,7 +154,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     if (this.isDeleted) return;
     this.modalService.open<string>(FileSelecterComponent).then(value => {
       if (!this.selectedTable || !value) return;
-      this.selectedTable.distanceviewImageIdentifier = value;
+      this.selectedTable.backgroundImageIdentifier = value;
     });
   }
 }

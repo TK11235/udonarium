@@ -173,7 +173,7 @@ export class TabletopService {
     testDistanceFile = ImageStorage.instance.add(distanceFileContext);
     gameTable.name = '最初のテーブル';
     gameTable.imageIdentifier = testBgFile.identifier;
-    gameTable.distanceviewImageIdentifier = testDistanceFile.identifier;
+    gameTable.backgroundImageIdentifier = testDistanceFile.identifier;
     gameTable.width = 20;
     gameTable.height = 15;
     gameTable.initialize();

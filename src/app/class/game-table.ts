@@ -34,8 +34,8 @@ export class GameTable extends ObjectNode implements InnerXml {
   @SyncVar() height: number = 20;
   @SyncVar() gridSize: number = 50;
   @SyncVar() imageIdentifier: string = 'imageIdentifier';
-  @SyncVar() distanceviewImageIdentifier: string = 'imageIdentifier';
-  @SyncVar() distanceViewFilterType: FilterType = FilterType.WHITE;
+  @SyncVar() backgroundImageIdentifier: string = 'imageIdentifier';
+  @SyncVar() backgroundFilterType: FilterType = FilterType.WHITE;
   @SyncVar() selected: boolean = false;
   @SyncVar() gridType: GridType = GridType.SQUARE;
   @SyncVar() gridColor: string = '#000000e6';
