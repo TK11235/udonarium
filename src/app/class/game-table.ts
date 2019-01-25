@@ -17,16 +17,6 @@ export enum FilterType {
   BLACK = 'black',
 }
 
-export interface GameTableDataContainer {
-  width: number;
-  height: number;
-  gridSize: number;
-  imageIdentifier: string;
-  distanceviewImageIdentifier: string;
-  distanceViewFilterType: FilterType;
-  gridType: GridType;
-}
-
 @SyncObject('game-table')
 export class GameTable extends ObjectNode implements InnerXml {
   @SyncVar() name: string = 'テーブル';
