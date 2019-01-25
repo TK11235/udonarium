@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ChatTabList } from '@udonarium/chat-tab-list';
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
-import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
@@ -63,16 +63,14 @@ export class SaveDataService {
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].getAttribute('imageIdentifier');
-      images[identifier] = ImageStorage.instance.get(identifier);
+      if (identifier) images[identifier] = ImageStorage.instance.get(identifier);
 
       let backgroundImageIdentifier = imageElements[i].getAttribute('backgroundImageIdentifier');
-      if (backgroundImageIdentifier) {
-        images[backgroundImageIdentifier] = ImageStorage.instance.get(backgroundImageIdentifier);
-      }
+      if (backgroundImageIdentifier) images[backgroundImageIdentifier] = ImageStorage.instance.get(backgroundImageIdentifier);
     }
     for (let identifier in images) {
       let image = images[identifier];
-      if (image && image.blob) {
+      if (image && image.state === ImageState.COMPLETE) {
         files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
       }
     }
