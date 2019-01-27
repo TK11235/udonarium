@@ -1,7 +1,7 @@
 import { EventSystem } from '../system';
 import { ImageContext, ImageFile, ImageState } from './image-file';
 
-export type Catalog = { identifier: string, state: number }[];
+export type CatalogItem = { identifier: string, state: number };
 
 export class ImageStorage {
   private static _instance: ImageStorage
@@ -110,8 +110,8 @@ export class ImageStorage {
     }, ms);
   }
 
-  getCatalog(): Catalog {
-    let catalog: Catalog = [];
+  getCatalog(): CatalogItem[] {
+    let catalog: CatalogItem[] = [];
     for (let image of this.images) {
       if (ImageState.COMPLETE <= image.state) {
         catalog.push({ identifier: image.identifier, state: image.state });

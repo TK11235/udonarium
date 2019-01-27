@@ -3,7 +3,7 @@ import { EventSystem, Network } from '../system';
 import { BufferSharingTask } from './buffer-sharing-task';
 import { FileReaderUtil } from './file-reader-util';
 import { ImageContext, ImageFile, ImageState } from './image-file';
-import { Catalog, ImageStorage } from './image-storage';
+import { CatalogItem, ImageStorage } from './image-storage';
 import { MimeType } from './mime-type';
 
 export class FileSharingSystem {
@@ -34,8 +34,8 @@ export class FileSharingSystem {
         if (event.isSendFromSelf) return;
         console.log('SYNCHRONIZE_FILE_LIST ImageStorageService ' + event.sendFrom);
 
-        let otherCatalog: Catalog = event.data;
-        let request: Catalog = [];
+        let otherCatalog: CatalogItem[] = event.data;
+        let request: CatalogItem[] = [];
 
         for (let item of otherCatalog) {
           let image: ImageFile = ImageStorage.instance.get(item.identifier);
@@ -60,8 +60,8 @@ export class FileSharingSystem {
       .on('REQUEST_FILE_RESOURE', async event => {
         if (event.isSendFromSelf) return;
 
-        let request: Catalog = event.data.identifiers;
-        let randomRequest: Catalog = [];
+        let request: CatalogItem[] = event.data.identifiers;
+        let randomRequest: CatalogItem[] = [];
 
         for (let item of request) {
           let image: ImageFile = ImageStorage.instance.get(item.identifier);
@@ -162,14 +162,14 @@ export class FileSharingSystem {
     console.log('stopFileTransmission => ', this.taskMap.size);
   }
 
-  private request(request: Catalog, peer: string) {
+  private request(request: CatalogItem[], peer: string) {
     console.log('requestFile() ' + peer);
     let peers = Network.peerIds;
     peers.splice(peers.indexOf(Network.peerId), 1);
     EventSystem.call('REQUEST_FILE_RESOURE', { identifiers: request, receiver: Network.peerId, candidatePeers: peers }, peer);
   }
 
-  private makeSendUpdateImages(catalog: Catalog, maxSize: number = 1024 * 1024 * 0.5): ImageContext[] {
+  private makeSendUpdateImages(catalog: CatalogItem[], maxSize: number = 1024 * 1024 * 0.5): ImageContext[] {
     let updateImages: ImageContext[] = [];
     let byteSize: number = 0;
 
