@@ -22,8 +22,8 @@ export class BufferSharingTask<T> {
   private chankSize: number = 8 * 1024;
   private sendChankTimer: number;
 
-  private sentChankLength = 0;
-  private completedChankLength = 0;
+  private sentChankIndex = 0;
+  private completedChankIndex = 0;
 
   onprogress: (task: BufferSharingTask<T>, loded: number, total: number) => void;
   onfinish: (task: BufferSharingTask<T>, data: T) => void;
@@ -76,10 +76,10 @@ export class BufferSharingTask<T> {
     EventSystem.register(this)
       .on<number>('FILE_MORE_CHANK_' + this.identifier, 0, event => {
         if (this.sendTo !== event.sendFrom) return;
-        this.completedChankLength = event.data;
+        this.completedChankIndex = event.data;
         if (this.sendChankTimer == null) {
           clearTimeout(this.timeoutTimer);
-          this.sendChank(this.sentChankLength + 1);
+          this.sendChank(this.sentChankIndex + 1);
         }
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
@@ -89,24 +89,24 @@ export class BufferSharingTask<T> {
         if (this.onfinish) this.onfinish(this, this.data);
         this.cancel();
       });
-    this.sentChankLength = this.completedChankLength = 0;
+    this.sentChankIndex = this.completedChankIndex = 0;
     setZeroTimeout(() => this.sendChank(0));
   }
 
   private sendChank(index: number) {
     let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
     EventSystem.call('FILE_SEND_CHANK_' + this.identifier, data, this.sendTo);
-    this.sentChankLength = index;
+    this.sentChankIndex = index;
     if (this.chanks.length <= index + 1) {
       EventSystem.call('FILE_SEND_END_' + this.identifier, null, this.sendTo);
       console.log('バッファ送信完了', this.identifier);
       if (this.onfinish) this.onfinish(this, this.data);
       this.cancel();
-    } else if (this.completedChankLength + 8 <= index + 1) {
+    } else if (this.completedChankIndex + 8 <= index + 1) {
       this.sendChankTimer = null;
       this.resetTimeout();
     } else {
-      this.sendChankTimer = setZeroTimeout(() => { this.sendChank(this.sentChankLength + 1); });
+      this.sendChankTimer = setZeroTimeout(() => { this.sendChank(this.sentChankIndex + 1); });
     }
   }
 
