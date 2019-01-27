@@ -1,7 +1,7 @@
 import { EventSystem } from '../system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 
-export type Catalog = { identifier: string, state: number }[];
+export type CatalogItem = { identifier: string, state: number };
 
 export class AudioStorage {
   private static _instance: AudioStorage
@@ -109,8 +109,8 @@ export class AudioStorage {
     }, ms);
   }
 
-  getCatalog(): Catalog {
-    let catalog: Catalog = [];
+  getCatalog(): CatalogItem[] {
+    let catalog: CatalogItem[] = [];
     for (let audio of AudioStorage.instance.audios) {
       if (AudioState.COMPLETE <= audio.state) {
         catalog.push({ identifier: audio.identifier, state: audio.state });

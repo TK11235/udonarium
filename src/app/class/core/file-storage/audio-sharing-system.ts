@@ -1,6 +1,6 @@
 import { EventSystem, Network } from '../system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
-import { AudioStorage, Catalog } from './audio-storage';
+import { AudioStorage, CatalogItem } from './audio-storage';
 import { BufferSharingTask } from './buffer-sharing-task';
 import { FileReaderUtil } from './file-reader-util';
 
@@ -29,8 +29,8 @@ export class AudioSharingSystem {
         if (event.isSendFromSelf) return;
         console.log('SYNCHRONIZE_AUDIO_LIST ' + event.sendFrom);
 
-        let otherCatalog: Catalog = event.data;
-        let request: Catalog = [];
+        let otherCatalog: CatalogItem[] = event.data;
+        let request: CatalogItem[] = [];
 
         console.log('SYNCHRONIZE_AUDIO_LIST active tasks ', this.taskMap.size);
         for (let item of otherCatalog) {
@@ -57,8 +57,8 @@ export class AudioSharingSystem {
       .on('REQUEST_AUDIO_RESOURE', event => {
         if (event.isSendFromSelf) return;
 
-        let request: Catalog = event.data.identifiers;
-        let randomRequest: Catalog = [];
+        let request: CatalogItem[] = event.data.identifiers;
+        let randomRequest: CatalogItem[] = [];
 
         for (let item of request) {
           let audio: AudioFile = AudioStorage.instance.get(item.identifier);
@@ -180,7 +180,7 @@ export class AudioSharingSystem {
     console.log('stopFileTransmission => ', this.taskMap.size);
   }
 
-  private request(request: Catalog, peer: string) {
+  private request(request: CatalogItem[], peer: string) {
     console.log('requestFile() ' + peer);
     let peers = Network.peerIds;
     peers.splice(peers.indexOf(Network.peerId), 1);
