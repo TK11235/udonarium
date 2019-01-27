@@ -28,6 +28,7 @@ export class BufferSharingTask<T> {
   onprogress: (task: BufferSharingTask<T>, loded: number, total: number) => void;
   onfinish: (task: BufferSharingTask<T>, data: T) => void;
   ontimeout: (task: BufferSharingTask<T>) => void;
+  oncancel: (task: BufferSharingTask<T>) => void;
 
   private timeoutTimer: NodeJS.Timer;
 
@@ -52,10 +53,15 @@ export class BufferSharingTask<T> {
   }
 
   cancel() {
+    this.dispose();
+    if (this.oncancel) this.oncancel(this);
+  }
+
+  private dispose() {
     EventSystem.unregister(this);
     clearTimeout(this.sendChankTimer);
     clearTimeout(this.timeoutTimer);
-    this.onfinish = this.ontimeout = null;
+    this.onprogress = this.onfinish = this.ontimeout = this.oncancel = null;
   }
 
   private initializeSend() {
@@ -87,7 +93,7 @@ export class BufferSharingTask<T> {
         console.warn('送信キャンセル', this, event.data.peer);
         if (this.ontimeout) this.ontimeout(this);
         if (this.onfinish) this.onfinish(this, this.data);
-        this.cancel();
+        this.dispose();
       });
     this.sentChankIndex = this.completedChankIndex = 0;
     setZeroTimeout(() => this.sendChank(0));
@@ -101,7 +107,7 @@ export class BufferSharingTask<T> {
       EventSystem.call('FILE_SEND_END_' + this.identifier, null, this.sendTo);
       console.log('バッファ送信完了', this.identifier);
       if (this.onfinish) this.onfinish(this, this.data);
-      this.cancel();
+      this.dispose();
     } else if (this.completedChankIndex + 8 <= index + 1) {
       this.sendChankTimer = null;
       this.resetTimeout();
@@ -144,7 +150,7 @@ export class BufferSharingTask<T> {
 
         this.data = MessagePack.decode(uint8Array);
         if (this.onfinish) this.onfinish(this, this.data);
-        this.cancel();
+        this.dispose();
       });
   }
 
@@ -153,7 +159,7 @@ export class BufferSharingTask<T> {
     this.timeoutTimer = setTimeout(() => {
       if (this.ontimeout) this.ontimeout(this);
       if (this.onfinish) this.onfinish(this, this.data);
-      this.cancel();
+      this.dispose();
     }, 15 * 1000);
   }
 }
