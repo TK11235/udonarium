@@ -20,10 +20,13 @@ export class BufferSharingTask<T> {
   private arrayBuffer: ArrayBuffer;
   private chanks: ArrayBuffer[] = [];
   private chankSize: number = 8 * 1024;
+  private chankReceiveCount: number = 0;
   private sendChankTimer: number;
 
   private sentChankIndex = 0;
   private completedChankIndex = 0;
+
+  private startTime = 0;
 
   onprogress: (task: BufferSharingTask<T>, loded: number, total: number) => void;
   onfinish: (task: BufferSharingTask<T>, data: T) => void;
@@ -118,17 +121,27 @@ export class BufferSharingTask<T> {
 
   private initializeReceive() {
     this.resetTimeout();
-    let startTime = performance.now();
+    this.startTime = performance.now();
+    this.chankReceiveCount = 0;
     EventSystem.register(this)
       .on<ChankData>('FILE_SEND_CHANK_' + this.identifier, 0, event => {
+        this.chankReceiveCount++;
+        if (this.chanks.length < 1) this.chanks = new Array(event.data.length);
+
         this.chanks[event.data.index] = event.data.chank;
         if (this.onprogress) this.onprogress(this, event.data.index, event.data.length);
-        this.resetTimeout();
-        if ((event.data.index + 1) % 4 === 0) {
-          EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index, event.sendFrom);
+        if (this.chanks.length <= this.chankReceiveCount) {
+          this.finishReceive();
+        } else {
+          this.resetTimeout();
+          if ((event.data.index + 1) % 4 === 0) {
+            EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index, event.sendFrom);
+          }
         }
-      })
-      .on('FILE_SEND_END_' + this.identifier, 0, event => {
+      });
+  }
+
+  private finishReceive() {
         console.log('バッファ受信完了', this.identifier);
         if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
         EventSystem.unregister(this);
@@ -136,7 +149,7 @@ export class BufferSharingTask<T> {
         let sumLength = 0;
         this.chanks.forEach(chank => sumLength += chank.byteLength);
 
-        let time = performance.now() - startTime;
+        let time = performance.now() - this.startTime;
         let rate = (sumLength / 1024 / 1024) / (time / 1000);
         console.log(`${(time / 1000).toFixed(2)}秒 転送速度: ${rate.toFixed(2)}MB/s`);
 
@@ -151,7 +164,6 @@ export class BufferSharingTask<T> {
         this.data = MessagePack.decode(uint8Array);
         if (this.onfinish) this.onfinish(this, this.data);
         this.dispose();
-      });
   }
 
   private resetTimeout() {
