@@ -16,7 +16,7 @@
     <button (click)="openModal(tabletopObject.face)" [disabled]="!tabletopObject.isVisible">ダイス目の画像を変更</button>
   </ng-container>
   <ng-container *ngSwitchDefault>
-    <button (click)="openModal('imageIdentifier')">画像変更</button>
+    <button (click)="openModal('imageIdentifier', true)">画像変更</button>
   </ng-container>
 </ng-container>
 <button (click)="saveToXML()">保存</button>

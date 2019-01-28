@@ -152,10 +152,9 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
 
   openDistanceViewImageModal() {
     if (this.isDeleted) return;
-    this.modalService.open<string>(FileSelecterComponent).then(value => {
+    this.modalService.open<string>(FileSelecterComponent, { isAllowedEmpty: true }).then(value => {
       if (!this.selectedTable || !value) return;
       this.selectedTable.backgroundImageIdentifier = value;
     });
   }
 }
-

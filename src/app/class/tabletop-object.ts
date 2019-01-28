@@ -21,7 +21,7 @@ export class TabletopObject extends ObjectNode {
 
   @SyncVar() posZ: number = 0;
 
-  private _imageFile: ImageFile = ImageFile.createEmpty('null');
+  private _imageFile: ImageFile = ImageFile.Empty;
   private _dataElements: { [name: string]: string } = {};
 
   // GameDataElement getter/setter
@@ -41,7 +41,7 @@ export class TabletopObject extends ObjectNode {
     let imageIdElement: DataElement = this.imageDataElement.getFirstElementByName('imageIdentifier');
     if (imageIdElement && this._imageFile.identifier !== imageIdElement.value) {
       let file: ImageFile = ImageStorage.instance.get(<string>imageIdElement.value);
-      if (file) this._imageFile = file;
+      this._imageFile = file ? file : ImageFile.Empty;
     }
     return this._imageFile;
   }
