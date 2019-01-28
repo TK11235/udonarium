@@ -85,18 +85,9 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private calcLocalCoordinate(x: number, y: number, target: HTMLElement) {
     if (!document.getElementById('app-table-layer').contains(target)) return;
 
-    let isTerrain = true;
-    let node: HTMLElement = target;
     let dragArea = document.getElementById('app-game-table');
-
-    while (node) {
-      if (node === dragArea) break;
-      node = node.parentElement;
-    }
-    if (node == null) isTerrain = false;
-
     let coordinate: PointerCoordinate = { x: x, y: y, z: 0 };
-    if (!isTerrain) {
+    if (target.contains(dragArea)) {
       coordinate = PointerDeviceService.convertToLocal(coordinate, dragArea);
       coordinate.z = 0;
     } else {
