@@ -5,3 +5,12 @@
 .image  img {
   vertical-align: bottom;
 }
+
+.empty {
+  line-height: 120px;
+  vertical-align: middle;
+}
+
+.empty button {
+  height: 100px;
+}

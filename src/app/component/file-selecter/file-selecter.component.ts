@@ -1,9 +1,15 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { EventSystem, Network } from '@udonarium/core/system';
-
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
 
@@ -15,13 +21,17 @@ import { PanelService } from 'service/panel.service';
 })
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  @Input() isAllowedEmpty: boolean = false;
   get images(): ImageFile[] { return ImageStorage.instance.images; }
+  get empty(): ImageFile { return ImageFile.Empty; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
     private modalService: ModalService
-  ) { }
+  ) {
+    this.isAllowedEmpty = this.modalService.option && this.modalService.option.isAllowedEmpty ? true : false;
+  }
 
   ngOnInit() {
     this.modalService.title = this.panelService.title = 'ファイル一覧';
