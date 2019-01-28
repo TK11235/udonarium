@@ -15,7 +15,8 @@ import { PanelService } from 'service/panel.service';
 })
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  fileStorageService = ImageStorage.instance;
+  get images(): ImageFile[] { return ImageStorage.instance.images; }
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
