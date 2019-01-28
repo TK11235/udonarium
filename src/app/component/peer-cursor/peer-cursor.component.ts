@@ -24,7 +24,6 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private opacityElement: HTMLElement = null;
   private fadeOutTimer: NodeJS.Timer = null;
 
-  private isAllowedToUpdate: boolean = true;
   private updateInterval: NodeJS.Timer = null;
   private callcack: any = (e) => this.onMouseMove(e);
 
@@ -44,11 +43,6 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
           this.stopTransition();
           this.setPosition(event.data[0], event.data[1], event.data[2]);
           this.resetFadeOut();
-        });
-    } else {
-      EventSystem.register(this)
-        .on('CURSOR_MOVE', event => {
-          if (event.isSendFromSelf) this.isAllowedToUpdate = true;
         });
     }
   }
@@ -80,8 +74,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     this._x = x;
     this._y = y;
     this._target = e.target;
-    if (!this.updateInterval && this.isAllowedToUpdate) {
-      this.isAllowedToUpdate = false;
+    if (!this.updateInterval) {
       this.updateInterval = setTimeout(() => {
         this.updateInterval = null;
         this.calcLocalCoordinate(this._x, this._y, this._target);
@@ -111,15 +104,6 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     EventSystem.call('CURSOR_MOVE', [coordinate.x, coordinate.y, coordinate.z]);
-  }
-
-  private findDragAreaElement(parent: HTMLElement): HTMLElement {
-    if (parent.tagName === 'DIV') {
-      return parent;
-    } else if (parent.tagName !== 'BODY') {
-      return this.findDragAreaElement(parent.parentElement);
-    }
-    return null;
   }
 
   private resetFadeOut() {
