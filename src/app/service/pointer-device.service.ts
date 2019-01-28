@@ -33,6 +33,7 @@ export class PointerDeviceService {
   pointers: PointerCoordinate[] = [{ x: 0, y: 0, z: 0 }];
   pointerType: PointerType = PointerType.UNKNOWN;
 
+  targetElement: HTMLElement;
   private contextMenuStartPostion: PointerCoordinate = { x: 0, y: 0, z: 0 };
 
   get pointerX(): number {
@@ -68,6 +69,7 @@ export class PointerDeviceService {
       this.onMouseDown(e);
     }
     this.contextMenuStartPostion = this.pointers[0];
+    this.targetElement = e.target;
   }
 
   private onMouseDown(e: MouseEvent) {
@@ -93,6 +95,7 @@ export class PointerDeviceService {
     } else {
       this.onMouseMove(e);
     }
+    this.targetElement = e.target;
   }
 
   private onMouseMove(e: MouseEvent) {
