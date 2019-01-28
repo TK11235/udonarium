@@ -17,7 +17,7 @@ import { TabletopObject } from '@udonarium/tabletop-object';
 import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
 
-import { PointerDeviceService } from './pointer-device.service';
+import { PointerCoordinate, PointerDeviceService } from './pointer-device.service';
 
 type ObjectIdentifier = string;
 type LocationName = string;
@@ -95,9 +95,10 @@ export class TabletopService {
         // todo:立体地形の上にドロップした時の挙動
         let gameObject = ObjectSerializer.instance.parseXml(xmlElement);
         if (gameObject instanceof TabletopObject) {
-          let pointer = PointerDeviceService.convertToLocal(this.pointerDeviceService.pointers[0], this.dragAreaElement);
+          let pointer = this.calcTabletopLocalCoordinate();
           gameObject.location.x = pointer.x - 25;
           gameObject.location.y = pointer.y - 25;
+          gameObject.posZ = pointer.z;
           this.placeToTabletop(gameObject);
           gameObject.update();
           SoundEffect.play(PresetSound.put);
@@ -156,6 +157,21 @@ export class TabletopService {
         gameObject.setLocation('table');
         break;
     }
+  }
+
+  calcTabletopLocalCoordinate(
+    x: number = this.pointerDeviceService.pointers[0].x,
+    y: number = this.pointerDeviceService.pointers[0].y,
+    target: HTMLElement = this.pointerDeviceService.targetElement
+  ): PointerCoordinate {
+    let coordinate: PointerCoordinate = { x: x, y: y, z: 0 };
+    if (target.contains(this.dragAreaElement)) {
+      coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
+      coordinate.z = 0;
+    } else {
+      coordinate = PointerDeviceService.convertLocalToLocal(coordinate, target, this.dragAreaElement);
+    }
+    return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
   }
 
   makeDefaultTable() {
