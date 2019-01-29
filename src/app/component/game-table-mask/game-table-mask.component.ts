@@ -2,14 +2,16 @@ import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit } from
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { EventSystem } from '@udonarium/core/system';
+import { DiceType } from '@udonarium/dice-symbol';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
-import { ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
-import { PointerDeviceService } from 'service/pointer-device.service';
+import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { TabletopService } from 'service/tabletop.service';
 
 @Component({
   selector: 'game-table-mask',
@@ -33,6 +35,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   movableOption: MovableOption = {};
 
   constructor(
+    private tabletopService: TabletopService,
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
     private pointerDeviceService: PointerDeviceService
@@ -77,9 +80,10 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     e.preventDefault();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
-    let potison = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', potison);
-    this.contextMenuService.open(potison, [
+    let menuPotison = this.pointerDeviceService.pointers[0];
+    let objectPotison = this.tabletopService.calcTabletopLocalCoordinate();
+    console.log('mouseCursor', menuPotison);
+    this.contextMenuService.open(menuPotison, [
       (this.isLock
         ? {
           name: '固定解除', action: () => {
@@ -112,6 +116,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
           SoundEffect.play(PresetSound.delete);
         }
       },
+      { name: 'オブジェクト作成', action: null, subActions: this.getContextMenuSubActions(objectPotison) }
     ], this.name);
   }
 
@@ -134,5 +139,92 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     let option: PanelOption = { title: title, left: coordinate.x - 200, top: coordinate.y - 150, width: 400, height: 300 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
+  }
+
+  private getContextMenuSubActions(potison: PointerCoordinate): ContextMenuAction[] {
+    return [
+      {
+        name: 'キャラクターを作成', action: () => {
+          let character = this.tabletopService.createGameCharacter(potison);
+
+          EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: character.identifier, className: character.aliasName });
+          let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
+          let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
+          component.tabletopObject = character;
+
+          SoundEffect.play(PresetSound.put);
+        }
+      },
+      {
+        name: 'マップマスクを作成', action: () => {
+          this.tabletopService.createGameTableMask(potison);
+          SoundEffect.play(PresetSound.put);
+        }
+      },
+      {
+        name: '地形を作成', action: () => {
+          this.tabletopService.createTerrain(potison);
+          SoundEffect.play(PresetSound.lock);
+        }
+      },
+      {
+        name: '共有メモを作成', action: () => {
+          this.tabletopService.createTextNote(potison);
+          SoundEffect.play(PresetSound.put);
+        }
+      },
+      {
+        name: 'トランプの山札を作成', action: () => {
+          this.tabletopService.createTrump(potison);
+          SoundEffect.play(PresetSound.cardPut);
+        }
+      },
+      {
+        name: 'ダイスを作成', action: null, subActions: [
+          {
+            name: 'D4', action: () => {
+              this.tabletopService.createDiceSymbol(potison, 'D4', DiceType.D4, '4_dice');
+              SoundEffect.play(PresetSound.put);
+            }
+          },
+          {
+            name: 'D6', action: () => {
+              this.tabletopService.createDiceSymbol(potison, 'D6', DiceType.D6, '6_dice');
+              SoundEffect.play(PresetSound.put);
+            }
+          },
+          {
+            name: 'D8', action: () => {
+              this.tabletopService.createDiceSymbol(potison, 'D8', DiceType.D8, '8_dice');
+              SoundEffect.play(PresetSound.put);
+            }
+          },
+          {
+            name: 'D10', action: () => {
+              this.tabletopService.createDiceSymbol(potison, 'D10', DiceType.D10, '10_dice');
+              SoundEffect.play(PresetSound.put);
+            }
+          },
+          {
+            name: 'D10 (00-90)', action: () => {
+              this.tabletopService.createDiceSymbol(potison, 'D10', DiceType.D10_10TIMES, '100_dice');
+              SoundEffect.play(PresetSound.put);
+            }
+          },
+          {
+            name: 'D12', action: () => {
+              this.tabletopService.createDiceSymbol(potison, 'D12', DiceType.D12, '12_dice');
+              SoundEffect.play(PresetSound.put);
+            }
+          },
+          {
+            name: 'D20', action: () => {
+              this.tabletopService.createDiceSymbol(potison, 'D20', DiceType.D20, '20_dice');
+              SoundEffect.play(PresetSound.put);
+            }
+          }
+        ]
+      }
+    ];
   }
 }
