@@ -117,8 +117,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
     this.selectGameObject(gameObject);
 
-    let potison = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', potison);
+    let position = this.pointerDeviceService.pointers[0];
+    console.log('mouseCursor', position);
 
     let actions: ContextMenuAction[] = [];
 
@@ -156,7 +156,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       });
     }
 
-    this.contextMenuService.open(potison, actions, gameObject.name);
+    this.contextMenuService.open(position, actions, gameObject.name);
   }
 
   toggleEdit() {

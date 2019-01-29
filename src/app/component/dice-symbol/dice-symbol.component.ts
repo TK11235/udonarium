@@ -149,10 +149,10 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     e.preventDefault();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
-    let potison = this.pointerDeviceService.pointers[0];
+    let position = this.pointerDeviceService.pointers[0];
 
     let actions: ContextMenuAction[] = [];
-    console.log('mouseCursor', potison);
+    console.log('mouseCursor', position);
 
     if (this.isVisible) {
       actions.push({
@@ -209,7 +209,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
         SoundEffect.play(PresetSound.delete);
       }
     });
-    this.contextMenuService.open(potison, actions, this.name);
+    this.contextMenuService.open(position, actions, this.name);
   }
 
   onMove() {

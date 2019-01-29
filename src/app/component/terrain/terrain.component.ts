@@ -93,10 +93,10 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
-    let menuPotison = this.pointerDeviceService.pointers[0];
-    let objectPotison = this.tabletopService.calcTabletopLocalCoordinate();
-    console.log('mouseCursor', menuPotison);
-    this.contextMenuService.open(menuPotison, [
+    let menuPosition = this.pointerDeviceService.pointers[0];
+    let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
+    console.log('mouseCursor', menuPosition);
+    this.contextMenuService.open(menuPosition, [
       (this.isLocked
         ? {
           name: '固定解除', action: () => {
@@ -143,7 +143,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
           SoundEffect.play(PresetSound.delete);
         }
       },
-      { name: 'オブジェクト作成', action: null, subActions: this.getContextMenuSubActions(objectPotison) }
+      { name: 'オブジェクト作成', action: null, subActions: this.getContextMenuSubActions(objectPosition) }
     ], this.name);
   }
 
@@ -170,11 +170,11 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     component.tabletopObject = gameObject;
   }
 
-  private getContextMenuSubActions(potison: PointerCoordinate): ContextMenuAction[] {
+  private getContextMenuSubActions(position: PointerCoordinate): ContextMenuAction[] {
     return [
       {
         name: 'キャラクターを作成', action: () => {
-          let character = this.tabletopService.createGameCharacter(potison);
+          let character = this.tabletopService.createGameCharacter(position);
 
           EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: character.identifier, className: character.aliasName });
           let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
@@ -186,25 +186,25 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       {
         name: 'マップマスクを作成', action: () => {
-          this.tabletopService.createGameTableMask(potison);
+          this.tabletopService.createGameTableMask(position);
           SoundEffect.play(PresetSound.put);
         }
       },
       {
         name: '地形を作成', action: () => {
-          this.tabletopService.createTerrain(potison);
+          this.tabletopService.createTerrain(position);
           SoundEffect.play(PresetSound.lock);
         }
       },
       {
         name: '共有メモを作成', action: () => {
-          this.tabletopService.createTextNote(potison);
+          this.tabletopService.createTextNote(position);
           SoundEffect.play(PresetSound.put);
         }
       },
       {
         name: 'トランプの山札を作成', action: () => {
-          this.tabletopService.createTrump(potison);
+          this.tabletopService.createTrump(position);
           SoundEffect.play(PresetSound.cardPut);
         }
       },
@@ -212,43 +212,43 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
         name: 'ダイスを作成', action: null, subActions: [
           {
             name: 'D4', action: () => {
-              this.tabletopService.createDiceSymbol(potison, 'D4', DiceType.D4, '4_dice');
+              this.tabletopService.createDiceSymbol(position, 'D4', DiceType.D4, '4_dice');
               SoundEffect.play(PresetSound.put);
             }
           },
           {
             name: 'D6', action: () => {
-              this.tabletopService.createDiceSymbol(potison, 'D6', DiceType.D6, '6_dice');
+              this.tabletopService.createDiceSymbol(position, 'D6', DiceType.D6, '6_dice');
               SoundEffect.play(PresetSound.put);
             }
           },
           {
             name: 'D8', action: () => {
-              this.tabletopService.createDiceSymbol(potison, 'D8', DiceType.D8, '8_dice');
+              this.tabletopService.createDiceSymbol(position, 'D8', DiceType.D8, '8_dice');
               SoundEffect.play(PresetSound.put);
             }
           },
           {
             name: 'D10', action: () => {
-              this.tabletopService.createDiceSymbol(potison, 'D10', DiceType.D10, '10_dice');
+              this.tabletopService.createDiceSymbol(position, 'D10', DiceType.D10, '10_dice');
               SoundEffect.play(PresetSound.put);
             }
           },
           {
             name: 'D10 (00-90)', action: () => {
-              this.tabletopService.createDiceSymbol(potison, 'D10', DiceType.D10_10TIMES, '100_dice');
+              this.tabletopService.createDiceSymbol(position, 'D10', DiceType.D10_10TIMES, '100_dice');
               SoundEffect.play(PresetSound.put);
             }
           },
           {
             name: 'D12', action: () => {
-              this.tabletopService.createDiceSymbol(potison, 'D12', DiceType.D12, '12_dice');
+              this.tabletopService.createDiceSymbol(position, 'D12', DiceType.D12, '12_dice');
               SoundEffect.play(PresetSound.put);
             }
           },
           {
             name: 'D20', action: () => {
-              this.tabletopService.createDiceSymbol(potison, 'D20', DiceType.D20, '20_dice');
+              this.tabletopService.createDiceSymbol(position, 'D20', DiceType.D20, '20_dice');
               SoundEffect.play(PresetSound.put);
             }
           }

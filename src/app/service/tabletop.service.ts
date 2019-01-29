@@ -174,28 +174,28 @@ export class TabletopService {
     return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
   }
 
-  createGameCharacter(potison: PointerCoordinate): GameCharacter {
+  createGameCharacter(position: PointerCoordinate): GameCharacter {
     let character = GameCharacter.createGameCharacter('新しいキャラクター', 1, '');
-    character.location.x = potison.x - 25;
-    character.location.y = potison.y - 25;
-    character.posZ = potison.z;
+    character.location.x = position.x - 25;
+    character.location.y = position.y - 25;
+    character.posZ = position.z;
     return character;
   }
 
-  createGameTableMask(potison: PointerCoordinate): GameTableMask {
+  createGameTableMask(position: PointerCoordinate): GameTableMask {
     let viewTable = this.tableSelecter.viewTable;
     if (!viewTable) return;
 
     let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
-    tableMask.location.x = potison.x - 25;
-    tableMask.location.y = potison.y - 25;
-    tableMask.posZ = potison.z;
+    tableMask.location.x = position.x - 25;
+    tableMask.location.y = position.y - 25;
+    tableMask.posZ = position.z;
 
     viewTable.appendChild(tableMask);
     return tableMask;
   }
 
-  createTerrain(potison: PointerCoordinate): Terrain {
+  createTerrain(position: PointerCoordinate): Terrain {
     let url: string = './assets/images/tex.jpg';
     let image: ImageFile = ImageStorage.instance.get(url)
     if (!image) image = ImageStorage.instance.add(url);
@@ -204,23 +204,23 @@ export class TabletopService {
     if (!viewTable) return;
 
     let terrain = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
-    terrain.location.x = potison.x - 50;
-    terrain.location.y = potison.y - 50;
-    terrain.posZ = potison.z;
+    terrain.location.x = position.x - 50;
+    terrain.location.y = position.y - 50;
+    terrain.posZ = position.z;
 
     viewTable.appendChild(terrain);
     return terrain;
   }
 
-  createTextNote(potison: PointerCoordinate): TextNote {
+  createTextNote(position: PointerCoordinate): TextNote {
     let textNote = TextNote.create('共有メモ', 'テキストを入力してください', 5, 4, 3);
-    textNote.location.x = potison.x;
-    textNote.location.y = potison.y;
-    textNote.posZ = potison.z;
+    textNote.location.x = position.x;
+    textNote.location.y = position.y;
+    textNote.posZ = position.z;
     return textNote;
   }
 
-  createDiceSymbol(potison: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string): DiceSymbol {
+  createDiceSymbol(position: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string): DiceSymbol {
     console.log('createDiceSymbol');
     let diceSymbol = DiceSymbol.create(name, diceType, 1);
     let image: ImageFile = null;
@@ -232,17 +232,17 @@ export class TabletopService {
       diceSymbol.imageDataElement.getFirstElementByName(face).value = image.identifier;
     });
 
-    diceSymbol.location.x = potison.x - 25;
-    diceSymbol.location.y = potison.y - 25;
-    diceSymbol.posZ = potison.z;
+    diceSymbol.location.x = position.x - 25;
+    diceSymbol.location.y = position.y - 25;
+    diceSymbol.posZ = position.z;
     return diceSymbol;
   }
 
-  createTrump(potison: PointerCoordinate): CardStack {
+  createTrump(position: PointerCoordinate): CardStack {
     let cardStack = CardStack.create('トランプ山札');
-    cardStack.location.x = potison.x - 25;
-    cardStack.location.y = potison.y - 25;
-    cardStack.posZ = potison.z;
+    cardStack.location.x = position.x - 25;
+    cardStack.location.y = position.y - 25;
+    cardStack.posZ = position.z;
 
     let back: string = './assets/images/trump/z02.gif';
     if (!ImageStorage.instance.get(back)) {

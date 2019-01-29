@@ -103,9 +103,9 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
-    let potison = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', potison);
-    this.contextMenuService.open(potison, [
+    let position = this.pointerDeviceService.pointers[0];
+    console.log('mouseCursor', position);
+    this.contextMenuService.open(position, [
       { name: '詳細を表示', action: () => { this.showDetail(this.gameCharacter); } },
       { name: 'チャットパレットを表示', action: () => { this.showChatPalette(this.gameCharacter) } },
       {

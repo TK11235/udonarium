@@ -126,9 +126,9 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
-    let potison = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', potison);
-    this.contextMenuService.open(potison, [
+    let position = this.pointerDeviceService.pointers[0];
+    console.log('mouseCursor', position);
+    this.contextMenuService.open(position, [
       { name: 'メモを編集', action: () => { this.showDetail(this.textNote); } },
       {
         name: 'コピーを作る', action: () => {
