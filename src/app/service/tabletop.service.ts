@@ -6,7 +6,7 @@ import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
-import { DiceSymbol } from '@udonarium/dice-symbol';
+import { DiceSymbol, DiceType } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
 import { GameTable } from '@udonarium/game-table';
 import { GameTableMask } from '@udonarium/game-table-mask';
@@ -172,6 +172,107 @@ export class TabletopService {
       coordinate = PointerDeviceService.convertLocalToLocal(coordinate, target, this.dragAreaElement);
     }
     return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
+  }
+
+  createGameCharacter(potison: PointerCoordinate): GameCharacter {
+    let character = GameCharacter.createGameCharacter('新しいキャラクター', 1, '');
+    character.location.x = potison.x - 25;
+    character.location.y = potison.y - 25;
+    character.posZ = potison.z;
+    return character;
+  }
+
+  createGameTableMask(potison: PointerCoordinate): GameTableMask {
+    let viewTable = this.tableSelecter.viewTable;
+    if (!viewTable) return;
+
+    let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
+    tableMask.location.x = potison.x - 25;
+    tableMask.location.y = potison.y - 25;
+    tableMask.posZ = potison.z;
+
+    viewTable.appendChild(tableMask);
+    return tableMask;
+  }
+
+  createTerrain(potison: PointerCoordinate): Terrain {
+    let url: string = './assets/images/tex.jpg';
+    let image: ImageFile = ImageStorage.instance.get(url)
+    if (!image) image = ImageStorage.instance.add(url);
+
+    let viewTable = this.tableSelecter.viewTable;
+    if (!viewTable) return;
+
+    let terrain = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
+    terrain.location.x = potison.x - 50;
+    terrain.location.y = potison.y - 50;
+    terrain.posZ = potison.z;
+
+    viewTable.appendChild(terrain);
+    return terrain;
+  }
+
+  createTextNote(potison: PointerCoordinate): TextNote {
+    let textNote = TextNote.create('共有メモ', 'テキストを入力してください', 5, 4, 3);
+    textNote.location.x = potison.x;
+    textNote.location.y = potison.y;
+    textNote.posZ = potison.z;
+    return textNote;
+  }
+
+  createDiceSymbol(potison: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string): DiceSymbol {
+    console.log('createDiceSymbol');
+    let diceSymbol = DiceSymbol.create(name, diceType, 1);
+    let image: ImageFile = null;
+
+    diceSymbol.faces.forEach(face => {
+      let url: string = `./assets/images/dice/${imagePathPrefix}/${imagePathPrefix}[${face}].png`;
+      image = ImageStorage.instance.get(url)
+      if (!image) { image = ImageStorage.instance.add(url); }
+      diceSymbol.imageDataElement.getFirstElementByName(face).value = image.identifier;
+    });
+
+    diceSymbol.location.x = potison.x - 25;
+    diceSymbol.location.y = potison.y - 25;
+    diceSymbol.posZ = potison.z;
+    return diceSymbol;
+  }
+
+  createTrump(potison: PointerCoordinate): CardStack {
+    let cardStack = CardStack.create('トランプ山札');
+    cardStack.location.x = potison.x - 25;
+    cardStack.location.y = potison.y - 25;
+    cardStack.posZ = potison.z;
+
+    let back: string = './assets/images/trump/z02.gif';
+    if (!ImageStorage.instance.get(back)) {
+      ImageStorage.instance.add(back);
+    }
+
+    let names: string[] = ['c', 'd', 'h', 's'];
+
+    for (let name of names) {
+      for (let i = 1; i <= 13; i++) {
+        let trump: string = name + (('00' + i).slice(-2));
+        let url: string = './assets/images/trump/' + trump + '.gif';
+        if (!ImageStorage.instance.get(url)) {
+          ImageStorage.instance.add(url);
+        }
+        let card = Card.create('サンプルカード', url, back);
+        cardStack.putOnBottom(card);
+      }
+    }
+
+    for (let i = 1; i <= 2; i++) {
+      let trump: string = 'x' + (('00' + i).slice(-2));
+      let url: string = './assets/images/trump/' + trump + '.gif';
+      if (!ImageStorage.instance.get(url)) {
+        ImageStorage.instance.add(url);
+      }
+      let card = Card.create('サンプルカード', url, back);
+      cardStack.putOnBottom(card);
+    }
+    return cardStack;
   }
 
   makeDefaultTable() {

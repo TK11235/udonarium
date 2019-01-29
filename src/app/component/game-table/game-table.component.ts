@@ -21,7 +21,7 @@ import { GameTableSettingComponent } from 'component/game-table-setting/game-tab
 import { ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
 import { PanelOption, PanelService } from 'service/panel.service';
-import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
 
 @Component({
@@ -264,36 +264,38 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
 
     if (this.pointerDeviceService.isAllowedToOpenContextMenu) {
-      let potison = this.pointerDeviceService.pointers[0];
-      console.log('mouseCursor A', potison);
-      this.contextMenuService.open(potison, [
+      let menuPotison = this.pointerDeviceService.pointers[0];
+      let objectPotison = this.tabletopService.calcTabletopLocalCoordinate();
+      console.log('mouseCursor', menuPotison);
+      this.contextMenuService.open(menuPotison, [
         {
           name: 'キャラクターを作成', action: () => {
-            this.createGameCharacter(potison);
+            let character = this.tabletopService.createGameCharacter(objectPotison);
+            this.showDetail(character);
             SoundEffect.play(PresetSound.put);
           }
         },
         {
           name: 'マップマスクを作成', action: () => {
-            this.createGameTableMask(potison);
+            this.tabletopService.createGameTableMask(objectPotison);
             SoundEffect.play(PresetSound.put);
           }
         },
         {
           name: '地形を作成', action: () => {
-            this.createTerrain(potison);
+            this.tabletopService.createTerrain(objectPotison);
             SoundEffect.play(PresetSound.lock);
           }
         },
         {
           name: '共有メモを作成', action: () => {
-            this.createTextNote(potison);
+            this.tabletopService.createTextNote(objectPotison);
             SoundEffect.play(PresetSound.put);
           }
         },
         {
           name: 'トランプの山札を作成', action: () => {
-            this.createTrump(potison);
+            this.tabletopService.createTrump(objectPotison);
             SoundEffect.play(PresetSound.cardPut);
           }
         },
@@ -301,47 +303,46 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
           name: 'ダイスを作成', action: null, subActions: [
             {
               name: 'D4', action: () => {
-                this.createDiceSymbol(potison, 'D4', DiceType.D4, '4_dice');
+                this.tabletopService.createDiceSymbol(objectPotison, 'D4', DiceType.D4, '4_dice');
                 SoundEffect.play(PresetSound.put);
               }
             },
             {
               name: 'D6', action: () => {
-                this.createDiceSymbol(potison, 'D6', DiceType.D6, '6_dice');
+                this.tabletopService.createDiceSymbol(objectPotison, 'D6', DiceType.D6, '6_dice');
                 SoundEffect.play(PresetSound.put);
               }
             },
             {
               name: 'D8', action: () => {
-                this.createDiceSymbol(potison, 'D8', DiceType.D8, '8_dice');
+                this.tabletopService.createDiceSymbol(objectPotison, 'D8', DiceType.D8, '8_dice');
                 SoundEffect.play(PresetSound.put);
               }
             },
             {
               name: 'D10', action: () => {
-                this.createDiceSymbol(potison, 'D10', DiceType.D10, '10_dice');
+                this.tabletopService.createDiceSymbol(objectPotison, 'D10', DiceType.D10, '10_dice');
                 SoundEffect.play(PresetSound.put);
               }
             },
             {
               name: 'D10 (00-90)', action: () => {
-                this.createDiceSymbol(potison, 'D10', DiceType.D10_10TIMES, '100_dice');
+                this.tabletopService.createDiceSymbol(objectPotison, 'D10', DiceType.D10_10TIMES, '100_dice');
                 SoundEffect.play(PresetSound.put);
               }
             },
             {
               name: 'D12', action: () => {
-                this.createDiceSymbol(potison, 'D12', DiceType.D12, '12_dice');
+                this.tabletopService.createDiceSymbol(objectPotison, 'D12', DiceType.D12, '12_dice');
                 SoundEffect.play(PresetSound.put);
               }
             },
             {
               name: 'D20', action: () => {
-                this.createDiceSymbol(potison, 'D20', DiceType.D20, '20_dice');
+                this.tabletopService.createDiceSymbol(objectPotison, 'D20', DiceType.D20, '20_dice');
                 SoundEffect.play(PresetSound.put);
               }
             }
-
           ]
         },
         {
@@ -469,115 +470,5 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   trackByGameObject(index: number, gameObject: GameObject) {
     return gameObject.identifier;
-  }
-
-  private createGameCharacter(potison: PointerCoordinate) {
-    console.log('mouseCursor B', potison);
-    let gameObject = GameCharacter.createGameCharacter('新しいキャラクター', 1, '');
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    gameObject.location.x = pointer.x - 25;
-    gameObject.location.y = pointer.y - 25;
-    gameObject.update();
-    this.showDetail(gameObject);
-  }
-
-  private createGameTableMask(potison: PointerCoordinate) {
-    console.log('createGameTableMask A');
-    let viewTable = this.tableSelecter.viewTable;
-    if (!viewTable) return;
-
-    let tableMask = GameTableMask.create('マップマスク', 5, 5, 100);
-    viewTable.appendChild(tableMask);
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    console.log('createGameTableMask B', pointer);
-    tableMask.location.x = pointer.x - 25;
-    tableMask.location.y = pointer.y - 25;
-    tableMask.update();
-  }
-
-  private createTerrain(potison: PointerCoordinate) {
-    console.log('createTerrain');
-
-    let url: string = './assets/images/tex.jpg';
-    let image: ImageFile = ImageStorage.instance.get(url)
-    if (!image) image = ImageStorage.instance.add(url);
-
-    let viewTable = this.tableSelecter.viewTable;
-    if (!viewTable) return;
-
-    let terrain = Terrain.create('地形', 2, 2, 2, image.identifier, image.identifier);
-    viewTable.appendChild(terrain);
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    terrain.location.x = pointer.x - 50;
-    terrain.location.y = pointer.y - 50;
-    terrain.update();
-  }
-
-  private createTextNote(potison: PointerCoordinate) {
-    console.log('createTextNote');
-    let textNote = TextNote.create('共有メモ', 'テキストを入力してください', 5, 4, 3);
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    textNote.location.x = pointer.x;
-    textNote.location.y = pointer.y;
-    textNote.update();
-  }
-
-  private createDiceSymbol(potison: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string) {
-    console.log('createDiceSymbol');
-    let diceSymbol = DiceSymbol.create(name, diceType, 1);
-    let image: ImageFile = null;
-
-    diceSymbol.faces.forEach(face => {
-      let url: string = `./assets/images/dice/${imagePathPrefix}/${imagePathPrefix}[${face}].png`;
-      image = ImageStorage.instance.get(url)
-      if (!image) { image = ImageStorage.instance.add(url); }
-      diceSymbol.imageDataElement.getFirstElementByName(face).value = image.identifier;
-    });
-
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    diceSymbol.location.x = pointer.x - 25;
-    diceSymbol.location.y = pointer.y - 25;
-    diceSymbol.update();
-  }
-
-  private createTrump(potison: PointerCoordinate) {
-    let pointer = PointerDeviceService.convertToLocal(potison, this.gameObjects.nativeElement);
-    let cardStack = CardStack.create('トランプ山札');
-    cardStack.location.x = pointer.x - 25;
-    cardStack.location.y = pointer.y - 25;
-    cardStack.update();
-
-    let back: string = './assets/images/trump/z02.gif';
-    if (!ImageStorage.instance.get(back)) {
-      ImageStorage.instance.add(back);
-    }
-
-    let names: string[] = ['c', 'd', 'h', 's'];
-
-    for (let name of names) {
-      for (let i = 1; i <= 13; i++) {
-        let trump: string = name + (('00' + i).slice(-2));
-        let url: string = './assets/images/trump/' + trump + '.gif';
-        if (!ImageStorage.instance.get(url)) {
-          ImageStorage.instance.add(url);
-        }
-        let card = Card.create('サンプルカード', url, back);
-        cardStack.putOnBottom(card);
-
-      }
-    }
-
-    for (let i = 1; i <= 2; i++) {
-      let trump: string = 'x' + (('00' + i).slice(-2));
-      let url: string = './assets/images/trump/' + trump + '.gif';
-      if (!ImageStorage.instance.get(url)) {
-        ImageStorage.instance.add(url);
-      }
-      let card = Card.create('サンプルカード', url, back);
-      cardStack.putOnBottom(card);
-    }
   }
 }
