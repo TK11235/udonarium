@@ -284,13 +284,13 @@ export class TabletopService {
     let bgFileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
     bgFileContext.url = './assets/images/BG10a_80.jpg';
     testBgFile = ImageStorage.instance.add(bgFileContext);
-    let testDistanceFile: ImageFile = null;
-    let distanceFileContext = ImageFile.createEmpty('testTableDistanceviewImage_image').toContext();
-    distanceFileContext.url = './assets/images/BG00a1_80.jpg';
-    testDistanceFile = ImageStorage.instance.add(distanceFileContext);
+    //let testDistanceFile: ImageFile = null;
+    //let distanceFileContext = ImageFile.createEmpty('testTableDistanceviewImage_image').toContext();
+    //distanceFileContext.url = './assets/images/BG00a1_80.jpg';
+    //testDistanceFile = ImageStorage.instance.add(distanceFileContext);
     gameTable.name = '最初のテーブル';
     gameTable.imageIdentifier = testBgFile.identifier;
-    gameTable.backgroundImageIdentifier = testDistanceFile.identifier;
+    //gameTable.backgroundImageIdentifier = testDistanceFile.identifier;
     gameTable.width = 20;
     gameTable.height = 15;
     gameTable.initialize();
