@@ -16,9 +16,9 @@ export class Jukebox extends GameObject {
 
   private audioPlayer: AudioPlayer = new AudioPlayer();
 
-  // override
-  destroy() {
-    super.destroy();
+  // GameObject Lifecycle
+  onStoreRemoved() {
+    super.onStoreRemoved();
     this._stop();
   }
 

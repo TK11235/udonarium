@@ -1,4 +1,3 @@
-import { EventSystem } from '../system';
 import { ObjectFactory } from './object-factory';
 import { ObjectSerializer } from './object-serializer';
 import { ObjectStore } from './object-store';
@@ -30,18 +29,22 @@ export class GameObject {
     this.context.identifier = identifier;
   }
 
-  initialize(needUpdate: boolean = true) {
+  initialize() {
     ObjectStore.instance.add(this);
-    if (needUpdate) this.update(false);
   }
 
   destroy() {
-    EventSystem.unregister(this);
     ObjectStore.instance.delete(this);
   }
 
-  update(needVersionUp: boolean = true) {
-    if (needVersionUp) this.versionUp();
+  // GameObject Lifecycle
+  onStoreAdded() { }
+
+  // GameObject Lifecycle
+  onStoreRemoved() { }
+
+  update() {
+    this.versionUp();
     ObjectStore.instance.update(this.identifier);
   }
 

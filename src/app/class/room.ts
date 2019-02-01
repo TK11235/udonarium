@@ -13,8 +13,11 @@ import { TextNote } from './text-note';
 
 @SyncObject('room')
 export class Room extends GameObject implements InnerXml {
-  // override
-  initialize(needUpdate: boolean = true) { }
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    ObjectStore.instance.remove(this); // ObjectStoreには登録しない
+  }
 
   innerXml(): string {
     let xml = '';

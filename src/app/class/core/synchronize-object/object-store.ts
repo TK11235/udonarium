@@ -26,14 +26,17 @@ export class ObjectStore {
 
   private constructor() { console.log('ObjectStore ready...'); };
 
-  add(object: GameObject) {
-    if (this.identifierHash[object.identifier] != null) return;
+  add(object: GameObject, shouldBroadcast: boolean = true): GameObject {
+    if (this.get(object.identifier) != null || this.isDeleted(object.identifier)) return null;
     this.identifierHash[object.identifier] = object;
     let objects = this._getObjects(object.aliasName);
     objects.push(object);
+    object.onStoreAdded();
+    if (shouldBroadcast) this.update(object.toContext());
+    return object;
   }
 
-  remove(object: GameObject, shouldUnregister: boolean = true): GameObject {
+  remove(object: GameObject): GameObject {
     if (!this.identifierHash[object.identifier]) return null;
 
     let objects = this._getObjects(object.aliasName);
@@ -41,8 +44,7 @@ export class ObjectStore {
     if (-1 < index) objects.splice(index, 1);
     delete this.identifierHash[object.identifier];
 
-    if (shouldUnregister) EventSystem.unregister(object);
-
+    object.onStoreRemoved();
     return object;
   }
 

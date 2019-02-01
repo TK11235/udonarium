@@ -17,8 +17,9 @@ export class PeerCursor extends GameObject {
   get isMine(): boolean { return (PeerCursor.myCursor && PeerCursor.myCursor === this); }
   get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
     if (!this.isMine) {
       EventSystem.register(this)
         .on('CLOSE_OTHER_PEER', -1000, event => {
@@ -29,9 +30,11 @@ export class PeerCursor extends GameObject {
     }
   }
 
-  destroy() {
+  // GameObject Lifecycle
+  onStoreRemoved() {
+    super.onStoreRemoved();
+    EventSystem.unregister(this);
     delete PeerCursor.hash[this.peerId];
-    super.destroy();
   }
 
   static find(peerId): PeerCursor {

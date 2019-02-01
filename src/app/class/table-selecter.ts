@@ -10,8 +10,9 @@ export class TableSelecter extends GameObject {
   gridShow: boolean = false; // true=常時グリッド表示
   gridSnap: boolean = true;
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
     EventSystem.register(this)
       .on('SELECT_GAME_TABLE', 0, event => {
         console.log('SELECT_GAME_TABLE ' + this.identifier);
@@ -20,6 +21,12 @@ export class TableSelecter extends GameObject {
         this.viewTableIdentifier = event.data.identifier;
         if (this.viewTable) this.viewTable.selected = true;
       });
+  }
+
+  // GameObject Lifecycle
+  onStoreRemoved() {
+    super.onStoreRemoved();
+    EventSystem.unregister(this);
   }
 
   get viewTable(): GameTable {

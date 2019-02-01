@@ -38,17 +38,24 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   private static unknownNodes: { [identifier: string]: ObjectNode[] } = {};
   private needsSort: boolean = true;
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
-    this.initializeChildren();
-  }
-
+  // override
   destroy() {
-    if (this.parent) this.parent.removeChild(this);
     super.destroy();
     for (let child of this.children) {
       child.destroy();
     }
+  }
+
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    this.initializeChildren();
+  }
+
+  // GameObject Lifecycle
+  onStoreRemoved() {
+    super.onStoreRemoved();
+    if (this.parent) this.parent.removeChild(this);
   }
 
   private initializeChildren() {

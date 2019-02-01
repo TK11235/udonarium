@@ -9,8 +9,9 @@ export class ChatTab extends ObjectNode implements InnerXml {
   @SyncVar() name: string = 'タブ';
   get chatMessages(): ChatMessage[] { return <ChatMessage[]>this.children; }
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
     EventSystem.register(this)
       .on<ChatMessageContext>('BROADCAST_MESSAGE', 200, event => {
         if (!event.isSendFromSelf) return;
@@ -32,6 +33,12 @@ export class ChatTab extends ObjectNode implements InnerXml {
 
         event.data.identifier = chat.identifier;
       });
+  }
+
+  // GameObject Lifecycle
+  onStoreRemoved() {
+    super.onStoreRemoved();
+    EventSystem.unregister(this);
   }
 
   addMessage(message: ChatMessageContext) {

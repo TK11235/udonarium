@@ -86,7 +86,7 @@ export class ObjectSynchronizer {
       return;
     }
     newObject.apply(context);
-    newObject.initialize(false);
+    ObjectStore.instance.add(newObject, false);
   }
 
   private sendCatalog(sendTo: string) {

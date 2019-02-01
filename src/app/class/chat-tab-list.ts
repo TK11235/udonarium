@@ -7,8 +7,11 @@ import { ObjectStore } from './core/synchronize-object/object-store';
 
 @SyncObject('chat-tab-list')
 export class ChatTabList extends ObjectNode implements InnerXml {
-  // override
-  initialize(needUpdate: boolean = true) { }
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    ObjectStore.instance.remove(this); // ObjectStoreには登録しない
+  }
 
   innerXml(): string {
     let xml = '';
