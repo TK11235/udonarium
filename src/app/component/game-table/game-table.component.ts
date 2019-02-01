@@ -18,7 +18,7 @@ import { TextNote } from '@udonarium/text-note';
 
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
-import { ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
@@ -345,6 +345,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           ]
         },
+        ContextMenuSeparator,
         {
           name: 'テーブル設定', action: () => {
             this.modalService.open(GameTableSettingComponent);

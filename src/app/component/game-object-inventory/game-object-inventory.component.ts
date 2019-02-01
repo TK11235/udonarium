@@ -11,7 +11,7 @@ import { TabletopObject } from '@udonarium/tabletop-object';
 
 import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
-import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
@@ -124,19 +124,13 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
     actions.push({ name: '詳細を表示', action: () => { this.showDetail(gameObject); } });
     actions.push({ name: 'チャットパレットを表示', action: () => { this.showChatPalette(gameObject) } });
-    actions.push({
-      name: 'コピーを作る', action: () => {
-        this.cloneGameObject(gameObject);
-        SoundEffect.play(PresetSound.put);
-      }
-    });
+    actions.push(ContextMenuSeparator);
     let locations = [
       { name: 'table', alias: 'テーブルに移動' },
       { name: 'common', alias: '共有イベントリに移動' },
       { name: Network.peerId, alias: '個人イベントリに移動' },
       { name: 'graveyard', alias: '墓場に移動' }
     ];
-
     for (let location of locations) {
       if (gameObject.location.name === location.name) continue;
       actions.push({
@@ -155,6 +149,13 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
         }
       });
     }
+    actions.push(ContextMenuSeparator);
+    actions.push({
+      name: 'コピーを作る', action: () => {
+        this.cloneGameObject(gameObject);
+        SoundEffect.play(PresetSound.put);
+      }
+    });
 
     this.contextMenuService.open(position, actions, gameObject.name);
   }

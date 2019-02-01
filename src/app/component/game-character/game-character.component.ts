@@ -10,7 +10,7 @@ import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.compon
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -108,16 +108,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     this.contextMenuService.open(position, [
       { name: '詳細を表示', action: () => { this.showDetail(this.gameCharacter); } },
       { name: 'チャットパレットを表示', action: () => { this.showChatPalette(this.gameCharacter) } },
-      {
-        name: 'コピーを作る', action: () => {
-          let cloneObject = this.gameCharacter.clone();
-          console.log('コピー', cloneObject);
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.update();
-          SoundEffect.play(PresetSound.put);
-        }
-      },
+      ContextMenuSeparator,
       {
         name: '共有イベントリに移動', action: () => {
           this.gameCharacter.setLocation('common');
@@ -135,7 +126,18 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
           this.gameCharacter.setLocation('graveyard');
           SoundEffect.play(PresetSound.delete);
         }
-      }
+      },
+      ContextMenuSeparator,
+      {
+        name: 'コピーを作る', action: () => {
+          let cloneObject = this.gameCharacter.clone();
+          console.log('コピー', cloneObject);
+          cloneObject.location.x += this.gridSize;
+          cloneObject.location.y += this.gridSize;
+          cloneObject.update();
+          SoundEffect.play(PresetSound.put);
+        }
+      },
     ], this.name);
   }
 

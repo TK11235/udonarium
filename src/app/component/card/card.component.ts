@@ -20,7 +20,7 @@ import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -229,12 +229,14 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
             this.owner = Network.peerId;
           }
         }),
+      ContextMenuSeparator,
       {
         name: '重なったカードで山札を作る', action: () => {
           this.createStack();
           SoundEffect.play(PresetSound.cardPut);
         }
       },
+      ContextMenuSeparator,
       { name: 'カードを編集', action: () => { this.showDetail(this.card); } },
       {
         name: 'コピーを作る', action: () => {

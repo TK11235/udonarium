@@ -9,7 +9,7 @@ import { TabletopObject } from '@udonarium/tabletop-object';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -161,7 +161,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
         }
       });
     }
-
+    actions.push(ContextMenuSeparator);
     if (this.isMine || this.hasOwner) {
       actions.push({
         name: 'ダイスを公開', action: () => {
@@ -191,6 +191,8 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       });
       actions.push({ name: `ダイス目を設定`, action: null, subActions: subActions });
     }
+
+    actions.push(ContextMenuSeparator);
 
     actions.push({ name: '詳細を表示', action: () => { this.showDetail(this.diceSymbol); } });
     actions.push({

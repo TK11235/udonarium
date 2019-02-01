@@ -11,7 +11,7 @@ import { CardStackListComponent } from 'component/card-stack-list/card-stack-lis
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -210,6 +210,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       },
+      ContextMenuSeparator,
       {
         name: '一番上を表にする', action: () => {
           this.cardStack.faceUp();
@@ -222,6 +223,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
+      ContextMenuSeparator,
       {
         name: 'すべて表にする', action: () => {
           this.cardStack.faceUpAll();
@@ -240,6 +242,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
+      ContextMenuSeparator,
       {
         name: 'シャッフル', action: () => {
           this.cardStack.shuffle();
@@ -247,12 +250,14 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
         }
       },
+      { name: 'カード一覧', action: () => { this.showStackList(this.cardStack); } },
+      ContextMenuSeparator,
       (this.isShowTotal
         ? { name: '枚数を非表示にする', action: () => { this.cardStack.isShowTotal = false; } }
         : { name: '枚数を表示する', action: () => { this.cardStack.isShowTotal = true; } }
       ),
-      { name: 'カード一覧', action: () => { this.showStackList(this.cardStack); } },
       { name: 'カードサイズを揃える', action: () => { if (this.cardStack.topCard) this.cardStack.unifyCardsSize(this.cardStack.topCard.size); } },
+      ContextMenuSeparator,
       {
         name: '山札を人数分に分割する', action: () => {
           this.splitStack(Network.peerIds.length);
@@ -265,6 +270,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           SoundEffect.play(PresetSound.cardShuffle);
         }
       },
+      ContextMenuSeparator,
       { name: '詳細を表示', action: () => { this.showDetail(this.cardStack); } },
       {
         name: 'コピーを作る', action: () => {

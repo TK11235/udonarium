@@ -8,7 +8,7 @@ import { Terrain, TerrainViewState } from '@udonarium/terrain';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
@@ -125,6 +125,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
             this.mode = TerrainViewState.ALL;
           }
         }),
+      ContextMenuSeparator,
       { name: '地形設定を編集', action: () => { this.showDetail(this.terrain); } },
       {
         name: 'コピーを作る', action: () => {
@@ -143,6 +144,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
           SoundEffect.play(PresetSound.delete);
         }
       },
+      ContextMenuSeparator,
       { name: 'オブジェクト作成', action: null, subActions: this.getContextMenuSubActions(objectPosition) }
     ], this.name);
   }

@@ -8,7 +8,7 @@ import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
-import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
@@ -98,6 +98,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
           }
         }
       ),
+      ContextMenuSeparator,
       { name: 'マップマスクを編集', action: () => { this.showDetail(this.gameTableMask); } },
       {
         name: 'コピーを作る', action: () => {
@@ -116,6 +117,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
           SoundEffect.play(PresetSound.delete);
         }
       },
+      ContextMenuSeparator,
       { name: 'オブジェクト作成', action: null, subActions: this.getContextMenuSubActions(objectPosition) }
     ], this.name);
   }
