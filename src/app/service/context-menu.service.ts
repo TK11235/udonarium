@@ -4,9 +4,23 @@ interface ContextMenuPoint {
   x: number,
   y: number
 }
+
+export enum ContextMenuType {
+  ACTION = 'action',
+  SEPARATOR = 'separator',
+}
+
+export const ContextMenuSeparator: ContextMenuAction = {
+  name: '',
+  enabled: true,
+  type: ContextMenuType.SEPARATOR
+}
+
 export interface ContextMenuAction {
   name: string,
-  action: Function,
+  action?: Function,
+  enabled?: boolean,
+  type?: ContextMenuType,
   subActions?: ContextMenuAction[]
 }
 
