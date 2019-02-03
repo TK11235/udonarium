@@ -1,7 +1,7 @@
-<div class="draggable-panel is-max-limit" #root [style.left.px]="left" [style.top.px]="top" (mouseleave)="hideSubMenu()">
-  <div *ngIf="0 < contextMenuService.title.length" class="title">{{contextMenuService.title}}</div>
+<div class="draggable-panel" [ngClass]="{'submenu-panel': isSubmenu, 'is-max-limit': !isSubmenu}" (mouseleave)="hideSubMenu()" #root>
+  <div *ngIf="0 < title.length" class="title">{{title}}</div>
   <ul>
-    <ng-container *ngFor="let action of contextMenuService.actions">
+    <ng-container *ngFor="let action of actions">
       <ng-container *ngTemplateOutlet="action?.type === 'separator' ? separator : actionMenu; context: { action: action }"></ng-container>
     </ng-container>
   </ul>
@@ -12,7 +12,7 @@
     <div *ngIf="action.subActions" class="sub-menu-arrow">
       <i class="material-icons" style="font-size: 1em; vertical-align: bottom;">arrow_forward_ios</i>
     </div>
-    <context-sub-menu *ngIf="subMenu && parentMenu === action" [title]="action.name" [subActions]="subMenu"></context-sub-menu>
+    <context-menu *ngIf="subMenu && parentMenu === action" [title]="action.name" [actions]="subMenu" [isSubmenu]="true"></context-menu>
   </li>
 </ng-template>
 <ng-template #separator let-action="action">

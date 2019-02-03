@@ -8,15 +8,12 @@ import { ContextMenuAction, ContextMenuService } from 'service/context-menu.serv
   styleUrls: ['./context-menu.component.css']
 })
 export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root') panelElementRef: ElementRef;
+  @ViewChild('root') rootElementRef: ElementRef;
 
-  @Input() set left(left: number) { this.contextMenuService.position.x = left; }
-  @Input() set top(top: number) { this.contextMenuService.position.y = top; }
+  @Input() title: string = '';
+  @Input() actions: ContextMenuAction[] = [];
 
-  get left() { return this.contextMenuService.position.x; }
-  get top() { return this.contextMenuService.position.y; }
-
-  private $panelElement: JQuery;
+  @Input() isSubmenu: boolean = false;
 
   parentMenu: ContextMenuAction;
   subMenu: ContextMenuAction[];
@@ -24,28 +21,36 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   showSubMenuTimer: NodeJS.Timer;
   hideSubMenuTimer: NodeJS.Timer;
 
+  private callbackOnOutsideClick = (e) => this.onOutsideClick(e);
+
   constructor(
+    private elementRef: ElementRef,
     public contextMenuService: ContextMenuService
   ) { }
 
   ngOnInit() {
-
+    if (!this.isSubmenu) {
+      this.title = this.contextMenuService.title;
+      this.actions = this.contextMenuService.actions;
+    }
   }
 
   ngAfterViewInit() {
-    this.$panelElement = $(this.panelElementRef.nativeElement);
-
-    this.setForeground();
-    this.adjustPosition();
+    if (!this.isSubmenu) {
+      this.setForeground();
+      this.adjustPositionRoot();
+      document.addEventListener('mousedown', this.callbackOnOutsideClick, false);
+    } else {
+      this.adjustPositionSub();
+    }
   }
 
   ngOnDestroy() {
-
+    document.removeEventListener('mousedown', this.callbackOnOutsideClick, false);
   }
 
-  @HostListener('document:mousedown', ['$event'])
   onOutsideClick(event) {
-    if (!$(event.target).closest(this.$panelElement).length) {
+    if (!$(event.target).closest($(this.rootElementRef.nativeElement)).length) {
       this.close();
     }
   }
@@ -69,11 +74,13 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     $stacks.each(function () {
       $(this).css('zIndex', parseInt($(this).css('zIndex')) - bottomZindex);
     });
-    this.$panelElement.css('zIndex', topZIndex + 1);
+    $(this.rootElementRef.nativeElement).css('zIndex', topZIndex + 1);
   }
 
-  private adjustPosition() {
-    let $panel = $(this.panelElementRef.nativeElement);
+  private adjustPositionRoot() {
+    let $panel = $(this.rootElementRef.nativeElement);
+
+    $panel.offset({ left: this.contextMenuService.position.x, top: this.contextMenuService.position.y });
 
     let offsetLeft = $panel.offset().left;
     let offsetTop = $panel.offset().top;
@@ -93,11 +100,31 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     $panel.offset({ left: offsetLeft, top: offsetTop });
+  }
 
-    setTimeout(() => {
-      this.left = offsetLeft;
-      this.top = offsetTop;
-    }, 0);
+  private adjustPositionSub() {
+    console.log('adjustPosition subMenu');
+    let $parent = $(this.elementRef.nativeElement.parentElement);
+    let $submenu = $(this.rootElementRef.nativeElement);
+    let offsetLeft = $submenu.offset().left;
+    let offsetTop = $submenu.offset().top;
+
+    if (window.innerWidth < offsetLeft + $submenu.outerWidth()) {
+      offsetLeft -= (offsetLeft + $submenu.outerWidth()) - $parent.offset().left;
+      offsetLeft += 8;
+    }
+    if (window.innerHeight < offsetTop + $submenu.outerHeight()) {
+      offsetTop -= (offsetTop + $submenu.outerHeight()) - window.innerHeight;
+    }
+
+    if (offsetLeft < 0) {
+      offsetLeft = 0;
+    }
+    if (offsetTop < 0) {
+      offsetTop = 0;
+    }
+
+    $submenu.offset({ left: offsetLeft, top: offsetTop });
   }
 
   doAction(action: ContextMenuAction) {
