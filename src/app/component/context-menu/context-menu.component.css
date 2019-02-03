@@ -20,7 +20,7 @@
   position: absolute;
   z-index: 1;
   left: calc(100% - 4px);
-  top: 4px;
+  top: -16px;
 }
 .is-max-limit {
   max-height: 100%;
