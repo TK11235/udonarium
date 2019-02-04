@@ -82,7 +82,7 @@ export class ObjectSynchronizer {
   private createObject(context: ObjectContext) {
     let newObject: GameObject = ObjectFactory.instance.create(context.aliasName, context.identifier);
     if (!newObject) {
-      console.log(context.aliasName + ' is Unknown...?', context);
+      console.warn(context.aliasName + ' is Unknown...?', context);
       return;
     }
     newObject.apply(context);
