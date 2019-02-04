@@ -94,6 +94,10 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
           this.needUpdate = true;
           this.maxMessages += 1;
         }
+      })
+      .on('MESSAGE_ADDED', event => {
+        let tabIdentifier: string = event.data.tabIdentifier;
+        if (this.chatTab.identifier === tabIdentifier) this.chatTab.markForRead();
       });
   }
 

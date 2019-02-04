@@ -94,6 +94,7 @@
 
 .chat-tab label {
   display: inline-block;
+  position: relative;
 }
 
 .chat-tab input[type="radio"] {
@@ -123,6 +124,12 @@
 .chat-tab input[type="radio"]:checked + div {
   background: #555;
   color: #CCC;
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: 0;
 }
 
 .tab-setting {
