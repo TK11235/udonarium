@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { BadgeComponent } from 'component/badge/badge.component';
 import { CardStackListComponent } from 'component/card-stack-list/card-stack-list.component';
 import { CardStackComponent } from 'component/card-stack/card-stack.component';
 import { CardComponent } from 'component/card/card.component';
@@ -57,6 +58,7 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [
     AppComponent,
+    BadgeComponent,
     CardComponent,
     CardStackComponent,
     CardStackListComponent,
