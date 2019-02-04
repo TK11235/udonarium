@@ -1,15 +1,13 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { ChatMessageContext } from '@udonarium/chat-message';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { DiceSymbol } from '@udonarium/dice-symbol';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
-import { TabletopObject } from '@udonarium/tabletop-object';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
