@@ -9,6 +9,10 @@ export class ChatTab extends ObjectNode implements InnerXml {
   @SyncVar() name: string = 'タブ';
   get chatMessages(): ChatMessage[] { return <ChatMessage[]>this.children; }
 
+  private _unreadLength: number = 0;
+  get unreadLength(): number { return this._unreadLength; }
+  get hasUnread(): boolean { return 0 < this.unreadLength; }
+
   // GameObject Lifecycle
   onStoreAdded() {
     super.onStoreAdded();
@@ -41,9 +45,27 @@ export class ChatTab extends ObjectNode implements InnerXml {
     EventSystem.unregister(this);
   }
 
+  // ObjectNode Lifecycle
+  onChildAdded(child: ObjectNode) {
+    super.onChildAdded(child);
+    if (child.parent === this && child instanceof ChatMessage && child.isDisplayable) {
+      this._unreadLength++;
+      EventSystem.trigger('MESSAGE_ADDED', { tabIdentifier: this.identifier, messageIdentifier: child.identifier });
+    }
+  }
+
+  // ObjectNode Lifecycle
+  onChildRemoved(child: ObjectNode) {
+    super.onChildRemoved(child);
+  }
+
   addMessage(message: ChatMessageContext) {
     message.tabIdentifier = this.identifier;
     EventSystem.call('BROADCAST_MESSAGE', message);
+  }
+
+  markForRead() {
+    this._unreadLength = 0;
   }
 
   innerXml(): string {
