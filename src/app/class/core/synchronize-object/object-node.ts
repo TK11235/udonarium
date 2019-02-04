@@ -58,6 +58,30 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     if (this.parent) this.parent.removeChild(this);
   }
 
+  // ObjectNode Lifecycle
+  onChildAdded(child: ObjectNode) { }
+
+  // ObjectNode Lifecycle
+  onChildRemoved(child: ObjectNode) { }
+
+  private _onChildAdded(child: ObjectNode) {
+    let node: ObjectNode = this;
+    while (node) {
+      node.onChildAdded(child);
+      node = node.parent;
+      if (node === this) break;
+    }
+  }
+
+  private _onChildRemoved(child: ObjectNode) {
+    let node: ObjectNode = this;
+    while (node) {
+      node.onChildRemoved(child);
+      node = node.parent;
+      if (node === this) break;
+    }
+  }
+
   private initializeChildren() {
     if (ObjectNode.unknownNodes[this.identifier] == null) return;
     let objects = ObjectNode.unknownNodes[this.identifier];
@@ -76,10 +100,15 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
 
   private updateChildren(child: ObjectNode = this) {
     let index = this._children.indexOf(child);
+    let isAdded = false;
 
-    if (index < 0 && child.parent === this) this._children.push(child);
+    if (index < 0 && child.parent === this) {
+      this._children.push(child);
+      isAdded = true;
+    }
     if (0 <= index && child.parent !== this) {
       this._children.splice(index, 1);
+      this._onChildRemoved(child);
       return;
     }
 
@@ -88,8 +117,8 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     let prevIndex = index - 1 < 0 ? 0 : index - 1;
     let nextIndex = this._children.length - 1 < index + 1 ? this._children.length - 1 : index + 1;
 
-    if (this._children[prevIndex].index <= child.index && child.index <= this._children[nextIndex].index) return;
-    this.needsSort = true;
+    if (this._children[prevIndex].index > child.index || child.index > this._children[nextIndex].index) this.needsSort = true;
+    if (isAdded) this._onChildAdded(child);
   }
 
   private updateIndexs() {
@@ -113,7 +142,6 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
       child.parent.updateChildren(child);
     }
 
-    child.update();
     return child;
   }
 
@@ -134,7 +162,6 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
       child.parent.updateChildren(child);
     }
 
-    child.update();
     return child;
   }
 
@@ -152,7 +179,6 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     if (oldParent) {
       oldParent.updateChildren(child);
     }
-    child.update();
     return child;
   }
 
