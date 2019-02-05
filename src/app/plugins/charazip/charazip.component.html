@@ -1,0 +1,83 @@
+<div id="charazip">
+  <h1>ユドナリウムのキャラコマを作るやつ</h1>
+
+  キャラクターシートから
+  <a href="https://udonarium.app/" target="_blank">ユドナリウム</a>
+  で使えるコマを生成します。 <br /><br />
+
+  <input
+    #input
+    placeholder="キャラクターシートのURL"
+    style="width: 80%"
+    [(ngModel)]="url"
+    (focus)="onFocus()"
+    (keydown.enter)="createZip()"
+  />
+  <br />
+  <button (click)="createZip()">キャラコマ生成</button> <br />
+  <div style="color: red; font-weight: bolder">{{ errorMsg }}</div>
+  <br />
+
+  <h2>○対応システム</h2>
+  <ul>
+    <li>
+      <a href="https://character-sheets.appspot.com/" target="_blank">
+        キャラクターシート倉庫
+      </a>
+      :
+      <span *ngFor="let info of appspotList">
+        <a href="{{ info.href }}" target="_blank">{{ info.name }}</a> &nbsp;
+      </span>
+    </li>
+    <li>
+      <a href="https://charasheet.vampire-blood.net/" target="_blank">
+        キャラクター保管所
+      </a>
+      :
+      <span *ngFor="let info of vampireBloodList">
+        <a href="{{ info.href }}" target="_blank">{{ info.name }}</a> &nbsp;
+      </span>
+    </li>
+  </ul>
+
+  <h2>○使い方</h2>
+  <ol>
+    <li>
+      キャラクターのURLを入力する <br />
+      (キャラクターシート倉庫であれば
+      https://character-sheets.appspot.com/SYSTEM/edit.html?key=XXXXXX
+      のようなもの) <br />
+      (キャラクター保管所であれば https://charasheet.vampire-blood.net/XXXXXXX
+      のようなもの)
+    </li>
+    <li>キャラコマ生成を押す</li>
+    <li>ユドナリウム用のキャラデータ(zipファイル)がダウンロードされます</li>
+    <li>ダウンロードしたzipファイルをユドナリウムにドラッグ＆ドロップ</li>
+  </ol>
+
+  <h2>○注意</h2>
+  <ul>
+    <li>
+      ユドナリウムの作者様、キャラクターシート倉庫様、キャラクター保管所様とこのツールは一切関係がありません。
+    </li>
+    <li>
+      このツールを使用したことにより発生したいかなる問題・損害に対しても作者は一切責任を負いません。自己責任でご利用ください。
+    </li>
+    <li>Chromeで動作確認しています。他のブラウザでの動作はわかりません。</li>
+    <li>
+      スマホのようなモバイル端末での動作は想定していません。パソコンから使ってください。
+    </li>
+  </ul>
+
+  <br />
+  ○製作者・不具合連絡先:
+  <a href="https://twitter.com/trpg_yoshi" target="_blank">
+    よっしー@trpg_yoshi
+  </a>
+  <ul style="font-size: smaller;">
+    <li>
+      このシステムに対応してほしい！
+      って要望があれば、キャラシのurlとそのキャラシから作って欲しいユドナリウムのコマデータをいただければ対応が早いと思います。
+    </li>
+  </ul>
+</div>

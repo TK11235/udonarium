@@ -58,6 +58,8 @@ import { TabletopService } from 'service/tabletop.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { CharazipComponent } from './plugins/charazip/charazip.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +67,7 @@ import { AppRoutingModule } from './app-routing.module';
     CardComponent,
     CardStackComponent,
     CardStackListComponent,
+    CharazipComponent,
     ChatMessageComponent,
     ChatPaletteComponent,
     ChatTabComponent,
