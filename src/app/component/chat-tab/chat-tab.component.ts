@@ -94,10 +94,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
           this.needUpdate = true;
           this.maxMessages += 1;
         }
-      })
-      .on('MESSAGE_ADDED', event => {
-        let tabIdentifier: string = event.data.tabIdentifier;
-        if (this.chatTab.identifier === tabIdentifier) this.chatTab.markForRead();
       });
   }
 
@@ -149,7 +145,13 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   private onScroll(e: Event) {
-    if (200 < this.panelService.scrollablePanel.scrollTop) return;
-    this.moreMessages(4);
+    if (this.hasMany && this.panelService.scrollablePanel.scrollTop <= 200) {
+      this.moreMessages(4);
+    } else if (this.chatTab.hasUnread) {
+      let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+      if (top - 100 <= this.panelService.scrollablePanel.scrollTop) {
+        this.chatTab.markForRead();
+      }
+    }
   }
 }
