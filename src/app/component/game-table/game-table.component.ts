@@ -15,11 +15,9 @@ import { TableSelecter } from '@udonarium/table-selecter';
 import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
 
-import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
-import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
 
@@ -72,7 +70,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private callbackOnMouseDown = (e) => this.onMouseDown(e);
   private callbackOnMouseUp = (e) => this.onMouseUp(e);
   private callbackOnMouseMove = (e) => this.onMouseMove(e);
-  private callbackOnContextMenu = (e) => this.onContextMenu(e);
 
   private buttonCode: number = 0;
 
@@ -92,7 +89,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private pointerDeviceService: PointerDeviceService,
     private tabletopService: TabletopService,
     private modalService: ModalService,
-    private panelService: PanelService
   ) { }
 
   ngOnInit() {
@@ -356,14 +352,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity;
-  }
-
-  private showDetail(gameObject: GameCharacter) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    let option: PanelOption = { left: 0, top: 0, width: 800, height: 600 };
-    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
-    component.tabletopObject = gameObject;
   }
 
   private removeSelectionRanges() {
