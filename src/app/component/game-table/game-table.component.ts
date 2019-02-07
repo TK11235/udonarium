@@ -6,19 +6,18 @@ import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { EventSystem } from '@udonarium/core/system';
-import { DiceSymbol, DiceType } from '@udonarium/dice-symbol';
+import { DiceSymbol } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
 import { FilterType, GameTable, GridType } from '@udonarium/game-table';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PeerCursor } from '@udonarium/peer-cursor';
-import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
 
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
-import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
@@ -267,91 +266,16 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       let menuPosition = this.pointerDeviceService.pointers[0];
       let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
       console.log('mouseCursor', menuPosition);
-      this.contextMenuService.open(menuPosition, [
-        {
-          name: 'キャラクターを作成', action: () => {
-            let character = this.tabletopService.createGameCharacter(objectPosition);
-            this.showDetail(character);
-            SoundEffect.play(PresetSound.put);
-          }
-        },
-        {
-          name: 'マップマスクを作成', action: () => {
-            this.tabletopService.createGameTableMask(objectPosition);
-            SoundEffect.play(PresetSound.put);
-          }
-        },
-        {
-          name: '地形を作成', action: () => {
-            this.tabletopService.createTerrain(objectPosition);
-            SoundEffect.play(PresetSound.lock);
-          }
-        },
-        {
-          name: '共有メモを作成', action: () => {
-            this.tabletopService.createTextNote(objectPosition);
-            SoundEffect.play(PresetSound.put);
-          }
-        },
-        {
-          name: 'トランプの山札を作成', action: () => {
-            this.tabletopService.createTrump(objectPosition);
-            SoundEffect.play(PresetSound.cardPut);
-          }
-        },
-        {
-          name: 'ダイスを作成', action: null, subActions: [
-            {
-              name: 'D4', action: () => {
-                this.tabletopService.createDiceSymbol(objectPosition, 'D4', DiceType.D4, '4_dice');
-                SoundEffect.play(PresetSound.put);
-              }
-            },
-            {
-              name: 'D6', action: () => {
-                this.tabletopService.createDiceSymbol(objectPosition, 'D6', DiceType.D6, '6_dice');
-                SoundEffect.play(PresetSound.put);
-              }
-            },
-            {
-              name: 'D8', action: () => {
-                this.tabletopService.createDiceSymbol(objectPosition, 'D8', DiceType.D8, '8_dice');
-                SoundEffect.play(PresetSound.put);
-              }
-            },
-            {
-              name: 'D10', action: () => {
-                this.tabletopService.createDiceSymbol(objectPosition, 'D10', DiceType.D10, '10_dice');
-                SoundEffect.play(PresetSound.put);
-              }
-            },
-            {
-              name: 'D10 (00-90)', action: () => {
-                this.tabletopService.createDiceSymbol(objectPosition, 'D10', DiceType.D10_10TIMES, '100_dice');
-                SoundEffect.play(PresetSound.put);
-              }
-            },
-            {
-              name: 'D12', action: () => {
-                this.tabletopService.createDiceSymbol(objectPosition, 'D12', DiceType.D12, '12_dice');
-                SoundEffect.play(PresetSound.put);
-              }
-            },
-            {
-              name: 'D20', action: () => {
-                this.tabletopService.createDiceSymbol(objectPosition, 'D20', DiceType.D20, '20_dice');
-                SoundEffect.play(PresetSound.put);
-              }
-            }
-          ]
-        },
-        ContextMenuSeparator,
-        {
-          name: 'テーブル設定', action: () => {
-            this.modalService.open(GameTableSettingComponent);
-          }
+      let menuActions: ContextMenuAction[] = [];
+
+      Array.prototype.push.apply(menuActions, this.tabletopService.getContextMenuActionsForCreateObject(objectPosition));
+      menuActions.push(ContextMenuSeparator);
+      menuActions.push({
+        name: 'テーブル設定', action: () => {
+          this.modalService.open(GameTableSettingComponent);
         }
-      ], this.currentTable.name);
+      });
+      this.contextMenuService.open(menuPosition, menuActions, this.currentTable.name);
     }
   }
 
