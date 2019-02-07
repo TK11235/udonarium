@@ -16,10 +16,8 @@ import { TableSelecter } from '@udonarium/table-selecter';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
-import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 
 import { ContextMenuAction } from './context-menu.service';
-import { PanelOption, PanelService } from './panel.service';
 import { PointerCoordinate, PointerDeviceService } from './pointer-device.service';
 
 type ObjectIdentifier = string;
@@ -63,7 +61,6 @@ export class TabletopService {
   constructor(
     public ngZone: NgZone,
     public pointerDeviceService: PointerDeviceService,
-    private panelService: PanelService,
   ) {
     this.initialize();
   }
@@ -376,12 +373,6 @@ export class TabletopService {
         let character = this.createGameCharacter(position);
         EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: character.identifier, className: character.aliasName });
         SoundEffect.play(PresetSound.put);
-        let coordinate = this.pointerDeviceService.pointers[0];
-        let title = 'キャラクターシート';
-        if (character.name.length) title += ' - ' + character.name;
-        let option: PanelOption = { title: title, left: coordinate.x - 400, top: coordinate.y - 300, width: 800, height: 600 };
-        let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
-        component.tabletopObject = character;
       }
     }
   }
