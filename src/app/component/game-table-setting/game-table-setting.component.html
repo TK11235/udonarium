@@ -11,15 +11,15 @@
     <ng-container *ngIf="!isEmpty || selectedTable">
       <div class="images-select">
         <div>
-          背景
+          画像
           <div (click)="openBgImageModal()">
             <img height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'">
           </div>
         </div>
         <div>
-          遠景
+          背景
           <div *ngIf="!tableDistanceviewImage.url">
-            <button (click)="openDistanceViewImageModal()" style="height: 120px;">遠景画像を追加</button>
+            <button (click)="openDistanceViewImageModal()" style="height: 120px;">背景画像を追加</button>
           </div>
           <div *ngIf="tableDistanceviewImage.url" (click)="openDistanceViewImageModal()">
             <img height="120" [src]="tableDistanceviewImage.url | safe: 'resourceUrl'">
@@ -53,7 +53,7 @@
         </select>
       </div>
       <div>
-        遠景フィルタ
+        背景フィルタ
         <select [(ngModel)]="tableDistanceviewFilter" name="tableDistanceviewFilter" [attr.disabled]="!isEditable ? '' : null">
           <option value="">なし</option>
           <option value="white">ホワイト</option>
