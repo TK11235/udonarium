@@ -30,6 +30,7 @@ import { JukeboxComponent } from 'component/jukebox/jukebox.component';
 import { PeerMenuComponent } from 'component/peer-menu/peer-menu.component';
 import { TextViewComponent } from 'component/text-view/text-view.component';
 import { AppConfig, AppConfigService } from 'service/app-config.service';
+import { ChatMessageService } from 'service/chat-message.service';
 import { ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
 import { PanelOption, PanelService } from 'service/panel.service';
@@ -52,6 +53,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private modalService: ModalService,
     private panelService: PanelService,
     private pointerDeviceService: PointerDeviceService,
+    private chatMessageService: ChatMessageService,
     private appConfigService: AppConfigService,
     private saveDataService: SaveDataService,
     private ngZone: NgZone
@@ -142,6 +144,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       .on('OPEN_PEER', 0, event => {
         console.log('OPEN_PEER', event.data.peer);
         PeerCursor.myCursor.peerId = event.data.peer;
+      })
+      .on('OPEN_OTHER_PEER', event => {
+        if (event.isSendFromSelf) this.chatMessageService.calibrateTimeOffset();
       })
       .on('CLOSE_OTHER_PEER', 0, event => {
         //
