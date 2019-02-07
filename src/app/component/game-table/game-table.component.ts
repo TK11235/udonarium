@@ -258,21 +258,21 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     e.stopPropagation();
     e.preventDefault();
 
-    if (this.pointerDeviceService.isAllowedToOpenContextMenu) {
-      let menuPosition = this.pointerDeviceService.pointers[0];
-      let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
-      console.log('mouseCursor', menuPosition);
-      let menuActions: ContextMenuAction[] = [];
+    if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
-      Array.prototype.push.apply(menuActions, this.tabletopService.getContextMenuActionsForCreateObject(objectPosition));
-      menuActions.push(ContextMenuSeparator);
-      menuActions.push({
-        name: 'テーブル設定', action: () => {
-          this.modalService.open(GameTableSettingComponent);
-        }
-      });
-      this.contextMenuService.open(menuPosition, menuActions, this.currentTable.name);
-    }
+    let menuPosition = this.pointerDeviceService.pointers[0];
+    let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
+    console.log('mouseCursor', menuPosition);
+    let menuActions: ContextMenuAction[] = [];
+
+    Array.prototype.push.apply(menuActions, this.tabletopService.getContextMenuActionsForCreateObject(objectPosition));
+    menuActions.push(ContextMenuSeparator);
+    menuActions.push({
+      name: 'テーブル設定', action: () => {
+        this.modalService.open(GameTableSettingComponent);
+      }
+    });
+    this.contextMenuService.open(menuPosition, menuActions, this.currentTable.name);
   }
 
   private setTransform(transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number) {
