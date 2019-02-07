@@ -32,6 +32,9 @@ export class GameObjectInventoryService {
   private locationMap: Map<ObjectIdentifier, LocationName> = new Map();
   private tagNameMap: Map<ObjectIdentifier, ElementName> = new Map();
 
+  readonly newLineString: string = '/';
+  readonly newLineDataElement: DataElement = DataElement.create(this.newLineString);
+
   constructor() {
     this.initialize();
   }

@@ -40,6 +40,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '昇順' : '降順'; }
 
+  get newLineString(): string { return this.inventoryService.newLineString; }
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
