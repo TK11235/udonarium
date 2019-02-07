@@ -9,6 +9,11 @@ export class ChatMessageService {
   private timeOffset: number = Date.now();
   private performanceOffset: number = performance.now();
 
+  private ntpApiUrls: string[] = [
+    'https://ntp-a1.nict.go.jp/cgi-bin/json',
+    'https://ntp-b1.nict.go.jp/cgi-bin/json',
+  ];
+
   gameType: string = '';
 
   constructor() {
@@ -20,8 +25,10 @@ export class ChatMessageService {
   }
 
   private calibrateTimeOffset() {
+    let index = Math.floor(Math.random() * this.ntpApiUrls.length);
+    let ntpApiUrl = this.ntpApiUrls[index];
     let sendTime = performance.now();
-    fetch('http://ntp-a1.nict.go.jp/cgi-bin/json')
+    fetch(ntpApiUrl)
       .then(response => {
         if (response.ok) return response.json();
         throw new Error('Network response was not ok.');
