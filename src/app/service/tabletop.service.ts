@@ -416,7 +416,7 @@ export class TabletopService {
   private getCreateDiceSymbolMenu(position: PointerCoordinate): ContextMenuAction {
     let dices: { menuName: string, diceName: string, type: DiceType, imagePathPrefix: string }[] = [
       { menuName: 'D4', diceName: 'D4', type: DiceType.D4, imagePathPrefix: '4_dice' },
-      { menuName: 'D8', diceName: 'D8', type: DiceType.D6, imagePathPrefix: '6_dice' },
+      { menuName: 'D6', diceName: 'D6', type: DiceType.D6, imagePathPrefix: '6_dice' },
       { menuName: 'D8', diceName: 'D8', type: DiceType.D8, imagePathPrefix: '8_dice' },
       { menuName: 'D10', diceName: 'D10', type: DiceType.D10, imagePathPrefix: '10_dice' },
       { menuName: 'D10 (00-90)', diceName: 'D10', type: DiceType.D10_10TIMES, imagePathPrefix: '100_dice' },
