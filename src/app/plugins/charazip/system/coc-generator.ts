@@ -1,5 +1,4 @@
 import { ChatPalette } from '@udonarium/chat-palette';
-import { DataElement } from '@udonarium/data-element';
 
 import { CustomCharacter } from '../custom-character';
 
@@ -9,183 +8,84 @@ import { CustomCharacter } from '../custom-character';
  */
 export class CocGenerator {
   static generateByVampireVlood(json: any, url: string): CustomCharacter[] {
-    const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter();
-
-    /*
-     * common
-     */
-    const nameElement = DataElement.create(
-      'name',
+    const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter(
       json.pc_name,
-      {},
-      'name_' + gameCharacter.identifier
-    );
-    const sizeElement = DataElement.create(
-      'size',
       1,
-      {},
-      'size_' + gameCharacter.identifier
+      ''
     );
-    gameCharacter.commonDataElement.appendChild(nameElement);
-    gameCharacter.commonDataElement.appendChild(sizeElement);
-
-    if (
-      gameCharacter.imageDataElement.getFirstElementByName('imageIdentifier')
-    ) {
-      gameCharacter.imageDataElement.getFirstElementByName(
-        'imageIdentifier'
-      ).value = '';
-      gameCharacter.imageDataElement
-        .getFirstElementByName('imageIdentifier')
-        .update();
-    }
 
     /*
      * リソース
      */
-    const resourceElement = DataElement.create(
-      'リソース',
-      '',
-      {},
-      'リソース' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(resourceElement);
-
+    const resourceElement = gameCharacter.appendDetailElement('リソース');
     resourceElement.appendChild(
-      DataElement.create(
-        'HP',
-        json.NA9,
-        { type: 'numberResource', currentValue: json.NA9 },
-        'HP_' + gameCharacter.identifier
-      )
+      gameCharacter.createResourceElement('HP', json.NA9, json.NA9)
     );
     resourceElement.appendChild(
-      DataElement.create(
-        'MP',
-        json.NA10,
-        { type: 'numberResource', currentValue: json.NA10 },
-        'MP_' + gameCharacter.identifier
-      )
+      gameCharacter.createResourceElement('MP', json.NA10, json.NA10)
     );
     resourceElement.appendChild(
-      DataElement.create(
-        'SAN',
-        json.SAN_Max,
-        { type: 'numberResource', currentValue: json.SAN_Left },
-        'SAN_' + gameCharacter.identifier
-      )
+      gameCharacter.createResourceElement('SAN', json.SAN_Max, json.SAN_Left)
     );
     resourceElement.appendChild(
-      DataElement.create(
-        '神話技能',
-        99,
-        { type: 'numberResource', currentValue: json.TKAP[3] },
-        '神話技能_' + gameCharacter.identifier
-      )
+      gameCharacter.createResourceElement('神話技能', 99, json.TKAP[3])
     );
     resourceElement.appendChild(
-      DataElement.create(
-        '不定領域',
-        99,
-        { type: 'numberResource', currentValue: json.SAN_Danger },
-        '不定領域_' + gameCharacter.identifier
-      )
+      gameCharacter.createResourceElement('不定領域', 99, json.SAN_Danger)
     );
 
     /*
      *情報
      */
-    const infoElement = DataElement.create(
-      '情報',
-      '',
-      {},
-      '情報' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(infoElement);
-    infoElement.appendChild(
-      DataElement.create('PL名', '', {}, 'PL名_' + gameCharacter.identifier)
-    );
+    const infoElement = gameCharacter.appendDetailElement('情報');
+    infoElement.appendChild(gameCharacter.createDataElement('PL', ''));
     // 持ち物
     const items = json.item_name.filter((item: any) => item).join('/');
     const arms = json.arms_name.filter((arm: any) => arm).join('/');
     infoElement.appendChild(
-      DataElement.create(
-        '持ち物',
-        `${items}/${arms}`,
-        { type: 'note' },
-        '持ち物' + gameCharacter.identifier
-      )
+      gameCharacter.createNoteElement('持ち物', `${items}/${arms}`)
     );
     infoElement.appendChild(
-      DataElement.create(
-        'プロフ',
-        json.pc_making_memo,
-        { type: 'note' },
-        'プロフ' + gameCharacter.identifier
-      )
+      gameCharacter.createNoteElement('プロフ', json.pc_making_memo)
     );
-    infoElement.appendChild(
-      DataElement.create(
-        'URL',
-        url,
-        { type: 'note' },
-        'URL_' + gameCharacter.identifier
-      )
-    );
+    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
 
     /*
      *能力値
      */
-    const abilityElement = DataElement.create(
-      '能力値',
-      '',
-      {},
-      '能力値' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(abilityElement);
+    const abilityElement = gameCharacter.appendDetailElement('能力値');
     abilityElement.appendChild(
-      DataElement.create('STR', json.NP1, {}, 'STR_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('STR', json.NP1)
     );
     abilityElement.appendChild(
-      DataElement.create('CON', json.NP2, {}, 'CON_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('CON', json.NP2)
     );
     abilityElement.appendChild(
-      DataElement.create('POW', json.NP3, {}, 'POW_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('POW', json.NP3)
     );
     abilityElement.appendChild(
-      DataElement.create('DEX', json.NP4, {}, 'DEX_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('DEX', json.NP4)
     );
     abilityElement.appendChild(
-      DataElement.create('APP', json.NP5, {}, 'APP_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('APP', json.NP5)
     );
     abilityElement.appendChild(
-      DataElement.create('SIZ', json.NP6, {}, 'SIZ_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('SIZ', json.NP6)
     );
     abilityElement.appendChild(
-      DataElement.create('INT', json.NP7, {}, 'INT_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('INT', json.NP7)
     );
     abilityElement.appendChild(
-      DataElement.create('EDU', json.NP8, {}, 'EDU_' + gameCharacter.identifier)
+      gameCharacter.createDataElement('EDU', json.NP8)
     );
     abilityElement.appendChild(
-      DataElement.create(
-        'db',
-        json.dmg_bonus,
-        {},
-        'db_' + gameCharacter.identifier
-      )
+      gameCharacter.createDataElement('db', json.dmg_bonus)
     );
 
     /*
      *戦闘技能
      */
-    const combatElement = DataElement.create(
-      '戦闘技能',
-      '',
-      {},
-      '戦闘技能' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(combatElement);
+    const combatElement = gameCharacter.appendDetailElement('戦闘技能');
     let combatSkillNames = [
       '回避',
       'キック',
@@ -210,25 +110,14 @@ export class CocGenerator {
       }
       const skillPoint = json.TBAP[i];
       combatElement.appendChild(
-        DataElement.create(
-          skillName,
-          skillPoint,
-          {},
-          skillName + '_' + gameCharacter.identifier
-        )
+        gameCharacter.createDataElement(skillName, skillPoint)
       );
     }
 
     /*
      * 探索技能
      */
-    const exploreElement = DataElement.create(
-      '探索技能',
-      '',
-      {},
-      '探索技能' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(exploreElement);
+    const exploreElement = gameCharacter.appendDetailElement('探索技能');
     let exploreSkillNames = [
       '応急手当',
       '鍵開け',
@@ -253,25 +142,14 @@ export class CocGenerator {
       }
       const skillPoint = json.TFAP[i];
       exploreElement.appendChild(
-        DataElement.create(
-          skillName,
-          skillPoint,
-          {},
-          skillName + '_' + gameCharacter.identifier
-        )
+        gameCharacter.createDataElement(skillName, skillPoint)
       );
     }
 
     /*
      * 行動技能
      */
-    const actionElement = DataElement.create(
-      '行動技能',
-      '',
-      {},
-      '行動技能' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(actionElement);
+    const actionElement = gameCharacter.appendDetailElement('行動技能');
     let actionSkillNames = [
       json.unten_bunya ? `運転(${json.unten_bunya})` : '運転',
       '機械修理',
@@ -295,25 +173,14 @@ export class CocGenerator {
       }
       const skillPoint = json.TAAP[i];
       actionElement.appendChild(
-        DataElement.create(
-          skillName,
-          skillPoint,
-          {},
-          skillName + '_' + gameCharacter.identifier
-        )
+        gameCharacter.createDataElement(skillName, skillPoint)
       );
     }
 
     /*
      * 交渉技能
      */
-    const negotiateElement = DataElement.create(
-      '交渉技能',
-      '',
-      {},
-      '交渉技能' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(negotiateElement);
+    const negotiateElement = gameCharacter.appendDetailElement('交渉技能');
     let negotiateSkillNames = [
       '言いくるめ',
       '信用',
@@ -331,25 +198,14 @@ export class CocGenerator {
       }
       const skillPoint = json.TCAP[i];
       negotiateElement.appendChild(
-        DataElement.create(
-          skillName,
-          skillPoint,
-          {},
-          skillName + '_' + gameCharacter.identifier
-        )
+        gameCharacter.createDataElement(skillName, skillPoint)
       );
     }
 
     /*
      * 知識技能
      */
-    const knowledgeElement = DataElement.create(
-      '知識技能',
-      '',
-      {},
-      '知識技能' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(knowledgeElement);
+    const knowledgeElement = gameCharacter.appendDetailElement('知識技能');
     let knowledgeSkillNames = [
       '医学',
       'オカルト',
@@ -381,12 +237,7 @@ export class CocGenerator {
       }
       const skillPoint = json.TKAP[i];
       knowledgeElement.appendChild(
-        DataElement.create(
-          skillName,
-          skillPoint,
-          {},
-          skillName + '_' + gameCharacter.identifier
-        )
+        gameCharacter.createDataElement(skillName, skillPoint)
       );
     }
 

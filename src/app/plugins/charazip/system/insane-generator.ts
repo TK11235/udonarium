@@ -1,5 +1,4 @@
 import { ChatPalette } from '@udonarium/chat-palette';
-import { DataElement } from '@udonarium/data-element';
 
 import { CustomCharacter } from '../custom-character';
 
@@ -13,62 +12,28 @@ export class InsaneGenerator {
     url: string,
     imageIdentifier: string
   ): CustomCharacter[] {
-    const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter();
-
-    /*
-     * common
-     */
-    const nameElement = DataElement.create(
-      'name',
+    const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter(
       json.base.name,
-      {},
-      'name_' + gameCharacter.identifier
-    );
-    const sizeElement = DataElement.create(
-      'size',
       1,
-      {},
-      'size_' + gameCharacter.identifier
+      imageIdentifier
     );
-    gameCharacter.commonDataElement.appendChild(nameElement);
-    gameCharacter.commonDataElement.appendChild(sizeElement);
-
-    if (
-      gameCharacter.imageDataElement.getFirstElementByName('imageIdentifier')
-    ) {
-      gameCharacter.imageDataElement.getFirstElementByName(
-        'imageIdentifier'
-      ).value = imageIdentifier || '';
-      gameCharacter.imageDataElement
-        .getFirstElementByName('imageIdentifier')
-        .update();
-    }
 
     /*
      * ステータス
      */
-    const statusElement = DataElement.create(
-      'ステータス',
-      '',
-      {},
-      'ステータス' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(statusElement);
-
+    const statusElement = gameCharacter.appendDetailElement('ステータス');
     statusElement.appendChild(
-      DataElement.create(
+      gameCharacter.createResourceElement(
         '生命力',
         json.hitpoint.max,
-        { type: 'numberResource', currentValue: json.hitpoint.value },
-        '生命力' + gameCharacter.identifier
+        json.hitpoint.value
       )
     );
     statusElement.appendChild(
-      DataElement.create(
+      gameCharacter.createResourceElement(
         '正気度',
         json.sanepoint.max,
-        { type: 'numberResource', currentValue: json.sanepoint.value },
-        '正気度' + gameCharacter.identifier
+        json.sanepoint.value
       )
     );
     const curiosities = {
@@ -80,75 +45,37 @@ export class InsaneGenerator {
       e: '怪異'
     };
     statusElement.appendChild(
-      DataElement.create(
+      gameCharacter.createDataElement(
         '好奇心',
-        curiosities[json.base.curiosity],
-        {},
-        '好奇心' + gameCharacter.identifier
+        curiosities[json.base.curiosity]
       )
     );
     statusElement.appendChild(
-      DataElement.create(
-        '恐怖心',
-        json.base.nightmare,
-        {},
-        '恐怖心' + gameCharacter.identifier
-      )
+      gameCharacter.createDataElement('恐怖心', json.base.nightmare)
     );
 
     /*
      * 情報
      */
-    const infoElement = DataElement.create(
-      '情報',
-      '',
-      {},
-      '情報' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(infoElement);
+    const infoElement = gameCharacter.appendDetailElement('情報');
     infoElement.appendChild(
-      DataElement.create(
-        'PL名',
-        json.base.player || '',
-        {},
-        'PL名_' + gameCharacter.identifier
-      )
+      gameCharacter.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      DataElement.create(
+      gameCharacter.createDataElement(
         'HO',
-        json.scenario.pcno ? `PC${json.scenario.pcno}` : '',
-        {},
-        'HO_' + gameCharacter.identifier
+        json.scenario.pcno ? `PC${json.scenario.pcno}` : ''
       )
     );
     infoElement.appendChild(
-      DataElement.create(
-        '説明',
-        json.base.memo,
-        { type: 'note' },
-        '説明' + gameCharacter.identifier
-      )
+      gameCharacter.createNoteElement('説明', json.base.memo)
     );
-    infoElement.appendChild(
-      DataElement.create(
-        'URL',
-        url,
-        { type: 'note' },
-        'URL_' + gameCharacter.identifier
-      )
-    );
+    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
 
     /*
      * 特技
      */
-    const skillElement = DataElement.create(
-      '特技',
-      '',
-      {},
-      '特技' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(skillElement);
+    const skillElement = gameCharacter.appendDetailElement('特技');
     const skillNameList = [
       ['焼却', '恋', '痛み', '分解', '物理学', '時間'],
       ['拷問', '悦び', '官能', '電子機器', '数学', '混沌'],
@@ -178,11 +105,9 @@ export class InsaneGenerator {
       const skillName = skillNameList[rowId][nameId];
       const category = ['暴力', '情動', '知覚', '技術', '知識', '怪異'][nameId];
       skillElement.appendChild(
-        DataElement.create(
+        gameCharacter.createDataElement(
           `特技${skillCount}`,
-          `${skillName}(${category})`,
-          {},
-          `特技${skillCount}_${gameCharacter.identifier}`
+          `${skillName}(${category})`
         )
       );
     }
@@ -190,24 +115,14 @@ export class InsaneGenerator {
     /*
      * アイテム
      */
-    const itemElement = DataElement.create(
-      'アイテム',
-      '',
-      {},
-      'アイテム' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(itemElement);
+    const itemElement = gameCharacter.appendDetailElement('アイテム');
     for (const item of json.item) {
       if (!item.name) {
         continue;
       }
+      console.log(item.name, item.count);
       itemElement.appendChild(
-        DataElement.create(
-          item.name,
-          2,
-          { type: 'numberResource', currentValue: item.count || '0' },
-          item.name + '_' + gameCharacter.identifier
-        )
+        gameCharacter.createResourceElement(item.name, 2, item.count || '0')
       );
     }
 
@@ -218,13 +133,7 @@ export class InsaneGenerator {
       ['共感', '友情', '愛情', '忠誠', '憧憬', '狂信'],
       ['不信', '怒り', '妬み', '侮蔑', '劣等感', '殺意']
     ];
-    const personalityElement = DataElement.create(
-      '人物欄',
-      '',
-      {},
-      '人物欄' + gameCharacter.identifier
-    );
-    gameCharacter.detailDataElement.appendChild(personalityElement);
+    const personalityElement = gameCharacter.appendDetailElement('人物欄');
     let personalityCount = 0;
     for (const personality of json.personalities) {
       if (!personality.name) {
@@ -234,11 +143,9 @@ export class InsaneGenerator {
       const emotion =
         emotionList[personality.direction - 1][personality.emotion - 1];
       personalityElement.appendChild(
-        DataElement.create(
+        gameCharacter.createDataElement(
           `感情${personalityCount}`,
-          `${personality.name}(${emotion})`,
-          {},
-          `感情${personalityCount}_${gameCharacter.identifier}`
+          `${personality.name}(${emotion})`
         )
       );
     }
@@ -246,23 +153,17 @@ export class InsaneGenerator {
     /*
      * アビリティ
      */
-    const abilityElement = DataElement.create(
-      'アビリティ　タイプ／指定特技／効果',
-      '',
-      {},
-      'アビリティ' + gameCharacter.identifier
+    const abilityElement = gameCharacter.appendDetailElement(
+      'アビリティ　タイプ／指定特技／効果'
     );
-    gameCharacter.detailDataElement.appendChild(abilityElement);
     for (const ability of json.ability) {
       if (!ability.name) {
         continue;
       }
       abilityElement.appendChild(
-        DataElement.create(
+        gameCharacter.createNoteElement(
           ability.name,
-          `${ability.type}／${ability.targetSkill}／${ability.effect}`,
-          { type: 'note' },
-          ability.name + '_' + gameCharacter.identifier
+          `${ability.type}／${ability.targetSkill}／${ability.effect}`
         )
       );
     }
