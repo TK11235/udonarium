@@ -242,10 +242,7 @@ export class CocGenerator {
     }
 
     const domParser: DOMParser = new DOMParser();
-    domParser.parseFromString(
-      gameCharacter.rootDataElement.toXml(),
-      'application/xml'
-    );
+    domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 
     const palette: ChatPalette = new ChatPalette(
       'ChatPalette_' + gameCharacter.identifier

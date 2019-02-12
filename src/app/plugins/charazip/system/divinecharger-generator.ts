@@ -204,10 +204,7 @@ export class DivinechargerGenerator {
       }
 
       const domParser: DOMParser = new DOMParser();
-      domParser.parseFromString(
-        gameCharacter.rootDataElement.toXml(),
-        'application/xml'
-      );
+      domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 
       const palette: ChatPalette = new ChatPalette(
         'ChatPalette_' + gameCharacter.identifier
@@ -371,10 +368,7 @@ export class DivinechargerGenerator {
       );
 
       const domParser: DOMParser = new DOMParser();
-      domParser.parseFromString(
-        gameCharacter.rootDataElement.toXml(),
-        'application/xml'
-      );
+      domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
       /*
        * 所有者（並び替え用）
        */
@@ -475,10 +469,7 @@ export class DivinechargerGenerator {
       );
 
       const domParser: DOMParser = new DOMParser();
-      domParser.parseFromString(
-        gameCharacter.rootDataElement.toXml(),
-        'application/xml'
-      );
+      domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
       /*
        * 所有者（並び替え用）
        */
@@ -561,10 +552,7 @@ export class DivinechargerGenerator {
       );
 
       const domParser: DOMParser = new DOMParser();
-      domParser.parseFromString(
-        gameCharacter.rootDataElement.toXml(),
-        'application/xml'
-      );
+      domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
       /*
        * 所有者（並び替え用）
        */
@@ -641,10 +629,7 @@ export class DivinechargerGenerator {
       );
 
       const domParser: DOMParser = new DOMParser();
-      domParser.parseFromString(
-        gameCharacter.rootDataElement.toXml(),
-        'application/xml'
-      );
+      domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
       /*
        * 所有者（並び替え用）
        */
