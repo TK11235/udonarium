@@ -38,17 +38,6 @@ export class CustomCharacter extends GameCharacter {
     return super.toXml().replace(/custom-character/g, 'character');
   }
 
-  appendDetailElement(name: string): DataElement {
-    const dataElement = DataElement.create(
-      name,
-      '',
-      {},
-      `${name}_${this.identifier}`
-    );
-    this.detailDataElement.appendChild(dataElement);
-    return dataElement;
-  }
-
   createDataElement(name: string, value: string | number): DataElement {
     return DataElement.create(name, value, {}, `${name}_${this.identifier}`);
   }

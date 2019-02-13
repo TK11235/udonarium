@@ -17,7 +17,8 @@ export class CocGenerator {
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.appendDetailElement('リソース');
+    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    gameCharacter.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(
       gameCharacter.createResourceElement('HP', json.NA9, json.NA9)
     );
@@ -37,7 +38,8 @@ export class CocGenerator {
     /*
      *情報
      */
-    const infoElement = gameCharacter.appendDetailElement('情報');
+    const infoElement = gameCharacter.createDataElement('情報', '');
+    gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(gameCharacter.createDataElement('PL', ''));
     // 持ち物
     const items = json.item_name.filter((item: any) => item).join('/');
@@ -53,7 +55,8 @@ export class CocGenerator {
     /*
      *能力値
      */
-    const abilityElement = gameCharacter.appendDetailElement('能力値');
+    const abilityElement = gameCharacter.createDataElement('能力値', '');
+    gameCharacter.detailDataElement.appendChild(abilityElement);
     abilityElement.appendChild(
       gameCharacter.createDataElement('STR', json.NP1)
     );
@@ -85,7 +88,8 @@ export class CocGenerator {
     /*
      *戦闘技能
      */
-    const combatElement = gameCharacter.appendDetailElement('戦闘技能');
+    const combatElement = gameCharacter.createDataElement('戦闘技能', '');
+    gameCharacter.detailDataElement.appendChild(combatElement);
     let combatSkillNames = [
       '回避',
       'キック',
@@ -117,7 +121,8 @@ export class CocGenerator {
     /*
      * 探索技能
      */
-    const exploreElement = gameCharacter.appendDetailElement('探索技能');
+    const exploreElement = gameCharacter.createDataElement('探索技能', '');
+    gameCharacter.detailDataElement.appendChild(exploreElement);
     let exploreSkillNames = [
       '応急手当',
       '鍵開け',
@@ -149,7 +154,8 @@ export class CocGenerator {
     /*
      * 行動技能
      */
-    const actionElement = gameCharacter.appendDetailElement('行動技能');
+    const actionElement = gameCharacter.createDataElement('行動技能', '');
+    gameCharacter.detailDataElement.appendChild(actionElement);
     let actionSkillNames = [
       json.unten_bunya ? `運転(${json.unten_bunya})` : '運転',
       '機械修理',
@@ -180,7 +186,8 @@ export class CocGenerator {
     /*
      * 交渉技能
      */
-    const negotiateElement = gameCharacter.appendDetailElement('交渉技能');
+    const negotiateElement = gameCharacter.createDataElement('交渉技能', '');
+    gameCharacter.detailDataElement.appendChild(negotiateElement);
     let negotiateSkillNames = [
       '言いくるめ',
       '信用',
@@ -205,7 +212,8 @@ export class CocGenerator {
     /*
      * 知識技能
      */
-    const knowledgeElement = gameCharacter.appendDetailElement('知識技能');
+    const knowledgeElement = gameCharacter.createDataElement('知識技能', '');
+    gameCharacter.detailDataElement.appendChild(knowledgeElement);
     let knowledgeSkillNames = [
       '医学',
       'オカルト',

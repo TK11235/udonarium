@@ -21,7 +21,8 @@ export class InsaneGenerator {
     /*
      * ステータス
      */
-    const statusElement = gameCharacter.appendDetailElement('ステータス');
+    const statusElement = gameCharacter.createDataElement('ステータス', '');
+    gameCharacter.detailDataElement.appendChild(statusElement);
     statusElement.appendChild(
       gameCharacter.createResourceElement(
         '生命力',
@@ -57,7 +58,8 @@ export class InsaneGenerator {
     /*
      * 情報
      */
-    const infoElement = gameCharacter.appendDetailElement('情報');
+    const infoElement = gameCharacter.createDataElement('情報', '');
+    gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
       gameCharacter.createDataElement('PL', json.base.player || '')
     );
@@ -75,7 +77,8 @@ export class InsaneGenerator {
     /*
      * 特技
      */
-    const skillElement = gameCharacter.appendDetailElement('特技');
+    const skillElement = gameCharacter.createDataElement('特技', '');
+    gameCharacter.detailDataElement.appendChild(skillElement);
     const skillNameList = [
       ['焼却', '恋', '痛み', '分解', '物理学', '時間'],
       ['拷問', '悦び', '官能', '電子機器', '数学', '混沌'],
@@ -115,7 +118,8 @@ export class InsaneGenerator {
     /*
      * アイテム
      */
-    const itemElement = gameCharacter.appendDetailElement('アイテム');
+    const itemElement = gameCharacter.createDataElement('アイテム', '');
+    gameCharacter.detailDataElement.appendChild(itemElement);
     for (const item of json.item) {
       if (!item.name) {
         continue;
@@ -133,7 +137,8 @@ export class InsaneGenerator {
       ['共感', '友情', '愛情', '忠誠', '憧憬', '狂信'],
       ['不信', '怒り', '妬み', '侮蔑', '劣等感', '殺意']
     ];
-    const personalityElement = gameCharacter.appendDetailElement('人物欄');
+    const personalityElement = gameCharacter.createDataElement('人物欄', '');
+    gameCharacter.detailDataElement.appendChild(personalityElement);
     let personalityCount = 0;
     for (const personality of json.personalities) {
       if (!personality.name) {
@@ -153,9 +158,11 @@ export class InsaneGenerator {
     /*
      * アビリティ
      */
-    const abilityElement = gameCharacter.appendDetailElement(
-      'アビリティ　タイプ／指定特技／効果'
+    const abilityElement = gameCharacter.createDataElement(
+      'アビリティ　タイプ／指定特技／効果',
+      ''
     );
+    gameCharacter.detailDataElement.appendChild(abilityElement);
     for (const ability of json.ability) {
       if (!ability.name) {
         continue;

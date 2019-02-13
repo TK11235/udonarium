@@ -27,7 +27,8 @@ export class DivinechargerGenerator {
       /*
        *情報
        */
-      const infoElement = gameCharacter.appendDetailElement('情報');
+      const infoElement = gameCharacter.createDataElement('情報', '');
+      gameCharacter.detailDataElement.appendChild(infoElement);
       infoElement.appendChild(
         gameCharacter.createDataElement('PL', json.base.player || '')
       );
@@ -51,7 +52,8 @@ export class DivinechargerGenerator {
       /*
        * 主能力値
        */
-      const abilityElement = gameCharacter.appendDetailElement('主能力値');
+      const abilityElement = gameCharacter.createDataElement('主能力値', '');
+      gameCharacter.detailDataElement.appendChild(abilityElement);
       abilityElement.appendChild(
         gameCharacter.createDataElement('体力', json.ability.current.strength)
       );
@@ -73,9 +75,11 @@ export class DivinechargerGenerator {
       /*
        * 戦闘値／副能力値
        */
-      const battleabilityElement = gameCharacter.appendDetailElement(
-        '戦闘値／副能力値'
+      const battleabilityElement = gameCharacter.createDataElement(
+        '戦闘値／副能力値',
+        ''
       );
+      gameCharacter.detailDataElement.appendChild(battleabilityElement);
       battleabilityElement.appendChild(
         gameCharacter.createResourceElement(
           'HP',
@@ -128,9 +132,11 @@ export class DivinechargerGenerator {
       /*
        * 神聖石／所持金／ポイント
        */
-      const pointElement = gameCharacter.appendDetailElement(
-        '神聖石／所持金／ポイント'
+      const pointElement = gameCharacter.createDataElement(
+        '神聖石／所持金／ポイント',
+        ''
       );
+      gameCharacter.detailDataElement.appendChild(pointElement);
       pointElement.appendChild(
         gameCharacter.createDataElement('GR', json.points.gr)
       );
@@ -163,7 +169,8 @@ export class DivinechargerGenerator {
         '神聖装着',
         'ファイナルストライク'
       ];
-      const skillElement = gameCharacter.appendDetailElement('スキル');
+      const skillElement = gameCharacter.createDataElement('スキル', '');
+      gameCharacter.detailDataElement.appendChild(skillElement);
       let skillCount = 0;
       for (const skill of json.skills) {
         if (!skill.name || divineSkill.includes(skill.name)) {
@@ -189,7 +196,8 @@ export class DivinechargerGenerator {
       /*
        * 消耗品
        */
-      const expendableElement = gameCharacter.appendDetailElement('消耗品');
+      const expendableElement = gameCharacter.createDataElement('消耗品', '');
+      gameCharacter.detailDataElement.appendChild(expendableElement);
       for (const expendable of json.expendables) {
         if (!expendable.name) {
           continue;
@@ -330,7 +338,8 @@ export class DivinechargerGenerator {
       /*
        *情報
        */
-      const infoElement = gameCharacter.appendDetailElement('情報');
+      const infoElement = gameCharacter.createDataElement('情報', '');
+      gameCharacter.detailDataElement.appendChild(infoElement);
       infoElement.appendChild(
         gameCharacter.createDataElement(
           '種別',
@@ -372,9 +381,11 @@ export class DivinechargerGenerator {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.appendDetailElement(
-        '所有者（並び替え用）'
+      const sortElement = gameCharacter.createDataElement(
+        '所有者（並び替え用）',
+        ''
       );
+      gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
         gameCharacter.createDataElement('PL', json.base.player || '')
       );
@@ -434,7 +445,8 @@ export class DivinechargerGenerator {
       /*
        * 情報
        */
-      const infoElement = gameCharacter.appendDetailElement('情報');
+      const infoElement = gameCharacter.createDataElement('情報', '');
+      gameCharacter.detailDataElement.appendChild(infoElement);
       infoElement.appendChild(
         gameCharacter.createDataElement('種別', shield.type)
       );
@@ -473,9 +485,11 @@ export class DivinechargerGenerator {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.appendDetailElement(
-        '所有者（並び替え用）'
+      const sortElement = gameCharacter.createDataElement(
+        '所有者（並び替え用）',
+        ''
       );
+      gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
         gameCharacter.createDataElement('PL', json.base.player || '')
       );
@@ -520,7 +534,8 @@ export class DivinechargerGenerator {
       /*
        * 情報
        */
-      const infoElement = gameCharacter.appendDetailElement('情報');
+      const infoElement = gameCharacter.createDataElement('情報', '');
+      gameCharacter.detailDataElement.appendChild(infoElement);
       infoElement.appendChild(
         gameCharacter.createDataElement('種別', armour.type)
       );
@@ -556,9 +571,11 @@ export class DivinechargerGenerator {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.appendDetailElement(
-        '所有者（並び替え用）'
+      const sortElement = gameCharacter.createDataElement(
+        '所有者（並び替え用）',
+        ''
       );
+      gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
         gameCharacter.createDataElement('PL', json.base.player || '')
       );
@@ -603,7 +620,8 @@ export class DivinechargerGenerator {
       /*
        * 情報
        */
-      const infoElement = gameCharacter.appendDetailElement('情報');
+      const infoElement = gameCharacter.createDataElement('情報', '');
+      gameCharacter.detailDataElement.appendChild(infoElement);
       infoElement.appendChild(
         gameCharacter.createDataElement('種別', accessory.type)
       );
@@ -633,9 +651,11 @@ export class DivinechargerGenerator {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.appendDetailElement(
-        '所有者（並び替え用）'
+      const sortElement = gameCharacter.createDataElement(
+        '所有者（並び替え用）',
+        ''
       );
+      gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
         gameCharacter.createDataElement('PL', json.base.player || '')
       );
