@@ -8,6 +8,7 @@ import { CustomCharacter } from './custom-character';
 import { InsaneGenerator } from './system/insane-generator';
 import { CocGenerator } from './system/coc-generator';
 import { DivinechargerGenerator } from './system/divinecharger-generator';
+import { Dx3rdGenerator } from './system/dx3rd-generator';
 
 interface SystemInfo {
   system: string;
@@ -26,11 +27,14 @@ interface SystemInfo {
   styleUrls: ['./charazip.component.css']
 })
 export class CharazipComponent implements OnInit {
-  @ViewChild('input')
-  inputElementRef: ElementRef<HTMLInputElement>;
+  get vampireBloodList() {
+    return CharazipComponent.vampireBloodInfos;
+  }
+  get appspotList() {
+    return CharazipComponent.appspotInfos;
+  }
 
-  url = '';
-  errorMsg = '';
+  constructor() {}
 
   private static vampireBloodInfos: SystemInfo[] = [
     {
@@ -38,11 +42,14 @@ export class CharazipComponent implements OnInit {
       name: 'クトゥルフ',
       href: 'https://charasheet.vampire-blood.net/list_coc.html',
       generater: CocGenerator.generateByVampireVlood
+    },
+    {
+      system: 'dx3',
+      name: 'ダブルクロス3rd',
+      href: 'https://charasheet.vampire-blood.net/list_dx3.html',
+      generater: Dx3rdGenerator.generateByVampireVlood
     }
   ];
-  get vampireBloodList() {
-    return CharazipComponent.vampireBloodInfos;
-  }
 
   private static appspotInfos: SystemInfo[] = [
     {
@@ -52,17 +59,111 @@ export class CharazipComponent implements OnInit {
       generater: InsaneGenerator.geneateByAppspot
     },
     {
+      system: 'dx3',
+      name: 'ダブルクロス3rd',
+      href: 'https://character-sheets.appspot.com/dx3/',
+      generater: Dx3rdGenerator.geneateByAppspot
+    },
+    {
       system: 'divinecharger',
       name: 'ディヴァインチャージャー',
       href: 'https://character-sheets.appspot.com/divinecharger/',
       generater: DivinechargerGenerator.generateByAppspot
     }
   ];
-  get appspotList() {
-    return CharazipComponent.appspotInfos;
+
+  @ViewChild('input')
+  inputElementRef: ElementRef<HTMLInputElement>;
+
+  url =
+    ''
+  errorMsg = '';
+
+  private static async generateByVampireBloodCharacter(
+    id: string
+  ): Promise<CustomCharacter[]> {
+    const sheetUrl = `https://charasheet.vampire-blood.net/${id}`;
+    const json = await fetchJsonp(`${sheetUrl}.js`)
+      .then(response => response.json())
+      .catch(err => console.warn(err));
+    // URLが正しくない場合、空のjsonが帰ってくる
+    if (!json || Object.keys(json).length < 1) {
+      throw new Error('URLが正しくありません。');
+    }
+
+    if (!json.game) {
+      console.error(`game要素がありません。`);
+      throw new Error('このキャラクターシートは使用できません。');
+    }
+    const systemInfo = CharazipComponent.vampireBloodInfos.find(
+      info => info.system === json.game
+    );
+    if (!systemInfo) {
+      throw new Error('未対応のシステムです。');
+    }
+    return systemInfo.generater(json, sheetUrl);
   }
 
-  constructor() {}
+  private static async generateByAppspotCharacter(
+    system: string,
+    key: string
+  ): Promise<CustomCharacter[]> {
+    const sheetUrl = `https://character-sheets.appspot.com/${system}/edit.html?key=${key}`;
+    const systemInfo = CharazipComponent.appspotInfos.find(
+      info => info.system === system
+    );
+    if (!systemInfo) {
+      throw new Error('未対応のシステムです。');
+    }
+
+    const json = await fetchJsonp(
+      `https://character-sheets.appspot.com/${system}/display?ajax=1&base64Image=1&key=${key}`
+    )
+      .then(response => response.json())
+      .catch(err => console.warn(err));
+    // URLが正しくない場合、空のjsonが帰ってくる
+    if (!json || Object.keys(json).length < 1) {
+      throw new Error('URLが正しくありません。');
+    }
+
+    let imageIdentifier: string = null;
+    if (json.images && json.images.uploadImage) {
+      const image: ImageFile = await this.createImageAsync(
+        json.images.uploadImage
+      );
+      if (image) {
+        imageIdentifier = image.toContext().identifier;
+      }
+    }
+
+    return systemInfo.generater(json, sheetUrl, imageIdentifier);
+  }
+
+  /**
+   * @see ImageFile#createThumbnailAsync from @udonarium/core/file-storage/image-file
+   */
+  private static async createImageAsync(base64img: string): Promise<ImageFile> {
+    return new Promise((resolve, reject) => {
+      const canvas: HTMLCanvasElement = document.createElement('canvas');
+      const render: CanvasRenderingContext2D = canvas.getContext('2d');
+      const image: HTMLImageElement = new Image();
+      image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        render.drawImage(image, 0, 0);
+        canvas.toBlob(blob => {
+          if (blob.size > 2 * 1024 * 1024) {
+            resolve();
+          }
+          resolve(ImageStorage.instance.addAsync(blob));
+        });
+      };
+      image.onabort = image.onerror = () => {
+        reject();
+      };
+      image.src = base64img;
+    });
+  }
 
   ngOnInit() {}
 
@@ -158,91 +259,5 @@ export class CharazipComponent implements OnInit {
     }
 
     FileArchiver.instance.save(files, fileName);
-  }
-
-  private static async generateByVampireBloodCharacter(
-    id: string
-  ): Promise<CustomCharacter[]> {
-    const sheetUrl = `https://charasheet.vampire-blood.net/${id}`;
-    const json = await fetchJsonp(`${sheetUrl}.js`)
-      .then(response => response.json())
-      .catch(err => console.warn(err));
-    // URLが正しくない場合、空のjsonが帰ってくる
-    if (!json || Object.keys(json).length < 1) {
-      throw new Error('URLが正しくありません。');
-    }
-
-    if (!json.game) {
-      console.error(`game要素がありません。`);
-      throw new Error('このキャラクターシートは使用できません。');
-    }
-    const systemInfo = CharazipComponent.vampireBloodInfos.find(
-      info => info.system === json.game
-    );
-    if (!systemInfo) {
-      throw new Error('未対応のシステムです。');
-    }
-    return systemInfo.generater(json, sheetUrl);
-  }
-
-  private static async generateByAppspotCharacter(
-    system: string,
-    key: string
-  ): Promise<CustomCharacter[]> {
-    const sheetUrl = `https://character-sheets.appspot.com/${system}/edit.html?key=${key}`;
-    const systemInfo = CharazipComponent.appspotInfos.find(
-      info => info.system === system
-    );
-    if (!systemInfo) {
-      throw new Error('未対応のシステムです。');
-    }
-
-    const json = await fetchJsonp(
-      `https://character-sheets.appspot.com/${system}/display?ajax=1&base64Image=1&key=${key}`
-    )
-      .then(response => response.json())
-      .catch(err => console.warn(err));
-    // URLが正しくない場合、空のjsonが帰ってくる
-    if (!json || Object.keys(json).length < 1) {
-      throw new Error('URLが正しくありません。');
-    }
-
-    let imageIdentifier: string = null;
-    if (json.images && json.images.uploadImage) {
-      const image: ImageFile = await this.createImageAsync(
-        json.images.uploadImage
-      );
-      if (image) {
-        imageIdentifier = image.toContext().identifier;
-      }
-    }
-
-    return systemInfo.generater(json, sheetUrl, imageIdentifier);
-  }
-
-  /**
-   * @see ImageFile#createThumbnailAsync from @udonarium/core/file-storage/image-file
-   */
-  private static async createImageAsync(base64img: string): Promise<ImageFile> {
-    return new Promise((resolve, reject) => {
-      const canvas: HTMLCanvasElement = document.createElement('canvas');
-      const render: CanvasRenderingContext2D = canvas.getContext('2d');
-      const image: HTMLImageElement = new Image();
-      image.onload = () => {
-        canvas.width = image.width;
-        canvas.height = image.height;
-        render.drawImage(image, 0, 0);
-        canvas.toBlob(blob => {
-          if (blob.size > 2 * 1024 * 1024) {
-            resolve();
-          }
-          resolve(ImageStorage.instance.addAsync(blob));
-        });
-      };
-      image.onabort = image.onerror = () => {
-        reject();
-      };
-      image.src = base64img;
-    });
   }
 }
