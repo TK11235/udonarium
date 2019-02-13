@@ -81,6 +81,7 @@ export class AudioSharingSystem {
           for (let peer of candidatePeers) {
             console.log('REQUEST_AUDIO_RESOURE AudioStorageService Relay!!! ' + peer + ' -> ' + event.data.identifiers);
             EventSystem.call(event, peer);
+            return;
           }
           console.log('REQUEST_FILE_RESOURE ImageStorageService あぶれた...' + event.data.receiver, randomRequest.length, this.taskMap);
         }
