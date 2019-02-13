@@ -125,9 +125,13 @@ export class BufferSharingTask<T> {
     this.chankReceiveCount = 0;
     EventSystem.register(this)
       .on<ChankData>('FILE_SEND_CHANK_' + this.identifier, 0, event => {
-        this.chankReceiveCount++;
         if (this.chanks.length < 1) this.chanks = new Array(event.data.length);
 
+        if (this.chanks[event.data.index] != null) {
+          console.log(`already received. [${event.data.index}] <${this.identifier}>`);
+          return;
+        }
+        this.chankReceiveCount++;
         this.chanks[event.data.index] = event.data.chank;
         if (this.onprogress) this.onprogress(this, event.data.index, event.data.length);
         if (this.chanks.length <= this.chankReceiveCount) {
