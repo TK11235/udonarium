@@ -160,7 +160,7 @@ export class Dx3rdGenerator {
       });
     }
     const skillNames = ['運転_', '芸術_', '知識_', '情報_'];
-    for (let i = 0; i < json.V_skill_id.length; i++) {
+    for (let i = 0; json.V_skill_id && i < json.V_skill_id.length; i++) {
       const skillId = Number.parseInt(json.V_skill_id[i], 10);
       if (!skillId || skillId <= 0) {
         continue;
