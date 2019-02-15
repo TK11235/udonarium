@@ -124,7 +124,6 @@ export class InsaneGenerator {
       if (!item.name) {
         continue;
       }
-      console.log(item.name, item.count);
       itemElement.appendChild(
         gameCharacter.createResourceElement(item.name, 2, item.count || '0')
       );
