@@ -83,9 +83,9 @@ export class CharazipComponent implements OnInit {
     id: string
   ): Promise<CustomCharacter[]> {
     const sheetUrl = `https://charasheet.vampire-blood.net/${id}`;
-    const json = await fetchJsonp(`${sheetUrl}.js`)
-      .then(response => response.json())
-      .catch(err => console.warn(err));
+    const json = await fetchJsonp(`${sheetUrl}.js`).then(response =>
+      response.json()
+    );
     // URLが正しくない場合、空のjsonが帰ってくる
     if (!json || Object.keys(json).length < 1) {
       throw new Error('URLが正しくありません。');
@@ -118,9 +118,7 @@ export class CharazipComponent implements OnInit {
 
     const json = await fetchJsonp(
       `https://character-sheets.appspot.com/${system}/display?ajax=1&base64Image=1&key=${key}`
-    )
-      .then(response => response.json())
-      .catch(err => console.warn(err));
+    ).then(response => response.json());
     // URLが正しくない場合、空のjsonが帰ってくる
     if (!json || Object.keys(json).length < 1) {
       throw new Error('URLが正しくありません。');
