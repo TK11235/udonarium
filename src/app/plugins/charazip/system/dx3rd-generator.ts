@@ -273,7 +273,10 @@ export class Dx3rdGenerator {
       const power = json.arms_power[i];
       const range = json.arms_range[i];
       const memo = json.arms_sonota[i];
-      let armText = `判定[${hit}]`;
+      let armText = '';
+      if (hit) {
+        armText += `判定[${hit}]`;
+      }
       if (guardLevel) {
         armText += `ガード[${guardLevel}]`;
       }
@@ -481,7 +484,10 @@ export class Dx3rdGenerator {
       const power = json.arms_power[i];
       const range = json.arms_range[i];
       const memo = json.arms_sonota[i];
-      let armText = `判定[${hit}]`;
+      let armText = '';
+      if (hit) {
+        armText += `判定[${hit}]`;
+      }
       if (guardLevel) {
         armText += `ガード[${guardLevel}]`;
       }
@@ -494,8 +500,10 @@ export class Dx3rdGenerator {
       if (memo) {
         armText += `その他[${memo}]`;
       }
-      cp += `《${armName}》 ${armText}
-${hit} 《${armName}》 侵蝕:　攻撃力:${power}　効果:${memo}\n\n`;
+      cp += `《${armName}》 ${armText}\n`;
+      if (hit) {
+        cp += `${hit} 《${armName}》 侵蝕:　攻撃力:${power}　効果:${memo}\n\n`;
+      }
     }
     cp += '\n//-----防具\n';
     if (armerName) {
@@ -806,7 +814,10 @@ ${hit} 《${armName}》 侵蝕:　攻撃力:${power}　効果:${memo}\n\n`;
       const attack = combo.under100.attack;
       const range = combo.under100.range;
       const notes = combo.under100.notes;
-      let comboText = `判定[${dice}]`;
+      let comboText = '';
+      if (dice) {
+        comboText += `判定[${dice}]`;
+      }
       if (cost) {
         comboText += `侵蝕[${cost}]`;
       }
@@ -996,7 +1007,10 @@ ${hit} 《${armName}》 侵蝕:　攻撃力:${power}　効果:${memo}\n\n`;
       const attack = combo.under100.attack || '';
       const range = combo.under100.range || '';
       const notes = combo.under100.notes || '';
-      let comboText = `判定[${dice}]`;
+      let comboText = '';
+      if (dice) {
+        comboText += `判定[${dice}]`;
+      }
       if (cost) {
         comboText += `侵蝕[${cost}]`;
       }
@@ -1006,8 +1020,12 @@ ${hit} 《${armName}》 侵蝕:　攻撃力:${power}　効果:${memo}\n\n`;
       if (notes) {
         comboText += `効果[${notes}]`;
       }
-      cp += `《${combo.name}》 ${comboText}
-${dice} 《${combo.name}》 侵蝕:${cost}　攻撃力:${attack}　効果:${notes}\n\n`;
+      cp += `《${combo.name}》 ${comboText}`;
+      if (dice) {
+        cp += `${dice} 《${
+          combo.name
+        }》 侵蝕:${cost}　攻撃力:${attack}　効果:${notes}\n\n`;
+      }
     }
     cp += '\n//-----武器\n';
     for (const weapon of json.weapons) {
