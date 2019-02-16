@@ -229,14 +229,41 @@ export class Dx3rdGenerator {
         `Lv:${ressurectLv}｜侵蝕:[SL]d`
       )
     );
+    const convertEffectLv = [
+      '★',
+      1,
+      2,
+      3,
+      4,
+      5,
+      '★',
+      1,
+      2,
+      3,
+      '★',
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ];
     for (let i = 0; i < json.effect_name.length; i++) {
       const effectName = json.effect_name[i];
       if (!effectName) {
         continue;
       }
       let sl = json.S_effect_lv[i];
-      if (sl === '0') {
+      if (['★', '○', '◇', '0', '6', '10'].includes(sl)) {
         sl = '★';
+      } else {
+        sl = convertEffectLv[Number.parseInt(sl, 10)];
       }
       const cost = json.effect_cost[i];
       effectElement.appendChild(
@@ -401,10 +428,10 @@ export class Dx3rdGenerator {
         continue;
       }
       let sl = json.S_effect_lv[i];
-      if (sl === '0') {
+      if (['★', '○', '◇', '0', '6', '10'].includes(sl)) {
         sl = '★';
       } else {
-        sl = `${sl}+{Lv}`;
+        sl = `${convertEffectLv[Number.parseInt(sl, 10)]}+{Lv}`;
       }
       const timing = json.effect_timing[i];
       const judge = json.effect_hantei[i];

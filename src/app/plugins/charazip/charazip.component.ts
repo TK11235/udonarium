@@ -75,8 +75,7 @@ export class CharazipComponent implements OnInit {
   @ViewChild('input')
   inputElementRef: ElementRef<HTMLInputElement>;
 
-  url =
-    ''
+  url = '';
   errorMsg = '';
 
   private static async generateByVampireBloodCharacter(
