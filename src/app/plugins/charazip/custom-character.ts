@@ -2,6 +2,7 @@ import { SyncObject } from '@udonarium/core/synchronize-object/decorator';
 
 import { DataElement } from '@udonarium/data-element';
 import { GameCharacter } from '@udonarium/game-character';
+import { StringUtil } from '@udonarium/core/system/util/string-util';
 
 @SyncObject('custom-character')
 export class CustomCharacter extends GameCharacter {
@@ -39,6 +40,7 @@ export class CustomCharacter extends GameCharacter {
   }
 
   createDataElement(name: string, value: string | number): DataElement {
+    name = StringUtil.toHalfWidth(name);
     return DataElement.create(name, value, {}, `${name}_${this.identifier}`);
   }
 
@@ -47,6 +49,7 @@ export class CustomCharacter extends GameCharacter {
     value: string | number,
     currentValue: string | number
   ): DataElement {
+    name = StringUtil.toHalfWidth(name);
     return DataElement.create(
       name,
       value,
@@ -56,6 +59,7 @@ export class CustomCharacter extends GameCharacter {
   }
 
   createNoteElement(name: string, value: string | number): DataElement {
+    name = StringUtil.toHalfWidth(name);
     return DataElement.create(
       name,
       value,

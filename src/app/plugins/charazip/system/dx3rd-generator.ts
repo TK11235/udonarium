@@ -129,16 +129,16 @@ export class Dx3rdGenerator {
     const skillInfos = [
       { type: 1, name: '白兵' },
       { type: 1, name: '回避' },
-      { type: 1, name: '運転_' },
+      { type: 1, name: '運転:' },
       { type: 2, name: '射撃' },
       { type: 2, name: '知覚' },
-      { type: 2, name: '芸術_' },
+      { type: 2, name: '芸術:' },
       { type: 3, name: 'RC' },
       { type: 3, name: '意志' },
-      { type: 3, name: '知識_' },
+      { type: 3, name: '知識:' },
       { type: 4, name: '交渉' },
       { type: 4, name: '調達' },
-      { type: 4, name: '情報_' }
+      { type: 4, name: '情報:' }
     ];
     const skills: {
       type: number;
@@ -159,7 +159,7 @@ export class Dx3rdGenerator {
         extra: extra
       });
     }
-    const skillNames = ['運転_', '芸術_', '知識_', '情報_'];
+    const skillNames = ['運転:', '芸術:', '知識:', '情報:'];
     for (let i = 0; json.V_skill_id && i < json.V_skill_id.length; i++) {
       const skillId = Number.parseInt(json.V_skill_id[i], 10);
       if (!skillId || skillId <= 0) {
@@ -729,7 +729,7 @@ export class Dx3rdGenerator {
       }
       abilityElement.appendChild(
         gameCharacter.createDataElement(
-          `運転_${skills.name1}`,
+          `運転:${skills.name1}`,
           skills.lv1 || '0'
         )
       );
@@ -752,7 +752,7 @@ export class Dx3rdGenerator {
       }
       abilityElement.appendChild(
         gameCharacter.createDataElement(
-          `芸術_${skills.name2}`,
+          `芸術:${skills.name2}`,
           skills.lv2 || '0'
         )
       );
@@ -775,7 +775,7 @@ export class Dx3rdGenerator {
       }
       abilityElement.appendChild(
         gameCharacter.createDataElement(
-          `知識_${skills.name3}`,
+          `知識:${skills.name3}`,
           skills.lv3 || '0'
         )
       );
@@ -798,7 +798,7 @@ export class Dx3rdGenerator {
       }
       abilityElement.appendChild(
         gameCharacter.createDataElement(
-          `情報_${skills.name4}`,
+          `情報:${skills.name4}`,
           skills.lv4 || '0'
         )
       );
@@ -947,7 +947,7 @@ export class Dx3rdGenerator {
       if (!skills.name1) {
         continue;
       }
-      cp += `({【肉体】}+{D})dx+{運転_${skills.name1}} 《運転_${
+      cp += `({【肉体】}+{D})dx+{運転:${skills.name1}} 《運転:${
         skills.name1
       }》\n`;
     }
@@ -959,7 +959,7 @@ export class Dx3rdGenerator {
       if (!skills.name2) {
         continue;
       }
-      cp += `({【感覚】}+{D})dx+{芸術_${skills.name2}} 《芸術_${
+      cp += `({【感覚】}+{D})dx+{芸術:${skills.name2}} 《芸術:${
         skills.name2
       }》\n`;
     }
@@ -971,7 +971,7 @@ export class Dx3rdGenerator {
       if (!skills.name3) {
         continue;
       }
-      cp += `({【精神】}+{D})dx+{知識_${skills.name3}} 《知識_${
+      cp += `({【精神】}+{D})dx+{知識:${skills.name3}} 《知識:${
         skills.name3
       }》\n`;
     }
@@ -983,7 +983,7 @@ export class Dx3rdGenerator {
       if (!skills.name4) {
         continue;
       }
-      cp += `({【社会】}+{D})dx+{情報_${skills.name4}} 《情報_${
+      cp += `({【社会】}+{D})dx+{情報:${skills.name4}} 《情報:${
         skills.name4
       }》\n`;
     }
