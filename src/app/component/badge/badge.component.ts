@@ -1,5 +1,5 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, NgZone, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'badge',
@@ -20,19 +20,9 @@ import { Component, Input, NgZone, OnChanges, OnDestroy, OnInit } from '@angular
     ])
   ]
 })
-export class BadgeComponent implements OnInit, OnDestroy, OnChanges {
+export class BadgeComponent implements OnChanges {
   @Input() count: number = 0;
   animeState: string = 'active';
-
-  constructor() { }
-
-  ngOnInit() {
-
-  }
-
-  ngOnDestroy() {
-
-  }
 
   ngOnChanges() {
     this.animeState = 'inactive';
