@@ -54,7 +54,8 @@ INFO_MESSAGE_TEXT
     
     value %= 100
     
-    dice1 = value / 10
+    #dice1 = value / 10
+    dice1 = (value / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     dice2 = value % 10
     
     return [dice1, dice2]

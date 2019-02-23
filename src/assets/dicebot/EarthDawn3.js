@@ -239,7 +239,7 @@ Opal.loaded(["diceBot/EarthDawn"]);
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$ed_step', '$getStepResult', '$=~', '$to_i', '$min', '$!', '$nil?', '$max', '$new', '$[]=', '$<', '$getStepInfo', '$debug', '$each', '$+', '$rollStep', '$shift', '$getModifyText', '$==', '$getSuccess', '$>', '$getBaseStepTable', '$first', '$last', '$<=', '$get_table_by_number', '$-', '$/', '$size', '$times', '$addStepToResult', '$%', '$[]', '$getSuccessTable', '$>=', '$empty?', '$roll', '$!=']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$ed_step', '$getStepResult', '$=~', '$to_i', '$min', '$!', '$nil?', '$max', '$new', '$[]=', '$<', '$getStepInfo', '$debug', '$each', '$+', '$rollStep', '$shift', '$getModifyText', '$==', '$getSuccess', '$>', '$getBaseStepTable', '$first', '$last', '$<=', '$get_table_by_number', '$-', '$floor', '$/', '$size', '$times', '$addStepToResult', '$%', '$[]', '$getSuccessTable', '$>=', '$empty?', '$roll', '$!=']);
   self.$require("diceBot/EarthDawn");
   return (function($base, $super) {
     function $EarthDawn3(){};
@@ -367,7 +367,7 @@ if (diceType == null) diceType = nil;if (diceCount == null) diceCount = nil;
       overStep = $rb_minus($rb_minus(step, baseMaxStep), 1);
       stepRythm = [[0, 0, 0, 0, 2, 0, 0], [0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 2, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0], [0, 0, 2, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0, 0], [0, 2, 0, 0, 0, 0, 0]];
       result = [0, 0, 0, 0, 0, 0, 0];
-      loopCount = ($rb_divide(overStep, stepRythm.$size()));
+      loopCount = ($rb_divide(overStep, stepRythm.$size())).$floor();
       ($a = ($b = loopCount).$times, $a.$$p = (TMP_12 = function(){var self = TMP_12.$$s || this;
 
       return self.$addStepToResult(result, baseStepInfo)}, TMP_12.$$s = self, TMP_12.$$arity = 0, TMP_12), $a).call($b);

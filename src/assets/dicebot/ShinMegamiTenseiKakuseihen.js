@@ -14,7 +14,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass;
 
-  Opal.add_stubs(['$==', '$%', '$getTwoDice', '$+', '$*', '$getCheckResultText', '$min', '$max', '$first', '$getDiceList', '$/', '$getCheckResult', '$sprintf', '$>=', '$getSuccessResult', '$getFailResult']);
+  Opal.add_stubs(['$==', '$%', '$getTwoDice', '$+', '$*', '$getCheckResultText', '$min', '$max', '$first', '$getDiceList', '$floor', '$/', '$getCheckResult', '$sprintf', '$>=', '$getSuccessResult', '$getFailResult']);
   return (function($base, $super) {
     function $ShinMegamiTenseiKakuseihen(){};
     var self = $ShinMegamiTenseiKakuseihen = $klass($base, $super, 'ShinMegamiTenseiKakuseihen', $ShinMegamiTenseiKakuseihen);
@@ -78,7 +78,7 @@
       value = self.$getDiceList().$first();
       ((($a = value) !== false && $a !== nil && $a != null) ? $a : value = 0);
       value = value['$%'](100);
-      dice1 = $rb_divide(value, 10);
+      dice1 = ($rb_divide(value, 10)).$floor();
       dice2 = value['$%'](10);
       return [dice1, dice2];
     }, TMP_6.$$arity = 0);

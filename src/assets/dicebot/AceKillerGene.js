@@ -14,7 +14,7 @@ Opal.modules["diceBot/GardenOrder"] = function(Opal) {
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$get_critical_border', '$check_roll_repeat_attack', '$look_up_damage_chart', '$nil?', '$max', '$/', '$check_roll', '$<', '$roll', '$get_check_result', '$<=', '$>=', '$get_damage_table_info_by_type', '$get_table_by_number', '$[]']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$get_critical_border', '$check_roll_repeat_attack', '$look_up_damage_chart', '$nil?', '$max', '$floor', '$/', '$check_roll', '$<', '$roll', '$get_check_result', '$<=', '$>=', '$get_damage_table_info_by_type', '$get_table_by_number', '$[]']);
   return (function($base, $super) {
     function $GardenOrder(){};
     var self = $GardenOrder = $klass($base, $super, 'GardenOrder', $GardenOrder);
@@ -61,14 +61,14 @@ Opal.modules["diceBot/GardenOrder"] = function(Opal) {
         } else {
         return critical_border_text.$to_i()
       };
-      critical_border = [$rb_divide(success_rate, 5), 1].$max();
+      critical_border = [($rb_divide(success_rate, 5)).$floor(), 1].$max();
       return critical_border;
     }, TMP_5.$$arity = 2);
 
     Opal.defn(self, '$check_roll_repeat_attack', TMP_6 = function $$check_roll_repeat_attack(success_rate, repeat_count, critical_border) {
       var self = this, success_rate_per_one = nil;
 
-      success_rate_per_one = $rb_divide(success_rate, repeat_count);
+      success_rate_per_one = ($rb_divide(success_rate, repeat_count)).$floor();
       return self.$check_roll(success_rate_per_one, critical_border);
     }, TMP_6.$$arity = 3);
 

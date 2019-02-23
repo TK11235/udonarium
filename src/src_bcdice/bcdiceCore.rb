@@ -922,7 +922,8 @@ class BCDice
     string, secret, count, swapMarker = getD66Infos(dice)
     unless( string.nil? )
       value = getD66ValueByMarker(swapMarker)
-      diceText = (value / 10).to_s  + "," + (value % 10).to_s
+      #diceText = (value / 10).to_s  + "," + (value % 10).to_s
+      diceText = (value / 10).floor.to_s  + "," + (value % 10).to_s # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
       return value, diceText
     end
     

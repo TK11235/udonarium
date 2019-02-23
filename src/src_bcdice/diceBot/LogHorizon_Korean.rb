@@ -336,7 +336,8 @@ MESSAGETEXT
   
   
   def getTableByRank(rank, tables)
-	index = (rank - 1) / 5
+  #index = (rank - 1) / 5
+  index = ((rank - 1) / 5).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     
 	index = [0, index].max
 	index = [index, (tables.size - 1)].min

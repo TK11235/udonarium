@@ -26,7 +26,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$==', '$empty?', '$parren_killer', '$size', '$select', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$=~']);
+  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$==', '$empty?', '$parren_killer', '$size', '$select', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$floor', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$=~']);
   return (function($base, $super) {
     function $LogHorizon(){};
     var self = $LogHorizon = $klass($base, $super, 'LogHorizon', $LogHorizon);
@@ -230,7 +230,7 @@ if (i == null) i = nil;
     Opal.defn(self, '$getTableByRank', TMP_21 = function $$getTableByRank(rank, tables) {
       var self = this, index = nil;
 
-      index = $rb_divide(($rb_minus(rank, 1)), 5);
+      index = ($rb_divide(($rb_minus(rank, 1)), 5)).$floor();
       index = [0, index].$max();
       index = [index, ($rb_minus(tables.$size(), 1))].$min();
       return tables['$[]'](index);

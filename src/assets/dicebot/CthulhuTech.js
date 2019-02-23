@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $range = Opal.range;
 
-  Opal.add_stubs(['$==', '$check_nD10_nomalTest', '$check_nD10_combatTest', '$>=', '$to_i', '$+', '$/', '$>', '$===', '$getDamageDice', '$debug', '$ceil', '$-', '$cthulhutech_check', '$collect', '$split', '$each', '$[]=', '$[]', '$length', '$times', '$*', '$step']);
+  Opal.add_stubs(['$==', '$check_nD10_nomalTest', '$check_nD10_combatTest', '$>=', '$to_i', '$+', '$floor', '$/', '$>', '$===', '$getDamageDice', '$debug', '$ceil', '$-', '$cthulhutech_check', '$collect', '$split', '$each', '$[]=', '$[]', '$length', '$times', '$*', '$step']);
   return (function($base, $super) {
     function $CthulhuTech(){};
     var self = $CthulhuTech = $klass($base, $super, 'CthulhuTech', $CthulhuTech);
@@ -77,7 +77,7 @@
     Opal.defn(self, '$check_nD10_nomalTest', TMP_6 = function $$check_nD10_nomalTest(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
       var $a, self = this, isSuccess = nil;
 
-      if ((($a = ($rb_ge(n1, ($rb_plus($rb_divide(dice_cnt, 2), 0.9)).$to_i()))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
+      if ((($a = ($rb_ge(n1, ($rb_plus(($rb_divide(dice_cnt, 2)).$floor(), 0.9)).$to_i()))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return " ＞ ファンブル"};
       isSuccess = false;
       if ((($a = (self.isCombatTest)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {

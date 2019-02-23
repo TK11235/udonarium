@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash = Opal.hash, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$getJudgeResult', '$nil?', '$navigationResult', '$getFireResult', '$getBomberResult', '$getAvoidResult', '$===', '$empty?', '$to_i', '$roll', '$<=', '$/', '$+', '$[]', '$to_s', '$min', '$getFirePoint', '$getFirePointText', '$!=', '$getDirectionInfo', '$times', '$<<', '$each', '$split', '$getMovePoint', '$isInMapPosition', '$join', '$slice', '$scanFirePoints', '$size', '$gsub', '$[]=']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$getJudgeResult', '$nil?', '$navigationResult', '$getFireResult', '$getBomberResult', '$getAvoidResult', '$===', '$empty?', '$to_i', '$roll', '$<=', '$floor', '$/', '$+', '$[]', '$to_s', '$min', '$getFirePoint', '$getFirePointText', '$!=', '$getDirectionInfo', '$times', '$<<', '$each', '$split', '$getMovePoint', '$isInMapPosition', '$join', '$slice', '$scanFirePoints', '$size', '$gsub', '$[]=']);
   return (function($base, $super) {
     function $Skynauts(){};
     var self = $Skynauts = $klass($base, $super, 'Skynauts', $Skynauts);
@@ -122,10 +122,10 @@
       bonus = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
       self.$debug("移動修正", bonus);
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), total = ($a[0] == null ? nil : $a[0]), $b;
-      movePointBase = (function() {if ((($a = $rb_le(($rb_divide(total, 2)), 0)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
+      movePointBase = (function() {if ((($a = $rb_le(($rb_divide(total, 2)).$floor(), 0)) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return 1
         } else {
-        return ($rb_divide(total, 2))
+        return ($rb_divide(total, 2)).$floor()
       }; return nil; })();
       movePoint = $rb_plus(movePointBase, bonus);
       self.$debug("移動エリア数", movePoint);

@@ -55,14 +55,16 @@ INFO_MESSAGE_TEXT
     
     return critical_border_text.to_i unless critical_border_text.nil? 
     
-    critical_border = [success_rate / 5, 1].max
+    #critical_border = [success_rate / 5, 1].max
+    critical_border = [(success_rate / 5).floor, 1].max # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     return critical_border
   end
   
   
   
   def check_roll_repeat_attack(success_rate, repeat_count, critical_border)
-    success_rate_per_one = success_rate / repeat_count
+    #success_rate_per_one = success_rate / repeat_count
+    success_rate_per_one = (success_rate / repeat_count).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     
     check_roll(success_rate_per_one, critical_border)
   end

@@ -14,7 +14,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass;
 
-  Opal.add_stubs(['$==', '$%', '$/', '$debug', '$<=', '$>=', '$-']);
+  Opal.add_stubs(['$==', '$%', '$floor', '$/', '$debug', '$<=', '$>=', '$-']);
   return (function($base, $super) {
     function $EclipsePhase(){};
     var self = $EclipsePhase = $klass($base, $super, 'EclipsePhase', $EclipsePhase);
@@ -59,7 +59,7 @@
         return ""
       };
       diceValue = total_n['$%'](100);
-      dice_ten_place = $rb_divide(diceValue, 10);
+      dice_ten_place = ($rb_divide(diceValue, 10)).$floor();
       dice_one_place = diceValue['$%'](10);
       self.$debug("total_n", total_n);
       self.$debug("dice_ten_place, dice_one_place", dice_ten_place, dice_one_place);

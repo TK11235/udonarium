@@ -102,7 +102,8 @@ MESSAGETEXT
     debug("移動修正", bonus)
     
     total, = roll(1,6)
-    movePointBase = (total / 2) <= 0 ? 1 : (total / 2)
+    #movePointBase = (total / 2) <= 0 ? 1 : (total / 2)
+    movePointBase = (total / 2).floor <= 0 ? 1 : (total / 2).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     movePoint = movePointBase + bonus
     debug("移動エリア数", movePoint)    
     

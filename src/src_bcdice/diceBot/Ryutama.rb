@@ -85,14 +85,16 @@ INFO_MESSAGE_TEXT
     
     diceBase = dice1
     
-    dice1 = diceBase / 10
+    #dice1 = diceBase / 10
+    dice1 = (diceBase / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     dice2 = diceBase % 10
     
     if( isValidDice(dice1, dice2) )
       return dice1, dice2
     end
     
-    dice1 = diceBase / 100
+    #dice1 = diceBase / 100
+    dice1 = (diceBase / 100).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     dice2 = diceBase % 100
     
     if( isValidDice(dice1, dice2) )

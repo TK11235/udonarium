@@ -25,7 +25,8 @@ INFO_MESSAGE_TEXT
     return '' unless signOfInequality == '<='
     
     diceValue = total_n % 100 # 出目00は100ではなく00とする
-    dice_ten_place = diceValue / 10
+    #dice_ten_place = diceValue / 10
+    dice_ten_place = (diceValue / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     dice_one_place = diceValue % 10
     
     debug("total_n", total_n)

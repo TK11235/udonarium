@@ -236,7 +236,7 @@ Opal.loaded(["diceBot/EarthDawn"]);
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$ed_step', '$getStepResult', '$getStepResultInfos', '$nil?', '$==', '$getSuccess', '$!', '$empty?', '$debug', '$getStepResultInfo', '$<<', '$join', '$inject', '$+', '$>', '$size', '$=~', '$to_i', '$<', '$getStepInfo', '$each', '$rollStep', '$shift', '$getModifyText', '$getBaseStepTable', '$first', '$last', '$<=', '$get_table_by_number', '$-', '$/', '$times', '$addStepToResult', '$%', '$[]', '$[]=', '$roll', '$!=']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$ed_step', '$getStepResult', '$getStepResultInfos', '$nil?', '$==', '$getSuccess', '$!', '$empty?', '$debug', '$getStepResultInfo', '$<<', '$join', '$inject', '$+', '$>', '$size', '$=~', '$to_i', '$<', '$getStepInfo', '$each', '$rollStep', '$shift', '$getModifyText', '$getBaseStepTable', '$first', '$last', '$<=', '$get_table_by_number', '$-', '$floor', '$/', '$times', '$addStepToResult', '$%', '$[]', '$[]=', '$roll', '$!=']);
   self.$require("diceBot/EarthDawn");
   return (function($base, $super) {
     function $EarthDawn4(){};
@@ -404,7 +404,7 @@ if (type == null) type = nil;
       overStep = $rb_minus($rb_minus(step, baseMaxStep), 1);
       stepRythm = [[0, 0, 0, 0, 2, 0, 0], [0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 2, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0], [0, 0, 2, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0, 0], [0, 2, 0, 0, 0, 0, 0], [0, 1, 0, 0, 2, 0, 0], [0, 1, 0, 1, 1, 0, 0], [0, 1, 0, 2, 0, 0, 0], [0, 1, 1, 1, 0, 0, 0]];
       result = [0, 0, 0, 0, 0, 0, 0];
-      loopCount = ($rb_divide(overStep, stepRythm.$size()));
+      loopCount = ($rb_divide(overStep, stepRythm.$size())).$floor();
       ($a = ($b = loopCount).$times, $a.$$p = (TMP_14 = function(){var self = TMP_14.$$s || this;
 
       return self.$addStepToResult(result, overBounusStep)}, TMP_14.$$s = self, TMP_14.$$arity = 0, TMP_14), $a).call($b);
@@ -432,7 +432,7 @@ if (i == null) i = nil;
       self.$debug("diff", diff);
       if ((($a = ($rb_lt(diff, 0))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return "失敗"};
-      level = $rb_plus(($rb_divide(diff, 5)), 1);
+      level = $rb_plus(($rb_divide(diff, 5)).$floor(), 1);
       return "成功 レベル：" + (level);
     }, TMP_18.$$arity = 2);
 

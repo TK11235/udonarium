@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$getDiceType', '$==', '$parren_killer', '$+', '$getDiffculty', '$getRollValue', '$getResultText', '$empty?', '$getModifyString', '$getBaseText', '$!=', '$isValidDiceOne', '$isValidDice', '$/', '$%', '$include?', '$nil?', '$rand', '$isFamble', '$isCritical', '$>=', '$>', '$to_s', '$<']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$getDiceType', '$==', '$parren_killer', '$+', '$getDiffculty', '$getRollValue', '$getResultText', '$empty?', '$getModifyString', '$getBaseText', '$!=', '$isValidDiceOne', '$isValidDice', '$floor', '$/', '$%', '$include?', '$nil?', '$rand', '$isFamble', '$isCritical', '$>=', '$>', '$to_s', '$<']);
   return (function($base, $super) {
     function $Ryutama(){};
     var self = $Ryutama = $klass($base, $super, 'Ryutama', $Ryutama);
@@ -111,11 +111,11 @@
       if ((($a = (self.$isValidDice(dice1, dice2))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return [dice1, dice2]};
       diceBase = dice1;
-      dice1 = $rb_divide(diceBase, 10);
+      dice1 = ($rb_divide(diceBase, 10)).$floor();
       dice2 = diceBase['$%'](10);
       if ((($a = (self.$isValidDice(dice1, dice2))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return [dice1, dice2]};
-      dice1 = $rb_divide(diceBase, 100);
+      dice1 = ($rb_divide(diceBase, 100)).$floor();
       dice2 = diceBase['$%'](100);
       if ((($a = (self.$isValidDice(dice1, dice2))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return [dice1, dice2]};

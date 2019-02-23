@@ -322,7 +322,7 @@ if (more_difficlty == null) more_difficlty = nil;
     Opal.defn(self, '$getSetOfBullet', TMP_22 = function $$getSetOfBullet(diff) {
       var $a, $b, self = this, bullet_set_count = nil;
 
-      bullet_set_count = $rb_divide(diff, 10);
+      bullet_set_count = ($rb_divide(diff, 10)).$floor();
       if ((($a = (($b = ($rb_ge(diff, 1)), $b !== false && $b !== nil && $b != null ?($rb_lt(diff, 10)) : $b))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         bullet_set_count = 1};
       return bullet_set_count;
@@ -331,7 +331,7 @@ if (more_difficlty == null) more_difficlty = nil;
     Opal.defn(self, '$getHitBulletCountBase', TMP_23 = function $$getHitBulletCountBase(diff, bullet_set_count) {
       var $a, $b, self = this, hit_bullet_count_base = nil;
 
-      hit_bullet_count_base = ($rb_divide(bullet_set_count, 2));
+      hit_bullet_count_base = ($rb_divide(bullet_set_count, 2)).$floor();
       if ((($a = (($b = ($rb_ge(diff, 1)), $b !== false && $b !== nil && $b != null ?($rb_lt(diff, 10)) : $b))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         hit_bullet_count_base = 1};
       return hit_bullet_count_base;

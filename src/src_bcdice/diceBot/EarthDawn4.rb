@@ -204,7 +204,8 @@ INFO_MESSAGE_TEXT
     
     result = [  0,   0,   0,  0,  0,  0,   0]
     
-    loopCount = (overStep / stepRythm.size)
+    #loopCount = (overStep / stepRythm.size)
+    loopCount = (overStep / stepRythm.size).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     
     loopCount.times do
       addStepToResult(result, overBounusStep)
@@ -239,7 +240,8 @@ INFO_MESSAGE_TEXT
       return "失敗"
     end
     
-    level = (diff / 5) + 1
+    #level = (diff / 5) + 1
+    level = (diff / 5).floor + 1 # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     
     return "成功 レベル：#{level}"
   end

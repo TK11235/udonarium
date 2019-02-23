@@ -8,7 +8,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass;
 
-  Opal.add_stubs(['$==', '$%', '$/', '$debug', '$<=']);
+  Opal.add_stubs(['$==', '$%', '$floor', '$/', '$debug', '$<=']);
   return (function($base, $super) {
     function $IthaWenUa(){};
     var self = $IthaWenUa = $klass($base, $super, 'IthaWenUa', $IthaWenUa);
@@ -53,7 +53,7 @@
         return ""
       };
       diceValue = total_n['$%'](100);
-      dice0 = $rb_divide(diceValue, 10);
+      dice0 = ($rb_divide(diceValue, 10)).$floor();
       dice1 = diceValue['$%'](10);
       self.$debug("total_n", total_n);
       self.$debug("dice0, dice1", dice0, dice1);

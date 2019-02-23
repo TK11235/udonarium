@@ -197,7 +197,7 @@ if (item == null) item = nil;if (index == null) index = nil;
       type1_indexTexts = ["D", "R", "H", "M", "A", "N"];
       type2 = ["영주\t근위\t방랑\t현자\t사냥꾼\t야수"];
       type2_indexTexts = ["F", "G", "R", "W", "J", "N"];
-      tensValue = $rb_divide(number.$to_i(), 10);
+      tensValue = ($rb_divide(number.$to_i(), 10)).$floor();
       isBefore = ($rb_lt(tensValue, 4));
       type = ((function() {if (isBefore !== false && isBefore !== nil && isBefore != null) {
         return type1

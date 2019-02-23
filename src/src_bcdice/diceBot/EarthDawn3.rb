@@ -158,7 +158,8 @@ INFO_MESSAGE_TEXT
     
     result = [  0,   0,   0,  0,  0,  0,   0]
     
-    loopCount = (overStep / stepRythm.size)
+    #loopCount = (overStep / stepRythm.size)
+    loopCount = (overStep / stepRythm.size).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     
     loopCount.times do
       addStepToResult(result, baseStepInfo)

@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$freeze', '$map', '$to_proc', '$join', '$new', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$puts', '$gameType', '$setPrefixes', '$attr_accessor', '$attr_reader', '$gameName', '$getHelpMessage', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$getDiceListFromDiceText', '$collect', '$to_i', '$split', '$each', '$>=', '$kind_of?', '$lambda', '$call', '$select', '$===', '$public_methods', '$send', '$upcase', '$==', '$getTableInfoFromExtraTableText', '$get_table_by_nDx_extratable', '$get_table_by_d66', '$%', '$get_table_by_d66_swap', '$raise', '$gsub!', '$rollTableMessageDiceText', '$size', '$inspect']);
+  Opal.add_stubs(['$freeze', '$map', '$to_proc', '$join', '$new', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$puts', '$gameType', '$setPrefixes', '$attr_accessor', '$attr_reader', '$gameName', '$getHelpMessage', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$getDiceListFromDiceText', '$collect', '$to_i', '$split', '$each', '$>=', '$kind_of?', '$lambda', '$call', '$select', '$===', '$public_methods', '$send', '$upcase', '$==', '$getTableInfoFromExtraTableText', '$get_table_by_nDx_extratable', '$get_table_by_d66', '$floor', '$%', '$get_table_by_d66_swap', '$raise', '$gsub', '$rollTableMessageDiceText', '$size', '$inspect']);
   return (function($base, $super) {
     function $DiceBot(){};
     var self = $DiceBot = $klass($base, $super, 'DiceBot', $DiceBot);
@@ -592,7 +592,7 @@ if (method == null) method = nil;
     }, TMP_69.$$arity = 3);
 
     Opal.defn(self, '$getTableCommandResult', TMP_70 = function $$getTableCommandResult(command, tables, isPrintDiceText) {
-      var $a, $b, $c, $d, self = this, info = nil, name = nil, type = nil, table = nil, $case = nil, count = nil, limit = nil, item = nil, value = nil, output = nil, diceText = nil, text = nil, number = nil;
+      var $a, $b, $c, $d, self = this, info = nil, name = nil, type = nil, table = nil, $case = nil, count = nil, diceType = nil, limit = nil, item = nil, value = nil, output = nil, diceText = nil, text = nil, number = nil;
 
       if (isPrintDiceText == null) {
         isPrintDiceText = true;
@@ -605,20 +605,21 @@ if (method == null) method = nil;
       table = info['$[]']("table");
       if ((($a = (($b = type['$==']("D66")) ? self.d66Type['$=='](2) : type['$==']("D66"))) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         type = "D66S"};
-      $b = (function() {$case = type;if (/(\d+)D6/['$===']($case)) {count = (($c = $gvars['~']) === nil ? nil : $c['$[]'](1)).$to_i();
-      limit = $rb_minus($rb_times(6, count), ($rb_minus(count, 1)));
+      $b = (function() {$case = type;if (/(\d+)D(\d+)/['$===']($case)) {count = (($c = $gvars['~']) === nil ? nil : $c['$[]'](1)).$to_i();
+      diceType = (($c = $gvars['~']) === nil ? nil : $c['$[]'](2)).$to_i();
+      limit = $rb_minus($rb_times(diceType, count), ($rb_minus(count, 1)));
       table = self.$getTableInfoFromExtraTableText(table, limit);
-      return self.$get_table_by_nDx_extratable(table, count, 6);}else if ("D66"['$===']($case) || "D66N"['$===']($case)) {table = self.$getTableInfoFromExtraTableText(table, 36);
+      return self.$get_table_by_nDx_extratable(table, count, diceType);}else if ("D66"['$===']($case) || "D66N"['$===']($case)) {table = self.$getTableInfoFromExtraTableText(table, 36);
       $d = self.$get_table_by_d66(table), $c = Opal.to_ary($d), item = ($c[0] == null ? nil : $c[0]), value = ($c[1] == null ? nil : $c[1]), $d;
       value = value.$to_i();
       output = item['$[]'](1);
-      diceText = $rb_plus($rb_plus(($rb_divide(value, 10)).$to_s(), ","), (value['$%'](10)).$to_s());
+      diceText = $rb_plus($rb_plus(($rb_divide(value, 10)).$floor().$to_s(), ","), (value['$%'](10)).$to_s());
       return [output, value, diceText];}else if ("D66S"['$===']($case)) {table = self.$getTableInfoFromExtraTableText(table, 21);
       $d = self.$get_table_by_d66_swap(table), $c = Opal.to_ary($d), output = ($c[0] == null ? nil : $c[0]), value = ($c[1] == null ? nil : $c[1]), $d;
       value = value.$to_i();
-      diceText = $rb_plus($rb_plus(($rb_divide(value, 10)).$to_s(), ","), (value['$%'](10)).$to_s());
+      diceText = $rb_plus($rb_plus(($rb_divide(value, 10)).$floor().$to_s(), ","), (value['$%'](10)).$to_s());
       return [output, value, diceText];}else {return self.$raise("invalid dice Type " + (command))}})(), $a = Opal.to_ary($b), text = ($a[0] == null ? nil : $a[0]), number = ($a[1] == null ? nil : $a[1]), diceText = ($a[2] == null ? nil : $a[2]), $b;
-      text['$gsub!']("\\n", "\n");
+      text = text.$gsub("\\n", "\n");
       text = (($a = Opal.cvars['@@bcdice']) == null ? nil : $a).$rollTableMessageDiceText(text);
       if ((($a = (text['$nil?']())) !== nil && $a != null && (!$a.$$is_boolean || $a == true))) {
         return nil};

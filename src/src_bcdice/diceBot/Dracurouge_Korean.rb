@@ -144,7 +144,8 @@ MESSAGETEXT
 	type2 = %w{영주	근위	방랑	현자	사냥꾼	야수}
     type2_indexTexts = %w{F G R W J N}
 
-    tensValue = number.to_i / 10
+    #tensValue = number.to_i / 10
+    tensValue = (number.to_i / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     isBefore = (tensValue < 4 )
     type = (isBefore ? type1 : type2)
     indexTexts = (isBefore ? type1_indexTexts : type2_indexTexts)
