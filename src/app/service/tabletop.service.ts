@@ -102,7 +102,7 @@ export class TabletopService {
           gameObject.posZ = pointer.z;
           this.placeToTabletop(gameObject);
           gameObject.update();
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.piecePut);
         }
       });
   }
@@ -372,7 +372,7 @@ export class TabletopService {
       name: 'キャラクターを作成', action: () => {
         let character = this.createGameCharacter(position);
         EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: character.identifier, className: character.aliasName });
-        SoundEffect.play(PresetSound.put);
+        SoundEffect.play(PresetSound.piecePut);
       }
     }
   }
@@ -381,7 +381,7 @@ export class TabletopService {
     return {
       name: 'マップマスクを作成', action: () => {
         this.createGameTableMask(position);
-        SoundEffect.play(PresetSound.put);
+        SoundEffect.play(PresetSound.cardPut);
       }
     }
   }
@@ -390,7 +390,7 @@ export class TabletopService {
     return {
       name: '地形を作成', action: () => {
         this.createTerrain(position);
-        SoundEffect.play(PresetSound.lock);
+        SoundEffect.play(PresetSound.blockPut);
       }
     }
   }
@@ -399,7 +399,7 @@ export class TabletopService {
     return {
       name: '共有メモを作成', action: () => {
         this.createTextNote(position);
-        SoundEffect.play(PresetSound.put);
+        SoundEffect.play(PresetSound.cardPut);
       }
     }
   }
@@ -429,7 +429,7 @@ export class TabletopService {
       subMenus.push({
         name: item.menuName, action: () => {
           this.createDiceSymbol(position, item.diceName, item.type, item.imagePathPrefix);
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.dicePut);
         }
       });
     });

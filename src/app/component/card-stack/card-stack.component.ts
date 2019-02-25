@@ -288,7 +288,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cardStack.location.name = 'graveyard';
           this.cardStack.update();
           this.cardStack.destroy();
-          SoundEffect.play(PresetSound.delete);
+          SoundEffect.play(PresetSound.sweep);
         }
       },
     ], this.name);

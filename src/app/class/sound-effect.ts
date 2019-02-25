@@ -8,17 +8,21 @@ import { ObjectStore } from './core/synchronize-object/object-store';
 import { EventSystem } from './core/system';
 
 export class PresetSound {
-  static dice1: string = '';
-  static dice2: string = '';
+  static dicePick: string = '';
+  static dicePut: string = '';
+  static diceRoll1: string = '';
+  static diceRoll2: string = '';
   static cardDraw: string = '';
   static cardPick: string = '';
   static cardPut: string = '';
   static cardShuffle: string = '';
-  static pick: string = '';
-  static put: string = '';
-  static switch: string = '';
+  static piecePick: string = '';
+  static piecePut: string = '';
+  static blockPick: string = '';
+  static blockPut: string = '';
   static lock: string = '';
-  static delete: string = '';
+  static unlock: string = '';
+  static sweep: string = '';
 }
 
 @SyncObject('sound-effect')
@@ -35,9 +39,9 @@ export class SoundEffect extends GameObject {
         let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.identifier);
         if (!chatMessage || !chatMessage.isDicebot) return;
         if (Math.random() < 0.5) {
-          SoundEffect.play(PresetSound.dice1);
+          SoundEffect.play(PresetSound.diceRoll1);
         } else {
-          SoundEffect.play(PresetSound.dice2);
+          SoundEffect.play(PresetSound.diceRoll2);
         }
       });
   }

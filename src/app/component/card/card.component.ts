@@ -251,7 +251,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       {
         name: '削除する', action: () => {
           this.card.destroy();
-          SoundEffect.play(PresetSound.delete);
+          SoundEffect.play(PresetSound.sweep);
         }
       },
     ], this.name);

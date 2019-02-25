@@ -138,7 +138,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       actions.push({
         name: location.alias, action: () => {
           gameObject.setLocation(location.name);
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.piecePut);
         }
       });
     }
@@ -147,7 +147,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       actions.push({
         name: '削除する', action: () => {
           this.deleteGameObject(gameObject);
-          SoundEffect.play(PresetSound.delete);
+          SoundEffect.play(PresetSound.sweep);
         }
       });
     }
@@ -155,7 +155,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     actions.push({
       name: 'コピーを作る', action: () => {
         this.cloneGameObject(gameObject);
-        SoundEffect.play(PresetSound.put);
+        SoundEffect.play(PresetSound.piecePut);
       }
     });
 

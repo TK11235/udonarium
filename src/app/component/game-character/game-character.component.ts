@@ -112,19 +112,19 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       {
         name: '共有イベントリに移動', action: () => {
           this.gameCharacter.setLocation('common');
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.piecePut);
         }
       },
       {
         name: '個人イベントリに移動', action: () => {
           this.gameCharacter.setLocation(Network.peerId);
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.piecePut);
         }
       },
       {
         name: '墓場に移動', action: () => {
           this.gameCharacter.setLocation('graveyard');
-          SoundEffect.play(PresetSound.delete);
+          SoundEffect.play(PresetSound.sweep);
         }
       },
       ContextMenuSeparator,
@@ -135,18 +135,18 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.piecePut);
         }
       },
     ], this.name);
   }
 
   onMove() {
-    SoundEffect.play(PresetSound.pick);
+    SoundEffect.play(PresetSound.piecePick);
   }
 
   onMoved() {
-    SoundEffect.play(PresetSound.put);
+    SoundEffect.play(PresetSound.piecePut);
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

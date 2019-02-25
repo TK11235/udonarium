@@ -87,13 +87,13 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
         ? {
           name: '固定解除', action: () => {
             this.isLock = false;
-            SoundEffect.play(PresetSound.switch);
+            SoundEffect.play(PresetSound.unlock);
           }
         }
         : {
           name: '固定する', action: () => {
             this.isLock = true;
-            SoundEffect.play(PresetSound.switch);
+            SoundEffect.play(PresetSound.lock);
           }
         }
       ),
@@ -107,13 +107,13 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
           cloneObject.location.y += this.gridSize;
           cloneObject.isLock = false;
           if (this.gameTableMask.parent) this.gameTableMask.parent.appendChild(cloneObject);
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.cardPut);
         }
       },
       {
         name: '削除する', action: () => {
           this.gameTableMask.destroy();
-          SoundEffect.play(PresetSound.delete);
+          SoundEffect.play(PresetSound.sweep);
         }
       },
       ContextMenuSeparator,
@@ -122,11 +122,11 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onMove() {
-    SoundEffect.play(PresetSound.pick);
+    SoundEffect.play(PresetSound.cardPick);
   }
 
   onMoved() {
-    SoundEffect.play(PresetSound.put);
+    SoundEffect.play(PresetSound.cardPut);
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

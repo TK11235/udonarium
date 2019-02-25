@@ -101,13 +101,13 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
           name: '固定解除', action: () => {
             this.isLocked = false;
             this.terrain.update();
-            SoundEffect.play(PresetSound.switch);
+            SoundEffect.play(PresetSound.unlock);
           }
         } : {
           name: '固定する', action: () => {
             this.isLocked = true;
             this.terrain.update();
-            SoundEffect.play(PresetSound.switch);
+            SoundEffect.play(PresetSound.lock);
           }
         }),
       (this.hasWall
@@ -134,13 +134,13 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
           cloneObject.location.y += this.gridSize;
           cloneObject.isLocked = false;
           if (this.terrain.parent) this.terrain.parent.appendChild(cloneObject);
-          SoundEffect.play(PresetSound.lock);
+          SoundEffect.play(PresetSound.blockPut);
         }
       },
       {
         name: '削除する', action: () => {
           this.terrain.destroy();
-          SoundEffect.play(PresetSound.delete);
+          SoundEffect.play(PresetSound.sweep);
         }
       },
       ContextMenuSeparator,
@@ -149,11 +149,11 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onMove() {
-    SoundEffect.play(PresetSound.lock);
+    SoundEffect.play(PresetSound.blockPick);
   }
 
   onMoved() {
-    SoundEffect.play(PresetSound.lock);
+    SoundEffect.play(PresetSound.blockPut);
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

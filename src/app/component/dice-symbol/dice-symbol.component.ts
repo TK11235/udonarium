@@ -164,7 +164,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       actions.push({
         name: 'ダイスを公開', action: () => {
           this.owner = '';
-          SoundEffect.play(PresetSound.switch);
+          SoundEffect.play(PresetSound.unlock);
         }
       });
     }
@@ -172,7 +172,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       actions.push({
         name: '自分だけ見る', action: () => {
           this.owner = Network.peerId;
-          SoundEffect.play(PresetSound.switch);
+          SoundEffect.play(PresetSound.lock);
         }
       });
     }
@@ -183,7 +183,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
         subActions.push({
           name: `${face}`, action: () => {
             this.face = face;
-            SoundEffect.play(PresetSound.switch);
+            SoundEffect.play(PresetSound.dicePut);
           }
         });
       });
@@ -200,29 +200,29 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
         cloneObject.location.x += this.gridSize;
         cloneObject.location.y += this.gridSize;
         cloneObject.update();
-        SoundEffect.play(PresetSound.put);
+        SoundEffect.play(PresetSound.dicePut);
       }
     });
     actions.push({
       name: '削除する', action: () => {
         this.diceSymbol.destroy();
-        SoundEffect.play(PresetSound.delete);
+        SoundEffect.play(PresetSound.sweep);
       }
     });
     this.contextMenuService.open(position, actions, this.name);
   }
 
   onMove() {
-    SoundEffect.play(PresetSound.pick);
+    SoundEffect.play(PresetSound.dicePick);
   }
 
   onMoved() {
-    SoundEffect.play(PresetSound.put);
+    SoundEffect.play(PresetSound.dicePut);
   }
 
   diceRoll(): string {
     EventSystem.call('ROLL_DICE_SYNBOL', { identifier: this.diceSymbol.identifier });
-    SoundEffect.play(PresetSound.dice1);
+    SoundEffect.play(PresetSound.diceRoll1);
     return this.diceSymbol.diceRoll();
   }
 

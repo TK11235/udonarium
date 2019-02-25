@@ -137,24 +137,24 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();
-          SoundEffect.play(PresetSound.put);
+          SoundEffect.play(PresetSound.cardPut);
         }
       },
       {
         name: '削除する', action: () => {
           this.textNote.destroy();
-          SoundEffect.play(PresetSound.delete);
+          SoundEffect.play(PresetSound.sweep);
         }
       },
     ], this.title);
   }
 
   onMove() {
-    SoundEffect.play(PresetSound.pick);
+    SoundEffect.play(PresetSound.cardPick);
   }
 
   onMoved() {
-    SoundEffect.play(PresetSound.put);
+    SoundEffect.play(PresetSound.cardPut);
   }
 
   calcFitHeightIfNeeded() {
