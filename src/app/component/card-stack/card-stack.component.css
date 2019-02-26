@@ -67,6 +67,8 @@
 }
 
 .rotate-grab {
+  display: none;
+  opacity: 0;
   position: absolute;
   width: 28px;
   height: 28px;
@@ -81,7 +83,10 @@
   border-radius: 100%;
   color: #444;
   font-size: 8px;
-  opacity: 0;
+}
+
+.component:hover .rotate-grab, .component:active .rotate-grab {
+  display: block;
 }
 
 .rotate-grab:hover, .rotate-grab:active {
