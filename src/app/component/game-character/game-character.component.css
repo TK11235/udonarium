@@ -70,7 +70,7 @@
   border-radius: 37px;
 }
 
-.pedestal-outer:hover + .pedestal-grab, .pedestal-grab:hover, .pedestal-grab:active, {
+.pedestal-outer:hover + .pedestal-grab, .pedestal-grab:hover, .pedestal-grab:active {
   opacity: 1;
 }
 
