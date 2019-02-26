@@ -91,7 +91,29 @@
   filter: brightness(0.8);
 }
 
+.pedestal-grab {
+  z-index: -1;
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  right: -14px;
+  bottom: -14px;
+  cursor: default;
+
+  box-sizing: border-box;
+  border-top: solid 7px #CCC;
+  border-left: solid 7px #CCC;
+  border-right: solid 7px #CCC;
+  border-bottom: solid 7px #CCC;
+  border-radius: 14px;
+}
+
 .rotate-grab {
+  opacity: 0;
+  z-index: -1;
+}
+
+.rotate-grab-icon {
   position: absolute;
   width: 28px;
   height: 28px;
@@ -106,34 +128,37 @@
   border-radius: 100%;
   color: #444;
   font-size: 8px;
-  opacity: 1;
 
   transform-style: preserve-3d;
   transform: translateZ(0.1px);
 }
 
-.rotate-grab:hover, .rotate-grab:active {
+.component:hover .rotate-grab, .component:active .rotate-grab {
   opacity: 1;
 }
 
 .of-left-top {
   top: -14px;
   left: -14px;
+  border-radius: 14px 7px 14px 7px;
 }
 
 .of-left-bottom {
   bottom: -14px;
   left: -14px;
+  border-radius: 7px 14px 7px 14px;
 }
 
 .of-right-bottom {
   bottom: -14px;
   right: -14px;
+  border-radius: 14px 7px 14px 7px;
 }
 
 .of-right-top {
   top: -14px;
   right: -14px;
+  border-radius: 5px 14px 5px 14px;
 }
 
 .blinking-animation {

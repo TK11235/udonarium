@@ -18,16 +18,17 @@
         [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
     </ng-container>
     <ng-container *ngIf="!isLocked">
-      <div class="rotate-grab of-left-top">
+      <div class="pedestal-grab rotate-grab"></div>
+      <div class="rotate-grab of-left-top rotate-grab-icon">
         <i class="material-icons">autorenew</i>
       </div>
-      <div class="rotate-grab of-left-bottom">
+      <div class="rotate-grab of-left-bottom rotate-grab-icon">
         <i class="material-icons">autorenew</i>
       </div>
-      <div class="rotate-grab of-right-bottom">
+      <div class="rotate-grab of-right-bottom rotate-grab-icon">
         <i class="material-icons">autorenew</i>
       </div>
-      <div class="rotate-grab of-right-top">
+      <div class="rotate-grab of-right-top rotate-grab-icon">
         <i class="material-icons">autorenew</i>
       </div>
     </ng-container>
