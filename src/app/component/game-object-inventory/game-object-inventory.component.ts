@@ -64,6 +64,12 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       })
       .on('UPDATE_INVENTORY', event => {
         if (event.isSendFromSelf) this.changeDetector.markForCheck();
+      })
+      .on('OPEN_PEER', event => {
+        this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
+        if (!this.inventoryTypes.includes(this.selectTab)) {
+          this.selectTab = Network.peerId;
+        }
       });
     this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
   }
