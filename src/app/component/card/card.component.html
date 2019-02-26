@@ -2,8 +2,7 @@
   appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
   <div *ngIf="imageFile" class="component-content is-pointer-events-auto"
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
-    <img *ngIf="isFront" class="card-image" [src]="frontImage.url | safe: 'resourceUrl'">
-    <img *ngIf="!isFront" class="card-image" [src]="backImage.url | safe: 'resourceUrl'">
+    <img class="card-image" [src]="isFront ? frontImage.url : backImage.url | safe: 'resourceUrl'">
     <div class="rotate-grab of-left-top">
       <i class="material-icons">autorenew</i>
     </div>
