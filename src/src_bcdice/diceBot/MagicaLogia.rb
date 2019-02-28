@@ -9,11 +9,11 @@ class MagicaLogia < DiceBot
     @sortType = 3
     @d66Type = 2
   end
-  
+
   def gameName
     'マギカロギア'
   end
-  
+
   def gameType
     "MagicaLogia"
   end
@@ -40,16 +40,15 @@ class MagicaLogia < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     return '' unless(signOfInequality == ">=")
-    
-    output = 
+
+    output =
       if(dice_n <= 2)
         " ＞ ファンブル"
       elsif(dice_n >= 12)
@@ -59,19 +58,18 @@ INFO_MESSAGE_TEXT
       else
         " ＞ 失敗"
       end
-    
+
     output += getGainMagicElementText()
-    
+
     return output
   end
-  
-  
+
   # 表振り分け
   def rollDiceCommand(command)
     output = '1'
     type = ""
     total_n = ""
-    
+
     case command
     when 'BGT'
       type = '経歴表'
@@ -169,12 +167,12 @@ INFO_MESSAGE_TEXT
     when 'LWST'
       type = '迷宮世界シーン表'
       output, total_n = magicalogia_labyrinth_world_scene_table
-    
+
     end
-    
+
     return "#{type}(#{total_n}) ＞ #{output}"
   end
-  
+
   # シーン表
   def magicalogia_scene_table
     table = [
@@ -190,11 +188,10 @@ INFO_MESSAGE_TEXT
              '街のはるか上空。あなたは重力から解き放たれ、自由に空を飛ぶ。',
              '未来の予感。このままだと起きるかもしれない出来事の幻が現れる。',
             ]
-    
+
     return get_table_by_2d6(table)
   end
-  
-  
+
   # ファンブル表
   def magicalogia_fumble_table
     table = [
@@ -205,10 +202,10 @@ INFO_MESSAGE_TEXT
              '魔法災厄が、直接あなたに降りかかる。変調表を振り、その変調を受ける。',
              'ふぅ、危なかった。特に何も起こらない。',
             ]
-    
+
     return get_table_by_1d6(table)
   end
-  
+
   # 変調表
   def magicalogia_wrong_table
     table = [
@@ -219,11 +216,10 @@ INFO_MESSAGE_TEXT
              '『遮蔽』【根源力】が1点減少する',
              lambda{return "『不運』#{magicalogia_random_skill_table_text_only}のチェック欄をチェックする。その特技が使用不能になり、その分野の特技が指定特技になった判定を行うとき、マイナス1の修正が付く。"},
             ]
-    
+
     return get_table_by_1d6(table)
   end
-  
-  
+
   # 運命変転表
   def magicalogia_fortunechange_table
     table = [
@@ -236,7 +232,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   # 事件表
   def magicalogia_accident_table
     table = [
@@ -252,33 +248,32 @@ INFO_MESSAGE_TEXT
              '懐かしい表情、大切な思い出、伴侶となる予感……その人物に対する【運命】が1点上昇する。【運命】の属性は「血縁」になる。',
              '献身的な看護、魔法的な祝福、奇跡……その人物に対する【運命】が1点上昇する。【運命】の属性は自由に決定できる。もしも関係欄に疵があれば、その疵を1つ関係欄から消すことができる。',
             ]
-    
+
     return get_table_by_2d6(table)
   end
-  
+
   # 魔素獲得チェック
   def getGainMagicElementText()
     diceList = getDiceList
     debug("getGainMagicElementText diceList", diceList)
-    
+
     return '' if( diceList.empty? )
-    
+
     dice1 = diceList[0]
     dice2 = diceList[1]
-    
+
     #マギカロギア用魔素取得判定
     return  gainMagicElement(dice1, dice2)
   end
-  
-  
+
   def gainMagicElement(dice1, dice2)
     return "" unless(dice1 == dice2)
-    
+
     # ゾロ目
     table = ['星','獣','力','歌','夢','闇']
     return " ＞ " + table[dice1 - 1] + "の魔素2が発生"
   end
-  
+
   # 経歴表
   def magicalogia_background_table
     table = [
@@ -289,11 +284,10 @@ INFO_MESSAGE_TEXT
              '異端者／アウトサイダー',
              '外典／アポクリファ',
             ]
-    
+
     return get_table_by_1d6(table)
   end
-  
-  
+
   # 初期アンカー表
   def magicalogia_defaultanchor_table
     table = [
@@ -309,11 +303,10 @@ INFO_MESSAGE_TEXT
              '『庇護』あなたは、そのアンカーを秘かに見守っている。',
              '『情人』あなたは、そのアンカーと肉体関係を結んでいる。',
             ]
-    
+
     return get_table_by_2d6(table)
   end
-  
-  
+
   # 運命属性表
   def magicalogia_fortune_attribution_table
     table = [
@@ -324,11 +317,10 @@ INFO_MESSAGE_TEXT
              '『興味』とても稀少だったり、不可解だったりして研究や観察をしたくなる対象。',
              '『尊敬』その才能や思想、姿勢に対し畏敬や尊敬を抱く人物。',
             ]
-    
+
     return get_table_by_1d6(table)
   end
-  
-  
+
   # 願い表
   def magicalogia_wish_table
     table = [
@@ -339,10 +331,10 @@ INFO_MESSAGE_TEXT
              '特定の誰かを罰して欲しい。',
              '自分の欲望（金銭欲、名誉欲、肉欲、知識欲など）を満たして欲しい。',
             ]
-    
+
     return get_table_by_1d6(table)
   end
-  
+
   # 指定特技ランダム決定表
   def magicalogia_random_skill_table
     skillTableFull = [
@@ -353,30 +345,30 @@ INFO_MESSAGE_TEXT
                       ['夢', ['追憶', '謎', '嘘', '不安', '眠り', '偶然', '幻', '狂気', '祈り', '希望', '未来']],
                       ['闇', ['深淵', '腐敗', '裏切り', '迷い', '怠惰', '歪み', '不幸', 'バカ', '悪意', '絶望', '死']],
                      ]
-    
+
     skillTable, total_n = get_table_by_1d6(skillTableFull)
     tableName, skillTable = skillTable
     skill, total_n2 = get_table_by_2d6(skillTable)
     return "「#{tableName}」≪#{skill}≫", "#{total_n},#{total_n2}"
   end
-  
+
   #特技だけ抜きたい時用 あまりきれいでない
   def magicalogia_random_skill_table_text_only
     text, = magicalogia_random_skill_table
     return text
   end
-  
+
   #魔素の種類獲得表
   def get_magic_element_type
     table = ['星','獣','力','歌','夢','闇']
     return get_table_by_1d6(table)
   end
-  
+
   #時の流れ表
   def magicalogia_time_passage_table
     output = ""
     num, = roll(1,6)
-    
+
     if num == 1
       output = "標的となり追われる生活が続いた。ここ数年は苦しい戦いの日々だった。#{magicalogia_random_skill_table_text_only}の判定を行う。成功するとセッション終了時に追加の功績点1点。失敗すると「運命変転」発生。"
     elsif num == 2
@@ -393,10 +385,10 @@ INFO_MESSAGE_TEXT
     elsif num == 6
       output = "日々研鑚を重ね、魔法の修行に精進した。もしも望むなら、蔵書欄にある魔法を、自分の修得できる範囲の中で、現在とは別の魔法に変更して構わない。もしも、魔素がチャージされていた魔法を見習得にした場合、その魔素は失われる。"
     end
-    
+
     return output, num
   end
-  
+
   #典型的災厄
   def magicalogia_typical_fortune_change_table
     table = [
@@ -409,7 +401,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #物理的災厄
   def magicalogia_physical_fortune_change_table
     table = [
@@ -434,7 +426,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #狂気的災厄
   def magicalogia_insanity_fortune_change_table
     table = [
@@ -447,7 +439,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #社会的災厄
   def magicalogia_social_fortune_change_table
     table = [
@@ -460,7 +452,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #超常的災厄
   def magicalogia_paranormal_fortune_change_table
     table = [
@@ -473,7 +465,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #不思議系災厄
   def magicalogia_wonderful_fortune_change_table
     table = [
@@ -486,7 +478,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #コミカル系災厄
   def magicalogia_comical_fortune_change_table
     table = [
@@ -499,7 +491,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #ブランク秘密表用テーブル
   #宿敵表
   def magicalogia_inveterate_enemy_table
@@ -520,7 +512,7 @@ INFO_MESSAGE_TEXT
     end
     return output, num
   end
-  
+
   #謀略表
   def magicalogia_conspiracy_table
     table = [
@@ -533,7 +525,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #因縁表
   def magicalogia_fate_table
     table = [
@@ -546,7 +538,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #奇人表
   def magicalogia_cueball_table
     table = [
@@ -559,7 +551,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #力場表
   def magicalogia_force_field_table
     table = [
@@ -572,7 +564,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   #同盟表
   def magicalogia_alliance_table
     output = ""
@@ -592,7 +584,7 @@ INFO_MESSAGE_TEXT
     end
     return output, num
   end
-  
+
   #ブランク秘密表
   def magicalogia_blank_secret_table
     outtext = ""
@@ -620,7 +612,7 @@ INFO_MESSAGE_TEXT
     outnum = "#{num},#{outnum}"
     return outtext, outnum
   end
-  
+
   #プライズ表
   def magicalogia_prise_table
     table = [
@@ -638,7 +630,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   #極限環境シーン表
   def magicalogia_extreme_environment_scene_table
     table = [
@@ -656,7 +648,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   #内面世界シーン表
   def magicalogia_innner_world_scene_table
     table = [
@@ -674,7 +666,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   #魔法都市シーン表
   def magicalogia_magic_city_scene_table
     table = [
@@ -692,7 +684,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   #死後世界シーン表
   def magicalogia_world_after_dead_scene_table
     table = [
@@ -710,7 +702,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   #迷宮世界シーン表
   def magicalogia_labyrinth_world_scene_table
     table = [

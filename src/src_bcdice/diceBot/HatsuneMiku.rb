@@ -137,7 +137,8 @@ INFO_MESSAGE_TEXT
     return "ファンブル" if( dice_n == 1 )
     return "スペシャル" if( dice_n >= special_n )
 
-    success = @@bcdice.check_hit(total_n, signOfInequality, diff)
+    #success = @@bcdice.check_hit(total_n, signOfInequality, diff) # TKfix @@bcdice が参照できない (Opal 0.11.4)
+    success = bcdice.check_hit(total_n, signOfInequality, diff) # TKfix @@bcdice が参照できない (Opal 0.11.4)
     return "成功" if(success >= 1)
     return "失敗"
   end
@@ -742,72 +743,6 @@ INFO_MESSAGE_TEXT
 謎のメール。ある日、友人からあなたの元に一通のメールが送られてきました。そのメールを開くと、不思議な音楽が流れ出し、オトダマが現れました。その友人とは、それ以来、連絡がつきません。
 封印。ある日、あなたは古いレコード屋で一曲の音盤に出会います。その音盤を再生してみると、オトダマが現れました。そして、オトダマは「封印を解いてくれたお礼に、しばらく付き合ってあげる」と言ってきました。
 一目惚れ。以前、あなたは様々な楽曲を発表していました。すると、その楽曲に一目惚れしたと言って、あなたの元にオトダマが押しかけてきました。以来、そのオトダマに付きまとわれる毎日です。
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
-},},
-
-    '' => {
-      :name => "表",
-      :type => '',
-      :table => %w{
 },},
 
   }

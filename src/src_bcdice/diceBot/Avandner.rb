@@ -39,9 +39,8 @@ class Avandner < DiceBot
 MESSAGETEXT
   end
 
-
   def rollDiceCommand(command)
-    
+
     # AVコマンド：調査判定, 成功判定
     if /(\d+)AV(\d+)((x|\*)(\d+))?(\+(\d+))?(C(\d+))?$/i === command
       diceCount = $1.to_i
@@ -52,50 +51,48 @@ MESSAGETEXT
       criticalNumber = 2 if( criticalNumber > 3 )
       return checkRoll(diceCount, target, damage, criticalTrigger, criticalNumber)
     end
-    
+
     return nil
   end
-  
-  
+
   def checkRoll(diceCount, target, damage, criticalTrigger, criticalNumber)
     totalSuccessCount = 0
     totalCriticalCount = 0
     text = ""
-    
+
     rollCount = diceCount
-    
+
     while rollCount > 0
       dice, diceText = roll(rollCount, 10, @sortType)
       diceArray = diceText.split(/,/).collect{|i|i.to_i}
-      
+
       successCount = diceArray.count{|i| i <= target}
       criticalCount = diceArray.count{|i| i <= criticalNumber }
-      
+
       totalSuccessCount += successCount
       totalCriticalCount += criticalCount
-      
+
       text += "+" unless( text.empty? )
       text += "#{successCount}[#{diceText}]"
-      
+
       rollCount = criticalCount
     end
-    
+
     result = ""
     isDamage = (damage != 0)
-    
+
     if( isDamage )
       totalDamage = totalSuccessCount * damage + totalCriticalCount * criticalTrigger
-      
+
       result += "(#{diceCount}D10\<\=#{target}) ＞ #{text} ＞ Hits：#{totalSuccessCount}*#{damage}"
       result += " + Trigger：#{totalCriticalCount}*#{criticalTrigger}" if( criticalTrigger > 0 )
       result += " ＞ #{totalDamage}ダメージ"
     else
       result += "(#{diceCount}D10\<\=#{target}) ＞ #{text} ＞ 成功数：#{totalSuccessCount}"
     end
-    
+
     result += " / #{totalCriticalCount}クリティカル" if( totalCriticalCount > 0 )
 
     return result
   end
-  
 end

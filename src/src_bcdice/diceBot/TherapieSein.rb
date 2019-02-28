@@ -34,62 +34,61 @@ class TherapieSein < DiceBot
 MESSAGETEXT
   end
 
-
   def rollDiceCommand(command)
-    
-    output = 
+
+    output =
       case command.upcase
-      
+
       when /(TS|OP)(\d+)?(([\+\-]\d+)*)(\@(\d+))?$/i
         hasCritical = ( $1 == "OP" )
         target = ($6 || 0).to_i
         modify = ($2 || 0).to_i
         modifyAddString = $3
-        
+
         modify_list = modifyAddString.scan(/[\+\-]\d+/)  # 修正値を分割して配列へ
         modify_list.each{|i| modify += i.to_i }
-        
+
         checkRoll(hasCritical, modify, target)
-        
+
       else
         nil
       end
-    
+
     return output
   end
-  
+
   def checkRoll(hasCritical, modify, target)
     dice, diceText = roll(2, 6)
     successValue = dice + modify
-    
+
     modifyText = getValueText(modify)
     targetText = (target == 0 ? '' : ">=#{target}")
-    
+
     result = "(2D6#{modifyText}#{targetText})"
     result += " ＞ #{dice}(#{diceText})#{modifyText}"
-    
+
     if( hasCritical and dice == 12 )
       result += " ＞ クリティカル！"
       return result
     end
-    
+
     result += " ＞ #{successValue}#{targetText}"
-    
+
     return result if( target == 0 )
-    
+
     if( successValue >= target )
       result += " ＞ 【成功】"
     else
       result += " ＞ 【失敗】"
     end
-    
+
     return result
   end
-  
+
   def getValueText(value)
     return "" if( value == 0 )
     return "#{value}" if( value < 0 )
     return "\+#{value}"
   end
-  
+
 end

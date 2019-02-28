@@ -6,15 +6,15 @@ class MetalHead < DiceBot
   def initialize
     super
   end
-  
+
   def gameName
     'メタルヘッド'
   end
-  
+
   def gameType
     "MetalHead"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・アビリティロール  AR>=目標値
@@ -39,11 +39,11 @@ MESSAGETEXT
   def rollDiceCommand(command)
 
     debug("rollDiceCommand", command)
-    
+
     tableName   = ""
     tableNumber = ""
     tableResult = ""
-    
+
     case command.upcase
     when /^CC/
       tableName, tableResult, tableNumber = mh_cc_table
@@ -57,68 +57,66 @@ MESSAGETEXT
       target = parren_killer("(" + $1 + ")").to_i
       return rollHit(target)
     end
-    
+
     if(! tableName.empty?)
       return "#{tableName} ＞ #{tableNumber} ＞ #{tableResult}"
     end
 
   end
-  
+
   def changeText(string)
     string = string.gsub(/^(S)?AR/i) { "#{$1}2D6" }
     string = string.gsub(/^(S)?SR/i) { "#{$1}1D100" }
     return string
   end
-  
+
   def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     return '' if(signOfInequality != ">=")
     return '' if(diff == "?")
-    
+
     return " ＞ 絶対成功" if(dice_n >= 12)
     return " ＞ 絶対失敗" if(dice_n <=2)
-    
+
     return " ＞ 成功" if(totalValue >= diff)
     return " ＞ 失敗"
   end
-  
-  
+
   def rollHit(target)
     total, = roll(1, 100)
     resultText = getHitResult(total, total, target)
-    
+
     text = "(1D100<=#{target}) ＞ #{total}#{resultText}"
-    
+
     return text
   end
-  
+
   def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     return '' unless( signOfInequality == '<=' )
-    
+
     return getResult(total_n, dice_n, diff)
   end
-  
+
   def getHitResult(total_n, dice_n, diff)
     diceValue = total_n % 100
     dice1 = diceValue % 10 # 1の位を代入
-    
+
     debug("total_n", total_n)
-    
+
     return ' ＞ 失敗' if(total_n > diff)
-    
+
     return ' ＞ 成功（クリティカル）' if( dice1 == 1 )
     return ' ＞ 失敗（アクシデント）' if( dice1 == 0 )
     return ' ＞ 成功'
   end
-  
+
   def getResult(total_n, dice_n, diff)
-    
+
     return ' ＞ 絶対成功' if( dice_n <= 5)
     return ' ＞ 絶対失敗' if( dice_n >= 96 )
-    
+
     return ' ＞ 成功' if(total_n <= diff)
     return ' ＞ 失敗'
   end
-
 
   def mh_cc_table
     name = "クリティカルチャート"
@@ -229,12 +227,12 @@ MESSAGETEXT
         debug("suv[#{suv}] #{v} #{d} #{n}")
         if(n <= numbuf)
           damage_level = d
-        end 
+        end
       }
     }
 
     result = ""
-    
+
     if(numbuf != num.to_i)
       result = "#{numbuf} ＞ "
     end
@@ -244,9 +242,7 @@ MESSAGETEXT
     else
       result += "耐久レベル(SUV)[#{suv}] ＞ 部位[#{table_point[num_d1]}] ： 損傷種別[#{damage_level}]"
     end
-    
+
     return name, result, num
   end
-
 end
-

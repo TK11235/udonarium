@@ -7,11 +7,11 @@ class Torg < DiceBot
     super
     @sendMode = 2
   end
-  
+
   def gameName
     'トーグ'
   end
-  
+
   def gameType
     "TORG"
   end
@@ -32,7 +32,7 @@ class Torg < DiceBot
 　・ボーナス表「BTx+y or BONUSx+y or TOTALx+y」 xは数値, yは技能基本値
 INFO_MESSAGE_TEXT
   end
-  
+
   def changeText(string)
     string = string.gsub(/Result/i, 'RT')
     string = string.gsub(/(Intimidate|Test)/i, 'IT')
@@ -43,54 +43,53 @@ INFO_MESSAGE_TEXT
     string = string.gsub(/(bonus|total)/i, 'BT')
     string = string.gsub(/TG(\d+)/i) {"1R20+#{$1}"}
     string = string.gsub(/TG/i, '1R20')
-    
+
     return string
   end
-  
+
   def dice_command_xRn(string, nick_e)
     return torg_check(string, nick_e)
   end
-  
+
 ####################              TORG             ########################
   def torg_check(string, nick_e)
     output = '1'
-    
+
     unless( /(^|\s)S?(1R20([+-]\d+)*)(\s|$)/i =~ string )
       return '1'
     end
-    
+
     string = $2
     mod = $3
-    
+
     debug(mod)
     mod = parren_killer("(0#{mod})").to_i if( mod )
     debug(mod)
     mod = mod.to_i
-    
+
     skilled, unskilled, dice_str = torg_dice
     sk_bonus = get_torg_bonus(skilled)
-    
+
     if( mod )
         if(mod > 0)
           output = "#{sk_bonus}[#{dice_str}]+#{mod}"
-        else 
+        else
           output = "#{sk_bonus}[#{dice_str}]#{mod}"
         end
-    else 
+    else
       output = "#{sk_bonus}[#{dice_str}]"
     end
-    
+
     output += " ＞ " + (sk_bonus + mod).to_s
-    
+
     if(skilled != unskilled)
       output += "(技能無" + (get_torg_bonus(unskilled) + mod).to_s + ")"
     end
-    
+
     output = "#{nick_e}: (#{string}) ＞ #{output}"
-    
+
     return output
   end
-
 
   def torg_dice
     isSkilledCritical = true
@@ -98,16 +97,16 @@ INFO_MESSAGE_TEXT
     skilled = 0
     unskilled = 0
     dice_str = ""
-    
+
     while( isSkilledCritical )
       dummy = roll(1, 20, 0)
       dice_n = dummy.shift
       skilled += dice_n
       unskilled += dice_n if(isCritical)
-      
+
       dice_str += "," unless(dice_str.empty?)
       dice_str += "#{dice_n}"
-      
+
       if(dice_n == 20)
         isCritical = false
       elsif(dice_n != 10)
@@ -115,19 +114,19 @@ INFO_MESSAGE_TEXT
         isCritical = false
       end
     end
-    
+
     return skilled, unskilled, dice_str
   end
 
   def rollDiceCommand(command)
     string = command.upcase
-    
+
     output = '1'
     ttype = ""
     value = 0
-    
+
     return '1' unless(/([RITMDB]T)(\d+([\+\-]\d+)*)/i =~ string)
-    
+
     type = $1
     num = $2
 
@@ -161,15 +160,14 @@ INFO_MESSAGE_TEXT
       output, value = get_torg_bonus_text(num)
       ttype = 'ボーナス'
     end
-    
+
     if(ttype != '')
       output = "#{ttype}表[#{value}] ＞ #{output}"
     end
 
     return output
   end
-  
-  
+
 # 一般結果表 成功度
   def get_torg_success_level(value)
     success_table = [
@@ -178,22 +176,21 @@ INFO_MESSAGE_TEXT
         [3, "まあよい"],
         [7, "かなりよい"],
         [12, "すごい" ]]
-    
+
     return get_torg_table_result( value, success_table )
   end
-
 
 # 対人行為結果表
 # 威圧／威嚇(intimidate/Test)
   def get_torg_interaction_result_intimidate_test(value)
-    
+
     interaction_results_table = [
         [0, "技能なし"],
         [5, "萎縮"],
         [10, "逆転負け"],
         [15, "モラル崩壊"],
         [17, "プレイヤーズコール" ]]
-    
+
     return get_torg_table_result( value, interaction_results_table )
   end
 
@@ -205,7 +202,7 @@ INFO_MESSAGE_TEXT
         [10, "逆転負け"],
         [15, "高揚／逆転負け"],
         [17, "プレイヤーズコール" ]]
-    
+
     return get_torg_table_result( value, interaction_results_table )
   end
 
@@ -217,27 +214,26 @@ INFO_MESSAGE_TEXT
         [10, "萎縮／疲労"],
         [15, "逆転負け／疲労"],
         [17, "プレイヤーズコール" ]]
-    
+
     return get_torg_table_result( value, interaction_results_table )
   end
 
-
   def get_torg_table_result(value, table)
     output = '1'
-    
+
     table.each do |item|
       item_index = item[0]
-      
+
       if( item_index > value )
         break
       end
-        
+
       output = item[1]
     end
-    
+
     return output
   end
-  
+
 # オーズダメージチャート
   def get_torg_damage_ords(value)
     damage_table_ords = [
@@ -263,7 +259,7 @@ INFO_MESSAGE_TEXT
                            "レベル負傷  KO15",
                            damage_table_ords)
   end
-  
+
   # ポシビリティー能力者ダメージチャート
   def get_torg_damage_posibility(value)
     damage_table_posibility = [
@@ -283,8 +279,8 @@ INFO_MESSAGE_TEXT
         [13, "2レベル負傷  O4"],
         [14, "2レベル負傷  KO5"],
         [15, "3レベル負傷  KO5"]]
-        
-    return get_torg_damage(value, 
+
+    return get_torg_damage(value,
                            3,
                            "レベル負傷  KO5",
                            damage_table_posibility)
@@ -294,37 +290,37 @@ INFO_MESSAGE_TEXT
     if( value < 0 )
         return '1'
     end
-    
+
     table_max_value = damage_table.length - 1
-    
+
     if( value <= table_max_value )
         return get_torg_table_result( value, damage_table )
     end
-    
+
     over_kill_damage = ((value - table_max_value) / 2).to_i
     return "" + (over_kill_damage + maxDamage).to_s + maxDamageString
   end
-  
+
   def get_torg_bonus_text(num)
     val_arr = num.split(/\+/)
     value = val_arr.shift.to_i
-    
+
     mod = parren_killer("(0#{ val_arr.join('+') })").to_i
     resultValue = get_torg_bonus(value)
-    
+
     debug('TORG BT resultValue', resultValue)
     debug('TORG BT mod', mod)
-    
+
     if(mod == 0)
       output = "#{resultValue}"
     else
       output = getTorgBonusOutputTextWhenModDefined(value, resultValue, mod)
       value = "#{value}+#{mod}"
     end
-    
+
     return output, value
   end
-  
+
   def getTorgBonusOutputTextWhenModDefined(value, resultValue, mod)
     debug('getTorgBonusOutputTextWhenModDefined value, mod', value, mod)
     if(mod > 0)
@@ -335,7 +331,7 @@ INFO_MESSAGE_TEXT
       output = "#{resultValue}[#{value}]#{mod} ＞ #{resultValue + mod}"
     end
   end
-  
+
   def get_torg_bonus(value)
     bonus_table = [
                    [1, -12],
@@ -352,15 +348,14 @@ INFO_MESSAGE_TEXT
                    [18, 5],
                    [19, 6],
                    [20, 7]]
-    
+
     bonus = get_torg_table_result( value, bonus_table )
-    
+
     if( value > 20 )
       over_value_bonus = ((value - 21) / 5).to_i + 1
       bonus += over_value_bonus
     end
-    
+
     return bonus
   end
-
 end

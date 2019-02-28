@@ -5,7 +5,7 @@ class ShoujoTenrankai < DiceBot
 
   def initialize
     super
-    
+
     # @sendMode = @@DEFAULT_SEND_MODE #(0=結果のみ,1=0+式,2=1+ダイス個別)
     # @sortType = 0;      #ソート設定(1 = ?, 2 = ??, 3 = 1&2　各値の意味が不明です…）
     # @sameDiceRerollCount = 0;     #ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=ダイスのうち2個以上同じ目)
@@ -19,15 +19,15 @@ class ShoujoTenrankai < DiceBot
     # @rerollLimitCount = 0;    #振り足し回数上限
     # @fractionType = "omit";     #端数の処理 ("omit"=切り捨て, "roundUp"=切り上げ, "roundOff"=四捨五入)
   end
-  
+
   def gameName
     '少女展爛会'
   end
-  
+
   def gameType
     "ShoujoTenrankai"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 出来事表：
@@ -49,48 +49,45 @@ class ShoujoTenrankai < DiceBot
 　RUIN  廃屋／SHORE  水のほとり
 MESSAGETEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     info = @@eventTables[command.upcase]
-    
+
     return nil if info.nil?
-    
+
     name = info[:name]
     table = info[:table]
-    
+
     text, number1, number2 = getEventTableResult(table)
     tensionText = getTensionText(number1, number2)
-    
+
     result = "出来事表：#{name}([#{number1},#{number2}]) ＞ #{text}#{tensionText}"
 
     return result
   end
-  
-  
+
   def getTensionText(number1, number2)
     diff = (number1 - number2).abs
     return "" if diff == 0
     return "（テンション＋#{diff}）"
   end
-  
+
   def getEventTableResult(table)
     number1, = roll(1, 6)
     number2, = roll(1, 6)
-    
+
     isOdd = ((number1 % 2) == 0)
-    
+
     index = number2 - 1
-    index += 6 if isOdd 
-    
+    index += 6 if isOdd
+
     text = getTableValue(table[index])
-    
+
     return nil  if( text.nil? )
-    
+
     return text, number1, number2
   end
-  
-  
+
   @@eventTables =
     {
     "SPRING" => {
@@ -653,5 +650,4 @@ MESSAGETEXT
 【偶・5】一瞬寒気に襲われました。（ルナティック＋1）
 【偶・6】水の中で、魚の影が翻りました。
 },},}
-  
 end

@@ -81,7 +81,17 @@ class DiceBotTest
       
       # ゲームシステムをファイル名から判断する
       gameType = File.basename(filename, '.txt')
-      
+
+      # TKfix
+      begin
+        require(File.expand_path("../diceBot/#{gameType}.rb", File.dirname(__FILE__)))
+        #require_tree File.expand_path("../diceBot", File.dirname(__FILE__))
+      rescue LoadError, StandardError => e
+        debug("DiceBot load ERROR!!!", e.to_s)
+        nil
+      end
+      # TKfix
+
       dataSet =
         if RUBY_VERSION < '1.9'
           dataSetSources.each_with_index.map do |dataSetSource, i|
@@ -142,14 +152,12 @@ class DiceBotTest
 
     result = ''
     testData.input.each do |message|
-      #TKfix <<
-      result = result + @bot.roll(message, testData.gameType, @tableDir).first
+      result += @bot.roll(message, testData.gameType, @tableDir).first
     end
 
     unless rands.empty?
-      #TKfix <<
-      result = result + "\nダイス残り："
-      result = result + rands.map { |r| r.join('/') }.join(', ')
+      result += "\nダイス残り："
+      result += rands.map { |r| r.join('/') }.join(', ')
     end
 
     result
@@ -157,8 +165,7 @@ class DiceBotTest
 
   # 期待された出力と異なる場合のログ文字列を返す
   def logTextForUnexpected(result, data)
-    #TKfix <<
-    logText = logText + <<EOS
+    logText = <<EOS
 Game type: #{data.gameType}
 Index: #{data.index}
 Input:
@@ -176,8 +183,7 @@ EOS
 
   # 例外が発生した場合のログ文字列を返す
   def logTextForException(e, data)
-    #TKfix <<
-    logText = logText + <<EOS
+    logText = <<EOS
 Game type: #{data.gameType}
 Index: #{data.index}
 Exception: #{e.message}

@@ -10,15 +10,15 @@ class EarthDawn3 < EarthDawn
     @sendMode = 2
     @sortType = 1
   end
-  
+
   def gameName
     'アースドーン3版'
   end
-  
+
   def gameType
     "EarthDawn3"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ステップダイス　(xEn+k)
@@ -29,91 +29,86 @@ class EarthDawn3 < EarthDawn
 　　ステップ12、目標値8、カルマダイスD12：10E8+1D6
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     return  ed_step(command)
   end
-  
-  
+
   #アースドーンステップ表
   def ed_step(str)
-    
+
     output = getStepResult(str)
-    
+
     return output
   end
-  
-  
+
   def getStepResult(str)
-    
+
     return nil unless( /^(\d+)E(\d+)?(\+(\d*)D(\d+))?(\+\d)?/i =~ str)
-    
+
     stepTotal = 0
     @isFailed = true
-    
+
     step  = $1.to_i      #ステップ
     targetNumber = [$2.to_i, 20].min #目標値
     hasKarmaDice = (not $3.nil?)  #カルマダイスの有無
     karmaDiceCount = [1, $4.to_i].max #カルマダイスの個数
     karmaDiceType = $5.to_i #カルマダイスの種類
     diceModify = $6.to_i
-    
+
     karmaDiceInfo = Hash.new(0)
     if( hasKarmaDice )
       karmaDiceInfo[karmaDiceType] = karmaDiceCount
     end
-    
+
     return nil if(targetNumber < 0)
-    
+
     stepInfo = getStepInfo(step)
     debug('stepInfo', stepInfo)
-    
-    string = ""
-    
+
+    @string = ""
+
     diceTypes = [20, 12, 10, 8, 6, 4]
     diceTypes.each do |type|
-      stepTotal += rollStep(type, stepInfo.shift, string)
+      stepTotal += rollStep(type, stepInfo.shift)
     end
     modify = stepInfo.shift
-    
+
     karmaDiceInfo.each do |diceType, diceCount|
-      stepTotal += rollStep(diceType, diceCount, string)
+      stepTotal += rollStep(diceType, diceCount)
     end
-    
-    string += (getModifyText(modify) + getModifyText(diceModify))
+
+    @string += (getModifyText(modify) + getModifyText(diceModify))
     stepTotal += (modify + diceModify)
-    
+
     #ステップ判定終了
-    string += " ＞ #{stepTotal}"
-    
-    output = "ステップ#{step} ＞ #{string}"
+    @string += " ＞ #{stepTotal}"
+
+    output = "ステップ#{step} ＞ #{@string}"
     return output if(targetNumber == 0)
-    
+
     #結果判定
-    string += ' ＞ ' + getSuccess(targetNumber, stepTotal)
-    
-    output = "ステップ#{step}>=#{targetNumber} ＞ #{string}"
-    
+    @string += ' ＞ ' + getSuccess(targetNumber, stepTotal)
+
+    output = "ステップ#{step}>=#{targetNumber} ＞ #{@string}"
+
     return output
   end
-  
-  
+
   def getModifyText(modify)
-    string = ""
-    return string if( modify == 0 )
-    
-    string += "+" if( modify > 0 )
-    string += "#{modify}"
-    return string
+    @string = ""
+    return @string if( modify == 0 )
+
+    @string += "+" if( modify > 0 )
+    @string += "#{modify}"
+    return @string
   end
-  
-  
+
   def getBaseStepTable
-    
+
     stepTable =
       [
-       #      dice                          
+       #      dice
        #      D20  D12  D10  D8  D6  D4  mod
        [ 1,  [  0,   0,   0,  0,  1,  0,  -3] ],
        [ 2,  [  0,   0,   0,  0,  1,  0,  -2] ],
@@ -123,28 +118,25 @@ INFO_MESSAGE_TEXT
        [ 6,  [  0,   0,   1,  0,  0,  0,   0] ],
        [ 7,  [  0,   1,   0,  0,  0,  0,   0] ],
       ]
-    
+
     return stepTable
   end
-  
-  
-  
+
   def getStepInfo(step)
-    
+
     baseStepTable = getBaseStepTable
     baseMaxStep = baseStepTable.last.first
-    
+
     if( step <= baseMaxStep )
       return get_table_by_number(step, baseStepTable)
     end
-    
-    
+
     baseStepInfo = [  0,   1,   0,  0,  0,  0,   0]
     overStep = step - baseMaxStep - 1
-    
-    stepRythm = 
+
+    stepRythm =
     [
-       # dice                          
+       # dice
        # D20  D12  D10  D8  D6  D4  mod
        [  0,   0,   0,  0,  2,  0,   0],
        [  0,   0,   0,  1,  1,  0,   0],
@@ -154,54 +146,50 @@ INFO_MESSAGE_TEXT
        [  0,   1,   1,  0,  0,  0,   0],
        [  0,   2,   0,  0,  0,  0,   0],
     ]
-    
-    
+
     result = [  0,   0,   0,  0,  0,  0,   0]
-    
+
     #loopCount = (overStep / stepRythm.size)
     loopCount = (overStep / stepRythm.size).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
-    
+
     loopCount.times do
       addStepToResult(result, baseStepInfo)
     end
-    
+
     index = (overStep % stepRythm.size)
     restStepInfo = stepRythm[index]
-    
+
     addStepToResult(result, restStepInfo)
-    
+
     return result
   end
-  
-  
+
   def addStepToResult(result, step)
     result.size.times do |i|
       result[i] += step[i]
     end
-    
+
     return result
   end
-  
-  
+
   def getSuccess(targetNumber, stepTotal)
-    
+
     return '自動失敗' if( @isFailed )
-    
+
     successTable = getSuccessTable
     successInfo = get_table_by_number(targetNumber, successTable)
-    
+
     pathetic, poor, average, good, excelent, extraordinary = successInfo
-    
+
     return 'Extraordinary(極上)' if(stepTotal >= extraordinary)
     return 'Excelent(最高)' if(stepTotal >= excelent)
     return 'Good(上出来)' if(stepTotal >= good)
     return 'Average(そこそこ)' if(stepTotal >= average)
     return 'Poor(お粗末)' if(stepTotal >= poor)
     return 'Pathetic(惨め)' if( stepTotal >= pathetic )
-    
+
   end
-  
-  
+
   def getSuccessTable
     successTable =
       [
@@ -246,52 +234,45 @@ INFO_MESSAGE_TEXT
        [39,  [     1,    29,    39,    52,    58,    64  ] ],
        [40,  [     1,    30,    40,    53,    59,    66  ] ],
       ]
-    
+
     return successTable
   end
-  
 
+  def rollStep(diceType, diceCount)
+    debug('rollStep diceType, diceCount, @string', diceType, diceCount, @string)
 
-  def rollStep(diceType, diceCount, string)
-    debug('rollStep diceType, diceCount, string', diceType, diceCount, string)
-    
     stepTotal = 0
     return stepTotal unless(diceCount > 0)
-    
+
     #diceぶんのステップ判定
-    
-    #TKfix <<
-    string = string + "+" unless(string.empty? )
-    string = string + "#{diceCount}d#{diceType}["
-    debug('rollStep string', string)
-    
+
+    @string += "+" unless(@string.empty? )
+    @string += "#{diceCount}d#{diceType}["
+    debug('rollStep @string', @string)
+
     diceCount.times do |i|
       dice_now, dummy = roll(1, diceType)
-      
+
       if(dice_now != 1)
         @isFailed = false
       end
-      
+
       dice_in =  dice_now
-      
+
       while( dice_now == diceType )
         dice_now, dummy = roll(1, diceType)
-        
+
         dice_in += dice_now
       end
-      
+
       stepTotal += dice_in
 
-      #TKfix <<
-      string = string + ',' if( i != 0 )
-      string = string + "#{dice_in}"
+      @string += ',' if( i != 0 )
+      @string += "#{dice_in}"
     end
-    
-    #TKfix <<
-    string = string + "]"
-    
+
+    @string += "]"
+
     return stepTotal
   end
-
-
 end

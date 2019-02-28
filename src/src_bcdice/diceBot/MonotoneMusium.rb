@@ -5,19 +5,20 @@ class MonotoneMusium < DiceBot
 
   def initialize
     super
-    
+
     @sendMode = 2
     @d66Type = 1
     @sortType = 1
   end
+
   def gameName
     'モノトーン・ミュージアム'
   end
-  
+
   def gameType
     "MonotoneMusium"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定
@@ -33,41 +34,39 @@ class MonotoneMusium < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
-    
+
     result = checkRoll(command)
     return result unless(result.empty?)
-    
+
     debug("判定ロールではなかった")
-    
+
     debug("各種表として処理")
     return rollTableCommand(command)
   end
-  
-  
+
   def checkRoll(string)
     output = ''
-    
+
     crit = 12
     fumble = 2
-    
+
     return output unless(/^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string)
-    
+
     modText = $1
     target = $2.to_i
     crit = $4.to_i if($4)
     fumble = $6.to_i if($6)
-    
+
     mod = 0
     mod = parren_killer("(0#{modText})") unless( modText.nil? )
-    
+
     total, dice_str, = roll(2, 6, @sortType && 1)
     total_n = total + mod.to_i
-    
+
     output = "#{total}[#{dice_str}]＋#{mod} → #{total_n}"
-    
+
     if(total >= crit)
       output += " ＞ 自動成功"
     elsif(total <= fumble)
@@ -77,18 +76,17 @@ INFO_MESSAGE_TEXT
     else
       output += " ＞ 失敗"
     end
-    
+
     output = "(#{string}) ＞ #{output}"
-    
+
     return output
-    
+
   end
-  
-  
+
   def rollTableCommand(command)
     output = ''
     type = ""
-    
+
     case command
     when /ET2/i
       type ="感情表2.0"
@@ -121,9 +119,9 @@ INFO_MESSAGE_TEXT
       type = "歪み表"
       output, total_n = mm_distortion_table()
     end
-    
+
     output = "#{type}(#{total_n}) ＞ #{output}" if(output != '')
-    
+
     return output
   end
 
@@ -228,7 +226,7 @@ INFO_MESSAGE_TEXT
       "【理由の喪失】\n[境遇]を喪失する。特徴は失われない。",
       "【存在の喪失】\nあなたの存在は一瞬、この世界から消失する。",
     ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -249,7 +247,7 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_2d6(table)
   end
- 
+
   # 歪み表ver2.0(d66)[DT2]
   def mm_distortion_table_ver2
     table = [
@@ -308,7 +306,7 @@ INFO_MESSAGE_TEXT
       "【自己死】\nもっとも剥離値の高いPCひとりが［戦闘不能］になる。複数のPCが該当した場合はGMがランダムに決定する。",
       "【世界死】\n世界の破滅。難易度12の【縫製】判定に成功すると破滅から逃れられる。失敗すると行方不明になる。エンディングフェイズへ。",
     ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -484,5 +482,4 @@ INFO_MESSAGE_TEXT
 
     return get_table_by_d66(table)
   end
-
 end

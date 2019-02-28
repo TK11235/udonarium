@@ -5,18 +5,18 @@ class RokumonSekai2 < DiceBot
 
   def initialize
     super
-    
+
     @sendMode = 2;
     @sortType = 1;
   end
   def gameName
     '六門世界2nd'
   end
-  
+
   def gameType
     "RokumonSekai2"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定
@@ -27,46 +27,45 @@ Rコマンド(3R6m<=t[a])に読み替えます。
 　例) 3RS+1<=9　3R6+1<=9[3]
 INFO_MESSAGE_TEXT
   end
-  
+
   def changeText(string)
     debug('parren_killer_add begin stirng', string)
-    
+
     string = string.gsub(/(\d+)RS([\+\-][\+\-\d]+)<=(\d+)/i) {"3R6#{$2}<=#{$3}[#{$1}]"}
     string = string.gsub(/(\d+)RS<=(\d+)/i) {"3R6<=#{$2}[#{$1}]"}
-    
+
     debug('parren_killer_add end stirng', string)
-    
+
     return string
   end
-  
+
   def dice_command_xRn(string, nick_e)
     checkRoll(string, nick_e)
   end
-  
-  
+
   def checkRoll(string, nick_e)
     output = '1';
-    
+
     unless(/3R6([\+\-\d]*)<=(\d+)\[(\d+)\]/i =~ string)
       return output
     end
-    
+
     modText = $1
     target = $2.to_i
     abl = $3.to_i
-    
+
     mod = 0
     if(modText)
       mod = parren_killer("(0#{modText})").to_i
     end
-    
+
     dstr, suc, sum = rokumon2_roll(mod, target, abl)
     output = "#{sum}[#{dstr}] ＞ #{suc} ＞ 評価#{ rokumon2_suc_rank(suc) }"
-    
+
     if(suc != 0 )
       output += "(+#{suc}d6)"
     end
-    
+
     output = "#{nick_e}: (#{string}) ＞ #{output}"
 
     return output;
@@ -74,11 +73,11 @@ INFO_MESSAGE_TEXT
 
   def rokumon2_roll(mod, target, abl)
     suc = 0;
-    
+
     _, dicestr, = roll(3 + mod.abs, 6 , 1)
-    
+
     dice = dicestr.split(/,/).collect{|i| i.to_i }
-    
+
     mod.abs.times do |i|
       if(mod < 0)
         dice.shift
@@ -86,27 +85,27 @@ INFO_MESSAGE_TEXT
         dice.pop
       end
     end
-    
+
     cnt5 = 0;
     cnt2 = 0;
     sum = 0;
-    
+
     dice.each do |die1|
       cnt5 += 1 if(die1 >= 5)
       cnt2 += 1 if(die1 <= 2)
       suc += 1  if(die1 <= abl)
       sum += die1
     end
-    
+
     if(sum < target)
       suc += 2;
     elsif(sum == target)
       suc += 1;
     end
-    
+
     suc = 0 if(cnt5 >= 3)
     suc = 5 if(cnt2 >= 3)
-    
+
     return dicestr, suc, sum
   end
 
@@ -115,4 +114,3 @@ INFO_MESSAGE_TEXT
     return suc_rank[ suc ];
   end
 end
-

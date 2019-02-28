@@ -1,4 +1,4 @@
-#--*-coding:utf-8-*--
+# -*- coding: utf-8 -*-
 
 class GoldenSkyStories < DiceBot
   setPrefixes(['geta'])
@@ -6,56 +6,53 @@ class GoldenSkyStories < DiceBot
   def initialize
     super
   end
-  
+
   def gameName
     'ゆうやけこやけ'
   end
-  
+
   def gameType
     "GoldenSkyStories"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ※「ゆうやけこやけ」はダイスロールを使用しないシステムです。
 ※このダイスボットは部屋のシステム名表示用となります。
 
-
 ・下駄占い (GETA)
   あーしたてんきになーれ
 MESSAGETEXT
   end
-  
+
   def isGetOriginalMessage
     true
   end
-  
+
   def rollDiceCommand(command)
     debug('rollDiceCommand command', command)
-    
+
     result = ''
-    
+
     case command
     when /geta/i
       result= getaRoll()
     end
-    
-    return nil if result.empty? 
-    
+
+    return nil if result.empty?
+
     return "#{command} ＞ #{result}"
   end
-  
-  
+
   def getaRoll()
     result = ""
-    
+
     _, diceText = roll(1, 7)
-    
+
     diceList = diceText.split(/,/).collect{|i|i.to_i}
-    
+
     #result << " あーしたてんきになーれっ ＞ [#{diceList.join(',')}] ＞ "
-    #TKfix <<
-    result = result + "下駄占い ＞ "
+    result += "下駄占い ＞ "
 
     getaString = ''
     case(diceList[0])
@@ -74,10 +71,9 @@ MESSAGETEXT
       when 7
         getaString = '横：くもり'
     end
-    #TKfix <<
-    result = result + getaString
-    
-    return result 
+
+    result += getaString
+
+    return result
   end
-  
 end

@@ -17,7 +17,7 @@ class DemonParasite < DiceBot
   def gameType
     "DemonParasite"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・衝動表　(URGEx)
@@ -34,20 +34,19 @@ class DemonParasite < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   # ゲーム別成功度判定(nD6)
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     if(n1 >= 2)  # １の目が２個以上ならファンブル
       return " ＞ 致命的失敗"
     end
-    
+
     if(n_max >= 2)  # ６の目が２個以上あったらクリティカル
       return " ＞ 効果的成功"
     end
-    
+
     return '' if(diff == "?")
-    
+
     case signOfInequality
     when ">="
       if(total_n >= diff)
@@ -61,33 +60,30 @@ INFO_MESSAGE_TEXT
       return " ＞ 失敗"
     end
   end
-  
-  
-  
+
   def rollDiceCommand(command)
-    
+
     case command
     when /(\w)?URGE\s*(\d+)/i
       return get_urge(command)
     else
       return '1'
     end
-    
+
   end
-  
-  
+
   # 衝動表
   def get_urge(string)
-    
+
     unless(/(\w)?URGE\s*(\d+)/i =~ string)
       return '1'
     end
-    
+
     initialWord = $1
     urgelv = $2.to_i
-    
+
     urge_type = 0
-    
+
     case initialWord
     when nil
       urge_type = 1
@@ -104,18 +100,18 @@ INFO_MESSAGE_TEXT
     else     # あり得ない文字
       urge_type = 1
     end
-    
+
     if(( urgelv < 1 ) or ( urgelv > 5 ))
       return '衝動段階は1から5です'
     end
-    
+
     if( urge_type == 0 )
       return '1'
     end
-    
+
     urge = dp_urge_get( urge_type )
     dice_now, = roll(2, 6)
-    
+
     if(urge_type <= 1)
       title = '衝動表'
     elsif(urge_type <= 2)
@@ -129,15 +125,14 @@ INFO_MESSAGE_TEXT
     else
       title = '鬼御魂(戦闘中)衝動表'
     end
-    
+
     resultText = urge[urgelv - 1][dice_now - 2]
-    
+
     output = "#{title}#{urgelv}-#{dice_now}:#{resultText}"
-    
+
     return output
   end
-  
-  
+
   def dp_urge_get( urge_type )
     if(urge_type <= 1)
       return [[
@@ -536,8 +531,7 @@ INFO_MESSAGE_TEXT
           '『覚醒』第五段階を2回振り、双方の効果を適応する。',
         ]]
     end
-    
+
     return []
   end
-  
 end

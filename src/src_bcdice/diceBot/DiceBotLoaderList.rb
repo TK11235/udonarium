@@ -34,6 +34,9 @@ class DiceBotLoaderList
     DiceBotLoader.new(/\A(?:SwordWorld|SW)\s*2\.0\z/i,
                       :filenames => %w(SwordWorld SwordWorld2_0),
                       :class => :SwordWorld2_0),
+    DiceBotLoader.new(/\A(?:SwordWorld|SW)\s*2\.5\z/i,
+                      :filenames => %w(SwordWorld SwordWorld2_5),
+                      :class => :SwordWorld2_5),
     DiceBotLoader.new(%w(SwordWorld SW)),
     DiceBotLoader.new(%w(Arianrhod AR)),
     DiceBotLoader.new(/\A(?:Infinite\s*Fantasia|IF)\z/i,
@@ -141,6 +144,7 @@ class DiceBotLoaderList
     DiceBotLoader.new('Garako'),
     DiceBotLoader.new('ShoujoTenrankai'),
     DiceBotLoader.new('GardenOrder'),
+    DiceBotLoader.new('DarkSouls'),
     DiceBotLoader.new('None', :filenames => [], :class => :DiceBot)
   ]
 end

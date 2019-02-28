@@ -40,25 +40,24 @@ class Strave < DiceBot
 MESSAGETEXT
   end
 
-
   def rollDiceCommand(command)
-    
-    output = 
+
+    output =
       case command.upcase
-      
+
       # MPコマンド：モラトリアムフェイズ用判定
       when /MP(\d+)$/i
         diceCount = 2
         target = $1.to_i
         checkRoll(diceCount, target, nil)
-        
+
       # STコマンド：命中判定
       when /(\d+)ST(\d+)(x|\*)(\d+)$/i
         diceCount = $1.to_i
         target = $2.to_i
         damage = ($4 || 0).to_i
         checkRoll(diceCount, target, damage)
-        
+
       # 各種表
       when 'AFF'
         get_affiliation_table
@@ -68,26 +67,25 @@ MESSAGETEXT
         get_affiliation_table2
       when 'IDV'
         get_identity_table2
-      
+
       else
         nil
       end
-    
+
     return output
   end
-  
-  
+
   def checkRoll(diceCount, target, damage)
     target = 1 if( target < 1 )
     target = 10 if( target > 10 )
-    
+
     dice, diceText = roll(diceCount, 10, @sortType)
     diceArray = diceText.split(/,/).collect{|i|i.to_i}
-    
+
     successCount = diceArray.find_all{|i| (i <= target)}.size
-    
+
     isDamage = (not damage.nil?)
-    
+
     if( isDamage )
       totalDamage = successCount * damage
       result = "(#{diceCount}D10\<\=#{target}) ＞ #{diceText} ＞ Hits：#{successCount}*#{damage} ＞ #{totalDamage}ダメージ"
@@ -99,11 +97,10 @@ MESSAGETEXT
         result += " ＞ 【失敗】"
       end
     end
-    
+
     return result
   end
-  
-  
+
   def get_affiliation_table
     name = '所属表：基本'
     table = [
@@ -211,18 +208,15 @@ MESSAGETEXT
             ]
     return get_strave_1d100_table_result(name, table)
   end
-  
-  
+
   def get_strave_1d100_table_result(name, table)
     dice, = roll(1, 100)
     dice2 = ((dice.to_i - 1) / 5).floor + 1
     result = get_table_by_number(dice2, table)
     return get_strave_table_result(name, dice, result)
   end
-  
 
   def get_strave_table_result(name, dice, result)
     return "#{name}(#{dice}) ＞ #{result}"
   end
-
 end

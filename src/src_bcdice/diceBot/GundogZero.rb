@@ -8,11 +8,11 @@ class GundogZero < Gundog
   def gameName
     'ガンドッグ・ゼロ'
   end
-  
+
   def gameType
     "GundogZero"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。
@@ -25,46 +25,43 @@ nD9ロールも対応。
 　修正を後ろに書くことも出来ます。
 INFO_MESSAGE_TEXT
   end
-  
-  
-  
+
   def rollDiceCommand(command)
     string = command.upcase
-    
+
     table = []
     ttype = ""
     type = ""
     dice = 0
     mod = 0
-    
-    
+
     # ダメージペナルティ表
     if(/(\w)DPT([\+\-\d]*)/i =~ string)
       ttype = 'ダメージペナルティー'
       head = $1
       mod = parren_killer("(0#{$2})").to_i if($2)
-      
+
       type, table = getDamageTypeAndTable(head)
     end
-    
+
     # ファンブル表
     if(/(\w)FT([\+\-\d]*)/i =~ string)
       ttype = 'ファンブル'
       head = $1
       mod = parren_killer("(0#{$2})").to_i if($2)
-      
+
       type, table = getFumbleTypeAndTable(head)
     end
-    
+
     return '1' if( type.empty? )
-    
+
     dice = rand(10) + rand(10) + mod
     diceOriginalText = dice
     dice = 0 if(dice < 0)
     dice = 18 if(dice > 18)
-    
+
     output = "#{type}#{ttype}表[#{diceOriginalText}] ＞ #{table[dice]}"
-    
+
     return output
   end
 
@@ -119,7 +116,7 @@ INFO_MESSAGE_TEXT
         '手に持った武器を落とす',                           #17
         'ペナルティー無し',                                 #18
       ]
-      
+
     when "V"
       type = '車両'
       # 車両ダメージペナルティー表
@@ -144,7 +141,7 @@ INFO_MESSAGE_TEXT
         '乗員に[ショック]-10％',                            #17
         'ペナルティー無し',                                 #18
       ]
-      
+
     when "G"
       type = '汎用'
       # 汎用ダメージペナルティー表
@@ -173,10 +170,10 @@ INFO_MESSAGE_TEXT
       head = "S" # 間違ったら射撃扱い
       type, table = getDamageTypeAndTable(head)
     end
-    
+
     return type, table
   end
-  
+
   def getFumbleTypeAndTable(head)
     case head
     when "S"
@@ -255,8 +252,7 @@ INFO_MESSAGE_TEXT
       head = "S" # 間違ったら射撃扱い
       type, table = getFumbleTypeAndTable(head)
     end
-    
+
     return type, table
   end
-  
 end

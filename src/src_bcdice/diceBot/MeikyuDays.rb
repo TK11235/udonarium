@@ -12,11 +12,11 @@ class MeikyuDays < DiceBot
   def gameName
     '迷宮デイズ'
   end
-  
+
   def gameType
     "MeikyuDays"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定　(nMD+m)
@@ -36,23 +36,21 @@ class MeikyuDays < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def changeText(string)
     string = string.gsub(/(\d+)MD6/i) {"#{$1}R6"}
     string = string.gsub(/(\d+)MD/i) {"#{$1}R6"}
     return string
   end
-  
-  
+
   def dice_command_xRn(string, nick_e)
     @nick = nick_e
     return checkRoll(string)
   end
-  
+
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
     return '' unless(signOfInequality == ">=")
-    
+
     if(dice_n <= 2)
       return " ＞ 絶対失敗"
     elsif(dice_n >= 12)
@@ -63,12 +61,10 @@ INFO_MESSAGE_TEXT
       return " ＞ 失敗"
     end
   end
-  
-  
-  
+
   def checkRoll(string)
     output = "1"
-    
+
     debug("checkRoll string", string)
     unless(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i =~ string)
       debug("not mutch")
@@ -81,38 +77,38 @@ INFO_MESSAGE_TEXT
     reg4 = $4
     reg6 = $6
     reg7 = $7
-    
+
     string = reg2#$2
     dice_c = reg3.to_i#$3.to_i
     bonus = 0
     signOfInequality = ""
     diff = 0
-    
+
     bonusText = reg4#$4
     bonus = parren_killer("(0" + bonusText + ")").to_i unless( bonusText.nil? )
-    
+
     signOfInequality = reg6 if(reg6)#$6 if($6)
     diff = reg7.to_i if(reg7)#$7.to_i if($7)
     dice_now = 0
     dice_str = ""
     total_n = 0
-    
+
     _, dice_str, = roll(dice_c, 6, (sortType & 1))
     dice_num = dice_str.split(/,/).collect{|i|i.to_i}
-    
+
     dice_now = dice_num[dice_c - 2] + dice_num[dice_c - 1]
     total_n = dice_now + bonus
-    
+
     dice_str = "[#{dice_str}]"
-    
+
     output = "#{dice_now}#{dice_str}"
-    
+
     if(bonus > 0)
       output += "+#{bonus}"
     elsif(bonus < 0)
       output += "#{bonus}"
     end
-    
+
     if(sendMode > 0)
       if(/[^\d\[\]]+/ =~ output)
         output = "#{@nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
@@ -122,11 +118,11 @@ INFO_MESSAGE_TEXT
     else
       output = "#{@nick_e}: (#{string}) ＞ #{total_n}"
     end
-    
+
     if(signOfInequality != "")  # 成功度判定処理
       output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
     end
-    
+
     return output
   end
 
@@ -203,7 +199,7 @@ INFO_MESSAGE_TEXT
     if(output != '1')
       output = "#{type}表(#{total_n}) ＞ #{output}"
     end
-    
+
     return output
   end
 
@@ -222,10 +218,10 @@ INFO_MESSAGE_TEXT
       '他の迷宮屋と喧嘩になる。パーティの中からランダムに1人を選び、お互いの《敵意》を1点上昇させる。',
       '迷宮屋志望の見習が、1d6人ほど配下として加わる。',
     ]
-    
+
     return get_table_by_2d6(table)
   end
-  
+
   #**休憩表（2d6）
   def md_break_table
     table = [
@@ -241,10 +237,10 @@ INFO_MESSAGE_TEXT
       '各キャラクターは、迷宮化現象に巻き込まれ、身動きがとれない普通の人を1人見つけた。《配下》に加えることができる。',
       '各キャラクターは1d6を振る。出た目の上位2名が唐突に恋に落ちる。同じ目が出て2名をうまく割り出せない場合は、GMの左隣に近い方を優先する。恋に落ちた2人、相手以外に対する《好意》を合計し、その値に対する《好意》に加える。その後、相手以外に対する《好意》をすべて0にする。',
     ]
-    
+
     return get_table_by_2d6(table)
   end
-  
+
   #**交渉表（2d6）
   def md_negotiation_table
     table = [
@@ -263,8 +259,6 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-
-
   #**ハプニング表（2d6）
   def md_happening_table
     table = [
@@ -280,7 +274,7 @@ INFO_MESSAGE_TEXT
       '過去の行状のせいで人に呪われる。「呪い」のバッドステータスを受ける。',
       '自分の失敗が許せない。このゲームの間、《器》が1点減少したものとして扱う。',
     ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -299,10 +293,9 @@ INFO_MESSAGE_TEXT
       'カーネルは停止した。そして持っているアイテムの中からランダムに1つを選ぶ。そのアイテムにレベルがあれば、いつのまにかレベルが1上昇している。',
       '鮮やかにカーネルを停止させ、傷一つないまま保存することに成功した。このカーネルの売却価格が3d6MC上昇する。',
     ]
-    
+
     return get_table_by_2d6(table)
   end
-
 
   #**痛打表（2d6）
   def md_critical_attack_table
@@ -319,7 +312,7 @@ INFO_MESSAGE_TEXT
       '敵の急所をとらえ致命傷を与える。攻撃目標の《HP》を0にする。',
       '戦いの中、武具もまた成長する。持っているアイテムをランダムに1選ぶ。そのアイテムにレベルがあれば、1点上昇する。',
     ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -394,7 +387,7 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_2d6(table)
   end
-  
+
   #**怪物因縁表（2d6）
   def md_monster_connection_table
     table = [
@@ -412,7 +405,7 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_2d6(table)
   end
-  
+
   #**PC因縁表（2d6）
   def md_pc_connection_table
     table = [
@@ -430,7 +423,7 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_2d6(table)
   end
-  
+
   #**ラブ因縁表（2d6）
   def md_love_connection_table
     table = [
@@ -518,5 +511,4 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_1d6(table)
   end
-  
 end

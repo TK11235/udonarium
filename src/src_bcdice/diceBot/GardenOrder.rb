@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 class GardenOrder < DiceBot
   setPrefixes([
     'GO\d+(\/\d+)?(@\d+)?',
@@ -10,11 +9,11 @@ class GardenOrder < DiceBot
   def gameName
     'ガーデンオーダー'
   end
-  
+
   def gameType
     "GardenOrder"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・基本判定
@@ -28,87 +27,78 @@ class GardenOrder < DiceBot
 　例）DCSL7　DCEL22
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
-    
+
     case command
     when /GO(\d+)(\/(\d+))?(@(\d+))?/i
       success_rate = $1.to_i
       repeat_count = ($3 || 1).to_i
       critical_border_text = $5
       critical_border = get_critical_border(critical_border_text, success_rate)
-      
+
       return check_roll_repeat_attack(success_rate, repeat_count, critical_border)
-      
+
      when /^DC(SL|BL|IM|BR|RF|EL)(\d+)/i
       type = $1
       damage_value = $2.to_i
       return look_up_damage_chart(type, damage_value)
     end
-    
+
     return nil
   end
-  
-  
+
   def get_critical_border(critical_border_text, success_rate)
-    
-    return critical_border_text.to_i unless critical_border_text.nil? 
-    
+
+    return critical_border_text.to_i unless critical_border_text.nil?
+
     #critical_border = [success_rate / 5, 1].max
     critical_border = [(success_rate / 5).floor, 1].max # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     return critical_border
   end
-  
-  
-  
+
   def check_roll_repeat_attack(success_rate, repeat_count, critical_border)
     #success_rate_per_one = success_rate / repeat_count
     success_rate_per_one = (success_rate / repeat_count).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
-    
+
     check_roll(success_rate_per_one, critical_border)
   end
-  
-  
+
   def check_roll(success_rate, critical_border)
     fumble_border = (success_rate < 100 ? 96 : 99)
-    
+
     dice_value, = roll(1, 100)
     result = get_check_result(dice_value, success_rate, critical_border, fumble_border)
-    
+
     text = "D100<=#{success_rate}@#{critical_border} ＞ #{dice_value} ＞ #{result}"
     return text
   end
-  
-  
+
   def get_check_result(dice_value, success_rate, critical_border, fumble_border)
     return "クリティカル" if dice_value <= critical_border
     return "ファンブル" if dice_value >= fumble_border
     return "成功" if dice_value <= success_rate
     return "失敗"
   end
-  
-  
+
   def look_up_damage_chart(type, damage_value)
     name, table= get_damage_table_info_by_type( type )
-    
+
     row = get_table_by_number(damage_value, table, nil)
     return nil if row.nil?
-    
+
     "負傷表：#{name}[#{damage_value}] ＞ #{row[:damage]} ｜ #{row[:name]} … #{row[:text]}"
   end
-
 
   def get_damage_table_info_by_type( type )
     data = @@damage_table[type]
     return nil if data.nil?
-    
+
     return data[:name], data[:table]
   end
-  
-  
+
   @@damage_table = {
-    
+
     "SL" => {
       :name => "切断",
       :table => [
@@ -165,7 +155,7 @@ INFO_MESSAGE_TEXT
                     :text => "脊髄が損傷する。",
                     :damage => "致命傷２／放心、スタン、マヒ"}],
                 ]},
-    
+
     "BL" => {
       :name => "銃弾",
       :table => [
@@ -222,7 +212,7 @@ INFO_MESSAGE_TEXT
                     :text => "銃弾が心臓の近くを貫く。動脈にダメージを受けたようだ。",
                     :damage => "致命傷２／ＤＯＴ：重傷1"}],
                 ]},
-    
+
     "IM" => {
       :name => "衝撃",
       :table => [
@@ -279,7 +269,7 @@ INFO_MESSAGE_TEXT
                     :text => "衝撃が身体の芯まで届き、内臓がいくつか傷ついたようだ。",
                     :damage => "致命傷２／ＤＯＴ：重傷1"}],
                 ]},
-    
+
     "BR" => {
       :name => "灼熱",
       :table => [
@@ -336,7 +326,7 @@ INFO_MESSAGE_TEXT
                     :text => "身体の大部分に焼けどを負う。",
                     :damage => "致命傷２／スタン"}],
                 ]},
-    
+
     "RF" => {
       :name => "冷却",
       :table => [
@@ -393,7 +383,7 @@ INFO_MESSAGE_TEXT
                     :text => "完全に氷に閉じ込められる。",
                     :damage => "致命傷２／スタン、マヒ"}],
                 ]},
-    
+
     "EL" => {
       :name => "電撃",
       :table => [
@@ -451,5 +441,4 @@ INFO_MESSAGE_TEXT
                     :damage => "致命傷２／スタン"}],
                 ]}
   }
-  
 end

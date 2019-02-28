@@ -11,7 +11,7 @@ class Garako < DiceBot
   def initialize
     super
   end
-  
+
   def gameName
     'ガラコと破界の塔'
   end
@@ -19,7 +19,7 @@ class Garako < DiceBot
   def gameType
     "Garako"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定
@@ -39,24 +39,22 @@ GR+n>=X：「+n」で判定値を指定、「X」で目標値を指定。
 ・戦闘開始距離：BSD
 MESSAGETEXT
   end
-  
-  
-  
+
   def rollDiceCommand(command)
-    
-    output = 
+
+    output =
       case command.upcase
-        
+
       when /^GR((\+|\-)\d+)?>=(\d+)$/i
         modifyString = $1
         targetString = $3
         checkRoll(modifyString, targetString)
-        
+
       when /(\w)DC(\d+)/i
         part = $1.upcase
         damage = $2.to_i
         get_damage_chart(part, damage)
-        
+
       when 'PNM'
         get_nametable_pm
       when 'PNF'
@@ -98,43 +96,39 @@ MESSAGETEXT
       else
         nil
       end
-    
+
     return output
   end
-  
-  
+
   def checkRoll(modifyString, targetString)
-    
+
     modify = modifyString.to_i
     target = targetString.to_i
-    
+
     dice, = roll(1, 10)
     total = (dice + modify)
-    
+
     text = getResultText(dice, total, target)
-    
+
     result = ""
-    #TKfix <<
-    result = result + "(1D10#{modifyString}>#{total})"
-    result = result + " ＞ #{total}[#{dice}#{modifyString}] ＞ #{total} ＞ #{text}"
-    
+    result += "(1D10#{modifyString}>#{total})"
+    result += " ＞ #{total}[#{dice}#{modifyString}] ＞ #{total} ＞ #{text}"
+
     return result
   end
-  
-  
+
   def getResultText(dice, total, target)
-    
+
     return "ファンブル" if( dice == 1 )
     return "クリティカル" if( dice == 10 )
-    
+
     if total < target
       return "失敗"
     end
-    
+
     return "成功"
   end
-  
-  
+
   def get_nametable_pm
     name = '名前表：ピグマー族（男）'
     table = [
@@ -151,8 +145,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_pf
     name = '名前表：ピグマー族（女）'
     table = [
@@ -169,8 +162,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_em
     name = '名前表：エレメント族（男）'
     table = [
@@ -187,8 +179,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_ef
     name = '名前表：エレメント族（女）'
     table = [
@@ -205,8 +196,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_nm
     name = '名前表：ノーマッド族（男）'
     table = [
@@ -223,8 +213,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_nf
     name = '名前表：ノーマッド族（女）'
     table = [
@@ -241,8 +230,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_rm
     name = '名前表：ラット族（男）'
     table = [
@@ -260,7 +248,6 @@ MESSAGETEXT
     return get_garako_1d10_table_result(name, table)
   end
 
-  
   def get_nametable_rf
     name = '名前表：ラット族（女）'
     table = [
@@ -277,8 +264,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_b1
     name = '名前表：ブレイン族（その１）'
     table = [
@@ -295,8 +281,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_b2
     name = '名前表：ブレイン族（その２）'
     table = [
@@ -313,8 +298,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_nametable_t1
     name = '名前表：テンタクル族（その１）'
     table = [
@@ -332,7 +316,6 @@ MESSAGETEXT
     return get_garako_1d10_table_result(name, table)
   end
 
-  
   def get_nametable_t2
     name = '名前表：テンタクル族（その２）'
     table = [
@@ -349,7 +332,6 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-
 
   def get_idiosyncrasy_table
     name = '個性表'
@@ -455,14 +437,13 @@ MESSAGETEXT
               [99, '〈カース〉 目標が判定を行った直後に使用。その判定の達成値を-3する。'],
               [100, '〈リザレクション〉 死んだ目標を生き返らせる。生き返った目標のHPは10になる。このシーンの間に死亡したキャラクターのみ目標にできる。（超能力）'],
             ]
-    
+
     dice, = roll(1, 100)
     result = get_table_by_number(dice, table)
-    
+
     return get_garako_table_result(name, dice, result)
   end
-  
-  
+
   def get_motivation_table
     name = '動機決定表'
     table = [
@@ -479,7 +460,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
+
   def get_damage_region_chart
     name = '部位決定チャート'
     table = [
@@ -496,12 +477,11 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   # 部位ダメージチャート
   def get_damage_chart(part, damage)
-    
-    name, table = 
+
+    name, table =
       case part
       when 'C'
         get_damagechart_cockpit
@@ -516,21 +496,20 @@ MESSAGETEXT
       else
         nil
       end
-    
-    return nil if table.nil? 
-    
+
+    return nil if table.nil?
+
     tableMaxValue = table.last[0]
     damage = [damage, tableMaxValue].min
-    
+
     result = get_table_by_number(damage , table)
-    
+
     return get_garako_table_result(name, damage, result)
   end
-  
-  
+
   def get_damagechart_cockpit
     name = "部位ダメージチャート：コックピット"
-    table = 
+    table =
       [
        [1, '小破（アーマー損傷）：以後、この部位の【部位装甲】-1。'],
        [2, '小破（視界不良）：モニターやハッチの歪み等により、視界を大きく遮られる。以後、【視認性】-1、【部位装甲】-1。'],
@@ -543,14 +522,13 @@ MESSAGETEXT
        [9, '大破（貫通！）：パイロットに被害が！　キミはHPダメージ（1d10+3-【身体】）に加え、［弱体1］を受ける。'],
        [10, '修復不能（破壊）：コックピットが［修復不能］となる。キミは2d10-【身体】点のHPダメージを受ける。ガラコはすべての機能を停止する。コックピットのハッチが自動的に開く。'],
       ]
-    
+
     return name, table
   end
-  
-  
+
   def get_damagechart_engine
     name = "部位ダメージチャート：エンジン"
-    table = 
+    table =
       [
        [1, '小破（アーマー損傷）：以後、この部位の【部位装甲】-1。'],
        [2, '小破（アーマー損傷）：以後、この部位の【部位装甲】-1。'],
@@ -563,14 +541,13 @@ MESSAGETEXT
        [9, '大破（故障）：以後、この部位の【部位装甲】が0になる。［弱体1］を受ける。'],
        [10, '修復不能（エンジン停止）：エンジンが停止する。ガラコはすべての機能を停止する。コックピットのハッチが自動的に開く。【操作性】10の判定を行うこと。失敗するとエンジンが爆発する。その場合、すべての部位が［修復不能］となり、キミは2d10-【身体】点のダメージを受ける。'],
       ]
-    
+
     return name, table
   end
-  
-  
+
   def get_damagechart_frame
     name = "部位ダメージチャート：フレーム"
-    table = 
+    table =
       [
        [1, '小破（不安定）：体勢を崩す。次のターン、キミは攻撃を行えない。この部位の【部位装甲】-1。'],
        [2, '小破（スクラッチ！）：フレームに醜い傷が残る。この部位の【部位装甲】-1。'],
@@ -583,14 +560,13 @@ MESSAGETEXT
        [9, '大破（アーマー損傷）：フレームに甚大なダメージを受ける。以後、この部位の【部位装甲】に-3。［弱体1］を受ける。'],
        [10, '修復不能（フレーム崩壊）：フレームが［修復不能］となる。フレームの大部分が剥がれ落ち、ガラコの内部が晒される。以後、キミに対して部位狙いが行われる場合、その命中判定に対する修正（p21）は発生しなくなる。［弱体2］を受ける。'],
       ]
-    
+
     return name, table
   end
-  
-  
+
   def get_damagechart_arm
     name = "部位ダメージチャート：アーム"
-    table = 
+    table =
       [
        [1, '小破（アーマー損傷）：アームの装甲にヒビが入る。【部位装甲】-1。'],
        [2, '小破（武器落とし！）：【身体】8の判定を行う。失敗した場合、ダメージを受けた側のアームに（スロットを消費して）装着していた武器を落とす。【部位装甲】-1。'],
@@ -603,14 +579,13 @@ MESSAGETEXT
        [9, '大破（武器落とし！）：ダメージを受けた側のアームに（スロットを消費して）装着していた武器を落とす。以後、この部位の【部位装甲】が0になる。［弱体1］を受ける。'],
        [10, '修復不能（破壊）：ダメージを受けた側のアームが［修復不能］となる。［弱体2］を受ける。'],
       ]
-    
+
     return name, table
   end
-  
-  
+
   def get_damagechart_leg
     name = "部位ダメージチャート：レッグ"
-    table = 
+    table =
       [
        [1, '小破（アーマー損傷）：以後、この部位の【部位装甲】-1。'],
        [2, '小破（よろめき）：以後、この部位の【部位装甲】-1。次のターン終了時まで、キミは移動できない。'],
@@ -623,11 +598,10 @@ MESSAGETEXT
        [9, '大破（跛足）：以後、【移動力】-2。この部位の【部位装甲】が0になる。［弱体1］を受ける。'],
        [10, '修復不能（破壊）：ダメージを受けた側のレッグが［修復不能］となる。【移動力】-2。［弱体2］を受ける。'],
       ]
-    
+
     return name, table
   end
-  
-  
+
   def get_garako_custom_chart()
     name = "ガラコ改造チャート表"
     table = [
@@ -644,8 +618,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_weapon_custom_chart()
     name = "武器改造チャート表"
     table = [
@@ -662,8 +635,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_event_chart
     name = "イベントチャート表"
     table = [
@@ -680,8 +652,7 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_battle_start_distance
     name = "戦闘開始距離"
     table = [
@@ -698,18 +669,14 @@ MESSAGETEXT
             ]
     return get_garako_1d10_table_result(name, table)
   end
-  
-  
+
   def get_garako_1d10_table_result(name, table)
     dice, = roll(1, 10)
     output = get_table_by_number(dice, table)
     return get_garako_table_result(name, dice, output)
   end
-  
-  
+
   def get_garako_table_result(name, dice, output)
     return "#{name}(#{dice}) ＞ #{output}"
   end
-  
-  
 end

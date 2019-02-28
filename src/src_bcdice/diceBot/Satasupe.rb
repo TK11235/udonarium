@@ -12,11 +12,11 @@ class Satasupe < DiceBot
   def gameName
     'サタスペ'
   end
-  
+
   def gameType
     "Satasupe"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定コマンド　(nR>=x[y,z,c] or nR>=x or nR>=[,,c] etc)
@@ -45,44 +45,39 @@ class Satasupe < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
-  
+
   def rollDiceCommand(command)
     debug("rollDiceCommand begin string", command)
-    
+
     result = ''
-    
+
     result = checkRoll(command)
     return result unless(result.empty?)
-    
+
     debug("判定ロールではなかった")
-    
-    
+
     result = check_seigou(command)
     return result unless(result.empty?)
-    
+
     debug("〔性業値〕チェックでもなかった")
-    
-    
+
     debug("各種表として処理")
     return rollTableCommand(command)
   end
-  
-  
+
   def checkRoll(string)
     debug("checkRoll begin string", string)
-    
+
     return '' unless(/^(\d+)R>=(\d+)(\[(\d+)?(,|,\d+)?(,\d+(S)?)?\])?$/i =~ string)
-    
+
     roll_times = $1.to_i
     target = $2.to_i
     params = $3
-    
+
     min_suc, fumble, critical, isCriticalStop = getRollParams(params)
-    
+
     result = ""
-    
+
     if(target > 12 )
       result  += "【#{string}】 ＞ 難易度が12を超えたため、超過分、ファンブル率が上昇！\n"
       while(target > 12)
@@ -90,44 +85,43 @@ INFO_MESSAGE_TEXT
         fumble = fumble + 1
       end
     end
-    
+
     if(critical < 1 or critical > 12)
       critical = 13
     end
-    
+
     if(fumble >= 6 )
       result += "#{getJudgeInfo(target, fumble, critical)} ＞ ファンブル率が6を超えたため自動失敗！"
       return result
     end
-    
+
     if(target < 5 )
       result  += "【#{string}】 ＞ あらゆる難易度は5未満にはならないため、難易度は5になる！\n"
       target = 5
     end
-    
+
     dice_str, total_suc, isCritical, isFumble = checkRollLoop(roll_times, min_suc, target, critical, fumble, isCriticalStop)
-    
+
     result += "#{getJudgeInfo(target, fumble, critical)} ＞ #{dice_str} ＞ 成功度#{total_suc}"
-    
+
     if( isFumble )
       result += " ＞ ファンブル"
     end
-    
+
     if( isCritical and total_suc > 0 )
       result += " ＞ 必殺発動可能！"
     end
-    
+
     debug( 'checkRoll result result', result )
     return result
   end
-  
-  
+
   def getRollParams(params)
     min_suc = 0
     fumble = 1
     critical = 13
 	isCriticalStop = false
-    
+
     # params => "[x,y,cS]"
     unless( params.nil? )
       if( /\[(\d*)(,(\d*)?)?(,(\d*)(S)?)?\]/ =~ params )
@@ -137,30 +131,28 @@ INFO_MESSAGE_TEXT
         isCriticalStop = (not $6.nil? )
       end
     end
-    
+
     return min_suc, fumble, critical, isCriticalStop
   end
-  
-  
+
   def getJudgeInfo(target, fumble, critical)
     "【難易度#{target}、ファンブル率#{fumble}#{getcriticalString(critical)}】"
   end
-  
+
   def getcriticalString(critical)
     criticalString = (critical == 13 ? "なし" : critical.to_s)
     return "、必殺#{criticalString}"
   end
-  
-  
+
   def checkRollLoop(roll_times, min_suc, target, critical, fumble, isCriticalStop)
     dice_str = ''
     isFumble = false
     isCritical = false
     total_suc = 0
-    
+
     roll_times.times do |i|
       debug('roll_times', roll_times)
-    
+
       debug('min_suc, total_suc', min_suc, total_suc)
       if( min_suc != 0 )
         if(total_suc >= min_suc)
@@ -168,107 +160,102 @@ INFO_MESSAGE_TEXT
           break
         end
       end
-      
+
       d1, = roll(1, 6)
       d2, = roll(1, 6)
-      
+
       dice_suc = 0
       dice_suc = 1 if(target <= (d1 + d2))
       dice_str += "+" unless( dice_str.empty? )
       dice_str += "#{dice_suc}[#{d1},#{d2}]"
       total_suc += dice_suc
-      
+
       if(critical <= d1+d2)
         isCritical = true
         dice_str += "『必殺！』"
       end
-      
+
       if((d1 == d2) and (d1 <= fumble))  # ファンブルの確認
         isFumble = true
         isCritical = false
         break
       end
-      
+
       if(isCritical and isCriticalStop) #必殺止めの確認
         break
       end
-      
+
     end
-    
+
     return dice_str, total_suc, isCritical, isFumble
   end
-  
-  
-  
+
   def check_seigou(string)
     debug("check_seigou begin string", string)
-    
+
     return '' unless(/^SR(\d+)(([+]|[-])(\d+))?$/i =~ string)
-    
+
     target = $1.to_i
     operator = $3
     value = $4.to_i
-    
+
     dice,  = roll(2, 6)
     modify = 0
-    
+
     unless( operator.nil? )
       modify = value  if( operator == "+")
       modify = value * (-1)  if( operator == "-")
     end
-    
+
     diceTotal = dice + modify
-    
+
     seigou = ""
     seigou = "「激」" if(target < diceTotal)
     seigou = "「迷」" if(target == diceTotal)
     seigou = "「律」" if(target > diceTotal)
-    
+
     result = "〔性業値〕#{target}、「修正値」#{modify} ＞ ダイス結果：（#{dice}） ＞ #{dice}＋（#{modify}）＝#{diceTotal} ＞ #{seigou}"
-    
+
     result += " ＞ 1ゾロのため〔性業値〕が1点上昇！" if( dice == 2 )
     result += " ＞ 6ゾロのため〔性業値〕が1点減少！" if( dice == 12 )
-    
+
     debug( 'check_seigou result result', result )
     return result
   end
-  
-  
+
   ####################
   # 各種表
-  
+
   def rollTableCommand(command)
     command = command.upcase
     result = []
-    
+
     return result unless( /([A-Za-z]+)(\d+)?(([+]|[-]|[=])(\d+))?/ === command )
-    
+
     command = $1
     counts = 1
     counts = $2.to_i if($2)
     operator = $4
     value = $5.to_i
-    
-    
+
     debug("rollDiceCommand command", command)
-    
+
     case command
     when "TAGT"
       result = getTagTableResult(counts)
-      
+
     when "GETSST"
       result = getCreateSatasupeResult(counts)
-      
+
     when "NPCT"
       result = getNpcTableResult(counts)
     else
       result = getAnotherTableResult(command, counts, operator, value)
     end
-    
+
     return result.join("\n")
   end
-  
-  
+
   def getTagTableResult(counts)
     name = "タグ決定表"
     table = [
@@ -309,38 +296,36 @@ INFO_MESSAGE_TEXT
              'ファッション(風)',
              '情報ハプニング',
             ]
-    
+
     result = []
-    
+
     counts.times do |i|
       info, number = get_table_by_d66(table)
       text = "#{name}:#{number}:#{info}"
       result.push( text )
     end
-    
+
     return result
   end
-  
-  
-  
+
   def getCreateSatasupeResult(counts)
     debug("getCreateSatasupeResult counts", counts)
-    
+
     name = "サタスペ作成"
-    
+
     hit = 0
     damage = 0
     life = 0
     kutibeni = 0
     kiba = 0
-    
+
     abilities = []
-    
+
     baseParts = "#{name}：ベース部品："
     partsEffect = "部品効果："
-    
+
     number1, = roll(1, 6)
-    
+
     case number1
     when 1
       baseParts += "「紙製の筒」"
@@ -348,21 +333,21 @@ INFO_MESSAGE_TEXT
       hit = 10
       damage = 3
       life = 1
-      
+
     when 2
       baseParts += "「木製の筒」"
       partsEffect += "「命中：9、ダメージ：3、耐久度2」"
       hit = 9
       damage = 3
       life = 2
-      
+
     when 3
       baseParts += "「小型のプラスチック製の筒」"
       partsEffect += "「命中：9、ダメージ：4、耐久度2」"
       hit = 9
       damage = 4
       life = 2
-      
+
     when 4
       baseParts += "「大型のプラスチック製の筒」"
       partsEffect += "「命中：8、ダメージ：3、耐久度2、両手」"
@@ -370,14 +355,14 @@ INFO_MESSAGE_TEXT
       damage = 3
       life = 2
       abilities << "「両手」"
-      
+
     when 5
       baseParts += "「小型の金属製の筒」"
       partsEffect += "「命中：9、ダメージ：4、耐久度3」"
       hit = 9
       damage = 4
       life = 3
-      
+
     when 6
       baseParts += "「大型の金属製の筒」"
       partsEffect += "「命中：8、ダメージ：5、耐久度3、両手」"
@@ -386,7 +371,7 @@ INFO_MESSAGE_TEXT
       life = 3
       abilities << "「両手」"
     end
-    
+
     armsTable =[
              [11, '「パチンコ玉」'],
              [12, '「釘や画鋲、針」'],
@@ -433,15 +418,15 @@ INFO_MESSAGE_TEXT
               [56, '「マヒ」'],
               [66, '「爆発3」'],
              ]
-    
+
     baseParts += "  アクセサリ部品："
-    
+
     counts.times do |i|
-      
+
       number2 = d66(2)
       baseParts += get_table_by_number(number2, armsTable)
       partsEffect += get_table_by_number(number2, armsEffectTable)
-      
+
       case number2
       when 11
         abilities << "「武器破壊」"
@@ -478,29 +463,26 @@ INFO_MESSAGE_TEXT
       when 66
         abilities << "「爆発3」"
       end
-      
+
     end
-    
-    
+
     result = []
     result.push( baseParts )
     result.push( partsEffect )
-    
+
     text = "完成品：サタスペ  （ダメージ＋#{damage}・命中#{hit}・射撃、"
     text += "「（判定前宣言）#{kutibeni}回だけ、必殺10」" if( kutibeni > 0 )
     text += "「（判定前宣言）#{kiba}回だけ、ダメージ＋２」" if( kiba > 0 )
-    
+
     text += abilities.sort.uniq.join
-    
+
     text += "「サタスペ#{counts}」「耐久度#{life}」）"
-    
+
     result.push( text )
-    
+
     return result
   end
-   
-  
-  
+
   def getNpcTableResult(counts)
     #好み／雰囲気表
     lmood = [
@@ -534,55 +516,52 @@ INFO_MESSAGE_TEXT
             '40+5D6', #壮年
             '60+6D6', #老年
            ]
-    
+
     name = "NPC表:"
-    
+
     result = []
-    
+
     counts.times do |i|
       age_type, dummy = roll(1, 6)
       age_type -= 1
-      
+
       agen_text = agen[age_type]
       age_num = agen_text.split(/\+/)
-      
+
       total, dummy = rollDiceAddingUp( age_num[1] )
       ysold = total + age_num[0].to_i
-      
+
       lmodValue = lmood[(rand 6)]
       lageValue = lage[(rand 3)]
-      
+
       text = "#{name}#{age[age_type]}(#{ysold}歳):#{lmodValue}#{lageValue}"
       result.push(text)
     end
-    
+
     return result
   end
-  
-  
-  
+
   def getAnotherTableResult(command, counts, operator, value)
     result = []
-    
+
     name, table = get2d6TableInfo(command)
     return result if( name.empty? )
-    
+
     counts.times do |i|
       _, index = getTableIndex(operator, value, 2, 6)
-      
+
       info = table[index - 2]
       text = "#{name}#{index}:#{info}"
       result.push(text)
     end
-    
+
     return result
   end
-  
-  
+
   def getTableIndex(operator, value, diceCount, diceType)
     index = nil
     modify = 0
-    
+
     case operator
     when "+"
       modify = value
@@ -591,25 +570,23 @@ INFO_MESSAGE_TEXT
     when "="
       index = value
     end
-    
+
     if( index.nil? )
       index, = roll(diceCount, diceType)
       index += modify
     end
-    
+
     index = [index, diceCount * 1].max
     index = [index, diceCount * diceType].min
-    
+
     return modify, index
-  end  
-  
-  
-  
+  end
+
   def get2d6TableInfo(command)
-    
+
     name = ""
     table = []
-    
+
     case command
     when /CrimeIET/i
       name = "情報イベント表／〔犯罪〕:"
@@ -957,8 +934,7 @@ OSの不調。徹夜で再インストール。この日はもう行動できな
 「先にイッてるぜ」そのキャラクター１体を倒した者に経験点が１点与えられる。
 }
     end
-    
+
     return name, table
   end
-  
 end

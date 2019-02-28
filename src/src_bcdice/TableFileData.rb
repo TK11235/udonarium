@@ -86,6 +86,7 @@ class TableFileData
     return tableData
   end
   
+  
   def readGameCommandInfo(fileName, prefix)
     info = {
       "fileName" => fileName,
@@ -182,12 +183,14 @@ class TableFileData
     
     return key, value
   end
+      
   
   def getDiceAndTitle(line)
     dice, title = getLineKeyValue(line)
     
     return dice, title
   end
+  
   
   def getTableData(arg, targetGameType)
     oneTableData = Hash.new
@@ -240,10 +243,12 @@ class TableFileData
     return newTable
   end
   
+  
   def isTargetGameType(gameType, targetGameType)
     return true if( gameType.empty? )
     return ( gameType == targetGameType )
   end
+  
   
   def readOneTableData(oneTableData)
     return if( oneTableData.nil? )
@@ -305,7 +310,6 @@ class TableFileCreator
     
     gameType = @params['gameType'] if( gameType.nil? )
     gameType ||= ''
-    #TKfix !
     gameType = gameType.gsub(':', '_')
     
     if( command.nil? )

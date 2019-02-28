@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 
 class Nuekagami < DiceBot
-  
   def initialize
     super
   end
-  
+
   def gameName
     '鵺鏡'
   end
-  
+
   def gameType
     "Nuekagami"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・喪失表（xL）
@@ -23,29 +22,28 @@ class Nuekagami < DiceBot
 　HG：地獄門、RG：羅生門、VG：朱雀門、OG：応天門
 MESSAGETEXT
   end
-  
+
   def rollDiceCommand(command)
     info = @@tables[command.upcase]
     return nil if info.nil?
-    
+
     name = info[:name]
     type = info[:type]
     table = info[:table]
-    
-    text, number = 
+
+    text, number =
       case type
       when '1D20'
         get_table_by_nDx(table, 1, 20)
       else
         nil
       end
-    
+
     return nil if( text.nil? )
-    
+
     return "#{name}(#{number}) ＞ #{text}"
   end
-  
-  
+
   @@tables =
     {
     "LR" => {
@@ -73,7 +71,7 @@ MESSAGETEXT
 大悟。足掻けれど足掻けれど、満ちることなし。足りざるは自然。己の姿を受け入れむ。されば欠けたるに、悩まさるるもなし。
 望月。欠けたる月が満ちるが如く。欠けたるは突然に戻れり。いかなる誠、いかなる印か、知るものはあらず。
 },},
-    
+
     "BL" => {
       :name => "血脈の喪失表",
       :type => '1D20',
@@ -99,8 +97,7 @@ MESSAGETEXT
 人の体。体が歪み変わり、異形と化した。
 己の体。今は他人の体を借りている。
 },},
-    
-    
+
     "LL" => {
       :name => "生様の喪失表",
       :type => '1D20',
@@ -126,8 +123,7 @@ MESSAGETEXT
 守るべき人。守るべき人を守れなかった……。
 自由。脅され縛られ、誰かの命令を聞くしかできない。
 },},
-    
-    
+
     "SL" => {
       :name => "魂魄の喪失表",
       :type => '1D20',
@@ -153,7 +149,6 @@ MESSAGETEXT
 正気。今のあなたは狂気の沙汰だ！
 己の意志。あなたは誰かの人形。道具に過ぎない。
 },},
-
 
     "FL" => {
       :name => "因縁表",
@@ -181,7 +176,6 @@ MESSAGETEXT
 主君。心の主君。身命を賭して守り仕える。
 },},
 
-
     "HG" => {
       :name => "地獄門通過描写表",
       :type => '1D20',
@@ -207,7 +201,6 @@ MESSAGETEXT
 蛙呑む蛇を見たり。あさましき業に、己をふと顧みぬ。
 心中にて、かそけき希望の糸見へり。慎重にたぐりて登らむとす。
 },},
-
 
     "RG" => {
       :name => "羅生門通過描写表",
@@ -235,15 +228,14 @@ MESSAGETEXT
 神仏の似姿、幻視す。されば、いかな身にも信心のいくばくか起これり。
 },},
 
-
     "VG" => {
       :name => "朱雀門通過描写表",
       :type => '1D20',
       :table => %w{
 雷響きて、暗霊いよいよ濃ゆし。己が先を見せるるが如し。
-今一つ取り戻すは及ばぬ口惜しきに、鬼が如く唸りし。 
+今一つ取り戻すは及ばぬ口惜しきに、鬼が如く唸りし。
 求めし手、届かずも絶望すれど再び、ふらふらと歩み出さむ。
-かたときの福なるか。狐に化かさるるが如く、鹿なる泡沫の夢。 
+かたときの福なるか。狐に化かさるるが如く、鹿なる泡沫の夢。
 流るる血。朱に染まる視界。されど、染まらざる中に光あり。
 己が臓腑抉るが如く。己が業、抉り捨て進まん。
 先に狐の影見ゆ。あやしけれど、迷ひながら、狐を追へり。
@@ -261,8 +253,7 @@ MESSAGETEXT
 不意に仏心起こりて、万物慈みの念おぼえたり。
 頭上より何者かの楽の音、饗けり。その身、祝はるる心地せり。
 },},
-    
-    
+
     "OG" => {
       :name => "応天門通過描写表",
       :type => '1D20',
@@ -289,8 +280,7 @@ MESSAGETEXT
 都の暗雲、晴れたる日も稀にあり。なんぞ魂魄晴るる日なしや。
 },},
 
-
-
   }
+
   setPrefixes(@@tables.keys)
 end

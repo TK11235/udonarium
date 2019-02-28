@@ -8,15 +8,15 @@ class Warhammer < DiceBot
     @sendMode = 2
     @fractionType = "roundUp"     # 端数切り上げに設定
   end
-  
+
   def gameName
     'ウォーハンマー'
   end
-  
+
   def gameType
     "Warhammer"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・クリティカル表(whHxx/whAxx/whBxx/whLxx)
@@ -31,35 +31,36 @@ class Warhammer < DiceBot
 　例）wh60　　wh43@4W　　WH65@
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     output_msg = nil
-    
+
     case command.upcase
-      
+
     when /^(WH\d+(@[\dWH]*)?)/i
       atackCommand = $1
       output_msg = getAtackResult(atackCommand)
-      
+
     when /^(WH[HABTLW]\d+)/i
       criticalCommand = $1
       output_msg = getCriticalResult(criticalCommand)
     end
-    
+
     return output_msg
   end
-  
+
   def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)    # ゲーム別成功度判定(1d100)
     return '' unless(signOfInequality == "<=")
-    
+
     if(total_n <= diff)
-      return " ＞ 成功(成功度#{ ((diff - total_n)/10) })"
+      #return " ＞ 成功(成功度#{ ((diff - total_n)/10) })" # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+      return " ＞ 成功(成功度#{ ((diff - total_n)/10).floor })"
     end
-      
-    return " ＞ 失敗(失敗度#{ ((total_n - diff) / 10) })"
+
+    #return " ＞ 失敗(失敗度#{ ((total_n - diff) / 10) })" # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+    return " ＞ 失敗(失敗度#{ ((total_n - diff) / 10).floor })"
   end
-  
+
 ####################            WHFRP関連          ########################
   def getCriticalResult(string)
     # クリティカル効果データ
@@ -123,7 +124,7 @@ INFO_MESSAGE_TEXT
         '09:大動脈が切断された。コンマ数秒の内に血を噴き上げてくずおれる、ショックと出血で死は瞬時に訪れる。',
         '10:死亡する。いかに盛大に出血し、どのような死に様を見せたのかを説明してもよい。',
     ]
-    
+
     criticalTable = [
          5, 7, 9,10,10,10,10,10,10,10,  #01-10
          5, 6, 8, 9,10,10,10,10,10,10,  #11-20
@@ -136,21 +137,21 @@ INFO_MESSAGE_TEXT
          1, 3, 5, 6, 6, 7, 7, 8, 8, 9,  #81-90
          1, 2, 4, 5, 6, 6, 7, 7, 8, 8,  #91-00
     ]
-    
+
     output = "1"
-    
+
     unless(/WH([HABTLW])(\d+)/ =~ string)
       return '1'
     end
-    
+
     partsWord = $1     #部位
     criticalValue = $2.to_i    #クリティカル値
     criticalValue = 10 if(criticalValue > 10)
     criticalValue = 1 if(criticalValue < 1)
-    
+
     whpp = ''
     whppp = ''
-    
+
     case partsWord
     when /H/i
       whpp = '頭部'
@@ -168,24 +169,24 @@ INFO_MESSAGE_TEXT
       whpp = '翼部'
       whppp = whw
     end
-    
+
     dice_now, = roll(1, 100)
-    
+
     crit_no = ((dice_now - 1) / 10).to_i * 10
     crit_num = criticalTable[crit_no + criticalValue - 1]
-    
+
     resultText = whppp[crit_num - 1]
     if(crit_num >= 5)
       resultText += 'サドンデス×'
     else
       resultText += 'サドンデス○'
     end
-    
+
     output = "#{whpp}CT表(#{dice_now}+#{criticalValue}) ＞ #{resultText}"
-  
+
     return output
   end
-  
+
   def wh_atpos(pos_num, pos_type)   #WHFRP2命中部位表
     debug("wh_atpos begin pos_type", pos_type)
     pos_2l = [
@@ -248,9 +249,9 @@ INFO_MESSAGE_TEXT
       90,'右脚',
       100,'左脚',
     ]
-    
+
     wh_pos = [pos_2l, pos_2lw, pos_4l, pos_4la, pos_4lw, pos_b]
-    
+
     pos_t = 0
     debug("pos_type", pos_type)
     if(pos_type != "")
@@ -271,9 +272,9 @@ INFO_MESSAGE_TEXT
         end
       end
     end
-    
+
     output = ""
-    
+
     debug("pos_t", pos_t)
     if(pos_t < 0)
       wh_pos.each do |pos_i|
@@ -283,55 +284,52 @@ INFO_MESSAGE_TEXT
       pos_i = wh_pos[pos_t]
       output += get_wh_atpos_message(pos_i, pos_num)
     end
-    
+
     return output
   end
-  
+
   def get_wh_atpos_message(pos_i, pos_num)
     output = ""
-    
+
     output += ' ' + pos_i[0] + ":"
-    
+
     1.step(pos_i.length + 1, 2) do |i|
       if( pos_num <= pos_i[i] )
         output += pos_i[i + 1]
         break
       end
     end
-    
+
     return output
   end
-  
-  
+
   def getAtackResult(string)
     debug("getAtackResult begin string", string)
-    
+
     pos_type = ""
-    
+
     if( /(.+)(@.*)/ =~ string )
       string = $1
       pos_type = $2
       debug("pos_type", pos_type)
     end
-    
+
     unless(/WH(\d+)/i =~ string)
       return '1'
     end
-    
+
     diff = $1.to_i
-    
+
     total_n, = roll(1, 100)
-    
+
     output = "(#{string}) ＞ #{total_n}"
     output += check_suc(total_n, 0, "<=", diff, 1, 100, 0, total_n)
-    
+
     pos_num = (total_n % 10) * 10 + (total_n / 10).to_i
     pos_num = 100 if(total_n >= 100)
-    
+
     output += wh_atpos(pos_num, pos_type) if(total_n <= diff)
-    
+
     return output
   end
-
-
 end

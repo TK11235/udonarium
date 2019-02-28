@@ -20,8 +20,7 @@ libPaths = [
   "#{rootDir}/irc"
 ]
 libPaths.each do |libPath|
-  #TKfix <<
-  $LOAD_PATH = $LOAD_PATH + libPath
+  $LOAD_PATH << libPath
 end
 
 require 'DiceBotTest'
@@ -36,7 +35,9 @@ testDataPath = nil
 # テストデータ番号
 dataIndex = nil
 
-HELP_MESSAGE = "Usage: #{File.basename($0)} [TEST_DATA_PATH] [DATA_INDEX]"
+$stderr.puts('Tkfix') # Tkfix
+
+# HELP_MESSAGE = "Usage: #{File.basename($0)} [TEST_DATA_PATH] [DATA_INDEX]" # Tkfix
 
 if ARGV.include?('-h') || ARGV.include?('--help')
   $stdout.puts(HELP_MESSAGE)

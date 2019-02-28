@@ -10,11 +10,11 @@ class DarkBlaze < DiceBot
   def gameName
     'ダークブレイズ'
   end
-  
+
   def gameType
     "DarkBlaze"
   end
- 
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・行為判定　(DBxy#n)
@@ -29,45 +29,41 @@ class DarkBlaze < DiceBot
 　例）BT1　　　BT2　　　BT[1...3]
 INFO_MESSAGE_TEXT
   end
-  
+
   def changeText(string)
     return string unless(string =~ /DB/i)
-    
+
     string = string.gsub(/DB(\d),(\d)/) {"DB#{$1}#{$2}"}
     string = string.gsub(/DB\@(\d)\@(\d)/) {"DB#{$1}#{$2}"}
     string = string.gsub(/DB(\d)(\d)(#([\d][\+\-\d]*))/) {"3R6+#{$4}[#{$1},#{$2}]"}
     string = string.gsub(/DB(\d)(\d)(#([\+\-\d]*))/) {"3R6#{$4}[#{$1},#{$2}]"}
     string = string.gsub(/DB(\d)(\d)/) {"3R6[#{$1},#{$2}]"}
-    
+
     return string
   end
-  
-  
+
   def dice_command_xRn(string, nick_e)
     return check_roll(string, nick_e)
   end
-  
-  
+
   # ゲーム別成功度判定(nD6)
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     return '' unless(signOfInequality == ">=")
-    
+
     return '' if(diff == "?")
-    
+
     if(total_n >= diff)
       return " ＞ 成功"
     end
-    
+
     return " ＞ 失敗"
   end
-  
-  
-  
+
   def check_roll(string, nick_e)
     output = "1"
-    
+
     return '1' unless(/(^|\s)S?(3[rR]6([\+\-\d]+)?(\[(\d+),(\d+)\])(([>=]+)(\d+))?)(\s|$)/i =~ string)
-    
+
     #TKfix メソッドをまたぐと$xの中身がnilになっている
     reg2 = $2
     reg3 = $3
@@ -77,99 +73,95 @@ INFO_MESSAGE_TEXT
     reg7 = $7
     reg8 = $8
     reg9 = $9
-    
+
     string = reg2
     mod = 0
     abl = 1
     skl = 1
     signOfInequality = ""
     diff = 0
-    
+
     mod = parren_killer("(0#{reg3})").to_i if(reg3)
-    
+
     if(reg4)
       abl = reg5.to_i
       skl = reg6.to_i
     end
-    
+
     if(reg7)
       signOfInequality = marshalSignOfInequality(reg8)
       diff = reg9.to_i
     end
-    
+
     total, out_str = get_dice(mod, abl, skl)
     output = "#{nick_e}: (#{string}) ＞ #{out_str}"
-    
+
     if(signOfInequality != "")  # 成功度判定処理
       output += check_suc(total, 0, signOfInequality, diff, 3, 6, 0, 0)
     end
-    
+
     return output
   end
-                          
+
   def get_dice(mod, abl, skl)
     total = 0
     crit = 0
     fumble = 0
     dice_c = 3 + mod.abs
-    
+
     dummy = roll(dice_c, 6, 1)
-    
+
     dummy.shift
     dice_str = dummy.shift
-    
+
     dice_arr = dice_str.split(/,/).collect{|i|i.to_i}
-    
+
     3.times do |i|
       ch = dice_arr[i]
-      
+
       if(mod < 0)
-        ch = dice_arr[dice_c - i - 1] 
+        ch = dice_arr[dice_c - i - 1]
       end
-      
+
       total += 1 if(ch <= abl)
       total += 1 if(ch <= skl)
       crit += 1 if(ch <= 2)
       fumble += 1 if(ch >= 5)
     end
-    
-    
+
     resultText = ""
-    
+
     if(crit >= 3)
       resultText = " ＞ クリティカル"
       total = 6 + skl
     end
-    
+
     if(fumble >= 3)
       resultText = " ＞ ファンブル"
       total = 0
     end
-    
+
     output = "#{total}[#{dice_str}]#{resultText}"
-      
+
     return total, output
   end
-  
-  
-  
+
   def rollDiceCommand(command)
-    
+
     case command
     when /BT(\d+)?/i
       dice = $1
       dice ||= 1
       return get_horidasibukuro_table(dice)
     end
-    
+
     return nil
   end
-  
-  
+
   #** 掘り出し袋表
   def get_horidasibukuro_table(dice)
     output = '1'
-    
+
     material_kind = [   #2D6
       "蟲甲",     #5
       "金属",     #6
@@ -180,20 +172,20 @@ INFO_MESSAGE_TEXT
       "レアモノ", #11
       "レアモノ", #12
     ]
-    
+
     magic_stone = [ #1D3
       "火炎石",
       "雷撃石",
       "氷結石",
     ]
-    
+
     num1, dmy = roll(2, 6)
     num2, dmy = roll(dice, 6)
-    
+
     debug('dice', dice)
     debug('num1', num1)
     debug('num2', num2)
-    
+
     if(num1 <= 4)
       num2, dmy = roll(1, 6)
       magic_stone_result = (magic_stone[(num2 / 2).to_i - 1])
@@ -202,7 +194,7 @@ INFO_MESSAGE_TEXT
       output = "《金貨》を#{num2}枚獲得"
     else
       type = material_kind[num1 - 5]
-      
+
       if(num2 <= 3)
         output = "《#{type} I》を1個獲得"
       elsif(num2 <= 5)
@@ -223,12 +215,11 @@ INFO_MESSAGE_TEXT
         output = "《#{type} II》を2個《#{type} III》を2個獲得"
       end
     end
-    
+
     if(output != '1')
       output = "掘り出し袋表[#{num1},#{num2}] ＞ #{output}"
     end
-    
+
     return output
   end
-  
 end

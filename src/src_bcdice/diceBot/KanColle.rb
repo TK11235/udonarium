@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class KanColle < DiceBot
-  setPrefixes([
-    'ET', 'ACT',
-    'EVNT', 'EVKT', 'EVAT', 'EVET', 'EVENT', 'EVST', 'ETHT', 'ETVT', 'ETGT', 'ETBT', 'ETMT', 'ETFT',
-    'DVT', 'DVTM', 'WP1T', 'WP2T', 'WP3T', 'WP4T', 'ITT', 'MHT', 'SNT', 'SPSNT',
-    'KTM', 'BT', 'KHT', 'KMT', 'KST', 'KSYT', 'KKT', 'KSNT', 'SNZ', 'RNT'
-  ])
 
   def initialize
     super
@@ -14,14 +8,15 @@ class KanColle < DiceBot
     @sortType = 3
     @d66Type = 2
   end
+
   def gameName
     '艦これRPG'
   end
-  
+
   def gameType
     "KanColle"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 例) 2D6 ： 単純に2D6した値を出します。
@@ -52,11 +47,10 @@ class KanColle < DiceBot
 ・D66ダイス(D66S相当=低い方が10の桁になる)
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
     return '' unless( signOfInequality == ">=")
-    
+
     if(dice_n <= 2)
       return " ＞ ファンブル（判定失敗。アクシデント表を自分のＰＣに適用）"
     elsif(dice_n >= 12)
@@ -67,7 +61,7 @@ INFO_MESSAGE_TEXT
       return " ＞ 失敗"
     end
   end
-  
+
   def rollDiceCommand(command)
     output = '1'
     type = ""
@@ -148,7 +142,7 @@ INFO_MESSAGE_TEXT
     when 'SPSNT'
       type='特殊戦果表'
       output, total_n =  get_special_senka_table
-    
+
     when 'KTM'
       type='個性：一括'
       output, total_n =  get_kosei_table
@@ -173,20 +167,20 @@ INFO_MESSAGE_TEXT
     when 'KSNT'
       type='個性：戦闘表'
       output, total_n =  get_kosei_sentou_table
-
     when 'SNZ'
       type='戦場表'
       output, total_n =  get_senzyou_table
     when 'RNT'
       type='暴走表'
       output, total_n =  get_bousou_table
-
+    else
+      return getTableCommandResult(command, @@tables)
     end
-        
+
     return "#{type}(#{total_n}) ＞ #{output}"
-    
+
   end
-  
+
   # 感情表
   def get_emotion_table
     table = [
@@ -197,7 +191,7 @@ INFO_MESSAGE_TEXT
         'いとしい（プラス）／かまってほしい（マイナス）',
         'だいすき（プラス）／だいっきらい（マイナス）',
     ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -211,11 +205,10 @@ INFO_MESSAGE_TEXT
         'いててて。損傷が一つ発生する。もしも艦隊戦中なら、自分と同じ航行序列にいる味方艦にも損傷が一つ発生する。',
         'ううう。やりすぎちゃった！自分の【行動力】が１Ｄ６点減少する。',
     ]
-    
+
     return get_table_by_1d6(table)
   end
-  
-    
+
   # 日常イベント表
   def get_nichijyou_event_table
       table = [
@@ -235,7 +228,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（着任p220）')}
     return get_table_by_2d6(table)
   end
-  
+
   # 交流イベント表
   def get_kouryu_event_table
       table = [
@@ -255,8 +248,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（着任p221）')}
     return get_table_by_2d6(table)
   end
-  
-  
+
   # 遊びイベント表
   def get_asobi_event_table
       table = [
@@ -296,7 +288,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（着任p223）')}
     return get_table_by_2d6(table)
   end
-  
+
   # 遠征イベント表
   def get_ensei_event_table
         table = [
@@ -337,7 +329,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（着任p225）')}
     return get_table_by_2d6(table)
   end
-  
+
   # ほのぼのイベント表
   def get_honobono_event_table
         table = [
@@ -358,8 +350,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（建造弐p134）')}
     return get_table_by_2d6(table)
   end
-  
-  
+
   # 航海イベント表
   def get_voyage_event_table
         table = [
@@ -380,8 +371,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（建造弐p135）')}
     return get_table_by_2d6(table)
   end
-  
-    
+
   # 外出イベント表
   def get_gaisyutsu_event_table
         table = [
@@ -402,7 +392,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（建造弐p136）')}
     return get_table_by_2d6(table)
   end
-    
+
   # 激戦イベント表
   def get_battle_event_table
         table = [
@@ -423,7 +413,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（建造弐p137）')}
     return get_table_by_2d6(table)
   end
-    
+
   # 任務イベント表
   def get_mission_event_table
         table = [
@@ -444,8 +434,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（建造弐p138）')}
     return get_table_by_2d6(table)
   end
-  
-    
+
   # 恐怖イベント表
   def get_fear_event_table
         table = [
@@ -466,7 +455,7 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（建造弐p139）')}
     return get_table_by_2d6(table)
   end
-  
+
   def get_develop_table
     table = [
         '装備１種表（WP1T）',
@@ -478,7 +467,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   def get_develop_matome_table
     output1 = ''
     output2 = ''
@@ -558,7 +547,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   def get_item_table
     table = [
         'アイス',
@@ -663,7 +652,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   def get_kosei_miryoku_table
     table = [
         '素直',
@@ -749,7 +738,6 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-
   def get_senzyou_table
     table = [
 		'同航戦',
@@ -764,7 +752,6 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-
   def get_bousou_table
     table = [
 		'妄想',
@@ -778,5 +765,308 @@ INFO_MESSAGE_TEXT
     table.each{|i| i = i.gsub(/$/, '（建造弐p164）')}
     return get_table_by_1d6(table)
   end
+
+  @@tables =
+    {
+
+    'BT10' => {
+      :name => "指定個性⑩",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-10　《お嬢様》
+2-10　《面白い》
+3-10　《いじわる》
+4-10　《おしゃれ》
+5-10　《指揮》
+6-10　《魚雷》
+TABLE_TEXT_END
+    },
+
+    'BT11' => {
+      :name => "指定個性⑪",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-11　《スタイル》
+2-11　《えっち》
+3-11　《自由奔放》
+4-11　《入浴》
+5-11　《衛生》
+6-11　《対潜戦闘》
+TABLE_TEXT_END
+    },
+
+    'BT12' => {
+      :name => "指定個性⑫",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-12　《外国暮らし》
+2-12　《派手》
+3-12　《大胆》
+4-12　《恋愛》
+5-12　《整備》
+6-12　《夜戦》
+TABLE_TEXT_END
+    },
+
+    'BT2' => {
+      :name => "指定個性②",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-2　《人脈》
+2-2　《素直》
+3-2　《不思議》
+4-2　《寝る》
+5-2　《暗号》
+6-2　《電子戦》
+TABLE_TEXT_END
+    },
+
+    'BT3' => {
+      :name => "指定個性③",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-3　《名声》
+2-3　《クール》
+3-3　《おおらか》
+4-3　《空想》
+5-3　《通信》
+6-3　《航空打撃戦》
+TABLE_TEXT_END
+    },
+
+    'BT4' => {
+      :name => "指定個性④",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-4　《暗い過去》
+2-4　《優しい》
+3-4　《面倒見》
+4-4　《生き物》
+5-4　《索敵》
+6-4　《航空戦》
+TABLE_TEXT_END
+    },
+
+    'BT5' => {
+      :name => "指定個性⑤",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-5　《古風》
+2-5　《おしとやか》
+3-5　《マジメ》
+4-5　《読書》
+5-5　《規律》
+6-5　《対空戦闘》
+TABLE_TEXT_END
+    },
+
+    'BT6' => {
+      :name => "指定個性⑥",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-6　《口ぐせ》
+2-6　《けなげ》
+3-6　《負けず嫌い》
+4-6　《食べ物》
+5-6　《補給》
+6-6　《突撃》
+TABLE_TEXT_END
+    },
+
+    'BT7' => {
+      :name => "指定個性⑦",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-7　《幸運》
+2-7　《笑顔》
+3-7　《元気》
+4-7　《おしゃべり》
+5-7　《待機》
+6-7　《砲撃》
+TABLE_TEXT_END
+    },
+
+    'BT8' => {
+      :name => "指定個性⑧",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-8　《アイドル》
+2-8　《ばか》
+3-8　《楽観的》
+4-8　《買い物》
+5-8　《機動》
+6-8　《退却》
+TABLE_TEXT_END
+    },
+
+    'BT9' => {
+      :name => "指定個性⑨",
+      :type => '1D6',
+      :table => <<'TABLE_TEXT_END'
+1-9　《秘密兵器》
+2-9　《さわやか》
+3-9　《丁寧》
+4-9　《芸能》
+5-9　《海図》
+6-9　《支援》
+TABLE_TEXT_END
+    },
+
+    'ETIT' => {
+      :name => "侵攻効果表",
+      :type => '2d6',
+      :table => <<'TABLE_TEXT_END'
+援軍\n深海棲艦は徐々に力をつけ、大艦隊へとせいちょうしつつある。決戦フェイズの深海棲艦側の艦隊に、駆逐ハ級（『着任ノ書ｐ258』）が一人追加される。
+海域汚染\n特定の海域が深海棲艦の住みやすい環境になる。このセッションの艦隊戦のの各ラウンドの開始時に、深海棲艦の艦隊は誰か一人だけ【行動力】を1Ｄ6点減少できるようになる。【行動力】を消費すると、その戦場を好きなものに変更できる。
+略奪\n大勢の物資や人々を奪い、連れ去られる。鎮守府の資材がすべて1Ｄ6個失われる。
+象徴破壊\n人類に歴史的建造物や貴重な遺産、世界的な観光名所が破壊される。ＰＣ全員は【行動力】を1Ｄ6点減少する。
+襲撃\n深海棲艦の侵攻によって、鎮守府の周辺に住む人たちに大きな被害が出る。ＰＣ全員は暴走判定を行うこと。
+通商破壊\n深海棲艦の侵攻によって、通商ルートが破壊される。そのセッションの間、資材を獲得する効果が発生したとき、その資材の数がいずれも一つずつ減少する。
+謎のキリ\n謎の霧が海域を覆う。このセッションの艦隊戦中、深海棲艦はランドの開始時に、【行動力】を1Ｄ6点消費できるようになる。そのラウンドの間、消費した【行動力】の半分の値（切り捨て。0〜3点の値になる）だけ、深海棲艦全員は、艦隊戦で受けるダメージが軽減できる。この効果は累積するが、この効果で軽減できるダメージの上限は3点である。
+陸地浸食\n陸地を浸食し、海に変える。この事態に鎮守府への非難が高まる。そのセッションの間、ＰＣ全員はあらゆる判定にマイナス1の修正がつく。この侵攻以降、行動判定を行うＰＣは、判定直前に自分の【行動力】を1点消費するたび、進行による修正をすべて打ち消すことができる。
+新型改造\n深海棲艦は自らを強化しているようだ。そのセッションの決戦フェイズに登場する深海棲艦の中から一人を選ぶ。その深海棲艦をeliteのクラスを付加する。その深海棲艦がすでにeliteならflagshipに、flagshipなら改にすることもできる。
+艦娘研究\n艦娘が拿捕され、鹵獲される。一体何を企んでいるのか……？提督は、好きなＮＰＣの艦娘を一人選ぶ。深海棲艦の一人に、その艦娘の持つアビリティ一つを習得させることができる。
+基地建設\n深海棲艦は自分たちの基地を建造した。そのセッションの決戦フェイズで、深海棲艦の旗艦は、開幕雷撃戦と雷撃戦でダメージを受けなくなる。
+TABLE_TEXT_END
+    },
+
+    'LFDT' => {
+      :name => "艦隊敗北表",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+敵の支援砲撃。ランダムなPC一人に損傷を一つ与える。
+敵の罠。ランダムなPC一人に「アクシデント表」を一回適用する。
+追い詰められる。戦場が「T字戦不利」になる。
+本隊への合流。「敵部隊のサポート」発生。
+盟友艦行方不明（MIA）。敵部隊の旗艦が決戦フェイズ中、対応する盟友艦の固有、または戦術アビリティをいずれか一つを修得する。
+盟友艦轟沈。盟友艦は失われ「暴走表」を一回振り、暴走する。
+TABLE_TEXT_END
+    },
+
+    'LFVT' => {
+      :name => "艦隊勝利表",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+支援砲撃。敵艦の中からランダムな一人に損傷を一つ与える。
+士気高揚。この表を振ったPCの【命中力】が１点上昇する。
+士気高揚。この表を振ったPCの【火力】が１点上昇する。
+士気高揚。この表を振ったPCの【回避力】が１点上昇する。
+士気高揚。この表を振ったPCの【装甲力】が１点上昇する。
+絆が深まる。その盟友艦からのPCへの【感情値】が１点上昇する。
+TABLE_TEXT_END
+    },
+
+    'LSFT' => {
+      :name => "大規模部隊表",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+水上打撃部隊　「脅威力：10」
+空母機動部隊　「脅威力：9」
+水雷戦隊　　　　「脅威力：8」
+潜水艦部隊　　 「脅威力：7」
+輸送部隊       「脅威力：6」
+主力部隊       「脅威力：12」
+TABLE_TEXT_END
+    },
+
+    'WPCN' => {
+      :name => "砲開発表(燃料3/弾薬6/鋼材6/ボーキ3)",
+      :type => '4d6',
+      :table => <<'TABLE_TEXT_END'
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+三式弾(建造壱p169)
+25mm連装機銃(着任p252)
+41cm連装砲(着任p250)
+8cm高角砲(着任p250)
+15.2cm連装砲(着任p249)
+魚雷(着任p252)
+機銃(着任p252)
+小口径主砲(着任p249)
+中口径主砲(着任p249)
+小口径主砲(着任p249)
+中口径主砲(着任p249)
+10cm連装高角砲(着任p249)
+20.3cm連装砲(着任p249)
+61cm四連装(酸素)魚雷(着任p252)
+46cm三連装砲(着任p250)
+15.5cm三連装砲(副砲)(建造壱p167)
+61cm五連装(酸素)魚雷(建造壱p168)
+53cm艦種(酸素)魚雷(建造壱p168)
+九一式徹甲弾(建造壱p169)
+TABLE_TEXT_END
+    },
+
+    'WPFA' => {
+      :name => "艦載機開発表(燃料3/弾薬6/鋼材3/ボーキ6)",
+      :type => '4d6',
+      :table => <<'TABLE_TEXT_END'
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+Ju87C改(建造壱p167)
+流星(建造壱p167)
+紫電改二(建造壱p167)
+零式艦戦52型(着任p251)
+艦上戦闘機(着任p251)
+偵察機(着任p251)
+艦上爆撃機(着任p250)
+艦上攻撃機(着任p251)
+彩雲(着任p251)
+彗星(着任p250)
+天山(着任p251)
+瑞雲(建造壱p168)
+彗星一二型甲(建造壱p167)
+流星改(建造壱p167)
+烈風(建造壱p168)
+零式水上観測機(建造壱p168)
+TABLE_TEXT_END
+    },
+
+    'WPMC' => {
+      :name => "特殊開発表(燃料6/弾薬3/鋼材6/ボーキ3)",
+      :type => '2d6',
+      :table => <<'TABLE_TEXT_END'
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+開発失敗！(資材だけ失う)
+探照灯(建造壱p169)
+電探(着任p252)
+改良型艦本式タービン(着任p252)
+九四式爆雷投射機(建造壱p169)
+甲標的 甲(建造壱p168)
+33号対水上電探(建造壱p169)
+増設バルジ(中型艦)(建造壱p169)
+TABLE_TEXT_END
+    },
+
+    'WPMCN' => {
+      :name => "新特殊開発表(燃料6/弾薬3/鋼材6/ボーキ3)",
+      :type => '2d6',
+      :table => <<'TABLE_TEXT_END'
+開発失敗！(資材だけ失う)
+カ号観測機(建造弐p171)
+九三式水中聴音機(建造弐p171)
+ドラム缶(輸送用)(建造弐p171)
+探照灯(建造壱p169)
+電探(着任p252)
+改良型艦本式タービン(着任p252)
+九四式爆雷投射機(建造壱p169)
+甲標的 甲(建造壱p168)
+33号対水上電探(建造壱p169)
+増設バルジ(中型艦)(建造壱p169)
+TABLE_TEXT_END
+    },
+  }
+
+  setPrefixes([
+    'ET', 'ACT',
+    'EVNT', 'EVKT', 'EVAT', 'EVET', 'EVENT', 'EVST', 'ETHT', 'ETVT', 'ETGT', 'ETBT', 'ETMT', 'ETFT',
+    'DVT', 'DVTM', 'WP1T', 'WP2T', 'WP3T', 'WP4T', 'ITT', 'MHT', 'SNT', 'SPSNT',
+    'KTM', 'BT', 'KHT', 'KMT', 'KST', 'KSYT', 'KKT', 'KSNT', 'SNZ', 'RNT'
+  ] + @@tables.keys)
 
 end

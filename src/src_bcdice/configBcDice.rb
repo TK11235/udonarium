@@ -2,7 +2,7 @@
 
 require 'configBcDiceForSystem.rb'
 
-$isDebug = true
+$isDebug = false
 
 $bcDiceVersion = "2.02.29"
 
@@ -37,6 +37,7 @@ AceKillerGene
 Airgetlamh
 Alsetto
 Alshard
+Alter_raise
 Amadeus
 Amadeus:Korean
 Arianrhod
@@ -49,6 +50,7 @@ BeastBindTrinity
 BeginningIdol
 BeginningIdol:Korean
 BladeOfArcana
+BlindMythos
 BloodCrusade
 BloodMoon
 CardRanker
@@ -66,6 +68,8 @@ Cthulhu:ChineseTraditional
 Cthulhu:Korean
 CthulhuTech
 DarkBlaze
+DarkDaysDrive
+DarkSouls
 DeadlineHeroes
 DemonParasite
 DetatokoSaga
@@ -99,9 +103,11 @@ GundogRevised
 GundogZero
 GurpsFW
 HarnMaster
+HatsuneMiku
 Hieizan
 HouraiGakuen
 HuntersMoon
+Illusio
 InfiniteFantasia
 Insane
 Insane:Korean
@@ -112,6 +118,7 @@ Kamigakari:Korean
 KanColle
 KillDeathBusiness
 KillDeathBusiness:Korean
+KurayamiCrying
 LiveraDoll
 LogHorizon
 LogHorizon:Korean
@@ -132,6 +139,7 @@ NightWizard3rd
 NightmareHunterDeep
 Nuekagami
 OneWayHeroics
+OrgaRain
 Oukahoushin3rd
 Paranoia
 ParasiteBlood
@@ -139,6 +147,8 @@ Pathfinder
 Peekaboo
 Pendragon
 PhantasmAdventure
+Postman
+Raisondetre
 RecordOfSteam
 RokumonSekai2
 RoleMaster
@@ -155,10 +165,12 @@ ShinkuuGakuen
 ShinobiGami
 ShoujoTenrankai
 Skynauts
+StellarKnights
 StrangerOfSwordCity
 Strave
 SwordWorld
 SwordWorld2.0
+SwordWorld2.5
 TORG
 TORG1.5
 TherapieSein
@@ -171,5 +183,7 @@ WARPS
 WaresBlade
 Warhammer
 WitchQuest
+WorldOfDarkness
+YankeeYogSothoth
 ZettaiReido
 }

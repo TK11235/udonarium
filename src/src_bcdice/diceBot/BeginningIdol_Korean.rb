@@ -102,7 +102,7 @@ class BeginningIdol_Korean < DiceBot
   def gameType
     "BeginningIdol:Korean"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・퍼포먼스　[r]PDn[+m/-m](r：남은 주사위 눈　n：굴릴 갯수　m：수정치)
@@ -143,13 +143,11 @@ class BeginningIdol_Korean < DiceBot
 []内は省略可　D66 다이스가 존재
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
   end
-  
-  
+
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     return '' unless signOfInequality == ">="
     if(dice_n <= 2)
@@ -162,20 +160,19 @@ INFO_MESSAGE_TEXT
       return " ＞ 실패"
     end
   end
-  
-  
+
   def rollDiceCommand(command)
-    
+
     case command.upcase
     when /^([1-7]*)PD(\d+)([\+\-]\d+)?$/
       counts = $2.to_i
       return nil if counts <= 0
-      
+
       residual = $1
       adjust = $3.to_i
-      
+
       return rollPerformance(counts, residual, adjust)
-      
+
     when 'HW'
       title = '向かい風シーン表'
       table = [
@@ -187,7 +184,7 @@ INFO_MESSAGE_TEXT
         "屋内の電気がトラブルで点灯しないようだ。暗い世界は、気分まで滅入ってしまう。",
       ]
       return textFrom1D6Table(title, table)
-      
+
     when 'BWT'
       title = '대형 예능 프로덕션 업무표'
       table = [
@@ -1289,7 +1286,7 @@ INFO_MESSAGE_TEXT
         text, number = get_table_by_1d6(articleTable)
         nameParts.push([articleIndex, articleTitle, text, number])
       end
-      
+
       setArrayFromD66Table(nameParts, name, describeTitle, describeTable)
       setArrayFromD66Table(nameParts, name, sceneTitle, sceneTable)
       setArrayFromD66Table(nameParts, name, materialTitle, materialTable)
@@ -1298,7 +1295,7 @@ INFO_MESSAGE_TEXT
 
       numberString = ""
       nameParts.each do |index, src, text1, number1|
-        name = name.gsub(src, text1) #TKfix !
+        name = name.gsub(src, text1)
         numberString += "#{src}#{number1},"
       end
       numberString = numberString[0, numberString.length - 1]
@@ -1418,7 +1415,7 @@ INFO_MESSAGE_TEXT
         "その他アクセサリー表を使用する。",
       ]
       text = textFrom1D6Table(title, table)
-      
+
       title = '頭アクセサリー表'
       if text.include?(title)
         table = [
@@ -1446,7 +1443,7 @@ INFO_MESSAGE_TEXT
         ]
         return text + "\n" + textFromD66Table(title, table)
       end
-      
+
       title = '帽子アクセサリー表'
       if text.include?(title)
         table = [
@@ -1474,7 +1471,7 @@ INFO_MESSAGE_TEXT
         ]
         return text + "\n" + textFromD66Table(title, table)
       end
-      
+
       title = '胴アクセサリー表'
       if text.include?(title)
         table = [
@@ -1502,7 +1499,7 @@ INFO_MESSAGE_TEXT
         ]
         return text + "\n" + textFromD66Table(title, table)
       end
-      
+
       title = '腕アクセサリー表'
       if text.include?(title)
         table = [
@@ -1530,7 +1527,7 @@ INFO_MESSAGE_TEXT
         ]
         return text + "\n" + textFromD66Table(title, table)
       end
-      
+
       title = '足アクセサリー表'
       if text.include?(title)
         table = [
@@ -1558,7 +1555,7 @@ INFO_MESSAGE_TEXT
         ]
         return text + "\n" + textFromD66Table(title, table)
       end
-      
+
       title = 'その他アクセサリー表'
       if text.include?(title)
         table = [
@@ -1805,22 +1802,22 @@ INFO_MESSAGE_TEXT
     when /^(\d+)(S?)A([1-6]*)([\+\-]\d+)?$/
       title = '攻撃'
       counts = $1.to_i
-      return nil if counts <= 0 
-      
+      return nil if counts <= 0
+
       sure = (not $2.empty?)
       remove = $3
       adjust = $4
       adjust ||= ''
-      
+
       result = roll(counts, 6, 1)
       dice = result[1].split(",") - remove.split("")
-      
+
       text = "#{title} ＞ [" + result[1] + "]#{adjust} ＞ "
-      
+
       unless dice.count == counts or dice.empty?
         text += '[' + dice.join(",") + "]#{adjust} ＞ "
       end
-      
+
       if sure or (dice.count == dice.uniq.count)
         total = adjust.to_i
         total += dice.map(&:to_i).inject(:+) unless dice.empty?
@@ -2035,20 +2032,20 @@ INFO_MESSAGE_TEXT
       ]
       return textFrom1D6Table(title, table)
     end
-    
+
     return nil
   end
-  
+
   def rollPerformance(counts, residual, adjust)
     title = 'パフォーマンス'
-    
+
     string = ''
     string += '+' if adjust > 0
     string += "#{adjust}" unless adjust == 0
-    
+
     result = roll(counts, 6, 1)
     diceAll = result[1].delete(",") + residual
-    
+
     total = 0
     diceUse = []
     for i in 1..7
@@ -2057,21 +2054,21 @@ INFO_MESSAGE_TEXT
         diceUse.push(i)
       end
     end
-    
+
     text = " ＞ [" + result[1] + ']'
-    
+
     if residual.empty?
       text = "#{title}#{text}"
     else
       text = "シンフォニー#{text}"
     end
-    
+
     unless residual.empty?
       text += ',[' + residual.split("").sort.join(",") + ']'
     end
-    
+
     text += "#{string} ＞ "
-    
+
     if total == 0
       if residual.empty?
         total = 10 + adjust
@@ -2093,42 +2090,40 @@ INFO_MESSAGE_TEXT
       total += adjust
       text += "#{total}"
     end
-    
+
     return text
   end
-  
-  
+
   def textFromD66Table(title, table, chance = '')
     isSwap = true
     dice = getD66(isSwap)
     number, text, skill = table.assoc(dice)
-    
+
     text, skill = checkChance(text, skill, chance)
     return "#{title} ＞ [#{number}] ＞ " + replaceBadStatus(text) + getSkillText(skill)
   end
-  
+
   def checkChance(text, skill, chance)
     return text, skill if chance.empty?
     return text, skill unless /チャンスが(\d{1,2})以下なら오프。/ === text
-  
+
     target = $1.to_i
     matchedText = $&
-    
+
     if target >= chance.to_i
       text = "오프"
       skill = ''
     else
-      text = text.slice( matchedText) #TKfix !
-      text = text.slice(/\n$/) #TKfix !
+      text = text.sub(matchedText, '')
+      text = text.chomp
     end
-    
-    return text, skill 
+
+    return text, skill
   end
-  
-  
+
   def textFrom1D6Table(title, table1, table2 = nil)
     text1, number1 = get_table_by_1d6(table1)
-    
+
     text = "#{title} ＞ "
     if table2.nil?
       text += "[#{number1}] ＞ #{text1}"
@@ -2136,7 +2131,7 @@ INFO_MESSAGE_TEXT
       text2, number2 = get_table_by_1d6(table2)
       text += "[#{number1},#{number2}] ＞ #{text1}#{text2}"
     end
-    
+
     if /랜덤으로 지정한 특기가 지정 특기인 아이돌 스킬\(신장분야、(속성|재능)분야、출신분야가 나올경우 재굴림\)$/ =~ text
       category = $1
       while true
@@ -2146,11 +2141,10 @@ INFO_MESSAGE_TEXT
         text += " ＞ 振り直し"
       end
     end
-    
+
     return replaceBadStatus(text)
   end
-  
-  
+
   def getSkillList(field = 0)
     title = '特技リスト'
     table = [
@@ -2161,28 +2155,27 @@ INFO_MESSAGE_TEXT
              ['취미', ['오컬트','펫','스포츠','멋내기','요리','취미분야의 공백','쇼핑','댄스','ゲーム','음악','아이돌']],
              ['출신', ['오키나와','큐슈','시코쿠','주코쿠','킨키','주부','간토','호쿠리쿠','도호쿠','훗카이도','해외']],
             ]
-    
+
     number1 = 0
     if field == 0
       table, number1 = get_table_by_1d6(table)
     else
       table = table[field - 1]
     end
-    
+
     fieldName, table = table
     skill, number2 = get_table_by_2d6(table)
-    
+
     text = title
     if field == 0
       text += " ＞ [#{number1},#{number2}]"
     else
       text += "(#{fieldName}분야) ＞ [#{number2}]"
     end
-    
+
     return "#{text} ＞ 《#{skill}／#{fieldName}#{number2}》"
   end
-  
-  
+
   def badStatus(counts = 1)
     title = '변조'
     table = [
@@ -2193,52 +2186,49 @@ INFO_MESSAGE_TEXT
              "「믿지 못하는」　PC전원의 【이해도】를 1점 낮은 것으로 취급한다.",
              "「엇갈림」　PC는 아이템 사용과 리절트 페이즈에 「부탁」을 할 수 없게 된다.",
             ]
-    
+
     return '' if counts <= 0
-    
+
     result = roll(counts, 6, 1)
     numbers = result[1].split(",").uniq
-    
+
     text = "#{title} ＞ [" + result[1] + '] ＞ '
     occurrences = numbers.count
-    
+
     if occurrences > 1
       text += "以下の#{occurrences}つが発生する。\n"
     end
-    
+
     occurrences.times do |i|
       text += table[numbers[i].to_i - 1] + "\n"
     end
-    
+
     return text[0, text.length - 1]
   end
-  
-  
+
   def getSkillText(skill)
     return '' if skill.nil? or skill.empty?
-    
+
     text = skill
     if /^AT([1-6]?)$/ =~ text
       text = getSkillList($1.to_i)
     else
       text = "特技 : #{text}"
     end
-    
+
     return "\n#{text}"
   end
-  
-  
+
   def setArrayFromD66Table(array, name, src, table)
     index = name.index(src)
     return if index.nil?
-    
+
     isSwap = true
     dice = getD66(isSwap)
     number, text, = table.assoc(dice)
     array.push([index, src, text, number])
   end
-  
-  
+
   def getItem(counts = 1)
     title = 'アイテム'
     table = [
@@ -2249,39 +2239,38 @@ INFO_MESSAGE_TEXT
       "お菓子",
       "差し入れ",
     ]
-    
+
     return '' if counts <= 0
-    
+
     result = roll(counts, 6, 1)
     numbers = result[1].split(",")
     unique = numbers.uniq
-    
+
     text = "#{title} ＞ [" + result[1] + '] ＞ '
     acquisitions = numbers.count
     kinds = unique.count
-    
+
     kinds.times do |i|
       string = table[unique[i].to_i - 1]
       unless kinds == 1
         string = "「#{string}」"
       end
-      
+
       text += string
       unless acquisitions == kinds
         text += numbers.count(unique[i]).to_s + 'つ'
       end
       text += 'と'
     end
-    
-    text = text.slice(/と$/) #TKfix !
-    
+
+    text = text.sub(/と$/, '')
+
     return text
   end
-  
-  
+
   def replaceBadStatus(text)
     return text unless /変調がランダムに(一|二|三)つ発生する。/ =~ text
-    
+
     counts = 1
     case $1
     when '二'
@@ -2291,13 +2280,12 @@ INFO_MESSAGE_TEXT
     end
 
     substitution = text.clone
-    substitution = substitution.slice($&) #TKfix !
+    substitution = substitution.gsub($&, '')
     substitution += "\n" unless substitution.empty? or /\n$/ =~ substitution
-    
+
     return substitution + badStatus(counts)
   end
-  
-  
+
   def costume(title, brandOnly = false)
     table = []
     if title.include?('의상(챌린지 걸즈)')
@@ -2375,9 +2363,9 @@ INFO_MESSAGE_TEXT
     else
       return nil
     end
-    #TKfix !
+
     text = textFromD66Table(title, table)
-    text = text.slice(/\n.+$/) if brandOnly
+    text = text.split("\n").first if brandOnly
     return text
   end
 end

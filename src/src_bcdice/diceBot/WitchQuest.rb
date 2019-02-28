@@ -2,15 +2,15 @@
 
 class WitchQuest < DiceBot
   setPrefixes(['WQ\d+', 'SET\d+'])
-  
+
   def gameName
     'ウィッチクエスト'
   end
-  
+
   def gameType
     "WitchQuest"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・チャレンジ(成功判定)(WQn)
@@ -21,12 +21,11 @@ class WitchQuest < DiceBot
 　例）SET1　SET48
 MESSAGETEXT
   end
-  
+
   def changeText(string)
     string
   end
-  
-  
+
   def rollDiceCommand(command)
     case command
     when /WQ(\d+)/
@@ -36,29 +35,29 @@ MESSAGETEXT
       number = $1.to_i
       return getStructureEncounter(number)
     end
-    
+
     return nil
   end
-  
+
   def challenge(number)
     success = 0
     results = []
-    
+
     number.times do
       value1, = roll(1, 6)
       value2, = roll(1, 6)
-      
+
       if( value1 == value2 )
         success += 1
       end
-      
+
       results << "#{value1},#{value2}"
     end
-    
+
     successText = "(#{results.join(' / ')}) ＞ " + getSuccessText(success)
     return successText
   end
-  
+
   def getSuccessText(success)
     table = [[0, "失敗"],
              [1, "１レベル成功(成功)"],
@@ -68,17 +67,17 @@ MESSAGETEXT
              [5, "５レベル成功(伝説的大成功)"],
              [6, "６レベル成功(神話的大成功)"],
             ]
-    
+
     if( success >= table.last.first )
       return table.last.last
     end
-    
+
     return get_table_by_number(success, table)
   end
-  
+
   def getStructureEncounter(number)
     debug("getStructureEncounter number", number)
-    
+
     tables = [[1, %w{船から降りてきた 魚を売っている 仕事で忙しそうな 異国から来た おもしろおかしい 汗水流している}],
               [2, %w{おかしな格好をした 歌を歌っている ステキな笑顔をした 日なたぼっこをしている 悩んでいる 旅をしている}],
               [3, %w{待ちぼうけをしている 壁に登っている タバコを吸っている 踊りを踊っている 幸せそうな 向こうから走ってくる}],
@@ -128,118 +127,118 @@ MESSAGETEXT
               [47, %w{傷だらけな 両手に宝物を持った かわいい 地図を見ながら出てきている 剣を持った ダンジョンの主といわれる}],
               [48, %w{墓参りをしている 耳の遠い 死んでしまった 葬式をしている きもだめしをしている 墓守をしている}],
              ]
-    
+
     table = get_table_by_number(number, tables, nil)
     return nil if( table.nil? )
     text, index = get_table_by_1d6( table )
-    
+
     person = getPersonTable1()
-    
+
     return "SET#{number} ＞ #{index}:#{text}#{person}"
   end
-  
+
   def getPersonTable1()
     gotoNextTable = lambda{ "表２へ" + getPersonTable2() }
-    
+
     table = [[11, "おじさん"],
              [12, "おばさん"],
              [13, "おじいさん"],
              [14, "おばあさん"],
              [15, "男の子"],
              [16, "女の子"],
-             
+
              [22, "美少女"],
              [23, "美少年"],
              [24, "青年"],
              [25, "少年"],
              [26, "男女(カップル)"],
-             
+
              [33, "新婚さん"],
              [34, "お兄さん"],
              [35, "お姉さん"],
              [36, "店主(お店の人)"],
-             
+
              [44, "王様"],
              [45, "衛兵"],
              [46, "魔女"],
-             
+
              [55, "お姫様"],
              [56, gotoNextTable],
-             
+
              [66, gotoNextTable],
             ]
-    
+
     getPersonTable(table)
   end
-  
+
   def getPersonTable2()
     gotoNextTable = lambda{ "表３へ" + getPersonTable3() }
-    
+
     table = [[11, "魔法使い"],
              [12, "観光客"],
              [13, "先生"],
              [14, "探偵"],
              [15, "刷"],
              [16, "お嬢様"],
-             
+
              [22, "お嬢様"],
              [23, "紳士"],
              [24, "ご婦人"],
              [25, "女王様"],
              [26, "職人さん"],
-             
+
              [33, "女子高生"],
              [34, "学生"],
              [35, "剣闘士"],
              [36, "鳥"],
-             
+
              [44, "猫"],
              [45, "犬"],
              [46, "カエル"],
-             
+
              [55, "蛇"],
              [56, gotoNextTable],
-             
+
              [66, gotoNextTable],
             ]
-    
+
     getPersonTable(table)
   end
-  
+
   def getPersonTable3()
     gotoNextTable = lambda{ "表４へ" + getPersonTable4() }
-    
+
     table = [[11, "貴族"],
              [12, "いるか"],
              [13, "だいこん"],
              [14, "じゃがいも"],
              [15, "にんじん"],
              [16, "ドラゴン"],
-             
+
              [22, "ゾンビ"],
              [23, "幽霊"],
              [24, "うさぎ"],
              [25, "天使"],
              [26, "悪魔"],
-             
+
              [33, "赤ちゃん"],
              [34, "馬"],
              [35, "石"],
              [36, "お母さん"],
-             
+
              [44, "妖精"],
              [45, "守護霊"],
              [46, "猫神様"],
-             
+
              [55, "ロボット"],
              [56, "恐ろしい人"],
-             
+
              [66, gotoNextTable],
             ]
-    
+
     getPersonTable(table)
   end
-  
+
   def getPersonTable4()
     table = [[11, "魔女エディス"],
              [12, "魔女レーデルラン"],
@@ -247,40 +246,39 @@ MESSAGETEXT
              [14, "大魔女”ロロ”様"],
              [15, "エディスのお母さん”エリー”"],
              [16, "猫トンガリ"],
-             
+
              [22, "猫ヒューベ"],
              [23, "猫ゆうのす"],
              [24, "猫集会の集団の一団"],
              [25, "岩"],
              [26, "PCの母"],
-             
+
              [33, "PCの父"],
              [34, "PCの兄"],
              [35, "PCの姉"],
              [36, "PCの弟"],
-             
+
              [44, "PCの妹"],
              [45, "PCの遠い親戚"],
              [46, "PCの死んだはずの両親"],
-             
+
              [55, "初恋の人"],
              [56, "分かれた女(男)、不倫中の相手、または独身PCの場合、二股をかけている二人の両方"],
-             
+
              [66, "宇宙人"],
             ]
-    
+
     getPersonTable(table)
   end
-  
+
   def getPersonTable(table)
     isSwap = true
     number = bcdice.getD66(isSwap)
     debug("getPersonTable number", number)
-    
+
     " ＞ #{number}:" + get_table_by_number(number, table)
   end
-  
-  
+
   #以下のメソッドはテーブルの参照用に便利
   #get_table_by_2d6(table)
   #get_table_by_1d6(table)
@@ -288,7 +286,6 @@ MESSAGETEXT
   #get_table_by_nD6(table, count)
   #get_table_by_1d3(table)
   #get_table_by_number(index, table)
-  
-  
+
   #ダイス目が知りたくなったら getDiceList を呼び出すこと(DiceBot.rbにて定義)
 end

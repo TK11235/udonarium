@@ -16,7 +16,7 @@ class TokumeiTenkousei < DiceBot
   def gameType
     "TokumeiTenkousei"
   end
-
+  
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 「1の出目でEPP獲得」、判定時の「成功」「失敗」「ゾロ目で自動振り足し」を判定。

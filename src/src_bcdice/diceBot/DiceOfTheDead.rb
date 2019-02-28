@@ -9,17 +9,17 @@ class DiceOfTheDead < DiceBot
     @sortType = 1
     @d66Type = 2
   end
+
   def gameName
     'ダイス・オブ・ザ・デッド'
   end
-  
+
   def gameType
     "DiceOfTheDead"
   end
-  
+
   def getHelpMessage
-    #TKfix <<
-    return <<INFO_MESSAGE_TEXT
+    info = <<INFO_MESSAGE_TEXT
 ・ゾンビ化表　ZMB+x
 （x=オープン中の感染度マスの数。+xは省略可能、省略時は0）
 ・感染度表　BIOx
@@ -27,15 +27,13 @@ class DiceOfTheDead < DiceBot
 （上記二つは最初からシークレットダイスで行われます）
 INFO_MESSAGE_TEXT
   end
-  
-  
-  
+
   def rollDiceCommand(command)
     command = command.upcase
-    
+
     result = ''
     secret_flg = false
-    
+
     case command
     when /^BIO(\d+)?$/i
       roll_times = ($1 or 1).to_i
@@ -46,48 +44,46 @@ INFO_MESSAGE_TEXT
       result = rollZombie( value )
       secret_flg = true
     end
-    
+
     return result, secret_flg
   end
-  
-  
+
   def checkInfection(roll_times)
-    
+
     result = "感染度表"
-    
+
     roll_times.times do
-      
+
       d1, = roll(1, 6)
       d2, = roll(1, 6)
-      
+
       result += "　＞　出目：#{d1}、#{d2}　"
-      
+
       index1 = (d1 / 2.0).ceil - 1
       index2 = (d2 / 2.0).ceil - 1
-      
+
       table =
         [["「右下（【足】＋１）」", "「右中（【足】＋１）」", "「右上（【足】＋１）」"],
          ["「中下（【腕】＋１）」", "「真中（【腕】＋１）」", "「中上（【腕】＋１）」"],
          ["「左下（【頭】＋１）」", "「左中（【頭】＋１）」", "「左上（【頭】＋１）」"],
         ]
-      
+
       result += table[index1][index2]
     end
-      
+
     return result
   end
-  
-  
+
   ####################
   # 各種表
-  
+
   def rollZombie(value)
-    
+
     d1, = roll(1, 6)
     d2, = roll(1, 6)
-    
+
     diceTotal = d1 + d2 + value
-    
+
     table = [
              [5, "５以下：影響なし"],
              [6, "６：任意の部位を１点回復"],
@@ -104,17 +100,16 @@ INFO_MESSAGE_TEXT
              [17, "１７：次のターンのみ、すべての【能力値】を２倍にする"],
              [18, "１８以上：自分以外の味方１人にできる限り全力で攻撃を行う。〈アイテム〉も可能な限り使用する"]
             ]
-    
+
     minDice = table.first.first
     maxDice = table.last.first
     index = diceTotal
     index = [minDice, index].max
     index = [index, maxDice].min
-    
+
     number, text = table.assoc(index)
     result = "ゾンビ化表　＞　出目：#{d1}＋#{d2}　感染度：#{value}　合計値：#{diceTotal}　＞　#{text}"
-    
+
     return result
   end
-  
 end

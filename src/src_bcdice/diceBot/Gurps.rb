@@ -8,15 +8,15 @@ class Gurps < DiceBot
     @sendMode = 2
     @d66Type = 1
   end
-  
+
   def gameName
     'ガープス'
   end
-  
+
   def gameType
     "GURPS"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定においてクリティカル・ファンブルの自動判別、成功度の自動計算。(3d6<=目標値／目標値-3d6)
@@ -37,18 +37,17 @@ class Gurps < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   # ゲーム別成功度判定(nD6)
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     return '' unless(dice_cnt == 3 && signOfInequality == "<=")
-    
+
     success = diff - total_n #成功度
     crt_string  = " ＞ クリティカル(成功度：#{success})"
     fmb_string  = " ＞ ファンブル(失敗度：#{success})"
 	fail_string = " ＞ 自動失敗(失敗度：#{success})"
-    
+
     #クリティカル
     if   ((dice_n <= 6) && (diff >= 16))
       return crt_string
@@ -57,8 +56,8 @@ INFO_MESSAGE_TEXT
     elsif(dice_n <= 4)
       return crt_string
     end
-    
-    #ファンブル			
+
+    #ファンブル
     if   ((diff - dice_n) <= -10)
       return fmb_string
     elsif((dice_n >= 17) && (diff <=15))
@@ -68,46 +67,45 @@ INFO_MESSAGE_TEXT
 	elsif(dice_n >= 17)
 	  return fail_string
     end
-    
+
     if(total_n <= diff)
       return " ＞ 成功(成功度：#{success})"
     else
       return " ＞ 失敗(失敗度：#{success})"
     end
-    
+
   end
-  
+
   def rollDiceCommand(command)
-    
+
 	result = getRollDiceResult(command)
 	return result unless(result.nil?)
-	
+
 	#クリティカル・ファンブル表
 	result = getCFTableResult(command)
 	return result unless(result.nil?)
-	
+
 	#恐怖表
 	result = getFearResult(command)
 	return result unless(result.nil?)
-    
+
 	#反応表
 	result = getReactResult(command)
 	return result unless(result.nil?)
-    
+
 	#命中部位表
 	result = getHitResult(command)
 	return result unless(result.nil?)
-    
+
 	return ""
   end
-  
-  
+
   def getRollDiceResult(command)
-    
+
     return nil unless(/([\d\+\-]+)\-3[dD]6?([\d\+\-]*)/ === command)
 	diffStr = $1
 	modStr  = ($2 || '')
-	
+
 	dice_cnt = 3
 	dice_max = 6
 	dice_n, dice_str = roll(dice_cnt, dice_max)
@@ -117,16 +115,15 @@ INFO_MESSAGE_TEXT
 	diff = getValue(diffStr, 0)
 	total_n = dice_n + getValue(modStr, 0)
 	signOfInequality = "<="
-	
+
 	result = "(3D6#{modStr}<=#{diff}) ＞ #{dice_n}[#{dice_str}]#{modStr} ＞ #{total_n}#{check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)}"
 	return result
   end
-  
-  
+
   def getCFTableResult(command)
-    
+
 	return nil unless(/\w*(FMB|CRT)/ === command)
-	
+
 	case command
 	when "CRT"
 	  tableName = "クリティカル表"
@@ -148,7 +145,7 @@ INFO_MESSAGE_TEXT
 			   'ダメージ3倍。',
 			   '体を狙っていたら、相手は気絶(回復は30分後に生命力判定)。他はダメージ3倍。',
 		      ]
-      
+
 	when "HCRT"
 	  tableName = "頭部打撃クリティカル表"
 	  table = [
@@ -169,7 +166,7 @@ INFO_MESSAGE_TEXT
 			   '敵は通常のダメージを受け、朦朧状態になる。',
 			   '敵は通常のダメージを受け、朦朧状態になる。',
 			  ]
-      
+
 	when "FMB"
 	  tableName = "ファンブル表"
 	  table = [
@@ -190,7 +187,7 @@ INFO_MESSAGE_TEXT
 			   '武器が壊れる。ただし、モールなど固い"叩き"武器は壊れない(ふりなおし)。',
 			   '武器が壊れる。ただし、金属バットなど固い"叩き"武器は壊れない(ふりなおし)。',
 			  ]
-      
+
 	when "MFMB"
 	  tableName = "呪文ファンブル表"
 	  table = [
@@ -211,7 +208,7 @@ INFO_MESSAGE_TEXT
 			   '呪文が完全に失敗し、術者の右腕が損なわれる。回復に1週間を要する。',
 			   '呪文が完全に失敗する。GMから見て、術者や呪文が純粋で善良なものでなければ、悪魔(第3版文庫版P.384参照)があらわれ、術者を攻撃する。',
 			  ]
-      
+
 	when "YSCRT"
 	  tableName = "妖魔夜行スペシャルクリティカル表"
 	  table = [
@@ -232,7 +229,7 @@ INFO_MESSAGE_TEXT
 			   'ダメージ3倍。',
 			   '胴体を狙っていたら、相手は気絶(回復は30分後に生命力判定)。他は3倍ダメージ。',
 			  ]
-      
+
 	when "YSFMB"
 	  tableName = "妖魔夜行スペシャルファンブル表"
 	  table = [
@@ -253,7 +250,7 @@ INFO_MESSAGE_TEXT
 			   '自分に命中。半分ダメージ。防護点は無効。',
 			   'この表を2回振って、プレイヤーが好きな方を適用する。',
 			  ]
-      
+
 	when "YFMB"
 	  tableName = "妖術ファンブル表"
 	  table = [
@@ -274,22 +271,21 @@ INFO_MESSAGE_TEXT
 			   '妖術が完全に失敗し、術者の弱点が明らかにされる。弱点がなければ振り直して良い。',
 			   '妖術が完全に失敗する。術者は完全な行動不能におちいる。回復は反日ごとに生命力で判定を行う。',
 			  ]
-      
+
 	else
 	  return nil
 	end
-	
+
     result, number = get_table_by_nD6(table, 3)
-	
+
 	return "#{tableName}(#{number})：#{result}"
   end
-  
-  
+
   def getFearResult(command)
-    
+
 	return nil unless(/FEAR((\+)?\d+)?/ === command)
 	modify = $1.to_i
-    
+
 	tableName = "恐怖表"
 	table = [
 		     '1ターン朦朧状態。2ターン目に自動回復。',
@@ -330,7 +326,7 @@ INFO_MESSAGE_TEXT
 		     '昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い恐怖症、ないし-30CPぶんの精神的特徴を植え付けられる。',
 		     '昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い恐怖症、ないし-30CPぶんの精神的特徴を植え付けられる。知力が1点永遠に低下する。あわせて精神系の技能、呪文、超能力のレベルも低下する。',
 		    ]
-    
+
 	dice, dummy = roll(3, 6)
 	number = dice + modify
 	if(number > 40)
@@ -339,20 +335,19 @@ INFO_MESSAGE_TEXT
 	  num = number - 4
 	end
 	result = table[num]
-	
+
 	return "#{tableName}(#{number})：#{result}"
   end
-  
-  
+
   def getReactResult(command)
-    
+
 	return nil unless(/REACT((\+|\-)?\d*)/ === command)
 	modify = $1.to_i
-    
+
 	tableName = "反応表"
 	dice, dummy = roll(3, 6)
 	number = dice + modify
-    
+
 	if(number < 1)
       result = "最悪"
 	elsif(number < 4)
@@ -370,15 +365,14 @@ INFO_MESSAGE_TEXT
 	else
       result = "最高"
 	end
-	
+
 	return "#{tableName}(#{number})：#{result}"
   end
-  
-  
+
   def getHitResult(command)
-    
+
     return nil unless("HIT" === command)
-    
+
 	tableName = "命中部位表"
 	table = [
              '脳',
@@ -399,16 +393,14 @@ INFO_MESSAGE_TEXT
              '武器',
             ]
 	result, number = get_table_by_nD6(table, 3)
-	
+
 	return "#{tableName}(#{number})：#{result}"
   end
-  
-  
+
   def getValue(text, defaultValue)
-    
-    return defaultValue if( text == nil or text.empty? ) 
-    
-    parren_killer("(0" + text + ")").to_i 
+
+    return defaultValue if( text == nil or text.empty? )
+
+    parren_killer("(0" + text + ")").to_i
   end
-  
 end

@@ -9,11 +9,11 @@ class ShinkuuGakuen < DiceBot
   def gameName
     '真空学園'
   end
-  
+
   def gameType
     "ShinkuuGakuen"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定
@@ -35,8 +35,8 @@ RLx>=y：この書式なら目標値 ｙ で判定結果出力
 　例）CSW10　CBX76
 MESSAGETEXT
   end
-  
-  def rollDiceCommand(command) 
+
+  def rollDiceCommand(command)
     prefixsRegText = prefixs.collect{|i| i.sub(/\.\*/, '')}.join('|')
     #Tkfix 正規表現オプション
     #unless ( /(^|\s)(S)?(#{prefixsRegText})([\d\+\-]*)(>=(\d+))?/i === command )
@@ -45,30 +45,30 @@ MESSAGETEXT
       debug("NOT match")
       return nil
     end
-    
+
     debug("matched.")
-    
+
     waponCommand = $3
     base = $4.to_i
     diff = $6
-    
+
     waponInfo = getWaponTable(waponCommand)
     output_msg = rollJudge(base, diff, waponInfo)
-    
+
     return output_msg
   end
-  
+
   def rollJudge(base, diff, waponInfo)
     debug("rollJudge base", base)
     debug("rollJudge diff", diff)
-    
+
     waponName = waponInfo[:name]
     waponTable = waponInfo[:table]
-    
+
     diceList = getJudgeDiceList
     total = diceList.inject(){|value, i| value += i}
     allTotal = total + base
-    
+
     diffText = if diff.nil? then "" else ">=#{diff}" end
     result = "(#{waponName}：#{base}#{diffText}) ＞ 1D100+#{base} ＞ #{total}"
     result += "[#{diceList.join(',')}]" if( diceList.length >= 2 )
@@ -76,72 +76,70 @@ MESSAGETEXT
     result += " ＞ #{allTotal}"
     result += getSuccessText(allTotal, diff, diceList, waponTable)
     result += getWaponSkillText(waponTable, diceList.max)
-    
+
     debug("check_1D100 result", result)
-    
+
     return result
   end
-  
+
   def getJudgeDiceList
     diceList = []
     while( true )
       value, = roll(1, 100)
       diceList << value
-      
+
       rank01 = value % 10
       debug("rank01", rank01)
-      
+
       break unless( rank01 == 0 )
     end
-    
+
     return diceList
   end
-  
+
   def getSuccessText(allTotal, diff, diceList, isWapon)
     first = diceList.first
-    return '' if( first.nil? ) 
-    
+    return '' if( first.nil? )
+
     return " ＞ ファンブル" if( first <= 9 )
-    
+
     if( diff.nil? and (first != 10) )
       return ''
     end
-    
+
     result = ''
     skillText = getSkillText(first, diff, isWapon)
     result += skillText
-    
+
     unless( diff.nil? )
       result += ' ＞ ' if( skillText.empty? )
-      
+
       success = (allTotal >= diff.to_i ? "成功" : "失敗")
       result += "#{success}"
     end
-    
+
     return result
   end
-  
+
   def getSkillText(first, diff, isWapon)
     result = ''
     return result if( isWapon )
-    
+
     result = ' ＞ '
     return result unless( first == 10 )
-    
-    
+
     result += "技能なし：ファンブル"
-    
-    return result if( diff.nil? ) 
-    
+
+    return result if( diff.nil? )
+
     result += "／技能あり："
-    
+
     return result\
   end
-  
-  
+
   def getWaponTable(waponCommand)
     debug('getWaponTable waponCommand', waponCommand)
-    
+
     case waponCommand.upcase
     when 'SW'
       return getWaponTableSword
@@ -186,10 +184,10 @@ MESSAGETEXT
     when 'CST'
       return getWaponTableStandCounter
     end
-    
+
     return {:name => '判定', :table => nil}
   end
-  
+
   def getWaponTableSword
     {:name => '剣',
       :table =>
@@ -205,7 +203,7 @@ MESSAGETEXT
        [00, '光速剣', '攻撃量3倍､盾受け不可､カウンター不可、Ｂ・Ｄ'],
       ]}
   end
-  
+
   def getWaponTableSwordCounter
     {:name => '剣カウンター',
       :table =>
@@ -219,10 +217,10 @@ MESSAGETEXT
        [00, '不動剣', 'クロスカウンター、Ｂ・Ｄ、ダメージ２倍'],
       ]}
   end
-  
+
   def getWaponTableLongSword
     {:name => '大剣',
-      :table => 
+      :table =>
       [[11, 'スマッシュ', '敵防御半分'],
        [22, '峰打ち', '麻痺硬化「根性」０'],
        [33, '水鳥剣', '敵防御判定ー５０'],
@@ -238,7 +236,7 @@ MESSAGETEXT
 
   def getWaponTableLongSwordCounter
     {:name => '大剣カウンター',
-      :table => 
+      :table =>
       [[22, '無形の位', '攻撃の無効化'],
        [33, nil, nil],
        [44, nil, nil],
@@ -253,7 +251,7 @@ MESSAGETEXT
 
   def getWaponTableShortSword
     {:name => '小剣',
-      :table => 
+      :table =>
       [[11, '乱れ突き', '２連続攻撃'],
        [22, 'フェイクタング', 'スタン効果「注意力」５'],
        [33, 'マインドステア', '麻痺効果「注意力」０'],
@@ -266,10 +264,10 @@ MESSAGETEXT
        [00, '百花繚乱', '回避不可、盾受け不可、攻撃量３倍、Ｂ・Ｄ'],
       ]}
   end
-  
+
   def getWaponTableShortSwordCounter
     {:name => '小剣カウンター',
-      :table => 
+      :table =>
       [[11, 'リポスト', 'カウンター'],
        [22, nil, nil],
        [33, nil, nil],
@@ -298,7 +296,7 @@ MESSAGETEXT
        [00, '無双三段', '三段攻撃、二段目Ｂ・Ｄ、三段目ダメージ２倍、Ｂ・Ｄ'],
       ]}
   end
-  
+
   def getWaponTableSpearCounter
     {:name => '槍カウンター',
       :table =>
@@ -310,10 +308,10 @@ MESSAGETEXT
        [00, nil, nil],
       ]}
   end
-  
+
   def getWaponTableAx
     {:name => '斧',
-      :table => 
+      :table =>
       [[11, '一人時間差', '防御行動ー１００'],
        [22, 'トマホーク', 'カウンター不可'],
        [33, '大木断', 'ダメージ２倍'],
@@ -326,10 +324,10 @@ MESSAGETEXT
        [00, '高速ナブラ', '回避不可、カウンター不可、攻撃量３倍、Ｂ・Ｄ'],
       ]}
   end
-  
+
   def getWaponTableAxCounter
     {:name => '斧カウンター',
-      :table => 
+      :table =>
       [[44, '真っ向唐竹割り', 'クロスカウンター、Ｂ・Ｄ'],
        [55, nil, nil],
        [66, nil, nil],
@@ -339,10 +337,10 @@ MESSAGETEXT
        [00, nil, nil],
       ]}
   end
-  
+
   def getWaponTableClub
     {:name =>'棍棒',
-      :table => 
+      :table =>
       [[11, 'ハードヒット', '防御力無視'],
        [22, 'ダブルヒット', '２連続攻撃'],
        [33, '回転撃', '防御判定ー１００'],
@@ -355,10 +353,10 @@ MESSAGETEXT
        [00, 'グランドクロス', '防御無視、盾、カウンター不可、ダメージ２倍、Ｂ・Ｄ、全体攻撃'],
       ]}
   end
-  
+
   def getWaponTableClubCounter
     {:name =>'棍棒カウンター',
-      :table => 
+      :table =>
       [[11, 'ブロッキング', '攻撃の無効化'],
        [22, nil, nil],
        [33, nil, nil],
@@ -371,10 +369,10 @@ MESSAGETEXT
        [00, nil, nil],
       ]}
   end
-  
+
   def getWaponTableBow
     {:name => '弓',
-      :table => 
+      :table =>
       [[11, '影縫い', '麻痺効果「注意力」０'],
        [22, 'アローレイン', '全体攻撃・回避ー５０'],
        [33, '速射', '２連続攻撃'],
@@ -387,7 +385,7 @@ MESSAGETEXT
        [00, '夢想弓', 'Ｂ・Ｄ、ダメージ３倍'],
       ]}
   end
-  
+
   def getWaponTableMartialArt
     {:name => '体術',
       :table =>
@@ -403,7 +401,7 @@ MESSAGETEXT
        [00, '千手観音', '５連続攻撃、すべてカウンター不可'],
       ]}
   end
-  
+
   def getWaponTableMartialArtCounter
     {:name => '体術カウンター',
       :table =>
@@ -419,21 +417,21 @@ MESSAGETEXT
        [00, nil, nil],
       ]}
   end
-  
+
   def getRandMartialArtCounter
     value, = roll(1, 10)
     dice = value * 10 + value
     dice = 100 if( value == 110 )
-    
+
     tableInfo = getWaponTableMartialArt
     waponTable = tableInfo[:table]
-    
+
     result = " ＞ (#{value})"
     result += getWaponSkillText(waponTable, dice)
-    
+
     return result
   end
-  
+
   def getWaponTableBoxing
     {:name => 'ボクシング',
       :table =>
@@ -449,7 +447,7 @@ MESSAGETEXT
        [00, '右', '防御力無視、ダメージ１０倍'],
       ]}
   end
-  
+
   def getWaponTableBoxingCounter
     {:name => 'ボクシングカウンター',
       :table =>
@@ -465,7 +463,7 @@ MESSAGETEXT
        [00, 'ノーガード戦法', '攻撃の無効化、次ターン以降は自分の盾受け、回避不可、全ての攻撃にＢ・Ｄ'],
       ]}
   end
-  
+
   def getWaponTableProWrestling
     {:name => 'プロレス',
       :table =>
@@ -481,7 +479,7 @@ MESSAGETEXT
        [00, 'ジャックハマー', '盾受け不可、防御力無視、ダメージ３倍、成功度＋１０'],
       ]}
   end
-  
+
   def getWaponTableProWrestlingCounter
     {:name => 'プロレスカウンター',
       :table =>
@@ -494,7 +492,7 @@ MESSAGETEXT
        [00, nil, nil],
       ]}
   end
-  
+
   def getWaponTableStand
     {:name => '幽波紋',
       :table =>
@@ -510,7 +508,7 @@ MESSAGETEXT
        [00, 'STAR PLATINUM', '攻撃量１５倍、Ｂ・Ｄ'],
       ]}
   end
-  
+
   def getWaponTableStandCounter
     {:name => '幽波紋カウンター',
       :table =>
@@ -526,28 +524,27 @@ MESSAGETEXT
        [00, nil, nil],
       ]}
   end
-  
+
   def getWaponSkillText(waponTable, dice)
     debug('getWaponSkillText', dice)
-    
+
     return '' if( waponTable.nil? )
-    
+
     preName = ''
     preEffect = ''
-    
+
     waponTable.each do |index, name, effect|
       name ||= preName
       preName = name
-      
+
       effect ||= preEffect
       preEffect = effect
-      
+
       next unless( index == (dice % 100) )
-      
+
       return " ＞ 「#{name}」#{effect}"
     end
-    
+
     return ''
   end
-  
 end

@@ -14,15 +14,15 @@ class BladeOfArcana < DiceBot
     @sendMode = 2
     @sortType = 1
   end
-  
+
   def gameName
     'ブレイド・オブ・アルカナ'
   end
-  
+
   def gameType
     "BladeOfArcana"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ■行為判定　nA[m][Cx][Fy]
@@ -43,7 +43,7 @@ class BladeOfArcana < DiceBot
 　　例）CTR+→因縁表（R版）を出目2～21でロールする。
 INFO_MESSAGE_TEXT
   end
-  
+
   def rollDiceCommand(command)
     case command.upcase
     when /^(\d+)A(\d*)([CF]?)(\d*)([CF]?)(\d*)$/
@@ -54,7 +54,7 @@ INFO_MESSAGE_TEXT
       option2 = $5
       argument2 = $6
       return nil if option1.empty? != argument1.empty? or option2.empty? != argument2.empty? or (not option2.empty? and option1 == option2)
-      
+
       if option1 == 'C'
         critical = argument1.to_i
         fumble = argument2.to_i
@@ -63,7 +63,7 @@ INFO_MESSAGE_TEXT
         fumble = argument1.to_i
       end
       return rollAct(counts, judgment, critical, fumble)
-    
+
     when /^CT3([\+\-]?)$/
       sign = $1
       title = '因縁表(The 3rd)　『BoA3』P292'
@@ -92,7 +92,7 @@ INFO_MESSAGE_TEXT
         "【自身】",
       ]
       return tableText(title, table, sign)
-    
+
     when /^CTR([\+\-]?)$/
       sign = $1
       title = '因縁表(リインカーネイション)　『BAR』P51、299'
@@ -121,7 +121,7 @@ INFO_MESSAGE_TEXT
         "【自身】",
       ]
       return tableText(title, table, sign)
-    
+
     when /^DJV(\-?)$/
       sign = $1
       title = '前世邂逅表（デジャブ）　『BAR』P235'
@@ -150,7 +150,7 @@ INFO_MESSAGE_TEXT
         "【なし】",
       ]
       return tableText(title, table, sign)
-    
+
     when /^AKST([\+\-]?)$/
       sign = $1
       title = '悪徳シーン表　『GoV』P16、164'
@@ -180,10 +180,10 @@ INFO_MESSAGE_TEXT
       ]
       return tableText(title, table, sign)
     end
-    
+
     return nil
   end
-  
+
   def rollAct(counts, judgment = 0, critical = 0, fumble = 0)
     if critical < 1
       critical = 1
@@ -193,7 +193,7 @@ INFO_MESSAGE_TEXT
     elsif critical > judgment
       critical = judgment
     end
-    
+
     if fumble <= 0
       fumble = 20
     end
@@ -206,15 +206,15 @@ INFO_MESSAGE_TEXT
     elsif fumble > 20
       fumble = 20
     end
-    
+
     value, string = roll(counts, 20, 1)
     text = "(#{counts}A#{judgment}C#{critical}F#{fumble}) ＞ #{string} ＞ "
-    
+
     unless counts == 1
       value = string.split(",").map(&:to_i).min
       text += "#{value} ＞ "
     end
-    
+
     if value >= fumble
       text += 'ファンブル'
     elsif value <= critical
@@ -226,7 +226,7 @@ INFO_MESSAGE_TEXT
     end
     return text
   end
-  
+
   def tableText(title, table, sign = '')
     number, = roll(1, 20)
     index = number
@@ -235,7 +235,7 @@ INFO_MESSAGE_TEXT
     elsif sign == '-'
       index -= 1
     end
-    
+
     text = "#{title} ＞ #{index}"
     unless sign.empty?
       text += "[#{number}#{sign}1]"

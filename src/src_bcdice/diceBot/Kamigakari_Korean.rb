@@ -15,15 +15,15 @@ class Kamigakari_Korean < DiceBot
     @sortType = 1
     @d66Type = 1
   end
-  
+
   def gameName
     '카미가카리'
   end
-  
+
   def gameType
     "Kamigakari:Korean"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・각종표
@@ -36,34 +36,33 @@ class Kamigakari_Korean < DiceBot
 ・D66주사위 가능
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     tableName = ""
     result = ""
-    
+
     debug("rollDiceCommand command", command)
-    
+
 	case command
-      
+
     when "RT"
       tableName, result, number = getReimonCompensationTableResult
-      
+
     when /^MT(\d*)$/
       rank = $1
       rank ||= 1
       rank = rank.to_i
       tableName, result, number = getGetMaterialTableResult(rank)
-    
+
     when "ET"
       tableName, result, number = getEmotionTableResult
- 
+
     when "NT"
       tableName, result, number = getNameTableResult
-        
+
     when "KT"
       tableName, result, number = getKyoukaiTableResult
-    
+
     else
       debug("rollDiceCommand commandNOT matched -> command:", command)
       return ""
@@ -72,15 +71,14 @@ INFO_MESSAGE_TEXT
     if( result.empty? )
       return ""
     end
-	
+
 	text = "#{tableName}(#{number})：#{result}"
 	return text
   end
-  
-  
+
   def getReimonCompensationTableResult
     tableName = "영문소비의 댓가표"
-    
+
     table = [
              '사신화：물리법칙을 너무 초월한 대가로, 영혼이 왜곡되어, PC는 즉시 아라미타마로 변모한다. 아라미타마화한 PC는, 어딘가로 떠나간다.',
              '존재소멸：아라미타마화를 최후의 힘으로 억누른다. 하지만 그 결과, PC의 영혼은 불타버려, 이 세계에서 소멸한다. 그 PC는 [상태변화: 사망]이 되어, 시체도 남지 않는다.',
@@ -90,13 +88,13 @@ INFO_MESSAGE_TEXT
              '영향없음：기적적으로, 영혼의 마모에 의한 악영향을 완전히 피하고, 또한 영문의 회복도 빠를 것으로 보인다. 육체나 정신 모두, 딱히 영향은 없다.',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
-  
+
   def getEmotionTableResult
     tableName = "감정표"
-    
+
     table = [
              [11, '운명/그 캐릭터에게, 운명적, 또는 숙명적인 것을 느끼고 있다.'],
              [12, '운명/그 캐릭터에게, 운명적, 또는 숙명적인 것을 느끼고 있다.'],
@@ -135,18 +133,18 @@ INFO_MESSAGE_TEXT
              [65, '＊PC의 임의/플레이어, 또는 GM이 설정한 임의의 감정을 품고 있다.'],
              [66, '＊PC의 임의/플레이어, 또는 GM이 설정한 임의의 감정을 품고 있다.'],
             ]
-            
+
     isSwap = false
     number = bcdice.getD66(isSwap)
-    
+
     result = get_table_by_number(number, table)
-    
+
     return tableName, result, number
   end
 
   def getNameTableResult
     tableName = "전기 성씨・이름 결정표"
-    
+
     table = [
              [11, '미츠루기(御剣)　리쿠/린'],
              [12, '시시우치(獅子内)　야마토/카에데'],
@@ -185,18 +183,18 @@ INFO_MESSAGE_TEXT
              [65, '메아라시(明嵐)　야쿠모/오토하'],
              [66, '쿠사카베(草壁)　다이고/아야'],
             ]
-    
+
     isSwap = false
     number = bcdice.getD66(isSwap)
-    
+
     result = get_table_by_number(number, table)
-    
+
     return tableName, result, number
   end
- 
+
   def getKyoukaiTableResult
     tableName = "마경임계표"
-    
+
     table = [
              [11, "시공의 비틀림\n현재 위치의 시공이 비틀려, PC전원은 즉시 [침입 에리어]로 돌아간다."],
              [12, "시공의 비틀림\n현재 위치의 시공이 비틀려, PC전원은 즉시 [침입 에리어]로 돌아간다."],
@@ -235,15 +233,15 @@ INFO_MESSAGE_TEXT
              [65, "임계중복\n[마경임계]가 2번 발생한다. GM은 이 표를 2번 굴려, 효과를 각각 적용할 수 있다. 다시 「임계중복」이 발생한 경우, [GM의 임의] 1번으로 취급한다."],
              [66, "임계중복\n[마경임계]가 2번 발생한다. GM은 이 표를 2번 굴려, 효과를 각각 적용할 수 있다. 다시 「임계중복」이 발생한 경우, [GM의 임의] 1번으로 취급한다."],
             ]
-        
+
     isSwap = false
     number = bcdice.getD66(isSwap)
-    
+
     result = get_table_by_number(number, table)
-    
+
     return tableName, result, number
   end
- 
+
   def getGetMaterialTableResult(rank)
     tableName = "획득 소재 차트"
     table = [
@@ -284,25 +282,24 @@ INFO_MESSAGE_TEXT
              '모피형태의 ',
              '깃털형태의 ',
             ]
-    
+
     result, number = get_table_by_d66(table)
     result += "단편"
-    
+
     effect, number2 = getMaterialEffect(rank)
     number = "#{number},#{number2}"
-    
+
     price = getPrice(effect)
-    
+
     result = "#{result}.#{effect}"
     result += "：#{price}" unless( price.nil? )
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getMaterialEffect(rank)
     number, = roll(1, 6)
-    
+
     result = ""
     type = ""
     if( number < 6)
@@ -312,80 +309,79 @@ INFO_MESSAGE_TEXT
       result, number2 = getMaterialEffectRare()
       type = "드문 소재"
     end
-    
+
     result = "#{type}：#{result}"
     number = "#{number},#{number2}"
-    
+
     return result, number
   end
-  
-  
+
   def getMaterialEffectNomal(rank)
     table = [
-             [13, '체력+n'], 
-             [16, '민첩+n'], 
-             [23, '지성+n'], 
-             [26, '정신+n'], 
-             [33, '행운+n'], 
-             [35, '물D+n'], 
-             [41, '마D+n'], 
-             [43, '행동+n'], 
-             [46, '생명+n×3'], 
-             [53, '장갑+n'], 
-             [56, '결계+n'], 
-             [63, '이동+n마스'], 
+             [13, '체력+n'],
+             [16, '민첩+n'],
+             [23, '지성+n'],
+             [26, '정신+n'],
+             [33, '행운+n'],
+             [35, '물D+n'],
+             [41, '마D+n'],
+             [43, '행동+n'],
+             [46, '생명+n×3'],
+             [53, '장갑+n'],
+             [56, '결계+n'],
+             [63, '이동+n마스'],
              [66, '※PC의 임의'],
             ]
-    
+
     isSwap = false
     number = bcdice.getD66(isSwap)
-    
+
     result = get_table_by_number(number, table)
     debug("getMaterialEffectNomal result", result)
-    
+
     if( /\+n/ === result )
       power, number2 = getMaterialEffectPower(rank)
-      
-      result = result.sub(/\+n/, "+#{power}") #TKfix !
+
+      result = result.sub(/\+n/, "+#{power}")
       number = "#{number},#{number2}"
     end
-    
+
     return result, number
   end
-  
+
   def getMaterialEffectPower(rank)
     table = [
              [  4, [1, 1, 1, 2, 2, 3]],
              [  8, [1, 1, 2, 2, 3, 3]],
              [  9, [1, 2, 3, 3, 4, 5]],
             ]
-    
+
     rank = 9 if( rank > 9 )
     rankTable = get_table_by_number(rank, table)
     power, number = get_table_by_1d6(rankTable)
-    
+
     return power, number
   end
-  
+
   def getMaterialEffectRare()
     table = [[3, '**부여'],
              [5, '**반감'],
              [6, '※GM의 임의'],
             ]
-    
+
     number, = roll(1, 6)
     result = get_table_by_number(number, table)
     debug('getMaterialEffectRare result', result)
-    
+
     if( /\*\*/ === result )
       attribute, number2 = getAttribute()
-      result = result.sub(/\*\*/, "#{attribute}") #TKfix !
+      result = result.sub(/\*\*/, "#{attribute}")
       number = "#{number},#{number2}"
     end
-      
+
     return result, number
   end
-  
+
   def getAttribute()
     table = [
              [21, '［화염］'],
@@ -397,20 +393,19 @@ INFO_MESSAGE_TEXT
              [64, '［자력］'],
              [66, '［섬광］'],
             ]
-    
+
     isSwap = false
     number = bcdice.getD66(isSwap)
-    
+
     result = get_table_by_number(number, table)
-    
+
     return result, number
   end
-  
-  
+
   def getPrice(effect)
-    
+
     power = 0
-    
+
     case effect
     when /\+(\d+)/
       power = $1.to_i
@@ -421,17 +416,16 @@ INFO_MESSAGE_TEXT
     else
       power = 0
     end
-    
+
     table = [nil,
-             '500G(효과치:1)', 
-             '1000G(효과치:2)', 
-             '1500G(효과치:3)', 
-             '2000G(효과치:4)', 
-             '3000G(효과치:5)', 
+             '500G(효과치:1)',
+             '1000G(효과치:2)',
+             '1500G(효과치:3)',
+             '2000G(효과치:4)',
+             '3000G(효과치:5)',
             ]
     price = table[power]
-    
+
     return price
   end
-  
 end

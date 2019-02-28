@@ -12,10 +12,11 @@ class DoubleCross < DiceBot
     @unlimitedRollDiceType = 10   #無限ロールのダイス
     @rerollNumber = 10     #振り足しする条件
   end
+
   def gameName
     'ダブルクロス2nd,3rd'
   end
-  
+
   def gameType
     "DoubleCross"
   end
@@ -35,12 +36,12 @@ class DoubleCross < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
+
   def changeText(string)
     return string unless(/(\d+)DX/i =~ string)
-    
+
     debug("DoubleCross parren_killer_add string", string)
-    
+
     string = string.gsub(/(\d+)DX(\d*)([^\d\s][\+\-\d]+)/i) {"#{$1}R10#{$3}[#{$2}]"}
     string = string.gsub(/(\d+)DX(\d+)/i) {"#{$1}R10[#{$2}]"}
     string = string.gsub(/(\d+)DX([^\d\s][\+\-\d]+)/i) {"#{$1}R10#{$2}"}
@@ -51,22 +52,22 @@ INFO_MESSAGE_TEXT
       string = string.gsub(/\@(\d+)/, "")
     end
     string = string.gsub(/\[\]/, "")
-    
+
     debug("DoubleCross parren_killer_add changed string", string)
-    
+
     return string
   end
-  
+
   def dice_command_xRn(string, nick_e)
     output_msg = check_dice(string)
     return nil if( output_msg.nil? )
-    
+
     return "#{nick_e}: #{output_msg}"
   end
-  
+
   def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)# ゲーム別成功度判定(nD10)
     return '' unless( signOfInequality == ">=" )
-    
+
     if(n1 >= dice_cnt)
       return " ＞ ファンブル"
     elsif(total_n >= diff)
@@ -75,18 +76,18 @@ INFO_MESSAGE_TEXT
       return " ＞ 失敗"
     end
   end
-  
+
   # 振り足し時のダイス読み替え処理用（ダブルクロスはクリティカルでダイス10に読み替える)
   def getJackUpValueOnAddRoll(dice_n, round)
     return (10 - dice_n)
   end
-  
+
   # 個数振り足しダイスロール
   def check_dice(string)
-    
+
     debug("dxdice begin string", string)
-    
-    dice_cnt = 0 
+
+    dice_cnt = 0
     dice_max = 0
     round = 0
     total_n = 0
@@ -95,26 +96,26 @@ INFO_MESSAGE_TEXT
     output = ""
     output2 = ""
     next_roll = 0
-    
+
     string = string.gsub(/-[\d]+[rR][\d]+/, '')    # 振り足しロールの引き算している部分をカット
-    
+
     unless(/(^|\s)[sS]?([\d]+[rR][\d\+\-rR]+)(\[(\d+)\])?(([<>=]+)(\d+))?($|\s)/ =~ string)
       debug("invaid string", string)
       return nil
     end
-    
+
     string = $2
-    
+
     critical = $4
     critical ||= rerollNumber
     critical = critical.to_i
-    
+
     debug("critical", critical)
-    
+
     if( critical <= 1 )
       return "クリティカル値が低すぎます。2以上を指定してください。"
     end
-    
+
     #TKfix メソッドをまたぐと$xの中身がnilになっている
     if( not $5.nil? )
       diff = $7.to_i
@@ -127,10 +128,10 @@ INFO_MESSAGE_TEXT
         #diff = $2.to_i
       end
     end
-    
+
     dice_cmd = []
     dice_bns = []
-    
+
     dice_a = string.split(/\+/)
     dice_a.each do |dice_o|
       if(/[Rr]/ =~ dice_o)
@@ -141,18 +142,18 @@ INFO_MESSAGE_TEXT
         else
           dice_cmd.push( dice_o )
         end
-      else 
+      else
         dice_bns.push( dice_o )
       end
     end
-    
+
     bonus_str = dice_bns.join("+")
     bonus_ttl = 0
     bonus_ttl = parren_killer( "(#{bonus_str})").to_i if(bonus_str != "")
-    
+
     numberSpot1 = 0
     dice_cnt_total =0
-    
+
     dice_cmd.each do |dice_o|
       subtotal = 0
       dice_cnt, dice_max = dice_o.split(/[rR]/).collect{|s|s.to_i}
@@ -173,13 +174,11 @@ INFO_MESSAGE_TEXT
       output += "#{subtotal}[#{dice_dat[1]}]"
       total_n += subtotal
     end
-    
+
     round = 0
-    
+
     if(next_roll > 0)
       dice_cnt = next_roll
-      #TKfix end while -> loop do
-      #begin
       loop do
         subtotal = 0
         output2 += "#{output}+"
@@ -195,16 +194,17 @@ INFO_MESSAGE_TEXT
           else             # 特殊処理無し(最大値)
             subtotal = dice_dat[4]
           end
-        else 
+        else
           subtotal = dice_dat[4]
         end
         output += "#{subtotal}[#{dice_dat[1]}]"
         total_n += subtotal
-        break if  ( !@@bcdice.isReRollAgain(dice_cnt, round) )
+
+        #break unless ( @@bcdice.isReRollAgain(dice_cnt, round) ) # TKfix @@bcdice が参照できない (Opal 0.11.4)
+        break unless ( bcdice.isReRollAgain(dice_cnt, round) ) # TKfix @@bcdice が参照できない (Opal 0.11.4)
       end
-      #end while ( @@bcdice.isReRollAgain(dice_cnt, round) )
     end
-    
+
     total_n += bonus_ttl
     if(bonus_ttl > 0)
       output = "#{output2}#{output}+#{bonus_ttl} ＞ #{total_n}"
@@ -213,44 +213,41 @@ INFO_MESSAGE_TEXT
     else
       output = "#{output2}#{output} ＞ #{total_n}"
     end
-    
+
     string += "[#{critical}]"
     string += "#{signOfInequality}#{diff}" if(signOfInequality != "")
     output = "(#{string}) ＞ #{output}"
     if(output.length > $SEND_STR_MAX)    # 長すぎたときの救済
       output = "(#{string}) ＞ ... ＞ 回転数#{round} ＞ #{total_n}"
     end
-    
+
     if(signOfInequality != "")   # 成功度判定処理
       output += check_suc(total_n, 0, signOfInequality, diff, dice_cnt_total, dice_max, numberSpot1, 0)
     else     # 目標値無し判定
-      if(round <= 0) 
-        if(dice_max == 10) 
-          if(numberSpot1 >= dice_cnt_total) 
+      if(round <= 0)
+        if(dice_max == 10)
+          if(numberSpot1 >= dice_cnt_total)
             output += " ＞ ファンブル"
           end
         end
       end
     end
-    
+
     return output
   end
-  
-  
-  
+
   def rollDiceCommand(command)
     get_emotion_table()
   end
-  
-  
+
   #** 感情表
   def get_emotion_table()
     output = nil
-    
+
     pos_dice, pos_table = dx_feel_positive_table
     neg_dice, neg_table = dx_feel_negative_table
     dice_now, = roll(1, 2)
-    
+
     if(pos_table != '1' and neg_table != '1')
       if(dice_now < 2)
         pos_table = "○" + pos_table
@@ -259,7 +256,7 @@ INFO_MESSAGE_TEXT
       end
       output = "感情表(#{pos_dice}-#{neg_dice}) ＞ #{pos_table} - #{neg_table}"
     end
-    
+
     return output
   end
 
@@ -290,7 +287,7 @@ INFO_MESSAGE_TEXT
       [101, '懐旧(かいきゅう)'],
       [102, '任意(にんい)'],
     ]
-    
+
     return dx_feel_table( table )
   end
 
@@ -321,7 +318,7 @@ INFO_MESSAGE_TEXT
       [101, '無関心(むかんしん)'],
       [102, '任意(にんい)'],
     ]
-    
+
     return dx_feel_table( table )
   end
 
@@ -331,5 +328,4 @@ INFO_MESSAGE_TEXT
 
     return dice_now, output
   end
-
 end

@@ -33,7 +33,6 @@ MESSAGETEXT
       result = "#{name}(#{number}) ＞ #{text}"
       return text
     end
-    
     result = getTableCommandResult(command, @@tables)
     return result unless result.nil?
   end

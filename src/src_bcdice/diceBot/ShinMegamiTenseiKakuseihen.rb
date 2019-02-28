@@ -37,13 +37,12 @@ INFO_MESSAGE_TEXT
     #ゾロ目
     isRepdigit = ( dice1 == dice2 )
     
-    #TKfix <<
     result = " ＞ スワップ"
-    result = result + getCheckResultText(diff, [total1, total2].min, isRepdigit)
-    result = result + "／通常"
-    result = result + getCheckResultText(diff, total_n, isRepdigit)
-    result = result + "／逆スワップ"
-    result = result + getCheckResultText(diff, [total1, total2].max, isRepdigit)
+    result += getCheckResultText(diff, [total1, total2].min, isRepdigit)
+    result += "／通常"
+    result += getCheckResultText(diff, total_n, isRepdigit)
+    result += "／逆スワップ"
+    result += getCheckResultText(diff, [total1, total2].max, isRepdigit)
     
     return result
   end

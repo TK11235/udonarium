@@ -7,15 +7,15 @@ class LogHorizon_Korean < DiceBot
     super
     @d66Type = 1;
   end
-  
+
   def gameName
     '로그 호라이즌'
   end
-  
+
   def gameType
     "LogHorizon:Korean"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・판정(xLH±y>=z)
@@ -61,44 +61,40 @@ class LogHorizon_Korean < DiceBot
 ・이니티움님, 광황님, CoC방 여러분 감사합니다. by호흡도의식하면귀찮아
 MESSAGETEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     # get～DiceCommandResultという名前のメソッドを集めて実行、
     # 結果がnil以外の場合それを返して終了。
     return analyzeDiceCommandResultMethod(command)
   end
-  
-  
+
   def getCheckRollDiceCommandResult(command)
-    
+
     return nil unless(/(\d+)LH([\+\-\d]*)(>=([\+\-\d]*))?/i === command)
-    
+
     diceCount = $1.to_i
     modifyText = ($2 || '')
     difficultyText = $4
-    
+
 	#修正値の計算
 	modify = getValue( modifyText, 0 )
-    
+
 	#目標値の計算
     difficulty = getValue( difficultyText, nil )
-	
+
 	#ダイスロール
 	dice, dice_str = roll(diceCount, 6)
     diceList = dice_str.split(/,/).collect{|i|i.to_i}.sort
-    
+
 	total = dice + modify
-	
+
 	#出力用ダイスコマンドを生成
 	command =  "#{diceCount}LH#{modifyText}"
 	command += ">=#{difficulty}" unless(difficulty.nil?)
-	
-    
+
 	#출력문 생성
 	result = "(#{command}) ＞ #{dice}[#{dice_str}]#{modifyText} ＞ #{total}"
-    
-    
+
 	#クリティカル・ファンブルチェック
     if( isCritical(diceList) )
       result += " ＞ 크리티컬！"
@@ -107,59 +103,55 @@ MESSAGETEXT
     else
       result += getJudgeResultString(difficulty, total)
     end
-    
+
     return result
-    
+
   end
-  
-  
+
   #成否判定
   def getJudgeResultString(difficulty, total)
     return '' if(difficulty.nil?)
-    
+
     if(total >= difficulty)
       return " ＞ 성공"
     else
       return " ＞ 실패"
     end
   end
-  
-  
+
   def getValue(text, defaultValue)
-    return defaultValue if( text == nil or text.empty? ) 
-    
-    parren_killer("(0" + text + ")").to_i 
+    return defaultValue if( text == nil or text.empty? )
+
+    parren_killer("(0" + text + ")").to_i
   end
-  
-  
+
   def isCritical(diceList)
 	(diceList.select{|i| i == 6 }.size >= 2)
   end
-  
+
   def isFamble(diceList, diceCount)
     (diceList.select{|i| i == 1 }.size >= diceCount)
   end
-  
-  
+
   #消耗表
   def getConsumptionDiceCommandResult( command )
-    
+
     return nil unless(/(P|E|G|C|ES|CS)CT(\d+)?([\+\-\d]*)(\$(\d+))?/ === command)
-    
+
     type = $1
     is_special = ($1 && $1.length > 1)
     rank = ($2 && $2 != '') ? $2.to_i : nil
     return nil if !rank && !is_special
-    
+
     rank = 0 if !rank
     is_choice = (not $4.nil?)
     dice_value = $5
     modifyText = $3
     modify  = getValue(modifyText, 0)
-    
+
     tableName = ""
     tables = nil
-    
+
     case type
     when "P"
       tableName, tables = getPhysicalConsumptionResultTables
@@ -176,22 +168,21 @@ MESSAGETEXT
     else
       return nil
     end
-    
+
     table = getTableByRank(rank, tables)
-    
+
     number, dice_str = is_choice ? [dice_value.to_i, dice_value] : roll(1, 6)
     number += modify
-    
+
     adjustedNumber = getAdjustNumber(number, table)
-    
+
     result = get_table_by_number(adjustedNumber, table)
-	
+
     text = "#{tableName}(#{number}[#{dice_str}])：#{result}"
-    
+
     return text
   end
-  
-  
+
   def getPhysicalConsumptionResultTables()
     tableName = "체력 소모표"
     tables = [[
@@ -215,11 +206,10 @@ MESSAGETEXT
                [7, '[피로:40]을 받는다'],
               ],
              ]
-    
+
     return tableName, tables
   end
-  
-  
+
   def getEnergyConsumptionResultTables()
     tableName = "기력 소모표"
     tables = [[
@@ -243,10 +233,10 @@ MESSAGETEXT
                [7, '【인과력】을 3점 잃는다'],
               ],
              ]
-    
+
     return tableName, tables
   end
-  
+
   def getGoodsConsumptionResultTables()
     tableName = "물품 소모표"
     tables = [[
@@ -270,11 +260,10 @@ MESSAGETEXT
                [7, '[소모품] 아이템을 4개 잃는다.'],
               ],
              ]
-    
+
     return tableName, tables
   end
-  
-  
+
   def getCashConsumptionResultTables()
     tableName = "금전 소모표"
     tables = [[
@@ -298,11 +287,10 @@ MESSAGETEXT
                [7, '소지금 100G 잃는다.'],
               ],
              ]
-    
+
     return tableName, tables
   end
-  
-  
+
   def getExplosionSpecialConsumptionResultTables
     tableName = "특수 소모표 : 로데릭 연구소는 폭발했다!"
     tables = [[
@@ -317,8 +305,7 @@ MESSAGETEXT
              ]]
     return tableName, tables
   end
-  
-  
+
   def getCurseSpecialConsumptionResultTables
     tableName = "특수 소모표: 알브의 저주다!"
     tables = [[
@@ -333,61 +320,61 @@ MESSAGETEXT
              ]]
     return tableName, tables
   end
-  
-  
+
   def getTableByRank(rank, tables)
-  #index = (rank - 1) / 5
-  index = ((rank - 1) / 5).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
-    
+    #index = (rank - 1) / 5
+    index = ((rank - 1) / 5).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+
 	index = [0, index].max
 	index = [index, (tables.size - 1)].min
-    
-    return tables[index]    
+
+    return tables[index]
   end
-  
-  
+
   def getAdjustNumber(number, table)
     number = getAdjustNumberMin(number, table)
     number = getAdjustNumberMax(number, table)
     return number
   end
-  
+
   #최소치의 조정(값이 너무 작은경우 표의 최소)
   def getAdjustNumberMin(number, table)
     value = getTableMinimum(table)
     return [number, value].max
   end
-  
+
   def getTableMinimum(table)
     table.first.first
   end
-  
-  
+
   #최대치의 조정(값이 너무 큰 경우 표의 최대)
   def getAdjustNumberMax(number, table)
     value = table.last.first
     return [number, value].min
   end
-  
-  
-  
+
   #재보표
   def getTresureDiceCommandResult(command)
-    
+
     return nil unless(/(C|M|I|H|G)TRS(\d*)([\+\-\d]*)(\$)?/ === command)
-    
-  	type = $1
-  	rank = $2.to_i
-    is_choice = ($2.empty? || (not $4.nil?))
-  	modifyText = $3
+
+    #TKfix メソッドをまたぐと$xの中身がnilになっている
+    reg1 = $1
+    reg2 = $2
+    reg3 = $3
+    reg4 = $4
+
+  	type = reg1 #$1
+  	rank = reg2.to_i #$2.to_i
+    is_choice = (reg2.empty? || (not reg4.nil?)) #($2.empty? || (not $4.nil?))
+  	modifyText = reg3 # $3
   	modify = getValue(modifyText, 0)
-    is_prize = ($4 == "$")
+    is_prize = (reg4 == "$") #($4 == "$")
     dice_value = nil
     dice_value = '7' if is_prize
     is_rank_enable = ( (not is_choice) || is_prize)
-    
-    
-    tableName, table = 
+
+    tableName, table =
       case type
       when "C"
         getCashTresureResultTable
@@ -402,48 +389,47 @@ MESSAGETEXT
       else
         nil
       end
-    
+
     return nil if table.nil?
-  	
-  	number, dice_str, = 
-      if is_choice 
-        [dice_value.to_i, dice_value] 
-      else 
+
+  	number, dice_str, =
+      if is_choice
+        [dice_value.to_i, dice_value]
+      else
         roll(2, 6)
       end
-    
+
   	number += (rank * (is_rank_enable ? 5 : 0)) + modify
-    
+
     return command if is_choice and (number < getTableMinimum(table))
-    
+
     number = [getAdjustNumberMin(number, table), 87].min
-    
-    result = 
+
+    result =
       if type == "H"
         getHiroineTresureResultString(table, number)
       else
         getOtherTresureResultString(table, number)
       end
-    
+
     return "#{tableName}(#{number}#{dice_str ? '[' + dice_str + ']' : ''})：#{result}"
   end
-  
-  
+
   def getHiroineTresureResultString(table, number)
     table_max_number = table.map {|e| e.first }.max
-    
-    result = 
+
+    result =
       if number <= table_max_number
         get_table_by_number(number, table)
       else
         "※ #{table_max_number + 1}이후는 미정입니다 ※"
       end
-    
+
     return result
   end
-  
+
   def getOtherTresureResultString(table, number)
-    result = 
+    result =
       case number
       when 63 .. 72
         get_table_by_number(number - 10, table) + '&80G'
@@ -454,11 +440,10 @@ MESSAGETEXT
       else
         get_table_by_number(number, table)
       end
-    
+
     return result
   end
-  
-  
+
   def getCashTresureResultTable
     tableName = "금전 재보표"
     table = [
@@ -519,11 +504,10 @@ MESSAGETEXT
              [61, '269G'],
              [62, '277G'],
             ]
-    
+
     return tableName, table
   end
-  
-  
+
   def getMagicTresureResultTable
     tableName = "마법소재 재물표"
     table = [
@@ -584,10 +568,10 @@ MESSAGETEXT
              [61, '튼튼한 위장[코어소재](220G)&기묘한 표본[환전](50G)'],
              [62, '마촉매10[마촉매10](110G)&마촉매9[마촉매9](90G)x2'],
             ]
-    
+
     return tableName, table
   end
-  
+
   def getItemTresureResultTable
     tableName = "환전아이템 재물표"
     table = [
@@ -648,10 +632,10 @@ MESSAGETEXT
              [61, '여우 봉제인형[환전](270G)'],
              [62, '오래된 역사서[환전](280G)'],
             ]
-    
+
     return tableName, table
   end
-  
+
   def getHeroineTresureResultTable
     tableName = "히로인 재보표"
     table = [
@@ -685,7 +669,7 @@ MESSAGETEXT
              [34, '팔뚝이 말랑말랑하지만 가계부를 쓰는 마왕'],#마오유우 마왕
              [35, '그 가슴 실로 풍만하였다는 기억상실의 여자 닌자'],#닌자 슬레이어 유카노
              [36, '잘 옷자락을 붙잡는 양갈래 땋은 머리의 빵집 소녀'],
-             [37, '「더럽다는건 칭찬이다!」라는 주관의 여자 암살자'],#파이널 판타지 11 
+             [37, '「더럽다는건 칭찬이다!」라는 주관의 여자 암살자'],#파이널 판타지 11
              [38, '단추가 터질것 같고 울상인 길드 창구의 간판아가씨'],
              [39, '뭐든지 오컬트에 아수라장이 되는 소녀'],
              [40, '전투 때마다 많이 먹어지게 되는게 고민인 궁술소녀'],
@@ -702,10 +686,10 @@ MESSAGETEXT
              [51, '항상 밝은 남국의 갈색피부 소녀'],
              [52, '당신의 첫사랑과 닮은 그녀'],
             ]
-    
+
     return tableName, table
   end
-  
+
     def getGoblinTresureResultTable
     tableName = "고블린 재물표"
     table = [
@@ -766,15 +750,15 @@ MESSAGETEXT
              [61, '269G'],
              [62, '백랑의 모피[환전](280G)'],
             ]
-    
+
     return tableName, table
   end
-  
+
   #パーソナリティタグ表
   def getPersonalityTagDiceCommandResult(command)
-    
+
     return nil unless("PTAG" === command)
-    
+
 	tableName = "퍼스널리티 태그"
 	table = [
 	         '[조숙]',
@@ -783,35 +767,35 @@ MESSAGETEXT
 	         '[지극성실]',
 	         '[먹보]',
 	         '[개구쟁이]또는[말괄량이]',
-			 
+
 	         '[사람좋음]',
 	         '[정열]',
 	         '[남챙겨주기]',
 	         '[이지적]',
 	         '[벽창호]',
 	         '[형님 기질]또는[누님 기질]',
-			 
+
 	         '[의리투철]',
 	         '[변덕쟁이]',
 	         '[장인기질]',
 	         '[열혈한]',
 	         '[노력가]',
 	         '[남자밝힘]또는[여자밝힘]',
-			 
+
 	         '[가정적]',
 	         '[호승심]',
 	         '[순진]',
 	         '[무뚝뚝이]',
 	         '[자비로움]',
 	         '[마이페이스]',
-			 
+
 	         '[낙천가]',
 	         '[동료애]',
 	         '[자긍심]',
 	         '[사교적]',
 	         '[냉정침착]',
 	         '[로맨티스트]',
-			 
+
 	         '[학구적]',
 	         '[내향적]',
 	         '[사서고생]',
@@ -819,18 +803,18 @@ MESSAGETEXT
 	         '[용맹과감]',
 	         '[미스테리어스]',
 	        ]
-	
+
 	result, number = get_table_by_d66(table)
-	
+
 	text = "#{tableName}(#{number})：#{result}"
     return text
   end
-  
+
   #交友表
   def getFriendlyChartDiceCommandResult(command)
-    
+
     return nil unless("KOYU" === command)
-    
+
     tableName = "교우표"
     table = [
 	         "교우대상에 대한 보호\n당신은 교우대상을 보호하고 싶다. 당신에게는 지켜줄수 있는 강함이 있다.",
@@ -839,35 +823,35 @@ MESSAGETEXT
              "교우대상의 영웅\n당신은 교우대상에게서 영웅시되고 있다. 설령 당신이 부정하더라도 상관 없다.",
              "교우대상에 대한 존경\n당신은 교우대상을 존경한다. 그의 기술, 강인한 마음. 그것이 무엇이든 그에대한 경의는 변함이 없다.",
              "교우대상의 파트너\n당신은 교우대상을 파트너라고 생각한다. 그라면 자신과 함께 가 줄 것이다.",
-             
+
              "교우대상에 대한 보호\n당신은 교우대상을 보호하고 싶다. 당신에게는 지켜줄수 있는 강함이 있다.",
              "교우대상에 대한 친애\n당신은 교우대상에게 호감을 가지고 있다. 그 마음을 상대에게 전했을지 아닐지는 임의. ",
              "교우대상에 대한 의형제\n당신은 교우대상과 형제나 다름없는 사이다. 물론 피는 이어지지 않았지만 그런것은 사소한 일이다.",
              "교우대상의 영웅\n당신은 교우대상에게서 영웅시되고 있다. 설령 당신이 부정하더라도 상관 없다.",
              "교우대상에 대한 존경\n당신은 교우대상을 존경한다. 그의 기술, 강인한 마음. 그것이 무엇이든 그에대한 경의는 변함이 없다.",
              "교우대상의 파트너\n당신은 교우대상을 파트너라고 생각한다. 그라면 자신과 함께 가 줄 것이다.",
-             
+
              "교우대상의 은혜\n당신은 교우대상에게 큰 은혜를 입었다.",
              "교우대상의 라이벌\n당신은 교우대상을 라이벌이라고 생각한다. 이는 일반적인 감정일 수도 있고, 서로 절차탁마 하는 관계일 수도 있다.",
              "교우대상에 대한 흥미\n당신은 교우대상에게 흥미를 품고 있다. 그를 보는것이 재미있어서 그의 행동을 지켜보고 싶다.",
              "교우대상에 대한 우정\n당신은 교우대상을 벗이라고 생각한다. 언제 어디서나 그 마음은 변하지 않을 것이다.",
              "교우대상의 동지\n당신은 교우대상과 뜻을 함께 한다. 언제나 어디서나 그 마음은 변하지 않을 것이다.",
              "교우대상에 대한 이해\n당신은 교우대상을 이해하고 싶다. 그는 당신과는 다른 새로운 관점을 보여준다.",
-             
+
              "교우대상의 은혜\n당신은 교우대상에게 큰 은혜를 입었다.",
              "교우대상의 라이벌\n당신은 교우대상을 라이벌이라고 생각한다. 이는 일반적인 감정일 수도 있고, 서로 절차탁마 하는 관계일 수도 있다.",
              "교우대상에 대한 흥미\n당신은 교우대상에게 흥미를 품고 있다. 그를 보는것이 재미있어서 그의 행동을 지켜보고 싶다.",
              "교우대상에 대한 우정\n당신은 교우대상을 벗이라고 생각한다. 언제 어디서나 그 마음은 변하지 않을 것이다.",
              "교우대상의 동지\n당신은 교우대상과 뜻을 함께 한다. 언제나 어디서나 그 마음은 변하지 않을 것이다.",
              "교우대상에 대한 이해\n당신은 교우대상을 이해하고 싶다. 그는 당신과는 다른 새로운 관점을 보여준다.",
-             
+
              "교우대상에 대한 진력\n당신은 교우대상을 힘껏 돕고 싶다. 그것은 그의 인품 때문일 수도, 당신의 집착 때문일 수도 있다.",
              "교우대상과의 사제관계\n당신은 교우대상과 사제관계를 맺었다. 어느쪽이라도 상관은 없지만 많은 것을 가르치거나 배울 수 있을 것이다.",
              "교우대상과의 고용관계\n당신은 교우대상과 고용관계에 있다. 당신과 그는 ",
              "교우대상의 이웃\n당신은 교우대상의 이웃이다. 매일 아침 인사를 나누는 정도일 수도 있고, 함께 저녁을 먹는 사이일 수도 있다.",
              "교우대상과의 거래\n당신은 교우대상과 장사를 한다. 서로에게 이익이 있는 좋은 거래를 할 수 있는 상대다.",
              "교우대상의 가족\n당신은 교우대상과 함께 살고 있다. 같은집에 누군가 있으면 쓸쓸하지 않을 것이다.",
-             
+
              "교우대상에 대한 진력\n당신은 교우대상을 힘껏 돕고 싶다. 그것은 그의 인품 때문일 수도, 당신의 집착 때문일 수도 있다.",
              "교우대상과의 사제관계\n당신은 교우대상과 사제관계를 맺었다. 어느쪽이라도 상관은 없지만 많은 것을 가르치거나 배울 수 있을 것이다.",
              "교우대상과의 고용관계\n당신은 교우대상과 고용관계에 있다. 당신과 그는 ",
@@ -875,21 +859,21 @@ MESSAGETEXT
              "교우대상과의 거래\n당신은 교우대상과 장사를 한다. 서로에게 이익이 있는 좋은 거래를 할 수 있는 상대다.",
              "교우대상의 가족\n당신은 교우대상과 함께 살고 있다. 같은집에 누군가 있으면 쓸쓸하지 않을 것이다.",
                          ]
-    
+
     result, number = get_table_by_d66(table)
-    
+
     text = "#{tableName}([#{number}]) ＞ #{result}"
     return text
-    
+
   end
-  
+
   #プレフィックスドマジックアイテム表
   def getPrefixedMagickItemDiceCommandResult(command)
-    
+
     return nil unless(/MGR([1-3])/ === command)
-    
+
     rank = $1.to_i
-    
+
     table_1 = [
                "접두어：기합의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋１한다.",
                "접두어：비술의　해당태그：[지팡이][마석]\n아이 템효과：이 아이템의【마력】에 ＋１한다.",
@@ -897,35 +881,35 @@ MESSAGETEXT
                "접두어：저격의　해당태그：[활][투척]\n아이템 효과：〔기동：행동〕이 무기에 의한 [사격공격]과 동시에 사용한다. 공격의 사정거리에 ＋２Ｓｑ. 시나리오당 1회사용가능",
                "접두어：필살의　해당태그：모든 무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한[무기공격]의 [명중판정] 다이스에 ６이 하나 이상 있다면 판정을 크리티컬로 간주한다. 시나리오당 1회 사용 가능.",
                "접두어：화염의　해당태그：모든 무기, [악기]\n아이템 효과：아이템에 [화염]태그를 추가한다.（이 효과를 선택할 때 태그를[냉기][전격][광휘][사독][정신] 중 하나로 바뀌어도 좋다. 그 경우「냉기의」「전격의」와 같이 변경할 것）",
-                              
+
                "접두어：기합의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋１한다.",
                "접두어：비술의　해당태그：[지팡이][마석]\n아이 템효과：이 아이템의【마력】에 ＋１한다.",
                "접두어：일격의　해당태그：[백병공격]가능한 무기\n아이템 효과：〔기동：대미지굴림〕이 무기에 의한 [백병공격]의 대미지 굴림에 ＋７. 시나리오 당 1회 사용 가능.",
                "접두어：저격의　해당태그：[활][투척]\n아이템 효과：〔기동：행동〕이 무기에 의한 [사격공격]과 동시에 사용한다. 공격의 사정거리에 ＋２Ｓｑ. 시나리오당 1회사용가능",
                "접두어：필살의　해당태그：모든 무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한[무기공격]의 [명중판정] 다이스에 ６이 하나 이상 있다면 판정을 크리티컬로 간주한다. 시나리오당 1회 사용 가능.",
                "접두어：화염의　해당태그：모든 무기, [악기]\n아이템 효과：아이템에 [화염]태그를 추가한다.（이 효과를 선택할 때 태그를[냉기][전격][광휘][사독][정신] 중 하나로 바뀌어도 좋다. 그 경우「냉기의」「전격의」와 같이 변경할 것）",
-               
+
                "접두어：화염술사의　해당태그：[지팡이][마석][다리]\n아이템 효과：〔기동：대미지 굴림〕당신이 행할 [화염]태그를 가진 대미지굴림에 +7, 시나리오당 1회 사용가능 (이 효과를 선택할 때에는 태그를 [냉기], [전격], [광휘], [사독], [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [빙술사의], [뇌술사의]와 같이 플레이 할것)",
                "접두어：철신의　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리부터의 공격) ：３]을 얻는다.",
                "접두어：화살막이의　해당태그：[盾][中鎧][軽鎧]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리 이외로부터의 공격) ：３]을 얻는다.",
                "접두어：화염막이의　해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면 개시시에 [경감（화염）：１０]을 받는다.（이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘] [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도「얼음막이의」,「벼락막이의」와 같이 변경할 것）",
                "접두어：근성의　해당태그：[중갑][머리]\n아이템 효과：〔기동：본문〕당신이 BS를 입은 직후에 사용한다. 직전에 입은 BS에서 하나를 선택해 해제한다. 시나리오당 1회 사용 가능",
                "접두어：치유의　해당태그：[팔]\n아이템 효과：당신의【회복력】에 ＋２한다.",
-               
+
                "접두어：화염술사의　해당태그：[지팡이][마석][다리]\n아이템 효과：〔기동：대미지 굴림〕당신이 행할 [화염]태그를 가진 대미지굴림에 +7, 시나리오당 1회 사용가능 (이 효과를 선택할 때에는 태그를 [냉기], [전격], [광휘], [사독], [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [빙술사의], [뇌술사의]와 같이 플레이 할것)",
                "접두어：철신의　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리부터의 공격) ：３]을 얻는다.",
                "접두어：화살막이의　해당태그：[盾][中鎧][軽鎧]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리 이외로부터의 공격) ：３]을 얻는다.",
                "접두어：화염막이의　해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면 개시시에 [경감（화염）：１０]을 받는다.（이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘] [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도「얼음막이의」,「벼락막이의」와 같이 변경할 것）",
                "접두어：근성의　해당태그：[중갑][머리]\n아이템 효과：〔기동：본문〕당신이 BS를 입은 직후에 사용한다. 직전에 입은 BS에서 하나를 선택해 해제한다. 시나리오당 1회 사용 가능",
                "접두어：치유의　해당태그：[팔]\n아이템 효과：당신의【회복력】에 ＋２한다.",
-               
+
                "접두어：모래쥐의　해당태그：[다리][외투]\n아이템 효과：〔기동：클린업〕당신의【헤이트】에 ー２한다. 시나리오당１회 사용가능.",
                "접두어：올뺴미의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [암시]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 1회 사용가능.",
                "접두어：곤들매기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [수생]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 １회 사용가능.",
                "접두어：눈썰미의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 드롭 아이템 굴림을 한 직후에 사용해 해당 굴림을 다시 굴린다. 시나리오당 １회 사용가능.",
                "접두어：보물 찾기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림을 한 직후에 사용해 해당 굴림을 다시 굴린다.. 시나리오당 １회 사용가능.",
                "접두어：돌변의　해당태그：[가방]\n아이템 효과：〔기동：인스턴트〕당신은 곧바로《장비 변경》을 한다. 시나리오당 １회 사용가능.",
-               
+
                "접두어：모래쥐의　해당태그：[다리][외투]\n아이템 효과：〔기동：클린업〕당신의【헤이트】에 ー２한다. 시나리오당１회 사용가능.",
                "접두어：올뺴미의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [암시]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 1회 사용가능.",
                "접두어：곤들매기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [수생]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 １회 사용가능.",
@@ -933,7 +917,7 @@ MESSAGETEXT
                "접두어：보물 찾기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림을 한 직후에 사용해 해당 굴림을 다시 굴린다.. 시나리오당 １회 사용가능.",
                "접두어：돌변의　해당태그：[가방]\n아이템 효과：〔기동：인스턴트〕당신은 곧바로《장비 변경》을 한다. 시나리오당 １회 사용가능.",
               ]
-    
+
     table_2 = [
                "접두어：분노의　해당태그：[양손]무기\n아이템 효과：〔기동：대미지굴림〕이 무기에 의한 [무기공격]의 대미지 굴림에＋[당신의【헤이트】]. 장면에 1회 사용가능.",
                "접두어：연격의　해당태그：[한손]무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한 [무기공격]의 [명중판정]을 다시 굴린다. 장면에 1회 사용가능.",
@@ -941,35 +925,35 @@ MESSAGETEXT
                "접두어：치명타의　해당태그：[둔기/도끼][격투][채찍][지팡이]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ",
                "접두어：마탄의　해당태그：[활][투척]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ",
                "접두어：지력의　해당태그：모든무기, [마석][악기]\n아이템 효과：당신의 [마법공격], [특수공격]의 대미지 굴림에 ＋１Ｄ. 이 효과는 중첩되지 않는다.",
-               
+
                "접두어：분노의　해당태그：[양손]무기\n아이템 효과：〔기동：대미지굴림〕이 무기에 의한 [무기공격]의 대미지 굴림에＋[당신의【헤이트】]. 장면에 1회 사용가능.",
                "접두어：연격의　해당태그：[한손]무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한 [무기공격]의 [명중판정]을 다시 굴린다. 장면에 1회 사용가능.",
                "접두어：예리한　해당태그：[검][카타나][창]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ",
                "접두어：치명타의　해당태그：[둔기/도끼][격투][채찍][지팡이]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ",
                "접두어：마탄의　해당태그：[활][투척]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ",
                "접두어：지력의　해당태그：모든무기, [마석][악기]\n아이템 효과：당신의 [마법공격], [특수공격]의 대미지 굴림에 ＋１Ｄ. 이 효과는 중첩되지 않는다.",
-               
+
                "접두어：악귀퇴치의　해당태그：모든 무기\n아이템 효과：이 무기에 의한 [인간형]에 대한 [무기공격]의 대미지에 ＋１0 (이효과를 선택할 때 태그를 [자연],[정령],[환수],[불사],[인조],[인간]중 하나로 바꾸어도 좋다. 그 경우 접두어도「정령퇴치의」 「환수퇴치의」와 같이 변경할 것)",
                "접두어：견고한　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【물리방어력】에 ＋４",
                "접두어：항마의　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【마법방어력】에 ＋４",
                "접두어：방벽의　해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작될 때 [장벽：１０]을 얻는다.",
                "접두어：인내의　해당태그：[방패][머리]\n아이템 효과：〔기동：본문〕당신이 강제적인 이동을 받았을 때에 사용해 해당 거리를ー１Ｓｑ한다.",
                "접두어：호법의　해당태그：[팔]\n아이템 효과：당신이 부여할 [장벽]의 강도에 ＋５.",
-               
+
                "접두어：악귀퇴치의　해당태그：모든 무기\n아이템 효과：이 무기에 의한 [인간형]에 대한 [무기공격]의 대미지에 ＋１0 (이효과를 선택할 때 태그를 [자연],[정령],[환수],[불사],[인조],[인간]중 하나로 바꾸어도 좋다. 그 경우 접두어도「정령퇴치의」 「환수퇴치의」와 같이 변경할 것)",
                "접두어：견고한　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【물리방어력】에 ＋４",
                "접두어：항마의　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【마법방어력】에 ＋４",
                "접두어：방벽의　해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작될 때 [장벽：１０]을 얻는다.",
                "접두어：인내의　해당태그：[방패][머리]\n아이템 효과：〔기동：본문〕당신이 강제적인 이동을 받았을 때에 사용해 해당 거리를ー１Ｓｑ한다.",
                "접두어：호법의　해당태그：[팔]\n아이템 효과：당신이 부여할 [장벽]의 강도에 ＋５.",
-               
+
                "접두어：맥동하는　해당태그：[팔]\n아이템 효과：당신이 부여하는 [재생]의 강도에＋３.",
                "접두어：질주하는　해당태그：[다리][외투]\n아이템 효과：〔기동：행동〕당신이 《런》, 《대시》를 사용했을  때에 사용해 이동거리를 +1Sq 한다. ",
                "접두어：신속의　해당태그：[다리][외투]\n아이템 효과：이 아이템의 [행동수정]에 ＋３.",
                "접두어：역경의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 [전투불능]이 된 직후 사용할 수 있다.당신은 【인과력】１점 얻는다. 장면에 1회사용 가능",
                "접두어：숲지름　해당태그：[보조장비][악기][가방]\n아이템 효과：당신이 장면을 시작 될 때 [경감([천연]프롭, 기믹에서 오는 데미지): 15]를 얻는다.(이 효과를 선택할 때 태그를[마법], [기계] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [지옥지름], [함정지름]과 같이 변경할 것)",
                "접두어：여행자의　해당태그：[가방]\n아이템 효과：이 아이템에 [소지품 슬롯] 4개를 추가한다.",
-               
+
                "접두어：맥동하는　해당태그：[팔]\n아이템 효과：당신이 부여하는 [재생]의 강도에＋３.",
                "접두어：질주하는　해당태그：[다리][외투]\n아이템 효과：〔기동：행동〕당신이 《런》, 《대시》를 사용했을  때에 사용해 이동거리를 +1Sq 한다. ",
                "접두어：신속의　해당태그：[다리][외투]\n아이템 효과：이 아이템의 [행동수정]에 ＋３.",
@@ -977,7 +961,7 @@ MESSAGETEXT
                "접두어：숲지름　해당태그：[보조장비][악기][가방]\n아이템 효과：당신이 장면을 시작 될 때 [경감([천연]프롭, 기믹에서 오는 데미지): 15]를 얻는다.(이 효과를 선택할 때 태그를[마법], [기계] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [지옥지름], [함정지름]과 같이 변경할 것)",
                "접두어：여행자의　해당태그：[가방]\n아이템 효과：이 아이템에 [소지품 슬롯] 4개를 추가한다.",
               ]
-    
+
     table_3 = [
                "접두어：기백의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋３한다.",
                "접두어：신비의　해당태그：[지팡이][마석]\n아이템 효과：이 무기의【마력】에 ＋３한다.",
@@ -985,35 +969,35 @@ MESSAGETEXT
                "접두어：흡혈의　해당태그：[백병공격]가능한 무기\n아이템 효과：이 무기에의한[백병공격]으로 데미지를 입혔을 때【HP】는５점 회복된다.",
                "접두어：충격의　해당태그：[한손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [멍함]을 입힌다.",
                "접두어：노호의　해당태그：[양손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [위축]을 입힌다.",
-               
+
                "접두어：기백의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋３한다.",
                "접두어：신비의　해당태그：[지팡이][마석]\n아이템 효과：이 무기의【마력】에 ＋３한다.",
                "접두어：원격의　해당태그：[활][트착]\n아이템 효과：이 무기의 사정거리에 ＋１Ｓｑ한다.",
                "접두어：흡혈의　해당태그：[백병공격]가능한 무기\n아이템 효과：이 무기에의한[백병공격]으로 데미지를 입혔을 때【HP】는５점 회복된다.",
                "접두어：충격의　해당태그：[한손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [멍함]을 입힌다.",
                "접두어：노호의　해당태그：[양손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [위축]을 입힌다.",
-               
+
                "접두어：갑주비늘　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리로부터의 공격)：10]을 얻는다.",
                "접두어：화살반사　해당태그：[방패][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리 이외로부터의 공격) ：10]을 얻는다.",
                "접두어：내화의　	해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(화염) ：25]를 얻는다. (이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘], [정신]중 하나로 바꾸어도 좋다. 이경우 접두어도「내빙의」「내전의」와 같이 변경했어)",
                "접두어：성채의　	해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작 될 때 【장벽：２０】을 얻는다.",
                "접두어：정찰의　	해당태그：[머리]\n아이템 효과：당신이 행할[정찰]태그를 가진 행동 및《이상탐지》판정에＋１Ｄ.",
                "접두어：쾌유의　	해당태그：[머리]\n아이템 효과：당신의【회복력】에＋５.",
-               
+
                "접두어：갑주비늘　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리로부터의 공격：10]을 얻는다.",
                "접두어：화살반사　해당태그：[방패][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리 이외로부터의 공격) ：10]을 얻는다.",
                "접두어：내화의　	해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(화염) ：25]를 얻는다. (이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘], [정신]중 하나로 바꾸어도 좋다. 이경우 접두어도「내빙의」「내전의」와 같이 변경했어)",
                "접두어：성채의　	해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작 될 때 【장벽：２０】을 얻는다.",
                "접두어：정찰의　	해당태그：[머리]\n아이템 효과：당신이 행할[정찰]태그를 가진 행동 및《이상탐지》판정에＋１Ｄ.",
                "접두어：쾌유의　	해당태그：[머리]\n아이템 효과：당신의【회복력】에＋５.",
-               
+
                "접두어：함정해제의　해당태그：[팔]\n아이템 효과：〔기동：판정 직전〕당신이 《프롭 해제》를 행할 때 사용하며그 판정은 크리티컬이 된다. 장면에１회 사용 가능",
                "접두어：부동의	　해당태그：[다리][외투]\n아이템 효과：당신은 [멍함],[경직]상태가 되어도 [저지능력]을 잃지 않는다.",
                "접두어：그림자질주　해당태그：[다리][외투]\n아이템 효과：당신이 [은밀상태]일 때《런》을 해도 [은밀상태]는 해제되지 않는다.",
                "접두어：심해의	　해당태그：[보조장비][악기][가방]\n아이템 효과： 당신은 [암시],[수생]태그를 얻는다.",
                "접두어：금전운의	　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림 또는 드롭 아이템 굴림을 한 직후에 사용하며 해당 굴림을 다시 굴린다. 장면에１회 사용할 수 있다.",
                "접두어：함정회피의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：데미지 적용 직전〕당신에게 적용될 예정인 프롭 및[기믹]에 의한 데미지를 무효로 할 수 있다. 시나리오당１회 사용할 수 있다.",
-               
+
                "접두어：함정해제의　해당태그：[팔]\n아이템 효과：〔기동：판정 직전〕당신이 《프롭 해제》를 행할 때 사용하며그 판정은 크리티컬이 된다. 장면에１회 사용 가능",
                "접두어：부동의	　해당태그：[다리][외투]\n아이템 효과：당신은 [멍함],[경직]상태가 되어도 [저지능력]을 잃지 않는다.",
                "접두어：그림자질주　해당태그：[다리][외투]\n아이템 효과：당신이 [은밀상태]일 때《런》을 해도 [은밀상태]는 해제되지 않는다.",
@@ -1021,10 +1005,10 @@ MESSAGETEXT
                "접두어：금전운의	　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림 또는 드롭 아이템 굴림을 한 직후에 사용하며 해당 굴림을 다시 굴린다. 장면에１회 사용할 수 있다.",
                "접두어：함정회피의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：데미지 적용 직전〕당신에게 적용될 예정인 프롭 및[기믹]에 의한 데미지를 무효로 할 수 있다. 시나리오당１회 사용할 수 있다.",
               ]
-    
+
     tableName = "프리픽스드 아이템 효과표"
     table = nil
-    
+
     case rank
     when 1
       tableName += "（매직 그레이드１）"
@@ -1036,19 +1020,19 @@ MESSAGETEXT
       tableName += "（매직그레이드３）"
       table = table_3
     end
-    
+
     result, number = get_table_by_d66(table)
-    
+
     text = "#{tableName}([#{number}]) ＞ #{result}"
     return text
-    
+
   end
-  
+
   #공격 명중 장소 랜덤결정표
   def getHitLocationDiceCommandResult(command)
-    
+
     return nil unless("HLOC" === command)
-    
+
     tableName = "공격명중장소"
     table = [
 	         '이마',
@@ -1057,35 +1041,35 @@ MESSAGETEXT
 	         '턱',
 	         '뒷통수',
 	         '목',
-			 
+
 	         '귀',
 	         '눈',
 	         '관자놀이',
 	         '팔',
 	         '팔꿈치',
 	         '손',
-			 
+
 	         '손가락',
 	         '심장',
 	         '위',
 	         '폐',
 	         '갈비',
 	         '어깨',
-			 
+
 	         '등',
 	         '옆구리',
 	         '허리',
 	         '아랫배',
 	         '허벅지',
 	         '목',
-			 
+
 	         '장딴지',
 	         '아킬레스건',
 	         '발 뒤꿈치',
 	         '정강이',
 	         '새끼 발가락',
 	         '무릅',
-			 
+
 	         '사회적 신용',
 	         '인간관계',
 	         '첫사랑의 추억',
@@ -1096,13 +1080,12 @@ MESSAGETEXT
     result, number = get_table_by_d66(table)
     "#{tableName}(#{number})：#{result}"
   end
-  
-  
+
   #PC명 랜덤 결정표
   def getPCNameDiceCommandResult(command)
-    
+
     return nil unless("PCNM" === command)
-    
+
     tableName = "PC名"
     table = [
 	         'Kuraudo',
@@ -1111,35 +1094,35 @@ MESSAGETEXT
 	         'Asuna',
 	         'Leeroy Jenkins',
 	         'Buront',
-			 
+
 	         '의사양반',
 	         '거대도너츠',
 	         '이등병가민',
 	         '버섯대위',
 	         '∃@ㅏ이돌전도사E',
 	         '작업장',
-			 
+
 	         '크로울리',
 	         '다이테스',
 	         '타츠야',
 	         '미유키',
 	         '슬레인',
 	         '타카본씨',
-			 
+
 	         '흑의 연금술사',
 	         '†사랑의천사네코히메†',
 	         '데스★건',
 	         '卍칠흑의타천사卍',
 	         '광속의이명을가지고중력을자유자재로조종하는고귀한기사',
 	         '신세계†영걸살해자',
-			 
+
 	         '로그호라',
 	         'ㄱㄱㄱㄱ',
 	         '창고',
 	         '은행',
 	         '보관',
 	         '위탁',
-			 
+
 	         '사스케',
 	         '라파엘로',
 	         '도나텔로',
@@ -1147,26 +1130,25 @@ MESSAGETEXT
 	         '센다이',
 	         '후지키도',
             ]
-    
+
     result, number = get_table_by_d66(table)
-    
+
     return "#{tableName}(#{number})：#{result}"
   end
-  
-  
+
   #ロデ研の新発明ランダム決定表
   def getInventionAttributeTextDiceCommandResult(command)
-    
+
     return nil unless(/IAT([ABMDLT]*)/ === command)
-    
+
     tableName = "로데릭 연구소의 새로운 발명"
-    
+
     table_indicate_string = ($1 && $1 != '') ? $1 : 'MDLT'
     is_single = (table_indicate_string.length == 1)
-    
+
     result = []
     number = []
-    
+
     table_indicate_string.split(//).each do |char|
       dice_result, dice_str = roll(1, 6)
       number << dice_str
@@ -1209,21 +1191,20 @@ MESSAGETEXT
                   ].map {|e| (is_single ? '발명품의 종류：' : '') + e }
                 end[dice_result - 1]
     end
-    
+
     return "#{tableName}([#{number.join(',')}])：#{result.join(' ')}"
   end
-  
-  
+
   #아키바 거리에서 발생하는 문제 랜덤결정 표
   def getTroubleInAkibaStreetDiceCommandResult(command)
-    
+
     return nil unless command === "TIAS"
-    
+
     tableName = "아키바 거리에서 발생하는 문제"
-    
+
     number = []
     result = []
-    
+
     [
      [
       '〈로그 호라이즌〉이',
@@ -1262,21 +1243,20 @@ MESSAGETEXT
       number << dice_str
       result << table[dice_result - 1]
     end
-    
+
     return "#{tableName}([#{number.join(',')}])：#{result.join(' ')}"
   end
-  
-  
+
   #버림받은 아이 랜덤결정표
   def getAbandonedChildDiceCommandResult(command)
-    
+
     return nil unless command === "ABDC"
-    
+
     tableName = "버림받은 아이"
-    
+
     number = []
     result = []
-    
+
     [
      [
       '꽃의 이름',
@@ -1331,11 +1311,10 @@ MESSAGETEXT
       number << dice_str
       result << table[dice_result - 1]
     end
-    
+
     return "#{tableName}([#{number.join(',')}])：#{result.join('　')}"
   end
-  
-  
+
   #楽器種別表
   def getMusicalInstrumentTypeDiceCommandResult(command)
     return nil unless(/MII(\d?)/ === command)
@@ -1344,12 +1323,12 @@ MESSAGETEXT
     else
       roll(1, 6)
     end
-    return nil if type < 1 || 6 < type 
+    return nil if type < 1 || 6 < type
     tableName = "악기 종류 표"
     type_name = ['타악기１', '건반악기', '현악기１', '현악기２', '관악기１', '관악기２'][type - 1]
-    
+
     dice, = roll(1, 6)
-    result = [	
+    result = [
         ['캐스터네츠', '마라카스', '심벌즈', '트라이앵글', '북', '드럼'],
         ['목제 실로폰', '철제 실로폰', '하모늄', '하프시 코드', '피아노', '클라비코드'],
         ['하프', '류트', '기타', '바이올린', '첼로', '리라'],
@@ -1357,19 +1336,19 @@ MESSAGETEXT
         ['트럼펫', '호른', '트럼본', '튜바', '피리', '클라리넷'],
         ['리코더', '오카리나', '오보에', '하모니카', '아코디언', '퉁소']
       ][type - 1][dice - 1]
-    
+
     return "#{tableName}" + (is_roll ? "(#{type})" : '') + "：#{type_name}(#{dice})：#{result}"
   end
-  
+
   def getEastalDiceCommandResult(command)
-    
+
     return nil unless command =~ /ESTL(\d+)/
-    
+
     cr = $1.to_i
     return nil unless (cr >= 1 && cr <= 10)
-    
+
     tableName = "이스탈 탐색표"
-    
+
     table = ["숲 베리 따기: 여러분은 베리가 열린 수풀을 발견한다. 탐색을 하는 PC는 난이도 8의 [지각판정]을 한다(한 명당 1회만). 성공한 사람은 「숲 베리 (맘대로 샌드위치에 상당)」를 하나 입수한다.",
              "나뭇잎 사이로 햇빛이 비치는 산책길: 나뭇잎 사이로 햇빛이 비치는 밝은 잡목림이 이어진다. 적당히 사람의 손이 닿아서 산책하는 기분으로 걸을 수 있다.",
              "군생지에는 주의: 여러분은 트리피드의 군생지에 들어오고 말았다! 힘겨운 싸움 끝에 다행히도 승리를 거머쥐었지만, 여러분 전원은 [피로: 10]을 입는다.",
@@ -1426,15 +1405,13 @@ MESSAGETEXT
              "냉랭한 산길: 여러분은 바람이 세차게 부는, 얼어붙을 듯한 산길을 걸어간다. [경감(냉기)를 가지고 있거나, 혹은 얻을 수 있는 PC는 이 영향을 받지 않는다. 그렇지 않은 PC는 【인과력】 2점을 잃거나 보조장비 하나에 [파손] 태그를 입는다(여러분이 선택). 양쪽 모두 선택할 수 없는 경우, [피로: 50]을 입는다.",
              "고블린의 야영지: 여러분은 야영 중인 고블린들을 물리쳤다! 전원 50G를 손에 넣는다. 목표치 14의 [지각판정]을 한다(한사람당 1회). 성공한 사람은 「고브 영웅상[환전] (60G)」을 하나 입수한다.",
              "줄곧 이어지는 생활: 산비탈의 한 면 전체에 밭들이 계단처럼 펼쳐져 있다. 이 정도의 논밭을 일구는 데 도대체 얼마나 많은 시간이 들었을까? 근처에는 틀림없이 〈대지인〉의 마을이 있을 것이다."]
-    
+
     d1, dummy = roll(1, 6)
     d2, dummy = roll(1, 6)
     value = (d1.to_i + d2.to_i - 2 + (cr - 1) * 5)
-    
+
     result = table[value]
-    
+
     return "#{tableName}CR#{cr}(#{value + 7}[#{d1},#{d2}])\n#{result}"
   end
-  
 end
-

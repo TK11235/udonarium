@@ -12,14 +12,15 @@ class Insane_Korean < DiceBot
     @sortType = 3
     @d66Type = 2
   end
+
   def gameName
     '인세인'
   end
-  
+
   def gameType
     "Insane:Korean"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・판정
@@ -52,25 +53,23 @@ class Insane_Korean < DiceBot
 ・D66 다이스 있음.
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def changeText(string)
     string
   end
-  
-  
+
   def dice_command_xRn(string, nick_e)
     ''
   end
-  
+
   # 게임 별 성공 여부 판정(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     return '' unless(signOfInequality == ">=")
-    
-    output = 
+
+    output =
       if(dice_n <= 2)
         " ＞ 펌블(판정실패。 덱에서 【광기】를 1장 획득)"
       elsif(dice_n >= 12)
@@ -80,17 +79,15 @@ INFO_MESSAGE_TEXT
       else
         " ＞ 실패"
       end
-    
+
     return output
   end
-  
-  
-  
+
   def rollDiceCommand(command)
     output = '1'
     type = ""
     total_n = ""
-    
+
     case command
     when 'ST'
       type = '씬표'
@@ -192,7 +189,7 @@ INFO_MESSAGE_TEXT
       type = '반응표'
       output, total_n = get_reaction_scene_table
     end
-    
+
     return "#{type}(#{total_n}) ＞ #{output}"
   end
 
@@ -211,10 +208,9 @@ INFO_MESSAGE_TEXT
             '수많은 사람들. 시끄러운 소리. 매우 소란스러운 점내 BGM에, 비정상적인 웃음소리. 시끄러운 번화가의 한 곳이지만……? ',
             '밝은 빛에 비춰져, 안심하며 한숨. 하지만 빛이 강해지는 만큼, 그림자도 짙어진다. ',
             ]
-    
+
     return get_table_by_2d6(table)
   end
-
 
   # 사실은 무서운 현대 일본 씬표
   def get_horror_scene_table
@@ -231,7 +227,7 @@ INFO_MESSAGE_TEXT
         '새된 울음소리가 울려 퍼진다. 갑자기 공복감이 느껴진다. 오늘은 뭘 먹을까? ',
         '잠을 이루지 못하고 눈을 뜬다. 뭔가 악몽을 꾼 것 같은데……. 어라, 의식은 있는데 몸이 움직이지 않아! ',
             ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -250,7 +246,7 @@ INFO_MESSAGE_TEXT
             '강가의 공장 터. 아주 오래 전부터 쓰지 않은 듯, 건물은 무너져가고 있다. 아무래도 부랑자들이 거처로 쓰고 있는 듯하다.',
             '조용한 실내. 무언가 불온한 기색이 느껴지지만……저건 뭐지? 창문에, 창문에!',
              ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -297,10 +293,10 @@ INFO_MESSAGE_TEXT
              [56, '「본체표를 사용」 같은'],
              [66, '무지개 빛으로 빛나는'],
             ]
-    
+
     return get_table_by_d66_swap(table)
   end
-  
+
   # 본체표
   def get_body_table
     table = [
@@ -326,11 +322,10 @@ INFO_MESSAGE_TEXT
              [56, '「부위표」를 사용'],
              [66, '소인'],
             ]
-    
+
     return get_table_by_d66_swap(table)
   end
-  
-  
+
   # 부위표
   def get_parts_table
     table = [
@@ -356,11 +351,10 @@ INFO_MESSAGE_TEXT
              [56, '가지나 잎'],
              [66, '내장'],
             ]
-  
+
     return get_table_by_d66_swap(table)
   end
-  
-  
+
   # 감정표
   def get_fortunechange_table
     table = [
@@ -371,7 +365,7 @@ INFO_MESSAGE_TEXT
         '동정（플러스）／열등감（마이너스）',
         '광신（플러스）／살의（마이너스）',
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -400,7 +394,7 @@ INFO_MESSAGE_TEXT
              [56, '호스트or호스티스≪웃음≫≪관능≫'],
              [66, '경호원　폭략분야에서 원하는 것을 2개'],
             ]
-    
+
     return get_table_by_d66_swap(table)
   end
 
@@ -432,7 +426,7 @@ INFO_MESSAGE_TEXT
       ['지식', ['물리학', '수학', '화학', '생물학', '의학', '교양', '인류학', '역사', '민속학', '고고학', '천문학']],
       ['괴이', ['시간', '혼돈', '심해', '죽음', '영혼', '마술', '암흑', '종말', '꿈', '지저', '우주']],
     ]
-    
+
     skillTable, total_n = get_table_by_1d6(skillTableFull)
     tableName, skillTable = *skillTable
     skill, total_n2 = get_table_by_2d6(skillTable)
@@ -444,7 +438,7 @@ INFO_MESSAGE_TEXT
     text, = get_random_skill_table
     return text
   end
-  
+
   # 지정특기 랜덤결정(폭력)
   def get_violence_skill_table
     table = [
@@ -462,7 +456,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   # 지정특기 랜덤결정(감정)
   def get_emotion_skill_table
     table = [
@@ -480,7 +474,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   # 지정특기 랜덤결정(지식)
   def get_perception_skill_table
     table = [
@@ -498,7 +492,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   # 지정특기 랜덤결정(기술)
   def get_skill_skill_table
     table = [
@@ -516,7 +510,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   # 지정특기 랜덤결정(지식)
   def get_knowledge_skill_table
     table = [
@@ -534,7 +528,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   # 지정특기 랜덤결정(괴이)
   def get_mystery_skill_table
     table = [
@@ -552,7 +546,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   # 회화 중에 발생하는 공포표
   def get_conversation_horror_table
     table = [
@@ -576,7 +570,7 @@ INFO_MESSAGE_TEXT
              "지정특기：혼돈\n전봇대 밑에 여성이 웅크리고 있다. 배를 부여잡고, 괴로운 듯 얼굴을 숙이고 있다. 「괜찮으세요?」\n 다가가서 말을 건 당신에게, 여성은 고개를 끄덕였다. 「네—감사합니다。」\n 그렇게 말하며 고개를 든 여성의 얼굴은, 아무것도 없었다. 반들반들하게 벗겨진 달걀 같은 피부가 계속되고 있을 뿐이었다. 우왓!?\n 뒤로 몸을 젖힌 순간, 의식이 멀어졌고, 정신을 차려보니 당신은 전봇대 밑에 웅크리고 있었다. ",
              "지정특기：웃음\n역에 도착하니, 몹시 혼잡했다. 인신사고로 전차가 멈춰있는 듯하다. 재수 없으려니. 그렇게 생각하고 있으면, 개찰구 근처의 인파 속에서, 일본 옷을 입은 여성이 빠른 걸음으로 당신 쪽으로 다가왔다. 여성은 만면에 미소를 짓고 있었다. 혼잣말을 중얼거리는지, 입이 움직이고 있다. 스쳐지나갈 때에, 여성의 목소리가 귀에 들렸다. 「해버렸다. 해버렸다. 해버렸다. 꼴좋네。」\n 엣, 하며 돌아보는 당신을 남겨두고, 여성은 인파 속으로 사라져버렸다. ",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -590,7 +584,7 @@ INFO_MESSAGE_TEXT
              "지정특기：감촉\n똑. 똑. 목덜미에 떨어진 미지근한 물방울의 감촉에 당신은 눈썹을 찌푸렸다. 눈치채고 나면, 책상 위에 빨간 물방울이 떨어져 있다. 쇳내가 코를 찌른다. 똑. 똑. 똑. 물방울은 세를 늘려, 자꾸 자꾸 떨어져내려, 책상 위로 퍼져나간다. 천천히 올려다보면, 천장에는 커다랗고 검붉은 얼룩이 넓게 퍼져있다. 똑. 토독. 똑. --토도도도독! 높아진 물소리에 당신은 우뚝 멈춰 선다. 지붕 밑에, 대체, 뭐가……?",
              "지정특기：지저\n낯익은 장소에서, 낯선 문을 발견했다. 열어보면, 긴 내리막계단이 어둠 속으로 뻗어 있다. 수상쩍게 생각해서 아래로 내려가보니…… 그 곳은 지하실이었다. 이런 장소가 있었던가.  한 손에 불빛을 들고 나아가보면 무언가 다가오는 기분이 든다. 어둠 속에서, 누군가가, 당신의 이름을 불렀다. ",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -604,7 +598,7 @@ INFO_MESSAGE_TEXT
              "지정특기：함정\n폐허를 걷고 있으니, 갑자기 발에 극심한 통증이 일었다. 비명을 억누르며 아래를 보니, 발목에 덫이 꽉 물려있다. 어째서 이런 곳에, 이런 덫이……? 고생해서 덫을 해제하고, 다시 주변을 둘러보았을 때, 당신은 깜짝 놀란다. 덫은 하나가 아니었다. 잔해 속에 숨겨놓은 것처럼, 몇 개고, 몇 개고, 덫이 설치되어 있었다. ",
              "지정특기：약품\n갑자기, 신나 냄새가 코를 찔렀다. 폐허의 벽에 끈적끈적하게, 붉은 페인트로 문자가 쓰여있다. 무엇이 쓰여있는지는 분명하지 않지만, 오로지 악의와 증오만을 칠해 넣은 듯한 터치에 두려움이 생긴다. 그러던 도중 어떤 사실을 눈치채고, 당신은 바짝 소름이 돋았다. 페인트가 아직 마르지 않았다. ……갓 칠한 것처럼 새로운 것이다. ",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -618,7 +612,7 @@ INFO_MESSAGE_TEXT
              "지정특기：그늘\n덤불 속에 폐차가 파묻혀있다. 특징 없는 하얀 밴이다. 창문은 새카맣게 그을음이 묻어있어, 아무것도 보이지 않는다. 차체는 녹이 슬고, 도료도 벗겨져서, 방치되어버린 오래된 폐차임이 확실하다. —-그런데도, 폐차 속에서 날카로운 시선이 느껴진다. 잠금이 풀리는 소리가 나고, 천천히 뒷좌석의 문이 열리기 시작한다…….",
              "지정특기：소각\n타닥……타닥……. 불이 타오르는 소리가 들린다. 공터에 모닥불이 불꽃을 튀기고 있었다. 곁에는 아무도 없다 따듯해진 기분으로 멈춰 서서, 나뭇가지로 모닥불을 휘젓고 있으니, 불 속에서 가벼운 웃음소리가 들렸다. 흠칫 놀란 당신의 발 밑을, 고양이처럼 커다란 무언가가 스르륵 빠져나갔다. 모닥불로 눈을 돌리면, 그 곳에는 단지 그을은 뼛조각만 남아있었다.",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -632,7 +626,7 @@ INFO_MESSAGE_TEXT
              "지정특기：마술\n자료 속에서, 기묘한 고서가 나왔다. 가죽 장정의 호화로운 책으로, 묘한 냄새가 난다. 문장은 지리멸렬해서, 정상적인 인간이 썼다고 생각되지 않는다. 그러나, 찢어진 듯한 페이지를 한 장 한 장 넘기고 있으려니, 차츰차츰 작자가 말하려는 바를 알게 된다. 계속, 계속해서 알게 된다. 아아, 이제 알았다. 완전히 알았다. 이제 괜찮다. 분명 이 책은, 당신에게 읽혀지기 위해 쓰여졌던 것이다.. ",
              "지정특기：역사\n표지가 없는 보고서를 발견했다. 팔락팔락 넘겨보면, 지금 막 당신이 조사하고 있는 사건에 대한 조사보고서였다. 안타깝게도, 여기저기 먹칠이 되어있어, 가장 중요한 부분은 알 수 없다. 보아하니, 아무래도, 군에 의한 조사인 듯하다. 군? 어째서 군대가 이 사건을 조사하고 있었던 거지? ",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -646,7 +640,7 @@ INFO_MESSAGE_TEXT
              "유령 자동차×1　데드 루프ｐ193",
              "원령×1　기본ｐ245",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -660,7 +654,7 @@ INFO_MESSAGE_TEXT
              "늑대 인간×1　기본ｐ265",
              "쿠네쿠네×1　데드 루프ｐ193",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -674,7 +668,7 @@ INFO_MESSAGE_TEXT
              "마녀×1　기본ｐ245",
              "기어 다니는 자×1　기본ｐ261",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -688,7 +682,7 @@ INFO_MESSAGE_TEXT
              "지정특기：근심\n시야의 구석을 어두운 얼굴의 남자가 지나가는 것이 보였다. 돌아봐도 아무도 없다. 누구야? 모른다고, 저런 녀석.",
              "지정특기：암흑\n팟! 갑작스런 정전으로 층이 어둠에 잠겼다. 놀라서 얼굴을 들어올리면, 어둠 속에서 많은 사람의 그림자가 멈춰 서서, 당신을 가만히 보고 있다! ",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -702,7 +696,7 @@ INFO_MESSAGE_TEXT
              "「어이! 좀 전의 일인데 어떻게 된거야!」\n 다른 용무의 클레임 전화다! 지친 정신에 손상을 입고, 【정신력】 -1. ",
              "「……없으면 좋을텐데。」\n 전화 저편에서 지옥 같은 목소리가 속삭인다. 오싹해져 반사적으로 전화를 끊는다. 착신 이력은 남아있지 않다……뭐야 지금!? 《전자기기》로 공포판정.",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -723,7 +717,7 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-  
+
   # 회사명 결정표1
   def get_corporatenameone_table
     table = [
@@ -734,7 +728,7 @@ INFO_MESSAGE_TEXT
              "크림슨",
              "범인",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -748,7 +742,7 @@ INFO_MESSAGE_TEXT
              "공포",
              "인세인",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -762,7 +756,7 @@ INFO_MESSAGE_TEXT
              "(유)",
              "(유)",
             ]
-    
+
     return get_table_by_1d6(table)
   end
 
@@ -783,5 +777,4 @@ INFO_MESSAGE_TEXT
             ]
     return get_table_by_2d6(table)
   end
-
 end

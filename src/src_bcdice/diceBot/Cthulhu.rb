@@ -10,15 +10,15 @@ class Cthulhu < DiceBot
     @critical_percentage = 1
     @fumble_percentage   = 1
   end
-  
+
   def gameName
     'クトゥルフ'
   end
-  
+
   def gameType
     "Cthulhu"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 c=クリティカル値 ／ f=ファンブル値 ／ s=スペシャル
@@ -87,11 +87,10 @@ INFO_MESSAGE_TEXT
       @fumble_percentage   = 1
       return getCombineRoll(command)
     end
-    
+
     return nil
   end
-  
-  
+
   def getCheckResult(command)
 
     output = ""
@@ -127,7 +126,6 @@ INFO_MESSAGE_TEXT
 
     return output
   end
-
 
   def getCheckResultText(total_n, diff, broken_num = 0)
 
@@ -187,7 +185,6 @@ INFO_MESSAGE_TEXT
     return result
   end
 
-
   def getRegistResult(command)
     output = "1"
 
@@ -196,11 +193,11 @@ INFO_MESSAGE_TEXT
     value = $2.to_i
     target =  value * 5 + 50
 
-    if(target < 5) 
+    if(target < 5)
       return "(1d100<=#{target}) ＞ 自動失敗"
     end
 
-    if(target > 95) 
+    if(target > 95)
       return "(1d100<=#{target}) ＞ 自動成功"
     end
 
@@ -210,30 +207,29 @@ INFO_MESSAGE_TEXT
 
     return "(1d100<=#{target}) ＞ #{total_n} ＞ #{result}"
   end
-  
-  
+
   def getCombineRoll(command)
     output = "1"
-    
+
     return output unless(/CBR(B)?\((\d+),(\d+)\)/i =~ command)
-    
+
     diff_1 = $2.to_i
     diff_2 = $3.to_i
 
     total, = roll(1, 100)
-    
+
     result_1 = getCheckResultText(total, diff_1)
     result_2 = getCheckResultText(total, diff_2)
-    
+
     successList = ["決定的成功/スペシャル", "決定的成功", "スペシャル", "成功"]
     failList = ["失敗", "致命的失敗"]
-    
+
     succesCount = 0
     succesCount += 1 if successList.include?( result_1 )
     succesCount += 1 if successList.include?( result_2 )
     debug("succesCount", succesCount)
-    
-    rank = 
+
+    rank =
       if( succesCount >= 2 )
         "成功"
       elsif( succesCount == 1 )
@@ -241,9 +237,7 @@ INFO_MESSAGE_TEXT
       else
         "失敗"
       end
-    
+
     return "(1d100<=#{diff_1},#{diff_2}) ＞ #{total}[#{result_1},#{result_2}] ＞ #{rank}"
   end
-
 end
-

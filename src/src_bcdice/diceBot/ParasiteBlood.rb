@@ -25,18 +25,17 @@ class ParasiteBlood < DemonParasite
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def get_urge(string)    # パラサイトブラッドの衝動表
     urge = []
 
     unless(/(\w*)URGE\s*(\d+)/i =~ string)
       return '1'
     end
-    
+
     initialWord = $1
     urgelv = $2.to_i
-    
+
     case initialWord
     when ""
       urge_type = 1;
@@ -45,7 +44,7 @@ INFO_MESSAGE_TEXT
     else         # あり得ない文字
       urge_type = 1;
     end
-    
+
     if((urgelv < 1) or (urgelv > 5))
       return '衝動段階は1から5です';
     end
@@ -53,7 +52,7 @@ INFO_MESSAGE_TEXT
     if(urge_type == 0)
       return '1';
     end
-    
+
     dice_now, = roll(2, 6);
     urge = get_pb_urge_table(urgelv, dice_now, urge_type)
     resultText = "#{urgelv}-#{dice_now}:#{urge}"
@@ -64,14 +63,13 @@ INFO_MESSAGE_TEXT
     else
       output = '1'
     end
-    
+
     return output;
   end
-  
-  
+
   def get_pb_urge_table(level, dice, urge_type)
     table = nil
-    
+
     if(urge_type <= 1)  # 衝動表
       table =  get_pb_normal_urge_table;
     elsif(urge_type <= 2)  # AASとサイボーグの誤作動表
@@ -79,10 +77,10 @@ INFO_MESSAGE_TEXT
     else   # エラートラップ
       table = get_pb_normal_urge_table;
     end
-    
+
     return table[level - 1 ][dice - 2];
   end
-  
+
   def get_pb_normal_urge_table
     return [[
         '『怒り/20』突然強い怒りに駆られる。最も近い対象を罵倒し、そのターンの終了まで[行動不能]となる。',
@@ -150,7 +148,6 @@ INFO_MESSAGE_TEXT
         '『絶望/30』全身が絶望に満たされ、全てを破壊したくなる。次のターンの終了まで、ダメージに+15。',
       ]]
   end
-  
 
   #**パラサイトブラッドの誤作動表(2d6)
   def get_pb_aas_urge_table
@@ -168,7 +165,7 @@ INFO_MESSAGE_TEXT
         '『排熱暴走/10』排熱機能に異常。次のターンのターン終了まで［着火］状態となる。特殊ダメージは本人のものを使用する。' ,
         '『電装異常/20』電装系に異常。即座に【負荷】が2点蓄積する。',
         ],
-      
+
       #**第２段階
       [
         '『安全機能/20』セーフティが誤動作。このターンのターン終了まで判定の達成値に-5。' ,
@@ -183,7 +180,7 @@ INFO_MESSAGE_TEXT
         '『装甲軟化/20』防御機能に異常。次のターンのターン終了まで、防御力に-5。' ,
         '『装備異常/20』精密動作に異常発生。装備している［通常アイテム］の武器がランダムでひとつ、［装備］から外れる。' ,
       ],
-      
+
       #**第３段階
       [
         '『動力漏電/20』動力が漏電し始める。【負荷】が2点蓄積する。' ,
@@ -198,7 +195,7 @@ INFO_MESSAGE_TEXT
         '『友軍誤認/20』警戒装置が誤動。最も近い［距離：移動10m/対象：1体］に通常肉弾攻撃を行う。' ,
         '『電子賦活/20』電磁障壁が突如復帰。【電力】が10回復する。' ,
         ],
-      
+
       #**第４段階
       [
         '『照準誤認/20』照準機能に異常発生。最も近い［距離：移動10m/対象：1体］に通常肉弾攻撃を行う。判定は自動的にクリティカルとなる。' ,
@@ -213,7 +210,7 @@ INFO_MESSAGE_TEXT
         '『状況分析/20』周辺解析ソフトが高速で動作。60ターン（10分間）の間、命中判定の達成値に+5。' ,
         '『機能再生/20』兵装に誤作動。取得済みの使用不能になった《兵装》を1つ指定し、再び使用できるようになる。' ,
         ],
-      
+
       #**第５段階
       [
         '『機能停止/30』機能が作動しなくなる。このターンのターン終了まで、【負荷】を蓄積させる行動が取れなくなる。' ,

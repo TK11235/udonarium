@@ -13,11 +13,11 @@ class SwordWorld2_0 < SwordWorld
   def gameName
     'ソードワールド2.0'
   end
-  
+
   def gameType
     return "SwordWorld2.0"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 自動的成功、成功、失敗、自動的失敗の自動判定を行います。
@@ -62,7 +62,7 @@ class SwordWorld2_0 < SwordWorld
 　絡み効果表を出すことができます。
 INFO_MESSAGE_TEXT
   end
-  
+
   def rollDiceCommand(command)
     case command
       when /^Gr(\d+)?/i
@@ -79,18 +79,25 @@ INFO_MESSAGE_TEXT
         super(command)
     end
   end
-  
+
+
   def getRateUpFromString(string)
     rateUp = 0
-     regexp = /r\[(\d+)\]/i
-     if( regexp === string )
+
+    regexp = /r\[(\d+)\]/i
+
+    if( regexp === string )
       rateUp = $1.to_i
       string = string.gsub(regexp, '')
     end
-     return rateUp, string
+
+    return rateUp, string
   end
-   def getAdditionalString(string, output)
-     output, values = super(string, output)
+
+
+  def getAdditionalString(string, output)
+
+    output, values = super(string, output)
     
     isGratestFortune, string = getGratestFortuneFromString(string)
     
@@ -100,84 +107,93 @@ INFO_MESSAGE_TEXT
     return output, values
   end
   
+  
   def rollDice(values)
     
     unless values['isGratestFortune']
       return super(values)
     end
-     dice, diceText = roll(1, 6)
-     dice *= 2
+
+    dice, diceText = roll(1, 6)
+
+    dice *= 2
     diceText = "#{diceText},#{diceText}"
-     return dice, diceText
+
+    return dice, diceText
   end
+  
   
   def getGratestFortuneFromString(string)
     isGratestFortune = false
-     regexp = /gf/i
-     if( regexp === string )
+
+    regexp = /gf/i
+
+    if( regexp === string )
       isGratestFortune = true
       string = string.gsub(regexp, '')
     end
-     return isGratestFortune, string
+
+    return isGratestFortune, string
   end
+
 
   def is2dCritical
     true
   end
-  
-  
+
+
   # SW2.0 の超成功用
   def check2dCritical(critical, dice_new, dice_arry, loop_count)
     return if( critical <= 2 )
-    
+
     if( loop_count == 0 )
       return if( dice_new == 12 )
       return if( dice_new == 2 )
     end
-    
+
     if( dice_new >= critical )
       dice_arry.push( 2 )
     end
   end
-  
-  
+
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(nD6)
-    
+
     debug("check_nD6")
     result = super(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     return result unless( result == "" )
-    
-    string = @@bcdice.getOriginalMessage
-    
+
+    #string = @@bcdice.getOriginalMessage # TKfix @@bcdice が参照できない (Opal 0.11.4)
+    string = bcdice.getOriginalMessage
+
     superSuccessValue = 41
-    
+
     if( /@(\d+)/ === string )
       critical = $1.to_i
-      if( dice_n >= critical ) 
+      if( dice_n >= critical )
         if( total_n >= superSuccessValue )
           return " ＞ 超成功"
         end
       end
     end
-    
+
     return result
   end
-  
+
   def growth(count = 1)
     ((1..count).map do growth_step end).join " | "
   end
-  
+
   def growth_step
     d1, = roll(1, 6)
     d2, = roll(1, 6)
-    
+
     a1 = get_ability_by_dice(d1)
     a2 = get_ability_by_dice(d2)
-    
+
     return a1 != a2 ? "[#{d1},#{d2}]->(#{a1} or #{a2})" : "[#{d1},#{d2}]->(#{a1})"
   end
-  
+
   def get_ability_by_dice(dice)
     ['器用度', '敏捷度', '筋力', '生命力', '知力', '精神力'][dice - 1]
   end

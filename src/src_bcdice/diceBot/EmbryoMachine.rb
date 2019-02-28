@@ -8,14 +8,15 @@ class EmbryoMachine < DiceBot
     @sendMode = 2
     @sortType = 1
   end
+
   def gameName
     'エムブリオマシン'
   end
-  
+
   def gameType
     "EmbryoMachine"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定ロール(EMt+m@c#f)
@@ -28,7 +29,7 @@ class EmbryoMachine < DiceBot
 　・射撃攻撃ファンブル表　SFT
 INFO_MESSAGE_TEXT
   end
-  
+
   def changeText(string)
     string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(@(\d+))(\#(\d+))/i) {"2R10#{$2}>=#{$1}[#{$4},#{$6}]"}
     string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(\#(\d+))/i) {"2R10#{$2}>=#{$1}[20,#{$4}]"}
@@ -39,17 +40,16 @@ INFO_MESSAGE_TEXT
     string = string.gsub(/EM(\d+)(@(\d+))/i) {"2R10>=#{$1}[#{$3},2]"}
     string = string.gsub(/EM(\d+)/i) {"2R10>=#{$1}[20,2]"}
   end
-  
+
   def dice_command_xRn(string, nick_e)
     return checkRoll(string, nick_e)
   end
-  
-  
+
   # ゲーム別成功度判定(nD10)
   def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     debug("EmbryoMachine check_nD10 begin")
     return '' unless(signOfInequality == ">=")
-    
+
     if(dice_n <= 2)
       return " ＞ ファンブル"
     elsif(dice_n >= 20)
@@ -60,13 +60,12 @@ INFO_MESSAGE_TEXT
       return " ＞ 失敗"
     end
   end
-  
-  
+
   def checkRoll(string, nick_e)
     output = '1'
-    
+
     return output unless(/(^|\s)S?(2[rR]10([\+\-\d]+)?([>=]+(\d+))(\[(\d+),(\d+)\]))(\s|$)/i =~ string )
-    
+
     string = $2
     diff = 0
     crit = 20
@@ -74,12 +73,12 @@ INFO_MESSAGE_TEXT
     mod = 0
     total_n = 0
     modText = $3
-    
+
     diff = $5.to_i if($5)
     crit = $7.to_i if($7)
     fumble = $8.to_i if($8)
     mod = parren_killer("(0#{modText})").to_i if(modText)
-    
+
     dice_now, dice_str, = roll(2, 10, (sortType & 1))
     dice_loc, = roll(2, 10)
     dice_arr = dice_str.split(/,/).collect{|i|i.to_i}
@@ -106,19 +105,17 @@ INFO_MESSAGE_TEXT
     else
       output += " ＞ 失敗"
     end
-    
+
     return output
   end
-  
-  
-  
+
   def rollDiceCommand(command)
     debug("rollDiceCommand command", command)
-    
+
     output = '1'
     type = ""
     number = 0
-    
+
     case command
     when /HLT/i
       type = '命中部位'
@@ -133,7 +130,7 @@ INFO_MESSAGE_TEXT
       number, = roll(2, 10)
       output = get_melee_fumble_table(number)
     end
-    
+
     if(output != '1')
       output = "#{type}表(#{number}) ＞ #{output}"
     end
@@ -221,5 +218,4 @@ INFO_MESSAGE_TEXT
 
     return get_table_by_number(num, table)
   end
-
 end

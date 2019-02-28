@@ -21,15 +21,15 @@ class GranCrest < DiceBot
     @d66Type = 1
     @fractionType = "omit"
   end
-  
+
   def gameName
     'グランクレスト'
   end
-  
+
   def gameType
     "GranCrest"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・2D6の目標値判定でクリティカル処理
@@ -42,19 +42,18 @@ class GranCrest < DiceBot
 　組織表（OCT）、拠点表（BCT）、文化表（CCT）
 MESSAGETEXT
   end
-  
-  
+
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
   end
-  
+
   # ゲーム別成功度判定(nD6)
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     debug("check_nD6 begin")
 
     result = ''
-    
+
     if (n_max >= 2) then
       total_n += 10
       result += "（クリティカル）"
@@ -63,13 +62,13 @@ MESSAGETEXT
 
     return result unless(signOfInequality == ">=")
     return result if(diff == "?")
-    
+
     if(total_n >= diff)
       result += " ＞ 成功"
     else
       result += " ＞ 失敗"
     end
-    
+
     return result
   end
 
@@ -101,8 +100,7 @@ MESSAGETEXT
     text = "#{tableName}(#{number}) ＞ #{result}"
     return text
   end
-  
-  
+
   def getMeetingTableResult
     tableName = "邂逅表"
     table = [
@@ -145,11 +143,10 @@ MESSAGETEXT
             ]
 
     result, number = get_table_by_d66(table)
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getFeelingTableResult(command)
     debug("getFeelingTableResult command", command)
 
@@ -241,14 +238,13 @@ MESSAGETEXT
 
     result, number = get_table_by_d66(table)
     debug("getFeelingTableResult result", result)
-    
+
     return tableName, result, number
   end
 
-
   def getCountryTableResult(command)
     debug("getCountryTableResult command", command)
-    
+
     tableName = ''
     table = []
 
@@ -517,8 +513,7 @@ MESSAGETEXT
     end
 
     debug("getCountryTableResult result", result)
-    
+
     return tableName, result, number
   end
-  
 end

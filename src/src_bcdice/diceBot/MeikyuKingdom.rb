@@ -28,11 +28,11 @@ class MeikyuKingdom < DiceBot
   def gameName
     '迷宮キングダム'
   end
-  
+
   def gameType
     "MeikyuKingdom"
   end
-  
+
   def getHelpMessage
   return <<INFO_MESSAGE_TEXT
 ・判定　(nMK+m)
@@ -62,104 +62,101 @@ class MeikyuKingdom < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def changeText(string)
     debug("changeText before string", string)
-    
+
     string = string.gsub(/(\d+)MK6/i) {"#{$1}R6"}
     string = string.gsub(/(\d+)MK/i) {"#{$1}R6"}
-    
+
     debug("changeText after string", string)
-    
+
     return string
   end
-  
+
   def dice_command_xRn(string, nick_e)
     return mayokin_check(string, nick_e)
   end
-  
+
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
     result = get2D6Result(total_n, dice_n, signOfInequality, diff)
-    #TKfix <<
-    result = result + getKiryokuResult(total_n, dice_n, signOfInequality, diff)
-    
+    result += getKiryokuResult(total_n, dice_n, signOfInequality, diff)
+
     return result
   end
-  
+
   def get2D6Result(total_n, dice_n, signOfInequality, diff)
     return '' unless(signOfInequality == ">=")
-    
+
     if(dice_n <= 2)
       return " ＞ 絶対失敗"
     elsif(dice_n >= 12)
       return " ＞ 絶対成功"
     end
-    
+
     return get2D6ResultOnlySuccess(total_n, diff)
   end
-  
+
   def get2D6ResultOnlySuccess(total_n, diff)
     if(total_n >= diff)
       return " ＞ 成功"
     end
-    
+
     return " ＞ 失敗"
   end
-  
+
   def getKiryokuResult(total_n, dice_n, signOfInequality, diff)
     output_msg = ""
-    
+
     diceList = getDiceList
     debug("getKiryokuResult diceList", diceList)
-    
+
     dice6List = diceList.find_all{|i| i == 6}
     debug("dice6List", dice6List)
-    
+
     if( dice6List.length == 0 )
       return output_msg
     end
-    
+
     if( dice6List.length >= 2 )
       return " ＆ 《気力》#{dice6List.length}点獲得"
     end
-    
+
     diceNone6List = diceList.find_all{|i| i != 6}
     diceNone6List.sort!
     debug("diceNone6List", diceNone6List)
-    
+
     maxDice1 = diceNone6List.pop.to_i
     maxDice2 = diceNone6List.pop.to_i
     debug("maxDice1", maxDice1)
     debug("maxDice2", maxDice2)
-    
+
     debug("total_n", total_n)
     none6Total_n = total_n - 6 + maxDice2
     debug("none6Total_n", none6Total_n)
-    
+
     none6Dice_n = maxDice1 + maxDice2
     debug("none6Dice_n", none6Dice_n)
     debug("diff", diff)
     none6DiceReuslt =  get2D6ResultOnlySuccess(none6Total_n, diff)
-    
+
     return " (もしくは) #{none6Total_n}#{none6DiceReuslt} ＆ 《気力》#{dice6List.length}点獲得"
   end
-  
-  
+
   ####################         迷宮キングダム        ########################
   def mayokin_check(string, nick_e)
     debug("mayokin_check string", string)
-    
+
     output = "1"
-    
+
     return output unless(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i =~ string)
-    
+
     string = $2
     diceCount = $3.to_i
     modifyText = $4
     signOfInequality = $6
     signOfInequality ||= ""
-    
+
     #TKfix メソッドをまたぐと$xの中身がnilになっている
     diff = $7.to_i
     diff ||= 0
@@ -167,10 +164,10 @@ INFO_MESSAGE_TEXT
     debug("string", string)
     debug("diceCount", diceCount)
     debug("modifyText", modifyText)
-    
+
     #diff = $7.to_i
     #diff ||= 0
-    
+
     bonus = 0
     if( modifyText )
       bonus = parren_killer("(0#{modifyText})").to_i
@@ -180,29 +177,29 @@ INFO_MESSAGE_TEXT
     dice_now = 0
     dice_str = ""
     total_n = 0
-    
+
     _, dice_str, = roll(diceCount, 6, (sortType & 1))
     dice_num = dice_str.split(/,/).collect{|i|i.to_i}
     debug("diceCount, dice_num", diceCount, dice_num)
-    
+
     dice1 = 0
     dice2 = 0
     dice1 = dice_num[diceCount - 2] if( diceCount >= 2)
     dice2 = dice_num[diceCount - 1] if( diceCount >= 1)
     dice_now = dice1 + dice2
     debug("dice1, dice2, dice_now", dice1, dice2, dice_now)
-    
+
     total_n = dice_now + bonus
     dice_str = "[#{dice_str}]"
     setDiceText(dice_str)
-    
+
     output = "#{dice_now}#{dice_str}"
     if(bonus > 0)
       output += "+#{bonus}"
     elsif(bonus < 0)
       output += "#{bonus}"
     end
-    
+
     if(sendMode > 0)
       if(output =~ /[^\d\[\]]+/)
         output = "#{nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
@@ -212,24 +209,23 @@ INFO_MESSAGE_TEXT
     else
       output = "#{nick_e}: (#{string}) ＞ #{total_n}"
     end
-    
+
     if(signOfInequality != "")  # 成功度判定処理
       output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
     end
-    
+
     return output
   end
-  
-  
+
   ####################         迷宮キングダム        ########################
-  
+
   def rollDiceCommand(command)
     output = ""
     type = ""
     total_n = ""
-    
+
     case command
-      
+
     when /^NAMEA/i
       debug("namea passed")
       type = '名前Ａ'
@@ -247,7 +243,7 @@ INFO_MESSAGE_TEXT
       type = 'ファンタジック名前'
       total_n = d66(2)
       output = mk_name_fa_table(total_n)
-      
+
     when /^NAME(\d*)/i
       type = '名前'
       count = getCount($1)
@@ -258,25 +254,25 @@ INFO_MESSAGE_TEXT
       end
       output = names
       total_n = count
-      
+
     when /^PNT(\d*)/i
       type = '地名'
       count = getCount($1)
       output = mk_pn_decide_table(count)
       total_n = count
-      
+
     when /^MLT(\d*)/i
       type = '地名'
       count = getCount($1)
       output = mk_ls_decide_table(count)
       total_n = count
-      
+
     when /^DFT(\d*)/i
       type = 'デバイスファクトリー'
       count = getCount($1)
       output = mk_device_factory_table(count)
       total_n = count
-      
+
     when /^LRT/i
       type = '生活散策'
       output, total_n = mk_life_research_table
@@ -292,7 +288,7 @@ INFO_MESSAGE_TEXT
     when /^FRT/i
       type = 'お祭り'
       output, total_n = mk_festival_table
-      
+
       # 休憩表(2D6)
     when /^TBT/i
       type = '才覚休憩'
@@ -341,7 +337,7 @@ INFO_MESSAGE_TEXT
     when /^T5T/i
       type = 'お宝５'
       output, total_n = mk_treasure5_table
-      
+
       # アイテム表
     when /^RWIT/i
       type = 'レア武具アイテム'
@@ -375,7 +371,7 @@ INFO_MESSAGE_TEXT
       type = 'アイテムカテゴリ決定'
       total_n, dummy = roll(1, 6)
       output = mk_item_decide_table(total_n)
-      
+
       # ランダムエンカウント表
     when /^1RET/i
       type = '1Lvランダムエンカウント'
@@ -401,7 +397,7 @@ INFO_MESSAGE_TEXT
       type = '6Lvランダムエンカウント'
       total_n, dummy = roll(1, 6)
       output = mk_random_encount6_table(total_n)
-      
+
       # その他表
     when /^KDT/i
       type = '王国災厄'
@@ -430,12 +426,12 @@ INFO_MESSAGE_TEXT
     when /^ET/i
       type = '感情'
       output, total_n = mk_emotion_table
-      
+
     when /^KNT(\d+)/i
       type = '王国名'
       count = getCount($1)
       total_n = d66(2)
-      
+
       case count
       when 1
         output = mk_kingdom_name_1_table(total_n)
@@ -444,12 +440,12 @@ INFO_MESSAGE_TEXT
       when 3
         output = mk_kingdom_name_3_table(total_n)
       end
-      
+
     when /^WORD(\d+)/i
       type = '単語'
       count = getCount($1)
       total_n = d66(2)
-      
+
       case count
       when 1
         output = mk_word_1_table(total_n)
@@ -460,7 +456,7 @@ INFO_MESSAGE_TEXT
       when 4
         output = mk_word_4_table(total_n)
       end
-      
+
     when /^ABT/i
       type = '捜索後休憩'
       output, total_n = getAftersearchBreakTable()
@@ -471,13 +467,13 @@ INFO_MESSAGE_TEXT
       type = 'カップル休憩'
       output, total_n = getLoversBreakTable()
     end
-    
+
     if(output != '1')
       output = "#{type}表(#{total_n}) ＞ #{output}"
     end
-    
+
   end
-  
+
   def getCount(countText)
     if( countText.empty? )
       return 1
@@ -501,7 +497,7 @@ INFO_MESSAGE_TEXT
                         "突然王国に旅人が訪れ、王国の食料庫が乏しくなってくる。［生活レベル／１１］に成功すると、他国から補給を呼んで《民》＋(2d6)人。失敗すると《民》－(2d6)人",
                       ])
   end
-  
+
   # 治安散策表(2d6)
   def mk_order_research_table
     get_table_by_2d6( [
@@ -518,7 +514,7 @@ INFO_MESSAGE_TEXT
                         "王国の中で不満分子たちがなにやら不穏な話をしているのを耳にする。［治安レベル／１１］の判定に成功すると、あなたは留守中の準備をしておくことができる。そのゲーム中、一度だけ王国災厄表の結果を無効にすることができる。失敗すると、ランダムに施設１軒を選び、それが破壊される",
                       ])
   end
-  
+
   # 文化散策表(2d6)
   def mk_calture_research_table
     get_table_by_2d6( [
@@ -535,7 +531,6 @@ INFO_MESSAGE_TEXT
                         "王国の中の民たちの表情に制裁がない。暗い迷宮生活に倦んでいるようだ。［文化レベル／１１］の判定に成功すると民を盛り上げる祭りを開き、《民の声》＋(1d6)。失敗すると維持費＋(1d6)",
                       ] )
   end
-
 
   # 軍事散策表(2d6)
   def mk_army_research_table
@@ -554,7 +549,6 @@ INFO_MESSAGE_TEXT
                       ] )
   end
 
-
   # 才覚休憩表（2d6）
   def mk_talent_break_table
     get_table_by_2d6( [
@@ -571,7 +565,6 @@ INFO_MESSAGE_TEXT
                         "この迷宮は一筋縄ではいかないようだ。今こそ、用意していたアレが役に立つだろう。自分の習得しているスキル１種を未修得にし、同じスキルグループのスキル１種を修得してもよい。この効果は永続する。",
                       ])
   end
-
 
   # 魅力休憩表（2d6）
   def mk_charm_break_table
@@ -590,7 +583,6 @@ INFO_MESSAGE_TEXT
                       ] )
   end
 
-
   # 探索休憩表（2d6）
   def mk_search_break_table
     get_table_by_2d6( [
@@ -607,7 +599,6 @@ INFO_MESSAGE_TEXT
                         "こ、これは秘密の扉？［探索/11］の判定に成功すると、この部屋に隣接する好きな部屋に通路を延ばすことができる",
                       ] )
   end
-
 
   # 武勇休憩表（2d6）
   def mk_valor_break_table
@@ -642,7 +633,7 @@ INFO_MESSAGE_TEXT
                         'みんなのワクワクがアイテムに乗り移った？　ランダムに自分のアイテムスロット1つを選ぶ。そこにレベルのあるアイテムがあった場合、そのレベルが1上がる',
                       ])
   end
-  
+
   # お祭り表(2D6)
   def mk_festival_table
     get_table_by_2d6( [
@@ -676,8 +667,7 @@ INFO_MESSAGE_TEXT
                         "敵国の勢力が強大化する。ＧＭは、関係が敵対の国全てについて、その国の領土に接する土地を１つ選び、その土地をその国の領土にする",
                       ])
   end
-  
-  
+
   # 才覚ハプニング表（2d6）
   def mk_talent_happening_table
     get_table_by_2d6( [
@@ -695,7 +685,6 @@ INFO_MESSAGE_TEXT
                       ])
   end
 
-  
   # 魅力ハプニング表（2d6）
   def mk_charm_happening_table
     get_table_by_2d6( [
@@ -712,7 +701,6 @@ INFO_MESSAGE_TEXT
                         "他人が信用できなくなる。このゲームの間、協調行動を行えなくなり、人間関係のルールも使用できなくなる",
                       ])
   end
-
 
   # 探索ハプニング表（2d6）
   def mk_search_happening_table
@@ -731,7 +719,6 @@ INFO_MESSAGE_TEXT
                       ])
   end
 
-
   # 武勇ハプニング表（2d6）
   def mk_valor_happening_table
     get_table_by_2d6( [
@@ -748,7 +735,6 @@ INFO_MESSAGE_TEXT
                         "自分の失敗が許せない。このゲームの間、《器》が１点減少したものとして扱う",
                       ])
   end
-
 
   # 王国変動表(2d6)
   def mk_kingdom_change_table
@@ -767,7 +753,6 @@ INFO_MESSAGE_TEXT
                       ])
   end
 
-
   # 王国変動失敗表(2d6)
   def mk_kingdom_mischange_table
     get_table_by_2d6( [
@@ -784,7 +769,6 @@ INFO_MESSAGE_TEXT
                         "民の意識が大きく揺れる。(1d6)を振り、その目が現在の《民の声》を上回っていたら、好きな国力が１点減少する",
                       ])
   end
-
 
   # 痛打表（2d6）
   def mk_critical_attack_table
@@ -803,7 +787,6 @@ INFO_MESSAGE_TEXT
                       ])
   end
 
-
   # 致命傷表（2d6）
   def mk_fatal_wounds_table
     get_table_by_2d6( [
@@ -820,7 +803,6 @@ INFO_MESSAGE_TEXT
                         "幸運にもダメージを免れる。ダメージを無効化するが、代わりにランダムにバッドステータス１種を受ける",
                       ])
   end
-
 
   # 道中表（2d6）
   def mk_travel_table
@@ -839,7 +821,6 @@ INFO_MESSAGE_TEXT
                       ])
   end
 
-
   # 交渉表（2d6）
   def mk_negotiation_table
     get_table_by_2d6( [
@@ -856,7 +837,6 @@ INFO_MESSAGE_TEXT
                         "運命の出会い。モンスター達の宮廷の代表に対する《好意》＋１、友好的になる",
                       ])
   end
-
 
   # 戦闘ファンブル表（2d6）
   def mk_combat_fumble_table
@@ -883,7 +863,7 @@ INFO_MESSAGE_TEXT
                        "愛情／侮蔑",
                      ])
   end
-  
+
   # 相場表（2d6）
   def mk_market_price_table
     get_table_by_2d6( [
@@ -901,10 +881,9 @@ INFO_MESSAGE_TEXT
                       ] )
   end
 
-
   # お宝表１（1d6）
   def mk_treasure1_table
-    
+
     get_table_by_1d6( [
                         "何も無し",
                         "何も無し",
@@ -914,7 +893,6 @@ INFO_MESSAGE_TEXT
                         "【お弁当】１個",
                       ])
   end
-
 
   # お宝表２（1d6）
   def mk_treasure2_table
@@ -928,7 +906,6 @@ INFO_MESSAGE_TEXT
                      ])
   end
 
-
   # お宝表３（1d6）
   def mk_treasure3_table
     get_table_by_1d6([
@@ -940,7 +917,6 @@ INFO_MESSAGE_TEXT
                        "ランダムにレア武具アイテム１個",
                      ])
   end
-
 
   # お宝表４（1d6）
   def mk_treasure4_table
@@ -954,7 +930,6 @@ INFO_MESSAGE_TEXT
                      ])
   end
 
-
   # お宝表５（1d6）
   def mk_treasure5_table
     get_table_by_1d6( [
@@ -967,7 +942,6 @@ INFO_MESSAGE_TEXT
                       ])
   end
 
-
   # 名前表
   def mk_name_table
     debug("mk_name_table begin")
@@ -975,11 +949,11 @@ INFO_MESSAGE_TEXT
     # 名前表
     name_n = (rand(6) + 1)
     debug("name_n", name_n)
-    
+
     d1 = d66(2)
     d2 = d66(2)
     debug("d1, d2", d1, d2)
-    
+
     debug("name_n", name_n)
     if(name_n <= 1)
       # 名前表A＋二つ名表A
@@ -1000,12 +974,11 @@ INFO_MESSAGE_TEXT
       # 名前表ファンタジー＋二つ名表B
       output = mk_nick_b_table(mk_name_fa_table(d1), d2)
     end
-    
+
     dice = "#{name_n},#{d1},#{d2}"
-    
+
     return output, dice
   end
-  
 
   # 二つ名表A(D66)
   def mk_nick_a_table(output, num)
@@ -1039,7 +1012,7 @@ INFO_MESSAGE_TEXT
 
     return output
   end
-  
+
   # 二つ名表B(D66)
   def mk_nick_b_table(output, num)
     table = [
@@ -1093,7 +1066,7 @@ INFO_MESSAGE_TEXT
       [56, "クラバドーラ／クレヨン"],
       [66, "ソープ／プルーム"],
     ]
-    
+
     return get_table_by_number(num, table)
   end
 
@@ -1125,7 +1098,7 @@ INFO_MESSAGE_TEXT
 
     return get_table_by_number(num, table)
   end
-  
+
   # 名前表エキゾチック(D66)
   def mk_name_ex_table(num)
     table = [
@@ -1153,7 +1126,7 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_number(num, table)
   end
-  
+
   # 名前表ファンタジー(D66)
   def mk_name_fa_table(num)
     table = [
@@ -1186,13 +1159,13 @@ INFO_MESSAGE_TEXT
   # デバイスファクトリー(1D6)
   def mk_device_factory_table(num)
     output = mk_item_decide_table(rand(6) + 1)
-    
+
     num = 1
     num.times do |i|
       dice, = roll(2, 6)
       output = output + ' / ' + mk_item_features_table(dice)
     end
-    
+
     return output
   end
 
@@ -1417,7 +1390,7 @@ INFO_MESSAGE_TEXT
   def mk_item_features_table(num)
     output = ""
     dice, = roll(2, 6)
-    
+
     if(num <= 2)
       output = '「' + mk_item_power_table((rand(6))+1) + '」の神力を宿す'
     elsif(num <= 3)
@@ -1445,10 +1418,10 @@ INFO_MESSAGE_TEXT
     else
       output = '「' + mk_item_attribute_table((rand(6))+1) + '」の属性を持つ。'
     end
-    
+
     return '特性[' + num.to_s + ']：' + output
   end
-  
+
   # 神力決定表(1D6)
   def mk_item_power_table(num)
     table = [
@@ -1526,13 +1499,13 @@ INFO_MESSAGE_TEXT
 
   def mk_gender_table(num)
     output = '1'
-    
+
     if( (num % 2) != 0)
       output = '男'
     else
       output = '女'
     end
-    
+
     return output
   end
 
@@ -1652,26 +1625,26 @@ INFO_MESSAGE_TEXT
   # 地名決定表
   def mk_pn_decide_table(num)
     output = ''
-    
+
     d1, = roll(1, 6)
     d2, = roll(1, 6)
     debug("d1", d1)
     debug("d2", d2)
-    
+
     d1 = (d1 / 2.0).ceil.to_i
     d2 = (d2 / 2.0).ceil.to_i
-    
+
     num.times do |i|
       output += "「" + mk_decoration_table(d1) + mk_placename_table(d2) + "」"
     end
-    
+
     return output
   end
-  
+
   # 修飾決定表(1D6)
   def mk_decoration_table(num)
     debug("mk_decoration_table num", num)
-    
+
     table = [
              [ 1, lambda{ mk_basic_decoration_table(d66(2)) } ],
              [ 2, lambda{ mk_spooky_decoration_table(d66(2)) } ],
@@ -2049,8 +2022,6 @@ INFO_MESSAGE_TEXT
     return get_table_by_number(num, table)
   end
 
-
-  
   #################
 
   # 王国名決定表１(D66)
@@ -2136,7 +2107,6 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_number(num, table)
   end
-
 
   # 単語表１(D66)
   def mk_word_1_table(num)
@@ -2249,7 +2219,7 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_number(num, table)
   end
-  
+
   def getAftersearchBreakTable()
     get_table_by_2d6( [
                        '「おつとめ、ご苦労様です」同行する民たちが感謝の言葉をかける。《民の声》が1点回復する。',
@@ -2265,7 +2235,7 @@ INFO_MESSAGE_TEXT
                        '「へぇ、こんなヤツだったのか」仲間の意外な一面を見つける。宮廷の中から好きなキャラクター1人を選ぶ。自分のそのキャラクターに対する《好意》か《敵意》を1点上昇させ、その属性を好きなものに変更できる。',
                        ] )
   end
-  
+
   def getWholeBreakTable()
     get_table_by_2d6( [
                        '部屋の中から使えそうな装備をみつくろう。宮廷全員は、それぞれ好きなコモンアイテムのカテゴリを選び、そのランダムにコモンアイテムを1つ獲得する。そのアイテムにレベルがあれば、それは1レベルのものとなる。',
@@ -2281,7 +2251,7 @@ INFO_MESSAGE_TEXT
                        '宮廷の前に光り輝くアイテムが降臨する。レア武具アイテムかレア一般アイテムのどちらかを選ぶ。ランダムにそのアイテムを1つ選び、それを獲得する。',
                       ] )
   end
-  
+
   def getLoversBreakTable()
     table = [
       [11, '「あーもう、最悪！」仲良く休憩するつもりが、ひどい喧嘩になってしまう。この表の使用者のお互いに対する《好意》が0になり、その値の分だけお互いに対する《敵意》が上昇する。'],
@@ -2306,9 +2276,8 @@ INFO_MESSAGE_TEXT
       [56, '「え？　え？　えぇぇぇぇッ！？」ふとした拍子に唇がふれあう。受け身キャラの攻め気キャラ以外に対する《好意》がすべて0になり、その値のぶんだけ攻め気キャラに対する《好意》が上昇する。'],
       [66, '「…………」気がつくとお互い、目をそらせなくなってしまう。そのまま顔を寄せ合い……。この表の使用者のお互いに対する《好意》が2点上昇し、その属性を「愛情」にする。'],
     ]
-    
+
     value = d66(2)
     return get_table_by_number(value, table), value
   end
-  
 end

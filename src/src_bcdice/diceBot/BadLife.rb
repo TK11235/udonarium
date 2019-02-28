@@ -6,7 +6,7 @@ class BadLife < DiceBot
   def initialize
     super
   end
-  
+
   def gameName
     '犯罪活劇RPGバッドライフ'
   end
@@ -14,7 +14,7 @@ class BadLife < DiceBot
   def gameType
     "BadLife"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定：nBADm[±a][Cb±c][Fd±e][@X±f][!OP]　　[]内のコマンドは省略可。
@@ -37,7 +37,6 @@ BL8@15 → 1ダイスで修正+8、難易度15の判定。
 GL6@20 → 1ダイスで修正+6、難易度20の判定。〈波乱万丈〉の効果。
 GL6@20!HA → 上記に加えて〈先見の明〉［重撃］の効果。
 
-
 ・コードネーム表
 怪盗：TRN　　　闇医者：DRN　　博徒：GRN
 殺シ屋：KRN　　業師：SRN　　　遊ビ人：BRN
@@ -45,32 +44,30 @@ GL6@20!HA → 上記に加えて〈先見の明〉［重撃］の効果。
 ・スキル表：SKL
 MESSAGETEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     command = command.upcase
-    
+
     result = judgeDice(command)
     return result unless result.nil?
-    
-    output = 
+
+    output =
       case command
-        
+
       when /([TDGKSB])RN/i
         initials = $1
         get_name_table(initials)
-      
+
       when 'SKL'
         get_skill_table
-      
+
       else
         nil
       end
-    
+
     return output
   end
-  
-  
+
   def judgeDice(command)
     unless /(\d+)?(BAD|BL|GL)([\+\-\d+]*)((C|F)([\+\-\d+]*)?)?((C|F)([\+\-\d+]*))?(\@([\+\-\d+]*))?(\!(\D*))?/i === command
       return nil
@@ -87,10 +84,10 @@ MESSAGETEXT
     reg13 = $13
 
     diceCount = (reg1 || 1).to_i#($1 || 1).to_i
-    
+
     critical = 20
     fumble = 1
-    
+
     #isStormy = ($2 == 'GL')  # 波乱万丈
     isStormy = (reg2 == 'GL')  # 波乱万丈
     if( isStormy )
@@ -108,8 +105,7 @@ MESSAGETEXT
     
     return checkRoll(diceCount, modify, critical, fumble, target, isStormy, optionalText)
   end
-  
-  
+
   def get_critival_fumble(critical, fumble, marker, text)
     case marker
     when 'C'
@@ -117,43 +113,42 @@ MESSAGETEXT
     when 'F'
       fumble += get_value(text)
     end
-    
+
     return critical, fumble
   end
-  
-  
+
   def checkRoll(diceCount, modify, critical, fumble, target, isStormy, optionalText)
     isAnticipation = optionalText.include?('A')    # 先見の明
     isHeavyAttack = optionalText.include?('H')     # 重撃
-    
+
     dice, diceText = roll(diceCount, 20)
     diceMax = 0
     diceArray = diceText.split(/,/).collect{|i|i.to_i}
     diceArray.each do |i|                            # さくら鯖で.maxを使うと、何故か.minになる……
       diceMax = i if( i > diceMax )
     end
-    
+
     diceMax = 5 if( isHeavyAttack && diceMax <= 5 )  # 重撃
-    
+
     isCritical = (diceMax >= critical)
     isFumble = (diceMax <= fumble)
-    
+
     diceMax = 20 if( isCritical )                    # クリティカル
     total = diceMax + modify
     total += 5 if( isAnticipation && diceMax <= 7 )  # 先見の明
     total = 0 if( isFumble )                         # ファンブル
-    
+
     result = "#{diceCount}D20\(C:#{critical},F:#{fumble}\) ＞ "
     result += "#{diceMax}\[#{diceText}\]"
     result += "\+" if( modify > 0 )
     result += "#{modify}" if( modify != 0 )
     result += "\+5" if( isAnticipation && diceMax <= 7 )  # 先見の明
     result += " ＞ 達成値：#{total}"
-    
+
     if(target > 0)
       success = total - target
       result += ">=#{target} 成功度：#{success} ＞ "
-      
+
       if( isCritical )
         result += "成功（クリティカル）"
       elsif( total >= target )
@@ -166,16 +161,15 @@ MESSAGETEXT
       result += " クリティカル" if( isCritical )
       result += " ファンブル" if( isFumble )
     end
-    
+
     skillText = ""
     skillText += "〈波乱万丈〉" if( isStormy )
     skillText += "〈先見の明〉" if( isAnticipation )
     skillText += "［重撃］" if( isHeavyAttack )
     result += " #{skillText}" if( skillText != "" )
-    
+
     return result
   end
-  
 
   def get_name_table(initials)
     case initials
@@ -326,10 +320,10 @@ MESSAGETEXT
     else
       return nil
     end
-    
+
     return get_badlife_1d20_table_result(name, table)
   end
-  
+
   def get_skill_table
     name = 'スキル表'
     table = [
@@ -436,24 +430,22 @@ MESSAGETEXT
             ]
     dice, = roll(1, 100)
     result = get_table_by_number(dice, table)
-    
+
     return get_badlife_table_result(name, dice, result)
   end
-  
+
   def get_badlife_1d20_table_result(name, table)
     dice, = roll(1, 20)
     output = get_table_by_number(dice, table)
     return get_badlife_table_result(name, dice, output)
   end
-  
+
   def get_badlife_table_result(name, dice, output)
     return "#{name}(#{dice}) ＞ #{output}"
   end
-  
+
   def get_value(text)
     text ||= ""
     return parren_killer("(0#{ text })").to_i
   end
-  
-  
 end

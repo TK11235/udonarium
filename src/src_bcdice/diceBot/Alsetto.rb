@@ -42,9 +42,8 @@ ALGコマンドは「2以下」でトライアンフ処理を行います。
 MESSAGETEXT
   end
 
-
   def rollDiceCommand(command)
-    
+
     # ALCコマンド：命中判定
     # ALCコマンド：成功判定
     if /(\d+)AL(C|G)?(\d+)?((x|\*)(\d+))?$/i === command
@@ -64,52 +63,50 @@ MESSAGETEXT
       damage = ($6 || 0).to_i
       return checkRoll(rapid, target, damage, isCritical, criticalNumber)
     end
-    
+
     return nil
   end
-  
-  
+
   def checkRoll(rapid, target, damage, isCritical, criticalNumber)
     totalSuccessCount = 0
     totalCriticalCount = 0
     text = ""
-    
+
     rollCount = rapid
-    
+
     while rollCount > 0
       dice, diceText = roll(rollCount, 6, @sortType)
       diceArray = diceText.split(/,/).collect{|i|i.to_i}
 
       successCount = 0
       criticalCount = 0
-      
+
       diceArray.each do |i|
         if(i <= target)
           successCount += 1
         end
-        
+
         if(i <= criticalNumber)
           criticalCount += 1
         end
       end
-      
+
       totalSuccessCount += successCount
       totalCriticalCount += 1 unless criticalCount == 0
-      
+
       text += "+" unless( text.empty? )
       text += "#{successCount}[#{diceText}]"
-      
+
       break unless( isCritical )
-      
+
       rollCount = criticalCount
     end
-    
-    
+
     isDamage = (damage != 0)
-    
+
     if( isDamage )
       totalDamage = totalSuccessCount * damage
-      
+
       result = "(#{rapid}D6\<\=#{target}) ＞ #{text} ＞ Hits：#{totalSuccessCount}*#{damage} ＞ #{totalDamage}ダメージ"
       result += " / #{totalCriticalCount}トライアンフ" if( isCritical )
     else
@@ -119,5 +116,4 @@ MESSAGETEXT
 
     return result
   end
-  
 end

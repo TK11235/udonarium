@@ -3,6 +3,7 @@
 require 'diceBot/Torg'
 
 class Torg1_5 < Torg
+  setPrefixes(Torg.prefixes)
   
   def gameName
     'トーグ1.5版'
@@ -133,5 +134,4 @@ class Torg1_5 < Torg
     
     return "#{over_kill_damage}レベル負傷  KO#{over_kill_shock}"
   end
-  
 end

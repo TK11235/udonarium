@@ -1,48 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class KillDeathBusiness < DiceBot
-  setPrefixes([
-    'HST',
-    'ST[1-2]?',
-    'DWT', 'DeathWT',
-    'RWT', 'RevengeWT',
-    'VWT', 'VictoryWT',
-    'PWT', 'PossesionWT',
-    'CWT', 'ControlWT',
-    'FWT', 'FlourishWT',
-    'IWT', 'IntensifyWT',
-    'HWT', 'HealthWT',
-    'SaWT', 'SafetyWT',
-    'LWT', 'LongevityWT',
-    'EWT', 'ExistWT',
-    'NAME[1-3]?', 'NAME[1-3]?',
-    'OSPT', 'OccultSPT',
-    'FSPT', 'FamilySPT',
-    'LoSPT', 'LoveSPT',
-    'JSPT', 'JusticeSPT',
-    'TSPT', 'TrainingSPT',
-    'BSPT', 'BeamSPT',
-    'CMT',
-    'EST', 'sErviceST',
-    'SOUL',
-    'STGT',
-    'HSAT[1-2]?',
-    'EXT[1-4]?',
-    'SKLT',
-    'SKLJ',
-    'ERT',
-    'WKT',
-    'PCDT',
-    'OHT',
-    'PCT1',
-    'PCT2',
-    'PCT3',
-    'PCT4',
-    'PCT5',
-    'PCT6',
-    'PCT7',
-    'JD.*'
-  ])
 
   def initialize
     super
@@ -50,15 +8,15 @@ class KillDeathBusiness < DiceBot
     @sortType = 1
     @d66Type = 2
   end
-  
+
   def gameName
     'キルデスビジネス'
   end
-  
+
   def gameType
     "KillDeathBusiness"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定
@@ -88,16 +46,15 @@ class KillDeathBusiness < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     return '' unless(signOfInequality == ">=")
-    
-    output = 
+
+    output =
       if(dice_n <= 2)
         " ＞ ファンブル(判定失敗。【視聴率】が20％減少)"
       elsif(dice_n >= 12)
@@ -107,15 +64,14 @@ INFO_MESSAGE_TEXT
       else
         " ＞ 失敗"
       end
-    
+
     return output
   end
-  
-  
+
   def rollDiceCommand(command)
-    
+
     debug("rollDiceCommand command", command)
-    
+
     #判定チェックは先に処理
     case command
     when @@judogeDiceReg
@@ -123,48 +79,46 @@ INFO_MESSAGE_TEXT
       text = "判定#{result}"
       return text
     end
-    
+
     #判定以外なら表コマンドの処理に
     return rollTableCommand(command)
   end
-  
-  
+
   @@judogeDiceReg = /(^|\s)JD(\d+)([\+\-]\d+)?(,(\d+))?($|\s)/i
-  
+
   def judgeDice(command)
-    
+
     unless(@@judogeDiceReg === command)
       return '1'
     end
-    
+
     target = $2.to_i
     modify = $3.to_i
     fumble = $5.to_i
-    
+
     result = ""
-    
+
     if(target > 12 )
       result  += "【#{command}】 ＞ 難易度が12以上はスペシャルのみ成功。\n"
       target = 12
     end
-    
+
     if(target < 5 )
       result  += "【#{command}】 ＞ 難易度の最低は5。\n"
       target = 5
     end
-    
+
     if( fumble < 2 )
       fumble = 2
     elsif(fumble > 11 )
       result  += "【#{command}】 ＞ スペシャルを出すと必ず成功なので、ファンブル率は11とする。\n"
       fumble = 11
     end
-    
-    
+
     number, diceText, = roll(2, 6)
-    
+
     result += "【難易度#{target}、補正#{modify}、ファンブル率#{fumble}】 ＞ 出目(#{diceText}) ＞ "
-    
+
     if(number == 2 )
       result += "出目が2なのでファンブル！(判定失敗。【視聴率】が20％減少)"
     elsif(number == 12)
@@ -179,75 +133,76 @@ INFO_MESSAGE_TEXT
          result += "達成値#{number}、難易度以上なので判定成功！"
        end
     end
-    
-        
+
     return result
   end
-  
-  
-  
+
   def rollTableCommand(command)
+
+    
+    result = getTableCommandResult(command, @@tables)
+    return result unless result.nil?
     
     tableName = ""
     result = ""
-    
+
 	case command
-      
+
     when "HST"
       tableName, result, number = getHistoryTableResult
-      
+
     when /^ST(\d)?$/
 	  #シーン表
       type = $1.to_i
-      
+
 	  tableName, result, number = getSceneTableResult(type)
-      
+
     when /^.+WT$/i
 	  #願い事表
       tableName, result, number = getWishTableResult(command)
-      
+
     when /^NAME(\d)?$/
 	  #万能命名表
       type = $1.to_i
       tableName, result, number = getNameTableResult(type)
-      
+
     when /^.+SPT$/i
 	  #サブプロット表
       tableName, result, number = getSubprotTableResult(command)
-      
+
     when "CMT"
 	  #CM表
       tableName, result, number = getCmTableResult()
-      
+
     when "ERT"
 	  #副作用蘇生表
       tableName, result, number = getErTableResult()
-      
+
     when "WKT"
 	  #一週間表
-      tableName, result, number = getWKTableResult() 
-            
+      tableName, result, number = getWKTableResult()
+
     when /^EST$/i, /^sErviceST$/i
       tableName, result, number = getServiceSceneTableResult()
-      
+
     when "SOUL"
       tableName, result, number = getSoulTableResult()
-	  
+
     when "STGT"
       tableName, result, number = getSceneTelopGenericTableResult()
-	  
+
     when /^HSAT(\d)?$/
       type = $1.to_i
       tableName, result, number = getHairStylistAbuseTableResult(type)
-	  
+
     when /^EXT(\d)?$/
       type = $1.to_i
       tableName, result, number = getExtraTableResult(type)
-	  
+
     when /^SKL(T|J)$/
 	  type = $1
       tableName, result, number = getSkillTableResult(type)
-      
+
     when "PCDT"
 	  #製作委員決定表
       tableName, result, number = getpcTableResult()
@@ -275,23 +230,19 @@ INFO_MESSAGE_TEXT
     when "PCT7"
 	  #ヘルベアタスク表
       tableName, result, number = getpbTableResult()
-
-    else
-      debug("rollDiceCommand commandNOT matched -> command:", command)
-      return ""
 	end
-    
+
     if( result.empty? )
       return ""
     end
-	
+
 	text = "#{tableName}(#{number})：#{result}"
 	return text
   end
-  
+
   def getHistoryTableResult
     tableName = "履歴表"
-    
+
     table = [
              '魔術
 あなたは悪魔との接触を目指して研磨を積んでいたオカルティスト、または恐怖の探索者である。たいへんな苦労の末、ようやく現れた悪魔は、願いと引き替えに番組に出ろ、などと言い出した。あなたは少々あっけにとられながらも、そもそも悪魔を探していた理由である願い事を叶えるため、彼らの主催する番組に出演する事を承諾した。',
@@ -307,16 +258,15 @@ INFO_MESSAGE_TEXT
 あなたは平穏な人生を送っていたが、あるとき目の前に悪魔が現れる。そいつは番組出演のエントリーシートを持っていて、そこにはあなたの名前が書かれていた。友人が勝手にあなたの名前で番組にエントリーシートを送っていたのだ！　あなたはそのまま拉致され、むりやり願い事を決めさせられ、悪趣味な番組で暴力を撒き散らす事になってしまった。',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getSceneTableResult(type)
     debug("getSceneTableResult type", type)
-    
+
     tableName = "シーン表"
-    
+
     sceneTable1 = [
                    [11, 'あなたが根城にしていた'],
                    [12, 'あなたの写真で壁が埋め尽くされた'],
@@ -363,10 +313,10 @@ INFO_MESSAGE_TEXT
                    [56, '民家'],
                    [66, '野原'],
                   ]
-    
+
     result = ''
     number = 0
-    
+
     case type
     when 1
       result, number = get_table_by_d66_swap(sceneTable1)
@@ -378,17 +328,16 @@ INFO_MESSAGE_TEXT
       result = "#{result1}#{result2}"
       number = "#{num1},#{num2}"
     end
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getWishTableResult(command)
     debug("getWishTableResult command", command)
-    
+
     tableName = ''
     table = []
-    
+
     case command
     when /^DWT$/i, /^DeathWT$/i
       tableName = "願い事表「死」"
@@ -501,17 +450,16 @@ INFO_MESSAGE_TEXT
                '理想の人生を手に入れたい。',
               ]
     end
-    
+
     result, number = get_table_by_1d6(table)
     debug("getWishTableResult result", result)
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getNameTableResult(type)
     tableName = "万能命名表"
-    
+
     nameTable1 = [
                   [11, 'アナログ'],
                   [12, 'イージー'],
@@ -581,10 +529,10 @@ INFO_MESSAGE_TEXT
                   [56, 'モーター'],
                   [66, 'レッグ'],
                  ]
-    
+
     result = ''
     number = 0
-    
+
     case type
     when 1
       result, number = get_table_by_d66_swap(nameTable1)
@@ -599,15 +547,14 @@ INFO_MESSAGE_TEXT
       result = "#{result1}#{result2}#{result3}"
       number = "#{num1},#{num2},#{num3}"
     end
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getSubprotTableResult(command)
     tableName = ''
     table = []
-    
+
     case command
     when /^OSPT$/i, /^OccultSPT$/i
       tableName = "サブプロット表「オカルト」"
@@ -777,15 +724,14 @@ INFO_MESSAGE_TEXT
 クリア条件：相手への関係の【深度】を２以上にする。すると、あなたと相手は友情のようなもので結ばれるかもしれないし、やはり無理だったのだと、あなたが諦めるかもしれない。
 報酬：【視聴率】10%増加、200【ソウル】',
               ]
-      
+
     end
-    
+
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getCmTableResult()
     tableName = "CM表"
     table = [
@@ -812,11 +758,10 @@ INFO_MESSAGE_TEXT
              [66, 'ヘル入浴剤／体が溶ける！新感覚で話題を呼んだヘル入浴剤がついに登場！死体の処理には使わないでください。'],
             ]
     result, number = get_table_by_d66_swap(table)
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getErTableResult()
     tableName = "蘇生副作用表"
     table = [
@@ -843,11 +788,11 @@ INFO_MESSAGE_TEXT
              [66, '立派な角が額に生えた'],
             ]
     result, number = get_table_by_d66_swap(table)
-    
+
     return tableName, result, number
   end
-  
-  def getWKTableResult() 
+
+  def getWKTableResult()
     tableName = "一週間表"
     table = [
              [11, '家を追い出されたヘルＰが泊まりに来た'],
@@ -873,11 +818,10 @@ INFO_MESSAGE_TEXT
              [66, '妙に寄付を募る営業電話がかかってくる週だった'],
             ]
     result, number = get_table_by_d66_swap(table)
-    
+
     return tableName, result, number
   end
 
-  
   def getServiceSceneTableResult()
     tableName = "サービスシーン表"
     sceneTable = [
@@ -889,7 +833,7 @@ INFO_MESSAGE_TEXT
                   '別ジャンルサービスシーン表',
                  ]
     sceneGroup, number1 = get_table_by_1d6(sceneTable)
-    
+
     case sceneGroup
     when "脱衣系サービスシーン表"
       table = [
@@ -946,15 +890,14 @@ INFO_MESSAGE_TEXT
                'ロボ',
               ]
     end
-    
+
     resultTmp, number2 = get_table_by_1d6(table)
     result = "#{sceneGroup}「#{resultTmp}」を行う。"
     number = "#{number1}#{number2}"
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getSoulTableResult()
     tableName = "ソウル放出表"
     table = [
@@ -966,11 +909,10 @@ INFO_MESSAGE_TEXT
              '300',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getSceneTelopGenericTableResult()
     tableName = "汎用演出表"
     table = [
@@ -982,14 +924,13 @@ INFO_MESSAGE_TEXT
              'ヘルバンドの新曲がBGMとして流れる',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getHairStylistAbuseTableResult(type)
     tableName = "ヘルスタイリスト罵倒表"
-    
+
     hellStylistAbuseTable1 = [
                               [11, ' 汁まみれになった'],
                               [12, ' お爺ちゃんがこのまえ捨てた'],
@@ -1036,7 +977,7 @@ INFO_MESSAGE_TEXT
                               [56, ' 毛虫'],
                               [66, ' 野良犬'],
                              ]
-                             
+
       hellStylistwtable1 = [
                '「まるで『',
                '「まるで『',
@@ -1053,7 +994,7 @@ INFO_MESSAGE_TEXT
                '』に見えるわ。」',
                '』そっくりよ！」',
               ]
-    
+
     case type
       when 1
         result, number = get_table_by_d66_swap(hellStylistAbuseTable1)
@@ -1067,11 +1008,10 @@ INFO_MESSAGE_TEXT
         result = "#{before}#{result1}#{result2}#{after}"
         number = "#{num1},#{num2}"
     end
-    
+
     return tableName, result, number
   end
-  
-  
+
   def getSkillTableResult(type)
     skillTableFull = [
                       ['職業', ['無職', '芸術家', '研究者', '家事手伝い', '学生', '悪漢', '労働者', '探偵', '大物', '医師', '公務員']],
@@ -1093,11 +1033,10 @@ INFO_MESSAGE_TEXT
       result = skillGroup
       number = num1
     end
-    
-    
+
     return tableName, result, number
   end
-  
+
   def getExtraTableResult(type)
     tableName = "エキストラ表"
     extraTable1 = [
@@ -1192,7 +1131,7 @@ INFO_MESSAGE_TEXT
 				   [56, "不機嫌に登場"],
 				   [66, "陽気に登場"],
 	              ]
-	
+
     case type
     when 1
       result, number = get_table_by_d66_swap(extraTable1)
@@ -1210,7 +1149,7 @@ INFO_MESSAGE_TEXT
       result = "#{result1}#{result2}が#{result3}#{result4}"
       number = "#{num1},#{num2},#{num3},#{num4}"
     end
-    
+
     return tableName, result, number
   end
 
@@ -1240,7 +1179,7 @@ INFO_MESSAGE_TEXT
              [66, 'ヘルベア'],
             ]
     result, number = get_table_by_d66_swap(table)
-    
+
     return tableName, result, number
   end
 
@@ -1255,7 +1194,7 @@ INFO_MESSAGE_TEXT
              'エピソード中の表現が微妙かつ厄介な問題を引き起こし、たくさんのヘルピープルが嫌な気分になったうえ公開ナシに。',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
 
@@ -1270,7 +1209,7 @@ INFO_MESSAGE_TEXT
              '「長回し。」指定特技は《生》。カットの切り替わりなしで、30分ほど同じシーンが続く。NGは許されない。これで間を持たせられるのはプロの俳優くらいのものだが、回収人は演技の素人だ。',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
   def getprTableResult()
@@ -1284,7 +1223,7 @@ INFO_MESSAGE_TEXT
              '「食事が出ない。」指定特技は《獲得》。食事の時間だが、ヘル仕出し弁当が来ない。その分の予算を着服されたのだ。空腹のままいい演技をするには、気合に頼るしかない。',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
   def getpnTableResult()
@@ -1298,7 +1237,7 @@ INFO_MESSAGE_TEXT
              '「人類一般への憎しみ。」指定特技は《復讐》。理由なく人を憎むことを強要される。もともと性格のいい回収人にとってはかなりの難行だ。人類の悪いところ探しをしよう！',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
   def getpdTableResult()
@@ -1312,7 +1251,7 @@ INFO_MESSAGE_TEXT
              '「お前そのものがNG。」指定特技は《安全》。回収人の人選そのものに難癖をつけられた。あなたにNGを出すことだけが目的だ。キレずに耐えてくれ。相手は超強いのだ。',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
   def getpfTableResult()
@@ -1326,7 +1265,7 @@ INFO_MESSAGE_TEXT
              '「局部へのひどい打撃。」指定特技は《死》。ヘルADや他のキャラクターから局部を強打されることを強要される。死なずにうまく痛がれ。下手をするとショックでそのまま死ぬ！',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
   def getpgTableResult()
@@ -1340,7 +1279,7 @@ INFO_MESSAGE_TEXT
              '「混ざってダンス。」指定特技は《健康》。いきなりダンスシーンが始まる！ただし回収人はバックダンサーだ。歌え！踊りきれ！息切れしたり笑顔が引きつるとNGだ！',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
   def getpbTableResult()
@@ -1354,9 +1293,133 @@ INFO_MESSAGE_TEXT
              '「ヘルお札。」指定特技は《繁栄》。願いを成就する悪霊が、あなたの成功を確約！その後は成功したまま事故で死ぬことになるが、そんなの些細なことだ！',
             ]
     result, number = get_table_by_1d6(table)
-    
+
     return tableName, result, number
   end
 
-end
+  @@tables =
+    {
 
+    'ANSPT' => {
+      :name => "サブプロット表「対悪魔」",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+『退魔の印』\nキャラクターから一人を選び、相手が「小道具」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の持っているものが有名なマジックアイテムであり、将来的に悪魔と戦うときに有用だと確信する。貸してもらう約束をとりつけなければ！相手への関係を、属性「退魔師」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を2以上にする。すると、相手は小道具を譲ることに同意してくれる。それが役に立つのかは、また別の話。\n報酬：【視聴率】１０％増加、200【ソウル】
+『サービスしない』\nキャラクターから一人を選び、相手が「衣装」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手の姿がヒントになって、サービスシーンが失敗すればヘルピープルがガッカリするだろうと気づく。相手への関係を、属性「失敗要因」で獲得する。【深度】は１になる。\nクリア条件：相手がサービスシーンを失敗したところに居合わせる。結局、心の声なども放送されているので、あなたの無謀な試みはヘル視聴者に筒ｔ抜けだ。\n報酬：【視聴率】１０％増加、あなたと相手の両方に200【ソウル】
+『悪魔の手下』\nキャラクターから一人を選び、相手が「職業」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手の職業がなんであるのか気づく……それは昔からあなたが悪魔の手下とみなしている職業だった！相手への関係を、属性「悪魔の手下」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を2以上にする。すると誤解が解けて、職業的偏見も解消される……あるいは、本当に悪魔の手下であったことが判明する。\n報酬：【視聴率】１０％増加、200【ソウル】
+『番組失敗』\nキャラクターから一人を選び、相手が「情動」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の抱いている興奮や不安を、ヘルＰも同様に抱いていることが分かる。つまり、この番組がうまくいかなければ、悪魔が一匹苦しむ。相手への関係を、属性「気づき」で獲得する。【深度】は１になる。\nクリア条件：結果フェイズ開始時に【視聴率】が30%以下になっていること。これで奴をリンボにトばせるかもしれない。\n報酬：【視聴率】１０％増加、200【ソウル】
+『不殺』\n標的が「願望」で修得している特技を指定特技として判定を行う。判定に成功すると、標的を殺さないことで悪魔の力を削ぐことができると気づく。そのためには、相手を守らないといけない。相手への関係を、属性「守るべき人」で獲得する。【深度】は１になる。\nクリア条件：結果フェイズまで相手を生き残らせる。怒るヘルＰに皮肉の一つでも言ってやるといいだろう。\n報酬：【視聴率】１０％増加、700【ソウル】
+『仲間』\nキャラクターから一人を選び、相手が「動作」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手が悪魔と戦う際に力になってくれる人物だと確信する。愚かな番組への協力をやめさせれば、きっと大丈夫だ。相手への関係を、属性「同士」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を3にする。結局断られるかもしれないが、あなたは言うだけ言ったことで満足した。\n報酬：【視聴率】１０％増加、相手が回収人なら400【ソウル】　相手がＮＰＣなら600【ソウル】
+TABLE_TEXT_END
+    },
+
+    'MASPT' => {
+      :name => "サブプロット「意地悪」",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+『二位狙い』\nキャラクターから一人を選び、相手が「願望」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたはがっかりした相手の顔を見たくなる。相手への関係を、属性「二位にしたい」で獲得する。【深度】は１になる。\nクリア条件:結果フェイズに他のサブプロットクリアの処理が終わったあとで、相手の【ソウル】が回収人のなかで最も多い状態ではないこと。ギリギリの二位にしてやることで、いい顔が見られるだろう。\n報酬:【視聴率】１０％増加、相手の所持【ソウル】と同じだけの【ソウル】(最低0、最大600)
+『偏見』\nキャラクターから一人を選び、相手が「職業」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手の職業に対して根強い偏見を持っていることになる。どんどんイヤミを言っていこう。相手への関係を、属性「いらない奴」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を3にする。あなたの偏見は解消されるのかもしれないし、あるいは相手がひどく落ち込むことで、あなたが勝利を確信するのかもしれない。\n報酬:【視聴率】１０％増加、相手が回収人なら400【ソウル】　相手がＮＰＣなら600【ソウル】
+『ダメ衣装』\nキャラクターから一人を選び、相手が「衣装」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手の衣装が非常にダメだと確信する。罵倒したい。いやむしろ罵倒しないといけない。相手への関係を、属性「服がダメ」で獲得する。【深度】は１になる。\nクリア条件:相手と同じシーンに三回登場し、三シーンにわたってヘルスタイリスト罵倒表を使った罵倒を行う。オリジナルの罵倒でもかまわない。\n報酬:【視聴率】１０％増加、あなたと相手の両方に100【ソウル】
+『弱そうな奴』\nキャラクターから一人を選び、相手が「動作」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手の動きが非常に一般人じみていて簡単に倒せそうであると確信する。相手への関係を、属性「弱そう」で獲得する。【深度】は１になる。\nクリア条件:相手に戦闘を挑みキラートリックで倒す。ラッキーヒットだったのかもしれないし、相手は本当にチョロかったのかもしれない。だが、そんなことは結果の前には関係ない。\n報酬:【視聴率】１０％増加、500【ソウル】
+『ニセブランド』\nキャラクターから一人を選び、相手が「小道具」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の持っているアイテムがニセのブランド品だと確信する！これはしつこく言い立てなければ！相手への関係を、属性「情報弱者」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にする。あなたの間違いが判明するか、あなたが正しかったことが判明するか、あるいはどうでもよくなるか。選ぶのはあなただ！\n報酬:【視聴率】１０％増加、200【ソウル】
+『泣かせたい』\nキャラクターから一人を選び、相手が「情動」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手の泣き顔がヘル視聴者(と、あなた)に非常な満足感を与えてくれるであろうと確信する。相手への関係を、属性「泣かせたい人」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にする。相手は泣き出すか、そっと涙を流す……が、理由は相手が決定する。血が目に入っただけかもしれない。\n報酬:【視聴率】１０％増加、200【ソウル】
+TABLE_TEXT_END
+    },
+
+    'MOSPT' => {
+      :name => "サブプロット表「金儲け」",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+『悪魔の代わり』\n回収人から一人を選び、相手が「願望」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたは相手の願いを叶える現実的な方法を思いつく。まとまった予算があれば可能だ。あとは売り込むだけ！相手への関係を、属性「新規顧客」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を3にする。すると、相手は承諾する……番組で負けたらの話だが。そして約束は守られない可能性がある。\n報酬：【視聴率】１０％増加、400【ソウル】
+『スカウト』\nキャラクターから一人を選び、相手が「職業」で修得している特技を指定特技として判定を行う。判定に成功すると、相手こそあなたのビジネスに必要な人材だったと気がつく。番組の勝敗がどうなるにせよ、番組終了後に相手を確保しておきたい。相手への関係を、属性「即戦力」で獲得する。【深度】は１になる。\nクリア条件：このサブプロットを獲得した次のセッションの導入シーンの始めに相手が登場する。地獄に堕ちているとダメ。\n報酬：【視聴率】１０％増加、200【ソウル】
+『売り出し』\nキャラクターから一人を選び、相手が「衣装」で修得している特技を指定特技として判定を行う。判定に成功すると、ヘルドレスの下に隠された相手の体格が、マスのニーズにぴったりと合致するものだと確信する。マネージメントして大儲けだ！相手への関係を、属性「モデル候補」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を2以上にする。すると相手のプロフィールをある程度把握することに成功し、あとで勝手に売り出すことが可能になる。\n報酬：【視聴率】１０％増加、200【ソウル】
+『クローン』\nキャラクターから一人を選び、相手が「小道具」で修得している特技を指定特技として判定を行う。判定に成功すると、その小道具はデザインがかっこいいうえに、ちょっとした施設があれば簡単にコピー品を量産できることに気がつく。相手への関係を、属性「オリジナル」で獲得する。【深度】は１になる。\nクリア条件：相手を戦闘で一度倒す。ヘルＥＲに送られる相手の小道具をそっと抜き取り、グレーな感じの工場に送ろう。来週には世界中に出回っているはずだ。\n報酬：【視聴率】１０％増加、300【ソウル】
+『チャンプ』\nキャラクターから一人を選び、相手が「動作」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の身のこなしのなかに、任意の格闘技の世界チャンプになれる素質を見て取る。いいトレーナーをつければイケるはずだ！相手への関係を、属性「原石」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を2以上にする。すると、相手は興味を示した、とあなたが確信する。チャンピオンのマネージャーとして栄華を極めるあなたの未来が目に浮かぶ。\n報酬：【視聴率】１０％増加、200【ソウル】
+『ゆるキャラ』\nキャラクターから一人を選び、相手が「情動」で修得している特技を指定特技として判定を行う。判定に成功すると、相手のムードにぴったりのキャラを思いつく。あなたの考えた変な語尾をつけさせることができれば、大ヒット間違いなしだ……！相手への関係を、属性「中身」で獲得する。【深度】は１になる。\nクリア条件：語尾を一つ指定する。相手が登場するメインフェイズのうち三つで、プレイヤーのものを含む発言すべてにその語尾をつけて喋るとクリア。他のプレイヤーやゲームマスターに語尾の欠落を指摘されるとＮＧ。\n報酬：【視聴率】１０％増加、あなたと相手の両方に300【ソウル】
+TABLE_TEXT_END
+    },
+
+    'PASPT' => {
+      :name => "サブプロット表「仕切り」",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+『協力しろ』\nキャラクターから一人を選び、相手が「動作」で修得している特技を指定特技として判定を行う。判定に成功すると、相手は番組の内容にうんざりしていて、はなから協力する気がないのだと確信する。説得して番組を盛り上げるようにしなくては！相手への関係を、属性「非協力的」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を3にする。すると相手はあなたの意気込みを分かってくれたような……くれないような。まあとにかく一区切りがつく。\n報酬：【視聴率】１０％増加、相手が回収人なら400【ソウル】相手がＮＰＣなら600【ソウル】
+『願いごと変更』\nキャラクターから一人を選び、相手が「願望」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の願いは番組的によくないものだと確信する。もっと盛り上がるような、いい願いに変えさせなければ！相手への関係を、属性「願いが下手」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にする。すると、相手は願いごとをあなたが提案したものに変更することに同意する。そして、後で本当に変更したりしなかったりするだろう。\n報酬：【視聴率】１０％増加、200【ソウル】
+『少しの助け』\nキャラクターから一人を選び、相手が「情動」で修得している特技を指定特技として判定を行う。判定に成功すると、相手は自分が手を貸してやらないとダメな奴だと直感する。放っておいたらなんの役にも立たずにいるだけになってしまうだろう。相手への関係を、属性「一人ではダメ」で獲得する。【深度】は１になる。\nクリア条件:相手に対して判定への協力を行い、その判定が成功する。すると相手の成功にも自分の協力にも満足がいき、感動的なＢＧＭも流れる。\n報酬：【視聴率】１０％増加、クリア条件達成時の相手への関係【深度】×200【ソウル】
+『トリビア』\nキャラクターから一人を選び、相手が「職業」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の職業的知識をトリビアとして披露することが番組には不可欠だと確信してしまう。なんとかして聞き出さなければ。相手への関係を、属性「トリビア係」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にする。いくつか職業的知識がヘル視聴者に披露されたことで、視聴者ではなくあなたの知識欲が満たされた。\n報酬：【視聴率】１０％増加、200【ソウル】
+『決め台詞』\nキャラクターから一人を選び、相手が「小道具」で修得している特技を指定特技として判定を行う。判定に成功すると、相手が小道具を使うときにドラマティックな決め台詞を使えば番組的にオイシイと気づく。言わせたい……！相手への関係を、属性「素人」で獲得する。【深度】は１になる。\nクリア条件:相手が参加する戦闘の開始時に、あなたの考えた決め台詞を相手に二回言わせる。途中で台詞を変えたらカウントしなおし。\n報酬：【視聴率】１０％増加、あなたと相手の両方に300【ソウル】
+『テコ入れ回避』\nキャラクターから一人を選び、相手が「衣装」で修得している特技を指定特技として判定を行う。判定に成功すると、こんな人がいるんじゃあ番組の視聴率も期待できないと確信してしまう。頑張らなければ。誰が？あなたが！相手への関係を、属性「売れなさそう」で獲得する。【深度】は１になる。\nクリア条件:結果フェイズ開始時に【視聴率】が40%以上になっている。危ない場面もあったかもしれないが、とりあえずＯＫだ。\n報酬：【視聴率】１０％増加、300【ソウル】　クリア時にフィーバーが発生していれば、さらに300【ソウル】
+TABLE_TEXT_END
+    },
+
+    'POSPT' => {
+      :name => "サブプロット表「人気」",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+『踏み台』\nキャラクターから一人を選び、相手が「情動」で修得している特技を指定特技として判定を行う。判定に成功すると、相手のようなムードの人物と一緒にサービスシーンを行えばヘル視聴者に愛されると確信する。相手への関係を、属性「踏み台」で獲得する。【深度】は１になる。\nクリア条件：相手と一緒にサービスシーンを成功させる。意図していたのかは不明だが、相手のアシストによりサービスは成功、ちょっと実況されたりもする。\n報酬：【視聴率】１０％増加、200【ソウル】
+『器用さ』\nキャラクターから一人を選び、相手が「職業」で修得している特技を指定特技として判定を行う。判定に成功すると、どんな相手と組ませてもソツなくこなすマルチな人材としてヘルＰにチヤホヤされる未来が目に浮かぶ。まずはあいつからだ。相手への関係を、属性「最初の課題」で獲得する。【深度】は１になる。\nクリア条件：合計三人のキャラクターと一緒にサービスシーンを三回成功させる。それぞれ違うキャラクターと行うこと。成功するたびにヘル視聴者はあなたの器用さに感銘を受ける。\n報酬：【視聴率】１０％増加、500【ソウル】　クリア時にフィーバーが発生していれば、さらに300【ソウル】
+『主役争い』\nキャラクターから一人を選び、相手が「願望」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の願いごとはヘル視聴者にウケて人気が出てしまいそうだと直感する。なんとか相手を自分のストーリーに巻き込まなければ。相手への関係を、属性「脇役候補」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を3にする。相手のことを深く知り、ヘルカメラに向かって事情を語らせることで、こいつのストーリーは終わったと確信できた！\n報酬：【視聴率】１０％増加、相手が回収人なら400【ソウル】　相手がＮＰＣなら500【ソウル】
+『アレを奪え』\nキャラクターから一人を選び、相手が「小道具」で修得している特技を指定特技として判定を行う。判定に成功すると、相手の持っているものは自分にこそふさわしいと確信する。ヘルスタイリストのチョイスは間違っていた。あれはあなたのものだ！相手への関係を、属性「アイテムハンガー」で獲得する。【深度】は１になる。\nクリア条件：暴力で奪うなら、相手を戦闘で一度倒す。譲ってもらいたいなら、相手への関係の【深度】を3にする。どちらにせよ、クリア条件を達成した時点であなたは高揚感に包まれて満足してしまい、結局小道具はいらないものだったと悟る。\n報酬：【視聴率】１０％増加、クリア条件達成時の相手への関係【深度】×200【ソウル】
+『振り付け』\nキャラクターから一人を選び、相手が「動作」で修得している特技を指定特技として判定を行う。判定に成功すると、相手のなにげない動きに対して、今年の流行ナンバーワンになる可能性を見て取る。あの振り付けを盗まなければ……！相手への関係を、属性「無自覚な天才」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を2以上にする。すると相手は振り付けを教えてくれて、あなたは完全にそれをモノにする。流行るかどうかはまた別の問題だ。\n報酬：【視聴率】１０％増加、200【ソウル】
+『着こなし』\nキャラクターから一人を選び、相手が「衣装」で修得している特技を指定特技として判定を行う。判定に成功すると、相手のヘルドレスの着こなしはあなたを完全に凌駕していると確信してしまう。他の面では勝っているのに。相手への関係を、属性「ファッショナブル」で獲得する。【深度】は１になる。\nクリア条件：相手への関係の【深度】を2以上にする。すると相手は着こなしについて丁寧な、あるいは短いが核心を突いていると思われる助言をあなたにしてくれる。役に立ったり立たなかったりするだろう。\n報酬：【視聴率】１０％増加、200【ソウル】
+TABLE_TEXT_END
+    },
+
+    'UMSPT' => {
+      :name => "サブプロット表「恨み」",
+      :type => '1d6',
+      :table => <<'TABLE_TEXT_END'
+『悲しい過去』\nキャラクターから一人を選び、相手が「職業」で修得している特技を指定特技として判定を行う。判定に成功すると、相手と同じ職業の人に虐げられた悲しい過去が、あなたの脳裏にフラッシュバックする。相手への関係を、属性「奴らの同類」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を２以上にする。相手を深く知っていくなかで、あなたの恨みは溶けて消えるか、さらに深まって人格の一部になるだろう。\n報酬:【視聴率】１０％増加、200【ソウル】
+『昔の恋人』\nキャラクターから一人を選び、相手が「動作」で修得している特技を指定特技として判定を行う。判定に成功すると、相手とあなたの昔の恋人がまったく同じ癖を持っている事が判明する！もしや……そして、手ひどくフラれた過去がフラッシュバックする。相手への関係を、属性「昔の恋人」で獲得する。【深度】は１になる。\nクリア条件:なぜフッたのか聞き出すため戦闘で一度倒す。すると、相手は理由を語るか、あるいはただの人違いであったことが判明する。いずれにせよあなたは人間的に成長できる……かもしれない。\n報酬:【視聴率】１０％増加、クリア条件達成時の【関係深度】×200【ソウル】
+『間違い』\nキャラクターから一人を選び、相手が「情動」で修得している特技を指定特技として判定を行う。判定に成功すると、相手と同じモチベーションで行動する人に敗北した過去が、あなたの脳裏にフラッシュバックする。奴らは間違っている。それを地獄に知らしめなければ！相手への関係を、属性「悪人」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にする。すると、相手は分かってくれる。または、あなたは理解してもらえたと思い込む。今日は久々にいい気分で眠れそうだ。\n報酬：【視聴率】１０％増加、あなたと相手の両方に100【ソウル】
+『破れた夢』\nキャラクターから一人を選び、相手が「願望」で修得している特技を指定特技として判定を行う。判定に成功すると、あなたはかつて同じ夢を抱き、そして破れていたことが判明する。夢を諦める悲しいシーンが脳裏にフラッシュバックする。相手への関係を、属性「破滅しそう」で獲得する。【深度】は１になる。\nクリア条件:相手がサブプロットを達成したシーンに登場する。すると、あなたは相手の成功を我がことのように喜んでいる自分に気づく。もしかしたら、これがきっかけで変われるのかもしれない。\n報酬:【視聴率】１０％増加、300【ソウル】
+『仇の手下』\nキャラクターから一人を選び、相手が「小道具」で修得している特技を指定特技として判定を行う。判定に成功すると、その小道具にはあなたが生涯の敵として定めた人物が関わっていることが明らかになる。そんなものを使うとは……許せん！相手への関係を、属性「奴らの手下」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にする。すると、相手は本当に奴らの手下であると確信できる。本当のところは不明。そのあとに戦闘を挑み、一度相手を倒せ。すると、あなたは満足する。次は奴だ。\n報酬:【視聴率】１０％増加、300【ソウル】
+『服よこせ』\nキャラクターから一人を選び、相手が「衣装」で修得している特技を指定特技として判定を行う。判定に成功すると、その衣装は本当はあなたが着たかったものだと判明する。ヘルスタイリストへの抗議がひどい罵倒とともに却下されるシーンが脳裏にフラッシュバックする。相手への関係を、属性「服よこせ」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にし、かつ相手からあなたへの関係の【深度】を1以上にする。根負けした相手はちょっとヘルドレスを貸してくれて、あなたは満足する。ちなみに、本当に似合っているかどうかは関係ない。\n報酬:【視聴率】１０％増加、あなたと相手の両方に300【ソウル】
+TABLE_TEXT_END
+    },
+  }
+
+  setPrefixes([
+    'HST',
+    'ST[1-2]?',
+    'DWT', 'DeathWT',
+    'RWT', 'RevengeWT',
+    'VWT', 'VictoryWT',
+    'PWT', 'PossesionWT',
+    'CWT', 'ControlWT',
+    'FWT', 'FlourishWT',
+    'IWT', 'IntensifyWT',
+    'HWT', 'HealthWT',
+    'SaWT', 'SafetyWT',
+    'LWT', 'LongevityWT',
+    'EWT', 'ExistWT',
+    'NAME[1-3]?', 'NAME[1-3]?',
+    'OSPT', 'OccultSPT',
+    'FSPT', 'FamilySPT',
+    'LoSPT', 'LoveSPT',
+    'JSPT', 'JusticeSPT',
+    'TSPT', 'TrainingSPT',
+    'BSPT', 'BeamSPT',
+    'CMT',
+    'EST', 'sErviceST',
+    'SOUL',
+    'STGT',
+    'HSAT[1-2]?',
+    'EXT[1-4]?',
+    'SKLT',
+    'SKLJ',
+    'ERT',
+    'WKT',
+    'PCDT',
+    'OHT',
+    'PCT1',
+    'PCT2',
+    'PCT3',
+    'PCT4',
+    'PCT5',
+    'PCT6',
+    'PCT7',
+    'JD.*'
+  ] + @@tables.keys)
+
+end

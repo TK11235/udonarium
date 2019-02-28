@@ -11,11 +11,11 @@ class DeadlineHeroes < DiceBot
   def gameName
     'デッドラインヒーローズ'
   end
-  
+
   def gameType
     "DeadlineHeroes"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・行為判定（DLHx）
@@ -34,20 +34,19 @@ class DeadlineHeroes < DiceBot
 ・リアルネームチャート　日本（RNCJ）、海外（RNCO）
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
-    
+
     case command
     when /^DLH(\d+([\+\-]\d+)*)/i
       expressions = $1
       return rollJudge(expressions)
-      
+
     when /^DC(L||S|C)(\d+)/i
       type = $1
       minusScore = $2.to_i
-      
-      chartName = 
+
+      chartName =
         case type
         when "L"  # L は「ライフ」
           '肉体'
@@ -56,41 +55,41 @@ INFO_MESSAGE_TEXT
         when "C"  # C は「クレジット」
           '環境'
         end
-      
+
       return fetchDeathChart(chartName, minusScore)
-      
+
     when /^RNC([JO])/i
       type = $1
       chartName = ((type == 'J') ? '日本' : '海外')
-      
+
       dice10, dice01, diceTotal = rollD100
-      
+
       text = "リアルネームチャート（#{chartName}）"
       text += ": 1D100[#{dice10},#{dice01}]=#{diceTotal}"
       text += " ＞ " + fetchResultFromRealNameChart(diceTotal, getRealNameChartByName(chartName))
-      
+
       return text
-      
+
     when /^HNC/i
       result = rollHeroNameTemplateChart()
       return "ヒーローネームチャート: 1D10[#{result[:dice]}] ＞ #{result[:result]}" unless result.nil?
     end
-    
+
     return nil
   end
-  
+
   def rollJudge(expressions)
-    
+
     target = parren_killer("(" + expressions + ")").to_i
     target = 100 if target > 100
     target = 0 if target < 0
-    
+
     dice10, dice01, diceTotal = rollD100
-      
+
     text = "行為判定(成功率:#{target}％)"
     text += " ＞ 1D100[#{dice10},#{dice01}]=#{'%02d' % [diceTotal]}"
     text += " ＞ #{'%02d' % [diceTotal]}"
-    
+
     if diceTotal <= target
       text += " ＞ 成功"
       text += " ＞ クリティカル！ パワーの代償１／２" if isRepdigit?(dice10, dice01)
@@ -98,56 +97,54 @@ INFO_MESSAGE_TEXT
       text += " ＞ 失敗"
       text += " ＞ ファンブル！ パワーの代償２倍＆振り直し不可" if isRepdigit?(dice10, dice01)
     end
-    
+
     return text
   end
-  
-  
+
   def rollD100
     dice10, = roll(1, 10)
     dice10 = 0 if dice10 == 10
     dice01, = roll(1, 10)
     dice01 = 0 if dice01 == 10
-    
+
     diceTotal = dice10 * 10 + dice01
     diceTotal = 100 if diceTotal == 0
-    
+
     return dice10, dice01, diceTotal
   end
-  
+
   def isRepdigit?(diceA, diceB)
     return diceA == diceB
   end
-  
-  
+
   def fetchDeathChart(chartName, minusScore)
     dice, = roll(1, 10)
     keyNumber = dice + minusScore
-    
+
     keyText, resultText, = fetchFromChart(keyNumber, getDeathChartByName(chartName))
-    
+
     return "デスチャート（#{chartName}）[マイナス値:#{minusScore} + 1D10(->#{dice}) = #{keyNumber}] ＞ #{keyText} ： #{resultText}"
   end
-  
+
   def fetchFromChart(keyNumber, chart)
     unless chart.empty?
       # return "key number = #{keyNumber}, size of chart = #{chart.size}, class of chart = #{chart.class}]"
       minKey = chart.keys.min
       maxKey = chart.keys.max
-      
+
       return ["#{minKey}以下", chart[minKey]] if keyNumber < minKey
       return ["#{maxKey}以上", chart[maxKey]] if keyNumber > maxKey
       return [keyNumber.to_s, chart[keyNumber]] if chart.has_key? keyNumber
     end
-    
+
     return ["未定義", "？？？"]
   end
-  
+
   def getDeathChartByName(chartName)
     return {} unless @@deathCharts.has_key? chartName
     return @@deathCharts[chartName]
   end
-  
+
   @@deathCharts = {
     '肉体' => {
       10 => "何も無し。キミは奇跡的に一命を取り留めた。闘いは続く。",
@@ -189,44 +186,41 @@ INFO_MESSAGE_TEXT
       20 => "キミの名は史上最悪の汚点として永遠に歴史に刻まれる。もはやキミを信じる仲間はなく、キミを助ける社会もない。キミは［汚名］を受けた。",
     },
   }
-  
+
   def fetchResultFromRealNameChart(keyNumber, chartInfo)
     columns, chart, = chartInfo
-    
+
     range, elements = chart.find do |range, elements|
       range.include?( keyNumber )
     end
-    
-    return nil if range.nil? 
-    
+
+    return nil if range.nil?
+
     result = "(#{range}) ＞ "
-    
+
     if elements.size <= 1
       result += elements.first
       return result
     end
-    
-    
+
     nameTextList = []
-    
+
     columns.each_with_index do |title, i|
       text = elements[i]
       next if text.nil?
       nameTextList << "#{title}: #{text}"
     end
-    
+
     result += nameTextList.join("\n")
-    
+
     return result
   end
-  
-  
+
   def getRealNameChartByName(chartName)
     return {} unless @@realNameCharts.has_key? chartName
     return @@realNameCharts[chartName]
   end
-  
-  
+
   @@realNameCharts = {
     '日本' => [['姓', '名（男）', '名（女）'], [
       [01..06, ['アイカワ／相川、愛川', 'アキラ／晶、章', 'アン／杏']],
@@ -267,33 +261,32 @@ INFO_MESSAGE_TEXT
       [97..100, ['名無し（何らかの理由で名前を持たない、もしくは失った）']],
     ]],
   }
-  
-  
+
   def rollHeroNameTemplateChart()
-    
+
     chart = getHeroNameTemplateChart()
     return nil if chart.nil?
-    
+
     dice, = roll(1, 10)
-    
+
     templateText = chart[dice][:text]
     return nil if templateText.nil?
-    
+
     result = {:dice => dice, :result => templateText}
     return result if templateText == "任意"
-    
+
     elements = chart[dice][:elements]
-    
+
     resolvedElements = elements.map{|i| rollHeroNameBaseChart(i) }
-    
+
     text = resolvedElements.map{|i| getHeroNameElementText(i)}.join(" ＋ ")
     resultText = resolvedElements.map{|i| i[:coreResult]}.join("").sub(/・{2,}/, "・").sub(/・$/, "")
-    
+
     result[:result] += " ＞ ( #{text} ) ＞ 「#{resultText}」"
-    
+
     return result
   end
-  
+
   def getHeroNameElementText(info)
     result = ""
     result += "#{info[:chartName]}" if info.has_key?(:chartName)
@@ -301,20 +294,19 @@ INFO_MESSAGE_TEXT
     result += "［#{info[:innerChartName]}］ ＞ 1D10[#{info[:innerResult][:dice]}] ＞ " if info.has_key?(:innerChartName)
     result += "「#{info[:coreResult]}」"
   end
-  
-  
+
   def rollHeroNameBaseChart(chartName)
     defaultResult = {:result => chartName, :coreResult => chartName}
-    
+
     chart = getHeroNameBaseChartByName(chartName)
     return defaultResult if chart.nil?
-    
+
     dice, = roll(1, 10)
     return defaultResult unless chart.has_key?( dice )
-    
+
     result = {:dice => dice, :result => chart[dice], :chartName => chartName}
     result[:coreResult] = result[:result]
-    
+
     if result[:result] =~ /［(.+)］/
         innerResult = rollHeroNameElementChart($1.to_s)
       result[:innerResult] = innerResult
@@ -322,35 +314,35 @@ INFO_MESSAGE_TEXT
       result[:coreResult] = innerResult[:name]
       result[:result] += " ＞ 1D10[#{innerResult[:dice]}] ＞ #{innerResult[:name]}（意味：#{innerResult[:mean]}）"
     end
-    
+
     return result
   end
-  
+
   def rollHeroNameElementChart(chartName)
-    
+
     chart = getHeroNameElementChartByName(chartName.sub("/", "／"))
     return nil if chart.nil?
-    
+
     dice, = roll(1, 10)
     return nil unless chart.has_key?( dice )
-    
+
     name, mean, = chart[dice]
-    
+
     return {:dice => dice, :name => name, :coreResult => name, :mean => mean, :chartName => chartName}
   end
-  
+
   def getHeroNameTemplateChart()
     @@heroNameTemplates
   end
-  
+
   def getHeroNameBaseChartByName(chartName)
     return @@heroNameBaseCharts[chartName]
   end
-  
+
   def getHeroNameElementChartByName(chartName)
-    return @@heroNameElementCharts[chartName] 
+    return @@heroNameElementCharts[chartName]
   end
-  
+
   @@heroNameTemplates = {
     1 => {:text => 'ベースＡ＋ベースＢ',               :elements => ['ベースＡ', 'ベースＢ']},
     2 => {:text => 'ベースＢ',                         :elements => ['ベースＢ']},
@@ -363,7 +355,7 @@ INFO_MESSAGE_TEXT
     9 => {:text => '（ベースＢ）・ザ・（ベースＢ）',   :elements => ['ベースＢ', '・ザ・', 'ベースＢ']},
     10 => {:text => '任意', :elements => ['任意']},
   }
-  
+
   @@heroNameBaseCharts = {
     'ベースＡ' => {
       1 => 'ザ・',
@@ -402,7 +394,7 @@ INFO_MESSAGE_TEXT
       10 => 'ヒーロー／スペシャル',
     },
   }
-  
+
   @@heroNameElementCharts = {
     '部位' => {
       1 => ['ハート', '心臓'],

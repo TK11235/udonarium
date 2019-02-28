@@ -8,11 +8,11 @@ class GundogRevised < DiceBot
   def gameName
     'ガンドッグ・リヴァイズド'
   end
-  
+
   def gameType
     "GundogRevised"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。
@@ -25,74 +25,73 @@ nD9ロールも対応。
 　修正を後ろに書くことも出来ます。
 INFO_MESSAGE_TEXT
   end
-  
+
   # ---- 以降、Gundog.rbよりほぼコピペ（絶対成功→ベアリーに用語変更対応の為、継承だと不都合）
   # ゲーム別成功度判定(1d100)
   def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    
+
     return '' unless(signOfInequality == "<=")
-    
+
     if(total_n >= 100)
       return " ＞ ファンブル"
     end
-    
-    if(total_n <= 1) 
+
+    if(total_n <= 1)
       return " ＞ ベアリー(達成値1+SL)"
     end
-    
+
     if(total_n <= diff)
       dig10 = (total_n / 10).to_i
       dig1 = (total_n) - dig10 * 10
       dig10 = 0 if(dig10 >= 10)
       dig1 = 0 if(dig1 >= 10)  # 条件的にはあり得ない(笑
-      
+
       if(dig1 <= 0)
         return " ＞ クリティカル(達成値20+SL)"
       end
-      
+
       return " ＞ 成功(達成値#{(dig10 + dig1)}+SL)"
     end
-    
+
     return " ＞ 失敗"
   end
-  
+
   def isD9
     true
   end
   # ---- コピペ分、ここまで
-  
+
   def rollDiceCommand(command)
     string = command.upcase
-    
+
     table = []
     ttype = ""
     type = ""
     dice = 0
     mod = 0
-    
-    
+
     # ダメージペナルティ表
     if(/(\w)DPT([\+\-\d]*)/i =~ string)
       ttype = 'ダメージペナルティー'
       head = $1
       mod = parren_killer("(0#{$2})").to_i if($2)
-      
+
       type, table = getDamageTypeAndTable(head)
     end
-    
+
     # ファンブル表
     if(/(\w)FT([\+\-\d]*)/i =~ string)
       ttype = 'ファンブル'
       head = $1
       mod = parren_killer("(0#{$2})").to_i if($2)
-      
+
       type, table = getFumbleTypeAndTable(head)
     end
-    
+
     return '1' if( type.empty? )
-    
+
     dice, diceText = roll(2, 10)
-    
+
     dice = mod
     diceArray = diceText.split(/,/).collect{|i|i.to_i}
     diceArray.each do |i|
@@ -101,9 +100,9 @@ INFO_MESSAGE_TEXT
     diceOriginalText = dice
     dice = 0 if(dice < 0)
     dice = 18 if(dice > 18)
-    
+
     output = "#{type}#{ttype}表[#{diceOriginalText}] ＞ #{table[dice]}"
-    
+
     return output
   end
 
@@ -158,7 +157,7 @@ INFO_MESSAGE_TEXT
         '手に持った武器を落とす。複数ある場合はランダム',   #17
         'ペナルティー無し',                                 #18
       ]
-      
+
     when "V"
       type = '車両'
       # 車両ダメージペナルティー表
@@ -183,7 +182,7 @@ INFO_MESSAGE_TEXT
         '車両が蛇行。乗員全員は〈運動〉判定。失敗で[不安定]',           #17
         'ペナルティー無し',                                 #18
       ]
-      
+
     when "G"
       type = '汎用'
       # 汎用ダメージペナルティー表
@@ -212,10 +211,10 @@ INFO_MESSAGE_TEXT
       head = "S" # 間違ったら射撃扱い
       type, table = getDamageTypeAndTable(head)
     end
-    
+
     return type, table
   end
-  
+
   def getFumbleTypeAndTable(head)
     case head
     when "S"
@@ -294,8 +293,7 @@ INFO_MESSAGE_TEXT
       head = "S" # 間違ったら射撃扱い
       type, table = getFumbleTypeAndTable(head)
     end
-    
+
     return type, table
   end
-  
 end

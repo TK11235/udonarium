@@ -1,25 +1,19 @@
 # -*- coding: utf-8 -*-
 
 class ColossalHunter < DiceBot
-  
   def initialize
     super
     @d66Type = 1
   end
-  
-  
-  def prefixs
-    ["CH.*", "B6T", "CNP"] + @@tables.keys
-  end
-  
+
   def gameName
     'コロッサルハンター'
   end
-  
+
   def gameType
     "ColossalHunter"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定（CH±x>=y)
@@ -38,45 +32,41 @@ class ColossalHunter < DiceBot
 ・D66ダイスあり
 MESSAGETEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     # get～DiceCommandResultという名前のメソッドを集めて実行、
     # 結果がnil以外の場合それを返して終了。
     return analyzeDiceCommandResultMethod(command)
   end
-  
-  
+
   def getCheckRollDiceCommandResult(command)
     debug("getCheckRollDiceCommandResult command", command)
-    
+
     return nil unless(/(\d+)?CH([\+\-\d]*)(>=([\+\-\d]*))?$/i === command)
-    
+
     diceCount = ($1 || 3).to_i
     modifyText = ($2 || '')
     difficultyText = $4
-    
+
 	#修正値の計算
 	modify = getValue( modifyText, 0 )
-    
+
 	#目標値の計算
     difficulty = getValue( difficultyText, nil )
-	
+
 	#ダイスロール
 	dice, dice_str = roll(diceCount, 6)
     diceList = dice_str.split(/,/).collect{|i|i.to_i}.sort
-    
+
 	total = dice + modify
-	
+
 	#出力用ダイスコマンドを生成
 	command =  "#{diceCount}CH#{modifyText}"
 	command += ">=#{difficulty}" unless(difficulty.nil?)
-	
-    
+
 	#出力文の生成
 	result = "(#{command}) ＞ #{dice}[#{dice_str}]#{modifyText} ＞ #{total}"
-    
-    
+
 	#クリティカル・ファンブルチェック
     if( isFamble(dice) )
       result += " ＞ ファンブル"
@@ -85,95 +75,88 @@ MESSAGETEXT
     else
       result += getJudgeResultString(difficulty, total)
     end
-    
+
     return result
   end
-  
-  
+
   #成否判定
   def getJudgeResultString(difficulty, total)
     return '' if(difficulty.nil?)
-    
+
     return " ＞ 成功" if(total >= difficulty)
     return " ＞ 失敗"
   end
-  
-  
+
   def getValue(text, defaultValue)
-    return defaultValue if( text == nil or text.empty? ) 
-    
-    parren_killer("(0" + text + ")").to_i 
+    return defaultValue if( text == nil or text.empty? )
+
+    parren_killer("(0" + text + ")").to_i
   end
-  
-  
+
   def isCritical(total)
     (total >= 16)
   end
-  
+
   def isFamble(total)
     (total <= 5)
   end
-  
-  
+
   def getSourceSceneDiceCommandResult(command)
     return nil unless /^B6T$/ === command
-    
+
     name = "BIG-6表"
     table = getBig6Table
     yearTitle = "年齢"
-    
+
     return getYearTableResult(name, table, yearTitle)
   end
-  
-  
+
   def getYearTableResult(name, table, yearTitle)
     item, index = get_table_by_d66(table)
     return nil if item.nil?
-    
+
     title, text, yearText, = item
 debug('yearText', yearText)
     year, calculateText = getYear(yearText)
-    
+
     result = "#{name}(#{index}) ＞ #{title}：#{text} ＞ #{yearTitle}：#{yearText}"
     result += " ＞ #{calculateText} ＞ #{yearTitle}：#{year}" unless year.nil?
     result += "歳"
-    
+
     return result
   end
-  
+
   def getYear(yearText)
     text = yearText.gsub(/(\d+)D(6+)/){ getD6xResult($1.to_i, $2.length) }
-    
+
     calculateText = "(#{text})"
     year = parren_killer( calculateText.gsub(/×/, "*") )
     return nil if year == calculateText
     return nil if year == text
-    
+
     return year, calculateText
   end
-  
-  
+
   def getD6xResult(count, dice6Count)
     total = 0
-    
+
     count.times do |i|
       number = 0
-      
+
       dice6Count.times do |i|
       number *= 10
         dice, = roll(1, 6)
         number += dice
       end
-      
+
       total += number
     end
-    
+
     return total.to_s
   end
-  
-  
+
   def getBig6Table
-    table = 
+    table =
       [
        ["この世の地獄", "あれはまさに地獄。屍の山。嘆く者。呆然とする者。目の前で潰される者。あの日、人類は霊長ではなく……弱き獣の一種となった。", "15+2D6"],
        ["悪の時代", "全ての崩壊、呆然の時。救援が望めぬとわかったなら、少なからぬ者が悪に走った。あの頃は、あなたもまた下劣なる略奪者だった。", "18+2D6"],
@@ -214,11 +197,10 @@ debug('yearText', yearText)
       ]
     return table
   end
-  
 
   def getCreateNpcDiceCommandResult(command)
     return nil unless /^CNP$/ === command
-    
+
     name = "NPC作成表"
     table = [
            ['ハンター嫌いの', 'ごろつき', '全てへの絶望'],
@@ -258,31 +240,30 @@ debug('yearText', yearText)
            ['誰からも愛される', '指導者', 'あなたへの羨望'],
            ['あなたに恋をしている', 'ハンター', 'あなたへの執着'],
           ]
-    
+
     nature, nature_number = getD66Item(table, 0)
     type, type_number = getD66Item(table, 1)
     secret, secret_number = getD66Item(table, 2)
-    
+
     result = "#{name}(#{nature_number}, #{type_number}, #{secret_number}) ＞ 性質：#{nature}／タイプ：#{type}／心の秘密：#{secret}"
     return result
   end
-  
+
   def getD66Item(table, index)
     item, number = get_table_by_d66(table)
     return item[index], number
   end
 
-  
   def getTableDiceCommandResult(command)
-  
+
     info = @@tables[command]
     return nil if info.nil?
-    
+
     name = info[:name]
     type = info[:type]
     table = info[:table]
-    
-    text, number = 
+
+    text, number =
       case type
       when '2D6'
         get_table_by_2d6(table)
@@ -293,16 +274,15 @@ debug('yearText', yearText)
       else
         nil
       end
-    
+
     return nil if( text.nil? )
-    
+
     return "#{name}(#{number}) ＞ #{text}"
   end
-  
-  
+
   @@tables =
     {
-  
+
     'AWT' => {
       :name => "覚醒表",
       :type => 'D66',
@@ -344,8 +324,7 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 天性のハンター：初めてコロッサルに対峙した時、自然にリクラフトして武装していた。しかも、歴戦のハンターと同等以上の巧みさで。あなたはこの時代、待望された天才だ。
 ありえぬ存在：BIG-6以前から、あるいはものごころつく以前から、ハンターの能力が開花していた。周囲の目は期待と不安、そして打算にまみれている。
 },},
-    
-    
+
     'CST' => {
       :name => "現状表",
       :type => 'D66',
@@ -387,7 +366,7 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 導き手：自身も葛藤しつつ、あなたは宗教者として人に教えを説く。神に見放されたこの世界でも、心の支えは必要だ。人の心は救われねばならない。　リーダー度：11
 指導者：あなたはZOSの顔役だ。多くの人望を集め、ハンターの地位を向上させている。一挙一動が注目を受ける。気をひきしめて日々を過ごさねば。　リーダー度：12
 },},
-    
+
     'HMT' => {
       :name => "ハンターマーク表",
       :type => 'D66',
@@ -429,8 +408,7 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 全身
 片眼
 },},
-    
-    
+
     'SPT' => {
       :name => "特徴表",
       :type => 'D66',
@@ -472,7 +450,7 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 健康的な体
 整った容貌
 },},
-    
+
     'PRT' => {
       :name => "プレシャス表",
       :type => 'D66',
@@ -514,7 +492,7 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 開かない懐中時計
 一組のダイス
 },},
-    
+
     'EXT' => {
       :name => "専門能力表",
       :type => 'D66',
@@ -556,8 +534,7 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 祭事　分類：日常
 商売　分類：日常
 },},
-    
-    
+
     'CAT' => {
       :name => "コロッサル行動表",
       :type => '1D6',
@@ -569,7 +546,7 @@ ZOS壊滅：住んでいたZOSがコロッサルに蹂躙される。全てが�
 何もしない。
 何もしない。
 },},
-    
+
   }
 
   setPrefixes(["CH.*", "B6T", "CNP"] + @@tables.keys)

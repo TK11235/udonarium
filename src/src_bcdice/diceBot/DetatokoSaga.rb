@@ -15,17 +15,17 @@ class DetatokoSaga < DiceBot
     @sortType = 1
     @d66Type = 2
   end
+
   def gameName
     'でたとこサーガ'
   end
-  
+
   def gameType
     "DetatokoSaga"
   end
-  
+
   def getHelpMessage
-    #TKfix <<
-    return <<INFO_MESSAGE_TEXT
+    info = <<INFO_MESSAGE_TEXT
 ・通常判定　xDS or xDSy or xDS>=z or xDSy>=z
 　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝目標値(省略時８))
 　例）3DS　2DS5　0DS　3DS>=10　3DS7>=12
@@ -38,136 +38,129 @@ class DetatokoSaga < DiceBot
 ・気力バッドエンド表　WBET (WillBadEndTable)
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
     debug("rollDiceCommand begin string", command)
-    
+
     result = ''
-    
+
     result = checkRoll(command)
     return result unless(result.empty?)
-    
+
     result = checkJudgeValue(command)
     return result unless(result.empty?)
-    
+
     debug("各種表として処理")
     return rollTableCommand(command)
   end
-  
-  
+
   # 通常判定　xDS or xDSy or xDS>=z or xDSy>=z
   def checkRoll(string)
     debug("checkRoll begin string", string)
-    
+
     return '' unless(/^(\d+)DS(\d+)?((>=)(\d+))?$/i =~ string)
-    
+
     target = 8
-    
+
     skill = $1.to_i
     flag = $2.to_i
     target = $5.to_i unless( $5.nil? )
-    
+
     result = "判定！　スキルレベル：#{skill}　フラグ：#{flag}　目標値：#{target}"
-    
+
     total, rollText = getRollResult(skill)
     result += " ＞ #{total}[#{rollText}] ＞ 判定値：#{total}"
-    
+
     success = getSuccess(total, target)
     result += " ＞ #{success}"
-    
+
     result += getCheckFlagResult(total, flag)
-    
+
     return result
   end
-  
-  
+
   def getRollResult(skill)
-    
+
     diceCount = skill + 1
     diceCount = 3 if( skill == 0 )
-    
+
     dice = []
     diceCount.times do |i|
       dice[i], = roll(1, 6)
     end
-    
+
     diceText = dice.join(',')
-    
+
     dice = dice.sort
     dice = dice.reverse if( skill != 0 )
 
     total = dice[0] + dice[1]
-    
+
     return total, diceText
   end
-  
-  
+
   def getSuccess(check, target)
-    
+
     if(check >= target)
       return "目標値以上！【成功】"
     end
-    
+
     return "目標値未満…【失敗】"
   end
-  
-  
+
   def getCheckFlagResult(total, flag)
-    
+
     if(total > flag)
       return ""
     end
-    
+
     willText = getDownWill(flag)
     result = "、フラグ以下！【気力#{willText}点減少】"
     result += "【判定値変更不可】"
-    
+
     return result
   end
-  
+
   def getDownWill(flag)
     if(flag>=10)
       return "6"
     end
-    
+
     dice, = roll(1, 6)
     return "1D6->#{ dice }"
   end
-  
-  
-  
+
   #スキル判定値　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z
   def checkJudgeValue(string)
-    
+
     debug("checkJudgeValue begin string", string)
-    
+
     return '' unless(/^(\d+)JD(\d+)?(([+]|[-]|[\/])(\d+))?$/i =~ string)
-    
+
     skill = $1.to_i
     flag = $2.to_i
     operator = $4
     value = $5.to_i
-    
+
     result = "判定！　スキルレベル：#{skill}　フラグ：#{flag}"
-    
+
     modifyText = getModifyText(operator, value)
     result += "　修正値：#{modifyText}" unless( modifyText.empty? )
-    
+
     total, rollText = getRollResult(skill)
     result += " ＞ #{total}[#{rollText}]#{modifyText}"
-    
+
     totalResult = getTotalResultValue(total, value, operator)
     result += " ＞ #{totalResult}"
-    
+
     result += getCheckFlagResult(total, flag)
-    
+
     return result
   end
-  
-  
+
   def getModifyText(operator, value)
-    operatorText = 
+    return '' if( value == 0) # TKfix
+    operatorText =
       case operator
       when "+"
         "＋"
@@ -178,12 +171,10 @@ INFO_MESSAGE_TEXT
       else
         return ""
       end
-    
+
     return "#{operatorText}#{value}"
   end
-  
-  
-  
+
   def getTotalResultValue(total, value, operator)
     case operator
     when "+"
@@ -196,32 +187,29 @@ INFO_MESSAGE_TEXT
       return "判定値：#{total}"
     end
   end
-  
-  
+
   def getTotalResultValueWhenSlash(total, value)
     return "0では割れません" if( value == 0 )
-    
+
     quotient = ((1.0 * total) / value).ceil
-    
+
     result = "#{total}÷#{value} ＞ 判定値：#{quotient}"
     return result
   end
-  
-  
-  
+
   ####################
   # 各種表
-  
+
   def rollTableCommand(command)
     command = command.upcase
     result = []
-    
+
     debug("rollDiceCommand command", command)
-    
+
     name = ''
     text = ''
     total = 0
-    
+
     case command.upcase
     when "SST", "StrengthStigmaTable".upcase
       name, text, total = choiceStrengthStigmaTable()
@@ -234,15 +222,13 @@ INFO_MESSAGE_TEXT
     else
       return
     end
-    
+
     result = "#{name}(#{total}) ＞ #{text}"
-    
+
     return result
   end
 
-
 ###表一覧
-
 
   def choiceStrengthStigmaTable()
     name = "体力烙印表"
@@ -263,11 +249,11 @@ INFO_MESSAGE_TEXT
     text, total = get_table_by_2d6(table)
     return name , text, total
   end
-  
+
   def choiceWillStigmaTable()
-    
+
     name = "気力烙印表"
-    
+
     table = %w{
 あなたは【烙印】を２つ受ける。この表をさらに２回振って受ける【烙印】を決める（その結果、再びこの出目が出ても【烙印】は増えない）。
 【絶望】どうしようもない状況。希望は失われ……膝を付くことしかできない。
@@ -285,11 +271,11 @@ INFO_MESSAGE_TEXT
     text, total = get_table_by_2d6(table)
     return name , text, total
   end
-  
+
   def choiceStrengthBadEndTable()
 
     name = "体力バッドエンド表"
-    
+
     table = %w{
 【死亡】あなたは死んだ。次のセッションに参加するには、クラス１つを『モンスター』か『暗黒』にクラスチェンジしなくてはいけない。
 【命乞】あなたは恐怖に駆られ、命乞いをしてしまった！次のセッション開始時に、クラス１つが『ザコ』に変更される！
@@ -307,11 +293,11 @@ INFO_MESSAGE_TEXT
     text, total = get_table_by_2d6(table)
     return name , text, total
   end
-  
+
   def choiceWillBadEndTable()
-    
+
     name = "気力バッドエンド表"
-    
+
     table = %w{
 【自害】あなたは自ら死を選んだ。次のセッションに参加するには、クラス１つを『暗黒』にクラスチェンジしなくてはいけない。
 【堕落】あなたは心の中の闇に飲まれた。次のセッション開始時に、クラス１つが『暗黒』か『モンスター』に変更される！
@@ -329,6 +315,4 @@ INFO_MESSAGE_TEXT
     text, total = get_table_by_2d6(table)
     return name , text, total
   end
-  
-  
 end

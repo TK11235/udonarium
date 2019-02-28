@@ -183,7 +183,8 @@ class BCDice
   end
   
   def printErrorMessage(e)
-    sendMessageToOnlySender("error " + e.to_s + $@.join("\n"))
+    #sendMessageToOnlySender("error " + e.to_s + $@.join("\n"))
+    sendMessageToOnlySender("error " + e.to_s + ($@ || []).join("\n") + $!) # TKfix $@ is nil
   end
   
   def recieveMessageCatched(nick_e, tnick)
@@ -464,8 +465,8 @@ class BCDice
       return
     end
     
-    #TKfix << 
-    arg = arg + "->#{@tnick}" unless( @tnick.empty? )
+    
+    arg += "->#{@tnick}" unless( @tnick.empty? )
     
     pointerMode = :sameNick
     output, pointerMode = countHolder.executeCommand(arg, @nick_e, channel, pointerMode)
@@ -752,8 +753,7 @@ class BCDice
     return if( output == "1" )
     
     if( @isTest )
-      #TKfix << 
-      output = output + "###secret dice###"
+      output += "###secret dice###"
     end
     
     broadmsg(output, @nick_e)
@@ -991,8 +991,6 @@ class BCDice
       dice_st_n = ""
       round = 0
       
-      #TKfix end while -> loop do
-      #begin
       loop do
         if( round >= 1 )
           # 振り足し時のダイス読み替え処理用（ダブルクロスはクリティカルでダイス10に読み替える)
@@ -1010,10 +1008,9 @@ class BCDice
           dice_st_n += "#{dice_n}"
         end
         round += 1
-  
-        break if  ( !((dice_add > 1) and (dice_n >= dice_add)) )
-      end 
-      #end while( (dice_add > 1) and (dice_n >= dice_add) )
+        
+        break unless ( (dice_add > 1) and (dice_n >= dice_add) )
+      end
       
       total +=  dice_now
       
