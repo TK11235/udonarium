@@ -350,7 +350,8 @@ export class DiceBot extends GameObject {
       let diceBotTablePrefix = 'diceBotTable_'
       let isNeedResult = true;
       try {
-        let cgiDiceBot = Opal.get('CgiDiceBot').$new();
+        Opal.gvars.isDebug = true;
+        let cgiDiceBot = Opal.CgiDiceBot.$new();
         result = cgiDiceBot.$roll(message, gameType, dir, diceBotTablePrefix, isNeedResult);
         console.log('diceRoll!!!', result);
         console.log('isSecret!!!', cgiDiceBot.isSecret);
@@ -372,7 +373,7 @@ export class DiceBot extends GameObject {
       }
       let help = '';
       try {
-        let bcdice = Opal.get('CgiDiceBot').$new().$newBcDice();
+        let bcdice = Opal.CgiDiceBot.$new().$newBcDice();
         bcdice.$setGameByTitle(gameType);
         help = bcdice.diceBot.$getHelpMessage();
         console.log('bot.getHelpMessage()!!!', help);
@@ -450,7 +451,7 @@ export class DiceBot extends GameObject {
         }
         if (http.status === 200) {
           console.log(table + ' is loading OK!!!');
-          let tableFileData = Opal.get('TableFileData');
+          let tableFileData = Opal.TableFileData;
           let array = /((.+)_(.+)).txt$/ig.exec(table);
           tableFileData.$setVirtualTableData(array[1], array[2], array[3], http.responseText);
         } else {
