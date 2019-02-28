@@ -346,8 +346,8 @@ export class DiceBot extends GameObject {
         return { result: '', isSecret: false };
       }
       let result = [];
-      let dir = []
-      let diceBotTablePrefix = 'diceBotTable_'
+      let dir = [];
+      let diceBotTablePrefix = 'diceBotTable_';
       let isNeedResult = true;
       try {
         Opal.gvars.isDebug = true;
