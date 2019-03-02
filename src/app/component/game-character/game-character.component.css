@@ -85,8 +85,8 @@
 }
 
 .pedestal-outer {
+  pointer-events: none;
   backface-visibility: hidden;
-  transform: translateZ(0.01px);
   position: absolute;
   height: 100%;
   width: 100%;
@@ -218,4 +218,12 @@
 
 .grab-group:hover .rotate-grab, .grab-group:active .rotate-grab, .rotate-grab:hover, .rotate-grab:active {
   opacity: 1;
+}
+
+.material-icons {
+  display: none;
+}
+
+.component:hover .material-icons, .component:active .material-icons {
+  display: inline;
 }
