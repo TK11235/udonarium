@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ChatTab } from '@udonarium/chat-tab';
-import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
@@ -9,8 +8,7 @@ import { EventSystem } from '@udonarium/core/system';
 import { ChatMessageService } from 'service/chat-message.service';
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
-
-import * as Beautify from 'vkbeautify';
+import { SaveDataService } from 'service/save-data.service';
 
 @Component({
   selector: 'app-chat-tab-setting',
@@ -32,7 +30,8 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: ModalService,
     private panelService: PanelService,
-    private chatMessageService: ChatMessageService
+    private chatMessageService: ChatMessageService,
+    private saveDataService: SaveDataService
   ) { }
 
   ngOnInit() {
@@ -64,13 +63,9 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
   save() {
     if (!this.selectedTab) return;
-    let xml = this.selectedTab.toXml();
+    let fileName: string = 'chat_' + this.selectedTab.name;
 
-    xml = Beautify.xml(xml, 2);
-    console.log(xml);
-
-    let files: File[] = [new File([xml], 'data.xml', { type: 'text/plain' })];
-    FileArchiver.instance.save(files, 'chat_' + this.selectedTab.name);
+    this.saveDataService.saveGameObject(this.selectedTab, fileName);
   }
 
   delete() {
