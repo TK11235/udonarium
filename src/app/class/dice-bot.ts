@@ -284,9 +284,7 @@ export class DiceBot extends GameObject {
         console.log('BROADCAST_MESSAGE DiceBot...?');
         let text: string = chatMessage.text;
 
-        text = text.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
-          return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-        });
+        text = text.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
 
         let gameType: string = chatMessage.tag;
 
@@ -312,10 +310,7 @@ export class DiceBot extends GameObject {
 
     if (result.length < 1) return;
 
-    result = result.replace(/[＞]/g, function (s) {
-      return '→';
-    });
-    result = result.trim();
+    result = result.replace(/[＞]/g, s => '→').trim();
 
     let diceBotMessage: ChatMessageContext = {
       identifier: '',
