@@ -439,27 +439,21 @@ export class DiceBot extends GameObject {
 
   private static loadExtratablesAsync(path: string, table: string) {
     return new Promise<void>((resolve, reject) => {
-      let http = new XMLHttpRequest();
-      http.open('get', path, true);
-      http.onerror = (event) => {
-        console.error(event);
-        resolve();
-      };
-      http.onreadystatechange = (event) => {
-        if (http.readyState !== 4) {
-          return;
-        }
-        if (http.status === 200) {
-          console.log(table + ' is loading OK!!!');
-          let tableFileData = Opal.TableFileData;
+      fetch(path)
+        .then(response => {
+          if (response.ok) return response.text();
+          throw new Error('Network response was not ok.');
+        })
+        .then(text => {
           let array = /((.+)_(.+)).txt$/ig.exec(table);
-          tableFileData.$setVirtualTableData(array[1], array[2], array[3], http.responseText);
-        } else {
-          console.warn(table + 'fail...? status:' + http.status);
-        }
-        resolve();
-      };
-      http.send(null);
+          Opal.TableFileData.$setVirtualTableData(array[1], array[2], array[3], text);
+          console.log(table + ' is loading OK!!!');
+          resolve();
+        })
+        .catch(error => {
+          console.warn('There has been a problem with your fetch operation: ', error.message);
+          resolve();
+        });
     });
   }
 }
