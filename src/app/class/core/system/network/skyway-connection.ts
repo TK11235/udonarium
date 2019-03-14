@@ -4,6 +4,7 @@ import * as MessagePack from 'msgpack-lite';
 import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { PeerContext } from './peer-context';
+import { SkyWayDataConnection } from './skyway-data-connection';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare var Peer;
@@ -32,7 +33,7 @@ export class SkyWayConnection implements Connection {
 
   private key: string = '';
   private peer: PeerJs.Peer;
-  private connections: PeerJs.DataConnection[] = [];
+  private connections: SkyWayDataConnection[] = [];
 
   private listAllPeersCache: string[] = [];
   private httpRequestInterval: number = performance.now() + 500;
@@ -65,9 +66,10 @@ export class SkyWayConnection implements Connection {
   connect(peerId: string): boolean {
     if (!this.shouldConnect(peerId)) return false;
 
-    let conn: PeerJs.DataConnection = this.peer.connect(peerId, {
+    let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(peerId, {
+      serialization: 'none',
       metadata: { sendFrom: this.peerId }
-    });
+    }));
 
     this.openDataConnection(conn);
     return true;
@@ -146,7 +148,7 @@ export class SkyWayConnection implements Connection {
     }
   }
 
-  private onData(conn: PeerJs.DataConnection, container: DataContainer) {
+  private onData(conn: SkyWayDataConnection, container: DataContainer) {
     if (0 < container.ttl) this.onRelay(conn, container);
     if (this.callback.onData) {
       let byteLength = container.data.byteLength;
@@ -167,7 +169,7 @@ export class SkyWayConnection implements Connection {
     }
   }
 
-  private onRelay(conn: PeerJs.DataConnection, container: DataContainer) {
+  private onRelay(conn: SkyWayDataConnection, container: DataContainer) {
     container.ttl--;
 
     let canUpdate: boolean = container.peers && 0 < container.peers.length;
@@ -203,7 +205,7 @@ export class SkyWayConnection implements Connection {
     }
   }
 
-  private add(conn: PeerJs.DataConnection): boolean {
+  private add(conn: SkyWayDataConnection): boolean {
     let existConn = this.findDataConnection(conn.remoteId);
     if (existConn !== null) {
       console.log('add() is Fail. ' + conn.remoteId + ' is already connecting.');
@@ -263,7 +265,7 @@ export class SkyWayConnection implements Connection {
     });
 
     peer.on('connection', conn => {
-      this.openDataConnection(conn);
+      this.openDataConnection(new SkyWayDataConnection(conn));
     });
 
     peer.on('error', err => {
@@ -290,7 +292,7 @@ export class SkyWayConnection implements Connection {
     this.peer = peer;
   }
 
-  private openDataConnection(conn: PeerJs.DataConnection) {
+  private openDataConnection(conn: SkyWayDataConnection) {
     if (this.add(conn) === false) return;
 
     let sendFrom: string = conn.metadata.sendFrom;
@@ -310,7 +312,6 @@ export class SkyWayConnection implements Connection {
       this.onData(conn, data);
     });
     conn.on('open', () => {
-      exchangeSkyWayImplementation(conn);
       if (timeout !== null) clearTimeout(timeout);
       timeout = null;
       if (context) context.isOpen = true;
@@ -331,7 +332,7 @@ export class SkyWayConnection implements Connection {
     });
   }
 
-  private closeDataConnection(conn: PeerJs.DataConnection) {
+  private closeDataConnection(conn: SkyWayDataConnection) {
     conn.close();
     let index = this.connections.indexOf(conn);
     if (0 <= index) {
@@ -344,7 +345,7 @@ export class SkyWayConnection implements Connection {
     this.update();
   }
 
-  private findDataConnection(peerId: string): PeerJs.DataConnection {
+  private findDataConnection(peerId: string): SkyWayDataConnection {
     for (let conn of this.connections) {
       if (conn.remoteId === peerId) {
         return conn;
@@ -464,38 +465,5 @@ export class SkyWayConnection implements Connection {
       default:
         return 'SkyWayに関する不明なエラーが発生しました(' + errType + ')';
     }
-  }
-}
-
-/* 
-SkyWay の DataConnection._startSendLoop() を取り替える.
-setInterval() に由来する遅延を解消するが skyway-js-sdk の更新次第で動作しなくなるので注意.
-
-https://github.com/skyway/skyway-js-sdk/blob/master/src/peer/dataConnection.js
-*/
-function exchangeSkyWayImplementation(conn: PeerJs.DataConnection) {
-  if (conn._dc && conn._sendBuffer) {
-    conn._startSendLoop = startSendLoopZeroTimeout;
-  }
-}
-
-function startSendLoopZeroTimeout() {
-  if (!this.sendInterval) {
-    this.sendInterval = setZeroTimeout(sendBuffertZeroTimeout.bind(this));
-  }
-}
-
-function sendBuffertZeroTimeout() {
-  const currMsg = this._sendBuffer.shift();
-  try {
-    this._dc.send(currMsg);
-  } catch (error) {
-    this._sendBuffer.push(currMsg);
-  }
-
-  if (this._sendBuffer.length === 0) {
-    this.sendInterval = undefined;
-  } else {
-    this.sendInterval = setZeroTimeout(sendBuffertZeroTimeout.bind(this));
   }
 }
