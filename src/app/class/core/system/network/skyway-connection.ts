@@ -205,7 +205,7 @@ export class SkyWayConnection implements Connection {
     }
   }
 
-  private add(conn: SkyWayDataConnection): boolean {
+  private addDataConnection(conn: SkyWayDataConnection): boolean {
     let existConn = this.findDataConnection(conn.remoteId);
     if (existConn !== null) {
       console.log('add() is Fail. ' + conn.remoteId + ' is already connecting.');
@@ -214,7 +214,7 @@ export class SkyWayConnection implements Connection {
           this.closeDataConnection(conn);
         } else {
           this.closeDataConnection(existConn);
-          this.add(conn);
+          this.addDataConnection(conn);
           return true;
         }
       }
@@ -293,7 +293,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private openDataConnection(conn: SkyWayDataConnection) {
-    if (this.add(conn) === false) return;
+    if (this.addDataConnection(conn) === false) return;
 
     let sendFrom: string = conn.metadata.sendFrom;
     if (this.callback.willOpen) this.callback.willOpen(conn.remoteId, sendFrom);
@@ -315,7 +315,7 @@ export class SkyWayConnection implements Connection {
       if (timeout !== null) clearTimeout(timeout);
       timeout = null;
       if (context) context.isOpen = true;
-      this.update();
+      this.updatePeerList();
       if (this.callback.onOpen) this.callback.onOpen(conn.remoteId);
     });
     conn.on('close', () => {
@@ -342,7 +342,7 @@ export class SkyWayConnection implements Connection {
     }
     this.relayingPeerIds.delete(conn.remoteId);
     console.log('<close()> Peer:' + conn.remoteId + ' length:' + this.connections.length + ':' + this.peerContexts.length);
-    this.update();
+    this.updatePeerList();
   }
 
   private findDataConnection(peerId: string): SkyWayDataConnection {
@@ -373,7 +373,7 @@ export class SkyWayConnection implements Connection {
     return { diff1: diff1, diff2: diff2 };
   }
 
-  private update(): string[] {
+  private updatePeerList(): string[] {
     let peers: string[] = [];
     for (let conn of this.connections) {
       if (conn.open) peers.push(conn.remoteId);
