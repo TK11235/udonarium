@@ -1,7 +1,7 @@
+import { UUID } from '../system/util/uuid';
 import { ObjectFactory } from './object-factory';
 import { ObjectSerializer } from './object-serializer';
 import { ObjectStore } from './object-store';
-import { UUID } from './uuid';
 
 export interface ObjectContext {
   aliasName: string;
