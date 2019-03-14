@@ -122,7 +122,7 @@ export class SkyWayConnection implements Connection {
       setZeroTimeout(async () => {
         if (1 * 1024 < container.data.length) {
           container.isCompressed = true;
-          container.data = await this.compressAsync(container.data);
+          container.data = await compressAsync(container.data);
         }
         if (sendTo) {
           this.sendUnicast(container, sendTo);
@@ -157,7 +157,7 @@ export class SkyWayConnection implements Connection {
         setZeroTimeout(async () => {
           let data: Uint8Array;
           if (container.isCompressed) {
-            data = await this.decompressAsync(container.data);
+            data = await decompressAsync(container.data);
           } else {
             data = new Uint8Array(container.data);
           }
@@ -181,7 +181,7 @@ export class SkyWayConnection implements Connection {
     let unknownPeerIds: string[] = [];
 
     if (canUpdate) {
-      let diff = this.diffArray(this._peerIds, container.peers);
+      let diff = diffArray(this._peerIds, container.peers);
       relayingPeerIds = diff.diff1;
       unknownPeerIds = diff.diff2;
       this.relayingPeerIds.set(conn.remoteId, relayingPeerIds);
@@ -354,25 +354,6 @@ export class SkyWayConnection implements Connection {
     return null;
   }
 
-  private diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
-    let diff1: T[] = [];
-    let diff2: T[] = [];
-
-    let includesInArray1: boolean = false;
-    let includesInArray2: boolean = false;
-
-    for (let item of array1.concat(array2)) {
-      includesInArray1 = array1.includes(item);
-      includesInArray2 = array2.includes(item);
-      if (includesInArray1 && !includesInArray2) {
-        diff1.push(item);
-      } else if (!includesInArray1 && includesInArray2) {
-        diff2.push(item);
-      }
-    }
-    return { diff1: diff1, diff2: diff2 };
-  }
-
   private updatePeerList(): string[] {
     let peers: string[] = [];
     for (let conn of this.connections) {
@@ -402,50 +383,6 @@ export class SkyWayConnection implements Connection {
     this.sendBroadcast(container);
   }
 
-  private async compressAsync(data: Buffer): Promise<Uint8Array> {
-    let files: File[] = [];
-    files.push(new File([data], 'data.pack', { type: 'application/octet-stream' }));
-
-    let zip = new JSZip();
-    let length = files.length;
-    for (let i = 0; i < length; i++) {
-      let file = files[i]
-      zip.file(file.name, file);
-    }
-
-    let uint8array: Uint8Array = await zip.generateAsync({
-      type: 'uint8array',
-      compression: 'DEFLATE',
-      compressionOptions: {
-        level: 2
-      }
-    });
-
-    return uint8array;
-  }
-
-  private async decompressAsync(data: Buffer | ArrayBuffer | Uint8Array): Promise<Uint8Array> {
-    let zip = new JSZip();
-    try {
-      zip = await zip.loadAsync(data);
-    } catch (reason) {
-      console.warn(reason);
-      return null;
-    }
-    let uint8array: Uint8Array = await new Promise<Uint8Array>(
-      async (resolve, reject) => {
-        zip.forEach(async (relativePath, zipEntry) => {
-          try {
-            uint8array = await zipEntry.async('uint8array');
-            resolve(uint8array);
-          } catch (reason) {
-            console.warn(reason);
-          }
-        });
-      });
-    return uint8array;
-  }
-
   private getSkyWayErrorMessage(errType: string): string {
     switch (errType) {
       case 'peer-unavailable':
@@ -466,4 +403,67 @@ export class SkyWayConnection implements Connection {
         return 'SkyWayに関する不明なエラーが発生しました(' + errType + ')';
     }
   }
+}
+
+function diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
+  let diff1: T[] = [];
+  let diff2: T[] = [];
+
+  let includesInArray1: boolean = false;
+  let includesInArray2: boolean = false;
+
+  for (let item of array1.concat(array2)) {
+    includesInArray1 = array1.includes(item);
+    includesInArray2 = array2.includes(item);
+    if (includesInArray1 && !includesInArray2) {
+      diff1.push(item);
+    } else if (!includesInArray1 && includesInArray2) {
+      diff2.push(item);
+    }
+  }
+  return { diff1: diff1, diff2: diff2 };
+}
+
+async function compressAsync(data: Buffer): Promise<Uint8Array> {
+  let files: File[] = [];
+  files.push(new File([data], 'd', { type: 'application/octet-stream' }));
+
+  let zip = new JSZip();
+  let length = files.length;
+  for (let i = 0; i < length; i++) {
+    let file = files[i]
+    zip.file(file.name, file);
+  }
+
+  let uint8array: Uint8Array = await zip.generateAsync({
+    type: 'uint8array',
+    compression: 'DEFLATE',
+    compressionOptions: {
+      level: 2
+    }
+  });
+
+  return uint8array;
+}
+
+async function decompressAsync(data: Buffer | ArrayBuffer | Uint8Array): Promise<Uint8Array> {
+  let zip = new JSZip();
+  try {
+    zip = await zip.loadAsync(data);
+  } catch (reason) {
+    console.warn(reason);
+    return null;
+  }
+  let uint8array: Uint8Array = await new Promise<Uint8Array>(
+    async (resolve, reject) => {
+      zip.forEach(async (relativePath, zipEntry) => {
+        try {
+          uint8array = await zipEntry.async('uint8array');
+          resolve(uint8array);
+        } catch (reason) {
+          console.warn(reason);
+        }
+      });
+    });
+  return uint8array;
 }
