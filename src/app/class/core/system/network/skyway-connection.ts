@@ -148,84 +148,6 @@ export class SkyWayConnection implements Connection {
     }
   }
 
-  private onData(conn: SkyWayDataConnection, container: DataContainer) {
-    if (0 < container.ttl) this.onRelay(conn, container);
-    if (this.callback.onData) {
-      let byteLength = container.data.byteLength;
-      this.bandwidthUsage += byteLength;
-      this.queue = this.queue.then(() => new Promise((resolve, reject) => {
-        setZeroTimeout(async () => {
-          let data: Uint8Array;
-          if (container.isCompressed) {
-            data = await decompressAsync(container.data);
-          } else {
-            data = new Uint8Array(container.data);
-          }
-          this.callback.onData(conn.remoteId, MessagePack.decode(data));
-          this.bandwidthUsage -= byteLength;
-          return resolve();
-        });
-      }));
-    }
-  }
-
-  private onRelay(conn: SkyWayDataConnection, container: DataContainer) {
-    container.ttl--;
-
-    let canUpdate: boolean = container.peers && 0 < container.peers.length;
-    let hasRelayingList: boolean = this.relayingPeerIds.has(conn.remoteId);
-
-    if (!canUpdate && !hasRelayingList) return;
-
-    let relayingPeerIds: string[] = [];
-    let unknownPeerIds: string[] = [];
-
-    if (canUpdate) {
-      let diff = diffArray(this._peerIds, container.peers);
-      relayingPeerIds = diff.diff1;
-      unknownPeerIds = diff.diff2;
-      this.relayingPeerIds.set(conn.remoteId, relayingPeerIds);
-      container.peers = container.peers.concat(relayingPeerIds);
-    } else if (hasRelayingList) {
-      relayingPeerIds = this.relayingPeerIds.get(conn.remoteId);
-    }
-
-    for (let peerId of relayingPeerIds) {
-      let conn = this.findDataConnection(peerId);
-      if (conn && conn.open) {
-        console.log('<' + peerId + '> 転送しなきゃ・・・');
-        conn.send(container);
-      }
-    }
-    if (unknownPeerIds.length && this.callback.onDetectUnknownPeers) {
-      for (let peerId of unknownPeerIds) {
-        if (this.connect(peerId)) console.log('auto connect to unknown Peer <' + peerId + '>');
-      }
-      this.callback.onDetectUnknownPeers(unknownPeerIds);
-    }
-  }
-
-  private addDataConnection(conn: SkyWayDataConnection): boolean {
-    let existConn = this.findDataConnection(conn.remoteId);
-    if (existConn !== null) {
-      console.log('add() is Fail. ' + conn.remoteId + ' is already connecting.');
-      if (existConn !== conn) {
-        if (existConn.metadata.sendFrom < conn.metadata.sendFrom) {
-          this.closeDataConnection(conn);
-        } else {
-          this.closeDataConnection(existConn);
-          this.addDataConnection(conn);
-          return true;
-        }
-      }
-      return false;
-    }
-    this.connections.push(conn);
-    this.peerContexts.push(new PeerContext(conn.remoteId));
-    console.log('<add()> Peer:' + conn.remoteId + ' length:' + this.connections.length);
-    return true;
-  }
-
   setApiKey(key: string) {
     if (this.key !== key) console.log('Key Change');
     this.key = key;
@@ -345,6 +267,27 @@ export class SkyWayConnection implements Connection {
     this.updatePeerList();
   }
 
+  private addDataConnection(conn: SkyWayDataConnection): boolean {
+    let existConn = this.findDataConnection(conn.remoteId);
+    if (existConn !== null) {
+      console.log('add() is Fail. ' + conn.remoteId + ' is already connecting.');
+      if (existConn !== conn) {
+        if (existConn.metadata.sendFrom < conn.metadata.sendFrom) {
+          this.closeDataConnection(conn);
+        } else {
+          this.closeDataConnection(existConn);
+          this.addDataConnection(conn);
+          return true;
+        }
+      }
+      return false;
+    }
+    this.connections.push(conn);
+    this.peerContexts.push(new PeerContext(conn.remoteId));
+    console.log('<add()> Peer:' + conn.remoteId + ' length:' + this.connections.length);
+    return true;
+  }
+
   private findDataConnection(peerId: string): SkyWayDataConnection {
     for (let conn of this.connections) {
       if (conn.remoteId === peerId) {
@@ -352,6 +295,63 @@ export class SkyWayConnection implements Connection {
       }
     }
     return null;
+  }
+
+  private onData(conn: SkyWayDataConnection, container: DataContainer) {
+    if (0 < container.ttl) this.onRelay(conn, container);
+    if (this.callback.onData) {
+      let byteLength = container.data.byteLength;
+      this.bandwidthUsage += byteLength;
+      this.queue = this.queue.then(() => new Promise((resolve, reject) => {
+        setZeroTimeout(async () => {
+          let data: Uint8Array;
+          if (container.isCompressed) {
+            data = await decompressAsync(container.data);
+          } else {
+            data = new Uint8Array(container.data);
+          }
+          this.callback.onData(conn.remoteId, MessagePack.decode(data));
+          this.bandwidthUsage -= byteLength;
+          return resolve();
+        });
+      }));
+    }
+  }
+
+  private onRelay(conn: SkyWayDataConnection, container: DataContainer) {
+    container.ttl--;
+
+    let canUpdate: boolean = container.peers && 0 < container.peers.length;
+    let hasRelayingList: boolean = this.relayingPeerIds.has(conn.remoteId);
+
+    if (!canUpdate && !hasRelayingList) return;
+
+    let relayingPeerIds: string[] = [];
+    let unknownPeerIds: string[] = [];
+
+    if (canUpdate) {
+      let diff = diffArray(this._peerIds, container.peers);
+      relayingPeerIds = diff.diff1;
+      unknownPeerIds = diff.diff2;
+      this.relayingPeerIds.set(conn.remoteId, relayingPeerIds);
+      container.peers = container.peers.concat(relayingPeerIds);
+    } else if (hasRelayingList) {
+      relayingPeerIds = this.relayingPeerIds.get(conn.remoteId);
+    }
+
+    for (let peerId of relayingPeerIds) {
+      let conn = this.findDataConnection(peerId);
+      if (conn && conn.open) {
+        console.log('<' + peerId + '> 転送しなきゃ・・・');
+        conn.send(container);
+      }
+    }
+    if (unknownPeerIds.length && this.callback.onDetectUnknownPeers) {
+      for (let peerId of unknownPeerIds) {
+        if (this.connect(peerId)) console.log('auto connect to unknown Peer <' + peerId + '>');
+      }
+      this.callback.onDetectUnknownPeers(unknownPeerIds);
+    }
   }
 
   private updatePeerList(): string[] {
