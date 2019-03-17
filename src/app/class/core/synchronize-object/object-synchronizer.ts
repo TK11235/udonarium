@@ -85,8 +85,8 @@ export class ObjectSynchronizer {
       console.warn(context.aliasName + ' is Unknown...?', context);
       return;
     }
-    newObject.apply(context);
     ObjectStore.instance.add(newObject, false);
+    newObject.apply(context);
   }
 
   private sendCatalog(sendTo: string) {
