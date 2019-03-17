@@ -1,4 +1,5 @@
 import { ChatMessage, ChatMessageContext } from './chat-message';
+import { ChatTab } from './chat-tab';
 import { SyncObject } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectStore } from './core/synchronize-object/object-store';
@@ -277,15 +278,11 @@ export class DiceBot extends GameObject {
     super.onStoreAdded();
     DiceBot.queue.add(DiceBot.loadScriptAsync('./assets/cgiDiceBot.js'));
     EventSystem.register(this)
-      .on<ChatMessageContext>('BROADCAST_MESSAGE', 100, async event => {
-        if (!event.isSendFromSelf) return;
-        let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.identifier);
-        if (!chatMessage || chatMessage.isSystem) return;
-        console.log('BROADCAST_MESSAGE DiceBot...?');
-        let text: string = chatMessage.text;
+      .on('SEND_MESSAGE', async event => {
+        let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
+        if (!chatMessage || !chatMessage.isSendFromSelf || chatMessage.isSystem) return;
 
-        text = text.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
-
+        let text: string = chatMessage.text.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
         let gameType: string = chatMessage.tag;
 
         try {
@@ -330,7 +327,8 @@ export class DiceBot extends GameObject {
         diceBotMessage.to += ' ' + originalMessage.from;
       }
     }
-    EventSystem.call('BROADCAST_MESSAGE', diceBotMessage);
+    let chatTab = ObjectStore.instance.get<ChatTab>(originalMessage.tabIdentifier);
+    if (chatTab) chatTab.addMessage(diceBotMessage);
   }
 
   static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult> {

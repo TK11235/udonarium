@@ -1,11 +1,11 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { ChatMessageContext } from '@udonarium/chat-message';
+import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
-import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { DiceBot } from '@udonarium/dice-bot';
 import { GameCharacter } from '@udonarium/game-character';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -100,15 +100,17 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
 
     EventSystem.register(this)
-      .on<ChatMessageContext>('BROADCAST_MESSAGE', -1000, event => {
-        if (event.isSendFromSelf && event.data.tabIdentifier === this.chatTabidentifier) {
-          this.scrollToBottom(true);
+      .on('MESSAGE_ADDED', event => {
+        let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
+        if (message && message.isSendFromSelf && event.data.tabIdentifier === this.chatTabidentifier) {
+          this.isAutoScroll = true;
         } else {
           this.checkAutoScroll();
         }
-        if (this.writingPeers.has(event.sendFrom)) {
-          clearTimeout(this.writingPeers.get(event.sendFrom));
-          this.writingPeers.delete(event.sendFrom);
+        let sendFrom = message ? message.from : '?';
+        if (this.writingPeers.has(sendFrom)) {
+          clearTimeout(this.writingPeers.get(sendFrom));
+          this.writingPeers.delete(sendFrom);
           this.updateWritingPeerNames();
         }
       })
