@@ -159,18 +159,17 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // @TODO やり方はもう少し考えた方がいいい
   scrollToBottom(isForce: boolean = false) {
-    if (!this.panelService.scrollablePanel || this.scrollToBottomTimer != null) return;
+    if (isForce) this.isAutoScroll = true;
+    if (!this.isAutoScroll || !this.panelService.scrollablePanel) return;
 
-    if (isForce) {
-      this.isAutoScroll = true;
-    }
-    if (this.isAutoScroll) {
-      if (this.chatTab) this.chatTab.markForRead();
-      this.scrollToBottomTimer = setTimeout(() => {
-        this.scrollToBottomTimer = null;
-        this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
-      }, 0);
-    }
+    if (this.chatTab) this.chatTab.markForRead();
+
+    if (this.scrollToBottomTimer != null) return;
+    this.scrollToBottomTimer = setTimeout(() => {
+      this.scrollToBottomTimer = null;
+      this.isAutoScroll = false;
+      this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
+    }, 0);
   }
 
   // @TODO
