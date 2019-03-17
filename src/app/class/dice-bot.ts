@@ -361,7 +361,6 @@ export class DiceBot extends GameObject {
   static getHelpMessage(gameType: string): Promise<string> {
     DiceBot.queue.add(DiceBot.loadDiceBotAsync(gameType));
     return DiceBot.queue.add(() => {
-      console.log('getHelpMessage');
       if ('Opal' in window === false) {
         console.warn('Opal is not loaded...');
         return '';
@@ -371,7 +370,6 @@ export class DiceBot extends GameObject {
         let bcdice = Opal.CgiDiceBot.$new().$newBcDice();
         bcdice.$setGameByTitle(gameType);
         help = bcdice.diceBot.$getHelpMessage();
-        console.log('bot.getHelpMessage()!!!', help);
       } catch (e) {
         console.error(e);
       }
