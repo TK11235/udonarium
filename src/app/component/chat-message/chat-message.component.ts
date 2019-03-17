@@ -20,7 +20,7 @@ import { ImageFile } from '@udonarium/core/file-storage/image-file';
       ])
     ])
   ],
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ChatMessageComponent implements OnInit, AfterViewInit {
