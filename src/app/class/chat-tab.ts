@@ -13,6 +13,11 @@ export class ChatTab extends ObjectNode implements InnerXml {
   get unreadLength(): number { return this._unreadLength; }
   get hasUnread(): boolean { return 0 < this.unreadLength; }
 
+  get latestTimeStamp(): number {
+    let lastIndex = this.chatMessages.length - 1;
+    return lastIndex < 0 ? 0 : this.chatMessages[lastIndex].timestamp;
+  }
+
   // ObjectNode Lifecycle
   onChildAdded(child: ObjectNode) {
     super.onChildAdded(child);
