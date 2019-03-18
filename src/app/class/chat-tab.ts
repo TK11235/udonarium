@@ -27,7 +27,7 @@ export class ChatTab extends ObjectNode implements InnerXml {
     }
   }
 
-  addMessage(message: ChatMessageContext) {
+  addMessage(message: ChatMessageContext): ChatMessage {
     message.tabIdentifier = this.identifier;
 
     let chat = new ChatMessage();
@@ -44,6 +44,7 @@ export class ChatTab extends ObjectNode implements InnerXml {
     chat.initialize();
     EventSystem.trigger('SEND_MESSAGE', { tabIdentifier: this.identifier, messageIdentifier: chat.identifier });
     this.appendChild(chat);
+    return chat;
   }
 
   markForRead() {
