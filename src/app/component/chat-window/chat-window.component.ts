@@ -1,7 +1,7 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
+import { ChatMessage } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
@@ -95,7 +95,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.sender = Network.peerId;
+    this.sender = this.myPeer.identifier;
     console.log(this.chatMessageService.chatTabs);
     this.chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
 
@@ -260,49 +260,10 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (event && event.keyCode !== 13) return;
 
-    if (!this.sender.length) this.sender = Network.peerId;
-
-    let time = this.chatMessageService.getTime();
-    console.log('time:' + time);
-    let chatMessage: ChatMessageContext = {
-      from: Network.peerContext.id,
-      name: this.sender,
-      text: this.text,
-      timestamp: time,
-      tag: this.gameType,
-      imageIdentifier: '',
-    };
-
-    if (this.sender === Network.peerId || !this.gameCharacter) {
-      chatMessage.imageIdentifier = this.myPeer.imageIdentifier;
-      chatMessage.name = this.myPeer.name;
-    } else if (this.gameCharacter) {
-      chatMessage.imageIdentifier = (this.gameCharacter.imageFile ? this.gameCharacter.imageFile.identifier : '');
-      chatMessage.name = this.gameCharacter.name;
-    }
-
-    if (this.sendTo != null && this.sendTo.length) {
-      let name = '';
-      let object = ObjectStore.instance.get(this.sendTo);
-      if (object instanceof GameCharacter) {
-        name = object.name;
-        chatMessage.to = object.identifier;
-      } else if (object instanceof PeerCursor) {
-        name = object.name;
-        let peer = PeerContext.create(object.peerId);
-        if (peer) chatMessage.to = peer.id;
-      }
-      chatMessage.name += ' > ' + name;
-    }
-    console.log(chatMessage);
+    if (!this.sender.length) this.sender = this.myPeer.identifier;
 
     if (this.chatTab) {
-      let latestTimeStamp: number = 0 < this.chatTab.chatMessages.length
-        ? this.chatTab.chatMessages[this.chatTab.chatMessages.length - 1].timestamp
-        : chatMessage.timestamp;
-      if (chatMessage.timestamp <= latestTimeStamp) chatMessage.timestamp = latestTimeStamp + 1;
-
-      this.chatTab.addMessage(chatMessage);
+      this.chatMessageService.sendMessage(this.chatTab, this.text, this.gameType, this.sender, this.sendTo);
     }
     this.text = '';
     this.previousWritingLength = this.text.length;

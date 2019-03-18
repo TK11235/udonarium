@@ -1,11 +1,10 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { ChatMessageContext } from '@udonarium/chat-message';
 import { ChatPalette } from '@udonarium/chat-palette';
 import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem } from '@udonarium/core/system';
 import { PeerContext } from '@udonarium/core/system/network/peer-context';
-import { EventSystem, Network } from '@udonarium/core/system';
 import { DiceBot } from '@udonarium/dice-bot';
 import { GameCharacter } from '@udonarium/game-character';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -138,38 +137,9 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
 
     if (event && event.keyCode !== 13) return;
 
-    let time = this.chatMessageService.getTime();
-    console.log('time:' + time);
-    let chatMessage: ChatMessageContext = {
-      from: Network.peerContext.id,
-      name: this.character.name,
-      text: this.palette.evaluate(this.text, this.character.rootDataElement),
-      timestamp: time,
-      tag: this.gameType,
-      imageIdentifier: this.character.imageFile ? this.character.imageFile.identifier : '',
-    };
-
-    if (this.sendTo != null && this.sendTo.length) {
-      let name = '';
-      let object = ObjectStore.instance.get(this.sendTo);
-      if (object instanceof GameCharacter) {
-        name = object.name;
-        chatMessage.to = object.identifier;
-      } else if (object instanceof PeerCursor) {
-        name = object.name;
-        let peer = PeerContext.create(object.peerId);
-        if (peer) chatMessage.to = peer.id;
-      }
-      chatMessage.name += ' > ' + name;
-    }
-
     if (this.chatTab) {
-      let latestTimeStamp: number = 0 < this.chatTab.chatMessages.length
-        ? this.chatTab.chatMessages[this.chatTab.chatMessages.length - 1].timestamp
-        : chatMessage.timestamp;
-      if (chatMessage.timestamp <= latestTimeStamp) chatMessage.timestamp = latestTimeStamp + 1;
-
-      this.chatTab.addMessage(chatMessage);
+      let text = this.palette.evaluate(this.text, this.character.rootDataElement);
+      this.chatMessageService.sendMessage(this.chatTab, text, this.gameType, this.character.identifier, this.sendTo);
     }
     this.text = '';
     this.previousWritingLength = this.text.length;

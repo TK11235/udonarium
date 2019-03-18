@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 
+import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { Network } from '@udonarium/core/system';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { GameCharacter } from '@udonarium/game-character';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
 const HOURS = 60 * 60 * 1000;
 
@@ -66,5 +71,64 @@ export class ChatMessageService {
 
   getTime(): number {
     return Math.floor(this.timeOffset + (performance.now() - this.performanceOffset));
+  }
+
+  sendMessage(chatTab: ChatTab, text: string, gameType: string, sendFrom: string, sendTo?: string): ChatMessage {
+    let chatMessage: ChatMessageContext = {
+      from: Network.peerContext.id,
+      to: this.findId(sendTo),
+      name: this.makeMessageName(sendFrom, sendTo),
+      imageIdentifier: this.findImageIdentifier(sendFrom),
+      timestamp: this.calcTimeStamp(chatTab),
+      tag: gameType,
+      text: text,
+    };
+
+    return chatTab.addMessage(chatMessage);
+  }
+
+  private findId(identifier: string): string {
+    let object = ObjectStore.instance.get(identifier);
+    if (object instanceof GameCharacter) {
+      return object.identifier;
+    } else if (object instanceof PeerCursor) {
+      return PeerContext.create(object.peerId).id;
+    }
+    return null;
+  }
+
+  private findObjectName(identifier: string): string {
+    console.warn('findObjectName', identifier, PeerCursor.myCursor);
+    let object = ObjectStore.instance.get(identifier);
+    if (object instanceof GameCharacter) {
+      return object.name;
+    } else if (object instanceof PeerCursor) {
+      return object.name;
+    }
+    return identifier;
+  }
+
+  private makeMessageName(sendFrom: string, sendTo?: string): string {
+    let sendFromName = this.findObjectName(sendFrom);
+    if (sendTo == null || sendTo.length < 1) return sendFromName;
+
+    let sendToName = this.findObjectName(sendTo);
+    return sendFromName + ' > ' + sendToName;
+  }
+
+  private findImageIdentifier(identifier: string): string {
+    let object = ObjectStore.instance.get(identifier);
+    if (object instanceof GameCharacter) {
+      return object.imageFile ? object.imageFile.identifier : '';
+    } else if (object instanceof PeerCursor) {
+      return object.imageIdentifier;
+    }
+    return identifier;
+  }
+
+  private calcTimeStamp(chatTab: ChatTab): number {
+    let now = this.getTime();
+    let latest = chatTab.latestTimeStamp;
+    return now <= latest ? latest + 1 : now;
   }
 }
