@@ -1,13 +1,14 @@
 import { Network } from '../network/network';
 
 export class Event<T> {
+  readonly isSendFromSelf: boolean = false;
 
   constructor(
-    public eventName: string,
+    readonly eventName: string,
     public data: T,
-    public sendFrom?: string) { }
-
-  get isSendFromSelf(): boolean { return this.sendFrom === Network.instance.peerId; }
+    readonly sendFrom: string = Network.instance.peerId) {
+    this.isSendFromSelf = this.sendFrom === Network.instance.peerId;
+  }
 
   toContext(): EventContext {
     return {

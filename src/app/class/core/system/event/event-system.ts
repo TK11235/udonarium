@@ -87,7 +87,6 @@ export class EventSystem implements Subject {
   }
 
   private _call(event: Event<any>, sendTo?: string) {
-    if (event.sendFrom == null) event.sendFrom = Network.instance.peerId;
     let context = event.toContext();
     context.sendTo = sendTo;
     Network.instance.send(context);
@@ -98,7 +97,7 @@ export class EventSystem implements Subject {
   trigger(event: EventContext): Event<any>
   trigger(...args: any[]): Event<any> {
     if (args.length === 2) {
-      this._trigger(new Event(args[0], args[1], Network.instance.peerId));
+      this._trigger(new Event(args[0], args[1]));
     } else if (args[0] instanceof Event) {
       return this._trigger(args[0]);
     } else {
@@ -107,7 +106,6 @@ export class EventSystem implements Subject {
   }
 
   private _trigger(event: Event<any>): Event<any> {
-    if (event.sendFrom == null) event.sendFrom = Network.instance.peerId;
     for (let listener of this.getListeners(event.eventName).concat()) {
       listener.trigger(event);
     }
