@@ -76,9 +76,9 @@ export class EventSystem implements Subject {
     return null;
   }
 
-  call(eventName: string, data: any, sendTo?: string)
-  call(event: Event<any>, sendTo?: string)
-  call(...args: any[]) {
+  call<T>(eventName: string, data: T, sendTo?: string)
+  call<T>(event: Event<T>, sendTo?: string)
+  call<T>(...args: any[]) {
     if (typeof args[0] === 'string') {
       this._call(new Event(args[0], args[1]), args[2]);
     } else {
@@ -92,10 +92,10 @@ export class EventSystem implements Subject {
     Network.instance.send(context);
   }
 
-  trigger(eventName: string, data: any): Event<any>
-  trigger(event: Event<any>): Event<any>
-  trigger(event: EventContext): Event<any>
-  trigger(...args: any[]): Event<any> {
+  trigger<T>(eventName: string, data: T): Event<T>
+  trigger<T>(event: Event<T>): Event<T>
+  trigger<T>(event: EventContext<T>): Event<T>
+  trigger<T>(...args: any[]): Event<T> {
     if (args.length === 2) {
       this._trigger(new Event(args[0], args[1]));
     } else if (args[0] instanceof Event) {
@@ -105,7 +105,7 @@ export class EventSystem implements Subject {
     }
   }
 
-  private _trigger(event: Event<any>): Event<any> {
+  private _trigger<T>(event: Event<T>): Event<T> {
     for (let listener of this.getListeners(event.eventName).concat()) {
       listener.trigger(event);
     }
@@ -147,7 +147,7 @@ export class EventSystem implements Subject {
       }
     }
 
-    callback.onData = (peerId, data: EventContext[]) => {
+    callback.onData = (peerId, data: EventContext<never>[]) => {
       for (let event of data) {
         this.trigger(event);
       }

@@ -10,7 +10,7 @@ export class Event<T> {
     this.isSendFromSelf = this.sendFrom === Network.instance.peerId;
   }
 
-  toContext(): EventContext {
+  toContext(): EventContext<T> {
     return {
       sendFrom: this.sendFrom,
       sendTo: null,
@@ -20,9 +20,9 @@ export class Event<T> {
   }
 }
 
-export interface EventContext {
+export interface EventContext<T> {
   sendFrom: string;
   sendTo: string;
   eventName: string;
-  data: any;
+  data: T;
 }
