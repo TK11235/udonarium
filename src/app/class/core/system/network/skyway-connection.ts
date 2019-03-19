@@ -116,7 +116,7 @@ export class SkyWayConnection implements Connection {
       ttl: 0
     }
 
-    let byteLength = container.data.length;
+    let byteLength = container.data.byteLength;
     this.bandwidthUsage += byteLength;
     this.queue = this.queue.then(() => new Promise((resolve, reject) => {
       setZeroTimeout(async () => {
