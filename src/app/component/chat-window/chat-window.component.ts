@@ -257,11 +257,9 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event) event.preventDefault();
 
     if (!this.text.length) return;
-
     if (event && event.keyCode !== 13) return;
 
     if (!this.sender.length) this.sender = this.myPeer.identifier;
-
     if (this.chatTab) {
       this.chatMessageService.sendMessage(this.chatTab, this.text, this.gameType, this.sender, this.sendTo);
     }

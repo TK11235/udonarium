@@ -134,7 +134,6 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
     if (event) event.preventDefault();
 
     if (!this.text.length) return;
-
     if (event && event.keyCode !== 13) return;
 
     if (this.chatTab) {
