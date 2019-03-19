@@ -1,7 +1,6 @@
 import { Network } from '../network/network';
 
 export class Event<T> {
-  isCancelled: boolean = false;
 
   constructor(
     public eventName: string,
