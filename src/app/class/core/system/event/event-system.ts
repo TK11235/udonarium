@@ -88,8 +88,7 @@ export class EventSystem implements Subject {
 
   private _call(event: Event<any>, sendTo?: string) {
     let context = event.toContext();
-    context.sendTo = sendTo;
-    Network.instance.send(context);
+    Network.instance.send(context, sendTo);
   }
 
   trigger<T>(eventName: string, data: T): Event<T>

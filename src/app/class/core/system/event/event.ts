@@ -1,6 +1,6 @@
 import { Network } from '../network/network';
 
-export class Event<T> {
+export class Event<T> implements EventContext<T>{
   readonly isSendFromSelf: boolean = false;
 
   constructor(
@@ -13,7 +13,6 @@ export class Event<T> {
   toContext(): EventContext<T> {
     return {
       sendFrom: this.sendFrom,
-      sendTo: null,
       eventName: this.eventName,
       data: this.data,
     };
@@ -22,7 +21,6 @@ export class Event<T> {
 
 export interface EventContext<T> {
   sendFrom: string;
-  sendTo: string;
   eventName: string;
   data: T;
 }

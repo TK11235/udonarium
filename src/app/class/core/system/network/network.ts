@@ -3,6 +3,8 @@ import { Connection, ConnectionCallback } from './connection';
 import { IPeerContext } from './peer-context';
 import { SkyWayConnection } from './skyway-connection';
 
+type QueueItem = { data: any, sendTo: string };
+
 export class Network {
   private static _instance: Network
   static get instance(): Network {
@@ -24,7 +26,7 @@ export class Network {
   private key: string = '';
   private connection: Connection;
 
-  private queue: any[] = [];
+  private queue: QueueItem[] = [];
   private sendInterval: number = null;
   private sendCallback = () => { this.sendQueue(); }
   private callbackUnload: any = (e) => { this.close(); };
@@ -68,8 +70,8 @@ export class Network {
     }
   }
 
-  send(data: any) {
-    this.queue.push(data);
+  send(data: any, sendTo?: string) {
+    this.queue.push({ data: data, sendTo: sendTo });
     if (this.sendInterval === null) {
       this.sendInterval = setZeroTimeout(this.sendCallback);
     }
@@ -81,15 +83,15 @@ export class Network {
     let echocast: any[] = [];
 
     let length = this.queue.length < 128 ? this.queue.length : 128;
-    let events = this.queue.splice(0, length);
-    for (let event of events) {
-      if (event.sendTo == null) {
-        broadcast.push(event);
-      } else if (event.sendTo === this.peerId) {
-        echocast.push(event);
+    let items = this.queue.splice(0, length);
+    for (let item of items) {
+      if (item.sendTo == null) {
+        broadcast.push(item.data);
+      } else if (item.sendTo === this.peerId) {
+        echocast.push(item.data);
       } else {
-        if (!(event.sendTo in unicast)) unicast[event.sendTo] = [];
-        unicast[event.sendTo].push(event);
+        if (!(item.sendTo in unicast)) unicast[item.sendTo] = [];
+        unicast[item.sendTo].push(item.data);
       }
     }
 
