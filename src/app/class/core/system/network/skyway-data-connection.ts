@@ -12,14 +12,14 @@ declare module PeerJs {
 
 interface DataChank {
   id: string;
-  data: ArrayBuffer;
+  data: Uint8Array;
   index: number;
   total: number;
 };
 
 interface ReceivedChank {
   id: string;
-  chanks: ArrayBuffer[];
+  chanks: Uint8Array[];
   length: number;
 };
 
@@ -46,7 +46,7 @@ export class SkyWayDataConnection extends EventEmitter {
   }
 
   send(data: any) {
-    let encodedData = MessagePack.encode(data);
+    let encodedData: Uint8Array = MessagePack.encode(data);
 
     let total = Math.ceil(encodedData.length / this.chunkSize);
     if (total <= 1) {
@@ -63,7 +63,7 @@ export class SkyWayDataConnection extends EventEmitter {
     }
   }
 
-  private onData(data: any) {
+  private onData(data: ArrayBuffer) {
     let chank: DataChank = MessagePack.decode(new Uint8Array(data));
 
     if (chank.id == null) {
@@ -91,7 +91,7 @@ export class SkyWayDataConnection extends EventEmitter {
 
     let pos = 0;
     for (let c of receivedChank.chanks) {
-      uint8Array.set(new Uint8Array(c), pos);
+      uint8Array.set(c, pos);
       pos += c.byteLength;
     }
 

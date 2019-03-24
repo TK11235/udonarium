@@ -14,7 +14,7 @@ declare module PeerJs {
 }
 
 interface DataContainer {
-  data: any;
+  data: Uint8Array;
   peers?: string[];
   ttl: number;
   isCompressed?: boolean;
@@ -307,12 +307,7 @@ export class SkyWayConnection implements Connection {
       this.bandwidthUsage += byteLength;
       this.queue = this.queue.then(() => new Promise((resolve, reject) => {
         setZeroTimeout(async () => {
-          let data: Uint8Array;
-          if (container.isCompressed) {
-            data = await decompressAsync(container.data);
-          } else {
-            data = new Uint8Array(container.data);
-          }
+          let data = container.isCompressed ? await decompressAsync(container.data) : container.data;
           this.callback.onData(conn.remoteId, MessagePack.decode(data));
           this.bandwidthUsage -= byteLength;
           return resolve();
@@ -427,7 +422,7 @@ function diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
   return { diff1: diff1, diff2: diff2 };
 }
 
-async function compressAsync(data: Buffer): Promise<Uint8Array> {
+async function compressAsync(data: Uint8Array): Promise<Uint8Array> {
   let files: File[] = [];
   files.push(new File([data], 'd', { type: 'application/octet-stream' }));
 
@@ -449,7 +444,7 @@ async function compressAsync(data: Buffer): Promise<Uint8Array> {
   return uint8array;
 }
 
-async function decompressAsync(data: Buffer | ArrayBuffer | Uint8Array): Promise<Uint8Array> {
+async function decompressAsync(data: ArrayBuffer | Uint8Array): Promise<Uint8Array> {
   let zip = new JSZip();
   try {
     zip = await zip.loadAsync(data);
