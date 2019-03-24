@@ -1,13 +1,13 @@
 import * as MessagePack from 'msgpack-lite';
 
 import { EventSystem } from '../system';
-import { FileReaderUtil } from './file-reader-util';
 import { setZeroTimeout } from '../system/util/zero-timeout';
+import { FileReaderUtil } from './file-reader-util';
 
 interface ChankData {
   index: number;
   length: number;
-  chank: ArrayBuffer;
+  chank: Uint8Array;
 }
 
 export class BufferSharingTask<T> {
@@ -17,8 +17,8 @@ export class BufferSharingTask<T> {
   get sendTo(): string { return this._sendTo };
 
   private data: T;
-  private arrayBuffer: ArrayBuffer;
-  private chanks: ArrayBuffer[] = [];
+  private uint8Array: Uint8Array;
+  private chanks: Uint8Array[] = [];
   private chankSize: number = 8 * 1024;
   private chankReceiveCount: number = 0;
   private sendChankTimer: number;
@@ -37,13 +37,13 @@ export class BufferSharingTask<T> {
 
   private constructor(data?: T, sendTo?: string) {
     this.data = data;
-    this.arrayBuffer = <ArrayBuffer>MessagePack.encode(data).buffer;
+    this.uint8Array = MessagePack.encode(data);
     this._sendTo = sendTo;
   }
 
   static async createSendTask<T>(data: T, sendTo: string, identifier?: string): Promise<BufferSharingTask<T>> {
     let task = new BufferSharingTask(data, sendTo);
-    task._identifier = identifier != null ? identifier : await FileReaderUtil.calcSHA256Async(task.arrayBuffer);
+    task._identifier = identifier != null ? identifier : await FileReaderUtil.calcSHA256Async(task.uint8Array);
     task.initializeSend();
     return task;
   }
@@ -69,13 +69,13 @@ export class BufferSharingTask<T> {
 
   private initializeSend() {
     let offset = 0;
-    let byteLength = this.arrayBuffer.byteLength;
+    let byteLength = this.uint8Array.byteLength;
     while (offset < byteLength) {
-      let chank: ArrayBuffer = null;
+      let chank: Uint8Array = null;
       if (offset + this.chankSize < byteLength) {
-        chank = this.arrayBuffer.slice(offset, offset + this.chankSize);
+        chank = this.uint8Array.slice(offset, offset + this.chankSize);
       } else {
-        chank = this.arrayBuffer.slice(offset, byteLength);
+        chank = this.uint8Array.slice(offset, byteLength);
       }
       this.chanks.push(chank);
       offset += this.chankSize;
@@ -151,7 +151,7 @@ export class BufferSharingTask<T> {
     EventSystem.unregister(this);
 
     let sumLength = 0;
-    this.chanks.forEach(chank => sumLength += chank.byteLength);
+    for (let chank of this.chanks) { sumLength += chank.byteLength; }
 
     let time = performance.now() - this.startTime;
     let rate = (sumLength / 1024 / 1024) / (time / 1000);
@@ -160,10 +160,10 @@ export class BufferSharingTask<T> {
     let uint8Array = new Uint8Array(sumLength);
     let pos = 0;
 
-    this.chanks.forEach(chank => {
-      uint8Array.set(new Uint8Array(chank), pos);
+    for (let chank of this.chanks) {
+      uint8Array.set(chank, pos);
       pos += chank.byteLength;
-    });
+    }
 
     this.data = MessagePack.decode(uint8Array);
     if (this.onfinish) this.onfinish(this, this.data);
