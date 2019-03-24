@@ -456,8 +456,7 @@ async function decompressAsync(data: ArrayBuffer | Uint8Array): Promise<Uint8Arr
     async (resolve, reject) => {
       zip.forEach(async (relativePath, zipEntry) => {
         try {
-          uint8array = await zipEntry.async('uint8array');
-          resolve(uint8array);
+          resolve(await zipEntry.async('uint8array'));
         } catch (reason) {
           console.warn(reason);
         }

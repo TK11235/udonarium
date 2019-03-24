@@ -48,7 +48,7 @@ export class SkyWayDataConnection extends EventEmitter {
   send(data: any) {
     let encodedData: Uint8Array = MessagePack.encode(data);
 
-    let total = Math.ceil(encodedData.length / this.chunkSize);
+    let total = Math.ceil(encodedData.byteLength / this.chunkSize);
     if (total <= 1) {
       this.conn.send(encodedData);
       return;
