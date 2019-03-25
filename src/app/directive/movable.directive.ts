@@ -77,7 +77,11 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if ((event.isSendFromSelf && this.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
-        this.cancel();
+        if (this.isGrabbing) {
+          this.cancel();
+        } else {
+          this.setAnimatedTransition(true);
+        }
         this.stopTransition();
         this.setPosition(this.tabletopObject);
       });
