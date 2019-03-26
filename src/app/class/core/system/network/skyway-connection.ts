@@ -120,7 +120,7 @@ export class SkyWayConnection implements Connection {
     this.bandwidthUsage += byteLength;
     this.queue = this.queue.then(() => new Promise((resolve, reject) => {
       setZeroTimeout(async () => {
-        if (1 * 1024 < container.data.length) {
+        if (1 * 1024 < container.data.byteLength) {
           let compressed = await compressAsync(container.data);
           if (compressed.byteLength < container.data.byteLength) {
             container.data = compressed;
