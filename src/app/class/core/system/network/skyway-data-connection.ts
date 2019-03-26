@@ -33,10 +33,11 @@ export class SkyWayDataConnection extends EventEmitter {
 
   constructor(private conn: PeerJs.DataConnection) {
     super();
-
-    exchangeSkyWayImplementation(conn);
     conn.on('data', data => this.onData(data));
-    conn.on('open', () => this.emit('open'));
+    conn.on('open', () => {
+      exchangeSkyWayImplementation(conn);
+      this.emit('open');
+    });
     conn.on('close', () => this.emit('close'));
     conn.on('error', err => this.emit('error', err));
   }
