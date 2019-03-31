@@ -323,6 +323,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       let cardStack = CardStack.create('山札');
       cardStack.location.x = this.cardStack.location.x + 50 - (Math.random() * 100);
       cardStack.location.y = this.cardStack.location.y + 50 - (Math.random() * 100);
+      cardStack.posZ = this.cardStack.posZ;
       cardStack.location.name = this.cardStack.location.name;
       cardStack.rotate = this.rotate;
       cardStack.update();
