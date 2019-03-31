@@ -19,7 +19,7 @@ export class BufferSharingTask<T> {
   private data: T;
   private uint8Array: Uint8Array;
   private chanks: Uint8Array[] = [];
-  private chankSize: number = 8 * 1024;
+  private chankSize: number = 32 * 1024;
   private chankReceiveCount: number = 0;
   private sendChankTimer: number;
 
@@ -111,7 +111,7 @@ export class BufferSharingTask<T> {
       console.log('バッファ送信完了', this.identifier);
       if (this.onfinish) this.onfinish(this, this.data);
       this.dispose();
-    } else if (this.completedChankIndex + 8 <= index + 1) {
+    } else if (this.completedChankIndex + 4 <= index) {
       this.sendChankTimer = null;
       this.resetTimeout();
     } else {
@@ -138,7 +138,7 @@ export class BufferSharingTask<T> {
           this.finishReceive();
         } else {
           this.resetTimeout();
-          if ((event.data.index + 1) % 4 === 0) {
+          if ((event.data.index + 1) % 1 === 0) {
             EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index, event.sendFrom);
           }
         }
