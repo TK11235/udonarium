@@ -98,7 +98,6 @@ export class ChatMessageService {
   }
 
   private findObjectName(identifier: string): string {
-    console.warn('findObjectName', identifier, PeerCursor.myCursor);
     let object = ObjectStore.instance.get(identifier);
     if (object instanceof GameCharacter) {
       return object.name;

@@ -68,14 +68,12 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('dragstart', ['$event'])
   onDragstart(e) {
-    console.log('Dragstart Cancel !!!!');
     e.stopPropagation();
     e.preventDefault();
   }
 
   @HostListener('mousedown', ['$event'])
   onDragMouseDown(e: any) {
-    console.log('TerrainComponent mousedown !!!');
     e.preventDefault();
 
     // TODO:もっと良い方法考える
@@ -86,7 +84,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('Terrein onContextMenu', this.pointerDeviceService.isAllowedToOpenContextMenu);
     e.stopPropagation();
     e.preventDefault();
 
@@ -94,7 +91,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let menuPosition = this.pointerDeviceService.pointers[0];
     let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
-    console.log('mouseCursor', menuPosition);
     this.contextMenuService.open(menuPosition, [
       (this.isLocked
         ? {
@@ -129,7 +125,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.terrain.clone();
-          console.log('コピー', cloneObject);
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.isLocked = false;
@@ -161,7 +156,6 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private showDetail(gameObject: Terrain) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = '地形設定';

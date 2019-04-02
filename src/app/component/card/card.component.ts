@@ -127,7 +127,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('carddrop', ['$event'])
   onCardDrop(e) {
     if (this.card === e.detail || (e.detail instanceof Card === false && e.detail instanceof CardStack === false)) {
-      //console.log('onCardDrop cancel', this.card.name, e.detail);
       return;
     }
     e.stopPropagation();
@@ -136,7 +135,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
       let distance: number = Math.sqrt((cardStack.location.x - this.card.location.x) ** 2 + (cardStack.location.y - this.card.location.y) ** 2 + (cardStack.posZ - this.card.posZ) ** 2);
-      //console.log('onCardDrop CardStack fire', this.card.name, distance);
       if (distance < 25) {
         cardStack.location.x = this.card.location.x;
         cardStack.location.y = this.card.location.y;
@@ -168,7 +166,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('dragstart', ['$event'])
   onDragstart(e) {
-    console.log('Dragstart Cancel !!!!');
     e.stopPropagation();
     e.preventDefault();
   }
@@ -177,7 +174,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   onMouseDown(e: any) {
     this.onDoubleClick(e);
     this.card.toTopmost();
-    console.log('GameCharacterComponent mousedown !!!');
 
     this.addMouseEventListeners();
 
@@ -185,7 +181,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onMouseUp(e: any) {
-    console.log('onMouseUp Card !!!!');
     e.preventDefault();
     this.dispatchCardDropEvent();
     this.removeMouseEventListeners();
@@ -193,13 +188,11 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
     this.removeMouseEventListeners();
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', position);
     this.contextMenuService.open(position, [
       (!this.isVisible || this.isHand
         ? {
@@ -241,7 +234,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.card.clone();
-          console.log('コピー', cloneObject);
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();
@@ -312,7 +304,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private showDetail(gameObject: Card) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = 'カード設定';

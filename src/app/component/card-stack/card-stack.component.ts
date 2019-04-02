@@ -108,7 +108,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostListener('carddrop', ['$event'])
   onCardDrop(e) {
     if (this.cardStack === e.detail || (e.detail instanceof Card === false && e.detail instanceof CardStack === false)) {
-      console.log('onCardDrop cancel', this.name, e.detail);
       return;
     }
     e.stopPropagation();
@@ -117,12 +116,10 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     if (e.detail instanceof Card) {
       let card: Card = e.detail;
       let distance: number = Math.sqrt((card.location.x - this.cardStack.location.x) ** 2 + (card.location.y - this.cardStack.location.y) ** 2 + (card.posZ - this.cardStack.posZ) ** 2);
-      console.log('onCardDrop Card fire', this.name, distance);
       if (distance < 50) this.cardStack.putOnTop(card);
     } else if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
       let distance: number = Math.sqrt((cardStack.location.x - this.cardStack.location.x) ** 2 + (cardStack.location.y - this.cardStack.location.y) ** 2 + (cardStack.posZ - this.cardStack.posZ) ** 2);
-      console.log('onCardDrop CardStack fire', this.cardStack.name, distance);
       if (distance < 25) {
         let cards: Card[] = this.cardStack.drawCardAll();
         cardStack.location.name = this.cardStack.location.name;
@@ -163,20 +160,17 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('dragstart', ['$event'])
   onDragstart(e) {
-    console.log('Dragstart Cancel !!!!');
     e.stopPropagation();
     e.preventDefault();
   }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
-    console.log('GameCharacterComponent mousedown !!!');
     this.onDoubleClick(e);
     this.cardStack.toTopmost();
 
     this.addMouseEventListeners();
 
-    console.log('onSelectedGameCharacter', this.cardStack.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.cardStack.identifier, className: 'GameCharacter' });
 
     e.preventDefault();
@@ -190,14 +184,12 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
     this.removeMouseEventListeners();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', position);
     this.contextMenuService.open(position, [
       {
         name: '１枚引く', action: () => {
@@ -275,7 +267,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.cardStack.clone();
-          console.log('コピー', cloneObject);
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.owner = '';
@@ -310,7 +301,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       card.toTopmost();
       card.update();
     }
-    console.log('breakStack', cards, this.cardStack.cards);
     this.cardStack.location.name = 'graveyard';
     this.cardStack.update();
     this.cardStack.destroy();
@@ -365,7 +355,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private showDetail(gameObject: CardStack) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = '山札設定';
@@ -376,7 +365,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private showStackList(gameObject: CardStack) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
 
     let coordinate = this.pointerDeviceService.pointers[0];

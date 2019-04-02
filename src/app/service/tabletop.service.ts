@@ -222,7 +222,6 @@ export class TabletopService {
   }
 
   createDiceSymbol(position: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string): DiceSymbol {
-    console.log('createDiceSymbol');
     let diceSymbol = DiceSymbol.create(name, diceType, 1);
     let image: ImageFile = null;
 

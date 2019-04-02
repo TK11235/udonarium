@@ -92,8 +92,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    console.log('きどう');
-
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.data.identifier !== this.currentTable.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
@@ -190,7 +188,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('wheel', ['$event'])
   onWheel(e: WheelEvent) {
-    console.log('onWheel', e.deltaY);
     let transformX = 0;
     let transformY = 0;
     let transformZ = 0;
@@ -210,7 +207,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('document:keydown', ['$event'])
   onKeydown(e: KeyboardEvent) {
-    console.log('onKeydown', e.keyCode);
     if (document.body !== document.activeElement) return;
     let transformX = 0;
     let transformY = 0;
@@ -254,7 +250,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: any) {
     if (!document.activeElement.contains(this.gameObjects.nativeElement)) return;
-    console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
 
@@ -262,7 +257,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let menuPosition = this.pointerDeviceService.pointers[0];
     let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
-    console.log('mouseCursor', menuPosition);
     let menuActions: ContextMenuAction[] = [];
 
     Array.prototype.push.apply(menuActions, this.tabletopService.getContextMenuActionsForCreateObject(objectPosition));

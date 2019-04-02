@@ -85,7 +85,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
-    console.log('GameCharacterComponent mousedown !!!', this.gameCharacter);
     e.preventDefault();
 
     // TODO:もっと良い方法考える
@@ -97,14 +96,12 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
     let position = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', position);
     this.contextMenuService.open(position, [
       { name: '詳細を表示', action: () => { this.showDetail(this.gameCharacter); } },
       { name: 'チャットパレットを表示', action: () => { this.showChatPalette(this.gameCharacter) } },
@@ -131,7 +128,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.gameCharacter.clone();
-          console.log('コピー', cloneObject);
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();

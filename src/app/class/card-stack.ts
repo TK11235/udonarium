@@ -39,7 +39,6 @@ export class CardStack extends TabletopObject {
       card.index = Math.random() * length;
       card.rotate = Math.floor(Math.random() * 2) * 180;
     }
-    console.log('shuffle!!!!', this.cards.length, this.cards);
     return this.cards;
   }
 
@@ -55,7 +54,6 @@ export class CardStack extends TabletopObject {
       card.toTopmost();
       card.update();
     }
-    console.log('drawCard', card, this.topCard);
     return card;
   }
 

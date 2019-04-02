@@ -135,14 +135,12 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     this.doubleClickTimer = null;
     if (this.doubleClickPoint.x === this.pointerDeviceService.pointers[0].x
       && this.doubleClickPoint.y === this.pointerDeviceService.pointers[0].y) {
-      console.log('onDoubleClick !!!!');
       if (this.isVisible) this.diceRoll();
     }
   }
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
 
@@ -150,7 +148,6 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     let position = this.pointerDeviceService.pointers[0];
 
     let actions: ContextMenuAction[] = [];
-    console.log('mouseCursor', position);
 
     if (this.isVisible) {
       actions.push({
@@ -196,7 +193,6 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     actions.push({
       name: 'コピーを作る', action: () => {
         let cloneObject = this.diceSymbol.clone();
-        console.log('コピー', cloneObject);
         cloneObject.location.x += this.gridSize;
         cloneObject.location.y += this.gridSize;
         cloneObject.update();
@@ -227,7 +223,6 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   }
 
   showDetail(gameObject: DiceSymbol) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = 'ダイスシンボル設定';

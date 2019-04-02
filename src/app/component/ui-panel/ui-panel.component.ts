@@ -148,7 +148,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   private onScrollablePanelMouseDown(e: MouseEvent) {
     if (e.target === this.scrollablePanel.nativeElement) {
       if (e.offsetX >= this.scrollablePanel.nativeElement.clientWidth || e.offsetY >= this.scrollablePanel.nativeElement.clientHeight) {
-        console.log('scrollbar clicked');
         this.$draggablePanel.draggable('option', 'handle', '.draggable-panel');
         document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
         return;
@@ -158,12 +157,10 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private onDraggablePanelMouseDown(e: MouseEvent) {
-    console.log('onDraggablePanelMouseDown');
     this.setForeground();
   }
 
   private onMouseUp(e: any) {
-    console.log('onMouseUp');
     this.$draggablePanel.draggable('option', 'handle', false);
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
   }
@@ -174,10 +171,8 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
       && this.$draggablePanel.outerWidth() >= window.innerWidth
       && this.$draggablePanel.outerHeight() >= window.innerHeight) {
       this.isFullScreen = false;
-      console.log('通常');
     } else {
       this.isFullScreen = true;
-      console.log('最大化');
     }
 
     if (this.isFullScreen) {

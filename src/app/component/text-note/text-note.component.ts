@@ -81,7 +81,6 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('dragstart', ['$event'])
   onDragstart(e) {
-    console.log('Dragstart Cancel !!!!');
     e.stopPropagation();
     e.preventDefault();
   }
@@ -103,7 +102,6 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onMouseUp(e: any) {
     if (this.pointerDeviceService.isAllowedToOpenContextMenu) {
-      console.log('this.textAreaElementRef.nativeElement.focus() !!!!');
       let selection = window.getSelection();
       if (!selection.isCollapsed) selection.removeAllRanges();
       this.textAreaElementRef.nativeElement.focus();
@@ -119,7 +117,6 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
     this.removeMouseEventListeners();
     if (this.isSelected) return;
     e.stopPropagation();
@@ -127,7 +124,6 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
-    console.log('mouseCursor', position);
     this.contextMenuService.open(position, [
       { name: 'メモを編集', action: () => { this.showDetail(this.textNote); } },
       {
@@ -188,7 +184,6 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private showDetail(gameObject: TextNote) {
-    console.log('onSelectedGameObject <' + gameObject.aliasName + '>', gameObject.identifier);
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = '共有メモ設定';

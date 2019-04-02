@@ -56,14 +56,12 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
 
   @HostListener('dragstart', ['$event'])
   onDragstart(e) {
-    console.log('Dragstart Cancel !!!!');
     e.stopPropagation();
     e.preventDefault();
   }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
-    console.log('GameCharacterComponent mousedown !!!');
     e.preventDefault();
 
     // TODO:もっと良い方法考える
@@ -74,14 +72,12 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let menuPosition = this.pointerDeviceService.pointers[0];
     let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
-    console.log('mouseCursor', menuPosition);
     this.contextMenuService.open(menuPosition, [
       (this.isLock
         ? {
