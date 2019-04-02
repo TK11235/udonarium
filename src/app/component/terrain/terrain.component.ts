@@ -106,6 +106,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
             SoundEffect.play(PresetSound.lock);
           }
         }),
+      ContextMenuSeparator,
       (this.hasWall
         ? {
           name: '壁を非表示', action: () => {
