@@ -38,6 +38,7 @@ export class CardStack extends TabletopObject {
     for (let card of this.cards) {
       card.index = Math.random() * length;
       card.rotate = Math.floor(Math.random() * 2) * 180;
+      this.setSamePositionFor(card);
     }
     return this.cards;
   }
@@ -46,11 +47,9 @@ export class CardStack extends TabletopObject {
     let card = this.topCard ? <Card>this.cardRoot.removeChild(this.topCard) : null;
     if (card) {
       card.location.name = this.location.name;
-      card.location.x = this.location.x;
-      card.location.y = this.location.y;
-      card.posZ = this.posZ;
       card.rotate += this.rotate;
       if (360 < card.rotate) card.rotate -= 360;
+      this.setSamePositionFor(card);
       card.toTopmost();
       card.update();
     }
@@ -62,38 +61,45 @@ export class CardStack extends TabletopObject {
     for (let card of cards) {
       this.cardRoot.removeChild(card);
       card.location.name = this.location.name;
-      card.location.x = this.location.x;
-      card.location.y = this.location.y;
-      card.posZ = this.posZ;
       card.rotate += this.rotate;
+      this.setSamePositionFor(card);
       if (360 < card.rotate) card.rotate -= 360;
     }
     return cards;
   }
 
   faceUp() {
-    if (this.topCard) this.topCard.faceUp();
+    if (this.topCard) {
+      this.topCard.faceUp();
+      this.setSamePositionFor(this.topCard);
+    }
   }
 
   faceDown() {
-    if (this.topCard) this.topCard.faceDown();
+    if (this.topCard) {
+      this.topCard.faceDown();
+      this.setSamePositionFor(this.topCard);
+    }
   }
 
   faceUpAll() {
     for (let card of this.cards) {
       card.faceUp();
+      this.setSamePositionFor(card);
     }
   }
 
   faceDownAll() {
     for (let card of this.cards) {
       card.faceDown();
+      this.setSamePositionFor(card);
     }
   }
 
   uprightAll() {
     for (let card of this.cards) {
       card.rotate = 0;
+      this.setSamePositionFor(card);
     }
   }
 
@@ -112,7 +118,7 @@ export class CardStack extends TabletopObject {
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
     card.location.name = this.identifier;
-    card.update();
+    this.setSamePositionFor(card);
     return <Card>this.cardRoot.insertBefore(card, this.topCard);
   }
 
@@ -124,7 +130,7 @@ export class CardStack extends TabletopObject {
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
     card.location.name = this.identifier;
-    card.update();
+    this.setSamePositionFor(card);
     return <Card>this.cardRoot.appendChild(card);
   }
 
@@ -146,6 +152,12 @@ export class CardStack extends TabletopObject {
         object[i].zindex = i;
       }
     }
+  }
+
+  private setSamePositionFor(card: Card) {
+    card.location.x = this.location.x;
+    card.location.y = this.location.y;
+    card.posZ = this.posZ;
   }
 
   static create(name: string, identifier?: string): CardStack {
