@@ -1,6 +1,6 @@
-import * as JSZip from 'jszip/dist/jszip.min.js';
 import * as MessagePack from 'msgpack-lite';
 
+import { compressAsync, decompressAsync } from '../util/compress';
 import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { PeerContext } from './peer-context';
@@ -420,47 +420,4 @@ function diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
     }
   }
   return { diff1: diff1, diff2: diff2 };
-}
-
-async function compressAsync(data: Uint8Array): Promise<Uint8Array> {
-  let files: File[] = [];
-  files.push(new File([data], 'd', { type: 'application/octet-stream' }));
-
-  let zip = new JSZip();
-  let length = files.length;
-  for (let i = 0; i < length; i++) {
-    let file = files[i]
-    zip.file(file.name, file);
-  }
-
-  let uint8array: Uint8Array = await zip.generateAsync({
-    type: 'uint8array',
-    compression: 'DEFLATE',
-    compressionOptions: {
-      level: 2
-    }
-  });
-
-  return uint8array;
-}
-
-async function decompressAsync(data: ArrayBuffer | Uint8Array): Promise<Uint8Array> {
-  let zip = new JSZip();
-  try {
-    zip = await zip.loadAsync(data);
-  } catch (reason) {
-    console.warn(reason);
-    return null;
-  }
-  let uint8array: Uint8Array = await new Promise<Uint8Array>(
-    async (resolve, reject) => {
-      zip.forEach(async (relativePath, zipEntry) => {
-        try {
-          resolve(await zipEntry.async('uint8array'));
-        } catch (reason) {
-          console.warn(reason);
-        }
-      });
-    });
-  return uint8array;
 }
