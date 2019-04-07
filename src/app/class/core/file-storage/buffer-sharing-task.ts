@@ -68,18 +68,9 @@ export class BufferSharingTask<T> {
   }
 
   private initializeSend() {
-    let offset = 0;
-    let byteLength = this.uint8Array.byteLength;
-    while (offset < byteLength) {
-      let chank: Uint8Array = null;
-      if (offset + this.chankSize < byteLength) {
-        chank = this.uint8Array.slice(offset, offset + this.chankSize);
-      } else {
-        chank = this.uint8Array.slice(offset, byteLength);
-      }
-      this.chanks.push(chank);
-      offset += this.chankSize;
-    }
+    let total = Math.ceil(this.uint8Array.byteLength / this.chankSize);
+    this.chanks = new Array(total);
+
     console.log('チャンク分割 ' + this.identifier, this.chanks.length);
 
     EventSystem.register(this)
@@ -103,7 +94,8 @@ export class BufferSharingTask<T> {
   }
 
   private sendChank(index: number) {
-    let data = { index: index, length: this.chanks.length, chank: this.chanks[index] };
+    let chank = this.uint8Array.slice(index * this.chankSize, (index + 1) * this.chankSize);
+    let data = { index: index, length: this.chanks.length, chank: chank };
     EventSystem.call('FILE_SEND_CHANK_' + this.identifier, data, this.sendTo);
     this.sentChankIndex = index;
     if (this.chanks.length <= index + 1) {
