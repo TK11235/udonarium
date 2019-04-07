@@ -57,9 +57,11 @@ export class SkyWayDataConnection extends EventEmitter {
 
     let id = UUID.generateUuid();
 
+    let sliceData: Uint8Array = null;
+    let chank: DataChank = null;
     for (let sliceIndex = 0; sliceIndex < total; sliceIndex++) {
-      let sliceData = encodedData.slice(sliceIndex * this.chunkSize, (sliceIndex + 1) * this.chunkSize);
-      let chank: DataChank = { id: id, data: sliceData, index: sliceIndex, total: total };
+      sliceData = encodedData.slice(sliceIndex * this.chunkSize, (sliceIndex + 1) * this.chunkSize);
+      chank = { id: id, data: sliceData, index: sliceIndex, total: total };
       this.conn.send(MessagePack.encode(chank));
     }
   }
