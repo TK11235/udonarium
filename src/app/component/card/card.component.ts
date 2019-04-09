@@ -246,7 +246,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           SoundEffect.play(PresetSound.sweep);
         }
       },
-    ], this.name);
+    ], this.isVisible ? this.name : 'カード');
   }
 
   onMove() {
