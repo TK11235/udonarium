@@ -3,6 +3,10 @@
   <div *ngIf="imageFile" class="component-content is-pointer-events-auto"
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
     <img class="card-image" [src]="(isFront ? frontImage.url : backImage.url) | safe: 'resourceUrl'">
+    <div *ngIf="!isFront && hasOwner" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(-75%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+      <span>{{ownerName}}</span>
+    </div>
+    <img *ngIf="isHand && frontImage" class="card-image thumbnail-transform is-translucent" [src]="frontImage.url | safe: 'resourceUrl'">
     <div class="rotate-grab of-left-top">
       <i class="material-icons">autorenew</i>
     </div>
@@ -15,9 +19,5 @@
     <div class="rotate-grab of-right-top">
       <i class="material-icons">autorenew</i>
     </div>
-  </div>
-  <img *ngIf="isHand && frontImage" class="card-image upright-transform is-3d is-translucent" [src]="frontImage.url | safe: 'resourceUrl'">
-  <div *ngIf="!isFront && hasOwner" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-    <span>{{ownerName}}</span>
   </div>
 </div>

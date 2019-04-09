@@ -60,14 +60,13 @@
   width: 100%;
 }
 
-.upright-transform {
+.thumbnail-transform {
   position: absolute;
-  backface-visibility: visible;
-  transform: rotateX(-90deg) scale(0.7) translateY(-50%) ;
+  transform: scale(0.9);
 }
 
 .is-translucent {
-  filter: opacity(0.7);
+  filter: opacity(0.8);
 }
 
 .rotate-grab {
@@ -123,7 +122,7 @@
   padding: 3px 9px;
   border-radius: 24px;
   position: absolute;
-  top: 50%
+  top: 0;
 }
 
 .is-nowrap {
