@@ -7,18 +7,20 @@
       <span>{{ownerName}}</span>
     </div>
     <img *ngIf="isHand && frontImage" class="card-image thumbnail-transform is-translucent" [src]="frontImage.url | safe: 'resourceUrl'">
-    <div class="rotate-grab of-left-top">
-      <i class="material-icons">autorenew</i>
-    </div>
-    <div class="rotate-grab of-left-bottom">
-      <i class="material-icons">autorenew</i>
-    </div>
-    <div class="rotate-grab of-right-bottom">
-      <i class="material-icons">autorenew</i>
-    </div>
-    <div class="rotate-grab of-right-top">
-      <i class="material-icons">autorenew</i>
-    </div>
+    <ng-container *ngIf="!isIconHidden">
+      <div class="rotate-grab of-left-top">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-left-bottom">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-right-bottom">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-right-top">
+        <i class="material-icons">autorenew</i>
+      </div>
       <div class="border-bg is-pointer-events-none"></div>
+    </ng-container>
   </div>
 </div>

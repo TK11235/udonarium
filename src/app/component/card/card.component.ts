@@ -54,6 +54,9 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   get frontImage(): ImageFile { return this.card.frontImage; }
   get backImage(): ImageFile { return this.card.backImage; }
 
+  private iconHiddenTimer: NodeJS.Timer = null;
+  get isIconHidden(): boolean { return this.iconHiddenTimer != null };
+
   gridSize: number = 50;
 
   movableOption: MovableOption = {};
@@ -176,6 +179,13 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.card.toTopmost();
 
     this.addMouseEventListeners();
+
+    clearTimeout(this.iconHiddenTimer);
+    this.iconHiddenTimer = setTimeout(() => {
+      this.iconHiddenTimer = null;
+      this.changeDetector.markForCheck();
+    }, 400);
+    this.changeDetector.markForCheck();
 
     e.preventDefault();
   }
