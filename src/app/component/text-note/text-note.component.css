@@ -74,6 +74,7 @@
   font-size: 15px;
   padding: 3px 9px;
   white-space: nowrap;
+  backface-visibility: hidden;
 }
 
 .is-black-background {
@@ -99,6 +100,8 @@ textarea {
   padding: 2px;
   margin: 0;
   word-break: break-all;
+
+  backface-visibility: hidden;
 }
 
 textarea:focus {
