@@ -126,32 +126,51 @@ textarea:focus {
 
 .rotate-grab {
   position: absolute;
-  width: 28px;
+  width: 42px;
   height: 28px;
   box-sizing: border-box;
-  border: solid 2px #CCCCCC;
   cursor: -moz-default;
   cursor: -webkit-default;
   cursor: default;
   z-index: 1;
-  padding: 0;
+  text-align: center;
+  padding: 2px;
   background-color: #CCCCCC;
-  border-radius: 100%;
+  border-radius: 28px;
   color: #444;
   font-size: 8px;
-  opacity: 0;
-}
-
-.rotate-grab:hover, .rotate-grab:active {
-  opacity: 1;
 }
 
 .of-left-top {
   top: -14px;
-  left: -14px;
+  left: -21px;
 }
 
 .of-right-top {
   top: -14px;
-  right: -14px;
+  right: -21px;
+}
+
+.rotate-grab {
+  opacity: 0;
+}
+
+.component:hover .rotate-grab {
+  opacity: 0.5;
+}
+
+.component:active .rotate-grab {
+  opacity: 0;
+}
+
+.component .rotate-grab:hover, .component .rotate-grab:active {
+  opacity: 1;
+}
+
+.material-icons {
+  display: none;
+}
+
+.component:hover .material-icons, .component:active .material-icons {
+  display: inline;
 }
