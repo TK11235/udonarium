@@ -127,6 +127,30 @@
   border-radius: 14px;
 }
 
+.border-bg {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: rgba(204, 204, 204, 0.5);
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+}
+
+.border-bg {
+  display: none;
+}
+
+.component:hover .border-bg {
+  display: block;
+}
+
+.component:active .border-bg {
+  display: none;
+}
+
 .name-tag {
   box-sizing: border-box;
   font-size: 15px;
