@@ -1,29 +1,29 @@
 <div class="component is-3d is-pointer-events-none" [ngClass]="{'is-empty': isEmpty}"
   [style.width.px]="size * gridSize"
   appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
-  <div class="component-content is-3d is-pointer-events-auto is-grab"
+  <div class="component-content is-pointer-events-auto is-grab"
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
     <div *ngIf="imageFile" (@shuffle.start)="animationShuffleStarted($event)" (@shuffle.done)="animationShuffleDone($event)"
       [@shuffle]="animeState">
       <img class="card-image" [ngStyle]="{'transform': 'rotateZ(' + topCard.rotate +'deg)'}" [src]="imageFile.url | safe: 'resourceUrl'">
     </div>
-    <div class="rotate-grab of-left-top">
-      <i class="material-icons">autorenew</i>
+      <div class="rotate-grab of-left-top">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-left-bottom">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-right-bottom">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-right-top">
+        <i class="material-icons">autorenew</i>
+      </div>
+    <div *ngIf="isShowTotal" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(-50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+      <span>{{cards.length}}枚</span>
     </div>
-    <div class="rotate-grab of-left-bottom">
-      <i class="material-icons">autorenew</i>
+    <div *ngIf="hasOwner" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+      <span>{{ownerName}} が確認中</span>
     </div>
-    <div class="rotate-grab of-right-bottom">
-      <i class="material-icons">autorenew</i>
-    </div>
-    <div class="rotate-grab of-right-top">
-      <i class="material-icons">autorenew</i>
-    </div>
-  </div>
-  <div *ngIf="isShowTotal" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(-50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-    <span>{{cards.length}}枚</span>
-  </div>
-  <div *ngIf="hasOwner" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-    <span>{{ownerName}} が確認中</span>
   </div>
 </div>
