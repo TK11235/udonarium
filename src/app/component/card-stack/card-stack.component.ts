@@ -60,6 +60,9 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private callbackOnMouseUp = (e) => this.onMouseUp(e);
 
+  private iconHiddenTimer: NodeJS.Timer = null;
+  get isIconHidden(): boolean { return this.iconHiddenTimer != null };
+
   gridSize: number = 50;
 
   movableOption: MovableOption = {};
@@ -170,6 +173,11 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cardStack.toTopmost();
 
     this.addMouseEventListeners();
+
+    clearTimeout(this.iconHiddenTimer);
+    this.iconHiddenTimer = setTimeout(() => {
+      this.iconHiddenTimer = null;
+    }, 400);
 
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.cardStack.identifier, className: 'GameCharacter' });
 
