@@ -2,8 +2,7 @@
   <div class="background-image is-pointer-events-none" [ngClass]="[(backgroundFilterType ? 'is-filter' : ''), backgroundFilterType]" 
     [style.background-image]="'url(' + backgroundImage.url + ')' | safe: 'style'"></div>
   <div class="component-content is-fill is-3d" #gameTable>
-    <div id="app-game-table" class="game-table is-3d"#gameObjects>
-      <div class="table-image is-pointer-events-none" [style.background-image]="'url(' + tableImage.url + ')' | safe: 'style'" ></div>
+    <div id="app-game-table" class="game-table table-image is-3d" [style.background-image]="'url(' + tableImage.url + ')' | safe: 'style'" #gameObjects>
       <canvas class="grid-canvas is-fill is-pointer-events-none" #gridCanvas></canvas>
       <terrain class="is-3d" *ngFor="let terrain of terrains; trackBy: trackByGameObject" [terrain]="terrain"></terrain>
       <game-table-mask class="is-3d" *ngFor="let mask of tableMasks; trackBy: trackByGameObject" [gameTableMask]="mask"></game-table-mask>
