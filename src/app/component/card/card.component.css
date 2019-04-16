@@ -70,50 +70,61 @@
 }
 
 .rotate-grab {
-  display: none;
-  opacity: 0;
   position: absolute;
   width: 28px;
   height: 28px;
   box-sizing: border-box;
-  border: solid 2px #CCCCCC;
   cursor: -moz-default;
   cursor: -webkit-default;
   cursor: default;
   z-index: 1;
-  padding: 0;
+  padding: 2px;
   background-color: #CCCCCC;
   border-radius: 100%;
   color: #444;
   font-size: 8px;
 }
 
-.component:hover .rotate-grab, .component:active .rotate-grab {
-  display: block;
+.rotate-grab {
+  display: none;
 }
 
-.rotate-grab:hover, .rotate-grab:active {
+.component:hover .rotate-grab {
+  display: block;
+  opacity: 0.5;
+}
+
+.component:active .rotate-grab {
+  display: none;
+}
+
+.component .rotate-grab:hover, .component .rotate-grab:active {
+  display: block;
   opacity: 1;
 }
 
 .of-left-top {
-  top: -7px;
-  left: -7px;
+  top: -10px;
+  left: -10px;
+  border-radius: 14px;
 }
 
 .of-left-bottom {
-  bottom: -7px;
-  left: -7px;
+  bottom: -10px;
+  left: -10px;
+  border-radius: 14px;
 }
 
 .of-right-bottom {
-  bottom: -7px;
-  right: -7px;
+  bottom: -10px;
+  right: -10px;
+  border-radius: 14px;
 }
 
 .of-right-top {
-  top: -7px;
-  right: -7px;
+  top: -10px;
+  right: -10px;
+  border-radius: 14px;
 }
 
 .name-tag {
@@ -132,4 +143,11 @@
 .is-black-background {
   color: #CCC;
   background-color: rgba(30, 30, 30, 0.8);
+}
+
+.material-icons {
+  display: none;
+}
+.component:hover .material-icons, .component:active .material-icons {
+  display: inline;
 }
