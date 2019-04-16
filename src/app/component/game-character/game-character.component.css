@@ -55,7 +55,6 @@
   width: calc(100% + 12px);
   cursor: default;
   border-radius: 37px;
-  opacity: 0;
 }
 
 .pedestal-grab-border {
@@ -70,36 +69,32 @@
   border-radius: 37px;
 }
 
-.pedestal-outer:hover + .pedestal-grab, .pedestal-grab:hover, .pedestal-grab:active {
-  opacity: 1;
-}
-
 .pedestal-inner {
   backface-visibility: hidden;
   position: absolute;
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  border:solid 6px #FFCC80;
+  border: solid 6px #FFCC80;
   border-radius: 25px;
 }
 
 .pedestal-outer {
-  pointer-events: none;
   backface-visibility: hidden;
+  transform: translateZ(0.01px);
   position: absolute;
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  border:solid 2px #212121;
+  border: solid 2px #212121;
   border-radius: 25px;
 }
 
 .upright-transform {
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  position: absolute;
   transform: rotateX(-90deg) translateY(-50%);
 }
 
@@ -168,7 +163,7 @@
   position: absolute;
   top: 3px;
   backface-visibility: hidden;
-  transform: rotateY(-180deg)
+  transform: rotateY(-180deg);
 }
 
 .rotate-grab-icon {
@@ -176,16 +171,15 @@
   width: 28px;
   height: 28px;
   box-sizing: border-box;
-  border:solid 2px #CCCCCC;
   cursor: -moz-default;
   cursor: -webkit-default;
   cursor: default;
   z-index: 1;
-  padding: 0;
+  padding: 2px;
   background-color: #CCCCCC;
   border-radius: 100%;
   color: #444;
-  opacity: 0;
+  font-size: 8px;
 }
 
 .of-top {
@@ -216,7 +210,23 @@
   color: #444;
 }
 
-.grab-group:hover .rotate-grab, .grab-group:active .rotate-grab, .rotate-grab:hover, .rotate-grab:active {
+.rotate-grab {
+  opacity: 0;
+  /*display: none;*/
+}
+
+.component:hover .rotate-grab {
+  /*display: block;*/
+  opacity: 0.5;
+}
+
+.component:active .rotate-grab {
+  /*display: none;*/
+  opacity: 0;
+}
+
+.component .rotate-grab:hover, .component .rotate-grab:active {
+  /*display: block;*/
   opacity: 1;
 }
 
