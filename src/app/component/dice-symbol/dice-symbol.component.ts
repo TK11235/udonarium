@@ -73,6 +73,9 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
 
   animeState: string = 'inactive';
 
+  private iconHiddenTimer: NodeJS.Timer = null;
+  get isIconHidden(): boolean { return this.iconHiddenTimer != null };
+
   private emptyImage: ImageFile = ImageFile.Empty;
   gridSize: number = 50;
 
@@ -119,6 +122,12 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
     this.onDoubleClick(e);
+
+    clearTimeout(this.iconHiddenTimer);
+    this.iconHiddenTimer = setTimeout(() => {
+      this.iconHiddenTimer = null;
+    }, 400);
+
     e.preventDefault();
   }
 

@@ -5,12 +5,14 @@
       class="component-content is-3d is-pointer-events-auto">
       <div class="pedestal-inner" [ngClass]="{'is-gray-border': hasOwner}"></div>
       <div class="pedestal-outer"></div>
+      <ng-container *ngIf="!isIconHidden">
       <div class="pedestal-grab rotate-grab">
         <div class="pedestal-grab-border">
           <div class="material-icons of-front">autorenew</div>
           <div class="material-icons of-back">autorenew</div>
         </div>
       </div>
+      </ng-container>
       <div class="component-content is-3d" [@diceRoll]="animeState" (@diceRoll.done)="animationShuffleDone($event)">
         <div class="upright-transform is-fit-width is-3d">
           <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize">
