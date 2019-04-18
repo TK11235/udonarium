@@ -212,21 +212,17 @@
 
 .rotate-grab {
   opacity: 0;
-  /*display: none;*/
 }
 
 .component:hover .rotate-grab {
-  /*display: block;*/
   opacity: 0.5;
 }
 
 .component:active .rotate-grab {
-  /*display: none;*/
   opacity: 0;
 }
 
 .component .rotate-grab:hover, .component .rotate-grab:active {
-  /*display: block;*/
   opacity: 1;
 }
 
