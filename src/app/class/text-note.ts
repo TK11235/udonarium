@@ -17,21 +17,27 @@ export class TextNote extends TabletopObject {
   set text(text: string) { this.setCommonValue('text', text); }
 
   toTopmost() {
-    let object: any[] = ObjectStore.instance.getObjects('text-note');
-    object.sort((a, b) => {
-      if (a.zindex < b.zindex) return -1;
-      if (a.zindex > b.zindex) return 1;
-      return 0;
-    });
-    let last = object[object.length - 1];
-    if (last === this) return;
-    let max = last.zindex;
-    if (this.zindex <= max) this.zindex = max + 1;
+    let objects: TextNote[] = ObjectStore.instance.getObjects('text-note');
 
-    if (object.length * 16 < max) {
-      for (let i = 0; i < object.length; i++) {
-        object[i].zindex = i;
+    let maxZindex: number = -1;
+    let hasConflict: boolean = false;
+    for (let i = 0; i < objects.length; i++) {
+      if (maxZindex === objects[i].zindex) {
+        hasConflict = true;
+      } else if (maxZindex < objects[i].zindex) {
+        maxZindex = objects[i].zindex;
+        hasConflict = false;
       }
+    }
+
+    if (maxZindex === this.zindex && !hasConflict) return;
+    this.zindex = maxZindex + 1;
+
+    if (this.zindex < objects.length + 256) return;
+    objects.sort((a, b) => a.zindex - b.zindex);
+
+    for (let i = 0; i < objects.length; i++) {
+      objects[i].zindex = i;
     }
   }
 
