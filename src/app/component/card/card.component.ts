@@ -83,12 +83,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         } else if (event.data.aliasName === 'data') {
           this.changeDetector.markForCheck();
         }
-        if (event.isSendFromSelf || event.data.identifier !== this.card.identifier) return;
-      })
-      .on('UPDATE_GAME_OBJECT', 1000, event => {
-        if (event.isSendFromSelf || event.data.aliasName !== 'card') return;
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (!object) this.changeDetector.markForCheck();
       });
     if (!this.frontImage || !this.backImage || this.frontImage.state < 2 || this.backImage.state < 2) {
       let dummy = {};
