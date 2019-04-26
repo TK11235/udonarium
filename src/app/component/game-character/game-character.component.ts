@@ -1,4 +1,4 @@
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
@@ -10,7 +10,7 @@ import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.compon
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
+import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -20,7 +20,6 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./game-character.component.css'],
   animations: [
     trigger('bounceInOut', [
-      state('in', style({ transform: 'scale3d(1, 1, 1)' })),
       transition('void => *', [
         animate('600ms ease', keyframes([
           style({ transform: 'scale3d(0, 0, 0)', offset: 0 }),

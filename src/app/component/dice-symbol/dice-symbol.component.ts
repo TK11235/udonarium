@@ -1,4 +1,4 @@
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { EventSystem, Network } from '@udonarium/core/system';
@@ -17,7 +17,6 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./dice-symbol.component.css'],
   animations: [
     trigger('diceRoll', [
-      state('active', style({ transform: '' })),
       transition('* => active', [
         animate('800ms ease', keyframes([
           style({ transform: 'scale3d(0.8, 0.8, 0.8) rotateZ(0deg)', offset: 0 }),
@@ -29,7 +28,6 @@ import { PointerDeviceService } from 'service/pointer-device.service';
       ])
     ]),
     trigger('bounceInOut', [
-      state('in', style({ transform: 'scale3d(1, 1, 1)' })),
       transition('void => *', [
         animate('600ms ease', keyframes([
           style({ transform: 'scale3d(0, 0, 0)', offset: 0 }),

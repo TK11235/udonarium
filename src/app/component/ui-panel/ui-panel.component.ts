@@ -1,4 +1,4 @@
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import {
   AfterViewInit,
   Component,
@@ -23,7 +23,6 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   ],
   animations: [
     trigger('flyInOut', [
-      state('in', style({ transform: 'scale(1, 1)' })),
       transition('void => *', [
         animate('100ms ease-out', keyframes([
           style({ transform: 'scale(0.8, 0.8)', opacity: '0', offset: 0 }),
@@ -33,16 +32,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
       transition('* => void', [
         animate(100, style({ transform: 'scale(0, 0)' }))
       ])
-    ]),
-    trigger('bgInOut', [
-      state('in', style({ 'background-color': 'rgba(30, 30, 30, 0.3)' })),
-      transition('void => *', [
-        style({ 'background-color': 'rgba(30, 30, 30, 0.0)' }), animate(200)
-      ]),
-      transition('* => void', [
-        animate(200, style({ 'background-color': 'rgba(30, 30, 30, 0.0)' }))
-      ])
-    ]),
+    ])
   ]
 })
 export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
