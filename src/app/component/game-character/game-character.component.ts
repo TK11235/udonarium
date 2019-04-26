@@ -62,7 +62,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   ngOnInit() {
     this.movableOption = {
       tabletopObject: this.gameCharacter,
-      transformCssOffset: 'translateZ(0.15px)',
+      transformCssOffset: 'translateZ(1.0px)',
       colideLayers: ['terrain']
     };
     this.rotableOption = {

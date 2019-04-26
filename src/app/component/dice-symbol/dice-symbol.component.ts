@@ -103,7 +103,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       });
     this.movableOption = {
       tabletopObject: this.diceSymbol,
-      transformCssOffset: 'translateZ(0.15px)',
+      transformCssOffset: 'translateZ(1.0px)',
       colideLayers: ['terrain']
     };
     this.rotableOption = {
