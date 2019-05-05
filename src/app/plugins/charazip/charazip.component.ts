@@ -9,6 +9,7 @@ import { InsaneGenerator } from './system/insane-generator';
 import { CocGenerator } from './system/coc-generator';
 import { DivinechargerGenerator } from './system/divinecharger-generator';
 import { Dx3rdGenerator } from './system/dx3rd-generator';
+import { Sw2Generator } from './system/sw2-generator';
 
 interface SystemInfo {
   system: string;
@@ -48,6 +49,12 @@ export class CharazipComponent implements OnInit {
       name: 'ダブルクロス3rd',
       href: 'https://charasheet.vampire-blood.net/list_dx3.html',
       generater: Dx3rdGenerator.generateByVampireVlood
+    },
+    {
+      system: 'swordworld2',
+      name: 'ソードワールド2.0',
+      href: 'https://charasheet.vampire-blood.net/list_swordworld2.html',
+      generater: Sw2Generator.generateByVampireVlood
     }
   ];
 
