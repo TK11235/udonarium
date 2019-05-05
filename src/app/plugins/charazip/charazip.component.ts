@@ -187,7 +187,8 @@ export class CharazipComponent implements OnInit {
           );
         } catch (err) {
           console.error(err);
-          this.errorMsg = err.message;
+          this.errorMsg =
+            'キャラクターシートの取り込みに失敗しました。' + err.message;
           return;
         }
       }
@@ -206,7 +207,8 @@ export class CharazipComponent implements OnInit {
           );
         } catch (err) {
           console.error(err);
-          this.errorMsg = err.message;
+          this.errorMsg =
+            'キャラクターシートの取り込みに失敗しました。' + err.message;
           return;
         }
       }
