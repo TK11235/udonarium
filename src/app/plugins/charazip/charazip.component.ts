@@ -177,7 +177,7 @@ export class CharazipComponent implements OnInit {
     let gameCharacters: CustomCharacter[] = null;
     if (!gameCharacters) {
       const matchResult = this.url.match(
-        /^http(s)?:\/\/charasheet\.vampire-blood\.net\/([^?]+)/
+        /^http(s)?:\/\/charasheet\.vampire-blood\.net\/([^?#]+)/
       );
       if (matchResult) {
         const id = matchResult[2];
