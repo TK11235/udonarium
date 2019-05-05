@@ -10,6 +10,7 @@ import { CocGenerator } from './system/coc-generator';
 import { DivinechargerGenerator } from './system/divinecharger-generator';
 import { Dx3rdGenerator } from './system/dx3rd-generator';
 import { Sw2Generator } from './system/sw2-generator';
+import { MonotonemuseumGenerator } from './system/monotonemuseum-generator';
 
 interface SystemInfo {
   system: string;
@@ -76,6 +77,12 @@ export class CharazipComponent implements OnInit {
       name: 'ディヴァインチャージャー',
       href: 'https://character-sheets.appspot.com/divinecharger/',
       generater: DivinechargerGenerator.generateByAppspot
+    },
+    {
+      system: 'mnt',
+      name: 'モノトーンミュージアム',
+      href: 'https://character-sheets.appspot.com/mnt/',
+      generater: MonotonemuseumGenerator.geneateByAppspot
     }
   ];
 
