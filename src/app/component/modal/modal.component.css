@@ -1,4 +1,4 @@
-.modal-background{
+.modal-background {
   box-sizing: border-box;
   position: absolute;
   color: #CCC;
@@ -14,7 +14,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .modal-panel{
