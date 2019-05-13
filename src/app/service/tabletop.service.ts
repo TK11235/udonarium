@@ -444,6 +444,7 @@ class TabletopCache<T extends TabletopObject> {
     if (this.needsRefresh) {
       this._objects = this.refreshCollector();
       this._objects = this._objects ? this._objects : [];
+      this.needsRefresh = false;
     }
     return this._objects;
   }
