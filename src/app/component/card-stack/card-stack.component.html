@@ -24,7 +24,7 @@
     <div *ngIf="isShowTotal" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(-50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
       <span>{{cards.length}}枚</span>
     </div>
-    <div *ngIf="hasOwner" class="name-tag is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+    <div *ngIf="hasOwner" class="name-tag has-length-limit is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
       <span>{{ownerName}} が確認中</span>
     </div>
   </div>

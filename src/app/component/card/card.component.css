@@ -160,6 +160,13 @@
   top: 0;
 }
 
+.has-length-limit {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 18em;
+}
+
 .is-nowrap {
   white-space: nowrap;
 }

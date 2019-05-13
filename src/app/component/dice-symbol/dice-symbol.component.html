@@ -22,8 +22,8 @@
                 <div class="back-tag is-3d">{{name}}:<span *ngIf="isVisible">{{face}}</span><span *ngIf="!isVisible">???</span></div>
               </div>
               <div *ngIf="hasOwner" class="owner-tag is-nowrap is-black-background is-3d" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-                <div class="fornt-tag is-3d">{{ownerName}}</div>
-                <div class="back-tag is-3d">{{ownerName}}</div>
+                <div class="fornt-tag has-length-limit is-3d">{{ownerName}}</div>
+                <div class="back-tag has-length-limit is-3d">{{ownerName}}</div>
               </div>
               <img class="image" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'" [ngClass]="{'is-black-mask': !isVisible, 'is-harf-black-mask': isMine}">
             </div>

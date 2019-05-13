@@ -187,6 +187,13 @@
   transform: rotateY(-180deg)
 }
 
+.has-length-limit {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 18em;
+}
+
 .rotate-grab-icon {
   position: absolute;
   width: 28px;

@@ -166,6 +166,13 @@
   transform: rotateY(-180deg);
 }
 
+.has-length-limit {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 24em;
+}
+
 .rotate-grab-icon {
   position: absolute;
   width: 28px;

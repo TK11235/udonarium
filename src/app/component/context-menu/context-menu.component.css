@@ -29,6 +29,8 @@
 .title{
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 18em;
   font-size: 12px;
   text-align: center;
   padding: 2px 4px;
