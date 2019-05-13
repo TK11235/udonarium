@@ -37,7 +37,6 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
   }
 
   ngAfterViewInit() {
-    console.log(this.tabletopObject);
   }
 
   ngOnDestroy() {

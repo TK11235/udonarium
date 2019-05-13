@@ -39,7 +39,6 @@ export class PanelService {
   open<T>(childComponent: Type<T>, option?: PanelOption, parentViewContainerRef?: ViewContainerRef): T {
     if (!parentViewContainerRef) {
       parentViewContainerRef = PanelService.defaultParentViewContainerRef;
-      console.log('Panel Open', parentViewContainerRef);
     }
     let panelComponentRef: ComponentRef<any>;
 
