@@ -9,18 +9,18 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-
 import { Card, CardState } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
-
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
+import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -78,32 +78,20 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.data.identifier === this.card.identifier) {
-          this.changeDetector.markForCheck();
-        } else if (event.data.aliasName === 'data') {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (!this.card || !object) return;
+        if ((this.card === object)
+          || (object instanceof ObjectNode && this.card.contains(object))
+          || (object instanceof PeerCursor && object.peerId === this.card.owner)) {
           this.changeDetector.markForCheck();
         }
+      })
+      .on('SYNCHRONIZE_FILE_LIST', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
+        this.changeDetector.markForCheck();
       });
-    if (!this.frontImage || !this.backImage || this.frontImage.state < 2 || this.backImage.state < 2) {
-      let dummy = {};
-      EventSystem.register(dummy)
-        .on('SYNCHRONIZE_FILE_LIST', event => {
-          if ((this.frontImage && 0 < this.frontImage.state) || (this.backImage && 0 < this.backImage.state)) {
-            this.changeDetector.markForCheck();
-          }
-          if (this.frontImage && this.backImage && 2 <= this.frontImage.state && 2 <= this.backImage.state) {
-            EventSystem.unregister(dummy);
-          }
-        })
-        .on('UPDATE_FILE_RESOURE', -1000, event => {
-          if ((this.frontImage && 0 < this.frontImage.state) || (this.backImage && 0 < this.backImage.state)) {
-            this.changeDetector.markForCheck();
-          }
-          if (this.frontImage && this.backImage && 2 <= this.frontImage.state && 2 <= this.backImage.state) {
-            EventSystem.unregister(dummy);
-          }
-        });
-    }
     this.movableOption = {
       tabletopObject: this.card,
       transformCssOffset: 'translateZ(0.15px)',

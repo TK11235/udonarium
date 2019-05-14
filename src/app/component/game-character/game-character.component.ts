@@ -1,11 +1,20 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
-
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { GameCharacter } from '@udonarium/game-character';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
-
 import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
@@ -18,6 +27,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   selector: 'game-character',
   templateUrl: './game-character.component.html',
   styleUrls: ['./game-character.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('bounceInOut', [
       transition('void => *', [
@@ -55,10 +65,25 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   constructor(
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
+    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
+    EventSystem.register(this)
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (!this.gameCharacter || !object) return;
+        if (this.gameCharacter === object || (object instanceof ObjectNode && this.gameCharacter.contains(object))) {
+          this.changeDetector.markForCheck();
+        }
+      })
+      .on('SYNCHRONIZE_FILE_LIST', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
+        this.changeDetector.markForCheck();
+      });
     this.movableOption = {
       tabletopObject: this.gameCharacter,
       transformCssOffset: 'translateZ(1.0px)',

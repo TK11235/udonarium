@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
-
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
@@ -37,10 +37,25 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     private tabletopService: TabletopService,
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
+    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
+    EventSystem.register(this)
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (!this.gameTableMask || !object) return;
+        if (this.gameTableMask === object || (object instanceof ObjectNode && this.gameTableMask.contains(object))) {
+          this.changeDetector.markForCheck();
+        }
+      })
+      .on('SYNCHRONIZE_FILE_LIST', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
+        this.changeDetector.markForCheck();
+      });
     this.movableOption = {
       tabletopObject: this.gameTableMask,
       transformCssOffset: 'translateZ(0.15px)',

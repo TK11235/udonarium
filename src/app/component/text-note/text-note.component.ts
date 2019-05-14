@@ -1,21 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
-import { TabletopObject } from '@udonarium/tabletop-object';
 import { TextNote } from '@udonarium/text-note';
-
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
@@ -26,7 +15,8 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 @Component({
   selector: 'text-note',
   templateUrl: './text-note.component.html',
-  styleUrls: ['./text-note.component.css']
+  styleUrls: ['./text-note.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('textArea') textAreaElementRef: ElementRef;
@@ -59,10 +49,25 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
     private ngZone: NgZone,
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
+    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
+    EventSystem.register(this)
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (!this.textNote || !object) return;
+        if (this.textNote === object || (object instanceof ObjectNode && this.textNote.contains(object))) {
+          this.changeDetector.markForCheck();
+        }
+      })
+      .on('SYNCHRONIZE_FILE_LIST', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
+        this.changeDetector.markForCheck();
+      });
     this.movableOption = {
       tabletopObject: this.textNote,
       transformCssOffset: 'translateZ(0.15px)',

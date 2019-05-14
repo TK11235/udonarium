@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { Terrain, TerrainViewState } from '@udonarium/terrain';
-
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
@@ -16,7 +16,8 @@ import { TabletopService } from 'service/tabletop.service';
 @Component({
   selector: 'terrain',
   templateUrl: './terrain.component.html',
-  styleUrls: ['./terrain.component.css']
+  styleUrls: ['./terrain.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() terrain: Terrain = null;
@@ -47,10 +48,25 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     private tabletopService: TabletopService,
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
+    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
+    EventSystem.register(this)
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (!this.terrain || !object) return;
+        if (this.terrain === object || (object instanceof ObjectNode && this.terrain.contains(object))) {
+          this.changeDetector.markForCheck();
+        }
+      })
+      .on('SYNCHRONIZE_FILE_LIST', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
+        this.changeDetector.markForCheck();
+      });
     this.movableOption = {
       tabletopObject: this.terrain,
       colideLayers: ['terrain']

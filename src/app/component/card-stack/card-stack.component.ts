@@ -1,12 +1,22 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
-
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
-
 import { CardStackListComponent } from 'component/card-stack-list/card-stack-list.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
@@ -75,13 +85,32 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
     private elementRef: ElementRef,
+    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
     EventSystem.register(this)
       .on('SHUFFLE_CARD_STACK', -1000, event => {
-        if (event.data.identifier === this.cardStack.identifier) this.animeState = 'active';
+        if (event.data.identifier === this.cardStack.identifier) {
+          this.animeState = 'active';
+          this.changeDetector.markForCheck();
+        }
+      })
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (!this.cardStack || !object) return;
+        if ((this.cardStack === object)
+          || (object instanceof ObjectNode && this.cardStack.contains(object))
+          || (object instanceof PeerCursor && object.peerId === this.cardStack.owner)) {
+          this.changeDetector.markForCheck();
+        }
+      })
+      .on('SYNCHRONIZE_FILE_LIST', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
+        this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.cardStack,
@@ -106,6 +135,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   animationShuffleDone(event: any) {
     this.animeState = 'inactive';
+    this.changeDetector.markForCheck();
   }
 
   @HostListener('carddrop', ['$event'])
