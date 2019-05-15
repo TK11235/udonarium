@@ -1,7 +1,7 @@
 <div>
   <button (click)="close(true)">シャッフルしてウィンドウを閉じる</button>
   <hr/>
-  <div *ngFor="let card of cardStack.cards" class="box">
+  <div *ngFor="let card of cardStack.cards" class="box" [appTooltip]="card">
     <div class="image contain" [style.background-image]="'url(' + card?.frontImage?.url + ')' | safe: 'style' "></div>
     <div class="image contain" [style.background-image]="'url(' + card?.backImage?.url + ')' | safe: 'style' "></div>
     <div style="display: inline-block;">
