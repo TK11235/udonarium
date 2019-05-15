@@ -33,7 +33,7 @@
   max-width: 18em;
   font-size: 12px;
   text-align: center;
-  padding: 2px 4px;
+  padding: 4px 16px;
   margin: 0 2px;
   color: #444;
   border-bottom: 1px solid #AAA;
@@ -42,7 +42,7 @@
   display: inline-block;
 }
 hr.separator {
-  margin: 0.1em -0.3em;
+  margin: 0.1em -12px;
   height: 1px;
   border: 0;
   background-color: #AAA;
@@ -65,7 +65,7 @@ ul > li {
   cursor: -webkit-default;
   cursor: default;
 
-  padding: 2px 15px 2px 15px;
+  padding: 2px 20px;
   font-size: 12px;
   color: #444;
 }
