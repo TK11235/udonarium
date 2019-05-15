@@ -177,14 +177,14 @@
 }
 
 .fornt-tag {
- backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .back-tag {
   position: absolute;
   top: 3px;
   backface-visibility: hidden;
-  transform: rotateY(-180deg)
+  transform: rotateY(-180deg);
 }
 
 .has-length-limit {
