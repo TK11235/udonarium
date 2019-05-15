@@ -258,7 +258,7 @@ export class TabletopService {
         if (!ImageStorage.instance.get(url)) {
           ImageStorage.instance.add(url);
         }
-        let card = Card.create('サンプルカード', url, back);
+        let card = Card.create('カード', url, back);
         cardStack.putOnBottom(card);
       }
     }
@@ -269,7 +269,7 @@ export class TabletopService {
       if (!ImageStorage.instance.get(url)) {
         ImageStorage.instance.add(url);
       }
-      let card = Card.create('サンプルカード', url, back);
+      let card = Card.create('カード', url, back);
       cardStack.putOnBottom(card);
     }
     return cardStack;
