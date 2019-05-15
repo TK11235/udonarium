@@ -30,6 +30,7 @@ import { JukeboxComponent } from 'component/jukebox/jukebox.component';
 import { LobbyComponent } from 'component/lobby/lobby.component';
 import { ModalComponent } from 'component/modal/modal.component';
 import { NetworkIndicatorComponent } from 'component/network-indicator/network-indicator.component';
+import { OverviewPanelComponent } from 'component/overview-panel/overview-panel.component';
 import { PasswordCheckComponent } from 'component/password-check/password-check.component';
 import { PeerCursorComponent } from 'component/peer-cursor/peer-cursor.component';
 import { PeerMenuComponent } from 'component/peer-menu/peer-menu.component';
@@ -41,7 +42,7 @@ import { UIPanelComponent } from 'component/ui-panel/ui-panel.component';
 
 import { MovableDirective } from 'directive/movable.directive';
 import { RotableDirective } from 'directive/rotable.directive';
-
+import { TooltipDirective } from 'directive/tooltip.directive';
 import { SafePipe } from 'pipe/safe.pipe';
 
 import { AppConfigService } from 'service/app-config.service';
@@ -81,6 +82,7 @@ import { AppComponent } from './app.component';
     JukeboxComponent,
     LobbyComponent,
     ModalComponent,
+    OverviewPanelComponent,
     PasswordCheckComponent,
     PeerMenuComponent,
     RoomSettingComponent,
@@ -95,6 +97,7 @@ import { AppComponent } from './app.component';
     RotableDirective,
     NetworkIndicatorComponent,
     DiceSymbolComponent,
+    TooltipDirective,
   ],
   imports: [
     BrowserModule,
@@ -134,6 +137,7 @@ import { AppComponent } from './app.component';
     RoomSettingComponent,
     TextViewComponent,
     TextNoteComponent,
+    OverviewPanelComponent,
   ],
   bootstrap: [AppComponent]
 })

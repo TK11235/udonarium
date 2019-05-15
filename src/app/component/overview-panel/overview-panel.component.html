@@ -1,0 +1,200 @@
+<div class="component is-pointer-events-none" [@fadeInOut]="'in'" #draggablePanel>
+  <ng-container [ngSwitch]="tabletopObject.aliasName">
+    <ng-container *ngSwitchCase="'numberResource'">
+    </ng-container>
+    <ng-container *ngSwitchCase="'card'">
+      <ng-container *ngTemplateOutlet="overviewCard"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'card-stack'">
+      <ng-container *ngTemplateOutlet="overviewCard"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'text-note'">
+      <ng-container *ngTemplateOutlet="overviewNote"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'character'">
+      <ng-container *ngTemplateOutlet="overviewCharacter"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'dice-symbol'">
+      <ng-container *ngTemplateOutlet="overviewDiceSymbol"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <ng-container *ngTemplateOutlet="overviewCharacter"></ng-container>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-container *ngIf="isOpenImageView">
+  <ng-container *ngTemplateOutlet="imageView"></ng-container>
+</ng-container>
+
+<ng-template #overviewCard>
+  <div class="component-content is-small-size"
+    [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+    <div *ngIf="hasImage" style="position: relative;">
+      <img class="card-image" [src]="imageUrl | safe: 'resourceUrl'" />
+      <button class="zoom-button" (click)="chanageImageView(true)">
+        <i class="material-icons">zoom_in</i>
+      </button>
+      <div *ngIf="tabletopObject.hasOwner" class="component-owner position-right-bottom"
+        [ngClass]="{'with-button-marign': hasImage}">
+        <div class="owner-tag">{{tabletopObject.ownerName}}</div>
+      </div>
+    </div>
+    <div *ngIf="0 < tabletopObject?.name?.length" class="component-title title-background"
+      [ngClass]="{'with-button-marign': hasImage}">
+      <ng-container *ngIf="tabletopObject.isVisible == null || tabletopObject.isVisible">{{tabletopObject.name}}</ng-container>
+      <ng-container *ngIf="tabletopObject.isVisible != null && !tabletopObject.isVisible">カード</ng-container>
+    </div>
+    <div class="component-background">
+      <div class="grid-container-root" *ngIf="hasDataElms && tabletopObject.isVisible">
+        <div class="grid-container">
+          <ng-container *ngFor="let child of dataElms">
+            <ng-container *ngTemplateOutlet="dataElement; context: { dataElm: child }"></ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #overviewNote>
+  <div class="component-content is-large-size"
+    [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+    <div class="component-title title-background">{{tabletopObject.title}}</div>
+    <div class="component-background text-note-container">
+      <div style="position: relative;">
+        <div class="is-fill">
+          <textarea class="textarea" [(ngModel)]="tabletopObject.text" spellcheck="false"></textarea>
+        </div>
+        <div class="textarea-spacer">{{tabletopObject.text}}</div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #overviewCharacter>
+  <div class="component-content character-grid-container is-middle-size">
+    <div class="title-bg-area title-background"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+    </div>
+    <div class="image-area character-image-box"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }"
+      *ngIf="hasImage">
+      <img class="character-image" [src]="imageUrl | safe: 'resourceUrl'" />
+    </div>
+    <div class="title-area component-title" [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging,
+    'pointer-events-none': this.isPointerDragging }">{{tabletopObject.name}}</div>
+    <div class="void-area is-pointer-events-none"></div>
+    <div class="dataElm-area component-background"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+      <div class="grid-container-root" *ngIf="hasDataElms">
+        <!--<ng-container *ngFor="let dataElm of dataElms">-->
+        <ng-container *ngFor="let dataElm of inventoryDataElms">
+          <ng-container *ngIf="dataElm && dataElm.name !== newLineString">
+            <div class="grid-container">
+              <ng-container *ngTemplateOutlet="dataElement; context: { dataElm: dataElm}"></ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #overviewDiceSymbol>
+  <div class="component-content character-grid-container is-middle-size">
+    <div class="title-bg-area title-background"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+    </div>
+    <div class="title-area component-title"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+      {{tabletopObject.name}}:
+      <ng-container *ngIf="tabletopObject.isVisible">{{tabletopObject.face}}</ng-container>
+      <ng-container *ngIf="!tabletopObject.isVisible">???</ng-container>
+    </div>
+    <div *ngIf="tabletopObject.hasOwner" class="owner-name-area component-owner"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+      <div class="owner-tag">{{tabletopObject.ownerName}}
+      </div>
+    </div>
+    <div class="image-area character-image-box"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }"
+      *ngIf="hasImage">
+      <img class="character-image"
+        [ngClass]="{'is-black-mask': !tabletopObject.isVisible, 'is-harf-black-mask': tabletopObject.isMine}"
+        [src]="imageUrl | safe: 'resourceUrl'" />
+    </div>
+    <div class="void-area is-pointer-events-none"></div>
+    <div class="dataElm-area component-background"
+      [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
+      <div class="grid-container-root" *ngIf="hasDataElms && tabletopObject.isVisible">
+        <div class="grid-container">
+          <ng-container *ngFor="let dataElm of dataElms">
+            <ng-container *ngIf="dataElm && dataElm.name !== newLineString">
+              <ng-container *ngTemplateOutlet="dataElement; context: { dataElm: dataElm}"></ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #dataElement let-dataElm="dataElm">
+  <ng-container *ngIf="0 < dataElm.children.length; then thenBlock; else elseBlock"></ng-container>
+  <ng-template #thenBlock>
+    <div class="section" style="padding-top: 0.5em;">
+      <div class="section-text" *ngIf="0 < dataElm.name.trim().length">{{dataElm.name}}</div>
+      <div class="grid-container indetnt">
+        <ng-container *ngFor="let child of dataElm.children">
+          <ng-container *ngTemplateOutlet="dataElement; context: { dataElm: child}"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #elseBlock>
+    <ng-container [ngSwitch]="dataElm.type">
+      <ng-container *ngSwitchCase="'note'">
+        <div class="section">
+          <div>{{dataElm.name}}</div>
+          <div class="note" style="position: relative;">
+            <div class="is-fill">
+              <textarea class="textarea" [(ngModel)]="dataElm.value" spellcheck="false"></textarea>
+            </div>
+            <div class="textarea-spacer">{{dataElm.value}}</div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'numberResource'">
+        <div class="tag">{{dataElm.name}}</div>
+        <div class="value">
+          <div style="display: inline-block; width: min-content;">
+            <div class="hidden-spacer" style="margin-right: 2em;">{{dataElm.currentValue}}</div>
+            <input class="input" type="number" size="1" [(ngModel)]="dataElm.currentValue" />
+          </div>
+          <div style="display: inline;"> / {{dataElm.value}}</div>
+        </div>
+        <div class="section" style="line-height: 1em;">
+          <input type="range"
+            [style]="'font-size: 0.8em; width: 100%; --min: 0; --max:' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
+            min="0" max="{{dataElm.value}}" [(ngModel)]="dataElm.currentValue" />
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <div class="tag">{{dataElm.name}}</div>
+        <div class="value">
+          <div class="hidden-spacer">{{dataElm.value}}</div>
+          <input class="input" size="1" [(ngModel)]="dataElm.value" />
+        </div>
+      </ng-container>
+    </ng-container>
+    <div class="section border"></div>
+  </ng-template>
+</ng-template>
+
+<ng-template #imageView>
+  <div class="image-view-background is-fill" (click)="chanageImageView(false)" [@fadeInOut]="'in'">
+    <div class="close-button is-pointer-events-none"><i class="material-icons">close</i></div>
+    <img class="contain-image" [src]="imageUrl | safe: 'resourceUrl'" />
+  </div>
+</ng-template>
