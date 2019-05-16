@@ -65,7 +65,7 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private $panel: JQuery;
 
-  private callbackOnPanelRisize = (e) => this.onPanelResize(e);
+  private callbackOnScroll = (e) => this.onScroll(e);
 
   constructor(
     private ngZone: NgZone,
@@ -81,7 +81,7 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit 
       this.$panel = $(this.draggablePanel.nativeElement);
       $(this.draggablePanel.nativeElement).draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', opacity: 0.7 });
       this.initPanelPosition();
-      document.addEventListener('scroll', this.callbackOnPanelRisize, false);
+      document.addEventListener('scroll', this.callbackOnScroll, false);
     });
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
@@ -101,10 +101,10 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    document.removeEventListener('scroll', this.callbackOnPanelRisize, false);
+    document.removeEventListener('scroll', this.callbackOnScroll, false);
   }
 
-  private onPanelResize(e: any) {
+  private onScroll(e: any) {
     this.adjustPosition();
   }
 
