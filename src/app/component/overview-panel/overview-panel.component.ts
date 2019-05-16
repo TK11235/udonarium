@@ -18,7 +18,6 @@ import { DataElement } from '@udonarium/data-element';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
-import { compileNgModule } from '@angular/core/src/render3/jit/module';
 
 @Component({
   selector: 'overview-panel',

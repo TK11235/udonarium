@@ -124,7 +124,7 @@ input[type='range']::-webkit-slider-thumb {
   width: var(--slider-thumb-size);
   height: var(--slider-thumb-size);
   box-sizing: border-box;
-  border: solid 1px  var(--slider-border-color);
+  border: solid 1px var(--slider-border-color);
   border-radius: 2em;
   background: #ddd;
   cursor: pointer;
@@ -134,7 +134,7 @@ input[type='range']::-moz-range-thumb {
   width: var(--slider-thumb-size);
   height: var(--slider-thumb-size);
   box-sizing: border-box;
-  border: solid 1px  var(--slider-border-color);
+  border: solid 1px var(--slider-border-color);
   border-radius: 2em;
   background: #ddd;
   cursor: pointer;
