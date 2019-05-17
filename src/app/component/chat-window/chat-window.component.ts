@@ -70,7 +70,10 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     let hasChanged: boolean = this._chatTabidentifier !== chatTabidentifier;
     this._chatTabidentifier = chatTabidentifier;
     this.updatePanelTitle();
-    if (hasChanged) this.scrollToBottom(true);
+    if (hasChanged) {
+      this.scrollToBottom(true);
+      if (this.chatTab) this.chatTab.markForRead();
+    }
   }
 
   get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
@@ -107,6 +110,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
           this.checkAutoScroll();
         }
+        if (this.isAutoScroll && event.data.tabIdentifier === this.chatTabidentifier && this.chatTab) this.chatTab.markForRead();
         let sendFrom = message ? message.from : '?';
         if (this.writingPeers.has(sendFrom)) {
           clearTimeout(this.writingPeers.get(sendFrom));
@@ -163,8 +167,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   scrollToBottom(isForce: boolean = false) {
     if (isForce) this.isAutoScroll = true;
     if (!this.isAutoScroll || !this.panelService.scrollablePanel) return;
-
-    if (this.chatTab) this.chatTab.markForRead();
 
     if (this.scrollToBottomTimer != null) return;
     this.scrollToBottomTimer = setTimeout(() => {
