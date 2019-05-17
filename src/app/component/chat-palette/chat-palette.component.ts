@@ -70,7 +70,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    if (this.isEdit) this.palette.setPalette(this.editPalette);
+    if (this.isEdit) this.toggleEditMode();
   }
 
   selectPalette(line: string) {
