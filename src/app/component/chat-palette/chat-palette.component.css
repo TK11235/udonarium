@@ -15,6 +15,8 @@
   object-position: 50% 0%;
 }
 .table {
+  box-sizing: border-box;
+  padding : 5px;
   display: table;
   width: 100%;
 }
@@ -60,4 +62,49 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.chat-tab {
+  padding : 0 5px 5px 5px;
+  user-select: none;
+}
+
+.chat-tab label {
+  display: inline-block;
+  position: relative;
+}
+
+.chat-tab input[type="radio"] {
+  display: none;
+}
+
+.chat-tab input[type="radio"] + div {
+  display: inline-block;
+  vertical-align: middle;
+  outline: 0;
+  font-size: 8px;
+  background-color: transparent;
+  color: #444; 
+  border: solid 1px #555;
+  padding: 2px 8px;
+  margin: 2px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.chat-tab input[type="radio"] + div:hover {
+  background-color: #888;
+  color: #eee;
+  border: solid 1px #555;
+}
+
+.chat-tab input[type="radio"]:checked + div {
+  background: #555;
+  color: #CCC;
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: 0;
 }

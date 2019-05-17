@@ -1,5 +1,13 @@
 <div class="flex-container">
   <div style="flex-grow: 0;">
+    <form>
+      <div class="chat-tab">
+        <label *ngFor="let chatTab of chatMessageService.chatTabs; trackBy: trackByChatTab">
+          <input name="chat-tab" type="radio" value="{{chatTab.identifier}}" ng-control="options" [(ngModel)]="chatTabidentifier">
+          <div>{{chatTab.name}}<badge *ngIf="chatTab.hasUnread" class="badge" [count]="chatTab.unreadLength"></badge></div>
+        </label>
+      </div>
+    </form>
     <div class="table" [ngClass]="{ 'direct-message': isDirect }">
       <div class="table-cell imagebox">
         <img class="image" *ngIf="character && character.imageFile != null && 0 < character.imageFile.url.length" [src]="character.imageFile.url | safe: 'resourceUrl'"
@@ -7,20 +15,18 @@
       </div>
       <div class="table-cell">
         <div>
-          <select style="width: 8em;" [(ngModel)]="chatTabidentifier" [ngModelOptions]="{standalone: true}">
-            <option *ngFor="let chatTab of chatMessageService.chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
+          <select style="width: 12em;" (change)="onSelectedCharacter($event.target.value)"  [ngModel]="character.identifier">
+            <option *ngFor="let gameCharacter of gameCharacters" value="{{gameCharacter.identifier}}">{{gameCharacter.name}}</option>
+          </select> ＞
+          <select style="width: 10em;" [(ngModel)]="sendTo">
+            <option value="">全員</option>
+            <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（あなた）</ng-container></option>
           </select>
           <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
             <option value="">ダイスボット指定なし</option>
             <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
           </select>
           <button (click)="showDicebotHelp()">?</button>
-          <br>
-          <span>{{character.name}}</span> ＞
-          <select style="width: 10em;" [(ngModel)]="sendTo">
-            <option value="">全員</option>
-            <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（あなた）</ng-container></option>
-          </select>
         </div>
         <div>
           <form>
