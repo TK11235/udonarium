@@ -1,4 +1,13 @@
-import { AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
@@ -15,7 +24,8 @@ import { TabletopService } from 'service/tabletop.service';
 @Component({
   selector: 'game-table-mask',
   templateUrl: './game-table-mask.component.html',
-  styleUrls: ['./game-table-mask.component.css']
+  styleUrls: ['./game-table-mask.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() gameTableMask: GameTableMask = null;

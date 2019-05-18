@@ -1,6 +1,7 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -29,6 +30,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   selector: 'card-stack',
   templateUrl: './card-stack.component.html',
   styleUrls: ['./card-stack.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('shuffle', [
       state('active', style({ transform: '' })),

@@ -1,12 +1,20 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
 
 @Component({
   selector: 'game-data-element, [game-data-element]',
   templateUrl: './game-data-element.component.html',
-  styleUrls: ['./game-data-element.component.css']
+  styleUrls: ['./game-data-element.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() gameDataElement: DataElement = null;
