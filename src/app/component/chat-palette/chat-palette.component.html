@@ -2,7 +2,7 @@
   <div style="flex-grow: 0;">
     <form>
       <div class="chat-tab">
-        <label *ngFor="let chatTab of chatMessageService.chatTabs; trackBy: trackByChatTab">
+        <label *ngFor="let chatTab of chatMessageService.chatTabs">
           <input name="chat-tab" type="radio" value="{{chatTab.identifier}}" ng-control="options" [(ngModel)]="chatTabidentifier">
           <div>{{chatTab.name}}<badge *ngIf="chatTab.hasUnread" class="badge" [count]="chatTab.unreadLength"></badge></div>
         </label>
