@@ -286,8 +286,20 @@ export class DiceBot extends GameObject {
         let gameType: string = chatMessage.tag;
 
         try {
-          let rollResult = await DiceBot.diceRollAsync(text, gameType);
-          this.sendResultMessage(rollResult, chatMessage);
+          let regArray = /^((\d+)?\s+)?(.*)/ig.exec(text);
+          let repeat: number = (regArray[2] != null) ? Number(regArray[2]) : 1;
+          let rollText: string = (regArray[3] != null) ? regArray[3] : text;
+
+          let finalResult: DiceRollResult = { result: '', isSecret: false };
+          for (let i = 0; i < repeat && i < 32; i++) {
+            let rollResult = await DiceBot.diceRollAsync(rollText, gameType);
+            if (rollResult.result.length < 1) break;
+
+            finalResult.result += rollResult.result;
+            finalResult.isSecret = finalResult.isSecret || rollResult.isSecret;
+            if (1 < repeat) finalResult.result += ` #${i + 1}`;
+          }
+          this.sendResultMessage(finalResult, chatMessage);
         } catch (e) {
           console.error(e);
         }
