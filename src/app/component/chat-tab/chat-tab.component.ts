@@ -121,7 +121,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   ngOnChanges() {
     this.needUpdate = true;
-    this.maxMessages = 0;
+    this.maxMessages = 10;
 
     clearInterval(this.asyncMessagesInitializeTimer);
     let length = DEFAULT_MESSAGE_LENGTH;
