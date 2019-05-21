@@ -100,7 +100,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.sender = this.myPeer.identifier;
     console.log(this.chatMessageService.chatTabs);
-    this.chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
+    this._chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
 
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
@@ -147,9 +147,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.scrollToBottom(true);
-    }, 0);
+    this.scrollToBottom(true);
   }
 
   ngOnDestroy() {
@@ -170,6 +168,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.scrollToBottomTimer != null) return;
     this.scrollToBottomTimer = setTimeout(() => {
+      if (this.chatTab) this.chatTab.markForRead();
       this.scrollToBottomTimer = null;
       this.isAutoScroll = false;
       this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
