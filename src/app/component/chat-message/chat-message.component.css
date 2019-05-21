@@ -11,7 +11,7 @@
   width: 100%;
   word-wrap : break-word;
   overflow-wrap:break-word;
-  border-bottom:1px dotted #666;
+  border-bottom:1px dotted #999;
 }
 
 .direct-message {
@@ -39,19 +39,27 @@
 .message .title {
   vertical-align: top;
   font-size: 14px;
-  padding-left: 5px;
+  padding-left: 12px;
 }
 .message .text {
   vertical-align: top;
-  padding: 0.1em 5px 0px 5px;
+  padding: 0.1em 12px 0px 12px;
   font-size: 14px;
 }
 .message .tip {
   font-size: 8px;
 }
 
+.msg-name {
+  font-weight: bold;
+}
+
 .msg-text {
   white-space: pre-wrap;
+}
+
+.dicebot-message .msg-name {
+  font-size: 8px;
 }
 
 .dicebot-message .msg-text {
