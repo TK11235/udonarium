@@ -355,7 +355,7 @@ export class DiceBot extends GameObject {
       let diceBotTablePrefix = 'diceBotTable_';
       let isNeedResult = true;
       try {
-        Opal.gvars.isDebug = true;
+        Opal.gvars.isDebug = false;
         let cgiDiceBot = Opal.CgiDiceBot.$new();
         result = cgiDiceBot.$roll(message, gameType, dir, diceBotTablePrefix, isNeedResult);
         console.log('diceRoll!!!', result);
