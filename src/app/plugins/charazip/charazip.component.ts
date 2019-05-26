@@ -46,16 +46,16 @@ export class CharazipComponent implements OnInit {
       generater: CocGenerator.generateByVampireVlood
     },
     {
-      system: 'dx3',
-      name: 'ダブルクロス3rd',
-      href: 'https://charasheet.vampire-blood.net/list_dx3.html',
-      generater: Dx3rdGenerator.generateByVampireVlood
-    },
-    {
       system: 'swordworld2',
       name: 'ソードワールド2.0',
       href: 'https://charasheet.vampire-blood.net/list_swordworld2.html',
       generater: Sw2Generator.generateByVampireVlood
+    },
+    {
+      system: 'dx3',
+      name: 'ダブルクロス3rd',
+      href: 'https://charasheet.vampire-blood.net/list_dx3.html',
+      generater: Dx3rdGenerator.generateByVampireVlood
     }
   ];
 

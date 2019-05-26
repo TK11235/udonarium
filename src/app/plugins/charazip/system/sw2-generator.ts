@@ -27,10 +27,13 @@ export class Sw2Generator {
       gameCharacter.createResourceElement('MP', json.MP, json.MP)
     );
     resourceElement.appendChild(
+      gameCharacter.createResourceElement('防護点', json.bougo, json.bougo)
+    );
+    resourceElement.appendChild(
       gameCharacter.createResourceElement('1ゾロ', 10, 0)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('穢れ度', 5, json.kegare)
+      gameCharacter.createResourceElement('穢れ度', 5, json.kegare || 0)
     );
     resourceElement.appendChild(
       gameCharacter.createDataElement('所持金', json.money)
@@ -127,15 +130,36 @@ export class Sw2Generator {
      */
     const modifyElement = gameCharacter.createDataElement('バフ・デバフ', '');
     gameCharacter.detailDataElement.appendChild(modifyElement);
-    modifyElement.appendChild(gameCharacter.createDataElement('命中', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('回避', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('攻撃', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('クリレイ', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('出目固定', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('魔法行使', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('魔法威力', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('生命抵抗', 0));
-    modifyElement.appendChild(gameCharacter.createDataElement('精神抵抗', 0));
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('命中', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('回避', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('攻撃', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('クリレイ', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('出目固定', 12, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('魔法行使', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('魔法威力', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('生命抵抗', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('精神抵抗', 5, 0)
+    );
+    modifyElement.appendChild(
+      gameCharacter.createResourceElement('ダメージ軽減', 5, 0)
+    );
     /*
      * 所持品
      */
@@ -174,6 +198,11 @@ export class Sw2Generator {
     let cpBattle = `//-----抵抗力
 2d+{冒険者レベル}+({生命力}/6)+{生命抵抗} 【生命抵抗力判定】
 2d+{冒険者レベル}+({精神力}/6)+{精神抵抗} 【精神抵抗力判定】
+
+//-----ダメージ計算
+C({HP}-()+{防護点}+{ダメージ軽減}) 　【残HP（物理ダメージ）】
+C({HP}-()+{ダメージ軽減})　【残HP（魔法ダメージ）】
+C({MP}-())　【MP消費】
 
 //-----戦闘準備
 `;
