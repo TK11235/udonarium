@@ -228,7 +228,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           let cloneObject = this.card.clone();
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
-          cloneObject.update();
+          cloneObject.toTopmost();
           SoundEffect.play(PresetSound.cardPut);
         }
       },

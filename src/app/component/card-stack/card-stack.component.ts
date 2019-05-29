@@ -300,7 +300,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.owner = '';
-          cloneObject.update();
+          cloneObject.toTopmost();
           SoundEffect.play(PresetSound.cardPut);
         }
       },
@@ -346,7 +346,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       cardStack.posZ = this.cardStack.posZ;
       cardStack.location.name = this.cardStack.location.name;
       cardStack.rotate = this.rotate;
-      cardStack.update();
+      cardStack.toTopmost();
       cardStacks.push(cardStack);
     }
 

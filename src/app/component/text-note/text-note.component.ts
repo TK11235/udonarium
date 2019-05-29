@@ -137,7 +137,7 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log('コピー', cloneObject);
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
-          cloneObject.update();
+          cloneObject.toTopmost();
           SoundEffect.play(PresetSound.cardPut);
         }
       },
