@@ -155,17 +155,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
       let distance: number = Math.sqrt((cardStack.location.x - this.cardStack.location.x) ** 2 + (cardStack.location.y - this.cardStack.location.y) ** 2 + (cardStack.posZ - this.cardStack.posZ) ** 2);
-      if (distance < 25) {
-        let cards: Card[] = this.cardStack.drawCardAll();
-        cardStack.location.name = this.cardStack.location.name;
-        cardStack.location.x = this.cardStack.location.x;
-        cardStack.location.y = this.cardStack.location.y;
-        cardStack.posZ = this.cardStack.posZ;
-        for (let card of cards) cardStack.putOnBottom(card);
-        this.cardStack.location.name = '';
-        this.cardStack.update();
-        this.cardStack.destroy();
-      }
+      if (distance < 25) this.concatStack(cardStack);
     }
   }
 
@@ -374,6 +364,27 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
         splitIndex = (cards.length / split) * (num + 1);
       }
     }
+  }
+
+  private concatStack(topStack: CardStack, bottomStack: CardStack = this.cardStack) {
+    let newCardStack = CardStack.create(topStack.name);
+    newCardStack.location.name = bottomStack.location.name;
+    newCardStack.location.x = bottomStack.location.x;
+    newCardStack.location.y = bottomStack.location.y;
+    newCardStack.posZ = bottomStack.posZ;
+    newCardStack.zindex = topStack.zindex;
+
+    let bottomCards: Card[] = bottomStack.drawCardAll();
+    let topCards: Card[] = topStack.drawCardAll();
+    for (let card of topCards.concat(bottomCards)) newCardStack.putOnBottom(card);
+
+    bottomStack.location.name = '';
+    bottomStack.update();
+    bottomStack.destroy();
+
+    topStack.location.name = '';
+    topStack.update();
+    topStack.destroy();
   }
 
   private dispatchCardDropEvent() {
