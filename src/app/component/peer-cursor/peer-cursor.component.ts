@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { EventSystem } from '@udonarium/core/system';
+import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
@@ -32,6 +32,11 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private _y: number = 0;
   private _target: HTMLElement;
 
+  get delayMs(): number {
+    let maxDelay = Network.peerIds.length * 16.6;
+    return maxDelay < 100 ? 100 : maxDelay;
+  }
+
   constructor(
     private tabletopService: TabletopService,
     private ngZone: NgZone
@@ -61,6 +66,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.cursorElement = this.cursorElementRef.nativeElement;
       this.opacityElement = this.opacityElementRef.nativeElement;
+      this.setAnimatedTransition();
       this.setPosition(0, 0, 0);
       this.resetFadeOut();
     }
@@ -83,7 +89,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.updateInterval = setTimeout(() => {
         this.updateInterval = null;
         this.calcLocalCoordinate(this._x, this._y, this._target);
-      }, 100);
+      }, this.delayMs);
     }
   }
 
@@ -112,6 +118,10 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private stopTransition() {
     this.cursorElement.style.transform = window.getComputedStyle(this.cursorElement).transform;
+  }
+
+  private setAnimatedTransition() {
+    this.cursorElement.style.transition = `transform ${this.delayMs + 33}ms linear, opacity 0.5s ease-out`;
   }
 
   private setPosition(x: number, y: number, z: number) {
