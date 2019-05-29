@@ -4,6 +4,7 @@ import { EventSystem } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { TabletopService } from 'service/tabletop.service';
 
 @Component({
   selector: 'peer-cursor, [peer-cursor]',
@@ -32,6 +33,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private _target: HTMLElement;
 
   constructor(
+    private tabletopService: TabletopService,
     private ngZone: NgZone
   ) { }
 
@@ -40,9 +42,12 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
       EventSystem.register(this)
         .on('CURSOR_MOVE', event => {
           if (event.sendFrom !== this.cursor.peerId) return;
-          this.stopTransition();
-          this.setPosition(event.data[0], event.data[1], event.data[2]);
-          this.resetFadeOut();
+          this.tabletopService.addBatch(() => {
+            this.stopTransition();
+            this.setAnimatedTransition();
+            this.setPosition(event.data[0], event.data[1], event.data[2]);
+            this.resetFadeOut();
+          }, this);
         });
     }
   }

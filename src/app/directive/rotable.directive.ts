@@ -77,13 +77,15 @@ export class RotableDirective extends Grabbable implements OnInit, OnDestroy, Af
       EventSystem.register(this)
         .on('UPDATE_GAME_OBJECT', -1000, event => {
           if ((event.isSendFromSelf && this.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
-          if (this.isGrabbing) {
-            this.cancel();
-          } else {
-            this.setAnimatedTransition(true);
-          }
-          this.stopTransition();
-          this.setRotate(this.tabletopObject);
+          this.tabletopService.addBatch(() => {
+            if (this.isGrabbing) {
+              this.cancel();
+            } else {
+              this.setAnimatedTransition(true);
+            }
+            this.stopTransition();
+            this.setRotate(this.tabletopObject);
+          }, this);
         });
       this.setRotate(this.tabletopObject);
     } else {
