@@ -21,6 +21,9 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   }
 
   get parent(): ObjectNode { return ObjectStore.instance.get<ObjectNode>(this.parentIdentifier); }
+  get parentIsUnknown(): boolean { return 0 < this.parentIdentifier.length && ObjectStore.instance.get<ObjectNode>(this.parentIdentifier) == null; }
+  get parentIsDestroyed(): boolean { return 0 < this.parentIdentifier.length && ObjectStore.instance.isDeleted(this.parentIdentifier); }
+
   private _children: ObjectNode[] = [];
   get children(): ObjectNode[] {
     if (this.needsSort) {
