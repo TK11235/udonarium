@@ -88,13 +88,8 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   private initializeChildren() {
     if (ObjectNode.unknownNodes[this.identifier] == null) return;
     let objects = ObjectNode.unknownNodes[this.identifier];
-    for (let object of objects.concat()) {
-      if (object.parent === this) {
-        this.updateChildren(object);
-        objects.splice(objects.indexOf(object), 1);
-      } else if (object.parent) {
-        objects.splice(objects.indexOf(object), 1);
-      }
+    for (let object of objects) {
+      if (object.parent === this) this.updateChildren(object);
     }
     if (ObjectNode.unknownNodes[this.identifier]) {
       delete ObjectNode.unknownNodes[this.identifier];
