@@ -39,7 +39,7 @@ export class TabletopService {
 
   private locationMap: Map<ObjectIdentifier, LocationName> = new Map();
   private characterCache = new TabletopCache<GameCharacter>(() => ObjectStore.instance.getObjects(GameCharacter).filter(obj => obj.location.name === 'table'));
-  private cardCache = new TabletopCache<Card>(() => ObjectStore.instance.getObjects(Card).filter(obj => obj.location.name === 'table' || obj.parentIsDestroyed));
+  private cardCache = new TabletopCache<Card>(() => ObjectStore.instance.getObjects(Card).filter(obj => obj.location.name === 'table' && (!obj.parentIsAssigned || obj.parentIsDestroyed)));
   private cardStackCache = new TabletopCache<CardStack>(() => ObjectStore.instance.getObjects(CardStack).filter(obj => obj.location.name === 'table'));
   private tableMaskCache = new TabletopCache<GameTableMask>(() => {
     let viewTable = this.tableSelecter.viewTable;
