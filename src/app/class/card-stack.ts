@@ -46,7 +46,6 @@ export class CardStack extends TabletopObject {
   drawCard(): Card {
     let card = this.topCard ? <Card>this.cardRoot.removeChild(this.topCard) : null;
     if (card) {
-      card.location.name = this.location.name;
       card.rotate += this.rotate;
       if (360 < card.rotate) card.rotate -= 360;
       this.setSamePositionFor(card);
@@ -60,7 +59,6 @@ export class CardStack extends TabletopObject {
     let cards = this.cards;
     for (let card of cards) {
       this.cardRoot.removeChild(card);
-      card.location.name = this.location.name;
       card.rotate += this.rotate;
       this.setSamePositionFor(card);
       if (360 < card.rotate) card.rotate -= 360;
@@ -117,7 +115,6 @@ export class CardStack extends TabletopObject {
     let delta = Math.abs(card.rotate - this.rotate);
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
-    card.location.name = this.identifier;
     this.setSamePositionFor(card);
     return <Card>this.cardRoot.insertBefore(card, this.topCard);
   }
@@ -129,7 +126,6 @@ export class CardStack extends TabletopObject {
     let delta = Math.abs(card.rotate - this.rotate);
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
-    card.location.name = this.identifier;
     this.setSamePositionFor(card);
     return <Card>this.cardRoot.appendChild(card);
   }
@@ -161,7 +157,15 @@ export class CardStack extends TabletopObject {
     }
   }
 
+  // override
+  setLocation(location: string) {
+    super.setLocation(location);
+    let cards = this.cards;
+    for (let card of cards) card.setLocation(location);
+  }
+
   private setSamePositionFor(card: Card) {
+    card.location.name = this.location.name;
     card.location.x = this.location.x;
     card.location.y = this.location.y;
     card.posZ = this.posZ;
