@@ -372,6 +372,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     newCardStack.location.y = bottomStack.location.y;
     newCardStack.posZ = bottomStack.posZ;
     newCardStack.zindex = topStack.zindex;
+    newCardStack.rotate = bottomStack.rotate;
 
     let bottomCards: Card[] = bottomStack.drawCardAll();
     let topCards: Card[] = topStack.drawCardAll();
