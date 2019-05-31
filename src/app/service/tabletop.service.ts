@@ -38,6 +38,7 @@ export class TabletopService {
   }
 
   private locationMap: Map<ObjectIdentifier, LocationName> = new Map();
+  private parentMap: Map<ObjectIdentifier, ObjectIdentifier> = new Map();
   private characterCache = new TabletopCache<GameCharacter>(() => ObjectStore.instance.getObjects(GameCharacter).filter(obj => obj.location.name === 'table'));
   private cardCache = new TabletopCache<Card>(() => ObjectStore.instance.getObjects(Card).filter(obj => obj.location.name === 'table' && (!obj.parentIsAssigned || obj.parentIsDestroyed)));
   private cardStackCache = new TabletopCache<CardStack>(() => ObjectStore.instance.getObjects(CardStack).filter(obj => obj.location.name === 'table'));
@@ -81,9 +82,9 @@ export class TabletopService {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!object || !(object instanceof TabletopObject)) {
           this.refreshCache(event.data.aliasName);
-        } else if (this.locationMap.get(object.identifier) !== object.location.name) {
+        } else if (this.shouldRefreshCache(object)) {
           this.refreshCache(event.data.aliasName);
-          this.locationMap.set(object.identifier, object.location.name);
+          this.updateMap(object);
         }
       })
       .on('DELETE_GAME_OBJECT', -1000, event => {
@@ -164,7 +165,21 @@ export class TabletopService {
     this.textNoteCache.refresh();
     this.diceSymbolCache.refresh();
 
+    this.clearMap();
+  }
+
+  private shouldRefreshCache(object: TabletopObject) {
+    return this.locationMap.get(object.identifier) !== object.location.name || this.parentMap.get(object.identifier) !== object.parentId;
+  }
+
+  private updateMap(object: TabletopObject) {
+    this.locationMap.set(object.identifier, object.location.name);
+    this.parentMap.set(object.identifier, object.parentId);
+  }
+
+  private clearMap() {
     this.locationMap.clear();
+    this.parentMap.clear();
   }
 
   private placeToTabletop(gameObject: TabletopObject) {
