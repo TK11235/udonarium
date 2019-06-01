@@ -40,7 +40,7 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
   get sendTo(): string[] {
     if (this._to !== this.to) {
       this._to = this.to;
-      this._sendTo = 0 < this.to.length ? this.to.split(/\s+/) : [];
+      this._sendTo = this.to != null && 0 < this.to.trim().length ? this.to.trim().split(/\s+/) : [];
     }
     return this._sendTo;
   }
@@ -49,7 +49,7 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
   get tags(): string[] {
     if (this._tag !== this.tag) {
       this._tag = this.tag;
-      this._tags = 0 < this.tag.length ? this.tag.split(/\s+/) : [];
+      this._tags = this.tag != null && 0 < this.tag.trim().length ? this.tag.trim().split(/\s+/) : [];
     }
     return this._tags;
   }

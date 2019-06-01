@@ -23,7 +23,15 @@ export class DataSummarySetting extends GameObject implements InnerXml {
   @SyncVar() sortOrder: SortOrder = SortOrder.ASC;
   @SyncVar() dataTag: string = 'HP MP 敏捷度 生命力 精神力';
 
-  get dataTags(): string[] { return this.dataTag.split(/\s+/); }
+  private _dataTag: string;
+  private _dataTags: string[];
+  get dataTags(): string[] {
+    if (this._dataTag !== this.dataTag) {
+      this._dataTag = this.dataTag;
+      this._dataTags = this.dataTag != null && 0 < this.dataTag.trim().length ? this.dataTag.trim().split(/\s+/) : [];
+    }
+    return this._dataTags;
+  }
 
   innerXml(): string { return ''; }
   parseInnerXml(element: Element) {
