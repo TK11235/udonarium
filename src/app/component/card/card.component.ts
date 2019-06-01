@@ -161,13 +161,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.card.toTopmost();
 
     this.addMouseEventListeners();
-
-    clearTimeout(this.iconHiddenTimer);
-    this.iconHiddenTimer = setTimeout(() => {
-      this.iconHiddenTimer = null;
-      this.changeDetector.markForCheck();
-    }, 400);
-    this.changeDetector.markForCheck();
+    this.startIconHiddenTimer();
 
     e.preventDefault();
   }
@@ -289,6 +283,15 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < children.length; i++) {
       children[i].dispatchEvent(event);
     }
+  }
+
+  private startIconHiddenTimer() {
+    clearTimeout(this.iconHiddenTimer);
+    this.iconHiddenTimer = setTimeout(() => {
+      this.iconHiddenTimer = null;
+      this.changeDetector.markForCheck();
+    }, 400);
+    this.changeDetector.markForCheck();
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

@@ -151,11 +151,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
     this.onDoubleClick(e);
-
-    clearTimeout(this.iconHiddenTimer);
-    this.iconHiddenTimer = setTimeout(() => {
-      this.iconHiddenTimer = null;
-    }, 400);
+    this.startIconHiddenTimer();
 
     e.preventDefault();
   }
@@ -268,6 +264,15 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     let option: PanelOption = { title: title, left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
+  }
+
+  private startIconHiddenTimer() {
+    clearTimeout(this.iconHiddenTimer);
+    this.iconHiddenTimer = setTimeout(() => {
+      this.iconHiddenTimer = null;
+      this.changeDetector.markForCheck();
+    }, 400);
+    this.changeDetector.markForCheck();
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

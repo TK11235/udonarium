@@ -195,11 +195,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cardStack.toTopmost();
 
     this.addMouseEventListeners();
-
-    clearTimeout(this.iconHiddenTimer);
-    this.iconHiddenTimer = setTimeout(() => {
-      this.iconHiddenTimer = null;
-    }, 400);
+    this.startIconHiddenTimer();
 
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.cardStack.identifier, className: 'GameCharacter' });
 
@@ -424,5 +420,14 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cardStack.owner = Network.peerId;
     let component = this.panelService.open<CardStackListComponent>(CardStackListComponent, option);
     component.cardStack = gameObject;
+  }
+
+  private startIconHiddenTimer() {
+    clearTimeout(this.iconHiddenTimer);
+    this.iconHiddenTimer = setTimeout(() => {
+      this.iconHiddenTimer = null;
+      this.changeDetector.markForCheck();
+    }, 400);
+    this.changeDetector.markForCheck();
   }
 }
