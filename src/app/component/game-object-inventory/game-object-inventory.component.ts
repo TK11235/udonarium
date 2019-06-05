@@ -170,6 +170,13 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     this.isEdit = !this.isEdit;
   }
 
+  cleanInventory() {
+    for (const gameObject of this.getGameObjects(this.selectTab)) {
+      this.deleteGameObject(gameObject);
+    }
+    SoundEffect.play(PresetSound.sweep);
+  }
+
   private cloneGameObject(gameObject: TabletopObject) {
     gameObject.clone();
   }
