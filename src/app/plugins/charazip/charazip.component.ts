@@ -11,6 +11,7 @@ import { DivinechargerGenerator } from './system/divinecharger-generator';
 import { Dx3rdGenerator } from './system/dx3rd-generator';
 import { Sw2Generator } from './system/sw2-generator';
 import { MonotonemuseumGenerator } from './system/monotonemuseum-generator';
+import { ShinobigamiGenerator } from './system/shinobigami-generator';
 
 interface SystemInfo {
   system: string;
@@ -65,6 +66,12 @@ export class CharazipComponent implements OnInit {
       name: 'インセイン',
       href: 'https://character-sheets.appspot.com/insane/',
       generater: InsaneGenerator.geneateByAppspot
+    },
+    {
+      system: 'shinobigami',
+      name: 'シノビガミ',
+      href: 'https://character-sheets.appspot.com/shinobigami/',
+      generater: ShinobigamiGenerator.geneateByAppspot
     },
     {
       system: 'dx3',
