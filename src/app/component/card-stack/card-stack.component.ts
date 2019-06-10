@@ -191,8 +191,8 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
-    this.onDoubleClick(e);
     this.cardStack.toTopmost();
+    this.onDoubleClick(e);
 
     this.addMouseEventListeners();
     this.startIconHiddenTimer();
