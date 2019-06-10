@@ -50,7 +50,6 @@ export class CardStack extends TabletopObject {
       if (360 < card.rotate) card.rotate -= 360;
       this.setSamePositionFor(card);
       card.toTopmost();
-      card.update();
     }
     return card;
   }
