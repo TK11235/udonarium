@@ -130,8 +130,9 @@ export class CardStack extends TabletopObject {
   }
 
   toTopmost() {
-    let objects: (Card | CardStack)[] = ObjectStore.instance.getObjects<CardStack>('card-stack').filter(obj => obj.location.name === 'table');
-    objects = objects.concat(ObjectStore.instance.getObjects<Card>('card').filter(obj => obj.location.name === 'table' && (!obj.parentIsAssigned || obj.parentIsDestroyed)));
+    let objects: (Card | CardStack)[] = ObjectStore.instance.getObjects('card-stack');
+    objects = objects.concat(ObjectStore.instance.getObjects('card'));
+    objects = objects.filter(obj => obj.isVisibleOnTable);
 
     let maxZindex: number = -1;
     let hasConflict: boolean = false;
