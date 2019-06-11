@@ -35,9 +35,9 @@ export class ObjectSerializer {
       if (attribute == null) continue;
       attrStr += ' ' + name + '="' + attribute + '"';
     }
-    xml += '<' + tagName + attrStr + '>';
+    xml += `<${tagName + attrStr}>`;
     xml += 'innerXml' in gameObject ? (<InnerXml>gameObject).innerXml() : '';
-    xml += '</' + tagName + '>';
+    xml += `</${tagName}>`;
     return xml;
   }
 
@@ -143,11 +143,11 @@ export class ObjectSerializer {
       let split: string[] = attributes[i].name.split('.');
       let key: string | number = split[0];
       let obj: Object | Array<any> = syncData;
-      let parentObj: Object | Array<any> = null;
 
       if (1 < split.length) {
         // 階層構造の解析 foo.bar.0="abc" 等
         // 処理として実装こそしているが、xmlの仕様としては良くないので使用するべきではない.
+        let parentObj: Object | Array<any> = null;
         for (let j = 0; j < split.length; j++) {
           let index = parseInt(split[j]);
           if (parentObj && !Number.isNaN(index) && !Array.isArray(obj) && Object.keys(parentObj).length) {
@@ -165,8 +165,7 @@ export class ObjectSerializer {
 
       let type = typeof obj[key];
       if (type !== 'string' && obj[key] != null) {
-        let json = JSON.parse(value);
-        value = json;
+        value = JSON.parse(value);
       }
       obj[key] = value;
     }
