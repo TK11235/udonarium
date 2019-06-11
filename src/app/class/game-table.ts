@@ -1,6 +1,5 @@
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { InnerXml } from './core/synchronize-object/object-serializer';
 import { EventSystem } from './core/system';
 import { GameTableMask } from './game-table-mask';
 import { Terrain } from './terrain';
@@ -18,7 +17,7 @@ export enum FilterType {
 }
 
 @SyncObject('game-table')
-export class GameTable extends ObjectNode implements InnerXml {
+export class GameTable extends ObjectNode {
   @SyncVar() name: string = 'テーブル';
   @SyncVar() width: number = 20;
   @SyncVar() height: number = 20;
@@ -46,12 +45,9 @@ export class GameTable extends ObjectNode implements InnerXml {
     return masks;
   }
 
-  innerXml(): string {
-    return super.innerXml();
-  }
-
-  parseInnerXml(element: Element) {
-    super.parseInnerXml(element);
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
     if (this.selected) EventSystem.trigger('SELECT_GAME_TABLE', { identifier: this.identifier });
   }
 }
