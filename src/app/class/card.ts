@@ -1,11 +1,10 @@
-import { CardStack } from './card-stack';
 import { ImageFile } from './core/file-storage/image-file';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
-import { ObjectStore } from './core/synchronize-object/object-store';
 import { Network } from './core/system';
 import { DataElement } from './data-element';
 import { PeerCursor } from './peer-cursor';
 import { TabletopObject } from './tabletop-object';
+import { moveToTopmost } from './tabletop-object-util';
 
 export enum CardState {
   FRONT,
@@ -48,30 +47,7 @@ export class Card extends TabletopObject {
   }
 
   toTopmost() {
-    let objects: (Card | CardStack)[] = ObjectStore.instance.getObjects('card-stack');
-    objects = objects.concat(ObjectStore.instance.getObjects('card'));
-    objects = objects.filter(obj => obj.isVisibleOnTable);
-
-    let maxZindex: number = -1;
-    let hasConflict: boolean = false;
-    for (let i = 0; i < objects.length; i++) {
-      if (maxZindex === objects[i].zindex) {
-        hasConflict = true;
-      } else if (maxZindex < objects[i].zindex) {
-        maxZindex = objects[i].zindex;
-        hasConflict = false;
-      }
-    }
-
-    if (maxZindex === this.zindex && !hasConflict) return;
-    this.zindex = maxZindex + 1;
-
-    if (this.zindex < objects.length + 256) return;
-    objects.sort((a, b) => a.zindex - b.zindex);
-
-    for (let i = 0; i < objects.length; i++) {
-      objects[i].zindex = i;
-    }
+    moveToTopmost(this, ['card-stack']);
   }
 
   static create(name: string, fornt: string, back: string, size: number = 2, identifier?: string): Card {
