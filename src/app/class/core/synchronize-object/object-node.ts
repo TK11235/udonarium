@@ -30,11 +30,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   get children(): ObjectNode[] {
     if (this.needsSort) {
       this.needsSort = false;
-      this._children.sort((a, b) => {
-        if (a.index < b.index) return -1;
-        if (a.index > b.index) return 1;
-        return 0;
-      });
+      this._children.sort((a, b) => a.index - b.index);
     }
     return this._children.concat();
   }
@@ -248,7 +244,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     if (oldParent && this.parent !== oldParent) oldParent.updateChildren(this);
     if (this.parent) {
       this.parent.updateChildren(this);
-    } else if (0 < this.parentIdentifier.length) {
+    } else if (this.parentIsAssigned) {
       if (!(this.parentIdentifier in ObjectNode.unknownNodes)) {
         ObjectNode.unknownNodes[this.parentIdentifier] = [];
       }
