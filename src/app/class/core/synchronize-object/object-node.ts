@@ -97,19 +97,21 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   private updateChildren(child: ObjectNode = this) {
     let index = this._children.indexOf(child);
     let isAdded = false;
+    let isMyChild = child.parent === this;
 
-    if (index < 0 && child.parent === this) {
+    if (index < 0 && isMyChild) {
       this._children.push(child);
+      index = this._children.length - 1;
       isAdded = true;
-    }
-    if (0 <= index && child.parent !== this) {
+    } else if (0 <= index && !isMyChild) {
       this._children.splice(index, 1);
       this._onChildRemoved(child);
+      return;
+    } else if (index < 0 && !isMyChild) {
       return;
     }
 
     if (!this._children.length) return;
-    if (index < 0) index = this._children.indexOf(child);
     let prevIndex = index - 1 < 0 ? 0 : index - 1;
     let nextIndex = this._children.length - 1 < index + 1 ? this._children.length - 1 : index + 1;
 
