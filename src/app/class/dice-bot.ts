@@ -5,6 +5,7 @@ import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { EventSystem } from './core/system';
 import { PromiseQueue } from './core/system/util/promise-queue';
+import { StringUtil } from './core/system/util/string-util';
 
 declare var Opal
 
@@ -282,7 +283,7 @@ export class DiceBot extends GameObject {
         let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
         if (!chatMessage || !chatMessage.isSendFromSelf || chatMessage.isSystem) return;
 
-        let text: string = chatMessage.text.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
+        let text: string = StringUtil.toHalfWidth(chatMessage.text);
         let gameType: string = chatMessage.tag;
 
         try {

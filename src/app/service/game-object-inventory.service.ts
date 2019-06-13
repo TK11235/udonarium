@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
+import { StringUtil } from '@udonarium/core/system/util/string-util';
 import { DataElement } from '@udonarium/data-element';
 import { DataSummarySetting, SortOrder } from '@udonarium/data-summary-setting';
 import { GameCharacter } from '@udonarium/game-character';
@@ -244,9 +245,7 @@ class ObjectInventory {
 
   private convertToSortableValue(dataElement: DataElement): number | string {
     let value = dataElement.isNumberResource ? dataElement.currentValue : dataElement.value;
-    let resultStr: string = (value + '').trim().replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
-      return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-    });
+    let resultStr = StringUtil.toHalfWidth((value + '').trim());
     let resultNum = +resultStr;
     return Number.isNaN(resultNum) ? resultStr : resultNum;
   }

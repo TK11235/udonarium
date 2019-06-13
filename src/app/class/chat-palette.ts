@@ -1,6 +1,7 @@
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectContext } from './core/synchronize-object/game-object';
 import { ObjectNode } from './core/synchronize-object/object-node';
+import { StringUtil } from './core/system/util/string-util';
 import { DataElement } from './data-element';
 
 export interface PaletteLine {
@@ -52,9 +53,7 @@ export class ChatPalette extends ObjectNode {
     } else {
       evaluate = line.palette;
     }
-    evaluate = evaluate.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
-      return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-    });
+    evaluate = StringUtil.toHalfWidth(evaluate);
 
     console.log(evaluate);
     let limit = 128;
@@ -99,9 +98,7 @@ export class ChatPalette extends ObjectNode {
   }
 
   private parseVariable(palette: string): PaletteVariable {
-    palette = palette.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
-      return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-    });
+    palette = StringUtil.toHalfWidth(palette);
     let array = /^\s*\/\/([^=\{\}\s]+)\s*=\s*(.+)\s*/gi.exec(palette);
     if (!array) return null;
     let variable: PaletteVariable = {
