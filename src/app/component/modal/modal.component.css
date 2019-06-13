@@ -1,10 +1,6 @@
-.modal-background {
+.component {
   box-sizing: border-box;
   position: absolute;
-  color: #CCC;
-  background-color: rgba(30, 30, 30, 0.3);
-  height: 100%;
-  width: 100%;
   top :0;
   bottom :0;
   left :0;
@@ -16,9 +12,21 @@
   justify-content: center;
 }
 
-.modal-panel{
+.modal-background {
   box-sizing: border-box;
-  overflow: auto;
+  position: absolute;
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.3);
+  top :0;
+  bottom :0;
+  left :0;
+  right :0;
+  z-index: -1;
+}
+
+.modal-panel {
+  box-sizing: border-box;
+  overflow: hidden;
 
   color: #444;
   background: linear-gradient(-30deg, rgba(240,218,189, 0.9), rgba(255, 244, 232, 0.9));
