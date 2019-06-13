@@ -48,20 +48,20 @@
   padding: 2px 5px;
   width: 100%;
   background-color: #CCC;
-  /*color: #CCC;*/
   color: #444;
 }
+
 .title-button {
   position: absolute;
   right: 0;
   top: 0;
 }
+
 .title button {
   background: none;
   border: none;
   border-radius: 0;
   outline: none;
-  /*color: #CCC;*/
   color: #444;
 }
 
@@ -69,14 +69,10 @@
   padding: 10px;
 }
 
-.scrollable-panel{
+.scrollable-panel {
   box-sizing: border-box;
   overflow: auto;
-  /*margin: auto 0 0 0;*/
-  /*top: 0px;*/
-  top: 25px;
-  bottom: 0;
-  max-height: 100%;
+  max-height: calc(100vh - 41px);
   width: 100%;
   padding: 8px;
 }
