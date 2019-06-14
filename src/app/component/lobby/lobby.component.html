@@ -27,7 +27,7 @@
           <td *ngIf="0 < room.peers[0].password.length" style="text-align: center; padding: 0 1em;"><i class="material-icons" style="vertical-align: middle; font-size:0.9rem;">lock</i></td>
           <td *ngIf="room.peers[0].password.length < 1" style="text-align: center; padding: 0 1em;">-</td>
           <td style="text-align: center; padding: 0 1em;">{{room.peers.length}}人</td>
-          <td><button [disabled]="room.peers[0]?.room === currentRoom" *ngIf="0 < room.room.length" type="submit" (click)="connect(room.peers)">接続する</button></td>
+          <td><button [disabled]="room.peers[0]?.room === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peers)">接続する</button></td>
         </tr>
       </ng-container>
     </table>

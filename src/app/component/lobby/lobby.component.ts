@@ -16,7 +16,7 @@ import { PanelService } from 'service/panel.service';
   styleUrls: ['./lobby.component.css'],
 })
 export class LobbyComponent implements OnInit, OnDestroy {
-  rooms: { room: string, roomName: string, peers: PeerContext[] }[] = [];
+  rooms: { alias: string, roomName: string, peers: PeerContext[] }[] = [];
 
   isReloading: boolean = false;
 
@@ -64,15 +64,15 @@ export class LobbyComponent implements OnInit, OnDestroy {
     for (let id of peerIds) {
       let context = new PeerContext(id);
       if (context.isRoom) {
-        let roomIdentifier = context.room + context.roomName;
-        if (!(roomIdentifier in peersOfroom)) {
-          peersOfroom[roomIdentifier] = [];
+        let alias = context.room + context.roomName;
+        if (!(alias in peersOfroom)) {
+          peersOfroom[alias] = [];
         }
-        peersOfroom[roomIdentifier].push(context);
+        peersOfroom[alias].push(context);
       }
     }
-    for (let room in peersOfroom) {
-      this.rooms.push({ room: room, roomName: peersOfroom[room][0].roomName, peers: peersOfroom[room] });
+    for (let alias in peersOfroom) {
+      this.rooms.push({ alias: alias, roomName: peersOfroom[alias][0].roomName, peers: peersOfroom[alias] });
     }
     this.help = '接続可能なルームが見つかりませんでした。「新しいルームを作成する」で新規ルームを作成できます。';
     this.isReloading = false;
