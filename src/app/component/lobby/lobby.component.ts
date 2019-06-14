@@ -74,6 +74,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
     for (let alias in peersOfroom) {
       this.rooms.push({ alias: alias, roomName: peersOfroom[alias][0].roomName, peers: peersOfroom[alias] });
     }
+    this.rooms.sort((a, b) => {
+      if (a.alias < b.alias) return -1;
+      if (a.alias > b.alias) return 1;
+      return 0;
+    });
     this.help = '接続可能なルームが見つかりませんでした。「新しいルームを作成する」で新規ルームを作成できます。';
     this.isReloading = false;
   }
