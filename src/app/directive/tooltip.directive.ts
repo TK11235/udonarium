@@ -30,7 +30,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
   private openTooltipTimer: NodeJS.Timer;
   private closeTooltipTimer: NodeJS.Timer;
 
-  private TooltipComponentRef: ComponentRef<OverviewPanelComponent>
+  private tooltipComponentRef: ComponentRef<OverviewPanelComponent>
 
   constructor(
     private ngZone: NgZone,
@@ -52,17 +52,17 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
   private onMouseEnter(e: any) {
     this.clearTimer();
-    if (!this.TooltipComponentRef) this.startOpenTimer();
+    if (!this.tooltipComponentRef) this.startOpenTimer();
   }
 
   private onMouseLeave(e: any) {
     this.clearTimer();
-    if (this.TooltipComponentRef) this.startCloseTimer();
+    if (this.tooltipComponentRef) this.startCloseTimer();
   }
 
   private onMouseDown(e: any) {
-    if (!this.TooltipComponentRef) return;
-    if (!this.TooltipComponentRef.location.nativeElement.contains(e.target)
+    if (!this.tooltipComponentRef) return;
+    if (!this.tooltipComponentRef.location.nativeElement.contains(e.target)
       && !this.viewContainerRef.element.nativeElement.contains(e.target)) {
       this.ngZone.run(() => this.close());
     }
@@ -84,7 +84,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
   private startCloseTimer() {
     this.closeTooltipTimer = setTimeout(() => {
-      if (this.TooltipComponentRef && this.TooltipComponentRef.location.nativeElement.contains(document.activeElement)) {
+      if (this.tooltipComponentRef && this.tooltipComponentRef.location.nativeElement.contains(document.activeElement)) {
         this.startCloseTimer();
       } else {
         this.ngZone.run(() => this.close());
@@ -106,13 +106,13 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     const injector = parentViewContainerRef.injector;
     const panelComponentFactory = this.componentFactoryResolver.resolveComponentFactory(OverviewPanelComponent);
 
-    this.TooltipComponentRef = parentViewContainerRef.createComponent(panelComponentFactory, parentViewContainerRef.length, injector);
+    this.tooltipComponentRef = parentViewContainerRef.createComponent(panelComponentFactory, parentViewContainerRef.length, injector);
 
-    this.TooltipComponentRef.instance.tabletopObject = this.tabletopObject;
-    this.TooltipComponentRef.instance.left = this.pointerDeviceService.pointerX;
-    this.TooltipComponentRef.instance.top = this.pointerDeviceService.pointerY;
+    this.tooltipComponentRef.instance.tabletopObject = this.tabletopObject;
+    this.tooltipComponentRef.instance.left = this.pointerDeviceService.pointerX;
+    this.tooltipComponentRef.instance.top = this.pointerDeviceService.pointerY;
 
-    this.addEventListeners(this.TooltipComponentRef.location.nativeElement);
+    this.addEventListeners(this.tooltipComponentRef.location.nativeElement);
     this.ngZone.runOutsideAngular(() => {
       document.body.addEventListener('mousedown', this.callbackOnMouseDown, false);
     });
@@ -122,22 +122,22 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
         if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) this.close();
       });
 
-    this.TooltipComponentRef.onDestroy(() => {
-      this.removeEventListeners(this.TooltipComponentRef.location.nativeElement);
+    this.tooltipComponentRef.onDestroy(() => {
+      this.removeEventListeners(this.tooltipComponentRef.location.nativeElement);
       document.body.removeEventListener('mousedown', this.callbackOnMouseDown, false);
       this.clearTimer();
-      this.TooltipComponentRef = null;
+      this.tooltipComponentRef = null;
       EventSystem.unregister(this);
     });
-    TooltipDirective.activeTooltips.push(this.TooltipComponentRef);
+    TooltipDirective.activeTooltips.push(this.tooltipComponentRef);
   }
 
   private close() {
     TooltipDirective.activeTooltips.forEach(componentRef => componentRef.destroy());
     TooltipDirective.activeTooltips = [];
 
-    if (!this.TooltipComponentRef) return;
-    this.TooltipComponentRef.destroy();
+    if (!this.tooltipComponentRef) return;
+    this.tooltipComponentRef.destroy();
   }
 
   private addEventListeners(element: Element) {
