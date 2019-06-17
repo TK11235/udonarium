@@ -23,6 +23,7 @@ import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { TabletopService } from 'service/tabletop.service';
 
 @Component({
   selector: 'card',
@@ -72,6 +73,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     private panelService: PanelService,
     private elementRef: ElementRef,
     private changeDetector: ChangeDetectorRef,
+    private tabletopService: TabletopService,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
@@ -260,7 +262,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     cardStack.rotate = this.rotate;
     cardStack.update();
 
-    let cards: Card[] = ObjectStore.instance.getObjects<Card>(Card).filter((obj) => { return obj.location.name === this.card.location.name });
+    let cards: Card[] = this.tabletopService.cards.concat();
 
     cards.sort((a, b) => {
       if (a.zindex < b.zindex) return 1;
