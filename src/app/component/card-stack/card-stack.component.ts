@@ -150,12 +150,12 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (e.detail instanceof Card) {
       let card: Card = e.detail;
-      let distance: number = Math.sqrt((card.location.x - this.cardStack.location.x) ** 2 + (card.location.y - this.cardStack.location.y) ** 2 + (card.posZ - this.cardStack.posZ) ** 2);
-      if (distance < 50) this.cardStack.putOnTop(card);
+      let distance: number = (card.location.x - this.cardStack.location.x) ** 2 + (card.location.y - this.cardStack.location.y) ** 2 + (card.posZ - this.cardStack.posZ) ** 2;
+      if (distance < 50 ** 2) this.cardStack.putOnTop(card);
     } else if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
-      let distance: number = Math.sqrt((cardStack.location.x - this.cardStack.location.x) ** 2 + (cardStack.location.y - this.cardStack.location.y) ** 2 + (cardStack.posZ - this.cardStack.posZ) ** 2);
-      if (distance < 25) this.concatStack(cardStack);
+      let distance: number = (cardStack.location.x - this.cardStack.location.x) ** 2 + (cardStack.location.y - this.cardStack.location.y) ** 2 + (cardStack.posZ - this.cardStack.posZ) ** 2;
+      if (distance < 25 ** 2) this.concatStack(cardStack);
     }
   }
 
