@@ -173,11 +173,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.doubleClickPoint.x === this.pointerDeviceService.pointers[0].x
       && this.doubleClickPoint.y === this.pointerDeviceService.pointers[0].y) {
       console.log('onDoubleClick !!!!');
-      let card = this.cardStack.drawCard();
-      if (card) {
-        card.location.x += 100 + (Math.random() * 50);
-        card.location.y += 25 + (Math.random() * 50);
-        card.update();
+      if (this.drawCard() != null) {
         SoundEffect.play(PresetSound.cardDraw);
       }
     }
@@ -219,11 +215,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     this.contextMenuService.open(position, [
       {
         name: '１枚引く', action: () => {
-          let card = this.cardStack.drawCard();
-          if (card) {
-            card.location.x += 100 + (Math.random() * 50);
-            card.location.y += 25 + (Math.random() * 50);
-            card.update();
+          if (this.drawCard() != null) {
             SoundEffect.play(PresetSound.cardDraw);
           }
         }
@@ -316,6 +308,16 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onMoved() {
     SoundEffect.play(PresetSound.cardPut);
+  }
+
+  private drawCard(): Card {
+    let card = this.cardStack.drawCard();
+    if (card) {
+      card.location.x += 100 + (Math.random() * 50);
+      card.location.y += 25 + (Math.random() * 50);
+      card.update();
+    }
+    return card;
   }
 
   private breakStack() {
