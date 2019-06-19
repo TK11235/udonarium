@@ -313,6 +313,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   private drawCard(): Card {
     let card = this.cardStack.drawCard();
     if (card) {
+      this.cardStack.update(); // todo
       card.location.x += 100 + (Math.random() * 50);
       card.location.y += 25 + (Math.random() * 50);
       card.update();
