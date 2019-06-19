@@ -52,7 +52,7 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
       })
       .on('DELETE_GAME_OBJECT', -1000, event => {
         if (this.gameDataElement && this.gameDataElement.identifier === event.data.identifier) {
-          this.gameDataElement = null;
+          this.changeDetector.markForCheck();
         }
       });
   }
