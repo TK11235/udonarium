@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef, HostListener } from '@angular/core';
 
 import { ChatTab } from '@udonarium/chat-tab';
 import { AudioPlayer } from '@udonarium/core/file-storage/audio-player';
@@ -41,12 +41,13 @@ import { SaveDataService } from 'service/save-data.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit, OnDestroy {
+export class AppComponent implements AfterViewInit, OnDestroy  {
 
   @ViewChild('modalLayer', { read: ViewContainerRef }) modalLayerViewContainerRef: ViewContainerRef;
   private immediateUpdateTimer: NodeJS.Timer = null;
   private lazyUpdateTimer: NodeJS.Timer = null;
   private openPanelCount: number = 0;
+  private userChangedData: boolean = false;
 
   constructor(
     private modalService: ModalService,
@@ -169,6 +170,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         });
       });
   }
+
+  @HostListener('window:beforeunload', [ '$event' ])
+  beforeUnloadHander() {
+    if(this.userChangedData) {
+      return confirm();
+    }
+    else {
+      return true;
+    }
+  }
+
   ngAfterViewInit() {
     PanelService.defaultParentViewContainerRef = ModalService.defaultParentViewContainerRef = ContextMenuService.defaultParentViewContainerRef = this.modalLayerViewContainerRef;
     setTimeout(() => {
@@ -227,9 +239,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       ? Network.peerContext.roomName
       : 'ルームデータ';
     this.saveDataService.saveRoom(roomName);
+
+    this.userChangedData = false;
   }
 
   private lazyNgZoneUpdate(isImmediate: boolean) {
+    this.userChangedData = true;
+
     if (isImmediate) {
       if (this.immediateUpdateTimer !== null) return;
       this.immediateUpdateTimer = setTimeout(() => {
