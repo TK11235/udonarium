@@ -208,6 +208,7 @@ WT　【変調表】
 RTT　【ランダム特技決定表】
 ST　【シーン表(無印)】
 
+//-----忍法
 `;
     cp += json.ninpou
       .filter((ninpou: any) => ninpou.name)
@@ -216,6 +217,7 @@ ST　【シーン表(無印)】
           txt + `[${ninpou.name}] {${ninpou.name}}\n`,
         ''
       );
+    cp += '\n//-----背景\n';
     cp += json.background
       .filter((background: any) => background.name)
       .reduce(
