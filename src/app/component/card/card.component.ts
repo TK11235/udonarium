@@ -262,7 +262,10 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     cardStack.rotate = this.rotate;
     cardStack.zindex = this.card.zindex;
 
-    let cards: Card[] = this.tabletopService.cards.concat();
+    let cards: Card[] = this.tabletopService.cards.filter(card => {
+      let distance: number = (card.location.x - this.card.location.x) ** 2 + (card.location.y - this.card.location.y) ** 2 + (card.posZ - this.card.posZ) ** 2;
+      return distance < 100 ** 2;
+    });
 
     cards.sort((a, b) => {
       if (a.zindex < b.zindex) return 1;
@@ -271,8 +274,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     for (let card of cards) {
-      let distance: number = (card.location.x - this.card.location.x) ** 2 + (card.location.y - this.card.location.y) ** 2 + (card.posZ - this.card.posZ) ** 2;
-      if (distance < 100 ** 2) cardStack.putOnBottom(card);
+      cardStack.putOnBottom(card);
     }
   }
 
