@@ -47,11 +47,6 @@ export class ObjectSynchronizer {
           if (object) EventSystem.call('UPDATE_GAME_OBJECT', object.toContext(), event.sendFrom);
         }
       })
-      .on('CLOSE_OTHER_PEER', 0, event => {
-        if (!event.isSendFromSelf) return;
-        console.log('CLOSE_OTHER_PEER GameRoomService !!!', event.data.peer);
-        EventSystem.call('DELETE_GAME_OBJECT', { identifier: event.data.peer });
-      })
       .on('UPDATE_GAME_OBJECT', 0, event => {
         let context: ObjectContext = event.data;
         let object: GameObject = ObjectStore.instance.get(context.identifier);
