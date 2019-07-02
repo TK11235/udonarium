@@ -53,7 +53,7 @@ export class PeerCursor extends GameObject {
   static createMyCursor(): PeerCursor {
     if (PeerCursor.myCursor) {
       console.warn('It is already created.');
-      return;
+      return PeerCursor.myCursor;
     }
     PeerCursor.myCursor = new PeerCursor();
     PeerCursor.myCursor.peerId = Network.peerId;
