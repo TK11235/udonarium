@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
 class BeastBindTrinity < DiceBot
-  setPrefixes(['\d+BB', 'EMO'])
+  setPrefixes(['\d+BB' , 'EMO' , 'EXPO_.' , 'FACE_.'])
 
-#●前ver(1.43.01)からの変更・修正
-#・「達成値の下限が０になっていない」ルール上の見落としを修正。
-#・機能に%w、$zの追加。
-#・結果表示の式の形を変形し、C値・F値を常に表示するように変更。
-#・機能追加に伴い説明文が長くなったので、邂逅表以外の各種表を削除。
+#●前ver(1.43.07)からの変更・修正
+#・nBBで判定を行う際、「ダイスを１個しか振らない場合」の達成値計算が正しくなかった誤りを修正。
+#・@x(クリティカル値指定)、を加減式で入力できるように仕様変更。クリティカル値は、加減式での入力なら%w(人間性からのクリティカル値計算)と併用可能に。
+#・#y(ファンブル値指定)を加減式で入力できるように仕様変更。また、「ファンブルしても達成値が0にならない」モード#Ayを追加。
+#・&v(出目v未満のダイスを出目vとして扱う)のモードを追加。2018年12月現在、ゲーマーズ・フィールド誌先行収録データでのみ使用するモードです。
+#・「暴露表」および「正体判明チャート」をダイスボットに組み込み。
+#・どどんとふ以外のボーンズ＆カーズを用いたオンラインセッション用ツールにあわせ、ヘルプメッセージ部分からイニシアティブ表についての言及を削除。
 
   def initialize
     super
@@ -25,34 +27,47 @@ class BeastBindTrinity < DiceBot
 
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
-・判定　(nBB+m%w@x#y$z)
+・判定　(nBB+m%w@x#y$z&v)
 　n個のD6を振り、出目の大きい2個から達成値を算出。修正mも可能。
-　＞%wは「現在の人間性が w」であることを表し、省略可能。
-　　これを入力すると、人間性からクリティカル値を自動計算します。
-　＞@xは「クリティカル値が x」であることを表し、省略可能。
-　　%wと@xを両方とも指定した場合、@xのクリティカル値指定が優先されます。
-　＞#yは「ファンブル値が y」であることを表し、省略可能。
-　＞$zは、ダイスの出目をその数値に固定して判定を行う。複数指定可、省略可能。
-　　例）2BB$1→ダイスを2個振る判定で、ダイス1個の出目を1で固定
-　　例）2BB$16→ダイスを2個振る判定で、ダイス2個の出目を1と6で固定
-　＞クリティカル値（または%wの指定）を省略した場合は「12」として、
-　　ファンブル値を省略した場合は「2」として達成値を計算します。
+　
+　%w、@x、#y、$z、&vはすべて省略可能。
+＞%w：現在の人間性が w であるとして、クリティカル値(C値)を計算。
+・省略した場合、C値=12として達成値を算出する。
+＞@x：クリティカル値修正。（加減式でも入力可能）
+・xに直接数字を書くと、C値をその数字に上書きする。
+　「絶対にクリティカルしない」状態は、@13など xを13以上に指定すること。
+・xの先頭が「+」か「-」なら、計算したC値にその値を加算。例）@-1、@+2
+　この方法でC値をプラスする場合、上限は12となる。
+＞#y、#Ay：ファンブル値修正。（加減式でも入力可能）
+・yに直接数字を書くと、ファンブル値をその数字に設定。
+・yの数字の先頭が「+」か「-」なら、ファンブル値=2にその数字を加算。例）#+2
+・※#Ayとすると、ファンブルしても達成値を通常通り算出。　例）#A+1
+＞$z：ダイスの出目をzに固定して判定する。複数指定可。
+　　　《運命歪曲》など「ダイスの１個を振り直す」効果等に使用する。
+　例）2BB$1 →ダイスを2個振る判定で、ダイス1個の出目を1で固定
+　例）2BB$16→ダイスを2個振る判定で、ダイスの出目を1と6で固定
+＞&v：出目がv未満のダイスがあれば、出目がvだったものとして達成値を計算する。
+　例）2BB&3 →出目3未満（→出目1、2）を出目3だったものとして計算。
 
-※%wの機能は、イニシアティブ表に「人間性」の項目を用意しておき、
-　「nBB+m%{人間性}」のチャットパレットを作成して使う事を想定しています。
-
-・邂逅表　EMO
 ・D66ダイスあり
+・邂逅表：EMO
+・暴露表：EXPO_A　　・魔獣化暴露表：EXPO_B
+・アイドル専用暴露表：EXPO_I
+・アイドル専用魔獣化暴露表：EXPO_J
+・正体判明チャートA～C：FACE_A、FACE_B、FACE_C
 INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
     string = string.gsub(/(\d+)BB6/i) {"#{$1}R6"}
     string = string.gsub(/(\d+)BB/i)  {"#{$1}R6"}
+    string = string.gsub(/(\d+)BF6/i) {"#{$1}Q6"}
+    string = string.gsub(/(\d+)BF/i)  {"#{$1}Q6"}
     string = string.gsub(/\%([\-\d]+)/i)  {"[H:#{$1}]"}
-    string = string.gsub(/\@(\d+)/i)  {"[C#{$1}]"}
-    string = string.gsub(/\#(\d+)/i)  {"[F#{$1}]"}
-    string = string.gsub(/\$(\d+)/i)  {"[S#{$1}]"}
+    string = string.gsub(/\@([\+\-\d]+)/i)  {"[C#{$1}]"}
+    string = string.gsub(/\#([A]?[\+\-\d]+)/i)  {"[F#{$1}]"}
+    string = string.gsub(/\$([1-6]+)/i)  {"[S#{$1}]"}
+    string = string.gsub(/\&(\d)/i)   {"[U#{$1}]"}
     return string
   end
 
@@ -77,11 +92,11 @@ INFO_MESSAGE_TEXT
     output = "1"
 
     debug("bbt string", string)
-    unless(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(\[H:([\-\d]+)\])?(\[C(\d+)\])?(\[F(\d+)\])?(\[S(\d+)\])?(([>=]+)(\d+))?)(\s|$)/i =~ string)
+    unless(/(^|\s)S?((\d+)R6([\+\-\d]*)(\[H:([\-\d]+)\])?(\[C([\+\-\d]+)\])?(\[F(A)?([\+\-\d]+)\])?(\[S([1-6]+)\])?(\[U([1-6])\])?(([>=]+)(\d+))?)(\s|$)/i =~ string)
       debug("not mutch")
       return output
     end
-
+    
     #TKfix メソッドをまたぐと$xの中身がnilになっている
     reg1 = $1
     reg2 = $2
@@ -98,126 +113,185 @@ INFO_MESSAGE_TEXT
     reg13 = $13
     reg14 = $14
     reg15 = $15
-
-    string = reg2#$2
-    dice_c = reg3.to_i#$3.to_i
-    bonus = 0
-    signOfInequality = ""
-    diff = 0
-
-    bonusText = reg4#$4
-    bonus = parren_killer("(0" + bonusText + ")").to_i unless( bonusText.nil? )
-
-    cri = 12					# クリティカル値の基本値は12。C値以上の出目が出た場合、達成値+20（クリティカル）。
-    fum =  2					# ファンブル値の基本値は2。F値以下の出目が出た場合、達成値が0で固定される（ファンブル）。
-    humanity = 99				# 指定されていない時のために人間性を仮代入。データ上、60を超える事はない
-
-    # 指定された人間性からクリティカル値を自動算出する
-    #if($5)
+    reg16 = $16
+    reg17 = $17
+    reg18 = $18
+    
+    # 各種値の初期設定
+    humanity = 99					# 人間性（ゲームプレイ中の上限は60）
+    critical = 12					# クリティカル値（基本値=12）
+    fumble   =  2					# ファンブル値（基本値=2）
+    dicesubs = []					# 出目を固定して振る場合の出目予約
+    nofumble = false				# ファンブルしても達成値が0にならないモードかどうかの判別
+    dicepull = false				# 「出目●未満のダイス」を出目●として扱うモードが有効かどうかの判別
+    pul_flg  = false				# 出目引き上げ機能が適用されたかどうかの確認
+    
+    # 各種文字列の取得
+    string    = reg2				# ダイスボットで読み込んだ判定文全体
+    dice_c    = reg3.to_i			# 振るダイス数の取得
+    bonus     = 0					# 修正値の取得
+    signOfInequality = ""			# 判定結果のための不等号
+    diff      = 0					# 難易度
+    bonusText = reg4				# 修正値の取得
+    bonus     = parren_killer("(0" + bonusText + ")").to_i unless( bonusText.nil? )
+    
     if(reg5)
-      humanity = reg6.to_i if(reg6) #$6.to_i if($6)
-      if humanity <= 0			# 変異第三段階（人間性 0以下）：クリティカル値 9
-        cri =  9
-      elsif humanity <= 20		# 変異第二段階（人間性20以下）：クリティカル値10
-        cri = 10
-      elsif humanity <= 40		# 変異第一段階（人間性40以下）：クリティカル値11
-        cri = 11
-      else						# 変異なし：クリティカル値12
-        cri = 12
+      humanity = reg6.to_i if(reg6)	# 人間性からクリティカル値を取得
+      debug("▼現在人間性 取得 #{humanity}")
+      if humanity <= 0
+        critical = 9
+          debug("▼現在人間性からC値取得 #{critical}")
+      elsif humanity <= 20
+        critical = 10
+          debug("▼現在人間性からC値取得 #{critical}")
+      elsif humanity <= 40
+        critical = 11
+          debug("▼現在人間性からC値取得 #{critical}")
       end
     end
-
-    # クリティカル値の指定		# 人間性からのC値自動計算より優先される
-    #if($7)
+    
     if(reg7)
-      cri = reg8.to_i if(reg8)#$8.to_i if($8)
+      str_critical = reg8 if(reg8)	# クリティカル値の文字列を取得
+        debug("▼C値文字列 取得 #{str_critical}")
     end
-
-    # ファンブル値の指定		# F値は、アーツやアイテムの効果によってのみ変化するため、手動で入力させる
-    #if($9)
+    
     if(reg9)
-      fum = reg10.to_i if(reg10)#$10.to_i if($10)
+      nofumble = true if(reg10)		# ファンブル耐性指定
+        debug("▼F値耐性 #{nofumble}")
+      str_fumble = reg11 if(reg11)	# ファンブル値の文字列を取得
+        debug("▼F値文字列 取得 #{str_fumble}")
     end
-
-    # 出目差し換えの指定		# 《運命歪曲》等の「ダイスを１個選んで振り直す」アーツや、
-    rer = 0						# 《勝利の旗印》等の「ダイスを１個選んで出目を書き換える」アーツの達成値再計算に使用する機能
-    #if($11)
-    if(reg11)
-      rer = reg12.to_i if(reg12)#$12.to_i if($12)
+    
+    if(reg12)
+      str_dicesubs = reg13 if(reg13)	# ダイス差し替え用の文字列を取得
+        debug("▼出目予約用の文字列 取得 #{str_dicesubs}")
     end
-
-    signOfInequality = reg14 if(reg14)#$14 if($14)
-    diff = reg15 if(reg15)#$15.to_i if($15)
+    
+    if(reg14)
+      dicepull = reg15.to_i if(reg15)	# ダイス引き上げ用の文字列を取得
+        debug("▼出目引き上げモード 取得 #{dicepull}")
+    end
+    
+    signOfInequality = reg17 if(reg17);
+    diff = reg18.to_i if(reg18);
+    
+    # 数値・数式からクリティカル値を決定
+    if(str_critical)
+      #n_cri = eval(str_critical)
+      n_cri = 0 # TKfix evalを使用しない
+      str_critical.scan(/[\+\-]?\d+/).each do |num|
+        n_cri += num.to_i
+      end
+        debug("▼C値指定符 算出 #{n_cri}")
+      critical = str_critical.match(/^[\+\-][\+\-\d]+/) ? [critical + n_cri, 12].min : n_cri
+        debug("▼クリティカル値 #{critical}")
+    end
+    
+    # 数値・数式からファンブル値を決定
+    if(str_fumble)
+      #n_fum = eval(str_fumble)
+      n_fum = 0 # TKfix evalを使用しない
+      str_fumble.scan(/[\+\-]?\d+/).each do |num|
+        n_fum += num.to_i
+      end
+        debug("▼F値指定符 算出 #{n_fum}")
+      fumble = str_fumble.match(/^[\+\-][\+\-\d]+/) ? fumble + n_fum : n_fum
+        debug("▼ファンブル値 #{fumble}")
+    end
+    
+    # 出目予約の有無を確認
+    if(str_dicesubs)
+      for i in str_dicesubs.split(//) do dicesubs.push(i.to_i) if(dicesubs.size < dice_c) end
+      debug("▼ダイス出目予約 #{dicesubs}")
+    end
+    
     dice_now = 0
     dice_str = ""
+    n_max = 0
     total_n = 0
-
+    
     cri_flg   = false
     cri_bonus = 0
     fum_flg   = false
     rer_num  = []
-
-    # 出目差し換えが入力されている場合の処理
-    # 1～6以外の数字や、差し替えるダイス数が振るダイス数をオーバーしている場合は無視する
-    if(rer > 0)
-      rer_ary = rer.to_s.split(//).collect{|i|i.to_i}
-      for i in rer_ary do rer_num.push(i) if([1,2,3,4,5,6].include?(i) && rer_num.size < dice_c) end
-    end
-
-    dice_tc = dice_c - rer_num.size
-
+    
+    dice_tc = dice_c - dicesubs.size
+    
     if(dice_tc > 0)
-      _, dice_str, = roll(dice_tc, 6, (sortType & 1))			# ダイス数修正、並べ替えせずに出力
-      dice_num = (dice_str.split(/,/) + rer_num).collect{|n|n.to_i} # 差し換え指定のダイスを挿入
-    elsif(rer_num.size == 0)
+      _, dice_str, = roll(dice_tc, 6, (sortType & 1))					# ダイス数修正、並べ替えせずに出力
+      dice_num = (dice_str.split(/,/) + dicesubs).collect{|n|n.to_i} 	# 差し換え指定のダイスを挿入
+    elsif(dicesubs.size == 0)
       return "ERROR:振るダイスの数が0個です"
     else
-      dice_num = rer_num											# 差し換えのみの場合は差し換え指定のみ（ダイスを振らない）
+      dice_num = dicesubs												# 差し換えのみの場合は差し換え指定のみ（ダイスを振らない）
     end
-
-    dice_num.sort!													# 並べ替え
-    dice_str = dice_num.join(",")									# dice_strの取得
-    dice_now = dice_num[dice_c - 2] + dice_num[dice_c - 1]			# 判定の出目を確定
-
-    if(dice_now >= cri)												# クリティカル成立の判定
+    
+    dice_num.sort!														# 並べ替え
+    
+    if(dicepull)														# 出目引き上げ機能
+      debug("▼出目引き上げ #{dicepull}")
+      dice_num_old = dice_num.dup
+      for i in 0...dice_num.size do dice_num[i] = [dice_num[i], dicepull].max end
+      pul_flg = dice_num == dice_num_old ? false : true
+      debug("▼出目引き上げの有無について #{pul_flg}")
+      
+      dice_num.sort!													# 置換後、再度並べ替え
+      dold_str = dice_num_old.join(",")									# 置換前のダイス一覧を作成
+    end
+    
+    dice_str = dice_num.join(",")										# dice_strの取得
+    if dice_c == 1
+      dice_now = dice_num[dice_c - 1]									# ダイス数が1の場合、通常の処理だと配列の引数が「0」と「-1」となって二重に計算されるので処理を変更
+    else
+      dice_now = dice_num[dice_c - 2] + dice_num[dice_c - 1]			# 判定の出目を確定
+    end
+    
+    if(dice_now >= critical)											# クリティカル成立の判定
       cri_flg = true
       cri_bonus = 20
     end
-
-    total_n = [dice_now + bonus + cri_bonus, 0].max				# 達成値の最小値は0
-
-    if(fum >= dice_now)												# ファンブル成立の判定
+    
+    total_n = [dice_now + bonus + cri_bonus, 0].max						# 達成値の最小値は0
+    
+    if(fumble >= dice_now)												# ファンブル成立の判定
       fum_flg = true
-      total_n = 0
+      total_n = 0 unless nofumble
     end
-
+    
     dice_str = "[#{dice_str}]"
-
-    if(fum_flg == true)												# 結果出力文の作成
-      output = "#{dice_now}#{dice_str}【ファンブル】"
+    
+    # 表示文章の作成
+    output = ""
+    
+    if(pul_flg)
+      output += "[#{dold_str}] ＞ "
+    end
+    
+    output += "#{dice_now}#{dice_str}"
+    
+    if(fum_flg == true && nofumble == false)
+      output += "【ファンブル】"
     else
-      output = "#{dice_now}#{dice_str}"
+      output += "【ファンブル】" if(fum_flg)
       if(bonus > 0)
         output += "+#{bonus}"
       elsif(bonus < 0)
         output += "#{bonus}"
       end
-      if(cri_flg == true)
-        output += "+#{cri_bonus}【クリティカル】"
-      end
+      output += "+#{cri_bonus}【クリティカル】" if(cri_flg)
     end
-
+    
     showstring = "#{dice_c}R6"										# 結果出力文におけるダイスロール式の作成
     if(bonus > 0)													# （結果出力の時に必ずC値・F値を表示するようにする）
       showstring += "+#{bonus}"
     elsif(bonus < 0)
       showstring += "#{bonus}"
     end
-    showstring += "[C#{cri},F#{fum}]"
+    showstring += "[C#{critical},F#{fumble}]"
     if(signOfInequality != "")
       showstring += "#{signOfInequality}#{diff}"
     end
-
+    
     if(sendMode > 0)												# 出力文の完成
       if(/[^\d\[\]]+/ =~ output)
         output = "#{@nick_e}: (#{showstring}) ＞ #{output} ＞ #{total_n}"
@@ -227,35 +301,69 @@ INFO_MESSAGE_TEXT
     else
       output = "#{@nick_e}: (#{showstring}) ＞ #{total_n}"
     end
-
+    
     if(signOfInequality != "")  # 成功度判定処理
       output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
     end
-
+    
     return output
   end
-
+  
   ####################           ビーストバインド トリニティ          ########################
   def rollDiceCommand(command)
     output = '1'
     type = ""
     total_n = 0
-
+    
     case command
-
+    
     # 邂逅表(d66)
-    when /EMO/i
+    when /^EMO/i
       type = '邂逅表'
       output, total_n = bbt_emotion_table
+    
+    # 暴露表
+    when /^EXPO_([ABIJ])/
+      case $1
+        when /A/
+          type = '暴露表'
+          tabletype = 1
+        when /B/
+          type = '魔獣化暴露表'
+          tabletype = 2
+        when /I/
+          type = 'アイドル専用暴露表'
+          tabletype = 3
+        when /J/
+          type = 'アイドル専用魔獣化暴露表'
+          tabletype = 4
+      end
+      output, total_n = bbt_exposure_table(tabletype)
+      
+    # 正体判明チャート
+    when /^FACE_([ABC])/
+      case $1
+        when /A/
+          type = '正体判明チャートA'
+          tabletype = 1
+        when /B/
+          type = '正体判明チャートB'
+          tabletype = 2
+        when /C/
+          type = '正体判明チャートC'
+          tabletype = 3
+      end
+      output, total_n = bbt_face_table(tabletype)
+      
     end
-
+    
     if(output != '1')
       output = "#{type}(#{total_n}) ＞ #{output}"
     end
-
+    
     return output
   end
-
+  
   #**邂逅表(d66)
   def bbt_emotion_table
     table = [
@@ -266,7 +374,91 @@ INFO_MESSAGE_TEXT
       '友情',      '友情',      '忠誠',      '忠誠',      '恐怖',      '恐怖',
       '執着',      '執着',      '軽蔑',      '軽蔑',      '憎悪',      '憎悪',
     ]
-
+    
     return get_table_by_d66(table)
+  end
+  
+  #**暴露表（暴露表、魔獣化暴露表、アイドル専用暴露表、アイドル専用魔獣化暴露表）
+  def bbt_exposure_table(type)
+    case type
+      # 暴露表
+      when 1
+        table = [
+          '噂になるがすぐ忘れられる',
+          '都市伝説として処理される',
+          'ワイドショーをにぎわす',
+          'シナリオ中［迫害状態］になる',
+          '絆の対象ひとりに正体が知られる',
+          '魔獣化暴露表へ'
+        ]
+      # 魔獣化暴露表
+      when 2
+        table = [
+          'トンデモ業界の伝説になる',
+          'シナリオ中［迫害状態］になる',
+          'シナリオ中［迫害状態］になる',
+          '絆の対象ひとりに正体が知られる',
+          '絆の対象ひとりに正体が知られる',
+          '自衛隊退魔部隊×2D6体の襲撃'
+        ]
+      # アイドル専用暴露表
+      when 3
+        table = [
+          '愉快な伝説として人気になる',
+          'ワイドショーをにぎわす',
+          '炎上。シナリオ中［迫害状態］',
+          '所属事務所に2D6時間説教される',
+          '絆の対象ひとりに正体が知られる',
+          'アイドル専用魔獣化暴露表へ'
+        ]
+      # アイドル専用魔獣化暴露表
+      when 4
+        table = [
+          'シナリオ中［迫害状態］になる',
+          'シナリオ中［迫害状態］になる',
+          '絆の対象ひとりに正体が知られる',
+          '事務所から契約を解除される',
+          '絆の対象ひとりに正体が知られる',
+          '1D6本のレギュラー番組を失う'
+        ]
+    end
+    return get_table_by_1d6(table)
+  end
+  
+  #**正体判明チャート（正体判明チャートA～C）
+  def bbt_face_table(type)
+    case type
+      # 正体判明チャートA
+      when 1
+        table = [
+          'あなたを受け入れてくれる',
+          'あなたを受け入れてくれる',
+          '絆が（拒絶）に書き換わる',
+          '絆がエゴに書き換わる',
+          '気絶しその事実を忘れる',
+          '精神崩壊する'
+        ]
+      # 正体判明チャートB
+      when 2
+        table = [
+          'あなたを受け入れてくれる',
+          '狂乱し攻撃してくる',
+          '退場。その場から逃亡。暴露表へ',
+          '絆がエゴに書き換わる',
+          '精神崩壊する',
+          '精神崩壊する'
+        ]
+      # 正体判明チャートC
+      when 3
+        table = [
+          'あなたを受け入れてくれる',
+          '退場。その場から逃亡。暴露表へ',
+          '退場。その場から逃亡。暴露表へ',
+          '絆がエゴに書き換わる',
+          '精神崩壊する',
+          '精神崩壊する'
+        ]
+    end
+    return get_table_by_1d6(table)
   end
 end

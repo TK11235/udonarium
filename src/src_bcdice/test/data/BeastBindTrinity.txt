@@ -2,7 +2,7 @@ input:
 2BB+5
 output:
 BeastBindTrinity : (2R6+5[C12,F2]) ＞ 11[5,6]+5 ＞ 16
-rand:5/6,6/6
+rand:6/6,5/6
 ============================
 input:
 2BB+5>=16
@@ -135,3 +135,124 @@ EMO
 output:
 BeastBindTrinity : 邂逅表(11) ＞ 家族
 rand:1/6,1/6
+============================
+input:
+2BB+5@-1
+output:
+BeastBindTrinity : (2R6+5[C11,F2]) ＞ 10[4,6]+5 ＞ 15
+rand:4/6,6/6
+============================
+input:
+2BB+5%20@-1
+output:
+BeastBindTrinity : (2R6+5[C9,F2]) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35
+rand:4/6,6/6
+============================
+input:
+2BB+5%20@-1>=30
+output:
+BeastBindTrinity : (2R6+5[C9,F2]>=30) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35 ＞ 成功
+rand:4/6,6/6
+============================
+input:
+2BB+5@-1-2
+output:
+BeastBindTrinity : (2R6+5[C9,F2]) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35
+rand:4/6,6/6
+============================
+input:
+2BB+5%-5@+2#+2
+output:
+BeastBindTrinity : (2R6+5[C11,F4]) ＞ 10[4,6]+5 ＞ 15
+rand:4/6,6/6
+============================
+input:
+2BB+5#A6
+output:
+BeastBindTrinity : (2R6+5[C12,F6]) ＞ 6[1,5]【ファンブル】+5 ＞ 11
+rand:5/6,1/6
+============================
+input:
+2BB+5#A+6
+output:
+BeastBindTrinity : (2R6+5[C12,F8]) ＞ 6[1,5]【ファンブル】+5 ＞ 11
+rand:5/6,1/6
+============================
+input:
+2BB+5&3
+output:
+BeastBindTrinity : (2R6+5[C12,F2]) ＞ [1,1] ＞ 6[3,3]+5 ＞ 11
+rand:1/6,1/6
+============================
+input:
+1BB
+output:
+BeastBindTrinity : (1R6[C12,F2]) ＞ 3
+rand:3/6
+============================
+input:
+1BB+3
+output:
+BeastBindTrinity : (1R6+3[C12,F2]) ＞ 3[3]+3 ＞ 6
+rand:3/6
+============================
+input:
+1BB&3
+output:
+BeastBindTrinity : (1R6[C12,F2]) ＞ [1] ＞ 3[3] ＞ 3
+rand:1/6
+============================
+input:
+2BB+5%20@+3
+output:
+BeastBindTrinity : (2R6+5[C12,F2]) ＞ 11[5,6]+5 ＞ 16
+rand:5/6,6/6
+============================
+input:
+2BB+5%20@13
+output:
+BeastBindTrinity : (2R6+5[C13,F2]) ＞ 12[6,6]+5 ＞ 17
+rand:6/6,6/6
+============================
+input:
+EXPO_A
+output:
+BeastBindTrinity : 暴露表(1) ＞ 噂になるがすぐ忘れられる
+rand:1/6
+============================
+input:
+EXPO_B
+output:
+BeastBindTrinity : 魔獣化暴露表(2) ＞ シナリオ中［迫害状態］になる
+rand:2/6
+============================
+input:
+EXPO_I
+output:
+BeastBindTrinity : アイドル専用暴露表(4) ＞ 所属事務所に2D6時間説教される
+rand:4/6
+============================
+input:
+EXPO_J
+output:
+BeastBindTrinity : アイドル専用魔獣化暴露表(6) ＞ 1D6本のレギュラー番組を失う
+rand:6/6
+============================
+input:
+FACE_A
+output:
+BeastBindTrinity : 正体判明チャートA(1) ＞ あなたを受け入れてくれる
+rand:1/6
+============================
+input:
+FACE_B
+output:
+BeastBindTrinity : 正体判明チャートB(2) ＞ 狂乱し攻撃してくる
+rand:2/6
+============================
+input:
+FACE_C
+output:
+BeastBindTrinity : 正体判明チャートC(4) ＞ 絆がエゴに書き換わる
+rand:4/6
+============================
