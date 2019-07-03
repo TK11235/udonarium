@@ -208,3 +208,87 @@ output:
 DarkDaysDrive : 関係属性表(6) ＞ 憧れ
 rand:6/6
 ============================
+input:
+IA
+output:
+DarkDaysDrive : イケメンアクション決定表(11) ＞ 遠距離
+rand:1/6,1/6
+============================
+input:
+IA
+output:
+DarkDaysDrive : イケメンアクション決定表(25) ＞ 悪人
+rand:2/6,5/6
+============================
+input:
+IA
+output:
+DarkDaysDrive : イケメンアクション決定表(56) ＞ 超自然
+rand:5/6,6/6
+============================
+input:
+IA
+output:
+DarkDaysDrive : イケメンアクション決定表(66) ＞ 振り直しor自由選択
+rand:6/6,6/6
+============================
+input:
+IAA
+output:
+DarkDaysDrive : イケメンアクション（遠距離）表(1) ＞ 目を合わせて微笑む（かっこよさ：4）
+rand:1/6
+============================
+input:
+IAB
+output:
+DarkDaysDrive : イケメンアクション（移動）表(1) ＞ 車道側を歩く（かっこよさ：4）
+rand:1/6
+============================
+input:
+IAC
+output:
+DarkDaysDrive : イケメンアクション（近距離）表(1) ＞ 黙って見つめる（かっこよさ：3）
+rand:1/6
+============================
+input:
+IAD
+output:
+DarkDaysDrive : イケメンアクション（善人）表(6) ＞ 悪堕ち（かっこよさ：6）
+rand:6/6
+============================
+input:
+IAE
+output:
+DarkDaysDrive : イケメンアクション（悪人）表(5) ＞ 罠にかける（かっこよさ：6）
+rand:5/6
+============================
+input:
+IAF
+output:
+DarkDaysDrive : イケメンアクション（幼い）表(2) ＞ 疲れる（かっこよさ：3）
+rand:2/6
+============================
+input:
+IAG
+output:
+DarkDaysDrive : イケメンアクション（バカ）表(3) ＞ 転ぶ（かっこよさ：4）
+rand:3/6
+============================
+input:
+IAH
+output:
+DarkDaysDrive : イケメンアクション（渋い）表(4) ＞ 残心（かっこよさ：5）
+rand:4/6
+============================
+input:
+IAI
+output:
+DarkDaysDrive : イケメンアクション（賢い）表(6) ＞ 大丈夫だと言う（かっこよさ：7）
+rand:6/6
+============================
+input:
+IAJ
+output:
+DarkDaysDrive : イケメンアクション（超自然）表(5) ＞ 闇を生み出す（かっこよさ：6）
+rand:5/6
+============================
