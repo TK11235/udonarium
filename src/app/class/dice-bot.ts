@@ -86,6 +86,7 @@ export class DiceBot extends GameObject {
     { script: 'ShinkuuGakuen', game: '真空学園' },
     { script: 'ShinMegamiTenseiKakuseihen', game: '真・女神転生TRPG　覚醒編' },
     { script: 'SRS', game: 'Standard RPG System' },
+    { script: 'StratoShout', game: 'ストラトシャウト' },
     { script: 'TherapieSein', game: '青春疾患セラフィザイン' },
     { script: 'EtrianOdysseySRS', game: '世界樹の迷宮SRS' },
     { script: 'ZettaiReido', game: '絶対隷奴' },
