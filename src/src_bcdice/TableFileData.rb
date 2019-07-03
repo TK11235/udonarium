@@ -28,6 +28,7 @@ require 'configBcDice.rb'
 # 
 # というデータフォーマットとなる。
 
+
 class TableFileData
   
   @@virtualTableData = Hash.new

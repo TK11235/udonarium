@@ -143,9 +143,7 @@ class KariDice < DiceBot<br/>
 <br/>
 これを実装するには、<br/>
 <pre><code>
-  def prefixs
-    []
-  end
+  setPrefixes([])
 </code></pre>
 と<br/>
 <pre><code>
@@ -271,9 +269,7 @@ Rands: 1/6, 5/6, 3/6
 <br/>
 まずはコマンドの定義を<br/>
 <pre><code>
-  def prefixs
-    ['KD\d+>=\d+']
-  end
+  setPrefixes(['KD\d+>=\d+'])
 </code></pre>
 ここに書いて、どどんとふにコマンドを教えてやる必要があります。忘れがちなので注意！<br/>
 ポイントは、文字列を””ではなく’’で囲むことですね。<br/>
@@ -281,7 +277,7 @@ Rands: 1/6, 5/6, 3/6
 正規表現相当の文字をここで文字列として定義してRubyとActionScript両方で使っているので、扱いにクセがあります。<br/>
 分かりにくい場合は、今後の拡張性も考えて<br/>
 </code></pre>
-    ['KD.*']<br/>
+  setPrefixes(['KD.*'])<br/>
 </code></pre>
 みたいに手を抜いた記述にしてしまうのも手です。<br/>
 とりあえず動かしてみたいですしね。<br/>

@@ -459,7 +459,7 @@ class DiceBot
     methodList = public_methods().select do |method|
       /^get.+DiceCommandResult$/ === method.to_s
     end
-
+    
     methodList.each do |method|
       result = send(method, command)
       return result unless result.nil?
@@ -468,7 +468,7 @@ class DiceBot
     return nil
   end
   
-
+  
   def get_table_by_nDx_extratable(table, count, diceType)
     number, diceText = roll(count, diceType)
     text = getTableValue(table[number - count])
