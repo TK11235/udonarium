@@ -109,6 +109,7 @@ export class DiceBot extends GameObject {
     { script: 'Torg1_5', game: 'トーグ1.5版' },
     { script: 'TokumeiTenkousei', game: '特命転攻生' },
     { script: 'Dracurouge', game: 'ドラクルージュ' },
+    { script: 'TrinitySeven', game: 'トリニティセブンRPG' },
     { script: 'TwilightGunsmoke', game: 'トワイライト・ガンスモーク' },
     { script: 'TunnelsAndTrolls', game: 'トンネルズ＆トロールズ' },
     { script: 'NightWizard', game: 'ナイトウィザード2版' },
