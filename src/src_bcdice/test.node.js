@@ -12,9 +12,14 @@ require('./cgiDiceBot.js');
 
 const errorLog = [];
 
+Opal.gvars.isDebug = false;
+const cgiDiceBot = Opal.CgiDiceBot.$new();
+
 files.forEach(file => {
   const gameType = file.replace(/\.txt$/, '');
   if (!diceBots.includes(gameType + '.js')) return;
+
+  process.stdout.write(`\n${gameType} `);
 
   require(DiceBotDir + gameType);
   fs.readFileSync(path.join(DataDir, file)).toString()
@@ -22,7 +27,7 @@ files.forEach(file => {
     .split(/=+\n/g)
     .filter(a => a)
     .forEach((test, index) => {
-      const testData = test.match(/input:\n((.|\n)*)?output:\n((.|\n)*)rand:(.*)\n/);
+      const testData = test.match(/input:((.|\n)*)?output:((.|\n)*)rand:((.|\n)*)/);
 
       const input = testData[1].trim();
       const output = testData[3].trim();
@@ -32,8 +37,6 @@ files.forEach(file => {
       let resultMsg = '';
 
       try {
-        const cgiDiceBot = Opal.CgiDiceBot.$new();
-
         cgiDiceBot.$setRandomValues(rands.split(/,/g).map(a => a.split(/\//g)));
         cgiDiceBot.$setTest(true);
 
