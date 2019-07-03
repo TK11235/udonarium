@@ -14,15 +14,15 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$==', '$<=', '$>=', '$+', '$getGainMagicElementText', '$===', '$magicalogia_background_table', '$magicalogia_defaultanchor_table', '$magicalogia_fortune_attribution_table', '$magicalogia_wish_table', '$magicalogia_scene_table', '$magicalogia_fumble_table', '$magicalogia_wrong_table', '$magicalogia_fortunechange_table', '$magicalogia_accident_table', '$magicalogia_random_skill_table', '$magicalogia_time_passage_table', '$magicalogia_typical_fortune_change_table', '$magicalogia_physical_fortune_change_table', '$magicalogia_mental_fortune_change_table', '$magicalogia_insanity_fortune_change_table', '$magicalogia_social_fortune_change_table', '$magicalogia_paranormal_fortune_change_table', '$magicalogia_wonderful_fortune_change_table', '$magicalogia_comical_fortune_change_table', '$magicalogia_blank_secret_table', '$magicalogia_prise_table', '$magicalogia_inveterate_enemy_table', '$magicalogia_conspiracy_table', '$magicalogia_fate_table', '$magicalogia_cueball_table', '$magicalogia_force_field_table', '$magicalogia_alliance_table', '$magicalogia_extreme_environment_scene_table', '$magicalogia_innner_world_scene_table', '$magicalogia_magic_city_scene_table', '$magicalogia_world_after_dead_scene_table', '$magicalogia_labyrinth_world_scene_table', '$lambda', '$magicalogia_random_skill_table_text_only', '$get_table_by_2d6', '$get_table_by_1d6', '$getDiceList', '$empty?', '$[]', '$gainMagicElement', '$-', '$roll', '$get_magic_element_type']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$==', '$<=', '$>=', '$+', '$getGainMagicElementText', '$===', '$magicalogia_background_table', '$magicalogia_defaultanchor_table', '$magicalogia_fortune_attribution_table', '$magicalogia_wish_table', '$magicalogia_scene_table', '$magicalogia_fumble_table', '$magicalogia_wrong_table', '$magicalogia_fortunechange_table', '$magicalogia_accident_table', '$magicalogia_random_skill_table', '$magicalogia_time_passage_table', '$magicalogia_typical_fortune_change_table', '$magicalogia_physical_fortune_change_table', '$magicalogia_mental_fortune_change_table', '$magicalogia_insanity_fortune_change_table', '$magicalogia_social_fortune_change_table', '$magicalogia_paranormal_fortune_change_table', '$magicalogia_wonderful_fortune_change_table', '$magicalogia_comical_fortune_change_table', '$magicalogia_blank_secret_table', '$magicalogia_prise_table', '$magicalogia_inveterate_enemy_table', '$magicalogia_conspiracy_table', '$magicalogia_fate_table', '$magicalogia_cueball_table', '$magicalogia_force_field_table', '$magicalogia_alliance_table', '$magicalogia_extreme_environment_scene_table', '$magicalogia_innner_world_scene_table', '$magicalogia_magic_city_scene_table', '$magicalogia_world_after_dead_scene_table', '$magicalogia_labyrinth_world_scene_table', '$magicalogia_new_scene_table', '$magicalogia_random_skill_star_table', '$magicalogia_random_skill_beast_table', '$magicalogia_random_skill_force_table', '$magicalogia_random_skill_poem_table', '$magicalogia_random_skill_dream_table', '$magicalogia_random_skill_night_table', '$magicalogia_magi_fortune_change_table', '$magicalogia_magic_bookshelf_scene_table', '$magicalogia_magic_academy_scene_table', '$magicalogia_tower_credo_scene_table', '$magicalogia_parallel_world_scene_table', '$magicalogia_post_apocalypse_scene_table', '$magicalogia_god_bar_scene_table', '$magicalogia_starlight_scene_table', '$magicalogia_world_low_add_table', '$magicalogia_wondaring_monster_table', '$magicalogia_fallen_flower_table', '$magicalogia_old_library_scene_table', '$magicalogia_new_time_passage_table', '$magicalogia_fallen_after_table', '$lambda', '$magicalogia_random_skill_table_text_only', '$get_table_by_2d6', '$get_table_by_1d6', '$getDiceList', '$empty?', '$[]', '$gainMagicElement', '$-', '$roll', '$get_magic_element_type', '$magicalogia_random_skill_table_text_only_force', '$magicalogia_random_skill_table_text_only_beast', '$magicalogia_random_skill_table_text_only_dream', '$magicalogia_random_skill_table_text_only_star', '$magicalogia_random_skill_table_text_only_poem', '$magicalogia_random_skill_table_text_only_night', '$magicalogia_fallen_after_table_low', '$magicalogia_fallen_after_table_high']);
   return (function($base, $super, $parent_nesting) {
     function $MagicaLogia(){};
     var self = $MagicaLogia = $klass($base, $super, 'MagicaLogia', $MagicaLogia);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_MagicaLogia_initialize_1, TMP_MagicaLogia_gameName_2, TMP_MagicaLogia_gameType_3, TMP_MagicaLogia_getHelpMessage_4, TMP_MagicaLogia_check_2D6_5, TMP_MagicaLogia_rollDiceCommand_6, TMP_MagicaLogia_magicalogia_scene_table_8, TMP_MagicaLogia_magicalogia_fumble_table_9, TMP_MagicaLogia_magicalogia_wrong_table_11, TMP_MagicaLogia_magicalogia_fortunechange_table_12, TMP_MagicaLogia_magicalogia_accident_table_14, TMP_MagicaLogia_getGainMagicElementText_15, TMP_MagicaLogia_gainMagicElement_16, TMP_MagicaLogia_magicalogia_background_table_17, TMP_MagicaLogia_magicalogia_defaultanchor_table_18, TMP_MagicaLogia_magicalogia_fortune_attribution_table_19, TMP_MagicaLogia_magicalogia_wish_table_20, TMP_MagicaLogia_magicalogia_random_skill_table_21, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_22, TMP_MagicaLogia_get_magic_element_type_23, TMP_MagicaLogia_magicalogia_time_passage_table_24, TMP_MagicaLogia_magicalogia_typical_fortune_change_table_25, TMP_MagicaLogia_magicalogia_physical_fortune_change_table_26, TMP_MagicaLogia_magicalogia_mental_fortune_change_table_27, TMP_MagicaLogia_magicalogia_insanity_fortune_change_table_28, TMP_MagicaLogia_magicalogia_social_fortune_change_table_29, TMP_MagicaLogia_magicalogia_paranormal_fortune_change_table_30, TMP_MagicaLogia_magicalogia_wonderful_fortune_change_table_31, TMP_MagicaLogia_magicalogia_comical_fortune_change_table_32, TMP_MagicaLogia_magicalogia_inveterate_enemy_table_33, TMP_MagicaLogia_magicalogia_conspiracy_table_34, TMP_MagicaLogia_magicalogia_fate_table_35, TMP_MagicaLogia_magicalogia_cueball_table_36, TMP_MagicaLogia_magicalogia_force_field_table_37, TMP_MagicaLogia_magicalogia_alliance_table_38, TMP_MagicaLogia_magicalogia_blank_secret_table_39, TMP_MagicaLogia_magicalogia_prise_table_40, TMP_MagicaLogia_magicalogia_extreme_environment_scene_table_42, TMP_MagicaLogia_magicalogia_innner_world_scene_table_44, TMP_MagicaLogia_magicalogia_magic_city_scene_table_46, TMP_MagicaLogia_magicalogia_world_after_dead_scene_table_48, TMP_MagicaLogia_magicalogia_labyrinth_world_scene_table_50;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_MagicaLogia_initialize_1, TMP_MagicaLogia_gameName_2, TMP_MagicaLogia_gameType_3, TMP_MagicaLogia_getHelpMessage_4, TMP_MagicaLogia_check_2D6_5, TMP_MagicaLogia_rollDiceCommand_6, TMP_MagicaLogia_magicalogia_scene_table_8, TMP_MagicaLogia_magicalogia_fumble_table_9, TMP_MagicaLogia_magicalogia_wrong_table_11, TMP_MagicaLogia_magicalogia_fortunechange_table_12, TMP_MagicaLogia_magicalogia_accident_table_14, TMP_MagicaLogia_getGainMagicElementText_15, TMP_MagicaLogia_gainMagicElement_16, TMP_MagicaLogia_magicalogia_background_table_17, TMP_MagicaLogia_magicalogia_defaultanchor_table_18, TMP_MagicaLogia_magicalogia_fortune_attribution_table_19, TMP_MagicaLogia_magicalogia_wish_table_20, TMP_MagicaLogia_magicalogia_random_skill_table_21, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_22, TMP_MagicaLogia_get_magic_element_type_23, TMP_MagicaLogia_magicalogia_time_passage_table_24, TMP_MagicaLogia_magicalogia_typical_fortune_change_table_25, TMP_MagicaLogia_magicalogia_physical_fortune_change_table_26, TMP_MagicaLogia_magicalogia_mental_fortune_change_table_27, TMP_MagicaLogia_magicalogia_insanity_fortune_change_table_28, TMP_MagicaLogia_magicalogia_social_fortune_change_table_29, TMP_MagicaLogia_magicalogia_paranormal_fortune_change_table_30, TMP_MagicaLogia_magicalogia_wonderful_fortune_change_table_31, TMP_MagicaLogia_magicalogia_comical_fortune_change_table_32, TMP_MagicaLogia_magicalogia_inveterate_enemy_table_33, TMP_MagicaLogia_magicalogia_conspiracy_table_34, TMP_MagicaLogia_magicalogia_fate_table_35, TMP_MagicaLogia_magicalogia_cueball_table_36, TMP_MagicaLogia_magicalogia_force_field_table_37, TMP_MagicaLogia_magicalogia_alliance_table_38, TMP_MagicaLogia_magicalogia_blank_secret_table_39, TMP_MagicaLogia_magicalogia_prise_table_40, TMP_MagicaLogia_magicalogia_extreme_environment_scene_table_42, TMP_MagicaLogia_magicalogia_innner_world_scene_table_44, TMP_MagicaLogia_magicalogia_magic_city_scene_table_46, TMP_MagicaLogia_magicalogia_world_after_dead_scene_table_48, TMP_MagicaLogia_magicalogia_labyrinth_world_scene_table_50, TMP_MagicaLogia_magicalogia_new_scene_table_52, TMP_MagicaLogia_magicalogia_random_skill_star_table_53, TMP_MagicaLogia_magicalogia_random_skill_beast_table_54, TMP_MagicaLogia_magicalogia_random_skill_force_table_55, TMP_MagicaLogia_magicalogia_random_skill_poem_table_56, TMP_MagicaLogia_magicalogia_random_skill_dream_table_57, TMP_MagicaLogia_magicalogia_random_skill_night_table_58, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_star_59, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_beast_60, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_force_61, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_poem_62, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_dream_63, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_night_64, TMP_MagicaLogia_magicalogia_magi_fortune_change_table_65, TMP_MagicaLogia_magicalogia_magic_bookshelf_scene_table_69, TMP_MagicaLogia_magicalogia_magic_academy_scene_table_76, TMP_MagicaLogia_magicalogia_tower_credo_scene_table_80, TMP_MagicaLogia_magicalogia_parallel_world_scene_table_84, TMP_MagicaLogia_magicalogia_post_apocalypse_scene_table_86, TMP_MagicaLogia_magicalogia_god_bar_scene_table_88, TMP_MagicaLogia_magicalogia_starlight_scene_table_90, TMP_MagicaLogia_magicalogia_world_low_add_table_91, TMP_MagicaLogia_magicalogia_wondaring_monster_table_98, TMP_MagicaLogia_magicalogia_fallen_flower_table_99, TMP_MagicaLogia_magicalogia_old_library_scene_table_103, TMP_MagicaLogia_magicalogia_new_time_passage_table_106, TMP_MagicaLogia_magicalogia_fallen_after_table_low_107, TMP_MagicaLogia_magicalogia_fallen_after_table_high_108, TMP_MagicaLogia_magicalogia_fallen_after_table_109;
 
     
-    self.$setPrefixes(["WT", "FCT", "ST", "FT", "AT", "BGT", "DAT", "FAT", "WIT", "RTT", "TPT", "TCT", "PCT", "MCT", "ICT", "SCT", "XCT", "WCT", "CCT", "BST", "PT", "XEST", "IWST", "MCST", "WDST", "LWST", "MIT", "MOT", "MAT", "MUT", "MFT", "MLT"]);
+    self.$setPrefixes(["WT", "FCT", "ST", "FT", "AT", "BGT", "DAT", "FAT", "WIT", "RTT", "TPT", "TCT", "PCT", "MCT", "ICT", "SCT", "XCT", "WCT", "CCT", "BST", "PT", "XEST", "IWST", "MCST", "WDST", "LWST", "MIT", "MOT", "MAT", "MUT", "MFT", "MLT", "STB", "RTS", "RTB", "RTF", "RTP", "RTD", "RTN", "MGCT", "MBST", "MAST", "TCST", "PWST", "PAST", "GBST", "SLST", "WLAT", "WMT", "FFT", "OLST", "TPTB", "FLT"]);
     
     Opal.defn(self, '$initialize', TMP_MagicaLogia_initialize_1 = function $$initialize() {
       var self = this, $iter = TMP_MagicaLogia_initialize_1.$$p, $yield = $iter || nil, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -54,7 +54,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_MagicaLogia_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "変調表　　　　WT\n" + "運命変転表　　FCT\n" + "　典型的災厄 TCT／物理的災厄 PCT／精神的災厄 MCT／狂気的災厄 ICT\n" + "　社会的災厄 SCT／超常的災厄 XCT／不思議系災厄 WCT／コミカル系災厄 CCT\n" + "シーン表　　　ST\n" + "　極限環境 XEST／内面世界 IWST／魔法都市 MCST\n" + "　死後世界 WDST／迷宮世界 LWST\n" + "ファンブル表　FT\n" + "事件表　　　　AT\n" + "経歴表　　　　　BGT/初期アンカー表　DAT/運命属性表　　　FAT\n" + "願い表　　　　　WIT/ランダム特技表　RTT/時の流れ表　　　TPT\n" + "ブランク秘密表　BST/プライズ表　　　PT/宿敵表　　　　　MIT\n" + "謀略表　　　　　MOT/因縁表　　　　　MAT/奇人表　　　　　MUT\n" + "力場表　　　　　MFT/同盟表　　　　　MLT\n" + "・D66ダイスあり\n"
+      return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "経歴表　BGT/初期アンカー表　DAT/運命属性表　FAT\n" + "願い表　WIT/プライズ表　PT\n" + "時の流れ表　TPT/大判時の流れ表　TPTB\n" + "事件表　AT\n" + "ファンブル表　FT／変調表　WT\n" + "運命変転表　FCT\n" + "　典型的災厄 TCT／物理的災厄 PCT／精神的災厄 MCT／狂気的災厄 ICT\n" + "　社会的災厄 SCT／超常的災厄 XCT／不思議系災厄 WCT／コミカル系災厄 CCT\n" + "　魔法使いの災厄 MGCT\n" + "シーン表　ST／大判シーン表　STB\n" + "　極限環境 XEST／内面世界 IWST／魔法都市 MCST\n" + "　死後世界 WDST／迷宮世界 LWST\n" + "　魔法書架 MBST／魔法学院 MAST／クレドの塔 TCST\n" + "　並行世界 PWST／終末　　 PAST／異世界酒場 GBST\n" + "　ほしかげ SLST／旧図書館 OLST\n" + "世界法則追加表 WLAT/さまよう怪物表 WMT\n" + "ランダム特技表　RTT\n" + "　指定特技（星）　RTS/指定特技（獣）　RTB/指定特技（力）　RTF\n" + "　指定特技（歌）　RTP/指定特技（夢）　RTD/指定特技（闇）　RTN\n" + "ブランク秘密表　BST/\n" + "　宿敵表　MIT/謀略表　MOT/因縁表　MAT\n" + "　奇人表　MUT/力場表　MFT/同盟表　MLT\n" + "落花表　FFT\n" + "その後表 FLT\n" + "・D66ダイスあり\n"
     }, TMP_MagicaLogia_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$check_2D6', TMP_MagicaLogia_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
@@ -182,7 +182,70 @@
       $b = self.$magicalogia_world_after_dead_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("LWST"['$===']($case)) {
       type = "迷宮世界シーン表";
-      $b = self.$magicalogia_labyrinth_world_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;};
+      $b = self.$magicalogia_labyrinth_world_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("STB"['$===']($case)) {
+      type = "大判シーン表";
+      $b = self.$magicalogia_new_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("RTS"['$===']($case)) {
+      type = "指定特技（星）";
+      $b = self.$magicalogia_random_skill_star_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("RTB"['$===']($case)) {
+      type = "指定特技（獣）";
+      $b = self.$magicalogia_random_skill_beast_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("RTF"['$===']($case)) {
+      type = "指定特技（力）";
+      $b = self.$magicalogia_random_skill_force_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("RTP"['$===']($case)) {
+      type = "指定特技（歌）";
+      $b = self.$magicalogia_random_skill_poem_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("RTD"['$===']($case)) {
+      type = "指定特技（夢）";
+      $b = self.$magicalogia_random_skill_dream_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("RTN"['$===']($case)) {
+      type = "指定特技（闇）";
+      $b = self.$magicalogia_random_skill_night_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("MGCT"['$===']($case)) {
+      type = "運命変転「魔法使いの災厄」";
+      $b = self.$magicalogia_magi_fortune_change_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("MBST"['$===']($case)) {
+      type = "魔法書架シーン表";
+      $b = self.$magicalogia_magic_bookshelf_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("MAST"['$===']($case)) {
+      type = "魔法学院シーン表";
+      $b = self.$magicalogia_magic_academy_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("TCST"['$===']($case)) {
+      type = "クレドの塔シーン表";
+      $b = self.$magicalogia_tower_credo_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("PWST"['$===']($case)) {
+      type = "並行世界シーン表";
+      $b = self.$magicalogia_parallel_world_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("PAST"['$===']($case)) {
+      type = "終末シーン表";
+      $b = self.$magicalogia_post_apocalypse_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("GBST"['$===']($case)) {
+      type = "異世界酒場シーン表";
+      $b = self.$magicalogia_god_bar_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("SLST"['$===']($case)) {
+      type = "ほしかげシーン表";
+      $b = self.$magicalogia_starlight_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("WLAT"['$===']($case)) {
+      type = "世界法則追加表";
+      $b = self.$magicalogia_world_low_add_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("WMT"['$===']($case)) {
+      type = "さまよう怪物表";
+      $b = self.$magicalogia_wondaring_monster_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("FFT"['$===']($case)) {
+      type = "落花表";
+      $b = self.$magicalogia_fallen_flower_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("OLST"['$===']($case)) {
+      type = "旧図書館シーン表";
+      $b = self.$magicalogia_old_library_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("TPTB"['$===']($case)) {
+      type = "大判時の流れ表";
+      $b = self.$magicalogia_new_time_passage_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("FLT"['$===']($case)) {
+      type = "その後表";
+      $b = self.$magicalogia_fallen_after_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;};
       return "" + (type) + "(" + (total_n) + ") ＞ " + (output);
     }, TMP_MagicaLogia_rollDiceCommand_6.$$arity = 1);
     
@@ -575,7 +638,8 @@
       return self.$get_table_by_2d6(table);
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
     }, TMP_MagicaLogia_magicalogia_world_after_dead_scene_table_48.$$arity = 0);
-    return (Opal.defn(self, '$magicalogia_labyrinth_world_scene_table', TMP_MagicaLogia_magicalogia_labyrinth_world_scene_table_50 = function $$magicalogia_labyrinth_world_scene_table() {try {
+    
+    Opal.defn(self, '$magicalogia_labyrinth_world_scene_table', TMP_MagicaLogia_magicalogia_labyrinth_world_scene_table_50 = function $$magicalogia_labyrinth_world_scene_table() {try {
 
       var TMP_49, self = this, table = nil;
 
@@ -585,7 +649,332 @@
       Opal.ret("" + "怪物が現れ、キミたちを襲う。このシーンに登場しているPC全員は、" + (self.$magicalogia_random_skill_table_text_only()) + "の判定を行うこと。成功すると、怪物を倒し、好きな魔素が一個発生する。失敗すると、キミの負った傷は時間と空間を越えて、キミのアンカーに不幸をもたらす。「運命変転」が発生する。")}, TMP_49.$$s = self, TMP_49.$$arity = 0, TMP_49)), "目の前には、似たような扉がずらりとならんでいる。どの扉を開いたものか?", "暗闇の中から、うなり声が聞こえてくる。どうやら、近くに怪物が潜んでいるようだ。うまくやりすごせないものか……。≪静寂≫で判定を行う。失敗すると、【魔力】が1点減少する。", "通路が途切れ、深い谷が口を開けている。谷底まで光は届かず、まるで地の底まで続いているかのようだ。「闇」の魔素を一個獲得できる。", "金貨や銀貨、宝石に王冠、山のような宝物の積み上げられた部屋。番人は見当たらないが……。このシーンに登場しているPCのうち一人は、≪黄金≫で判定を行うことができる。成功すると1D6点の元型功績点かランダムに決定した魔素三個を獲得できる。失敗すると、このシーンに登場しているPC全員の【魔力】が1点減少する。誰かが判定を行うと、成否にかかわらずこの効果はなくなる。", "行き止まりの壁には、一見、意味不明な文字が並んでいる。ここから先に進むためには、この文字の謎を解かねばならないのだろうか。このシーンに登場しているPCのうち一人は、≪謎≫で判定を行うことができる。成功すると公開されているハンドアウトの中から、好きな【秘密】を公開することができる。失敗すると、部屋に仕掛けられた罠が発動し、このシーンは強制的に終了する。誰かが判定を行うと、成否にかかわらずこの効果はなくなる。"];
       return self.$get_table_by_2d6(table);
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, TMP_MagicaLogia_magicalogia_labyrinth_world_scene_table_50.$$arity = 0), nil) && 'magicalogia_labyrinth_world_scene_table';
+    }, TMP_MagicaLogia_magicalogia_labyrinth_world_scene_table_50.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_new_scene_table', TMP_MagicaLogia_magicalogia_new_scene_table_52 = function $$magicalogia_new_scene_table() {try {
+
+      var TMP_51, self = this, table = nil;
+
+      
+      table = ["ここではないどこか。魔法の力が満ちた異境の一つへ、一瞬だけ旅をする。そのシーンに星の魔素が1点発生する。", "夢の中。遠く過ぎ去った日々が、あなたの前に現れる。そのシーンに夢の魔素が1点発生する。", "強く風が吹き、雲が流されていく。遠く、雷鳴が聞こえた。そのシーンに力の魔素が1点発生する。", "静かなカフェの店内。珈琲の香りと共に、優しく穏やかな雰囲気が満ちている。", "無人の路地裏。ここならば、邪魔が入ることもないだろう。", $send(self, 'lambda', [], (TMP_51 = function(){var self = TMP_51.$$s || this;
+
+      Opal.ret("" + "周囲で〈断章〉が引き起こした魔法災厄が発生する。" + (self.$magicalogia_random_skill_table_text_only()) + "の判定を行うこと。成功すると、そのシーンに好きな魔素が1点発生する。失敗すると、「運命変転表」を使用する。")}, TMP_51.$$s = self, TMP_51.$$arity = 0, TMP_51)), "なんの変哲もないおだやかな風景。しかし、その日常の背後で魔法災厄の影を感じる。", "読んでいた本を閉じる。そこには、あなたが知りたかったことが書かれていた。なるほど、そういうことか。", "夜の街を歩く。暖かな家々の明かりが、遠く見える。そのシーンに歌の魔素が1点発生する。", "大勢で賑わう広場。祭りでも行われているのだろうか？ 誰かを呼ぶ声が聞こえる。そのシーンに獣の魔素が1点発生する。", "悲劇の予感。家族の不幸、友の絶望、仲間の死......このままだと起きてしまうかもしれない出来事の幻が見える。そのシーンに闇の魔素が1点発生する。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_new_scene_table_52.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_star_table', TMP_MagicaLogia_magicalogia_random_skill_star_table_53 = function $$magicalogia_random_skill_star_table() {
+      var self = this, table = nil;
+
+      
+      table = ["黄金", "大地", "森", "道", "海", "静寂", "雨", "嵐", "太陽", "天空", "異界"];
+      return self.$get_table_by_2d6(table);
+    }, TMP_MagicaLogia_magicalogia_random_skill_star_table_53.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_beast_table', TMP_MagicaLogia_magicalogia_random_skill_beast_table_54 = function $$magicalogia_random_skill_beast_table() {
+      var self = this, table = nil;
+
+      
+      table = ["肉", "蟲", "花", "血", "鱗", "混沌", "牙", "叫び", "怒り", "翼", "エロス"];
+      return self.$get_table_by_2d6(table);
+    }, TMP_MagicaLogia_magicalogia_random_skill_beast_table_54.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_force_table', TMP_MagicaLogia_magicalogia_random_skill_force_table_55 = function $$magicalogia_random_skill_force_table() {
+      var self = this, table = nil;
+
+      
+      table = ["重力", "風", "流れ", "水", "波", "自由", "衝撃", "雷", "炎", "光", "円環"];
+      return self.$get_table_by_2d6(table);
+    }, TMP_MagicaLogia_magicalogia_random_skill_force_table_55.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_poem_table', TMP_MagicaLogia_magicalogia_random_skill_poem_table_56 = function $$magicalogia_random_skill_poem_table() {
+      var self = this, table = nil;
+
+      
+      table = ["物語", "旋律", "涙", "別れ", "微笑み", "想い", "勝利", "恋", "情熱", "癒し", "時"];
+      return self.$get_table_by_2d6(table);
+    }, TMP_MagicaLogia_magicalogia_random_skill_poem_table_56.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_dream_table', TMP_MagicaLogia_magicalogia_random_skill_dream_table_57 = function $$magicalogia_random_skill_dream_table() {
+      var self = this, table = nil;
+
+      
+      table = ["追憶", "謎", "嘘", "不安", "眠り", "偶然", "幻", "狂気", "祈り", "希望", "未来"];
+      return self.$get_table_by_2d6(table);
+    }, TMP_MagicaLogia_magicalogia_random_skill_dream_table_57.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_night_table', TMP_MagicaLogia_magicalogia_random_skill_night_table_58 = function $$magicalogia_random_skill_night_table() {
+      var self = this, table = nil;
+
+      
+      table = ["深淵", "腐敗", "裏切り", "迷い", "怠惰", "歪み", "不幸", "バカ", "悪意", "絶望", "死"];
+      return self.$get_table_by_2d6(table);
+    }, TMP_MagicaLogia_magicalogia_random_skill_night_table_58.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_table_text_only_star', TMP_MagicaLogia_magicalogia_random_skill_table_text_only_star_59 = function $$magicalogia_random_skill_table_text_only_star() {
+      var $a, $b, self = this, text = nil;
+
+      
+      $b = self.$magicalogia_random_skill_star_table(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), $b;
+      return text;
+    }, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_star_59.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_table_text_only_beast', TMP_MagicaLogia_magicalogia_random_skill_table_text_only_beast_60 = function $$magicalogia_random_skill_table_text_only_beast() {
+      var $a, $b, self = this, text = nil;
+
+      
+      $b = self.$magicalogia_random_skill_beast_table(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), $b;
+      return text;
+    }, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_beast_60.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_table_text_only_force', TMP_MagicaLogia_magicalogia_random_skill_table_text_only_force_61 = function $$magicalogia_random_skill_table_text_only_force() {
+      var $a, $b, self = this, text = nil;
+
+      
+      $b = self.$magicalogia_random_skill_force_table(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), $b;
+      return text;
+    }, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_force_61.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_table_text_only_poem', TMP_MagicaLogia_magicalogia_random_skill_table_text_only_poem_62 = function $$magicalogia_random_skill_table_text_only_poem() {
+      var $a, $b, self = this, text = nil;
+
+      
+      $b = self.$magicalogia_random_skill_poem_table(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), $b;
+      return text;
+    }, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_poem_62.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_table_text_only_dream', TMP_MagicaLogia_magicalogia_random_skill_table_text_only_dream_63 = function $$magicalogia_random_skill_table_text_only_dream() {
+      var $a, $b, self = this, text = nil;
+
+      
+      $b = self.$magicalogia_random_skill_dream_table(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), $b;
+      return text;
+    }, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_dream_63.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_random_skill_table_text_only_night', TMP_MagicaLogia_magicalogia_random_skill_table_text_only_night_64 = function $$magicalogia_random_skill_table_text_only_night() {
+      var $a, $b, self = this, text = nil;
+
+      
+      $b = self.$magicalogia_random_skill_night_table(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), $b;
+      return text;
+    }, TMP_MagicaLogia_magicalogia_random_skill_table_text_only_night_64.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_magi_fortune_change_table', TMP_MagicaLogia_magicalogia_magi_fortune_change_table_65 = function $$magicalogia_magi_fortune_change_table() {
+      var self = this, table = nil;
+
+      
+      table = ["嫌悪。〈愚者〉たちを嫌悪し、〈大法典〉のやり方に疑問を覚えるようになる。この不幸が二度発生すると、その魔法使いは死亡しないで〈書籍卿〉になり、NPCとなる。この不幸が〈書籍卿〉に降り注いだ場合、不幸は無効化される。", "悪心。魔法に関する強い願いや邪悪な欲望が肥大化していく。この不幸が二度発生すると、その魔法使いは死亡した後〈禁書〉となり、NPCとなる。", "幽霊。肉体がほとんど失われ、霊的存在になる。この不幸が二度発生すると、その魔法使いは死亡ではなく消滅する。", "連鎖。運命変転が発生する。この不幸が二度発生しても死亡しない。", "変調。ランダムに変調1つを受ける。この不幸が二度発生しても死亡しない。", "消耗。【魔力】が1点減少する。この不幸が二度発生しても死亡しない。"];
+      return self.$get_table_by_1d6(table);
+    }, TMP_MagicaLogia_magicalogia_magi_fortune_change_table_65.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_magic_bookshelf_scene_table', TMP_MagicaLogia_magicalogia_magic_bookshelf_scene_table_69 = function $$magicalogia_magic_bookshelf_scene_table() {try {
+
+      var TMP_66, TMP_67, TMP_68, self = this, table = nil;
+
+      
+      table = [$send(self, 'lambda', [], (TMP_66 = function(){var self = TMP_66.$$s || this;
+
+      Opal.ret("" + "〈禁書〉の保管庫へ入ることを許可された。幾重にも張り巡らされた決壊や、鋭い目つきの書警たちが目に付く。その隙をついて、〈禁書〉が襲い掛かってきた！このシーンに登場したPCは一人だけ《" + (self.$magicalogia_random_skill_table_text_only_force()) + "》の判定を行う。失敗すると、【魔力】が3点減少する。成功すると、【一時的魔力】を3点得る。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_66.$$s = self, TMP_66.$$arity = 0, TMP_66)), "私室。狭いけれど、一番落ち着ける場所だ。このシーンに登場しているPCのうち一人は、【魔力】を上限まで回復させることができる。", "町の図書館。いつのまにか、人界に戻ってきてしまったようだ。このシーンに登場しているPCのうち一人は、好きなキャラクターを1人選び、事件表を一回振って、その効果を適用する。", "巨大な円卓がしつらえられた部屋。どうやらここは、会議場のようだ。", "長い廊下。学院の制服に身を包んだ少年少女が、笑いさざめきながら駆けていく。", $send(self, 'lambda', [], (TMP_67 = function(){var self = TMP_67.$$s || this;
+
+      Opal.ret("" + "荒れ果てた部屋。倒れた空っぽの本棚が、目に付く。これは〈大破壊〉の影響なのだろうか…。このシーンに登場するPCは、" + (self.$magicalogia_random_skill_table_text_only()) + "の判定を行う。失敗すると、時空を超えてアンカーに影響が現れる。「運命変転」が発生する。")}, TMP_67.$$s = self, TMP_67.$$arity = 0, TMP_67)), "倉庫。未整理の本が山のように積まれて、司書たちが分類整理に追われている。", "誰かの研究室に迷い込む。積まれている魔導書が興味深い。", "高い天井と、天井まで続く壁を埋め尽くす、本の群れ。このすべてが、この書庫に所蔵された魔導書だ。このシーンに登場しているPCのうち一人は、【一時的魔力】を1点獲得する。", $send(self, 'lambda', [], (TMP_68 = function(){var self = TMP_68.$$s || this;
+
+      Opal.ret("" + "魔導書の閲覧室。数人の魔法使いが、熱心に魔導書を読んでいる。このシーンに登場しているPCのうち一人は、" + (self.$magicalogia_random_skill_table_text_only()) + "の判定を行うことができる。成功すると、修得している魔法を一つ、修得可能な別の魔法に入れ替えることができる。失敗すると、「封印」の変調を受ける。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_68.$$s = self, TMP_68.$$arity = 0, TMP_68)), "本棚と本棚の間に、唐突に扉が浮かんでいる。この扉は、異界につながる戸口だ。一体どこにつながっているのだろう。異界シーン表の中からランダムに一つを選んで、その効果を適用する。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_magic_bookshelf_scene_table_69.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_magic_academy_scene_table', TMP_MagicaLogia_magicalogia_magic_academy_scene_table_76 = function $$magicalogia_magic_academy_scene_table() {try {
+
+      var TMP_70, TMP_71, TMP_72, TMP_73, TMP_74, TMP_75, self = this, table = nil;
+
+      
+      table = ["目の前に美しい黒龍が現れた。学院の長、ザナルパトスだ。彼は、何を告げようとしているのだろうか。", $send(self, 'lambda', [], (TMP_70 = function(){var self = TMP_70.$$s || this;
+
+      Opal.ret("" + "突然何かが襲い掛かってきた！生徒が元型の召喚に失敗したようだ。このシーンに登場しているPCのうち一人は、≪" + (self.$magicalogia_random_skill_table_text_only_force()) + "≫の判定を行う。失敗すると、【魔力】が3点減少する。成功すると、【一時的魔力】を3点得る。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_70.$$s = self, TMP_70.$$arity = 0, TMP_70)), $send(self, 'lambda', [], (TMP_71 = function(){var self = TMP_71.$$s || this;
+
+      Opal.ret("" + "ここは女子寮？このシーンに男性のPCが登場した場合、その男性PCは≪" + (self.$magicalogia_random_skill_table_text_only_beast()) + "≫の判定を行う。失敗すると、「封印」の変調を受ける。")}, TMP_71.$$s = self, TMP_71.$$arity = 0, TMP_71)), "寮の廊下。「どなたですか？」寮監のシグリットに呼び止められた。このシーンに登場しているPCは≪自由≫で判定を行う。失敗すると、このシーンで行う判定すべてにマイナス1の修正を受ける。", "天井の高い廊下。分厚い扉の向こうからかすかに授業を行う講師の声が聞こえてくる。", $send(self, 'lambda', [], (TMP_72 = function(){var self = TMP_72.$$s || this;
+
+      Opal.ret("" + "扉を開けて現れたのは、よく知る相手だった。なぜか、学院に迷い込んでしまったようだ。" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。失敗すると、「運命変転」が発生する。")}, TMP_72.$$s = self, TMP_72.$$arity = 0, TMP_72)), "誰かが作った秘密の小部屋に迷い込んでしまう。学園ではあまり食べられないお菓子が山のように仕舞われているようだ。", "学院西部に広がるアーデンの森。鳥の鳴き声が聞こえる。", $send(self, 'lambda', [], (TMP_73 = function(){var self = TMP_73.$$s || this;
+
+      Opal.ret("" + "授業を行っている教室。講師が呼び出した元型がこちらに向かって飛んでくる。このシーンに登場しているPCは一人だけ" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。失敗すると【魔力】が1点減少する。成功すると、その特技の精霊が召喚できる。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_73.$$s = self, TMP_73.$$arity = 0, TMP_73)), $send(self, 'lambda', [], (TMP_74 = function(){var self = TMP_74.$$s || this;
+
+      Opal.ret("" + "生徒に何か魔法を見せて欲しいと乞われる。このシーンに登場しているPCは一人だけ、≪" + (self.$magicalogia_random_skill_table_text_only_dream()) + "≫の判定を行う。失敗すると、「不運」の変調を受ける。成功すると、「夢」の魔素をを2点獲得する。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_74.$$s = self, TMP_74.$$arity = 0, TMP_74)), $send(self, 'lambda', [], (TMP_75 = function(){var self = TMP_75.$$s || this;
+
+      Opal.ret("" + "自習室。生徒たちが必死に魔導書を理解しようとしている。このシーンに登場しているPCは一人だけ、≪" + (self.$magicalogia_random_skill_table_text_only_star()) + "≫の判定を行う。成功すると、好きな魔素をを2点獲得する。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_75.$$s = self, TMP_75.$$arity = 0, TMP_75))];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_magic_academy_scene_table_76.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_tower_credo_scene_table', TMP_MagicaLogia_magicalogia_tower_credo_scene_table_80 = function $$magicalogia_tower_credo_scene_table() {try {
+
+      var TMP_77, TMP_78, TMP_79, self = this, table = nil;
+
+      
+      table = ["目の前に一人の少女が現れる。眠り姫の長、ラトゥナだ。ずっと眠り続けている筈の彼女が現れたのは、いったい何を告げるためなのだろうか。", $send(self, 'lambda', [], (TMP_77 = function(){var self = TMP_77.$$s || this;
+
+      Opal.ret("" + "突然何かが襲い掛かってきた！未熟な魔法使いが元型の召喚に失敗したようだ。このシーンに登場しているPCは一人だけ、≪" + (self.$magicalogia_random_skill_table_text_only_force()) + "≫の判定を行う。失敗すると、【魔力】が3点減少する。成功すると、【一時的魔力】を3点得る。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_77.$$s = self, TMP_77.$$arity = 0, TMP_77)), $send(self, 'lambda', [], (TMP_78 = function(){var self = TMP_78.$$s || this;
+
+      Opal.ret("" + "話しかけてきた天涯預言者が、不幸な未来を予言する。このシーンに登場しているPCは一人だけ、≪" + (self.$magicalogia_random_skill_table_text_only_dream()) + "≫の判定を行う。失敗すると、【魔力】が1点減少する。成功すると、「夢」の魔素をを1点獲得する。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_78.$$s = self, TMP_78.$$arity = 0, TMP_78)), "塔の内側の壁に並ぶ、無数の魔道書の前。この中から、なにかの手がかりが得られるかも知れない。このシーンに登場しているPCのうち一人は、【一時的魔力】を1点獲得する。", "小さな客間で〈大法典〉からの使者との会合が行われている。天涯が新たな予言を伝えているのかも知れない。", $send(self, 'lambda', [], (TMP_79 = function(){var self = TMP_79.$$s || this;
+
+      Opal.ret("" + "こんな場所にいる筈のない人が君の前にあらわれる。眠り姫の眠りの中に迷い込んでしまったらしい。" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。失敗すると、「運命変転」が発生する。")}, TMP_79.$$s = self, TMP_79.$$arity = 0, TMP_79)), "塔の上。山脈の連なりとその上に浮かぶ月が、塔を静かに見下ろしている。", "塔の外壁に作られた螺旋階段の上。強い風が吹き付けている。", "クレドの塔に続く、険しい山道。何かが潜んでいるんだろうか…。「獣」の魔素を1点獲得できる。", "幻夢殿の中。眠り姫達の安らかな寝息が聞こえてくる。こちらも眠くなってくる。", "突然、目の前に扉が現れる。この扉は、異界につながる戸口だ。一体どこにつながっているのだろう。異界シーン表の中からランダムに一つを選んで、その効果を適用する。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_tower_credo_scene_table_80.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_parallel_world_scene_table', TMP_MagicaLogia_magicalogia_parallel_world_scene_table_84 = function $$magicalogia_parallel_world_scene_table() {try {
+
+      var TMP_81, TMP_82, TMP_83, self = this, table = nil;
+
+      
+      table = ["カフェのテーブル。FMラジオは、去年解散したはずのバンドの、先日発表した新曲を流している。このシーンに登場しているPCのうち一人は、「時の流れ表」を1回振り、効果を適用する。", $send(self, 'lambda', [], (TMP_81 = function(){var self = TMP_81.$$s || this;
+
+      Opal.ret("" + "賑やかな通り。向こうから、あなたにそっくりな人物が歩いてくる。あれはこの世界の、あなた自身だろうか。このシーンに登場しているPCの一人は、" + (self.$magicalogia_random_skill_table_text_only()) + "の判定を行う。成功すると、好きな魔素をを2点獲得する。失敗すると、「病魔」の変調を受ける。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_81.$$s = self, TMP_81.$$arity = 0, TMP_81)), "夜の街を歩く。よく知っている筈の風景なのに、どこか違うという違和感がぬぐえない。", "買い物客でにぎわう商店街。つぶれたはずの店が健在であったり、繁盛しているはずの店が潰れていたりしている。", "繁華街。ビルの大型ビジョンから、知らない国同士の戦争に関するニュースが流れている。", $send(self, 'lambda', [], (TMP_82 = function(){var self = TMP_82.$$s || this;
+
+      Opal.ret("" + "縁のある人の家の前。玄関から、見知らぬ人が現れ、こちらを不審げに眺めている。この人はもしかして…？" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。失敗すると、「運命変転」が発生する。")}, TMP_82.$$s = self, TMP_82.$$arity = 0, TMP_82)), "乗客のいない電車の中。時折、聞き覚えのない駅名がアナウンスされる。", "学校帰りの学生たちが目立つ、駅前のロータリー。あの学校の制服のリボンは、赤だっただろうか？", "洋館の前。ここに、こんな建物はなかった筈だが。", $send(self, 'lambda', [], (TMP_83 = function(){var self = TMP_83.$$s || this;
+
+      Opal.ret("" + "小学校の前を通る。音楽室の窓から、見知らぬ音楽家の肖像が見える。≪" + (self.$magicalogia_random_skill_table_text_only_poem()) + "≫の判定を行う。失敗すると、「封印」の変調を受ける。")}, TMP_83.$$s = self, TMP_83.$$arity = 0, TMP_83)), "目の前で、以前、経験した出来事が起きる。この世界では、これは、今から起きる出来事なのだ。このシーンに登場しているPCのうち一人は、このシーンの間、判定に+1の修正を受ける。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_parallel_world_scene_table_84.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_post_apocalypse_scene_table', TMP_MagicaLogia_magicalogia_post_apocalypse_scene_table_86 = function $$magicalogia_post_apocalypse_scene_table() {try {
+
+      var TMP_85, self = this, table = nil;
+
+      
+      table = ["夜。雨宿りのために足を踏み入れた寺院に危険は気配はなく、ゆっくり休めそうだ。静に時が流れていく。", "夜。雑草が生い茂り、ツタに覆われた人気のない山村で巨大な肉食獣が襲い掛かってくる。このシーンに登場しているPCのうち一人は、≪牙≫の判定を行わなければならない。失敗すると、【魔力】が2点減少する。誰かが判定すると、成否にかかわらず、この効果はなくなる。", "夜。大規模な爆撃で地平線と化した戦場跡。どこの国ともわからぬ国旗が夜風に吠えている。虚憑が一体襲い掛かってくる。魔法戦を行うこと。この魔法戦はゲーム中に一度だけ発生する。", $send(self, 'lambda', [], (TMP_85 = function(){var self = TMP_85.$$s || this;
+
+      Opal.ret("" + "夜。もはや廃墟と化した埃っぽい都市。〈愚者〉が虚憑に襲われている。このシーンに登場しているPCの一人は、" + (self.$magicalogia_random_skill_table_text_only()) + "の判定することができる。成功すれば救出でき、助け出した〈愚者〉に対し、好きな属性で運命を1点獲得する。失敗すると【魔力】を3点失う。")}, TMP_85.$$s = self, TMP_85.$$arity = 0, TMP_85)), "夜。虚憑の群れに付きまとわれる。シーンプレイヤーは≪悪意≫の判定を行う。失敗するとこのシーンの間、あらゆる判定がマイナス2される。", "夜明け前。ハイウェイが一直線に突き抜ける灰色の荒野。静かすぎて自らの鼓動を感じるほどだ。虚憑が一体襲い掛かってくる。魔法戦を開始すること。2ラウンド経過するまでは夜、以降のラウンドは昼として処理する。この魔法戦はゲーム中に一度だけ発生する。", "昼。〈愚者〉の子供が、歴史的な遺産を遊び場に、一人遊びをしている。この子の未来はどうなるのだろうか。", "昼。世界大戦で墜落した戦闘機が、砂漠の砂に半ば埋もれている。だが、そのエンジンは死んでいない。このシーンに登場しているPCの一人は≪風≫で判定を行うことができる。成功すると魔力のリセットを行う。成否にかかわらず、この効果は一度だけ発生する。", "昼。広い建物が並ぶ美しい海岸。かつてはリゾート地だったそこには、白い遺骨が大量に打ち上げられ、潮騒に洗われている。誰か一人が≪別れ≫の特技の判定に成功すると、ランダムに選んだ魔素3点を獲得する。誰かが判定すると、成否にかかわらず、この効果はなくなる。", "昼。崩壊した農村のかたわらで、美味しそうな果実を発見する。≪大地≫の判定に成功すると【魔力】が2点回復する。", "夕刻。錆び付いた線路。その先までたくさんのしゃれこうべが無造作に転がっている。虚憑が一体襲い掛かってくる。魔法戦を開始すること。2ラウンド経過するまでは昼、以降のラウンドは夜として処理する。この魔法戦はゲーム中に一度だけ発生する。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_post_apocalypse_scene_table_86.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_god_bar_scene_table', TMP_MagicaLogia_magicalogia_god_bar_scene_table_88 = function $$magicalogia_god_bar_scene_table() {try {
+
+      var TMP_87, self = this, table = nil;
+
+      
+      table = ["マスターの雷神に絡まれる。このシーンに登場しているPCのうち一人は、雷神相手に「事件表」を振る。", "神々しく光輝く、威厳に溢れた神が現れ、場の雰囲気を支配する。このシーンの間、「世界法則」に「調査阻害」が加わる。", "上の階に登ろうとすると、キマイラが待ち構えている。このシーンに登場しているPCのうち一人は、≪炎≫で判定を行う。失敗すると、【魔力】が1点減少する。成功するまで判定を行うこと。この効果は一度だけ発生する。", "「かんぱーい！」注がれた酒をつい飲んでしまう。ずいぶん強いスピリッツのようだが。このシーンに登場しているPCのうち一人は、≪水≫で判定を行うことができる。成功すると魔貨を1点手に入れる。成否にかかわらずこの効果は一度だけ発生する。", "乾杯のかけ声、酔っ払いの笑い声、あちこちのテーブルでは大きな話し声…。どこにでもある、酒場の光景だ。", $send(self, 'lambda', [], (TMP_87 = function(){var self = TMP_87.$$s || this;
+
+      Opal.ret("" + "客の一人に、無理矢理酒を飲まされる。なんて強い酒だろう。" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。失敗すると、「運命変転」が発生する。")}, TMP_87.$$s = self, TMP_87.$$arity = 0, TMP_87)), "階段を上っている。いったいいつから登り始めたのか記憶にない。これはどこまで続くのだろう。", "建物の中の筈なのに、雷雲が立ちこめ、嵐が巻き起こる。神々がケンカしている！このシーンに登場しているPCのうち一人は、≪嵐≫で判定を行う。失敗すると、【魔力】が2点減少する。成否にかかわらずこの効果は一度だけ発生する。", "扉の前に、妖怪が張り付いていて、通してくれない。妖怪は何かくれと強請ってくる。このシーンに登場しているPCのうち一人は、好きな魔素を1点減少する。減少する魔素がない場合、【魔力】が1点減少する。", "上の階に登ろうとすると、竜が待ち構えている。このシーンに登場しているPCのうち一人は、≪牙≫で判定を行う。失敗すると、「綻び」の変調を受ける。成否にかかわらず、この効果は一度だけ発生する。", "美しい女神が、鏡をのぞき込んでいる。どうやら、運命が映る鏡だと言うのだが。このシーンに登場しているPCのうち一人は、≪未来≫で判定を行っても良い。成功すると好きなアンカーとの【運命】が1点上昇する。成否にかかわらず、この効果は一度だけ発生する。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_god_bar_scene_table_88.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_starlight_scene_table', TMP_MagicaLogia_magicalogia_starlight_scene_table_90 = function $$magicalogia_starlight_scene_table() {try {
+
+      var TMP_89, self = this, table = nil;
+
+      
+      table = ["あなたの持つ「切符」は無効であると車掌に告げられる。他の乗客の視線を感じる。このシーンに登場しているPCのうち一人は、もう一度「切符」を調達しなければならない。魂の特技の判定を、成功するまで繰り返すこと。", "ごとごと。ごとごと。ガラスより透き通る銀河の水辺を走る。色とりどりの花々が星の光に冴え渡っては通り過ぎて行く。", "ふと目を覚ます。汽車に揺られていつの間にか眠っていたらしい。夢の中で誰かと会っていた気がしてならない。シーンプレイヤーが≪深淵≫の判定に成功すると、ランダムに選んだアンカーとの運命が1点上昇する。", "銀河の水辺にぽつりと浮かぶ島に、目の覚めるような白い立派な十字架がそびえたっている。このシーンに登場しているPCのうち一人は、≪祈り≫で判定を行うことができる。成功すると、以降このゲーム中に発生する魔法災厄が一回だけ無効化される。誰かが判定すると、成否にかかわらず、この効果はなくなる。", "窓から銀河を見つめる、黒い外套を着た少女がいる。あなたに気づくとお菓子を差し出し、にこりと笑って去っていく。シーンプレイヤーはランダムに選んだ魔素を1点獲得する。", "ノイズ混じりの車内放送が「停車駅」への到着を告げる。しばらくすると「汽車」が止まった。キャラクターは「停車駅」で降りることができる。降りる場合、「停車駅」の世界法則を決定し、その法則に従ってシーンを進めること。", "車窓の向こうに、星明りに照らされたススキ野原が青白く広がる。そんな中で、不思議な紋様の書かれた三角標が何本か、ぽつり、ぽつりと立ち尽くしているのが見えた。", "気づくと誰もいない。青いビロウドを張った座席だけが、空間をむなしく彩っている。シーンプレイヤー以外のPCが、このシーンに登場しようとする場合、≪静寂≫で判定を行う。失敗したPCは、このシーンに登場できない。", $send(self, 'lambda', [], (TMP_89 = function(){var self = TMP_89.$$s || this;
+
+      Opal.ret("" + "「この席、よろしいかな？」あなたの隣に〈書籍卿〉が座る。" + (self.$magicalogia_random_skill_table_text_only()) + "の判定に成功すると公開されているハンドアウトの中から、好きなものを選び、その【秘密】を公開することができる。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_89.$$s = self, TMP_89.$$arity = 0, TMP_89)), "銀河を超える渡り鳥の群れ。しばし「汽車」と並走し、やがて離れ、天の川のようにきらきらした光の帯になっていく。このシーンに登場しているPCのうち一人は、≪翼≫で判定を行うことができる。成功すると魔力をリセットできる。誰かが判定すると、成否にかかわらず、この効果はなくなる。", "隣の車輛から誰かが移ってきた。なんと、あなたのアンカーである。このシーンに登場しているPCをランダムに一人選び、そのPCのアンカーの中から、この異境に存在しない〈愚者〉のアンカーをランダムで一人選ぶこと。そのアンカーが、元の世界へ無事戻ることができたら、ゲーム終了時に功績点を1点獲得する。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_starlight_scene_table_90.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_world_low_add_table', TMP_MagicaLogia_magicalogia_world_low_add_table_91 = function $$magicalogia_world_low_add_table() {
+      var self = this, table = nil;
+
+      
+      table = ["世界法則「楽園」。この「停車駅」は美しく、慰めに満ちている。この「停車駅」で降りた〈愚者〉は魅了され、ここで一生を過ごすことになる。「刻印百景」の特技で判定に成功すると、これを押しとどめることができる。この判定は、対象の〈愚者〉一人につき一回しかできない。", "世界法則「夜祭」。星の明かりや提灯を頼りに、終わらないお祭りが続いている。このシーンに登場しているキャラクターは、「刻印百景」の特技で判定に成功すると、【手当】の俗呪を使用したとき、消費した魔素1点につき、【魔力】を2点回復できるようになる。", "世界法則「遺棄」。この「停車駅」の周辺は、様々なモノが捨てられている。シーンプレイヤーが「刻印百景」の特技で判定に成功すると、魔法【回想】と同じ効果が一回だけ発生する。誰を対象とするかは、シーンに登場しているキャラクターの中から、ランダムに選ばれる。", "世界法則「楽園」。この「停車駅」の周辺は、魔素を帯びた不思議な色合いの羽をもつ蝶が生息している。このシーンに登場しているキャラクターは、「刻印百景」の特技で判定に成功すると、任意の魔素を2点獲得できる。失敗すると、ランダムに選んだ変調1つを受ける。", "この「停車駅」の周辺は死んだ〈愚者〉たちの終着点でもある。もしここで降りる〈愚者〉がいれば、その人物は死んでいたことになる。このシーンに登場しているキャラクターがその〈愚者〉をアンカーとしている場合、「刻印百景」の特技で判定に成功すると、「疵」になることなく運命欄から消去できる。", "世界法則「魔法門」。他の異境への入り口が存在する。「刻印百景」の特技で判定に成功すると、その魔法門を発見できる。"];
+      return self.$get_table_by_1d6(table);
+    }, TMP_MagicaLogia_magicalogia_world_low_add_table_91.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_wondaring_monster_table', TMP_MagicaLogia_magicalogia_wondaring_monster_table_98 = function $$magicalogia_wondaring_monster_table() {try {
+
+      var TMP_92, TMP_93, TMP_94, TMP_95, TMP_96, TMP_97, self = this, table = nil;
+
+      
+      table = [$send(self, 'lambda', [], (TMP_92 = function(){var self = TMP_92.$$s || this;
+
+      Opal.ret("" + "トロールに率いられたオークとゴブリンの大軍団に遭遇する。数百という怪物たちが野蛮な叫び声をあげながら、魔法使いたちに襲い掛かってくる。≪" + (self.$magicalogia_random_skill_table_text_only_star()) + "≫の判定を行う。全員の判定が終わったら、失敗したPCは1d6点のダメージを受ける。このとき、判定に成功したPCの数だけそのダメージの値を軽減できる。")}, TMP_92.$$s = self, TMP_92.$$arity = 0, TMP_92)), $send(self, 'lambda', [], (TMP_93 = function(){var self = TMP_93.$$s || this;
+
+      Opal.ret("" + "大きな猛牛の頭をした巨漢…ミノタウロスが立ち塞がる。手に持った青銅の斧を振りかぶる。シーンに登場しているPCの中からランダムに代表を1人選ぶ。代表は≪" + (self.$magicalogia_random_skill_table_text_only_beast()) + "≫の判定を行う。失敗すると、PC全員は2点のダメージと「綻び」の変調を受ける。")}, TMP_93.$$s = self, TMP_93.$$arity = 0, TMP_93)), $send(self, 'lambda', [], (TMP_94 = function(){var self = TMP_94.$$s || this;
+
+      Opal.ret("" + "突如、ドラゴンが現れる。深紅の鱗に覆われた巨影は、鎌首をもたげると、数瞬後、強烈な炎を吐いた。シーンに登場しているPC全員は≪" + (self.$magicalogia_random_skill_table_text_only_force()) + "≫の判定を行う。全員の判定が終わったら、PC全員は、1+判定に失敗した人数点のダメージを受ける。")}, TMP_94.$$s = self, TMP_94.$$arity = 0, TMP_94)), $send(self, 'lambda', [], (TMP_95 = function(){var self = TMP_95.$$s || this;
+
+      Opal.ret("" + "白銀の鎧に身を包んだ騎士が現れる。騎士は一対一の勝負を挑んできた。シーンに登場しているPCの中から代表を1人選ぶ。代表は≪" + (self.$magicalogia_random_skill_table_text_only_poem()) + "≫の判定を行う。失敗すると代表は5点のダメージを受ける。")}, TMP_95.$$s = self, TMP_95.$$arity = 0, TMP_95)), $send(self, 'lambda', [], (TMP_96 = function(){var self = TMP_96.$$s || this;
+
+      Opal.ret("" + "美しい上半身と獣の下半身を持つ女怪が現れる。艶めかしくその体をくゆらせながら、手を差し出してくる。シーンに登場しているPC全員は≪" + (self.$magicalogia_random_skill_table_text_only_dream()) + "≫の判定を行う。失敗したPCは、3点のダメージを受け、好きな魔素を3点失う。")}, TMP_96.$$s = self, TMP_96.$$arity = 0, TMP_96)), $send(self, 'lambda', [], (TMP_97 = function(){var self = TMP_97.$$s || this;
+
+      Opal.ret("" + "黒いローブをまとった幽鬼が現れる。枯れ木のような細い腕を振り上げて、勇気は呪いの言葉を叫ぶ。幽鬼の【魔力】は4点。シーンに登場しているPC全員は≪" + (self.$magicalogia_random_skill_table_text_only_night()) + "≫の判定を行う。失敗したPCは、「不幸」の変調を受け、運命変転が発生する。")}, TMP_97.$$s = self, TMP_97.$$arity = 0, TMP_97))];
+      return self.$get_table_by_1d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_wondaring_monster_table_98.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_fallen_flower_table', TMP_MagicaLogia_magicalogia_fallen_flower_table_99 = function $$magicalogia_fallen_flower_table() {
+      var self = this, table = nil;
+
+      
+      table = ["肉体が枯れるように崩壊する。その苦痛は耐え難いもののようだ。人の言葉にならない断末魔が聞く者を苛み、死ぬ。〈永遠〉をアンカーにしているものは、それが疵になる。", "精神が壊れる。その唇から、〈永遠〉が抱く夢や願望だけが小さく小さく、壊れた楽器のように吐き出され、季節が変わる頃に、死ぬ。〈永遠〉をアンカーにしているものは、それが疵になる。", "その生命力が暴走し、死と再生が繰り返される。助けてくれと懇願する声すら出せない。1d6ヶ月後、死ぬ。〈永遠〉をアンカーにしているものは、それが疵になる。", "〈禁書〉とともに封印に飲み込まれる。運命を結んでいるPCの夢に、暗い、怖い、助けてくれと繰り返し現れるが、次の新月の夜にふつりと途切れる。〈永遠〉をアンカーにしているものは、それが疵になる。", "その時は何も起きない。運良く助かったか、〈愚者〉に戻れたようにも見える。だが一度でも眠りにつけば、目を覚ますことなく死ぬ。〈永遠〉をアンカーにしているものは、それが疵になる。", "身体がしおれ、「種」が落ちる。しかし、再生することはない。もし大地に埋めてやれば、何かの植物として芽吹くだろう。（〈永遠〉をアンカーにしているものは、そのアンカーを失う。疵にはならない）"];
+      return self.$get_table_by_1d6(table);
+    }, TMP_MagicaLogia_magicalogia_fallen_flower_table_99.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_old_library_scene_table', TMP_MagicaLogia_magicalogia_old_library_scene_table_103 = function $$magicalogia_old_library_scene_table() {try {
+
+      var TMP_100, TMP_101, TMP_102, self = this, table = nil;
+
+      
+      table = [$send(self, 'lambda', [], (TMP_100 = function(){var self = TMP_100.$$s || this;
+
+      Opal.ret("" + "曲がり角。唐突に〈禁書〉が現れ、襲いかかってきた！このシーンに登場するPCは、" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。失敗すると、【魔力】を3点失う。")}, TMP_100.$$s = self, TMP_100.$$arity = 0, TMP_100)), "通路の真ん中。扉を開けて〈旧世界秩序〉の〈書籍卿〉「古き書物の化身」が現れた。彼はこのシーンに登場しているPCに協力を申し出る。このシーンに登場しているPCの一人は、《嘘》で判定を行う。成功すると〈書籍卿〉はこのシナリオの間、そのPCが行う魔法戦で、一度だけ立会人になる。失敗すると〈書籍卿〉は怒り出し、次のシーンでそのPCに対して、魔法戦をしかけてくる。誰かが判定すると、成否にかかわらず、この効果はなくなる。", "元・研究室。壊れた実験道具が床に散らばっている。", "元・閲覧室。数人の魔法使いたちが休んでいる。ここならば、色々な話が聞けそうだ。", "空の書架が並ぶ、開けた空間。ここならば、一息つけるだろう。", $send(self, 'lambda', [], (TMP_101 = function(){var self = TMP_101.$$s || this;
+
+      Opal.ret("" + "破壊された魔導書が、山のように積み重なる場所。本の山に隠れていた〈断章〉が襲い掛かってくる。このシーンに登場するPCは、" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。成功すると、〈断章〉を倒し、好きな魔素を一個手に入れる。失敗すると、時空を超えてアンカーに影響が現れる。「運命変転」が発生する。")}, TMP_101.$$s = self, TMP_101.$$arity = 0, TMP_101)), "破壊された書架が重なり合って作り上げた、迷路のような通路が続く。この先には、何があるのだろうか", "元・宿舎。簡素な寝台が、いくつか残っている。", "通路の行き止まり。目の前になぜか大きな箱がある。このシーンに登場しているPCの一人は、《謎》で判定を行うことができる。成功すると、箱の中にプライズを発見する。「プライズ表」を1回使用することができる。失敗すると、トラップが発動する。箱は爆発し、このシーンに登場しているPC全員の【魔力】が1点減少する。誰かが判定すると、成否にかかわらず、この効果はなくなる。", $send(self, 'lambda', [], (TMP_102 = function(){var self = TMP_102.$$s || this;
+
+      Opal.ret("" + "どこからか湧き出した水が、床の上に泉を作っている場所。泉の上に何者かの呼び出した元型が浮かんでいる。" + (self.$magicalogia_random_skill_table_text_only()) + "で判定を行う。成功すると、【一時的魔力】を1点手に入れる。失敗すると、攻撃され、【魔力】が1点減少する。誰かが判定すると、成否にかかわらず、この効果はなくなる。")}, TMP_102.$$s = self, TMP_102.$$arity = 0, TMP_102)), "なぜ、君がここに？扉を開けると、そこにはPCのアンカーがいた。シーンプレイヤーのアンカーの中から、ランダムに一人を選ぶ。そのアンカーが登場する。シーンプレイヤーは、そのアンカーに「事件」を行っても、行動済みにならない。"];
+      return self.$get_table_by_2d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_old_library_scene_table_103.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_new_time_passage_table', TMP_MagicaLogia_magicalogia_new_time_passage_table_106 = function $$magicalogia_new_time_passage_table() {try {
+
+      var TMP_104, TMP_105, self = this, table = nil;
+
+      
+      table = [$send(self, 'lambda', [], (TMP_104 = function(){var self = TMP_104.$$s || this;
+
+      Opal.ret("" + "波乱万丈の人生を送る。この時代に起きた有名な事件の背後では、多くの魔法的存在が暗躍していた。あなたも、その事件に関わり、〈禁書〉や〈書籍卿〉たちと戦いを繰り広げる。" + (self.$magicalogia_random_skill_table_text_only()) + "の判定を行う。成功するとセッション終了時に追加で功績点を1点獲得する。失敗すると、自分に「運命変転」が発生する。")}, TMP_104.$$s = self, TMP_104.$$arity = 0, TMP_104)), $send(self, 'lambda', [], (TMP_105 = function(){var self = TMP_105.$$s || this;
+
+      Opal.ret("" + "冒険の日々の途中、大きな幸せがおとずれる。" + (self.$magicalogia_random_skill_table_text_only()) + "の判定を行う。成功すると、自分のアンカーが負っている不幸か、自分が負っている疵一つを無効化する。")}, TMP_105.$$s = self, TMP_105.$$arity = 0, TMP_105)), "瞑想していたのか。それとも何か封印されていたのか。長い眠りから目を覚ます。もうそんな時間か。おかげで十分に休息できた。ランダムに魔素を三個獲得するか、自分が「魔力のリセット」を行うか、自分の受けている変調をすべて回復する。", "特殊な異境に旅をしていた。そのせいか、人界で何が起きていたのかまったく分からない。浦島太郎になった気分だ。異境の土産として、魔貨を1d6点獲得する。", "市井の人々に交じって平穏な日々をおくる。そんな日々の中にも、ちょっとした事件が起きた。自分のアンカーを一人目標に選んで「事件表」を振ることができる。", "日々研鑚を重ね、魔法の修行に精進した。もしも望むなら、蔵書欄にある魔法を、自分の修得可能な別の魔法に変更して構わない。もしも、魔素がチャージされていた魔法を未習得にした場合、その魔素は失われる。"];
+      return self.$get_table_by_1d6(table);
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_MagicaLogia_magicalogia_new_time_passage_table_106.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_fallen_after_table_low', TMP_MagicaLogia_magicalogia_fallen_after_table_low_107 = function $$magicalogia_fallen_after_table_low() {
+      var self = this, table = nil;
+
+      
+      table = ["成就者は、邪悪な魔法の力にひかれるようになる。成就者が、そのセッションで〈断章〉に憑依されていたり、魔法災厄の犠牲になったりしていた場合、【堕落値】が1点上昇し、堕落チェックを行う。堕落チェックに失敗した場合、成就者は命を落とし、そのPCの疵となる。", "成就者は、自分の不幸が魔法使いによるものだと信じるようになる。成就者が何らかの不幸に見舞われていた場合、【堕落値】が1点上昇し、堕落チェックを行う。堕落チェックに失敗した場合、願いを叶えたPCの成就者との【運命】の値が2点減少する。", "成就者は、自分が特別な人間だと信じるようになる。願いを叶える努力を放棄するようになり、自堕落になる。成就者の【堕落値】が2点上昇する。堕落チェックを行う。堕落チェックに失敗した場合、「運命変転表『狂気的災厄』」を使用し、その不幸を受ける。", "成就者は、願いが叶い、欲望が増大する。次はより大きな願いを求めるようになるだろう。成就者の【堕落値】が1点上昇する。堕落チェックを行う。堕落チェックに失敗した場合、「運命変転表『社会的災厄』」を使用し、その不幸を受ける。", "成就者は、自分の願いを叶えたのが魔法によるものだと気付く。成就者の【堕落値】が1点上昇する。堕落チェックを行う。堕落チェックに失敗した場合、「運命変転表『超常的災厄』」を使用し、その不幸を受ける。", "成就者は、自分の願いを叶えたのがPCだと気付く。成就者の【堕落値】が、そのPCの成就者との【運命】の値と同じ値になる。もし、この効果によって【堕落値】が以前より増えていた場合、堕落チェックを行う。堕落チェックに失敗した場合、成就者は〈愚者〉ではなくなり、魔法使いとなる。"];
+      return self.$get_table_by_1d6(table);
+    }, TMP_MagicaLogia_magicalogia_fallen_after_table_low_107.$$arity = 0);
+    
+    Opal.defn(self, '$magicalogia_fallen_after_table_high', TMP_MagicaLogia_magicalogia_fallen_after_table_high_108 = function $$magicalogia_fallen_after_table_high() {
+      var self = this, table = nil;
+
+      
+      table = ["成就者は、突如自分に訪れた幸運に罪悪感を覚えるようになる。もし成就者の【堕落値】が1点以上だった場合、堕落チェックを行う。堕落チェックに失敗した場合、「運命変転表『精神的災厄』」を使用し、その不幸を受ける。", "成就者は、願いを叶えたPCに対して不信感を感じるようになる。自分は利用されているのでは無いかと疑い始め、願いを叶えたPCと距離を取る。成就者との【運命】の値が1点減少する。", "成就者は、叶えて貰った願いを失うことになる。堕落チェックを行う。堕落チェックに成功すると、【堕落値】が1点減少する。", "成就者は、願いを叶えたPCが魔法使いだと気付く。以降、その成就者の【堕落値】が上昇することがあった場合、その上昇値が1点増える（この効果は累積しない）。この効果が気に入らない場合、PCはその成就者の自分に関する記憶を消すことで、この効果を無効化することもできる。その場合、PCの成就者との【運命】の値は1になる。", "成就者は、突然の幸運に感謝しつつも、自分の日常と戦っていく。もし、成就者に【堕落値】が1点以上ある場合、その値が1点減少する。", "成就者は、信じれば夢が叶うと思うようになり、少しだけ前向きになる。PCは功績点を1点獲得する。"];
+      return self.$get_table_by_1d6(table);
+    }, TMP_MagicaLogia_magicalogia_fallen_after_table_high_108.$$arity = 0);
+    return (Opal.defn(self, '$magicalogia_fallen_after_table', TMP_MagicaLogia_magicalogia_fallen_after_table_109 = function $$magicalogia_fallen_after_table() {
+      var $a, $b, self = this, outtext = nil, outnum = nil, num = nil;
+
+      
+      outtext = "";
+      outnum = "";
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (num = ($a[0] == null ? nil : $a[0])), $b;
+      if ($truthy($rb_le(num, 3))) {
+        
+        $b = self.$magicalogia_fallen_after_table_low(), $a = Opal.to_ary($b), (outtext = ($a[0] == null ? nil : $a[0])), (outnum = ($a[1] == null ? nil : $a[1])), $b;
+        outtext = "" + (outtext);
+        } else {
+        
+        $b = self.$magicalogia_fallen_after_table_high(), $a = Opal.to_ary($b), (outtext = ($a[0] == null ? nil : $a[0])), (outnum = ($a[1] == null ? nil : $a[1])), $b;
+        outtext = "" + (outtext);
+      };
+      outnum = "" + (num) + "," + (outnum);
+      return [outtext, outnum];
+    }, TMP_MagicaLogia_magicalogia_fallen_after_table_109.$$arity = 0), nil) && 'magicalogia_fallen_after_table';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 
