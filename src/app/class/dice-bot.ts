@@ -105,6 +105,7 @@ export class DiceBot extends GameObject {
     { script: 'DetatokoSaga', game: 'でたとこサーガ' },
     { script: 'DeadlineHeroes', game: 'デッドラインヒーローズ' },
     { script: 'DemonParasite', game: 'デモンパラサイト' },
+    { script: 'TokyoGhostResearch', game: '東京ゴーストリサーチ' },
     { script: 'TokyoNova', game: 'トーキョーＮ◎ＶＡ' },
     { script: 'Torg', game: 'トーグ' },
     { script: 'Torg1_5', game: 'トーグ1.5版' },
