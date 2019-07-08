@@ -21,6 +21,7 @@ interface ReceivedChank {
   id: string;
   chanks: Uint8Array[];
   length: number;
+  byteLength: number;
 };
 
 export class SkyWayDataConnection extends EventEmitter {
@@ -76,21 +77,20 @@ export class SkyWayDataConnection extends EventEmitter {
 
     let received = this.receivedMap.get(chank.id);
     if (received == null) {
-      received = { id: chank.id, chanks: new Array(chank.total), length: 0 };
+      received = { id: chank.id, chanks: new Array(chank.total), length: 0, byteLength: 0 };
       this.receivedMap.set(chank.id, received);
     }
 
     if (received.chanks[chank.index] != null) return;
 
     received.length++;
+    received.byteLength += chank.data.byteLength;
     received.chanks[chank.index] = chank.data;
 
     if (received.length < chank.total) return;
     this.receivedMap.delete(chank.id);
 
-    let sumByteLength = 0;
-    for (let c of received.chanks) sumByteLength += c.byteLength;
-    let uint8Array = new Uint8Array(sumByteLength);
+    let uint8Array = new Uint8Array(received.byteLength);
 
     let pos = 0;
     for (let c of received.chanks) {
