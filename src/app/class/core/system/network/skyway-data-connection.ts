@@ -25,7 +25,7 @@ interface ReceivedChank {
 
 export class SkyWayDataConnection extends EventEmitter {
   private chunkSize = 15.5 * 1024;
-  private receivedChankMap: Map<string, ReceivedChank> = new Map();
+  private receivedMap: Map<string, ReceivedChank> = new Map();
 
   get open(): boolean { return this.conn.open; }
   get remoteId(): string { return this.conn.remoteId; }
@@ -74,26 +74,26 @@ export class SkyWayDataConnection extends EventEmitter {
       return;
     }
 
-    let receivedChank = this.receivedChankMap.get(chank.id);
-    if (receivedChank == null) {
-      receivedChank = { id: chank.id, chanks: new Array(chank.total), length: 0 };
-      this.receivedChankMap.set(chank.id, receivedChank);
+    let received = this.receivedMap.get(chank.id);
+    if (received == null) {
+      received = { id: chank.id, chanks: new Array(chank.total), length: 0 };
+      this.receivedMap.set(chank.id, received);
     }
 
-    if (receivedChank.chanks[chank.index] != null) return;
+    if (received.chanks[chank.index] != null) return;
 
-    receivedChank.length++;
-    receivedChank.chanks[chank.index] = chank.data;
+    received.length++;
+    received.chanks[chank.index] = chank.data;
 
-    if (receivedChank.length < chank.total) return;
-    this.receivedChankMap.delete(chank.id);
+    if (received.length < chank.total) return;
+    this.receivedMap.delete(chank.id);
 
-    let sumLength = 0;
-    for (let c of receivedChank.chanks) sumLength += c.byteLength;
-    let uint8Array = new Uint8Array(sumLength);
+    let sumByteLength = 0;
+    for (let c of received.chanks) sumByteLength += c.byteLength;
+    let uint8Array = new Uint8Array(sumByteLength);
 
     let pos = 0;
-    for (let c of receivedChank.chanks) {
+    for (let c of received.chanks) {
       uint8Array.set(c, pos);
       pos += c.byteLength;
     }
