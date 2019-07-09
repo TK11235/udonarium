@@ -120,9 +120,10 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   }
 
   private updateIndexs() {
-    for (let i = 0; i < this._children.length; i++) {
-      this._children[i].majorIndex = i;
-      this._children[i].minorIndex = Math.random();
+    let children = this.children;
+    for (let i = 0; i < children.length; i++) {
+      children[i].majorIndex = i;
+      children[i].minorIndex = Math.random();
     }
   }
 
@@ -153,11 +154,18 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     if (index < 0) return this.appendChild(child);
 
     child.parentIdentifier = this.identifier;
-    this._children.splice(index, 0, child);
 
     if (child.parent) {
-      child.parent.updateIndexs();
+      let prevIndex = 0 < index ? this.children[index - 1].index : 0;
+      let diff = reference.index - prevIndex;
+      let insertIndex = prevIndex + diff * (0.45 + 0.1 * Math.random());
+      child.majorIndex = insertIndex | 0;
+      child.minorIndex = insertIndex - child.majorIndex;
+
       child.parent.updateChildren(child);
+      if (diff < 1e-7) {
+        child.parent.updateIndexs();
+      }
     }
 
     return child;
