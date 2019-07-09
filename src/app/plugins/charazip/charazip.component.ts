@@ -12,6 +12,7 @@ import { Dx3rdGenerator } from './system/dx3rd-generator';
 import { Sw2Generator } from './system/sw2-generator';
 import { MonotonemuseumGenerator } from './system/monotonemuseum-generator';
 import { ShinobigamiGenerator } from './system/shinobigami-generator';
+import { DlhGenerator } from './system/dlh-generator';
 
 interface SystemInfo {
   system: string;
@@ -86,6 +87,12 @@ export class CharazipComponent implements OnInit {
       generater: DivinechargerGenerator.generateByAppspot
     },
     {
+      system: 'dlh',
+      name: 'デッドラインヒーローズ',
+      href: 'https://character-sheets.appspot.com/dlh/',
+      generater: DlhGenerator.geneateByAppspot
+    },
+    {
       system: 'mnt',
       name: 'モノトーンミュージアム',
       href: 'https://character-sheets.appspot.com/mnt/',
@@ -112,7 +119,7 @@ export class CharazipComponent implements OnInit {
     }
 
     if (!json.game) {
-      console.error(`game要素がありません。`);
+      console.error('game要素がありません。');
       throw new Error('このキャラクターシートは使用できません。');
     }
     const systemInfo = CharazipComponent.vampireBloodInfos.find(
