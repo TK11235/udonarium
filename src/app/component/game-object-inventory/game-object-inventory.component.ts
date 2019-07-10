@@ -171,7 +171,10 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   }
 
   cleanInventory() {
-    for (const gameObject of this.getGameObjects(this.selectTab)) {
+    let tabTitle = this.getTabTitle(this.selectTab);
+    let gameObjects = this.getGameObjects(this.selectTab);
+    if (!confirm(`${tabTitle}に存在する${gameObjects.length}個の要素を完全に削除しますか？`)) return;
+    for (const gameObject of gameObjects) {
       this.deleteGameObject(gameObject);
     }
     SoundEffect.play(PresetSound.sweep);
