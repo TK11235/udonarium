@@ -107,7 +107,7 @@ export class CardStack extends TabletopObject {
   }
 
   putOnTop(card: Card): Card {
-    if (!this.cardRoot) return;
+    if (!this.cardRoot) return null;
     if (!this.topCard) return this.putOnBottom(card);
     card.owner = '';
     card.zindex = 0;
@@ -119,7 +119,7 @@ export class CardStack extends TabletopObject {
   }
 
   putOnBottom(card: Card): Card {
-    if (!this.cardRoot) return;
+    if (!this.cardRoot) return null;
     card.owner = '';
     card.zindex = 0;
     let delta = Math.abs(card.rotate - this.rotate);
