@@ -213,7 +213,7 @@ export class TabletopService {
   }
 
   createGameCharacter(position: PointerCoordinate): GameCharacter {
-    let character = GameCharacter.createGameCharacter('新しいキャラクター', 1, '');
+    let character = GameCharacter.create('新しいキャラクター', 1, '');
     character.location.x = position.x - 25;
     character.location.y = position.y - 25;
     character.posZ = position.z;

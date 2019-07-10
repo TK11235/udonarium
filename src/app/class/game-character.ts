@@ -23,7 +23,7 @@ export class GameCharacter extends TabletopObject {
     this.update();
   }
 
-  static createGameCharacter(name: string, size: number, imageIdentifier: string): GameCharacter {
+  static create(name: string, size: number, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
     gameCharacter.initialize();
