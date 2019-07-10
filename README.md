@@ -34,7 +34,7 @@
   - 立体地形
   - コマ、カード、共有メモ
   - チャット送受信、チャットパレット
-  - ダイスボット（[BCDice](https://github.com/torgtaitai/BCDice)を[Opal](http://opalrb.com/)でJavaScriptにトランスパイル）
+  - ダイスボット（[BCDice](https://github.com/bcdice/BCDice)を[Opal](http://opalrb.com/)でJavaScriptにトランスパイル）
   - 画像ファイル共有
   - BGM再生
   - セーブデータ生成（ZIP形式）
@@ -62,7 +62,7 @@
 言語はTypeScriptを用い、[Angular](https://angular.io/)で実装されています。  
 開発を効率化するCLIツールとして[Angular CLI](https://github.com/angular/angular-cli)を利用しています。
 
-インストール手順は[Angular公式ページのクイックスタート](https://angular.jp/guide/quickstart)が参考になります。
+インストール手順は[Angular公式ページのセットアップ](https://angular.jp/guide/setup-local)が参考になります。
 
 #### Angular CLI
 
