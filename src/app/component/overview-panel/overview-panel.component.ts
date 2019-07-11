@@ -42,7 +42,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   ]
 })
 export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('draggablePanel') draggablePanel: ElementRef;
+  @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef;
   @Input() tabletopObject: TabletopObject = null;
 
   @Input() left: number = 0;

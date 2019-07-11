@@ -40,7 +40,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 })
 
 export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('textArea') textAreaElementRef: ElementRef;
+  @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
 
   sender: string = 'Guest';
   text: string = '';

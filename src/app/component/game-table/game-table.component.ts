@@ -30,10 +30,10 @@ import { TabletopService } from 'service/tabletop.service';
   ],
 })
 export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root') rootElementRef: ElementRef;
-  @ViewChild('gameTable') gameTable: ElementRef;
-  @ViewChild('gameObjects') gameObjects: ElementRef;
-  @ViewChild('gridCanvas') gridCanvas: ElementRef;
+  @ViewChild('root', { static: true }) rootElementRef: ElementRef;
+  @ViewChild('gameTable', { static: true }) gameTable: ElementRef;
+  @ViewChild('gameObjects', { static: true }) gameObjects: ElementRef;
+  @ViewChild('gridCanvas', { static: true }) gridCanvas: ElementRef;
 
   get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
   get currentTable(): GameTable { return this.tabletopService.currentTable; }

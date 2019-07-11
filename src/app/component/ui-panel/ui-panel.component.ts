@@ -36,9 +36,9 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   ]
 })
 export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('draggablePanel') draggablePanel: ElementRef;
-  @ViewChild('scrollablePanel') scrollablePanel: ElementRef;
-  @ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
+  @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef;
+  @ViewChild('scrollablePanel', { static: true }) scrollablePanel: ElementRef;
+  @ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;
 
   @Input() set title(title: string) { this.panelService.title = title; }
   @Input() set left(left: number) { this.panelService.left = left; }

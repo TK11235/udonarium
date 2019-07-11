@@ -8,7 +8,7 @@ import { ContextMenuAction, ContextMenuService } from 'service/context-menu.serv
   styleUrls: ['./context-menu.component.css']
 })
 export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root') rootElementRef: ElementRef;
+  @ViewChild('root', { static: true }) rootElementRef: ElementRef;
 
   @Input() title: string = '';
   @Input() actions: ContextMenuAction[] = [];

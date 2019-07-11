@@ -20,7 +20,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./chat-palette.component.css']
 })
 export class ChatPaletteComponent implements OnInit, OnDestroy {
-  @ViewChild('textArea') textAreaElementRef: ElementRef;
+  @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
   @Input() character: GameCharacter = null;
 
   get palette(): ChatPalette { return this.character.chatPalette; }

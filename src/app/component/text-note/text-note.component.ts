@@ -19,7 +19,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('textArea') textAreaElementRef: ElementRef;
+  @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
 
   @Input() textNote: TextNote = null;
   @Input() is3D: boolean = false;
