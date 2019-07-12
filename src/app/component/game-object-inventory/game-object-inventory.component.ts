@@ -201,7 +201,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     component.character = gameObject;
   }
 
-  private selectGameObject(gameObject: GameObject) {
+  selectGameObject(gameObject: GameObject) {
     let aliasName: string = gameObject.aliasName;
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
   }

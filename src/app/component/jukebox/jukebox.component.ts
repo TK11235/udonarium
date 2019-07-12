@@ -27,7 +27,7 @@ export class JukeboxComponent implements OnInit, OnDestroy {
   get audios(): AudioFile[] { return AudioStorage.instance.audios.filter(audio => !audio.isHidden); }
   get jukebox(): Jukebox { return ObjectStore.instance.get<Jukebox>('Jukebox'); }
 
-  private auditionPlayer: AudioPlayer = new AudioPlayer();
+  readonly auditionPlayer: AudioPlayer = new AudioPlayer();
   private lazyUpdateTimer: NodeJS.Timer = null;
 
   constructor(
