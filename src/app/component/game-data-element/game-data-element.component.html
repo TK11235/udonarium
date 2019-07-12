@@ -19,7 +19,7 @@
       </ng-container>
     </div>
     <div class="table-cell">
-      <ng-container [ngSwitch]="gameDataElement.attributes['type']">
+      <ng-container [ngSwitch]="gameDataElement.type">
         <ng-container *ngSwitchCase="'numberResource'">
           <input [style]="'font-size: 1.0em; min-width: 90px; width: 90%; --min: 0; --max: ' + value + '; --val:' + currentValue +';' | safe: 'style'"
             [(ngModel)]="currentValue" type="range" min="0" max="{{value}}" />

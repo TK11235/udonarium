@@ -13,7 +13,7 @@
     <button (click)="openModal('wall')">壁の画像を変更</button>
   </ng-container>
   <ng-container *ngSwitchCase="'dice-symbol'">
-    <button (click)="openModal(tabletopObject.face)" [disabled]="!tabletopObject.isVisible">ダイス目の画像を変更</button>
+    <button (click)="openModal(tabletopObject['face'])" [disabled]="!tabletopObject['isVisible']">ダイス目の画像を変更</button>
   </ng-container>
   <ng-container *ngSwitchDefault>
     <button (click)="openModal('imageIdentifier', true)">画像変更</button>
