@@ -4,7 +4,7 @@
 <div>
   <div *ngFor="let audio of audios" class="box">
     <button *ngIf="audio !== auditionPlayer?.audio || auditionPlayer?.paused" (click)="play(audio)" [disabled]="!audio.isReady" >試聴/再生</button>
-    <button *ngIf="audio === auditionPlayer?.audio && !auditionPlayer?.paused" (click)="stop(audio)" [disabled]="!audio.isReady" >試聴/停止</button>
+    <button *ngIf="audio === auditionPlayer?.audio && !auditionPlayer?.paused" (click)="stop()" [disabled]="!audio.isReady" >試聴/停止</button>
     <button *ngIf="audio !== jukebox?.audio" (click)="playBGM(audio)" [disabled]="!audio.isReady" >BGM/再生</button>
     <button *ngIf="audio === jukebox?.audio" (click)="stopBGM(audio)" [disabled]="!audio.isReady" >BGM/停止</button>
     <span *ngIf="audio === auditionPlayer?.audio && !auditionPlayer?.paused">【試聴中】</span>
