@@ -8,8 +8,8 @@ export class DataElement extends ObjectNode {
   @SyncVar() type: string;
   @SyncVar() currentValue: number | string;
 
-  get isNumberResource(): boolean { return this.attributes['type'] != null && this.attributes['type'] === 'numberResource'; }
-  get isNote(): boolean { return this.attributes['type'] != null && this.attributes['type'] === 'note'; }
+  get isNumberResource(): boolean { return this.type != null && this.type === 'numberResource'; }
+  get isNote(): boolean { return this.type != null && this.type === 'note'; }
 
   public static create(name: string, value: number | string = '', attributes: Attributes = {}, identifier: string = ''): DataElement {
     let dataElement: DataElement;
