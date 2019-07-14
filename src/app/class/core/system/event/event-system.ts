@@ -57,11 +57,7 @@ export class EventSystem implements Subject {
     let listeners: Listener[] = this.getListeners(listener.eventName);
 
     listeners.push(listener);
-    listeners.sort(function (a, b) {
-      if (a.priority > b.priority) return -1;
-      if (a.priority < b.priority) return 1;
-      return 0;
-    });
+    listeners.sort((a, b) => b.priority - a.priority);
     return listener;
   }
 
