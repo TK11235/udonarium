@@ -44,8 +44,8 @@ export class EventSystem implements Subject {
 
   private _unregister(key: any = this, eventName: string, callback: Callback<any>) {
     for (let _eventName in this.listenersHash) {
-      let listeners = this.getListeners(_eventName);
-      for (let listener of listeners.concat()) {
+      let listeners = this.getListeners(_eventName).concat();
+      for (let listener of listeners) {
         if (listener.isEqual(key, eventName, callback)) {
           listener.unregister();
         }
@@ -101,10 +101,8 @@ export class EventSystem implements Subject {
   }
 
   private _trigger<T>(event: Event<T>): Event<T> {
-    for (let listener of this.getListeners(event.eventName).concat()) {
-      listener.trigger(event);
-    }
-    for (let listener of this.getListeners('*').concat()) {
+    let listeners = this.getListeners(event.eventName).concat(this.getListeners('*'));
+    for (let listener of listeners) {
       listener.trigger(event);
     }
     return event;
