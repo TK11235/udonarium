@@ -21,14 +21,11 @@ import { PanelService } from 'service/panel.service';
 })
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private searchWord:string = 'default';
+  searchWord:string = 'default';
 
   @Input() isAllowedEmpty: boolean = false;
   get images(): ImageFile[] { return ImageStorage.instance.images; }
   get empty(): ImageFile { return ImageFile.Empty; }
-  //以下のget・setは暫定
-  get searchWd(): string { return this.searchWord; }
-  set searchWd(word:string) {this.searchWord = word; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,

@@ -14,14 +14,9 @@ import { PanelService } from 'service/panel.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
-  private searchWord:string = 'default';
-  private selectedImageTag:string = '';
-
-  //以下のget・setは暫定
-  get searchWd(): string { return this.searchWord; }
-  set searchWd(word:string) {this.searchWord = word; }
-　get selectedIT(): string{ return this.selectedImageTag; }
-  set selectedIT(word:string) {this.selectedImageTag = word; }
+  searchWord:string = 'default';
+  selectedImageTag:string = '';
+  isTagTextBoxChanged:boolean = false;
 
   fileStorageService = ImageStorage.instance;
   constructor(
@@ -60,6 +55,10 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   changeTag() {
-    console.log('検索ボタン押下/変更後タグ：' + this.selectedImageTag );
+    console.log('変更ボタン押下/変更後タグ：' + this.selectedImageTag );
+  }
+
+  changeTagTextBox() {
+    this.isTagTextBoxChanged = true;
   }
 }
