@@ -1,3 +1,7 @@
+<div id="search">
+  検索：  <input [(ngModel)]="searchWord"  placeholder="部分一致で検索" /> 
+</div>
+<hr/>
 <div id="file-list">
   <span class="empty" *ngIf="isAllowedEmpty">
     <button (click)="onSelectedFile(empty)">画像なし</button>

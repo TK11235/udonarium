@@ -21,6 +21,8 @@ import { PanelService } from 'service/panel.service';
 })
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  private searchWord:string = 'default';
+
   @Input() isAllowedEmpty: boolean = false;
   get images(): ImageFile[] { return ImageStorage.instance.images; }
   get empty(): ImageFile { return ImageFile.Empty; }

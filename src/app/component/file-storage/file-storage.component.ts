@@ -14,6 +14,8 @@ import { PanelService } from 'service/panel.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
+  private searchWord:string = 'default';
+  private selectedImageTag:string = '';
 
   fileStorageService = ImageStorage.instance;
   constructor(
