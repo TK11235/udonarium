@@ -26,6 +26,9 @@ export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() isAllowedEmpty: boolean = false;
   get images(): ImageFile[] { return ImageStorage.instance.images; }
   get empty(): ImageFile { return ImageFile.Empty; }
+  //以下のget・setは暫定
+  get searchWd(): string { return this.searchWord; }
+  set searchWd(word:string) {this.searchWord = word; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -55,5 +58,9 @@ export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('onSelectedFile', file);
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
     this.modalService.resolve(file.identifier);
+  }
+
+  searchImageFromTag() {
+    console.log('検索ボタン押下/検索ワード：' + this.searchWord );
   }
 }

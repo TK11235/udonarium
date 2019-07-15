@@ -17,6 +17,12 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   private searchWord:string = 'default';
   private selectedImageTag:string = '';
 
+  //以下のget・setは暫定
+  get searchWd(): string { return this.searchWord; }
+  set searchWd(word:string) {this.searchWord = word; }
+　get selectedIT(): string{ return this.selectedImageTag; }
+  set selectedIT(word:string) {this.selectedImageTag = word; }
+
   fileStorageService = ImageStorage.instance;
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -47,5 +53,13 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   onSelectedFile(file: ImageFile) {
     console.log('onSelectedFile', file);
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
+  }
+
+  searchImageFromTag() {
+    console.log('検索ボタン押下/検索ワード：' + this.searchWord );
+  }
+
+  changeTag() {
+    console.log('検索ボタン押下/変更後タグ：' + this.selectedImageTag );
   }
 }
