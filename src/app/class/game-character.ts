@@ -18,11 +18,6 @@ export class GameCharacter extends TabletopObject {
     return null;
   }
 
-  setLocation(location: string) {
-    this.location.name = location;
-    this.update();
-  }
-
   static create(name: string, size: number, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
