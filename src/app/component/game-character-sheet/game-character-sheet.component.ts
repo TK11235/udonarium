@@ -75,7 +75,6 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
       let element = this.tabletopObject.imageDataElement.getFirstElementByName(name);
       if (!element) return;
       element.value = value;
-      element.update();
     });
   }
 }

@@ -41,7 +41,6 @@ export class ChatPalette extends ObjectNode {
   setPalette(paletteSource: string) {
     this.value = paletteSource;
     this.isAnalized = false;
-    this.update();
   }
 
   evaluate(line: PaletteLine, extendVariables?: DataElement): string

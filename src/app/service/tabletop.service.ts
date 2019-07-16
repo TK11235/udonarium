@@ -105,7 +105,6 @@ export class TabletopService {
           gameObject.location.y = pointer.y - 25;
           gameObject.posZ = pointer.z;
           this.placeToTabletop(gameObject);
-          gameObject.update();
           SoundEffect.play(PresetSound.piecePut);
         }
       });

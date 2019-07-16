@@ -53,7 +53,6 @@ export class CardStackListComponent implements OnInit, OnDestroy {
     card.rotate += this.cardStack.rotate;
     if (360 < card.rotate) card.rotate -= 360;
     card.toTopmost();
-    card.update();
     SoundEffect.play(PresetSound.cardDraw);
   }
 

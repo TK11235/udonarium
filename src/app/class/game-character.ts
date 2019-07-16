@@ -35,7 +35,6 @@ export class GameCharacter extends TabletopObject {
 
     if (this.imageDataElement.getFirstElementByName('imageIdentifier')) {
       this.imageDataElement.getFirstElementByName('imageIdentifier').value = imageIdentifier;
-      this.imageDataElement.getFirstElementByName('imageIdentifier').update();
     }
 
     let resourceElement: DataElement = DataElement.create('リソース', '', {}, 'リソース' + this.identifier);
@@ -87,7 +86,5 @@ export class GameCharacter extends TabletopObject {
 //格闘＝１`);
     palette.initialize();
     this.appendChild(palette);
-
-    this.update();
   }
 }

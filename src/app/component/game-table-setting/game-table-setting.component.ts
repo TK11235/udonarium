@@ -48,13 +48,11 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   get tableGridShow(): boolean { return this.tableSelecter.gridShow; }
   set tableGridShow(tableGridShow: boolean) {
     this.tableSelecter.gridShow = tableGridShow;
-    this.tableSelecter.update();
   }
 
   get tableGridSnap(): boolean { return this.tableSelecter.gridSnap; }
   set tableGridSnap(tableGridSnap: boolean) {
     this.tableSelecter.gridSnap = tableGridSnap;
-    this.tableSelecter.update();
   }
 
   get tableGridType(): GridType { return this.selectedTable.gridType; }
@@ -131,7 +129,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
       this.selectedTableXml = this.selectedTable.toXml();
       this.selectedTable.destroy();
     }
-    this.tableSelecter.update();
   }
 
   restore() {

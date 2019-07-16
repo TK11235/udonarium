@@ -112,13 +112,11 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
         ? {
           name: '固定解除', action: () => {
             this.isLocked = false;
-            this.terrain.update();
             SoundEffect.play(PresetSound.unlock);
           }
         } : {
           name: '固定する', action: () => {
             this.isLocked = true;
-            this.terrain.update();
             SoundEffect.play(PresetSound.lock);
           }
         }),
