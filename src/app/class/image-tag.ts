@@ -1,15 +1,12 @@
-import { ImageFile } from './core/file-storage/image-file';
-import { ImageStorage } from './core/file-storage/image-storage';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 
 @SyncObject('image-tag')
 export class ImageTag extends ObjectNode {
-    @SyncVar() imageIdentifier: string;
-    @SyncVar() isSave: boolean;
+    @SyncVar() imageIdentifier: string = '';
+    @SyncVar() isSave: boolean = false;
 
     get tag():string {return <string>this.value; }
-    get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
 
     set tag(tag:string) { this.value = tag; }
 
