@@ -76,4 +76,7 @@ export class SaveDataService {
     }
     return files;
   }
+
+  //NktAts-20190716：ここに、以下のメソッドを足す
+  //イメージタグとXMLを引数として、存在するイメージタグの保存フラグをtrueにするメソッド
 }
