@@ -316,7 +316,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cardStack.update(); // todo
       card.location.x += 100 + (Math.random() * 50);
       card.location.y += 25 + (Math.random() * 50);
-      card.update();
+      card.setLocation(this.cardStack.location.name);
     }
     return card;
   }
@@ -327,10 +327,9 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       card.location.x += 25 - (Math.random() * 50);
       card.location.y += 25 - (Math.random() * 50);
       card.toTopmost();
-      card.update();
+      card.setLocation(this.cardStack.location.name);
     }
-    this.cardStack.location.name = 'graveyard';
-    this.cardStack.update();
+    this.cardStack.setLocation('graveyard');
     this.cardStack.destroy();
   }
 
@@ -349,8 +348,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     let cards = this.cardStack.drawCardAll();
-    this.cardStack.location.name = 'graveyard';
-    this.cardStack.update();
+    this.cardStack.setLocation('graveyard');
     this.cardStack.destroy();
 
     let num = 0;
@@ -377,12 +375,10 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     let topCards: Card[] = topStack.drawCardAll();
     for (let card of topCards.concat(bottomCards)) newCardStack.putOnBottom(card);
 
-    bottomStack.location.name = '';
-    bottomStack.update();
+    bottomStack.setLocation('');
     bottomStack.destroy();
 
-    topStack.location.name = '';
-    topStack.update();
+    topStack.setLocation('');
     topStack.destroy();
   }
 
