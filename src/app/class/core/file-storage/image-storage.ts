@@ -1,5 +1,7 @@
 import { EventSystem } from '../system';
 import { ImageContext, ImageFile, ImageState } from './image-file';
+import { ImageTagList } from '../../image-tag-list';
+import { ImageTag} from '../../image-tag';
 
 export type CatalogItem = { identifier: string, state: number };
 
@@ -61,6 +63,12 @@ export class ImageStorage {
     if (this.update(image)) return this.imageHash[image.identifier];
     this.imageHash[image.identifier] = image;
     console.log('addNewFile()', image);
+
+    let imagetag = new ImageTag();
+    imagetag.imageIdentifier = image.identifier;
+    imagetag.tag = image.identifier;
+    ImageTagList.instance.appendChild(imagetag);
+
     return image;
   }
 
