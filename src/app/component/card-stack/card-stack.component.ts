@@ -322,8 +322,8 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private breakStack() {
-    let cards = this.cardStack.drawCardAll();
-    for (let card of cards.reverse()) {
+    let cards = this.cardStack.drawCardAll().reverse();
+    for (let card of cards) {
       card.location.x += 25 - (Math.random() * 50);
       card.location.y += 25 - (Math.random() * 50);
       card.toTopmost();
