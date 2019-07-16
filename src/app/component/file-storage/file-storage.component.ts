@@ -3,6 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ImageTagList } from '@udonarium/image-tag-list';
 import { EventSystem, Network } from '@udonarium/core/system';
 
 import { PanelService } from 'service/panel.service';
@@ -48,6 +49,8 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   onSelectedFile(file: ImageFile) {
     console.log('onSelectedFile', file);
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
+
+    this.selectedImageTag = ImageTagList.instance.getTagFromIdentifier(file.identifier).tag;
   }
 
   searchImageFromTag() {

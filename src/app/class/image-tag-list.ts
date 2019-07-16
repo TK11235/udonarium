@@ -29,6 +29,15 @@ export class ImageTagList extends ObjectNode implements InnerXml {
         return resultTags;
     }
 
+    getTagFromIdentifier(ide:string) :ImageTag {
+        for(let target of this.imageTags) {
+            if(target.imageIdentifier == ide) return target;
+        }
+
+        console.log('NotFound Target ImageTag from ImageTagList',ide);
+        return null;
+    }
+
     innerXml(): string { return ''; }
 
     parseInnerXml(element: Element) {
