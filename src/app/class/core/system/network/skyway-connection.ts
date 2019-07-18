@@ -265,6 +265,10 @@ export class SkyWayConnection implements Connection {
       this.peerContexts.splice(index, 1);
     }
     this.relayingPeerIds.delete(conn.remoteId);
+    this.relayingPeerIds.forEach(peerIds => {
+      let index = peerIds.indexOf(conn.remoteId);
+      if (0 <= index) peerIds.splice(index, 1);
+    });
     console.log('<close()> Peer:' + conn.remoteId + ' length:' + this.connections.length + ':' + this.peerContexts.length);
     this.updatePeerList();
   }
