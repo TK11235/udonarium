@@ -304,6 +304,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private onData(conn: SkyWayDataConnection, container: DataContainer) {
+    if (container.peers && 0 < container.peers.length) this.onUpdatePeerList(conn, container);
     if (0 < container.ttl) this.onRelay(conn, container);
     if (this.callback.onData) {
       let byteLength = container.data.byteLength;
@@ -322,23 +323,8 @@ export class SkyWayConnection implements Connection {
   private onRelay(conn: SkyWayDataConnection, container: DataContainer) {
     container.ttl--;
 
-    let canUpdate: boolean = container.peers && 0 < container.peers.length;
-    let hasRelayingList: boolean = this.relayingPeerIds.has(conn.remoteId);
-
-    if (!canUpdate && !hasRelayingList) return;
-
-    let relayingPeerIds: string[] = [];
-    let unknownPeerIds: string[] = [];
-
-    if (canUpdate) {
-      let diff = diffArray(this._peerIds, container.peers);
-      relayingPeerIds = diff.diff1;
-      unknownPeerIds = diff.diff2;
-      this.relayingPeerIds.set(conn.remoteId, relayingPeerIds);
-      container.peers = container.peers.concat(relayingPeerIds);
-    } else if (hasRelayingList) {
-      relayingPeerIds = this.relayingPeerIds.get(conn.remoteId);
-    }
+    let relayingPeerIds: string[] = this.relayingPeerIds.get(conn.remoteId);
+    if (relayingPeerIds == null) return;
 
     for (let peerId of relayingPeerIds) {
       let conn = this.findDataConnection(peerId);
@@ -347,11 +333,23 @@ export class SkyWayConnection implements Connection {
         conn.send(container);
       }
     }
-    if (unknownPeerIds.length && this.callback.onDetectUnknownPeers) {
+  }
+
+  private onUpdatePeerList(conn: SkyWayDataConnection, container: DataContainer) {
+    let relayingPeerIds: string[] = [];
+    let unknownPeerIds: string[] = [];
+
+    let diff = diffArray(this._peerIds, container.peers);
+    relayingPeerIds = diff.diff1;
+    unknownPeerIds = diff.diff2;
+    this.relayingPeerIds.set(conn.remoteId, relayingPeerIds);
+    container.peers = container.peers.concat(relayingPeerIds);
+
+    if (unknownPeerIds.length) {
       for (let peerId of unknownPeerIds) {
         if (this.connect(peerId)) console.log('auto connect to unknown Peer <' + peerId + '>');
       }
-      this.callback.onDetectUnknownPeers(unknownPeerIds);
+      if (this.callback.onDetectUnknownPeers) this.callback.onDetectUnknownPeers(unknownPeerIds);
     }
   }
 
