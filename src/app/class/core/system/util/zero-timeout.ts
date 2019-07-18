@@ -2,7 +2,7 @@ let i: number = 0;
 const timeouts = new Map<number, Function>();
 const channel = new MessageChannel();
 
-export function setZeroTimeout(fn): number {
+export function setZeroTimeout(fn: Function): number {
   if (i === 0x100000000) // max queue size
     i = 0;
   if (++i in timeouts) throw new Error('setZeroTimeout queue overflow.');
