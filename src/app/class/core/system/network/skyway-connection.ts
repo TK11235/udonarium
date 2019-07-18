@@ -113,7 +113,7 @@ export class SkyWayConnection implements Connection {
     if (this.connections.length < 1) return;
     let container: DataContainer = {
       data: MessagePack.encode(data),
-      ttl: 0
+      ttl: 1
     }
 
     let byteLength = container.data.byteLength;
@@ -145,7 +145,6 @@ export class SkyWayConnection implements Connection {
   }
 
   private sendBroadcast(container: DataContainer) {
-    container.ttl = 1;
     for (let conn of this.connections) {
       if (conn.open) conn.send(container);
     }
