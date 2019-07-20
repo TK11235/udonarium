@@ -100,7 +100,7 @@ export class CharazipComponent implements OnInit {
     }
   ];
 
-  @ViewChild('input')
+  @ViewChild('input', { static: true })
   inputElementRef: ElementRef<HTMLInputElement>;
 
   url = '';
