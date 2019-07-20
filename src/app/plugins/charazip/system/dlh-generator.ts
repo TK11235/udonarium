@@ -145,7 +145,7 @@ export class DlhGenerator {
     );
     mentalSkillElement.appendChild(
       gameCharacter.createDataElement(
-        '意思Lv',
+        '意志Lv',
         json.skills.mental.s3.level || '0'
       )
     );
