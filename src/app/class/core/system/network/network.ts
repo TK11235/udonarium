@@ -18,7 +18,7 @@ export class Network {
   get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peerContexts.concat() : []; }
   get peerContext(): IPeerContext { return this.connection ? this.connection.peerContext : null; }
 
-  get isConnected(): boolean { return this.connection && this.connection.peerContext ? this.connection.peerContext.isOpen : false; }
+  get isOpen(): boolean { return this.connection && this.connection.peerContext ? this.connection.peerContext.isOpen : false; }
 
   readonly callback: ConnectionCallback = new ConnectionCallback();
   get bandwidthUsage(): number { return this.connection ? this.connection.bandwidthUsage : 0; }

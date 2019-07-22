@@ -7,18 +7,18 @@
   <span>あなたのニックネーム：  <input [(ngModel)]="myPeer.name"  placeholder="ニックネーム" /></span>
 </div>
 <div>
-  <span>あなたのID：<span *ngIf="networkService.isConnected" style="font-weight: bold;">{{networkService.peerContext.id}}</span>
-  <span *ngIf="!networkService.isConnected" style="font-weight: bold;">???</span>
+  <span>あなたのID：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.id}}</span>
+  <span *ngIf="!networkService.isOpen" style="font-weight: bold;">???</span>
   </span>
 </div>
 <!--<div>host ID:{{networkService.hostPeerID}}</div>-->
 <ng-container *ngIf="18 < networkService.peerId.length">
   <hr/>
   <div>
-    <span>ルーム名：<span *ngIf="networkService.isConnected" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
+    <span>ルーム名：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
   </div>
   <div>
-    <span>パスワード：<span *ngIf="networkService.isConnected" style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>
+    <span>パスワード：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>
   </div>
 </ng-container>
 <hr/>
@@ -31,9 +31,9 @@
 <div>
   <ng-container *ngIf="networkService.peerId.length <= 18">
     <input [(ngModel)]="targetPeerId" placeholder="接続したい相手のID" name="targetPeerId" />
-    <button (click)="connectPeer()" [disabled]="!networkService.isConnected">プライベート接続</button><br>
+    <button (click)="connectPeer()" [disabled]="!networkService.isOpen">プライベート接続</button><br>
   </ng-container>
-  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isConnected">ロビー（ルーム一覧）を表示</button>
+  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isOpen">ロビー（ルーム一覧）を表示</button>
 </div>
 <div><span style="font-size: 12px;">{{help}}</span></div>
 <ng-container *ngIf="networkService.peerId.length <= 18">
