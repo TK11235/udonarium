@@ -127,13 +127,12 @@ export class Network {
     let store = new SkyWayConnection();
     store.setApiKey(this.key);
 
-    store.callback.willOpen = (peerId, sendFrom) => { if (this.callback.willOpen) this.callback.willOpen(peerId, sendFrom); }
-    store.callback.onTimeout = (peerId) => { if (this.callback.onTimeout) this.callback.onTimeout(peerId); }
-    store.callback.onOpen = (peerId) => { if (this.callback.onOpen) this.callback.onOpen(peerId); }
+    store.callback.onOpen = (conn) => { if (this.callback.onOpen) this.callback.onOpen(conn); }
+    store.callback.onClose = (conn) => { if (this.callback.onClose) this.callback.onClose(conn); }
+    store.callback.onConnect = (peerId) => { if (this.callback.onConnect) this.callback.onConnect(peerId); }
+    store.callback.onDisconnect = (peerId) => { if (this.callback.onDisconnect) this.callback.onDisconnect(peerId); }
     store.callback.onData = (peerId, data: any[]) => { if (this.callback.onData) this.callback.onData(peerId, data); }
-    store.callback.onClose = (peerId) => { if (this.callback.onClose) this.callback.onClose(peerId); }
     store.callback.onError = (peerId, err) => { if (this.callback.onError) this.callback.onError(peerId, err); }
-    store.callback.onDetectUnknownPeers = (peerIds) => { if (this.callback.onDetectUnknownPeers) this.callback.onDetectUnknownPeers(peerIds); }
 
     if (0 < this.queue.length && this.sendInterval === null) this.sendInterval = setZeroTimeout(this.sendCallback);
 

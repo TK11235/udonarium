@@ -118,26 +118,17 @@ export class EventSystem implements Subject {
   private initializeNetworkEvent() {
     let callback = Network.instance.callback;
 
-    callback.willOpen = (peerId, sendFrom) => {
-      if (sendFrom !== Network.instance.peerId) {
-        this.sendSystemMessage('Receive <' + peerId + '> connecting...');
-      } else {
-        this.sendSystemMessage('Request <' + peerId + '> connecting...');
-      }
+    callback.onOpen = (conn) => {
+      this.trigger('OPEN_PEER', { peer: conn.peerId });
+    }
+    callback.onClose = (conn) => {
+      this.trigger('LOST_CONNECTION_PEER', { peer: conn.peerId });
     }
 
-    callback.onTimeout = (peerId) => {
-      this.sendSystemMessage('timeout peer connection... <' + peerId + '>');
-    }
-
-    callback.onOpen = (peerId) => {
+    callback.onConnect = (peerId) => {
       this.sendSystemMessage('<' + peerId + '> is Open <DataConnection>');
-      if (peerId === Network.instance.peerId) {
-        this.trigger('OPEN_PEER', { peer: peerId });
-      } else {
-        this.trigger('OPEN_OTHER_PEER', { peer: peerId });
-        this.call('OTHER_PEERS', { otherPeers: Network.instance.peerIds });
-      }
+      this.trigger('OPEN_OTHER_PEER', { peer: peerId });
+      this.call('OTHER_PEERS', { otherPeers: Network.instance.peerIds });
     }
 
     callback.onData = (peerId, data: EventContext<never>[]) => {
@@ -146,22 +137,13 @@ export class EventSystem implements Subject {
       }
     }
 
-    callback.onClose = (peerId) => {
+    callback.onDisconnect = (peerId) => {
       this.sendSystemMessage('<' + peerId + '> is closed <DataConnection>');
-      if (peerId === Network.instance.peerId) {
-        this.trigger('LOST_CONNECTION_PEER', { peer: peerId });
-      } else {
-        this.trigger('CLOSE_OTHER_PEER', { peer: peerId });
-      }
+      this.trigger('CLOSE_OTHER_PEER', { peer: peerId });
     }
 
     callback.onError = (peerId, err) => {
       this.sendSystemMessage('<' + peerId + '> ' + err);
-    }
-
-    callback.onDetectUnknownPeers = (peerIds) => {
-      console.warn('未接続のPeerを確認?', peerIds);
-      this.trigger('OTHER_PEERS', { otherPeers: peerIds });
     }
   }
 

@@ -185,7 +185,7 @@ export class SkyWayConnection implements Connection {
       }
       this.peerContext.isOpen = true;
       console.log('My peer Context', this.peerContext);
-      if (this.callback.onOpen) this.callback.onOpen(this.peerId);
+      if (this.callback.onOpen) this.callback.onOpen(this);
     });
 
     peer.on('connection', conn => {
@@ -207,7 +207,7 @@ export class SkyWayConnection implements Connection {
         case 'socket-error':
         default:
           if (this.peerContext && this.peerContext.isOpen) {
-            if (this.callback.onClose) this.callback.onClose(this.peerId);
+            if (this.callback.onClose) this.callback.onClose(this);
           }
           break;
       }
@@ -219,17 +219,13 @@ export class SkyWayConnection implements Connection {
   private openDataConnection(conn: SkyWayDataConnection) {
     if (this.addDataConnection(conn) === false) return;
 
-    let sendFrom: string = conn.metadata.sendFrom;
-    if (this.callback.willOpen) this.callback.willOpen(conn.remoteId, sendFrom);
-
     let index = this.connections.indexOf(conn);
     let context: PeerContext = null;
     if (0 <= index) context = this.peerContexts[index];
 
     let timeout: NodeJS.Timer = setTimeout(() => {
-      if (this.callback.onTimeout) this.callback.onTimeout(conn.remoteId);
       this.closeDataConnection(conn);
-      if (this.callback.onClose) this.callback.onClose(conn.remoteId);
+      if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     }, 15000);
 
     conn.on('data', data => {
@@ -240,13 +236,13 @@ export class SkyWayConnection implements Connection {
       timeout = null;
       if (context) context.isOpen = true;
       this.updatePeerList();
-      if (this.callback.onOpen) this.callback.onOpen(conn.remoteId);
+      if (this.callback.onConnect) this.callback.onConnect(conn.remoteId);
     });
     conn.on('close', () => {
       if (timeout !== null) clearTimeout(timeout);
       timeout = null;
       this.closeDataConnection(conn);
-      if (this.callback.onClose) this.callback.onClose(conn.remoteId);
+      if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     });
     conn.on('error', err => {
       if (timeout !== null) clearTimeout(timeout);
@@ -349,7 +345,6 @@ export class SkyWayConnection implements Connection {
       for (let peerId of unknownPeerIds) {
         if (this.connect(peerId)) console.log('auto connect to unknown Peer <' + peerId + '>');
       }
-      if (this.callback.onDetectUnknownPeers) this.callback.onDetectUnknownPeers(unknownPeerIds);
     }
   }
 
