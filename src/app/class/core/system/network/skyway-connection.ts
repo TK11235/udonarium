@@ -185,7 +185,7 @@ export class SkyWayConnection implements Connection {
       }
       this.peerContext.isOpen = true;
       console.log('My peer Context', this.peerContext);
-      if (this.callback.onOpen) this.callback.onOpen(this);
+      if (this.callback.onOpen) this.callback.onOpen(this.peerId);
     });
 
     peer.on('connection', conn => {
@@ -207,7 +207,7 @@ export class SkyWayConnection implements Connection {
         case 'socket-error':
         default:
           if (this.peerContext && this.peerContext.isOpen) {
-            if (this.callback.onClose) this.callback.onClose(this);
+            if (this.callback.onClose) this.callback.onClose(this.peerId);
           }
           break;
       }

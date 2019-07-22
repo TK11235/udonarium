@@ -118,11 +118,11 @@ export class EventSystem implements Subject {
   private initializeNetworkEvent() {
     let callback = Network.instance.callback;
 
-    callback.onOpen = (conn) => {
-      this.trigger('OPEN_NETWORK', { peer: conn.peerId });
+    callback.onOpen = (peerId) => {
+      this.trigger('OPEN_NETWORK', { peer: peerId });
     }
-    callback.onClose = (conn) => {
-      this.trigger('CLOSE_NETWORK', { peer: conn.peerId });
+    callback.onClose = (peerId) => {
+      this.trigger('CLOSE_NETWORK', { peer: peerId });
     }
 
     callback.onConnect = (peerId) => {

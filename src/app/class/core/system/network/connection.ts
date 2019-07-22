@@ -1,8 +1,8 @@
 import { IPeerContext } from './peer-context';
 
 export class ConnectionCallback {
-  onOpen: (conn: Connection) => void;
-  onClose: (conn: Connection) => void;
+  onOpen: (peerId: string) => void;
+  onClose: (peerId: string) => void;
   onConnect: (peerId: string) => void;
   onDisconnect: (peerId: string) => void;
   onData: (peerId: string, data: any) => void;
