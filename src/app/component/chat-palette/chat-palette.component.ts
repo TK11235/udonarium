@@ -79,7 +79,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
           if (0 < this.gameCharacters.length) this.onSelectedCharacter(this.gameCharacters[0].identifier);
         }
       })
-      .on('CLOSE_OTHER_PEER', event => {
+      .on('DISCONNECT_PEER', event => {
         let object = ObjectStore.instance.get(this.sendTo);
         if (object instanceof PeerCursor && object.peerId === event.data.peer) {
           this.sendTo = '';

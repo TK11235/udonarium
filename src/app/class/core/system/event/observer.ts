@@ -4,9 +4,10 @@ import { Subject } from './subject';
 export type Callback<T> = (event: Event<T>, listener?: Observer) => void;
 
 export interface EventMap {
-  'OTHER_PEERS': { otherPeers: string[] };
-  'OPEN_OTHER_PEER': { peer: string };
-  'CLOSE_OTHER_PEER': { peer: string };
+  'OPEN_NETWORK': { peer: string };
+  'CLOSE_NETWORK': { peer: string };
+  'CONNECT_PEER': { peer: string };
+  'DISCONNECT_PEER': { peer: string };
   'UPDATE_GAME_OBJECT': {
     aliasName: string;
     identifier: string;

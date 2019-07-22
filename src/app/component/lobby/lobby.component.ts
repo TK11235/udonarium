@@ -35,10 +35,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.changeTitle();
     EventSystem.register(this)
-      .on('OPEN_PEER', 0, event => {
+      .on('OPEN_NETWORK', 0, event => {
         this.changeTitle();
       })
-      .on('OTHER_PEERS', event => {
+      .on('CONNECT_PEER', event => {
         this.changeTitle();
       });
     this.reload();
@@ -97,7 +97,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
     let triedPeer: string[] = [];
     EventSystem.register(triedPeer)
-      .on('OPEN_PEER', 0, event => {
+      .on('OPEN_NETWORK', 0, event => {
         console.log('LobbyComponent OPEN_PEER', event.data.peer);
         EventSystem.unregister(triedPeer);
         ObjectStore.instance.clearDeleteHistory();
@@ -105,7 +105,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
           Network.connect(peer.fullstring);
         }
         EventSystem.register(triedPeer)
-          .on('OPEN_OTHER_PEER', 0, event => {
+          .on('CONNECT_PEER', 0, event => {
             console.log('接続成功！', event.data.peer);
             triedPeer.push(event.data.peer);
             console.log('接続成功 ' + triedPeer.length + '/' + peerContexts.length);
@@ -114,7 +114,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
               EventSystem.unregister(triedPeer);
             }
           })
-          .on('CLOSE_OTHER_PEER', 0, event => {
+          .on('DISCONNECT_PEER', 0, event => {
             console.warn('接続失敗', event.data.peer);
             triedPeer.push(event.data.peer);
             console.warn('接続失敗 ' + triedPeer.length + '/' + peerContexts.length);

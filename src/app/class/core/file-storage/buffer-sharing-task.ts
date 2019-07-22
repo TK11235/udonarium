@@ -82,7 +82,7 @@ export class BufferSharingTask<T> {
           this.sendChank(this.sentChankIndex + 1);
         }
       })
-      .on('CLOSE_OTHER_PEER', 0, event => {
+      .on('DISCONNECT_PEER', 0, event => {
         if (event.data.peer !== this.sendTo) return;
         console.warn('送信キャンセル', this, event.data.peer);
         if (this.ontimeout) this.ontimeout(this);

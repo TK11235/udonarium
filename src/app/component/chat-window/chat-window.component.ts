@@ -126,7 +126,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
           this.sender = this.myPeer.identifier;
         }
       })
-      .on('CLOSE_OTHER_PEER', event => {
+      .on('DISCONNECT_PEER', event => {
         let object = ObjectStore.instance.get(this.sendTo);
         if (object instanceof PeerCursor && object.peerId === event.data.peer) {
           this.sendTo = '';

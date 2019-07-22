@@ -119,16 +119,15 @@ export class EventSystem implements Subject {
     let callback = Network.instance.callback;
 
     callback.onOpen = (conn) => {
-      this.trigger('OPEN_PEER', { peer: conn.peerId });
+      this.trigger('OPEN_NETWORK', { peer: conn.peerId });
     }
     callback.onClose = (conn) => {
-      this.trigger('LOST_CONNECTION_PEER', { peer: conn.peerId });
+      this.trigger('CLOSE_NETWORK', { peer: conn.peerId });
     }
 
     callback.onConnect = (peerId) => {
       this.sendSystemMessage('<' + peerId + '> is Open <DataConnection>');
-      this.trigger('OPEN_OTHER_PEER', { peer: peerId });
-      this.call('OTHER_PEERS', { otherPeers: Network.instance.peerIds });
+      this.trigger('CONNECT_PEER', { peer: peerId });
     }
 
     callback.onData = (peerId, data: EventContext<never>[]) => {
@@ -139,7 +138,7 @@ export class EventSystem implements Subject {
 
     callback.onDisconnect = (peerId) => {
       this.sendSystemMessage('<' + peerId + '> is closed <DataConnection>');
-      this.trigger('CLOSE_OTHER_PEER', { peer: peerId });
+      this.trigger('DISCONNECT_PEER', { peer: peerId });
     }
 
     callback.onError = (peerId, err) => {

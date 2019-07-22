@@ -20,7 +20,7 @@ export class ObjectSynchronizer {
     this.destroy();
     console.log('ObjectSynchronizer ready...');
     EventSystem.register(this)
-      .on('OPEN_OTHER_PEER', 2, event => {
+      .on('CONNECT_PEER', 2, event => {
         if (!event.isSendFromSelf) return;
         console.log('OPEN_OTHER_PEER GameRoomService !!!', event.data.peer);
         this.sendCatalog(event.data.peer);

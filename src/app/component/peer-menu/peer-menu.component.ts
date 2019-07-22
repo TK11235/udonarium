@@ -38,7 +38,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     EventSystem.register(this)
-      .on('OPEN_PEER', event => {
+      .on('OPEN_NETWORK', event => {
         this.ngZone.run(() => { });
       });
   }
@@ -78,17 +78,17 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let dummy = {};
       EventSystem.register(dummy)
-        .on('OPEN_PEER', 0, event => {
+        .on('OPEN_NETWORK', 0, event => {
           ObjectStore.instance.clearDeleteHistory();
           Network.connect(this.targetPeerId);
           EventSystem.unregister(dummy);
           EventSystem.register(dummy)
-            .on('OPEN_OTHER_PEER', 0, event => {
+            .on('CONNECT_PEER', 0, event => {
               console.log('接続成功！', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
             })
-            .on('CLOSE_OTHER_PEER', 0, event => {
+            .on('DISCONNECT_PEER', 0, event => {
               console.warn('接続失敗', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
@@ -139,8 +139,8 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let listener = EventSystem.register(this);
-    listener.on('OPEN_PEER', 0, event => {
-      console.log('OPEN_PEER', event.data.peer);
+    listener.on('OPEN_NETWORK', 0, event => {
+      console.log('OPEN_NETWORK', event.data.peer);
       EventSystem.unregisterListener(listener);
       ObjectStore.instance.clearDeleteHistory();
       for (let context of conectPeers) {
