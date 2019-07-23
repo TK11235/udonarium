@@ -130,15 +130,15 @@ export class EventSystem implements Subject {
       this.trigger('CONNECT_PEER', { peer: peerId });
     }
 
+    callback.onDisconnect = (peerId) => {
+      this.sendSystemMessage('<' + peerId + '> is closed <DataConnection>');
+      this.trigger('DISCONNECT_PEER', { peer: peerId });
+    }
+
     callback.onData = (peerId, data: EventContext<never>[]) => {
       for (let event of data) {
         this.trigger(event);
       }
-    }
-
-    callback.onDisconnect = (peerId) => {
-      this.sendSystemMessage('<' + peerId + '> is closed <DataConnection>');
-      this.trigger('DISCONNECT_PEER', { peer: peerId });
     }
 
     callback.onError = (peerId, err) => {

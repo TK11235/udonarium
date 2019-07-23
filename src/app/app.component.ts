@@ -151,12 +151,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         console.log('OPEN_NETWORK', event.data.peer);
         PeerCursor.myCursor.peerId = event.data.peer;
       })
-      .on('CONNECT_PEER', event => {
-        if (event.isSendFromSelf) this.chatMessageService.calibrateTimeOffset();
-      })
-      .on('DISCONNECT_PEER', 0, event => {
-        //
-      })
       .on('CLOSE_NETWORK', 0, event => {
         console.log('CLOSE_NETWORK', event.data.peer);
         this.ngZone.run(async () => {
@@ -167,8 +161,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
             Network.open();
           }
         });
+      })
+      .on('CONNECT_PEER', event => {
+        if (event.isSendFromSelf) this.chatMessageService.calibrateTimeOffset();
+      })
+      .on('DISCONNECT_PEER', 0, event => {
+        //
       });
   }
+
   ngAfterViewInit() {
     PanelService.defaultParentViewContainerRef = ModalService.defaultParentViewContainerRef = ContextMenuService.defaultParentViewContainerRef = this.modalLayerViewContainerRef;
     setTimeout(() => {
