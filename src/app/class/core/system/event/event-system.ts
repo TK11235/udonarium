@@ -126,12 +126,12 @@ export class EventSystem implements Subject {
     }
 
     callback.onConnect = (peerId) => {
-      this.sendSystemMessage('<' + peerId + '> is Open <DataConnection>');
+      this.sendSystemMessage('<' + peerId + '> connect <DataConnection>');
       this.trigger('CONNECT_PEER', { peer: peerId });
     }
 
     callback.onDisconnect = (peerId) => {
-      this.sendSystemMessage('<' + peerId + '> is closed <DataConnection>');
+      this.sendSystemMessage('<' + peerId + '> disconnect <DataConnection>');
       this.trigger('DISCONNECT_PEER', { peer: peerId });
     }
 

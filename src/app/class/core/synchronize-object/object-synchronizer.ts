@@ -22,7 +22,7 @@ export class ObjectSynchronizer {
     EventSystem.register(this)
       .on('CONNECT_PEER', 2, event => {
         if (!event.isSendFromSelf) return;
-        console.log('OPEN_OTHER_PEER GameRoomService !!!', event.data.peer);
+        console.log('CONNECT_PEER GameRoomService !!!', event.data.peer);
         this.sendCatalog(event.data.peer);
       })
       .on<CatalogItem[]>('SYNCHRONIZE_GAME_OBJECT', 0, event => {

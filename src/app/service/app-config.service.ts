@@ -76,14 +76,14 @@ export class AppConfigService {
 
     EventSystem.register(this)
       .on('CONNECT_PEER', -1000, () => {
-        console.log('AppConfigService OPEN_OTHER_PEER', Network.peerIds);
+        console.log('AppConfigService CONNECT_PEER', Network.peerIds);
         if (!this.isOpen) {
           this.isOpen = true;
         }
         db.addPeerHistory(Network.peerId, Network.peerIds);
       })
       .on('DISCONNECT_PEER', -1000, () => {
-        console.log('AppConfigService CLOSE_OTHER_PEER', Network.peerIds);
+        console.log('AppConfigService DISCONNECT_PEER', Network.peerIds);
       });
   }
 
