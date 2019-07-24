@@ -127,8 +127,8 @@ export class Network {
     let store = new SkyWayConnection();
     store.setApiKey(this.key);
 
-    store.callback.onOpen = (conn) => { if (this.callback.onOpen) this.callback.onOpen(conn); }
-    store.callback.onClose = (conn) => { if (this.callback.onClose) this.callback.onClose(conn); }
+    store.callback.onOpen = (peerId) => { if (this.callback.onOpen) this.callback.onOpen(peerId); }
+    store.callback.onClose = (peerId) => { if (this.callback.onClose) this.callback.onClose(peerId); }
     store.callback.onConnect = (peerId) => { if (this.callback.onConnect) this.callback.onConnect(peerId); }
     store.callback.onDisconnect = (peerId) => { if (this.callback.onDisconnect) this.callback.onDisconnect(peerId); }
     store.callback.onData = (peerId, data: any[]) => { if (this.callback.onData) this.callback.onData(peerId, data); }
