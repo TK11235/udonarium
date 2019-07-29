@@ -26,7 +26,7 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    EventSystem.register(this).on('SYNCHRONIZE_FILE_LIST', 0, event => {
+    EventSystem.register(this).on('SYNCHRONIZE_FILE_LIST', event => {
       if (event.isSendFromSelf) {
         this.changeDetector.markForCheck();
       }

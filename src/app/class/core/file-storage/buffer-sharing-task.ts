@@ -74,7 +74,7 @@ export class BufferSharingTask<T> {
     console.log('チャンク分割 ' + this.identifier, this.chanks.length);
 
     EventSystem.register(this)
-      .on<number>('FILE_MORE_CHANK_' + this.identifier, 0, event => {
+      .on<number>('FILE_MORE_CHANK_' + this.identifier, event => {
         if (this.sendTo !== event.sendFrom) return;
         this.completedChankIndex = event.data;
         if (this.sendChankTimer == null) {
@@ -82,7 +82,7 @@ export class BufferSharingTask<T> {
           this.sendChank(this.sentChankIndex + 1);
         }
       })
-      .on('DISCONNECT_PEER', 0, event => {
+      .on('DISCONNECT_PEER', event => {
         if (event.data.peer !== this.sendTo) return;
         console.warn('送信キャンセル', this, event.data.peer);
         if (this.ontimeout) this.ontimeout(this);
@@ -116,7 +116,7 @@ export class BufferSharingTask<T> {
     this.startTime = performance.now();
     this.chankReceiveCount = 0;
     EventSystem.register(this)
-      .on<ChankData>('FILE_SEND_CHANK_' + this.identifier, 0, event => {
+      .on<ChankData>('FILE_SEND_CHANK_' + this.identifier, event => {
         if (this.chanks.length < 1) this.chanks = new Array(event.data.length);
 
         if (this.chanks[event.data.index] != null) {

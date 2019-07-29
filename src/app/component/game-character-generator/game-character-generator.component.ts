@@ -38,7 +38,7 @@ export class GameCharacterGeneratorComponent implements OnInit, OnDestroy, After
   ngOnInit() {
     this.panelService.title = 'キャラクタージェネレーター'
     EventSystem.register(this)
-      .on('SELECT_FILE', 0, event => {
+      .on('SELECT_FILE', event => {
         console.log('SELECT_FILE GameCharacterGeneratorComponent ' + event.data.fileIdentifier);
 
         let fileIdentifier: string = event.data.fileIdentifier;

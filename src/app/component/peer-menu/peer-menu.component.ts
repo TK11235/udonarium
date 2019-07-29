@@ -78,17 +78,17 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let dummy = {};
       EventSystem.register(dummy)
-        .on('OPEN_NETWORK', 0, event => {
+        .on('OPEN_NETWORK', event => {
           ObjectStore.instance.clearDeleteHistory();
           Network.connect(this.targetPeerId);
           EventSystem.unregister(dummy);
           EventSystem.register(dummy)
-            .on('CONNECT_PEER', 0, event => {
+            .on('CONNECT_PEER', event => {
               console.log('接続成功！', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
             })
-            .on('DISCONNECT_PEER', 0, event => {
+            .on('DISCONNECT_PEER', event => {
               console.warn('接続失敗', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
@@ -139,7 +139,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let listener = EventSystem.register(this);
-    listener.on('OPEN_NETWORK', 0, event => {
+    listener.on('OPEN_NETWORK', event => {
       console.log('OPEN_NETWORK', event.data.peer);
       EventSystem.unregisterListener(listener);
       ObjectStore.instance.clearDeleteHistory();

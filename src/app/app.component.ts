@@ -139,19 +139,19 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       .on('DELETE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(event.isSendFromSelf); })
       .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
       .on('SYNCHRONIZE_FILE_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
-      .on<AppConfig>('LOAD_CONFIG', 0, event => {
+      .on<AppConfig>('LOAD_CONFIG', event => {
         console.log('LOAD_CONFIG !!!', event.data);
         Network.setApiKey(event.data.webrtc.key);
         Network.open();
       })
-      .on<File>('FILE_LOADED', 0, event => {
+      .on<File>('FILE_LOADED', event => {
         this.lazyNgZoneUpdate(false);
       })
-      .on('OPEN_NETWORK', 0, event => {
+      .on('OPEN_NETWORK', event => {
         console.log('OPEN_NETWORK', event.data.peer);
         PeerCursor.myCursor.peerId = event.data.peer;
       })
-      .on('CLOSE_NETWORK', 0, event => {
+      .on('CLOSE_NETWORK', event => {
         console.log('CLOSE_NETWORK', event.data.peer);
         this.ngZone.run(async () => {
           if (1 < Network.peerIds.length) {
@@ -165,7 +165,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       .on('CONNECT_PEER', event => {
         if (event.isSendFromSelf) this.chatMessageService.calibrateTimeOffset();
       })
-      .on('DISCONNECT_PEER', 0, event => {
+      .on('DISCONNECT_PEER', event => {
         //
       });
   }
