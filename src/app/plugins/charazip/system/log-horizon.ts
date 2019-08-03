@@ -435,16 +435,18 @@ ITRS{CR}+0 換金アイテム財宝表
     } コスト:${skill.cost} 制限:${skill.limit} 効果:${skill.function}\n`;
     // 判定
     let judge = '';
-    if (skill.roll.includes('対決')) {
-      const m = skill.roll.match(/\(((.*)\/.*)\)/);
-      judge = `{${m[2]}} ${skill.name}${m[1]}\n`;
+    const jMatch = skill.roll.match(/対決\(((.*)\/.*)\)/);
+    if (jMatch) {
+      judge = `{${jMatch[2]}} ${skill.name}${jMatch[1]}\n`;
     }
-    // 障壁
-    let barrier = '';
-    const bMatch = skill.function.match(/［障壁：([^［］]*)］/);
-    if (bMatch) {
-      const calc = LogHorizon.convertToCalc(bMatch[1], skill.skill_rank);
-      barrier = `${calc} ${skill.name}付与障壁量\n`;
+    // ステータス
+    let status = '';
+    const sRegex = /［(障壁|追撃)：([^［］]*)］/g;
+    let sMatch = sRegex.exec(skill.function);
+    while (sMatch) {
+      const calc = LogHorizon.convertToCalc(sMatch[2], skill.skill_rank);
+      status = `${calc} ${skill.name}付与${sMatch[1]}量\n`;
+      sMatch = sRegex.exec(skill.function);
     }
     // ダメージロール
     let damage = '';
@@ -466,7 +468,7 @@ ITRS{CR}+0 換金アイテム財宝表
       const calc = LogHorizon.convertToCalc(hMatch[1], skill.skill_rank);
       heal = `${calc} ${skill.name}回復量\n`;
     }
-    return `${effect}${judge}${barrier}${damage}${heal}`;
+    return `${effect}${judge}${status}${damage}${heal}`;
   }
 
   private static convertToCalc(str: string, skillRank: number): string {
