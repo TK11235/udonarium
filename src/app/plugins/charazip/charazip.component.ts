@@ -5,15 +5,15 @@ import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
 import { CustomCharacter } from './custom-character';
-import { InsaneGenerator } from './system/insane-generator';
-import { CocGenerator } from './system/coc-generator';
-import { DivinechargerGenerator } from './system/divinecharger-generator';
-import { Dx3rdGenerator } from './system/dx3rd-generator';
-import { Sw2Generator } from './system/sw2-generator';
-import { MonotonemuseumGenerator } from './system/monotonemuseum-generator';
-import { ShinobigamiGenerator } from './system/shinobigami-generator';
-import { DlhGenerator } from './system/dlh-generator';
-import { LhtrpgGenerator, LhrpgCharacter } from './system/lhtrpg-generator';
+import { Insane } from './system/insane';
+import { Cthulhu } from './system/cthulhu';
+import { DivineCharger } from './system/divine-charger';
+import { DoubleCross3rd } from './system/double-cross-3rd';
+import { SwordWorld2 } from './system/sword-world-2';
+import { MonotoneMusium } from './system/monotone-musium';
+import { Shinobigami } from './system/shinobigami';
+import { DeadlineHeroes } from './system/deadline-heroes';
+import { LogHorizon, LhrpgCharacter } from './system/log-horizon';
 
 interface SystemInfo {
   system: string;
@@ -46,19 +46,19 @@ export class CharazipComponent implements OnInit {
       system: 'coc',
       name: 'クトゥルフ',
       href: 'https://charasheet.vampire-blood.net/list_coc.html',
-      generater: CocGenerator.generateByVampireVlood
+      generater: Cthulhu.generateByVampireVlood
     },
     {
       system: 'swordworld2',
       name: 'ソードワールド2.0',
       href: 'https://charasheet.vampire-blood.net/list_swordworld2.html',
-      generater: Sw2Generator.generateByVampireVlood
+      generater: SwordWorld2.generateByVampireVlood
     },
     {
       system: 'dx3',
       name: 'ダブルクロス3rd',
       href: 'https://charasheet.vampire-blood.net/list_dx3.html',
-      generater: Dx3rdGenerator.generateByVampireVlood
+      generater: DoubleCross3rd.generateByVampireVlood
     }
   ];
 
@@ -67,37 +67,37 @@ export class CharazipComponent implements OnInit {
       system: 'insane',
       name: 'インセイン',
       href: 'https://character-sheets.appspot.com/insane/',
-      generater: InsaneGenerator.geneateByAppspot
+      generater: Insane.geneateByAppspot
     },
     {
       system: 'shinobigami',
       name: 'シノビガミ',
       href: 'https://character-sheets.appspot.com/shinobigami/',
-      generater: ShinobigamiGenerator.geneateByAppspot
+      generater: Shinobigami.geneateByAppspot
     },
     {
       system: 'dx3',
       name: 'ダブルクロス3rd',
       href: 'https://character-sheets.appspot.com/dx3/',
-      generater: Dx3rdGenerator.geneateByAppspot
+      generater: DoubleCross3rd.geneateByAppspot
     },
     {
       system: 'divinecharger',
       name: 'ディヴァインチャージャー',
       href: 'https://character-sheets.appspot.com/divinecharger/',
-      generater: DivinechargerGenerator.generateByAppspot
+      generater: DivineCharger.generateByAppspot
     },
     {
       system: 'dlh',
       name: 'デッドラインヒーローズ',
       href: 'https://character-sheets.appspot.com/dlh/',
-      generater: DlhGenerator.geneateByAppspot
+      generater: DeadlineHeroes.geneateByAppspot
     },
     {
       system: 'mnt',
       name: 'モノトーンミュージアム',
       href: 'https://character-sheets.appspot.com/mnt/',
-      generater: MonotonemuseumGenerator.geneateByAppspot
+      generater: MonotoneMusium.geneateByAppspot
     }
   ];
 
@@ -175,7 +175,7 @@ export class CharazipComponent implements OnInit {
     if (!json || Object.keys(json).length < 1) {
       throw new Error('URLが正しくありません。');
     }
-    return LhtrpgGenerator.generate(json);
+    return LogHorizon.generate(json);
   }
 
   /**

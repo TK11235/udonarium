@@ -6,7 +6,7 @@ import { CustomCharacter } from '../custom-character';
  * キャラクターシート倉庫 インセイン
  * https://character-sheets.appspot.com/insane/
  */
-export class InsaneGenerator {
+export class Insane {
   static geneateByAppspot(
     json: any,
     url: string,

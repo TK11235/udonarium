@@ -6,7 +6,7 @@ import { CustomCharacter } from '../custom-character';
  * キャラクター保管所 クトゥルフ
  * https://charasheet.vampire-blood.net/list_coc.html
  */
-export class CocGenerator {
+export class Cthulhu {
   static generateByVampireVlood(json: any, url: string): CustomCharacter[] {
     const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter(
       json.pc_name,

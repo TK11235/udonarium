@@ -6,7 +6,7 @@ import { CustomCharacter } from '../custom-character';
  * キャラクターシート倉庫 ディヴァインチャージャー
  * https://character-sheets.appspot.com/divinecharger/
  */
-export class DivinechargerGenerator {
+export class DivineCharger {
   static generateByAppspot(
     json: any,
     url: string,

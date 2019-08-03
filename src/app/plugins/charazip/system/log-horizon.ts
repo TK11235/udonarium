@@ -8,9 +8,9 @@ import { ɵDomAdapter } from '@angular/platform-browser';
 
 /**
  * ログ・ホライズンTRPG 冒険窓口
- * https://lhrpg.com/lhz/pc?id=161664
+ * https://lhrpg.com
  */
-export class LhtrpgGenerator {
+export class LogHorizon {
   static generate(json: LhrpgCharacter): CustomCharacter[] {
     const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter(
       json.name,
@@ -443,7 +443,7 @@ ITRS{CR}+0 換金アイテム財宝表
     let barrier = '';
     const bMatch = skill.function.match(/［障壁：([^［］]*)］/);
     if (bMatch) {
-      const calc = LhtrpgGenerator.convertToCalc(bMatch[1], skill.skill_rank);
+      const calc = LogHorizon.convertToCalc(bMatch[1], skill.skill_rank);
       barrier = `${calc} ${skill.name}付与障壁量\n`;
     }
     // ダメージロール
@@ -452,7 +452,7 @@ ITRS{CR}+0 換金アイテム財宝表
     let dMatch = dRegex.exec(skill.function);
     let isFirst = true;
     while (dMatch) {
-      const calc = LhtrpgGenerator.convertToCalc(dMatch[1], skill.skill_rank);
+      const calc = LogHorizon.convertToCalc(dMatch[1], skill.skill_rank);
       damage += `${calc} ${skill.name}${isFirst ? '' : '追加'}ダメージ(${
         dMatch[3]
       })\n`;
@@ -463,7 +463,7 @@ ITRS{CR}+0 換金アイテム財宝表
     let heal = '';
     const hMatch = skill.function.match(/［([^［］]*)］点回復/);
     if (hMatch) {
-      const calc = LhtrpgGenerator.convertToCalc(hMatch[1], skill.skill_rank);
+      const calc = LogHorizon.convertToCalc(hMatch[1], skill.skill_rank);
       heal = `${calc} ${skill.name}回復量\n`;
     }
     return `${effect}${judge}${barrier}${damage}${heal}`;

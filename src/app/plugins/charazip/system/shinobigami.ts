@@ -6,7 +6,7 @@ import { CustomCharacter } from '../custom-character';
  * キャラクターシート倉庫 シノビガミ
  * https://character-sheets.appspot.com/shinobigami/
  */
-export class ShinobigamiGenerator {
+export class Shinobigami {
   static geneateByAppspot(
     json: any,
     url: string,

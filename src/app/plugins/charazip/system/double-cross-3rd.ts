@@ -2,7 +2,7 @@ import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
 
-export class Dx3rdGenerator {
+export class DoubleCross3rd {
   /**
    * キャラクター保管所 ダブルクロス3rd
    * https://charasheet.vampire-blood.net/list_dx3.html
@@ -154,9 +154,9 @@ export class Dx3rdGenerator {
       const mod = Number.parseInt(json.skill_sonota[i] || 0, 10);
       skills.push({
         type: info.type,
-        name: name,
+        name,
         total: sl + mod,
-        extra: extra
+        extra
       });
     }
     const skillNames = ['運転:', '芸術:', '知識:', '情報:'];
@@ -171,9 +171,9 @@ export class Dx3rdGenerator {
       const mod = Number.parseInt(json.skill_sonota[i + 12] || 0, 10);
       skills.push({
         type: skillId,
-        name: name,
+        name,
         total: sl + mod,
-        extra: extra
+        extra
       });
     }
     const bodySkills = skills.filter(skill => skill.type === 1);

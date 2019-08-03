@@ -6,7 +6,7 @@ import { CustomCharacter } from '../custom-character';
  * キャラクターシート倉庫 モノトーンミュージアム
  * https://character-sheets.appspot.com/mnt/
  */
-export class MonotonemuseumGenerator {
+export class MonotoneMusium {
   static geneateByAppspot(
     json: any,
     url: string,

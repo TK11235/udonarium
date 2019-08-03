@@ -1,14 +1,12 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
-import { strictEqual } from 'assert';
-import { stringify } from 'querystring';
 
 /**
- * キャラクターシート倉庫 インセイン
+ * キャラクターシート倉庫 デッドラインヒーローズ
  * https://character-sheets.appspot.com/dlh/
  */
-export class DlhGenerator {
+export class DeadlineHeroes {
   static geneateByAppspot(
     json: any,
     url: string,

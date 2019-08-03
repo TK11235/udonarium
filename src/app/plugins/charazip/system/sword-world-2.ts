@@ -2,8 +2,7 @@ import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
 
-export class Sw2Generator {
-  string;
+export class SwordWorld2 {
   /**
    * キャラクター保管所 ソードワールド2.0
    * https://charasheet.vampire-blood.net/list_dx3.html
@@ -302,7 +301,7 @@ C({レンジャー}+({知力}/6)) 【魔香水】
       );
       const dex = Math.floor(Number.parseInt(json.NP2 || 0, 10) / 6);
       const kaihi = Number.parseInt(json.kaihi || 0, 10);
-      const kaihiMod = Sw2Generator.formatSign(kaihi - dex - kaihiGinouLv);
+      const kaihiMod = SwordWorld2.formatSign(kaihi - dex - kaihiGinouLv);
       if (json.is_senyou_shield === '1') {
         cpBattle += `2d+{${
           json.kaihi_ginou_name
@@ -313,7 +312,7 @@ C({レンジャー}+({知力}/6)) 【魔香水】
         }}+({敏捷度}/6)${kaihiMod}+{回避} 【回避力判定】\n`;
       }
     } else {
-      const kaihi = Sw2Generator.formatSign(json.kaihi);
+      const kaihi = SwordWorld2.formatSign(json.kaihi);
       cpBattle += `2d${kaihi}+{回避} 【回避力判定】\n`;
     }
 
@@ -328,10 +327,10 @@ C({レンジャー}+({知力}/6)) 【魔香水】
       }
       const hitGinouName = skillList[vHitGinou - 1];
       const isSenyou = json.arms_is_senyou[i];
-      const hitMod = Sw2Generator.formatSign(json.arms_hit_mod[i]);
+      const hitMod = SwordWorld2.formatSign(json.arms_hit_mod[i]);
       const iryoku = json.arms_iryoku[i];
       const critical = json.arms_critical[i];
-      const damageMod = Sw2Generator.formatSign(json.arms_damage_mod[i]);
+      const damageMod = SwordWorld2.formatSign(json.arms_damage_mod[i]);
       cpBattle += `//-----${armsName}\n`;
       if (isSenyou === '1') {
         cpBattle += `2d+{${hitGinouName}}+(({器用度}+2)/6)${hitMod}+{命中} 【命中力判定】${armsName}\n`;
@@ -387,7 +386,7 @@ k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical}\${出
       const lv = Number.parseInt(mlv, 10);
       const maryoku = json[`maryoku${magic.id}`];
       const int = Math.floor(Number.parseInt(json.NP5 || 0, 10) / 6);
-      const mod = Sw2Generator.formatSign(maryoku - int - lv);
+      const mod = SwordWorld2.formatSign(maryoku - int - lv);
       const skillName = skillList[magic.id - 1];
       cpBattle += `//-----${skillName}
 2d+{${skillName}}+({知力}/6)${mod}+{魔法行使} 【${magic.alias}行使判定】\n`;
