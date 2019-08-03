@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import * as fetchJsonp from 'fetch-jsonp';
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
-import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
 import { CustomCharacter } from './custom-character';
@@ -13,6 +13,7 @@ import { Sw2Generator } from './system/sw2-generator';
 import { MonotonemuseumGenerator } from './system/monotonemuseum-generator';
 import { ShinobigamiGenerator } from './system/shinobigami-generator';
 import { DlhGenerator } from './system/dlh-generator';
+import { LhtrpgGenerator, LhrpgCharacter } from './system/lhtrpg-generator';
 
 interface SystemInfo {
   system: string;
@@ -164,6 +165,19 @@ export class CharazipComponent implements OnInit {
     return systemInfo.generater(json, sheetUrl, imageIdentifier);
   }
 
+  private static async generateByLhrpgCharacter(
+    id: string
+  ): Promise<CustomCharacter[]> {
+    const json = await fetchJsonp(`https://lhrpg.com/lhz/api/${id}.json`).then(
+      response => response.json<LhrpgCharacter>()
+    );
+    // URLが正しくない場合、空のjsonが帰ってくる
+    if (!json || Object.keys(json).length < 1) {
+      throw new Error('URLが正しくありません。');
+    }
+    return LhtrpgGenerator.generate(json);
+  }
+
   /**
    * @see ImageFile#createThumbnailAsync from @udonarium/core/file-storage/image-file
    */
@@ -215,8 +229,9 @@ export class CharazipComponent implements OnInit {
           );
         } catch (err) {
           console.error(err);
-          this.errorMsg =
-            'キャラクターシートの取り込みに失敗しました。' + err.message;
+          this.errorMsg = `キャラクターシートの取り込みに失敗しました。\n${
+            err.message
+          }`;
           return;
         }
       }
@@ -235,8 +250,30 @@ export class CharazipComponent implements OnInit {
           );
         } catch (err) {
           console.error(err);
+          this.errorMsg = `キャラクターシートの取り込みに失敗しました。\n${
+            err.message
+          }`;
+          return;
+        }
+      }
+    }
+    if (!gameCharacters) {
+      let matchResult = this.url.match(/^http(s)?:\/\/lhrpg\.com\/lhz\//);
+      if (matchResult) {
+        matchResult = this.url.match(/\?id=(\d+)/);
+        if (!matchResult) {
           this.errorMsg =
-            'キャラクターシートの取り込みに失敗しました。' + err.message;
+            'URLが正しくありません。\nパーソナルファクターのページのURL"https://lhrpg.com/lhz/pc?id=xxxxxx"を入力してください。';
+          return;
+        }
+        const id = matchResult[1];
+        try {
+          gameCharacters = await CharazipComponent.generateByLhrpgCharacter(id);
+        } catch (err) {
+          console.error(err);
+          this.errorMsg = `キャラクターシートの取り込みに失敗しました。
+「基本情報を変更する」→「外部ツールからの〈冒険者〉データ参照を許可する」にチェックが入っているか確認してください。
+${err.message}`;
           return;
         }
       }
@@ -253,7 +290,7 @@ export class CharazipComponent implements OnInit {
       'name',
       gameCharacters[0].commonDataElement
     );
-    const objectName: string = element ? <string>element.value : '';
+    const objectName: string = element ? element.value.toString() : '';
 
     this.saveGameCharacters(gameCharacters, 'xml_' + objectName);
   }
@@ -275,14 +312,16 @@ export class CharazipComponent implements OnInit {
       'imageIdentifier'
     ).value;
     if (imageIdentifier) {
-      const image = ImageStorage.instance.get(<string>imageIdentifier);
-      files.push(
-        new File(
-          [image.blob],
-          image.identifier + '.' + MimeType.extension(image.blob.type),
-          { type: image.blob.type }
-        )
-      );
+      const image = ImageStorage.instance.get(imageIdentifier.toString());
+      if (image && image.state === ImageState.COMPLETE) {
+        files.push(
+          new File(
+            [image.blob],
+            image.identifier + '.' + MimeType.extension(image.blob.type),
+            { type: image.blob.type }
+          )
+        );
+      }
     }
 
     FileArchiver.instance.save(files, fileName);
