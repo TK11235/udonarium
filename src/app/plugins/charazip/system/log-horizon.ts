@@ -1,10 +1,7 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
-import { format } from 'url';
 import { StringUtil } from '@udonarium/core/system/util/string-util';
-import { resolveTxt } from 'dns';
-import { ɵDomAdapter } from '@angular/platform-browser';
 
 /**
  * ログ・ホライズンTRPG 冒険窓口
@@ -134,77 +131,6 @@ export class LogHorizon {
       gameCharacter.createDataElement('INT基本値', json.int_basic_value)
     );
     /*
-     * 技能値
-     */
-    const skillElement = gameCharacter.createDataElement('技能値', '');
-    gameCharacter.detailDataElement.appendChild(skillElement);
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '運動',
-        this.convertToCommand(json.abl_motion)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '耐久',
-        this.convertToCommand(json.abl_durability)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '解除',
-        this.convertToCommand(json.abl_dismantle)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '操作',
-        this.convertToCommand(json.abl_operate)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '知覚',
-        this.convertToCommand(json.abl_sense)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '交渉',
-        this.convertToCommand(json.abl_negotiate)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '知識',
-        this.convertToCommand(json.abl_knowledge)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '解析',
-        this.convertToCommand(json.abl_analyze)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '回避',
-        this.convertToCommand(json.abl_avoid)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '抵抗',
-        this.convertToCommand(json.abl_resist)
-      )
-    );
-    skillElement.appendChild(
-      gameCharacter.createDataElement(
-        '命中',
-        this.convertToCommand(json.abl_hit)
-      )
-    );
-    /*
      * 装備
      */
     const equipmentElement = gameCharacter.createDataElement('装備', '');
@@ -261,15 +187,51 @@ export class LogHorizon {
       'ChatPalette_' + gameCharacter.identifier
     );
     palette.dicebot = 'LogHorizon';
+    const skillToRoll = (json: LhrpgCharacter) => (skillName: string) => {
+      if (skillName === '運動') {
+        return json.abl_motion;
+      }
+      if (skillName === '耐久') {
+        return json.abl_durability;
+      }
+      if (skillName === '解除') {
+        return json.abl_dismantle;
+      }
+      if (skillName === '操作') {
+        return json.abl_operate;
+      }
+      if (skillName === '知覚') {
+        return json.abl_sense;
+      }
+      if (skillName === '交渉') {
+        return json.abl_negotiate;
+      }
+      if (skillName === '知識') {
+        return json.abl_knowledge;
+      }
+      if (skillName === '解析') {
+        return json.abl_analyze;
+      }
+      if (skillName === '回避') {
+        return json.abl_avoid;
+      }
+      if (skillName === '抵抗') {
+        return json.abl_resist;
+      }
+      if (skillName === '命中') {
+        return json.abl_hit;
+      }
+    };
     // チャパレ内容
     let cp = `キャラクター名:${json.name}
 
 ○戦闘の基本
-{命中} 命中値
-{回避} 回避値 ヘイトトップ
-{回避}+2 回避値 ヘイトアンダー
-{抵値} 抵抗値 ヘイトトップ
-{抵抗}+2 抵抗値 ヘイトアンダー
+
+${this.convertToCommand(skillToRoll(json)('命中'))} 命中値
+${this.convertToCommand(skillToRoll(json)('回避'))} 回避値 ヘイトトップ
+${this.convertToCommand(skillToRoll(json)('回避'))}+2 回避値 ヘイトアンダー
+${this.convertToCommand(skillToRoll(json)('抵抗'))} 抵抗値 ヘイトトップ
+${this.convertToCommand(skillToRoll(json)('抵抗'))}+2 抵抗値 ヘイトアンダー
 {攻撃力}+1D6 基本武器攻撃、物理ダメージ
 {魔力}+1D6 基本魔法攻撃、魔法ダメージ
 
@@ -305,7 +267,9 @@ C(0-{HP}) 残障壁=残HP-HP
       const skills = json.skills.filter(skill => skill.timing === timing);
       if (skills.length > 0) {
         cp += `\n○${timing}\n`;
-        cp += skills.map(this.formatSkill).join(sep);
+        cp += skills
+          .map(skill => this.formatSkill(skill, skillToRoll(json)))
+          .join(sep);
       }
     }
     cp += `
@@ -376,14 +340,14 @@ C(0-{HP}) 残障壁=残HP-HP
 
     cp += `
 ○各種判定
-{運動} 運動値
-{耐久} 耐久値
-{解除} 解除値
-{操作} 操作値
-{知覚} 知覚値
-{交渉} 交渉値
-{知識} 知識値
-{解析} 解析値
+${this.convertToCommand(skillToRoll(json)('運動'))} 運動値
+${this.convertToCommand(skillToRoll(json)('耐久'))} 耐久値
+${this.convertToCommand(skillToRoll(json)('解除'))} 解除値
+${this.convertToCommand(skillToRoll(json)('操作'))} 操作値
+${this.convertToCommand(skillToRoll(json)('知覚'))} 知覚値
+${this.convertToCommand(skillToRoll(json)('交渉'))} 交渉値
+${this.convertToCommand(skillToRoll(json)('知識'))} 知識値
+${this.convertToCommand(skillToRoll(json)('解析'))} 解析値
 
 ○消耗表
 PCT{CR}+0 体力消耗表
@@ -405,10 +369,10 @@ ITRS{CR}+0 換金アイテム財宝表
     return [gameCharacter];
   }
 
-  private static convertToCommand(str: string): string {
+  private static convertToCommand(skill: string): string {
     let val = 0;
     let dice = 0;
-    const s = str.split('+');
+    const s = skill.split('+');
     for (const elm of s) {
       if (elm.match(/(\d+)D/)) {
         dice += Number.parseInt(elm.replace('D', ''), 10);
@@ -425,7 +389,10 @@ ITRS{CR}+0 換金アイテム財宝表
     return `${dice}LH`;
   }
 
-  private static formatSkill(skill: LhrpgSkill): string {
+  private static formatSkill(
+    skill: LhrpgSkill,
+    conv: (skillName: string) => string
+  ): string {
     const tagsText = skill.tags.map(tag => `[${tag}] `).join('');
     // 効果
     const effect = `《${skill.name}》 ${tagsText}SR:${skill.skill_rank}/${
@@ -437,7 +404,9 @@ ITRS{CR}+0 換金アイテム財宝表
     let judge = '';
     const jMatch = skill.roll.match(/対決\(((.*)\/.*)\)/);
     if (jMatch) {
-      judge = `{${jMatch[2]}} ${skill.name}${jMatch[1]}\n`;
+      judge = `${LogHorizon.convertToCommand(conv(jMatch[2]))} ${skill.name}${
+        jMatch[1]
+      }\n`;
     }
     // ステータス
     let status = '';
