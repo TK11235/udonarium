@@ -3,6 +3,7 @@ export namespace XmlUtil {
     let domParser: DOMParser = new DOMParser();
     let xmlDocument: Document = null;
     try {
+      xml = xml.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '');
       xmlDocument = domParser.parseFromString(xml, 'application/xml');
       let parsererror = xmlDocument.getElementsByTagName('parsererror');
       if (parsererror.length) {
