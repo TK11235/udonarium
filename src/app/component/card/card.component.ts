@@ -145,6 +145,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.doubleClickPoint.x === this.pointerDeviceService.pointers[0].x
       && this.doubleClickPoint.y === this.pointerDeviceService.pointers[0].y) {
       console.log('onDoubleClick !!!!');
+      if (this.hasOwner && !this.isHand) return;
       this.state = this.isVisible && !this.isHand ? CardState.BACK : CardState.FRONT;
       this.owner = '';
       SoundEffect.play(PresetSound.cardDraw);
