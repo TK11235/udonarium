@@ -89,13 +89,13 @@ export class LogHorizon {
       gameCharacter.createResourceElement('隠密', 1, 0)
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement('障壁', 50, 0)
+      gameCharacter.createResourceElement('障壁', 100, 0)
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement('再生', 50, 0)
+      gameCharacter.createResourceElement('再生', 100, 0)
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement('疲労', 50, 0)
+      gameCharacter.createResourceElement('疲労', 100, 0)
     );
     statusElement.appendChild(gameCharacter.createNoteElement('BS', ''));
     statusElement.appendChild(
@@ -235,11 +235,13 @@ ${this.convertToCommand(skillToRoll(json)('抵抗'))}+2 抵抗値 ヘイトア�
 {攻撃力}+1D6 基本武器攻撃、物理ダメージ
 {魔力}+1D6 基本魔法攻撃、魔法ダメージ
 
-○被ダメ計算用
+○HP計算用
+C({初期HP}-{疲労}) 最大HP=初期HP-疲労
 C(0-{物防}-0) 被ダメージ=物理ダメージ-物防-軽減
 C(0-{魔防}-0) 被ダメージ=魔法ダメージ-魔防-軽減
 C(({HP}+{障壁})-0-{ヘイト}*0-0) 残HP＝(HP+障壁)-ダメージ-ヘイトダメージ-その他
 C(0-{HP}) 残障壁=残HP-HP
+C({HP}+{再生}) HP=現HP+再生回復量
 `;
     const timingList = [
       'セットアップ',
@@ -359,6 +361,9 @@ CCT{CR}+0 金銭消耗表
 CTRS{CR}+0 金銭財宝表
 MTRS{CR}+0 魔法素材財宝表
 ITRS{CR}+0 換金アイテム財宝表
+
+○ステータス
+//初期HP=${json.max_hitpoint}
 `;
 
     palette.setPalette(cp);
