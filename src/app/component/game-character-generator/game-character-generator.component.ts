@@ -32,7 +32,7 @@ export class GameCharacterGeneratorComponent implements OnInit, OnDestroy, After
   constructor(
     private viewContainerRef: ViewContainerRef,
     private modalService: ModalService,
-    private panelService:PanelService
+    private panelService: PanelService
   ) { }
 
   ngOnInit() {
