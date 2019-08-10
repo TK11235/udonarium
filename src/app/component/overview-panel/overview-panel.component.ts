@@ -10,6 +10,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  AfterViewChecked,
 } from '@angular/core';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
@@ -41,7 +42,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit {
+export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
   @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef;
   @Input() tabletopObject: TabletopObject = null;
 
@@ -64,8 +65,6 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private $panel: JQuery;
 
-  private callbackOnScroll = (e) => this.onScroll(e);
-
   constructor(
     private ngZone: NgZone,
     private inventoryService: GameObjectInventoryService,
@@ -80,7 +79,6 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit 
       this.$panel = $(this.draggablePanel.nativeElement);
       $(this.draggablePanel.nativeElement).draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', opacity: 0.7 });
       this.initPanelPosition();
-      document.addEventListener('scroll', this.callbackOnScroll, false);
     });
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
@@ -100,15 +98,13 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    document.removeEventListener('scroll', this.callbackOnScroll, false);
   }
 
-  private onScroll(e: any) {
+  ngAfterViewChecked() {
     this.adjustPosition();
   }
 
   private adjustPosition() {
-    console.log('adjustPosition');
     let outerWidth = this.$panel.outerWidth();
     let outerHeight = this.$panel.outerHeight();
 
