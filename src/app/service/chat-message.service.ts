@@ -32,6 +32,12 @@ export class ChatMessageService {
   get infoTab(): ChatTab {
     return this.chatTabs.find(chatTab => chatTab.receiveInfo);
   }
+  setReceiveInfo(chatTab: ChatTab, receiveInfo: boolean): void {
+    this.chatTabs
+      .filter(tab => tab.receiveInfo)
+      .forEach(tab => (tab.receiveInfo = false));
+    chatTab.receiveInfo = receiveInfo;
+  }
 
   calibrateTimeOffset() {
     if (this.intervalTimer != null) {
