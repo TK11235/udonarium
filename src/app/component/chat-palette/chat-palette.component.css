@@ -108,3 +108,8 @@
   top: -4px;
   right: 0;
 }
+
+.material-icons {
+  vertical-align: middle;
+  font-size: 1rem;
+}
