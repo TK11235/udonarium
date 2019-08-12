@@ -15,6 +15,11 @@
       <hr/>
       <div>
         <ng-container *ngIf="!isDeleted">
+          <label>
+            操作ログを受け取る
+            <input type="checkbox" [(ngModel)]="receiveInfo" />
+          </label>
+          <br />
           <button (click)="save()">保存</button>
           <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">削除</button>
         </ng-container>

@@ -87,6 +87,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     let chatTab: ChatTab = new ChatTab('MainTab');
     chatTab.name = 'メインタブ';
+    chatTab.receiveInfo = true;
     chatTab.initialize();
 
     chatTab = new ChatTab('SubTab');
