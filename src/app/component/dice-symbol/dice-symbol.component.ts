@@ -199,9 +199,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
         name: 'ダイスを公開', action: () => {
           this.owner = '';
           SoundEffect.play(PresetSound.unlock);
-          this.sendLogMessage(
-            `ダイス「${this.name}」を公開しました。出目:${this.face}`
-          );
+          this.sendLogMessage(`ダイスを公開しました。出目:${this.face}`);
         }
       });
     }
@@ -222,7 +220,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
             const prev = this.face;
             this.face = face;
             SoundEffect.play(PresetSound.dicePut);
-            let message = `ダイス「${this.name}」のダイス目を変更しました。`;
+            let message = `ダイス目を変更しました。`;
             if (!this.hasOwner) {
               message += `出目:${prev}→${face}`;
             }
@@ -267,7 +265,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     SoundEffect.play(PresetSound.diceRoll1);
     const prev = this.face;
     const result = this.diceSymbol.diceRoll();
-    let message = `ダイス「${this.name}」を振りました。`;
+    let message = `ダイスを振りました。`;
     if (!this.hasOwner) {
       message += `出目:${prev}→${result}`;
     }
@@ -299,16 +297,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   }
 
   private sendLogMessage(text: string): void {
-    const infoTab = this.chatMessageService.infoTab;
-    if (!infoTab) {
-      return;
-    }
-    this.chatMessageService.sendMessage(
-      infoTab,
-      text,
-      '',
-      PeerCursor.myCursor.identifier,
-      ''
-    );
+    const name = `<${this.name}：${PeerCursor.myCursor.name}>`;
+    this.chatMessageService.sendSystemMessage(name, text, 'DiceSymbol');
   }
 }

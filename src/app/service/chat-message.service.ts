@@ -91,6 +91,24 @@ export class ChatMessageService {
     return chatTab.addMessage(chatMessage);
   }
 
+  sendSystemMessage(name: string, text: string, type?: string): void {
+    if (!this.infoTab) {
+      return;
+    }
+    const systemMessage: ChatMessageContext = {
+      identifier: '',
+      tabIdentifier: this.infoTab.identifier,
+      originFrom: Network.peerContext.id,
+      from: type ? `System-${type}` : 'System',
+      timestamp: this.calcTimeStamp(this.infoTab),
+      imageIdentifier: '',
+      tag: 'system',
+      name,
+      text
+    };
+    this.infoTab.addMessage(systemMessage);
+  }
+
   private findId(identifier: string): string {
     let object = ObjectStore.instance.get(identifier);
     if (object instanceof GameCharacter) {
