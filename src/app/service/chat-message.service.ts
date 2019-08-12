@@ -29,6 +29,10 @@ export class ChatMessageService {
     return ObjectStore.instance.getObjects(ChatTab);
   }
 
+  get infoTab(): ChatTab {
+    return this.chatTabs.find(chatTab => chatTab.receiveInfo);
+  }
+
   calibrateTimeOffset() {
     if (this.intervalTimer != null) {
       console.log('calibrateTimeOffset was canceled.');
