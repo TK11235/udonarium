@@ -2,6 +2,7 @@ import { ImageTag } from './image-tag';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { InnerXml } from './core/synchronize-object/object-serializer';
+import { PeerCursor } from './peer-cursor';
 
 @SyncObject('ImageTagList')
 export class ImageTagList extends ObjectNode implements InnerXml {
@@ -14,8 +15,6 @@ export class ImageTagList extends ObjectNode implements InnerXml {
         }
         return ImageTagList._instance;
     }
-    
-    get imageTags(): ImageTag[] {return <ImageTag[]> this.children; }
 
     getMatchTags(searchWord: string) :ImageTag[] {
         let resultTags: ImageTag[] = [];
@@ -36,6 +35,23 @@ export class ImageTagList extends ObjectNode implements InnerXml {
 
         console.log('NotFound Target ImageTag from ImageTagList',ide);
         return null;
+    }
+
+    pushTag(ide:string ,newtag:string = PeerCursor.myCursor.name ) :ImageTag {
+        let retTag =this.getTagFromIdentifier(ide);
+
+        if(retTag == null) {
+            retTag = new ImageTag();
+            retTag.imageIdentifier = ide;
+            retTag.tag = newtag;
+            this.appendChild(retTag);
+            return retTag;
+        }
+
+        if(retTag.tag != newtag) {
+            retTag.tag = newtag;
+        }
+        return retTag;
     }
 
     innerXml(): string { return ''; }
