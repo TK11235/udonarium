@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class MonotoneMusium_Korean < DiceBot
-  setPrefixes(['2D6.*', 'ET','ET2', 'OT', 'DT', 'DT2', 'WDT'])
+  setPrefixes(['2D6.*', 'ET', 'ET2', 'OT', 'DT', 'DT2', 'WDT'])
 
   def initialize
     super
@@ -36,9 +36,8 @@ INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)
-
     result = checkRoll(command)
-    return result unless(result.empty?)
+    return result unless result.empty?
 
     debug("판정롤이 아닙니다")
 
@@ -52,26 +51,26 @@ INFO_MESSAGE_TEXT
     crit = 12
     fumble = 2
 
-    return output unless(/^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string)
+    return output unless /^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string
 
     modText = $1
     target = $2.to_i
-    crit = $4.to_i if($4)
-    fumble = $6.to_i if($6)
+    crit = $4.to_i if $4
+    fumble = $6.to_i if $6
 
     mod = 0
-    mod = parren_killer("(0#{modText})") unless( modText.nil? )
+    mod = parren_killer("(0#{modText})") unless modText.nil?
 
     total, dice_str, = roll(2, 6, @sortType && 1)
     total_n = total + mod.to_i
 
     output = "#{total}[#{dice_str}]＋#{mod} → #{total_n}"
 
-    if(total >= crit)
+    if total >= crit
       output += " ＞ 자동 성공"
-    elsif(total <= fumble)
+    elsif total <= fumble
       output += " ＞ 자동 실패"
-    elsif(total_n >= target)
+    elsif total_n >= target
       output += " ＞ 성공"
     else
       output += " ＞ 실패"
@@ -80,7 +79,6 @@ INFO_MESSAGE_TEXT
     output = "(#{string}) ＞ #{output}"
 
     return output
-
   end
 
   def rollTableCommand(command)
@@ -89,13 +87,13 @@ INFO_MESSAGE_TEXT
 
     case command
     when /ET2/i
-      type ="감정표2.0"
+      type = "감정표2.0"
       output, total_n = mm_emotion_table_ver2()
     when /ET/i
-      type ="감정표"
+      type = "감정표"
       output, total_n = mm_emotion_table()
     when /OT/i
-      type ="징조표"
+      type = "징조표"
       output, total_n = mm_omens_table()
     when /DT2/i
       type = "일그러짐표ver2.0"
@@ -108,7 +106,7 @@ INFO_MESSAGE_TEXT
       output, total_n = mm_distortion_table()
     end
 
-    output = "#{type}(#{total_n}) ＞ #{output}" if(output != '')
+    output = "#{type}(#{total_n}) ＞ #{output}" if output != ''
 
     return output
   end
@@ -138,8 +136,8 @@ INFO_MESSAGE_TEXT
       "【모멸(侮蔑)】",
       "【질투(嫉妬)】",
       "【열등감(劣等感)】",
-	  "【우월감(優越感)】",
-	  "【연민(憐憫)】",
+    "【우월감(優越感)】",
+    "【연민(憐憫)】",
       "【존경(尊敬)】",
       "【감복(感服)】",
       "【모정(慕情)】",
@@ -150,8 +148,8 @@ INFO_MESSAGE_TEXT
       "【집착(執着)】",
       "【회개(悔悟)】",
       "【경계심(警戒心)】",
-	  "【적개심(敵愾心)】",
-	  "【망각(忘却)】",
+    "【적개심(敵愾心)】",
+    "【망각(忘却)】",
     ]
     return get_table_by_d66(table)
   end
@@ -199,7 +197,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_d66(table)
   end
 
- # 징조표(2d6)[OT]
+  # 징조표(2d6)[OT]
   def mm_omens_table
     table = [
       "【신념의 상실】\n［출신］을 상실한다. 특징은 없어지지 않는다.",
@@ -240,7 +238,7 @@ INFO_MESSAGE_TEXT
   def mm_distortion_table_ver2
     table = [
       "【색채침식】\n씬 내에 존재하는 모든 무생물과 생물은 흰색과 흑백으로 이루어진 모노톤의 존재가 된다. 방적공은 【봉제】 난이도 8의 판정에 성공하면 이 영향을 받지 않는다. 이 효과는 일그러짐을 가져온 이형의 죽음에 의해서 해제된다.",
-	  "【색채침식】\n씬 내에 존재하는 모든 무생물과 생물은 흰색과 흑백으로 이루어진 모노톤의 존재가 된다. 방적공은 【봉제】 난이도 8의 판정에 성공하면 이 영향을 받지 않는다. 이 효과는 일그러짐을 가져온 이형의 죽음에 의해서 해제된다.",
+    "【색채침식】\n씬 내에 존재하는 모든 무생물과 생물은 흰색과 흑백으로 이루어진 모노톤의 존재가 된다. 방적공은 【봉제】 난이도 8의 판정에 성공하면 이 영향을 받지 않는다. 이 효과는 일그러짐을 가져온 이형의 죽음에 의해서 해제된다.",
       "【허무출현】\n일그러짐 중에서 허무가 배어 나온다. 씬에 등장하고 있는 엑스트라는 벌레 한 마리에 이르기까지 소멸해서 두 번 다시 나타나지 않는다.",
       "【허무출현】\n일그러짐 중에서 허무가 배어 나온다. 씬에 등장하고 있는 엑스트라는 벌레 한 마리에 이르기까지 소멸해서 두 번 다시 나타나지 않는다.",
       "【계절변용】\n계절이 갑자기 변화한다. 1D6을 굴려서 1이라면 봄, 2라면 여름, 3이라면 가을, 4라면 겨울, 5라면 플레이하고 있는 현재의 계절, 6이라면 GM의 임의대로 변한다.",
