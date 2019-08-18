@@ -81,6 +81,7 @@ export class DiceBot extends GameObject {
     { script: 'ShinobiGami', game: 'シノビガミ' },
     { script: 'ShadowRun', game: 'シャドウラン' },
     { script: 'ShadowRun4', game: 'シャドウラン第４版' },
+    { script: 'ShadowRun5', game: 'シャドウラン第５版' },
     { script: 'ShoujoTenrankai', game: '少女展爛会' },
     { script: 'Alter_raise', game: '心衝想機TRPGアルトレイズ' },
     { script: 'ShinkuuGakuen', game: '真空学園' },
