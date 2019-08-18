@@ -118,6 +118,7 @@ export class DiceBot extends GameObject {
     { script: 'NightWizard', game: 'ナイトウィザード2版' },
     { script: 'NightWizard3rd', game: 'ナイトウィザード3版' },
     { script: 'NightmareHunterDeep', game: 'ナイトメアハンター=ディープ' },
+    { script: 'NinjaSlayer', game: 'ニンジャスレイヤーTRPG' },
     { script: 'Nuekagami', game: '鵺鏡' },
     { script: 'Nechronica', game: 'ネクロニカ' },
     { script: 'HarnMaster', game: 'ハーンマスター' },
