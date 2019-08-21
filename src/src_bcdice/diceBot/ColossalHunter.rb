@@ -42,35 +42,35 @@ MESSAGETEXT
   def getCheckRollDiceCommandResult(command)
     debug("getCheckRollDiceCommandResult command", command)
 
-    return nil unless(/(\d+)?CH([\+\-\d]*)(>=([\+\-\d]*))?$/i === command)
+    return nil unless /(\d+)?CH([\+\-\d]*)(>=([\+\-\d]*))?$/i === command
 
     diceCount = ($1 || 3).to_i
     modifyText = ($2 || '')
     difficultyText = $4
 
-	#修正値の計算
-	modify = getValue( modifyText, 0 )
+    # 修正値の計算
+    modify = getValue(modifyText, 0)
 
-	#目標値の計算
-    difficulty = getValue( difficultyText, nil )
+    # 目標値の計算
+    difficulty = getValue(difficultyText, nil)
 
-	#ダイスロール
-	dice, dice_str = roll(diceCount, 6)
-    diceList = dice_str.split(/,/).collect{|i|i.to_i}.sort
+    # ダイスロール
+    dice, dice_str = roll(diceCount, 6)
+    diceList = dice_str.split(/,/).collect { |i| i.to_i }.sort
 
-	total = dice + modify
+    total = dice + modify
 
-	#出力用ダイスコマンドを生成
-	command =  "#{diceCount}CH#{modifyText}"
-	command += ">=#{difficulty}" unless(difficulty.nil?)
+    # 出力用ダイスコマンドを生成
+    command =  "#{diceCount}CH#{modifyText}"
+    command += ">=#{difficulty}" unless difficulty.nil?
 
-	#出力文の生成
-	result = "(#{command}) ＞ #{dice}[#{dice_str}]#{modifyText} ＞ #{total}"
+    # 出力文の生成
+    result = "(#{command}) ＞ #{dice}[#{dice_str}]#{modifyText} ＞ #{total}"
 
-	#クリティカル・ファンブルチェック
-    if( isFamble(dice) )
+    # クリティカル・ファンブルチェック
+    if isFamble(dice)
       result += " ＞ ファンブル"
-    elsif( isCritical(total) )
+    elsif isCritical(total)
       result += " ＞ クリティカル"
     else
       result += getJudgeResultString(difficulty, total)
@@ -79,16 +79,17 @@ MESSAGETEXT
     return result
   end
 
-  #成否判定
+  # 成否判定
   def getJudgeResultString(difficulty, total)
-    return '' if(difficulty.nil?)
+    return '' if difficulty.nil?
 
-    return " ＞ 成功" if(total >= difficulty)
+    return " ＞ 成功" if total >= difficulty
+
     return " ＞ 失敗"
   end
 
   def getValue(text, defaultValue)
-    return defaultValue if( text == nil or text.empty? )
+    return defaultValue if (text == nil) || text.empty?
 
     parren_killer("(0" + text + ")").to_i
   end
@@ -116,7 +117,7 @@ MESSAGETEXT
     return nil if item.nil?
 
     title, text, yearText, = item
-debug('yearText', yearText)
+    debug('yearText', yearText)
     year, calculateText = getYear(yearText)
 
     result = "#{name}(#{index}) ＞ #{title}：#{text} ＞ #{yearTitle}：#{yearText}"
@@ -127,10 +128,10 @@ debug('yearText', yearText)
   end
 
   def getYear(yearText)
-    text = yearText.gsub(/(\d+)D(6+)/){ getD6xResult($1.to_i, $2.length) }
+    text = yearText.gsub(/(\d+)D(6+)/) { getD6xResult($1.to_i, $2.length) }
 
     calculateText = "(#{text})"
-    year = parren_killer( calculateText.gsub(/×/, "*") )
+    year = parren_killer(calculateText.gsub(/×/, "*"))
     return nil if year == calculateText
     return nil if year == text
 
@@ -144,7 +145,7 @@ debug('yearText', yearText)
       number = 0
 
       dice6Count.times do |i|
-      number *= 10
+        number *= 10
         dice, = roll(1, 6)
         number += dice
       end
@@ -255,7 +256,6 @@ debug('yearText', yearText)
   end
 
   def getTableDiceCommandResult(command)
-
     info = @@tables[command]
     return nil if info.nil?
 
@@ -271,11 +271,9 @@ debug('yearText', yearText)
         get_table_by_1d6(table)
       when 'D66'
         get_table_by_d66(table)
-      else
-        nil
       end
 
-    return nil if( text.nil? )
+    return nil if text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end

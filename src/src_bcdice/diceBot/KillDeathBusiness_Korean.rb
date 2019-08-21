@@ -91,17 +91,16 @@ INFO_MESSAGE_TEXT
 
   # 게임별 성공도 판정(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-
     debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
 
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
     output =
-      if(dice_n <= 2)
+      if dice_n <= 2
         " ＞ 펌블(판정 실패.【시청률】이 20%감소)"
-      elsif(dice_n >= 12)
+      elsif dice_n >= 12
         " ＞ 스페셜(판정 성공.【시청률】이 10%증가)"
-      elsif(total_n >= diff)
+      elsif total_n >= diff
         " ＞ 성공"
       else
         " ＞ 실패"
@@ -111,10 +110,9 @@ INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)
-
     debug("rollDiceCommand command", command)
 
-    #판정체크는 먼저 처리
+    # 판정체크는 먼저 처리
     case command
     when @@judogeDiceReg
       result = judgeDice(command)
@@ -122,15 +120,14 @@ INFO_MESSAGE_TEXT
       return text
     end
 
-    #판정 이외라면 표 커멘드의 처리를 한다
+    # 판정 이외라면 표 커멘드의 처리를 한다
     return rollTableCommand(command)
   end
 
   @@judogeDiceReg = /(^|\s)JD(\d+)([\+\-]\d+)?(,(\d+))?($|\s)/i
 
   def judgeDice(command)
-
-    unless(@@judogeDiceReg === command)
+    unless @@judogeDiceReg === command
       return '1'
     end
 
@@ -140,20 +137,20 @@ INFO_MESSAGE_TEXT
 
     result = ""
 
-    if(target > 12 )
-      result  += "【#{command}】 ＞ 난이도가 12이상은 스페셜만 성공.\n"
+    if target > 12
+      result += "【#{command}】 ＞ 난이도가 12이상은 스페셜만 성공.\n"
       target = 12
     end
 
-    if(target < 5 )
-      result  += "【#{command}】 ＞ 난이도의 최저치는 5.\n"
+    if target < 5
+      result += "【#{command}】 ＞ 난이도의 최저치는 5.\n"
       target = 5
     end
 
-    if( fumble < 2 )
+    if  fumble < 2
       fumble = 2
-    elsif(fumble > 11 )
-      result  += "【#{command}】 ＞ 스페셜을 내면 반드시 성공이므로, 펌블치은 11으로 한다.\n"
+    elsif fumble > 11
+      result += "【#{command}】 ＞ 스페셜을 내면 반드시 성공이므로, 펌블치은 11으로 한다.\n"
       fumble = 11
     end
 
@@ -161,15 +158,15 @@ INFO_MESSAGE_TEXT
 
     result += "【난이도#{target}、보정#{modify}、펌블치#{fumble}】 ＞ 주사위 눈(#{diceText}) ＞ "
 
-    if(number == 2 )
+    if number == 2
       result += "주사위 눈이 2이므로 펌블!(판정 실패.【시청률】이 20%감소)"
-    elsif(number == 12)
+    elsif number == 12
       result += "주사위 눈이 12이므로 스페셜!(판정 성공.【시청률】이 10%증가)"
-    elsif(number <= fumble)
+    elsif number <= fumble
       result += "주사위 눈이	  펌블율 이하이므로 펌블!(판정 실패.【시청률】이 20%감소)"
     else
-       number += modify
-       if(number < target)
+      number += modify
+       if number < target
          result += "달성치#{number}、난이도미만이므로 판정 실패!"
        else
          result += "달성치#{number}、난이도이상이므로 판정 성공!"
@@ -180,106 +177,105 @@ INFO_MESSAGE_TEXT
   end
 
   def rollTableCommand(command)
-
     tableName = ""
     result = ""
 
-	case command
+  case command
 
-    when "HST"
-      tableName, result, number = getHistoryTableResult
+  when "HST"
+    tableName, result, number = getHistoryTableResult
 
-    when /^ST(\d)?$/
-	  #씬표
-      type = $1.to_i
+  when /^ST(\d)?$/
+    # 씬표
+    type = $1.to_i
 
-	  tableName, result, number = getSceneTableResult(type)
+    tableName, result, number = getSceneTableResult(type)
 
-    when /^.+WT$/i
-	  #소원표
-      tableName, result, number = getWishTableResult(command)
+  when /^.+WT$/i
+    # 소원표
+    tableName, result, number = getWishTableResult(command)
 
-    when /^NAME(\d)?$/
-	  #만능이름표
-      type = $1.to_i
+  when /^NAME(\d)?$/
+    # 만능이름표
+    type = $1.to_i
       tableName, result, number = getNameTableResult(type)
 
-    when /^.+SPT$/i
-	  #서브플롯표
-      tableName, result, number = getSubprotTableResult(command)
+  when /^.+SPT$/i
+    # 서브플롯표
+    tableName, result, number = getSubprotTableResult(command)
 
-    when "CMT"
-	  #CM표
-      tableName, result, number = getCmTableResult()
+  when "CMT"
+    # CM표
+    tableName, result, number = getCmTableResult()
 
-    when "ERT"
-	  #소생 부작용 표
-      tableName, result, number = getErTableResult()
+  when "ERT"
+    # 소생 부작용 표
+    tableName, result, number = getErTableResult()
 
-    when "WKT"
-	  #일주일간 표
-      tableName, result, number = getWKTableResult()
+  when "WKT"
+    # 일주일간 표
+    tableName, result, number = getWKTableResult()
 
-    when /^EST$/i, /^sErviceST$/i
-      tableName, result, number = getServiceSceneTableResult()
+  when /^EST$/i, /^sErviceST$/i
+    tableName, result, number = getServiceSceneTableResult()
 
-    when "SOUL"
-      tableName, result, number = getSoulTableResult()
+  when "SOUL"
+    tableName, result, number = getSoulTableResult()
 
-    when "STGT"
-      tableName, result, number = getSceneTelopGenericTableResult()
+  when "STGT"
+    tableName, result, number = getSceneTelopGenericTableResult()
 
-    when /^HSAT(\d)?$/
-      type = $1.to_i
+  when /^HSAT(\d)?$/
+    type = $1.to_i
       tableName, result, number = getHairStylistAbuseTableResult(type)
 
-    when /^EXT(\d)?$/
-      type = $1.to_i
+  when /^EXT(\d)?$/
+    type = $1.to_i
       tableName, result, number = getExtraTableResult(type)
 
-    when /^SKL(T|J)$/
-	  type = $1
+  when /^SKL(T|J)$/
+    type = $1
       tableName, result, number = getSkillTableResult(type)
 
-    when "PCDT"
-	  #제작위원 결정표
-      tableName, result, number = getpcTableResult()
-    when "OHT"
-	  #실제 어떠했는가 표
-      tableName, result, number = getohTableResult()
-    when "PCT1"
-	  #헬 스타일리스트 표
-      tableName, result, number = getplTableResult()
-    when "PCT2"
-	  #헬 크로우 태스크 표
-      tableName, result, number = getprTableResult()
-    when "PCT3"
-	  #헬 스네이크 태스크 표
-      tableName, result, number = getpnTableResult()
-    when "PCT4"
-	  #헬 드래곤 태스크 표
-      tableName, result, number = getpdTableResult()
-    when "PCT5"
-	  #헬 플라이 태스크 표
-      tableName, result, number = getpfTableResult()
-    when "PCT6"
-	  #헬 갓 태스크 표
-      tableName, result, number = getpgTableResult()
-    when "PCT7"
-	  #헬 베어 태스크 표
-      tableName, result, number = getpbTableResult()
+  when "PCDT"
+    # 제작위원 결정표
+    tableName, result, number = getpcTableResult()
+  when "OHT"
+    # 실제 어떠했는가 표
+    tableName, result, number = getohTableResult()
+  when "PCT1"
+    # 헬 스타일리스트 표
+    tableName, result, number = getplTableResult()
+  when "PCT2"
+    # 헬 크로우 태스크 표
+    tableName, result, number = getprTableResult()
+  when "PCT3"
+    # 헬 스네이크 태스크 표
+    tableName, result, number = getpnTableResult()
+  when "PCT4"
+    # 헬 드래곤 태스크 표
+    tableName, result, number = getpdTableResult()
+  when "PCT5"
+    # 헬 플라이 태스크 표
+    tableName, result, number = getpfTableResult()
+  when "PCT6"
+    # 헬 갓 태스크 표
+    tableName, result, number = getpgTableResult()
+  when "PCT7"
+    # 헬 베어 태스크 표
+    tableName, result, number = getpbTableResult()
 
-    else
-      debug("rollDiceCommand commandNOT matched -> command:", command)
+  else
+    debug("rollDiceCommand commandNOT matched -> command:", command)
       return ""
-	end
+  end
 
-    if( result.empty? )
+    if result.empty?
       return ""
     end
 
-	text = "#{tableName}(#{number})：#{result}"
-	return text
+  text = "#{tableName}(#{number})：#{result}"
+  return text
   end
 
   def getHistoryTableResult
@@ -1047,7 +1043,7 @@ INFO_MESSAGE_TEXT
                '높은 곳에서 멋진 걸 말한다',
               ]
     else
-      table = [#"다른 장르계 서비스 신표"
+      table = [# "다른 장르계 서비스 신표"
                '사이코 서스펜스',
                '스페이스 오페라',
                '동화',
@@ -1162,14 +1158,14 @@ INFO_MESSAGE_TEXT
               ]
 
     case type
-      when 1
-        result, number = get_table_by_d66_swap(hellStylistAbuseTable1)
-      when 2
-        result, number = get_table_by_d66_swap(hellStylistAbuseTable2)
-      else
-        result1, num1 = get_table_by_d66_swap(hellStylistAbuseTable1)
+    when 1
+      result, number = get_table_by_d66_swap(hellStylistAbuseTable1)
+    when 2
+      result, number = get_table_by_d66_swap(hellStylistAbuseTable2)
+    else
+      result1, num1 = get_table_by_d66_swap(hellStylistAbuseTable1)
         result2, num2 = get_table_by_d66_swap(hellStylistAbuseTable2)
-        before,  = get_table_by_1d6(hellStylistwtable1)
+        before, = get_table_by_1d6(hellStylistwtable1)
         after, = get_table_by_1d6(hellStylistwtable2)
         result = "#{before}#{result1}#{result2}#{after}"
         number = "#{num1},#{num2}"
@@ -1189,7 +1185,7 @@ INFO_MESSAGE_TEXT
                      ]
     skillTable, num1 = get_table_by_1d6(skillTableFull)
     skillGroup, table = skillTable
-    if(type == "T")
+    if type == "T"
       tableName = "지정특기 랜덤결정표"
       skill, num2 = get_table_by_2d6(table)
       result = "「#{skillGroup}」《#{skill}》"
@@ -1206,97 +1202,97 @@ INFO_MESSAGE_TEXT
   def getExtraTableResult(type)
     tableName = "엑스트라 표"
     extraTable1 = [
-				   [11, "당신과 친구인"],
-				   [12, "당신과 원망하는 녀석의 기회를 노리고 있는"],
-				   [13, "바쁘게 전화로 이야기 하고있는"],
-				   [14, "넘어지며 도망친"],
-				   [15, "씬의 배경의 소유자인"],
-				   [16, "가공의 인물이라고 생각되고 있던 신(神)"],
-				   [22, "과거의 시즌 우승자인"],
-				   [23, "기분 좋게 엄청 취한"],
-				   [24, "공포로 몸을 움츠리게 하고 있는"],
-				   [25, "업계에서는 유명한"],
-				   [26, "행복한 가정을 가지고 있는"],
-				   [33, "광역 지명 수배되고 있는"],
-				   [34, "오늘 모닝뉴스에서 특집으로 되어 있던"],
-				   [35, "항상 미소를 잊지 않는 거물인"],
-				   [36, "진실의 탐구 과정에서 발광한"],
-				   [44, "현지에서는 패배를 모르는"],
-				   [45, "매우 동작에 절도가 있는"],
-				   [46, "평범한"],
-				   [55, "변신 히어로의 정체인"],
-				   [56, "『#{getNameTableResult(0)[1]}』의 이명을 가지고 있는"],
-				   [66, "역사상의 인물이지만 실은 살아있던"],
-	              ]
-	extraTable2 = [
-				   [11, "샐러리맨"],
-				   [12, "스포츠 선수"],
-				   [13, "양아치"],
-				   [14, "드라이버"],
-				   [15, "쥐"],
-				   [16, "파일럿"],
-				   [22, "영화 감독"],
-				   [23, "개"],
-				   [24, "자객"],
-				   [25, "주부"],
-				   [26, "소설가"],
-				   [33, "작사"],
-				   [34, "정치가"],
-				   [35, "갑부"],
-				   [36, "큰 남자"],
-				   [44, "수수께끼의 미녀"],
-				   [45, "고양이"],
-				   [46, "미소녀"],
-				   [55, "문화인"],
-				   [56, "용자"],
-				   [66, "신(神)"],
-	              ]
+           [11, "당신과 친구인"],
+           [12, "당신과 원망하는 녀석의 기회를 노리고 있는"],
+           [13, "바쁘게 전화로 이야기 하고있는"],
+           [14, "넘어지며 도망친"],
+           [15, "씬의 배경의 소유자인"],
+           [16, "가공의 인물이라고 생각되고 있던 신(神)"],
+           [22, "과거의 시즌 우승자인"],
+           [23, "기분 좋게 엄청 취한"],
+           [24, "공포로 몸을 움츠리게 하고 있는"],
+           [25, "업계에서는 유명한"],
+           [26, "행복한 가정을 가지고 있는"],
+           [33, "광역 지명 수배되고 있는"],
+           [34, "오늘 모닝뉴스에서 특집으로 되어 있던"],
+           [35, "항상 미소를 잊지 않는 거물인"],
+           [36, "진실의 탐구 과정에서 발광한"],
+           [44, "현지에서는 패배를 모르는"],
+           [45, "매우 동작에 절도가 있는"],
+           [46, "평범한"],
+           [55, "변신 히어로의 정체인"],
+           [56, "『#{getNameTableResult(0)[1]}』의 이명을 가지고 있는"],
+           [66, "역사상의 인물이지만 실은 살아있던"],
+                ]
+  extraTable2 = [
+           [11, "샐러리맨"],
+           [12, "스포츠 선수"],
+           [13, "양아치"],
+           [14, "드라이버"],
+           [15, "쥐"],
+           [16, "파일럿"],
+           [22, "영화 감독"],
+           [23, "개"],
+           [24, "자객"],
+           [25, "주부"],
+           [26, "소설가"],
+           [33, "작사"],
+           [34, "정치가"],
+           [35, "갑부"],
+           [36, "큰 남자"],
+           [44, "수수께끼의 미녀"],
+           [45, "고양이"],
+           [46, "미소녀"],
+           [55, "문화인"],
+           [56, "용자"],
+           [66, "신(神)"],
+                ]
     extraTable3 = [
-				   [11, "이상한 상자안에서"],
-				   [12, "불쌍한 희생자를 죽이면서"],
-				   [13, "소를 타면서"],
-				   [14, "말을 타면서"],
-				   [15, "벽을 분쇄하면서"],
-				   [16, "문을 분쇄하면서"],
-				   [22, "진한 안개속에서 천천히"],
-				   [23, "자동문에서 나오면서"],
-				   [24, "상공에서 급강하하면서"],
-				   [25, "전속력으로 달리면서"],
-				   [26, "높은 곳으로부터"],
-				   [33, "테마 음악과 함께"],
-				   [34, "지나가는 길에"],
-				   [35, "이름과 직업의 명함과 함께"],
-				   [36, "오토바이를 타면서"],
-				   [44, "무덤을 뚫으며"],
-				   [45, "부하를 여럿 거느리며"],
-				   [46, "거친 바람에 감기며"],
-				   [55, "무기를 잡으며"],
-				   [56, "헬 포탈을 지나며"],
-				   [66, "불길을 등에 지며"],
-	              ]
-	extraTable4 = [
-				   [11, "사랑스럽게 등장"],
-				   [12, "선명하게 등장"],
-				   [13, "시원스럽게 등장"],
-				   [14, "이상하게 등장"],
-				   [15, "몹시 거칠게 등장"],
-				   [16, "기세 좋게 등장"],
-				   [22, "아름답게 등장"],
-				   [23, "잘난듯이 등장"],
-				   [24, "엄숙하게 등장"],
-				   [25, "무섭게 등장"],
-				   [26, "멋지게 등장"],
-				   [33, "뽐내며 등장"],
-				   [34, "죽음의 예감과 함께 등장"],
-				   [35, "조용하게 등장"],
-				   [36, "품위있게 등장"],
-				   [44, "야무지지 못하게 등장"],
-				   [45, "지적이게 등장"],
-				   [46, "나고야풍으로 등장"],
-				   [55, "매끈하게 등장"],
-				   [56, "기분이 안좋게 등장"],
-				   [66, "쾌활하게 등장"],
-	              ]
+           [11, "이상한 상자안에서"],
+           [12, "불쌍한 희생자를 죽이면서"],
+           [13, "소를 타면서"],
+           [14, "말을 타면서"],
+           [15, "벽을 분쇄하면서"],
+           [16, "문을 분쇄하면서"],
+           [22, "진한 안개속에서 천천히"],
+           [23, "자동문에서 나오면서"],
+           [24, "상공에서 급강하하면서"],
+           [25, "전속력으로 달리면서"],
+           [26, "높은 곳으로부터"],
+           [33, "테마 음악과 함께"],
+           [34, "지나가는 길에"],
+           [35, "이름과 직업의 명함과 함께"],
+           [36, "오토바이를 타면서"],
+           [44, "무덤을 뚫으며"],
+           [45, "부하를 여럿 거느리며"],
+           [46, "거친 바람에 감기며"],
+           [55, "무기를 잡으며"],
+           [56, "헬 포탈을 지나며"],
+           [66, "불길을 등에 지며"],
+                ]
+  extraTable4 = [
+           [11, "사랑스럽게 등장"],
+           [12, "선명하게 등장"],
+           [13, "시원스럽게 등장"],
+           [14, "이상하게 등장"],
+           [15, "몹시 거칠게 등장"],
+           [16, "기세 좋게 등장"],
+           [22, "아름답게 등장"],
+           [23, "잘난듯이 등장"],
+           [24, "엄숙하게 등장"],
+           [25, "무섭게 등장"],
+           [26, "멋지게 등장"],
+           [33, "뽐내며 등장"],
+           [34, "죽음의 예감과 함께 등장"],
+           [35, "조용하게 등장"],
+           [36, "품위있게 등장"],
+           [44, "야무지지 못하게 등장"],
+           [45, "지적이게 등장"],
+           [46, "나고야풍으로 등장"],
+           [55, "매끈하게 등장"],
+           [56, "기분이 안좋게 등장"],
+           [66, "쾌활하게 등장"],
+                ]
 
     case type
     when 1
@@ -1368,29 +1364,30 @@ INFO_MESSAGE_TEXT
     tableName = "헬 라이온터스크 표"
     table = [
              '
-			 「프랑스어.」지정 특기는《예술가》. 왠지 등장 인물 전원이 프랑스어로 밖에 회화할 수 없는 씬이 설정된다. 할 수 있는 한, 프랑스어를 구사하고 의사소통을 시도해라!',
+       「프랑스어.」지정 특기는《예술가》. 왠지 등장 인물 전원이 프랑스어로 밖에 회화할 수 없는 씬이 설정된다. 할 수 있는 한, 프랑스어를 구사하고 의사소통을 시도해라!',
              '
-			 「회화가 없다.」지정 특기는《뛰다》. 회화 그 자체가 비열하고 엔터테인먼트적이라고 하는 것으로, 모든 말을 발언하는 것이 허락되지 않는 씬표가 설정된다. 제스처로 힘내라!',
+       「회화가 없다.」지정 특기는《뛰다》. 회화 그 자체가 비열하고 엔터테인먼트적이라고 하는 것으로, 모든 말을 발언하는 것이 허락되지 않는 씬표가 설정된다. 제스처로 힘내라!',
              '
-			 「명언의 인용.」지정 특기는《머리장식》. 과거의 명작 영화나 소설, 역사상의 사건등에서 따라한 명언 밖에 말할 수 없는 씬이 설정된다. 교양이 없으면 말할 수 없다!',
+       「명언의 인용.」지정 특기는《머리장식》. 과거의 명작 영화나 소설, 역사상의 사건등에서 따라한 명언 밖에 말할 수 없는 씬이 설정된다. 교양이 없으면 말할 수 없다!',
              '
-			 「등장인물의증가。」지정 특기는《트레드》. 등장 인물이 쓸데 없이 두배로 늘어나서 각각 개성적인 고민이나 사건을 말하기 시작한다. 이대로는 귀찮고 개런티도 늘어나므로, 전부 죽이자.',
+       「등장인물의증가。」지정 특기는《트레드》. 등장 인물이 쓸데 없이 두배로 늘어나서 각각 개성적인 고민이나 사건을 말하기 시작한다. 이대로는 귀찮고 개런티도 늘어나므로, 전부 죽이자.',
              '
-			 「막연한 불안.」지정 특기는《자부》. 특별히 무언가 정해지지않고, 멍하니  불안감에 연연 괴로워하거나 침체하거나 하는 씬을 강요 당한다. 이것을 지루하게 하지 않는 것은 어렵다!',
+       「막연한 불안.」지정 특기는《자부》. 특별히 무언가 정해지지않고, 멍하니  불안감에 연연 괴로워하거나 침체하거나 하는 씬을 강요 당한다. 이것을 지루하게 하지 않는 것은 어렵다!',
 
-			 '「길게 끌기.」지정 특기는《삶》. 컷 없이 30분 정도 같은 씬이 계속 된다. NG는 용서되지 않는다. 이것으로 중간을 가지게할 수 있는 것은 프로의 배우정도의 것이지만, 회수인은 연기의 아마추어다.',
+       '「길게 끌기.」지정 특기는《삶》. 컷 없이 30분 정도 같은 씬이 계속 된다. NG는 용서되지 않는다. 이것으로 중간을 가지게할 수 있는 것은 프로의 배우정도의 것이지만, 회수인은 연기의 아마추어다.',
             ]
     result, number = get_table_by_1d6(table)
 
     return tableName, result, number
   end
+
   def getprTableResult()
     tableName = "헬 크로우터스크 표"
     table = [
 
              '「초라한 게스트.」지정 특기는《악당》. 일반인이나 개, 남동생이나 엄마가 게스트로서 등장한다. 본래의 게스트와의 차액은 착복된다. 사정을 알려져 있지 않은 게스트와 잘 관련되자!',
 
-			 '「친가에서의 촬영.」지정 특기는《외치다》. 촬영 장소가 친가가 된다. 본래의 로케 비용은 착복된다. 가족을 설득하고, 잘 촬영 허가를 받지 않으면 적자가 나와 버릴 것이다!',
+       '「친가에서의 촬영.」지정 특기는《외치다》. 촬영 장소가 친가가 된다. 본래의 로케 비용은 착복된다. 가족을 설득하고, 잘 촬영 허가를 받지 않으면 적자가 나와 버릴 것이다!',
 
              '「평상복으로의 촬영.」지정 특기는《안경》. 왠지 헬 스타일리스트가 휴일로, 그 만큼의 인건비와 의상대로써 착복된다. 평상복인 채로 초상의 액션을 해내는 것은 불가능하게 가깝다!',
 
@@ -1404,6 +1401,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpnTableResult()
     tableName = "헬 스네이크터스크 표"
     table = [
@@ -1424,6 +1422,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpdTableResult()
     tableName = "헬 드래곤터스크 표"
     table = [
@@ -1444,6 +1443,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpfTableResult()
     tableName = "헬 플라잉터스크 표"
     table = [
@@ -1463,6 +1463,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpgTableResult()
     tableName = "헬 갓터스크 표"
     table = [
@@ -1483,6 +1484,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpbTableResult()
     tableName = "헬 베어터스크 표"
     table = [

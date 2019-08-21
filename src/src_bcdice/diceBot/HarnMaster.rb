@@ -26,7 +26,7 @@ MESSAGETEXT
   end
 
   def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    return '' unless(signOfInequality == "<=")
+    return '' unless signOfInequality == "<="
 
     result = getCheckResult(total_n, diff)
     return "＞ #{result}"
@@ -34,16 +34,19 @@ MESSAGETEXT
 
   def getCheckResult(total, diff)
     return getFailResult(total) if total > diff
+
     return getSuccessResult(total)
   end
 
   def getFailResult(total)
     return "致命的失敗" if (total % 5) == 0
+
     return "失敗"
   end
 
   def getSuccessResult(total)
     return "決定的成功" if (total % 5) == 0
+
     return "成功"
   end
 
@@ -74,7 +77,6 @@ MESSAGETEXT
   end
 
   def getStrikeLocationHuman(type)
-
     typeName = ''
     table = nil
 
@@ -112,7 +114,7 @@ MESSAGETEXT
 
     side = (((number % 2) == 1) ? "左" : "右")
 
-    part = part.sub(/\*/, side) #TKfix !
+    part.sub(/\*/, side)
   end
 
   def getFaceLocation(part)
@@ -162,7 +164,7 @@ MESSAGETEXT
 
   def getStrikeLocationHumanNormalTable()
     table = [
-             [  5, "頭部"],
+             [ 5, "頭部"],
              [ 10, "顔+"],
              [ 15, "首"],
              [ 27, "*肩"],
@@ -184,7 +186,7 @@ MESSAGETEXT
 
   def getStrikeLocationHumanDownTable()
     table = [
-             [  6, "*前腕"],
+             [ 6, "*前腕"],
              [ 12, "*手"],
              [ 19, "胸部"],
              [ 29, "腹部"],

@@ -33,10 +33,8 @@ INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)
-
     result = checkRoll(command)
-    return result unless(result.empty?)
-
+    return result unless result.empty?
   end
 
   def checkRoll(string)
@@ -45,30 +43,30 @@ INFO_MESSAGE_TEXT
     crit = 12
     fumble = 2
 
-    return output unless(/^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string)
+    return output unless /^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string
 
     modText = $1
     target = $2.to_i
-    crit = $4.to_i if($4)
-    fumble = $6.to_i if($6)
+    crit = $4.to_i if $4
+    fumble = $6.to_i if $6
 
     mod = 0
-    mod = parren_killer("(0#{modText})") unless( modText.nil? )
+    mod = parren_killer("(0#{modText})") unless modText.nil?
 
     total, dice_str, = roll(2, 6, @sortType && 1)
     total_n = total + mod.to_i
 
-    if(mod.to_i < 0)
+    if mod.to_i < 0
       output = "#{total}[#{dice_str}]－#{mod.to_i.abs} ＞ #{total_n}"
     else
       output = "#{total}[#{dice_str}]＋#{mod} ＞ #{total_n}"
     end
 
-    if(total >= crit)
+    if total >= crit
       output += " ＞ 自動成功"
-    elsif(total <= fumble)
+    elsif total <= fumble
       output += " ＞ 自動失敗"
-    elsif(total_n >= target)
+    elsif total_n >= target
       output += " ＞ 成功"
     else
       output += " ＞ 失敗"
@@ -77,7 +75,5 @@ INFO_MESSAGE_TEXT
     output = "(#{string}) ＞ #{output}"
 
     return output
-
   end
-
 end

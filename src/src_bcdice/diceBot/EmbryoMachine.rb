@@ -31,14 +31,14 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(@(\d+))(\#(\d+))/i) {"2R10#{$2}>=#{$1}[#{$4},#{$6}]"}
-    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(\#(\d+))/i) {"2R10#{$2}>=#{$1}[20,#{$4}]"}
-    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(@(\d+))/i) {"2R10#{$2}>=#{$1}[#{$4},2]"}
-    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)/i) {"2R10#{$2}>=#{$1}[20,2]"}
-    string = string.gsub(/EM(\d+)(@(\d+))(\#(\d+))/i) {"2R10>=#{$1}[#{$3},#{$5}]"}
-    string = string.gsub(/EM(\d+)(\#(\d+))/i) {"2R10>=#{$1}[20,#{$3}]"}
-    string = string.gsub(/EM(\d+)(@(\d+))/i) {"2R10>=#{$1}[#{$3},2]"}
-    string = string.gsub(/EM(\d+)/i) {"2R10>=#{$1}[20,2]"}
+    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(@(\d+))(\#(\d+))/i) { "2R10#{$2}>=#{$1}[#{$4},#{$6}]" }
+    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(\#(\d+))/i) { "2R10#{$2}>=#{$1}[20,#{$4}]" }
+    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)(@(\d+))/i) { "2R10#{$2}>=#{$1}[#{$4},2]" }
+    string = string.gsub(/EM(\d+)([\+\-][\+\-\d]+)/i) { "2R10#{$2}>=#{$1}[20,2]" }
+    string = string.gsub(/EM(\d+)(@(\d+))(\#(\d+))/i) { "2R10>=#{$1}[#{$3},#{$5}]" }
+    string = string.gsub(/EM(\d+)(\#(\d+))/i) { "2R10>=#{$1}[20,#{$3}]" }
+    string = string.gsub(/EM(\d+)(@(\d+))/i) { "2R10>=#{$1}[#{$3},2]" }
+    string = string.gsub(/EM(\d+)/i) { "2R10>=#{$1}[20,2]" }
   end
 
   def dice_command_xRn(string, nick_e)
@@ -48,13 +48,13 @@ INFO_MESSAGE_TEXT
   # ゲーム別成功度判定(nD10)
   def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     debug("EmbryoMachine check_nD10 begin")
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
+    if dice_n <= 2
       return " ＞ ファンブル"
-    elsif(dice_n >= 20)
+    elsif dice_n >= 20
       return " ＞ クリティカル"
-    elsif(total_n >= diff)
+    elsif total_n >= diff
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -64,7 +64,7 @@ INFO_MESSAGE_TEXT
   def checkRoll(string, nick_e)
     output = '1'
 
-    return output unless(/(^|\s)S?(2[rR]10([\+\-\d]+)?([>=]+(\d+))(\[(\d+),(\d+)\]))(\s|$)/i =~ string )
+    return output unless /(^|\s)S?(2[rR]10([\+\-\d]+)?([>=]+(\d+))(\[(\d+),(\d+)\]))(\s|$)/i =~ string
 
     string = $2
     diff = 0
@@ -74,33 +74,33 @@ INFO_MESSAGE_TEXT
     total_n = 0
     modText = $3
 
-    diff = $5.to_i if($5)
-    crit = $7.to_i if($7)
-    fumble = $8.to_i if($8)
-    mod = parren_killer("(0#{modText})").to_i if(modText)
+    diff = $5.to_i if $5
+    crit = $7.to_i if $7
+    fumble = $8.to_i if $8
+    mod = parren_killer("(0#{modText})").to_i if modText
 
     dice_now, dice_str, = roll(2, 10, (sortType & 1))
     dice_loc, = roll(2, 10)
-    dice_arr = dice_str.split(/,/).collect{|i|i.to_i}
+    dice_arr = dice_str.split(/,/).collect { |i| i.to_i }
     big_dice = dice_arr[1]
     output = "#{dice_now}[#{dice_str}]"
     total_n = dice_now + mod
-    if(mod > 0)
+    if mod > 0
       output += "+#{mod}"
-    elsif(mod < 0)
-      output += "#{mod}"
+    elsif mod < 0
+      output += mod.to_s
     end
-    if(output =~ /[^\d\[\]]+/)
+    if output =~ /[^\d\[\]]+/
       output = "#{@nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
     else
       output = "#{@nick_e}: (#{string}) ＞ #{output}"
     end
     # 成功度判定
-    if(dice_now <= fumble)
+    if dice_now <= fumble
       output += " ＞ ファンブル"
-    elsif(dice_now >= crit)
+    elsif dice_now >= crit
       output += " ＞ クリティカル ＞ " + get_hit_level_table(big_dice) + "(ダメージ+10) ＞ [#{dice_loc}]#{get_hit_location_table(dice_loc)}"
-    elsif(total_n >= diff)
+    elsif total_n >= diff
       output += " ＞ 成功 ＞ " + get_hit_level_table(big_dice) + " ＞ [#{dice_loc}]#{get_hit_location_table(dice_loc)}"
     else
       output += " ＞ 失敗"
@@ -131,13 +131,13 @@ INFO_MESSAGE_TEXT
       output = get_melee_fumble_table(number)
     end
 
-    if(output != '1')
+    if output != '1'
       output = "#{type}表(#{number}) ＞ #{output}"
     end
     return output
   end
 
-#** 命中部位表
+  # ** 命中部位表
   def get_hit_location_table(num)
     table = [
         [ 4, '頭'],
@@ -152,7 +152,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_number(num, table)
   end
 
-#** ファンブル表
+  # ** ファンブル表
   def get_shoot_fumble_table(num) # 射撃攻撃ファンブル表
     output = '1'
     table = [
@@ -177,7 +177,7 @@ INFO_MESSAGE_TEXT
         '何も起きなかった。',
     ]
     dc = 2
-    output = table[num - dc] if(table[num - dc])
+    output = table[num - dc] if table[num - dc]
     return output
   end
 
@@ -205,7 +205,7 @@ INFO_MESSAGE_TEXT
         '何も起きなかった。',
     ]
     dc = 2
-    output = table[num - dc] if(table[num - dc])
+    output = table[num - dc] if table[num - dc]
     return output
   end
 

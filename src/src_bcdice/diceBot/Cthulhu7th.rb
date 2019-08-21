@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class Cthulhu7th < DiceBot
-  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR\(\d+\)' , 'FAR.*'])
+  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR\(\d+\)', 'FAR.*'])
 
   def initialize
-    #$isDebug = true
+    # $isDebug = true
     super
 
     @bonus_dice_range = (-2 .. 2)
@@ -55,14 +55,13 @@ INFO_MESSAGE_TEXT
   end
 
   def getCheckResult(command)
-
-    nil unless (/^CC([-\d]+)?<=(\d+)/i =~ command)
-    bonus_dice_count = $1.to_i #ボーナス・ペナルティダイスの個数
+    nil unless /^CC([-\d]+)?<=(\d+)/i =~ command
+    bonus_dice_count = $1.to_i # ボーナス・ペナルティダイスの個数
     diff = $2.to_i
 
-    return "エラー。目標値は1以上です。" if(diff <= 0)
+    return "エラー。目標値は1以上です。" if diff <= 0
 
-    unless ( @bonus_dice_range.include?(bonus_dice_count) )
+    unless @bonus_dice_range.include?(bonus_dice_count)
       return "エラー。ボーナス・ペナルティダイスの値は#{@bonus_dice_range.min}～#{@bonus_dice_range.max}です。"
     end
 
@@ -83,7 +82,7 @@ INFO_MESSAGE_TEXT
 
   def rollPercentD10
     dice, = roll(1, 10)
-    dice = 0 if(dice == 10)
+    dice = 0 if dice == 10
 
     return dice
   end
@@ -93,10 +92,9 @@ INFO_MESSAGE_TEXT
 
     tens_digit_count = 1 + bonus_dice_count.abs
     tens_digit_count.times do
-
       bonus = rollPercentD10
       total = (bonus * 10) + units_digit
-      total = 100 if (total == 0)
+      total = 100 if total == 0
 
       total_list.push(total)
     end
@@ -105,25 +103,26 @@ INFO_MESSAGE_TEXT
   end
 
   def getTotal(total_list, bonus_dice_count)
-    return total_list.min if( bonus_dice_count >= 0 )
+    return total_list.min if bonus_dice_count >= 0
+
     return total_list.max
   end
 
   def getCheckResultText(total, diff, fumbleable = false)
+    if total <= diff
+      return "決定的成功" if total == 1
+      return "極限の成功" if total <= (diff / 5)
+      return "困難な成功" if total <= (diff / 2)
 
-    if(total <= diff)
-      return "決定的成功" if(total == 1)
-      return "極限の成功" if(total <= (diff / 5))
-      return "困難な成功" if(total <= (diff / 2))
       return "通常成功"
     end
 
     fumble_text = "致命的失敗"
 
-    return fumble_text if (total == 100)
+    return fumble_text if total == 100
 
-    if (total >= 96)
-      if (diff < 50)
+    if total >= 96
+      if diff < 50
         return fumble_text
       else
         return fumble_text if fumbleable
@@ -134,8 +133,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getCombineRoll(command)
-
-    return nil unless(/CBR\((\d+),(\d+)\)/i =~ command)
+    return nil unless /CBR\((\d+),(\d+)\)/i =~ command
 
     diff_1 = $1.to_i
     diff_2 = $2.to_i
@@ -148,14 +146,14 @@ INFO_MESSAGE_TEXT
     successList = ["決定的成功", "極限の成功", "困難な成功", "通常成功"]
 
     succesCount = 0
-    succesCount += 1 if successList.include?( result_1 )
-    succesCount += 1 if successList.include?( result_2 )
+    succesCount += 1 if successList.include?(result_1)
+    succesCount += 1 if successList.include?(result_2)
     debug("succesCount", succesCount)
 
     rank =
-      if( succesCount >= 2 )
+      if succesCount >= 2
         "成功"
-      elsif( succesCount == 1 )
+      elsif succesCount == 1
         "部分的成功"
       else
         "失敗"
@@ -165,8 +163,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getFullAutoResult(command)
-
-    return nil unless (/^FAR\((-?\d+)(,(-?\d+))(,(-?\d+))(,(-?\d+))?\)/i =~ command)
+    return nil unless /^FAR\((-?\d+)(,(-?\d+))(,(-?\d+))(,(-?\d+))?\)/i =~ command
 
     bullet_count = $1.to_i
     diff = $3.to_i
@@ -175,22 +172,22 @@ INFO_MESSAGE_TEXT
 
     output = ""
 
-    #最大で（8回*（PC技能値最大値/10））＝72発しか撃てないはずなので上限
+    # 最大で（8回*（PC技能値最大値/10））＝72発しか撃てないはずなので上限
     bullet_count_limit = 100
-    if (bullet_count > bullet_count_limit)
+    if bullet_count > bullet_count_limit
       output += "\n弾薬が多すぎます。装填された弾薬を#{bullet_count_limit}発に変更します。\n"
       bullet_count = bullet_count_limit
     end
 
-    return "弾薬は正の数です。" if (bullet_count <= 0)
-    return "目標値は正の数です。" if (diff <= 0)
+    return "弾薬は正の数です。" if bullet_count <= 0
+    return "目標値は正の数です。" if diff <= 0
 
-    if (broken_number < 0)
+    if broken_number < 0
       output += "\n故障ナンバーは正の数です。マイナス記号を外します。\n"
       broken_number = broken_number.abs
     end
 
-    unless ( @bonus_dice_range.include?(bonus_dice_count) )
+    unless @bonus_dice_range.include?(bonus_dice_count)
       return "\nエラー。ボーナス・ペナルティダイスの値は#{@bonus_dice_range.min}～#{@bonus_dice_range.max}です。"
     end
 
@@ -201,7 +198,6 @@ INFO_MESSAGE_TEXT
   end
 
   def rollFullAuto(bullet_count, diff, broken_number, dice_num)
-
     output = ""
     loopCount = 0
 
@@ -213,17 +209,16 @@ INFO_MESSAGE_TEXT
 
     # 難易度変更用ループ
     (0 .. 3).each do |more_difficlty|
-
       output += getNextDifficltyMessage(more_difficlty)
 
       # ペナルティダイスを減らしながらロール用ループ
-      while (dice_num >= @bonus_dice_range.min)
+      while dice_num >= @bonus_dice_range.min
 
         loopCount += 1
         hit_result, total, total_list = getHitResultInfos(dice_num, diff, more_difficlty)
         output += "\n#{loopCount}回目: ＞ #{total_list.join(", ")} ＞ #{hit_result}"
 
-        if (total >= broken_number)
+        if total >= broken_number
           output += "ジャム"
           return getHitResultText(output, counts)
         end
@@ -235,7 +230,7 @@ INFO_MESSAGE_TEXT
         counts[:impale_bullet] += impale_bullet
         counts[:bullet] -= lost_bullet
 
-        return getHitResultText(output, counts) if (counts[:bullet] <= 0)
+        return getHitResultText(output, counts) if counts[:bullet] <= 0
 
         dice_num -= 1
       end
@@ -254,7 +249,7 @@ INFO_MESSAGE_TEXT
     fumbleable = getFumbleable(more_difficlty)
     hit_result = getCheckResultText(total, diff, fumbleable)
 
-    return hit_result , total, total_list
+    return hit_result, total, total_list
   end
 
   def getHitResultText(output, counts)
@@ -264,14 +259,13 @@ INFO_MESSAGE_TEXT
   def getHitType(more_difficlty, hit_result)
     successList, impaleBulletList = getSuccessListImpaleBulletList(more_difficlty)
 
-    return :hit if successList.include?( hit_result )
-    return :impale if impaleBulletList.include?( hit_result )
+    return :hit if successList.include?(hit_result)
+    return :impale if impaleBulletList.include?(hit_result)
 
     return ""
   end
 
   def getBulletResults(bullet_count, hit_type, diff)
-
     bullet_set_count = getSetOfBullet(diff)
     hit_bullet_count_base = getHitBulletCountBase(diff, bullet_set_count)
     impale_bullet_count_base = (bullet_set_count / 2.to_f)
@@ -280,15 +274,15 @@ INFO_MESSAGE_TEXT
     hit_bullet_count = 0
     impale_bullet_count = 0
 
-    if ( not isLastBulletTurn(bullet_count, bullet_set_count) )
+    if !isLastBulletTurn(bullet_count, bullet_set_count)
 
       case hit_type
       when :hit
-        hit_bullet_count = hit_bullet_count_base #通常命中した弾数の計算
+        hit_bullet_count = hit_bullet_count_base # 通常命中した弾数の計算
 
       when :impale
         hit_bullet_count = impale_bullet_count_base.floor
-        impale_bullet_count = impale_bullet_count_base.ceil  #貫通した弾数の計算
+        impale_bullet_count = impale_bullet_count_base.ceil # 貫通した弾数の計算
       end
 
       lost_bullet_count = bullet_set_count
@@ -297,7 +291,7 @@ INFO_MESSAGE_TEXT
 
       case hit_type
       when :hit
-        hit_bullet_count = getLastHitBulletCount( bullet_count )
+        hit_bullet_count = getLastHitBulletCount(bullet_count)
 
       when :impale
         halfbull = bullet_count / 2.to_f
@@ -313,7 +307,6 @@ INFO_MESSAGE_TEXT
   end
 
   def getSuccessListImpaleBulletList(more_difficlty)
-
     successList = []
     impaleBulletList = []
 
@@ -352,8 +345,8 @@ INFO_MESSAGE_TEXT
     #bullet_set_count = diff / 10
     bullet_set_count = (diff / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
-    if ((diff >= 1) and (diff < 10))
-      bullet_set_count = 1  #技能値が9以下での最低値保障処理
+    if (diff >= 1) && (diff < 10)
+      bullet_set_count = 1 # 技能値が9以下での最低値保障処理
     end
 
     return bullet_set_count
@@ -363,21 +356,20 @@ INFO_MESSAGE_TEXT
     #hit_bullet_count_base = (bullet_set_count / 2)
     hit_bullet_count_base = (bullet_set_count / 2).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
-    if ((diff >= 1) and (diff < 10))
-      hit_bullet_count_base = 1  #技能値9以下での最低値保障
+    if (diff >= 1) && (diff < 10)
+      hit_bullet_count_base = 1 # 技能値9以下での最低値保障
     end
 
     return hit_bullet_count_base
   end
 
-  def isLastBulletTurn(bullet_count,bullet_set_count)
+  def isLastBulletTurn(bullet_count, bullet_set_count)
     ((bullet_count - bullet_set_count) < 0)
   end
 
   def getLastHitBulletCount(bullet_count)
-
-    #残弾1での最低値保障処理
-    if (bullet_count == 1)
+    # 残弾1での最低値保障処理
+    if bullet_count == 1
       return 1
     end
 
@@ -386,7 +378,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getFumbleable(more_difficlty)
-    #成功が49以下の出目のみとなるため、ファンブル値は上昇
-    return ( more_difficlty >= 1 )
+    # 成功が49以下の出目のみとなるため、ファンブル値は上昇
+    return (more_difficlty >= 1)
   end
 end

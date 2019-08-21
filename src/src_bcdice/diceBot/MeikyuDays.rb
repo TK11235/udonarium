@@ -9,6 +9,7 @@ class MeikyuDays < DiceBot
     @sortType = 1
     @d66Type = 2
   end
+
   def gameName
     '迷宮デイズ'
   end
@@ -38,8 +39,8 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/(\d+)MD6/i) {"#{$1}R6"}
-    string = string.gsub(/(\d+)MD/i) {"#{$1}R6"}
+    string = string.gsub(/(\d+)MD6/i) { "#{$1}R6" }
+    string = string.gsub(/(\d+)MD/i) { "#{$1}R6" }
     return string
   end
 
@@ -48,14 +49,14 @@ INFO_MESSAGE_TEXT
     return checkRoll(string)
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
-    return '' unless(signOfInequality == ">=")
+  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
+    if dice_n <= 2
       return " ＞ 絶対失敗"
-    elsif(dice_n >= 12)
+    elsif dice_n >= 12
       return " ＞ 絶対成功"
-    elsif(total_n >= diff)
+    elsif total_n >= diff
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -66,35 +67,28 @@ INFO_MESSAGE_TEXT
     output = "1"
 
     debug("checkRoll string", string)
-    unless(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i =~ string)
+    unless (m = /(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i.match(string))
       debug("not mutch")
       return output
     end
 
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg2 = $2
-    reg3 = $2
-    reg4 = $4
-    reg6 = $6
-    reg7 = $7
-
-    string = reg2#$2
-    dice_c = reg3.to_i#$3.to_i
+    string = m[2]
+    dice_c = m[3].to_i
     bonus = 0
     signOfInequality = ""
     diff = 0
 
-    bonusText = reg4#$4
-    bonus = parren_killer("(0" + bonusText + ")").to_i unless( bonusText.nil? )
+    bonusText = m[4]
+    bonus = parren_killer("(0" + bonusText + ")").to_i unless bonusText.nil?
 
-    signOfInequality = reg6 if(reg6)#$6 if($6)
-    diff = reg7.to_i if(reg7)#$7.to_i if($7)
+    signOfInequality = m[6] if m[6]
+    diff = m[7].to_i if m[7]
     dice_now = 0
     dice_str = ""
     total_n = 0
 
     _, dice_str, = roll(dice_c, 6, (sortType & 1))
-    dice_num = dice_str.split(/,/).collect{|i|i.to_i}
+    dice_num = dice_str.split(/,/).collect { |i| i.to_i }
 
     dice_now = dice_num[dice_c - 2] + dice_num[dice_c - 1]
     total_n = dice_now + bonus
@@ -103,14 +97,14 @@ INFO_MESSAGE_TEXT
 
     output = "#{dice_now}#{dice_str}"
 
-    if(bonus > 0)
+    if bonus > 0
       output += "+#{bonus}"
-    elsif(bonus < 0)
-      output += "#{bonus}"
+    elsif bonus < 0
+      output += bonus.to_s
     end
 
-    if(sendMode > 0)
-      if(/[^\d\[\]]+/ =~ output)
+    if sendMode > 0
+      if /[^\d\[\]]+/ =~ output
         output = "#{@nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
       else
         output = "#{@nick_e}: (#{string}) ＞ #{total_n}"
@@ -119,7 +113,7 @@ INFO_MESSAGE_TEXT
       output = "#{@nick_e}: (#{string}) ＞ #{total_n}"
     end
 
-    if(signOfInequality != "")  # 成功度判定処理
+    if signOfInequality != "" # 成功度判定処理
       output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
     end
 
@@ -196,14 +190,14 @@ INFO_MESSAGE_TEXT
       output, total_n = md_kernel_stop_table
     end
 
-    if(output != '1')
+    if output != '1'
       output = "#{type}表(#{total_n}) ＞ #{output}"
     end
 
     return output
   end
 
-  #**散策表(2d6)
+  # **散策表(2d6)
   def md_research_table
     table = [
       '次に挑む迷宮の迷宮支配者を倒さなければ人類文明が滅ぶことを偶然知ってしまう。《気力》を最大値まで回復する。',
@@ -222,7 +216,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**休憩表（2d6）
+  # **休憩表（2d6）
   def md_break_table
     table = [
       'アイテムの改善案を出し合ってみる。各キャラクターは、好きなキャラクター1体を選び、1d6を振ってそのキャラクターのアイテムスロットから1つをランダムに選ぶ。出た目のアイテムにレベルがあれば、1上昇する。',
@@ -241,7 +235,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**交渉表（2d6）
+  # **交渉表（2d6）
   def md_negotiation_table
     table = [
       '中立的な態度は偽装だった。彼らは不意打ちを行う。奇襲扱いで戦闘を開始すること。',
@@ -259,7 +253,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**ハプニング表（2d6）
+  # **ハプニング表（2d6）
   def md_happening_table
     table = [
       '急に絶望に襲われる。【お酒】を消費することが出来なければ、このゲーム中、最も高い能力値が1点減少する。',
@@ -278,7 +272,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**カーネル停止表（2d6）
+  # **カーネル停止表（2d6）
   def md_kernel_stop_table
     table = [
       'カーネルが肉体に致命的な迷宮化を引き起こす！致命傷表を振ること。カーネルはまだ停止しない。',
@@ -297,7 +291,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**痛打表（2d6）
+  # **痛打表（2d6）
   def md_critical_attack_table
     table = [
       '武器の伝説がまた一つ増えた。攻撃に使用した武具アイテムにレベルがあれば、そのレベルが1点上昇する。',
@@ -316,7 +310,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**致命傷表（2d6）
+  # **致命傷表（2d6）
   def md_fatal_wounds_table
     table = [
       '重要器官を粉砕される。キャラクターは即座に死亡する。',
@@ -334,7 +328,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**戦闘ファンブル表（2d6）
+  # **戦闘ファンブル表（2d6）
   def md_combat_fumble_table
     table = [
       'ぶざまな失敗に熱くなる。攻撃の目標のキャラクターに対して《敵意》を4点得る。',
@@ -352,7 +346,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**登場表（2d6）
+  # **登場表（2d6）
   def md_appearance_table
     table = [
       '「ここから先に行かせるわけにはいかん」急ぐ途中に敵が立ちふさがる。〔武勇〕で難易度11の判定を行う。成功すればバトルフィールドの好きなエリアにそのキャラクターを配置することができる。失敗した場合、《HP》を1にした状態でバトルフィールドの好きなエリアにそのキャラクターを配置することができる。',
@@ -370,7 +364,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**因縁表（2d6）
+  # **因縁表（2d6）
   def md_connection_table
     table = [
       '対象はあなたの父、もしくは母である。幼い頃に家庭を捨てて失踪した対象を、あなたはずっと憎んでいた。対象への《敵意》が1点上昇する。また、対象を戦闘で倒した際に、経験点10点を得ることができる。',
@@ -388,7 +382,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**怪物因縁表（2d6）
+  # **怪物因縁表（2d6）
   def md_monster_connection_table
     table = [
       '対象はあなたの故郷を滅ぼした。そこは、もうペンペン草すら生えない廃墟となっている。対象への《敵意》が4点上昇する。',
@@ -406,7 +400,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**PC因縁表（2d6）
+  # **PC因縁表（2d6）
   def md_pc_connection_table
     table = [
       '対象はあなたが追い求めていた敵だった。なぜ敵なのか設定すること。対象への《敵意》が4点上昇する。対象を殺害すると経験点100点を得る。',
@@ -424,7 +418,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**ラブ因縁表（2d6）
+  # **ラブ因縁表（2d6）
   def md_love_connection_table
     table = [
       'あなたは対象と過去にいい友人だった。対象への《好意》が2点上昇するが、その属性は友情に変化する。',
@@ -442,7 +436,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**相場表（2d6）
+  # **相場表（2d6）
   def md_market_price_table
     table = [
       'なし',
@@ -460,7 +454,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  #**お宝表１（1d6）
+  # **お宝表１（1d6）
   def md_treasure1_table
     table = [
       '何もなし。',
@@ -473,7 +467,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-  #**お宝表２（1d6）
+  # **お宝表２（1d6）
   def md_treasure2_table
     table = [
       'そのモンスターの素材欄の中から、好きな素材を3個。',
@@ -486,7 +480,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-  #**お宝表３（1d6）
+  # **お宝表３（1d6）
   def md_treasure3_table
     table = [
       'そのモンスターの素材欄の中から、好きな素材を5個。',
@@ -499,7 +493,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-  #**お宝表４（1d6）
+  # **お宝表４（1d6）
   def md_treasure4_table
     table = [
       'そのモンスターの素材欄の中から、好きな素材を5個。',

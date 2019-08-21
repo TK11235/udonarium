@@ -41,7 +41,6 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     output =
       case command.upcase
 
@@ -93,15 +92,12 @@ MESSAGETEXT
         get_event_chart
       when 'BSD'
         get_battle_start_distance
-      else
-        nil
       end
 
     return output
   end
 
   def checkRoll(modifyString, targetString)
-
     modify = modifyString.to_i
     target = targetString.to_i
 
@@ -118,9 +114,8 @@ MESSAGETEXT
   end
 
   def getResultText(dice, total, target)
-
-    return "ファンブル" if( dice == 1 )
-    return "クリティカル" if( dice == 10 )
+    return "ファンブル" if dice == 1
+    return "クリティカル" if dice == 10
 
     if total < target
       return "失敗"
@@ -480,7 +475,6 @@ MESSAGETEXT
 
   # 部位ダメージチャート
   def get_damage_chart(part, damage)
-
     name, table =
       case part
       when 'C'
@@ -493,8 +487,6 @@ MESSAGETEXT
         get_damagechart_arm
       when 'L'
         get_damagechart_leg
-      else
-        nil
       end
 
     return nil if table.nil?
@@ -502,7 +494,7 @@ MESSAGETEXT
     tableMaxValue = table.last[0]
     damage = [damage, tableMaxValue].min
 
-    result = get_table_by_number(damage , table)
+    result = get_table_by_number(damage, table)
 
     return get_garako_table_result(name, damage, result)
   end

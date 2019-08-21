@@ -4,9 +4,10 @@ class Gorilla < DiceBot
   setPrefixes(['G.*'])
 
   def initialize
-    #$isDebug = true
+    # $isDebug = true
     super()
   end
+
   def gameName
     'ゴリラTRPG'
   end
@@ -30,29 +31,29 @@ MESSAGETEXT
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?G/i) {"#{$1}2D6"}
+    string = string.gsub(/^(S)?G/i) { "#{$1}2D6" }
     return string
   end
 
-  def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
-    if(dice_n == 10)
+  def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+    if dice_n == 10
       diceList = getDiceList()
-      if(diceList[0] == 5)
+      if diceList[0] == 5
         # 2d6の合計が10で片方5ならもう片方も5であろうという手抜き判定
-        return " ＞ ゴリティカル（自動的成功）";
+        return " ＞ ゴリティカル（自動的成功）"
       end
     end
     # 2014.02.24 余り無いと思うが'>'に対応できてなかったので追記
-    if(signOfInequality == '>=')
-      if(totalValue >= diff)
-        return " ＞ 成功";
+    if signOfInequality == '>='
+      if totalValue >= diff
+        return " ＞ 成功"
       end
     end
-    if(signOfInequality == '>')
-      if(totalValue > diff)
-        return " ＞ 成功";
+    if signOfInequality == '>'
+      if totalValue > diff
+        return " ＞ 成功"
       end
     end
-    return " ＞ 失敗";
+    return " ＞ 失敗"
   end
 end

@@ -61,48 +61,35 @@ MESSAGETEXT
       when 'SKL'
         get_skill_table
 
-      else
-        nil
       end
 
     return output
   end
 
   def judgeDice(command)
-    unless /(\d+)?(BAD|BL|GL)([\+\-\d+]*)((C|F)([\+\-\d+]*)?)?((C|F)([\+\-\d+]*))?(\@([\+\-\d+]*))?(\!(\D*))?/i === command
+    unless (m = /(\d+)?(BAD|BL|GL)([\+\-\d+]*)((C|F)([\+\-\d+]*)?)?((C|F)([\+\-\d+]*))?(\@([\+\-\d+]*))?(\!(\D*))?/i.match(command))
       return nil
     end
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg1 = $1
-    reg2 = $2
-    reg3 = $3
-    reg5 = $5
-    reg6 = $6
-    reg8 = $8
-    reg9 = $9
-    reg11 = $11
-    reg13 = $13
 
-    diceCount = (reg1 || 1).to_i#($1 || 1).to_i
+    diceCount = (m[1] || 1).to_i
 
     critical = 20
     fumble = 1
 
-    #isStormy = ($2 == 'GL')  # 波乱万丈
-    isStormy = (reg2 == 'GL')  # 波乱万丈
-    if( isStormy )
+    isStormy = (m[2] == 'GL') # 波乱万丈
+    if  isStormy
       critical -= 3
       fumble += 1
     end
-    
-    modify = get_value(reg3)#get_value($3)
-    
-    critical, fumble = get_critival_fumble(critical, fumble, reg5, reg6)#get_critival_fumble(critical, fumble, $5, $6)
-    critical, fumble = get_critival_fumble(critical, fumble, reg8, reg9)#get_critival_fumble(critical, fumble, $8, $9)
-    
-    target = get_value(reg11)#get_value($11)
-    optionalText = (reg13 || '')#($13 || '')
-    
+
+    modify = get_value(m[3])
+
+    critical, fumble = get_critival_fumble(critical, fumble, m[5], m[6])
+    critical, fumble = get_critival_fumble(critical, fumble, m[8], m[9])
+
+    target = get_value(m[11])
+    optionalText = (m[13] || '')
+
     return checkRoll(diceCount, modify, critical, fumble, target, isStormy, optionalText)
   end
 
@@ -123,50 +110,50 @@ MESSAGETEXT
 
     dice, diceText = roll(diceCount, 20)
     diceMax = 0
-    diceArray = diceText.split(/,/).collect{|i|i.to_i}
-    diceArray.each do |i|                            # さくら鯖で.maxを使うと、何故か.minになる……
-      diceMax = i if( i > diceMax )
+    diceArray = diceText.split(/,/).collect { |i| i.to_i }
+    diceArray.each do |i| # さくら鯖で.maxを使うと、何故か.minになる……
+      diceMax = i if  i > diceMax
     end
 
-    diceMax = 5 if( isHeavyAttack && diceMax <= 5 )  # 重撃
+    diceMax = 5 if isHeavyAttack && diceMax <= 5   # 重撃
 
     isCritical = (diceMax >= critical)
     isFumble = (diceMax <= fumble)
 
-    diceMax = 20 if( isCritical )                    # クリティカル
+    diceMax = 20 if isCritical                     # クリティカル
     total = diceMax + modify
-    total += 5 if( isAnticipation && diceMax <= 7 )  # 先見の明
-    total = 0 if( isFumble )                         # ファンブル
+    total += 5 if isAnticipation && diceMax <= 7   # 先見の明
+    total = 0 if isFumble                          # ファンブル
 
     result = "#{diceCount}D20\(C:#{critical},F:#{fumble}\) ＞ "
     result += "#{diceMax}\[#{diceText}\]"
-    result += "\+" if( modify > 0 )
-    result += "#{modify}" if( modify != 0 )
-    result += "\+5" if( isAnticipation && diceMax <= 7 )  # 先見の明
+    result += "\+" if modify > 0
+    result += modify.to_s if modify != 0
+    result += "\+5" if isAnticipation && diceMax <= 7 # 先見の明
     result += " ＞ 達成値：#{total}"
 
-    if(target > 0)
+    if target > 0
       success = total - target
       result += ">=#{target} 成功度：#{success} ＞ "
 
-      if( isCritical )
+      if isCritical
         result += "成功（クリティカル）"
-      elsif( total >= target )
+      elsif  total >= target
         result += "成功"
       else
         result += "失敗"
-        result += "（ファンブル）" if( isFumble )
+        result += "（ファンブル）" if isFumble
       end
     else
-      result += " クリティカル" if( isCritical )
-      result += " ファンブル" if( isFumble )
+      result += " クリティカル" if isCritical
+      result += " ファンブル" if isFumble
     end
 
     skillText = ""
-    skillText += "〈波乱万丈〉" if( isStormy )
-    skillText += "〈先見の明〉" if( isAnticipation )
-    skillText += "［重撃］" if( isHeavyAttack )
-    result += " #{skillText}" if( skillText != "" )
+    skillText += "〈波乱万丈〉" if  isStormy
+    skillText += "〈先見の明〉" if  isAnticipation
+    skillText += "［重撃］" if isHeavyAttack
+    result += " #{skillText}" if skillText != ""
 
     return result
   end

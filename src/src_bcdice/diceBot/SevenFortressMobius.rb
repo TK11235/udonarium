@@ -29,7 +29,7 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.sub(/(\d*)SFM/i){"#{$1}NW"}
+    string = string.sub(/(\d*)SFM/i) { "#{$1}NW" }
 
     string = @nightWizardDiceBot.changeText(string)
   end

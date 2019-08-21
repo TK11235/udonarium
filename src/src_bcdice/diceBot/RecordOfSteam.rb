@@ -24,7 +24,7 @@ MESSAGETEXT
   # サンプルのダイスコマンドは「nSt@c」で n=ダイス個数, t=目標値, c=クリティカル値。@cのみ省略可
 
   def rollDiceCommand(command)
-    unless( /(\d+)[sS](\d+)(@(\d+))?/i =~ command )
+    unless /(\d+)[sS](\d+)(@(\d+))?/i =~ command
       return "1"
     end
 
@@ -36,21 +36,21 @@ MESSAGETEXT
     criticalValue ||= 1
     criticalValue = criticalValue.to_i
 
-    if(diceCount >= 150)
+    if diceCount >= 150
       return "(多分)無限個なので振れません！ ヤメテクダサイ、(プロセスが)死んでしまいますっ"
     end
 
-    if(criticalValue >= 3)
+    if criticalValue >= 3
       return "(多分)無限個なので振れません！ ヤメテクダサイ、(プロセスが)死んでしまいますっ"
     end
 
     specialValue = criticalValue
 
-    rollResult, successCount, roundCount, specialCount , fumbleCount = getDiceRollResult(diceCount, targetNumber, criticalValue, specialValue)
+    rollResult, successCount, roundCount, specialCount, fumbleCount = getDiceRollResult(diceCount, targetNumber, criticalValue, specialValue)
 
     output = "(#{command}) ＞ #{rollResult}"
 
-    if(output.length > $SEND_STR_MAX)
+    if output.length > $SEND_STR_MAX
       output = "(#{command}) ＞ ..."
     end
 
@@ -73,14 +73,14 @@ MESSAGETEXT
     fumbleCount = 0
     fumbleFlag = false
 
-    while(diceCount > 0)
+    while diceCount > 0
       _, diceListText, = roll(diceCount, 6)
       debug("diceListText", diceListText)
 
-      rollResult += "," if(rollResult != "")
+      rollResult += "," if rollResult != ""
       rollResult += diceListText
 
-      diceList = diceListText.split(/,/).collect{|i|i.to_i}
+      diceList = diceListText.split(/,/).collect { |i| i.to_i }
       if diceList.uniq.length == 1 && roundCount == 0
         if diceList.uniq.first <= specialValue
           specialFlag = true
@@ -90,15 +90,15 @@ MESSAGETEXT
       end
       debug("diceList", diceList)
 
-      if(specialFlag)
+      if specialFlag
         specialCount = 1
         successCount = diceCount * 3
 
-        return rollResult, successCount ,roundCount, specialCount, fumbleCount
-      elsif(fumbleFlag)
+        return rollResult, successCount, roundCount, specialCount, fumbleCount
+      elsif fumbleFlag
         fumbleCount = 1
 
-        return rollResult, successCount ,roundCount, specialCount, fumbleCount
+        return rollResult, successCount, roundCount, specialCount, fumbleCount
       end
 
       diceCount = 0
@@ -108,20 +108,20 @@ MESSAGETEXT
         debug("criticalValue", criticalValue)
         debug("specialValue", specialValue)
 
-        if(diceValue <= criticalValue)
+        if diceValue <= criticalValue
           diceCount += 2
           roundCount += 1
         end
 
-        successCount += 1 if(diceValue <= targetNumber)
+        successCount += 1 if diceValue <= targetNumber
       end
     end
 
-    return rollResult, successCount ,roundCount, specialCount, fumbleCount
+    return rollResult, successCount, roundCount, specialCount, fumbleCount
   end
 
   def getRoundCountText(roundCount)
-    if( roundCount <= 0 )
+    if  roundCount <= 0
       return ""
     end
 
@@ -129,7 +129,7 @@ MESSAGETEXT
   end
 
   def getSuccessText(successCount)
-    if(successCount > 0)
+    if successCount > 0
       return " ＞ 成功数#{successCount}"
     end
 
@@ -137,13 +137,13 @@ MESSAGETEXT
   end
 
   def getSpecialText(specialCount)
-    if(specialCount == 1)
+    if specialCount == 1
       return " ＞ スペシャル"
     end
   end
 
   def getFumbleText(fumbleCount)
-    if(fumbleCount == 1)
+    if fumbleCount == 1
       return " ＞ ファンブル"
     end
   end

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class DarkDaysDrive < DiceBot
-
   def initialize
     super
     @d66Type = 2
   end
+
   def gameName
     'ダークデイズドライブ'
   end
@@ -49,15 +49,14 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
     output =
-      if(dice_n <= 2)
+      if dice_n <= 2
         " ＞ ファンブル(判定失敗。失敗表(FT)を追加で１回振る)"
-      elsif(dice_n >= 12)
+      elsif dice_n >= 12
         " ＞ スペシャル(判定成功。大成功表(GJT)を１回使用可能)"
-      elsif(total_n >= diff)
+      elsif total_n >= diff
         " ＞ 成功"
       else
         " ＞ 失敗"
@@ -66,30 +65,28 @@ INFO_MESSAGE_TEXT
     return output
   end
 
-
   def rollDiceCommand(command)
     string = command.upcase
 
     case string
-    when 'RTT'   # ランダム特技決定表
+    when 'RTT' # ランダム特技決定表
       return getRandomSkillTableResult(command)
     end
-    
+
     return getTableDiceCommandResult(command)
   end
-  
 
   # 指定特技ランダム決定表
   def getRandomSkillTableResult(command)
     name = 'ランダム'
 
     skillTableFull = [
-                      ['背景', ['呪い','絶望','孤児','死別','一般人','獲物','憧れ','友人','挑戦者','血縁','永遠']],
-                      ['仕事',  ['脅迫','捨てる','拉致','盗む','ハッキング','侵入','変装','だます','隠す','のぞく','聞き出す']],
-                      ['捜索',  ['トイレ','食事','自然','運動施設','街','友愛会','暗部','史跡','文化施設','温泉','宿泊']],
-                      ['趣味',  ['お酒','グルメ','ダンス','スポーツ','健康','ファッション','恋愛','フェス','音楽','物語','学問']],
-                      ['雰囲気',  ['だらしない','のんびり','暖かい','明るい','甘い','普通','洗練','渋い','静か','真面目','冷たい']],
-                      ['戦闘法',  ['忍術','古武術','剣術','棒術','拳法','ケンカ','総合格闘技','レスリング','軍隊格闘術','射撃','弓術']],
+                      ['背景', ['呪い', '絶望', '孤児', '死別', '一般人', '獲物', '憧れ', '友人', '挑戦者', '血縁', '永遠']],
+                      ['仕事',  ['脅迫', '捨てる', '拉致', '盗む', 'ハッキング', '侵入', '変装', 'だます', '隠す', 'のぞく', '聞き出す']],
+                      ['捜索',  ['トイレ', '食事', '自然', '運動施設', '街', '友愛会', '暗部', '史跡', '文化施設', '温泉', '宿泊']],
+                      ['趣味',  ['お酒', 'グルメ', 'ダンス', 'スポーツ', '健康', 'ファッション', '恋愛', 'フェス', '音楽', '物語', '学問']],
+                      ['雰囲気',  ['だらしない', 'のんびり', '暖かい', '明るい', '甘い', '普通', '洗練', '渋い', '静か', '真面目', '冷たい']],
+                      ['戦闘法',  ['忍術', '古武術', '剣術', '棒術', '拳法', 'ケンカ', '総合格闘技', 'レスリング', '軍隊格闘術', '射撃', '弓術']],
                      ]
 
     skillTable, total_n = get_table_by_1d6(skillTableFull)
@@ -102,7 +99,6 @@ INFO_MESSAGE_TEXT
   end
 
   def getTableDiceCommandResult(command)
-
     info = @@tables[command]
     return nil if info.nil?
 
@@ -125,26 +121,23 @@ INFO_MESSAGE_TEXT
         number = bcdice.getD66(isSwap)
         result = get_table_by_number(number, table)
         [result, number]
-      else
-        nil
       end
 
-    return nil if( text.nil? )
+    return nil if text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
-  
+
   def getD66Table(table)
     table.map do |item|
-      if item.kind_of?(String) and  /^(\d+):(.*)/ === item
+      if item.kind_of?(String) && (/^(\d+):(.*)/ === item)
         [$1.to_i, $2]
       else
         item
       end
     end
   end
-  
-  
+
   @@tables =
     {
     'ABRT' => {
@@ -173,7 +166,7 @@ INFO_MESSAGE_TEXT
 56:用心棒(P158)
 66:料理人(P158)
 },},
-    
+
     'DT' => {
       :name => "ダメージ表",
       :type => '1D6',
@@ -483,10 +476,7 @@ V-FILES（P227)
 光る（かっこよさ：6）
 },}
 
-
-
   }
 
   setPrefixes(['RTT'] + @@tables.keys)
 end
-

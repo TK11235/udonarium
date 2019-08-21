@@ -54,16 +54,16 @@ MESSAGETEXT
 
     result = ''
 
-    if (n_max >= 2) then
+    if n_max >= 2 then
       total_n += 10
       result += "（クリティカル）"
       result += " ＞ #{total_n}"
     end
 
-    return result unless(signOfInequality == ">=")
-    return result if(diff == "?")
+    return result unless signOfInequality == ">="
+    return result if diff == "?"
 
-    if(total_n >= diff)
+    if total_n >= diff
       result += " ＞ 成功"
     else
       result += " ＞ 失敗"
@@ -73,7 +73,6 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     debug("rollDiceCommand command", command)
 
     tableName = ""
@@ -82,14 +81,14 @@ MESSAGETEXT
     case command
 
     when "MT"
-      #邂逅表
+      # 邂逅表
       tableName, result, number = getMeetingTableResult()
     when /^.+FT$/i
-      #感情表
+      # 感情表
       tableName, result, number = getFeelingTableResult(command)
 
     when /^.*CT$/i
-      #国特徴表
+      # 国特徴表
       tableName, result, number = getCountryTableResult(command)
 
     else
@@ -248,7 +247,7 @@ MESSAGETEXT
     tableName = ''
     table = []
 
-    if (/^CT$/i =~ command || /^CategoryCT$/i =~ command)
+    if /^CT$/i =~ command || /^CategoryCT$/i =~ command
       tableName = "国特徴・カテゴリー表"
       table = [
                "地形（TCT）\n森林、山岳、河川など、その国に存在する地勢を表す。",

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class KillDeathBusiness < DiceBot
-
   def initialize
     super
     @sendMode = 2
@@ -49,17 +48,16 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-
     debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
 
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
     output =
-      if(dice_n <= 2)
+      if dice_n <= 2
         " ＞ ファンブル(判定失敗。【視聴率】が20％減少)"
-      elsif(dice_n >= 12)
+      elsif dice_n >= 12
         " ＞ スペシャル(判定成功。【視聴率】が10％増加)"
-      elsif(total_n >= diff)
+      elsif total_n >= diff
         " ＞ 成功"
       else
         " ＞ 失敗"
@@ -69,10 +67,9 @@ INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)
-
     debug("rollDiceCommand command", command)
 
-    #判定チェックは先に処理
+    # 判定チェックは先に処理
     case command
     when @@judogeDiceReg
       result = judgeDice(command)
@@ -80,15 +77,14 @@ INFO_MESSAGE_TEXT
       return text
     end
 
-    #判定以外なら表コマンドの処理に
+    # 判定以外なら表コマンドの処理に
     return rollTableCommand(command)
   end
 
   @@judogeDiceReg = /(^|\s)JD(\d+)([\+\-]\d+)?(,(\d+))?($|\s)/i
 
   def judgeDice(command)
-
-    unless(@@judogeDiceReg === command)
+    unless @@judogeDiceReg === command
       return '1'
     end
 
@@ -98,20 +94,20 @@ INFO_MESSAGE_TEXT
 
     result = ""
 
-    if(target > 12 )
-      result  += "【#{command}】 ＞ 難易度が12以上はスペシャルのみ成功。\n"
+    if target > 12
+      result += "【#{command}】 ＞ 難易度が12以上はスペシャルのみ成功。\n"
       target = 12
     end
 
-    if(target < 5 )
-      result  += "【#{command}】 ＞ 難易度の最低は5。\n"
+    if target < 5
+      result += "【#{command}】 ＞ 難易度の最低は5。\n"
       target = 5
     end
 
-    if( fumble < 2 )
+    if  fumble < 2
       fumble = 2
-    elsif(fumble > 11 )
-      result  += "【#{command}】 ＞ スペシャルを出すと必ず成功なので、ファンブル率は11とする。\n"
+    elsif fumble > 11
+      result += "【#{command}】 ＞ スペシャルを出すと必ず成功なので、ファンブル率は11とする。\n"
       fumble = 11
     end
 
@@ -119,15 +115,15 @@ INFO_MESSAGE_TEXT
 
     result += "【難易度#{target}、補正#{modify}、ファンブル率#{fumble}】 ＞ 出目(#{diceText}) ＞ "
 
-    if(number == 2 )
+    if number == 2
       result += "出目が2なのでファンブル！(判定失敗。【視聴率】が20％減少)"
-    elsif(number == 12)
+    elsif number == 12
       result += "出目が12なのでスペシャル！(判定成功。【視聴率】が10％増加)"
-    elsif(number <= fumble)
+    elsif number <= fumble
       result += "出目がファンブル率以下なのでファンブル！(判定失敗。【視聴率】が20％減少)"
     else
-       number += modify
-       if(number < target)
+      number += modify
+       if number < target
          result += "達成値#{number}、難易度未満なので判定失敗！"
        else
          result += "達成値#{number}、難易度以上なので判定成功！"
@@ -138,106 +134,104 @@ INFO_MESSAGE_TEXT
   end
 
   def rollTableCommand(command)
-
-    
     result = getTableCommandResult(command, @@tables)
     return result unless result.nil?
-    
+
     tableName = ""
     result = ""
 
-	case command
+  case command
 
-    when "HST"
-      tableName, result, number = getHistoryTableResult
+  when "HST"
+    tableName, result, number = getHistoryTableResult
 
-    when /^ST(\d)?$/
-	  #シーン表
-      type = $1.to_i
+  when /^ST(\d)?$/
+    # シーン表
+    type = $1.to_i
 
-	  tableName, result, number = getSceneTableResult(type)
+    tableName, result, number = getSceneTableResult(type)
 
-    when /^.+WT$/i
-	  #願い事表
-      tableName, result, number = getWishTableResult(command)
+  when /^.+WT$/i
+    # 願い事表
+    tableName, result, number = getWishTableResult(command)
 
-    when /^NAME(\d)?$/
-	  #万能命名表
-      type = $1.to_i
+  when /^NAME(\d)?$/
+    # 万能命名表
+    type = $1.to_i
       tableName, result, number = getNameTableResult(type)
 
-    when /^.+SPT$/i
-	  #サブプロット表
-      tableName, result, number = getSubprotTableResult(command)
+  when /^.+SPT$/i
+    # サブプロット表
+    tableName, result, number = getSubprotTableResult(command)
 
-    when "CMT"
-	  #CM表
-      tableName, result, number = getCmTableResult()
+  when "CMT"
+    # CM表
+    tableName, result, number = getCmTableResult()
 
-    when "ERT"
-	  #副作用蘇生表
-      tableName, result, number = getErTableResult()
+  when "ERT"
+    # 副作用蘇生表
+    tableName, result, number = getErTableResult()
 
-    when "WKT"
-	  #一週間表
-      tableName, result, number = getWKTableResult()
+  when "WKT"
+    # 一週間表
+    tableName, result, number = getWKTableResult()
 
-    when /^EST$/i, /^sErviceST$/i
-      tableName, result, number = getServiceSceneTableResult()
+  when /^EST$/i, /^sErviceST$/i
+    tableName, result, number = getServiceSceneTableResult()
 
-    when "SOUL"
-      tableName, result, number = getSoulTableResult()
+  when "SOUL"
+    tableName, result, number = getSoulTableResult()
 
-    when "STGT"
-      tableName, result, number = getSceneTelopGenericTableResult()
+  when "STGT"
+    tableName, result, number = getSceneTelopGenericTableResult()
 
-    when /^HSAT(\d)?$/
-      type = $1.to_i
+  when /^HSAT(\d)?$/
+    type = $1.to_i
       tableName, result, number = getHairStylistAbuseTableResult(type)
 
-    when /^EXT(\d)?$/
-      type = $1.to_i
+  when /^EXT(\d)?$/
+    type = $1.to_i
       tableName, result, number = getExtraTableResult(type)
 
-    when /^SKL(T|J)$/
-	  type = $1
+  when /^SKL(T|J)$/
+    type = $1
       tableName, result, number = getSkillTableResult(type)
 
-    when "PCDT"
-	  #製作委員決定表
-      tableName, result, number = getpcTableResult()
-    when "OHT"
-	  #実際どうだったのか表
-      tableName, result, number = getohTableResult()
-    when "PCT1"
-	  #ヘルライオンタスク表
-      tableName, result, number = getplTableResult()
-    when "PCT2"
-	  #ヘルクロウタスク表
-      tableName, result, number = getprTableResult()
-    when "PCT3"
-	  #ヘルスネークタスク表
-      tableName, result, number = getpnTableResult()
-    when "PCT4"
-	  #ヘルドラゴンタスク表
-      tableName, result, number = getpdTableResult()
-    when "PCT5"
-	  #ヘルフライタスク表
-      tableName, result, number = getpfTableResult()
-    when "PCT6"
-	  #ヘルゴートタスク表
-      tableName, result, number = getpgTableResult()
-    when "PCT7"
-	  #ヘルベアタスク表
-      tableName, result, number = getpbTableResult()
-	end
+  when "PCDT"
+    # 製作委員決定表
+    tableName, result, number = getpcTableResult()
+  when "OHT"
+    # 実際どうだったのか表
+    tableName, result, number = getohTableResult()
+  when "PCT1"
+    # ヘルライオンタスク表
+    tableName, result, number = getplTableResult()
+  when "PCT2"
+    # ヘルクロウタスク表
+    tableName, result, number = getprTableResult()
+  when "PCT3"
+    # ヘルスネークタスク表
+    tableName, result, number = getpnTableResult()
+  when "PCT4"
+    # ヘルドラゴンタスク表
+    tableName, result, number = getpdTableResult()
+  when "PCT5"
+    # ヘルフライタスク表
+    tableName, result, number = getpfTableResult()
+  when "PCT6"
+    # ヘルゴートタスク表
+    tableName, result, number = getpgTableResult()
+  when "PCT7"
+    # ヘルベアタスク表
+    tableName, result, number = getpbTableResult()
+  end
 
-    if( result.empty? )
+    if result.empty?
       return ""
     end
 
-	text = "#{tableName}(#{number})：#{result}"
-	return text
+  text = "#{tableName}(#{number})：#{result}"
+  return text
   end
 
   def getHistoryTableResult
@@ -996,14 +990,14 @@ INFO_MESSAGE_TEXT
               ]
 
     case type
-      when 1
-        result, number = get_table_by_d66_swap(hellStylistAbuseTable1)
-      when 2
-        result, number = get_table_by_d66_swap(hellStylistAbuseTable2)
-      else
-        result1, num1 = get_table_by_d66_swap(hellStylistAbuseTable1)
+    when 1
+      result, number = get_table_by_d66_swap(hellStylistAbuseTable1)
+    when 2
+      result, number = get_table_by_d66_swap(hellStylistAbuseTable2)
+    else
+      result1, num1 = get_table_by_d66_swap(hellStylistAbuseTable1)
         result2, num2 = get_table_by_d66_swap(hellStylistAbuseTable2)
-        before,  = get_table_by_1d6(hellStylistwtable1)
+        before, = get_table_by_1d6(hellStylistwtable1)
         after, = get_table_by_1d6(hellStylistwtable2)
         result = "#{before}#{result1}#{result2}#{after}"
         number = "#{num1},#{num2}"
@@ -1019,11 +1013,11 @@ INFO_MESSAGE_TEXT
                       ['小道具', ['ピアス', '髪飾り', '銃', 'ネックレス', 'ベルト', '眼鏡', '帽子', '時計', '剣', 'リング', 'タトゥー']],
                       ['衣装', ['ネイキッド', 'アウトドア', 'エスニック', 'ヒップホップ', 'ミリタリー', 'フォーマル', 'トラッド', 'ゴシック', 'パンク', 'メタル', 'アイドル']],
                       ['情動', ['愛', '喜び', '期待', '焦り', '自負', '怒り', '悲しみ', '嫉妬', '恐怖', '恥', '嫌悪']],
-                      ['願望', ['死', '復讐', '勝利', '支配', '獲得', '繁栄', '強化', '安全', '健康', '長寿','生']],
+                      ['願望', ['死', '復讐', '勝利', '支配', '獲得', '繁栄', '強化', '安全', '健康', '長寿', '生']],
                      ]
     skillTable, num1 = get_table_by_1d6(skillTableFull)
     skillGroup, table = skillTable
-    if(type == "T")
+    if type == "T"
       tableName = "指定特技ランダム決定表"
       skill, num2 = get_table_by_2d6(table)
       result = "「#{skillGroup}」《#{skill}》"
@@ -1040,97 +1034,97 @@ INFO_MESSAGE_TEXT
   def getExtraTableResult(type)
     tableName = "エキストラ表"
     extraTable1 = [
-				   [11, "あなたの親友である"],
-				   [12, "あなたと恨んで付け狙っている"],
-				   [13, "いそがしく電話で話し込んでいる"],
-				   [14, "ころんで逃げ損ねた"],
-				   [15, "シーンの背景の持ち主である"],
-				   [16, "架空の人物だと思われていた神"],
-				   [22, "過去のシーズン優勝者である"],
-				   [23, "気分よく酔っ払った"],
-				   [24, "恐怖で身をすくませている"],
-				   [25, "業界では有名な"],
-				   [26, "幸せな家庭を持つ"],
-				   [33, "広域指名手配されている"],
-				   [34, "今朝のニュースで特集されていた"],
-				   [35, "常に微笑みを絶やさない大物"],
-				   [36, "真実の探求の過程で発狂した"],
-				   [44, "地元では負けを知らない"],
-				   [45, "非常に動作にキレのある"],
-				   [46, "普通の"],
-				   [55, "変身ヒーローの正体である"],
-				   [56, "『#{getNameTableResult(0)[1]}』の異名を持つ"],
-				   [66, "歴史上の人物だが実は生きていた"],
-	              ]
-	extraTable2 = [
-				   [11, "サラリーマン"],
-				   [12, "スポーツ選手"],
-				   [13, "チンピラ"],
-				   [14, "ドライバー"],
-				   [15, "ねずみ"],
-				   [16, "パイロット"],
-				   [22, "映画監督"],
-				   [23, "犬"],
-				   [24, "刺客"],
-				   [25, "主婦"],
-				   [26, "小説家"],
-				   [33, "雀士"],
-				   [34, "政治家"],
-				   [35, "大金持ち"],
-				   [36, "大男"],
-				   [44, "謎の美女"],
-				   [45, "猫"],
-				   [46, "美少女"],
-				   [55, "文化人"],
-				   [56, "勇者"],
-				   [66, "神"],
-	              ]
+           [11, "あなたの親友である"],
+           [12, "あなたと恨んで付け狙っている"],
+           [13, "いそがしく電話で話し込んでいる"],
+           [14, "ころんで逃げ損ねた"],
+           [15, "シーンの背景の持ち主である"],
+           [16, "架空の人物だと思われていた神"],
+           [22, "過去のシーズン優勝者である"],
+           [23, "気分よく酔っ払った"],
+           [24, "恐怖で身をすくませている"],
+           [25, "業界では有名な"],
+           [26, "幸せな家庭を持つ"],
+           [33, "広域指名手配されている"],
+           [34, "今朝のニュースで特集されていた"],
+           [35, "常に微笑みを絶やさない大物"],
+           [36, "真実の探求の過程で発狂した"],
+           [44, "地元では負けを知らない"],
+           [45, "非常に動作にキレのある"],
+           [46, "普通の"],
+           [55, "変身ヒーローの正体である"],
+           [56, "『#{getNameTableResult(0)[1]}』の異名を持つ"],
+           [66, "歴史上の人物だが実は生きていた"],
+                ]
+  extraTable2 = [
+           [11, "サラリーマン"],
+           [12, "スポーツ選手"],
+           [13, "チンピラ"],
+           [14, "ドライバー"],
+           [15, "ねずみ"],
+           [16, "パイロット"],
+           [22, "映画監督"],
+           [23, "犬"],
+           [24, "刺客"],
+           [25, "主婦"],
+           [26, "小説家"],
+           [33, "雀士"],
+           [34, "政治家"],
+           [35, "大金持ち"],
+           [36, "大男"],
+           [44, "謎の美女"],
+           [45, "猫"],
+           [46, "美少女"],
+           [55, "文化人"],
+           [56, "勇者"],
+           [66, "神"],
+                ]
     extraTable3 = [
-				   [11, "怪しい箱の中から"],
-				   [12, "哀れな犠牲者を殺しながら"],
-				   [13, "牛に乗りつつ"],
-				   [14, "馬に乗りつつ"],
-				   [15, "壁を粉砕しながら"],
-				   [16, "壁を粉砕しながら"],
-				   [22, "濃い霧の中からゆっくりと"],
-				   [23, "自動ドアを抜けながら"],
-				   [24, "上空から急降下しつつ"],
-				   [25, "全速力で走りつつ"],
-				   [26, "高いところから"],
-				   [33, "テーマ音楽とともに"],
-				   [34, "通りがかりに"],
-				   [35, "名前と職業のテロップと一緒に"],
-				   [36, "バイクに乗りつつ"],
-				   [44, "墓をやぶって"],
-				   [45, "部下を大勢引き連れて"],
-				   [46, "吹きすさぶ風を纏い"],
-				   [55, "武器を構えつつ"],
-				   [56, "ヘルポータルを通って"],
-				   [66, "炎をバックに"],
-	              ]
-	extraTable4 = [
-				   [11, "愛らしく登場"],
-				   [12, "あざやかに登場"],
-				   [13, "あっさりと登場"],
-				   [14, "怪しく登場"],
-				   [15, "荒々しく登場"],
-				   [16, "勢い良く登場"],
-				   [22, "美しく登場"],
-				   [23, "偉そうに登場"],
-				   [24, "おごそかに登場"],
-				   [25, "恐ろしく登場"],
-				   [26, "かっこよく登場"],
-				   [33, "気取って登場"],
-				   [34, "死の予感とともに登場"],
-				   [35, "しめやかに登場"],
-				   [36, "上品に登場"],
-				   [44, "だらしなく登場"],
-				   [45, "知的に登場"],
-				   [46, "なごやかに登場"],
-				   [55, "なめらかに登場"],
-				   [56, "不機嫌に登場"],
-				   [66, "陽気に登場"],
-	              ]
+           [11, "怪しい箱の中から"],
+           [12, "哀れな犠牲者を殺しながら"],
+           [13, "牛に乗りつつ"],
+           [14, "馬に乗りつつ"],
+           [15, "壁を粉砕しながら"],
+           [16, "壁を粉砕しながら"],
+           [22, "濃い霧の中からゆっくりと"],
+           [23, "自動ドアを抜けながら"],
+           [24, "上空から急降下しつつ"],
+           [25, "全速力で走りつつ"],
+           [26, "高いところから"],
+           [33, "テーマ音楽とともに"],
+           [34, "通りがかりに"],
+           [35, "名前と職業のテロップと一緒に"],
+           [36, "バイクに乗りつつ"],
+           [44, "墓をやぶって"],
+           [45, "部下を大勢引き連れて"],
+           [46, "吹きすさぶ風を纏い"],
+           [55, "武器を構えつつ"],
+           [56, "ヘルポータルを通って"],
+           [66, "炎をバックに"],
+                ]
+  extraTable4 = [
+           [11, "愛らしく登場"],
+           [12, "あざやかに登場"],
+           [13, "あっさりと登場"],
+           [14, "怪しく登場"],
+           [15, "荒々しく登場"],
+           [16, "勢い良く登場"],
+           [22, "美しく登場"],
+           [23, "偉そうに登場"],
+           [24, "おごそかに登場"],
+           [25, "恐ろしく登場"],
+           [26, "かっこよく登場"],
+           [33, "気取って登場"],
+           [34, "死の予感とともに登場"],
+           [35, "しめやかに登場"],
+           [36, "上品に登場"],
+           [44, "だらしなく登場"],
+           [45, "知的に登場"],
+           [46, "なごやかに登場"],
+           [55, "なめらかに登場"],
+           [56, "不機嫌に登場"],
+           [66, "陽気に登場"],
+                ]
 
     case type
     when 1
@@ -1212,6 +1206,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getprTableResult()
     tableName = "ヘルクロウタスク表"
     table = [
@@ -1226,6 +1221,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpnTableResult()
     tableName = "ヘルスネークタスク表"
     table = [
@@ -1240,6 +1236,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpdTableResult()
     tableName = "ヘルドラゴンタスク表"
     table = [
@@ -1254,6 +1251,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpfTableResult()
     tableName = "ヘルフライタスク表"
     table = [
@@ -1268,6 +1266,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpgTableResult()
     tableName = "ヘルゴートタスク表"
     table = [
@@ -1282,6 +1281,7 @@ INFO_MESSAGE_TEXT
 
     return tableName, result, number
   end
+
   def getpbTableResult()
     tableName = "ヘルベアタスク表"
     table = [
@@ -1421,5 +1421,4 @@ TABLE_TEXT_END
     'PCT7',
     'JD.*'
   ] + @@tables.keys)
-
 end

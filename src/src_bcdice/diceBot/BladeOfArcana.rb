@@ -53,7 +53,7 @@ INFO_MESSAGE_TEXT
       argument1 = $4
       option2 = $5
       argument2 = $6
-      return nil if option1.empty? != argument1.empty? or option2.empty? != argument2.empty? or (not option2.empty? and option1 == option2)
+      return nil if (option1.empty? != argument1.empty?) || (option2.empty? != argument2.empty?) || (!option2.empty? && (option1 == option2))
 
       if option1 == 'C'
         critical = argument1.to_i

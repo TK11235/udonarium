@@ -16,7 +16,6 @@ class DiceBotLoaderList
     @loaders.find { |loader| loader.match?(strippedTitle) }
   end
 
-
   # ゲームタイトル別の読み込み処理の一覧
   # @return [Array<DiceBotLoader>]
   #

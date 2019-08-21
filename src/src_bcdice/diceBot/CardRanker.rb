@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 class CardRanker < DiceBot
-
   def initialize
     super
-    @sendMode = 2;
-    @sortType = 1;
-    @d66Type = 2;
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
   end
+
   def gameName
     'カードランカー'
   end
@@ -35,16 +35,16 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    return '' unless( signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
-      return " ＞ ファンブル";
-    elsif(dice_n >= 12)
-      return " ＞ スペシャル ＞ " + getRandumMonster();
-    elsif(total_n >= diff)
-      return " ＞ 成功";
+    if dice_n <= 2
+      return " ＞ ファンブル"
+    elsif dice_n >= 12
+      return " ＞ スペシャル ＞ " + getRandumMonster()
+    elsif total_n >= diff
+      return " ＞ 成功"
     else
-      return " ＞ 失敗";
+      return " ＞ 失敗"
     end
   end
 
@@ -66,7 +66,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getRandumMonster
-    type = "ランダムモンスター選択";
+    type = "ランダムモンスター選択"
     colorTable = getColorTable
     color, colorIndex = get_table_by_1d6(colorTable)
 
@@ -95,16 +95,15 @@ INFO_MESSAGE_TEXT
   end
 
   def getMonster(color, monsterIndex)
+    return nil if monsterIndex < 2
 
-    return nil if( monsterIndex < 2 )
-
-    type = "モンスター選択";
+    type = "モンスター選択"
 
     colorWords = ['W', 'U', 'V', 'G', 'R', 'B']
     colorIndex = colorWords.index(color)
     debug("colorIndex")
 
-    return nil if( colorIndex.nil? )
+    return nil if colorIndex.nil?
 
     colorTable = getColorTable
     color = colorTable[colorIndex]
@@ -114,7 +113,7 @@ INFO_MESSAGE_TEXT
     debug("monsterIndex", monsterIndex)
     monsterName = monsters[monsterIndex - 2]
 
-    return nil if( monsterName.nil? )
+    return nil if monsterName.nil?
 
     output = "#{type} ＞ #{color}の#{monsterIndex}：#{monsterName}"
     return output
@@ -255,5 +254,4 @@ TABLE_TEXT_END
   }
 
   setPrefixes(['RM', 'CM.*'] + @@tables.keys)
-
 end

@@ -3,7 +3,7 @@
 class OneWayHeroics < DiceBot
   def initialize
     super
-    @d66Type = 2  #d66の差し替え(0=D66無し, 1=順番そのまま([5,3]->53), 2=昇順入れ替え([5,3]->35)
+    @d66Type = 2 # d66の差し替え(0=D66無し, 1=順番そのまま([5,3]->53), 2=昇順入れ替え([5,3]->35)
   end
 
   def gameName
@@ -73,11 +73,9 @@ MESSAGETEXT
         isSwap = (@d66Type == 2)
         dice = getD66(isSwap)
         getTableResult(table, dice, hasGap)
-      else
-        nil
       end
 
-    return nil if( text.nil? )
+    return nil if text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
@@ -101,7 +99,7 @@ MESSAGETEXT
     dice, diceText = rollJudgeDice(diceCount)
     total = dice + ability + modifyValue
 
-    text = "#{command}"
+    text = command.to_s
     text += " ＞ #{diceCount}D6[#{diceText}]+#{ability}#{modifyText}"
     text += " ＞ #{total}"
 
@@ -114,7 +112,7 @@ MESSAGETEXT
   def rollJudgeDice(diceCount)
     dice, diceText, = roll(diceCount, 6)
 
-    if( diceCount == 2 )
+    if diceCount == 2
       return dice, diceText
     end
 
@@ -135,16 +133,18 @@ MESSAGETEXT
     return "" if target.nil?
 
     return "成功" if total >= target
+
     return "失敗"
   end
 
   def getTableResult(table, dice, hasGap = false)
     number, text, command = table.assoc(dice)
 
-    if number.nil? and hasGap
+    if number.nil? && hasGap
       params = nil
       table.each do |data|
         break if data.first > dice
+
         params = data
       end
 
@@ -168,6 +168,7 @@ MESSAGETEXT
 
     text = rollDiceCommand(command)
     return " ＞ #{command} is NOT found." if text.nil?
+
     return " ＞ \n #{command} ＞ #{text}"
   end
 
@@ -183,10 +184,10 @@ MESSAGETEXT
 
     if dice <= day
       text += " ＞ 日数[#{day}]以下"
-      text += getAddRoll( command1 )
+      text += getAddRoll(command1)
     else
       text += " ＞ 日数[#{day}]を超えている"
-      text += getAddRoll( command2 )
+      text += getAddRoll(command2)
     end
 
     return text
@@ -200,6 +201,7 @@ MESSAGETEXT
 
   def getRandomEventDiceCommandResult(command)
     return nil unless /^RET(\d+)$/ === command
+
     day = $1.to_i
 
     name = "ランダムイベント表"
@@ -215,13 +217,14 @@ MESSAGETEXT
     dice, = roll(1, 6)
     number, text = getTableResult(table, dice)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
 
   def getRandomEventPlusDiceCommandResult(command)
     return nil unless /^RETP(\d+)$/ === command
+
     day = $1.to_i
 
     name = "ランダムイベント表プラス"
@@ -241,13 +244,14 @@ MESSAGETEXT
     dice, = roll(1, 6)
     number, text = getTableResult(table, dice)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
 
   def getDungeonTableDiceCommandResult(command)
     return nil unless /^DNGN(\d+)$/ === command
+
     day = $1.to_i
 
     name = "ダンジョン表"
@@ -268,13 +272,14 @@ MESSAGETEXT
     hasGap = true
     number, text = getTableResult(table, dice, hasGap)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
 
   def getDungeonPlusTableDiceCommandResult(command)
     return nil unless /^DNGNP(\d+)$/ === command
+
     day = $1.to_i
 
     name = "ダンジョン表プラス"
@@ -301,7 +306,7 @@ MESSAGETEXT
     hasGap = true
     number, text = getTableResult(table, dice, hasGap)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
@@ -417,12 +422,12 @@ MESSAGETEXT
       :name => "偵察表",
       :type => '1D6',
       :table => [
-        [1 ,"山に突き当たる。「登山」判定：【筋力】　ジャッジ：山を登る描写。"],
-        [2 ,"川を流れ下る。「水泳」判定：【敏捷】　ジャッジ：川でピンチに陥る描写。"],
-        [3 ,"広い湖だ……。「水泳」判定：【生命】　ジャッジ：湖面を泳ぐ描写。"],
-        [4 ,"山の楽なルートを探そう。「登山」判定：【知力】　ジャッジ：山の豆知識。"],
-        [5 ,"迫る闇から恐怖のあまり目を離せない。判定：【意志】　ジャッジ：勇者としての決意。"],
-        [6 ,"任意のＮＰＣに会って情報を聞く。判定：【魅力】　ジャッジ：相手を立てる会話。"]
+        [1, "山に突き当たる。「登山」判定：【筋力】　ジャッジ：山を登る描写。"],
+        [2, "川を流れ下る。「水泳」判定：【敏捷】　ジャッジ：川でピンチに陥る描写。"],
+        [3, "広い湖だ……。「水泳」判定：【生命】　ジャッジ：湖面を泳ぐ描写。"],
+        [4, "山の楽なルートを探そう。「登山」判定：【知力】　ジャッジ：山の豆知識。"],
+        [5, "迫る闇から恐怖のあまり目を離せない。判定：【意志】　ジャッジ：勇者としての決意。"],
+        [6, "任意のＮＰＣに会って情報を聞く。判定：【魅力】　ジャッジ：相手を立てる会話。"]
       ]
     },
 
@@ -638,14 +643,14 @@ MESSAGETEXT
       :name => "聖武具ドロップ表",
       :type => '2D6',
       :table => [
-        [2 , "【紅き太陽の剣】"],
-        [3 , "【紅き太陽の剣】"],
-        [4 , "【聖剣カレドヴルフ】 "],
-        [5 , "【聖斧エルサーベス】 "],
-        [6 , "【水霊のマント】"],
-        [7 , "【大地の鎧】"],
-        [8 , "【大気の盾】"],
-        [9 , "【聖弓ル・アルシャ】"],
+        [2, "【紅き太陽の剣】"],
+        [3, "【紅き太陽の剣】"],
+        [4, "【聖剣カレドヴルフ】 "],
+        [5, "【聖斧エルサーベス】 "],
+        [6, "【水霊のマント】"],
+        [7, "【大地の鎧】"],
+        [8, "【大気の盾】"],
+        [9, "【聖弓ル・アルシャ】"],
         [10, " 【聖槍ヴァルキウス】"],
         [11, " 【聖なる月の剣】"],
         [12, " 【聖なる月の剣】"]

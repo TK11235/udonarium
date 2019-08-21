@@ -1,0 +1,69 @@
+# -*- coding: utf-8 -*-
+
+require "rake/testtask"
+
+task :default => :test
+
+desc 'Clean coverage resuts'
+task :clean_coverage do
+  if RUBY_VERSION > '1.8.x'
+    require 'simplecov'
+    resultset_path = SimpleCov::ResultMerger.resultset_path
+    FileUtils.rm resultset_path if File.exist? resultset_path
+  end
+end
+
+namespace :test do
+  desc 'ダイスボットのテストを行う'
+  task :dicebots do
+    if RUBY_VERSION < '1.9'
+      sh('ruby test.rb')
+    else
+      sh('RUBYOPT="--enable-frozen-string-literal" ruby test.rb')
+    end
+  end
+
+  Rake::TestTask.new(:dicebot_loaders) do |t|
+    t.test_files = ['test/testDiceBotLoaders.rb']
+  end
+
+  Rake::TestTask.new(:dicebot_prefixes_compatibility) do |t|
+    t.test_files = ['test/testDiceBotPrefixesCompatibility.rb']
+  end
+end
+
+BCDiceTestCase = Struct.new(:name, :task)
+
+desc 'すべてのテストを行う'
+task :test => :clean_coverage do
+  test_cases = [
+    BCDiceTestCase.new('ダイスボット', 'test:dicebots'),
+    BCDiceTestCase.new('ダイスボット読み込み', 'test:dicebot_loaders'),
+    BCDiceTestCase.new('ダイスボットの接頭辞設定の後方互換性',
+                       'test:dicebot_prefixes_compatibility')
+  ]
+
+  failures = test_cases.
+    map { |test_case|
+      puts
+      puts("[#{test_case.name}のテスト]")
+
+      begin
+        Rake::Task[test_case.task].execute
+        nil
+      rescue
+        test_case.name
+      end
+    }.
+    compact
+
+  unless failures.empty?
+    raise "テスト失敗: #{failures.join(', ')}"
+  end
+end
+
+if RUBY_VERSION >= '2.3'
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+  task :test => [:rubocop]
+end

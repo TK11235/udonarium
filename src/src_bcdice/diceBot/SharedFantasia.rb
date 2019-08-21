@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class SharedFantasia < DiceBot
-  setPrefixes(['SF.*','ST.*'])
+  setPrefixes(['SF.*', 'ST.*'])
 
   def initialize
-    #$isDebug = true
+    # $isDebug = true
     super()
   end
 
@@ -32,45 +32,45 @@ MESSAGETEXT
 
   def changeText(string)
     @throwString = ''
-    if(string =~ /SF/i)
-      string = string.gsub(/SF/i) {"2D6"}
+    if string =~ /SF/i
+      string = string.gsub(/SF/i) { "2D6" }
     end
-    if(string =~ /ST/i)
-      string = string.gsub(/ST/i) {"2D6"}
+    if string =~ /ST/i
+      string = string.gsub(/ST/i) { "2D6" }
     end
     return string
   end
 
-  def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
+  def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
     resultString = ''
     critical = false
     fumble   = false
 
-    if(dice_n == 12)
+    if dice_n == 12
       critical = true
-    elsif(dice_n == 2)
+    elsif dice_n == 2
       fumble   = true
     end
 
     totalValueBonus = 0
-    if(signOfInequality == '>=')
+    if signOfInequality == '>='
       totalValueBonus = 1
     end
 
-    if(signOfInequality =~ />/)
-      if((totalValue + totalValueBonus) > diff)
-        if(critical)
-          resultString +=  " ＞ 自動成功(劇的成功)"
-        elsif(fumble)
+    if signOfInequality =~ />/
+      if (totalValue + totalValueBonus) > diff
+        if critical
+          resultString += " ＞ 自動成功(劇的成功)"
+        elsif fumble
           resultString += " ＞ 自動失敗"
         else
           resultString += " ＞ 成功"
         end
       else
-        if(critical)
+        if critical
           resultString += " ＞ 自動成功"
-        elsif(fumble)
-          resultString +=  " ＞ 自動失敗(致命的失敗)"
+        elsif fumble
+          resultString += " ＞ 自動失敗(致命的失敗)"
         else
           resultString += " ＞ 失敗"
         end
@@ -78,6 +78,5 @@ MESSAGETEXT
     end
 
     return resultString
-
   end
 end

@@ -2,28 +2,102 @@
 
 # ダイスボットの読み込みを担当するクラス
 class DiceBotLoader
+  # ボットの名前として有効なパターン（クラス名のパターン）
+  # @see https://docs.ruby-lang.org/ja/1.8.7/doc/spec=2flexical.html#identifier
+  # @see https://docs.ruby-lang.org/ja/1.8.7/doc/spec=2fvariables.html
+  #
+  # * 最初の文字は大文字のアルファベット
+  # * 2文字目以降は英数字かアンダースコア（_）
+  BOT_NAME_PATTERN = /\A[A-Z]\w*\z/
+
+  # 収集時に無視するボット名
+  #
+  # クラス名として有効なもののみ記述する。
+  #
+  # * 最初の文字は大文字のアルファベット
+  # * 2文字目以降は英数字かアンダースコア（_）
+  BOT_NAMES_TO_IGNORE = [
+    'DiceBot',
+    'DiceBotLoader',
+    'DiceBotLoaderList'
+  ]
+
+  # 有効なゲームタイプかを返す
+  # @param [String] gameType ゲームタイプ
+  # @return [Boolean]
+  #
+  # Object.const_getで該当するダイスボットのクラスを取得するので、
+  # クラス名として有効な名前でなければ、無効なゲームタイプと見なす。
+  #
+  # また、無視するボット名の一覧に含まれるゲームタイプも無効と見なす。
+  #
+  # '.' や '/' はクラス名には含まれないため、ディレクトリトラバーサル攻撃も
+  # これで防げる。
+  def self.validGameType?(gameType)
+    BOT_NAME_PATTERN === gameType &&
+      !BOT_NAMES_TO_IGNORE.include?(gameType)
+  end
+
   # 登録されていないタイトルのダイスボットを読み込む
-  # @param [String] gameTitle ゲームタイトル
+  # @param [String] gameType ゲームタイプ
   # @return [DiceBot] ダイスボットが存在した場合
   # @return [nil] 読み込み時にエラーが発生した場合
-  def self.loadUnknownGame(gameTitle)
-    debug("loadUnknownGame gameTitle", gameTitle)
+  def self.loadUnknownGame(gameType)
+    debug('DiceBotLoader.loadUnknownGame gameType', gameType)
 
-    escapedGameTitle = gameTitle.gsub(/(\.\.|\/|:|-)/, '_')
+    # unless validGameType?(gameType)
+    #   # クラス名として正しくない名前が指定された場合、後の
+    #   # Object.const_getで必ず失敗するため、読み込みを中止する
+    #   debug('DiceBotLoader.loadUnknownGame: 無効なゲームタイプ',
+    #         gameType)
+    #   return nil
+    # end
+
+    # # validGameType?によって '.' や '/' といったディレクトリが変わる文字が
+    # # 含まれていないことが保証されているため、必ずダイスボットディレクトリ
+    # # 直下のファイルが参照される
+    # fileName = File.expand_path("#{gameType}.rb", File.dirname(__FILE__))
+
+    # unless File.exist?(fileName)
+    #   # ファイルが存在しない場合、後のrequireで必ずLoadErrorが発生するため、
+    #   # 読み込みを中止する
+    #   debug('DiceBotLoader.loadUnknownGame: ダイスボットファイルが存在しません',
+    #         gameType)
+    #   return nil
+    # end
 
     begin
-      # ダイスボットファイルがこのディレクトリ内に存在すると仮定して読み込む
-      # TKfix dynamic requireは不可
-      #require(
-      #  File.expand_path("#{escapedGameTitle}.rb", File.dirname(__FILE__))
-      #)
-      
-      #Object.const_get(gameTitle).new  #TKfix 
-      Object.const_get(gameTitle.gsub(/[\.\/:-]/, '_')).new
+      # require(fileName) # TKfix dynamic requireは不可
+      # Object.const_get(gameType).new
+      Object.const_get(gameType).new # TKfix ダイスボットファイルがこのディレクトリ内に存在すると仮定して読み込む
     rescue LoadError, StandardError => e
-      debug("DiceBot load ERROR!!!", e.to_s)
+      debug('DiceBotLoader.loadUnknownGame: ダイスボットの読み込みに失敗しました',
+            e.to_s)
       nil
     end
+  end
+
+  # ダイスボットディレクトリに含まれるダイスボットを収集する
+  # @return [Array<DiceBot>]
+  def self.collectDiceBots
+    # TKfix
+    # diceBotDir = File.expand_path(File.dirname(__FILE__))
+
+    # require("#{diceBotDir}/DiceBot")
+
+    # botFiles = Dir.glob("#{diceBotDir}/*.rb")
+    # botNames =
+    #   botFiles.map { |botFile| File.basename(botFile, '.rb').untaint }
+    # validBotNames =
+    #   # 特別な名前のものを除外する
+    #   (botNames - BOT_NAMES_TO_IGNORE).
+    #   # 正しいクラス名になるものだけ選ぶ
+    #   select { |botName| BOT_NAME_PATTERN === botName }
+
+    # validBotNames.map { |botName|
+    #   require("#{diceBotDir}/#{botName}")
+    #   Object.const_get(botName).new
+    # }
   end
 
   # 読み込み処理を初期化する
@@ -111,13 +185,13 @@ class DiceBotLoader
     when Regexp
       unless options[:filenames]
         raise ArgumentError,
-          'options[:filenames] is required when gameTitlePattern is a Regexp'
+              'options[:filenames] is required when gameTitlePattern is a Regexp'
       end
 
       @gameTitlePattern = gameTitlePattern
     else
       raise TypeError,
-        'gameTitlePattern must be a String or an Array<String> or a Regexp'
+            'gameTitlePattern must be a String or an Array<String> or a Regexp'
     end
 
     # 既定の読み込むファイル名の配列

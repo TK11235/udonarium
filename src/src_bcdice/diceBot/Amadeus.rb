@@ -44,7 +44,7 @@ INFO_MESSAGE_TEXT
 
   def rollDiceCommand(command)
     text = amadeusDice(command)
-    return text unless( text.nil? )
+    return text unless text.nil?
 
     info = @@tables[command.upcase]
     return nil if info.nil?
@@ -61,26 +61,24 @@ INFO_MESSAGE_TEXT
         get_table_by_2d6(table)
       when 'D66'
         get_table_by_d66_swap(table)
-      else
-        nil
       end
 
-    return nil if( text.nil? )
+    return nil if text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
 
   def amadeusDice(command)
-    return nil unless( /^(R([A-DS])([\+\-\d]*))(@(\d))?((>(=)?)([\+\-\d]*))?(@(\d))?$/i =~ command )
+    return nil unless /^(R([A-DS])([\+\-\d]*))(@(\d))?((>(=)?)([\+\-\d]*))?(@(\d))?$/i =~ command
 
     commandText = $1
     skillRank = $2
     modifyText = $3
-    signOfInequality = ( $7.nil? ? ">=" : $7 )
-    targetText = ( $9.nil? ? "4" : $9 )
-    if( nil | $5 )
+    signOfInequality = ($7.nil? ? ">=" : $7)
+    targetText = ($9.nil? ? "4" : $9)
+    if nil | $5
       specialNum = $5.to_i
-    elsif( nil | $11 )
+    elsif nil | $11
       specialNum = $11.to_i
     else
       specialNum = 6
@@ -91,21 +89,21 @@ INFO_MESSAGE_TEXT
     target = parren_killer("(" + targetText + ")").to_i
 
     _, diceText, = roll(diceCount, 6)
-    diceList = diceText.split(/,/).collect{|i| i.to_i}
-    specialText = ( specialNum == 6 ? "" : "@#{specialNum}" )
+    diceList = diceText.split(/,/).collect { |i| i.to_i }
+    specialText = (specialNum == 6 ? "" : "@#{specialNum}")
 
     message = "(#{commandText}#{specialText}#{signOfInequality}#{targetText}) ＞ [#{diceText}]#{modifyText} ＞ "
-    diceList = [diceList.min] if( skillRank == "D" )
+    diceList = [diceList.min] if skillRank == "D"
     is_loop = false
     for dice in diceList do
-      if( is_loop )
+      if  is_loop
         message += " / "
-      elsif( diceList.length > 1)
+      elsif diceList.length > 1
         is_loop = true
       end
       achieve = dice + modify
       result = check_success(achieve, dice, signOfInequality, target, specialNum)
-      if( is_loop )
+      if is_loop
         message += "#{achieve}_#{result}[#{dice}#{@@checkInga[dice]}]"
       else
         message += "#{achieve}_#{result}[#{dice}]"
@@ -116,16 +114,17 @@ INFO_MESSAGE_TEXT
   end
 
   def check_success(total_n, dice_n, signOfInequality, diff, special_n)
-    return "ファンブル！" if( dice_n == 1 )
-    return "スペシャル！" if( dice_n >= special_n )
+    return "ファンブル！" if  dice_n == 1
+    return "スペシャル！" if  dice_n >= special_n
 
-    #success = @@bcdice.check_hit(total_n, signOfInequality, diff) # TKfix @@bcdice が参照できない (Opal 0.11.4)
-    success = bcdice.check_hit(total_n, signOfInequality, diff)
-    return "成功" if(success >= 1)
+    # success = @@bcdice.check_hit(total_n, signOfInequality, diff)
+    success = bcdice.check_hit(total_n, signOfInequality, diff) # TKfix @@bcdice が参照できない (Opal 0.11.4)
+    return "成功" if success >= 1
+
     return "失敗"
   end
 
-  @@checkDiceCount = { "S" => 4, "A" => 3, "B" => 2, "C" => 1, "D" => 2 }
+  @@checkDiceCount = {"S" => 4, "A" => 3, "B" => 2, "C" => 1, "D" => 2}
   @@checkInga = [ nil, "黒", "赤", "青", "緑", "白", "任意" ]
 
   @@tables =

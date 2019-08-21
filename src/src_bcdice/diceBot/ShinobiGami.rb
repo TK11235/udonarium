@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class ShinobiGami < DiceBot
-
   def initialize
     super
     @sendMode = 2
@@ -38,14 +37,14 @@ class ShinobiGami < DiceBot
 INFO_MESSAGE_TEXT
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
-    return '' unless( signOfInequality == ">=")
+  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
+    if dice_n <= 2
       return " ＞ ファンブル"
-    elsif(dice_n >= 12)
+    elsif dice_n >= 12
       return " ＞ スペシャル(生命点1点か変調1つ回復)"
-    elsif(total_n >= diff)
+    elsif total_n >= diff
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -57,21 +56,21 @@ INFO_MESSAGE_TEXT
 
     result = getTableCommandResult(command, @@tables)
     return result unless result.nil?
-    
+
     case string
-    when /((\w)*ST)/i   # シーン表
+    when /((\w)*ST)/i # シーン表
       return sinobigami_scene_table(string)
-    when /([K]*FT)/i   # ファンブル表
+    when /([K]*FT)/i # ファンブル表
       return sinobigami_fumble_table(string)
-    when /(ET)/i   # 感情表
+    when /(ET)/i # 感情表
       return sinobigami_emotion_table()
-    when /([GK]?WT)/i   # 変調表
+    when /([GK]?WT)/i # 変調表
       return sinobigami_wrong_table(string)
-    when /(BT)/i   # 戦場表
+    when /(BT)/i # 戦場表
       return sinobigami_battlefield_table()
-    when /((\w)*RTT)/i   # ランダム特技決定表
+    when /((\w)*RTT)/i # ランダム特技決定表
       return sinobigami_random_skill_table()
-    when /(MT)/i   # 異形表
+    when /(MT)/i # 異形表
       return sinobigami_metamorphose_table()
     end
 
@@ -275,7 +274,7 @@ INFO_MESSAGE_TEXT
     index = total_n - 2
 
     text = table[index]
-    return '1' if( text.nil? )
+    return '1' if text.nil?
 
     output = "#{sceneType}シーン表(#{total_n}) ＞ #{ text }"
 
@@ -287,12 +286,11 @@ INFO_MESSAGE_TEXT
     index = total_n - 1
 
     text = table[index]
-    return '1' if( text.nil? )
+    return '1' if text.nil?
 
     output = "#{tableName}(#{total_n}) ＞ #{text}"
 
     return output
-
   end
 
   # ファンブル表
@@ -399,12 +397,12 @@ INFO_MESSAGE_TEXT
     type = 'ランダム'
 
     skillTableFull = [
-                      ['器術', ['絡繰術','火術','水術','針術','仕込み','衣装術','縄術','登術','拷問術','壊器術','掘削術']],
-                      ['体術', ['騎乗術','砲術','手裏剣術','手練','身体操術','歩法','走法','飛術','骨法術','刀術','怪力']],
-                      ['忍術', ['生存術','潜伏術','遁走術','盗聴術','腹話術','隠形術','変装術','香術','分身の術','隠蔽術','第六感']],
-                      ['謀術', ['医術','毒術','罠術','調査術','詐術','対人術','遊芸','九ノ一の術','傀儡の術','流言の術','経済力']],
-                      ['戦術', ['兵糧術','鳥獣術','野戦術','地の利','意気','用兵術','記憶術','見敵術','暗号術','伝達術','人脈']],
-                      ['妖術', ['異形化','召喚術','死霊術','結界術','封術','言霊術','幻術','瞳術','千里眼の術','憑依術','呪術']],
+                      ['器術', ['絡繰術', '火術', '水術', '針術', '仕込み', '衣装術', '縄術', '登術', '拷問術', '壊器術', '掘削術']],
+                      ['体術', ['騎乗術', '砲術', '手裏剣術', '手練', '身体操術', '歩法', '走法', '飛術', '骨法術', '刀術', '怪力']],
+                      ['忍術', ['生存術', '潜伏術', '遁走術', '盗聴術', '腹話術', '隠形術', '変装術', '香術', '分身の術', '隠蔽術', '第六感']],
+                      ['謀術', ['医術', '毒術', '罠術', '調査術', '詐術', '対人術', '遊芸', '九ノ一の術', '傀儡の術', '流言の術', '経済力']],
+                      ['戦術', ['兵糧術', '鳥獣術', '野戦術', '地の利', '意気', '用兵術', '記憶術', '見敵術', '暗号術', '伝達術', '人脈']],
+                      ['妖術', ['異形化', '召喚術', '死霊術', '結界術', '封術', '言霊術', '幻術', '瞳術', '千里眼の術', '憑依術', '呪術']],
                      ]
 
     skillTable, total_n = get_table_by_1d6(skillTableFull)
@@ -430,11 +428,11 @@ INFO_MESSAGE_TEXT
             ]
     total_n, = roll(1, 6)
     text = table[total_n - 1]
-    return '1' if( text.nil? )
+    return '1' if  text.nil?
 
     output = "#{tableName}(#{total_n}) ＞ #{text}"
 
-    if (total_n > 3)
+    if total_n > 3
       return output
     end
 
@@ -479,7 +477,7 @@ INFO_MESSAGE_TEXT
 
     total_n, = roll(1, 6)
     text = powerTable[total_n - 1]
-    return '1' if( text.nil? )
+    return '1' if text.nil?
 
     output += " #{powerType} ＞ #{ text }#{ powerPage }"
 
@@ -727,6 +725,5 @@ TABLE_TEXT_END
     },
   }
 
-  setPrefixes(['ST', 'FT', 'ET', 'WT', 'BT', 'CST', 'MST', 'IST','EST','DST','TST', 'NST', 'KST', 'TKST', 'GST', 'GWT', 'GAST', 'KYST', 'JBST', 'KFT', 'KWT', 'MT', 'RTT'] + @@tables.keys)
-
+  setPrefixes(['ST', 'FT', 'ET', 'WT', 'BT', 'CST', 'MST', 'IST', 'EST', 'DST', 'TST', 'NST', 'KST', 'TKST', 'GST', 'GWT', 'GAST', 'KYST', 'JBST', 'KFT', 'KWT', 'MT', 'RTT'] + @@tables.keys)
 end

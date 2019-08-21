@@ -155,11 +155,11 @@ INFO_MESSAGE_TEXT
 
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     return '' unless signOfInequality == ">="
-    if(dice_n <= 2)
+    if dice_n <= 2
       return " ＞ ファンブル(変調がランダムに1つ発生し、PCは【思い出】を1つ獲得する)"
-    elsif(dice_n >= 12)
+    elsif dice_n >= 12
       return " ＞ スペシャル！(PCは【思い出】を1つ獲得する)"
-    elsif(total_n >= diff)
+    elsif total_n >= diff
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -167,7 +167,6 @@ INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)
-
     case command.upcase
     when /^([1-7]*)PD(\d+)([\+\-]\d+)?$/
       counts = $2.to_i
@@ -1028,7 +1027,7 @@ INFO_MESSAGE_TEXT
       return textFrom1D6Table(title, table1, table2)
 
     when /^BT(\d+)?$/
-      counts = ( $1 || 1 ).to_i
+      counts = ($1 || 1).to_i
       return badStatus(counts)
 
     when 'SGT'
@@ -1279,7 +1278,7 @@ INFO_MESSAGE_TEXT
         "クイーン／キング",
       ]
       describeTitle = '形容表'
-      describeTable =[
+      describeTable = [
         [11, "ビギニング"],
         [12, "パワフル"],
         [13, "ビューティフル"],
@@ -1303,7 +1302,7 @@ INFO_MESSAGE_TEXT
         [66, "アルティメット"],
       ]
       sceneTitle = '情景表'
-      sceneTable =[
+      sceneTable = [
         [11, "マーメイド"],
         [12, "ドリーム"],
         [13, "ピュア"],
@@ -1327,7 +1326,7 @@ INFO_MESSAGE_TEXT
         [66, "ギャラクシー"],
       ]
       materialTitle = 'マテリアル表'
-      materialTable =[
+      materialTable = [
         [11, "バスケット"],
         [12, "エクスプレス"],
         [13, "エアプレーン"],
@@ -1351,7 +1350,7 @@ INFO_MESSAGE_TEXT
         [66, "フェニックス"],
       ]
       actionTitle = 'アクション表'
-      actionTable =[
+      actionTable = [
         [11, "スパイラル"],
         [12, "フライ"],
         [13, "シャワー"],
@@ -1551,7 +1550,7 @@ INFO_MESSAGE_TEXT
       return textFromD66Table(title, table)
 
     when /^IT(\d+)?$/
-      counts = ( $1 || 1 ).to_i
+      counts = ($1 || 1).to_i
       return getItem(counts)
 
     when 'ACT'
@@ -1910,7 +1909,7 @@ INFO_MESSAGE_TEXT
       title = 'バーストタイム'
       degrees = $1.to_i
       counts = 6
-      if degrees < 45 or degrees > 55
+      if (degrees < 45) || (degrees > 55)
         return nil
       elsif degrees <= 49
         counts = 3
@@ -1954,7 +1953,7 @@ INFO_MESSAGE_TEXT
       counts = $1.to_i
       return nil if counts <= 0
 
-      sure = (not $2.empty?)
+      sure = !$2.empty?
       remove = $3
       adjust = $4
       adjust ||= ''
@@ -1964,11 +1963,11 @@ INFO_MESSAGE_TEXT
 
       text = "#{title} ＞ [" + result[1] + "]#{adjust} ＞ "
 
-      unless dice.count == counts or dice.empty?
+      unless (dice.count == counts) || dice.empty?
         text += '[' + dice.join(",") + "]#{adjust} ＞ "
       end
 
-      if sure or (dice.count == dice.uniq.count)
+      if sure || (dice.count == dice.uniq.count)
         total = adjust.to_i
         total += dice.map(&:to_i).inject(:+) unless dice.empty?
         total = 0 if total < 0
@@ -2191,7 +2190,7 @@ INFO_MESSAGE_TEXT
 
     string = ''
     string += '+' if adjust > 0
-    string += "#{adjust}" unless adjust == 0
+    string += adjust.to_s unless adjust == 0
 
     result = roll(counts, 6, 1)
     diceAll = result[1].delete(",") + residual
@@ -2227,18 +2226,18 @@ INFO_MESSAGE_TEXT
         total = 15 + adjust
         text += "【ミラクルシンクロ】#{total}＋シンフォニーを行った人数"
       end
-    elsif total == 21 and not diceUse.include?(7)
+    elsif (total == 21) && !diceUse.include?(7)
       unless residual.empty?
         text += '[' + diceUse.join(',') + "]#{string} ＞ "
       end
       total = 30 + adjust
       text += "【パーフェクトミラクル】#{total}"
     else
-      unless residual.empty? and diceUse.count == diceAll.length
+      unless residual.empty? && (diceUse.count == diceAll.length)
         text += '[' + diceUse.join(',') + "]#{string} ＞ "
       end
       total += adjust
-      text += "#{total}"
+      text += total.to_s
     end
 
     return text
@@ -2287,7 +2286,8 @@ INFO_MESSAGE_TEXT
       while true
         skill = getSkillList()
         text += "\n#{skill}"
-        break unless skill.include?("身長") or skill.include?(category) or skill.include?("出身")
+        break unless skill.include?("身長") || skill.include?(category) || skill.include?("出身")
+
         text += " ＞ 振り直し"
       end
     end
@@ -2298,12 +2298,12 @@ INFO_MESSAGE_TEXT
   def getSkillList(field = 0)
     title = '特技リスト'
     table = [
-             ['身長', ['～125','131','136','141','146','156','166','171','176','180','190～']],
-             ['属性', ['エスニック','ダーク','セクシー','フェミニン','キュート','プレーン','パッション','ポップ','バーニング','クール','スター']],
-             ['才能', ['異国文化','スタイル','集中力','胆力','体力','笑顔','運動神経','気配り','学力','セレブ','演技力']],
-             ['キャラ', ['中二病','ミステリアス','マイペース','軟派','語尾','キャラ分野の空白','元気','硬派','物腰丁寧','どじ','ばか']],
-             ['趣味', ['オカルト','ペット','スポーツ','おしゃれ','料理','趣味分野の空白','ショッピング','ダンス','ゲーム','音楽','アイドル']],
-             ['出身', ['沖縄','九州地方','四国地方','中国地方','近畿地方','中部地方','関東地方','北陸地方','東北地方','北海道','海外']],
+             ['身長', ['～125', '131', '136', '141', '146', '156', '166', '171', '176', '180', '190～']],
+             ['属性', ['エスニック', 'ダーク', 'セクシー', 'フェミニン', 'キュート', 'プレーン', 'パッション', 'ポップ', 'バーニング', 'クール', 'スター']],
+             ['才能', ['異国文化', 'スタイル', '集中力', '胆力', '体力', '笑顔', '運動神経', '気配り', '学力', 'セレブ', '演技力']],
+             ['キャラ', ['中二病', 'ミステリアス', 'マイペース', '軟派', '語尾', 'キャラ分野の空白', '元気', '硬派', '物腰丁寧', 'どじ', 'ばか']],
+             ['趣味', ['オカルト', 'ペット', 'スポーツ', 'おしゃれ', '料理', '趣味分野の空白', 'ショッピング', 'ダンス', 'ゲーム', '音楽', 'アイドル']],
+             ['出身', ['沖縄', '九州地方', '四国地方', '中国地方', '近畿地方', '中部地方', '関東地方', '北陸地方', '東北地方', '北海道', '海外']],
             ]
 
     number1 = 0
@@ -2357,7 +2357,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getSkillText(skill)
-    return '' if skill.nil? or skill.empty?
+    return '' if skill.nil? || skill.empty?
 
     text = skill
     if /^AT([1-6]?)$/ =~ text
@@ -2431,7 +2431,7 @@ INFO_MESSAGE_TEXT
 
     substitution = text.clone
     substitution = substitution.gsub($&, '')
-    substitution += "\n" unless substitution.empty? or /\n$/ =~ substitution
+    substitution += "\n" unless substitution.empty? || /\n$/ =~ substitution
 
     return substitution + badStatus(counts)
   end

@@ -8,7 +8,7 @@ class Strave < DiceBot
 
   def initialize
     super
-    @sortType = 1 #ダイスのソート有
+    @sortType = 1 # ダイスのソート有
   end
 
   def gameName
@@ -41,7 +41,6 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     output =
       case command.upcase
 
@@ -68,30 +67,28 @@ MESSAGETEXT
       when 'IDV'
         get_identity_table2
 
-      else
-        nil
       end
 
     return output
   end
 
   def checkRoll(diceCount, target, damage)
-    target = 1 if( target < 1 )
-    target = 10 if( target > 10 )
+    target = 1 if target < 1
+    target = 10 if target > 10
 
     dice, diceText = roll(diceCount, 10, @sortType)
-    diceArray = diceText.split(/,/).collect{|i|i.to_i}
+    diceArray = diceText.split(/,/).collect { |i| i.to_i }
 
-    successCount = diceArray.find_all{|i| (i <= target)}.size
+    successCount = diceArray.find_all { |i| (i <= target) }.size
 
-    isDamage = (not damage.nil?)
+    isDamage = !damage.nil?
 
-    if( isDamage )
+    if isDamage
       totalDamage = successCount * damage
       result = "(#{diceCount}D10\<\=#{target}) ＞ #{diceText} ＞ Hits：#{successCount}*#{damage} ＞ #{totalDamage}ダメージ"
     else
       result = "(#{diceCount}D10\<\=#{target}) ＞ #{diceText}"
-      if( successCount > 0 )
+      if  successCount > 0
         result += " ＞ 【成功】"
       else
         result += " ＞ 【失敗】"

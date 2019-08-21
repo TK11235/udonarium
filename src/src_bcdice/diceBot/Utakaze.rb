@@ -44,7 +44,7 @@ MESSAGETEXT
       base = ($1 || 2).to_i
       crit = $3.to_i
       diff = $5.to_i
-      result= checkRoll(base, crit, diff)
+      result = checkRoll(base, crit, diff)
     end
 
     return nil if result.empty?
@@ -58,15 +58,15 @@ MESSAGETEXT
     base = getValue(base)
     crit = getValue(crit)
 
-    return result if( base < 1 )
+    return result if base < 1
 
-    crit = 6 if( crit > 6 )
+    crit = 6 if crit > 6
 
     result += "(#{base}d6)"
 
     _, diceText = roll(base, 6)
 
-    diceList = diceText.split(/,/).collect{|i|i.to_i}.sort
+    diceList = diceText.split(/,/).collect { |i| i.to_i }.sort
 
     result += " ＞ [#{diceList.join(',')}] ＞ "
     result += getRollResultString(diceList, crit, diff)
@@ -75,20 +75,19 @@ MESSAGETEXT
   end
 
   def getRollResultString(diceList, crit, diff)
-
     success, maxnum, setCount = getSuccessInfo(diceList, crit, diff)
 
     result = ""
 
-    if( isDragonDice(crit) )
+    if isDragonDice(crit)
       result += "龍のダイス「#{@arrayDragonDiceName[crit]}」(#{crit.to_s})を使用 ＞ "
     end
 
-    if( success )
+    if  success
       result += "成功レベル:#{maxnum} (#{setCount}セット)"
-      if( diff != 0 )
+      if diff != 0
         diffSuccess = (maxnum >= diff)
-        if( diffSuccess )
+        if diffSuccess
           result += " ＞ 成功"
         else
           result += " ＞ 失敗"
@@ -113,28 +112,27 @@ MESSAGETEXT
     countThreshold = (isDragonDice(crit) ? 1 : 2)
 
     diceCountHash.each do |dice, count|
-      maxnum = count if( count > maxnum )
-      successDiceList << dice if( count >= countThreshold )
+      maxnum = count if  count > maxnum
+      successDiceList << dice if count >= countThreshold
     end
 
     debug("successDiceList", successDiceList)
 
-    if(successDiceList.size <= 0)
+    if successDiceList.size <= 0
       # 失敗：ゾロ目無し(全部違う)
       return false, 0, 0
     end
 
-    #竜のダイスの場合
-    maxnum *= 2 if( isDragonDice(crit) )
+    # 竜のダイスの場合
+    maxnum *= 2 if isDragonDice(crit)
 
     # 成功：ゾロ目あり
     return true, maxnum, successDiceList.size
   end
 
   def getDiceCountHash(diceList, crit)
-
     diceCountHash = diceList.inject(Hash.new(0)) do |hash, dice|
-      if( isNomalDice(crit) or (dice == crit) )
+      if isNomalDice(crit) || (dice == crit)
         hash[dice] += 1
       end
       hash
@@ -144,7 +142,7 @@ MESSAGETEXT
   end
 
   def isNomalDice(crit)
-    not isDragonDice(crit)
+    !isDragonDice(crit)
   end
 
   def isDragonDice(crit)
@@ -152,7 +150,8 @@ MESSAGETEXT
   end
 
   def getValue(number)
-    return 0 if( number > 100 )
+    return 0 if number > 100
+
     return number
   end
 end

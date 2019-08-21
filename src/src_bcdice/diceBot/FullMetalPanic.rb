@@ -3,7 +3,7 @@
 require 'diceBot/MetallicGuadian'
 
 class FullMetalPanic < MetallicGuadian
-  setPrefixes(['2D6.*','MG.*','FP.*'])
+  setPrefixes(['2D6.*', 'MG.*', 'FP.*'])
 
   def initialize
     super
@@ -35,7 +35,7 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?(MG|FP)/i) {"#{$1}2D6"}
+    string = string.gsub(/^(S)?(MG|FP)/i) { "#{$1}2D6" }
     return string
   end
 end

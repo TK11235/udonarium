@@ -5,19 +5,19 @@ class TokyoGhostResearch < DiceBot
   setPrefixes([
   'OP', 'TB', 'TK?\(\d+\)'
   ])
-  
+
   def initialize
     super
   end
-  
+
   def gameName
     '東京ゴーストリサーチ'
   end
-  
+
   def gameType
     "TokyoGhostResearch"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 判定
@@ -29,56 +29,52 @@ class TokyoGhostResearch < DiceBot
   ・一般トラブル表  TB
 MESSAGETEXT
   end
-  
-  def rollDiceCommand(command)
 
-    output = 
+  def rollDiceCommand(command)
+    output =
       case command.upcase
-      
+
       when /TK/i
         return getCheckResult(command)
-      
+
       when 'OP'
         tgr_opening_table
       when 'TB'
         tgr_common_trouble_table
-      else
-        nil
       end
-      
+
     return output
   end
 
   def getCheckResult(command)
-  
-      output = ""
-      diff = 0
-      
-      if(/TK?<=(\d+)/i =~ command)
-        diff = $2.to_i
-      end
-      
-      if (diff > 0)
-        output += "(1D10<=#{diff})"
-      
-        total_n, = roll(1, 10)
-        output += ' ＞ ' + "#{total_n}"
-        output += ' ＞ ' + getCheckResultText(total_n, diff)
-      end
+    output = ""
+    diff = 0
+
+    if /TK?<=(\d+)/i =~ command
+      diff = $2.to_i
+    end
+
+    if diff > 0
+      output += "(1D10<=#{diff})"
+
+      total_n, = roll(1, 10)
+      output += ' ＞ ' + total_n.to_s
+      output += ' ＞ ' + getCheckResultText(total_n, diff)
+    end
     return output
   end
 
   def getCheckResultText(total_n, diff)
-    if((total_n >= diff) )
-       result = "成功"
+    if total_n >= diff
+      result = "成功"
     else
-       result = "失敗"
+      result = "失敗"
     end
-    
+
     return result
   end
-  
-  #導入表(1d10)[OP]
+
+  # 導入表(1d10)[OP]
   def tgr_opening_table
     name = "導入表"
     table = [
@@ -91,12 +87,12 @@ MESSAGETEXT
       [7, "【人生の岐路】人生の岐路にまさに差し掛かったところであった。"],
       [8, "【同窓会】かつての同級生に会い、差を実感したばかりだった。"],
       [9, "【転職活動中】転職を考えて求人サイトを見ているところだった。"],
-      [10,"【サボリ中】仕事をサボっているところに呼び出しがあった。"],
+      [10, "【サボリ中】仕事をサボっているところに呼び出しがあった。"],
     ]
     return get_1d10_table_result(name, table)
   end
-  
-  #一般トラブル表(1d10)[TB]
+
+  # 一般トラブル表(1d10)[TB]
   def tgr_common_trouble_table
     name = "一般トラブル表"
     table = [
@@ -109,11 +105,10 @@ MESSAGETEXT
       [7, "会社や上司の不興を買ってしまった。【環境ダメージ1点】"],
       [8, "疲労困憊で動くこともままならない。【肉体ダメージ1点＋精神ダメージ1点】"],
       [9, "負傷したうえ、会社に損害を与えてしまった。【肉体ダメージ1点＋環境ダメージ1点】"],
-      [10,"上司から厳しく叱責され、まずい立場になった。【精神ダメージ1点＋環境ダメージ1点】"],
+      [10, "上司から厳しく叱責され、まずい立場になった。【精神ダメージ1点＋環境ダメージ1点】"],
     ]
     return get_1d10_table_result(name, table)
   end
-
 
   def get_1d10_table_result(name, table)
     dice, = roll(1, 10)

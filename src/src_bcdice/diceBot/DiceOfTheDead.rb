@@ -36,12 +36,12 @@ INFO_MESSAGE_TEXT
 
     case command
     when /^BIO(\d+)?$/i
-      roll_times = ($1 or 1).to_i
-      result = checkInfection( roll_times )
+      roll_times = ($1 || 1).to_i
+      result = checkInfection(roll_times)
       secret_flg = true
     when /^ZMB(\+(\d+))?$/i
       value = $2.to_i
-      result = rollZombie( value )
+      result = rollZombie(value)
       secret_flg = true
     end
 
@@ -49,11 +49,9 @@ INFO_MESSAGE_TEXT
   end
 
   def checkInfection(roll_times)
-
     result = "感染度表"
 
     roll_times.times do
-
       d1, = roll(1, 6)
       d2, = roll(1, 6)
 
@@ -78,7 +76,6 @@ INFO_MESSAGE_TEXT
   # 各種表
 
   def rollZombie(value)
-
     d1, = roll(1, 6)
     d2, = roll(1, 6)
 

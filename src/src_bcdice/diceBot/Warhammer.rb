@@ -6,7 +6,7 @@ class Warhammer < DiceBot
   def initialize
     super
     @sendMode = 2
-    @fractionType = "roundUp"     # 端数切り上げに設定
+    @fractionType = "roundUp" # 端数切り上げに設定
   end
 
   def gameName
@@ -38,8 +38,8 @@ INFO_MESSAGE_TEXT
     case command.upcase
 
     when /^(WH\d+(@[\dWH]*)?)/i
-      atackCommand = $1
-      output_msg = getAtackResult(atackCommand)
+      attackCommand = $1
+      output_msg = getAttackResult(attackCommand)
 
     when /^(WH[HABTLW]\d+)/i
       criticalCommand = $1
@@ -49,19 +49,19 @@ INFO_MESSAGE_TEXT
     return output_msg
   end
 
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)    # ゲーム別成功度判定(1d100)
-    return '' unless(signOfInequality == "<=")
+  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(1d100)
+    return '' unless signOfInequality == "<="
 
-    if(total_n <= diff)
-      #return " ＞ 成功(成功度#{ ((diff - total_n)/10) })" # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
-      return " ＞ 成功(成功度#{ ((diff - total_n)/10).floor })"
+    if total_n <= diff
+      # return " ＞ 成功(成功度#{ ((diff - total_n) / 10) })"
+      return " ＞ 成功(成功度#{ ((diff - total_n) / 10).floor })" # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     end
 
-    #return " ＞ 失敗(失敗度#{ ((total_n - diff) / 10) })" # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
-    return " ＞ 失敗(失敗度#{ ((total_n - diff) / 10).floor })"
+    # return " ＞ 失敗(失敗度#{ ((total_n - diff) / 10) })"
+    return " ＞ 失敗(失敗度#{ ((total_n - diff) / 10).floor })" # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
   end
 
-####################            WHFRP関連          ########################
+  ####################            WHFRP関連          ########################
   def getCriticalResult(string)
     # クリティカル効果データ
     whh = [
@@ -126,28 +126,28 @@ INFO_MESSAGE_TEXT
     ]
 
     criticalTable = [
-         5, 7, 9,10,10,10,10,10,10,10,  #01-10
-         5, 6, 8, 9,10,10,10,10,10,10,  #11-20
-         4, 6, 8, 9, 9,10,10,10,10,10,  #21-30
-         4, 5, 7, 8, 9, 9,10,10,10,10,  #31-40
-         3, 5, 7, 8, 8, 9, 9,10,10,10,  #41-50
-         3, 4, 6, 7, 8, 8, 9, 9,10,10,  #51-60
-         2, 4, 6, 7, 7, 8, 8, 9, 9,10,  #61-70
-         2, 3, 5, 6, 7, 7, 8, 8, 9, 9,  #71-80
-         1, 3, 5, 6, 6, 7, 7, 8, 8, 9,  #81-90
-         1, 2, 4, 5, 6, 6, 7, 7, 8, 8,  #91-00
+         5, 7, 9, 10, 10, 10, 10, 10, 10, 10, # 01-10
+         5, 6, 8, 9, 10, 10, 10, 10, 10, 10, # 11-20
+         4, 6, 8, 9, 9, 10, 10, 10, 10, 10, # 21-30
+         4, 5, 7, 8, 9, 9, 10, 10, 10, 10, # 31-40
+         3, 5, 7, 8, 8, 9, 9, 10, 10, 10, # 41-50
+         3, 4, 6, 7, 8, 8, 9, 9, 10, 10, # 51-60
+         2, 4, 6, 7, 7, 8, 8, 9, 9, 10, # 61-70
+         2, 3, 5, 6, 7, 7, 8, 8, 9, 9,  # 71-80
+         1, 3, 5, 6, 6, 7, 7, 8, 8, 9,  # 81-90
+         1, 2, 4, 5, 6, 6, 7, 7, 8, 8,  # 91-00
     ]
 
     output = "1"
 
-    unless(/WH([HABTLW])(\d+)/ =~ string)
+    unless /WH([HABTLW])(\d+)/ =~ string
       return '1'
     end
 
-    partsWord = $1     #部位
-    criticalValue = $2.to_i    #クリティカル値
-    criticalValue = 10 if(criticalValue > 10)
-    criticalValue = 1 if(criticalValue < 1)
+    partsWord = $1 # 部位
+    criticalValue = $2.to_i # クリティカル値
+    criticalValue = 10 if criticalValue > 10
+    criticalValue = 1 if criticalValue < 1
 
     whpp = ''
     whppp = ''
@@ -176,7 +176,7 @@ INFO_MESSAGE_TEXT
     crit_num = criticalTable[crit_no + criticalValue - 1]
 
     resultText = whppp[crit_num - 1]
-    if(crit_num >= 5)
+    if crit_num >= 5
       resultText += 'サドンデス×'
     else
       resultText += 'サドンデス○'
@@ -187,74 +187,74 @@ INFO_MESSAGE_TEXT
     return output
   end
 
-  def wh_atpos(pos_num, pos_type)   #WHFRP2命中部位表
+  def wh_atpos(pos_num, pos_type) # WHFRP2命中部位表
     debug("wh_atpos begin pos_type", pos_type)
     pos_2l = [
       '二足',
-      15,'頭部',
-      35,'右腕',
-      55,'左腕',
-      80,'胴体',
-      90,'右脚',
-      100,'左脚',
+      15, '頭部',
+      35, '右腕',
+      55, '左腕',
+      80, '胴体',
+      90, '右脚',
+      100, '左脚',
     ]
     pos_2lw = [
       '有翼二足',
-      15,'頭部',
-      25,'右腕',
-      35,'左腕',
-      45,'右翼',
-      55,'左翼',
-      80,'胴体',
-      90,'右脚',
-      100,'左脚',
+      15, '頭部',
+      25, '右腕',
+      35, '左腕',
+      45, '右翼',
+      55, '左翼',
+      80, '胴体',
+      90, '右脚',
+      100, '左脚',
     ]
     pos_4l = [
       '四足',
-      15,'頭部',
-      60,'胴体',
-      70,'右前脚',
-      80,'左前脚',
-      90,'右後脚',
-      100,'左後脚',
+      15, '頭部',
+      60, '胴体',
+      70, '右前脚',
+      80, '左前脚',
+      90, '右後脚',
+      100, '左後脚',
     ]
     pos_4la = [
       '半人四足',
-      10,'頭部',
-      20,'右腕',
-      30,'左腕',
-      60,'胴体',
-      70,'右前脚',
-      80,'左前脚',
-      90,'右後脚',
-      100,'左後脚',
+      10, '頭部',
+      20, '右腕',
+      30, '左腕',
+      60, '胴体',
+      70, '右前脚',
+      80, '左前脚',
+      90, '右後脚',
+      100, '左後脚',
     ]
     pos_4lw = [
       '有翼四足',
-      10,'頭部',
-      20,'右翼',
-      30,'左翼',
-      60,'胴体',
-      70,'右前脚',
-      80,'左前脚',
-      90,'右後脚',
-      100,'左後脚',
+      10, '頭部',
+      20, '右翼',
+      30, '左翼',
+      60, '胴体',
+      70, '右前脚',
+      80, '左前脚',
+      90, '右後脚',
+      100, '左後脚',
     ]
     pos_b = [
         '鳥',
-      15,'頭部',
-      35,'右翼',
-      55,'左翼',
-      80,'胴体',
-      90,'右脚',
-      100,'左脚',
+      15, '頭部',
+      35, '右翼',
+      55, '左翼',
+      80, '胴体',
+      90, '右脚',
+      100, '左脚',
     ]
 
     wh_pos = [pos_2l, pos_2lw, pos_4l, pos_4la, pos_4lw, pos_b]
 
     pos_t = 0
     debug("pos_type", pos_type)
-    if(pos_type != "")
+    if pos_type != ""
       case pos_type
       when /\@(2W|W2)/i
         pos_t = 1
@@ -267,7 +267,7 @@ INFO_MESSAGE_TEXT
       when /\@W/i
         pos_t = 5
       else
-        unless( /\@(2H|H2|2)/i =~ pos_type)
+        unless  /\@(2H|H2|2)/i =~ pos_type
           pos_t = -1
         end
       end
@@ -276,7 +276,7 @@ INFO_MESSAGE_TEXT
     output = ""
 
     debug("pos_t", pos_t)
-    if(pos_t < 0)
+    if pos_t < 0
       wh_pos.each do |pos_i|
         output += get_wh_atpos_message(pos_i, pos_num)
       end
@@ -294,7 +294,7 @@ INFO_MESSAGE_TEXT
     output += ' ' + pos_i[0] + ":"
 
     1.step(pos_i.length + 1, 2) do |i|
-      if( pos_num <= pos_i[i] )
+      if pos_num <= pos_i[i]
         output += pos_i[i + 1]
         break
       end
@@ -303,18 +303,18 @@ INFO_MESSAGE_TEXT
     return output
   end
 
-  def getAtackResult(string)
-    debug("getAtackResult begin string", string)
+  def getAttackResult(string)
+    debug("getAttackResult begin string", string)
 
     pos_type = ""
 
-    if( /(.+)(@.*)/ =~ string )
+    if /(.+)(@.*)/ =~ string
       string = $1
       pos_type = $2
       debug("pos_type", pos_type)
     end
 
-    unless(/WH(\d+)/i =~ string)
+    unless /WH(\d+)/i =~ string
       return '1'
     end
 
@@ -326,9 +326,9 @@ INFO_MESSAGE_TEXT
     output += check_suc(total_n, 0, "<=", diff, 1, 100, 0, total_n)
 
     pos_num = (total_n % 10) * 10 + (total_n / 10).to_i
-    pos_num = 100 if(total_n >= 100)
+    pos_num = 100 if total_n >= 100
 
-    output += wh_atpos(pos_num, pos_type) if(total_n <= diff)
+    output += wh_atpos(pos_num, pos_type) if total_n <= diff
 
     return output
   end

@@ -3,7 +3,7 @@
 require 'diceBot/SRS'
 
 class EtrianOdysseySRS < SRS
-  setPrefixes(['2D6.*','EO.*','SQ.*'])
+  setPrefixes(['2D6.*', 'EO.*', 'SQ.*'])
 
   def initialize
     super
@@ -39,7 +39,7 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?(EO|SQ)/i) {"#{$1}2D6"}
+    string = string.gsub(/^(S)?(EO|SQ)/i) { "#{$1}2D6" }
     return string
   end
 end

@@ -4,11 +4,11 @@ require 'diceBot/SwordWorld2_0'
 
 class SwordWorld2_5 < SwordWorld2_0
   setPrefixes(['K\d+.*', 'Gr(\d+)?', 'FT', 'TT'])
-  
+
   def initialize
     super
   end
-  
+
   def gameName
     'ソードワールド2.5'
   end
@@ -66,14 +66,12 @@ class SwordWorld2_5 < SwordWorld2_0
 　絡み効果表を出すことができます。
 INFO_MESSAGE_TEXT
   end
-  
-  
-  
+
   def changeText(string)
-    return string unless( /(^|\s)[sS]?(K[\d]+)/i =~ string )
+    return string unless /(^|\s)[sS]?(K[\d]+)/i =~ string
 
     string = super(string)
-    
+
     debug('parren_killer_add before string', string)
 
     string = string.gsub(/#([\+\-]?[\d]+)/i) do
@@ -84,48 +82,43 @@ INFO_MESSAGE_TEXT
         "a[#{value}]"
       end
     end
-    
+
     debug('parren_killer_add after string', string)
-    
+
     return string
   end
-  
-  
+
   def getRatingCommandStrings
     super + "aA"
   end
-  
-  
+
   def getAdditionalString(string, output)
     output, values = super(string, output)
-    
+
     keptDiceChangeModify, string = getKeptDiceChangesFromString(string)
-    
+
     values['keptDiceChangeModify'] = keptDiceChangeModify
-    output += "a[#{keptDiceChangeModify}]" if( keptDiceChangeModify != 0 )
-    
+    output += "a[#{keptDiceChangeModify}]" if keptDiceChangeModify != 0
+
     return output, values
   end
-  
-  
+
   def getAdditionalDiceValue(dice, values)
     keptDiceChangeModify = values['keptDiceChangeModify'].to_i
-    
+
     value = 0
-    value += keptDiceChangeModify.to_i if( keptDiceChangeModify != 0 and dice != 2 )
-    
+    value += keptDiceChangeModify.to_i if (keptDiceChangeModify != 0) && (dice != 2)
+
     return value
   end
-  
-  
+
   def getKeptDiceChangesFromString(string)
     keptDiceChangeModify = 0
     regexp = /a\[([\+\-]\d+)\]/i
-    if( regexp =~ string )
+    if regexp =~ string
       keptDiceChangeModify = $1
       string = string.gsub(regexp, '')
     end
     return keptDiceChangeModify, string
   end
-  
 end

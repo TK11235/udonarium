@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 class HuntersMoon < DiceBot
-
   def initialize
     super
-    @sendMode = 2;
-    @sortType = 1;
-    @d66Type = 2;
-    @fractionType = "roundUp";     # 端数切り上げに設定
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
+    @fractionType = "roundUp"; # 端数切り上げに設定
   end
 
   def gameName
@@ -51,89 +50,89 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
-      return " ＞ ファンブル(モノビースト追加行動+1)";
-    elsif(dice_n >= 12)
-      return " ＞ スペシャル(変調1つ回復orダメージ+1D6)";
-    elsif(total_n >= diff)
-      return " ＞ 成功";
+    if dice_n <= 2
+      return " ＞ ファンブル(モノビースト追加行動+1)"
+    elsif dice_n >= 12
+      return " ＞ スペシャル(変調1つ回復orダメージ+1D6)"
+    elsif total_n >= diff
+      return " ＞ 成功"
     else
-      return " ＞ 失敗";
+      return " ＞ 失敗"
     end
   end
 
   def rollDiceCommand(command)
     string = command.upcase
-    output = '1';
-    type = "";
-    total_n = "";
+    output = '1'
+    type = ""
+    total_n = ""
 
     case string.upcase
 
     when /CLT/i
-      type = '都市ロケーション';
+      type = '都市ロケーション'
       output, total_n = hm_city_location_table
     when /SLT/i
-      type = '閉所ロケーション';
+      type = '閉所ロケーション'
       output, total_n = hm_small_location_table
     when /HLT/i
-      type = '炎熱ロケーション';
+      type = '炎熱ロケーション'
       output, total_n = hm_hot_location_table
     when /FLT/i
-      type = '冷暗ロケーション';
+      type = '冷暗ロケーション'
       output, total_n = hm_freezing_location_table
     when /DLT/i
-      type = '部位ダメージ決定';
+      type = '部位ダメージ決定'
       output, total_n = hm_hit_location_table
 
     when /MAT/i
-      type = 'モノビースト行動';
+      type = 'モノビースト行動'
       output, total_n = hm_monobeast_action_table
 
     when /SA(2)?T(\d*)/i
-      isType2 = (not $1.nil?)
+      isType2 = !$1.nil?
       count = $2.to_i
-      count = 1 if(count == 0)
+      count = 1 if count == 0
 
-      type = '異形アビリティー';
+      type = '異形アビリティー'
       output, total_n = get_strange_ability_table_result(count, isType2)
 
     when /TST/i
-      type = '指定特技(社会)';
+      type = '指定特技(社会)'
       output, total_n = hm_social_skill_table
     when /THT/i
-      type = '指定特技(頭部)';
+      type = '指定特技(頭部)'
       output, total_n = hm_head_skill_table
     when /TAT/i
-      type = '指定特技(腕部)';
+      type = '指定特技(腕部)'
       output, total_n = hm_arm_skill_table
     when /TBT/i
-      type = '指定特技(胴部)';
+      type = '指定特技(胴部)'
       output, total_n = hm_trunk_skill_table
     when /TLT/i
-      type = '指定特技(脚部)';
+      type = '指定特技(脚部)'
       output, total_n = hm_leg_skill_table
     when /TET/i
-      type = '指定特技(環境)';
+      type = '指定特技(環境)'
       output, total_n = hm_environmental_skill_table
 
     when 'ET'
-      type = '遭遇';
+      type = '遭遇'
       output, total_n = hm_encount_table
 
     else
       return getTableCommandResult(command, @@tables)
     end
 
-    return output if(output == '1')
+    return output if output == '1'
 
-    output = "#{type}表(#{total_n}) ＞ #{output}";
-    return output;
+    output = "#{type}表(#{total_n}) ＞ #{output}"
+    return output
   end
 
-#** ロケーション表
+  # ** ロケーション表
   def hm_city_location_table
     table = [
         '住宅街/閑静な住宅街。不意打ちに適しているため、ハンターの攻撃判定に+1の修正をつけてもよい。',
@@ -182,7 +181,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-#** 遭遇表
+  # ** 遭遇表
   def hm_encount_table
     table = [
              '獲物/恐怖/あなたはモノビーストの獲物として追い回される。満月の夜でないと傷を負わせることができない怪物相手に、あなたは逃げ回るしかない。',
@@ -195,7 +194,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-  #**
+  # **
   def hm_monobeast_action_table
     table = [
              '社会/モノビーストは時間をかけて逃げ続けることで、ダメージを回復しようとしているようだ。部位ダメージを自由に一つ回復する。部位ダメージを受けていない場合、【モラル】が1D6回復する。',
@@ -208,7 +207,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-  #** 部位ダメージ決定表
+  # ** 部位ダメージ決定表
   def hm_hit_location_table
     table = [
              '脳',
@@ -229,7 +228,7 @@ INFO_MESSAGE_TEXT
   def getStrangeAbilityTable1()
   end
 
-  #** 異形アビリティー表
+  # ** 異形アビリティー表
   def get_strange_ability_table_result(count, isType2)
     output = ''
     dice = ''
@@ -238,15 +237,14 @@ INFO_MESSAGE_TEXT
     table2 = get_strange_ability_table_2
 
     count.times do |i|
-
-      if( i != 0 )
+      if i != 0
         output += "/"
         dice += ","
       end
 
       table = table1
 
-      if( isType2 )
+      if isType2
         number, = roll(1, 6)
         index = ((number % 2) == 1 ? 0 : 1)
 
@@ -256,13 +254,13 @@ INFO_MESSAGE_TEXT
       end
 
       ability, indexText = get_table_by_d66(table)
-      next if( ability == '1' )
+      next if  ability == '1'
 
-      output += "#{ability}"
+      output += ability.to_s
       dice += indexText
     end
 
-    return '1', dice if(output.empty?)
+    return '1', dice if output.empty?
 
     return output, dice
   end
@@ -351,7 +349,7 @@ INFO_MESSAGE_TEXT
     return table
   end
 
-#** 指定特技ランダム決定(社会)
+  # ** 指定特技ランダム決定(社会)
   def hm_social_skill_table
     table = [
              '怯える',
@@ -369,7 +367,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-#** 指定特技ランダム決定(頭部)
+  # ** 指定特技ランダム決定(頭部)
   def hm_head_skill_table
     table = [
              '聴く',
@@ -387,7 +385,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-#** 指定特技ランダム決定(腕部)
+  # ** 指定特技ランダム決定(腕部)
   def hm_arm_skill_table
     table = [
              '操作',
@@ -405,7 +403,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-#** 指定特技ランダム決定(胴部)
+  # ** 指定特技ランダム決定(胴部)
   def hm_trunk_skill_table
     table = [
              '塞ぐ',
@@ -423,7 +421,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-#** 指定特技ランダム決定(脚部)
+  # ** 指定特技ランダム決定(脚部)
   def hm_leg_skill_table
     table = [
              '迫る',
@@ -441,7 +439,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-#** 指定特技ランダム決定(環境)
+  # ** 指定特技ランダム決定(環境)
   def hm_environmental_skill_table
     table = [
              '耐熱',
@@ -646,5 +644,4 @@ TABLE_TEXT_END
   }
 
   setPrefixes(['(ET|CLT|SLT|HLT|FLT|DLT|MAT|SAT|SA2T|TST|THT|TAT|TBT|TLT|TET)\d*'] + @@tables.keys)
-
 end

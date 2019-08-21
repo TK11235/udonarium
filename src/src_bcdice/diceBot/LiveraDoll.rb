@@ -54,7 +54,6 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     output =
       case command.upcase
 
@@ -64,7 +63,7 @@ MESSAGETEXT
         blockNo.delete(0)
         blockNo = blockNo.sort
         blockNo = blockNo.uniq
-        
+
         output = checkRoll(diceCount, blockNo)
 
       when /^(C|K|W|R|B|G|E)(L|D|O)(\d+)$/i
@@ -73,8 +72,6 @@ MESSAGETEXT
         cardindex = $3.to_i
         get_card_text(color, cardtype, cardindex)
 
-      else
-        nil
       end
 
     return output
@@ -82,24 +79,24 @@ MESSAGETEXT
 
   def checkRoll(diceCount, blockNo)
     dice, diceText = roll(diceCount, 6, @sortType)
-    diceArray = diceText.split(/,/).collect{|i|i.to_i}
-    
+    diceArray = diceText.split(/,/).collect { |i| i.to_i }
+
     resultArray = Array.new
     success = 0
     diceArray.each do |i|
-      if( blockNo.count(i) > 0 )
+      if blockNo.count(i) > 0
         resultArray.push("×")
       else
         resultArray.push(i)
         success += 1
       end
     end
-    
+
     blockText = blockNo.join(',')
     resultText = resultArray.join(',')
-    
+
     result = "#{diceCount}D6(Block:#{blockText}) ＞ #{diceText} ＞ #{resultText} ＞ 成功数：#{success}"
-    
+
     return result
   end
 
@@ -133,8 +130,6 @@ MESSAGETEXT
                  [1, '『貴女好みの装い（おすきなように）』　貴女好みの装いは破壊されない。'],
                  [2, '『迷子の貴女へ（きめられないのなら、そのままどうぞ）』　全ての色（無色を含む）のＡｓレベルが３であるかのようにオーナーズネイルを使用することが出来る。'],
                 ]
-      else
-        nil
       end
     when 'K'
       case cardtype
@@ -180,8 +175,6 @@ MESSAGETEXT
                  [16, '『思索の黒絢（マインド：ザ　ブラックソード）』　全てのプレイヤーはプレイヤー自身のセットダイスを１個取り除く。その後貴女は【ドロゥ：２】を行う。'],
                  [17, '『爛熱の黒絢（グロウス：ザ　ブラックソード）』　全てのプレイヤーは【ドロゥ：１】を行う。その後、貴女は【ドロゥ：２】を行う。'],
                 ]
-      else
-        nil
       end
     when 'W'
       case cardtype
@@ -227,8 +220,6 @@ MESSAGETEXT
                  [16, '『混色もまた物語：青（ロア：ブルー）』　使用されたオーナーズネイルの効果は発揮されず、「使用済」となる。'],
                  [17, '『混色もまた物語：緑（ロア：グリーン）』　プレイヤー１人を対象とする。対象の「シールドレス」を１枚回復する。'],
                 ]
-      else
-        nil
       end
     when 'R'
       case cardtype
@@ -274,8 +265,6 @@ MESSAGETEXT
                  [16, '『銀腕、携えるは青（カレトヴルッフ：ブルー）』　【ドロゥ：５】を行う。その後セットダイスを２個取り除く。'],
                  [17, '『銀腕、携えるは緑（スカザック：グリーン）』　セルひとつを指定する。指定したセルに「影槍マーカー」を設置する。'],
                 ]
-      else
-        nil
       end
     when 'B'
       case cardtype
@@ -321,8 +310,6 @@ MESSAGETEXT
                  [16, '『深淵より至れ、始まりへ（アマランサス・レプリカ）』　自身の「シールドレス」を１枚破壊する。【ドロゥ：３】を行い、自身のオーナーズネイルひとつの「使用済」を解除する。'],
                  [17, '『深遠より至れ原初の森（混沌の森）』　リヴラドール１体を対象とする。対象の現在のパッシヴドレスと、自身のパッシヴドレスを交換する。この効果はクリンナップフェイズまで継続する。（効果中にパッシヴドレスが破壊されていた場合、破壊される前のパッシヴドレスに戻る）'],
                 ]
-      else
-        nil
       end
     when 'G'
       case cardtype
@@ -368,8 +355,6 @@ MESSAGETEXT
                  [16, '『憤怒の大渦（アンガー・メイルストロム）』　全てのプレイヤーのシールドレスを、現在最もシールドレスの枚数が少ないプレイヤーの枚数と同じ枚数に変更する。'],
                  [17, '『神秘の大渦（ミスティック・メイルストロム）』　使用されたオーナーズネイルの効果は発揮されず、「使用済」となる。'],
                 ]
-      else
-        nil
       end
     when 'E'
       case cardtype
@@ -381,11 +366,7 @@ MESSAGETEXT
                  [4, '『青の翼龍（ヴァイエル）』　1.このユニットが使用するアタックネイルの対象を１増加しても良い。　2.このユニットが「高度：９」以上に存在する限り、ブロックナンバーに４を追加する。'],
                  [5, '『緑の操り人形（グリーン・ジェイラー）』　自身を含む、このユニットと同じセルに存在するユニットは、クリンナッププロセスの終了時にシールドレスを１枚失う。'],
                 ]
-      else
-        nil
       end
-    else
-      nil
     end
 
     return get_table_by_number(cardindex, table)

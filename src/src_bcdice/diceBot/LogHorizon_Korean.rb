@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class LogHorizon_Korean < DiceBot
-  setPrefixes(['\d+LH.*', 'PC.*', 'EC.*', 'GC.*', 'CC.*', 'CTR.*', 'MTR.*', 'ITR.*', 'HTR.*','GTR.*', 'PTAG', 'KOYU', 'MGR.', 'HLOC', 'PCNM', 'IAT.*', 'TIAS', 'ABDC', 'MII.*', 'ESCT.*', 'CSCT.*', 'ESTL.*'])
+  setPrefixes(['\d+LH.*', 'PC.*', 'EC.*', 'GC.*', 'CC.*', 'CTR.*', 'MTR.*', 'ITR.*', 'HTR.*', 'GTR.*', 'PTAG', 'KOYU', 'MGR.', 'HLOC', 'PCNM', 'IAT.*', 'TIAS', 'ABDC', 'MII.*', 'ESCT.*', 'CSCT.*', 'ESTL.*'])
 
   def initialize
     super
-    @d66Type = 1;
+    @d66Type = 1
   end
 
   def gameName
@@ -69,50 +69,48 @@ MESSAGETEXT
   end
 
   def getCheckRollDiceCommandResult(command)
-
-    return nil unless(/(\d+)LH([\+\-\d]*)(>=([\+\-\d]*))?/i === command)
+    return nil unless /(\d+)LH([\+\-\d]*)(>=([\+\-\d]*))?/i === command
 
     diceCount = $1.to_i
     modifyText = ($2 || '')
     difficultyText = $4
 
-	#修正値の計算
-	modify = getValue( modifyText, 0 )
+  # 修正値の計算
+  modify = getValue(modifyText, 0)
 
-	#目標値の計算
-    difficulty = getValue( difficultyText, nil )
+    # 目標値の計算
+    difficulty = getValue(difficultyText, nil)
 
-	#ダイスロール
-	dice, dice_str = roll(diceCount, 6)
-    diceList = dice_str.split(/,/).collect{|i|i.to_i}.sort
+  # ダイスロール
+  dice, dice_str = roll(diceCount, 6)
+    diceList = dice_str.split(/,/).collect { |i| i.to_i }.sort
 
-	total = dice + modify
+  total = dice + modify
 
-	#出力用ダイスコマンドを生成
-	command =  "#{diceCount}LH#{modifyText}"
-	command += ">=#{difficulty}" unless(difficulty.nil?)
+  # 出力用ダイスコマンドを生成
+  command =  "#{diceCount}LH#{modifyText}"
+  command += ">=#{difficulty}" unless difficulty.nil?
 
-	#출력문 생성
-	result = "(#{command}) ＞ #{dice}[#{dice_str}]#{modifyText} ＞ #{total}"
+  # 출력문 생성
+  result = "(#{command}) ＞ #{dice}[#{dice_str}]#{modifyText} ＞ #{total}"
 
-	#クリティカル・ファンブルチェック
-    if( isCritical(diceList) )
+    # クリティカル・ファンブルチェック
+    if isCritical(diceList)
       result += " ＞ 크리티컬！"
-    elsif( isFamble(diceList, diceCount) )
+    elsif isFamble(diceList, diceCount)
       result += " ＞ 펌블！"
     else
       result += getJudgeResultString(difficulty, total)
     end
 
     return result
-
   end
 
-  #成否判定
+  # 成否判定
   def getJudgeResultString(difficulty, total)
-    return '' if(difficulty.nil?)
+    return '' if difficulty.nil?
 
-    if(total >= difficulty)
+    if total >= difficulty
       return " ＞ 성공"
     else
       return " ＞ 실패"
@@ -120,23 +118,22 @@ MESSAGETEXT
   end
 
   def getValue(text, defaultValue)
-    return defaultValue if( text == nil or text.empty? )
+    return defaultValue if (text == nil) || text.empty?
 
     parren_killer("(0" + text + ")").to_i
   end
 
   def isCritical(diceList)
-	(diceList.select{|i| i == 6 }.size >= 2)
+    (diceList.select { |i| i == 6 }.size >= 2)
   end
 
   def isFamble(diceList, diceCount)
-    (diceList.select{|i| i == 1 }.size >= diceCount)
+    (diceList.select { |i| i == 1 }.size >= diceCount)
   end
 
-  #消耗表
-  def getConsumptionDiceCommandResult( command )
-
-    return nil unless(/(P|E|G|C|ES|CS)CT(\d+)?([\+\-\d]*)(\$(\d+))?/ === command)
+  # 消耗表
+  def getConsumptionDiceCommandResult(command)
+    return nil unless /(P|E|G|C|ES|CS)CT(\d+)?([\+\-\d]*)(\$(\d+))?/ === command
 
     type = $1
     is_special = ($1 && $1.length > 1)
@@ -144,10 +141,10 @@ MESSAGETEXT
     return nil if !rank && !is_special
 
     rank = 0 if !rank
-    is_choice = (not $4.nil?)
+    is_choice = !$4.nil?
     dice_value = $5
     modifyText = $3
-    modify  = getValue(modifyText, 0)
+    modify = getValue(modifyText, 0)
 
     tableName = ""
     tables = nil
@@ -322,11 +319,11 @@ MESSAGETEXT
   end
 
   def getTableByRank(rank, tables)
-    #index = (rank - 1) / 5
+    # index = (rank - 1) / 5
     index = ((rank - 1) / 5).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
-	index = [0, index].max
-	index = [index, (tables.size - 1)].min
+  index = [0, index].max
+  index = [index, (tables.size - 1)].min
 
     return tables[index]
   end
@@ -337,7 +334,7 @@ MESSAGETEXT
     return number
   end
 
-  #최소치의 조정(값이 너무 작은경우 표의 최소)
+  # 최소치의 조정(값이 너무 작은경우 표의 최소)
   def getAdjustNumberMin(number, table)
     value = getTableMinimum(table)
     return [number, value].max
@@ -347,32 +344,25 @@ MESSAGETEXT
     table.first.first
   end
 
-  #최대치의 조정(값이 너무 큰 경우 표의 최대)
+  # 최대치의 조정(값이 너무 큰 경우 표의 최대)
   def getAdjustNumberMax(number, table)
     value = table.last.first
     return [number, value].min
   end
 
-  #재보표
+  # 재보표
   def getTresureDiceCommandResult(command)
+    return nil unless (m = /(C|M|I|H|G)TRS(\d*)([\+\-\d]*)(\$)?/.match(command))
 
-    return nil unless(/(C|M|I|H|G)TRS(\d*)([\+\-\d]*)(\$)?/ === command)
-
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg1 = $1
-    reg2 = $2
-    reg3 = $3
-    reg4 = $4
-
-  	type = reg1 #$1
-  	rank = reg2.to_i #$2.to_i
-    is_choice = (reg2.empty? || (not reg4.nil?)) #($2.empty? || (not $4.nil?))
-  	modifyText = reg3 # $3
-  	modify = getValue(modifyText, 0)
-    is_prize = (reg4 == "$") #($4 == "$")
+    type = m[1]
+    rank = m[2].to_i
+    is_choice = (m[2].empty? || !m[4].nil?)
+    modifyText = m[3]
+    modify = getValue(modifyText, 0)
+    is_prize = (m[4] == "$")
     dice_value = nil
     dice_value = '7' if is_prize
-    is_rank_enable = ( (not is_choice) || is_prize)
+    is_rank_enable = (!is_choice || is_prize)
 
     tableName, table =
       case type
@@ -386,22 +376,20 @@ MESSAGETEXT
         getHeroineTresureResultTable
       when "G"
         getGoblinTresureResultTable
-      else
-        nil
       end
 
     return nil if table.nil?
 
-  	number, dice_str, =
+    number, dice_str, =
       if is_choice
         [dice_value.to_i, dice_value]
       else
         roll(2, 6)
       end
 
-  	number += (rank * (is_rank_enable ? 5 : 0)) + modify
+    number += (rank * (is_rank_enable ? 5 : 0)) + modify
 
-    return command if is_choice and (number < getTableMinimum(table))
+    return command if is_choice && (number < getTableMinimum(table))
 
     number = [getAdjustNumberMin(number, table), 87].min
 
@@ -416,7 +404,7 @@ MESSAGETEXT
   end
 
   def getHiroineTresureResultString(table, number)
-    table_max_number = table.map {|e| e.first }.max
+    table_max_number = table.map { |e| e.first }.max
 
     result =
       if number <= table_max_number
@@ -639,37 +627,37 @@ MESSAGETEXT
   def getHeroineTresureResultTable
     tableName = "히로인 재보표"
     table = [
-             [ 7, '쓰러져 있는 초라한 말라깽이의 유녀'],#라스트오더
+             [ 7, '쓰러져 있는 초라한 말라깽이의 유녀'], # 라스트오더
              [ 8, '돈을 밝히는 경단머리인 차이나 아가씨'],
              [ 9, '응석부리고고 캐미솔을 어깨에 한 스웨터의 요술사'],
              [10, '작은 등으로 모두를 지키는 장면의 청바지를 입은 무투가'],
-             [11, '오징어 모자를 쓴 도짓코 침략자'],#이카무스메
+             [11, '오징어 모자를 쓴 도짓코 침략자'], # 이카무스메
              [12, '지나치게 긍정적인 자칭 명탐정씨'],
              [13, '중요한 곳에서 실수하는 부스스한 포니테일의 클레릭'],
              [14, '계란밥 좋아하는 빈유의 칸나기'],
              [15, '보석을 너무 좋아하는 억척스런 큰 리본의 이도류 세검사'],
-             [16, '오크에게서 간신히 도망쳐온 검의 처녀'],#큿 코로
+             [16, '오크에게서 간신히 도망쳐온 검의 처녀'], # 큿 코로
              [17, '당신을 맹목적으로 찬미하는 자칭 여동생'],
-             [18, '어필을 하지만 인식되지 않는 칸나기'],#금서목록 히메가미아이사
-             [19, '밝고 긍정적인 분홍색 리본의 소녀'],#카나메 마도카(?)
-             [20, '마법을 사용할수 없는 가슴이 작은게 컴플렉스인 마녀'],#루이즈
-             [21, '식욕에 일체 주저함이 없는 포동포동한 가슴의 아이돌'],#미무라 카나코
-             [22, '눈물점이 매혹의 저주인 누님계의 스워시버클러 '],#FATE 시리즈 랜서(4차)TS?!?!
-             [23, '집착심이 강한 젊게 차려입은 노처녀 신화생무'],#알퀘이드
-             [24, '시가를 사랑하는 헤이안 히키코모리 공주'],#NEET히메
+             [18, '어필을 하지만 인식되지 않는 칸나기'], # 금서목록 히메가미아이사
+             [19, '밝고 긍정적인 분홍색 리본의 소녀'], # 카나메 마도카(?)
+             [20, '마법을 사용할수 없는 가슴이 작은게 컴플렉스인 마녀'], # 루이즈
+             [21, '식욕에 일체 주저함이 없는 포동포동한 가슴의 아이돌'], # 미무라 카나코
+             [22, '눈물점이 매혹의 저주인 누님계의 스워시버클러 '], # FATE 시리즈 랜서(4차)TS?!?!
+             [23, '집착심이 강한 젊게 차려입은 노처녀 신화생무'], # 알퀘이드
+             [24, '시가를 사랑하는 헤이안 히키코모리 공주'], # NEET히메
              [25, '병약하지만 프라이드있는 몰락귀족 아가씨'],
-             [26, '활기가득! 왜소한 낭아족 야생 소녀'],#원령공주 산
-             [27, '빚더미에 올라 골판지 상자에서 사는 리코핀(로그호라 엑스트라 캐릭터)'],#로그호라이즌 리코핀
-             [28, '귀국자녀인 무녀복 스타일의 마포소녀에YO!'],#콩고
-             [29, '붙어 왔다갔다 하기만 할 수 있는 좀비 아가씨'],#유클리우드 헬사이즈
-             [30, '꿈에 한결같은 녹색머리 초시공 아이돌 후보생'], #란카 리
+             [26, '활기가득! 왜소한 낭아족 야생 소녀'], # 원령공주 산
+             [27, '빚더미에 올라 골판지 상자에서 사는 리코핀(로그호라 엑스트라 캐릭터)'], # 로그호라이즌 리코핀
+             [28, '귀국자녀인 무녀복 스타일의 마포소녀에YO!'], # 콩고
+             [29, '붙어 왔다갔다 하기만 할 수 있는 좀비 아가씨'], # 유클리우드 헬사이즈
+             [30, '꿈에 한결같은 녹색머리 초시공 아이돌 후보생'], # 란카 리
              [31, '바로 발이 올라가는 뾰족한 이빨의 불량소녀'],
              [32, '지치지 않는 방패'],
-             [33, '외환거래에 가진 돈을 전부 잃어 공허한 선배'],#아이마이미의 포노카선배
-             [34, '팔뚝이 말랑말랑하지만 가계부를 쓰는 마왕'],#마오유우 마왕
-             [35, '그 가슴 실로 풍만하였다는 기억상실의 여자 닌자'],#닌자 슬레이어 유카노
+             [33, '외환거래에 가진 돈을 전부 잃어 공허한 선배'], # 아이마이미의 포노카선배
+             [34, '팔뚝이 말랑말랑하지만 가계부를 쓰는 마왕'], # 마오유우 마왕
+             [35, '그 가슴 실로 풍만하였다는 기억상실의 여자 닌자'], # 닌자 슬레이어 유카노
              [36, '잘 옷자락을 붙잡는 양갈래 땋은 머리의 빵집 소녀'],
-             [37, '「더럽다는건 칭찬이다!」라는 주관의 여자 암살자'],#파이널 판타지 11
+             [37, '「더럽다는건 칭찬이다!」라는 주관의 여자 암살자'], # 파이널 판타지 11
              [38, '단추가 터질것 같고 울상인 길드 창구의 간판아가씨'],
              [39, '뭐든지 오컬트에 아수라장이 되는 소녀'],
              [40, '전투 때마다 많이 먹어지게 되는게 고민인 궁술소녀'],
@@ -690,134 +678,132 @@ MESSAGETEXT
     return tableName, table
   end
 
-    def getGoblinTresureResultTable
+  def getGoblinTresureResultTable
     tableName = "고블린 재물표"
-    table = [
-             [ 7, '라이트메이스'],
-             [ 8, '백과사전'],
-             [ 9, '42G'],
-             [10, '오래된 해골[코어소재](40G)'],
-             [11, '가속의 두루마리(초급)'],
-             [12, '46G'],
-             [13, '48G'],
-             [14, '50G'],
-             [15, '유리구슬[환전](60G)'],
-             [16, '피로 얼룩진 칼[코어소재](50G)'],
-             [17, '찌그러진 금접시[환전](60G)'],
-             [18, '59G'],
-             [19, '모피로 된 깔개[환전](60G)'],
-             [20, '뾰족한 발톱[코어소재](60G)'],
-             [21, '67G'],
-             [22, '흠집투성이의 상아상[환전](70G)'],
-             [23, '72G'],
-             [24, '라이트 랜스[파손]'],
-             [25, '골제 목걸이[환전](80G)'],
-             [26, '사금이 섞인 돌[환전](80G)'],
-             [27, '85G'],
-             [28, '향나무 파편[환전](90G)'],
-             [29, '기묘한 가면[환전](90G)'],
-             [30, '96G'],
-             [31, '시미터'],
-             [32, '우든 라운드'],
-             [33, '바람 소리의 방울[코어소재](80G)&철제 전립[코어소재](30G)'],
-             [34, '112G'],
-             [35, '산양슬라임(라지사이즈)[환전](120G)'],
-             [36, '121G'],
-             [37, '고급 노송나무[환전](125G)'],
-             [38, '130G'],
-             [39, '크리스탈제 체스말[환전](135G)'],
-             [40, '140G'],
-             [41, '텐트(캠핑용)'],
-             [42, '이상한 환약[코어소재](30G)×2&100G'],
-             [43, '수수께끼의 모피[코어소재](80G)&원한의 고리[코어소재](80G)'],
-             [44, '의식용 뼈 검[환전](160G)'],
-             [45, '낡은 동전[환전](165G)'],
-             [46, '낭아봉'],
-             [47, '법리회로[코어소재](60G)&120G'],
-             [48, '커다란 마력회로[코어소재](120G)&60G'],
-             [49, '189G'],
-             [50, '고급 통술[환전](200G)'],
-             [51, '201G'],
-             [52, '백색 반지'],
-             [53, '비취 목걸이[환전](210G)'],
-             [54, '황금 고블린상[환전](220G)'],
-             [55, '샤벨'],
-             [56, '진철 검신[코어소재](120G)&120G'],
-             [57, '지저분한청자[환전](240G)'],
-             [58, '톤스톤의 모듬 꼬치구이×2'],
-             [59, '고블린 왕의 훈장[환전](255G)'],
-             [60, '실눈뜨기의 두루마리(중급)×2'],
-             [61, '269G'],
-             [62, '백랑의 모피[환전](280G)'],
-            ]
+  table = [
+           [ 7, '라이트메이스'],
+           [ 8, '백과사전'],
+           [ 9, '42G'],
+           [10, '오래된 해골[코어소재](40G)'],
+           [11, '가속의 두루마리(초급)'],
+           [12, '46G'],
+           [13, '48G'],
+           [14, '50G'],
+           [15, '유리구슬[환전](60G)'],
+           [16, '피로 얼룩진 칼[코어소재](50G)'],
+           [17, '찌그러진 금접시[환전](60G)'],
+           [18, '59G'],
+           [19, '모피로 된 깔개[환전](60G)'],
+           [20, '뾰족한 발톱[코어소재](60G)'],
+           [21, '67G'],
+           [22, '흠집투성이의 상아상[환전](70G)'],
+           [23, '72G'],
+           [24, '라이트 랜스[파손]'],
+           [25, '골제 목걸이[환전](80G)'],
+           [26, '사금이 섞인 돌[환전](80G)'],
+           [27, '85G'],
+           [28, '향나무 파편[환전](90G)'],
+           [29, '기묘한 가면[환전](90G)'],
+           [30, '96G'],
+           [31, '시미터'],
+           [32, '우든 라운드'],
+           [33, '바람 소리의 방울[코어소재](80G)&철제 전립[코어소재](30G)'],
+           [34, '112G'],
+           [35, '산양슬라임(라지사이즈)[환전](120G)'],
+           [36, '121G'],
+           [37, '고급 노송나무[환전](125G)'],
+           [38, '130G'],
+           [39, '크리스탈제 체스말[환전](135G)'],
+           [40, '140G'],
+           [41, '텐트(캠핑용)'],
+           [42, '이상한 환약[코어소재](30G)×2&100G'],
+           [43, '수수께끼의 모피[코어소재](80G)&원한의 고리[코어소재](80G)'],
+           [44, '의식용 뼈 검[환전](160G)'],
+           [45, '낡은 동전[환전](165G)'],
+           [46, '낭아봉'],
+           [47, '법리회로[코어소재](60G)&120G'],
+           [48, '커다란 마력회로[코어소재](120G)&60G'],
+           [49, '189G'],
+           [50, '고급 통술[환전](200G)'],
+           [51, '201G'],
+           [52, '백색 반지'],
+           [53, '비취 목걸이[환전](210G)'],
+           [54, '황금 고블린상[환전](220G)'],
+           [55, '샤벨'],
+           [56, '진철 검신[코어소재](120G)&120G'],
+           [57, '지저분한청자[환전](240G)'],
+           [58, '톤스톤의 모듬 꼬치구이×2'],
+           [59, '고블린 왕의 훈장[환전](255G)'],
+           [60, '실눈뜨기의 두루마리(중급)×2'],
+           [61, '269G'],
+           [62, '백랑의 모피[환전](280G)'],
+          ]
 
-    return tableName, table
-  end
+  return tableName, table
+end
 
-  #パーソナリティタグ表
+  # パーソナリティタグ表
   def getPersonalityTagDiceCommandResult(command)
+    return nil unless "PTAG" === command
 
-    return nil unless("PTAG" === command)
+  tableName = "퍼스널리티 태그"
+  table = [
+           '[조숙]',
+           '[호기심왕성]',
+           '[외로움쟁이]',
+           '[지극성실]',
+           '[먹보]',
+           '[개구쟁이]또는[말괄량이]',
 
-	tableName = "퍼스널리티 태그"
-	table = [
-	         '[조숙]',
-	         '[호기심왕성]',
-	         '[외로움쟁이]',
-	         '[지극성실]',
-	         '[먹보]',
-	         '[개구쟁이]또는[말괄량이]',
+           '[사람좋음]',
+           '[정열]',
+           '[남챙겨주기]',
+           '[이지적]',
+           '[벽창호]',
+           '[형님 기질]또는[누님 기질]',
 
-	         '[사람좋음]',
-	         '[정열]',
-	         '[남챙겨주기]',
-	         '[이지적]',
-	         '[벽창호]',
-	         '[형님 기질]또는[누님 기질]',
+           '[의리투철]',
+           '[변덕쟁이]',
+           '[장인기질]',
+           '[열혈한]',
+           '[노력가]',
+           '[남자밝힘]또는[여자밝힘]',
 
-	         '[의리투철]',
-	         '[변덕쟁이]',
-	         '[장인기질]',
-	         '[열혈한]',
-	         '[노력가]',
-	         '[남자밝힘]또는[여자밝힘]',
+           '[가정적]',
+           '[호승심]',
+           '[순진]',
+           '[무뚝뚝이]',
+           '[자비로움]',
+           '[마이페이스]',
 
-	         '[가정적]',
-	         '[호승심]',
-	         '[순진]',
-	         '[무뚝뚝이]',
-	         '[자비로움]',
-	         '[마이페이스]',
+           '[낙천가]',
+           '[동료애]',
+           '[자긍심]',
+           '[사교적]',
+           '[냉정침착]',
+           '[로맨티스트]',
 
-	         '[낙천가]',
-	         '[동료애]',
-	         '[자긍심]',
-	         '[사교적]',
-	         '[냉정침착]',
-	         '[로맨티스트]',
+           '[학구적]',
+           '[내향적]',
+           '[사서고생]',
+           '[허영심]',
+           '[용맹과감]',
+           '[미스테리어스]',
+          ]
 
-	         '[학구적]',
-	         '[내향적]',
-	         '[사서고생]',
-	         '[허영심]',
-	         '[용맹과감]',
-	         '[미스테리어스]',
-	        ]
+  result, number = get_table_by_d66(table)
 
-	result, number = get_table_by_d66(table)
-
-	text = "#{tableName}(#{number})：#{result}"
+  text = "#{tableName}(#{number})：#{result}"
     return text
   end
 
-  #交友表
+  # 交友表
   def getFriendlyChartDiceCommandResult(command)
-
-    return nil unless("KOYU" === command)
+    return nil unless "KOYU" === command
 
     tableName = "교우표"
     table = [
-	         "교우대상에 대한 보호\n당신은 교우대상을 보호하고 싶다. 당신에게는 지켜줄수 있는 강함이 있다.",
+           "교우대상에 대한 보호\n당신은 교우대상을 보호하고 싶다. 당신에게는 지켜줄수 있는 강함이 있다.",
              "교우대상에 대한 친애\n당신은 교우대상에게 호감을 가지고 있다. 그 마음을 상대에게 전했을지 아닐지는 임의. ",
              "교우대상에 대한 의형제\n당신은 교우대상과 형제나 다름없는 사이다. 물론 피는 이어지지 않았지만 그런것은 사소한 일이다.",
              "교우대상의 영웅\n당신은 교우대상에게서 영웅시되고 있다. 설령 당신이 부정하더라도 상관 없다.",
@@ -864,13 +850,11 @@ MESSAGETEXT
 
     text = "#{tableName}([#{number}]) ＞ #{result}"
     return text
-
   end
 
-  #プレフィックスドマジックアイテム表
+  # プレフィックスドマジックアイテム表
   def getPrefixedMagickItemDiceCommandResult(command)
-
-    return nil unless(/MGR([1-3])/ === command)
+    return nil unless /MGR([1-3])/ === command
 
     rank = $1.to_i
 
@@ -1025,110 +1009,107 @@ MESSAGETEXT
 
     text = "#{tableName}([#{number}]) ＞ #{result}"
     return text
-
   end
 
-  #공격 명중 장소 랜덤결정표
+  # 공격 명중 장소 랜덤결정표
   def getHitLocationDiceCommandResult(command)
-
-    return nil unless("HLOC" === command)
+    return nil unless "HLOC" === command
 
     tableName = "공격명중장소"
     table = [
-	         '이마',
-	         '뺨',
-	         '코',
-	         '턱',
-	         '뒷통수',
-	         '목',
+           '이마',
+           '뺨',
+           '코',
+           '턱',
+           '뒷통수',
+           '목',
 
-	         '귀',
-	         '눈',
-	         '관자놀이',
-	         '팔',
-	         '팔꿈치',
-	         '손',
+           '귀',
+           '눈',
+           '관자놀이',
+           '팔',
+           '팔꿈치',
+           '손',
 
-	         '손가락',
-	         '심장',
-	         '위',
-	         '폐',
-	         '갈비',
-	         '어깨',
+           '손가락',
+           '심장',
+           '위',
+           '폐',
+           '갈비',
+           '어깨',
 
-	         '등',
-	         '옆구리',
-	         '허리',
-	         '아랫배',
-	         '허벅지',
-	         '목',
+           '등',
+           '옆구리',
+           '허리',
+           '아랫배',
+           '허벅지',
+           '목',
 
-	         '장딴지',
-	         '아킬레스건',
-	         '발 뒤꿈치',
-	         '정강이',
-	         '새끼 발가락',
-	         '무릅',
+           '장딴지',
+           '아킬레스건',
+           '발 뒤꿈치',
+           '정강이',
+           '새끼 발가락',
+           '무릅',
 
-	         '사회적 신용',
-	         '인간관계',
-	         '첫사랑의 추억',
-	         '완벽한 예측',
-	         '마음',
-	         '안경',
-	        ]
+           '사회적 신용',
+           '인간관계',
+           '첫사랑의 추억',
+           '완벽한 예측',
+           '마음',
+           '안경',
+          ]
     result, number = get_table_by_d66(table)
     "#{tableName}(#{number})：#{result}"
   end
 
-  #PC명 랜덤 결정표
+  # PC명 랜덤 결정표
   def getPCNameDiceCommandResult(command)
-
-    return nil unless("PCNM" === command)
+    return nil unless "PCNM" === command
 
     tableName = "PC名"
     table = [
-	         'Kuraudo',
-	         'Sefirosu',
-	         'Kirito',
-	         'Asuna',
-	         'Leeroy Jenkins',
-	         'Buront',
+           'Kuraudo',
+           'Sefirosu',
+           'Kirito',
+           'Asuna',
+           'Leeroy Jenkins',
+           'Buront',
 
-	         '의사양반',
-	         '거대도너츠',
-	         '이등병가민',
-	         '버섯대위',
-	         '∃@ㅏ이돌전도사E',
-	         '작업장',
+           '의사양반',
+           '거대도너츠',
+           '이등병가민',
+           '버섯대위',
+           '∃@ㅏ이돌전도사E',
+           '작업장',
 
-	         '크로울리',
-	         '다이테스',
-	         '타츠야',
-	         '미유키',
-	         '슬레인',
-	         '타카본씨',
+           '크로울리',
+           '다이테스',
+           '타츠야',
+           '미유키',
+           '슬레인',
+           '타카본씨',
 
-	         '흑의 연금술사',
-	         '†사랑의천사네코히메†',
-	         '데스★건',
-	         '卍칠흑의타천사卍',
-	         '광속의이명을가지고중력을자유자재로조종하는고귀한기사',
-	         '신세계†영걸살해자',
+           '흑의 연금술사',
+           '†사랑의천사네코히메†',
+           '데스★건',
+           '卍칠흑의타천사卍',
+           '광속의이명을가지고중력을자유자재로조종하는고귀한기사',
+           '신세계†영걸살해자',
 
-	         '로그호라',
-	         'ㄱㄱㄱㄱ',
-	         '창고',
-	         '은행',
-	         '보관',
-	         '위탁',
+           '로그호라',
+           'ㄱㄱㄱㄱ',
+           '창고',
+           '은행',
+           '보관',
+           '위탁',
 
-	         '사스케',
-	         '라파엘로',
-	         '도나텔로',
-	         '미켈란젤로',
-	         '센다이',
-	         '후지키도',
+           '사스케',
+           '라파엘로',
+           '도나텔로',
+           '미켈란젤로',
+           '센다이',
+           '후지키도',
             ]
 
     result, number = get_table_by_d66(table)
@@ -1136,10 +1117,9 @@ MESSAGETEXT
     return "#{tableName}(#{number})：#{result}"
   end
 
-  #ロデ研の新発明ランダム決定表
+  # ロデ研の新発明ランダム決定表
   def getInventionAttributeTextDiceCommandResult(command)
-
-    return nil unless(/IAT([ABMDLT]*)/ === command)
+    return nil unless /IAT([ABMDLT]*)/ === command
 
     tableName = "로데릭 연구소의 새로운 발명"
 
@@ -1161,7 +1141,7 @@ MESSAGETEXT
                    '굉장히 빠르거나 거친',
                    '대량 생산이 가능한',
                    '좋은 감촉의',
-                  ].map {|e| (is_single ? '특징A(장점)：' : '') + e }
+                  ].map { |e| (is_single ? '특징A(장점)：' : '') + e }
                 when 'B', 'D'
                   [
                    '중독성 있는',
@@ -1170,7 +1150,7 @@ MESSAGETEXT
                    '망가지기 쉬운',
                    '설명할 것이 많은',
                    '버려도 버려도 되돌아오는	',
-                  ].map {|e| (is_single ? '특징B(단점)：' : '') + e }
+                  ].map { |e| (is_single ? '특징B(단점)：' : '') + e }
                 when 'L'
                   [
                    '아름다운',
@@ -1179,7 +1159,7 @@ MESSAGETEXT
                    '참신한',
                    '형언할 수 없는',
                    '목숨을 깍는 형태를 한',
-                  ].map {|e| (is_single ? '형용：' : '') + e }
+                  ].map { |e| (is_single ? '형용：' : '') + e }
                 when 'T'
                   [
                    '무기',
@@ -1188,16 +1168,15 @@ MESSAGETEXT
                    '식량',
                    '약품',
                    '장난감',
-                  ].map {|e| (is_single ? '발명품의 종류：' : '') + e }
+                  ].map { |e| (is_single ? '발명품의 종류：' : '') + e }
                 end[dice_result - 1]
     end
 
     return "#{tableName}([#{number.join(',')}])：#{result.join(' ')}"
   end
 
-  #아키바 거리에서 발생하는 문제 랜덤결정 표
+  # 아키바 거리에서 발생하는 문제 랜덤결정 표
   def getTroubleInAkibaStreetDiceCommandResult(command)
-
     return nil unless command === "TIAS"
 
     tableName = "아키바 거리에서 발생하는 문제"
@@ -1247,9 +1226,8 @@ MESSAGETEXT
     return "#{tableName}([#{number.join(',')}])：#{result.join(' ')}"
   end
 
-  #버림받은 아이 랜덤결정표
+  # 버림받은 아이 랜덤결정표
   def getAbandonedChildDiceCommandResult(command)
-
     return nil unless command === "ABDC"
 
     tableName = "버림받은 아이"
@@ -1265,7 +1243,7 @@ MESSAGETEXT
       '돌의 이름',
       '동물 이름',
       '번호'
-     ].map {|e| '이름：' + e },
+     ].map { |e| '이름：' + e },
      [
       '폐 건물',
       '길가',
@@ -1273,7 +1251,7 @@ MESSAGETEXT
       '나무 위',
       '공원',
       '하수도'
-     ].map {|e| '주거：' + e },
+     ].map { |e| '주거：' + e },
      [
       '무언가를 찾기',
       '요리',
@@ -1281,7 +1259,7 @@ MESSAGETEXT
       '장사',
       '손재주있는',
       '약삭빠른 행동'
-     ].map {|e| '특기：' + e },
+     ].map { |e| '특기：' + e },
      [
       '깡마른',
       '키작은',
@@ -1289,7 +1267,7 @@ MESSAGETEXT
       '키가 큰',
       '부드럽고 탄력있는',
       '근육질의'
-     ].map {|e| '체형：' + e },
+     ].map { |e| '체형：' + e },
      [
       '과일',
       '고기',
@@ -1297,7 +1275,7 @@ MESSAGETEXT
       '생선',
       '과자',
       '벌레'
-     ].map {|e| '좋아하는 음식：' + e },
+     ].map { |e| '좋아하는 음식：' + e },
      [
       '말이 서툰',
       '사투리',
@@ -1305,7 +1283,7 @@ MESSAGETEXT
       '사극체',
       '3인칭',
       '귀국자녀'
-     ].map {|e| '말투：' + e }
+     ].map { |e| '말투：' + e }
     ].each do |table|
       dice_result, dice_str = roll(1, 6)
       number << dice_str
@@ -1315,15 +1293,17 @@ MESSAGETEXT
     return "#{tableName}([#{number.join(',')}])：#{result.join('　')}"
   end
 
-  #楽器種別表
+  # 楽器種別表
   def getMusicalInstrumentTypeDiceCommandResult(command)
-    return nil unless(/MII(\d?)/ === command)
+    return nil unless /MII(\d?)/ === command
+
      type, is_roll = if $1 && $1 != ''
-      [$1.to_i, false]
+                       [$1.to_i, false]
     else
       roll(1, 6)
     end
     return nil if type < 1 || 6 < type
+
     tableName = "악기 종류 표"
     type_name = ['타악기１', '건반악기', '현악기１', '현악기２', '관악기１', '관악기２'][type - 1]
 
@@ -1337,15 +1317,14 @@ MESSAGETEXT
         ['리코더', '오카리나', '오보에', '하모니카', '아코디언', '퉁소']
       ][type - 1][dice - 1]
 
-    return "#{tableName}" + (is_roll ? "(#{type})" : '') + "：#{type_name}(#{dice})：#{result}"
+    return tableName.to_s + (is_roll ? "(#{type})" : '') + "：#{type_name}(#{dice})：#{result}"
   end
 
   def getEastalDiceCommandResult(command)
-
     return nil unless command =~ /ESTL(\d+)/
 
     cr = $1.to_i
-    return nil unless (cr >= 1 && cr <= 10)
+    return nil unless cr >= 1 && cr <= 10
 
     tableName = "이스탈 탐색표"
 

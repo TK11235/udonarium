@@ -3,7 +3,7 @@
 require 'diceBot/SRS'
 
 class MetallicGuadian < SRS
-  setPrefixes(['2D6.*','MG.*'])
+  setPrefixes(['2D6.*', 'MG.*'])
 
   def initialize
     super
@@ -37,7 +37,7 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?MG/i) {"#{$1}2D6"}
+    string = string.gsub(/^(S)?MG/i) { "#{$1}2D6" }
     return string
   end
 end

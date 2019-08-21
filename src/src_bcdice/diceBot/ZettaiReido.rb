@@ -6,6 +6,7 @@ class ZettaiReido < DiceBot
   def initialize
     super
   end
+
   def gameName
     '絶対隷奴'
   end
@@ -28,7 +29,7 @@ INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)
-    return nil unless( /^(\d+)-2DR([\+\-\d]*)(>=(\d+))?$/i === command )
+    return nil unless /^(\d+)-2DR([\+\-\d]*)(>=(\d+))?$/i === command
 
     baseAvility = $1.to_i
     modText = $2
@@ -61,13 +62,13 @@ INFO_MESSAGE_TEXT
 
   def roll2DarkDice()
     _, dice_str = roll(2, 6)
-    dice1, dice2 = dice_str.split(',').collect{|i|i.to_i}
+    dice1, dice2 = dice_str.split(',').collect { |i| i.to_i }
 
     darkDice1, darkPoint1 = changeDiceToDarkDice(dice1)
     darkDice2, darkPoint2 = changeDiceToDarkDice(dice2)
 
     darkPoint = darkPoint1 + darkPoint2
-    if( darkPoint == 2 )
+    if darkPoint == 2
       darkPoint = 4
     end
 
@@ -80,7 +81,7 @@ INFO_MESSAGE_TEXT
   def changeDiceToDarkDice(dice)
     darkPoint = 0
     darkDice = dice
-    if( dice == 6 )
+    if dice == 6
       darkDice = 0
       darkPoint = 1
     end
@@ -92,9 +93,9 @@ INFO_MESSAGE_TEXT
     value = parren_killer("(0#{modText})").to_i
 
     text = ""
-    if( value < 0 )
+    if value < 0
       text = value.to_s
-    elsif( value > 0 )
+    elsif  value > 0
       text = "+" + value.to_s
     end
 
@@ -104,7 +105,7 @@ INFO_MESSAGE_TEXT
   def getDiffInfo(diffValue)
     diffText = ""
 
-    unless( diffValue.nil? )
+    unless diffValue.nil?
       diffValue = diffValue.to_i
       diffText = ">=#{diffValue.to_i}"
     end
@@ -115,7 +116,7 @@ INFO_MESSAGE_TEXT
   def getDarkPointResult(total, diff, darkPoint)
     text = ''
 
-    if( darkPoint > 0 )
+    if darkPoint > 0
       text = " ＞ #{darkPoint}DP"
     end
 
@@ -123,21 +124,20 @@ INFO_MESSAGE_TEXT
   end
 
   def getSuccessText(diceTotal, total, diff)
-
-    if( diceTotal == 0 )
+    if diceTotal == 0
       return " ＞ クリティカル"
     end
 
-    if( diceTotal == 10 )
+    if diceTotal == 10
       return " ＞ ファンブル"
     end
 
-    if( diff.nil? )
+    if diff.nil?
       diff = 0
     end
 
     successLevel = (total - diff)
-    if( successLevel >= 0 )
+    if successLevel >= 0
       return " ＞ #{successLevel} 成功"
     end
 

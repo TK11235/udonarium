@@ -2,7 +2,7 @@
 
 if RUBY_VERSION < '1.9.0' then
 
- require 'kconv'
+  require 'kconv'
 
  # String クラスに擬似的な 1.9.0 互換の encoding および encode メソッドを追加します。
  # ただし、完全な互換性は持ちません。
@@ -39,7 +39,7 @@ if RUBY_VERSION < '1.9.0' then
 
    # エンコードを変更します（options 未対応）。
    def encode(to_encoding, from_encoding = nil, options = nil)
-     if (from_encoding == nil)
+     if from_encoding == nil
        if @encoding == nil then
          f_encoding = Kconv::AUTO
        else
@@ -87,7 +87,6 @@ if RUBY_VERSION < '1.9.0' then
        self
      end
    end
-   
  end
- 
+
 end

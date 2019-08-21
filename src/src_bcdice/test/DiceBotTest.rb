@@ -65,32 +65,22 @@ class DiceBotTest
 
     targetFiles.each do |filename|
       next if /^_/ === File.basename(filename)
-      
+
       source =
         if RUBY_VERSION < '1.9'
           File.read(filename)
         else
           File.read(filename, :encoding => 'UTF-8')
         end
-      
+
       dataSetSources = source.
         gsub("\r\n", "\n").
         tr("\r", "\n").
         split("============================\n").
         map(&:chomp)
-      
+
       # ゲームシステムをファイル名から判断する
       gameType = File.basename(filename, '.txt')
-
-      # TKfix
-      begin
-        require(File.expand_path("../diceBot/#{gameType}.rb", File.dirname(__FILE__)))
-        #require_tree File.expand_path("../diceBot", File.dirname(__FILE__))
-      rescue LoadError, StandardError => e
-        debug("DiceBot load ERROR!!!", e.to_s)
-        nil
-      end
-      # TKfix
 
       dataSet =
         if RUBY_VERSION < '1.9'
@@ -102,18 +92,16 @@ class DiceBotTest
             DiceBotTestData.parse(dataSetSource, gameType, i)
           end
         end
-      
-      @testDataSet += 
+
+      @testDataSet +=
         if @dataIndex.nil?
           dataSet
         else
           dataSet.select { |data| data.index == @dataIndex }
         end
-      
     end
   end
-  
-  
+
   private :readTestDataSet
 
   # 各テストを実行する

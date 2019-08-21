@@ -3,7 +3,7 @@
 require 'diceBot/SRS'
 
 class Alshard < SRS
-  setPrefixes(['2D6.*','AL.*'])
+  setPrefixes(['2D6.*', 'AL.*'])
 
   def initialize
     super
@@ -37,7 +37,7 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?AL/i) {"#{$1}2D6"}
+    string = string.gsub(/^(S)?AL/i) { "#{$1}2D6" }
     return string
   end
 end

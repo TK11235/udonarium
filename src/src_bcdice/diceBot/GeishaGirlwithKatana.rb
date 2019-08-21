@@ -43,12 +43,12 @@ MESSAGETEXT
       return getChombaResultText()
     end
 
-    _, dice_str = roll(3,6)
-    diceList = dice_str.split(/,/).collect{|i|i.to_i}
+    _, dice_str = roll(3, 6)
+    diceList = dice_str.split(/,/).collect { |i| i.to_i }
     diceList.sort!
 
     yakuResult = getYaku(diceList)
-    unless( yakuResult.nil? )
+    unless yakuResult.nil?
       return getResultTextByDice(diceList, "【役】#{yakuResult}")
     end
 
@@ -68,7 +68,7 @@ MESSAGETEXT
     chomba_counter ||= 5
     chomba_counter = chomba_counter.to_i
 
-    chomba, = roll(1,100)
+    chomba, = roll(1, 100)
 
     return (chomba <= chomba_counter)
   end

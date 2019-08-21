@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-#TKfix <<
-$LOAD_PATH = $LOAD_PATH + File.dirname(__FILE__) + "/.."
+
+$LOAD_PATH.push(File.dirname(__FILE__) + "/..")
 
 require 'test/unit'
 require 'log'
@@ -8,16 +8,14 @@ require 'bcdiceCore.rb'
 require 'ArgsAnalizer.rb'
 
 class TestArgs < Test::Unit::TestCase
-  
   def setup
     $isDebug = false
   end
-  
+
   def trace
     $isDebug = true
   end
-  
-  
+
   def test_args
     argv = ['-sirc.trpg.net:6667', '-c#OnlineTRPG', '-gCthulhu', '-nfDICE_CoC']
     argsAnalizer = ArgsAnalizer.new(argv)
@@ -28,6 +26,4 @@ class TestArgs < Test::Unit::TestCase
     assert_equal($defaultGameType, 'Cthulhu')
     assert_equal($nick, 'fDICE_CoC')
   end
-  
 end
-

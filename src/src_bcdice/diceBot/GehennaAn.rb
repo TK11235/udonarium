@@ -30,10 +30,10 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/(\d+)GA(\d+)([\+\-][\+\-\d]+)/) {"#{$1}R6#{$3}>=#{$2}[1]"}
-    string = string.gsub(/(\d+)GA(\d+)/) {"#{$1}R6>=#{$2}[1]"}
-    string = string.gsub(/(\d+)G(\d+)([\+\-][\+\-\d]+)/) {"#{$1}R6#{$3}>=#{$2}[0]"}
-    string = string.gsub(/(\d+)G(\d+)/) {"#{$1}R6>=#{$2}[0]"}
+    string = string.gsub(/(\d+)GA(\d+)([\+\-][\+\-\d]+)/) { "#{$1}R6#{$3}>=#{$2}[1]" }
+    string = string.gsub(/(\d+)GA(\d+)/) { "#{$1}R6>=#{$2}[1]" }
+    string = string.gsub(/(\d+)G(\d+)([\+\-][\+\-\d]+)/) { "#{$1}R6#{$3}>=#{$2}[0]" }
+    string = string.gsub(/(\d+)G(\d+)/) { "#{$1}R6>=#{$2}[0]" }
   end
 
   def dice_command_xRn(string, nick_e)
@@ -43,7 +43,7 @@ INFO_MESSAGE_TEXT
   def checkGehenaAn(string, nick_e)
     output = '1'
 
-    return output unless(/(^|\s)S?((\d+)[rR]6([\+\-\d]+)?([>=]+(\d+))(\[(\d)\]))(\s|$)/i =~ string)
+    return output unless /(^|\s)S?((\d+)[rR]6([\+\-\d]+)?([>=]+(\d+))(\[(\d)\]))(\s|$)/i =~ string
 
     string = $2
     diceCount = $3.to_i
@@ -55,7 +55,7 @@ INFO_MESSAGE_TEXT
 
     diceValue, diceText, = roll(diceCount, 6, (sortType & 1))
 
-    diceArray = diceText.split(/,/).collect{|i|i.to_i}
+    diceArray = diceText.split(/,/).collect { |i| i.to_i }
 
     dice_1st = ""
     isLuck = true
@@ -63,33 +63,33 @@ INFO_MESSAGE_TEXT
 
     # 幸運の助けチェック
     diceArray.each do |i|
-      if( dice_1st != "" )
-        if( dice_1st != i or i < diff )
+      if dice_1st != ""
+        if (dice_1st != i) || (i < diff)
           isLuck = false
         end
       else
         dice_1st = i
       end
 
-      diceValue += 1 if(i >= diff)
+      diceValue += 1 if i >= diff
     end
 
-    diceValue *= 2 if(isLuck and (diceCount > 1))
+    diceValue *= 2 if isLuck && (diceCount > 1)
 
     output = "#{diceValue}[#{diceText}]"
     success = diceValue + mod
-    success = 0 if( success < 0 )
+    success = 0 if success < 0
 
     failed = diceCount - diceValue
-    failed = 0 if( failed < 0 )
+    failed = 0 if failed < 0
 
-    if(mod > 0)
+    if mod > 0
       output += "+#{mod}"
-    elsif(mod < 0)
-      output += "#{mod}"
+    elsif mod < 0
+      output += mod.to_s
     end
 
-    if(/[^\d\[\]]+/ =~ output )
+    if /[^\d\[\]]+/ =~ output
       output = "#{nick_e}: (#{string}) ＞ #{output} ＞ 成功#{success}、失敗#{failed}"
     else
       output = "#{nick_e}: (#{string}) ＞ #{output}"
@@ -102,13 +102,13 @@ INFO_MESSAGE_TEXT
   end
 
   def getAnastasisBonusText(mode, success)
-    return '' if( mode == 0)
+    return '' if mode == 0
 
     ma_bonus = ((success - 1) / 2).to_i
-    ma_bonus = 7 if(ma_bonus > 7)
+    ma_bonus = 7 if ma_bonus > 7
 
     bonus_str = ''
-    bonus_str += "連撃[+#{ma_bonus}]/" if(ma_bonus > 0)
+    bonus_str += "連撃[+#{ma_bonus}]/" if ma_bonus > 0
     bonus_str += "闘技[#{getTougiBonus(success)}]"
     return " ＞ #{bonus_str}"
   end

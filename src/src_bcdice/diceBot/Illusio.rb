@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
 class Illusio < DiceBot
-
   def initialize
     super
-    @sortType = 1 #ダイスのソート有
+    @sortType = 1 # ダイスのソート有
   end
-  
+
   setPrefixes([
     '(\d+)?IL([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?(P)?'
   ])
-  
+
   def gameName
     '晃天のイルージオ'
   end
@@ -18,7 +17,7 @@ class Illusio < DiceBot
   def gameType
     "Illusio"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 判定：[n]IL(BNo)[P]
@@ -34,10 +33,8 @@ class Illusio < DiceBot
 ・2IL1P → 2dでパリィナンバー「1」の判定。
 MESSAGETEXT
   end
-  
-  
+
   def rollDiceCommand(command)
-    
     if /(\d+)?IL([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?(P)?$/i === command
       diceCount = ($1 || 1).to_i
       blockNo = [($2 || 0).to_i, ($3 || 0).to_i, ($4 || 0).to_i, ($5 || 0).to_i, ($6 || 0).to_i, ($7 || 0).to_i]
@@ -45,37 +42,36 @@ MESSAGETEXT
       blockNo = blockNo.sort
       blockNo = blockNo.uniq
       isParry = !$8.nil?
-      
+
       return checkRoll(diceCount, blockNo, isParry)
     end
-    
+
     return nil
   end
-  
 
   def checkRoll(diceCount, blockNo, isParry)
     dice, diceText = roll(diceCount, 6, @sortTye)
-    diceArray = diceText.split(/,/).collect{|i|i.to_i}
-    
+    diceArray = diceText.split(/,/).collect { |i| i.to_i }
+
     resultArray = Array.new
     success = 0
     diceArray.each do |i|
-      if( blockNo.count(i) > 0 )
+      if blockNo.count(i) > 0
         resultArray.push("×")
       else
         resultArray.push(i)
         success += 1
       end
     end
-    
+
     blockText = blockNo.join(',')
     blockText2 = "Block"
-    blockText2 = "Parry" if( isParry )
+    blockText2 = "Parry" if isParry
     resultText = resultArray.join(',')
-    
+
     result = "#{diceCount}D6(#{blockText2}:#{blockText}) ＞ #{diceText} ＞ #{resultText} ＞ "
-    if( isParry )
-      if( success < diceCount )
+    if isParry
+      if  success < diceCount
         result += "パリィ成立！　次の非ダメージ2倍。"
       else
         result += "成功数：#{success}　パリィ失敗"
@@ -83,8 +79,7 @@ MESSAGETEXT
     else
       result += "成功数：#{success}"
     end
-    
+
     return result
   end
-  
 end

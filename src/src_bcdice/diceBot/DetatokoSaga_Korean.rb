@@ -45,10 +45,10 @@ INFO_MESSAGE_TEXT
     result = ''
 
     result = checkRoll(command)
-    return result unless(result.empty?)
+    return result unless result.empty?
 
     result = checkJudgeValue(command)
-    return result unless(result.empty?)
+    return result unless result.empty?
 
     debug("각종표로서 처리")
     return rollTableCommand(command)
@@ -58,13 +58,13 @@ INFO_MESSAGE_TEXT
   def checkRoll(string)
     debug("checkRoll begin string", string)
 
-    return '' unless(/^(\d+)DS(\d+)?((>=)(\d+))?$/i =~ string)
+    return '' unless /^(\d+)DS(\d+)?((>=)(\d+))?$/i =~ string
 
     target = 8
 
     skill = $1.to_i
     flag = $2.to_i
-    target = $5.to_i unless( $5.nil? )
+    target = $5.to_i unless $5.nil?
 
     result = "판정！　스킬레벨：#{skill}　플래그：#{flag}　목표치：#{target}"
 
@@ -80,9 +80,8 @@ INFO_MESSAGE_TEXT
   end
 
   def getRollResult(skill)
-
     diceCount = skill + 1
-    diceCount = 3 if( skill == 0 )
+    diceCount = 3 if  skill == 0
 
     dice = []
     diceCount.times do |i|
@@ -92,7 +91,7 @@ INFO_MESSAGE_TEXT
     diceText = dice.join(',')
 
     dice = dice.sort
-    dice = dice.reverse if( skill != 0 )
+    dice = dice.reverse if skill != 0
 
     total = dice[0] + dice[1]
 
@@ -100,8 +99,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getSuccess(check, target)
-
-    if(check >= target)
+    if check >= target
       return "목표치 이상！【성공】"
     end
 
@@ -109,8 +107,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getCheckFlagResult(total, flag)
-
-    if(total > flag)
+    if total > flag
       return ""
     end
 
@@ -122,7 +119,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getDownWill(flag)
-    if(flag>=10)
+    if flag >= 10
       return "6"
     end
 
@@ -130,12 +127,11 @@ INFO_MESSAGE_TEXT
     return "1D6->#{ dice }"
   end
 
-  #스킬판정치　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z
+  # 스킬판정치　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z
   def checkJudgeValue(string)
-
     debug("checkJudgeValue begin string", string)
 
-    return '' unless(/^(\d+)JD(\d+)?(([+]|[-]|[\/])(\d+))?$/i =~ string)
+    return '' unless /^(\d+)JD(\d+)?(([+]|[-]|[\/])(\d+))?$/i =~ string
 
     skill = $1.to_i
     flag = $2.to_i
@@ -145,7 +141,7 @@ INFO_MESSAGE_TEXT
     result = "판정！　스킬레벨：#{skill}　플래그：#{flag}"
 
     modifyText = getModifyText(operator, value)
-    result += "　수정치：#{modifyText}" unless( modifyText.empty? )
+    result += "　수정치：#{modifyText}" unless modifyText.empty?
 
     total, rollText = getRollResult(skill)
     result += " ＞ #{total}[#{rollText}]#{modifyText}"
@@ -159,7 +155,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getModifyText(operator, value)
-    return '' if( value == 0) # TKfix
+    return "" if( value == 0) # TKfix
     operatorText =
       case operator
       when "+"
@@ -178,9 +174,9 @@ INFO_MESSAGE_TEXT
   def getTotalResultValue(total, value, operator)
     case operator
     when "+"
-      return "#{total}+#{value} ＞ 판정치：#{total+value}"
+      return "#{total}+#{value} ＞ 판정치：#{total + value}"
     when "-"
-      return"#{total}-#{value} ＞ 판정치：#{total-value}"
+      return "#{total}-#{value} ＞ 판정치：#{total - value}"
     when "/"
       return getTotalResultValueWhenSlash(total, value)
     else
@@ -189,7 +185,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getTotalResultValueWhenSlash(total, value)
-    return "0으로는 나누어지지 않습니다" if( value == 0 )
+    return "0으로는 나누어지지 않습니다" if value == 0
 
     quotient = ((1.0 * total) / value).ceil
 
@@ -215,7 +211,7 @@ INFO_MESSAGE_TEXT
       name, text, total = choiceStrengthStigmaTable()
     when "WST", "WillStigmaTable".upcase
       name, text, total = choiceWillStigmaTable()
-    when "SBET","StrengthBadEndTable".upcase
+    when "SBET", "StrengthBadEndTable".upcase
       name, text, total = choiceStrengthBadEndTable()
     when "WBET", "WillBadEndTable".upcase
       name, text, total = choiceWillBadEndTable()
@@ -228,7 +224,7 @@ INFO_MESSAGE_TEXT
     return result
   end
 
-###표 목록
+  # ##표 목록
 
   def choiceStrengthStigmaTable()
     name = "체력 낙인표"
@@ -247,11 +243,10 @@ INFO_MESSAGE_TEXT
 ]
 
     text, total = get_table_by_2d6(table)
-    return name , text, total
+    return name, text, total
   end
 
   def choiceWillStigmaTable()
-
     name = "기력 낙인표"
 
     table = [
@@ -269,11 +264,10 @@ INFO_MESSAGE_TEXT
 ]
 
     text, total = get_table_by_2d6(table)
-    return name , text, total
+    return name, text, total
   end
 
   def choiceStrengthBadEndTable()
-
     name = "체력 배드엔딩표"
 
     table = [
@@ -291,11 +285,10 @@ INFO_MESSAGE_TEXT
 ]
 
     text, total = get_table_by_2d6(table)
-    return name , text, total
+    return name, text, total
   end
 
   def choiceWillBadEndTable()
-
     name = "기력 배드엔딩표"
 
     table = [
@@ -313,6 +306,6 @@ INFO_MESSAGE_TEXT
 ]
 
     text, total = get_table_by_2d6(table)
-    return name , text, total
+    return name, text, total
   end
 end

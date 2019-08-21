@@ -5,7 +5,7 @@ class Alsetto < DiceBot
 
   def initialize
     super
-    @sortType = 1 #ダイスのソート有
+    @sortType = 1 # ダイスのソート有
   end
 
   def gameName
@@ -43,16 +43,15 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     # ALCコマンド：命中判定
     # ALCコマンド：成功判定
     if /(\d+)AL(C|G)?(\d+)?((x|\*)(\d+))?$/i === command
       rapid = $1.to_i
       isCritical = $2.nil?
-      if( isCritical )
+      if  isCritical
         criticalNumber = 1
       else
-        if( $2 == "G" )
+        if $2 == "G"
           isCritical = true
           criticalNumber = 2
         else
@@ -76,17 +75,17 @@ MESSAGETEXT
 
     while rollCount > 0
       dice, diceText = roll(rollCount, 6, @sortType)
-      diceArray = diceText.split(/,/).collect{|i|i.to_i}
+      diceArray = diceText.split(/,/).collect { |i| i.to_i }
 
       successCount = 0
       criticalCount = 0
 
       diceArray.each do |i|
-        if(i <= target)
+        if i <= target
           successCount += 1
         end
 
-        if(i <= criticalNumber)
+        if i <= criticalNumber
           criticalCount += 1
         end
       end
@@ -94,24 +93,24 @@ MESSAGETEXT
       totalSuccessCount += successCount
       totalCriticalCount += 1 unless criticalCount == 0
 
-      text += "+" unless( text.empty? )
+      text += "+" unless text.empty?
       text += "#{successCount}[#{diceText}]"
 
-      break unless( isCritical )
+      break unless  isCritical
 
       rollCount = criticalCount
     end
 
     isDamage = (damage != 0)
 
-    if( isDamage )
+    if isDamage
       totalDamage = totalSuccessCount * damage
 
       result = "(#{rapid}D6\<\=#{target}) ＞ #{text} ＞ Hits：#{totalSuccessCount}*#{damage} ＞ #{totalDamage}ダメージ"
-      result += " / #{totalCriticalCount}トライアンフ" if( isCritical )
+      result += " / #{totalCriticalCount}トライアンフ" if isCritical
     else
       result = "(#{rapid}D6\<\=#{target}) ＞ #{text} ＞ 成功数：#{totalSuccessCount}"
-      result += " / #{totalCriticalCount}トライアンフ" if( isCritical )
+      result += " / #{totalCriticalCount}トライアンフ" if isCritical
     end
 
     return result

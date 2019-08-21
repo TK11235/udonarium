@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 
 class Oukahoushin3rd < DiceBot
-  
   def initialize
     super
   end
-  
+
   def gameName
     '央華封神RPG第三版'
   end
-  
+
   def gameType
     "Oukahoushin3rd"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・各種表
@@ -26,16 +25,14 @@ class Oukahoushin3rd < DiceBot
 　・狂気表（KKT）
 INFO_MESSAGE_TEXT
   end
-  
 
   def rollDiceCommand(command)
     return getTableCommandResult(command, @@tables)
   end
-  
-  
+
   @@tables =
     {
-    
+
     'BKT' => {
       :name => "武器攻撃裏成功表",
       :type => '2D6',
@@ -157,7 +154,6 @@ TABLE_TEXT_END
 TABLE_TEXT_END
     },
   }
-    
+
   setPrefixes([ ] + @@tables.keys)
-    
 end

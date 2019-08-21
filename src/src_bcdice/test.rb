@@ -20,9 +20,10 @@ libPaths = [
   "#{rootDir}/irc"
 ]
 libPaths.each do |libPath|
-  $LOAD_PATH << libPath
+  $LOAD_PATH.push(libPath)
 end
 
+require 'test/setup'
 require 'DiceBotTest'
 
 # 引数を解析してテストデータファイルのパスを返す

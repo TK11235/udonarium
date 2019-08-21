@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 class BloodMoon < DiceBot
-
   def initialize
     super
     @sendMode = 2
     @sortType = 1
     @d66Type = 2
-    @fractionType = "roundUp"     # 端数切り上げに設定
+    @fractionType = "roundUp" # 端数切り上げに設定
   end
 
   def gameName
@@ -41,13 +40,13 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
+    if dice_n <= 2
       return " ＞ ファンブル(【余裕】が 0 に)"
-    elsif(dice_n >= 12)
+    elsif dice_n >= 12
       return " ＞ スペシャル(【余裕】+3）"
-    elsif(total_n >= diff)
+    elsif total_n >= diff
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -64,7 +63,7 @@ INFO_MESSAGE_TEXT
 
     case command
 
-     when 'ST'
+    when 'ST'
       type = 'シーン表'
       output, total_n = getSceneTable
     when 'IST'
@@ -101,7 +100,7 @@ INFO_MESSAGE_TEXT
       return getTableCommandResult(command, @@tables)
     end
 
-    return output if(output == '1')
+    return output if output == '1'
 
     output = "#{type}(#{total_n}) ＞ #{output}"
     return output
@@ -446,5 +445,4 @@ TABLE_TEXT_END
   }
 
   setPrefixes(['ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT'] + @@tables.keys)
-
 end

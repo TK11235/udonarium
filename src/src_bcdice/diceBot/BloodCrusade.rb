@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 class BloodCrusade < DiceBot
-
   def initialize
     super
     @sendMode = 2
     @sortType = 1
     @d66Type = 2
-    @fractionType = "roundUp"     # 端数切り上げに設定
+    @fractionType = "roundUp" # 端数切り上げに設定
   end
 
   def gameName
@@ -43,14 +42,14 @@ class BloodCrusade < DiceBot
 INFO_MESSAGE_TEXT
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
-    return '' unless(signOfInequality == ">=")
+  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
+    if dice_n <= 2
       return " ＞ ファンブル(【モラル】-3。追跡フェイズなら吸血シーンを追加。戦闘フェイズなら吸血鬼は追加行動を一回得る)"
-    elsif(dice_n >= 12)
+    elsif dice_n >= 12
       return " ＞ スペシャル(【モラル】+3。追跡フェイズならあなたに関係を持つPCの【モラル】+2。攻撃判定ならダメージ+1D6）"
-    elsif(total_n >= diff)
+    elsif total_n >= diff
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -107,7 +106,7 @@ INFO_MESSAGE_TEXT
       return getTableCommandResult(command, @@tables)
     end
 
-    return output if(output == '1')
+    return output if output == '1'
 
     output = "#{type}(#{total_n}) ＞ #{output}"
     return output
@@ -549,5 +548,4 @@ TABLE_TEXT_END
   }
 
   setPrefixes(['RT', 'ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT'] + @@tables.keys)
-
 end

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class ShoujoTenrankai < DiceBot
-  setPrefixes(["SPRING","SUMMER","AUTUMN","WINTER","MORNING","NOON","AFTERNOON","TWILIGHT","NIGHT","MIDNIGHT","NORBLE","MARCHEN","COLONIAL","SHELF","LITTLE","ELDER","ATERIEL","OPEN","HAUNTED","SIMPLE","LARGE","CORRIDOR","STAIRS","COSY","TERRACE","GARRET","KITCHEN","BATH","REST","CELLER","LUMBER","GARDEN","WASTED","RUIN","SHORE"])
+  setPrefixes(["SPRING", "SUMMER", "AUTUMN", "WINTER", "MORNING", "NOON", "AFTERNOON", "TWILIGHT", "NIGHT", "MIDNIGHT", "NORBLE", "MARCHEN", "COLONIAL", "SHELF", "LITTLE", "ELDER", "ATERIEL", "OPEN", "HAUNTED", "SIMPLE", "LARGE", "CORRIDOR", "STAIRS", "COSY", "TERRACE", "GARRET", "KITCHEN", "BATH", "REST", "CELLER", "LUMBER", "GARDEN", "WASTED", "RUIN", "SHORE"])
 
   def initialize
     super
@@ -69,6 +69,7 @@ MESSAGETEXT
   def getTensionText(number1, number2)
     diff = (number1 - number2).abs
     return "" if diff == 0
+
     return "（テンション＋#{diff}）"
   end
 
@@ -83,7 +84,7 @@ MESSAGETEXT
 
     text = getTableValue(table[index])
 
-    return nil  if( text.nil? )
+    return nil if text.nil?
 
     return text, number1, number2
   end

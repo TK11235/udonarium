@@ -27,15 +27,15 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    return string unless(string =~ /NW/i)
+    return string unless string =~ /NW/i
 
     string = string.gsub(/([\-\d]+)NW([\+\-\d]*)@([,\d]+)#([,\d]+)([\+\-\d]*)/i) do
       modify = $5.empty? ? "" : ",#{$5}"
       "2R6m[#{$1}#{$2}#{modify}]c[#{$3}]f[#{$4}]"
     end
 
-    string = string.gsub(/([\-\d]+)NW([\+\-\d]*)/i) {"2R6m[#{$1}#{$2}]"}
-    string = string.gsub(/NW([\+\-\d]*)/i) {"2R6m[0#{$1}]"}
+    string = string.gsub(/([\-\d]+)NW([\+\-\d]*)/i) { "2R6m[#{$1}#{$2}]" }
+    string = string.gsub(/NW([\+\-\d]*)/i) { "2R6m[0#{$1}]" }
   end
 
   def dice_command_xRn(string, nick_e)
@@ -44,9 +44,9 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
-    if(total_n >= diff)
+    if total_n >= diff
       return " ＞ 成功"
     end
 
@@ -56,13 +56,10 @@ INFO_MESSAGE_TEXT
   def checkRoll(string, nick_e)
     debug('checkRoll string', string)
 
-    output = "1"
+    output = '1'
 
-    num = "[,\\d\\+\\-]+"
-    #Tkfix 正規表現オプション
-    #return output unless(/(^|\s)S?(2R6m\[(#{num})\](c\[(#{num})\])?(f\[(#{num})\])?(([>=]+)(\d+))?)(\s|$)/i =~ string)
-    pattern = "(^|\\s)S?(2R6m\\[(#{num})\\](c\\[(#{num})\\])?(f\\[(#{num})\\])?(([>=]+)(\d+))?)(\s|$)"
-    return output unless(Regexp.new(pattern, Regexp::IGNORECASE) =~ string)
+    num = '[,\d\+\-]+'
+    return output unless /(^|\s)S?(2R6m\[(#{num})\](c\[(#{num})\])?(f\[(#{num})\])?(([>=]+)(\d+))?)(\s|$)/i =~ string
 
     debug('is valid string')
 
@@ -81,14 +78,14 @@ INFO_MESSAGE_TEXT
     signOfInequality = ""
     diff = 0
 
-    if(criticalText)
+    if criticalText
       crit = criticalValue
     end
 
-    if(fumbleText)
+    if fumbleText
       fumble = fumbleValue
     end
-    if(judgeText)
+    if judgeText
       diff = judgeValue
       debug('judgeOperator', judgeOperator)
       signOfInequality = marshalSignOfInequality(judgeOperator)
@@ -102,7 +99,7 @@ INFO_MESSAGE_TEXT
     total, out_str = nw_dice(base, modify, crit, fumble)
 
     output = "#{nick_e}: (#{string}) ＞ #{out_str}"
-    if(signOfInequality != "")  # 成功度判定処理
+    if signOfInequality != "" # 成功度判定処理
       output += check_suc(total, 0, signOfInequality, diff, 3, 6, 0, 0)
     end
 
@@ -111,7 +108,8 @@ INFO_MESSAGE_TEXT
 
   def getValueText(text)
     value = text.to_i
-    return "#{value}" if(value < 0)
+    return value.to_s if value < 0
+
     return "+#{value}"
   end
 
@@ -130,7 +128,7 @@ INFO_MESSAGE_TEXT
 
     total = 0
 
-    if( @fumbleValues.include?(dice_n) )
+    if @fumbleValues.include?(dice_n)
       fumble_text, total = getFumbleTextAndTotal(base, modify, dice_str)
       output = "#{fumble_text} ＞ ファンブル ＞ #{total}"
     else
@@ -153,21 +151,21 @@ INFO_MESSAGE_TEXT
   end
 
   def getValuesFromText(text, default)
-    if( text == "0" )
+    if  text == "0"
       return default
     end
 
-    return text.split(/,/).collect{|i|i.to_i}
+    return text.split(/,/).collect { |i| i.to_i }
   end
 
   def checkCritical(total, dice_str, dice_n)
     debug("addRollWhenCritical begin total, dice_str", total, dice_str)
-    output = "#{total}"
+    output = total.to_s
 
     criticalText = ""
     criticalValue = getCriticalValue(dice_n)
 
-    while(criticalValue)
+    while criticalValue
       total += 10
       output += "+10[#{dice_str}]"
 

@@ -1,28 +1,26 @@
 # -*- coding: utf-8 -*-
 
 class FutariSousa < DiceBot
-  
   def initialize
     super
     @sendMode = 2
     @d66Type = 2
-    
+
     @success_threshold = 4 # 成功の目標値（固定）
     @special_dice = 6 # スペシャルとなる出目（ダイスの種別によらず固定）
   end
-  
+
   setPrefixes(
               ['(\d+)?DT', '(\d+)?AS', 'SHRD', 'SHFM', 'SHBT', 'SHPI', 'SHEG', 'SHWP', 'SHDS', 'SHFT', 'SHIN', 'SHEM', 'EVS', 'EVW', 'EVN', 'EVC', 'EVV', 'OBT', 'ACT', 'EWT', 'WMT', 'BGDD', 'BGDG', 'BGDM', 'BGAJ', 'BGAP', 'BGAI', 'HT', 'BT', 'GRT', 'MIT', 'JBT66', 'JBT10', 'FST66', 'FST10', 'FLT66', 'FLT10', 'LDT66', 'LDT10', 'NCT66', 'NCT10',])
-  
-  
+
   def gameName
     'フタリソウサ'
   end
-  
+
   def gameType
     "FutariSousa"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定用コマンド
@@ -48,11 +46,11 @@ class FutariSousa < DiceBot
 呼び名表A・B　NCT66・NCT10
 MESSAGETEXT
   end
-  
+
   def changeText(string)
     string
   end
-  
+
   def rollDiceCommand(command)
     output = '1'
     type = ""
@@ -61,11 +59,11 @@ MESSAGETEXT
     case command
     when /^(\d+)?DT$/i
       type = command
-      count = ( $1 || 2 ).to_i
+      count = ($1 || 2).to_i
       output, diceText = get_dt(count)
     when /^(\d+)?AS$/i
       type = command
-      count = ( $1 || 2 ).to_i
+      count = ($1 || 2).to_i
       output, diceText = get_as(count)
     when 'SHRD'
       type = '異常な癖決定表'
@@ -189,57 +187,53 @@ MESSAGETEXT
     return "#{type}(#{diceText}) ＞ #{output}"
   end
 
-
-  #DT
+  # DT
   def get_dt(count)
-    
     diceList = []
-    count.times do 
-      dice, =  roll(1 , 10)
+    count.times do
+      dice, =  roll(1, 10)
       diceList << dice
     end
-    
+
     output = get_dt_result(diceList)
     diceText = diceList.join(",")
-    
+
     return output, diceText
   end
-  
+
   def get_dt_result(diceList)
     max = diceList.max
-    
+
     return "ファンブル（変調を受け、助手の心労が1点上昇）" if max <= 1
     return "スペシャル（助手の余裕を1点獲得）" if diceList.include?(@special_dice)
     return "成功" if max >= @success_threshold
+
     return "失敗"
   end
-  
-  
-  #AS
+
+  # AS
   def get_as(count)
-    
     diceList = []
-    count.times do 
-      dice, =  roll(1 , 6)
+    count.times do
+      dice, =  roll(1, 6)
       diceList << dice
     end
-    
+
     output = get_as_result(diceList)
     diceText = diceList.join(",")
-    
+
     return output, diceText
   end
 
   def get_as_result(diceList)
     max = diceList.max
-    
+
     return "ファンブル（変調を受け、心労が1点上昇）" if max <= 1
     return "スペシャル（余裕2点と、探偵から助手への感情を獲得）" if diceList.include?(@special_dice)
-    return "成功（余裕1点と、探偵から助手への感情を獲得）"  if max >= @success_threshold
+    return "成功（余裕1点と、探偵から助手への感情を獲得）" if max >= @success_threshold
+
     return "失敗"
   end
-  
-  
 
   def getTableResult(table, dice)
     number, text, command = table.assoc(dice)
@@ -247,11 +241,10 @@ MESSAGETEXT
     if command.respond_to?(:call)
       text += command.call(self)
     end
-    
+
     return number, text
   end
 
-  
   def getAddRollProc(command)
     # 引数なしのlambda
     # Ruby 1.8と1.9以降で引数の個数の解釈が異なるため || が必要
@@ -263,29 +256,29 @@ MESSAGETEXT
 
     text = rollDiceCommand(command)
     return " ＞ #{command} is NOT found." if text.nil?
+
     return " ＞ \n #{command} ＞ #{text}"
   end
 
-
-  #異常な癖決定表
+  # 異常な癖決定表
   def get_strange_habit_random
     table = [
-             [1,'「異常な癖・口から出る表」の表を使用する。'],
-             [2,'「異常な癖・強引な捜査表」の表を使用する。'],
-             [3,'「異常な癖・すっとぼけ表」の表を使用する。'],
-             [4,'「異常な癖・事件に夢中表」の表を使用する。'],
-             [5,'「異常な癖・パートナーと……表」の表を使用する。'],
-             [6,'「異常な癖・何かしている表」の表を使用する。'],
-             [7,'「異常な癖・急なひらめき表」の表を使用する。'],
-             [8,'「異常な癖・喜怒哀楽表」の表を使用する。'],
-             [9,'「異常な癖・奇想天外表」の表を使用する。'],
-             [10,'好きな「異常な癖」の表を使用する。'],
+             [1, '「異常な癖・口から出る表」の表を使用する。'],
+             [2, '「異常な癖・強引な捜査表」の表を使用する。'],
+             [3, '「異常な癖・すっとぼけ表」の表を使用する。'],
+             [4, '「異常な癖・事件に夢中表」の表を使用する。'],
+             [5, '「異常な癖・パートナーと……表」の表を使用する。'],
+             [6, '「異常な癖・何かしている表」の表を使用する。'],
+             [7, '「異常な癖・急なひらめき表」の表を使用する。'],
+             [8, '「異常な癖・喜怒哀楽表」の表を使用する。'],
+             [9, '「異常な癖・奇想天外表」の表を使用する。'],
+             [10, '好きな「異常な癖」の表を使用する。'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText, table)    
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
+
   def get_strange_habit_from_mouth
     table = [
              [1, '猛烈に感謝の言葉を述べる'],
@@ -299,11 +292,11 @@ MESSAGETEXT
              [9, '「だいたいわかりました」'],
              [10, '「黙っていろ」'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
+
   def get_strange_habit_bull_through
     table = [
              [1, '勝手に捜査対象の鞄や引き出しを開ける'],
@@ -317,11 +310,11 @@ MESSAGETEXT
              [9, '証拠品を勝手に持ち歩いている'],
              [10, '勝手に鑑識を始める'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
+
   def get_strange_habit_play_innocent
     table = [
              [1, '自分の身分を偽って関係者に話を聞く'],
@@ -335,11 +328,11 @@ MESSAGETEXT
              [9, '落し物をしたと主張して現場や証拠品を漁る'],
              [10, '関係者に誘導尋問を仕掛ける'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
+
   def get_strange_habit_engrossed
     table = [
              [1, 'パートナーの体を使って事件を再現しようとする'],
@@ -353,11 +346,11 @@ MESSAGETEXT
              [9, '事件現場に踏み込んで調べ物をする'],
              [10, '食事中でも、かまわずに事件の話をする'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
+
   def get_strange_habit_with_partner
     table = [
              [1, 'パートナーの信頼に甘える'],
@@ -371,8 +364,8 @@ MESSAGETEXT
              [9, 'パートナーに対して懇切丁寧に事件を説明する'],
              [10, 'パートナーの耳元でいきなり喋り始める'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
@@ -389,11 +382,11 @@ MESSAGETEXT
              [9, 'ずっと眠っていたが急に起きる'],
              [10, 'しばらく何もしていない'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
+
   def get_strange_habit_fantastic
     table = [
              [1, 'やめろと言われていることをする'],
@@ -407,8 +400,8 @@ MESSAGETEXT
              [9, '時計を見て、急に動き出した'],
              [10, '事件とは関係なさそうな新聞の記事を読んでいる'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
@@ -425,11 +418,11 @@ MESSAGETEXT
              [9, '資料を確認している最中にひらめく'],
              [10, '関係者と会話をしている最中にひらめく'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
+
   def get_strange_habit_emotion
     table = [
              [1, '急に泣く'],
@@ -443,12 +436,12 @@ MESSAGETEXT
              [9, '淡々と物事を進める'],
              [10, 'ロボットのように決められたことだけをやる'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
-  #イベント表
+  # イベント表
   def get_event_scene
     table = [
              "気になるもの（P.165）\n　事件の起きた現場は、まだ残されている。\n　ここで起きた“何か”は、霧の向こうに隠されていた。\n　その霧に手を突っ込む者たちがいる。",
@@ -496,7 +489,7 @@ MESSAGETEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   def get_event_vs
     table = [
              "容疑者の嘘（P.189）\n　人は、何か後ろめたいことがあったとき、嘘をつく。\n　この容疑者は嘘をついている。\n　なら、何を隠しているのだろうか？",
@@ -508,8 +501,8 @@ MESSAGETEXT
             ]
     return get_table_by_1d6(table)
   end
-  
-  #調査の障害表
+
+  # 調査の障害表
   def get_obstruction_table
     table = [
              [11, '探偵と助手が警察にマークされる'],
@@ -538,7 +531,7 @@ MESSAGETEXT
     return get_table_by_d66_swap(table)
   end
 
-  #変調表
+  # 変調表
   def get_abnormal_condition
     table = [
              'すれ違い',
@@ -551,7 +544,7 @@ MESSAGETEXT
     return get_table_by_1d6(table)
   end
 
-  #目撃者表
+  # 目撃者表
   def get_eyewitness_table
     table = [
              "遊び相手が欲しい若者。判定技能：≪流行≫",
@@ -564,7 +557,7 @@ MESSAGETEXT
     return get_table_by_1d6(table)
   end
 
-  #迷宮入り表  
+  # 迷宮入り表
   def get_wrapped_in_mystery_table
     table = [
              [1, '真犯人とは別の人間が犯人にされてしまい、実刑を食らってしまった。その証拠はないが、そう直感できる。'],
@@ -579,69 +572,69 @@ MESSAGETEXT
              [10, '探偵は直感によって、真犯人を突き止めた。だが、真犯人を捕まえるための証拠がない。犯人を告発することができず、歯噛みをした。'],
             ]
 
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
-  
-  #背景表
+
+  # 背景表
   def get_background_detective_destiny
     table = [
-             [1,'『名探偵の先祖（真）』自分の先祖に著名な探偵がいる。その名を出せば、誰もが知るような大人物だ。自分はその血を濃く引いているようで、探偵としての才能を存分に発揮している。'],
-             [2,'『名探偵の先祖（想）』自分の先祖は著名な探偵だ。しかし、その活躍は「フィクション」として語られている。その人物は実在しないと言われているが……それは真実ではない。自分がその血を引いているのだから。'],
-             [3,'『親が世界的探偵』自分の親は、世界的に名の知れた名探偵だ。数々の難事件も解決している。自分にもその血が流れていて、事件に対する鋭い洞察力を受け継ぐことになった。'],
-             [4,'『街の名探偵』自分の親は、街ではよく名の知れた名探偵だ。街の人々から愛され、頼りにされていた。自分もその血を引いているのか、探偵として活動する力が備わっている。'],
-             [5,'『推理作家』自分を育てた人物は、著名な推理作家であった。その思考能力は自分にも継がれており、トリックを暴く力は探偵並みにあると言っていいだろう。'],
-             [6,'『育ての親』自分を育ててくれた人物は、事件を解決に導いたことのある人物である。その人物の教えを受けて、自分は探偵の才を開花させた。'],
-             [7,'『堕ちた名探偵』かつて、自分の親はあらゆる事件を解決し、名探偵として有名だった。しかし、今では優れた思考能力を悪用し、人々を駒のように扱っている。能力を引き継いだ自分もいつかはそうなるのだろうか？'],
-             [8,'『大悪人の血』世間を騒がせた大悪党や大怪盗。その血が自分にも流れている。故に悪人の思考をトレースすることができ、結果として名探偵のようにふるまえる。'],
-             [9,'『隠された血筋』どういう訳か、自分のルーツは抹消されている。自分が何者なのかすら、わからない。ただ、自分には事件を解決できる力があって、それがルーツに関係していると直感できる。'],
-             [10,'『クローン』自分は有名な名探偵のDNAから生まれた存在だ。そのためか、名探偵の力は生まれながらに備わっていた。'],
+             [1, '『名探偵の先祖（真）』自分の先祖に著名な探偵がいる。その名を出せば、誰もが知るような大人物だ。自分はその血を濃く引いているようで、探偵としての才能を存分に発揮している。'],
+             [2, '『名探偵の先祖（想）』自分の先祖は著名な探偵だ。しかし、その活躍は「フィクション」として語られている。その人物は実在しないと言われているが……それは真実ではない。自分がその血を引いているのだから。'],
+             [3, '『親が世界的探偵』自分の親は、世界的に名の知れた名探偵だ。数々の難事件も解決している。自分にもその血が流れていて、事件に対する鋭い洞察力を受け継ぐことになった。'],
+             [4, '『街の名探偵』自分の親は、街ではよく名の知れた名探偵だ。街の人々から愛され、頼りにされていた。自分もその血を引いているのか、探偵として活動する力が備わっている。'],
+             [5, '『推理作家』自分を育てた人物は、著名な推理作家であった。その思考能力は自分にも継がれており、トリックを暴く力は探偵並みにあると言っていいだろう。'],
+             [6, '『育ての親』自分を育ててくれた人物は、事件を解決に導いたことのある人物である。その人物の教えを受けて、自分は探偵の才を開花させた。'],
+             [7, '『堕ちた名探偵』かつて、自分の親はあらゆる事件を解決し、名探偵として有名だった。しかし、今では優れた思考能力を悪用し、人々を駒のように扱っている。能力を引き継いだ自分もいつかはそうなるのだろうか？'],
+             [8, '『大悪人の血』世間を騒がせた大悪党や大怪盗。その血が自分にも流れている。故に悪人の思考をトレースすることができ、結果として名探偵のようにふるまえる。'],
+             [9, '『隠された血筋』どういう訳か、自分のルーツは抹消されている。自分が何者なのかすら、わからない。ただ、自分には事件を解決できる力があって、それがルーツに関係していると直感できる。'],
+             [10, '『クローン』自分は有名な名探偵のDNAから生まれた存在だ。そのためか、名探偵の力は生まれながらに備わっていた。'],
             ]
-    diceText, = roll(1 , 10)
+    diceText, = roll(1, 10)
     output = get_table_by_number(diceText, table)
-    
+
     return output, diceText
   end
-  
+
   def get_background_detective_genius
     table = [
-             [1,'『超エリート』自分はエリートとして活躍すべく、あらゆる分野の訓練を行った。そして、望まれるままに優秀な人間となった。'],
-             [2,'『瞬間記憶能力』見たものはすべて頭の中にインプットされる。そして、決して忘れない。自分はそういう能力を備えている。'],
-             [3,'『知識の泉』頭の中にある引き出しの中には、あらゆる知識が収められている。つまり、知らないことはないということだ。'],
-             [4,'『スパルタ教育』厳しい教育を受け、その結果知識を得ることができた。その代わり、少し変わった思考方法になってしまったが……。大したことではないだろう。'],
-             [5,'『既に名探偵』既に幾多の事件を解決している天才である。数々の難事件も、自分の手腕で解決してきた。その傍らには、パートナーの姿もあった。'],
-             [6,'『憧れの背中』自分には憧れている相手がいた。その存在に追いつくために、努力をし、今の能力を手に入れた。その人物は、今は……。'],
-             [7,'『ライバル』自分と競い合っていたライバルがいる。能力としては、ほぼ互角だった。競い合いの中で、自分の能力は磨かれていったのである。'],
-             [8,'『かつての名探偵』かつては、あらゆる事件を解決に導いた天才であった。しかし、今は事件解決に消極的である。事件を遠ざけたいと思う何かがあったのだ。'],
-             [9,'『孤立した名探偵』自分は天才的な能力を持って数多の事件を解決した名探偵である。それ故に疎まれ、恐れられ、世間や組織の中で孤立をしてしまっている。'],
-             [10,'『人工名探偵』自分は何者かによって軟禁されて探偵知識を詰め込まれた、「人口名探偵」だ。名探偵になるべくして育てられた自分は、その能力を期待通りに発揮することができる。'],
+             [1, '『超エリート』自分はエリートとして活躍すべく、あらゆる分野の訓練を行った。そして、望まれるままに優秀な人間となった。'],
+             [2, '『瞬間記憶能力』見たものはすべて頭の中にインプットされる。そして、決して忘れない。自分はそういう能力を備えている。'],
+             [3, '『知識の泉』頭の中にある引き出しの中には、あらゆる知識が収められている。つまり、知らないことはないということだ。'],
+             [4, '『スパルタ教育』厳しい教育を受け、その結果知識を得ることができた。その代わり、少し変わった思考方法になってしまったが……。大したことではないだろう。'],
+             [5, '『既に名探偵』既に幾多の事件を解決している天才である。数々の難事件も、自分の手腕で解決してきた。その傍らには、パートナーの姿もあった。'],
+             [6, '『憧れの背中』自分には憧れている相手がいた。その存在に追いつくために、努力をし、今の能力を手に入れた。その人物は、今は……。'],
+             [7, '『ライバル』自分と競い合っていたライバルがいる。能力としては、ほぼ互角だった。競い合いの中で、自分の能力は磨かれていったのである。'],
+             [8, '『かつての名探偵』かつては、あらゆる事件を解決に導いた天才であった。しかし、今は事件解決に消極的である。事件を遠ざけたいと思う何かがあったのだ。'],
+             [9, '『孤立した名探偵』自分は天才的な能力を持って数多の事件を解決した名探偵である。それ故に疎まれ、恐れられ、世間や組織の中で孤立をしてしまっている。'],
+             [10, '『人工名探偵』自分は何者かによって軟禁されて探偵知識を詰め込まれた、「人口名探偵」だ。名探偵になるべくして育てられた自分は、その能力を期待通りに発揮することができる。'],
             ]
-    diceText, = roll(1 , 10)
+    diceText, = roll(1, 10)
     output = get_table_by_number(diceText, table)
-    
+
     return output, diceText
   end
 
   def get_background_detective_mania
     table = [
-             [1,'『サスペンスマニア』自分はサスペンスもののフィクションや、実在する事件に対して非常に強い関心を寄せている。ため込んだトリックの知識を活かすことができる機会を窺っている。'],
-             [2,'『死体マニア』自分は死体に対して強い関心を寄せている。死体の状態や詳細を知ることによって、強い興奮を覚えるという性質なのだ。困ったものだ。'],
-             [3,'『科学マニア』科学によって解明できないことはない。自分はそう考えているし、そのために能力を磨いてきた。人の起こす事件であれ、科学はすべてを見通すことができるだろう。'],
-             [4,'『いわゆるオタク』ゲームや漫画などで得た知識というのは、案外バカにならないものだ。自分はゲームを通じて様々な知識をため込んでおり、それを応用することであらゆる事件を解決する。'],
-             [5,'『人間マニア』自分は人間が好きだ。それ故に、観察もしている。行動に当人もわからない理由があることも知っている。事件も、どうしてそんなことを起こしたのかに興味がある。'],
-             [6,'『書物マニア』書物には、あらゆることが書かれている。少なくとも自分はそう考えているし、その証拠に本の知識を応用することで、難事件も解決できる。紙上の名探偵のように。'],
-             [7,'『オカルトマニア』オカルトや超常現象を信じている。それ故に、インチキを見破る術も知っているし、許せないと感じている。それが、どういうわけか難事件の解決にも繋がる。不思議だ。'],
-             [8,'『探偵マニア』古今東西、様々な探偵がいる。それについて調べていくうちに、自分もまた探偵としての能力が備わった。'],
-             [9,'『暴走する知識欲』自分は一つのことのマニアであるが、それから派生した物の知識もよく知っている。自分の知識欲は、それからさらに派生したものまで及ぶ。'],
-             [10,'『正義のマニア』自分が信奉している何か（書物や科学など）が、事件に関わっているとなると、居ても立っても居られない。マニアとして、その謎を解明しなければならない。'],
+             [1, '『サスペンスマニア』自分はサスペンスもののフィクションや、実在する事件に対して非常に強い関心を寄せている。ため込んだトリックの知識を活かすことができる機会を窺っている。'],
+             [2, '『死体マニア』自分は死体に対して強い関心を寄せている。死体の状態や詳細を知ることによって、強い興奮を覚えるという性質なのだ。困ったものだ。'],
+             [3, '『科学マニア』科学によって解明できないことはない。自分はそう考えているし、そのために能力を磨いてきた。人の起こす事件であれ、科学はすべてを見通すことができるだろう。'],
+             [4, '『いわゆるオタク』ゲームや漫画などで得た知識というのは、案外バカにならないものだ。自分はゲームを通じて様々な知識をため込んでおり、それを応用することであらゆる事件を解決する。'],
+             [5, '『人間マニア』自分は人間が好きだ。それ故に、観察もしている。行動に当人もわからない理由があることも知っている。事件も、どうしてそんなことを起こしたのかに興味がある。'],
+             [6, '『書物マニア』書物には、あらゆることが書かれている。少なくとも自分はそう考えているし、その証拠に本の知識を応用することで、難事件も解決できる。紙上の名探偵のように。'],
+             [7, '『オカルトマニア』オカルトや超常現象を信じている。それ故に、インチキを見破る術も知っているし、許せないと感じている。それが、どういうわけか難事件の解決にも繋がる。不思議だ。'],
+             [8, '『探偵マニア』古今東西、様々な探偵がいる。それについて調べていくうちに、自分もまた探偵としての能力が備わった。'],
+             [9, '『暴走する知識欲』自分は一つのことのマニアであるが、それから派生した物の知識もよく知っている。自分の知識欲は、それからさらに派生したものまで及ぶ。'],
+             [10, '『正義のマニア』自分が信奉している何か（書物や科学など）が、事件に関わっているとなると、居ても立っても居られない。マニアとして、その謎を解明しなければならない。'],
             ]
-    diceText, = roll(1 , 10)
+    diceText, = roll(1, 10)
     output = get_table_by_number(diceText, table)
-    
+
     return output, diceText
   end
-  
+
   def get_background_assistant_justice
     table = [
              '『お人よし』自分は他者からよくお人よしと言われている。そのため、人に頼まれて事件に絡むことがよくあった。だから、人の悩みを解決できる能力があるパートナーと一緒にいる。',
@@ -653,7 +646,7 @@ MESSAGETEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   def get_background_assistant_passion
     table = [
              '『能力にほれ込んだ』自分はパートナーの事件に関する能力にほれ込んだ。その鋭い洞察力や、推理力、知識の深さ。すべてが自分を魅了している。',
@@ -665,7 +658,7 @@ MESSAGETEXT
             ]
     return get_table_by_1d6(table)
   end
-  
+
   def get_background_assistant_involved
     table = [
              '『一方的に気に入られた』パートナーから、一方的に気に入られている。どうしてそうなったのかはわからないが、そういうものらしい。一緒にいるのは、不本意なのだけど……。',
@@ -678,7 +671,7 @@ MESSAGETEXT
     return get_table_by_1d6(table)
   end
 
-  #身長表
+  # 身長表
   def get_height_table
     table = [
              '非常に高い',
@@ -692,7 +685,7 @@ MESSAGETEXT
     return get_table_by_1d6(table)
   end
 
-  #たまり場表
+  # たまり場表
   def get_base_table
     table = [
              [1, 'PCが働いている職場'],
@@ -706,12 +699,12 @@ MESSAGETEXT
              [9, 'いつもパートナーと会う交差点'],
              [10, '二人だけが知っている秘密の場所'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
-  #関係表
+  # 関係表
   def get_guest_relation_table
     table = [
              [11, '昔のバディ'],
@@ -738,8 +731,8 @@ MESSAGETEXT
             ]
     return get_table_by_d66_swap(table)
   end
-  
-  #思い出の品決定表
+
+  # 思い出の品決定表
   def get_memorial_item_table
     table = [
              [11, 'たまり場にずっと置いてある宅配ピザの箱'],
@@ -767,7 +760,7 @@ MESSAGETEXT
     return get_table_by_d66_swap(table)
   end
 
-  #職業表A
+  # 職業表A
   def get_job_table_66
     table = [
              [11, 'パートナーと同じ'],
@@ -796,7 +789,7 @@ MESSAGETEXT
     return get_table_by_d66_swap(table)
   end
 
-  #職業表B
+  # 職業表B
   def get_job_table_10
     table = [
              [1, 'ディレッタント'],
@@ -811,12 +804,12 @@ MESSAGETEXT
              [10, '学生'],
             ]
 
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
-  #ファッション特徴表A
+  # ファッション特徴表A
   def get_fashion_table_66
     table = [
              [11, '高級志向'],
@@ -844,7 +837,7 @@ MESSAGETEXT
     return get_table_by_d66_swap(table)
   end
 
-  #ファッション特徴表B
+  # ファッション特徴表B
   def get_fashion_table_10
     table = [
              [1, 'スーツ'],
@@ -859,12 +852,12 @@ MESSAGETEXT
              [10, 'ファッションにこだわりがない'],
             ]
 
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
-  #好きなもの／嫌いなもの表A
+  # 好きなもの／嫌いなもの表A
   def get_like_dislike_table_66
     table = [
              [11, '死体'],
@@ -892,8 +885,8 @@ MESSAGETEXT
 
     return get_table_by_d66_swap(table)
   end
-  
-  #好きなもの／嫌いなもの表B
+
+  # 好きなもの／嫌いなもの表B
   def get_like_dislike_table_10
     table = [
              [1, '犯罪'],
@@ -908,12 +901,12 @@ MESSAGETEXT
              [10, '知らないこと'],
             ]
 
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
-  #感情表A
+  # 感情表A
   def get_feeling_table_66
     table = [
              [11, '顔'],
@@ -942,7 +935,7 @@ MESSAGETEXT
     return get_table_by_d66_swap(table)
   end
 
-  #感情表B
+  # 感情表B
   def get_feeling_table_10
     table = [
              [1, '人間性'],
@@ -956,12 +949,12 @@ MESSAGETEXT
              [9, '自分への態度'],
              [10, '自分との関係'],
             ]
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
     return output, diceText
   end
 
-  #呼び名表A
+  # 呼び名表A
   def get_name_to_call_table_66
     table = [
              [11, 'ダーリン、ハニー'],
@@ -989,8 +982,8 @@ MESSAGETEXT
 
     return get_table_by_d66_swap(table)
   end
-  
-  #呼び名表B
+
+  # 呼び名表B
   def get_name_to_call_table_10
     table = [
              [1, '呼び捨て'],
@@ -1005,10 +998,9 @@ MESSAGETEXT
              [10, 'あだ名'],
             ]
 
-    diceText, = roll(1 , 10)
-    output = get_table_by_number(diceText , table)
+    diceText, = roll(1, 10)
+    output = get_table_by_number(diceText, table)
 
     return output, diceText
   end
-  
 end

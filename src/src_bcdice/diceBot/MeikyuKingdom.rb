@@ -25,6 +25,7 @@ class MeikyuKingdom < DiceBot
     @sortType = 1
     @d66Type = 2
   end
+
   def gameName
     '迷宮キングダム'
   end
@@ -34,7 +35,7 @@ class MeikyuKingdom < DiceBot
   end
 
   def getHelpMessage
-  return <<INFO_MESSAGE_TEXT
+    return <<INFO_MESSAGE_TEXT
 ・判定　(nMK+m)
 　n個のD6を振って大きい物二つだけみて達成値を算出します。修正mも可能です。
 　絶対成功と絶対失敗も自動判定します。
@@ -66,8 +67,8 @@ INFO_MESSAGE_TEXT
   def changeText(string)
     debug("changeText before string", string)
 
-    string = string.gsub(/(\d+)MK6/i) {"#{$1}R6"}
-    string = string.gsub(/(\d+)MK/i) {"#{$1}R6"}
+    string = string.gsub(/(\d+)MK6/i) { "#{$1}R6" }
+    string = string.gsub(/(\d+)MK/i) { "#{$1}R6" }
 
     debug("changeText after string", string)
 
@@ -78,7 +79,7 @@ INFO_MESSAGE_TEXT
     return mayokin_check(string, nick_e)
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
+  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
     result = get2D6Result(total_n, dice_n, signOfInequality, diff)
     result += getKiryokuResult(total_n, dice_n, signOfInequality, diff)
 
@@ -86,11 +87,11 @@ INFO_MESSAGE_TEXT
   end
 
   def get2D6Result(total_n, dice_n, signOfInequality, diff)
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
-    if(dice_n <= 2)
+    if dice_n <= 2
       return " ＞ 絶対失敗"
-    elsif(dice_n >= 12)
+    elsif dice_n >= 12
       return " ＞ 絶対成功"
     end
 
@@ -98,7 +99,7 @@ INFO_MESSAGE_TEXT
   end
 
   def get2D6ResultOnlySuccess(total_n, diff)
-    if(total_n >= diff)
+    if total_n >= diff
       return " ＞ 成功"
     end
 
@@ -111,18 +112,18 @@ INFO_MESSAGE_TEXT
     diceList = getDiceList
     debug("getKiryokuResult diceList", diceList)
 
-    dice6List = diceList.find_all{|i| i == 6}
+    dice6List = diceList.find_all { |i| i == 6 }
     debug("dice6List", dice6List)
 
-    if( dice6List.length == 0 )
+    if dice6List.length == 0
       return output_msg
     end
 
-    if( dice6List.length >= 2 )
+    if dice6List.length >= 2
       return " ＆ 《気力》#{dice6List.length}点獲得"
     end
 
-    diceNone6List = diceList.find_all{|i| i != 6}
+    diceNone6List = diceList.find_all { |i| i != 6 }
     diceNone6List.sort!
     debug("diceNone6List", diceNone6List)
 
@@ -138,7 +139,7 @@ INFO_MESSAGE_TEXT
     none6Dice_n = maxDice1 + maxDice2
     debug("none6Dice_n", none6Dice_n)
     debug("diff", diff)
-    none6DiceReuslt =  get2D6ResultOnlySuccess(none6Total_n, diff)
+    none6DiceReuslt = get2D6ResultOnlySuccess(none6Total_n, diff)
 
     return " (もしくは) #{none6Total_n}#{none6DiceReuslt} ＆ 《気力》#{dice6List.length}点獲得"
   end
@@ -149,7 +150,7 @@ INFO_MESSAGE_TEXT
 
     output = "1"
 
-    return output unless(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i =~ string)
+    return output unless /(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i =~ string
 
     string = $2
     diceCount = $3.to_i
@@ -157,7 +158,6 @@ INFO_MESSAGE_TEXT
     signOfInequality = $6
     signOfInequality ||= ""
 
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
     diff = $7.to_i
     diff ||= 0
 
@@ -165,11 +165,8 @@ INFO_MESSAGE_TEXT
     debug("diceCount", diceCount)
     debug("modifyText", modifyText)
 
-    #diff = $7.to_i
-    #diff ||= 0
-
     bonus = 0
-    if( modifyText )
+    if modifyText
       bonus = parren_killer("(0#{modifyText})").to_i
     end
     debug("bonus", bonus)
@@ -179,13 +176,13 @@ INFO_MESSAGE_TEXT
     total_n = 0
 
     _, dice_str, = roll(diceCount, 6, (sortType & 1))
-    dice_num = dice_str.split(/,/).collect{|i|i.to_i}
+    dice_num = dice_str.split(/,/).collect { |i| i.to_i }
     debug("diceCount, dice_num", diceCount, dice_num)
 
     dice1 = 0
     dice2 = 0
-    dice1 = dice_num[diceCount - 2] if( diceCount >= 2)
-    dice2 = dice_num[diceCount - 1] if( diceCount >= 1)
+    dice1 = dice_num[diceCount - 2] if  diceCount >= 2
+    dice2 = dice_num[diceCount - 1] if  diceCount >= 1
     dice_now = dice1 + dice2
     debug("dice1, dice2, dice_now", dice1, dice2, dice_now)
 
@@ -194,14 +191,14 @@ INFO_MESSAGE_TEXT
     setDiceText(dice_str)
 
     output = "#{dice_now}#{dice_str}"
-    if(bonus > 0)
+    if bonus > 0
       output += "+#{bonus}"
-    elsif(bonus < 0)
-      output += "#{bonus}"
+    elsif bonus < 0
+      output += bonus.to_s
     end
 
-    if(sendMode > 0)
-      if(output =~ /[^\d\[\]]+/)
+    if sendMode > 0
+      if output =~ /[^\d\[\]]+/
         output = "#{nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
       else
         output = "#{nick_e}: (#{string}) ＞ #{total_n}"
@@ -210,7 +207,7 @@ INFO_MESSAGE_TEXT
       output = "#{nick_e}: (#{string}) ＞ #{total_n}"
     end
 
-    if(signOfInequality != "")  # 成功度判定処理
+    if signOfInequality != "" # 成功度判定処理
       output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
     end
 
@@ -468,22 +465,22 @@ INFO_MESSAGE_TEXT
       output, total_n = getLoversBreakTable()
     end
 
-    if(output != '1')
+    if output != '1'
       output = "#{type}表(#{total_n}) ＞ #{output}"
     end
-
   end
 
   def getCount(countText)
-    if( countText.empty? )
+    if countText.empty?
       return 1
     end
+
     return countText.to_i
   end
 
   # 生活散策表(2d6)
   def mk_life_research_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "ハグルマ資本主義神聖共和国から使者が現れる。受け入れる場合［生活レベル／９］に成功すると(1d6)ＭＧ獲得。この判定の難易度は、ハグルマとの関係が険悪なら＋２、敵対なら＋４される。使者を受け入れない場合、ハグルマとの関係が１段階悪化する。すでに関係が敵対なら、領土１つを失う",
                         "王国の活気にやる気がでる。《気力》+1、もう一度王国フェイズに行動できる",
                         "この国の評判を聞いて、旅人がやってくる。このゲームのシナリオの目的を果たしたら、終了フェイズに《民》＋(2d6)人",
@@ -500,7 +497,7 @@ INFO_MESSAGE_TEXT
 
   # 治安散策表(2d6)
   def mk_order_research_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "メトロ汗国から使者が現れる。受け入れる場合、［治安レベル／９］に成功すると《民》＋(2d6)人。失敗すると《民》－(2d6)人。この判定の難易度は、汗国との関係が険悪なら＋２、敵対なら＋４される。使者を受け入れない場合、汗国との関係が１段階悪化する。すでに関係が敵対なら、領土１つを失う",
                         "「つまらないものですが、これを冒険に役立ててください……」相場表でランダムに素材１種を選び、それを(1d6)個獲得する",
                         "民たちが自分らで、王国を守る相談をしている。この気０無のシナリオの目的を果たしたら、好きなレベルのある施設１軒を選び、その隣の部屋に同じ施設１軒を建設する",
@@ -517,7 +514,7 @@ INFO_MESSAGE_TEXT
 
   # 文化散策表(2d6)
   def mk_calture_research_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "千年王朝から使者が現れる。受け入れる場合、［文化レベル／９］に成功すると《民の声》＋(1d6)、失敗するとすると《民の声》－(1d6)。この判定の難易度は、千年王朝との関係が険悪なら＋２、敵対なら＋４される。使者を受け入れない場合、千年王朝との関係が１段階悪化する。すでに関係が敵対なら、領土１つを失う",
                         "民が祭りの準備を進めている。シナリオの目的を果たしていれば、収支報告の時に［収支報告時の《民の声》－ゲーム開始時の《民の声》］ＭＧを獲得できる。ただし、数値がマイナスになった場合は、その分維持費が上昇する",
                         "都会に出て行った幼馴染から手紙がくる。王国の様子を知りたがっているようだ。シナリオの目的を果たしたら、終了フェイズにランダムなジョブの逸材１人を獲得する",
@@ -529,12 +526,12 @@ INFO_MESSAGE_TEXT
                         "王国内を訪れる旅人たちを見かける。［文化レベル／９］の判定に成功すると、［憩いの施設の数×１］ＭＧを獲得する",
                         "「ご無事をお祈りしております……」　［文化レベル／１１］の判定に成功すると、価格が自国の［生活レベル］以下の回復アイテム１個を１Lvで獲得できる",
                         "王国の中の民たちの表情に制裁がない。暗い迷宮生活に倦んでいるようだ。［文化レベル／１１］の判定に成功すると民を盛り上げる祭りを開き、《民の声》＋(1d6)。失敗すると維持費＋(1d6)",
-                      ] )
+                      ])
   end
 
   # 軍事散策表(2d6)
   def mk_army_research_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "ダイナマイト帝国から使者が現れる。受け入れる場合、［軍事レベル／９］に成功すると(1d6)ＭＧ獲得、失敗すると維持費＋(1d6)ＭＧ。この判定の難易度は、ダイナマイトとの関係が険悪なら＋２、敵対なら＋４される。使者を受け入れない場合、ダイナマイトとの関係が１段階悪化する。すでに関係が敵対なら、領土１つを失う",
                         "長老から迷宮の昔話を聞く。このゲーム中、自分のレベル以下のモンスターを倒すと、そのモンスターをモンスターの《民》にすることができる。この効果は、そのゲーム中に１度だけ使用できる",
                         "冒険に向かう君に期待の声がかかる。民たちの期待に、気持ちが引き締まる。このゲーム中、《器》が１点上昇する",
@@ -546,12 +543,12 @@ INFO_MESSAGE_TEXT
                         "隣国からの貢物が届く。［軍事レベル／１１］の判定に成功すると、収支報告の時に価格の（）内の数字が［領土の数×１］以下のレアアイテム１個を獲得する",
                         "「こんなものを用意してみました」　［軍事レベル／１１］の判定に成功すると、価格が自国の［生活レベル］以下の武具アイテム１個を１Lvで獲得できる",
                         "あなたが他の出発を察知して、何者かが国を襲う！［軍事レベル／１１］の判定に成功するとあなたが他の武勇に歓声が上がり宮廷全員の気力＋(1d6)。失敗すると、宮廷全員の《ＨＰ》と《配下》が(1d6)減少する",
-                      ] )
+                      ])
   end
 
   # 才覚休憩表（2d6）
   def mk_talent_break_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "民との会話の中、経費節約のアイデアが沸く。［才覚/11］の判定に成功すると、維持費が（1d6）MG減少する",
                         "嫌いなものが出てくる夢を見て心寂しくなったところに仲間が来てくれる。好きな宮廷内のキャラクター１人への《好意》＋１",
                         "好きなものの夢を見る。シチュエーションを表現し、幸せそうだと感じるプレイヤーが居たら《気力》＋２",
@@ -568,7 +565,7 @@ INFO_MESSAGE_TEXT
 
   # 魅力休憩表（2d6）
   def mk_charm_break_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "妖精のワイン倉を発見し、酒盛りが始まる。宮廷全員の《気力》＋１。［魅力/9］の判定に失敗すると、あなたは脱ぎ出す。（1d6）を振り、奇数なら宮廷全員のあなたに対する《好意》＋１、偶数なら《敵意》＋１",
                         "休憩中、意外な寝言を言ってしまう。自分を除く宮廷全員は自分に対する《好意》と《敵意》を入れ替えることが出来る。また、その属性を自由に変更することができる",
                         "床の冷たさから、ぬくもりを求めて身体を寄せ合う。あなたに《好意》を持っているキャラの数だけ《気力》と《HP》が回復する",
@@ -580,12 +577,12 @@ INFO_MESSAGE_TEXT
                         "着替えを覗かれる。宮廷内からランダムに１体選び、（1d6）を振る。奇数なら大声をだしてしまい宮廷全員のそのキャラに対する《敵意》＋１、偶数ならそのキャラとあなたの互いの《好意》＋１",
                         "食べ物の匂いにつられたモンスターと遭遇する。ランダムエンカウント表でモンスターを決定する。［魅力/モンスターの中で最も高いレベル+3］の判定に成功した場合、そのモンスターたちと取引できる。失敗した場合戦闘に突入する",
                         "ふとした拍子に唇が触れあう。好きなキャラ１体を選ぶ。そのキャラの自分以外への《好意》の合計を全て自分に対する《好意》に加える。その後、自分以外への《好意》を０にする",
-                      ] )
+                      ])
   end
 
   # 探索休憩表（2d6）
   def mk_search_break_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "一休みの前に道具の手入れ。ランダムに自分のアイテムスロット１つを選ぶ。そのスロットにレベルがあるアイテムがあった場合、そのアイテムのレベルが１上がる",
                         "寝床を探していたらアルコープの奥の宝箱を見つける。［探索/11］の判定に成功したら好きな素材１種類を（1d6）個手に入れる",
                         "一眠りしたら夢の中で…。［探索/11］の判定に成功したら、好きな部屋のモンスターの名前とトラップの数をGMから教えてもらえる",
@@ -597,12 +594,12 @@ INFO_MESSAGE_TEXT
                         "星の灯りで地図を眺める…部屋の構造からして、この辺りに何かありそうだ。［探索/10］の判定に成功すると、この部屋に仕掛けられたイベント型のトラップを全て発見する",
                         "休んでいる間にトイレにいきたくなった。［探索/11］の判定に成功すると、迷宮のほころびを見つける。このゲームの間、この部屋から迷宮の外へ帰還することができる",
                         "こ、これは秘密の扉？［探索/11］の判定に成功すると、この部屋に隣接する好きな部屋に通路を延ばすことができる",
-                      ] )
+                      ])
   end
 
   # 武勇休憩表（2d6）
   def mk_valor_break_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "時が満ちるにつれ、闘志が高まる。現在の経過ターン数と等しい数だけ《気力》が回復する",
                         "もっと敵と戦いたい、血に飢えた自分を発見する。［武勇/11］の判定に成功すると《気力》が１点、《ＨＰ》が（1d6）点回復する",
                         "部屋の片隅にうち捨てられた亡骸を発見する。このマップの支配者の名前が分かっていれば、宮廷全員は支配者への《敵意》を１点上昇させることができる",
@@ -614,12 +611,12 @@ INFO_MESSAGE_TEXT
                         "休むべきときにしっかり休む。《ＨＰ》を（2d6）点回復することができる",
                         "怪物のいた痕跡を発見する。［武勇/11］の判定を行い、成功するとＧＭからこのゲームで遭遇する予定の、まだ種類の分かっていないモンスターを１種類教えてもらえる",
                         "殺気に反応し飛び起きた！ランダムエンカウント表でモンスターを決定し戦闘を行う。そのモンスターを倒した後、ランダムにレアアイテム１個を手に入れる",
-                      ] )
+                      ])
   end
 
   # お祭り休憩表(2D6)
   def mk_festival_break_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         'お祭りに向かう旅人たちとすれ違う。1D6MGが手に入る【宿屋】か【夜店】があれば、さらにもう1D6MGが手に入る',
                         'なんでこんなときに、ダンジョンに行かなきゃいけないんだ！　「あ、電報でーす」このマップの支配者から、お祭りによせて祝辞の電報がやってくる。そうか、おまえのせいかッ!!　マップの支配者の名前が分かり、そのキャラクターへの《敵意》が1D6点上がる',
                         '「そういえば、国のみんなが何かいってたなぁ……」回想シーン。好きな散策表を1つ選び、2D6を振る。表に照らし合わせた結果を処理する',
@@ -636,7 +633,7 @@ INFO_MESSAGE_TEXT
 
   # お祭り表(2D6)
   def mk_festival_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         '祈願祭。国や重要人物の無病息災を祈ったり、戦いの勝利などを祈る祭り。災害や飢饉、流行り病が起こった付近で行われる。シナリオの目的をクリアしていれば、《民》が1D6人上昇する',
                         '血祭り。戦いに向け、士気を向上させる祭り。戦争だけでなく、迷宮探索に向けて行われることも多い。生贄の血を軍神に捧げたりする。このゲームの間、戦闘に勝利すると《民の声》を1点獲得し、逃走すると《民の声》が1点失われる',
                         '記念日。建国記念日や領土獲得などの記念日のお祝い。簡単につくることができるが、気がつくと記念日だらけで、何の記念だったかを忘れてしまう。ほどほどに。このゲームの間、行為判定の目で3でも絶対失敗、11でも絶対成功になる（「呪い」のバッドステータスを受けたものは4でも絶対失敗、【必殺】を使った命中判定なら10でも絶対成功）',
@@ -653,7 +650,7 @@ INFO_MESSAGE_TEXT
 
   # 王国災厄表（2d6）
   def mk_kingdom_disaster_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "王国の悪い噂が蔓延する。既知の土地にある他国との関係が全て１段階悪化する",
                         "自国のモンスターが凶暴化する。自国のモンスターの《民》からランダムに１種類選び、そのレベルと等しいだけ《民》が減少する。その後、その種類のモンスターの《民》は全ていなくなる",
                         "疫病が大流行する。《民》－（2d6）",
@@ -670,7 +667,7 @@ INFO_MESSAGE_TEXT
 
   # 才覚ハプニング表（2d6）
   def mk_talent_happening_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "自分に王国を導くことなどできるのだろうか…。【お酒】を消費することができなければ、このゲーム中［才覚］－１",
                         "国王の威信が問われる。（2d6）を振り、その値が［《民の声》＋宮廷全員の国王に対する《好意》の合計］以上の場合、《民の声》－（1d6）し、さらに才覚ハプニング表を振る",
                         "思考に霧の帳が降りる。「散漫」のバッドステータスを受ける",
@@ -687,7 +684,7 @@ INFO_MESSAGE_TEXT
 
   # 魅力ハプニング表（2d6）
   def mk_charm_happening_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "民同士の諍いに心を痛め、頭髪にもダメージが！【お酒】を消費することができなければ、このゲーム中［魅力］－１",
                         "何気ない一言が不和の種に…。好きなキャラ１人を選び、宮廷全員のそのキャラに対する《敵意》＋１",
                         "あなたの美しさに嫉妬した迷宮が、あなたの姿を変える。「呪い」のバッドステータスを受ける",
@@ -704,7 +701,7 @@ INFO_MESSAGE_TEXT
 
   # 探索ハプニング表（2d6）
   def mk_search_happening_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "指の震えが止まらない。【お酒】を消費することができなければ、このゲーム中［探索］－１",
                         "流れ星に直撃。《ＨＰ》－（1d6）",
                         "敵の過去を知り、同情してしまう。あなたのこのマップの支配者に対する《好意》＋１。このゲームの間、《好意》を持ったキャラに対して攻撃を行い、絶対失敗した場合そのキャラへの《好意》と同じだけ《気力》が減少する",
@@ -721,7 +718,7 @@ INFO_MESSAGE_TEXT
 
   # 武勇ハプニング表（2d6）
   def mk_valor_happening_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "つい幼児退行を起こしそうになる。【お酒】を消費することができなければ、このゲーム中［武勇］－１",
                         "不意打ちを食らう。ランダムエンカウントが発生し、奇襲扱いで戦闘を行う",
                         "配下の期待が、あなたの重荷となる。［現在の《民の声》－（1d6）］だけ《気力》が減少する",
@@ -738,7 +735,7 @@ INFO_MESSAGE_TEXT
 
   # 王国変動表(2d6)
   def mk_kingdom_change_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "列強のプロパガンダが現れる。(1d6)を振り、その目が現在の《民の声》以下で、現在列強の属国になっていたら属国から抜けることができる。上回っていたら、ランダムに列強を１つ選びその属国になる",
                         "冒険の成功を祝う民たちが出迎えてくれる。《民の声》＋２。この結果を出したプレイヤー（以下、当ＰＬ）以外の全員は、今回の冒険を振り返り当PLのPCが《好意》を得るとしたら誰が一番ふさわしいかを協議する。決定したキャラへの当PLのPCの《好意》＋１",
                         "何者かによる唐突な奇襲攻撃。未知の土地に面している領土からランダムに１つを選ぶ。［軍事レベル/敵対国数×２＋険悪国数＋９］の判定に成功すると返り討ちにして(1d6)ＭＧを得る。失敗するとその領土は施設ごと失われる",
@@ -755,7 +752,7 @@ INFO_MESSAGE_TEXT
 
   # 王国変動失敗表(2d6)
   def mk_kingdom_mischange_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "列強のプロパガンダが現れる。(1d6)を振り、その目が現在の《民の声》を上回っていたら、ランダムに列強１つを選びその属国になる",
                         "新たな勢力が勃発する。王国シートの基地の土地欄の中から１つ、未知の土地を選ぶ。(1d6)を振り、その結果をその土地に記入する。１：敵対関係の国。２：険悪関係の国。３：凶暴な怪物の巣。４：人間嫌いのダンジョンマスターの庵。５：迷宮化の進んだ大迷宮。６：列強の飛び地",
                         "何者かによる唐突な奇襲攻撃。未知の土地に面している領土からランダムに１つを選ぶ。［軍事レベル/敵対国数×２＋険悪国数＋９］の判定に失敗するとその領土は施設ごと失われる",
@@ -772,7 +769,7 @@ INFO_MESSAGE_TEXT
 
   # 痛打表（2d6）
   def mk_critical_attack_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "攻撃の手応えが武器に刻まれる。その攻撃に使用した武具アイテムにレベルがあれば、そのレベルが１点上昇する",
                         "電光石火の一撃。攻撃の処理が終了したあと、もう一度行動できる",
                         "相手の姿形を変えるほどの一撃。攻撃目標に「呪い」のバッドステータスを与える",
@@ -789,7 +786,7 @@ INFO_MESSAGE_TEXT
 
   # 致命傷表（2d6）
   def mk_fatal_wounds_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "圧倒的一撃で急所を貫かれた。死亡する",
                         "致命的な一撃が頭をかすめる。［探索/受けたダメージ+5］の判定に失敗すると死亡する",
                         "出血多量で昏睡する。行動不能になる。この戦闘が終了するまでに《ＨＰ》を１以上にしないと死亡する",
@@ -806,7 +803,7 @@ INFO_MESSAGE_TEXT
 
   # 道中表（2d6）
   def mk_travel_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "道中の時間が愛を育む。全員、好きなキャラ１体を選びそのキャラに対する《好意》＋１",
                         "何かの死体を見つけた。好きな素材１種類を（1d6）手に入れる",
                         "辺りが闇に包まれる。宮廷の中からランダムにキャラを選ぶ。そのキャラが【星の欠片】を持っていたら、それが１個破壊される",
@@ -823,7 +820,7 @@ INFO_MESSAGE_TEXT
 
   # 交渉表（2d6）
   def mk_negotiation_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "中立的な態度は偽装だった。不意を打たれ、奇襲扱いで戦闘を行う",
                         "交渉は決裂した。戦闘を行う",
                         "交渉は決裂した。戦闘を行う",
@@ -840,7 +837,7 @@ INFO_MESSAGE_TEXT
 
   # 戦闘ファンブル表（2d6）
   def mk_combat_fumble_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "敵に援軍が現れる。敵軍の中で最もレベルの低いモンスターが（1d6）体増える。モンスター側がこの結果になった場合、好きなＰＣの《配下》＋（1d6）",
                         "敵の士気が大いに揺らぐ。自軍のキャラは全員１マス後退する",
                         "勢い余って仲間を攻撃！自分の居るエリアからランダムに自軍のキャラを１体選び、そのキャラに使用している武器と同じ威力のダメージを与える",
@@ -866,7 +863,7 @@ INFO_MESSAGE_TEXT
 
   # 相場表（2d6）
   def mk_market_price_table
-    get_table_by_2d6( [
+    get_table_by_2d6([
                         "無し",
                         "肉",
                         "牙",
@@ -878,13 +875,12 @@ INFO_MESSAGE_TEXT
                         "火薬",
                         "情報",
                         "革",
-                      ] )
+                      ])
   end
 
   # お宝表１（1d6）
   def mk_treasure1_table
-
-    get_table_by_1d6( [
+    get_table_by_1d6([
                         "何も無し",
                         "何も無し",
                         "そのモンスターの素材欄の中から、好きな素材１個",
@@ -932,7 +928,7 @@ INFO_MESSAGE_TEXT
 
   # お宝表５（1d6）
   def mk_treasure5_table
-    get_table_by_1d6( [
+    get_table_by_1d6([
                         "そのモンスターの素材欄の中から、好きな素材１０個",
                         "そのモンスターの素材欄の中から、好きな素材１５個",
                         "好きなコモンアイテムのカテゴリ１種を選び、そのカテゴリからランダムにアイテム１個。レベルがあるアイテムなら４レベルのものが手に入る",
@@ -955,19 +951,19 @@ INFO_MESSAGE_TEXT
     debug("d1, d2", d1, d2)
 
     debug("name_n", name_n)
-    if(name_n <= 1)
+    if name_n <= 1
       # 名前表A＋二つ名表A
       output = mk_nick_a_table(mk_name_a_table(d1), d2)
-    elsif(name_n <= 2)
+    elsif name_n <= 2
       # 名前表B＋二つ名表A
       output = mk_nick_a_table(mk_name_b_table(d1), d2)
-    elsif(name_n <= 3)
+    elsif name_n <= 3
       # 名前表エキゾチック＋二つ名表A
       output = mk_nick_a_table(mk_name_ex_table(d1), d2)
-    elsif(name_n <= 4)
+    elsif name_n <= 4
       # 名前表A＋二つ名表B
       output = mk_nick_b_table(mk_name_a_table(d1), d2)
-    elsif(name_n <= 5)
+    elsif name_n <= 5
       # 名前表B＋二つ名表B
       output = mk_nick_b_table(mk_name_b_table(d1), d2)
     else
@@ -1004,7 +1000,7 @@ INFO_MESSAGE_TEXT
       [55, "“両手に花の”"],
       [56, "“（ゲーム会場の地名）でも一、二を争う”"],
     ]
-    if(num < 66)
+    if num < 66
       output = get_table_by_number(num, table) + output
     else
       output = "#{output}#{(rand(6) + 1)}世"
@@ -1172,12 +1168,12 @@ INFO_MESSAGE_TEXT
   # アイテムカテゴリ決定表(1D6)
   def mk_item_decide_table(num)
     functionTable = [
-                     [ 1, lambda{ mk_weapon_item_table(d66(2))} ],
-                     [ 2, lambda{ mk_life_item_table(d66(2))} ],
-                     [ 3, lambda{ mk_rest_item_table(d66(2))} ],
-                     [ 4, lambda{ mk_search_item_table(d66(2))} ],
-                     [ 5, lambda{ mk_rare_weapon_item_table(d66(1))} ],
-                     [ 6, lambda{ mk_rare_item_table(d66(1))} ],
+                     [ 1, lambda { mk_weapon_item_table(d66(2)) } ],
+                     [ 2, lambda { mk_life_item_table(d66(2)) } ],
+                     [ 3, lambda { mk_rest_item_table(d66(2)) } ],
+                     [ 4, lambda { mk_search_item_table(d66(2)) } ],
+                     [ 5, lambda { mk_rare_weapon_item_table(d66(1)) } ],
+                     [ 6, lambda { mk_rare_item_table(d66(1)) } ],
                     ]
     return get_table_by_number(num, functionTable)
   end
@@ -1391,32 +1387,32 @@ INFO_MESSAGE_TEXT
     output = ""
     dice, = roll(2, 6)
 
-    if(num <= 2)
-      output = '「' + mk_item_power_table((rand(6))+1) + '」の神力を宿す'
-    elsif(num <= 3)
+    if num <= 2
+      output = '「' + mk_item_power_table(rand(6) + 1) + '」の神力を宿す'
+    elsif num <= 3
       output = '寿命を持つ。寿命の値を決定する。' + "\n"
       output += 'さらに、' + mk_item_features_table(dice)
-    elsif(num <= 4)
+    elsif num <= 4
       output = '境界障壁を持つ。《HP》の値を決定する。'
-    elsif(num <= 5)
+    elsif num <= 5
       output = '銘を持つ。銘を決定する。'
-    elsif(num <= 6)
-      output = '合成具である。もう1つの機能は「' + mk_item_decide_table((rand(6))+1) + '」である。'
-    elsif(num <= 7)
+    elsif num <= 6
+      output = '合成具である。もう1つの機能は「' + mk_item_decide_table(rand(6) + 1) + '」である。'
+    elsif num <= 7
       output = 'そのアイテムにレベルがあれば、レベルを1点上昇する。' + "\n"
-      output +='レベルが設定されていなければ、' + mk_item_features_table(dice)
-    elsif(num <= 8)
+      output += 'レベルが設定されていなければ、' + mk_item_features_table(dice)
+    elsif num <= 8
       output = '「' + mk_item_jyumon_table(dice) + '」の呪紋を持つ。'
-    elsif(num <= 9)
-      output = '「' + mk_item_jyuka_table((rand(6))+1) + '」の呪禍を持つ。' + "\n"
-      output +='さらに、' + mk_item_features_table(dice)
-    elsif(num <= 10)
+    elsif num <= 9
+      output = '「' + mk_item_jyuka_table(rand(6) + 1) + '」の呪禍を持つ。' + "\n"
+      output += 'さらに、' + mk_item_features_table(dice)
+    elsif num <= 10
       output = '高価だ。価格を設定する。'
-    elsif(num <= 11)
-      output = '「条件：' + mk_item_aptitude_table((rand(6))+1) + '」の適性を持つ。' + "\n"
-      output +='さらに、' + mk_item_features_table(dice)
+    elsif num <= 11
+      output = '「条件：' + mk_item_aptitude_table(rand(6) + 1) + '」の適性を持つ。' + "\n"
+      output += 'さらに、' + mk_item_features_table(dice)
     else
-      output = '「' + mk_item_attribute_table((rand(6))+1) + '」の属性を持つ。'
+      output = '「' + mk_item_attribute_table(rand(6) + 1) + '」の属性を持つ。'
     end
 
     return '特性[' + num.to_s + ']：' + output
@@ -1473,8 +1469,8 @@ INFO_MESSAGE_TEXT
   def mk_item_aptitude_table(num)
     table = [
              [ 1, 'ランダムなクラス1種' ],
-             [ 2, lambda{ mk_family_business_table(d66(2)) } ],
-             [ 3, lambda{ mk_gender_table((rand 6)+1) + '性' } ],
+             [ 2, lambda { mk_family_business_table(d66(2)) } ],
+             [ 3, lambda { mk_gender_table((rand 6) + 1) + '性' } ],
              [ 4, '上級ジョブ' ],
              [ 5, 'モンスタースキルを修得' ],
              [ 6, '童貞、もしくは処女' ],
@@ -1500,7 +1496,7 @@ INFO_MESSAGE_TEXT
   def mk_gender_table(num)
     output = '1'
 
-    if( (num % 2) != 0)
+    if (num % 2) != 0
       output = '男'
     else
       output = '女'
@@ -1646,9 +1642,9 @@ INFO_MESSAGE_TEXT
     debug("mk_decoration_table num", num)
 
     table = [
-             [ 1, lambda{ mk_basic_decoration_table(d66(2)) } ],
-             [ 2, lambda{ mk_spooky_decoration_table(d66(2)) } ],
-             [ 3, lambda{ mk_katakana_decoration_table(d66(2)) } ],
+             [ 1, lambda { mk_basic_decoration_table(d66(2)) } ],
+             [ 2, lambda { mk_spooky_decoration_table(d66(2)) } ],
+             [ 3, lambda { mk_katakana_decoration_table(d66(2)) } ],
     ]
     return get_table_by_number(num, table)
   end
@@ -1656,9 +1652,9 @@ INFO_MESSAGE_TEXT
   # 地名決定表(1D6)
   def mk_placename_table(num)
     table = [
-             [ 1, lambda{ mk_passage_placename_table(d66(2)) } ],
-             [ 2, lambda{ mk_natural_placename_table(d66(2)) } ],
-             [ 3, lambda{ mk_artifact_placename_table(d66(2)) } ],
+             [ 1, lambda { mk_passage_placename_table(d66(2)) } ],
+             [ 2, lambda { mk_natural_placename_table(d66(2)) } ],
+             [ 3, lambda { mk_artifact_placename_table(d66(2)) } ],
     ]
     return get_table_by_number(num, table)
   end
@@ -1835,7 +1831,7 @@ INFO_MESSAGE_TEXT
   def mk_ls_decide_table(num)
     output = ''
     num.times do |i|
-      output += "「" + mk_landscape_table(rand(6)+1) + "」"
+      output += "「" + mk_landscape_table(rand(6) + 1) + "」"
     end
     return output
   end
@@ -1844,12 +1840,12 @@ INFO_MESSAGE_TEXT
   def mk_landscape_table(num)
     dice = d66(2)
     table = [
-             [ 1, lambda{ mk_artifact_landscape_table(dice) } ],
-             [ 2, lambda{ mk_cave_landscape_table(dice) } ],
-             [ 3, lambda{ mk_natural_landscape_table(dice) } ],
-             [ 4, lambda{ mk_waterside_landscape_table(dice) } ],
-             [ 5, lambda{ mk_skyrealm_landscape_table(dice) } ],
-             [ 6, lambda{ mk_strange_place_landscape_table(dice) } ],
+             [ 1, lambda { mk_artifact_landscape_table(dice) } ],
+             [ 2, lambda { mk_cave_landscape_table(dice) } ],
+             [ 3, lambda { mk_natural_landscape_table(dice) } ],
+             [ 4, lambda { mk_waterside_landscape_table(dice) } ],
+             [ 5, lambda { mk_skyrealm_landscape_table(dice) } ],
+             [ 6, lambda { mk_strange_place_landscape_table(dice) } ],
     ]
     return get_table_by_number(num, table)
   end
@@ -2221,7 +2217,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getAftersearchBreakTable()
-    get_table_by_2d6( [
+    get_table_by_2d6([
                        '「おつとめ、ご苦労様です」同行する民たちが感謝の言葉をかける。《民の声》が1点回復する。',
                        '「おい、サボるな」と仲間から怒られた。いやいや、こっちは今までマジメにやってましたよ。宮廷の中から好きなキャラクター1人を選ぶ。自分のそのキャラクターに対する《敵意》が1点上昇する。',
                        '大漁大漁！　色々な素材が見つかる。肉、牙、革、木、鉄の素材（キャラクターシートの上の段の素材）を1個ずつ獲得する。',
@@ -2233,11 +2229,11 @@ INFO_MESSAGE_TEXT
                        '大漁大漁！　色々な素材が見つかる。衣料、魔素、機械、火薬、情報の素材（キャラクターシートの上の段の素材）を1個ずつ獲得する。',
                        'うわ！　罠だ。余計なものまで見つけてしまった。宮廷全員は1d6点のダメージを受ける。',
                        '「へぇ、こんなヤツだったのか」仲間の意外な一面を見つける。宮廷の中から好きなキャラクター1人を選ぶ。自分のそのキャラクターに対する《好意》か《敵意》を1点上昇させ、その属性を好きなものに変更できる。',
-                       ] )
+                       ])
   end
 
   def getWholeBreakTable()
-    get_table_by_2d6( [
+    get_table_by_2d6([
                        '部屋の中から使えそうな装備をみつくろう。宮廷全員は、それぞれ好きなコモンアイテムのカテゴリを選び、そのランダムにコモンアイテムを1つ獲得する。そのアイテムにレベルがあれば、それは1レベルのものとなる。',
                        'みんなで今後の作戦を練る。宮廷全員は、そのターンの間、あらゆる判定の達成値が1上昇する。',
                        '手分けして物資の調達を行う。各キャラクターは、好きな素材を1d6個獲得できる。このとき、素材が揃っていれば、各キャラクターにつき1個までアイテムを作成することができる。',
@@ -2249,7 +2245,7 @@ INFO_MESSAGE_TEXT
                        '緊急ミーティング！　国家運営に関してみんなで知恵を出し合う。《予算》を[宮廷の人数*1]MG獲得する。',
                        '負傷した配下たちの治療を行う。宮廷全員の《配下》が1d6人回復する。',
                        '宮廷の前に光り輝くアイテムが降臨する。レア武具アイテムかレア一般アイテムのどちらかを選ぶ。ランダムにそのアイテムを1つ選び、それを獲得する。',
-                      ] )
+                      ])
   end
 
   def getLoversBreakTable()

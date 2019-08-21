@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class YankeeYogSothoth < DiceBot
-
   def initialize
     super
     @d66Type = 2
   end
+
   def gameName
     'ヤンキー＆ヨグ＝ソトース'
   end
@@ -44,15 +44,14 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
     output =
-      if(dice_n <= 2)
+      if dice_n <= 2
         " ＞ ファンブル(判定失敗。ファンブル表（FT）を振ること)"
-      elsif(dice_n >= 12)
+      elsif dice_n >= 12
         " ＞ スペシャル(判定成功。【テンション】が１段階上昇)"
-      elsif(total_n >= diff)
+      elsif total_n >= diff
         " ＞ 成功"
       else
         " ＞ 失敗"
@@ -61,30 +60,28 @@ INFO_MESSAGE_TEXT
     return output
   end
 
-
   def rollDiceCommand(command)
     string = command.upcase
 
     case string
-    when 'RTT'   # ランダム特技決定表
+    when 'RTT' # ランダム特技決定表
       return getRandomSkillTableResult(command)
     end
-    
+
     return getTableDiceCommandResult(command)
   end
-  
 
   # 指定特技ランダム決定表
   def getRandomSkillTableResult(command)
     name = 'ランダム'
 
     skillTableFull = [
-                      ['苦手', ['大人','勉強','敗北','昆虫','親','異性','孤独','高所','暗がり','ホラー','子供']],
-                      ['部活', ['柔道','プロレス','テコンドー','空手','ボクシング','帰宅','剣道','野球','応援団','科学','文系']],
-                      ['中学時代', ['悪ガキ','統一','バイト','習い事','喧嘩','サボり','マジメくん','遊び歩き','真似ごと','部活','何もしない']],
-                      ['趣味', ['すけべ','車・バイク','家事','料理','運動','修行','ファッション','つるむ','寝る','ゲーム','読書']],
-                      ['スタイル', ['テキトー','ばか','オラオラ','熱血','硬派','自然体','軟派','自分大好き','腹黒','クール','インテリ']],
-                      ['好み', ['だらだら','食事','逆転','家族','支配','褒められる','恋愛','友情','勝利','金','静寂']],
+                      ['苦手', ['大人', '勉強', '敗北', '昆虫', '親', '異性', '孤独', '高所', '暗がり', 'ホラー', '子供']],
+                      ['部活', ['柔道', 'プロレス', 'テコンドー', '空手', 'ボクシング', '帰宅', '剣道', '野球', '応援団', '科学', '文系']],
+                      ['中学時代', ['悪ガキ', '統一', 'バイト', '習い事', '喧嘩', 'サボり', 'マジメくん', '遊び歩き', '真似ごと', '部活', '何もしない']],
+                      ['趣味', ['すけべ', '車・バイク', '家事', '料理', '運動', '修行', 'ファッション', 'つるむ', '寝る', 'ゲーム', '読書']],
+                      ['スタイル', ['テキトー', 'ばか', 'オラオラ', '熱血', '硬派', '自然体', '軟派', '自分大好き', '腹黒', 'クール', 'インテリ']],
+                      ['好み', ['だらだら', '食事', '逆転', '家族', '支配', '褒められる', '恋愛', '友情', '勝利', '金', '静寂']],
                      ]
 
     skillTable, total_n = get_table_by_1d6(skillTableFull)
@@ -95,10 +92,8 @@ INFO_MESSAGE_TEXT
 
     return output
   end
-  
-  
-  def getTableDiceCommandResult(command)
 
+  def getTableDiceCommandResult(command)
     info = @@tables[command]
     return nil if info.nil?
 
@@ -115,26 +110,23 @@ INFO_MESSAGE_TEXT
       when 'D66', 'D66S'
         table = getD66Table(table)
         get_table_by_d66_swap(table)
-      else
-        nil
       end
 
-    return nil if( text.nil? )
+    return nil if text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
-  
+
   def getD66Table(table)
     table.map do |item|
-      if item.kind_of?(String) and  /^(\d+):(.*)/ === item
+      if item.kind_of?(String) && (/^(\d+):(.*)/ === item)
         [$1.to_i, $2]
       else
         item
       end
     end
   end
-  
-  
+
   @@tables =
     {
     'FT' => {
@@ -148,7 +140,7 @@ INFO_MESSAGE_TEXT
 つまらないことで怪我をする。自分の【HP】が1D6点減少する。
 逆境に燃える。テンションが1段階上昇する。
 },},
-    
+
     'WT' => {
       :name => "変調表",
       :type => '1D6',
@@ -386,7 +378,6 @@ INFO_MESSAGE_TEXT
 66:売店で売っているお菓子をコンプリートした
 },},
   }
-  
+
   setPrefixes(['RTT'] + @@tables.keys)
 end
-

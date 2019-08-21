@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class KurayamiCrying < DiceBot
-  
   def initialize
     super
   end
@@ -27,17 +26,16 @@ MESSAGETEXT
       info = @@tables["ACT"]
       name = info[:name]
       table = getTableInfoFromExtraTableText(info[:table])
-      
+
       text = table[number]
-      
+
       result = "#{name}(#{number}) ＞ #{text}"
       return text
     end
     result = getTableCommandResult(command, @@tables)
     return result unless result.nil?
   end
-  
-  
+
   @@tables =
     {
 
@@ -57,9 +55,8 @@ MESSAGETEXT
 まるで自分を支える何かが失われたように、あなたはその場に立ち尽くす。諦めと絶望が心を支配する。ああ、そうか。これが、「心が折れる」ということか……。あなたは「理性」を4点失う。
 TABLE_TEXT_END
     },
-    
-  }
-  
-  setPrefixes(["ACT.*"] + @@tables.keys)
 
+  }
+
+  setPrefixes(["ACT.*"] + @@tables.keys)
 end

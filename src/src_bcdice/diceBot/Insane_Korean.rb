@@ -3,7 +3,7 @@
 class Insane_Korean < DiceBot
   setPrefixes([
     'ST', 'HJST', 'MTST', 'DVST', 'DT', 'BT', 'PT', 'FT', 'JT', 'BET', 'RTT', 'TVT', 'TET', 'TPT', 'TST', 'TKT', 'TMT',
-    'CHT', 'VHT', 'IHT', 'RHT', 'MHT', 'LHT', 'ECT','EMT','EAT','OPT','OHT','OWT','CNT1','CNT2','CNT3','RET'
+    'CHT', 'VHT', 'IHT', 'RHT', 'MHT', 'LHT', 'ECT', 'EMT', 'EAT', 'OPT', 'OHT', 'OWT', 'CNT1', 'CNT2', 'CNT3', 'RET'
   ])
 
   def initialize
@@ -64,17 +64,16 @@ INFO_MESSAGE_TEXT
 
   # 게임 별 성공 여부 판정(2D6)
   def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-
     debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
 
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
     output =
-      if(dice_n <= 2)
+      if dice_n <= 2
         " ＞ 펌블(판정실패。 덱에서 【광기】를 1장 획득)"
-      elsif(dice_n >= 12)
+      elsif dice_n >= 12
         " ＞ 스페셜(판정성공。 【생명력】 1점이나 【정신력】 1점 회복)"
-      elsif(total_n >= diff)
+      elsif total_n >= diff
         " ＞ 성공"
       else
         " ＞ 실패"
@@ -122,7 +121,7 @@ INFO_MESSAGE_TEXT
     when 'RTT'
       type = '랜덤 특기 결정표'
       output, total_n = get_random_skill_table
-        when 'TVT'
+    when 'TVT'
       type = '지정특기(폭력)표'
       output, total_n = get_violence_skill_table
     when 'TET'
@@ -159,14 +158,14 @@ INFO_MESSAGE_TEXT
       type = '정보 속에 숨어 있는 공포표'
       output, total_n = get_latence_horror_table
     when 'ECT'
-          type = '조우표・도시'
-       output, total_n = get_city_table
+      type = '조우표・도시'
+      output, total_n = get_city_table
     when 'EMT'
-          type = '조우표・산림'
-       output, total_n = get_mountainforest_table
+      type = '조우표・산림'
+      output, total_n = get_mountainforest_table
     when 'EAT'
-          type = '조우표・해변'
-       output, total_n = get_seaside_table
+      type = '조우표・해변'
+      output, total_n = get_seaside_table
     when 'OHT'
       type = '야근 시 조우하는 공포표'
       output, total_n = get_overtime_horror_table
@@ -402,7 +401,7 @@ INFO_MESSAGE_TEXT
   def get_badend_table
     table = [
              '당신 주위에 칠흑의 어둠이, 이형의 앞다리가, 무수한 촉수가 모여든다. 새로운 동료를 축복하고 있는 것이다. 당신은 이제 괴이를 무서워하지 않는다. 왜냐하면, 당신 자신이 괴이가 되었기 떄문이다. 이후, 당신은 괴이 NPC로서 등장한다',
-             lambda{return "감옥과도 같은, 수술실 같은 어둑한 방에 감금당했다. 그리고, 매일같이고문을 받게 되었다. 어떻게든 도망칠 수는 있었지만…….  #{get_random_skill_table_text_only}의 특기가 【공포심】이 된다."},
+             lambda { return "감옥과도 같은, 수술실 같은 어둑한 방에 감금당했다. 그리고, 매일같이고문을 받게 되었다. 어떻게든 도망칠 수는 있었지만…….  #{get_random_skill_table_text_only}의 특기가 【공포심】이 된다." },
              '아슬아슬한 순간, 수수께끼의 조직의 에이전트에게 구해진다. 「당신, 장래성이 있군. 어떤가? 우리들과 함께 하지 않겠나?」\n 당신은 원한다면, 닌자／마법사／헌터로서 괴이와 싸워나가는 것이 가능하다. 그 경우, 당신은 다른 사이코로 픽션의 캐릭터로 다시 태어난다.',
              '병원 침대에서 눈을 뜬다. 오랫동안, 무서운 악몽을 꾼 것 같은 기분이 든다. 그 세션의 후유증 판정은, 마이너스 1의 수정이 붙고, 펌블 수치가 1 상승한다. ',
              '어딘가의 민가에서 눈을 뜬다. 근사한 사람에게 구해져서, 극진한 간호를 받은 듯 하다. 딱히 페널티는 없다.',
@@ -410,7 +409,7 @@ INFO_MESSAGE_TEXT
              '다른 새로운 괴사건에 휘말린다. 고생은 끝, 그쪽은 어떻게든 무사해결! 딱히 패널티는 없다. ',
              '커다란 상처를 입고, 생사의 경계를 헤맨다. 원하는 특기로 판정을 시행하라. 실패하면 사망한다. 【생명력】만큼 마이너스의 수정이 붙는다.',
              '눈을 뜨면 익숙하지 않은 장소다. 여긴 어디지? 나는 누구? 아무래도 지나친 공포로 기억을 잃어버린 것 같다. 공적점이 있다면, 그것을 1점 잃는다.',
-             lambda{return "눈을 뜨니, 그곳은 평소의 그곳이었다. 하지만, 어딘가 위화감을 느낀다. 당신들 외에, 누구도 사건에 대해서는 모르는 것 같다. 죽었을 터인 그 인물도 살아있다. 시간을 여행한 것일까, 여긴 다른 세계선인가……? 　#{get_random_skill_table_text_only}의 특기가 【공포심】이 된다."},
+             lambda { return "눈을 뜨니, 그곳은 평소의 그곳이었다. 하지만, 어딘가 위화감을 느낀다. 당신들 외에, 누구도 사건에 대해서는 모르는 것 같다. 죽었을 터인 그 인물도 살아있다. 시간을 여행한 것일까, 여긴 다른 세계선인가……? 　#{get_random_skill_table_text_only}의 특기가 【공포심】이 된다." },
              '뒤를 돌아보자, 거기에는 압도적인 「그것」이 기다리고 있었다. 무자비한 일격이 당신을 덮치고, 당신은 사망한다.',
             ]
     return get_table_by_2d6(table)
@@ -433,7 +432,7 @@ INFO_MESSAGE_TEXT
     return "「#{tableName}」≪#{skill}≫", "#{total_n},#{total_n2}"
   end
 
-  #특기만 뽑고싶을 때 사용. 별로 예쁘진 않다.
+  # 특기만 뽑고싶을 때 사용. 별로 예쁘진 않다.
   def get_random_skill_table_text_only
     text, = get_random_skill_table
     return text
@@ -557,7 +556,7 @@ INFO_MESSAGE_TEXT
              "지정특기：고문\n대화 도중, 피 맛이 났다. 동시에 갈그랑거리는 위화감을 느꼈다. 상대가 새파랗게 질려서 당신의 얼굴을 가리킨다. 어찌된 일인지 물어보려 입을 열자, 뚝하고 무언가가 땅바닥으로 떨어졌다. 내려다보면, 피 웅덩이 속에 새하얗게 당신의 이빨이 한 개 떨어져 있다. ",
              "지정특기：인류학\n대화 도중, 시야에 위화감을 느낀 당신은 눈을 깜빡였다. 상대의 얼굴이, 이상하게 되어 있었다. 잡아 늘여서, 휘저은 것처럼, 그로테스크하게 일그러져 있다. 엣? 하고 자세히 보지만 일그러짐은 변함없다. 상대는 전혀 눈치채지 못한 듯하다. 눈을 질끈 감았다가 다시 보자, 겨우 일그러짐이 사라졌다. 당신은 마음에 한가지 의심이 생겨난다. 눈 앞에 있는 상대는, 정말로 인간인걸까? ",
             ]
-        return get_table_by_1d6(table)
+    return get_table_by_1d6(table)
   end
 
   # 거리에서 조우하는 공포표

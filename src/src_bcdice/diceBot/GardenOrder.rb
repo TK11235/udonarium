@@ -29,7 +29,6 @@ INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)
-
     case command
     when /GO(\d+)(\/(\d+))?(@(\d+))?/i
       success_rate = $1.to_i
@@ -39,7 +38,7 @@ INFO_MESSAGE_TEXT
 
       return check_roll_repeat_attack(success_rate, repeat_count, critical_border)
 
-     when /^DC(SL|BL|IM|BR|RF|EL)(\d+)/i
+    when /^DC(SL|BL|IM|BR|RF|EL)(\d+)/i
       type = $1
       damage_value = $2.to_i
       return look_up_damage_chart(type, damage_value)
@@ -49,16 +48,15 @@ INFO_MESSAGE_TEXT
   end
 
   def get_critical_border(critical_border_text, success_rate)
-
     return critical_border_text.to_i unless critical_border_text.nil?
 
-    #critical_border = [success_rate / 5, 1].max
+    # critical_border = [success_rate / 5, 1].max
     critical_border = [(success_rate / 5).floor, 1].max # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     return critical_border
   end
 
   def check_roll_repeat_attack(success_rate, repeat_count, critical_border)
-    #success_rate_per_one = success_rate / repeat_count
+    # success_rate_per_one = success_rate / repeat_count
     success_rate_per_one = (success_rate / repeat_count).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
     check_roll(success_rate_per_one, critical_border)
@@ -78,11 +76,12 @@ INFO_MESSAGE_TEXT
     return "クリティカル" if dice_value <= critical_border
     return "ファンブル" if dice_value >= fumble_border
     return "成功" if dice_value <= success_rate
+
     return "失敗"
   end
 
   def look_up_damage_chart(type, damage_value)
-    name, table= get_damage_table_info_by_type( type )
+    name, table = get_damage_table_info_by_type(type)
 
     row = get_table_by_number(damage_value, table, nil)
     return nil if row.nil?
@@ -90,7 +89,7 @@ INFO_MESSAGE_TEXT
     "負傷表：#{name}[#{damage_value}] ＞ #{row[:damage]} ｜ #{row[:name]} … #{row[:text]}"
   end
 
-  def get_damage_table_info_by_type( type )
+  def get_damage_table_info_by_type(type)
     data = @@damage_table[type]
     return nil if data.nil?
 
@@ -105,7 +104,7 @@ INFO_MESSAGE_TEXT
                  [ 5,
                    { :name => "切り傷",
                      :text => "皮膚が切り裂かれる。",
-                     :damage=> "軽傷1"}],
+                     :damage => "軽傷1"}],
                  [10,
                   { :name => "脚部負傷",
                     :text => "足が切り裂かれ、思わずひざまずく。",

@@ -5,7 +5,7 @@ class Skynauts < DiceBot
 
   def initialize
     super
-    @fractionType = "omit";     #端数の処理 ("omit"=切り捨て, "roundUp"=切り上げ, "roundOff"=四捨五入)
+    @fractionType = "omit"; # 端数の処理 ("omit"=切り捨て, "roundUp"=切り上げ, "roundOff"=四捨五入)
   end
 
   def gameName
@@ -66,18 +66,14 @@ MESSAGETEXT
   end
 
   def getJudgeResult(command)
-
-    return nil unless /^2D6<=(\d)$/i === command or /^SN(\d*)$/i === command
-
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg1 = $1
+    return nil unless (m = (/^2D6<=(\d)$/i.match(command) || /^SN(\d*)$/i.match(command)))
 
     debug("====getJudgeResult====")
 
-    target = reg1.empty? ? 7 : reg1.to_i #$1.empty? ? 7 : $1.to_i  # 目標値。省略時は7
-    debug("目標値",target)
+    target = m[1].empty? ? 7 : m[1].to_i # 目標値。省略時は7
+    debug("目標値", target)
 
-    total,diceText, = roll(2,6)
+    total, diceText, = roll(2, 6)
 
     if total <= 2
       result = "ファンブル"
@@ -93,19 +89,15 @@ MESSAGETEXT
   end
 
   def navigationResult(command)
-
-    return nil unless /^NV(\+(\d+))?$/ === command
-
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg2 = $2
+    return nil unless (m = /^NV(\+(\d+))?$/.match(command))
 
     debug("====navigationResult====")
 
-    bonus = reg2.to_i #$2.to_i  # 〈操舵室〉の修正。GMの任意修正にも対応できるように(マイナスは無視)
+    bonus = m[2].to_i # 〈操舵室〉の修正。GMの任意修正にも対応できるように(マイナスは無視)
     debug("移動修正", bonus)
 
-    total, = roll(1,6)
-    #movePointBase = (total / 2) <= 0 ? 1 : (total / 2)
+    total, = roll(1, 6)
+    # movePointBase = (total / 2) <= 0 ? 1 : (total / 2)
     movePointBase = (total / 2).floor <= 0 ? 1 : (total / 2).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     movePoint = movePointBase + bonus
     debug("移動エリア数", movePoint)
@@ -117,15 +109,15 @@ MESSAGETEXT
   end
 
   @@directionInfos = {
-    1 => { :name => "左下", :position_diff => {:x => -1, :y => +1}},
-    2 => { :name => "下",   :position_diff => {:x =>  0, :y => +1}},
-    3 => { :name => "右下", :position_diff => {:x => +1, :y => +1}},
-    4 => { :name => "左",   :position_diff => {:x => -1, :y =>  0}},
+    1 => {:name => "左下", :position_diff => {:x => -1, :y => +1}},
+    2 => {:name => "下", :position_diff => {:x => 0, :y => +1}},
+    3 => {:name => "右下", :position_diff => {:x => +1, :y => +1}},
+    4 => {:name => "左",   :position_diff => {:x => -1, :y =>  0}},
     # 5 は中央。算出する意味がないので対象外
-    6 => { :name => "右",   :position_diff => {:x => +1, :y =>  0}},
-    7 => { :name => "左上", :position_diff => {:x => -1, :y => -1}},
-    8 => { :name => "上",   :position_diff => {:x =>  0, :y => -1}},
-    9 => { :name => "右上", :position_diff => {:x => +1, :y => -1}},
+    6 => {:name => "右",   :position_diff => {:x => +1, :y =>  0}},
+    7 => {:name => "左上", :position_diff => {:x => -1, :y => -1}},
+    8 => {:name => "上", :position_diff => {:x => 0, :y => -1}},
+    9 => {:name => "右上", :position_diff => {:x => +1, :y => -1}},
   }
 
   def getDirectionInfo(direction, key, defaultValue = nil)
@@ -136,19 +128,13 @@ MESSAGETEXT
   end
 
   def getFireResult(command)
-
-    return nil unless /^D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/ === command
-
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg1 = $1
-    reg3 = $3
-    reg5 = $5
+    return nil unless (m = /^D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/.match(command))
 
     debug("====getFireResult====")
 
-    fireCount = reg3.to_i #$3.to_i # 砲撃回数
-    fireRange = reg1.to_s #$1.to_s # 砲撃範囲
-    ballistics = reg5.to_i #$5.to_i # 《弾道学》
+    fireCount = m[3].to_i # 砲撃回数
+    fireRange = m[1].to_s # 砲撃範囲
+    ballistics = m[5].to_i # 《弾道学》
     debug("fireCount", fireCount)
     debug("fireRange", fireRange)
     debug("ballistics", ballistics)
@@ -157,7 +143,7 @@ MESSAGETEXT
     fireCount = [fireCount, fireCountMax].min
 
     firePoint = getFirePoint(fireRange, fireCount) # 着弾座標取得（3次元配列）
-    fireText = getFirePointText(firePoint, fireCount)  # 表示用文字列作成
+    fireText = getFirePointText(firePoint, fireCount) # 表示用文字列作成
 
     if ballistics != 0 # 《弾道学》有
       fireText += " ＞ 《弾道学》:"
@@ -172,13 +158,12 @@ MESSAGETEXT
   end
 
   def getFirePoint(fireRange, fireCount)
-
     debug("====getFirePoint====")
 
     firePoint = []
 
     fireCount.times do |count|
-      debug("\n砲撃回数", count+1)
+      debug("\n砲撃回数", count + 1)
 
       firePoint << []
 
@@ -211,15 +196,13 @@ MESSAGETEXT
 
     fireTextList = []
     firePoint.each do |point|
-
       text = ""
       point.each do |x, y|
-
         # 《弾道学》《回避運動》などによる座標移動
         x, y = getMovePoint(x, y, direction)
 
         # マップ外の座標は括弧を付ける
-        text += ( isInMapPosition(x, y) ? "[縦#{y},横#{x}]" :"([縦#{y},横#{x}])" )
+        text += (isInMapPosition(x, y) ? "[縦#{y},横#{x}]" : "([縦#{y},横#{x}])")
         debug("着弾点テキスト", text)
       end
 
@@ -233,36 +216,31 @@ MESSAGETEXT
   end
 
   def isInMapPosition(x, y)
-    (1 <= y and y <= 6) and (2 <= x and x <= 12)
+    ((1 <= y) && (y <= 6)) && ((2 <= x) && (x <= 12))
   end
 
   def getMovePoint(x, y, direction)
     debug("====getMovePoint====")
     debug("方向", direction)
-    debug("座標移動前x",x)
-    debug("座標移動前y",y)
+    debug("座標移動前x", x)
+    debug("座標移動前y", y)
 
     position_diff = getDirectionInfo(direction, :position_diff, {})
     x += position_diff[:x].to_i
     y += position_diff[:y].to_i
 
-    debug("\n座標移動後x",x)
-    debug("座標移動後y",y)
+    debug("\n座標移動後x", x)
+    debug("座標移動後y", y)
     return x, y
   end
 
   def getBomberResult(command)
-
-    return nil unless /^BOM(\d*)?\/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/i === command
-
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg1 = $1
-    reg6 = $6
+    return nil unless (m = /^BOM(\d*)?\/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/i.match(command))
 
     debug("====getBomberResult====", command)
 
-    target = reg1.to_s #$1
-    direction = reg6.to_i #$6.to_i
+    target = m[1].to_s
+    direction = m[6].to_i
     debug("弾道学方向", direction)
 
     text = "#{command} ＞ "
@@ -279,24 +257,20 @@ MESSAGETEXT
   end
 
   def getAvoidResult(command)
-
-    return nil unless /^AVO(\d*)?(@([2,4,6,8]))(\(?\[縦\d+,横\d+\]\)?,?)+$/ === command
-
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg3 = $3
+    return nil unless (m = /^AVO(\d*)?(@([2,4,6,8]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.match(command))
 
     debug("====getAvoidResult====", command)
 
-    direction = reg3.to_i #$3.to_i
+    direction = m[3].to_i
     debug("回避方向", direction)
 
-    judgeCommand = command.slice(/^AVO(\d*)?(@([2,4,6,8]))/)  # 判定部分
+    judgeCommand = command.slice(/^AVO(\d*)?(@([2,4,6,8]))/) # 判定部分
     text = "#{judgeCommand} ＞ 《回避運動》"
     text += getJudgeResult("SN" + $1.to_s) # 操舵判定
 
     return text unless /成功/ === text
 
-    pointCommand = command.slice(/(\(?\[縦\d+,横\d+\]\)?,?)+/)  # 砲撃座標
+    pointCommand = command.slice(/(\(?\[縦\d+,横\d+\]\)?,?)+/) # 砲撃座標
 
     firePoint = scanFirePoints(pointCommand)
     fireCount = firePoint.size
@@ -329,7 +303,8 @@ MESSAGETEXT
 
         firePoint[-1] << []
 
-        next unless/[^\d]*(\d+),[^\d]*(\d+)/ === point
+        next unless /[^\d]*(\d+),[^\d]*(\d+)/ === point
+
         y = $1.to_i
         x = $2.to_i
 

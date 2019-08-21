@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class LogHorizon < DiceBot
-  setPrefixes(['\d+LH.*', 'PC.*', 'EC.*', 'GC.*', 'CC.*', 'CTR.*', 'MTR.*', 'ITR.*', 'OTR.*', 'HTR.*','GTR.*', 'PTAG', 'KOYU', 'MGR.', 'HLOC', 'PCNM', 'IAT.*', 'TIAS', 'ABDC', 'MII.*', 'ESCT.*', 'CSCT.*', 'ESTL.*'])
+  setPrefixes(['\d+LH.*', 'PC.*', 'EC.*', 'GC.*', 'CC.*', 'CTR.*', 'MTR.*', 'ITR.*', 'OTR.*', 'HTR.*', 'GTR.*', 'PTAG', 'KOYU', 'MGR.', 'HLOC', 'PCNM', 'IAT.*', 'TIAS', 'ABDC', 'MII.*', 'ESCT.*', 'CSCT.*', 'ESTL.*'])
 
   def initialize
     super
-    @d66Type = 1;
+    @d66Type = 1
   end
 
   def gameName
@@ -70,50 +70,48 @@ MESSAGETEXT
   end
 
   def getCheckRollDiceCommandResult(command)
-
-    return nil unless(/(\d+)LH([\+\-\d]*)(>=([\+\-\d]*))?/i === command)
+    return nil unless /(\d+)LH([\+\-\d]*)(>=([\+\-\d]*))?/i === command
 
     diceCount = $1.to_i
     modifyText = ($2 || '')
     difficultyText = $4
 
-    #修正値の計算
-    modify = getValue( modifyText, 0 )
+    # 修正値の計算
+    modify = getValue(modifyText, 0)
 
-    #目標値の計算
-    difficulty = getValue( difficultyText, nil )
+    # 目標値の計算
+    difficulty = getValue(difficultyText, nil)
 
-    #ダイスロール
+    # ダイスロール
     dice, dice_str = roll(diceCount, 6)
-    diceList = dice_str.split(/,/).collect{|i|i.to_i}.sort
+    diceList = dice_str.split(/,/).collect { |i| i.to_i }.sort
 
     total = dice + modify
 
-    #出力用ダイスコマンドを生成
+    # 出力用ダイスコマンドを生成
     command =  "#{diceCount}LH#{modifyText}"
-    command += ">=#{difficulty}" unless(difficulty.nil?)
+    command += ">=#{difficulty}" unless difficulty.nil?
 
-    #出力文の生成
+    # 出力文の生成
     result = "(#{command}) ＞ #{dice}[#{dice_str}]#{modifyText} ＞ #{total}"
 
-    #クリティカル・ファンブルチェック
-    if( isCritical(diceList) )
+    # クリティカル・ファンブルチェック
+    if isCritical(diceList)
       result += " ＞ クリティカル！"
-    elsif( isFamble(diceList, diceCount) )
+    elsif isFamble(diceList, diceCount)
       result += " ＞ ファンブル！"
     else
       result += getJudgeResultString(difficulty, total)
     end
 
     return result
-
   end
 
-  #成否判定
+  # 成否判定
   def getJudgeResultString(difficulty, total)
-    return '' if(difficulty.nil?)
+    return '' if difficulty.nil?
 
-    if(total >= difficulty)
+    if total >= difficulty
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -121,23 +119,22 @@ MESSAGETEXT
   end
 
   def getValue(text, defaultValue)
-    return defaultValue if( text == nil or text.empty? )
+    return defaultValue if (text == nil) || text.empty?
 
     parren_killer("(0" + text + ")").to_i
   end
 
   def isCritical(diceList)
-    (diceList.select{|i| i == 6 }.size >= 2)
+    (diceList.select { |i| i == 6 }.size >= 2)
   end
 
   def isFamble(diceList, diceCount)
-    (diceList.select{|i| i == 1 }.size >= diceCount)
+    (diceList.select { |i| i == 1 }.size >= diceCount)
   end
 
-  #消耗表
-  def getConsumptionDiceCommandResult( command )
-
-    return nil unless(/(P|E|G|C|ES|CS)CT(\d+)?([\+\-\d]*)(\$(\d+))?/ === command)
+  # 消耗表
+  def getConsumptionDiceCommandResult(command)
+    return nil unless /(P|E|G|C|ES|CS)CT(\d+)?([\+\-\d]*)(\$(\d+))?/ === command
 
     type = $1
     is_special = ($1 && $1.length > 1)
@@ -145,10 +142,10 @@ MESSAGETEXT
     return nil if !rank && !is_special
 
     rank = 0 if !rank
-    is_choice = (not $4.nil?)
+    is_choice = !$4.nil?
     dice_value = $5
     modifyText = $3
-    modify  = getValue(modifyText, 0)
+    modify = getValue(modifyText, 0)
 
     tableName = ""
     tables = nil
@@ -483,7 +480,7 @@ MESSAGETEXT
   end
 
   def getTableByRank(rank, tables)
-    #index = (rank - 1) / 5
+    # index = (rank - 1) / 5
     index = ((rank - 1) / 5).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
     index = [0, index].max
@@ -498,7 +495,7 @@ MESSAGETEXT
     return number
   end
 
-  #最少値の調整（値が小さすぎるなら表の最小値に）
+  # 最少値の調整（値が小さすぎるなら表の最小値に）
   def getAdjustNumberMin(number, table)
     value = getTableMinimum(table)
     return [number, value].max
@@ -508,32 +505,25 @@ MESSAGETEXT
     table.first.first
   end
 
-  #最大値の調整（値が大きすぎるなら表の最大値に）
+  # 最大値の調整（値が大きすぎるなら表の最大値に）
   def getAdjustNumberMax(number, table)
     value = table.last.first
     return [number, value].min
   end
 
-  #財宝表
+  # 財宝表
   def getTresureDiceCommandResult(command)
+    return nil unless (m = /(C|M|I|O|H|G)TRS(\d*)([\+\-\d]*)(\$)?/.match(command))
 
-    return nil unless(/(C|M|I|O|H|G)TRS(\d*)([\+\-\d]*)(\$)?/ === command)
-
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg1 = $1
-    reg2 = $2
-    reg3 = $3
-    reg4 = $4
-
-    type = reg1
-    rank = reg2.to_i
-    is_choice = (reg2.empty? || (not reg4.nil?))
-    modifyText = reg3
+    type = m[1]
+    rank = m[2].to_i
+    is_choice = (m[2].empty? || !m[4].nil?)
+    modifyText = m[3]
     modify = getValue(modifyText, 0)
-    is_prize = (reg4 == "$")
+    is_prize = (m[4] == "$")
     dice_value = nil
     dice_value = '7' if is_prize
-    is_rank_enable = ( (not is_choice) || is_prize)
+    is_rank_enable = (!is_choice || is_prize)
 
     tableName, table =
       case type
@@ -549,8 +539,6 @@ MESSAGETEXT
         getHeroineTresureResultTable
       when "G"
         getGoblinTresureResultTable
-      else
-        nil
       end
 
     return nil if table.nil?
@@ -564,7 +552,7 @@ MESSAGETEXT
 
     number += (rank * (is_rank_enable ? 5 : 0)) + modify
 
-    return command if is_choice and (number < getTableMinimum(table))
+    return command if is_choice && (number < getTableMinimum(table))
 
     if type == "H"
       number = [getAdjustNumberMin(number, table), 87].min
@@ -581,7 +569,7 @@ MESSAGETEXT
   end
 
   def getHiroineTresureResultString(table, number)
-    table_max_number = table.map {|e| e.first }.max
+    table_max_number = table.map { |e| e.first }.max
 
     result =
       if number <= table_max_number
@@ -1399,10 +1387,9 @@ MESSAGETEXT
     return tableName, table
   end
 
-  #パーソナリティタグ表
+  # パーソナリティタグ表
   def getPersonalityTagDiceCommandResult(command)
-
-    return nil unless("PTAG" === command)
+    return nil unless "PTAG" === command
 
     tableName = "パーソナリティタグ表"
     table = [
@@ -1455,10 +1442,9 @@ MESSAGETEXT
     return text
   end
 
-  #交友表
+  # 交友表
   def getFriendlyChartDiceCommandResult(command)
-
-    return nil unless("KOYU" === command)
+    return nil unless "KOYU" === command
 
     tableName = "交友表"
     table = [
@@ -1509,13 +1495,11 @@ MESSAGETEXT
 
     text = "#{tableName}([#{number}]) ＞ #{result}"
     return text
-
   end
 
-  #プレフィックスドマジックアイテム表
+  # プレフィックスドマジックアイテム表
   def getPrefixedMagickItemDiceCommandResult(command)
-
-    return nil unless(/MGR([1-3])/ === command)
+    return nil unless /MGR([1-3])/ === command
 
     rank = $1.to_i
 
@@ -1670,13 +1654,11 @@ MESSAGETEXT
 
     text = "#{tableName}([#{number}]) ＞ #{result}"
     return text
-
   end
 
-  #攻撃命中箇所ランダム決定表
+  # 攻撃命中箇所ランダム決定表
   def getHitLocationDiceCommandResult(command)
-
-    return nil unless("HLOC" === command)
+    return nil unless "HLOC" === command
 
     tableName = "攻撃命中箇所"
     table = [
@@ -1726,10 +1708,9 @@ MESSAGETEXT
     "#{tableName}(#{number})：#{result}"
   end
 
-  #PC名ランダム決定表
+  # PC名ランダム決定表
   def getPCNameDiceCommandResult(command)
-
-    return nil unless("PCNM" === command)
+    return nil unless "PCNM" === command
 
     tableName = "PC名"
     table = [
@@ -1781,10 +1762,9 @@ MESSAGETEXT
     return "#{tableName}(#{number})：#{result}"
   end
 
-  #ロデ研の新発明ランダム決定表
+  # ロデ研の新発明ランダム決定表
   def getInventionAttributeTextDiceCommandResult(command)
-
-    return nil unless(/IAT([ABMDLT]*)/ === command)
+    return nil unless /IAT([ABMDLT]*)/ === command
 
     tableName = "ロデ研の新発明"
 
@@ -1806,7 +1786,7 @@ MESSAGETEXT
                    'すごく速い',
                    '大量生産できる',
                    'よい手触り',
-                  ].map {|e| (is_single ? '特徴A(メリット)：' : '') + e }
+                  ].map { |e| (is_single ? '特徴A(メリット)：' : '') + e }
                 when 'B', 'D'
                   [
                    '中毒性のある',
@@ -1815,7 +1795,7 @@ MESSAGETEXT
                    '壊れやすい',
                    'マニュアルが超厚い',
                    '捨てても戻ってくる',
-                  ].map {|e| (is_single ? '特徴B(デメリット)：' : '') + e }
+                  ].map { |e| (is_single ? '特徴B(デメリット)：' : '') + e }
                 when 'L'
                   [
                    '美しい',
@@ -1824,7 +1804,7 @@ MESSAGETEXT
                    '斬新な',
                    '名状しがたき',
                    '命を刈り取る形をしている',
-                  ].map {|e| (is_single ? '見た目：' : '') + e }
+                  ].map { |e| (is_single ? '見た目：' : '') + e }
                 when 'T'
                   [
                    '武器',
@@ -1833,16 +1813,15 @@ MESSAGETEXT
                    '食料',
                    '薬品',
                    '乗り物',
-                  ].map {|e| (is_single ? '発明品の種類：' : '') + e }
+                  ].map { |e| (is_single ? '発明品の種類：' : '') + e }
                 end[dice_result - 1]
     end
 
     return "#{tableName}([#{number.join(',')}])：#{result.join(' ')}"
   end
 
-  #アキバの街で遭遇するトラブルランダム決定表
+  # アキバの街で遭遇するトラブルランダム決定表
   def getTroubleInAkibaStreetDiceCommandResult(command)
-
     return nil unless command === "TIAS"
 
     tableName = "アキバの街で遭遇するトラブル"
@@ -1892,9 +1871,8 @@ MESSAGETEXT
     return "#{tableName}([#{number.join(',')}])：#{result.join(' ')}"
   end
 
-  #廃棄児ランダム決定表
+  # 廃棄児ランダム決定表
   def getAbandonedChildDiceCommandResult(command)
-
     return nil unless command === "ABDC"
 
     tableName = "廃棄児"
@@ -1910,7 +1888,7 @@ MESSAGETEXT
       '石の名前',
       '動物の名前',
       '番号'
-     ].map {|e| '名前：' + e },
+     ].map { |e| '名前：' + e },
      [
       '廃ビル',
       '道端',
@@ -1918,7 +1896,7 @@ MESSAGETEXT
       '木の上',
       '公園',
       '下水道'
-     ].map {|e| '住居：' + e },
+     ].map { |e| '住居：' + e },
      [
       '探し物',
       '料理',
@@ -1926,7 +1904,7 @@ MESSAGETEXT
       '商売',
       '手先が器用',
       'あざといポーズ'
-     ].map {|e| '特技：' + e },
+     ].map { |e| '特技：' + e },
      [
       '痩せている',
       'ちびっこ',
@@ -1934,7 +1912,7 @@ MESSAGETEXT
       '背が高い',
       'ぷにぷに',
       'ガチムチ'
-     ].map {|e| '体型：' + e },
+     ].map { |e| '体型：' + e },
      [
       '果物',
       'お肉',
@@ -1942,7 +1920,7 @@ MESSAGETEXT
       'お魚',
       'お菓子',
       '虫'
-     ].map {|e| '好きな食べ物：' + e },
+     ].map { |e| '好きな食べ物：' + e },
      [
       'ぼく/わたし',
       'オイラ/アタシ',
@@ -1950,7 +1928,7 @@ MESSAGETEXT
       '拙者/わらわ',
       '自分の名前',
       'ミー'
-     ].map {|e| '一人称：' + e }
+     ].map { |e| '一人称：' + e }
     ].each do |table|
       dice_result, dice_str = roll(1, 6)
       number << dice_str
@@ -1960,15 +1938,17 @@ MESSAGETEXT
     return "#{tableName}([#{number.join(',')}])：#{result.join('　')}"
   end
 
-  #楽器種別表
+  # 楽器種別表
   def getMusicalInstrumentTypeDiceCommandResult(command)
-    return nil unless(/MII(\d?)/ === command)
-     type, is_roll = if $1 && $1 != ''
-      [$1.to_i, false]
-    else
-      roll(1, 6)
-    end
+    return nil unless /MII(\d?)/ === command
+
+    type, is_roll = if $1 && $1 != ''
+                      [$1.to_i, false]
+   else
+     roll(1, 6)
+   end
     return nil if type < 1 || 6 < type
+
     tableName = "楽器種別表"
     type_name = ['打楽器１', '鍵盤楽器', '弦楽器１', '弦楽器２', '管楽器１', '管楽器２'][type - 1]
 
@@ -1982,28 +1962,22 @@ MESSAGETEXT
         ['リコーダー', 'オカリナ', 'オーボエ', 'ハーモニカ', 'アコーディオン', '尺八']
       ][type - 1][dice - 1]
 
-    return "#{tableName}" + (is_roll ? "(#{type})" : '') + "：#{type_name}(#{dice})：#{result}"
+    return tableName.to_s + (is_roll ? "(#{type})" : '') + "：#{type_name}(#{dice})：#{result}"
   end
 
-  #イースタル探索表
+  # イースタル探索表
   def getEastalDiceCommandResult(command)
-    return nil unless /ESTL(\d*)([\+\-\d]*)(\$(\d+))?/ =~ command
+    return nil unless (m = /ESTL(\d*)([\+\-\d]*)(\$(\d+))?/.match(command))
 
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg1 = $1
-    reg2 = $2
-    reg3 = $3
-    reg4 = $4
+    return command if m[1].empty? && m[2].empty? && m[3].nil?
 
-    return command if (reg1.empty? && reg2.empty? && reg3.nil?)
-
-    rank = reg1.to_i
-    is_choice = (reg1.empty? || (not reg3.nil?))
-    modifyText = reg2
+    rank = m[1].to_i
+    is_choice = (m[1].empty? || !m[3].nil?)
+    modifyText = m[2]
     modify = getValue(modifyText, 0)
-    is_fix_roll = (not reg3.nil?)
-    dice_value = reg4
-    is_rank_enable = ( (not is_choice) || is_fix_roll)
+    is_fix_roll = !m[3].nil?
+    dice_value = m[4]
+    is_rank_enable = (!is_choice || is_fix_roll)
 
     tableName, table = getEastalExplorationResultTable
 
@@ -2018,8 +1992,7 @@ MESSAGETEXT
 
     number = [getAdjustNumberMin(number, table), 162].min
     result = get_table_by_number(number, table)
-    #result.chomp!
-    result = result.chomp # TKfix !
+    result = result.chomp
 
     return "#{tableName}(#{number}#{dice_str ? '[' + dice_str + ']' : ''})\n#{result}"
   end
@@ -2027,14 +2000,14 @@ MESSAGETEXT
   def getEastalExplorationResultTable
     tableName = "イースタル探索表"
     table = [
-             [  7, <<EOS
+             [ 7, <<EOS
 香りに誘われて：
 　小さな街道沿いで、商隊が〈走り茸〉にまとわりつかれている。
 　奴らを追い払うと、商隊のリーダーがお礼にと人数分の「干した〈走り松茸〉[換金](40G)」をくれる。
 　追われていた理由はこれだったらしい。
 EOS
              ],
-             [  8, <<EOS
+             [ 8, <<EOS
 不幸な出会い：
 　街道を歩いていると、横合いの茂みから〈小牙竜鬼〉の一団が飛び出してきた。
 　突然のことでとても驚いたけど、向こうも〈冒険者〉がいるとは思っていなかったらしい。
@@ -2042,7 +2015,7 @@ EOS
 　PCは全員[疲労:10]を受ける。
 EOS
              ],
-             [  9, <<EOS
+             [ 9, <<EOS
 釣果はいかが？：
 　〈大地人〉の村近くの川で釣りが盛んなようだ。
 　挑戦するならば長靴の中に(2D*5)Gを見つけることができる。

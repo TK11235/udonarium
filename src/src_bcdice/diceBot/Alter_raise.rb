@@ -42,7 +42,6 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     output =
       case command.upcase
 
@@ -82,8 +81,6 @@ MESSAGETEXT
         roc = ($1 || 0).to_i
         get_emotion_table(roc)
 
-      else
-        nil
       end
 
     return output
@@ -100,9 +97,9 @@ MESSAGETEXT
               [12, '刹那。端末をその切っ先に捉えた刹那、君たちの前で粒子の光が舞う。それ以上何も起こることはなく、世界は色を取り戻した。'],
             ]
 
-    if(roc > 1)
+    if roc > 1
       dice = roc
-      dice = 12 if(dice > 12)
+      dice = 12 if dice > 12
       diceText = ''
     else
       dice, diceText = roll(2, 6)
@@ -110,8 +107,8 @@ MESSAGETEXT
     end
 
     tableText = get_table_by_number(dice, table)
-# ''だと\nは文字列扱いに。
-    tableText += "\n【達成値7以上】GM：攻撃ルーチン1つを開示（番号はペアPLが指定）　PL：戦闘開始時のアクセルレベル+1" if(dice >= 7)
+    # ''だと\nは文字列扱いに。
+    tableText += "\n【達成値7以上】GM：攻撃ルーチン1つを開示（番号はペアPLが指定）　PL：戦闘開始時のアクセルレベル+1" if dice >= 7
     return "#{name} ＞ #{dice}#{diceText}：#{tableText}"
   end
 
@@ -250,9 +247,9 @@ MESSAGETEXT
   end
 
   def get_Alter_raise_1d6_table_result(name, table, roc)
-    if(roc > 0)
+    if roc > 0
       dice = roc
-      dice = 6 if(dice > 6)
+      dice = 6 if dice > 6
     else
       dice, = roll(1, 6)
     end
@@ -261,16 +258,16 @@ MESSAGETEXT
   end
 
   def get_Alter_raise_d66_table_result(name, table, roc)
-    if(roc > 10)
+    if roc > 10
       diceText = roc.to_s
       dice1 = diceText[0, 1].to_i
-      dice1 = 6 if(dice1 > 6)
+      dice1 = 6 if dice1 > 6
       dice2 = diceText[1, 1].to_i
-      dice2 = 1 if(dice2 < 1)
-      dice2 = 6 if(dice2 > 6)
-    elsif(roc > 0)
+      dice2 = 1 if dice2 < 1
+      dice2 = 6 if dice2 > 6
+    elsif roc > 0
       dice1 = roc
-      dice1 = 6 if(dice1 > 6)
+      dice1 = 6 if dice1 > 6
       dice2, = roll(1, 6)
     else
       dice1, = roll(1, 6)

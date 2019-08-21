@@ -37,45 +37,42 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-    prefixsRegText = prefixs.collect{|i| i.sub(/\.\*/, '')}.join('|')
-    #Tkfix 正規表現オプション
-    #unless ( /(^|\s)(S)?(#{prefixsRegText})([\d\+\-]*)(>=(\d+))?/i === command )
-    pattern = "(^|\\s)(S)?(#{prefixsRegText})([\\d\\+\\-]*)(>=(\\d+))?"
-    unless ( Regexp.new(pattern, Regexp::IGNORECASE) === command )
+    prefixesRegText = prefixes.collect { |i| i.sub(/\.\*/, '') }.join('|')
+    unless /(^|\s)(S)?(#{prefixesRegText})([\d\+\-]*)(>=(\d+))?/i === command
       debug("NOT match")
       return nil
     end
 
     debug("matched.")
 
-    waponCommand = $3
+    weaponCommand = $3
     base = $4.to_i
     diff = $6
 
-    waponInfo = getWaponTable(waponCommand)
-    output_msg = rollJudge(base, diff, waponInfo)
+    weaponInfo = getWeaponTable(weaponCommand)
+    output_msg = rollJudge(base, diff, weaponInfo)
 
     return output_msg
   end
 
-  def rollJudge(base, diff, waponInfo)
+  def rollJudge(base, diff, weaponInfo)
     debug("rollJudge base", base)
     debug("rollJudge diff", diff)
 
-    waponName = waponInfo[:name]
-    waponTable = waponInfo[:table]
+    weaponName = weaponInfo[:name]
+    weaponTable = weaponInfo[:table]
 
     diceList = getJudgeDiceList
-    total = diceList.inject(){|value, i| value += i}
+    total = diceList.inject() { |value, i| value += i }
     allTotal = total + base
 
     diffText = if diff.nil? then "" else ">=#{diff}" end
-    result = "(#{waponName}：#{base}#{diffText}) ＞ 1D100+#{base} ＞ #{total}"
-    result += "[#{diceList.join(',')}]" if( diceList.length >= 2 )
+    result = "(#{weaponName}：#{base}#{diffText}) ＞ 1D100+#{base} ＞ #{total}"
+    result += "[#{diceList.join(',')}]" if diceList.length >= 2
     result += "+#{base}"
     result += " ＞ #{allTotal}"
-    result += getSuccessText(allTotal, diff, diceList, waponTable)
-    result += getWaponSkillText(waponTable, diceList.max)
+    result += getSuccessText(allTotal, diff, diceList, weaponTable)
+    result += getWeaponSkillText(weaponTable, diceList.max)
 
     debug("check_1D100 result", result)
 
@@ -84,111 +81,111 @@ MESSAGETEXT
 
   def getJudgeDiceList
     diceList = []
-    while( true )
+    loop do
       value, = roll(1, 100)
       diceList << value
 
       rank01 = value % 10
       debug("rank01", rank01)
 
-      break unless( rank01 == 0 )
+      break unless rank01 == 0
     end
 
     return diceList
   end
 
-  def getSuccessText(allTotal, diff, diceList, isWapon)
+  def getSuccessText(allTotal, diff, diceList, isWeapon)
     first = diceList.first
-    return '' if( first.nil? )
+    return '' if first.nil?
 
-    return " ＞ ファンブル" if( first <= 9 )
+    return " ＞ ファンブル" if first <= 9
 
-    if( diff.nil? and (first != 10) )
+    if diff.nil? && (first != 10)
       return ''
     end
 
     result = ''
-    skillText = getSkillText(first, diff, isWapon)
+    skillText = getSkillText(first, diff, isWeapon)
     result += skillText
 
-    unless( diff.nil? )
-      result += ' ＞ ' if( skillText.empty? )
+    unless diff.nil?
+      result += ' ＞ ' if  skillText.empty?
 
       success = (allTotal >= diff.to_i ? "成功" : "失敗")
-      result += "#{success}"
+      result += success.to_s
     end
 
     return result
   end
 
-  def getSkillText(first, diff, isWapon)
+  def getSkillText(first, diff, isWeapon)
     result = ''
-    return result if( isWapon )
+    return result if isWeapon
 
     result = ' ＞ '
-    return result unless( first == 10 )
+    return result unless first == 10
 
     result += "技能なし：ファンブル"
 
-    return result if( diff.nil? )
+    return result if diff.nil?
 
     result += "／技能あり："
 
     return result\
   end
 
-  def getWaponTable(waponCommand)
-    debug('getWaponTable waponCommand', waponCommand)
+  def getWeaponTable(weaponCommand)
+    debug('getWeaponTable weaponCommand', weaponCommand)
 
-    case waponCommand.upcase
+    case weaponCommand.upcase
     when 'SW'
-      return getWaponTableSword
+      return getWeaponTableSword
     when 'CSW'
-      return getWaponTableSwordCounter
+      return getWeaponTableSwordCounter
     when 'LS'
-      return getWaponTableLongSword
+      return getWeaponTableLongSword
     when 'CLS'
-      return getWaponTableLongSwordCounter
+      return getWeaponTableLongSwordCounter
     when 'SS'
-      return getWaponTableShortSword
+      return getWeaponTableShortSword
     when 'CSS'
-      return getWaponTableShortSwordCounter
+      return getWeaponTableShortSwordCounter
     when 'SP'
-      return getWaponTableSpear
+      return getWeaponTableSpear
     when 'CSP'
-      return getWaponTableSpearCounter
+      return getWeaponTableSpearCounter
     when 'AX'
-      return getWaponTableAx
+      return getWeaponTableAx
     when 'CAX'
-      return getWaponTableAxCounter
+      return getWeaponTableAxCounter
     when 'CL'
-      return getWaponTableClub
+      return getWeaponTableClub
     when 'CCL'
-      return getWaponTableClubCounter
+      return getWeaponTableClubCounter
     when 'BW'
-      return getWaponTableBow
+      return getWeaponTableBow
     when 'MA'
-      return getWaponTableMartialArt
+      return getWeaponTableMartialArt
     when 'CMA'
-      return getWaponTableMartialArtCounter
+      return getWeaponTableMartialArtCounter
     when 'BX'
-      return getWaponTableBoxing
+      return getWeaponTableBoxing
     when 'CBX'
-      return getWaponTableBoxingCounter
+      return getWeaponTableBoxingCounter
     when 'PR'
-      return getWaponTableProWrestling
+      return getWeaponTableProWrestling
     when 'CPR'
-      return getWaponTableProWrestlingCounter
+      return getWeaponTableProWrestlingCounter
     when 'ST'
-      return getWaponTableStand
+      return getWeaponTableStand
     when 'CST'
-      return getWaponTableStandCounter
+      return getWeaponTableStandCounter
     end
 
     return {:name => '判定', :table => nil}
   end
 
-  def getWaponTableSword
+  def getWeaponTableSword
     {:name => '剣',
       :table =>
       [[11, '失礼剣', '成功度＋５'],
@@ -204,7 +201,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableSwordCounter
+  def getWeaponTableSwordCounter
     {:name => '剣カウンター',
       :table =>
       [[33, 'パリィ', '攻撃の無効化'],
@@ -218,7 +215,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableLongSword
+  def getWeaponTableLongSword
     {:name => '大剣',
       :table =>
       [[11, 'スマッシュ', '敵防御半分'],
@@ -234,7 +231,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableLongSwordCounter
+  def getWeaponTableLongSwordCounter
     {:name => '大剣カウンター',
       :table =>
       [[22, '無形の位', '攻撃の無効化'],
@@ -249,7 +246,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableShortSword
+  def getWeaponTableShortSword
     {:name => '小剣',
       :table =>
       [[11, '乱れ突き', '２連続攻撃'],
@@ -265,7 +262,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableShortSwordCounter
+  def getWeaponTableShortSwordCounter
     {:name => '小剣カウンター',
       :table =>
       [[11, 'リポスト', 'カウンター'],
@@ -281,7 +278,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableSpear
+  def getWeaponTableSpear
     {:name => '槍',
       :table =>
       [[11, 'チャージ', 'ダメージ１．５倍、盾受けー３０'],
@@ -297,7 +294,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableSpearCounter
+  def getWeaponTableSpearCounter
     {:name => '槍カウンター',
       :table =>
       [[55, '風車', 'カウンター、ダメージ２倍'],
@@ -309,7 +306,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableAx
+  def getWeaponTableAx
     {:name => '斧',
       :table =>
       [[11, '一人時間差', '防御行動ー１００'],
@@ -325,7 +322,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableAxCounter
+  def getWeaponTableAxCounter
     {:name => '斧カウンター',
       :table =>
       [[44, '真っ向唐竹割り', 'クロスカウンター、Ｂ・Ｄ'],
@@ -338,8 +335,8 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableClub
-    {:name =>'棍棒',
+  def getWeaponTableClub
+    {:name => '棍棒',
       :table =>
       [[11, 'ハードヒット', '防御力無視'],
        [22, 'ダブルヒット', '２連続攻撃'],
@@ -354,8 +351,8 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableClubCounter
-    {:name =>'棍棒カウンター',
+  def getWeaponTableClubCounter
+    {:name => '棍棒カウンター',
       :table =>
       [[11, 'ブロッキング', '攻撃の無効化'],
        [22, nil, nil],
@@ -370,7 +367,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableBow
+  def getWeaponTableBow
     {:name => '弓',
       :table =>
       [[11, '影縫い', '麻痺効果「注意力」０'],
@@ -386,7 +383,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableMartialArt
+  def getWeaponTableMartialArt
     {:name => '体術',
       :table =>
       [[11, '集気法', '通常ダメージ分自分のＨＰ回復'],
@@ -402,7 +399,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableMartialArtCounter
+  def getWeaponTableMartialArtCounter
     {:name => '体術カウンター',
       :table =>
       [[11, 'スウェイバック', '攻撃の無効化'],
@@ -421,18 +418,18 @@ MESSAGETEXT
   def getRandMartialArtCounter
     value, = roll(1, 10)
     dice = value * 10 + value
-    dice = 100 if( value == 110 )
+    dice = 100 if  value == 110
 
-    tableInfo = getWaponTableMartialArt
-    waponTable = tableInfo[:table]
+    tableInfo = getWeaponTableMartialArt
+    weaponTable = tableInfo[:table]
 
     result = " ＞ (#{value})"
-    result += getWaponSkillText(waponTable, dice)
+    result += getWeaponSkillText(weaponTable, dice)
 
     return result
   end
 
-  def getWaponTableBoxing
+  def getWeaponTableBoxing
     {:name => 'ボクシング',
       :table =>
       [[11, 'ワン・ツー', '２連続攻撃・２攻撃目盾受け、回避不可'],
@@ -448,7 +445,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableBoxingCounter
+  def getWeaponTableBoxingCounter
     {:name => 'ボクシングカウンター',
       :table =>
       [[11, 'ダッキングブロー', 'カウンター'],
@@ -464,7 +461,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableProWrestling
+  def getWeaponTableProWrestling
     {:name => 'プロレス',
       :table =>
       [[11, 'ボディスラム', '盾受け不可'],
@@ -480,7 +477,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableProWrestlingCounter
+  def getWeaponTableProWrestlingCounter
     {:name => 'プロレスカウンター',
       :table =>
       [[22, 'パワースラム', 'カウンター'],
@@ -493,7 +490,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableStand
+  def getWeaponTableStand
     {:name => '幽波紋',
       :table =>
       [[11, 'SILER CHARIOT', '攻撃量５倍、刺しタイプ攻撃'],
@@ -509,7 +506,7 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponTableStandCounter
+  def getWeaponTableStandCounter
     {:name => '幽波紋カウンター',
       :table =>
       [[11, 'ANUBIS', '技のみカウンター、ダメージ（カウンターした回数の２乗）倍、斬りタイプ攻撃'],
@@ -525,22 +522,22 @@ MESSAGETEXT
       ]}
   end
 
-  def getWaponSkillText(waponTable, dice)
-    debug('getWaponSkillText', dice)
+  def getWeaponSkillText(weaponTable, dice)
+    debug('getWeaponSkillText', dice)
 
-    return '' if( waponTable.nil? )
+    return '' if weaponTable.nil?
 
     preName = ''
     preEffect = ''
 
-    waponTable.each do |index, name, effect|
+    weaponTable.each do |index, name, effect|
       name ||= preName
       preName = name
 
       effect ||= preEffect
       preEffect = effect
 
-      next unless( index == (dice % 100) )
+      next unless index == (dice % 100)
 
       return " ＞ 「#{name}」#{effect}"
     end

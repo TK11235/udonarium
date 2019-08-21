@@ -5,159 +5,237 @@ unless $LOAD_PATH.include?(dodontof_root)
   $LOAD_PATH.unshift(dodontof_root)
 end
 
+require 'test/setup'
 require 'test/unit'
 require 'bcdiceCore'
 require 'diceBot/DiceBotLoader'
+require 'diceBot/DiceBotLoaderList'
 
+# ダイスボット読み込みのテスト
+#
+# 1. ゲームタイプ名が有効かを調べるテストケース
+# 2. 特定の名前のダイスボットの読み込み禁止を確認するテストケース
+# 3. 複数の名前で読み込めるダイスボットの読み込みを確認するテストケース
+# 4. ダイスボットファイルを置いただけで読み込めることを確認するテストケース
 class TestDiceBotLoaders < Test::Unit::TestCase
+  # ダイスボットのディレクトリ
+  DICE_BOT_DIR = File.expand_path('../diceBot', File.dirname(__FILE__))
+
   def setup
     $isDebug = false
 
     @bcDice = BCDiceMaker.new.newBcDice
   end
 
+  #--
+  # 1. ゲームタイプ名が有効かを調べるテストケース
+  #++
+
+  # 「Cthulhu」というゲームタイプは有効
+  def test_gameTypeCthulhuShouldBeValid
+    assert(DiceBotLoader.validGameType?('Cthulhu'))
+  end
+
+  # 「Cthulhu7th」というゲームタイプは有効
+  def test_gameTypeCthulhu7thShouldBeValid
+    assert(DiceBotLoader.validGameType?('Cthulhu7th'))
+  end
+
+  # 「Cthulhu7th_Korean」というゲームタイプは有効
+  def test_gameTypeCthulhu7th_KoreanShouldBeValid
+    assert(DiceBotLoader.validGameType?('Cthulhu7th_Korean'))
+  end
+
+  # 「_Template」というゲームタイプは無効
+  def test_gameType_TemplateShouldBeInvalid
+    assert(!DiceBotLoader.validGameType?('_Template'))
+  end
+
+  # 「test」というゲームタイプは無効
+  def test_gameType_testShouldBeInvalid
+    assert(!DiceBotLoader.validGameType?('test'))
+  end
+
+  #--
+  # 2. 特定の名前のダイスボットの読み込み禁止を確認するテストケース
+  #++
+
+  # 存在しないダイスボットを読み込まない
+  def test_shouldNotLoadDiceBotNotFound
+    assertDiceBotNotFound('NotFound')
+  end
+
+  # 「DiceBot」という名前のダイスボットを読み込まない
+  def test_shouldNotLoadDiceBotNamedDiceBot
+    assertDiceBotIgnored('DiceBot')
+  end
+
+  # 「DiceBotLoader」という名前のダイスボットを読み込まない
+  def test_shouldNotLoadDiceBotNamedDiceBotLoader
+    assertDiceBotIgnored('DiceBotLoader')
+  end
+
+  # 「DiceBotLoaderList」という名前のダイスボットを読み込まない
+  def test_shouldNotLoadDiceBotNamedDiceBotLoaderList
+    assertDiceBotIgnored('DiceBotLoaderList')
+  end
+
+  # 「_Template」という名前のダイスボットを読み込まない
+  def test_shouldNotLoadDiceBotNamed_Template
+    assertDiceBotIgnored('_Template')
+  end
+
+  # 「_InsaneScp」という名前のダイスボットを読み込まない
+  def test_shouldNotLoadDiceBotNamed_InsaceScp
+    assertDiceBotIgnored('_InsaneScp')
+  end
+
+  #--
+  # 3. 複数の名前で読み込めるダイスボットの読み込みを確認するテストケース
+  #++
+
   def test_None
-    assertDiceBot('DiceBot', 'None')
+    assertDiceBotWithLoader('DiceBot', 'None')
   end
 
   def test_Cthulhu
-    assertDiceBot('Cthulhu', 'Cthulhu')
-    assertDiceBot('Cthulhu', 'COC')
+    assertDiceBotWithLoader('Cthulhu', 'Cthulhu')
+    assertDiceBotWithLoader('Cthulhu', 'COC')
   end
 
   def test_Hieizan
-    assertDiceBot('Hieizan', 'Hieizan')
-    assertDiceBot('Hieizan', 'COCH')
+    assertDiceBotWithLoader('Hieizan', 'Hieizan')
+    assertDiceBotWithLoader('Hieizan', 'COCH')
   end
 
   def test_Elric
-    assertDiceBot('Elric!', 'Elric!')
-    assertDiceBot('Elric!', 'EL')
+    assertDiceBotWithLoader('Elric!', 'Elric!')
+    assertDiceBotWithLoader('Elric!', 'EL')
   end
 
   def test_RuneQuest
-    assertDiceBot('RuneQuest', 'RuneQuest')
-    assertDiceBot('RuneQuest', 'RQ')
+    assertDiceBotWithLoader('RuneQuest', 'RuneQuest')
+    assertDiceBotWithLoader('RuneQuest', 'RQ')
   end
 
   def test_Chill
-    assertDiceBot('Chill', 'Chill')
-    assertDiceBot('Chill', 'CH')
+    assertDiceBotWithLoader('Chill', 'Chill')
+    assertDiceBotWithLoader('Chill', 'CH')
   end
 
   def test_RoleMaster
-    assertDiceBot('RoleMaster', 'RoleMaster')
-    assertDiceBot('RoleMaster', 'RM')
+    assertDiceBotWithLoader('RoleMaster', 'RoleMaster')
+    assertDiceBotWithLoader('RoleMaster', 'RM')
   end
 
   def test_ShadowRun
-    assertDiceBot('ShadowRun', 'ShadowRun')
-    assertDiceBot('ShadowRun', 'SR')
+    assertDiceBotWithLoader('ShadowRun', 'ShadowRun')
+    assertDiceBotWithLoader('ShadowRun', 'SR')
   end
 
   def test_ShadowRun4
-    assertDiceBot('ShadowRun4', 'ShadowRun4')
-    assertDiceBot('ShadowRun4', 'SR4')
+    assertDiceBotWithLoader('ShadowRun4', 'ShadowRun4')
+    assertDiceBotWithLoader('ShadowRun4', 'SR4')
   end
 
   def test_Pendragon
-    assertDiceBot('Pendragon', 'Pendragon')
-    assertDiceBot('Pendragon', 'PD')
+    assertDiceBotWithLoader('Pendragon', 'Pendragon')
+    assertDiceBotWithLoader('Pendragon', 'PD')
   end
 
   def test_SwordWorld2_0
-    assertDiceBot('SwordWorld2.0', 'SwordWorld 2.0')
-    assertDiceBot('SwordWorld2.0', 'SwordWorld2.0')
-    assertDiceBot('SwordWorld2.0', 'SW 2.0')
-    assertDiceBot('SwordWorld2.0', 'SW2.0')
+    assertDiceBotWithLoader('SwordWorld2.0', 'SwordWorld 2.0')
+    assertDiceBotWithLoader('SwordWorld2.0', 'SwordWorld2.0')
+    assertDiceBotWithLoader('SwordWorld2.0', 'SW 2.0')
+    assertDiceBotWithLoader('SwordWorld2.0', 'SW2.0')
   end
 
   def test_SwordWorld
-    assertDiceBot('SwordWorld', 'SwordWorld')
-    assertDiceBot('SwordWorld', 'SW')
+    assertDiceBotWithLoader('SwordWorld', 'SwordWorld')
+    assertDiceBotWithLoader('SwordWorld', 'SW')
   end
 
   def test_Arianrhod
-    assertDiceBot('Arianrhod', 'Arianrhod')
-    assertDiceBot('Arianrhod', 'AR')
+    assertDiceBotWithLoader('Arianrhod', 'Arianrhod')
+    assertDiceBotWithLoader('Arianrhod', 'AR')
   end
 
   def test_InfiniteFantasia
-    assertDiceBot('InfiniteFantasia', 'Infinite Fantasia')
-    assertDiceBot('InfiniteFantasia', 'InfiniteFantasia')
-    assertDiceBot('InfiniteFantasia', 'IF')
+    assertDiceBotWithLoader('InfiniteFantasia', 'Infinite Fantasia')
+    assertDiceBotWithLoader('InfiniteFantasia', 'InfiniteFantasia')
+    assertDiceBotWithLoader('InfiniteFantasia', 'IF')
   end
 
   def test_WARPS
-    assertDiceBot('WARPS', 'WARPS')
+    assertDiceBotWithLoader('WARPS', 'WARPS')
   end
 
   def test_DemonParasite
-    assertDiceBot('DemonParasite', 'Demon Parasite')
-    assertDiceBot('DemonParasite', 'DemonParasite')
-    assertDiceBot('DemonParasite', 'DP')
+    assertDiceBotWithLoader('DemonParasite', 'Demon Parasite')
+    assertDiceBotWithLoader('DemonParasite', 'DemonParasite')
+    assertDiceBotWithLoader('DemonParasite', 'DP')
   end
 
   def test_ParasiteBlood
-    assertDiceBot('ParasiteBlood', 'Parasite Blood')
-    assertDiceBot('ParasiteBlood', 'ParasiteBlood')
-    assertDiceBot('ParasiteBlood', 'PB')
+    assertDiceBotWithLoader('ParasiteBlood', 'Parasite Blood')
+    assertDiceBotWithLoader('ParasiteBlood', 'ParasiteBlood')
+    assertDiceBotWithLoader('ParasiteBlood', 'PB')
   end
 
   def test_Gundog
-    assertDiceBot('Gundog', 'Gun Dog')
-    assertDiceBot('Gundog', 'GunDog')
-    assertDiceBot('Gundog', 'GD')
+    assertDiceBotWithLoader('Gundog', 'Gun Dog')
+    assertDiceBotWithLoader('Gundog', 'GunDog')
+    assertDiceBotWithLoader('Gundog', 'GD')
   end
 
   def test_GundogZero
-    assertDiceBot('GundogZero', 'Gun Dog Zero')
-    assertDiceBot('GundogZero', 'Gun DogZero')
-    assertDiceBot('GundogZero', 'GunDog Zero')
-    assertDiceBot('GundogZero', 'GunDogZero')
-    assertDiceBot('GundogZero', 'GDZ')
+    assertDiceBotWithLoader('GundogZero', 'Gun Dog Zero')
+    assertDiceBotWithLoader('GundogZero', 'Gun DogZero')
+    assertDiceBotWithLoader('GundogZero', 'GunDog Zero')
+    assertDiceBotWithLoader('GundogZero', 'GunDogZero')
+    assertDiceBotWithLoader('GundogZero', 'GDZ')
   end
 
   def test_TunnelsAndTrolls
-    assertDiceBot('Tunnels & Trolls', 'Tunnels & Trolls')
-    assertDiceBot('Tunnels & Trolls', 'Tunnels &Trolls')
-    assertDiceBot('Tunnels & Trolls', 'Tunnels& Trolls')
-    assertDiceBot('Tunnels & Trolls', 'Tunnels&Trolls')
-    assertDiceBot('Tunnels & Trolls', 'TuT')
+    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels & Trolls')
+    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels &Trolls')
+    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels& Trolls')
+    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels&Trolls')
+    assertDiceBotWithLoader('Tunnels & Trolls', 'TuT')
   end
 
   def test_NightmareHunterDeep
-    assertDiceBot('NightmareHunterDeep', 'Nightmare Hunter=Deep')
-    assertDiceBot('NightmareHunterDeep', 'Nightmare Hunter Deep')
-    assertDiceBot('NightmareHunterDeep', 'Nightmare HunterDeep')
-    assertDiceBot('NightmareHunterDeep', 'NightmareHunter=Deep')
-    assertDiceBot('NightmareHunterDeep', 'NightmareHunter Deep')
-    assertDiceBot('NightmareHunterDeep', 'NightmareHunterDeep')
-    assertDiceBot('NightmareHunterDeep', 'NHD')
+    assertDiceBotWithLoader('NightmareHunterDeep', 'Nightmare Hunter=Deep')
+    assertDiceBotWithLoader('NightmareHunterDeep', 'Nightmare Hunter Deep')
+    assertDiceBotWithLoader('NightmareHunterDeep', 'Nightmare HunterDeep')
+    assertDiceBotWithLoader('NightmareHunterDeep', 'NightmareHunter=Deep')
+    assertDiceBotWithLoader('NightmareHunterDeep', 'NightmareHunter Deep')
+    assertDiceBotWithLoader('NightmareHunterDeep', 'NightmareHunterDeep')
+    assertDiceBotWithLoader('NightmareHunterDeep', 'NHD')
   end
 
   def test_Warhammer
-    assertDiceBot('Warhammer', 'War HammerFRP')
-    assertDiceBot('Warhammer', 'War Hammer')
-    assertDiceBot('Warhammer', 'WarHammerFRP')
-    assertDiceBot('Warhammer', 'WarHammer')
-    assertDiceBot('Warhammer', 'WH')
+    assertDiceBotWithLoader('Warhammer', 'War HammerFRP')
+    assertDiceBotWithLoader('Warhammer', 'War Hammer')
+    assertDiceBotWithLoader('Warhammer', 'WarHammerFRP')
+    assertDiceBotWithLoader('Warhammer', 'WarHammer')
+    assertDiceBotWithLoader('Warhammer', 'WH')
   end
 
   def test_PhantasmAdventure
-    assertDiceBot('PhantasmAdventure', 'Phantasm Adventure')
-    assertDiceBot('PhantasmAdventure', 'PhantasmAdventure')
-    assertDiceBot('PhantasmAdventure', 'PA')
+    assertDiceBotWithLoader('PhantasmAdventure', 'Phantasm Adventure')
+    assertDiceBotWithLoader('PhantasmAdventure', 'PhantasmAdventure')
+    assertDiceBotWithLoader('PhantasmAdventure', 'PA')
   end
 
   def test_ChaosFlare
-    assertDiceBot('Chaos Flare', 'Chaos Flare')
-    assertDiceBot('Chaos Flare', 'ChaosFlare')
-    assertDiceBot('Chaos Flare', 'CF')
+    assertDiceBotWithLoader('Chaos Flare', 'Chaos Flare')
+    assertDiceBotWithLoader('Chaos Flare', 'ChaosFlare')
+    assertDiceBotWithLoader('Chaos Flare', 'CF')
   end
 
   def test_ChaosFlare_cards
-    assertDiceBot('Chaos Flare', 'Chaos Flare')
+    assertDiceBotWithLoader('Chaos Flare', 'Chaos Flare')
 
     cardTrader = @bcDice.cardTrader
     assert_equal(2, cardTrader.numOfDecks)
@@ -167,139 +245,139 @@ class TestDiceBotLoaders < Test::Unit::TestCase
   end
 
   def test_CthulhuTech
-    assertDiceBot('CthulhuTech', 'Cthulhu Tech')
-    assertDiceBot('CthulhuTech', 'CthulhuTech')
-    assertDiceBot('CthulhuTech', 'CT')
+    assertDiceBotWithLoader('CthulhuTech', 'Cthulhu Tech')
+    assertDiceBotWithLoader('CthulhuTech', 'CthulhuTech')
+    assertDiceBotWithLoader('CthulhuTech', 'CT')
   end
 
   def test_TokumeiTenkousei
-    assertDiceBot('TokumeiTenkousei', 'Tokumei Tenkousei')
-    assertDiceBot('TokumeiTenkousei', 'TokumeiTenkousei')
-    assertDiceBot('TokumeiTenkousei', 'ToT')
+    assertDiceBotWithLoader('TokumeiTenkousei', 'Tokumei Tenkousei')
+    assertDiceBotWithLoader('TokumeiTenkousei', 'TokumeiTenkousei')
+    assertDiceBotWithLoader('TokumeiTenkousei', 'ToT')
   end
 
   def test_ShinobiGami
-    assertDiceBot('ShinobiGami', 'Shinobi Gami')
-    assertDiceBot('ShinobiGami', 'ShinobiGami')
-    assertDiceBot('ShinobiGami', 'SG')
+    assertDiceBotWithLoader('ShinobiGami', 'Shinobi Gami')
+    assertDiceBotWithLoader('ShinobiGami', 'ShinobiGami')
+    assertDiceBotWithLoader('ShinobiGami', 'SG')
   end
 
   def test_DoubleCross
-    assertDiceBot('DoubleCross', 'Double Cross')
-    assertDiceBot('DoubleCross', 'DoubleCross')
-    assertDiceBot('DoubleCross', 'DX')
+    assertDiceBotWithLoader('DoubleCross', 'Double Cross')
+    assertDiceBotWithLoader('DoubleCross', 'DoubleCross')
+    assertDiceBotWithLoader('DoubleCross', 'DX')
   end
 
   def test_Satasupe
-    assertDiceBot('Satasupe', 'Sata Supe')
-    assertDiceBot('Satasupe', 'SataSupe')
-    assertDiceBot('Satasupe', 'SS')
+    assertDiceBotWithLoader('Satasupe', 'Sata Supe')
+    assertDiceBotWithLoader('Satasupe', 'SataSupe')
+    assertDiceBotWithLoader('Satasupe', 'SS')
   end
 
   def test_ArsMagica
-    assertDiceBot('ArsMagica', 'Ars Magica')
-    assertDiceBot('ArsMagica', 'ArsMagica')
-    assertDiceBot('ArsMagica', 'AM')
+    assertDiceBotWithLoader('ArsMagica', 'Ars Magica')
+    assertDiceBotWithLoader('ArsMagica', 'ArsMagica')
+    assertDiceBotWithLoader('ArsMagica', 'AM')
   end
 
   def test_DarkBlaze
-    assertDiceBot('DarkBlaze', 'Dark Blaze')
-    assertDiceBot('DarkBlaze', 'DarkBlaze')
-    assertDiceBot('DarkBlaze', 'DB')
+    assertDiceBotWithLoader('DarkBlaze', 'Dark Blaze')
+    assertDiceBotWithLoader('DarkBlaze', 'DarkBlaze')
+    assertDiceBotWithLoader('DarkBlaze', 'DB')
   end
 
   def test_NightWizard
-    assertDiceBot('NightWizard', 'Night Wizard')
-    assertDiceBot('NightWizard', 'NightWizard')
-    assertDiceBot('NightWizard', 'NW')
+    assertDiceBotWithLoader('NightWizard', 'Night Wizard')
+    assertDiceBotWithLoader('NightWizard', 'NightWizard')
+    assertDiceBotWithLoader('NightWizard', 'NW')
   end
 
   def test_Torg
-    assertDiceBot('TORG', 'TORG')
+    assertDiceBotWithLoader('TORG', 'TORG')
   end
 
   def test_Torg1_5
-    assertDiceBot('TORG1.5', 'TORG1.5')
+    assertDiceBotWithLoader('TORG1.5', 'TORG1.5')
   end
 
   def test_HuntersMoon
-    assertDiceBot('HuntersMoon', 'Hunters Moon')
-    assertDiceBot('HuntersMoon', 'HuntersMoon')
-    assertDiceBot('HuntersMoon', 'HM')
+    assertDiceBotWithLoader('HuntersMoon', 'Hunters Moon')
+    assertDiceBotWithLoader('HuntersMoon', 'HuntersMoon')
+    assertDiceBotWithLoader('HuntersMoon', 'HM')
   end
 
   def test_BloodCrusade
-    assertDiceBot('BloodCrusade', 'Blood Crusade')
-    assertDiceBot('BloodCrusade', 'BloodCrusade')
-    assertDiceBot('BloodCrusade', 'BC')
+    assertDiceBotWithLoader('BloodCrusade', 'Blood Crusade')
+    assertDiceBotWithLoader('BloodCrusade', 'BloodCrusade')
+    assertDiceBotWithLoader('BloodCrusade', 'BC')
   end
 
   def test_MeikyuKingdom
-    assertDiceBot('MeikyuKingdom', 'Meikyu Kingdom')
-    assertDiceBot('MeikyuKingdom', 'MeikyuKingdom')
-    assertDiceBot('MeikyuKingdom', 'MK')
+    assertDiceBotWithLoader('MeikyuKingdom', 'Meikyu Kingdom')
+    assertDiceBotWithLoader('MeikyuKingdom', 'MeikyuKingdom')
+    assertDiceBotWithLoader('MeikyuKingdom', 'MK')
   end
 
   def test_EarthDawn
-    assertDiceBot('EarthDawn', 'Earth Dawn')
-    assertDiceBot('EarthDawn', 'EarthDawn')
-    assertDiceBot('EarthDawn', 'ED')
+    assertDiceBotWithLoader('EarthDawn', 'Earth Dawn')
+    assertDiceBotWithLoader('EarthDawn', 'EarthDawn')
+    assertDiceBotWithLoader('EarthDawn', 'ED')
   end
 
   def test_EarthDawn3
-    assertDiceBot('EarthDawn3', 'Earth Dawn3')
-    assertDiceBot('EarthDawn3', 'EarthDawn3')
-    assertDiceBot('EarthDawn3', 'ED3')
+    assertDiceBotWithLoader('EarthDawn3', 'Earth Dawn3')
+    assertDiceBotWithLoader('EarthDawn3', 'EarthDawn3')
+    assertDiceBotWithLoader('EarthDawn3', 'ED3')
   end
 
   def test_EarthDawn4
-    assertDiceBot('EarthDawn4', 'Earth Dawn4')
-    assertDiceBot('EarthDawn4', 'EarthDawn4')
-    assertDiceBot('EarthDawn4', 'ED4')
+    assertDiceBotWithLoader('EarthDawn4', 'Earth Dawn4')
+    assertDiceBotWithLoader('EarthDawn4', 'EarthDawn4')
+    assertDiceBotWithLoader('EarthDawn4', 'ED4')
   end
 
   def test_EmbryoMachine
-    assertDiceBot('EmbryoMachine', 'Embryo Machine')
-    assertDiceBot('EmbryoMachine', 'EmbryoMachine')
-    assertDiceBot('EmbryoMachine', 'EM')
+    assertDiceBotWithLoader('EmbryoMachine', 'Embryo Machine')
+    assertDiceBotWithLoader('EmbryoMachine', 'EmbryoMachine')
+    assertDiceBotWithLoader('EmbryoMachine', 'EM')
   end
 
   def test_GehennaAn
-    assertDiceBot('GehennaAn', 'Gehenna An')
-    assertDiceBot('GehennaAn', 'GehennaAn')
-    assertDiceBot('GehennaAn', 'GA')
+    assertDiceBotWithLoader('GehennaAn', 'Gehenna An')
+    assertDiceBotWithLoader('GehennaAn', 'GehennaAn')
+    assertDiceBotWithLoader('GehennaAn', 'GA')
   end
 
   def test_MagicaLogia
-    assertDiceBot('MagicaLogia', 'Magica Logia')
-    assertDiceBot('MagicaLogia', 'MagicaLogia')
-    assertDiceBot('MagicaLogia', 'ML')
+    assertDiceBotWithLoader('MagicaLogia', 'Magica Logia')
+    assertDiceBotWithLoader('MagicaLogia', 'MagicaLogia')
+    assertDiceBotWithLoader('MagicaLogia', 'ML')
   end
 
   def test_Nechronica
-    assertDiceBot('Nechronica', 'Nechronica')
-    assertDiceBot('Nechronica', 'NC')
+    assertDiceBotWithLoader('Nechronica', 'Nechronica')
+    assertDiceBotWithLoader('Nechronica', 'NC')
   end
 
   def test_MeikyuDays
-    assertDiceBot('MeikyuDays', 'Meikyu Days')
-    assertDiceBot('MeikyuDays', 'MeikyuDays')
-    assertDiceBot('MeikyuDays', 'MD')
+    assertDiceBotWithLoader('MeikyuDays', 'Meikyu Days')
+    assertDiceBotWithLoader('MeikyuDays', 'MeikyuDays')
+    assertDiceBotWithLoader('MeikyuDays', 'MD')
   end
 
   def test_Peekaboo
-    assertDiceBot('Peekaboo', 'Peekaboo')
-    assertDiceBot('Peekaboo', 'PK')
+    assertDiceBotWithLoader('Peekaboo', 'Peekaboo')
+    assertDiceBotWithLoader('Peekaboo', 'PK')
   end
 
   def test_BarnaKronika
-    assertDiceBot('BarnaKronika', 'Barna Kronika')
-    assertDiceBot('BarnaKronika', 'BarnaKronika')
-    assertDiceBot('BarnaKronika', 'BK')
+    assertDiceBotWithLoader('BarnaKronika', 'Barna Kronika')
+    assertDiceBotWithLoader('BarnaKronika', 'BarnaKronika')
+    assertDiceBotWithLoader('BarnaKronika', 'BK')
   end
 
   def test_BarnaKronika_cards
-    assertDiceBot('BarnaKronika', 'Barna Kronika')
+    assertDiceBotWithLoader('BarnaKronika', 'Barna Kronika')
 
     cardTrader = @bcDice.cardTrader
     assert_equal(1, cardTrader.numOfDecks)
@@ -309,149 +387,444 @@ class TestDiceBotLoaders < Test::Unit::TestCase
   end
 
   def test_RokumonSekai2
-    assertDiceBot('RokumonSekai2', 'RokumonSekai2')
-    assertDiceBot('RokumonSekai2', 'RS2')
+    assertDiceBotWithLoader('RokumonSekai2', 'RokumonSekai2')
+    assertDiceBotWithLoader('RokumonSekai2', 'RS2')
   end
 
   def test_MonotoneMusium
-    assertDiceBot('MonotoneMusium', 'Monotone Musium')
-    assertDiceBot('MonotoneMusium', 'MonotoneMusium')
-    assertDiceBot('MonotoneMusium', 'MM')
+    assertDiceBotWithLoader('MonotoneMusium', 'Monotone Musium')
+    assertDiceBotWithLoader('MonotoneMusium', 'MonotoneMusium')
+    assertDiceBotWithLoader('MonotoneMusium', 'MM')
   end
 
   def test_ZettaiReido
-    assertDiceBot('ZettaiReido', 'Zettai Reido')
-    assertDiceBot('ZettaiReido', 'ZettaiReido')
+    assertDiceBotWithLoader('ZettaiReido', 'Zettai Reido')
+    assertDiceBotWithLoader('ZettaiReido', 'ZettaiReido')
   end
 
   def test_EclipsePhase
-    assertDiceBot('EclipsePhase', 'EclipsePhase')
+    assertDiceBotWithLoader('EclipsePhase', 'EclipsePhase')
   end
 
   def test_NjslyrBattle
-    assertDiceBot('NJSLYRBATTLE', 'NJSLYRBATTLE')
+    assertDiceBotWithLoader('NJSLYRBATTLE', 'NJSLYRBATTLE')
   end
 
   def test_ShinMegamiTenseiKakuseihen
-    assertDiceBot('SMTKakuseihen', 'ShinMegamiTenseiKakuseihen')
-    assertDiceBot('SMTKakuseihen', 'SMTKakuseihen')
+    assertDiceBotWithLoader('SMTKakuseihen', 'ShinMegamiTenseiKakuseihen')
+    assertDiceBotWithLoader('SMTKakuseihen', 'SMTKakuseihen')
   end
 
   def test_Ryutama
-    assertDiceBot('Ryutama', 'Ryutama')
+    assertDiceBotWithLoader('Ryutama', 'Ryutama')
   end
 
   def test_CardRanker
-    assertDiceBot('CardRanker', 'CardRanker')
+    assertDiceBotWithLoader('CardRanker', 'CardRanker')
   end
 
   def test_ShinkuuGakuen
-    assertDiceBot('ShinkuuGakuen', 'ShinkuuGakuen')
+    assertDiceBotWithLoader('ShinkuuGakuen', 'ShinkuuGakuen')
   end
 
   def test_CrashWorld
-    assertDiceBot('CrashWorld', 'CrashWorld')
+    assertDiceBotWithLoader('CrashWorld', 'CrashWorld')
   end
 
   def test_WitchQuest
-    assertDiceBot('WitchQuest', 'WitchQuest')
+    assertDiceBotWithLoader('WitchQuest', 'WitchQuest')
   end
 
   def test_BattleTech
-    assertDiceBot('BattleTech', 'BattleTech')
+    assertDiceBotWithLoader('BattleTech', 'BattleTech')
   end
 
   def test_Elysion
-    assertDiceBot('Elysion', 'Elysion')
+    assertDiceBotWithLoader('Elysion', 'Elysion')
   end
 
   def test_GeishaGirlwithKatana
-    assertDiceBot('GeishaGirlwithKatana', 'GeishaGirlwithKatana')
+    assertDiceBotWithLoader('GeishaGirlwithKatana', 'GeishaGirlwithKatana')
   end
 
   def test_Gurps
-    assertDiceBot('GURPS', 'GURPS')
+    assertDiceBotWithLoader('GURPS', 'GURPS')
   end
 
   def test_GurpsFW
-    assertDiceBot('GurpsFW', 'GurpsFW')
+    assertDiceBotWithLoader('GurpsFW', 'GurpsFW')
   end
 
   def test_FilledWith
-    assertDiceBot('FilledWith', 'FilledWith')
+    assertDiceBotWithLoader('FilledWith', 'FilledWith')
   end
 
   def test_HarnMaster
-    assertDiceBot('HarnMaster', 'HarnMaster')
+    assertDiceBotWithLoader('HarnMaster', 'HarnMaster')
   end
 
   def test_Insane
-    assertDiceBot('Insane', 'Insane')
+    assertDiceBotWithLoader('Insane', 'Insane')
   end
 
   def test_KillDeathBusiness
-    assertDiceBot('KillDeathBusiness', 'KillDeathBusiness')
+    assertDiceBotWithLoader('KillDeathBusiness', 'KillDeathBusiness')
   end
 
   def test_Kamigakari
-    assertDiceBot('Kamigakari', 'Kamigakari')
+    assertDiceBotWithLoader('Kamigakari', 'Kamigakari')
   end
 
   def test_RecordOfSteam
-    assertDiceBot('RecordOfSteam', 'RecordOfSteam')
+    assertDiceBotWithLoader('RecordOfSteam', 'RecordOfSteam')
   end
 
   def test_Oukahoushin3rd
-    assertDiceBot('Oukahoushin3rd', 'Oukahoushin3rd')
+    assertDiceBotWithLoader('Oukahoushin3rd', 'Oukahoushin3rd')
   end
 
   def test_BeastBindTrinity
-    assertDiceBot('BeastBindTrinity', 'BeastBindTrinity')
+    assertDiceBotWithLoader('BeastBindTrinity', 'BeastBindTrinity')
   end
 
   def test_BloodMoon
-    assertDiceBot('BloodMoon', 'BloodMoon')
+    assertDiceBotWithLoader('BloodMoon', 'BloodMoon')
   end
 
   def test_Utakaze
-    assertDiceBot('Utakaze', 'Utakaze')
+    assertDiceBotWithLoader('Utakaze', 'Utakaze')
   end
 
   def test_EndBreaker
-    assertDiceBot('EndBreaker', 'EndBreaker')
+    assertDiceBotWithLoader('EndBreaker', 'EndBreaker')
   end
 
   def test_KanColle
-    assertDiceBot('KanColle', 'KanColle')
+    assertDiceBotWithLoader('KanColle', 'KanColle')
   end
 
   def test_GranCrest
-    assertDiceBot('GranCrest', 'GranCrest')
+    assertDiceBotWithLoader('GranCrest', 'GranCrest')
   end
 
   def test_HouraiGakuen
-    assertDiceBot('HouraiGakuen', 'HouraiGakuen')
+    assertDiceBotWithLoader('HouraiGakuen', 'HouraiGakuen')
   end
 
   def test_TwilightGunsmoke
-    assertDiceBot('TwilightGunsmoke', 'TwilightGunsmoke')
+    assertDiceBotWithLoader('TwilightGunsmoke', 'TwilightGunsmoke')
   end
 
   def test_Garako
-    assertDiceBot('Garako', 'Garako')
+    assertDiceBotWithLoader('Garako', 'Garako')
   end
 
   def test_ShoujoTenrankai
-    assertDiceBot('ShoujoTenrankai', 'ShoujoTenrankai')
+    assertDiceBotWithLoader('ShoujoTenrankai', 'ShoujoTenrankai')
   end
 
   def test_GardenOrder
-    assertDiceBot('GardenOrder', 'GardenOrder')
+    assertDiceBotWithLoader('GardenOrder', 'GardenOrder')
+  end
+
+  def test_DarkSouls
+    assertDiceBotWithLoader('DarkSouls', 'DarkSouls')
+  end
+
+  #--
+  # 4. ダイスボットファイルを置いただけで読み込めることを確認するテストケース
+  #++
+
+  def test_AceKillerGene
+    assertDiceBotWithoutLoader('AceKillerGene')
+  end
+
+  def test_Airgetlamh
+    assertDiceBotWithoutLoader('Airgetlamh')
+  end
+
+  def test_Alsetto
+    assertDiceBotWithoutLoader('Alsetto')
+  end
+
+  def test_Alshard
+    assertDiceBotWithoutLoader('Alshard')
+  end
+
+  def test_Amadeus
+    assertDiceBotWithoutLoader('Amadeus')
+  end
+
+  def test_Amadeus_Korean
+    assertDiceBotWithoutLoader('Amadeus:Korean', 'Amadeus_Korean')
+  end
+
+  def test_Avandner
+    assertDiceBotWithoutLoader('Avandner')
+  end
+
+  def test_BadLife
+    assertDiceBotWithoutLoader('BadLife')
+  end
+
+  def test_BeginningIdol
+    assertDiceBotWithoutLoader('BeginningIdol')
+  end
+
+  def test_BeginningIdol_Korean
+    assertDiceBotWithoutLoader('BeginningIdol:Korean',
+                               'BeginningIdol_Korean')
+  end
+
+  def test_BladeOfArcana
+    assertDiceBotWithoutLoader('BladeOfArcana')
+  end
+
+  def test_BlindMythos
+    assertDiceBotWithoutLoader('BlindMythos')
+  end
+
+  def test_Chill3
+    assertDiceBotWithoutLoader('Chill3')
+  end
+
+  def test_CodeLayerd
+    assertDiceBotWithoutLoader('CodeLayerd')
+  end
+
+  def test_ColossalHunter
+    assertDiceBotWithoutLoader('ColossalHunter')
+  end
+
+  def test_Cthulhu7th
+    assertDiceBotWithoutLoader('Cthulhu7th')
+  end
+
+  def test_Cthulhu7th_ChineseTraditional
+    assertDiceBotWithoutLoader('Cthulhu7th:ChineseTraditional',
+                               'Cthulhu7th_ChineseTraditional')
+  end
+
+  def test_Cthulhu7th_Korean
+    assertDiceBotWithoutLoader('Cthulhu7th:Korean', 'Cthulhu7th_Korean')
+  end
+
+  def test_Cthulhu_ChineseTraditional
+    assertDiceBotWithoutLoader('Cthulhu:ChineseTraditional',
+                               'Cthulhu_ChineseTraditional')
+  end
+
+  def test_Cthulhu_Korean
+    assertDiceBotWithoutLoader('Cthulhu:Korean', 'Cthulhu_Korean')
+  end
+
+  def test_DarkDaysDrive
+    assertDiceBotWithoutLoader('DarkDaysDrive')
+  end
+
+  def test_DeadlineHeroes
+    assertDiceBotWithoutLoader('DeadlineHeroes')
+  end
+
+  def test_DetatokoSaga
+    assertDiceBotWithoutLoader('DetatokoSaga')
+  end
+
+  def test_DetatokoSaga_Korean
+    assertDiceBotWithoutLoader('DetatokoSaga:Korean', 'DetatokoSaga_Korean')
+  end
+
+  def test_DiceOfTheDead
+    assertDiceBotWithoutLoader('DiceOfTheDead')
+  end
+
+  def test_Dracurouge
+    assertDiceBotWithoutLoader('Dracurouge')
+  end
+
+  def test_Dracurouge_Korean
+    assertDiceBotWithoutLoader('Dracurouge:Korean', 'Dracurouge_Korean')
+  end
+
+  def test_DungeonsAndDoragons
+    assertDiceBotWithoutLoader('DungeonsAndDoragons')
+  end
+
+  def test_EtrianOdysseySRS
+    assertDiceBotWithoutLoader('EtrianOdysseySRS')
+  end
+
+  def test_FullMetalPanic
+    assertDiceBotWithoutLoader('FullMetalPanic')
+  end
+
+  def test_GoldenSkyStories
+    assertDiceBotWithoutLoader('GoldenSkyStories')
+  end
+
+  def test_Gorilla
+    assertDiceBotWithoutLoader('Gorilla')
+  end
+
+  def test_GundogRevised
+    assertDiceBotWithoutLoader('GundogRevised')
+  end
+
+  def test_HatsuneMiku
+    assertDiceBotWithoutLoader('HatsuneMiku')
+  end
+
+  def test_Insane_Korean
+    assertDiceBotWithoutLoader('Insane:Korean', 'Insane_Korean')
+  end
+
+  def test_IthaWenUa
+    assertDiceBotWithoutLoader('IthaWenUa')
+  end
+
+  def test_JamesBond
+    assertDiceBotWithoutLoader('JamesBond')
+  end
+
+  def test_Kamigakari_Korean
+    assertDiceBotWithoutLoader('Kamigakari:Korean', 'Kamigakari_Korean')
+  end
+
+  def test_KillDeathBusiness_Korean
+    assertDiceBotWithoutLoader('KillDeathBusiness:Korean',
+                               'KillDeathBusiness_Korean')
+  end
+
+  def test_LiveraDoll
+    assertDiceBotWithoutLoader('LiveraDoll')
+  end
+
+  def test_LogHorizon
+    assertDiceBotWithoutLoader('LogHorizon')
+  end
+
+  def test_LogHorizon_Korean
+    assertDiceBotWithoutLoader('LogHorizon:Korean', 'LogHorizon_Korean')
+  end
+
+  def test_LostRoyal
+    assertDiceBotWithoutLoader('LostRoyal')
+  end
+
+  def test_MetalHead
+    assertDiceBotWithoutLoader('MetalHead')
+  end
+
+  def test_MetalHeadExtream
+    assertDiceBotWithoutLoader('MetalHeadExtream')
+  end
+
+  def test_MetallicGuadian
+    assertDiceBotWithoutLoader('MetallicGuadian')
+  end
+
+  def test_MonotoneMusium_Korean
+    assertDiceBotWithoutLoader('MonotoneMusium:Korean',
+                               'MonotoneMusium_Korean')
+  end
+
+  def test_Nechronica_Korean
+    assertDiceBotWithoutLoader('Nechronica:Korean', 'Nechronica_Korean')
+  end
+
+  def test_NightWizard3rd
+    assertDiceBotWithoutLoader('NightWizard3rd')
+  end
+
+  def test_Nuekagami
+    assertDiceBotWithoutLoader('Nuekagami')
+  end
+
+  def test_OneWayHeroics
+    assertDiceBotWithoutLoader('OneWayHeroics')
+  end
+
+  def test_Paranoia
+    assertDiceBotWithoutLoader('Paranoia')
+  end
+
+  def test_Pathfinder
+    assertDiceBotWithoutLoader('Pathfinder')
+  end
+
+  def test_SRS
+    assertDiceBotWithoutLoader('SRS')
+  end
+
+  def test_SevenFortressMobius
+    assertDiceBotWithoutLoader('SevenFortressMobius')
+  end
+
+  def test_SharedFantasia
+    assertDiceBotWithoutLoader('SharedFantasia')
+  end
+
+  def test_Skynauts
+    assertDiceBotWithoutLoader('Skynauts')
+  end
+
+  def test_StrangerOfSwordCity
+    assertDiceBotWithoutLoader('StrangerOfSwordCity')
+  end
+
+  def test_Strave
+    assertDiceBotWithoutLoader('Strave')
+  end
+
+  def test_TherapieSein
+    assertDiceBotWithoutLoader('TherapieSein')
+  end
+
+  def test_TokyoNova
+    assertDiceBotWithoutLoader('TokyoNova')
+  end
+
+  def test_WaresBlade
+    assertDiceBotWithoutLoader('WaresBlade')
+  end
+
+  def test_YankeeYogSothoth
+    assertDiceBotWithoutLoader('YankeeYogSothoth')
   end
 
   private
 
-  def assertDiceBot(gameType, pattern)
+  # ダイスボットが存在しないことを表明する
+  # @param [String] gameType ゲームタイプ
+  # @return [void]
+  def assertDiceBotNotFound(gameType)
+    fileName = File.join(DICE_BOT_DIR, "#{gameType}.rb")
+    assert(!File.exist?(fileName), 'ファイルが存在しない')
+
+    assert_nil(DiceBotLoaderList.find(gameType),
+               '読み込み処理が存在しない')
+    assert_nil(DiceBotLoader.loadUnknownGame(gameType),
+               'loadUnknownGameで読み込まれない')
+  end
+
+  # ダイスボットを読み込もうとしても無視されることを表明する
+  # @param [String] gameType ゲームタイプ
+  # @return [void]
+  def assertDiceBotIgnored(gameType)
+    fileName = File.join(DICE_BOT_DIR, "#{gameType}.rb")
+    assert(File.exist?(fileName), 'ファイルが存在する')
+
+    assert_nil(DiceBotLoaderList.find(gameType),
+               '読み込み処理が存在しない')
+    assert_nil(DiceBotLoader.loadUnknownGame(gameType),
+               'loadUnknownGameで読み込まれない')
+  end
+
+  # DiceBotLoaderを通じて正しいダイスボットが読み込まれることを表明する
+  # @param [String] gameType ゲームタイプ
+  # @param [String] pattern 読み込む際に指定する名前
+  # @return [void]
+  def assertDiceBotWithLoader(gameType, pattern)
     loader = DiceBotLoaderList.find(pattern)
     assert(loader, '読み込み処理が見つかる')
 
@@ -470,5 +843,17 @@ class TestDiceBotLoaders < Test::Unit::TestCase
     @bcDice.setGameByTitle(pattern.downcase)
     assert_equal(gameType, @bcDice.getGameType,
                  '小文字を指定したsetGameByTitle後のゲームタイプが等しい')
+  end
+
+  # DiceBotLoaderなしでも正しいダイスボットが読み込まれることを表明する
+  # @param [String] gameType ゲームタイプ
+  # @param [String] pattern 読み込む際に指定する名前
+  # @return [void]
+  def assertDiceBotWithoutLoader(gameType, pattern = gameType)
+    assert_nil(DiceBotLoaderList.find(pattern), '読み込み処理が存在しない')
+
+    @bcDice.setGameByTitle(pattern)
+    assert_equal(gameType, @bcDice.getGameType,
+                 'setGameByTitle後のゲームタイプが等しい')
   end
 end

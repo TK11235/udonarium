@@ -9,7 +9,7 @@ class Postman < DiceBot
 
   def initialize
     super
-    @sortType = 1 #ダイスのソート有
+    @sortType = 1 # ダイスのソート有
   end
 
   def gameName
@@ -45,31 +45,30 @@ PO@5+2 → 2Dで目標値7の判定。判定の成否と達成値を表示。
 ◆自由行動シチュエーション表：FRE
 MESSAGETEXT
   end
- 
+
   def rollDiceCommand(command)
- 
     text =
       case command.upcase
 
       when /(\d+)?PO(\d+)?(([+-]\d+)*)?((>|>=|@)(\d+)(([+-]\d+)*)?)?/i
         diceCount = ($1 || 2).to_i
-        diceCount = 2 if(diceCount < 2)
+        diceCount = 2 if diceCount < 2
 
         modify = ($2 || 0).to_i
-        #modifyAddString = $3 #TKfix
-        modifyAddString = ($3 || '')
+        # modifyAddString = $3
+        modifyAddString = $3.to_s # TKfix
 
         type = ($6 || '')
         target = ($7 || 0).to_i
-        #targetAddString = $8 #TKfix
-        targetAddString = ($8 || '')
+        # targetAddString = $8
+        targetAddString = $8.to_s # TKfix
 
         modify_list = modifyAddString.scan(/[+-]\d+/)
-        modify_list.each{|i| modify += i.to_i }
+        modify_list.each { |i| modify += i.to_i }
 
-        if(target != 0)
+        if target != 0
           target_list = targetAddString.scan(/[+-]\d+/)
-          target_list.each{|j| target += j.to_i }
+          target_list.each { |j| target += j.to_i }
         end
 
         checkRoll(diceCount, modify, type, target)
@@ -81,8 +80,6 @@ MESSAGETEXT
       when 'FRE'
         get_free_situation_table
 
-      else
-        nil
       end
 
     return text
@@ -91,39 +88,39 @@ MESSAGETEXT
   def checkRoll(diceCount, modify, type, target)
     dice, diceText = roll(diceCount, 6, @sortTye)
 
-    diceArray = diceText.split(/,/).collect{|i|i.to_i}
+    diceArray = diceText.split(/,/).collect { |i| i.to_i }
     dice2 = diceArray[-2] + diceArray[-1]
     diceText2 = "#{diceArray[-2]},#{diceArray[-1]}"
-    criticalCount = diceArray.count{|i| i == 6}
+    criticalCount = diceArray.count { |i| i == 6 }
 
-    if(modify != 0)
+    if modify != 0
       modifyText = ''
-      modifyText = "+" if(modify > 0)
-      modifyText += "#{modify}"
+      modifyText = "+" if modify > 0
+      modifyText += modify.to_s
     end
 
     result = dice2 + modify
 
-    if(type != '')
+    if type != ''
       resultText = " 【失敗】"
       operatorText = ">"
-      if(type == '>')
-        resultText = " 【成功】" if(result > target)
+      if type == '>'
+        resultText = " 【成功】" if result > target
       else
         operatorText += "="
-        resultText = " 【成功】" if(result >= target)
+        resultText = " 【成功】" if result >= target
       end
     end
 
-    if(criticalCount >= 2)
+    if criticalCount >= 2
       resultText = " 【成功】（クリティカル）"
-    elsif(dice == diceCount)
+    elsif dice == diceCount
       resultText = " 【失敗】（ファンブル）"
     end
 
     text = "#{diceCount}D6(#{diceText})#{modifyText} ＞ #{dice2}(#{diceText2})#{modifyText} = 達成値：#{result}"
-    text += "#{operatorText}#{target} " if(target > 0)
-    text += "#{resultText}"
+    text += "#{operatorText}#{target} " if target > 0
+    text += resultText.to_s
 
     return text
   end
@@ -144,11 +141,11 @@ MESSAGETEXT
               [12, '風が強い1日になりそう。探索判定の難易度に+2。']
             ]
 
-    if(roc == 0)
+    if roc == 0
       dice, diceText = roll(2, 6)
     else
-      roc = 2 if(roc < 2)
-      roc = 12 if(roc > 12)
+      roc = 2 if roc < 2
+      roc = 12 if roc > 12
       dice = roc
       diceText = "Choice:#{roc}"
     end
@@ -178,5 +175,4 @@ MESSAGETEXT
     text = "#{name}(#{diceText}) ＞ #{dice}：#{tableText}"
     return text
   end
-
 end

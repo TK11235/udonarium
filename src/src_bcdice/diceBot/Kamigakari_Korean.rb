@@ -43,7 +43,7 @@ INFO_MESSAGE_TEXT
 
     debug("rollDiceCommand command", command)
 
-	case command
+    case command
 
     when "RT"
       tableName, result, number = getReimonCompensationTableResult
@@ -66,14 +66,14 @@ INFO_MESSAGE_TEXT
     else
       debug("rollDiceCommand commandNOT matched -> command:", command)
       return ""
-	end
+    end
 
-    if( result.empty? )
+    if result.empty?
       return ""
     end
 
-	text = "#{tableName}(#{number})：#{result}"
-	return text
+    text = "#{tableName}(#{number})：#{result}"
+    return text
   end
 
   def getReimonCompensationTableResult
@@ -292,7 +292,7 @@ INFO_MESSAGE_TEXT
     price = getPrice(effect)
 
     result = "#{result}.#{effect}"
-    result += "：#{price}" unless( price.nil? )
+    result += "：#{price}" unless price.nil?
 
     return tableName, result, number
   end
@@ -302,7 +302,7 @@ INFO_MESSAGE_TEXT
 
     result = ""
     type = ""
-    if( number < 6)
+    if number < 6
       result, number2 = getMaterialEffectNomal(rank)
       type = "자주 발견되는 소재"
     else
@@ -339,7 +339,7 @@ INFO_MESSAGE_TEXT
     result = get_table_by_number(number, table)
     debug("getMaterialEffectNomal result", result)
 
-    if( /\+n/ === result )
+    if /\+n/ === result
       power, number2 = getMaterialEffectPower(rank)
 
       result = result.sub(/\+n/, "+#{power}")
@@ -356,7 +356,7 @@ INFO_MESSAGE_TEXT
              [  9, [1, 2, 3, 3, 4, 5]],
             ]
 
-    rank = 9 if( rank > 9 )
+    rank = 9 if rank > 9
     rankTable = get_table_by_number(rank, table)
     power, number = get_table_by_1d6(rankTable)
 
@@ -373,9 +373,9 @@ INFO_MESSAGE_TEXT
     result = get_table_by_number(number, table)
     debug('getMaterialEffectRare result', result)
 
-    if( /\*\*/ === result )
+    if /\*\*/ === result
       attribute, number2 = getAttribute()
-      result = result.sub(/\*\*/, "#{attribute}")
+      result = result.sub(/\*\*/, attribute.to_s)
       number = "#{number},#{number2}"
     end
 
@@ -403,7 +403,6 @@ INFO_MESSAGE_TEXT
   end
 
   def getPrice(effect)
-
     power = 0
 
     case effect

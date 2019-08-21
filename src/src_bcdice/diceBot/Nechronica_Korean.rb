@@ -7,7 +7,7 @@ class Nechronica_Korean < DiceBot
     super
     @sendMode = 2
     @sortType = 3
-    @defaultSuccessTarget = "6"      #목표치가 딱히 없을때의 난이도
+    @defaultSuccessTarget = "6" # 목표치가 딱히 없을때의 난이도
   end
 
   def gameName
@@ -30,10 +30,10 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/(\d+)NC(10)?([\+\-][\+\-\d]+)/i) {"#{$1}R10#{$3}[0]"}
-    string = string.gsub(/(\d+)NC(10)?/i) {"#{$1}R10[0]"}
-    string = string.gsub(/(\d+)NA(10)?([\+\-][\+\-\d]+)/i) {"#{$1}R10#{$3}[1]"}
-    string = string.gsub(/(\d+)NA(10)?/i) {"#{$1}R10[1]"}
+    string = string.gsub(/(\d+)NC(10)?([\+\-][\+\-\d]+)/i) { "#{$1}R10#{$3}[0]" }
+    string = string.gsub(/(\d+)NC(10)?/i) { "#{$1}R10[0]" }
+    string = string.gsub(/(\d+)NA(10)?([\+\-][\+\-\d]+)/i) { "#{$1}R10#{$3}[1]" }
+    string = string.gsub(/(\d+)NA(10)?/i) { "#{$1}R10[1]" }
 
     return string
   end
@@ -44,24 +44,24 @@ INFO_MESSAGE_TEXT
   end
 
   def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)# ゲーム別成功度判定(nD10)
-    return '' unless(signOfInequality == ">=")
+    return '' unless signOfInequality == ">="
 
-    if(total_n >= 11)
+    if total_n >= 11
       return " ＞ 대성공"
     end
 
-    if(total_n >= diff)
+    if total_n >= diff
       return " ＞ 성공"
     end
 
-    #失敗パターン
+    # 失敗パターン
 
-    if(n1 <= 0)
+    if n1 <= 0
       return " ＞ 실패"
     end
 
     result = " ＞ 대실패"
-    if( dice_cnt > 1 )
+    if dice_cnt > 1
       result += " ＞ 사용파츠 전부 손실"
     end
 
@@ -73,7 +73,7 @@ INFO_MESSAGE_TEXT
 
     debug("nechronica_check string", string)
 
-    unless(/(^|\s)S?((\d+)[rR]10([\+\-\d]+)?(\[(\d+)\])?)(\s|$)/i =~ string)
+    unless /(^|\s)S?((\d+)[rR]10([\+\-\d]+)?(\[(\d+)\])?)(\s|$)/i =~ string
       debug("nechronica_check unmuched")
       return output
     end
@@ -82,16 +82,14 @@ INFO_MESSAGE_TEXT
     signOfInequality = ">="
 
     dice_n = 1
-    dice_n = $3.to_i if($3)
+    dice_n = $3.to_i if $3
 
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
     battleMode = $6.to_i
 
     modText = $4
     mod = parren_killer("(0#{modText})").to_i
 
     # 0=판정모드, 1=전투모드
-    #battleMode = $6.to_i
     isBattleMode = (battleMode == 1)
     debug("nechronica_check string", string)
     debug("isBattleMode", isBattleMode)
@@ -104,20 +102,20 @@ INFO_MESSAGE_TEXT
     total_n = n_max + mod
 
     output = "#{@nick_t}: (#{string}) ＞ [#{dice_str}]"
-    if(mod < 0)
-      output += "#{mod}"
-    elsif(mod > 0)
+    if mod < 0
+      output += mod.to_s
+    elsif mod > 0
       output += "+#{mod}"
     end
 
     n1 = 0
     cnt_max = 0
 
-    dice = dice_str.split(/,/).collect{|i|i.to_i}
+    dice = dice_str.split(/,/).collect { |i| i.to_i }
     dice.length.times do |i|
       dice[i] += mod
-      n1 += 1 if(dice[i] <= 1)
-      cnt_max += 1 if(dice[i] >= 10)
+      n1 += 1 if dice[i] <= 1
+      cnt_max += 1 if dice[i] >= 10
     end
 
     dice_str = dice.join(",")
@@ -128,14 +126,14 @@ INFO_MESSAGE_TEXT
 
     debug("dice_n, n1, total_n diff", dice_n, n1, total_n, diff)
 
-# β판의 실장
-#    if( (dice_n > 1) and (n1 >= 1) and (total_n <= diff) )
-#      output += " ＞ 파손#{n1}"
-#    end
+    # β판의 실장
+    #    if( (dice_n > 1) and (n1 >= 1) and (total_n <= diff) )
+    #      output += " ＞ 파손#{n1}"
+    #    end
 
-    if( isBattleMode )
+    if isBattleMode
       hit_loc = getHitLocation(total_n)
-      if(hit_loc != '1')
+      if hit_loc != '1'
         output += " ＞ #{hit_loc}"
       end
     end
@@ -147,7 +145,7 @@ INFO_MESSAGE_TEXT
     output = '1'
 
     debug("getHitLocation dice", dice)
-    return output if(dice <= 5)
+    return output if dice <= 5
 
     output = ''
     table = [
@@ -161,7 +159,7 @@ INFO_MESSAGE_TEXT
     index = dice - 6
 
     addDamage = ""
-    if(dice > 10)
+    if dice > 10
       index = 5
       addDamage = "(추가 데미지#{dice - 10})"
     end

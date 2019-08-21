@@ -1,0 +1,28 @@
+source 'https://rubygems.org'
+
+unless ENV['CI'] == 'true'
+  gem 'net-irc'
+  if RUBY_VERSION < '2.0'
+    gem 'wxruby-ruby19', '2.0.0'
+  end
+  gem 'ocra'
+end
+
+group :development, :test do
+  if RUBY_VERSION < '1.9'
+    gem 'rake', '~> 10.5'
+    gem 'test-unit', '1.2.3'
+  else
+    gem 'rake'
+    gem 'test-unit'
+    gem 'codecov', :require => false
+  end
+
+  if RUBY_VERSION >= '2.3'
+    gem 'rubocop', '~> 0.72.0', :require => false
+  end
+end
+
+if RUBY_VERSION > '1.8.x'
+  gem 'simplecov', :require => false
+end

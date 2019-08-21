@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class Elysion < DiceBot
-
   def initialize
     super
     @d66Type = 2
@@ -47,9 +46,9 @@ class Elysion < DiceBot
 MESSAGETEXT
   end
 
-#  教室 R:classRoom／購買 S:Shop／部室 B:Box／生徒会室 C:Council／学生寮 D:Dormitory／図書館 I:lIbrary／屋上 F:rooF／
-#　研究室 L:Labo／プール P:Pool／中庭 N:iNner／商店街 A:Avenue／廃墟 V:deVastation／ゲート G:Gate
-#  温泉 H:Hotsprings／修学旅行 T:School trip／お祭り室 E:festival／潜入調査 U:Infiltration study／
+  #  教室 R:classRoom／購買 S:Shop／部室 B:Box／生徒会室 C:Council／学生寮 D:Dormitory／図書館 I:lIbrary／屋上 F:rooF／
+  # 　研究室 L:Labo／プール P:Pool／中庭 N:iNner／商店街 A:Avenue／廃墟 V:deVastation／ゲート G:Gate
+  #  温泉 H:Hotsprings／修学旅行 T:School trip／お祭り室 E:festival／潜入調査 U:Infiltration study／
   def changeText(string)
     string
   end
@@ -66,7 +65,7 @@ MESSAGETEXT
     when /^EL(\d*)(\+\d+)?/i
       base = $1
       modify = $2
-      result= check(base, modify)
+      result = check(base, modify)
 
     when /^(F|O|M)?DATE\[(.*),(.*)\]/i
       type = $1
@@ -177,12 +176,14 @@ MESSAGETEXT
 
   def getValue(string)
     return 0 if string.nil?
+
     return string.to_i
   end
 
   def getValueString(value)
     return "+#{value}" if value > 0
     return "-#{value}" if value < 0
+
     return ""
   end
 
@@ -190,11 +191,11 @@ MESSAGETEXT
     success = getSuccessRank(total)
 
     return " ＞ 失敗" if success == 0
+
     return getSuccessResult(success)
   end
 
   def getSuccessResult(success)
-
     result = " ＞ 成功度#{success}"
     result += " ＞ 大成功 《アウル》2点獲得" if success >= @@successMax
 
@@ -243,25 +244,24 @@ MESSAGETEXT
     dice1, dummy = roll(1, 6)
     dice2, dummy = roll(1, 6)
 
-    result =  "#{pc1}[#{dice1}],#{pc2}[#{dice2}] ＞ "
+    result = "#{pc1}[#{dice1}],#{pc2}[#{dice2}] ＞ "
 
     number = dice1 * 10 + dice2
 
-    if( dice1 > dice2 )
+    if dice1 > dice2
       tmp = pc1
       pc1 = pc2
       pc2 = tmp
       number = dice2 * 10 + dice1
     end
 
-    result +=  getDateResult(type, number, pc1, pc2)
+    result += getDateResult(type, number, pc1, pc2)
 
     return result
   end
 
   def getDateResult(type, number, pc1, pc2)
-
-    name ,table = getDateTableByType(type)
+    name, table = getDateTableByType(type)
     debug("getDateTable name", name)
 
     text = get_table_by_number(number, table)
@@ -272,7 +272,6 @@ MESSAGETEXT
   end
 
   def getDateTableByType(type)
-
     case type
     when nil
       return getDateTable()
@@ -313,7 +312,7 @@ MESSAGETEXT
              [56, "「え？え？えぇぇぇぇッ?!」ふとした拍子に唇がふれあう。受け身キャラの攻め気キャラ以外に対する《感情値》が全て0になり、その値の分だけ攻め気キャラに対する《感情値》が上昇し、その属性が《好意》になる。"],
              [66, "「…………」気がつくとお互い、目をそらせなくなってしまう。そのまま顔を寄せ合い…。この表の使用者のお互いに対する《感情値》が3点上昇する。"],
             ]
-    return name ,table
+    return name, table
   end
 
   def getFrindDateTable()
@@ -343,7 +342,7 @@ MESSAGETEXT
              [66, "「実はコイツ……。」\n思っていたよりずっと近かった二人の距離に気付く。この表の使用者のお互いに対する《感情値》が3点上昇し、属性は《好意》になる。"],
             ]
 
-    return name ,table
+    return name, table
   end
 
   def getOnewayDateTable()
@@ -372,7 +371,7 @@ MESSAGETEXT
              [56, "「贈り物だよっ！」\n愛情がたくさん入ったアイテムを送る。攻め気キャラは好きなアイテムを一つ選び、調達判定を行う。成功した場合、アイテムを受け身キャラに渡す。渡したアイテムの価格の値と同じだけ、攻め気キャラの受け身キャラに対する《感情値》が上昇する。"],
              [66, "「そっか、私……。」\n思いが届かないうちに、片思いの相手が他の人と仲良くしているところをみせつけられる。受け身キャラは攻め気キャラ以外のキャラクターを一人選んで《感情値》を3点上昇し、属性を《好意》にする。この表の使用者のお互いに対するフラグがあった場合、フラグを折る。"],
             ]
-    return name ,table
+    return name, table
   end
 
   def getMidnightDateTable()
@@ -402,18 +401,18 @@ MESSAGETEXT
              [66, "「帰りの電車がなくなったの……。」\n二人で一夜を過ごす。この表の使用者はお互いに対する《感情値》が5点上昇するが、お互いに「バカ」の変調を受ける。"],
             ]
 
-    return name ,table
+    return name, table
   end
 
   def changePcName(text, base, name)
-    return text if name.nil? or name.empty?
+    return text if name.nil? || name.empty?
 
-    return text.gsub(/(#{base})/){$1 + "(#{name})"}
+    return text.gsub(/(#{base})/) { $1 + "(#{name})" }
   end
 
   def getDateValue
     dice1, = roll(1, 6)
-    return "#{dice1}"
+    return dice1.to_s
   end
 
   def getClassRoomBreakTable
@@ -655,7 +654,7 @@ MESSAGETEXT
     index = number - 2
 
     text = table[index]
-    return '' if( text.nil? )
+    return '' if text.nil?
 
     return "#{name}休憩表(#{number}) #{ text }"
   end
@@ -665,7 +664,7 @@ MESSAGETEXT
     index = number - 1
 
     text = table[index]
-    return '' if( text.nil? )
+    return '' if text.nil?
 
     return "#{name}(#{number}) #{ text }"
   end
@@ -858,7 +857,6 @@ MESSAGETEXT
   end
 
   def getBossEncount(level)
-
     name = "ボスキャラクター遭遇表"
     table = [
              [2, "剥奪天使（ｐ101）、イフリート（基本ｐ126）×PCと同じ数"],
@@ -886,7 +884,7 @@ MESSAGETEXT
     index = dice + level
 
     text = get_table_by_number(index, table, table.last.last)
-    return '' if( text.nil? )
+    return '' if text.nil?
 
     return "#{name}(#{index}) #{ text }"
   end
@@ -1224,10 +1222,9 @@ TABLE_TEXT_END
   setPrefixes([
     'EL.*',
     'DATE.*', 'FDATE.*', 'ODATE.*', 'MDATE.*',
-    'RBT', 'SBT', 'BBT','CBT','DBT','IBT','FBT','LBT','PBT','NBT','ABT','VBT','GBT','HBT',
+    'RBT', 'SBT', 'BBT', 'CBT', 'DBT', 'IBT', 'FBT', 'LBT', 'PBT', 'NBT', 'ABT', 'VBT', 'GBT', 'HBT',
     'BFT', 'FWT', 'FT',
     'SRT', 'ORT', 'DRT', 'URT',
     'NJ\d+', 'BS\d+'
   ] + @@tables.keys)
-
 end
