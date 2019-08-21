@@ -69,11 +69,11 @@
         total_n = $rb_plus(total_n, 10);
         result = $rb_plus(result, "（クリティカル）");
         result = $rb_plus(result, "" + " ＞ " + (total_n));};
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return result
       };
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return result};
       if ($truthy($rb_ge(total_n, diff))) {
         result = $rb_plus(result, " ＞ 成功")

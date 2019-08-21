@@ -101,7 +101,7 @@
       
       if ($truthy(signOfInequality['$!='](">="))) {
         return ""};
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return ""};
       if ($truthy($rb_ge(dice_n, 12))) {
         return " ＞ 絶対成功"};
@@ -126,7 +126,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
@@ -142,9 +142,9 @@
       self.$debug("total_n", total_n);
       if ($truthy($rb_gt(total_n, diff))) {
         return " ＞ 失敗"};
-      if ($truthy(dice1['$=='](1))) {
+      if (dice1['$=='](1)) {
         return " ＞ 成功（クリティカル）"};
-      if ($truthy(dice1['$=='](0))) {
+      if (dice1['$=='](0)) {
         return " ＞ 失敗（アクシデント）"};
       return " ＞ 成功";
     }, TMP_MetalHead_getHitResult_12.$$arity = 3);
@@ -202,9 +202,9 @@
         return [name, "数値が不正です", num]};
       num_d1 = numbuf['$%'](10);
       self.$debug("" + "num_d1[" + (num_d1) + "]");
-      if ($truthy(num_d1['$=='](1))) {
+      if (num_d1['$=='](1)) {
         numbuf = $rb_plus(numbuf, 1)};
-      if ($truthy(num_d1['$=='](0))) {
+      if (num_d1['$=='](0)) {
         numbuf = $rb_minus(numbuf, 1)};
       num_d1 = numbuf['$%'](10);
       self.$debug("" + "num_d1[" + (num_d1) + "]");
@@ -227,7 +227,7 @@ if (d == null) d = nil;if (n == null) n = nil;
       result = "";
       if ($truthy(numbuf['$!='](num.$to_i()))) {
         result = "" + (numbuf) + " ＞ "};
-      if ($truthy(suv['$==']("M"))) {
+      if (suv['$==']("M")) {
         result = $rb_plus(result, "" + "耐物 ＞ HP[" + (damage_level) + "]")
         } else {
         result = $rb_plus(result, "" + "耐久レベル(SUV)[" + (suv) + "] ＞ 部位[" + (table_point['$[]'](num_d1)) + "] ： 損傷種別[" + (damage_level) + "]")

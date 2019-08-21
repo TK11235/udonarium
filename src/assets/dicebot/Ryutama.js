@@ -76,7 +76,7 @@
       modifyString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
       difficulty = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
       $b = self.$getDiceType(dice1, dice2), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), (dice2 = ($a[1] == null ? nil : $a[1])), $b;
-      if ($truthy(dice1['$=='](0))) {
+      if (dice1['$=='](0)) {
         return ""};
       modifyString = ($truthy($a = modifyString) ? $a : "");
       modify = self.$parren_killer($rb_plus($rb_plus("(", modifyString), ")")).$to_i();
@@ -155,7 +155,7 @@
       var self = this, value = nil;
 
       
-      if ($truthy(dice['$=='](0))) {
+      if (dice['$=='](0)) {
         return 0};
       value = $rb_plus(self.$rand(dice), 1);
       return value;
@@ -186,7 +186,7 @@
       var $a, self = this;
 
       
-      if ($truthy(value2['$=='](0))) {
+      if (value2['$=='](0)) {
         return false};
       if ($truthy(($truthy($a = value1['$=='](6)) ? value2['$=='](6) : $a))) {
         return true};

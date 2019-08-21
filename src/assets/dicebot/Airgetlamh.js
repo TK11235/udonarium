@@ -65,7 +65,7 @@
         diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
         target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 6).$to_i();
         damage = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i();
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("L"))) {
+        if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("L")) {
           
           criticalTrigger = 0;
           criticalNumber = 0;

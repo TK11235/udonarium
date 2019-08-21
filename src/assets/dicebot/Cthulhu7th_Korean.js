@@ -111,7 +111,7 @@
 
       
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
-      if ($truthy(dice['$=='](10))) {
+      if (dice['$=='](10)) {
         dice = 0};
       return dice;
     }, TMP_Cthulhu7th_Korean_rollPercentD10_7.$$arity = 0);
@@ -127,7 +127,7 @@
       
         bonus = self.$rollPercentD10();
         total = $rb_plus($rb_times(bonus, 10), units_digit);
-        if ($truthy(total['$=='](0))) {
+        if (total['$=='](0)) {
           total = 100};
         return total_list.$push(total);}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
       return total_list;
@@ -151,7 +151,7 @@
       
       if ($truthy($rb_le(total, diff))) {
         
-        if ($truthy(total['$=='](1))) {
+        if (total['$=='](1)) {
           return "대성공"};
         if ($truthy($rb_le(total, $rb_divide(diff, 5)))) {
           return "대단한 성공"};
@@ -159,7 +159,7 @@
           return "어려운 성공"};
         return "보통 성공";};
       fumble_text = "대실패";
-      if ($truthy(total['$=='](100))) {
+      if (total['$=='](100)) {
         return fumble_text};
       if ($truthy($rb_ge(total, 96))) {
         if ($truthy($rb_lt(diff, 50))) {
@@ -191,7 +191,7 @@
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
         return "성공"
-      } else if ($truthy(succesCount['$=='](1))) {
+      } else if (succesCount['$=='](1)) {
         return "부분적 성공"
         } else {
         return "실패"
@@ -404,7 +404,7 @@ if (more_difficlty == null) more_difficlty = nil;
       var self = this, count = nil;
 
       
-      if ($truthy(bullet_count['$=='](1))) {
+      if (bullet_count['$=='](1)) {
         return 1};
       count = $rb_divide(bullet_count, (2).$to_f()).$floor();
       return count;

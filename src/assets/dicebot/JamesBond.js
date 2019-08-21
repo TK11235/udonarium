@@ -47,7 +47,7 @@
       var self = this, base = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };

@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars, $send = Opal.send;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$+', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$getSuccessResultText', '$==', '$>=', '$each', '$<=']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$+', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$getSuccessResultText', '$==', '$to_s', '$>=', '$each', '$<=']);
   return (function($base, $super, $parent_nesting) {
     function $CodeLayerd(){};
     var self = $CodeLayerd = $klass($base, $super, 'CodeLayerd', $CodeLayerd);
@@ -111,7 +111,7 @@ if (i == null) i = nil;
       if (successTotal['$=='](0)) {
         return "ファンブル！"};
       if (diff['$=='](0)) {
-        return "" + (successTotal)};
+        return successTotal.$to_s()};
       if ($truthy($rb_ge(successTotal, diff))) {
         return "成功"};
       return "失敗";

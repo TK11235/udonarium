@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$checkRoll', '$empty?', '$===', '$to_i', '$roll', '$sort', '$collect', '$split', '$+', '$getModifyText', '$join', '$getCriticalResult', '$nil?', '$isFumble', '$>=', '$==', '$<', '$size', '$select', '$to_s']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$checkRoll', '$empty?', '$===', '$to_i', '$roll', '$sort', '$collect', '$split', '$+', '$getModifyText', '$join', '$getCriticalResult', '$nil?', '$isFumble', '$>=', '$==', '$<', '$to_s', '$size', '$select']);
   return (function($base, $super, $parent_nesting) {
     function $StrangerOfSwordCity(){};
     var self = $StrangerOfSwordCity = $klass($base, $super, 'StrangerOfSwordCity', $StrangerOfSwordCity);
@@ -117,10 +117,10 @@ if (i == null) i = nil;
       var self = this;
 
       
-      if ($truthy(modify['$=='](0))) {
+      if (modify['$=='](0)) {
         return ""};
       if ($truthy($rb_lt(modify, 0))) {
-        return "" + (modify)};
+        return modify.$to_s()};
       return "" + "+" + (modify);
     }, TMP_StrangerOfSwordCity_getModifyText_8.$$arity = 1);
     

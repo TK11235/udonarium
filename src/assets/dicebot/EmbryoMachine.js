@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$checkRoll', '$debug', '$==', '$<=', '$>=', '$=~', '$to_i', '$parren_killer', '$roll', '$&', '$sortType', '$collect', '$split', '$[]', '$+', '$>', '$<', '$get_hit_level_table', '$get_hit_location_table', '$===', '$get_shoot_fumble_table', '$get_melee_fumble_table', '$!=', '$get_table_by_number', '$-']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$checkRoll', '$debug', '$==', '$<=', '$>=', '$=~', '$to_i', '$parren_killer', '$roll', '$&', '$sortType', '$collect', '$split', '$[]', '$+', '$>', '$<', '$to_s', '$get_hit_level_table', '$get_hit_location_table', '$===', '$get_shoot_fumble_table', '$get_melee_fumble_table', '$!=', '$get_table_by_number', '$-']);
   return (function($base, $super, $parent_nesting) {
     function $EmbryoMachine(){};
     var self = $EmbryoMachine = $klass($base, $super, 'EmbryoMachine', $EmbryoMachine);
@@ -104,7 +104,7 @@
 
       
       self.$debug("EmbryoMachine check_nD10 begin");
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -154,7 +154,7 @@ if (i == null) i = nil;
       if ($truthy($rb_gt(mod, 0))) {
         output = $rb_plus(output, "" + "+" + (mod))
       } else if ($truthy($rb_lt(mod, 0))) {
-        output = $rb_plus(output, "" + (mod))};
+        output = $rb_plus(output, mod.$to_s())};
       if ($truthy(output['$=~'](/[^\d\[\]]+/))) {
         output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)
         } else {

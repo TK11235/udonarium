@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$gsub', '$mayokin_check', '$get2D6Result', '$+', '$getKiryokuResult', '$==', '$<=', '$>=', '$get2D6ResultOnlySuccess', '$getDiceList', '$find_all', '$length', '$!=', '$sort!', '$to_i', '$pop', '$-', '$=~', '$parren_killer', '$roll', '$&', '$sortType', '$collect', '$split', '$[]', '$setDiceText', '$>', '$<', '$sendMode', '$check_suc', '$===', '$d66', '$mk_name_a_table', '$mk_name_b_table', '$mk_name_ex_table', '$mk_name_fa_table', '$getCount', '$times', '$mk_name_table', '$mk_pn_decide_table', '$mk_ls_decide_table', '$mk_device_factory_table', '$mk_life_research_table', '$mk_order_research_table', '$mk_calture_research_table', '$mk_army_research_table', '$mk_festival_table', '$mk_talent_break_table', '$mk_charm_break_table', '$mk_search_break_table', '$mk_valor_break_table', '$mk_festival_break_table', '$mk_talent_happening_table', '$mk_charm_happening_table', '$mk_search_happening_table', '$mk_valor_happening_table', '$mk_market_price_table', '$mk_treasure1_table', '$mk_treasure2_table', '$mk_treasure3_table', '$mk_treasure4_table', '$mk_treasure5_table', '$mk_rare_weapon_item_table', '$mk_rare_item_table', '$mk_weapon_item_table', '$mk_life_item_table', '$mk_rest_item_table', '$mk_search_item_table', '$mk_item_features_table', '$mk_item_decide_table', '$mk_random_encount1_table', '$mk_random_encount2_table', '$mk_random_encount3_table', '$mk_random_encount4_table', '$mk_random_encount5_table', '$mk_random_encount6_table', '$mk_kingdom_disaster_table', '$mk_kingdom_change_table', '$mk_kingdom_mischange_table', '$mk_critical_attack_table', '$mk_fatal_wounds_table', '$mk_combat_fumble_table', '$mk_travel_table', '$mk_negotiation_table', '$mk_emotion_table', '$mk_kingdom_name_1_table', '$mk_kingdom_name_2_table', '$mk_kingdom_name_3_table', '$mk_word_1_table', '$mk_word_2_table', '$mk_word_3_table', '$mk_word_4_table', '$getAftersearchBreakTable', '$getWholeBreakTable', '$getLoversBreakTable', '$empty?', '$get_table_by_2d6', '$get_table_by_1d3', '$get_table_by_1d6', '$rand', '$mk_nick_a_table', '$mk_nick_b_table', '$get_table_by_number', '$lambda', '$mk_item_power_table', '$mk_item_jyumon_table', '$mk_item_jyuka_table', '$mk_item_aptitude_table', '$mk_item_attribute_table', '$to_s', '$mk_family_business_table', '$mk_gender_table', '$%', '$ceil', '$/', '$mk_decoration_table', '$mk_placename_table', '$mk_basic_decoration_table', '$mk_spooky_decoration_table', '$mk_katakana_decoration_table', '$mk_passage_placename_table', '$mk_natural_placename_table', '$mk_artifact_placename_table', '$mk_landscape_table', '$mk_artifact_landscape_table', '$mk_cave_landscape_table', '$mk_natural_landscape_table', '$mk_waterside_landscape_table', '$mk_skyrealm_landscape_table', '$mk_strange_place_landscape_table']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$gsub', '$mayokin_check', '$get2D6Result', '$+', '$getKiryokuResult', '$==', '$<=', '$>=', '$get2D6ResultOnlySuccess', '$getDiceList', '$find_all', '$length', '$!=', '$sort!', '$to_i', '$pop', '$-', '$=~', '$parren_killer', '$roll', '$&', '$sortType', '$collect', '$split', '$[]', '$setDiceText', '$>', '$<', '$to_s', '$sendMode', '$check_suc', '$===', '$d66', '$mk_name_a_table', '$mk_name_b_table', '$mk_name_ex_table', '$mk_name_fa_table', '$getCount', '$times', '$mk_name_table', '$mk_pn_decide_table', '$mk_ls_decide_table', '$mk_device_factory_table', '$mk_life_research_table', '$mk_order_research_table', '$mk_calture_research_table', '$mk_army_research_table', '$mk_festival_table', '$mk_talent_break_table', '$mk_charm_break_table', '$mk_search_break_table', '$mk_valor_break_table', '$mk_festival_break_table', '$mk_talent_happening_table', '$mk_charm_happening_table', '$mk_search_happening_table', '$mk_valor_happening_table', '$mk_market_price_table', '$mk_treasure1_table', '$mk_treasure2_table', '$mk_treasure3_table', '$mk_treasure4_table', '$mk_treasure5_table', '$mk_rare_weapon_item_table', '$mk_rare_item_table', '$mk_weapon_item_table', '$mk_life_item_table', '$mk_rest_item_table', '$mk_search_item_table', '$mk_item_features_table', '$mk_item_decide_table', '$mk_random_encount1_table', '$mk_random_encount2_table', '$mk_random_encount3_table', '$mk_random_encount4_table', '$mk_random_encount5_table', '$mk_random_encount6_table', '$mk_kingdom_disaster_table', '$mk_kingdom_change_table', '$mk_kingdom_mischange_table', '$mk_critical_attack_table', '$mk_fatal_wounds_table', '$mk_combat_fumble_table', '$mk_travel_table', '$mk_negotiation_table', '$mk_emotion_table', '$mk_kingdom_name_1_table', '$mk_kingdom_name_2_table', '$mk_kingdom_name_3_table', '$mk_word_1_table', '$mk_word_2_table', '$mk_word_3_table', '$mk_word_4_table', '$getAftersearchBreakTable', '$getWholeBreakTable', '$getLoversBreakTable', '$empty?', '$get_table_by_2d6', '$get_table_by_1d3', '$get_table_by_1d6', '$rand', '$mk_nick_a_table', '$mk_nick_b_table', '$get_table_by_number', '$lambda', '$mk_item_power_table', '$mk_item_jyumon_table', '$mk_item_jyuka_table', '$mk_item_aptitude_table', '$mk_item_attribute_table', '$mk_family_business_table', '$mk_gender_table', '$%', '$ceil', '$/', '$mk_decoration_table', '$mk_placename_table', '$mk_basic_decoration_table', '$mk_spooky_decoration_table', '$mk_katakana_decoration_table', '$mk_passage_placename_table', '$mk_natural_placename_table', '$mk_artifact_placename_table', '$mk_landscape_table', '$mk_artifact_landscape_table', '$mk_cave_landscape_table', '$mk_natural_landscape_table', '$mk_waterside_landscape_table', '$mk_skyrealm_landscape_table', '$mk_strange_place_landscape_table']);
   return (function($base, $super, $parent_nesting) {
     function $MeikyuKingdom(){};
     var self = $MeikyuKingdom = $klass($base, $super, 'MeikyuKingdom', $MeikyuKingdom);
@@ -100,7 +100,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -131,7 +131,7 @@
 if (i == null) i = nil;
       return i['$=='](6)}, TMP_12.$$s = self, TMP_12.$$arity = 1, TMP_12));
       self.$debug("dice6List", dice6List);
-      if ($truthy(dice6List.$length()['$=='](0))) {
+      if (dice6List.$length()['$=='](0)) {
         return output_msg};
       if ($truthy($rb_ge(dice6List.$length(), 2))) {
         return "" + " ＆ 《気力》" + (dice6List.$length()) + "点獲得"};
@@ -201,7 +201,7 @@ if (i == null) i = nil;
       if ($truthy($rb_gt(bonus, 0))) {
         output = $rb_plus(output, "" + "+" + (bonus))
       } else if ($truthy($rb_lt(bonus, 0))) {
-        output = $rb_plus(output, "" + (bonus))};
+        output = $rb_plus(output, bonus.$to_s())};
       if ($truthy($rb_gt(self.$sendMode(), 0))) {
         if ($truthy(output['$=~'](/[^\d\[\]]+/))) {
           output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)

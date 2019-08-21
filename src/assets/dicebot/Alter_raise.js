@@ -88,7 +88,7 @@
       else if (/EMO(\d+)?$/i['$===']($case)) {
       roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
       return self.$get_emotion_table(roc);}
-      else {return nil}})();
+      else { return nil }})();
       return output;
     }, TMP_Alter_raise_rollDiceCommand_5.$$arity = 1);
     

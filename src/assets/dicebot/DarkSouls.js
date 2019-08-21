@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$!', '$nil?', '$getValue', '$checkRoll', '$roll', '$+', '$getValueText', '$==', '$collect', '$split', '$count', '$>', '$*', '$>=', '$parren_killer', '$<']);
+  Opal.add_stubs(['$setPrefixes', '$match', '$upcase', '$to_i', '$[]', '$!', '$nil?', '$getValue', '$checkRoll', '$roll', '$+', '$getValueText', '$==', '$collect', '$split', '$count', '$>', '$*', '$>=', '$to_s', '$parren_killer', '$<']);
   return (function($base, $super, $parent_nesting) {
     function $DarkSouls(){};
     var self = $DarkSouls = $klass($base, $super, 'DarkSouls', $DarkSouls);
@@ -57,21 +57,18 @@
     }, TMP_DarkSouls_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_DarkSouls_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, output = nil, $case = nil, reg1 = nil, reg2 = nil, reg3 = nil, reg5 = nil, diceCount = nil, isActive = nil, modify = nil, target = nil;
+      var $a, self = this, m = nil, diceCount = nil, isActive = nil, modify = nil, target = nil, output = nil;
 
       
-      output = (function() {$case = command.$upcase();
-      if (/(\d+)?(A)?DS([\+\-\d+]*)(\@(\d+))?$/i['$===']($case)) {
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      diceCount = ($truthy($a = reg1) ? $a : 2).$to_i();
-      isActive = reg2['$nil?']()['$!']();
-      modify = self.$getValue(reg3);
-      target = ($truthy($a = reg5) ? $a : 0).$to_i();
-      return self.$checkRoll(diceCount, isActive, modify, target);}
-      else {return nil}})();
+      if ($truthy((m = /(\d+)?(A)?DS([\+\-\d+]*)(\@(\d+))?$/i.$match(command.$upcase())))) {
+        } else {
+        return nil
+      };
+      diceCount = ($truthy($a = m['$[]'](1)) ? $a : 2).$to_i();
+      isActive = m['$[]'](2)['$nil?']()['$!']();
+      modify = self.$getValue(m['$[]'](3));
+      target = ($truthy($a = m['$[]'](5)) ? $a : 0).$to_i();
+      output = self.$checkRoll(diceCount, isActive, modify, target);
       return output;
     }, TMP_DarkSouls_rollDiceCommand_5.$$arity = 1);
     
@@ -108,7 +105,7 @@ if (i == null) i = nil;
           } else {
           result = $rb_plus(result, " ＞ 【失敗】")
         }};
-      result = $rb_plus(result, "" + (focusText));
+      result = $rb_plus(result, focusText.$to_s());
       return result;
     }, TMP_DarkSouls_checkRoll_8.$$arity = 4);
     
@@ -123,10 +120,10 @@ if (i == null) i = nil;
       var self = this;
 
       
-      if ($truthy(value['$=='](0))) {
+      if (value['$=='](0)) {
         return ""};
       if ($truthy($rb_lt(value, 0))) {
-        return "" + (value)};
+        return value.$to_s()};
       return "" + "+" + (value);
     }, TMP_DarkSouls_getValueText_10.$$arity = 1), nil) && 'getValueText';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)

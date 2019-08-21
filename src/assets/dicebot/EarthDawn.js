@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$ed_step', '$getStepResult', '$=~', '$to_i', '$>', '$<', '$getStepTable', '$[]', '$-', '$===', '$+', '$debug', '$rollStep', '$!=', '$==', '$>=', '$empty?', '$times', '$roll']);
+  Opal.add_stubs(['$setPrefixes', '$ed_step', '$getStepResult', '$=~', '$to_i', '$>', '$<', '$getStepTable', '$[]', '$-', '$===', '$+', '$debug', '$rollStep', '$!=', '$to_s', '$==', '$>=', '$empty?', '$times', '$roll']);
   return (function($base, $super, $parent_nesting) {
     function $EarthDawn(){};
     var self = $EarthDawn = $klass($base, $super, 'EarthDawn', $EarthDawn);
@@ -136,11 +136,11 @@
         self.string = $rb_plus(self.string, "+")};
       if ($truthy(nmod['$!='](0))) {
         
-        self.string = $rb_plus(self.string, "" + (nmod));
+        self.string = $rb_plus(self.string, nmod.$to_s());
         stepTotal = $rb_plus(stepTotal, nmod);};
       self.string = $rb_plus(self.string, "" + " ＞ " + (stepTotal));
       output = "" + "ステップ" + (step) + " ＞ " + (self.string);
-      if ($truthy(targetNumber['$=='](0))) {
+      if (targetNumber['$=='](0)) {
         return output};
       self.string = $rb_plus(self.string, " ＞ ");
       excelentSuccessNumber = stable['$[]'](7)['$[]']($rb_minus(targetNumber, 1));
@@ -209,7 +209,7 @@ if (i == null) i = nil;
         if ($truthy(dice_now['$!='](1))) {
           self.isFailed = false};
         dice_in = dice_now;
-        while ($truthy(dice_now['$=='](diceType))) {
+        while (dice_now['$=='](diceType)) {
           
           $c = self.$roll(1, diceType), $b = Opal.to_ary($c), (dice_now = ($b[0] == null ? nil : $b[0])), (dummy = ($b[1] == null ? nil : $b[1])), $c;
           dice_in = $rb_plus(dice_in, dice_now);
@@ -217,7 +217,7 @@ if (i == null) i = nil;
         stepTotal = $rb_plus(stepTotal, dice_in);
         if ($truthy(i['$!='](0))) {
           self.string = $rb_plus(self.string, ",")};
-        return (self.string = $rb_plus(self.string, "" + (dice_in)));}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9));
+        return (self.string = $rb_plus(self.string, dice_in.$to_s()));}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9));
       self.string = $rb_plus(self.string, "]");
       return stepTotal;
     }, TMP_EarthDawn_rollStep_10.$$arity = 2), nil) && 'rollStep';

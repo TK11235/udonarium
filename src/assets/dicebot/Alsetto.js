@@ -66,7 +66,7 @@
         isCritical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$nil?']();
         if ($truthy(isCritical)) {
           criticalNumber = 1
-        } else if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("G"))) {
+        } else if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("G")) {
           
           isCritical = true;
           criticalNumber = 2;

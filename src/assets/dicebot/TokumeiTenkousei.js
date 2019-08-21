@@ -6,7 +6,7 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
   Opal.add_stubs(['$==', '$>=', '$debug', '$!=', '$*']);
   return (function($base, $super, $parent_nesting) {
@@ -56,11 +56,11 @@
       if ($gvars.signOfInequality == null) $gvars.signOfInequality = nil;
 
       
-      if ($truthy($gvars.signOfInequality['$=='](">="))) {
+      if ($gvars.signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return ""};
       if ($truthy($rb_ge(total_n, diff))) {
         return " ＞ 成功"

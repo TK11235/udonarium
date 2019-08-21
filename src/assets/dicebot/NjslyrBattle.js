@@ -68,14 +68,14 @@
       $send(diceList, 'each', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
       
-        if ($truthy(i['$=='](1))) {
+        if (i['$=='](1)) {
           juuten = $rb_plus(juuten, 1)};
-        if ($truthy(i['$=='](6))) {
+        if (i['$=='](6)) {
           return (juuten = $rb_plus(juuten, 1))
           } else {
           return nil
         };}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));
-      if ($truthy(diceList['$[]'](0)['$=='](diceList['$[]'](1)))) {
+      if (diceList['$[]'](0)['$=='](diceList['$[]'](1))) {
         juuten = $rb_plus(juuten, 1)};
       if ($truthy($rb_gt(juuten, 0))) {
         return "" + " 重点 " + (juuten) + " 溜まる"};

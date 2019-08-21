@@ -153,7 +153,7 @@ if (diceValue == null) diceValue = nil;
     Opal.defn(self, '$getSpecialText', TMP_RecordOfSteam_getSpecialText_10 = function $$getSpecialText(specialCount) {
       var self = this;
 
-      if ($truthy(specialCount['$=='](1))) {
+      if (specialCount['$=='](1)) {
         return " ＞ スペシャル"
         } else {
         return nil
@@ -162,7 +162,7 @@ if (diceValue == null) diceValue = nil;
     return (Opal.defn(self, '$getFumbleText', TMP_RecordOfSteam_getFumbleText_11 = function $$getFumbleText(fumbleCount) {
       var self = this;
 
-      if ($truthy(fumbleCount['$=='](1))) {
+      if (fumbleCount['$=='](1)) {
         return " ＞ ファンブル"
         } else {
         return nil

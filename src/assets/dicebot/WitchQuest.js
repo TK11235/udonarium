@@ -67,7 +67,7 @@
       
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (value1 = ($a[0] == null ? nil : $a[0])), $b;
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (value2 = ($a[0] == null ? nil : $a[0])), $b;
-        if ($truthy(value1['$=='](value2))) {
+        if (value1['$=='](value2)) {
           success = $rb_plus(success, 1)};
         return results['$<<']("" + (value1) + "," + (value2));}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
       successText = $rb_plus("" + "(" + (results.$join(" / ")) + ") ＞ ", self.$getSuccessText(success));

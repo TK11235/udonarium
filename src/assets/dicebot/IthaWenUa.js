@@ -49,7 +49,7 @@
       var $a, self = this, diceValue = nil, dice0 = nil, dice1 = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };

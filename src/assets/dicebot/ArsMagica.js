@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$arsmagica_stress', '$!=', '$>=', '$to_i', '$marshalSignOfInequality', '$empty?', '$parren_killer', '$rand', '$==', '$times', '$+', '$push', '$sortType', '$sort', '$join', '$>', '$<', '$*', '$sub', '$sendMode', '$die', '$check_suc']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$arsmagica_stress', '$!=', '$>=', '$match', '$[]', '$to_i', '$marshalSignOfInequality', '$empty?', '$parren_killer', '$rand', '$==', '$times', '$+', '$push', '$sortType', '$sort', '$join', '$>', '$<', '$*', '$sub', '$to_s', '$sendMode', '$die', '$check_suc']);
   return (function($base, $super, $parent_nesting) {
     function $ArsMagica(){};
     var self = $ArsMagica = $klass($base, $super, 'ArsMagica', $ArsMagica);
@@ -109,43 +109,35 @@
       return " ＞ 失敗";
     }, TMP_ArsMagica_check_1D10_12.$$arity = 8);
     return (Opal.defn(self, '$arsmagica_stress', TMP_ArsMagica_arsmagica_stress_14 = function $$arsmagica_stress(string, nick_e) {
-      var $a, TMP_13, self = this, output = nil, reg1 = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, diff = nil, botch = nil, bonus = nil, crit_mul = nil, total = nil, signOfInequality = nil, bonusText = nil, die = nil, count0 = nil, dice_n = nil, crit_dice = nil;
+      var TMP_13, $a, self = this, output = nil, m = nil, diff = nil, botch = nil, bonus = nil, crit_mul = nil, total = nil, signOfInequality = nil, bonusText = nil, die = nil, count0 = nil, dice_n = nil, crit_dice = nil;
       if ($gvars.bonus == null) $gvars.bonus = nil;
 
       
       output = "1";
-      if ($truthy(/(^|\s)S?(1[rR]10([\+\-\d]*)(\[(\d+)\])?(([>=]+)(\d+))?)(\s|$)/i['$=~'](string))) {
+      if ($truthy((m = /(^|\s)S?(1[rR]10([\+\-\d]*)(\[(\d+)\])?(([>=]+)(\d+))?)(\s|$)/i.$match(string)))) {
         } else {
         return "1"
       };
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
       diff = 0;
       botch = 1;
       bonus = 0;
       crit_mul = 1;
       total = 0;
       signOfInequality = "";
-      bonusText = reg3;
-      if ($truthy(reg4)) {
-        botch = reg5.$to_i()};
-      if ($truthy(reg6)) {
+      bonusText = m['$[]'](3);
+      if ($truthy(m['$[]'](4))) {
+        botch = m['$[]'](5).$to_i()};
+      if ($truthy(m['$[]'](6))) {
         
-        signOfInequality = self.$marshalSignOfInequality(reg7);
-        diff = reg8;};
+        signOfInequality = self.$marshalSignOfInequality(m['$[]'](7));
+        diff = m['$[]'](8);};
       if ($truthy(bonusText['$empty?']())) {
         } else {
         bonus = self.$parren_killer("" + "(0" + (bonusText) + ")").$to_i()
       };
       die = self.$rand(10);
-      output = "" + "(" + (reg2) + ") ＞ ";
-      if ($truthy(die['$=='](0))) {
+      output = "" + "(" + (m['$[]'](2)) + ") ＞ ";
+      if (die['$=='](0)) {
         
         count0 = 0;
         dice_n = [];
@@ -153,7 +145,7 @@
 if (i == null) i = nil;
         
           botch_die = self.$rand(10);
-          if ($truthy(botch_die['$=='](0))) {
+          if (botch_die['$=='](0)) {
             count0 = $rb_plus(count0, 1)};
           return dice_n.$push(botch_die);}, TMP_13.$$s = self, TMP_13.$$arity = 1, TMP_13));
         if ($truthy(self.$sortType()['$!='](0))) {
@@ -179,10 +171,10 @@ if (i == null) i = nil;
           };
           total = bonus;
         };
-      } else if ($truthy(die['$=='](1))) {
+      } else if (die['$=='](1)) {
         
         crit_dice = "";
-        while ($truthy(die['$=='](1))) {
+        while (die['$=='](1)) {
           
           crit_mul = $rb_times(crit_mul, 2);
           die = $rb_plus(self.$rand(10), 1);
@@ -190,7 +182,7 @@ if (i == null) i = nil;
         };
         total = $rb_times(die, crit_mul);
         crit_dice = crit_dice.$sub(/,$/, "");
-        output = $rb_plus(output, "" + (total));
+        output = $rb_plus(output, total.$to_s());
         if ($truthy(self.$sendMode()['$!='](0))) {
           output = $rb_plus(output, "" + "[1," + (crit_dice) + "]")};
         total = $rb_plus(total, bonus);
@@ -206,7 +198,7 @@ if (i == null) i = nil;
         } else if ($truthy($rb_lt(bonus, 0))) {
           output = $rb_plus(output, "" + (self.$die($gvars.bonus)) + " ＞ " + (total))
           } else {
-          output = $rb_plus(output, "" + (total))
+          output = $rb_plus(output, total.$to_s())
         };
       };
       if ($truthy(signOfInequality['$!='](""))) {

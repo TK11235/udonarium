@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$check_roll', '$==', '$>=', '$to_i', '$parren_killer', '$marshalSignOfInequality', '$get_dice', '$!=', '$+', '$check_suc', '$abs', '$roll', '$shift', '$collect', '$split', '$times', '$[]', '$<', '$-', '$<=', '$===', '$get_horidasibukuro_table', '$debug', '$/']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$check_roll', '$==', '$>=', '$match', '$[]', '$to_i', '$parren_killer', '$marshalSignOfInequality', '$get_dice', '$!=', '$+', '$check_suc', '$abs', '$roll', '$shift', '$collect', '$split', '$times', '$<', '$-', '$<=', '$===', '$get_horidasibukuro_table', '$debug', '$/']);
   return (function($base, $super, $parent_nesting) {
     function $DarkBlaze(){};
     var self = $DarkBlaze = $klass($base, $super, 'DarkBlaze', $DarkBlaze);
@@ -97,11 +97,11 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return ""};
       if ($truthy($rb_ge(total_n, diff))) {
         return " ＞ 成功"};
@@ -109,38 +109,30 @@
     }, TMP_DarkBlaze_check_nD6_12.$$arity = 8);
     
     Opal.defn(self, '$check_roll', TMP_DarkBlaze_check_roll_13 = function $$check_roll(string, nick_e) {
-      var $a, $b, self = this, output = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, reg9 = nil, mod = nil, abl = nil, skl = nil, signOfInequality = nil, diff = nil, total = nil, out_str = nil;
+      var $a, $b, self = this, output = nil, m = nil, mod = nil, abl = nil, skl = nil, signOfInequality = nil, diff = nil, total = nil, out_str = nil;
 
       
       output = "1";
-      if ($truthy(/(^|\s)S?(3[rR]6([\+\-\d]+)?(\[(\d+),(\d+)\])(([>=]+)(\d+))?)(\s|$)/i['$=~'](string))) {
+      if ($truthy((m = /(^|\s)S?(3[rR]6([\+\-\d]+)?(\[(\d+),(\d+)\])(([>=]+)(\d+))?)(\s|$)/i.$match(string)))) {
         } else {
         return "1"
       };
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
-      reg9 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9));
-      string = reg2;
+      string = m['$[]'](2);
       mod = 0;
       abl = 1;
       skl = 1;
       signOfInequality = "";
       diff = 0;
-      if ($truthy(reg3)) {
-        mod = self.$parren_killer("" + "(0" + (reg3) + ")").$to_i()};
-      if ($truthy(reg4)) {
+      if ($truthy(m['$[]'](3))) {
+        mod = self.$parren_killer("" + "(0" + (m['$[]'](3)) + ")").$to_i()};
+      if ($truthy(m['$[]'](4))) {
         
-        abl = reg5.$to_i();
-        skl = reg6.$to_i();};
-      if ($truthy(reg7)) {
+        abl = m['$[]'](5).$to_i();
+        skl = m['$[]'](6).$to_i();};
+      if ($truthy(m['$[]'](7))) {
         
-        signOfInequality = self.$marshalSignOfInequality(reg8);
-        diff = reg9.$to_i();};
+        signOfInequality = self.$marshalSignOfInequality(m['$[]'](8));
+        diff = m['$[]'](9).$to_i();};
       $b = self.$get_dice(mod, abl, skl), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (out_str = ($a[1] == null ? nil : $a[1])), $b;
       output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (out_str);
       if ($truthy(signOfInequality['$!='](""))) {
@@ -220,7 +212,7 @@ if (i == null) i = nil;
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), (dmy = ($a[1] == null ? nil : $a[1])), $b;
         magic_stone_result = magic_stone['$[]']($rb_minus($rb_divide(num2, 2).$to_i(), 1));
         output = "" + "《" + (magic_stone_result) + "》を" + (dice) + "個獲得";
-      } else if ($truthy(num1['$=='](7))) {
+      } else if (num1['$=='](7)) {
         output = "" + "《金貨》を" + (num2) + "枚獲得"
         } else {
         

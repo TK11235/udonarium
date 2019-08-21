@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$nechronica_check', '$==', '$>=', '$<=', '$>', '$+', '$debug', '$=~', '$to_i', '$parren_killer', '$roll', '$<', '$collect', '$split', '$times', '$length', '$[]', '$[]=', '$-', '$join', '$check_suc', '$getHitLocation', '$!=']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$nechronica_check', '$==', '$>=', '$<=', '$>', '$+', '$debug', '$=~', '$to_i', '$parren_killer', '$roll', '$<', '$to_s', '$collect', '$split', '$times', '$length', '$[]', '$[]=', '$-', '$join', '$check_suc', '$getHitLocation', '$!=']);
   return (function($base, $super, $parent_nesting) {
     function $Nechronica(){};
     var self = $Nechronica = $klass($base, $super, 'Nechronica', $Nechronica);
@@ -95,7 +95,7 @@
       var self = this, result = nil;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -140,7 +140,7 @@
       total_n = $rb_plus(n_max, mod);
       output = "" + (self.nick_t) + ": (" + (string) + ") ＞ [" + (dice_str) + "]";
       if ($truthy($rb_lt(mod, 0))) {
-        output = $rb_plus(output, "" + (mod))
+        output = $rb_plus(output, mod.$to_s())
       } else if ($truthy($rb_gt(mod, 0))) {
         output = $rb_plus(output, "" + "+" + (mod))};
       n1 = 0;

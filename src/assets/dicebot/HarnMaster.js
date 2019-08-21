@@ -51,7 +51,7 @@
       var self = this, result = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
@@ -158,7 +158,7 @@
         } else {
         return "右"
       }; return nil; })();
-      return (part = part.$sub(/\*/, side));
+      return part.$sub(/\*/, side);
     }, TMP_HarnMaster_getLocationSide_12.$$arity = 2);
     
     Opal.defn(self, '$getFaceLocation', TMP_HarnMaster_getFaceLocation_13 = function $$getFaceLocation(part) {

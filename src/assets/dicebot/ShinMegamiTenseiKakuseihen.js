@@ -56,7 +56,7 @@
       var $a, $b, self = this, dice1 = nil, dice2 = nil, total1 = nil, total2 = nil, isRepdigit = nil, result = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };

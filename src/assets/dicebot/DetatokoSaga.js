@@ -113,7 +113,7 @@
 
       
       diceCount = $rb_plus(skill, 1);
-      if ($truthy(skill['$=='](0))) {
+      if (skill['$=='](0)) {
         diceCount = 3};
       dice = [];
       $send(diceCount, 'times', [], (TMP_7 = function(i){var self = TMP_7.$$s || this, $a, $b;
@@ -213,7 +213,7 @@ if (i == null) i = nil;
       var self = this, quotient = nil, result = nil;
 
       
-      if ($truthy(value['$=='](0))) {
+      if (value['$=='](0)) {
         return "0では割れません"};
       quotient = $rb_divide($rb_times(1.0, total), value).$ceil();
       result = "" + (total) + "÷" + (value) + " ＞ 判定値：" + (quotient);

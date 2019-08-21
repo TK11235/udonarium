@@ -48,7 +48,7 @@
         return " ＞ クリティカル"
       } else if ($truthy($rb_ge(dice_n, 12))) {
         return " ＞ ファンブル"
-      } else if ($truthy(signOfInequality['$==']("<="))) {
+      } else if (signOfInequality['$==']("<=")) {
         if ($truthy(diff['$!=']("?"))) {
           if ($truthy($rb_le(total_n, diff))) {
             

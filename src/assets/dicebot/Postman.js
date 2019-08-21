@@ -14,7 +14,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$<', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$>=', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$<', '$to_s', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$>=', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $Postman(){};
     var self = $Postman = $klass($base, $super, 'Postman', $Postman);
@@ -66,10 +66,10 @@
       if ($truthy($rb_lt(diceCount, 2))) {
         diceCount = 2};
       modify = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
-      modifyAddString = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : "");
+      modifyAddString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_s();
       type = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : "");
       target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i();
-      targetAddString = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](8))) ? $a : "");
+      targetAddString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8)).$to_s();
       modify_list = modifyAddString.$scan(/[+-]\d+/);
       $send(modify_list, 'each', [], (TMP_5 = function(i){var self = TMP_5.$$s || this;
 if (i == null) i = nil;
@@ -85,7 +85,7 @@ if (j == null) j = nil;
       roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
       return self.$get_weather_table(roc);}
       else if ("FRE"['$===']($case)) {return self.$get_free_situation_table()}
-      else {return nil}})();
+      else { return nil }})();
       return text;
     }, TMP_Postman_rollDiceCommand_7.$$arity = 1);
     
@@ -107,13 +107,13 @@ if (i == null) i = nil;
         modifyText = "";
         if ($truthy($rb_gt(modify, 0))) {
           modifyText = "+"};
-        modifyText = $rb_plus(modifyText, "" + (modify));};
+        modifyText = $rb_plus(modifyText, modify.$to_s());};
       result = $rb_plus(dice2, modify);
       if ($truthy(type['$!='](""))) {
         
         resultText = " 【失敗】";
         operatorText = ">";
-        if ($truthy(type['$=='](">"))) {
+        if (type['$=='](">")) {
           if ($truthy($rb_gt(result, target))) {
             resultText = " 【成功】"}
           } else {
@@ -124,12 +124,12 @@ if (i == null) i = nil;
         };};
       if ($truthy($rb_ge(criticalCount, 2))) {
         resultText = " 【成功】（クリティカル）"
-      } else if ($truthy(dice['$=='](diceCount))) {
+      } else if (dice['$=='](diceCount)) {
         resultText = " 【失敗】（ファンブル）"};
       text = "" + (diceCount) + "D6(" + (diceText) + ")" + (modifyText) + " ＞ " + (dice2) + "(" + (diceText2) + ")" + (modifyText) + " = 達成値：" + (result);
       if ($truthy($rb_gt(target, 0))) {
         text = $rb_plus(text, "" + (operatorText) + (target) + " ")};
-      text = $rb_plus(text, "" + (resultText));
+      text = $rb_plus(text, resultText.$to_s());
       return text;
     }, TMP_Postman_checkRoll_10.$$arity = 4);
     
@@ -139,7 +139,7 @@ if (i == null) i = nil;
       
       name = "天候チェック";
       table = [[2, "大雨と強風。探索判定の難易度に+4。"], [3, "風が強い1日になりそう。探索判定の難易度に+2。"], [4, "晴れ。特になし。"], [5, "夜の間の雨でぬかるむ。探索判定の難易度に+2。"], [6, "それなりの雨足。探索判定の難易度に+2。"], [7, "晴れ。特になし。"], [8, "天気は大荒れ。探索判定の難易度に+4。"], [9, "小雨が降る。探索判定の難易度に+1。"], [10, "それなりの雨足。探索判定の難易度に+2。"], [11, "晴れ。特になし。"], [12, "風が強い1日になりそう。探索判定の難易度に+2。"]];
-      if ($truthy(roc['$=='](0))) {
+      if (roc['$=='](0)) {
         $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b
         } else {
         

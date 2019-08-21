@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$==', '$to_i', '$scan', '$each', '$+', '$checkRoll', '$roll', '$getValueText', '$>=', '$<']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$==', '$to_i', '$scan', '$each', '$+', '$checkRoll', '$roll', '$getValueText', '$>=', '$<', '$to_s']);
   return (function($base, $super, $parent_nesting) {
     function $TherapieSein(){};
     var self = $TherapieSein = $klass($base, $super, 'TherapieSein', $TherapieSein);
@@ -65,7 +65,7 @@
 if (i == null) i = nil;
       return (modify = $rb_plus(modify, i.$to_i()))}, TMP_5.$$s = self, TMP_5.$$arity = 1, TMP_5));
       return self.$checkRoll(hasCritical, modify, target);}
-      else {return nil}})();
+      else { return nil }})();
       return output;
     }, TMP_TherapieSein_rollDiceCommand_6.$$arity = 1);
     
@@ -88,7 +88,7 @@ if (i == null) i = nil;
         result = $rb_plus(result, " ＞ クリティカル！");
         return result;};
       result = $rb_plus(result, "" + " ＞ " + (successValue) + (targetText));
-      if ($truthy(target['$=='](0))) {
+      if (target['$=='](0)) {
         return result};
       if ($truthy($rb_ge(successValue, target))) {
         result = $rb_plus(result, " ＞ 【成功】")
@@ -101,10 +101,10 @@ if (i == null) i = nil;
       var self = this;
 
       
-      if ($truthy(value['$=='](0))) {
+      if (value['$=='](0)) {
         return ""};
       if ($truthy($rb_lt(value, 0))) {
-        return "" + (value)};
+        return value.$to_s()};
       return "" + "+" + (value);
     }, TMP_TherapieSein_getValueText_8.$$arity = 1), nil) && 'getValueText';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)

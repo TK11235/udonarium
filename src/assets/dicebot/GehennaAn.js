@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$checkGehenaAn', '$=~', '$to_i', '$parren_killer', '$roll', '$&', '$sortType', '$collect', '$split', '$each', '$!=', '$<', '$>=', '$+', '$>', '$*', '$-', '$getAnastasisBonusText', '$==', '$/', '$getTougiBonus', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$checkGehenaAn', '$=~', '$to_i', '$parren_killer', '$roll', '$&', '$sortType', '$collect', '$split', '$each', '$!=', '$<', '$>=', '$+', '$>', '$*', '$-', '$to_s', '$getAnastasisBonusText', '$==', '$/', '$getTougiBonus', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $GehennaAn(){};
     var self = $GehennaAn = $klass($base, $super, 'GehennaAn', $GehennaAn);
@@ -137,7 +137,7 @@ if (i == null) i = nil;
       if ($truthy($rb_gt(mod, 0))) {
         output = $rb_plus(output, "" + "+" + (mod))
       } else if ($truthy($rb_lt(mod, 0))) {
-        output = $rb_plus(output, "" + (mod))};
+        output = $rb_plus(output, mod.$to_s())};
       if ($truthy(/[^\d\[\]]+/['$=~'](output))) {
         output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ 成功" + (success) + "、失敗" + (failed)
         } else {
@@ -151,7 +151,7 @@ if (i == null) i = nil;
       var self = this, ma_bonus = nil, bonus_str = nil;
 
       
-      if ($truthy(mode['$=='](0))) {
+      if (mode['$=='](0)) {
         return ""};
       ma_bonus = $rb_divide($rb_minus(success, 1), 2).$to_i();
       if ($truthy($rb_gt(ma_bonus, 7))) {

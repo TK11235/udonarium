@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$>=', '$<=', '$!=', '$==', '$rating', '$getRatingCommandStrings', '$new', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$loop', '$rollDice', '$getAdditionalDiceValue', '$min', '$*', '$[]', '$<<', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$to_s', '$sendMode', '$join', '$getAddText', '$===']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$>=', '$<=', '$!=', '$==', '$rating', '$getRatingCommandStrings', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$to_s', '$loop', '$rollDice', '$getAdditionalDiceValue', '$min', '$*', '$[]', '$<<', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$sendMode', '$join', '$getAddText', '$===']);
   return (function($base, $super, $parent_nesting) {
     function $SwordWorld(){};
     var self = $SwordWorld = $klass($base, $super, 'SwordWorld', $SwordWorld);
@@ -109,7 +109,7 @@
         return " ＞ 自動的失敗"};
       if ($truthy(signOfInequality['$!='](">="))) {
         return ""};
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return ""};
       if ($truthy($rb_ge(totalValue, diff))) {
         return " ＞ 成功"};
@@ -123,14 +123,13 @@
     }, TMP_SwordWorld_rollDiceCommand_13.$$arity = 1);
     
     Opal.defn(self, '$rating', TMP_SwordWorld_rating_15 = function $$rating(string) {
-      var $a, $b, TMP_14, self = this, commands = nil, pattern = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
+      var $a, $b, TMP_14, self = this, commands = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
       if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       
       self.$debug("rating string", string);
       commands = self.$getRatingCommandStrings();
-      pattern = "" + "(^|\\s)[sS]?(((k|K)[\\d\\+\\-]+)([" + (commands) + "]\\[([\\d\\+\\-]+)\\])*([\\d\\+\\-]*)([cmrCMR]\\[([\\d\\+\\-]+)\\]|gf|GF)*)($|\\s)";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern)['$=~'](string))) {
+      if ($truthy(new RegExp("" + "(^|\\s)[sS]?(((k|K)[\\d\\+\\-]+)([" + (commands) + "]\\[([\\d\\+\\-]+)\\])*([\\d\\+\\-]*)([cmrCMR]\\[([\\d\\+\\-]+)\\]|gf|GF)*)($|\\s)")['$=~'](string))) {
         } else {
         
         self.$debug("not matched");
@@ -168,7 +167,7 @@
         if ($truthy($rb_gt(addValue, 0))) {
           output = $rb_plus(output, "" + "+" + (addValue))};
         if ($truthy($rb_lt(addValue, 0))) {
-          output = $rb_plus(output, "" + (addValue))};};
+          output = $rb_plus(output, addValue.$to_s())};};
       output = $rb_plus(output, " ＞ ");
       diceResultTotals = [];
       diceResults = [];
@@ -200,8 +199,8 @@
         self.$debug("rateValue", rateValue);
         totalValue = $rb_plus(totalValue, rateValue);
         diceOnlyTotal = $rb_plus(diceOnlyTotal, dice);
-        diceResultTotals['$<<']("" + (dice));
-        diceResults['$<<']("" + (diceText));
+        diceResultTotals['$<<'](dice.$to_s());
+        diceResults['$<<'](diceText.$to_s());
         rateResults['$<<']((function() {if ($truthy($rb_gt(dice, 2))) {
           return rateValue
           } else {
@@ -332,7 +331,7 @@ if (rateText == null) rateText = nil;
         rate_10.$push(rate_arr['$[]'](8).$to_i());
         rate_11.$push(rate_arr['$[]'](9).$to_i());
         return rate_12.$push(rate_arr['$[]'](10).$to_i());}, TMP_23.$$s = self, TMP_23.$$arity = 1, TMP_23));
-      if ($truthy(self.rating_table['$=='](1))) {
+      if (self.rating_table['$=='](1)) {
         
         $writer = [31, (($writer = [32, (($writer = [33, 10]), $send(rate_12, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)])]), $send(rate_12, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)])];
         $send(rate_12, '[]=', Opal.to_a($writer));
@@ -359,14 +358,14 @@ if (rateText == null) rateText = nil;
         
         output = $rb_plus(output, "" + "2D:[" + (diceResults.$join(" ")) + "]=" + (diceResultTotals.$join(",")));
         rateResultsText = rateResults.$join(",");
-        if ($truthy(rateResultsText['$=='](totalText))) {
+        if (rateResultsText['$=='](totalText)) {
           } else {
           output = $rb_plus(output, "" + " ＞ " + (rateResultsText))
         };
       } else if ($truthy($rb_gt(self.$sendMode(), 0))) {
         output = $rb_plus(output, "" + "2D:" + (diceResultTotals.$join(",")))
         } else {
-        output = $rb_plus(output, "" + (totalValue))
+        output = $rb_plus(output, totalValue.$to_s())
       };
       if ($truthy($rb_le(diceOnlyTotal, 2))) {
         return "" + (output) + " ＞ 自動的失敗"};
@@ -386,7 +385,7 @@ if (rateText == null) rateText = nil;
 
       
       addText = "";
-      if ($truthy(addValue['$=='](0))) {
+      if (addValue['$=='](0)) {
         return addText};
       operator = (function() {if ($truthy($rb_gt(addValue, 0))) {
         return "+"
@@ -430,7 +429,7 @@ if (rateText == null) rateText = nil;
         self.rating_table = 2;
         mode_str = "2.0-mode";}
       };
-      if ($truthy(self.rating_table['$=='](pre_mode))) {
+      if (self.rating_table['$=='](pre_mode)) {
         return "1"};
       return "" + "RatingTableを" + (mode_str) + "に変更しました";
     }, TMP_SwordWorld_setRatingTable_28.$$arity = 1), nil) && 'setRatingTable';
@@ -588,11 +587,11 @@ Opal.loaded(["diceBot/SwordWorld"]);
       
       if ($truthy($rb_le(critical, 2))) {
         return nil};
-      if ($truthy(loop_count['$=='](0))) {
+      if (loop_count['$=='](0)) {
         
-        if ($truthy(dice_new['$=='](12))) {
+        if (dice_new['$=='](12)) {
           return nil};
-        if ($truthy(dice_new['$=='](2))) {
+        if (dice_new['$=='](2)) {
           return nil};};
       if ($truthy($rb_ge(dice_new, critical))) {
         return dice_arry.$push(2)
@@ -608,7 +607,7 @@ Opal.loaded(["diceBot/SwordWorld"]);
       
       self.$debug("check_nD6");
       result = $send(self, Opal.find_super_dispatcher(self, 'check_nD6', TMP_SwordWorld2_0_check_nD6_12, false), [total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max], null);
-      if ($truthy(result['$=='](""))) {
+      if (result['$==']("")) {
         } else {
         return result
       };

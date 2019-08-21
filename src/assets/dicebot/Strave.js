@@ -83,7 +83,7 @@
       else if ("IDT"['$===']($case)) {return self.$get_identity_table()}
       else if ("AFV"['$===']($case)) {return self.$get_affiliation_table2()}
       else if ("IDV"['$===']($case)) {return self.$get_identity_table2()}
-      else {return nil}})();
+      else { return nil }})();
       return output;
     }, TMP_Strave_rollDiceCommand_5.$$arity = 1);
     

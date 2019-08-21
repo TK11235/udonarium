@@ -55,7 +55,7 @@
       var self = this, output = nil;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -116,7 +116,7 @@
       number = self.$bcdice().$getD66(isSwap);
       result = self.$get_table_by_number(number, table);
       return [result, number];}
-      else {return nil}})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      else { return nil }})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(text['$nil?']())) {
         return nil};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);

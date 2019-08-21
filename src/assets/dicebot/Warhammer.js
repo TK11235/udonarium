@@ -26,12 +26,12 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getAtackResult', '$getCriticalResult', '$==', '$<=', '$floor', '$/', '$-', '$=~', '$to_i', '$>', '$<', '$roll', '$*', '$[]', '$+', '$>=', '$debug', '$!=', '$each', '$get_wh_atpos_message', '$step', '$length', '$check_suc', '$%', '$wh_atpos']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getAttackResult', '$getCriticalResult', '$==', '$<=', '$floor', '$/', '$-', '$=~', '$to_i', '$>', '$<', '$roll', '$*', '$[]', '$+', '$>=', '$debug', '$!=', '$each', '$get_wh_atpos_message', '$step', '$length', '$check_suc', '$%', '$wh_atpos']);
   return (function($base, $super, $parent_nesting) {
     function $Warhammer(){};
     var self = $Warhammer = $klass($base, $super, 'Warhammer', $Warhammer);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Warhammer_initialize_1, TMP_Warhammer_gameName_2, TMP_Warhammer_gameType_3, TMP_Warhammer_getHelpMessage_4, TMP_Warhammer_rollDiceCommand_5, TMP_Warhammer_check_1D100_6, TMP_Warhammer_getCriticalResult_7, TMP_Warhammer_wh_atpos_9, TMP_Warhammer_get_wh_atpos_message_11, TMP_Warhammer_getAtackResult_12;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Warhammer_initialize_1, TMP_Warhammer_gameName_2, TMP_Warhammer_gameType_3, TMP_Warhammer_getHelpMessage_4, TMP_Warhammer_rollDiceCommand_5, TMP_Warhammer_check_1D100_6, TMP_Warhammer_getCriticalResult_7, TMP_Warhammer_wh_atpos_9, TMP_Warhammer_get_wh_atpos_message_11, TMP_Warhammer_getAttackResult_12;
 
     
     self.$setPrefixes(["WH.*"]);
@@ -69,14 +69,14 @@
     }, TMP_Warhammer_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Warhammer_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, output_msg = nil, $case = nil, atackCommand = nil, criticalCommand = nil;
+      var $a, self = this, output_msg = nil, $case = nil, attackCommand = nil, criticalCommand = nil;
 
       
       output_msg = nil;
       $case = command.$upcase();
       if (/^(WH\d+(@[\dWH]*)?)/i['$===']($case)) {
-      atackCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      output_msg = self.$getAtackResult(atackCommand);}
+      attackCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      output_msg = self.$getAttackResult(attackCommand);}
       else if (/^(WH[HABTLW]\d+)/i['$===']($case)) {
       criticalCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
       output_msg = self.$getCriticalResult(criticalCommand);};
@@ -87,7 +87,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
@@ -206,11 +206,11 @@ if (i == null) i = nil;
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       return output;
     }, TMP_Warhammer_get_wh_atpos_message_11.$$arity = 2);
-    return (Opal.defn(self, '$getAtackResult', TMP_Warhammer_getAtackResult_12 = function $$getAtackResult(string) {
+    return (Opal.defn(self, '$getAttackResult', TMP_Warhammer_getAttackResult_12 = function $$getAttackResult(string) {
       var $a, $b, self = this, pos_type = nil, diff = nil, total_n = nil, output = nil, pos_num = nil;
 
       
-      self.$debug("getAtackResult begin string", string);
+      self.$debug("getAttackResult begin string", string);
       pos_type = "";
       if ($truthy(/(.+)(@.*)/['$=~'](string))) {
         
@@ -231,7 +231,7 @@ if (i == null) i = nil;
       if ($truthy($rb_le(total_n, diff))) {
         output = $rb_plus(output, self.$wh_atpos(pos_num, pos_type))};
       return output;
-    }, TMP_Warhammer_getAtackResult_12.$$arity = 1), nil) && 'getAtackResult';
+    }, TMP_Warhammer_getAttackResult_12.$$arity = 1), nil) && 'getAttackResult';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

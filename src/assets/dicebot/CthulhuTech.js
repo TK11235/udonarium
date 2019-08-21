@@ -66,11 +66,11 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         
         self.isCombatTest = false;
         return self.$check_nD10_nomalTest(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max);};
-      if ($truthy(signOfInequality['$=='](">"))) {
+      if (signOfInequality['$=='](">")) {
         
         self.isCombatTest = true;
         return self.$check_nD10_combatTest(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max);
@@ -174,7 +174,7 @@ if (i == null) i = nil;
           (function(){var $brk = Opal.new_brk(); try {return $send((10), 'times', [], (TMP_13 = function(i){var self = TMP_13.$$s || this, $a, TMP_14, dice_now = nil;
 if (i == null) i = nil;
           
-            if ($truthy(dice_num['$[]']($rb_plus(i, 2))['$=='](nil))) {
+            if (dice_num['$[]']($rb_plus(i, 2))['$=='](nil)) {
               
               Opal.brk(nil, $brk)};
             if ($truthy($rb_gt(dice_num['$[]'](i), 0))) {
@@ -184,7 +184,7 @@ if (i == null) i = nil;
                 (function(){var $brk = Opal.new_brk(); try {return $send(Opal.Range.$new($rb_plus(i, 3),10, true), 'step', [], (TMP_14 = function(i2){var self = TMP_14.$$s || this;
 if (i2 == null) i2 = nil;
                 
-                  if ($truthy(dice_num['$[]'](i2)['$=='](0))) {
+                  if (dice_num['$[]'](i2)['$=='](0)) {
                     
                     Opal.brk(nil, $brk)};
                   return (dice_now = $rb_plus(dice_now, $rb_plus(i2, 1)));}, TMP_14.$$s = self, TMP_14.$$brk = $brk, TMP_14.$$arity = 1, TMP_14))

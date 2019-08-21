@@ -12,9 +12,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash = Opal.hash, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash = Opal.hash, $hash2 = Opal.hash2, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$getJudgeResult', '$nil?', '$navigationResult', '$getFireResult', '$getBomberResult', '$getAvoidResult', '$===', '$empty?', '$to_i', '$roll', '$<=', '$floor', '$/', '$+', '$[]', '$to_s', '$min', '$getFirePoint', '$getFirePointText', '$!=', '$getDirectionInfo', '$times', '$<<', '$each', '$split', '$getMovePoint', '$isInMapPosition', '$join', '$slice', '$scanFirePoints', '$size', '$gsub', '$[]=', '$-']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$getJudgeResult', '$nil?', '$navigationResult', '$getFireResult', '$getBomberResult', '$getAvoidResult', '$match', '$empty?', '$[]', '$to_i', '$roll', '$<=', '$floor', '$/', '$+', '$to_s', '$min', '$getFirePoint', '$getFirePointText', '$!=', '$getDirectionInfo', '$times', '$<<', '$each', '$split', '$getMovePoint', '$isInMapPosition', '$join', '$===', '$slice', '$scanFirePoints', '$size', '$gsub', '$[]=', '$-']);
   return (function($base, $super, $parent_nesting) {
     function $Skynauts(){};
     var self = $Skynauts = $klass($base, $super, 'Skynauts', $Skynauts);
@@ -91,19 +91,18 @@
     }, TMP_Skynauts_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$getJudgeResult', TMP_Skynauts_getJudgeResult_6 = function $$getJudgeResult(command) {
-      var $a, $b, self = this, reg1 = nil, target = nil, total = nil, diceText = nil, result = nil, text = nil;
+      var $a, $b, self = this, m = nil, target = nil, total = nil, diceText = nil, result = nil, text = nil;
 
       
-      if ($truthy(($truthy($a = /^2D6<=(\d)$/i['$==='](command)) ? $a : /^SN(\d*)$/i['$==='](command)))) {
+      if ($truthy((m = ($truthy($a = /^2D6<=(\d)$/i.$match(command)) ? $a : /^SN(\d*)$/i.$match(command))))) {
         } else {
         return nil
       };
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
       self.$debug("====getJudgeResult====");
-      target = (function() {if ($truthy(reg1['$empty?']())) {
+      target = (function() {if ($truthy(m['$[]'](1)['$empty?']())) {
         return 7
         } else {
-        return reg1.$to_i()
+        return m['$[]'](1).$to_i()
       }; return nil; })();
       self.$debug("目標値", target);
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
@@ -119,16 +118,15 @@
     }, TMP_Skynauts_getJudgeResult_6.$$arity = 1);
     
     Opal.defn(self, '$navigationResult', TMP_Skynauts_navigationResult_7 = function $$navigationResult(command) {
-      var $a, $b, self = this, reg2 = nil, bonus = nil, total = nil, movePointBase = nil, movePoint = nil, text = nil;
+      var $a, $b, self = this, m = nil, bonus = nil, total = nil, movePointBase = nil, movePoint = nil, text = nil;
 
       
-      if ($truthy(/^NV(\+(\d+))?$/['$==='](command))) {
+      if ($truthy((m = /^NV(\+(\d+))?$/.$match(command)))) {
         } else {
         return nil
       };
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
       self.$debug("====navigationResult====");
-      bonus = reg2.$to_i();
+      bonus = m['$[]'](2).$to_i();
       self.$debug("移動修正", bonus);
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       movePointBase = (function() {if ($truthy($rb_le($rb_divide(total, 2).$floor(), 0))) {
@@ -158,20 +156,17 @@
     }, TMP_Skynauts_getDirectionInfo_8.$$arity = -3);
     
     Opal.defn(self, '$getFireResult', TMP_Skynauts_getFireResult_9 = function $$getFireResult(command) {
-      var $a, self = this, reg1 = nil, reg3 = nil, reg5 = nil, fireCount = nil, fireRange = nil, ballistics = nil, fireCountMax = nil, firePoint = nil, fireText = nil, text = nil;
+      var self = this, m = nil, fireCount = nil, fireRange = nil, ballistics = nil, fireCountMax = nil, firePoint = nil, fireText = nil, text = nil;
 
       
-      if ($truthy(/^D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/['$==='](command))) {
+      if ($truthy((m = /^D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/.$match(command)))) {
         } else {
         return nil
       };
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
       self.$debug("====getFireResult====");
-      fireCount = reg3.$to_i();
-      fireRange = reg1.$to_s();
-      ballistics = reg5.$to_i();
+      fireCount = m['$[]'](3).$to_i();
+      fireRange = m['$[]'](1).$to_s();
+      ballistics = m['$[]'](5).$to_i();
       self.$debug("fireCount", fireCount);
       self.$debug("fireRange", fireRange);
       self.$debug("ballistics", ballistics);
@@ -249,7 +244,7 @@ if (x == null) x = nil;if (y == null) y = nil;
     Opal.defn(self, '$isInMapPosition', TMP_Skynauts_isInMapPosition_16 = function $$isInMapPosition(x, y) {
       var $a, $b, self = this;
 
-      return ($truthy($a = (($b = $rb_le(1, y)) ? $rb_le(y, 6) : $rb_le(1, y))) ? (($b = $rb_le(2, x)) ? $rb_le(x, 12) : $rb_le(2, x)) : $a)
+      return ($truthy($a = ($truthy($b = $rb_le(1, y)) ? $rb_le(y, 6) : $b)) ? ($truthy($b = $rb_le(2, x)) ? $rb_le(x, 12) : $b) : $a)
     }, TMP_Skynauts_isInMapPosition_16.$$arity = 2);
     
     Opal.defn(self, '$getMovePoint', TMP_Skynauts_getMovePoint_17 = function $$getMovePoint(x, y, direction) {
@@ -269,18 +264,16 @@ if (x == null) x = nil;if (y == null) y = nil;
     }, TMP_Skynauts_getMovePoint_17.$$arity = 3);
     
     Opal.defn(self, '$getBomberResult', TMP_Skynauts_getBomberResult_18 = function $$getBomberResult(command) {
-      var $a, self = this, reg1 = nil, reg6 = nil, target = nil, direction = nil, text = nil, fireCommand = nil;
+      var self = this, m = nil, target = nil, direction = nil, text = nil, fireCommand = nil;
 
       
-      if ($truthy(/^BOM(\d*)?\/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/i['$==='](command))) {
+      if ($truthy((m = /^BOM(\d*)?\/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/i.$match(command)))) {
         } else {
         return nil
       };
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
       self.$debug("====getBomberResult====", command);
-      target = reg1.$to_s();
-      direction = reg6.$to_i();
+      target = m['$[]'](1).$to_s();
+      direction = m['$[]'](6).$to_i();
       self.$debug("弾道学方向", direction);
       text = "" + (command) + " ＞ ";
       text = $rb_plus(text, self.$getJudgeResult($rb_plus("SN", target)));
@@ -294,16 +287,15 @@ if (x == null) x = nil;if (y == null) y = nil;
     }, TMP_Skynauts_getBomberResult_18.$$arity = 1);
     
     Opal.defn(self, '$getAvoidResult', TMP_Skynauts_getAvoidResult_19 = function $$getAvoidResult(command) {
-      var $a, self = this, reg3 = nil, direction = nil, judgeCommand = nil, text = nil, pointCommand = nil, firePoint = nil, fireCount = nil;
+      var $a, self = this, m = nil, direction = nil, judgeCommand = nil, text = nil, pointCommand = nil, firePoint = nil, fireCount = nil;
 
       
-      if ($truthy(/^AVO(\d*)?(@([2,4,6,8]))(\(?\[縦\d+,横\d+\]\)?,?)+$/['$==='](command))) {
+      if ($truthy((m = /^AVO(\d*)?(@([2,4,6,8]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.$match(command)))) {
         } else {
         return nil
       };
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
       self.$debug("====getAvoidResult====", command);
-      direction = reg3.$to_i();
+      direction = m['$[]'](3).$to_i();
       self.$debug("回避方向", direction);
       judgeCommand = command.$slice(/^AVO(\d*)?(@([2,4,6,8]))/);
       text = "" + (judgeCommand) + " ＞ 《回避運動》";

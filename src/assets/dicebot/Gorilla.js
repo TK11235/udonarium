@@ -62,15 +62,15 @@
       var self = this, diceList = nil;
 
       
-      if ($truthy(dice_n['$=='](10))) {
+      if (dice_n['$=='](10)) {
         
         diceList = self.$getDiceList();
-        if ($truthy(diceList['$[]'](0)['$=='](5))) {
+        if (diceList['$[]'](0)['$=='](5)) {
           return " ＞ ゴリティカル（自動的成功）"};};
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         if ($truthy($rb_ge(totalValue, diff))) {
           return " ＞ 成功"}};
-      if ($truthy(signOfInequality['$=='](">"))) {
+      if (signOfInequality['$=='](">")) {
         if ($truthy($rb_gt(totalValue, diff))) {
           return " ＞ 成功"}};
       return " ＞ 失敗";

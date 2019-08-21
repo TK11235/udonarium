@@ -139,8 +139,8 @@
           } else {
           dice_str = $rb_plus(dice_str, ",")
         };
-        dice_str = $rb_plus(dice_str, "" + (dice_n));
-        if ($truthy(dice_n['$=='](20))) {
+        dice_str = $rb_plus(dice_str, dice_n.$to_s());
+        if (dice_n['$=='](20)) {
           isCritical = false
         } else if ($truthy(dice_n['$!='](10))) {
           
@@ -288,8 +288,8 @@ if (item == null) item = nil;
       resultValue = self.$get_torg_bonus(value);
       self.$debug("TORG BT resultValue", resultValue);
       self.$debug("TORG BT mod", mod);
-      if ($truthy(mod['$=='](0))) {
-        output = "" + (resultValue)
+      if (mod['$=='](0)) {
+        output = resultValue.$to_s()
         } else {
         
         output = self.$getTorgBonusOutputTextWhenModDefined(value, resultValue, mod);

@@ -81,7 +81,7 @@
       if ($gvars.signOfInequality == null) $gvars.signOfInequality = nil;
 
       
-      if ($truthy($gvars.signOfInequality['$=='](">="))) {
+      if ($gvars.signOfInequality['$=='](">=")) {
         } else {
         return ""
       };

@@ -26,7 +26,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$==', '$empty?', '$parren_killer', '$size', '$select', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$floor', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$=~']);
+  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$==', '$empty?', '$parren_killer', '$size', '$select', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$floor', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$match', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$to_s', '$=~']);
   return (function($base, $super, $parent_nesting) {
     function $LogHorizon_Korean(){};
     var self = $LogHorizon_Korean = $klass($base, $super, 'LogHorizon_Korean', $LogHorizon_Korean);
@@ -289,23 +289,19 @@ if (i == null) i = nil;
     }, TMP_LogHorizon_Korean_getAdjustNumberMax_25.$$arity = 2);
     
     Opal.defn(self, '$getTresureDiceCommandResult', TMP_LogHorizon_Korean_getTresureDiceCommandResult_26 = function $$getTresureDiceCommandResult(command) {
-      var $a, $b, self = this, reg1 = nil, reg2 = nil, reg3 = nil, reg4 = nil, type = nil, rank = nil, is_choice = nil, modifyText = nil, modify = nil, is_prize = nil, dice_value = nil, is_rank_enable = nil, $case = nil, tableName = nil, table = nil, number = nil, dice_str = nil, result = nil;
+      var $a, $b, self = this, m = nil, type = nil, rank = nil, is_choice = nil, modifyText = nil, modify = nil, is_prize = nil, dice_value = nil, is_rank_enable = nil, $case = nil, tableName = nil, table = nil, number = nil, dice_str = nil, result = nil;
 
       
-      if ($truthy(/(C|M|I|H|G)TRS(\d*)([\+\-\d]*)(\$)?/['$==='](command))) {
+      if ($truthy((m = /(C|M|I|H|G)TRS(\d*)([\+\-\d]*)(\$)?/.$match(command)))) {
         } else {
         return nil
       };
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      type = reg1;
-      rank = reg2.$to_i();
-      is_choice = ($truthy($a = reg2['$empty?']()) ? $a : reg4['$nil?']()['$!']());
-      modifyText = reg3;
+      type = m['$[]'](1);
+      rank = m['$[]'](2).$to_i();
+      is_choice = ($truthy($a = m['$[]'](2)['$empty?']()) ? $a : m['$[]'](4)['$nil?']()['$!']());
+      modifyText = m['$[]'](3);
       modify = self.$getValue(modifyText, 0);
-      is_prize = reg4['$==']("$");
+      is_prize = m['$[]'](4)['$==']("$");
       dice_value = nil;
       if ($truthy(is_prize)) {
         dice_value = "7"};
@@ -316,7 +312,7 @@ if (i == null) i = nil;
       else if ("I"['$===']($case)) {return self.$getItemTresureResultTable()}
       else if ("H"['$===']($case)) {return self.$getHeroineTresureResultTable()}
       else if ("G"['$===']($case)) {return self.$getGoblinTresureResultTable()}
-      else {return nil}})(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;
+      else { return nil }})(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(table['$nil?']())) {
         return nil};
       $b = (function() {if ($truthy(is_choice)) {
@@ -629,7 +625,7 @@ if (table == null) table = nil;
       type_name = ["타악기１", "건반악기", "현악기１", "현악기２", "관악기１", "관악기２"]['$[]']($rb_minus(type, 1));
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       result = [["캐스터네츠", "마라카스", "심벌즈", "트라이앵글", "북", "드럼"], ["목제 실로폰", "철제 실로폰", "하모늄", "하프시 코드", "피아노", "클라비코드"], ["하프", "류트", "기타", "바이올린", "첼로", "리라"], ["비파", "6현금", "호금", "샤미센", "시타르", "덜시머"], ["트럼펫", "호른", "트럼본", "튜바", "피리", "클라리넷"], ["리코더", "오카리나", "오보에", "하모니카", "아코디언", "퉁소"]]['$[]']($rb_minus(type, 1))['$[]']($rb_minus(dice, 1));
-      return $rb_plus($rb_plus("" + (tableName), (function() {if ($truthy(is_roll)) {
+      return $rb_plus($rb_plus(tableName.$to_s(), (function() {if ($truthy(is_roll)) {
         return "" + "(" + (type) + ")"
         } else {
         return ""

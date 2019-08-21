@@ -79,7 +79,7 @@
       else if ("WCC"['$===']($case)) {return self.$get_weapon_custom_chart()}
       else if ("EVC"['$===']($case)) {return self.$get_event_chart()}
       else if ("BSD"['$===']($case)) {return self.$get_battle_start_distance()}
-      else {return nil}})();
+      else { return nil }})();
       return output;
     }, TMP_Garako_rollDiceCommand_5.$$arity = 1);
     
@@ -102,9 +102,9 @@
       var self = this;
 
       
-      if ($truthy(dice['$=='](1))) {
+      if (dice['$=='](1)) {
         return "ファンブル"};
-      if ($truthy(dice['$=='](10))) {
+      if (dice['$=='](10)) {
         return "クリティカル"};
       if ($truthy($rb_lt(total, target))) {
         return "失敗"};
@@ -258,7 +258,7 @@
       else if ("F"['$===']($case)) {return self.$get_damagechart_frame()}
       else if ("A"['$===']($case)) {return self.$get_damagechart_arm()}
       else if ("L"['$===']($case)) {return self.$get_damagechart_leg()}
-      else {return nil}})(), $a = Opal.to_ary($b), (name = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;
+      else { return nil }})(), $a = Opal.to_ary($b), (name = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(table['$nil?']())) {
         return nil};
       tableMaxValue = table.$last()['$[]'](0);

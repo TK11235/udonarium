@@ -49,13 +49,13 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
-      if ($truthy(dice_n['$==']($rb_times(10, dice_cnt)))) {
+      if (dice_n['$==']($rb_times(10, dice_cnt))) {
         return " ＞ 完全成功"
-      } else if ($truthy(dice_n['$==']($rb_times(1, dice_cnt)))) {
+      } else if (dice_n['$==']($rb_times(1, dice_cnt))) {
         return " ＞ 絶対失敗"
       } else if ($truthy($rb_ge(total_n, diff))) {
         return " ＞ 成功"

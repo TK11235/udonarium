@@ -47,7 +47,7 @@
       var $a, self = this, cliticalValue = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };

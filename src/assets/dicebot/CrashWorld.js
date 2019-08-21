@@ -57,7 +57,7 @@
       while ($truthy(isEnd['$!']())) {
         
         $c = self.$roll(1, 12), $b = Opal.to_ary($c), (num = ($b[0] == null ? nil : $b[0])), $c;
-        if ($truthy(output['$==']("("))) {
+        if (output['$==']("(")) {
           output = "" + "(" + (num)
           } else {
           output = "" + (output) + ", " + (num)
@@ -66,16 +66,16 @@
           
           target = num;
           successness = $rb_plus(successness, 1);
-        } else if ($truthy(num['$=='](12))) {
+        } else if (num['$=='](12)) {
           isEnd = true
           } else {
           isEnd = true
         };
       };
-      if ($truthy(num['$=='](12))) {
+      if (num['$=='](12)) {
         successness = 0};
       output = "" + (output) + ")  成功度 : " + (successness);
-      if ($truthy(num['$=='](12))) {
+      if (num['$=='](12)) {
         output = "" + (output) + " ファンブル"};
       return output;
     }, TMP_CrashWorld_getCrashWorldRoll_5.$$arity = 1), nil) && 'getCrashWorldRoll';

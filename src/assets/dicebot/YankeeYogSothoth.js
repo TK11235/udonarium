@@ -55,7 +55,7 @@
       var self = this, output = nil;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -110,7 +110,7 @@
       else if ("D66"['$===']($case) || "D66S"['$===']($case)) {
       table = self.$getD66Table(table);
       return self.$get_table_by_d66_swap(table);}
-      else {return nil}})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      else { return nil }})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(text['$nil?']())) {
         return nil};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);

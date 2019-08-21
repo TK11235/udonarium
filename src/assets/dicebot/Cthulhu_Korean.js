@@ -24,9 +24,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getRegistResult', '$getCombineRoll', '$=~', '$to_i', '$>', '$+', '$roll', '$getCheckResultText', '$floor', '$/', '$*', '$<', '$<=', '$>=', '$-', '$include?', '$debug', '$==']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getRegistResult', '$getCombineRoll', '$match', '$to_i', '$[]', '$>', '$+', '$roll', '$getCheckResultText', '$floor', '$/', '$*', '$<', '$<=', '$>=', '$-', '$include?', '$debug', '$==']);
   return (function($base, $super, $parent_nesting) {
     function $Cthulhu_Korean(){};
     var self = $Cthulhu_Korean = $klass($base, $super, 'Cthulhu_Korean', $Cthulhu_Korean);
@@ -103,31 +103,30 @@
     }, TMP_Cthulhu_Korean_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$getCheckResult', TMP_Cthulhu_Korean_getCheckResult_6 = function $$getCheckResult(command) {
-      var $a, $b, self = this, output = nil, broken_num = nil, diff = nil, total_n = nil;
+      var $a, $b, self = this, broken_num = nil, diff = nil, m = nil, output = nil, total_n = nil;
 
       
-      output = "";
       broken_num = 0;
       diff = 0;
-      if ($truthy(/CC(B)?(\d+)<=(\d+)/i['$=~'](command))) {
+      if ($truthy((m = /CC(B)?(\d+)<=(\d+)/i.$match(command)))) {
         
-        broken_num = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-        diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
-      } else if ($truthy(/CC(B)?<=(\d+)/i['$=~'](command))) {
-        diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()};
+        broken_num = m['$[]'](2).$to_i();
+        diff = m['$[]'](3).$to_i();
+      } else if ($truthy((m = /CC(B)?<=(\d+)/i.$match(command)))) {
+        diff = m['$[]'](2).$to_i()};
+      output = "";
       if ($truthy($rb_gt(diff, 0))) {
         
-        output = $rb_plus(output, "" + "(1D100<=" + (diff) + ")");
+        output = "" + "(1D100<=" + (diff) + ")";
         if ($truthy($rb_gt(broken_num, 0))) {
           output = $rb_plus(output, "" + " 고장넘버[" + (broken_num) + "]")};
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = $rb_plus(output, $rb_plus(" ＞ ", "" + (total_n)));
-        output = $rb_plus(output, $rb_plus(" ＞ ", self.$getCheckResultText(total_n, diff, broken_num)));
+        output = $rb_plus(output, "" + " ＞ " + (total_n));
+        output = $rb_plus(output, "" + " ＞ " + (self.$getCheckResultText(total_n, diff, broken_num)));
         } else {
         
-        output = $rb_plus(output, "(1D100)");
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = $rb_plus(output, $rb_plus(" ＞ ", "" + (total_n)));
+        output = "" + "(1D100) ＞ " + (total_n);
       };
       return output;
     }, TMP_Cthulhu_Korean_getCheckResult_6.$$arity = 1);
@@ -179,15 +178,15 @@
     }, TMP_Cthulhu_Korean_getCheckResultText_7.$$arity = -3);
     
     Opal.defn(self, '$getRegistResult', TMP_Cthulhu_Korean_getRegistResult_8 = function $$getRegistResult(command) {
-      var $a, $b, self = this, output = nil, value = nil, target = nil, total_n = nil, result = nil;
+      var $a, $b, self = this, m = nil, value = nil, target = nil, total_n = nil, result = nil;
 
       
-      output = "1";
-      if ($truthy(/RES(B)?([-\d]+)/i['$=~'](command))) {
+      m = /RES(B)?([-\d]+)/i.$match(command);
+      if ($truthy(m)) {
         } else {
-        return output
+        return "1"
       };
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      value = m['$[]'](2).$to_i();
       target = $rb_plus($rb_times(value, 5), 50);
       if ($truthy($rb_lt(target, 5))) {
         return "" + "(1d100<=" + (target) + ") ＞ 자동실패"};
@@ -198,21 +197,20 @@
       return "" + "(1d100<=" + (target) + ") ＞ " + (total_n) + " ＞ " + (result);
     }, TMP_Cthulhu_Korean_getRegistResult_8.$$arity = 1);
     return (Opal.defn(self, '$getCombineRoll', TMP_Cthulhu_Korean_getCombineRoll_9 = function $$getCombineRoll(command) {
-      var $a, $b, self = this, output = nil, diff_1 = nil, diff_2 = nil, total = nil, result_1 = nil, result_2 = nil, successList = nil, failList = nil, succesCount = nil, rank = nil;
+      var $a, $b, self = this, m = nil, diff_1 = nil, diff_2 = nil, total = nil, result_1 = nil, result_2 = nil, successList = nil, succesCount = nil, rank = nil;
 
       
-      output = "1";
-      if ($truthy(/CBR(B)?\((\d+),(\d+)\)/i['$=~'](command))) {
+      m = /CBR(B)?\((\d+),(\d+)\)/i.$match(command);
+      if ($truthy(m)) {
         } else {
-        return output
+        return "1"
       };
-      diff_1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      diff_2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      diff_1 = m['$[]'](2).$to_i();
+      diff_2 = m['$[]'](3).$to_i();
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
       successList = ["크리티컬/스페셜", "크리티컬", "스페셜", "성공"];
-      failList = ["실패", "펌블"];
       succesCount = 0;
       if ($truthy(successList['$include?'](result_1))) {
         succesCount = $rb_plus(succesCount, 1)};
@@ -221,7 +219,7 @@
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
         return "성공"
-      } else if ($truthy(succesCount['$=='](1))) {
+      } else if (succesCount['$=='](1)) {
         return "부분적 성공"
         } else {
         return "실패"

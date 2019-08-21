@@ -71,12 +71,12 @@
       resultString = "";
       critical = false;
       fumble = false;
-      if ($truthy(dice_n['$=='](12))) {
+      if (dice_n['$=='](12)) {
         critical = true
-      } else if ($truthy(dice_n['$=='](2))) {
+      } else if (dice_n['$=='](2)) {
         fumble = true};
       totalValueBonus = 0;
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         totalValueBonus = 1};
       if ($truthy(signOfInequality['$=~'](/>/))) {
         if ($truthy($rb_gt($rb_plus(totalValue, totalValueBonus), diff))) {

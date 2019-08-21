@@ -14,7 +14,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$==', '$<=', '$>=', '$+', '$getGainMagicElementText', '$===', '$magicalogia_background_table', '$magicalogia_defaultanchor_table', '$magicalogia_fortune_attribution_table', '$magicalogia_wish_table', '$magicalogia_scene_table', '$magicalogia_fumble_table', '$magicalogia_wrong_table', '$magicalogia_fortunechange_table', '$magicalogia_accident_table', '$magicalogia_random_skill_table', '$magicalogia_time_passage_table', '$magicalogia_typical_fortune_change_table', '$magicalogia_physical_fortune_change_table', '$magicalogia_mental_fortune_change_table', '$magicalogia_insanity_fortune_change_table', '$magicalogia_social_fortune_change_table', '$magicalogia_paranormal_fortune_change_table', '$magicalogia_wonderful_fortune_change_table', '$magicalogia_comical_fortune_change_table', '$magicalogia_blank_secret_table', '$magicalogia_prise_table', '$magicalogia_inveterate_enemy_table', '$magicalogia_conspiracy_table', '$magicalogia_fate_table', '$magicalogia_cueball_table', '$magicalogia_force_field_table', '$magicalogia_alliance_table', '$magicalogia_extreme_environment_scene_table', '$magicalogia_innner_world_scene_table', '$magicalogia_magic_city_scene_table', '$magicalogia_world_after_dead_scene_table', '$magicalogia_labyrinth_world_scene_table', '$magicalogia_new_scene_table', '$magicalogia_random_skill_star_table', '$magicalogia_random_skill_beast_table', '$magicalogia_random_skill_force_table', '$magicalogia_random_skill_poem_table', '$magicalogia_random_skill_dream_table', '$magicalogia_random_skill_night_table', '$magicalogia_magi_fortune_change_table', '$magicalogia_magic_bookshelf_scene_table', '$magicalogia_magic_academy_scene_table', '$magicalogia_tower_credo_scene_table', '$magicalogia_parallel_world_scene_table', '$magicalogia_post_apocalypse_scene_table', '$magicalogia_god_bar_scene_table', '$magicalogia_starlight_scene_table', '$magicalogia_world_low_add_table', '$magicalogia_wondaring_monster_table', '$magicalogia_fallen_flower_table', '$magicalogia_old_library_scene_table', '$magicalogia_new_time_passage_table', '$magicalogia_fallen_after_table', '$lambda', '$magicalogia_random_skill_table_text_only', '$get_table_by_2d6', '$get_table_by_1d6', '$getDiceList', '$empty?', '$[]', '$gainMagicElement', '$-', '$roll', '$get_magic_element_type', '$magicalogia_random_skill_table_text_only_force', '$magicalogia_random_skill_table_text_only_beast', '$magicalogia_random_skill_table_text_only_dream', '$magicalogia_random_skill_table_text_only_star', '$magicalogia_random_skill_table_text_only_poem', '$magicalogia_random_skill_table_text_only_night', '$magicalogia_fallen_after_table_low', '$magicalogia_fallen_after_table_high']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$==', '$<=', '$>=', '$+', '$getGainMagicElementText', '$===', '$magicalogia_background_table', '$magicalogia_defaultanchor_table', '$magicalogia_fortune_attribution_table', '$magicalogia_wish_table', '$magicalogia_scene_table', '$magicalogia_fumble_table', '$magicalogia_wrong_table', '$magicalogia_fortunechange_table', '$magicalogia_accident_table', '$magicalogia_random_skill_table', '$magicalogia_time_passage_table', '$magicalogia_typical_fortune_change_table', '$magicalogia_physical_fortune_change_table', '$magicalogia_mental_fortune_change_table', '$magicalogia_insanity_fortune_change_table', '$magicalogia_social_fortune_change_table', '$magicalogia_paranormal_fortune_change_table', '$magicalogia_wonderful_fortune_change_table', '$magicalogia_comical_fortune_change_table', '$magicalogia_blank_secret_table', '$magicalogia_prise_table', '$magicalogia_inveterate_enemy_table', '$magicalogia_conspiracy_table', '$magicalogia_fate_table', '$magicalogia_cueball_table', '$magicalogia_force_field_table', '$magicalogia_alliance_table', '$magicalogia_extreme_environment_scene_table', '$magicalogia_innner_world_scene_table', '$magicalogia_magic_city_scene_table', '$magicalogia_world_after_dead_scene_table', '$magicalogia_labyrinth_world_scene_table', '$magicalogia_new_scene_table', '$magicalogia_random_skill_star_table', '$magicalogia_random_skill_beast_table', '$magicalogia_random_skill_force_table', '$magicalogia_random_skill_poem_table', '$magicalogia_random_skill_dream_table', '$magicalogia_random_skill_night_table', '$magicalogia_magi_fortune_change_table', '$magicalogia_magic_bookshelf_scene_table', '$magicalogia_magic_academy_scene_table', '$magicalogia_tower_credo_scene_table', '$magicalogia_parallel_world_scene_table', '$magicalogia_post_apocalypse_scene_table', '$magicalogia_god_bar_scene_table', '$magicalogia_starlight_scene_table', '$magicalogia_world_low_add_table', '$magicalogia_wondaring_monster_table', '$magicalogia_fallen_flower_table', '$magicalogia_old_library_scene_table', '$magicalogia_new_time_passage_table', '$magicalogia_fallen_after_table', '$lambda', '$magicalogia_random_skill_table_text_only', '$get_table_by_2d6', '$get_table_by_1d6', '$getDiceList', '$empty?', '$[]', '$gainMagicElement', '$-', '$roll', '$get_magic_element_type', '$magicalogia_random_skill_table_text_only_force', '$magicalogia_random_skill_table_text_only_beast', '$magicalogia_random_skill_table_text_only_dream', '$magicalogia_random_skill_table_text_only_star', '$magicalogia_random_skill_table_text_only_poem', '$magicalogia_random_skill_table_text_only_night', '$magicalogia_fallen_after_table_low', '$to_s', '$magicalogia_fallen_after_table_high']);
   return (function($base, $super, $parent_nesting) {
     function $MagicaLogia(){};
     var self = $MagicaLogia = $klass($base, $super, 'MagicaLogia', $MagicaLogia);
@@ -62,7 +62,7 @@
 
       
       self.$debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max);
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -318,7 +318,7 @@
       var self = this, table = nil;
 
       
-      if ($truthy(dice1['$=='](dice2))) {
+      if (dice1['$=='](dice2)) {
         } else {
         return ""
       };
@@ -966,11 +966,11 @@
       if ($truthy($rb_le(num, 3))) {
         
         $b = self.$magicalogia_fallen_after_table_low(), $a = Opal.to_ary($b), (outtext = ($a[0] == null ? nil : $a[0])), (outnum = ($a[1] == null ? nil : $a[1])), $b;
-        outtext = "" + (outtext);
+        outtext = outtext.$to_s();
         } else {
         
         $b = self.$magicalogia_fallen_after_table_high(), $a = Opal.to_ary($b), (outtext = ($a[0] == null ? nil : $a[0])), (outnum = ($a[1] == null ? nil : $a[1])), $b;
-        outtext = "" + (outtext);
+        outtext = outtext.$to_s();
       };
       outnum = "" + (num) + "," + (outnum);
       return [outtext, outnum];

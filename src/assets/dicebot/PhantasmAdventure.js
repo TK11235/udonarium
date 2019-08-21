@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$==', '$<', '$-', '$>', '$+', '$roll', '$>=', '$<=', '$sendMode', '$*']);
+  Opal.add_stubs(['$==', '$<', '$-', '$>', '$+', '$roll', '$>=', '$<=', '$sendMode', '$to_s', '$*']);
   return (function($base, $super, $parent_nesting) {
     function $PhantasmAdventure(){};
     var self = $PhantasmAdventure = $klass($base, $super, 'PhantasmAdventure', $PhantasmAdventure);
@@ -66,7 +66,7 @@
       var $a, $b, self = this, skill_mod = nil, fumble = nil, critical = nil, dice_now = nil, fum_num = nil, fum_str = nil, crit_num = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
@@ -89,7 +89,7 @@
           fum_num = 1};
         if ($truthy($rb_le(self.$sendMode(), 1))) {
           return "" + " ＞ 致命的失敗(" + (fum_num) + ")"};
-        fum_str = "" + (dice_now);
+        fum_str = dice_now.$to_s();
         if ($truthy($rb_lt(skill_mod, 0))) {
           fum_str = $rb_plus(fum_str, "" + "+" + ($rb_times(skill_mod, -1)) + "=" + (fum_num))
           } else {

@@ -131,7 +131,7 @@ if (die1 == null) die1 = nil;
         return (sum = $rb_plus(sum, die1));}, TMP_12.$$s = self, TMP_12.$$arity = 1, TMP_12));
       if ($truthy($rb_lt(sum, target))) {
         suc = $rb_plus(suc, 2)
-      } else if ($truthy(sum['$=='](target))) {
+      } else if (sum['$=='](target)) {
         suc = $rb_plus(suc, 1)};
       if ($truthy($rb_ge(cnt5, 3))) {
         suc = 0};

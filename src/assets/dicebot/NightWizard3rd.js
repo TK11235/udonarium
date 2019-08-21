@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$empty?', '$checkRoll', '$==', '$>=', '$debug', '$new', '$to_i', '$marshalSignOfInequality', '$split', '$parren_killer', '$nw_dice', '$!=', '$+', '$check_suc', '$<', '$getValuesFromText', '$roll', '$include?', '$getFumbleTextAndTotal', '$checkCritical', '$collect', '$getCriticalValue']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$empty?', '$checkRoll', '$==', '$>=', '$debug', '$to_i', '$marshalSignOfInequality', '$split', '$parren_killer', '$nw_dice', '$!=', '$+', '$check_suc', '$<', '$to_s', '$getValuesFromText', '$roll', '$include?', '$getFumbleTextAndTotal', '$checkCritical', '$collect', '$getCriticalValue']);
   return (function($base, $super, $parent_nesting) {
     function $NightWizard(){};
     var self = $NightWizard = $klass($base, $super, 'NightWizard', $NightWizard);
@@ -88,7 +88,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -98,14 +98,13 @@
     }, TMP_NightWizard_check_2D6_10.$$arity = 8);
     
     Opal.defn(self, '$checkRoll', TMP_NightWizard_checkRoll_11 = function $$checkRoll(string, nick_e) {
-      var $a, $b, self = this, output = nil, num = nil, pattern = nil, base_and_modify = nil, criticalText = nil, criticalValue = nil, fumbleText = nil, fumbleValue = nil, judgeText = nil, judgeOperator = nil, judgeValue = nil, crit = nil, fumble = nil, signOfInequality = nil, diff = nil, base = nil, modify = nil, total = nil, out_str = nil;
+      var $a, $b, self = this, output = nil, num = nil, base_and_modify = nil, criticalText = nil, criticalValue = nil, fumbleText = nil, fumbleValue = nil, judgeText = nil, judgeOperator = nil, judgeValue = nil, crit = nil, fumble = nil, signOfInequality = nil, diff = nil, base = nil, modify = nil, total = nil, out_str = nil;
 
       
       self.$debug("checkRoll string", string);
       output = "1";
       num = "[,\\d\\+\\-]+";
-      pattern = "" + "(^|\\s)S?(2R6m\\[(" + (num) + ")\\](c\\[(" + (num) + ")\\])?(f\\[(" + (num) + ")\\])?(([>=]+)(d+))?)( |$)";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE'))['$=~'](string))) {
+      if ($truthy(new RegExp("" + "(^|\\s)S?(2R6m\\[(" + (num) + ")\\](c\\[(" + (num) + ")\\])?(f\\[(" + (num) + ")\\])?(([>=]+)(\\d+))?)(\\s|$)", 'i')['$=~'](string))) {
         } else {
         return output
       };
@@ -149,7 +148,7 @@
       
       value = text.$to_i();
       if ($truthy($rb_lt(value, 0))) {
-        return "" + (value)};
+        return value.$to_s()};
       return "" + "+" + (value);
     }, TMP_NightWizard_getValueText_12.$$arity = 1);
     
@@ -198,7 +197,7 @@
       var TMP_16, self = this;
 
       
-      if ($truthy(text['$==']("0"))) {
+      if (text['$==']("0")) {
         return default$};
       return $send(text.$split(/,/), 'collect', [], (TMP_16 = function(i){var self = TMP_16.$$s || this;
 if (i == null) i = nil;
@@ -210,7 +209,7 @@ if (i == null) i = nil;
 
       
       self.$debug("addRollWhenCritical begin total, dice_str", total, dice_str);
-      output = "" + (total);
+      output = total.$to_s();
       criticalText = "";
       criticalValue = self.$getCriticalValue(dice_n);
       while ($truthy(criticalValue)) {

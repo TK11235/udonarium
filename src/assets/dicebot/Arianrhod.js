@@ -62,11 +62,11 @@
       if ($truthy($rb_ge(n_max, 2))) {
         return "" + " ＞ クリティカル(+" + (n_max) + "D6)"};
       result = "";
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return result
       };
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return result};
       if ($truthy($rb_ge(total_n, diff))) {
         return " ＞ 成功"};

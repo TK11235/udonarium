@@ -72,7 +72,7 @@
       if ("1D6"['$===']($case)) {return self.$get_table_by_1d6(table)}
       else if ("2D6"['$===']($case)) {return self.$get_table_by_2d6(table)}
       else if ("D66"['$===']($case)) {return self.$get_table_by_d66_swap(table)}
-      else {return nil}})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      else { return nil }})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(text['$nil?']())) {
         return nil};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);
@@ -119,7 +119,7 @@ if (i == null) i = nil;
         return "" + "@" + (specialNum)
       }; return nil; })();
       message = "" + "(" + (commandText) + (specialText) + (signOfInequality) + (targetText) + ") ＞ [" + (diceText) + "]" + (modifyText) + " ＞ ";
-      if ($truthy(skillRank['$==']("D"))) {
+      if (skillRank['$==']("D")) {
         diceList = [diceList.$min()]};
       is_loop = false;
       
@@ -150,7 +150,7 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
       var self = this, success = nil;
 
       
-      if ($truthy(dice_n['$=='](1))) {
+      if (dice_n['$=='](1)) {
         return "펌블！"};
       if ($truthy($rb_ge(dice_n, special_n))) {
         return "스페셜！"};

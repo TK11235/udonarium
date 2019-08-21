@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$sub', '$===', '$to_i', '$debug', '$getCriticalResult', '$getDownResult', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$getXrmDamageTable', '$collect', '$*', '$get_table_by_2d6', '$raise', '$getBaseValue', '$getHitPart', '$times', '$getHitText', '$+', '$getDamages', '$<<', '$join', '$>=', '$length', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$roll', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]', '$[]=', '$-', '$empty?', '$each', '$delete', '$inject', '$size', '$inspect', '$getPart', '$gsub', '$index', '$!', '$==', '$get_table_by_nD6', '$get_table_by_number', '$get_table_by_1d6']);
+  Opal.add_stubs(['$setPrefixes', '$sub', '$===', '$to_i', '$debug', '$getCriticalResult', '$getDownResult', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$getXrmDamageTable', '$collect', '$*', '$get_table_by_2d6', '$raise', '$getBaseValue', '$getHitPart', '$times', '$getHitText', '$+', '$getDamages', '$<<', '$join', '$>=', '$length', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$roll', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]', '$[]=', '$-', '$empty?', '$to_s', '$each', '$delete', '$inject', '$size', '$inspect', '$getPart', '$gsub', '$index', '$!', '$==', '$get_table_by_nD6', '$get_table_by_number', '$get_table_by_1d6']);
   return (function($base, $super, $parent_nesting) {
     function $BattleTech(){};
     var self = $BattleTech = $klass($base, $super, 'BattleTech', $BattleTech);
@@ -262,7 +262,7 @@ if (damageIndex == null) damageIndex = nil;
 
       
       if ($truthy(dice['$nil?']())) {
-        return [damage, "" + (damage)]};
+        return [damage, damage.$to_s()]};
       if ($truthy(isLrm)) {
         } else {
         return [damage, "" + "[" + (dice) + "] " + (damage)]
@@ -270,7 +270,7 @@ if (damageIndex == null) damageIndex = nil;
       currentDamage = $rb_minus(damage, $rb_times((($a = $BattleTech.$$cvars['@@lrmLimit']) == null ? nil : $a), index));
       if ($truthy($rb_gt(currentDamage, (($a = $BattleTech.$$cvars['@@lrmLimit']) == null ? nil : $a)))) {
         currentDamage = (($a = $BattleTech.$$cvars['@@lrmLimit']) == null ? nil : $a)};
-      return [currentDamage, "" + (currentDamage)];
+      return [currentDamage, currentDamage.$to_s()];
     }, TMP_BattleTech_getDamageInfo_20.$$arity = 4);
     
     Opal.defn(self, '$getTotalDamage', TMP_BattleTech_getTotalDamage_23 = function $$getTotalDamage(damages) {
@@ -323,7 +323,7 @@ if (sum == null) sum = nil;if (i == null) i = nil;
         
         $b = self.$getCriticalResult(), $a = Opal.to_ary($b), (criticalDice = ($a[0] == null ? nil : $a[0])), (criticalText = ($a[1] == null ? nil : $a[1])), $b;
         result = $rb_plus(result, "" + " ＞ [" + (criticalDice) + "] " + (criticalText));};
-      if ($truthy(criticalText['$==']((($a = $BattleTech.$$cvars['@@noCritical']) == null ? nil : $a)))) {
+      if (criticalText['$==']((($a = $BattleTech.$$cvars['@@noCritical']) == null ? nil : $a))) {
         criticalText = ""};
       return [result, part, criticalText];
     }, TMP_BattleTech_getHitResultOne_24.$$arity = 2);
@@ -333,7 +333,7 @@ if (sum == null) sum = nil;if (i == null) i = nil;
 
       
       diceCount = 2;
-      if ($truthy(partTable.$length()['$=='](6))) {
+      if (partTable.$length()['$=='](6)) {
         diceCount = 1};
       $b = self.$get_table_by_nD6(partTable, diceCount), $a = Opal.to_ary($b), (part = ($a[0] == null ? nil : $a[0])), (value = ($a[1] == null ? nil : $a[1])), $b;
       return [part, value];

@@ -41,7 +41,7 @@
       var $a, self = this;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
@@ -52,7 +52,7 @@
         return " ＞ 成功";
         } else {
         
-        if ($truthy(total_n['$=='](20))) {
+        if (total_n['$=='](20)) {
           return " ＞ ファンブル"};
         return " ＞ 失敗";
       };

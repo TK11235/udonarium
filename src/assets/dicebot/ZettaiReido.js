@@ -106,7 +106,7 @@ if (i == null) i = nil;
       $b = self.$changeDiceToDarkDice(dice1), $a = Opal.to_ary($b), (darkDice1 = ($a[0] == null ? nil : $a[0])), (darkPoint1 = ($a[1] == null ? nil : $a[1])), $b;
       $b = self.$changeDiceToDarkDice(dice2), $a = Opal.to_ary($b), (darkDice2 = ($a[0] == null ? nil : $a[0])), (darkPoint2 = ($a[1] == null ? nil : $a[1])), $b;
       darkPoint = $rb_plus(darkPoint1, darkPoint2);
-      if ($truthy(darkPoint['$=='](2))) {
+      if (darkPoint['$=='](2)) {
         darkPoint = 4};
       darkTotal = $rb_plus(darkDice1, darkDice2);
       darkDiceText = "" + (darkDice1) + "," + (darkDice2);
@@ -119,7 +119,7 @@ if (i == null) i = nil;
       
       darkPoint = 0;
       darkDice = dice;
-      if ($truthy(dice['$=='](6))) {
+      if (dice['$=='](6)) {
         
         darkDice = 0;
         darkPoint = 1;};
@@ -166,9 +166,9 @@ if (i == null) i = nil;
       var self = this, successLevel = nil;
 
       
-      if ($truthy(diceTotal['$=='](0))) {
+      if (diceTotal['$=='](0)) {
         return " ＞ クリティカル"};
-      if ($truthy(diceTotal['$=='](10))) {
+      if (diceTotal['$=='](10)) {
         return " ＞ ファンブル"};
       if ($truthy(diff['$nil?']())) {
         diff = 0};

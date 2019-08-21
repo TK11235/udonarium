@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$judgeRoll', '$nil?', '$reRoll', '$getRulingPlanetDiceCommandResult', '$getDurtyTableCommandReuslt', '$getTableCommandResult', '$=~', '$new', '$!', '$to_i', '$+', '$getRollResult', '$getTotalResultMessageText', '$collect', '$split', '$each', '$empty?', '$>', '$size', '$each_with_index', '$==', '$-', '$roll', '$getSuccessResultText', '$find_all', '$>=', '$<<', '$getSameDieList', '$join', '$count', '$inject', '$uniq', '$<=', '$length', '$===', '$getRulingPlanetDice', '$include?', '$changeRulingPlanetDice', '$*', '$ceil', '$/', '$[]', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$judgeRoll', '$nil?', '$reRoll', '$getRulingPlanetDiceCommandResult', '$getDurtyTableCommandReuslt', '$getTableCommandResult', '$=~', '$!', '$to_i', '$+', '$getRollResult', '$getTotalResultMessageText', '$collect', '$split', '$each', '$empty?', '$>', '$size', '$each_with_index', '$==', '$-', '$roll', '$getSuccessResultText', '$find_all', '$>=', '$<<', '$getSameDieList', '$join', '$count', '$inject', '$uniq', '$<=', '$length', '$===', '$getRulingPlanetDice', '$include?', '$changeRulingPlanetDice', '$*', '$ceil', '$/', '$[]', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $BlindMythos(){};
     var self = $BlindMythos = $klass($base, $super, 'BlindMythos', $BlindMythos);
@@ -92,11 +92,10 @@
     }, TMP_BlindMythos_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$judgeRoll', TMP_BlindMythos_judgeRoll_6 = function $$judgeRoll(command) {
-      var $a, $b, self = this, pattern = nil, isStop = nil, skillRank = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, message = nil, diceCount = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
+      var $a, $b, self = this, isStop = nil, skillRank = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, message = nil, diceCount = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
 
       
-      pattern = "^BM(S)?(\\d*)(@(\\d+))?>=(\\d+)$";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE'))['$=~'](command))) {
+      if ($truthy(/^BM(S)?(\d*)(@(\d+))?>=(\d+)$/i['$=~'](command))) {
         } else {
         return nil
       };
@@ -115,12 +114,11 @@
     }, TMP_BlindMythos_judgeRoll_6.$$arity = 1);
     
     Opal.defn(self, '$reRoll', TMP_BlindMythos_reRoll_9 = function $$reRoll(command, isStop) {
-      var $a, $b, TMP_7, TMP_8, self = this, pattern = nil, rerollCountsText = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, rerollCounts = nil, commandText = nil, message = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
+      var $a, $b, TMP_7, TMP_8, self = this, rerollCountsText = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, rerollCounts = nil, commandText = nil, message = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
 
       
       self.$debug("ReRoll Begin", command);
-      pattern = "^ReRoll([\\d,]+)(@(\\d+))?>=(\\d+)$";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE'))['$=~'](command))) {
+      if ($truthy(/^ReRoll([\d,]+)(@(\d+))?>=(\d+)$/i['$=~'](command))) {
         } else {
         return nil
       };

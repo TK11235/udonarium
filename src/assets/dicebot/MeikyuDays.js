@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$checkRoll', '$==', '$<=', '$>=', '$debug', '$=~', '$to_i', '$nil?', '$parren_killer', '$+', '$roll', '$&', '$sortType', '$collect', '$split', '$[]', '$-', '$>', '$<', '$sendMode', '$!=', '$check_suc', '$===', '$md_research_table', '$md_break_table', '$md_happening_table', '$md_market_price_table', '$md_treasure1_table', '$md_treasure2_table', '$md_treasure3_table', '$md_treasure4_table', '$md_connection_table', '$md_monster_connection_table', '$md_pc_connection_table', '$md_love_connection_table', '$md_critical_attack_table', '$md_fatal_wounds_table', '$md_combat_fumble_table', '$md_negotiation_table', '$md_appearance_table', '$md_kernel_stop_table', '$get_table_by_2d6', '$get_table_by_1d6']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$checkRoll', '$==', '$<=', '$>=', '$debug', '$match', '$[]', '$to_i', '$nil?', '$parren_killer', '$+', '$roll', '$&', '$sortType', '$collect', '$split', '$-', '$>', '$<', '$to_s', '$sendMode', '$=~', '$!=', '$check_suc', '$===', '$md_research_table', '$md_break_table', '$md_happening_table', '$md_market_price_table', '$md_treasure1_table', '$md_treasure2_table', '$md_treasure3_table', '$md_treasure4_table', '$md_connection_table', '$md_monster_connection_table', '$md_pc_connection_table', '$md_love_connection_table', '$md_critical_attack_table', '$md_fatal_wounds_table', '$md_combat_fumble_table', '$md_negotiation_table', '$md_appearance_table', '$md_kernel_stop_table', '$get_table_by_2d6', '$get_table_by_1d6']);
   return (function($base, $super, $parent_nesting) {
     function $MeikyuDays(){};
     var self = $MeikyuDays = $klass($base, $super, 'MeikyuDays', $MeikyuDays);
@@ -89,7 +89,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -105,36 +105,31 @@
     }, TMP_MeikyuDays_check_2D6_9.$$arity = 8);
     
     Opal.defn(self, '$checkRoll', TMP_MeikyuDays_checkRoll_11 = function $$checkRoll(string) {
-      var $a, $b, TMP_10, self = this, output = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg6 = nil, reg7 = nil, dice_c = nil, bonus = nil, signOfInequality = nil, diff = nil, bonusText = nil, dice_now = nil, dice_str = nil, total_n = nil, _ = nil, dice_num = nil;
+      var $a, $b, TMP_10, self = this, output = nil, m = nil, dice_c = nil, bonus = nil, signOfInequality = nil, diff = nil, bonusText = nil, dice_now = nil, dice_str = nil, total_n = nil, _ = nil, dice_num = nil;
 
       
       output = "1";
       self.$debug("checkRoll string", string);
-      if ($truthy(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i['$=~'](string))) {
+      if ($truthy((m = /(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i.$match(string)))) {
         } else {
         
         self.$debug("not mutch");
         return output;
       };
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      string = reg2;
-      dice_c = reg3.$to_i();
+      string = m['$[]'](2);
+      dice_c = m['$[]'](3).$to_i();
       bonus = 0;
       signOfInequality = "";
       diff = 0;
-      bonusText = reg4;
+      bonusText = m['$[]'](4);
       if ($truthy(bonusText['$nil?']())) {
         } else {
         bonus = self.$parren_killer($rb_plus($rb_plus("(0", bonusText), ")")).$to_i()
       };
-      if ($truthy(reg6)) {
-        signOfInequality = reg6};
-      if ($truthy(reg7)) {
-        diff = reg7.$to_i()};
+      if ($truthy(m['$[]'](6))) {
+        signOfInequality = m['$[]'](6)};
+      if ($truthy(m['$[]'](7))) {
+        diff = m['$[]'](7).$to_i()};
       dice_now = 0;
       dice_str = "";
       total_n = 0;
@@ -149,7 +144,7 @@ if (i == null) i = nil;
       if ($truthy($rb_gt(bonus, 0))) {
         output = $rb_plus(output, "" + "+" + (bonus))
       } else if ($truthy($rb_lt(bonus, 0))) {
-        output = $rb_plus(output, "" + (bonus))};
+        output = $rb_plus(output, bonus.$to_s())};
       if ($truthy($rb_gt(self.$sendMode(), 0))) {
         if ($truthy(/[^\d\[\]]+/['$=~'](output))) {
           output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)

@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$getReimonCompensationTableResult', '$to_i', '$getGetMaterialTableResult', '$getEmotionTableResult', '$getNameTableResult', '$getKyoukaiTableResult', '$empty?', '$get_table_by_1d6', '$getD66', '$bcdice', '$get_table_by_number', '$get_table_by_d66', '$+', '$getMaterialEffect', '$getPrice', '$nil?', '$roll', '$<', '$getMaterialEffectNomal', '$getMaterialEffectRare', '$getMaterialEffectPower', '$sub', '$>', '$getAttribute', '$[]']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$getReimonCompensationTableResult', '$to_i', '$getGetMaterialTableResult', '$getEmotionTableResult', '$getNameTableResult', '$getKyoukaiTableResult', '$empty?', '$get_table_by_1d6', '$getD66', '$bcdice', '$get_table_by_number', '$get_table_by_d66', '$+', '$getMaterialEffect', '$getPrice', '$nil?', '$roll', '$<', '$getMaterialEffectNomal', '$getMaterialEffectRare', '$getMaterialEffectPower', '$sub', '$>', '$getAttribute', '$to_s', '$[]']);
   return (function($base, $super, $parent_nesting) {
     function $Kamigakari_Korean(){};
     var self = $Kamigakari_Korean = $klass($base, $super, 'Kamigakari_Korean', $Kamigakari_Korean);
@@ -206,7 +206,7 @@
       if ($truthy(/\*\*/['$==='](result))) {
         
         $b = self.$getAttribute(), $a = Opal.to_ary($b), (attribute = ($a[0] == null ? nil : $a[0])), (number2 = ($a[1] == null ? nil : $a[1])), $b;
-        result = result.$sub(/\*\*/, "" + (attribute));
+        result = result.$sub(/\*\*/, attribute.$to_s());
         number = "" + (number) + "," + (number2);};
       return [result, number];
     }, TMP_Kamigakari_Korean_getMaterialEffectRare_14.$$arity = 0);

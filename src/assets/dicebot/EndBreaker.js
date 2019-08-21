@@ -107,7 +107,7 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
         count = $send(diceFullList, 'select', [], (TMP_9 = function(i){var self = TMP_9.$$s || this;
 if (i == null) i = nil;
         return i['$=='](num)}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9)).$size();
-        if ($truthy(count['$=='](0))) {
+        if (count['$=='](0)) {
           return nil
           } else {
           return (result = $rb_plus(result, "" + " [" + (num) + ":" + (count) + "個]"))

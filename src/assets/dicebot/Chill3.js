@@ -41,15 +41,15 @@
       var $a, self = this, s10 = nil, s1 = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
       s10 = dice_n.$div(10);
       s1 = dice_n['$%'](10);
-      if ($truthy(s10['$=='](10))) {
+      if (s10['$=='](10)) {
         s10 = 0};
-      if ($truthy(s10['$=='](s1))) {
+      if (s10['$=='](s1)) {
         
         if ($truthy(($truthy($a = $rb_gt(total_n, diff)) ? $a : dice_n['$=='](100)))) {
           

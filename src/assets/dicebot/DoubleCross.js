@@ -113,7 +113,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -207,7 +207,7 @@ if (s == null) s = nil;
         numberSpot1 = $rb_plus(numberSpot1, dice_dat['$[]'](2));
         dice_cnt_total = $rb_plus(dice_cnt_total, dice_cnt);
         if ($truthy($rb_gt(dice_dat['$[]'](6), 0))) {
-          if ($truthy(dice_max['$=='](10))) {
+          if (dice_max['$=='](10)) {
             subtotal = 10
             } else {
             subtotal = dice_dat['$[]'](4)
@@ -232,7 +232,7 @@ if (s == null) s = nil;
           dice_cnt_total = $rb_plus(dice_cnt_total, dice_cnt);
           dice_cnt = dice_dat['$[]'](6);
           if ($truthy($rb_gt(dice_dat['$[]'](6), 0))) {
-            if ($truthy(dice_max['$=='](10))) {
+            if (dice_max['$=='](10)) {
               subtotal = 10
               } else {
               subtotal = dice_dat['$[]'](4)
@@ -266,7 +266,7 @@ if (s == null) s = nil;
       if ($truthy(signOfInequality['$!='](""))) {
         output = $rb_plus(output, self.$check_suc(total_n, 0, signOfInequality, diff, dice_cnt_total, dice_max, numberSpot1, 0))
       } else if ($truthy($rb_le(round, 0))) {
-        if ($truthy(dice_max['$=='](10))) {
+        if (dice_max['$=='](10)) {
           if ($truthy($rb_ge(numberSpot1, dice_cnt_total))) {
             output = $rb_plus(output, " ＞ ファンブル")}}};
       return output;

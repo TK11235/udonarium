@@ -26,7 +26,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$=~', '$+', '$*', '$to_i', '$sub', '$gsub', '$tandt_berserk', '$==', '$getMaxSuccessLevel', '$>=', '$getExperiencePoint', '$-', '$<=', '$>', '$/', '$is_int?', '$sprintf', '$parren_killer', '$push', '$loop', '$shift', '$roll', '$&', '$sortType', '$collect', '$split', '$times', '$each', '$[]', '$[]=', '$<', '$length', '$-@', '$!=', '$sendMode']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$=~', '$+', '$*', '$to_i', '$sub', '$to_s', '$gsub', '$tandt_berserk', '$==', '$getMaxSuccessLevel', '$>=', '$getExperiencePoint', '$-', '$<=', '$>', '$/', '$is_int?', '$sprintf', '$match', '$[]', '$parren_killer', '$push', '$loop', '$shift', '$roll', '$&', '$sortType', '$collect', '$split', '$times', '$each', '$[]=', '$<', '$length', '$-@', '$!=', '$sendMode']);
   return (function($base, $super, $parent_nesting) {
     function $TunnelsAndTrolls(){};
     var self = $TunnelsAndTrolls = $klass($base, $super, 'TunnelsAndTrolls', $TunnelsAndTrolls);
@@ -80,7 +80,7 @@
         level_diff = $rb_plus($rb_times((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), 5), 15);
         string = $send(string, 'sub', [/(\d+)LV/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-        return "" + (level_diff)}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));};
+        return level_diff.$to_s()}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));};
       if ($truthy(/BS/i['$=~'](string))) {
         
         string = $send(string, 'gsub', [/(\d+)HBS([^\d\s][\+\-\d]+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $b;
@@ -109,14 +109,14 @@
 
       
       self.$debug("Tunnels & Trolls check_2D6 begin");
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
       self.$debug("Tunnels & Trolls check_2D6 pass1");
-      if ($truthy(dice_n['$=='](3))) {
+      if (dice_n['$=='](3)) {
         return " ＞ 自動失敗"};
-      if ($truthy(self.diffText['$==']("?"))) {
+      if (self.diffText['$==']("?")) {
         return self.$getMaxSuccessLevel(total_n, dice_n)};
       if ($truthy($rb_ge(total_n, diff))) {
         
@@ -171,28 +171,23 @@
       return v['$=='](v.$to_i())
     }, TMP_TunnelsAndTrolls_is_int$q_16.$$arity = 1);
     return (Opal.defn(self, '$tandt_berserk', TMP_TunnelsAndTrolls_tandt_berserk_23 = function $$tandt_berserk(string, nick_e) {
-      var $a, TMP_17, self = this, output = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, dice_c = nil, bonus = nil, isHyperBerserk = nil, dice_arr = nil, dice_now = nil, dice_str = nil, isFirstLoop = nil, n_max = nil, total_n = nil, bonus2 = nil;
+      var $a, TMP_17, self = this, output = nil, m = nil, dice_c = nil, bonus = nil, isHyperBerserk = nil, dice_arr = nil, dice_now = nil, dice_str = nil, isFirstLoop = nil, n_max = nil, total_n = nil, bonus2 = nil;
 
       
       self.$debug("tandt_berserk string", string);
       output = "1";
-      if ($truthy(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(\[(\w+)\])?)(\s|$)/i['$=~'](string))) {
+      if ($truthy((m = /(^|\s)S?((\d+)[rR]6([\+\-\d]*)(\[(\w+)\])?)(\s|$)/i.$match(string)))) {
         } else {
         return output
       };
       self.$debug("tandt_berserk matched");
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      string = reg2;
-      dice_c = reg3.$to_i();
+      string = m['$[]'](2);
+      dice_c = m['$[]'](3).$to_i();
       bonus = 0;
-      if ($truthy(reg4)) {
-        bonus = self.$parren_killer("" + "(0" + (reg4) + ")").$to_i()};
+      if ($truthy(m['$[]'](4))) {
+        bonus = self.$parren_killer("" + "(0" + (m['$[]'](4)) + ")").$to_i()};
       isHyperBerserk = false;
-      if ($truthy(($truthy($a = reg5) ? reg6['$=~'](/[Hh]/) : $a))) {
+      if ($truthy(($truthy($a = m['$[]'](5)) ? m['$[]'](6)['$=~'](/[Hh]/) : $a))) {
         isHyperBerserk = true};
       dice_arr = [];
       dice_now = 0;
@@ -256,7 +251,7 @@ if (i == null) i = nil;
               };}, TMP_22.$$s = self, TMP_22.$$arity = 1, TMP_22));
             self.$debug("min1, min2", min1, min2);
             bonus2 = $rb_minus(min2, min1)['$-@']();
-            if ($truthy(min2['$=='](5))) {
+            if (min2['$=='](5)) {
               rollDiceMaxCount = $rb_minus(rollDiceMaxCount, 1)};
             if ($truthy(isHyperBerserk)) {
               dice_arr.$push(3)
@@ -285,12 +280,12 @@ if (i == null) i = nil;
       if ($truthy($rb_lt(bonus2, 0))) {
         
         self.$debug("bonus2", bonus2);
-        output = $rb_plus(output, "" + (bonus2));};
+        output = $rb_plus(output, bonus2.$to_s());};
       self.$debug("bonus", bonus);
       if ($truthy($rb_gt(bonus, 0))) {
         output = $rb_plus(output, "" + "+" + (bonus))
       } else if ($truthy($rb_lt(bonus, 0))) {
-        output = $rb_plus(output, "" + (bonus))};
+        output = $rb_plus(output, bonus.$to_s())};
       if ($truthy($rb_gt(self.$sendMode(), 0))) {
         if ($truthy(output['$=~'](/[^\d\[\]]+/))) {
           output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)

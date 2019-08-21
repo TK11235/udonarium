@@ -58,7 +58,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -117,7 +117,7 @@
       type = "重度狂気表";
       $b = self.$getSevereInsanityTable(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else {return self.$getTableCommandResult(command, (($a = $BloodMoon.$$cvars['@@tables']) == null ? nil : $a))};
-      if ($truthy(output['$==']("1"))) {
+      if (output['$==']("1")) {
         return output};
       output = "" + (type) + "(" + (total_n) + ") ＞ " + (output);
       return output;

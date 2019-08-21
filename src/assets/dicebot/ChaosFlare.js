@@ -71,7 +71,7 @@
         
         total_n = $rb_minus(total_n, 20);
         output = $rb_plus(output, " ＞ ファンブル(-20)");};
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return output
       };

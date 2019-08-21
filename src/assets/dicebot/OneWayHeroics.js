@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$analyzeDiceCommandResultMethod', '$nil?', '$getCommandTablesResult', '$[]', '$upcase', '$===', '$to_i', '$roll', '$getTableResult', '$==', '$getD66', '$empty?', '$<', '$rollJudgeDice', '$+', '$getJudgeReusltText', '$getDiceListFromDiceText', '$sort!', '$reverse!', '$>=', '$assoc', '$each', '$>', '$first', '$respond_to?', '$arity', '$call', '$rollDiceCommand', '$lambda', '$getAddRoll', '$<=', '$getRandomEventAddText', '$getRandomEventAddTextProc', '$getAddRollProc', '$*', '$getGoldTextProc', '$getDownTextProc', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$analyzeDiceCommandResultMethod', '$nil?', '$getCommandTablesResult', '$[]', '$upcase', '$===', '$to_i', '$roll', '$getTableResult', '$==', '$getD66', '$empty?', '$<', '$rollJudgeDice', '$+', '$to_s', '$getJudgeReusltText', '$getDiceListFromDiceText', '$sort!', '$reverse!', '$>=', '$assoc', '$each', '$>', '$first', '$respond_to?', '$arity', '$call', '$rollDiceCommand', '$lambda', '$getAddRoll', '$<=', '$getRandomEventAddText', '$getRandomEventAddTextProc', '$getAddRollProc', '$*', '$getGoldTextProc', '$getDownTextProc', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $OneWayHeroics(){};
     var self = $OneWayHeroics = $klass($base, $super, 'OneWayHeroics', $OneWayHeroics);
@@ -94,7 +94,7 @@
       isSwap = self.d66Type['$=='](2);
       dice = self.$getD66(isSwap);
       return self.$getTableResult(table, dice, hasGap);}
-      else {return nil}})(), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), $b;
+      else { return nil }})(), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(text['$nil?']())) {
         return nil};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);
@@ -126,7 +126,7 @@
       modifyValue = modifyText.$to_i();
       $b = self.$rollJudgeDice(diceCount), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       total = $rb_plus($rb_plus(dice, ability), modifyValue);
-      text = "" + (command);
+      text = command.$to_s();
       text = $rb_plus(text, "" + " ＞ " + (diceCount) + "D6[" + (diceText) + "]+" + (ability) + (modifyText));
       text = $rb_plus(text, "" + " ＞ " + (total));
       result = self.$getJudgeReusltText(dice, total, target);
@@ -142,7 +142,7 @@
 
       
       $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
-      if ($truthy(diceCount['$=='](2))) {
+      if (diceCount['$=='](2)) {
         return [dice, diceText]};
       diceList = self.$getDiceListFromDiceText(diceText);
       diceList['$sort!']();

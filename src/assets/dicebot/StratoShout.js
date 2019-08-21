@@ -54,7 +54,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_StratoShout_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "    \n" + "VOT, GUT, BAT, KEYT, DRT: (ボーカル、ギター、ベース、キーボード、ドラム)トラブル表\n" + "EMO: 感情表\n" + "AT[1-6]: 特技表(空: ランダム 1: 主義 2: 身体 3: モチーフ 4: エモーション 5: 行動 6: 逆境)\n" + "SCENE, MACHI, GAKKO, BAND: (汎用、街角、学校、バンド)シーン表 接近シーンで使用\n" + "TENKAI: シーン展開表 奔走シーン 練習シーンで使用\n" + "\n" + "[]内は省略可　D66入れ替えあり\n"
+      return "" + "\n" + "VOT, GUT, BAT, KEYT, DRT: (ボーカル、ギター、ベース、キーボード、ドラム)トラブル表\n" + "EMO: 感情表\n" + "AT[1-6]: 特技表(空: ランダム 1: 主義 2: 身体 3: モチーフ 4: エモーション 5: 行動 6: 逆境)\n" + "SCENE, MACHI, GAKKO, BAND: (汎用、街角、学校、バンド)シーン表 接近シーンで使用\n" + "TENKAI: シーン展開表 奔走シーン 練習シーンで使用\n" + "\n" + "[]内は省略可　D66入れ替えあり\n"
     }, TMP_StratoShout_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$check_2D6', TMP_StratoShout_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {

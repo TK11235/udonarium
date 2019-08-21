@@ -17,12 +17,12 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$bcdice', '$set1Deck2Jokers', '$cardTrader', '$card_place=', '$-', '$canTapCard=', '$debug', '$gsub', '$check_barna_kronika', '$=~', '$collect', '$split', '$to_i', '$==', '$roll_barna_kronika', '$+', '$>', '$times', '$rand', '$[]', '$[]=', '$isCriticalCall', '$getAttackStringWhenCriticalCall', '$isNomalAtack', '$getAttackStringWhenNomal', '$!=', '$*', '$<', '$sub', '$getAtackHitLocation', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$bcdice', '$set1Deck2Jokers', '$cardTrader', '$card_place=', '$-', '$canTapCard=', '$debug', '$gsub', '$check_barna_kronika', '$=~', '$collect', '$split', '$to_i', '$==', '$roll_barna_kronika', '$+', '$>', '$times', '$rand', '$[]', '$[]=', '$isCriticalCall', '$getAttackStringWhenCriticalCall', '$isNomalAttack', '$getAttackStringWhenNomal', '$!=', '$*', '$<', '$sub', '$getAttackHitLocation', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $BarnaKronika(){};
     var self = $BarnaKronika = $klass($base, $super, 'BarnaKronika', $BarnaKronika);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_BarnaKronika_initialize_1, TMP_BarnaKronika_postSet_2, TMP_BarnaKronika_gameName_3, TMP_BarnaKronika_gameType_4, TMP_BarnaKronika_getHelpMessage_5, TMP_BarnaKronika_changeText_10, TMP_BarnaKronika_dice_command_xRn_11, TMP_BarnaKronika_check_barna_kronika_13, TMP_BarnaKronika_roll_barna_kronika_17, TMP_BarnaKronika_isCriticalCall_18, TMP_BarnaKronika_isNomalAtack_19, TMP_BarnaKronika_getAttackStringWhenCriticalCall_20, TMP_BarnaKronika_getAttackStringWhenNomal_21, TMP_BarnaKronika_getAtackHitLocation_22;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_BarnaKronika_initialize_1, TMP_BarnaKronika_postSet_2, TMP_BarnaKronika_gameName_3, TMP_BarnaKronika_gameType_4, TMP_BarnaKronika_getHelpMessage_5, TMP_BarnaKronika_changeText_10, TMP_BarnaKronika_dice_command_xRn_11, TMP_BarnaKronika_check_barna_kronika_13, TMP_BarnaKronika_roll_barna_kronika_17, TMP_BarnaKronika_isCriticalCall_18, TMP_BarnaKronika_isNomalAttack_19, TMP_BarnaKronika_getAttackStringWhenCriticalCall_20, TMP_BarnaKronika_getAttackStringWhenNomal_21, TMP_BarnaKronika_getAttackHitLocation_22;
 
     def.isBattleMode = def.nick_e = nil;
     
@@ -176,7 +176,7 @@ if (i == null) i = nil;
 if (i == null) i = nil;
       
         diceCount = diceCountList['$[]'](i);
-        if ($truthy(diceCount['$=='](0))) {
+        if (diceCount['$=='](0)) {
           return nil;};
         $send(diceCount, 'times', [], (TMP_16 = function(j){var self = TMP_16.$$s || this;
 if (j == null) j = nil;
@@ -185,9 +185,9 @@ if (j == null) j = nil;
           
           self.$debug("isCriticalCall");
           at_str = $rb_plus(at_str, self.$getAttackStringWhenCriticalCall(i, diceCount));
-        } else if ($truthy(self.$isNomalAtack(criticalCallDice, diceCount))) {
+        } else if ($truthy(self.$isNomalAttack(criticalCallDice, diceCount))) {
           
-          self.$debug("isNomalAtack");
+          self.$debug("isNomalAttack");
           at_str = $rb_plus(at_str, self.$getAttackStringWhenNomal(i, diceCount));};
         if ($truthy($rb_gt(diceCount, 1))) {
           return (set = $rb_plus(set, 1))
@@ -218,12 +218,12 @@ if (j == null) j = nil;
         } else {
         return false
       };
-      if ($truthy(criticalCallDice['$=='](0))) {
+      if (criticalCallDice['$=='](0)) {
         return false};
       return criticalCallDice['$==']($rb_plus(index, 1));
     }, TMP_BarnaKronika_isCriticalCall_18.$$arity = 2);
     
-    Opal.defn(self, '$isNomalAtack', TMP_BarnaKronika_isNomalAtack_19 = function $$isNomalAtack(criticalCallDice, diceCount) {
+    Opal.defn(self, '$isNomalAttack', TMP_BarnaKronika_isNomalAttack_19 = function $$isNomalAttack(criticalCallDice, diceCount) {
       var self = this;
 
       
@@ -234,34 +234,34 @@ if (j == null) j = nil;
       if ($truthy(criticalCallDice['$!='](0))) {
         return false};
       return $rb_gt(diceCount, 1);
-    }, TMP_BarnaKronika_isNomalAtack_19.$$arity = 2);
+    }, TMP_BarnaKronika_isNomalAttack_19.$$arity = 2);
     
     Opal.defn(self, '$getAttackStringWhenCriticalCall', TMP_BarnaKronika_getAttackStringWhenCriticalCall_20 = function $$getAttackStringWhenCriticalCall(index, diceCount) {
-      var self = this, hitLocation = nil, atackValue = nil, result = nil;
+      var self = this, hitLocation = nil, attackValue = nil, result = nil;
 
       
-      hitLocation = self.$getAtackHitLocation($rb_plus(index, 1));
-      atackValue = $rb_times(diceCount, 2);
-      result = $rb_plus(hitLocation, "" + ":攻撃値" + (atackValue) + ",");
+      hitLocation = self.$getAttackHitLocation($rb_plus(index, 1));
+      attackValue = $rb_times(diceCount, 2);
+      result = $rb_plus(hitLocation, "" + ":攻撃値" + (attackValue) + ",");
       return result;
     }, TMP_BarnaKronika_getAttackStringWhenCriticalCall_20.$$arity = 2);
     
     Opal.defn(self, '$getAttackStringWhenNomal', TMP_BarnaKronika_getAttackStringWhenNomal_21 = function $$getAttackStringWhenNomal(index, diceCount) {
-      var self = this, hitLocation = nil, atackValue = nil, result = nil;
+      var self = this, hitLocation = nil, attackValue = nil, result = nil;
 
       
-      hitLocation = self.$getAtackHitLocation($rb_plus(index, 1));
-      atackValue = diceCount;
-      result = $rb_plus(hitLocation, "" + ":攻撃値" + (atackValue) + ",");
+      hitLocation = self.$getAttackHitLocation($rb_plus(index, 1));
+      attackValue = diceCount;
+      result = $rb_plus(hitLocation, "" + ":攻撃値" + (attackValue) + ",");
       return result;
     }, TMP_BarnaKronika_getAttackStringWhenNomal_21.$$arity = 2);
-    return (Opal.defn(self, '$getAtackHitLocation', TMP_BarnaKronika_getAtackHitLocation_22 = function $$getAtackHitLocation(num) {
+    return (Opal.defn(self, '$getAttackHitLocation', TMP_BarnaKronika_getAttackHitLocation_22 = function $$getAttackHitLocation(num) {
       var self = this, table = nil;
 
       
       table = [[1, "頭部"], [2, "右腕"], [3, "左腕"], [4, "右脚"], [5, "左脚"], [6, "胴体"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_BarnaKronika_getAtackHitLocation_22.$$arity = 1), nil) && 'getAtackHitLocation';
+    }, TMP_BarnaKronika_getAttackHitLocation_22.$$arity = 1), nil) && 'getAttackHitLocation';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

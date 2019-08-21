@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$join', '$prefixs', '$=~', '$new', '$upcase', '$getCommandResult', '$!=', '$==', '$-', '$<=', '$>=', '$===', '$get_table_by_nD6', '$to_i', '$roll', '$+', '$>', '$[]', '$<', '$getTrapTable', '$floor', '$/', '$getTresureTable', '$get_table_by_1d6', '$getRandomEvent', '$get_table_by_d66', '$getLotResult', '$lambda', '$normal2', '$normal3', '$normal4', '$normal5', '$premium5', '$premium2', '$premium3', '$premium4', '$premium6', '$premium1', '$normal1', '$getRandomDiff', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$prefixesPattern', '$class', '$upcase', '$getCommandResult', '$!=', '$==', '$-', '$<=', '$>=', '$===', '$get_table_by_nD6', '$to_i', '$roll', '$+', '$>', '$[]', '$<', '$getTrapTable', '$floor', '$/', '$getTresureTable', '$get_table_by_1d6', '$getRandomEvent', '$get_table_by_d66', '$getLotResult', '$lambda', '$to_s', '$normal2', '$normal3', '$normal4', '$normal5', '$premium5', '$premium2', '$premium3', '$premium4', '$premium6', '$premium1', '$normal1', '$getRandomDiff', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $GurpsFW(){};
     var self = $GurpsFW = $klass($base, $super, 'GurpsFW', $GurpsFW);
@@ -66,12 +66,11 @@
     }, TMP_GurpsFW_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$dice_command', TMP_GurpsFW_dice_command_5 = function $$dice_command(string, name) {
-      var $a, self = this, secret_flg = nil, pattern = nil, secretMarker = nil, command = nil, output_msg = nil;
+      var $a, self = this, secret_flg = nil, secretMarker = nil, command = nil, output_msg = nil;
 
       
       secret_flg = false;
-      pattern = "" + "(^|\\s)(S)?(" + (self.$prefixs().$join("|")) + ")(\\s|$)";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE'))['$=~'](string))) {
+      if ($truthy(self.$class().$prefixesPattern()['$=~'](string))) {
         } else {
         return ["1", secret_flg]
       };
@@ -182,7 +181,7 @@
       tableName = "トラップリスト";
       diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
       $b = self.$getTrapTable(diff), $a = Opal.to_ary($b), (dif = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;
-      if ($truthy(table['$=='](nil))) {
+      if (table['$=='](nil)) {
         return ""};
       $b = self.$get_table_by_nD6(table, 3), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
       result = "" + (dif) + "：" + (result);}
@@ -200,7 +199,7 @@
       if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](4))['$!='](nil))) {
         num = $rb_plus(num, (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i())};
       table = self.$getTresureTable(num);
-      if ($truthy(table['$=='](nil))) {
+      if (table['$=='](nil)) {
         return ""};
       $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/RAND(E|N|H|L)(\d)?/['$===']($case)) {
@@ -249,12 +248,12 @@
       } else if ($truthy(($truthy($a = $rb_le(number, 4)) ? mode['$==']("N") : $a))) {
         result = "レアアイテム2"
       } else if ($truthy($rb_lt(number, 7))) {
-        if ($truthy(mode['$==']("N"))) {
+        if (mode['$==']("N")) {
           result = "CL×200GP"
           } else {
           result = "CL×100GP"
         }
-      } else if ($truthy(mode['$==']("N"))) {
+      } else if (mode['$==']("N")) {
         result = "CL×20GP"
         } else {
         result = "CL×10GP"
@@ -273,7 +272,7 @@
       $b = self.$get_table_by_d66(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/LOT(N|P)/['$===']($case)) {
       type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      if ($truthy(type['$==']("P"))) {
+      if (type['$==']("P")) {
         tableName = "ナンバーワンプレミアムくじ"
         } else {
         tableName = "ナンバーワンノーマルくじ"
@@ -297,11 +296,11 @@
         
         table = ["イレブンチキン", "イレブンチキン", "イレブンチキン", $send(self, 'lambda', [], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-        Opal.ret("" + (self.$normal2()))}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8)), $send(self, 'lambda', [], (TMP_9 = function(){var self = TMP_9.$$s || this;
+        Opal.ret(self.$normal2().$to_s())}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8)), $send(self, 'lambda', [], (TMP_9 = function(){var self = TMP_9.$$s || this;
 
-        Opal.ret("" + (self.$normal2()))}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9)), $send(self, 'lambda', [], (TMP_10 = function(){var self = TMP_10.$$s || this;
+        Opal.ret(self.$normal2().$to_s())}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9)), $send(self, 'lambda', [], (TMP_10 = function(){var self = TMP_10.$$s || this;
 
-        Opal.ret("" + (self.$normal3()))}, TMP_10.$$s = self, TMP_10.$$arity = 0, TMP_10))];
+        Opal.ret(self.$normal3().$to_s())}, TMP_10.$$s = self, TMP_10.$$arity = 0, TMP_10))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -314,9 +313,9 @@
         
         table = ["バロールたわし", "イグニスジッポ", "ヤコ仮面or梟の文鎮(選択可)", "ナレッジのハンモックorジンジャビースト", $send(self, 'lambda', [], (TMP_12 = function(){var self = TMP_12.$$s || this;
 
-        Opal.ret("" + (self.$normal3()))}, TMP_12.$$s = self, TMP_12.$$arity = 0, TMP_12)), $send(self, 'lambda', [], (TMP_13 = function(){var self = TMP_13.$$s || this;
+        Opal.ret(self.$normal3().$to_s())}, TMP_12.$$s = self, TMP_12.$$arity = 0, TMP_12)), $send(self, 'lambda', [], (TMP_13 = function(){var self = TMP_13.$$s || this;
 
-        Opal.ret("" + (self.$normal3()))}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13))];
+        Opal.ret(self.$normal3().$to_s())}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -329,7 +328,7 @@
         
         table = ["特性HPポーション", "特性MPポーション", "黒い甲冑", "天体望遠鏡", "金獅子の剥製", $send(self, 'lambda', [], (TMP_15 = function(){var self = TMP_15.$$s || this;
 
-        Opal.ret("" + (self.$normal4()))}, TMP_15.$$s = self, TMP_15.$$arity = 0, TMP_15))];
+        Opal.ret(self.$normal4().$to_s())}, TMP_15.$$s = self, TMP_15.$$arity = 0, TMP_15))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -342,7 +341,7 @@
         
         table = ["特性スタミナポーション", "戦乙女の兜", "フェンリルの首輪", "フェニックスカーペット", "動くアダマンゴーレム", $send(self, 'lambda', [], (TMP_17 = function(){var self = TMP_17.$$s || this;
 
-        Opal.ret("" + (self.$normal5()))}, TMP_17.$$s = self, TMP_17.$$arity = 0, TMP_17))];
+        Opal.ret(self.$normal5().$to_s())}, TMP_17.$$s = self, TMP_17.$$arity = 0, TMP_17))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -355,7 +354,7 @@
         
         table = ["キャンディークッション", "屑鉄の金床", "薪割り王の斧", "ロジエの水差し", "箱舟の模型", $send(self, 'lambda', [], (TMP_19 = function(){var self = TMP_19.$$s || this;
 
-        Opal.ret("" + (self.$premium5()))}, TMP_19.$$s = self, TMP_19.$$arity = 0, TMP_19))];
+        Opal.ret(self.$premium5().$to_s())}, TMP_19.$$s = self, TMP_19.$$arity = 0, TMP_19))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -368,11 +367,11 @@
         
         table = ["プレミアムチキン", "プレミアムチキン", "プレミアムチキン", $send(self, 'lambda', [], (TMP_21 = function(){var self = TMP_21.$$s || this;
 
-        Opal.ret("" + (self.$normal3()))}, TMP_21.$$s = self, TMP_21.$$arity = 0, TMP_21)), $send(self, 'lambda', [], (TMP_22 = function(){var self = TMP_22.$$s || this;
+        Opal.ret(self.$normal3().$to_s())}, TMP_21.$$s = self, TMP_21.$$arity = 0, TMP_21)), $send(self, 'lambda', [], (TMP_22 = function(){var self = TMP_22.$$s || this;
 
-        Opal.ret("" + (self.$premium2()))}, TMP_22.$$s = self, TMP_22.$$arity = 0, TMP_22)), $send(self, 'lambda', [], (TMP_23 = function(){var self = TMP_23.$$s || this;
+        Opal.ret(self.$premium2().$to_s())}, TMP_22.$$s = self, TMP_22.$$arity = 0, TMP_22)), $send(self, 'lambda', [], (TMP_23 = function(){var self = TMP_23.$$s || this;
 
-        Opal.ret("" + (self.$premium2()))}, TMP_23.$$s = self, TMP_23.$$arity = 0, TMP_23))];
+        Opal.ret(self.$premium2().$to_s())}, TMP_23.$$s = self, TMP_23.$$arity = 0, TMP_23))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -385,9 +384,9 @@
         
         table = ["親衛隊バッジ", "ハタモトチャブダイ", "星のコンパス", "白銀の甲冑", $send(self, 'lambda', [], (TMP_25 = function(){var self = TMP_25.$$s || this;
 
-        Opal.ret("" + (self.$normal4()))}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25)), $send(self, 'lambda', [], (TMP_26 = function(){var self = TMP_26.$$s || this;
+        Opal.ret(self.$normal4().$to_s())}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25)), $send(self, 'lambda', [], (TMP_26 = function(){var self = TMP_26.$$s || this;
 
-        Opal.ret("" + (self.$premium3()))}, TMP_26.$$s = self, TMP_26.$$arity = 0, TMP_26))];
+        Opal.ret(self.$premium3().$to_s())}, TMP_26.$$s = self, TMP_26.$$arity = 0, TMP_26))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -400,7 +399,7 @@
         
         table = ["特性クイックHPポーション", "特性クイックMPポーション", "特製クイックスタミナポーション", "火龍のフィギュアor氷龍のフィギュア(選択可)", "ヒメショーグンドレス", $send(self, 'lambda', [], (TMP_28 = function(){var self = TMP_28.$$s || this;
 
-        Opal.ret("" + (self.$premium4()))}, TMP_28.$$s = self, TMP_28.$$arity = 0, TMP_28))];
+        Opal.ret(self.$premium4().$to_s())}, TMP_28.$$s = self, TMP_28.$$arity = 0, TMP_28))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -413,7 +412,7 @@
         
         table = ["クイックユグドラポーション", "銀河龍のフィギュア/ドラゴン", "銀河龍のフィギュア/魔族", "魔族チェスセット", "イグニスコンロ", $send(self, 'lambda', [], (TMP_30 = function(){var self = TMP_30.$$s || this;
 
-        Opal.ret("" + (self.$premium5()))}, TMP_30.$$s = self, TMP_30.$$arity = 0, TMP_30))];
+        Opal.ret(self.$premium5().$to_s())}, TMP_30.$$s = self, TMP_30.$$arity = 0, TMP_30))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -426,7 +425,7 @@
         
         table = ["グレヴディバリウス", "天使の望遠鏡orデスの目覚まし時計(選択可)", "世界樹の蔦", "死神の飾りドレス", "ザバーニヤ等身大フィギュア", $send(self, 'lambda', [], (TMP_32 = function(){var self = TMP_32.$$s || this;
 
-        Opal.ret("" + (self.$premium6()))}, TMP_32.$$s = self, TMP_32.$$arity = 0, TMP_32))];
+        Opal.ret(self.$premium6().$to_s())}, TMP_32.$$s = self, TMP_32.$$arity = 0, TMP_32))];
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -440,7 +439,7 @@
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
         return result;
       }, TMP_premium6_34.$$arity = 0);
-      if ($truthy(type['$==']("P"))) {
+      if (type['$==']("P")) {
         return self.$premium1()
         } else {
         return self.$normal1()
@@ -526,12 +525,12 @@
       else if ((2)['$===']($case)) {
       area = "遺跡";
       $case = dice2;
-      if ((1)['$===']($case)) {table = ["回復の泉。PC全員のHP・MP・FPが完全に回復する。気絶・朦朧状態も回復。", "" + "随分進んだし一休みしよう。深度が奇数の場合はFPが" + (self.$getRandomDiff(dice1, 12, d, 0)) + "回復。深度が偶数の場合は進んだように見せかけて迷っているだけだった。深度が1D減少する。", "" + "どうやらここは古代の医務室らしい。" + (self.$getRandomDiff(dice1, 13, d, 0)) + "に成功すればPC全員のHP・MP・FPが完全に回復する。気絶・朦朧状態も回復。", "「道標のヒカリゴケ」を栽培しているフラウに出会う。300GPを払うと、以後の深度増加判定に+1のボーナスを得る。", "ダンジョンの見取り図を書いた部屋に出る。次のランダムイベントでは、好きな地形を選択してからイベント表を振ることができる。次が最終イベントだった場合、ラウンド終了時の深度判定に+2のボーナスを得る。", "" + "「パワーアップ装置！」と書かれた怪しげな機械が置いてある。" + (self.$getRandomDiff(dice1, 16, d, 0)) + "を支払って使用するとキャラクターを強化(？)可能。使用するかは自由だが、「好奇心」を持つキャラクターは知力判定に失敗すると使用する。使用したキャラクターは1Dを振り、以下のような効果が発生する。\n" + "\t----------\n" + "\t1：能力値が1点上昇する。上がる能力値はランダムで1つ。CP総計はそれに応じて増加する\n" + "\t2：お肌がピチピチになり、容貌が1段階上昇する。「超美形」の場合さらに反応が男女とも+1(+5CP)\n" + "\t3：習得している技1つを選択して強化する。ソーサルギアは" + (self.$getRandomDiff(dice1, 16, d, 1)) + "までの魔法を1つ習得する\n" + "\t4：装置は突然大爆発を起こす！" + (self.$getRandomDiff(dice1, 16, d, 2)) + "の「叩き」ダメージを受ける\n" + "\t5：「鋭敏感覚1」が身につく。すでに「鋭敏感覚」がある場合そのレベルが上昇する\n" + "\t6：能力値が1点下降する。下がる能力値はランダムで1つ。CP総計はそれに応じて減少する\n" + "\t----------"]}
+      if ((1)['$===']($case)) {table = ["回復の泉。PC全員のHP・MP・FPが完全に回復する。気絶・朦朧状態も回復。", "" + "随分進んだし一休みしよう。深度が奇数の場合はFPが" + (self.$getRandomDiff(dice1, 12, d, 0)) + "回復。深度が偶数の場合は進んだように見せかけて迷っているだけだった。深度が1D減少する。", "" + "どうやらここは古代の医務室らしい。" + (self.$getRandomDiff(dice1, 13, d, 0)) + "に成功すればPC全員のHP・MP・FPが完全に回復する。気絶・朦朧状態も回復。", "「道標のヒカリゴケ」を栽培しているフラウに出会う。300GPを払うと、以後の深度増加判定に+1のボーナスを得る。", "ダンジョンの見取り図を書いた部屋に出る。次のランダムイベントでは、好きな地形を選択してからイベント表を振ることができる。次が最終イベントだった場合、ラウンド終了時の深度判定に+2のボーナスを得る。", "" + "「パワーアップ装置！」と書かれた怪しげな機械が置いてある。" + (self.$getRandomDiff(dice1, 16, d, 0)) + "を支払って使用するとキャラクターを強化(？)可能。使用するかは自由だが、「好奇心」を持つキャラクターは知力判定に失敗すると使用する。使用したキャラクターは1Dを振り、以下のような効果が発生する。\n" + "  ----------\n" + "  1：能力値が1点上昇する。上がる能力値はランダムで1つ。CP総計はそれに応じて増加する\n" + "  2：お肌がピチピチになり、容貌が1段階上昇する。「超美形」の場合さらに反応が男女とも+1(+5CP)\n" + "  3：習得している技1つを選択して強化する。ソーサルギアは" + (self.$getRandomDiff(dice1, 16, d, 1)) + "までの魔法を1つ習得する\n" + "  4：装置は突然大爆発を起こす！" + (self.$getRandomDiff(dice1, 16, d, 2)) + "の「叩き」ダメージを受ける\n" + "  5：「鋭敏感覚1」が身につく。すでに「鋭敏感覚」がある場合そのレベルが上昇する\n" + "  6：能力値が1点下降する。下がる能力値はランダムで1つ。CP総計はそれに応じて減少する\n" + "  ----------"]}
       else if ((2)['$===']($case)) {table = ["財宝(カギ・トラップなし)。財宝の中身は1段階低い深度の財宝テーブルを使用する。", "" + "財宝(カギつき。行動を消費して" + (self.$getRandomDiff(dice1, 22, d, 0)) + "に成功すれば開く)財宝の中身は1段階低い深度の財宝テーブルを使用する。", "" + "財宝(カギなし、トラップつき。行動を消費して" + (self.$getRandomDiff(dice1, 23, d, 0)) + "に成功すれば解除可能)財宝の中身は1段階低い深度の財宝テーブルを使用する。", "" + "財宝(カギ、トラップつき。行動を消費して" + (self.$getRandomDiff(dice1, 24, d, 0)) + "に成功すれば解除可能)財宝の中身は1段階低い深度の財宝テーブルを使用する。", "" + "ミミックの罠。ランダムなキャラクターに3Dの「切り」ダメージを与える。" + (self.$getRandomDiff(dice1, 25, d, 0)) + "に成功すればこの罠を見抜いて無効化することができ、なおかつ「深度×" + (self.$getRandomDiff(dice1, 25, d, 1)) + "」GPを入手可能。", "" + "トレジャーイーターの罠。冒険中に入手したアイテム(消耗品・GP以外)を全て失う。" + (self.$getRandomDiff(dice1, 26, d, 0)) + "に成功すればこの罠を見抜いて無効化することができる。"]}
       else if ((3)['$===']($case)) {table = ["" + "鏡に映る怪人が自分の真似をしろとジェスチャーしている" + (self.$getRandomDiff(dice1, 31, d, 0)) + "のいずれかに成功すると鏡が消滅して隠し通路が開かれ、深度が2D増加する。", "" + "小さな魔将の像がフィルトウィズの地図の上で乱雑に置かれている。" + (self.$getRandomDiff(dice1, 32, d, 0)) + "で判定を行い、魔将の所在地を正しく配置すると隠し通路が開かれ、深度が2D増加する。", "" + "シュートの罠に引っかかるが、結果的に新たな道を発見する。深度が2D増加するが、PC全員が増加した深度" + (self.$getRandomDiff(dice1, 33, d, 0)) + "「叩き」ダメージを受ける。<軽業>で判定を行い、その成功度分ダメージを軽減可能。", "" + "ラダマンティス崇拝者が作り出した、巨大な甲羅のようなものが置かれた部屋。登っていけば近道することができそうだ。" + (self.$getRandomDiff(dice1, 34, d, 0)) + "に成功すれば深度が1D増加する。", "" + "後ろから重い物が転がってくる音がする。ローリングストーンだ！" + (self.$getRandomDiff(dice1, 35, d, 0)) + "で判定を行い、失敗したPCは" + (self.$getRandomDiff(dice1, 35, d, 1)) + "の「叩き」ダメージを受ける。全員成功だった場合のみ深度が2D増加する。", "" + "通路が入り組んでおり道に迷いそうだ。" + (self.$getRandomDiff(dice1, 36, d, 0)) + "の判定に失敗すると深度が2D減少する。「方向感覚」があればこの影響は受けない。"]}
       else if ((4)['$===']($case)) {table = ["" + (self.$getRandomDiff(dice1, 41, d, 0)) + "とエンカウント。2ラウンド経過するとキャンディークラウンは戦場全域に《べたべた》をかけて逃亡する。", "" + "石像が並ぶ通路がある。1Dを振って1・2・3なら" + (self.$getRandomDiff(dice1, 42, d, 0)) + "。1Dを振って4・5・6・の場合ガーゴイルに似ている、ただの石像。<モンスター知識-5>か「第六感」の判定に成功していなければ必ず相手の先制攻撃になり、その際PC先手で進行中の場合もモンスター先手に変更される。" + (self.$getRandomDiff(dice1, 42, d, 1)), "" + "障害物に隠れて" + (self.$getRandomDiff(dice1, 43, d, 0)) + "が狙撃してくる。モンスターのすぐ傍には合計5ヘクスの障害物(防護点5、HP35。形はGMが任意に決定する)がある。障害物ごしに攻撃するには射撃武器でなくてはならず、射撃武器も命中に-2のペナルティを受ける。", "" + "ブツゼンにモンスターが仁王立ちをしており、問答を行ってくる。" + (self.$getRandomDiff(dice1, 44, d, 0)) + "に成功すると戦闘を回避することができ、APとドロップ品も入手可能。失敗するか戦闘を望んだ場合" + (self.$getRandomDiff(dice1, 44, d, 1)) + "とエンカウントする。", "" + "進路上に鎖に繋がれたモンスターを発見する。迂回して戦闘を避けるなら深度1D減少し、戦闘して倒すと深度が1D増加する。戦闘を行う場合" + (self.$getRandomDiff(dice1, 45, d, 0)) + "とエンカウントする。", "" + "暴れゴーレムが襲いかかってくる！《倍速》の魔法がかかった" + (self.$getRandomDiff(dice1, 46, d, 0)) + "とエンカウントする。このゴーレムは暴走の負荷によりターンの最初にHPが" + (self.$getRandomDiff(dice1, 46, d, 1)) + "減少する。"]}
       else if ((5)['$===']($case)) {table = ["" + "毒矢が飛んでくる。" + (self.$getRandomDiff(dice1, 51, d, 0)) + "に失敗すると" + (self.$getRandomDiff(dice1, 51, d, 1)) + "の「刺し」ダメージを受け、1点でもダメージを受けた場合" + (self.$getRandomDiff(dice1, 51, d, 2)) + "判定を行い失敗すると以後ターンの最初に" + (self.$getRandomDiff(dice1, 51, d, 3)) + "の防護点無視ダメージを受ける。", "" + "毒霧が部屋に散布される。" + (self.$getRandomDiff(dice1, 52, d, 0)) + "で判定を行い、失敗すると《解毒》などを使用しない限り以後の判定全てに-2のペナルティを受ける。《空気浄化》があれば防御タイミングで使用して打ち消すことができる。", "" + "フロアイミテーターだ！この部屋自体が魔物である。ロックバトラー(" + (self.$getRandomDiff(dice1, 53, d, 0)) + ")とエンカウントする。このモンスターがいる限り移動はできず、ラウンドごとの地形変化や深度増加も行わない。PCとフロアイミテーターは常に隣接しているものとして扱う。", "" + "どうやら休憩室のようだ、ふわふわのベッドもある。" + (self.$getRandomDiff(dice1, 54, d, 0)) + "判定に失敗すると転倒状態になり、ダメージを受けるか行動を消費して起こしてもらうまで行動不能。全員失敗した場合、君たちの冒険はここまでだ。せめていい夢を見れるといいだろう(保険は適用可能)", "ラダマンティスの蛇の像と目が合う。どうやらダンジョンの監視者に見つかってしまったらしい！以後モンスターとエンカウントする場合、その数が2倍となる(この効果は累積する)なお、ネームドもしくは魔将の数は変化しない。", "" + "怪しげな卵が1つ置かれている。GMは" + (self.$getRandomDiff(dice1, 56, d, 0)) + "の中から好きなものを1体選びエンカウントさせることができる。深度が0の場合、卵の中から1段階高い財宝テーブルのアイテムが手に入る。"]}
-      else if ((6)['$===']($case)) {table = ["突如持っていた灯が消えて真っ暗になってしまう。暗闇を見通せる手段(特徴「暗視」、魔法《持続光》、遺跡1-4のヒカリゴケなど)がない限り、PCはこのラウンド中の敏捷力に-4のペナルティを受ける。(ストームコーザーは-8)", "" + "どうやら過去の訓練施設のようだ。「パンチングマシーン」と書かれたものがあり、100GP払って挑戦可能。武器を外した状態での「叩き」ダメージを求め、値が大きいと景品が入手可能。1回挑戦すると、ガタがきていたのか壊れてしまう。＜格闘＞＜猫格闘＞＜空手＞の技を使用しても構わない。\n" + "\t---------\n" + "\tダメージが" + (self.$getRandomDiff(dice1, 62, d, 0)) + "以上：2D×50GP\n" + "\tダメージが" + (self.$getRandomDiff(dice1, 62, d, 1)) + "以上：深度が1段階低い財宝テーブル\n" + "\tダメージが" + (self.$getRandomDiff(dice1, 62, d, 2)) + "以上：深度が1段階高い財宝テーブル\n" + "\t---------", "謎の装置のせいで気になるあの子と体が入れ替わってしまった！？シナリオ終了までPCのうち2人の体が入れ替わってしまい、精神的な特徴と癖が入れ替わってしまう。なぜか知力や技能はそのまま。プレイヤーは入れ替わった相手の性格を演じること。入れ替わる2人はランダムに決定するか面白くなるようにGMが選ぶ。展開が面白かった場合、GMはシナリオクリア時のCPを1点追加しても良い。", "" + "古代のテクノロジーを使用した医療施設だ。このイベントが発生するとモンスターは消滅する。" + (self.$getRandomDiff(dice1, 64, d, 0)) + "に成功すると全員のHP・FP・MPと転倒以外の状態異常を全回復できる。また、シナリオ終了まで不利な肉体的・精神的な特徴を無効化できる。", "" + "キャンディークラウンハウスだ！キャンディークラウン(CL40)×1D" + (self.$getRandomDiff(dice1, 65, d, 0)) + "とエンカウントする。もし1体も倒せなかった場合、1体も倒せずチャンスをものにできなかった悔しさからFPに出てきたキャンディークラウンの数Dのダメージを受ける(軽減不可)", "" + "なぜここに呼ばれたかおわかりになりますでしょうか？ラダマンティス崇拝者の作り出した審判の部屋。<地域知識/フィルトウィズ全域-3>に成功すると罰を与える部屋だとわかり、部屋の中央のラダマンティス像を攻撃できるようになる。像はどのヘクスからでも攻撃可能。分類：岩石、防護点8、HP" + (self.$getRandomDiff(dice1, 66, d, 0)) + "、切り刺しダメージボーナスなし。2ラウンド以内に破壊すれば現在の深度に等しいAPを入手可能。破壊できなかった場合像から裁きの光が放たれ、PC全員が「" + (self.$getRandomDiff(dice1, 66, d, 1)) + "」点の防護点無視ダメージを受ける。"]}
+      else if ((6)['$===']($case)) {table = ["突如持っていた灯が消えて真っ暗になってしまう。暗闇を見通せる手段(特徴「暗視」、魔法《持続光》、遺跡1-4のヒカリゴケなど)がない限り、PCはこのラウンド中の敏捷力に-4のペナルティを受ける。(ストームコーザーは-8)", "" + "どうやら過去の訓練施設のようだ。「パンチングマシーン」と書かれたものがあり、100GP払って挑戦可能。武器を外した状態での「叩き」ダメージを求め、値が大きいと景品が入手可能。1回挑戦すると、ガタがきていたのか壊れてしまう。＜格闘＞＜猫格闘＞＜空手＞の技を使用しても構わない。\n" + "  ---------\n" + "  ダメージが" + (self.$getRandomDiff(dice1, 62, d, 0)) + "以上：2D×50GP\n" + "  ダメージが" + (self.$getRandomDiff(dice1, 62, d, 1)) + "以上：深度が1段階低い財宝テーブル\n" + "  ダメージが" + (self.$getRandomDiff(dice1, 62, d, 2)) + "以上：深度が1段階高い財宝テーブル\n" + "  ---------", "謎の装置のせいで気になるあの子と体が入れ替わってしまった！？シナリオ終了までPCのうち2人の体が入れ替わってしまい、精神的な特徴と癖が入れ替わってしまう。なぜか知力や技能はそのまま。プレイヤーは入れ替わった相手の性格を演じること。入れ替わる2人はランダムに決定するか面白くなるようにGMが選ぶ。展開が面白かった場合、GMはシナリオクリア時のCPを1点追加しても良い。", "" + "古代のテクノロジーを使用した医療施設だ。このイベントが発生するとモンスターは消滅する。" + (self.$getRandomDiff(dice1, 64, d, 0)) + "に成功すると全員のHP・FP・MPと転倒以外の状態異常を全回復できる。また、シナリオ終了まで不利な肉体的・精神的な特徴を無効化できる。", "" + "キャンディークラウンハウスだ！キャンディークラウン(CL40)×1D" + (self.$getRandomDiff(dice1, 65, d, 0)) + "とエンカウントする。もし1体も倒せなかった場合、1体も倒せずチャンスをものにできなかった悔しさからFPに出てきたキャンディークラウンの数Dのダメージを受ける(軽減不可)", "" + "なぜここに呼ばれたかおわかりになりますでしょうか？ラダマンティス崇拝者の作り出した審判の部屋。<地域知識/フィルトウィズ全域-3>に成功すると罰を与える部屋だとわかり、部屋の中央のラダマンティス像を攻撃できるようになる。像はどのヘクスからでも攻撃可能。分類：岩石、防護点8、HP" + (self.$getRandomDiff(dice1, 66, d, 0)) + "、切り刺しダメージボーナスなし。2ラウンド以内に破壊すれば現在の深度に等しいAPを入手可能。破壊できなかった場合像から裁きの光が放たれ、PC全員が「" + (self.$getRandomDiff(dice1, 66, d, 1)) + "」点の防護点無視ダメージを受ける。"]}
       else {table = nil};}
       else if ((3)['$===']($case)) {
       area = "断崖";

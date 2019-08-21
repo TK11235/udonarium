@@ -14,12 +14,12 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$join', '$collect', '$prefixs', '$sub', '$===', '$new', '$debug', '$to_i', '$getWaponTable', '$rollJudge', '$[]', '$getJudgeDiceList', '$inject', '$+', '$nil?', '$>=', '$length', '$getSuccessText', '$getWaponSkillText', '$max', '$roll', '$<<', '$%', '$==', '$first', '$<=', '$!=', '$getSkillText', '$empty?', '$upcase', '$getWaponTableSword', '$getWaponTableSwordCounter', '$getWaponTableLongSword', '$getWaponTableLongSwordCounter', '$getWaponTableShortSword', '$getWaponTableShortSwordCounter', '$getWaponTableSpear', '$getWaponTableSpearCounter', '$getWaponTableAx', '$getWaponTableAxCounter', '$getWaponTableClub', '$getWaponTableClubCounter', '$getWaponTableBow', '$getWaponTableMartialArt', '$getWaponTableMartialArtCounter', '$getWaponTableBoxing', '$getWaponTableBoxingCounter', '$getWaponTableProWrestling', '$getWaponTableProWrestlingCounter', '$getWaponTableStand', '$getWaponTableStandCounter', '$getRandMartialArtCounter', '$*', '$each']);
+  Opal.add_stubs(['$setPrefixes', '$join', '$collect', '$prefixes', '$sub', '$===', '$debug', '$to_i', '$getWeaponTable', '$rollJudge', '$[]', '$getJudgeDiceList', '$inject', '$+', '$nil?', '$>=', '$length', '$getSuccessText', '$getWeaponSkillText', '$max', '$loop', '$roll', '$<<', '$%', '$==', '$first', '$<=', '$!=', '$getSkillText', '$empty?', '$to_s', '$upcase', '$getWeaponTableSword', '$getWeaponTableSwordCounter', '$getWeaponTableLongSword', '$getWeaponTableLongSwordCounter', '$getWeaponTableShortSword', '$getWeaponTableShortSwordCounter', '$getWeaponTableSpear', '$getWeaponTableSpearCounter', '$getWeaponTableAx', '$getWeaponTableAxCounter', '$getWeaponTableClub', '$getWeaponTableClubCounter', '$getWeaponTableBow', '$getWeaponTableMartialArt', '$getWeaponTableMartialArtCounter', '$getWeaponTableBoxing', '$getWeaponTableBoxingCounter', '$getWeaponTableProWrestling', '$getWeaponTableProWrestlingCounter', '$getWeaponTableStand', '$getWeaponTableStandCounter', '$getRandMartialArtCounter', '$*', '$each']);
   return (function($base, $super, $parent_nesting) {
     function $ShinkuuGakuen(){};
     var self = $ShinkuuGakuen = $klass($base, $super, 'ShinkuuGakuen', $ShinkuuGakuen);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_ShinkuuGakuen_gameName_1, TMP_ShinkuuGakuen_gameType_2, TMP_ShinkuuGakuen_getHelpMessage_3, TMP_ShinkuuGakuen_rollDiceCommand_5, TMP_ShinkuuGakuen_rollJudge_7, TMP_ShinkuuGakuen_getJudgeDiceList_8, TMP_ShinkuuGakuen_getSuccessText_9, TMP_ShinkuuGakuen_getSkillText_10, TMP_ShinkuuGakuen_getWaponTable_11, TMP_ShinkuuGakuen_getWaponTableSword_12, TMP_ShinkuuGakuen_getWaponTableSwordCounter_13, TMP_ShinkuuGakuen_getWaponTableLongSword_14, TMP_ShinkuuGakuen_getWaponTableLongSwordCounter_15, TMP_ShinkuuGakuen_getWaponTableShortSword_16, TMP_ShinkuuGakuen_getWaponTableShortSwordCounter_17, TMP_ShinkuuGakuen_getWaponTableSpear_18, TMP_ShinkuuGakuen_getWaponTableSpearCounter_19, TMP_ShinkuuGakuen_getWaponTableAx_20, TMP_ShinkuuGakuen_getWaponTableAxCounter_21, TMP_ShinkuuGakuen_getWaponTableClub_22, TMP_ShinkuuGakuen_getWaponTableClubCounter_23, TMP_ShinkuuGakuen_getWaponTableBow_24, TMP_ShinkuuGakuen_getWaponTableMartialArt_25, TMP_ShinkuuGakuen_getWaponTableMartialArtCounter_26, TMP_ShinkuuGakuen_getRandMartialArtCounter_27, TMP_ShinkuuGakuen_getWaponTableBoxing_28, TMP_ShinkuuGakuen_getWaponTableBoxingCounter_29, TMP_ShinkuuGakuen_getWaponTableProWrestling_30, TMP_ShinkuuGakuen_getWaponTableProWrestlingCounter_31, TMP_ShinkuuGakuen_getWaponTableStand_32, TMP_ShinkuuGakuen_getWaponTableStandCounter_33, TMP_ShinkuuGakuen_getWaponSkillText_35;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_ShinkuuGakuen_gameName_1, TMP_ShinkuuGakuen_gameType_2, TMP_ShinkuuGakuen_getHelpMessage_3, TMP_ShinkuuGakuen_rollDiceCommand_5, TMP_ShinkuuGakuen_rollJudge_7, TMP_ShinkuuGakuen_getJudgeDiceList_9, TMP_ShinkuuGakuen_getSuccessText_10, TMP_ShinkuuGakuen_getSkillText_11, TMP_ShinkuuGakuen_getWeaponTable_12, TMP_ShinkuuGakuen_getWeaponTableSword_13, TMP_ShinkuuGakuen_getWeaponTableSwordCounter_14, TMP_ShinkuuGakuen_getWeaponTableLongSword_15, TMP_ShinkuuGakuen_getWeaponTableLongSwordCounter_16, TMP_ShinkuuGakuen_getWeaponTableShortSword_17, TMP_ShinkuuGakuen_getWeaponTableShortSwordCounter_18, TMP_ShinkuuGakuen_getWeaponTableSpear_19, TMP_ShinkuuGakuen_getWeaponTableSpearCounter_20, TMP_ShinkuuGakuen_getWeaponTableAx_21, TMP_ShinkuuGakuen_getWeaponTableAxCounter_22, TMP_ShinkuuGakuen_getWeaponTableClub_23, TMP_ShinkuuGakuen_getWeaponTableClubCounter_24, TMP_ShinkuuGakuen_getWeaponTableBow_25, TMP_ShinkuuGakuen_getWeaponTableMartialArt_26, TMP_ShinkuuGakuen_getWeaponTableMartialArtCounter_27, TMP_ShinkuuGakuen_getRandMartialArtCounter_28, TMP_ShinkuuGakuen_getWeaponTableBoxing_29, TMP_ShinkuuGakuen_getWeaponTableBoxingCounter_30, TMP_ShinkuuGakuen_getWeaponTableProWrestling_31, TMP_ShinkuuGakuen_getWeaponTableProWrestlingCounter_32, TMP_ShinkuuGakuen_getWeaponTableStand_33, TMP_ShinkuuGakuen_getWeaponTableStandCounter_34, TMP_ShinkuuGakuen_getWeaponSkillText_36;
 
     
     self.$setPrefixes(["CRL.*", "CSW.*", "CLS.*", "CSS.*", "CSP.*", "CAX.*", "CCL.*", "CMA.*", "CBX.*", "CPR.*", "CST.*", "RL.*", "SW.*", "LS.*", "SS.*", "SP.*", "AX.*", "CL.*", "BW.*", "MA.*", "BX.*", "PR.*", "ST.*"]);
@@ -43,36 +43,35 @@
     }, TMP_ShinkuuGakuen_getHelpMessage_3.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_ShinkuuGakuen_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var TMP_4, $a, self = this, prefixsRegText = nil, pattern = nil, waponCommand = nil, base = nil, diff = nil, waponInfo = nil, output_msg = nil;
+      var TMP_4, $a, self = this, prefixesRegText = nil, weaponCommand = nil, base = nil, diff = nil, weaponInfo = nil, output_msg = nil;
 
       
-      prefixsRegText = $send(self.$prefixs(), 'collect', [], (TMP_4 = function(i){var self = TMP_4.$$s || this;
+      prefixesRegText = $send(self.$prefixes(), 'collect', [], (TMP_4 = function(i){var self = TMP_4.$$s || this;
 if (i == null) i = nil;
       return i.$sub(/\.\*/, "")}, TMP_4.$$s = self, TMP_4.$$arity = 1, TMP_4)).$join("|");
-      pattern = "" + "(^|\\s)(S)?(" + (prefixsRegText) + ")([\\d\\+\\-]*)(>=(\\d+))?";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE'))['$==='](command))) {
+      if ($truthy(new RegExp("" + "(^|\\s)(S)?(" + (prefixesRegText) + ")([\\d\\+\\-]*)(>=(\\d+))?", 'i')['$==='](command))) {
         } else {
         
         self.$debug("NOT match");
         return nil;
       };
       self.$debug("matched.");
-      waponCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      weaponCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
       base = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i();
       diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      waponInfo = self.$getWaponTable(waponCommand);
-      output_msg = self.$rollJudge(base, diff, waponInfo);
+      weaponInfo = self.$getWeaponTable(weaponCommand);
+      output_msg = self.$rollJudge(base, diff, weaponInfo);
       return output_msg;
     }, TMP_ShinkuuGakuen_rollDiceCommand_5.$$arity = 1);
     
-    Opal.defn(self, '$rollJudge', TMP_ShinkuuGakuen_rollJudge_7 = function $$rollJudge(base, diff, waponInfo) {
-      var TMP_6, self = this, waponName = nil, waponTable = nil, diceList = nil, total = nil, allTotal = nil, diffText = nil, result = nil;
+    Opal.defn(self, '$rollJudge', TMP_ShinkuuGakuen_rollJudge_7 = function $$rollJudge(base, diff, weaponInfo) {
+      var TMP_6, self = this, weaponName = nil, weaponTable = nil, diceList = nil, total = nil, allTotal = nil, diffText = nil, result = nil;
 
       
       self.$debug("rollJudge base", base);
       self.$debug("rollJudge diff", diff);
-      waponName = waponInfo['$[]']("name");
-      waponTable = waponInfo['$[]']("table");
+      weaponName = weaponInfo['$[]']("name");
+      weaponTable = weaponInfo['$[]']("table");
       diceList = self.$getJudgeDiceList();
       total = $send(diceList, 'inject', [], (TMP_6 = function(value, i){var self = TMP_6.$$s || this;
 if (value == null) value = nil;if (i == null) i = nil;
@@ -83,37 +82,40 @@ if (value == null) value = nil;if (i == null) i = nil;
         } else {
         return "" + ">=" + (diff)
       }; return nil; })();
-      result = "" + "(" + (waponName) + "：" + (base) + (diffText) + ") ＞ 1D100+" + (base) + " ＞ " + (total);
+      result = "" + "(" + (weaponName) + "：" + (base) + (diffText) + ") ＞ 1D100+" + (base) + " ＞ " + (total);
       if ($truthy($rb_ge(diceList.$length(), 2))) {
         result = $rb_plus(result, "" + "[" + (diceList.$join(",")) + "]")};
       result = $rb_plus(result, "" + "+" + (base));
       result = $rb_plus(result, "" + " ＞ " + (allTotal));
-      result = $rb_plus(result, self.$getSuccessText(allTotal, diff, diceList, waponTable));
-      result = $rb_plus(result, self.$getWaponSkillText(waponTable, diceList.$max()));
+      result = $rb_plus(result, self.$getSuccessText(allTotal, diff, diceList, weaponTable));
+      result = $rb_plus(result, self.$getWeaponSkillText(weaponTable, diceList.$max()));
       self.$debug("check_1D100 result", result);
       return result;
     }, TMP_ShinkuuGakuen_rollJudge_7.$$arity = 3);
     
-    Opal.defn(self, '$getJudgeDiceList', TMP_ShinkuuGakuen_getJudgeDiceList_8 = function $$getJudgeDiceList() {
-      var $a, $b, $c, self = this, diceList = nil, value = nil, rank01 = nil;
+    Opal.defn(self, '$getJudgeDiceList', TMP_ShinkuuGakuen_getJudgeDiceList_9 = function $$getJudgeDiceList() {
+      var TMP_8, self = this, diceList = nil;
 
       
       diceList = [];
-      while ($truthy(true)) {
-        
-        $c = self.$roll(1, 100), $b = Opal.to_ary($c), (value = ($b[0] == null ? nil : $b[0])), $c;
+      (function(){var $brk = Opal.new_brk(); try {return $send(self, 'loop', [], (TMP_8 = function(){var self = TMP_8.$$s || this, $a, $b, value = nil, rank01 = nil;
+
+      
+        $b = self.$roll(1, 100), $a = Opal.to_ary($b), (value = ($a[0] == null ? nil : $a[0])), $b;
         diceList['$<<'](value);
         rank01 = value['$%'](10);
         self.$debug("rank01", rank01);
-        if ($truthy(rank01['$=='](0))) {
+        if (rank01['$=='](0)) {
+          return nil
           } else {
-          break;
-        };
-      };
+          
+          Opal.brk(nil, $brk)
+        };}, TMP_8.$$s = self, TMP_8.$$brk = $brk, TMP_8.$$arity = 0, TMP_8))
+      } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       return diceList;
-    }, TMP_ShinkuuGakuen_getJudgeDiceList_8.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getJudgeDiceList_9.$$arity = 0);
     
-    Opal.defn(self, '$getSuccessText', TMP_ShinkuuGakuen_getSuccessText_9 = function $$getSuccessText(allTotal, diff, diceList, isWapon) {
+    Opal.defn(self, '$getSuccessText', TMP_ShinkuuGakuen_getSuccessText_10 = function $$getSuccessText(allTotal, diff, diceList, isWeapon) {
       var $a, self = this, first = nil, result = nil, skillText = nil, success = nil;
 
       
@@ -125,7 +127,7 @@ if (value == null) value = nil;if (i == null) i = nil;
       if ($truthy(($truthy($a = diff['$nil?']()) ? first['$!='](10) : $a))) {
         return ""};
       result = "";
-      skillText = self.$getSkillText(first, diff, isWapon);
+      skillText = self.$getSkillText(first, diff, isWeapon);
       result = $rb_plus(result, skillText);
       if ($truthy(diff['$nil?']())) {
         } else {
@@ -137,20 +139,20 @@ if (value == null) value = nil;if (i == null) i = nil;
           } else {
           return "失敗"
         }; return nil; })();
-        result = $rb_plus(result, "" + (success));
+        result = $rb_plus(result, success.$to_s());
       };
       return result;
-    }, TMP_ShinkuuGakuen_getSuccessText_9.$$arity = 4);
+    }, TMP_ShinkuuGakuen_getSuccessText_10.$$arity = 4);
     
-    Opal.defn(self, '$getSkillText', TMP_ShinkuuGakuen_getSkillText_10 = function $$getSkillText(first, diff, isWapon) {
+    Opal.defn(self, '$getSkillText', TMP_ShinkuuGakuen_getSkillText_11 = function $$getSkillText(first, diff, isWeapon) {
       var self = this, result = nil;
 
       
       result = "";
-      if ($truthy(isWapon)) {
+      if ($truthy(isWeapon)) {
         return result};
       result = " ＞ ";
-      if ($truthy(first['$=='](10))) {
+      if (first['$=='](10)) {
         } else {
         return result
       };
@@ -159,203 +161,203 @@ if (value == null) value = nil;if (i == null) i = nil;
         return result};
       result = $rb_plus(result, "／技能あり：");
       return result;
-    }, TMP_ShinkuuGakuen_getSkillText_10.$$arity = 3);
+    }, TMP_ShinkuuGakuen_getSkillText_11.$$arity = 3);
     
-    Opal.defn(self, '$getWaponTable', TMP_ShinkuuGakuen_getWaponTable_11 = function $$getWaponTable(waponCommand) {
+    Opal.defn(self, '$getWeaponTable', TMP_ShinkuuGakuen_getWeaponTable_12 = function $$getWeaponTable(weaponCommand) {
       var self = this, $case = nil;
 
       
-      self.$debug("getWaponTable waponCommand", waponCommand);
-      $case = waponCommand.$upcase();
-      if ("SW"['$===']($case)) {return self.$getWaponTableSword()}
-      else if ("CSW"['$===']($case)) {return self.$getWaponTableSwordCounter()}
-      else if ("LS"['$===']($case)) {return self.$getWaponTableLongSword()}
-      else if ("CLS"['$===']($case)) {return self.$getWaponTableLongSwordCounter()}
-      else if ("SS"['$===']($case)) {return self.$getWaponTableShortSword()}
-      else if ("CSS"['$===']($case)) {return self.$getWaponTableShortSwordCounter()}
-      else if ("SP"['$===']($case)) {return self.$getWaponTableSpear()}
-      else if ("CSP"['$===']($case)) {return self.$getWaponTableSpearCounter()}
-      else if ("AX"['$===']($case)) {return self.$getWaponTableAx()}
-      else if ("CAX"['$===']($case)) {return self.$getWaponTableAxCounter()}
-      else if ("CL"['$===']($case)) {return self.$getWaponTableClub()}
-      else if ("CCL"['$===']($case)) {return self.$getWaponTableClubCounter()}
-      else if ("BW"['$===']($case)) {return self.$getWaponTableBow()}
-      else if ("MA"['$===']($case)) {return self.$getWaponTableMartialArt()}
-      else if ("CMA"['$===']($case)) {return self.$getWaponTableMartialArtCounter()}
-      else if ("BX"['$===']($case)) {return self.$getWaponTableBoxing()}
-      else if ("CBX"['$===']($case)) {return self.$getWaponTableBoxingCounter()}
-      else if ("PR"['$===']($case)) {return self.$getWaponTableProWrestling()}
-      else if ("CPR"['$===']($case)) {return self.$getWaponTableProWrestlingCounter()}
-      else if ("ST"['$===']($case)) {return self.$getWaponTableStand()}
-      else if ("CST"['$===']($case)) {return self.$getWaponTableStandCounter()};
+      self.$debug("getWeaponTable weaponCommand", weaponCommand);
+      $case = weaponCommand.$upcase();
+      if ("SW"['$===']($case)) {return self.$getWeaponTableSword()}
+      else if ("CSW"['$===']($case)) {return self.$getWeaponTableSwordCounter()}
+      else if ("LS"['$===']($case)) {return self.$getWeaponTableLongSword()}
+      else if ("CLS"['$===']($case)) {return self.$getWeaponTableLongSwordCounter()}
+      else if ("SS"['$===']($case)) {return self.$getWeaponTableShortSword()}
+      else if ("CSS"['$===']($case)) {return self.$getWeaponTableShortSwordCounter()}
+      else if ("SP"['$===']($case)) {return self.$getWeaponTableSpear()}
+      else if ("CSP"['$===']($case)) {return self.$getWeaponTableSpearCounter()}
+      else if ("AX"['$===']($case)) {return self.$getWeaponTableAx()}
+      else if ("CAX"['$===']($case)) {return self.$getWeaponTableAxCounter()}
+      else if ("CL"['$===']($case)) {return self.$getWeaponTableClub()}
+      else if ("CCL"['$===']($case)) {return self.$getWeaponTableClubCounter()}
+      else if ("BW"['$===']($case)) {return self.$getWeaponTableBow()}
+      else if ("MA"['$===']($case)) {return self.$getWeaponTableMartialArt()}
+      else if ("CMA"['$===']($case)) {return self.$getWeaponTableMartialArtCounter()}
+      else if ("BX"['$===']($case)) {return self.$getWeaponTableBoxing()}
+      else if ("CBX"['$===']($case)) {return self.$getWeaponTableBoxingCounter()}
+      else if ("PR"['$===']($case)) {return self.$getWeaponTableProWrestling()}
+      else if ("CPR"['$===']($case)) {return self.$getWeaponTableProWrestlingCounter()}
+      else if ("ST"['$===']($case)) {return self.$getWeaponTableStand()}
+      else if ("CST"['$===']($case)) {return self.$getWeaponTableStandCounter()};
       return $hash2(["name", "table"], {"name": "判定", "table": nil});
-    }, TMP_ShinkuuGakuen_getWaponTable_11.$$arity = 1);
+    }, TMP_ShinkuuGakuen_getWeaponTable_12.$$arity = 1);
     
-    Opal.defn(self, '$getWaponTableSword', TMP_ShinkuuGakuen_getWaponTableSword_12 = function $$getWaponTableSword() {
+    Opal.defn(self, '$getWeaponTableSword', TMP_ShinkuuGakuen_getWeaponTableSword_13 = function $$getWeaponTableSword() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "剣", "table": [[11, "失礼剣", "成功度＋５"], [22, "隼斬り", "回避不可"], [33, "みじん斬り", "攻撃量２倍"], [44, "天地二段", "２連続攻撃"], [55, "波動剣", "カウンター不可、Ｂ・Ｄ"], [66, "疾風剣", "攻撃量３倍､盾受けー１００"], [77, "残像剣", "全体攻撃、Ｂ・Ｄ"], [88, "五月雨斬り」", "回避不可．ダメージ３倍"], [99, "ライジングノヴア」", "２連続攻撃・２撃目敵無防備、Ｂ・Ｄ"], [0, "光速剣", "攻撃量3倍､盾受け不可､カウンター不可、Ｂ・Ｄ"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableSword_12.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableSword_13.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableSwordCounter', TMP_ShinkuuGakuen_getWaponTableSwordCounter_13 = function $$getWaponTableSwordCounter() {
+    Opal.defn(self, '$getWeaponTableSwordCounter', TMP_ShinkuuGakuen_getWeaponTableSwordCounter_14 = function $$getWeaponTableSwordCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "剣カウンター", "table": [[33, "パリィ", "攻撃の無効化"], [44, nil, nil], [55, nil, nil], [66, "かすみ青眼", "カウンター"], [77, nil, nil], [88, nil, nil], [99, nil, nil], [0, "不動剣", "クロスカウンター、Ｂ・Ｄ、ダメージ２倍"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableSwordCounter_13.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableSwordCounter_14.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableLongSword', TMP_ShinkuuGakuen_getWaponTableLongSword_14 = function $$getWaponTableLongSword() {
+    Opal.defn(self, '$getWeaponTableLongSword', TMP_ShinkuuGakuen_getWeaponTableLongSword_15 = function $$getWeaponTableLongSword() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "大剣", "table": [[11, "スマッシュ", "敵防御半分"], [22, "峰打ち", "麻痺硬化「根性」０"], [33, "水鳥剣", "敵防御判定ー５０"], [44, "ブルクラッシュ", "敵防御力無視"], [55, "逆風の太刀", "カウンター不可、ダメージ２倍"], [66, "濁流剣", "回避不可、カウンター不可、Ｂ・Ｄ"], [77, "清流剣", "回避不可、カウンター不可、Ｂ・Ｄ"], [88, "燕返し", "２連続攻撃・２撃目カウンター不可、Ｂ・Ｄ"], [99, "地ずり残月", "盾受け不可、ダメージ３倍、Ｂ・Ｄ"], [0, "乱れ雪月花", "３連続攻撃・三撃目敵無防備、ダメージ３倍、防御力無視、Ｂ・Ｄ"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableLongSword_14.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableLongSword_15.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableLongSwordCounter', TMP_ShinkuuGakuen_getWaponTableLongSwordCounter_15 = function $$getWaponTableLongSwordCounter() {
+    Opal.defn(self, '$getWeaponTableLongSwordCounter', TMP_ShinkuuGakuen_getWeaponTableLongSwordCounter_16 = function $$getWeaponTableLongSwordCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "大剣カウンター", "table": [[22, "無形の位", "攻撃の無効化"], [33, nil, nil], [44, nil, nil], [55, "双破", "クロスカウンター、Ｂ・Ｄ"], [66, nil, nil], [77, nil, nil], [88, "喪心無想", "カウンター、攻撃量６倍"], [99, nil, nil], [0, nil, nil]]})
-    }, TMP_ShinkuuGakuen_getWaponTableLongSwordCounter_15.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableLongSwordCounter_16.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableShortSword', TMP_ShinkuuGakuen_getWaponTableShortSword_16 = function $$getWaponTableShortSword() {
+    Opal.defn(self, '$getWeaponTableShortSword', TMP_ShinkuuGakuen_getWeaponTableShortSword_17 = function $$getWeaponTableShortSword() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "小剣", "table": [[11, "乱れ突き", "２連続攻撃"], [22, "フェイクタング", "スタン効果「注意力」５"], [33, "マインドステア", "麻痺効果「注意力」０"], [44, "サイドワインダー", "成功度＋３、盾受け不可"], [55, "スクリュードライバー", "防御力無視、ダメージ２倍"], [66, "ニードルロンド", "３連続攻撃"], [77, "プラズマブラスト", "麻痺効果「根性」０、Ｂ・Ｄ"], [88, "サザンクロス", "麻痺効果「根性」５、攻撃量２倍"], [99, "ファイナルレター", "気絶効果「根性」０、回避不可、カウンター不可、Ｂ・Ｄ"], [0, "百花繚乱", "回避不可、盾受け不可、攻撃量３倍、Ｂ・Ｄ"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableShortSword_16.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableShortSword_17.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableShortSwordCounter', TMP_ShinkuuGakuen_getWaponTableShortSwordCounter_17 = function $$getWaponTableShortSwordCounter() {
+    Opal.defn(self, '$getWeaponTableShortSwordCounter', TMP_ShinkuuGakuen_getWeaponTableShortSwordCounter_18 = function $$getWeaponTableShortSwordCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "小剣カウンター", "table": [[11, "リポスト", "カウンター"], [22, nil, nil], [33, nil, nil], [44, nil, nil], [55, nil, nil], [66, nil, nil], [77, nil, nil], [88, "マタドール", "カウンター、麻痺効果「注意力」５"], [99, nil, nil], [0, "マリオネット", "攻撃の相手を変える"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableShortSwordCounter_17.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableShortSwordCounter_18.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableSpear', TMP_ShinkuuGakuen_getWaponTableSpear_18 = function $$getWaponTableSpear() {
+    Opal.defn(self, '$getWeaponTableSpear', TMP_ShinkuuGakuen_getWeaponTableSpear_19 = function $$getWeaponTableSpear() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "槍", "table": [[11, "チャージ", "ダメージ１．５倍、盾受けー３０"], [22, "稲妻突き", "回避不可"], [33, "脳削り", "麻痺効果「根性」０"], [44, "大車輪", "全体攻撃"], [55, "狂乱撃", "二回攻撃"], [66, "スパイラルチャージ", "盾受け不可、ダメージ２倍、Ｂ・Ｄ"], [77, "双龍波", "スタン効果「注意力」５、盾受け不可、Ｂ・Ｄ"], [88, "流星衝", "カウンター不可、ダメージ３倍、次行動まで攻撃対象にならない"], [99, "ランドスライサー", "全体攻撃、回避不可、カウンター不可、Ｂ・Ｄ"], [0, "無双三段", "三段攻撃、二段目Ｂ・Ｄ、三段目ダメージ２倍、Ｂ・Ｄ"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableSpear_18.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableSpear_19.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableSpearCounter', TMP_ShinkuuGakuen_getWaponTableSpearCounter_19 = function $$getWaponTableSpearCounter() {
+    Opal.defn(self, '$getWeaponTableSpearCounter', TMP_ShinkuuGakuen_getWeaponTableSpearCounter_20 = function $$getWeaponTableSpearCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "槍カウンター", "table": [[55, "風車", "カウンター、ダメージ２倍"], [66, nil, nil], [77, nil, nil], [88, nil, nil], [99, nil, nil], [0, nil, nil]]})
-    }, TMP_ShinkuuGakuen_getWaponTableSpearCounter_19.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableSpearCounter_20.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableAx', TMP_ShinkuuGakuen_getWaponTableAx_20 = function $$getWaponTableAx() {
+    Opal.defn(self, '$getWeaponTableAx', TMP_ShinkuuGakuen_getWeaponTableAx_21 = function $$getWeaponTableAx() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "斧", "table": [[11, "一人時間差", "防御行動ー１００"], [22, "トマホーク", "カウンター不可"], [33, "大木断", "ダメージ２倍"], [44, "ブレードロール", "全体攻撃"], [55, "マキ割りスペシャル", "盾受け不可、Ｂ・Ｄ"], [66, "ヨーヨー", "カウンター不可、２連続攻撃"], [77, "メガホーク", "カウンター不可、全体攻撃、攻撃量２倍"], [88, "デッドリースピン", "回避不可、攻撃量５倍"], [99, "マキ割りダイナミック", "盾受け不可、ダメージ２倍、Ｂ・Ｄ、ターンの最後に命中"], [0, "高速ナブラ", "回避不可、カウンター不可、攻撃量３倍、Ｂ・Ｄ"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableAx_20.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableAx_21.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableAxCounter', TMP_ShinkuuGakuen_getWaponTableAxCounter_21 = function $$getWaponTableAxCounter() {
+    Opal.defn(self, '$getWeaponTableAxCounter', TMP_ShinkuuGakuen_getWeaponTableAxCounter_22 = function $$getWeaponTableAxCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "斧カウンター", "table": [[44, "真っ向唐竹割り", "クロスカウンター、Ｂ・Ｄ"], [55, nil, nil], [66, nil, nil], [77, nil, nil], [88, nil, nil], [99, nil, nil], [0, nil, nil]]})
-    }, TMP_ShinkuuGakuen_getWaponTableAxCounter_21.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableAxCounter_22.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableClub', TMP_ShinkuuGakuen_getWaponTableClub_22 = function $$getWaponTableClub() {
+    Opal.defn(self, '$getWeaponTableClub', TMP_ShinkuuGakuen_getWeaponTableClub_23 = function $$getWeaponTableClub() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "棍棒", "table": [[11, "ハードヒット", "防御力無視"], [22, "ダブルヒット", "２連続攻撃"], [33, "回転撃", "防御判定ー１００"], [44, "飛翔脳天撃", "麻痺効果「根性」５"], [55, "削岩撃", "盾受け不可、攻撃量３倍"], [66, "地裂撃", "防御力無視、カウンター不可、盾受け不可、スタン効果「注意力」０"], [77, "トリプルヒット", "３連続攻撃"], [88, "亀甲羅割り", "防御力半分、盾受け不可、Ｂ・Ｄ"], [99, "叩きつぶす", "防御力無視、防御行動、カウンター不可、Ｂ・Ｄ"], [0, "グランドクロス", "防御無視、盾、カウンター不可、ダメージ２倍、Ｂ・Ｄ、全体攻撃"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableClub_22.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableClub_23.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableClubCounter', TMP_ShinkuuGakuen_getWaponTableClubCounter_23 = function $$getWaponTableClubCounter() {
+    Opal.defn(self, '$getWeaponTableClubCounter', TMP_ShinkuuGakuen_getWeaponTableClubCounter_24 = function $$getWeaponTableClubCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "棍棒カウンター", "table": [[11, "ブロッキング", "攻撃の無効化"], [22, nil, nil], [33, nil, nil], [44, nil, nil], [55, nil, nil], [66, "ジャストミート", "飛び道具のみカウンター"], [77, nil, nil], [88, nil, nil], [99, "ホームラン", "すべての攻撃に対するカウンター"], [0, nil, nil]]})
-    }, TMP_ShinkuuGakuen_getWaponTableClubCounter_23.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableClubCounter_24.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableBow', TMP_ShinkuuGakuen_getWaponTableBow_24 = function $$getWaponTableBow() {
+    Opal.defn(self, '$getWeaponTableBow', TMP_ShinkuuGakuen_getWeaponTableBow_25 = function $$getWeaponTableBow() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "弓", "table": [[11, "影縫い", "麻痺効果「注意力」０"], [22, "アローレイン", "全体攻撃・回避ー５０"], [33, "速射", "２連続攻撃"], [44, "瞬速の矢", "防御不可"], [55, "バラージシュート", "全体攻撃・盾受け不可・攻撃量２倍"], [66, "貫きの矢", "防御力無視、Ｂ・Ｄ"], [77, "落鳳波", "回避不可、Ｂ・Ｄ"], [88, "皆死ね矢", "全体攻撃、気絶効果「根性」５"], [99, "ミリオンダラー", "三連続攻撃"], [0, "夢想弓", "Ｂ・Ｄ、ダメージ３倍"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableBow_24.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableBow_25.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableMartialArt', TMP_ShinkuuGakuen_getWaponTableMartialArt_25 = function $$getWaponTableMartialArt() {
+    Opal.defn(self, '$getWeaponTableMartialArt', TMP_ShinkuuGakuen_getWeaponTableMartialArt_26 = function $$getWeaponTableMartialArt() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "体術", "table": [[11, "集気法", "通常ダメージ分自分のＨＰ回復"], [22, "コンビネーション", "２連続攻撃"], [33, "逆一本", "盾受け不可、防御力半分、スタン効果「根性」０"], [44, "コークスクリューブロー", "防御力無視、ダメージ３倍"], [55, "練気拳", "全体攻撃・回避不可"], [66, "バベルクランプル", "盾受け不可、Ｂ・Ｄ"], [77, "マシンガンジャブ", "３連続攻撃"], [88, "ナイアガラフォール", "盾受け不可、Ｂ・Ｄ、ダメージ２倍"], [99, "羅刹掌", "防御力無視、防御不可、Ｂ・Ｄ、ダメージ３倍"], [0, "千手観音", "５連続攻撃、すべてカウンター不可"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableMartialArt_25.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableMartialArt_26.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableMartialArtCounter', TMP_ShinkuuGakuen_getWaponTableMartialArtCounter_26 = function $$getWaponTableMartialArtCounter() {
+    Opal.defn(self, '$getWeaponTableMartialArtCounter', TMP_ShinkuuGakuen_getWeaponTableMartialArtCounter_27 = function $$getWeaponTableMartialArtCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "体術カウンター", "table": [[11, "スウェイバック", "攻撃の無効化"], [22, nil, nil], [33, "当て身投げ", "カウンター"], [44, nil, nil], [55, nil, nil], [66, "ジョルトカウンター", "クロスカウンター、Ｂ・Ｄ"], [77, nil, nil], [88, nil, nil], [99, "ガードキャンセル", $rb_plus("Ｄ１０で振った必殺技によるカウンター", self.$getRandMartialArtCounter())], [0, nil, nil]]})
-    }, TMP_ShinkuuGakuen_getWaponTableMartialArtCounter_26.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableMartialArtCounter_27.$$arity = 0);
     
-    Opal.defn(self, '$getRandMartialArtCounter', TMP_ShinkuuGakuen_getRandMartialArtCounter_27 = function $$getRandMartialArtCounter() {
-      var $a, $b, self = this, value = nil, dice = nil, tableInfo = nil, waponTable = nil, result = nil;
+    Opal.defn(self, '$getRandMartialArtCounter', TMP_ShinkuuGakuen_getRandMartialArtCounter_28 = function $$getRandMartialArtCounter() {
+      var $a, $b, self = this, value = nil, dice = nil, tableInfo = nil, weaponTable = nil, result = nil;
 
       
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (value = ($a[0] == null ? nil : $a[0])), $b;
       dice = $rb_plus($rb_times(value, 10), value);
-      if ($truthy(value['$=='](110))) {
+      if (value['$=='](110)) {
         dice = 100};
-      tableInfo = self.$getWaponTableMartialArt();
-      waponTable = tableInfo['$[]']("table");
+      tableInfo = self.$getWeaponTableMartialArt();
+      weaponTable = tableInfo['$[]']("table");
       result = "" + " ＞ (" + (value) + ")";
-      result = $rb_plus(result, self.$getWaponSkillText(waponTable, dice));
+      result = $rb_plus(result, self.$getWeaponSkillText(weaponTable, dice));
       return result;
-    }, TMP_ShinkuuGakuen_getRandMartialArtCounter_27.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getRandMartialArtCounter_28.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableBoxing', TMP_ShinkuuGakuen_getWaponTableBoxing_28 = function $$getWaponTableBoxing() {
+    Opal.defn(self, '$getWeaponTableBoxing', TMP_ShinkuuGakuen_getWeaponTableBoxing_29 = function $$getWeaponTableBoxing() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "ボクシング", "table": [[11, "ワン・ツー", "２連続攻撃・２攻撃目盾受け、回避不可"], [22, "リバーブロー", "麻痺効果「根性」５"], [33, "フリッカー", "２連続攻撃・全て盾受け、カウンター不可"], [44, "コークスクリューブロー", "防御力無視、ダメージ３倍"], [55, "レイ・ガン", "全体攻撃、Ｂ・Ｄ、陽属性魔法攻撃"], [66, "ショットガンブロー", "攻撃量１０倍"], [77, "ハートブレイクショット", "２連続攻撃・１攻撃目防御力無視、ダメージ３倍・２撃目敵無防備"], [88, "デンプシーロール", "３連続攻撃・全てＢ・Ｄ"], [99, "フラッシュピストンマッハパンチ", "全体攻撃、Ｂ・Ｄ、気絶効果「根性」５"], [0, "右", "防御力無視、ダメージ１０倍"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableBoxing_28.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableBoxing_29.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableBoxingCounter', TMP_ShinkuuGakuen_getWaponTableBoxingCounter_29 = function $$getWaponTableBoxingCounter() {
+    Opal.defn(self, '$getWeaponTableBoxingCounter', TMP_ShinkuuGakuen_getWeaponTableBoxingCounter_30 = function $$getWeaponTableBoxingCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "ボクシングカウンター", "table": [[11, "ダッキングブロー", "カウンター"], [22, "ジョルトカウンター", "クロスカウンター、Ｂ・Ｄ"], [33, nil, nil], [44, nil, nil], [55, nil, nil], [66, nil, nil], [77, nil, nil], [88, nil, nil], [99, nil, nil], [0, "ノーガード戦法", "攻撃の無効化、次ターン以降は自分の盾受け、回避不可、全ての攻撃にＢ・Ｄ"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableBoxingCounter_29.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableBoxingCounter_30.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableProWrestling', TMP_ShinkuuGakuen_getWaponTableProWrestling_30 = function $$getWaponTableProWrestling() {
+    Opal.defn(self, '$getWeaponTableProWrestling', TMP_ShinkuuGakuen_getWeaponTableProWrestling_31 = function $$getWeaponTableProWrestling() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "プロレス", "table": [[11, "ボディスラム", "盾受け不可"], [22, "ドロップキック", "Ｂ・Ｄ"], [33, "水車落とし", "盾受け不可、成功度＋５"], [44, "ナックルアロー", "Ｂ・Ｄ、麻痺効果「根性」５"], [55, "ワン・ツー・エルボー", "２連続攻撃"], [66, "バックドロップ", "盾受け不可、ダメージ２倍"], [77, "投げっ放しジャーマン", "盾受け不可、防御力無視、成功度＋５"], [88, "パワーボム", "盾受け不可、ダメージ２倍、Ｂ・Ｄ"], [99, "デスバレーボム", "盾受け不可、防御力無視、ダメージ２倍、気絶効果「根性」５"], [0, "ジャックハマー", "盾受け不可、防御力無視、ダメージ３倍、成功度＋１０"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableProWrestling_30.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableProWrestling_31.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableProWrestlingCounter', TMP_ShinkuuGakuen_getWaponTableProWrestlingCounter_31 = function $$getWaponTableProWrestlingCounter() {
+    Opal.defn(self, '$getWeaponTableProWrestlingCounter', TMP_ShinkuuGakuen_getWeaponTableProWrestlingCounter_32 = function $$getWeaponTableProWrestlingCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "プロレスカウンター", "table": [[22, "パワースラム", "カウンター"], [55, "アックスボンバー", "カウンター、Ｂ・Ｄ"], [66, nil, nil], [77, nil, nil], [88, nil, nil], [99, nil, nil], [0, nil, nil]]})
-    }, TMP_ShinkuuGakuen_getWaponTableProWrestlingCounter_31.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableProWrestlingCounter_32.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableStand', TMP_ShinkuuGakuen_getWaponTableStand_32 = function $$getWaponTableStand() {
+    Opal.defn(self, '$getWeaponTableStand', TMP_ShinkuuGakuen_getWeaponTableStand_33 = function $$getWeaponTableStand() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "幽波紋", "table": [[11, "SILER CHARIOT", "攻撃量５倍、刺しタイプ攻撃"], [22, "TOWER OF GRAY", "防御力無視"], [33, "DARK BLUE MOON", "全体攻撃、攻撃量２倍、水属性斬りタイプ攻撃"], [44, "EMPEROR", "回避不可、盾受け不可、カウンター不可、飛び道具攻撃"], [55, "MAGICIAN's RED", "ダメージ２倍、Ｂ・Ｄ、火属性魔法攻撃"], [66, "DEATH 13", "ダメージ０、全体攻撃、気絶効果「根性」５"], [77, "HIEROPHANT GREEN", "全体攻撃、Ｂ・Ｄ、水属性攻撃"], [88, "VANILLA ICE CREAM", "盾受け不可、カウンター不可、防御力無視、ダメージ３倍、Ｂ・Ｄ"], [99, "THE WORLD", "５連続攻撃、全て敵無防備"], [0, "STAR PLATINUM", "攻撃量１５倍、Ｂ・Ｄ"]]})
-    }, TMP_ShinkuuGakuen_getWaponTableStand_32.$$arity = 0);
+    }, TMP_ShinkuuGakuen_getWeaponTableStand_33.$$arity = 0);
     
-    Opal.defn(self, '$getWaponTableStandCounter', TMP_ShinkuuGakuen_getWaponTableStandCounter_33 = function $$getWaponTableStandCounter() {
+    Opal.defn(self, '$getWeaponTableStandCounter', TMP_ShinkuuGakuen_getWeaponTableStandCounter_34 = function $$getWeaponTableStandCounter() {
       var self = this;
 
       return $hash2(["name", "table"], {"name": "幽波紋カウンター", "table": [[11, "ANUBIS", "技のみカウンター、ダメージ（カウンターした回数の２乗）倍、斬りタイプ攻撃"], [22, nil, nil], [33, nil, nil], [44, nil, nil], [55, nil, nil], [66, "YELLOW TEMPERANE", "魔法・飛び道具含めて全ての攻撃を無効化"], [77, nil, nil], [88, nil, nil], [99, nil, nil], [0, nil, nil]]})
-    }, TMP_ShinkuuGakuen_getWaponTableStandCounter_33.$$arity = 0);
-    return (Opal.defn(self, '$getWaponSkillText', TMP_ShinkuuGakuen_getWaponSkillText_35 = function $$getWaponSkillText(waponTable, dice) {try {
+    }, TMP_ShinkuuGakuen_getWeaponTableStandCounter_34.$$arity = 0);
+    return (Opal.defn(self, '$getWeaponSkillText', TMP_ShinkuuGakuen_getWeaponSkillText_36 = function $$getWeaponSkillText(weaponTable, dice) {try {
 
-      var TMP_34, self = this, preName = nil, preEffect = nil;
+      var TMP_35, self = this, preName = nil, preEffect = nil;
 
       
-      self.$debug("getWaponSkillText", dice);
-      if ($truthy(waponTable['$nil?']())) {
+      self.$debug("getWeaponSkillText", dice);
+      if ($truthy(weaponTable['$nil?']())) {
         return ""};
       preName = "";
       preEffect = "";
-      $send(waponTable, 'each', [], (TMP_34 = function(index, name, effect){var self = TMP_34.$$s || this, $a;
+      $send(weaponTable, 'each', [], (TMP_35 = function(index, name, effect){var self = TMP_35.$$s || this, $a;
 if (index == null) index = nil;if (name == null) name = nil;if (effect == null) effect = nil;
       
         name = ($truthy($a = name) ? $a : preName);
         preName = name;
         effect = ($truthy($a = effect) ? $a : preEffect);
         preEffect = effect;
-        if ($truthy(index['$=='](dice['$%'](100)))) {
+        if (index['$=='](dice['$%'](100))) {
           } else {
           return nil;
         };
-        Opal.ret("" + " ＞ 「" + (name) + "」" + (effect));}, TMP_34.$$s = self, TMP_34.$$arity = 3, TMP_34));
+        Opal.ret("" + " ＞ 「" + (name) + "」" + (effect));}, TMP_35.$$s = self, TMP_35.$$arity = 3, TMP_35));
       return "";
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, TMP_ShinkuuGakuen_getWaponSkillText_35.$$arity = 2), nil) && 'getWaponSkillText';
+    }, TMP_ShinkuuGakuen_getWeaponSkillText_36.$$arity = 2), nil) && 'getWeaponSkillText';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

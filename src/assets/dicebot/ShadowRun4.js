@@ -76,7 +76,7 @@
         } else {
         return ""
       };
-      if ($truthy(successCount['$=='](0))) {
+      if (successCount['$=='](0)) {
         return " ＞ クリティカルグリッチ"};
       return " ＞ グリッチ";
     }, TMP_ShadowRun4_getGrichText_7.$$arity = 3), nil) && 'getGrichText';

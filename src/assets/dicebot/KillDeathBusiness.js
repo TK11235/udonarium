@@ -64,7 +64,7 @@
 
       
       self.$debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max);
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -122,9 +122,9 @@
         fumble = 11;};
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       result = $rb_plus(result, "" + "【難易度" + (target) + "、補正" + (modify) + "、ファンブル率" + (fumble) + "】 ＞ 出目(" + (diceText) + ") ＞ ");
-      if ($truthy(number['$=='](2))) {
+      if (number['$=='](2)) {
         result = $rb_plus(result, "出目が2なのでファンブル！(判定失敗。【視聴率】が20％減少)")
-      } else if ($truthy(number['$=='](12))) {
+      } else if (number['$=='](12)) {
         result = $rb_plus(result, "出目が12なのでスペシャル！(判定成功。【視聴率】が10％増加)")
       } else if ($truthy($rb_le(number, fumble))) {
         result = $rb_plus(result, "出目がファンブル率以下なのでファンブル！(判定失敗。【視聴率】が20％減少)")
@@ -419,7 +419,7 @@
       skillTableFull = [["職業", ["無職", "芸術家", "研究者", "家事手伝い", "学生", "悪漢", "労働者", "探偵", "大物", "医師", "公務員"]], ["動作", ["叫ぶ", "閃く", "斬る", "振る", "投げる", "殴る", "蹴る", "跳ぶ", "撃つ", "掴む", "待つ"]], ["小道具", ["ピアス", "髪飾り", "銃", "ネックレス", "ベルト", "眼鏡", "帽子", "時計", "剣", "リング", "タトゥー"]], ["衣装", ["ネイキッド", "アウトドア", "エスニック", "ヒップホップ", "ミリタリー", "フォーマル", "トラッド", "ゴシック", "パンク", "メタル", "アイドル"]], ["情動", ["愛", "喜び", "期待", "焦り", "自負", "怒り", "悲しみ", "嫉妬", "恐怖", "恥", "嫌悪"]], ["願望", ["死", "復讐", "勝利", "支配", "獲得", "繁栄", "強化", "安全", "健康", "長寿", "生"]]];
       $b = self.$get_table_by_1d6(skillTableFull), $a = Opal.to_ary($b), (skillTable = ($a[0] == null ? nil : $a[0])), (num1 = ($a[1] == null ? nil : $a[1])), $b;
       $b = skillTable, $a = Opal.to_ary($b), (skillGroup = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;
-      if ($truthy(type['$==']("T"))) {
+      if (type['$==']("T")) {
         
         tableName = "指定特技ランダム決定表";
         $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (skill = ($a[0] == null ? nil : $a[0])), (num2 = ($a[1] == null ? nil : $a[1])), $b;

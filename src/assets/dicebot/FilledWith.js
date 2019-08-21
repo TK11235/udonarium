@@ -79,7 +79,7 @@
       $case = command;
       if (/LOT(N|P)/['$===']($case)) {
       type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      if ($truthy(type['$==']("P"))) {
+      if (type['$==']("P")) {
         tableName = "ナンバーワンプレミアムくじ"
         } else {
         tableName = "ナンバーワンノーマルくじ"
@@ -139,11 +139,11 @@
       difficulty = self.$getValue(difficultyText, nil);
       $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
       command = "" + (diceCount) + "FW";
-      if ($truthy(crt['$=='](4))) {
+      if (crt['$=='](4)) {
         } else {
         command = $rb_plus(command, "" + "@" + (crt))
       };
-      if ($truthy(fmb['$=='](17))) {
+      if (fmb['$=='](17)) {
         } else {
         command = $rb_plus(command, "" + "#" + (fmb))
       };
@@ -252,7 +252,7 @@
         Opal.ret(self.$cook(9, 6))}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25))]}
         else if ((9)['$===']($case)) {table = ["世界樹のサラダ", "世界樹のサラダ", "世界樹のサラダ", "黄金のラダマン鍋", "黄金のラダマン鍋", "黄金のラダマン鍋"]};
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
-        if ($truthy(result.$class().$name()['$==']("Array"))) {
+        if (result.$class().$name()['$==']("Array")) {
           
           number = result['$[]'](1);
           result = result['$[]'](0);};
@@ -296,7 +296,7 @@
 
         Opal.ret(self.$premium(5, 6))}, TMP_35.$$s = self, TMP_35.$$arity = 0, TMP_35))]};
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
-        if ($truthy(result.$class().$name()['$==']("Array"))) {
+        if (result.$class().$name()['$==']("Array")) {
           
           number = result['$[]'](1);
           result = result['$[]'](0);};
@@ -334,7 +334,7 @@
         Opal.ret(self.$premium(6, 6))}, TMP_44.$$s = self, TMP_44.$$arity = 0, TMP_44))]}
         else if ((6)['$===']($case)) {table = ["イレブンチキン", "イレブンチキン(2ピース)", "イレブンチキン(3ピース)", "イレブンチキン(6ピース)", "イレブンチキン(12ピース)", "wish star"]};
         $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
-        if ($truthy(result.$class().$name()['$==']("Array"))) {
+        if (result.$class().$name()['$==']("Array")) {
           
           number = result['$[]'](1);
           result = result['$[]'](0);};
@@ -342,7 +342,7 @@
         return [result, number];
         } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
       }, TMP_premium_45.$$arity = 2);
-      if ($truthy(type['$==']("P"))) {
+      if (type['$==']("P")) {
         return self.$premium(1, "")
         } else {
         return self.$normal(1, "")

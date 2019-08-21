@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$bbt_check', '$==', '$>=', '$debug', '$=~', '$to_i', '$nil?', '$parren_killer', '$+', '$<=', '$each', '$scan', '$match', '$min', '$split', '$<', '$size', '$push', '$-', '$>', '$roll', '$&', '$sortType', '$collect', '$sort!', '$dup', '$max', '$[]', '$[]=', '$join', '$!=', '$sendMode', '$check_suc', '$===', '$bbt_emotion_table', '$bbt_exposure_table', '$bbt_face_table', '$get_table_by_d66', '$get_table_by_1d6']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$bbt_check', '$==', '$>=', '$debug', '$match', '$[]', '$to_i', '$nil?', '$parren_killer', '$+', '$<=', '$each', '$scan', '$min', '$split', '$<', '$size', '$push', '$-', '$>', '$roll', '$&', '$sortType', '$collect', '$sort!', '$dup', '$max', '$[]=', '$join', '$to_s', '$!=', '$sendMode', '$=~', '$check_suc', '$===', '$bbt_emotion_table', '$bbt_exposure_table', '$bbt_face_table', '$get_table_by_d66', '$get_table_by_1d6']);
   return (function($base, $super, $parent_nesting) {
     function $BeastBindTrinity(){};
     var self = $BeastBindTrinity = $klass($base, $super, 'BeastBindTrinity', $BeastBindTrinity);
@@ -110,7 +110,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -122,35 +122,17 @@
     }, TMP_BeastBindTrinity_check_2D6_16.$$arity = 8);
     
     Opal.defn(self, '$bbt_check', TMP_BeastBindTrinity_bbt_check_22 = function $$bbt_check(string) {
-      var $a, TMP_17, TMP_18, TMP_19, $b, TMP_20, TMP_21, self = this, output = nil, reg1 = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, reg9 = nil, reg10 = nil, reg11 = nil, reg12 = nil, reg13 = nil, reg14 = nil, reg15 = nil, reg16 = nil, reg17 = nil, reg18 = nil, humanity = nil, critical = nil, fumble = nil, dicesubs = nil, nofumble = nil, dicepull = nil, pul_flg = nil, dice_c = nil, bonus = nil, signOfInequality = nil, diff = nil, bonusText = nil, str_critical = nil, str_fumble = nil, str_dicesubs = nil, n_cri = nil, n_fum = nil, i = nil, dice_now = nil, dice_str = nil, n_max = nil, total_n = nil, cri_flg = nil, cri_bonus = nil, fum_flg = nil, rer_num = nil, dice_tc = nil, _ = nil, dice_num = nil, dice_num_old = nil, dold_str = nil, showstring = nil;
+      var TMP_17, TMP_18, TMP_19, $a, $b, TMP_20, TMP_21, self = this, output = nil, m = nil, humanity = nil, critical = nil, fumble = nil, dicesubs = nil, nofumble = nil, dicepull = nil, pul_flg = nil, dice_c = nil, bonus = nil, signOfInequality = nil, diff = nil, bonusText = nil, str_critical = nil, str_fumble = nil, str_dicesubs = nil, n_cri = nil, n_fum = nil, i = nil, dice_now = nil, dice_str = nil, n_max = nil, total_n = nil, cri_flg = nil, cri_bonus = nil, fum_flg = nil, rer_num = nil, dice_tc = nil, _ = nil, dice_num = nil, dice_num_old = nil, dold_str = nil, showstring = nil;
 
       
       output = "1";
       self.$debug("bbt string", string);
-      if ($truthy(/(^|\s)S?((\d+)R6([\+\-\d]*)(\[H:([\-\d]+)\])?(\[C([\+\-\d]+)\])?(\[F(A)?([\+\-\d]+)\])?(\[S([1-6]+)\])?(\[U([1-6])\])?(([>=]+)(\d+))?)(\s|$)/i['$=~'](string))) {
+      if ($truthy((m = /(^|\s)S?((\d+)R6([\+\-\d]*)(\[H:([\-\d]+)\])?(\[C([\+\-\d]+)\])?(\[F(A)?([\+\-\d]+)\])?(\[S([1-6]+)\])?(\[U([1-6])\])?(([>=]+)(\d+))?)(\s|$)/i.$match(string)))) {
         } else {
         
         self.$debug("not mutch");
         return output;
       };
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
-      reg9 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9));
-      reg10 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](10));
-      reg11 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](11));
-      reg12 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](12));
-      reg13 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](13));
-      reg14 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](14));
-      reg15 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](15));
-      reg16 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](16));
-      reg17 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](17));
-      reg18 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](18));
       humanity = 99;
       critical = 12;
       fumble = 2;
@@ -158,20 +140,20 @@
       nofumble = false;
       dicepull = false;
       pul_flg = false;
-      string = reg2;
-      dice_c = reg3.$to_i();
+      string = m['$[]'](2);
+      dice_c = m['$[]'](3).$to_i();
       bonus = 0;
       signOfInequality = "";
       diff = 0;
-      bonusText = reg4;
+      bonusText = m['$[]'](4);
       if ($truthy(bonusText['$nil?']())) {
         } else {
         bonus = self.$parren_killer($rb_plus($rb_plus("(0", bonusText), ")")).$to_i()
       };
-      if ($truthy(reg5)) {
+      if ($truthy(m['$[]'](5))) {
         
-        if ($truthy(reg6)) {
-          humanity = reg6.$to_i()};
+        if ($truthy(m['$[]'](6))) {
+          humanity = m['$[]'](6).$to_i()};
         self.$debug("" + "▼現在人間性 取得 " + (humanity));
         if ($truthy($rb_le(humanity, 0))) {
           
@@ -185,33 +167,33 @@
           
           critical = 11;
           self.$debug("" + "▼現在人間性からC値取得 " + (critical));};};
-      if ($truthy(reg7)) {
+      if ($truthy(m['$[]'](7))) {
         
-        if ($truthy(reg8)) {
-          str_critical = reg8};
+        if ($truthy(m['$[]'](8))) {
+          str_critical = m['$[]'](8)};
         self.$debug("" + "▼C値文字列 取得 " + (str_critical));};
-      if ($truthy(reg9)) {
+      if ($truthy(m['$[]'](9))) {
         
-        if ($truthy(reg10)) {
+        if ($truthy(m['$[]'](10))) {
           nofumble = true};
         self.$debug("" + "▼F値耐性 " + (nofumble));
-        if ($truthy(reg11)) {
-          str_fumble = reg11};
+        if ($truthy(m['$[]'](11))) {
+          str_fumble = m['$[]'](11)};
         self.$debug("" + "▼F値文字列 取得 " + (str_fumble));};
-      if ($truthy(reg12)) {
+      if ($truthy(m['$[]'](12))) {
         
-        if ($truthy(reg13)) {
-          str_dicesubs = reg13};
+        if ($truthy(m['$[]'](13))) {
+          str_dicesubs = m['$[]'](13)};
         self.$debug("" + "▼出目予約用の文字列 取得 " + (str_dicesubs));};
-      if ($truthy(reg14)) {
+      if ($truthy(m['$[]'](14))) {
         
-        if ($truthy(reg15)) {
-          dicepull = reg15.$to_i()};
+        if ($truthy(m['$[]'](15))) {
+          dicepull = m['$[]'](15).$to_i()};
         self.$debug("" + "▼出目引き上げモード 取得 " + (dicepull));};
-      if ($truthy(reg17)) {
-        signOfInequality = reg17};
-      if ($truthy(reg18)) {
-        diff = reg18.$to_i()};
+      if ($truthy(m['$[]'](17))) {
+        signOfInequality = m['$[]'](17)};
+      if ($truthy(m['$[]'](18))) {
+        diff = m['$[]'](18).$to_i()};
       if ($truthy(str_critical)) {
         
         n_cri = 0;
@@ -267,7 +249,7 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
         dice_num = $send($rb_plus(dice_str.$split(/,/), dicesubs), 'collect', [], (TMP_20 = function(n){var self = TMP_20.$$s || this;
 if (n == null) n = nil;
         return n.$to_i()}, TMP_20.$$s = self, TMP_20.$$arity = 1, TMP_20));
-      } else if ($truthy(dicesubs.$size()['$=='](0))) {
+      } else if (dicesubs.$size()['$=='](0)) {
         return "ERROR:振るダイスの数が0個です"
         } else {
         dice_num = dicesubs
@@ -327,7 +309,7 @@ if ($for_tmp2 == null) $for_tmp2 = nil;
         if ($truthy($rb_gt(bonus, 0))) {
           output = $rb_plus(output, "" + "+" + (bonus))
         } else if ($truthy($rb_lt(bonus, 0))) {
-          output = $rb_plus(output, "" + (bonus))};
+          output = $rb_plus(output, bonus.$to_s())};
         if ($truthy(cri_flg)) {
           output = $rb_plus(output, "" + "+" + (cri_bonus) + "【クリティカル】")};
       };
@@ -335,7 +317,7 @@ if ($for_tmp2 == null) $for_tmp2 = nil;
       if ($truthy($rb_gt(bonus, 0))) {
         showstring = $rb_plus(showstring, "" + "+" + (bonus))
       } else if ($truthy($rb_lt(bonus, 0))) {
-        showstring = $rb_plus(showstring, "" + (bonus))};
+        showstring = $rb_plus(showstring, bonus.$to_s())};
       showstring = $rb_plus(showstring, "" + "[C" + (critical) + ",F" + (fumble) + "]");
       if ($truthy(signOfInequality['$!='](""))) {
         showstring = $rb_plus(showstring, "" + (signOfInequality) + (diff))};

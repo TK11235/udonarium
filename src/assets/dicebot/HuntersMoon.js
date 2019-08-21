@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$hm_city_location_table', '$hm_small_location_table', '$hm_hot_location_table', '$hm_freezing_location_table', '$hm_hit_location_table', '$hm_monobeast_action_table', '$!', '$nil?', '$to_i', '$get_strange_ability_table_result', '$hm_social_skill_table', '$hm_head_skill_table', '$hm_arm_skill_table', '$hm_trunk_skill_table', '$hm_leg_skill_table', '$hm_environmental_skill_table', '$hm_encount_table', '$getTableCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$get_strange_ability_table_1', '$get_strange_ability_table_2', '$times', '$!=', '$+', '$roll', '$%', '$[]', '$get_table_by_d66', '$empty?', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$hm_city_location_table', '$hm_small_location_table', '$hm_hot_location_table', '$hm_freezing_location_table', '$hm_hit_location_table', '$hm_monobeast_action_table', '$!', '$nil?', '$to_i', '$get_strange_ability_table_result', '$hm_social_skill_table', '$hm_head_skill_table', '$hm_arm_skill_table', '$hm_trunk_skill_table', '$hm_leg_skill_table', '$hm_environmental_skill_table', '$hm_encount_table', '$getTableCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$get_strange_ability_table_1', '$get_strange_ability_table_2', '$times', '$!=', '$+', '$roll', '$%', '$[]', '$get_table_by_d66', '$to_s', '$empty?', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $HuntersMoon(){};
     var self = $HuntersMoon = $klass($base, $super, 'HuntersMoon', $HuntersMoon);
@@ -58,7 +58,7 @@
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -103,7 +103,7 @@
       else if (/SA(2)?T(\d*)/i['$===']($case)) {
       isType2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$nil?']()['$!']();
       count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      if ($truthy(count['$=='](0))) {
+      if (count['$=='](0)) {
         count = 1};
       type = "異形アビリティー";
       $b = self.$get_strange_ability_table_result(count, isType2), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
@@ -129,7 +129,7 @@
       type = "遭遇";
       $b = self.$hm_encount_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else {return self.$getTableCommandResult(command, (($a = $HuntersMoon.$$cvars['@@tables']) == null ? nil : $a))};
-      if ($truthy(output['$==']("1"))) {
+      if (output['$==']("1")) {
         return output};
       output = "" + (type) + "表(" + (total_n) + ") ＞ " + (output);
       return output;
@@ -225,9 +225,9 @@ if (i == null) i = nil;
           dice = $rb_plus(dice, "" + (number) + "-");
           output = $rb_plus(output, "" + "[表" + ($rb_plus(index, 1)) + "]");};
         $b = self.$get_table_by_d66(table), $a = Opal.to_ary($b), (ability = ($a[0] == null ? nil : $a[0])), (indexText = ($a[1] == null ? nil : $a[1])), $b;
-        if ($truthy(ability['$==']("1"))) {
+        if (ability['$==']("1")) {
           return nil;};
-        output = $rb_plus(output, "" + (ability));
+        output = $rb_plus(output, ability.$to_s());
         return (dice = $rb_plus(dice, indexText));}, TMP_15.$$s = self, TMP_15.$$arity = 1, TMP_15));
       if ($truthy(output['$empty?']())) {
         return ["1", dice]};

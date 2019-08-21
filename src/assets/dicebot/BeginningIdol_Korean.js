@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$check_nD6', '$==', '$<=', '$>=', '$upcase', '$===', '$to_i', '$rollPerformance', '$textFrom1D6Table', '$textFromD66Table', '$getSkillList', '$badStatus', '$roll', '$+', '$[]', '$-', '$getSkillText', '$=~', '$getItem', '$get_table_by_1d6', '$index', '$nil?', '$push', '$setArrayFromD66Table', '$sort!', '$each', '$gsub', '$length', '$include?', '$costume', '$<', '$>', '$!', '$empty?', '$split', '$count', '$join', '$uniq', '$inject', '$map', '$to_proc', '$delete', '$to_s', '$sort', '$getD66', '$assoc', '$checkChance', '$replaceBadStatus', '$sub', '$chomp', '$get_table_by_2d6', '$times', '$clone', '$first']);
+  Opal.add_stubs(['$setPrefixes', '$check_nD6', '$==', '$<=', '$>=', '$upcase', '$===', '$to_i', '$rollPerformance', '$textFrom1D6Table', '$textFromD66Table', '$getSkillList', '$badStatus', '$roll', '$+', '$[]', '$-', '$getSkillText', '$=~', '$getItem', '$get_table_by_1d6', '$index', '$nil?', '$push', '$setArrayFromD66Table', '$sort!', '$each', '$gsub', '$length', '$include?', '$costume', '$<', '$>', '$!', '$empty?', '$split', '$count', '$join', '$uniq', '$inject', '$map', '$to_proc', '$to_s', '$delete', '$sort', '$getD66', '$assoc', '$checkChance', '$replaceBadStatus', '$sub', '$chomp', '$get_table_by_2d6', '$times', '$clone', '$first']);
   return (function($base, $super, $parent_nesting) {
     function $BeginningIdol_Korean(){};
     var self = $BeginningIdol_Korean = $klass($base, $super, 'BeginningIdol_Korean', $BeginningIdol_Korean);
@@ -565,7 +565,7 @@ if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) tex
         string = $rb_plus(string, "+")};
       if (adjust['$=='](0)) {
         } else {
-        string = $rb_plus(string, "" + (adjust))
+        string = $rb_plus(string, adjust.$to_s())
       };
       result = self.$roll(counts, 6, 1);
       diceAll = $rb_plus(result['$[]'](1).$delete(","), residual);
@@ -606,7 +606,7 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
           total = $rb_plus(15, adjust);
           text = $rb_plus(text, "" + "【ミラクルシンクロ】" + (total) + "＋シンフォニーを行った人数");
         }
-      } else if ($truthy((($a = total['$=='](21)) ? diceUse['$include?'](7)['$!']() : total['$=='](21)))) {
+      } else if ($truthy(($truthy($a = total['$=='](21)) ? diceUse['$include?'](7)['$!']() : $a))) {
         
         if ($truthy(residual['$empty?']())) {
           } else {
@@ -621,7 +621,7 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
           text = $rb_plus(text, $rb_plus($rb_plus("[", diceUse.$join(",")), "" + "]" + (string) + " ＞ "))
         };
         total = $rb_plus(total, adjust);
-        text = $rb_plus(text, "" + (total));
+        text = $rb_plus(text, total.$to_s());
       };
       return text;
     }, TMP_BeginningIdol_Korean_rollPerformance_10.$$arity = 3);

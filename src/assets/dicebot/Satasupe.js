@@ -235,23 +235,23 @@ if (i == null) i = nil;
       if ($truthy(operator['$nil?']())) {
         } else {
         
-        if ($truthy(operator['$==']("+"))) {
+        if (operator['$==']("+")) {
           modify = value};
-        if ($truthy(operator['$==']("-"))) {
+        if (operator['$==']("-")) {
           modify = $rb_times(value, -1)};
       };
       diceTotal = $rb_plus(dice, modify);
       seigou = "";
       if ($truthy($rb_lt(target, diceTotal))) {
         seigou = "「激」"};
-      if ($truthy(target['$=='](diceTotal))) {
+      if (target['$=='](diceTotal)) {
         seigou = "「迷」"};
       if ($truthy($rb_gt(target, diceTotal))) {
         seigou = "「律」"};
       result = "" + "〔性業値〕" + (target) + "、「修正値」" + (modify) + " ＞ ダイス結果：（" + (dice) + "） ＞ " + (dice) + "＋（" + (modify) + "）＝" + (diceTotal) + " ＞ " + (seigou);
-      if ($truthy(dice['$=='](2))) {
+      if (dice['$=='](2)) {
         result = $rb_plus(result, " ＞ 1ゾロのため〔性業値〕が1点上昇！")};
-      if ($truthy(dice['$=='](12))) {
+      if (dice['$=='](12)) {
         result = $rb_plus(result, " ＞ 6ゾロのため〔性業値〕が1点減少！")};
       self.$debug("check_seigou result result", result);
       return result;

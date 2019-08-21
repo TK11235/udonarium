@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$=~', '$get_NAME_table', '$get_NAMEtwo_table', '$+', '$to_i', '$rollHit', '$rollDamage', '$roll', '$getHitRollResult', '$>=', '$<=', '$<', '$getRollDamageCritialText', '$empty?', '$join', '$>', '$==', '$collect', '$split', '$sort!', '$clone', '$times', '$shift', '$push', '$pop', '$nil?', '$*', '$**', '$each', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$=~', '$get_NAME_table', '$get_NAMEtwo_table', '$+', '$to_i', '$rollHit', '$rollDamage', '$roll', '$getHitRollResult', '$>=', '$<=', '$<', '$getRollDamageCritialText', '$empty?', '$join', '$>', '$to_s', '$==', '$collect', '$split', '$sort!', '$clone', '$times', '$shift', '$push', '$pop', '$nil?', '$*', '$**', '$each', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $TrinitySeven(){};
     var self = $TrinitySeven = $klass($base, $super, 'TrinitySeven', $TrinitySeven);
@@ -128,7 +128,7 @@
       if ($truthy($rb_gt(modify, 0))) {
         modifyText = "" + "+" + (modify)};
       if ($truthy($rb_lt(modify, 0))) {
-        modifyText = "" + (modify)};
+        modifyText = modify.$to_s()};
       text = "" + "(" + (command) + ") [" + (diceText) + "]" + (additionalListText) + (modifyText) + " ＞ " + (total);
       return text;
     }, TMP_TrinitySeven_rollDamage_8.$$arity = 4);

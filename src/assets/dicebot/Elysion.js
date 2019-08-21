@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$===', '$check', '$getDateBothResult', '$to_i', '$getDateResult', '$getDateValue', '$checkAnyCommand', '$empty?', '$getTableCommandResult', '$upcase', '$getClassRoomBreakTable', '$getSchoolStoreBrakeTable', '$getClubRoomBrakeTable', '$getStudentCouncilBrakeTable', '$getDormitoryBrakeTable', '$getLibraryBrakeTable', '$getRoofBrakeTable', '$getLaboratoryBrakeTable', '$getPoolBrakeTable', '$getInnerCourtBrakeTable', '$getShoppingAvenueBrakeTable', '$getDevastationBrakeTable', '$getGateBrakeTable', '$getBattleFieldTable', '$getFatalWoundsTable', '$getFumbleTable', '$getRandomNpcSchoolLife', '$getRandomNpcOther', '$getRandomNpcDownClassmen', '$getRandomNpcUpperClassmen', '$getUsuallyEncount', '$getBossEncount', '$getValue', '$roll', '$+', '$getValueString', '$==', '$getSpecialResult', '$getCheckResult', '$nil?', '$>', '$<', '$getSuccessRank', '$getSuccessResult', '$>=', '$ceil', '$/', '$-', '$getCriticalResult', '$getFambleResultText', '$*', '$getDateTableByType', '$get_table_by_number', '$changePcName', '$getDateTable', '$getFrindDateTable', '$getOnewayDateTable', '$getMidnightDateTable', '$gsub', '$getBreakTable', '$[]', '$getD6Table', '$getRandomNpc', '$get_table_by_d66_swap', '$getEncountTableResult', '$last', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$===', '$check', '$getDateBothResult', '$to_i', '$getDateResult', '$getDateValue', '$checkAnyCommand', '$empty?', '$getTableCommandResult', '$upcase', '$getClassRoomBreakTable', '$getSchoolStoreBrakeTable', '$getClubRoomBrakeTable', '$getStudentCouncilBrakeTable', '$getDormitoryBrakeTable', '$getLibraryBrakeTable', '$getRoofBrakeTable', '$getLaboratoryBrakeTable', '$getPoolBrakeTable', '$getInnerCourtBrakeTable', '$getShoppingAvenueBrakeTable', '$getDevastationBrakeTable', '$getGateBrakeTable', '$getBattleFieldTable', '$getFatalWoundsTable', '$getFumbleTable', '$getRandomNpcSchoolLife', '$getRandomNpcOther', '$getRandomNpcDownClassmen', '$getRandomNpcUpperClassmen', '$getUsuallyEncount', '$getBossEncount', '$getValue', '$roll', '$+', '$getValueString', '$==', '$getSpecialResult', '$getCheckResult', '$nil?', '$>', '$<', '$getSuccessRank', '$getSuccessResult', '$>=', '$ceil', '$/', '$-', '$getCriticalResult', '$getFambleResultText', '$*', '$getDateTableByType', '$get_table_by_number', '$changePcName', '$getDateTable', '$getFrindDateTable', '$getOnewayDateTable', '$getMidnightDateTable', '$gsub', '$to_s', '$getBreakTable', '$[]', '$getD6Table', '$getRandomNpc', '$get_table_by_d66_swap', '$getEncountTableResult', '$last', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $Elysion(){};
     var self = $Elysion = $klass($base, $super, 'Elysion', $Elysion);
@@ -340,7 +340,7 @@
 
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b;
-      return "" + (dice1);
+      return dice1.$to_s();
     }, TMP_Elysion_getDateValue_27.$$arity = 0);
     
     Opal.defn(self, '$getClassRoomBreakTable', TMP_Elysion_getClassRoomBreakTable_28 = function $$getClassRoomBreakTable() {

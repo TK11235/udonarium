@@ -51,7 +51,7 @@
       var self = this, dig10 = nil, dig1 = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
@@ -150,7 +150,7 @@ Opal.loaded(["diceBot/Gundog"]);
       var self = this, dig10 = nil, dig1 = nil;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };

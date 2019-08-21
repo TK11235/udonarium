@@ -24,9 +24,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$get_value', '$!', '$nil?', '$scan', '$each', '$get_roll_parameter', '$checkRoll', '$get_hit_table', '$get_SUV_table', '$get_damageEffect_table', '$get_critical_table', '$get_accident_table', '$get_mechanicAccident_table', '$get_strategyEvent_chart', '$get_NPCAttack_chart', '$get_loserDestiny_chart', '$get_randomEncounter_table', '$*', '$/', '$**', '$roll', '$getRollResultTextAndSuccesValue', '$+', '$>', '$>=', '$getFormulaText', '$include?', '$-', '$<=', '$==', '$to_s', '$<', '$get_MetalHeadExtream_1d10_table_result', '$index', '$to_a', '$[]', '$each_with_index', '$first', '$get_table_by_number', '$get_roc_dice', '$get_MetalHeadExtream_1d100_table_result', '$get_MetalHeadExtream_1dX_table_result', '$to_f', '$=~']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$last_match', '$[]', '$to_i', '$get_value', '$!', '$nil?', '$scan', '$each', '$get_roll_parameter', '$checkRoll', '$get_hit_table', '$get_SUV_table', '$get_damageEffect_table', '$get_critical_table', '$get_accident_table', '$get_mechanicAccident_table', '$get_strategyEvent_chart', '$get_NPCAttack_chart', '$get_loserDestiny_chart', '$get_randomEncounter_table', '$*', '$/', '$**', '$roll', '$getRollResultTextAndSuccesValue', '$+', '$>', '$>=', '$to_s', '$getFormulaText', '$include?', '$-', '$<=', '$==', '$<', '$get_MetalHeadExtream_1d10_table_result', '$index', '$to_a', '$each_with_index', '$first', '$get_table_by_number', '$get_roc_dice', '$get_MetalHeadExtream_1d100_table_result', '$get_MetalHeadExtream_1dX_table_result', '$to_f', '$=~']);
   return (function($base, $super, $parent_nesting) {
     function $MetalHeadExtream(){};
     var self = $MetalHeadExtream = $klass($base, $super, 'MetalHeadExtream', $MetalHeadExtream);
@@ -66,24 +66,17 @@
     }, TMP_MetalHeadExtream_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_MetalHeadExtream_rollDiceCommand_6 = function $$rollDiceCommand(command) {
-      var $a, TMP_5, $b, self = this, text = nil, $case = nil, reg1 = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, type = nil, target = nil, modify = nil, paramText = nil, isMuse = nil, accidentValue = nil, advancedRoll = nil, luckPoint = nil, params = nil, hitPart = nil, roc = nil, armorGrade = nil, damage = nil, damageStage = nil, damageType = nil, locationType = nil, correction = nil;
+      var $a, TMP_5, $b, self = this, text = nil, $case = nil, m = nil, type = nil, target = nil, modify = nil, paramText = nil, isMuse = nil, accidentValue = nil, advancedRoll = nil, luckPoint = nil, params = nil, hitPart = nil, roc = nil, armorGrade = nil, damage = nil, damageStage = nil, damageType = nil, locationType = nil, correction = nil;
 
       
       text = (function() {$case = command.$upcase();
       if (/([AS])R(\d+)(([\*\/]\d+)*)?(((@|A|L)\d+)*)(\!M)?$/i['$===']($case)) {
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
-      type = reg1;
-      target = reg2.$to_i();
-      modify = self.$get_value(1, reg3);
-      paramText = ($truthy($a = reg5) ? $a : "");
-      isMuse = reg8['$nil?']()['$!']();
+      m = Opal.const_get_relative($nesting, 'Regexp').$last_match();
+      type = m['$[]'](1);
+      target = m['$[]'](2).$to_i();
+      modify = self.$get_value(1, m['$[]'](3));
+      paramText = ($truthy($a = m['$[]'](5)) ? $a : "");
+      isMuse = m['$[]'](8)['$nil?']()['$!']();
       accidentValue = 96;
       advancedRoll = 1;
       luckPoint = 0;
@@ -123,7 +116,7 @@ if (marker == null) marker = nil;if (value == null) value = nil;
       locationType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
       roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
       return self.$get_randomEncounter_table(locationType, roc);}
-      else {return nil}})();
+      else { return nil }})();
       return text;
     }, TMP_MetalHeadExtream_rollDiceCommand_6.$$arity = 1);
     
@@ -141,7 +134,7 @@ if (marker == null) marker = nil;if (value == null) value = nil;
       if ($truthy($rb_gt(luckPoint, 0))) {
         complementText = $rb_plus(complementText, "" + ", LUC:" + (luckPoint))};
       if ($truthy($rb_ge(modify, 1))) {
-        modifyText = "" + (modify.$to_i())
+        modifyText = modify.$to_i().$to_s()
         } else {
         modifyText = "" + "1/" + ($rb_divide(1, modify).$to_i())
       };
@@ -474,24 +467,24 @@ if (type == null) type = nil;
       dice = roc;
       if ($truthy($rb_gt(dice, diceMax))) {
         dice = diceMax};
-      if ($truthy(dice['$=='](0))) {
+      if (dice['$=='](0)) {
         $b = self.$roll(1, diceMax), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b};
       return dice;
     }, TMP_MetalHeadExtream_get_roc_dice_26.$$arity = 2);
     return (Opal.defn(self, '$get_value', TMP_MetalHeadExtream_get_value_28 = function $$get_value(originalValue, calculateText) {
-      var $a, TMP_27, self = this, result = nil, calculateArray = nil;
+      var TMP_27, self = this, result = nil, calculateArray = nil;
 
       
       result = originalValue.$to_f();
-      calculateArray = ($truthy($a = calculateText) ? $a : "").$scan(/[\*\/]\d*/);
-      $send(calculateArray, 'each', [], (TMP_27 = function(i){var self = TMP_27.$$s || this, $b;
+      calculateArray = calculateText.$to_s().$scan(/[\*\/]\d*/);
+      $send(calculateArray, 'each', [], (TMP_27 = function(i){var self = TMP_27.$$s || this, $a;
 if (i == null) i = nil;
       
         i['$=~'](/([\*\/])(\d*)/i);
-        if ($truthy((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))['$==']("*"))) {
-          result = $rb_times(result, (($b = $gvars['~']) === nil ? nil : $b['$[]'](2)).$to_i())};
-        if ($truthy((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))['$==']("/"))) {
-          return (result = $rb_divide(result, (($b = $gvars['~']) === nil ? nil : $b['$[]'](2)).$to_i()))
+        if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$==']("*")) {
+          result = $rb_times(result, (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i())};
+        if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$==']("/")) {
+          return (result = $rb_divide(result, (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()))
           } else {
           return nil
         };}, TMP_27.$$s = self, TMP_27.$$arity = 1, TMP_27));

@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$judgeDice', '$nil?', '$===', '$get_name_table', '$get_skill_table', '$to_i', '$==', '$-', '$+', '$get_value', '$get_critival_fumble', '$checkRoll', '$include?', '$roll', '$collect', '$split', '$each', '$>', '$<=', '$>=', '$!=', '$get_badlife_1d20_table_result', '$get_table_by_number', '$get_badlife_table_result', '$parren_killer']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$judgeDice', '$nil?', '$===', '$get_name_table', '$get_skill_table', '$match', '$to_i', '$[]', '$==', '$-', '$+', '$get_value', '$get_critival_fumble', '$checkRoll', '$include?', '$roll', '$collect', '$split', '$each', '$>', '$<=', '$>=', '$!=', '$to_s', '$get_badlife_1d20_table_result', '$get_table_by_number', '$get_badlife_table_result', '$parren_killer']);
   return (function($base, $super, $parent_nesting) {
     function $BadLife(){};
     var self = $BadLife = $klass($base, $super, 'BadLife', $BadLife);
@@ -71,40 +71,31 @@
       initials = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
       return self.$get_name_table(initials);}
       else if ("SKL"['$===']($case)) {return self.$get_skill_table()}
-      else {return nil}})();
+      else { return nil }})();
       return output;
     }, TMP_BadLife_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$judgeDice', TMP_BadLife_judgeDice_6 = function $$judgeDice(command) {
-      var $a, $b, self = this, reg1 = nil, reg2 = nil, reg3 = nil, reg5 = nil, reg6 = nil, reg8 = nil, reg9 = nil, reg11 = nil, reg13 = nil, diceCount = nil, critical = nil, fumble = nil, isStormy = nil, modify = nil, target = nil, optionalText = nil;
+      var $a, $b, self = this, m = nil, diceCount = nil, critical = nil, fumble = nil, isStormy = nil, modify = nil, target = nil, optionalText = nil;
 
       
-      if ($truthy(/(\d+)?(BAD|BL|GL)([\+\-\d+]*)((C|F)([\+\-\d+]*)?)?((C|F)([\+\-\d+]*))?(\@([\+\-\d+]*))?(\!(\D*))?/i['$==='](command))) {
+      if ($truthy((m = /(\d+)?(BAD|BL|GL)([\+\-\d+]*)((C|F)([\+\-\d+]*)?)?((C|F)([\+\-\d+]*))?(\@([\+\-\d+]*))?(\!(\D*))?/i.$match(command)))) {
         } else {
         return nil
       };
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
-      reg9 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9));
-      reg11 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](11));
-      reg13 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](13));
-      diceCount = ($truthy($a = reg1) ? $a : 1).$to_i();
+      diceCount = ($truthy($a = m['$[]'](1)) ? $a : 1).$to_i();
       critical = 20;
       fumble = 1;
-      isStormy = reg2['$==']("GL");
+      isStormy = m['$[]'](2)['$==']("GL");
       if ($truthy(isStormy)) {
         
         critical = $rb_minus(critical, 3);
         fumble = $rb_plus(fumble, 1);};
-      modify = self.$get_value(reg3);
-      $b = self.$get_critival_fumble(critical, fumble, reg5, reg6), $a = Opal.to_ary($b), (critical = ($a[0] == null ? nil : $a[0])), (fumble = ($a[1] == null ? nil : $a[1])), $b;
-      $b = self.$get_critival_fumble(critical, fumble, reg8, reg9), $a = Opal.to_ary($b), (critical = ($a[0] == null ? nil : $a[0])), (fumble = ($a[1] == null ? nil : $a[1])), $b;
-      target = self.$get_value(reg11);
-      optionalText = ($truthy($a = reg13) ? $a : "");
+      modify = self.$get_value(m['$[]'](3));
+      $b = self.$get_critival_fumble(critical, fumble, m['$[]'](5), m['$[]'](6)), $a = Opal.to_ary($b), (critical = ($a[0] == null ? nil : $a[0])), (fumble = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$get_critival_fumble(critical, fumble, m['$[]'](8), m['$[]'](9)), $a = Opal.to_ary($b), (critical = ($a[0] == null ? nil : $a[0])), (fumble = ($a[1] == null ? nil : $a[1])), $b;
+      target = self.$get_value(m['$[]'](11));
+      optionalText = ($truthy($a = m['$[]'](13)) ? $a : "");
       return self.$checkRoll(diceCount, modify, critical, fumble, target, isStormy, optionalText);
     }, TMP_BadLife_judgeDice_6.$$arity = 1);
     
@@ -152,7 +143,7 @@ if (i == null) i = nil;
       if ($truthy($rb_gt(modify, 0))) {
         result = $rb_plus(result, "+")};
       if ($truthy(modify['$!='](0))) {
-        result = $rb_plus(result, "" + (modify))};
+        result = $rb_plus(result, modify.$to_s())};
       if ($truthy(($truthy($a = isAnticipation) ? $rb_le(diceMax, 7) : $a))) {
         result = $rb_plus(result, "+5")};
       result = $rb_plus(result, "" + " ＞ 達成値：" + (total));

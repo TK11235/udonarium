@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$freeze', '$map', '$to_proc', '$join', '$new', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$puts', '$gameType', '$setPrefixes', '$attr_accessor', '$attr_reader', '$gameName', '$getHelpMessage', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$getDiceListFromDiceText', '$collect', '$split', '$to_i', '$each', '$>=', '$kind_of?', '$lambda', '$call', '$select', '$public_methods', '$===', '$send', '$upcase', '$==', '$getTableInfoFromExtraTableText', '$get_table_by_nDx_extratable', '$get_table_by_d66', '$floor', '$%', '$get_table_by_d66_swap', '$raise', '$gsub', '$rollTableMessageDiceText', '$size', '$inspect']);
+  Opal.add_stubs(['$freeze', '$map', '$to_proc', '$join', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$puts', '$gameType', '$setPrefixes', '$attr_accessor', '$attr_reader', '$gameName', '$getHelpMessage', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$getDiceListFromDiceText', '$collect', '$split', '$to_i', '$each', '$>=', '$kind_of?', '$lambda', '$call', '$select', '$public_methods', '$===', '$send', '$upcase', '$==', '$getTableInfoFromExtraTableText', '$get_table_by_nDx_extratable', '$get_table_by_d66', '$floor', '$%', '$get_table_by_d66_swap', '$raise', '$gsub', '$rollTableMessageDiceText', '$size', '$inspect']);
   return (function($base, $super, $parent_nesting) {
     function $DiceBot(){};
     var self = $DiceBot = $klass($base, $super, 'DiceBot', $DiceBot);
@@ -40,12 +40,11 @@
       return self.prefixesPattern
     }, TMP_DiceBot_prefixesPattern_2.$$arity = 0);
     Opal.defs(self, '$setPrefixes', TMP_DiceBot_setPrefixes_3 = function $$setPrefixes(prefixes) {
-      var self = this, pattern = nil;
+      var self = this;
 
       
       self.prefixes = $send(prefixes, 'map', [], "freeze".$to_proc()).$freeze();
-      pattern = "" + "(^|\\s)(S)?(" + (prefixes.$join("|")) + ")(\\s|$)";
-      self.prefixesPattern = Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE')).$freeze();
+      self.prefixesPattern = new RegExp("" + "(^|\\s)(S)?(" + (prefixes.$join("|")) + ")(\\s|$)", 'i').$freeze();
       return self;
     }, TMP_DiceBot_setPrefixes_3.$$arity = 1);
     Opal.defs(self, '$clearPrefixes', TMP_DiceBot_clearPrefixes_4 = function $$clearPrefixes() {
@@ -616,7 +615,7 @@ if (method == null) method = nil;
       name = info['$[]']("name");
       type = info['$[]']("type").$upcase();
       table = info['$[]']("table");
-      if ($truthy((($a = type['$==']("D66")) ? self.d66Type['$=='](2) : type['$==']("D66")))) {
+      if ($truthy(($truthy($a = type['$==']("D66")) ? self.d66Type['$=='](2) : $a))) {
         type = "D66S"};
       $b = (function() {$case = type;
       if (/(\d+)D(\d+)/['$===']($case)) {
