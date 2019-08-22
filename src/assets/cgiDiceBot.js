@@ -26164,7 +26164,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
   }
   var TMP_decode_1, TMP_encode_2, $a, self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2, $klass = Opal.klass, $send = Opal.send;
 
-  Opal.add_stubs(['$require', '$kconv', '$<', '$===', '$new', '$initValues', '$attr_accessor', '$attr_reader', '$setDiceBot', '$setBcDice', '$gameType', '$nil?', '$bcdice=', '$-', '$diceBot=', '$readExtraCard', '$first', '$split', '$debug', '$parren_killer', '$upcase', '$recieveMessageCatched', '$printErrorMessage', '$sendMessageToOnlySender', '$+', '$to_s', '$join', '$setTnick', '$match', '$setCommand', '$[]', '$executePointCounter', '$addPlot', '$clone', '$quit', '$checkMode', '$printHelp', '$printCardHelp', '$quitFunction', '$sleepForIrc', '$exit', '$call', '$quitFunction=', '$downcase', '$setMaster', '$setGame', '$setDisplayMode', '$setUpplerRollThreshold', '$setRerollLimit', '$setRatingTable', '$setSortMode', '$setCardMode', '$setSpellMode', '$setTapMode', '$readCardSet', '$!=', '$master', '$setMasterWhenMasterAlreadySet', '$setMasterWhenMasterYetSet', '$==', '$setMasterByCurrentMasterOwnself', '$master=', '$sendMessageToChannels', '$setGameByTitle', '$isMaster', '$=~', '$to_i', '$setSendMode', '$sendMode', '$upplerRollThreshold=', '$>', '$upplerRollThreshold', '$rerollLimitCount=', '$rerollLimitCount', '$setSortType', '$sortType', '$getPrintPlotChannel', '$empty?', '$executeCommand', '$countHolder', '$sendMessage', '$addToSecretDiceResult', '$getNick', '$lambda', '$each', '$to_proc', '$each_slice', '$lines', '$getHelpMessage', '$recievePublicMessageCatched', '$setChannelForPlotOrSecretDice', '$printPlot', '$printSecretRoll', '$executePointCounterPublic', '$executeDiceRoll', '$changeMessageOriginal', '$executeCard', '$openSecretRoll', '$setPrintPlotChannel', '$isTalkChannel', '$!', '$dice_command', '$broadmsg', '$setNick', '$rollD66', '$checkAddRoll', '$checkBDice', '$checkRnDice', '$checkUpperRoll', '$checkChoiceCommand', '$getTableDataResult', '$rollDice', '$bdice', '$dice_command_xRn', '$choice_random', '$roll', '$getD66Infos', '$getD66ValueByMarker', '$floor', '$/', '$%', '$gsub', '$d66Type', '$isD9', '$<=', '$times', '$loop', '$>=', '$getJackUpValueOnAddRoll', '$rand', '$check_hit', '$push', '$sort_by', '$dice_num', '$randNomal', '$randFromRands', '$<<', '$shift', '$raise', '$inspect', '$sub', '$marshalSignOfInequality', '$defaultSuccessTarget', '$&', '$getGrichText', '$d66dice', '$getD66', '$getD66Value', '$*', '$getSecretRollMembersHolderKey', '$getSecretDiceResultHolderKey', '$delete', '$addToSecretRollMembersHolder', '$saveSecretDiceResult', '$[]=', '$include?', '$length', '$is_a?', '$getSuccessText', '$check_nDx', '$check_1D100', '$check_1D20', '$check_nD10', '$check_2D6', '$check_nD6', '$rollDiceAddingUp', '$changeRangeTextToNumberText', '$to_sym', '$fractionType', '$eval', '$changeText', '$find', '$loadDiceBot', '$loadUnknownGame', '$postSet', '$gameName', '$sleep']);
+  Opal.add_stubs(['$require', '$kconv', '$<', '$===', '$new', '$initValues', '$attr_accessor', '$attr_reader', '$setDiceBot', '$setBcDice', '$setDir', '$gameType', '$nil?', '$bcdice=', '$-', '$diceBot=', '$readExtraCard', '$first', '$split', '$debug', '$parren_killer', '$upcase', '$recieveMessageCatched', '$printErrorMessage', '$sendMessageToOnlySender', '$+', '$to_s', '$join', '$setTnick', '$match', '$setCommand', '$[]', '$executePointCounter', '$addPlot', '$clone', '$quit', '$checkMode', '$printHelp', '$printCardHelp', '$quitFunction', '$sleepForIrc', '$exit', '$call', '$quitFunction=', '$downcase', '$setMaster', '$setGame', '$setDisplayMode', '$setUpplerRollThreshold', '$setRerollLimit', '$setRatingTable', '$setSortMode', '$setCardMode', '$setSpellMode', '$setTapMode', '$readCardSet', '$!=', '$master', '$setMasterWhenMasterAlreadySet', '$setMasterWhenMasterYetSet', '$==', '$setMasterByCurrentMasterOwnself', '$master=', '$sendMessageToChannels', '$setGameByTitle', '$isMaster', '$=~', '$to_i', '$setSendMode', '$sendMode', '$upplerRollThreshold=', '$>', '$upplerRollThreshold', '$rerollLimitCount=', '$rerollLimitCount', '$setSortType', '$sortType', '$getPrintPlotChannel', '$empty?', '$executeCommand', '$countHolder', '$sendMessage', '$addToSecretDiceResult', '$getNick', '$lambda', '$each', '$to_proc', '$each_slice', '$lines', '$getHelpMessage', '$recievePublicMessageCatched', '$setChannelForPlotOrSecretDice', '$printPlot', '$printSecretRoll', '$executePointCounterPublic', '$executeDiceRoll', '$changeMessageOriginal', '$executeCard', '$openSecretRoll', '$setPrintPlotChannel', '$isTalkChannel', '$!', '$dice_command', '$broadmsg', '$setNick', '$rollD66', '$checkAddRoll', '$checkBDice', '$checkRnDice', '$checkUpperRoll', '$checkChoiceCommand', '$getTableDataResult', '$rollDice', '$bdice', '$dice_command_xRn', '$choice_random', '$getTableData', '$getTableIndexDiceValueAndDiceText', '$find', '$rollTableMessageDiceText', '$nick_e', '$roll', '$getD66Infos', '$getD66ValueByMarker', '$floor', '$/', '$%', '$gsub', '$d66Type', '$isD9', '$<=', '$times', '$loop', '$>=', '$getJackUpValueOnAddRoll', '$rand', '$check_hit', '$push', '$sort_by', '$dice_num', '$randNomal', '$randFromRands', '$<<', '$shift', '$raise', '$inspect', '$sub', '$marshalSignOfInequality', '$defaultSuccessTarget', '$&', '$getGrichText', '$d66dice', '$getD66', '$getD66Value', '$*', '$getSecretRollMembersHolderKey', '$getSecretDiceResultHolderKey', '$delete', '$addToSecretRollMembersHolder', '$saveSecretDiceResult', '$[]=', '$include?', '$length', '$is_a?', '$getSuccessText', '$check_nDx', '$check_1D100', '$check_1D20', '$check_nD10', '$check_2D6', '$check_nD6', '$rollDiceAddingUp', '$changeRangeTextToNumberText', '$to_sym', '$fractionType', '$eval', '$changeText', '$loadDiceBot', '$loadUnknownGame', '$postSet', '$gameName', '$sleep']);
   
   self.$require("log");
   self.$require("configBcDice.rb");
@@ -26202,7 +26202,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
 
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_BCDiceMaker_initialize_3, TMP_BCDiceMaker_newBcDice_4;
 
-    def.cardTrader = def.diceBot = def.counterInfos = nil;
+    def.cardTrader = def.diceBot = def.counterInfos = def.tableFileData = nil;
     
     
     Opal.defn(self, '$initialize', TMP_BCDiceMaker_initialize_3 = function $$initialize() {
@@ -26213,6 +26213,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       self.cardTrader = Opal.const_get_relative($nesting, 'CardTrader').$new();
       self.cardTrader.$initValues();
       self.counterInfos = $hash2([], {});
+      self.tableFileData = Opal.const_get_relative($nesting, 'TableFileData').$new();
       self.master = "";
       return (self.quitFunction = nil);
     }, TMP_BCDiceMaker_initialize_3.$$arity = 0);
@@ -26224,7 +26225,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       var self = this, bcdice = nil;
 
       
-      bcdice = Opal.const_get_relative($nesting, 'BCDice').$new(self, self.cardTrader, self.diceBot, self.counterInfos, nil);
+      bcdice = Opal.const_get_relative($nesting, 'BCDice').$new(self, self.cardTrader, self.diceBot, self.counterInfos, self.tableFileData);
       return bcdice;
     }, TMP_BCDiceMaker_newBcDice_4.$$arity = 0), nil) && 'newBcDice';
   })($nesting[0], null, $nesting);
@@ -26232,9 +26233,9 @@ Opal.modules["bcdiceCore"] = function(Opal) {
     function $BCDice(){};
     var self = $BCDice = $klass($base, $super, 'BCDice', $BCDice);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_BCDice_initialize_5, TMP_BCDice_setDir_6, TMP_BCDice_isKeepSecretDice_7, TMP_BCDice_getGameType_8, TMP_BCDice_setDiceBot_9, TMP_BCDice_readExtraCard_10, TMP_BCDice_setIrcClient_11, TMP_BCDice_setMessage_12, TMP_BCDice_getOriginalMessage_13, TMP_BCDice_changeMessageOriginal_14, TMP_BCDice_recieveMessage_15, TMP_BCDice_printErrorMessage_16, TMP_BCDice_recieveMessageCatched_17, TMP_BCDice_quit_18, TMP_BCDice_setQuitFuction_19, TMP_BCDice_setCommand_20, TMP_BCDice_setMaster_21, TMP_BCDice_setMasterWhenMasterAlreadySet_22, TMP_BCDice_setMasterByCurrentMasterOwnself_23, TMP_BCDice_setMasterWhenMasterYetSet_24, TMP_BCDice_setGame_25, TMP_BCDice_isMaster_26, TMP_BCDice_setDisplayMode_27, TMP_BCDice_setUpplerRollThreshold_28, TMP_BCDice_setRerollLimit_29, TMP_BCDice_setRatingTable_30, TMP_BCDice_setSortMode_31, TMP_BCDice_setCardMode_32, TMP_BCDice_setSpellMode_33, TMP_BCDice_setTapMode_34, TMP_BCDice_readCardSet_35, TMP_BCDice_executePointCounter_36, TMP_BCDice_addPlot_37, TMP_BCDice_getPrintPlotChannel_38, TMP_BCDice_checkMode_39, TMP_BCDice_printHelp_42, TMP_BCDice_setChannel_43, TMP_BCDice_recievePublicMessage_44, TMP_BCDice_recievePublicMessageCatched_45, TMP_BCDice_printPlot_47, TMP_BCDice_setChannelForPlotOrSecretDice_48, TMP_BCDice_isTalkChannel_49, TMP_BCDice_printSecretRoll_51, TMP_BCDice_executePointCounterPublic_52, TMP_BCDice_executeDiceRoll_53, TMP_BCDice_setTest_54, TMP_BCDice_executeCard_55, TMP_BCDice_dice_command_56, TMP_BCDice_checkAddRoll_57, TMP_BCDice_checkBDice_58, TMP_BCDice_checkRnDice_59, TMP_BCDice_checkUpperRoll_60, TMP_BCDice_checkChoiceCommand_61, TMP_BCDice_getTableDataResult_62, TMP_BCDice_getTableIndexDiceValueAndDiceText_63, TMP_BCDice_rollTableMessageDiceText_65, TMP_BCDice_roll_69, TMP_BCDice_setRandomValues_70, TMP_BCDice_rand_71, TMP_BCDice_setCollectRandResult_72, TMP_BCDice_getRandResults_73, TMP_BCDice_randNomal_74, TMP_BCDice_randFromRands_75, TMP_BCDice_dice_num_76, TMP_BCDice_bdice_78, TMP_BCDice_isReRollAgain_79, TMP_BCDice_rollD66_80, TMP_BCDice_d66dice_82, TMP_BCDice_getD66Infos_83, TMP_BCDice_getD66ValueByMarker_84, TMP_BCDice_getD66Value_85, TMP_BCDice_getD66_86, TMP_BCDice_openSecretRoll_88, TMP_BCDice_getNick_89, TMP_BCDice_addToSecretDiceResult_90, TMP_BCDice_addToSecretRollMembersHolder_91, TMP_BCDice_getSecretRollMembersHolderKey_92, TMP_BCDice_saveSecretDiceResult_93, TMP_BCDice_getSecretDiceResultHolderKey_94, TMP_BCDice_setPrintPlotChannel_95, TMP_BCDice_choice_random_96, TMP_BCDice_getMarshaledSignOfInequality_97, TMP_BCDice_marshalSignOfInequality_98, TMP_BCDice_check_hit_99, TMP_BCDice_check_suc_100, TMP_BCDice_getSuccessText_101, TMP_BCDice_check_nDx_102, TMP_BCDice_broadmsg_103, TMP_BCDice_sendMessage_104, TMP_BCDice_sendMessageToOnlySender_105, TMP_BCDice_sendMessageToChannels_106, TMP_BCDice_parren_killer_109, TMP_BCDice_rollDiceAddingUp_110, TMP_BCDice_changeRangeTextToNumberText_111, TMP_BCDice_setGameByTitle_112, TMP_BCDice_setIrcMode_113, TMP_BCDice_sleepForIrc_114;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_BCDice_initialize_5, TMP_BCDice_setDir_6, TMP_BCDice_isKeepSecretDice_7, TMP_BCDice_getGameType_8, TMP_BCDice_setDiceBot_9, TMP_BCDice_readExtraCard_10, TMP_BCDice_setIrcClient_11, TMP_BCDice_setMessage_12, TMP_BCDice_getOriginalMessage_13, TMP_BCDice_changeMessageOriginal_14, TMP_BCDice_recieveMessage_15, TMP_BCDice_printErrorMessage_16, TMP_BCDice_recieveMessageCatched_17, TMP_BCDice_quit_18, TMP_BCDice_setQuitFuction_19, TMP_BCDice_setCommand_20, TMP_BCDice_setMaster_21, TMP_BCDice_setMasterWhenMasterAlreadySet_22, TMP_BCDice_setMasterByCurrentMasterOwnself_23, TMP_BCDice_setMasterWhenMasterYetSet_24, TMP_BCDice_setGame_25, TMP_BCDice_isMaster_26, TMP_BCDice_setDisplayMode_27, TMP_BCDice_setUpplerRollThreshold_28, TMP_BCDice_setRerollLimit_29, TMP_BCDice_setRatingTable_30, TMP_BCDice_setSortMode_31, TMP_BCDice_setCardMode_32, TMP_BCDice_setSpellMode_33, TMP_BCDice_setTapMode_34, TMP_BCDice_readCardSet_35, TMP_BCDice_executePointCounter_36, TMP_BCDice_addPlot_37, TMP_BCDice_getPrintPlotChannel_38, TMP_BCDice_checkMode_39, TMP_BCDice_printHelp_42, TMP_BCDice_setChannel_43, TMP_BCDice_recievePublicMessage_44, TMP_BCDice_recievePublicMessageCatched_45, TMP_BCDice_printPlot_47, TMP_BCDice_setChannelForPlotOrSecretDice_48, TMP_BCDice_isTalkChannel_49, TMP_BCDice_printSecretRoll_51, TMP_BCDice_executePointCounterPublic_52, TMP_BCDice_executeDiceRoll_53, TMP_BCDice_setTest_54, TMP_BCDice_executeCard_55, TMP_BCDice_dice_command_56, TMP_BCDice_checkAddRoll_57, TMP_BCDice_checkBDice_58, TMP_BCDice_checkRnDice_59, TMP_BCDice_checkUpperRoll_60, TMP_BCDice_checkChoiceCommand_61, TMP_BCDice_getTableDataResult_63, TMP_BCDice_getTableIndexDiceValueAndDiceText_64, TMP_BCDice_rollTableMessageDiceText_66, TMP_BCDice_roll_70, TMP_BCDice_setRandomValues_71, TMP_BCDice_rand_72, TMP_BCDice_setCollectRandResult_73, TMP_BCDice_getRandResults_74, TMP_BCDice_randNomal_75, TMP_BCDice_randFromRands_76, TMP_BCDice_dice_num_77, TMP_BCDice_bdice_79, TMP_BCDice_isReRollAgain_80, TMP_BCDice_rollD66_81, TMP_BCDice_d66dice_83, TMP_BCDice_getD66Infos_84, TMP_BCDice_getD66ValueByMarker_85, TMP_BCDice_getD66Value_86, TMP_BCDice_getD66_87, TMP_BCDice_openSecretRoll_89, TMP_BCDice_getNick_90, TMP_BCDice_addToSecretDiceResult_91, TMP_BCDice_addToSecretRollMembersHolder_92, TMP_BCDice_getSecretRollMembersHolderKey_93, TMP_BCDice_saveSecretDiceResult_94, TMP_BCDice_getSecretDiceResultHolderKey_95, TMP_BCDice_setPrintPlotChannel_96, TMP_BCDice_choice_random_97, TMP_BCDice_getMarshaledSignOfInequality_98, TMP_BCDice_marshalSignOfInequality_99, TMP_BCDice_check_hit_100, TMP_BCDice_check_suc_101, TMP_BCDice_getSuccessText_102, TMP_BCDice_check_nDx_103, TMP_BCDice_broadmsg_104, TMP_BCDice_sendMessage_105, TMP_BCDice_sendMessageToOnlySender_106, TMP_BCDice_sendMessageToChannels_107, TMP_BCDice_parren_killer_110, TMP_BCDice_rollDiceAddingUp_111, TMP_BCDice_changeRangeTextToNumberText_112, TMP_BCDice_setGameByTitle_113, TMP_BCDice_setIrcMode_114, TMP_BCDice_sleepForIrc_115;
 
-    def.cardTrader = def.diceBot = def.parent = def.messageOriginal = def.message = def.nick_e = def.tnick = def.ircClient = def.isShortSpell = def.canTapCard = def.messages = def.channel = def.isMessagePrinted = def.counterInfos = def.isTest = def.isKeepSecretDice = def.rands = def.randResults = def.isIrcMode = nil;
+    def.cardTrader = def.tableFileData = def.diceBot = def.parent = def.messageOriginal = def.message = def.nick_e = def.tnick = def.ircClient = def.isShortSpell = def.canTapCard = def.messages = def.channel = def.isMessagePrinted = def.counterInfos = def.isTest = def.isKeepSecretDice = def.rands = def.randResults = def.isIrcMode = nil;
     
     Opal.const_set($nesting[0], 'SET_COMMAND_PATTERN', /^set\s+(.+)/i);
     Opal.const_set($nesting[0], 'VERSION', "2.03.02");
@@ -26262,7 +26263,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
     Opal.defn(self, '$setDir', TMP_BCDice_setDir_6 = function $$setDir(dir, prefix) {
       var self = this;
 
-      return nil
+      return self.tableFileData.$setDir(dir, prefix)
     }, TMP_BCDice_setDir_6.$$arity = 2);
     
     Opal.defn(self, '$isKeepSecretDice', TMP_BCDice_isKeepSecretDice_7 = function $$isKeepSecretDice(b) {
@@ -26683,7 +26684,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       };
       pointerMode = "sameNick";
       $b = self.$countHolder().$executeCommand(arg, self.nick_e, channel, pointerMode), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (pointerMode = ($a[1] == null ? nil : $a[1])), $b;
-      self.$debug("point_counter_command called, line", 461);
+      self.$debug("point_counter_command called, line", 462);
       self.$debug("output", output);
       self.$debug("pointerMode", pointerMode);
       if (output['$==']("1")) {
@@ -27105,13 +27106,32 @@ if (diceResult == null) diceResult = nil;
       return [output, secret];
     }, TMP_BCDice_checkChoiceCommand_61.$$arity = 1);
     
-    Opal.defn(self, '$getTableDataResult', TMP_BCDice_getTableDataResult_62 = function $$getTableDataResult(arg) {
-      var self = this;
+    Opal.defn(self, '$getTableDataResult', TMP_BCDice_getTableDataResult_63 = function $$getTableDataResult(arg) {
+      var $a, $b, TMP_62, self = this, dice = nil, title = nil, table = nil, secret = nil, value = nil, diceText = nil, key = nil, message = nil, output = nil;
 
-      return nil
-    }, TMP_BCDice_getTableDataResult_62.$$arity = 1);
+      
+      self.$debug("getTableDataResult Begin");
+      $b = self.tableFileData.$getTableData(arg, self.diceBot.$gameType()), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (title = ($a[1] == null ? nil : $a[1])), (table = ($a[2] == null ? nil : $a[2])), (secret = ($a[3] == null ? nil : $a[3])), $b;
+      self.$debug("dice", dice);
+      if ($truthy(table['$nil?']())) {
+        
+        self.$debug("table is null");
+        return nil;};
+      $b = self.$getTableIndexDiceValueAndDiceText(dice), $a = Opal.to_ary($b), (value = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      if ($truthy(value['$nil?']())) {
+        return nil};
+      self.$debug("value", value);
+      $b = $send(table, 'find', [], (TMP_62 = function(i){var self = TMP_62.$$s || this;
+if (i == null) i = nil;
+      return i.$first()['$==='](value)}, TMP_62.$$s = self, TMP_62.$$arity = 1, TMP_62)), $a = Opal.to_ary($b), (key = ($a[0] == null ? nil : $a[0])), (message = ($a[1] == null ? nil : $a[1])), $b;
+      if ($truthy(message['$nil?']())) {
+        return nil};
+      message = self.$rollTableMessageDiceText(message);
+      output = "" + (self.$nick_e()) + ":" + (title) + "(" + (value) + "[" + (diceText) + "]) ＞ " + (message);
+      return [output, secret];
+    }, TMP_BCDice_getTableDataResult_63.$$arity = 1);
     
-    Opal.defn(self, '$getTableIndexDiceValueAndDiceText', TMP_BCDice_getTableIndexDiceValueAndDiceText_63 = function $$getTableIndexDiceValueAndDiceText(dice) {
+    Opal.defn(self, '$getTableIndexDiceValueAndDiceText', TMP_BCDice_getTableIndexDiceValueAndDiceText_64 = function $$getTableIndexDiceValueAndDiceText(dice) {
       var $a, $b, self = this, diceCount = nil, diceType = nil, value = nil, diceText = nil, string = nil, secret = nil, count = nil, swapMarker = nil;
 
       
@@ -27130,13 +27150,13 @@ if (diceResult == null) diceResult = nil;
         return [value, diceText];
       };
       return nil;
-    }, TMP_BCDice_getTableIndexDiceValueAndDiceText_63.$$arity = 1);
+    }, TMP_BCDice_getTableIndexDiceValueAndDiceText_64.$$arity = 1);
     
-    Opal.defn(self, '$rollTableMessageDiceText', TMP_BCDice_rollTableMessageDiceText_65 = function $$rollTableMessageDiceText(text) {
-      var TMP_64, self = this, message = nil;
+    Opal.defn(self, '$rollTableMessageDiceText', TMP_BCDice_rollTableMessageDiceText_66 = function $$rollTableMessageDiceText(text) {
+      var TMP_65, self = this, message = nil;
 
       
-      message = $send(text, 'gsub', [/(\d+)D(\d+)/], (TMP_64 = function(){var self = TMP_64.$$s || this, $a, $b, m = nil, diceCount = nil, diceMax = nil, value = nil;
+      message = $send(text, 'gsub', [/(\d+)D(\d+)/], (TMP_65 = function(){var self = TMP_65.$$s || this, $a, $b, m = nil, diceCount = nil, diceMax = nil, value = nil;
         if ($gvars["~"] == null) $gvars["~"] = nil;
 
       
@@ -27144,12 +27164,12 @@ if (diceResult == null) diceResult = nil;
         diceCount = m['$[]'](1);
         diceMax = m['$[]'](2);
         $b = self.$roll(diceCount, diceMax), $a = Opal.to_ary($b), (value = ($a[0] == null ? nil : $a[0])), $b;
-        return "" + (diceCount) + "D" + (diceMax) + "(=>" + (value) + ")";}, TMP_64.$$s = self, TMP_64.$$arity = 0, TMP_64));
+        return "" + (diceCount) + "D" + (diceMax) + "(=>" + (value) + ")";}, TMP_65.$$s = self, TMP_65.$$arity = 0, TMP_65));
       return message;
-    }, TMP_BCDice_rollTableMessageDiceText_65.$$arity = 1);
+    }, TMP_BCDice_rollTableMessageDiceText_66.$$arity = 1);
     
-    Opal.defn(self, '$roll', TMP_BCDice_roll_69 = function $$roll(dice_cnt, dice_max, dice_sort, dice_add, dice_ul, dice_diff, dice_re) {
-      var $a, TMP_66, TMP_68, self = this, total = nil, dice_str = nil, numberSpot1 = nil, cnt_max = nil, n_max = nil, cnt_suc = nil, d9_on = nil, rerollCount = nil, dice_result = nil;
+    Opal.defn(self, '$roll', TMP_BCDice_roll_70 = function $$roll(dice_cnt, dice_max, dice_sort, dice_add, dice_ul, dice_diff, dice_re) {
+      var $a, TMP_67, TMP_69, self = this, total = nil, dice_str = nil, numberSpot1 = nil, cnt_max = nil, n_max = nil, cnt_suc = nil, d9_on = nil, rerollCount = nil, dice_result = nil;
       if ($gvars.DICE_MAXCNT == null) $gvars.DICE_MAXCNT = nil;
       if ($gvars.DICE_MAXNUM == null) $gvars.DICE_MAXNUM = nil;
 
@@ -27194,7 +27214,7 @@ if (diceResult == null) diceResult = nil;
         } else {
         return [total, dice_str, numberSpot1, cnt_max, n_max, cnt_suc, rerollCount]
       };
-      (function(){var $brk = Opal.new_brk(); try {return $send(dice_cnt, 'times', [], (TMP_66 = function(i){var self = TMP_66.$$s || this, TMP_67, $b, dice_now = nil, dice_n = nil, dice_st_n = nil, round = nil, suc = nil;
+      (function(){var $brk = Opal.new_brk(); try {return $send(dice_cnt, 'times', [], (TMP_67 = function(i){var self = TMP_67.$$s || this, TMP_68, $b, dice_now = nil, dice_n = nil, dice_st_n = nil, round = nil, suc = nil;
         if (self.diceBot == null) self.diceBot = nil;
 if (i == null) i = nil;
       
@@ -27203,7 +27223,7 @@ if (i == null) i = nil;
         dice_n = 0;
         dice_st_n = "";
         round = 0;
-        (function(){var $brk = Opal.new_brk(); try {return $send(self, 'loop', [], (TMP_67 = function(){var self = TMP_67.$$s || this, $b;
+        (function(){var $brk = Opal.new_brk(); try {return $send(self, 'loop', [], (TMP_68 = function(){var self = TMP_68.$$s || this, $b;
           if (self.diceBot == null) self.diceBot = nil;
 
         
@@ -27227,7 +27247,7 @@ if (i == null) i = nil;
             } else {
             
             Opal.brk(nil, $brk)
-          };}, TMP_67.$$s = self, TMP_67.$$brk = $brk, TMP_67.$$arity = 0, TMP_67))
+          };}, TMP_68.$$s = self, TMP_68.$$brk = $brk, TMP_68.$$arity = 0, TMP_68))
         } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
         total = $rb_plus(total, dice_now);
         if ($truthy(dice_ul['$!='](""))) {
@@ -27250,25 +27270,25 @@ if (i == null) i = nil;
           return (n_max = dice_now)
           } else {
           return nil
-        };}, TMP_66.$$s = self, TMP_66.$$brk = $brk, TMP_66.$$arity = 1, TMP_66))
+        };}, TMP_67.$$s = self, TMP_67.$$brk = $brk, TMP_67.$$arity = 1, TMP_67))
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       if ($truthy(dice_sort['$!='](0))) {
-        dice_str = $send(dice_result, 'sort_by', [], (TMP_68 = function(a){var self = TMP_68.$$s || this;
+        dice_str = $send(dice_result, 'sort_by', [], (TMP_69 = function(a){var self = TMP_69.$$s || this;
 if (a == null) a = nil;
-        return self.$dice_num(a)}, TMP_68.$$s = self, TMP_68.$$arity = 1, TMP_68)).$join(",")
+        return self.$dice_num(a)}, TMP_69.$$s = self, TMP_69.$$arity = 1, TMP_69)).$join(",")
         } else {
         dice_str = dice_result.$join(",")
       };
       return [total, dice_str, numberSpot1, cnt_max, n_max, cnt_suc, rerollCount];
-    }, TMP_BCDice_roll_69.$$arity = -3);
+    }, TMP_BCDice_roll_70.$$arity = -3);
     
-    Opal.defn(self, '$setRandomValues', TMP_BCDice_setRandomValues_70 = function $$setRandomValues(rands) {
+    Opal.defn(self, '$setRandomValues', TMP_BCDice_setRandomValues_71 = function $$setRandomValues(rands) {
       var self = this;
 
       return (self.rands = rands)
-    }, TMP_BCDice_setRandomValues_70.$$arity = 1);
+    }, TMP_BCDice_setRandomValues_71.$$arity = 1);
     
-    Opal.defn(self, '$rand', TMP_BCDice_rand_71 = function $$rand(max) {
+    Opal.defn(self, '$rand', TMP_BCDice_rand_72 = function $$rand(max) {
       var self = this, value = nil;
 
       
@@ -27284,9 +27304,9 @@ if (a == null) a = nil;
         self.randResults['$<<']([$rb_plus(value, 1), max])
       };
       return value;
-    }, TMP_BCDice_rand_71.$$arity = 1);
+    }, TMP_BCDice_rand_72.$$arity = 1);
     
-    Opal.defn(self, '$setCollectRandResult', TMP_BCDice_setCollectRandResult_72 = function $$setCollectRandResult(b) {
+    Opal.defn(self, '$setCollectRandResult', TMP_BCDice_setCollectRandResult_73 = function $$setCollectRandResult(b) {
       var self = this;
 
       if ($truthy(b)) {
@@ -27294,21 +27314,21 @@ if (a == null) a = nil;
         } else {
         return (self.randResults = nil)
       }
-    }, TMP_BCDice_setCollectRandResult_72.$$arity = 1);
+    }, TMP_BCDice_setCollectRandResult_73.$$arity = 1);
     
-    Opal.defn(self, '$getRandResults', TMP_BCDice_getRandResults_73 = function $$getRandResults() {
+    Opal.defn(self, '$getRandResults', TMP_BCDice_getRandResults_74 = function $$getRandResults() {
       var self = this;
 
       return self.randResults
-    }, TMP_BCDice_getRandResults_73.$$arity = 0);
+    }, TMP_BCDice_getRandResults_74.$$arity = 0);
     
-    Opal.defn(self, '$randNomal', TMP_BCDice_randNomal_74 = function $$randNomal(max) {
+    Opal.defn(self, '$randNomal', TMP_BCDice_randNomal_75 = function $$randNomal(max) {
       var self = this;
 
       return Opal.const_get_relative($nesting, 'Kernel').$rand(max)
-    }, TMP_BCDice_randNomal_74.$$arity = 1);
+    }, TMP_BCDice_randNomal_75.$$arity = 1);
     
-    Opal.defn(self, '$randFromRands', TMP_BCDice_randFromRands_75 = function $$randFromRands(targetMax) {
+    Opal.defn(self, '$randFromRands', TMP_BCDice_randFromRands_76 = function $$randFromRands(targetMax) {
       var $a, $b, self = this, nextRand = nil, value = nil, max = nil;
 
       
@@ -27321,18 +27341,18 @@ if (a == null) a = nil;
       if ($truthy(max['$!='](targetMax))) {
         self.$raise("" + "invalid max value! [ " + (value) + " / " + (max) + " ] but NEED [ " + (targetMax) + " ] dice")};
       return $rb_minus(value, 1);
-    }, TMP_BCDice_randFromRands_75.$$arity = 1);
+    }, TMP_BCDice_randFromRands_76.$$arity = 1);
     
-    Opal.defn(self, '$dice_num', TMP_BCDice_dice_num_76 = function $$dice_num(dice_str) {
+    Opal.defn(self, '$dice_num', TMP_BCDice_dice_num_77 = function $$dice_num(dice_str) {
       var self = this;
 
       
       dice_str = dice_str.$to_s();
       return dice_str.$sub(/\[[\d,]+\]/, "").$to_i();
-    }, TMP_BCDice_dice_num_76.$$arity = 1);
+    }, TMP_BCDice_dice_num_77.$$arity = 1);
     
-    Opal.defn(self, '$bdice', TMP_BCDice_bdice_78 = function $$bdice(string) {
-      var $a, TMP_77, self = this, total_n = nil, suc = nil, signOfInequality = nil, diff = nil, output = nil, dice_a = nil, dice_cnt_total = nil, numberSpot1 = nil;
+    Opal.defn(self, '$bdice', TMP_BCDice_bdice_79 = function $$bdice(string) {
+      var $a, TMP_78, self = this, total_n = nil, suc = nil, signOfInequality = nil, diff = nil, output = nil, dice_a = nil, dice_cnt_total = nil, numberSpot1 = nil;
 
       
       total_n = 0;
@@ -27360,7 +27380,7 @@ if (a == null) a = nil;
       dice_a = string.$split(/\+/);
       dice_cnt_total = 0;
       numberSpot1 = 0;
-      $send(dice_a, 'each', [], (TMP_77 = function(dice_o){var self = TMP_77.$$s || this, $b, $c, dice_cnt = nil, dice_max = nil, dice_dat = nil;
+      $send(dice_a, 'each', [], (TMP_78 = function(dice_o){var self = TMP_78.$$s || this, $b, $c, dice_cnt = nil, dice_max = nil, dice_dat = nil;
         if (self.diceBot == null) self.diceBot = nil;
 if (dice_o == null) dice_o = nil;
       
@@ -27373,7 +27393,7 @@ if (dice_o == null) dice_o = nil;
           output = $rb_plus(output, ",")};
         output = $rb_plus(output, dice_dat['$[]'](1));
         numberSpot1 = $rb_plus(numberSpot1, dice_dat['$[]'](2));
-        return (dice_cnt_total = $rb_plus(dice_cnt_total, dice_cnt));}, TMP_77.$$s = self, TMP_77.$$arity = 1, TMP_77));
+        return (dice_cnt_total = $rb_plus(dice_cnt_total, dice_cnt));}, TMP_78.$$s = self, TMP_78.$$arity = 1, TMP_78));
       if ($truthy(signOfInequality['$!='](""))) {
         
         string = $rb_plus(string, "" + (signOfInequality) + (diff));
@@ -27381,18 +27401,18 @@ if (dice_o == null) dice_o = nil;
         output = $rb_plus(output, self.diceBot.$getGrichText(numberSpot1, dice_cnt_total, suc));};
       output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (output);
       return output;
-    }, TMP_BCDice_bdice_78.$$arity = 1);
+    }, TMP_BCDice_bdice_79.$$arity = 1);
     
-    Opal.defn(self, '$isReRollAgain', TMP_BCDice_isReRollAgain_79 = function $$isReRollAgain(dice_cnt, round) {
+    Opal.defn(self, '$isReRollAgain', TMP_BCDice_isReRollAgain_80 = function $$isReRollAgain(dice_cnt, round) {
       var $a, $b, self = this;
 
       
       self.$debug("isReRollAgain dice_cnt, round", dice_cnt, round);
       
       return ($truthy($a = $rb_gt(dice_cnt, 0)) ? ($truthy($b = $rb_lt(round, self.diceBot.$rerollLimitCount())) ? $b : self.diceBot.$rerollLimitCount()['$=='](0)) : $a);;
-    }, TMP_BCDice_isReRollAgain_79.$$arity = 2);
+    }, TMP_BCDice_isReRollAgain_80.$$arity = 2);
     
-    Opal.defn(self, '$rollD66', TMP_BCDice_rollD66_80 = function $$rollD66(string) {
+    Opal.defn(self, '$rollD66', TMP_BCDice_rollD66_81 = function $$rollD66(string) {
       var $a, $b, self = this, output = nil, secret = nil;
 
       
@@ -27405,10 +27425,10 @@ if (dice_o == null) dice_o = nil;
       self.$debug("match D66 roll");
       $b = self.$d66dice(string), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (secret = ($a[1] == null ? nil : $a[1])), $b;
       return [output, secret];
-    }, TMP_BCDice_rollD66_80.$$arity = 1);
+    }, TMP_BCDice_rollD66_81.$$arity = 1);
     
-    Opal.defn(self, '$d66dice', TMP_BCDice_d66dice_82 = function $$d66dice(string) {
-      var $a, $b, TMP_81, self = this, secret = nil, output = nil, count = nil, swapMarker = nil, d66List = nil, d66Text = nil;
+    Opal.defn(self, '$d66dice', TMP_BCDice_d66dice_83 = function $$d66dice(string) {
+      var $a, $b, TMP_82, self = this, secret = nil, output = nil, count = nil, swapMarker = nil, d66List = nil, d66Text = nil;
 
       
       string = string.$upcase();
@@ -27419,16 +27439,16 @@ if (dice_o == null) dice_o = nil;
         return [output, secret]};
       self.$debug("d66dice count", count);
       d66List = [];
-      $send(count, 'times', [], (TMP_81 = function(i){var self = TMP_81.$$s || this;
+      $send(count, 'times', [], (TMP_82 = function(i){var self = TMP_82.$$s || this;
 if (i == null) i = nil;
-      return d66List['$<<'](self.$getD66ValueByMarker(swapMarker))}, TMP_81.$$s = self, TMP_81.$$arity = 1, TMP_81));
+      return d66List['$<<'](self.$getD66ValueByMarker(swapMarker))}, TMP_82.$$s = self, TMP_82.$$arity = 1, TMP_82));
       d66Text = d66List.$join(",");
       self.$debug("d66Text", d66Text);
       output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (d66Text);
       return [output, secret];
-    }, TMP_BCDice_d66dice_82.$$arity = 1);
+    }, TMP_BCDice_d66dice_83.$$arity = 1);
     
-    Opal.defn(self, '$getD66Infos', TMP_BCDice_getD66Infos_83 = function $$getD66Infos(string) {
+    Opal.defn(self, '$getD66Infos', TMP_BCDice_getD66Infos_84 = function $$getD66Infos(string) {
       var $a, $b, self = this, secret = nil, count = nil, swapMarker = nil;
 
       
@@ -27442,9 +27462,9 @@ if (i == null) i = nil;
       count = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : 1).$to_i();
       swapMarker = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](5))) ? $a : "").$upcase();
       return [string, secret, count, swapMarker];
-    }, TMP_BCDice_getD66Infos_83.$$arity = 1);
+    }, TMP_BCDice_getD66Infos_84.$$arity = 1);
     
-    Opal.defn(self, '$getD66ValueByMarker', TMP_BCDice_getD66ValueByMarker_84 = function $$getD66ValueByMarker(swapMarker) {
+    Opal.defn(self, '$getD66ValueByMarker', TMP_BCDice_getD66ValueByMarker_85 = function $$getD66ValueByMarker(swapMarker) {
       var self = this, $case = nil, isSwap = nil;
 
       return (function() {$case = swapMarker;
@@ -27455,9 +27475,9 @@ if (i == null) i = nil;
       isSwap = false;
       return self.$getD66(isSwap);}
       else {return self.$getD66Value()}})()
-    }, TMP_BCDice_getD66ValueByMarker_84.$$arity = 1);
+    }, TMP_BCDice_getD66ValueByMarker_85.$$arity = 1);
     
-    Opal.defn(self, '$getD66Value', TMP_BCDice_getD66Value_85 = function $$getD66Value(mode) {
+    Opal.defn(self, '$getD66Value', TMP_BCDice_getD66Value_86 = function $$getD66Value(mode) {
       var $a, self = this, isSwap = nil;
 
       if (mode == null) {
@@ -27467,9 +27487,9 @@ if (i == null) i = nil;
       mode = ($truthy($a = mode) ? $a : self.diceBot.$d66Type());
       isSwap = $rb_gt(mode, 1);
       return self.$getD66(isSwap);
-    }, TMP_BCDice_getD66Value_85.$$arity = -1);
+    }, TMP_BCDice_getD66Value_86.$$arity = -1);
     
-    Opal.defn(self, '$getD66', TMP_BCDice_getD66_86 = function $$getD66(isSwap) {
+    Opal.defn(self, '$getD66', TMP_BCDice_getD66_87 = function $$getD66(isSwap) {
       var $a, self = this, output = nil, dice_a = nil, dice_b = nil;
 
       
@@ -27485,10 +27505,10 @@ if (i == null) i = nil;
       };
       self.$debug("output", output);
       return output;
-    }, TMP_BCDice_getD66_86.$$arity = 1);
+    }, TMP_BCDice_getD66_87.$$arity = 1);
     
-    Opal.defn(self, '$openSecretRoll', TMP_BCDice_openSecretRoll_88 = function $$openSecretRoll(channel, mode) {
-      var TMP_87, self = this, messages = nil, memberKey = nil, members = nil;
+    Opal.defn(self, '$openSecretRoll', TMP_BCDice_openSecretRoll_89 = function $$openSecretRoll(channel, mode) {
+      var TMP_88, self = this, messages = nil, memberKey = nil, members = nil;
       if ($gvars.secretRollMembersHolder == null) $gvars.secretRollMembersHolder = nil;
 
       
@@ -27501,7 +27521,7 @@ if (i == null) i = nil;
         
         self.$debug("openSecretRoll members is nil. messages", messages);
         return messages;};
-      $send(members, 'each', [], (TMP_87 = function(member){var self = TMP_87.$$s || this, diceResultKey = nil, diceResult = nil;
+      $send(members, 'each', [], (TMP_88 = function(member){var self = TMP_88.$$s || this, diceResultKey = nil, diceResult = nil;
         if ($gvars.secretDiceResultHolder == null) $gvars.secretDiceResultHolder = nil;
 if (member == null) member = nil;
       
@@ -27515,16 +27535,16 @@ if (member == null) member = nil;
           return $gvars.secretDiceResultHolder.$delete(diceResultKey);
           } else {
           return nil
-        };}, TMP_87.$$s = self, TMP_87.$$arity = 1, TMP_87));
+        };}, TMP_88.$$s = self, TMP_88.$$arity = 1, TMP_88));
       if ($truthy($rb_le(mode, 0))) {
         
         self.$debug("delete recorde data");
         $gvars.secretRollMembersHolder.$delete(channel);};
       self.$debug("openSecretRoll result messages", messages);
       return messages;
-    }, TMP_BCDice_openSecretRoll_88.$$arity = 2);
+    }, TMP_BCDice_openSecretRoll_89.$$arity = 2);
     
-    Opal.defn(self, '$getNick', TMP_BCDice_getNick_89 = function $$getNick(nick) {
+    Opal.defn(self, '$getNick', TMP_BCDice_getNick_90 = function $$getNick(nick) {
       var $a, self = this;
 
       if (nick == null) {
@@ -27536,9 +27556,9 @@ if (member == null) member = nil;
       /[_\d]*(.+)[_\d]*/['$=~'](nick);
       nick = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
       return nick;
-    }, TMP_BCDice_getNick_89.$$arity = -1);
+    }, TMP_BCDice_getNick_90.$$arity = -1);
     
-    Opal.defn(self, '$addToSecretDiceResult', TMP_BCDice_addToSecretDiceResult_90 = function $$addToSecretDiceResult(diceResult, channel, mode) {
+    Opal.defn(self, '$addToSecretDiceResult', TMP_BCDice_addToSecretDiceResult_91 = function $$addToSecretDiceResult(diceResult, channel, mode) {
       var self = this, nick = nil;
 
       
@@ -27547,9 +27567,9 @@ if (member == null) member = nil;
       self.$addToSecretRollMembersHolder(channel, mode);
       self.$saveSecretDiceResult(diceResult, channel, mode);
       return (self.isMessagePrinted = true);
-    }, TMP_BCDice_addToSecretDiceResult_90.$$arity = 3);
+    }, TMP_BCDice_addToSecretDiceResult_91.$$arity = 3);
     
-    Opal.defn(self, '$addToSecretRollMembersHolder', TMP_BCDice_addToSecretRollMembersHolder_91 = function $$addToSecretRollMembersHolder(channel, mode) {
+    Opal.defn(self, '$addToSecretRollMembersHolder', TMP_BCDice_addToSecretRollMembersHolder_92 = function $$addToSecretRollMembersHolder(channel, mode) {
       var $a, self = this, key = nil, $writer = nil, members = nil, nick = nil;
       if ($gvars.secretRollMembersHolder == null) $gvars.secretRollMembersHolder = nil;
 
@@ -27563,15 +27583,15 @@ if (member == null) member = nil;
         } else {
         return members.$push(nick)
       };
-    }, TMP_BCDice_addToSecretRollMembersHolder_91.$$arity = 2);
+    }, TMP_BCDice_addToSecretRollMembersHolder_92.$$arity = 2);
     
-    Opal.defn(self, '$getSecretRollMembersHolderKey', TMP_BCDice_getSecretRollMembersHolderKey_92 = function $$getSecretRollMembersHolderKey(channel, mode) {
+    Opal.defn(self, '$getSecretRollMembersHolderKey', TMP_BCDice_getSecretRollMembersHolderKey_93 = function $$getSecretRollMembersHolderKey(channel, mode) {
       var self = this;
 
       return "" + (mode) + "," + (channel)
-    }, TMP_BCDice_getSecretRollMembersHolderKey_92.$$arity = 2);
+    }, TMP_BCDice_getSecretRollMembersHolderKey_93.$$arity = 2);
     
-    Opal.defn(self, '$saveSecretDiceResult', TMP_BCDice_saveSecretDiceResult_93 = function $$saveSecretDiceResult(diceResult, channel, mode) {
+    Opal.defn(self, '$saveSecretDiceResult', TMP_BCDice_saveSecretDiceResult_94 = function $$saveSecretDiceResult(diceResult, channel, mode) {
       var self = this, nick = nil, key = nil, $writer = nil;
       if ($gvars.secretDiceResultHolder == null) $gvars.secretDiceResultHolder = nil;
 
@@ -27586,17 +27606,17 @@ if (member == null) member = nil;
       $writer[$rb_minus($writer["length"], 1)];;
       self.$debug("key", key);
       return self.$debug("secretDiceResultHolder", $gvars.secretDiceResultHolder);
-    }, TMP_BCDice_saveSecretDiceResult_93.$$arity = 3);
+    }, TMP_BCDice_saveSecretDiceResult_94.$$arity = 3);
     
-    Opal.defn(self, '$getSecretDiceResultHolderKey', TMP_BCDice_getSecretDiceResultHolderKey_94 = function $$getSecretDiceResultHolderKey(channel, mode, nick) {
+    Opal.defn(self, '$getSecretDiceResultHolderKey', TMP_BCDice_getSecretDiceResultHolderKey_95 = function $$getSecretDiceResultHolderKey(channel, mode, nick) {
       var self = this, key = nil;
 
       
       key = "" + (mode) + "," + (channel) + "," + (nick);
       return key;
-    }, TMP_BCDice_getSecretDiceResultHolderKey_94.$$arity = 3);
+    }, TMP_BCDice_getSecretDiceResultHolderKey_95.$$arity = 3);
     
-    Opal.defn(self, '$setPrintPlotChannel', TMP_BCDice_setPrintPlotChannel_95 = function $$setPrintPlotChannel() {
+    Opal.defn(self, '$setPrintPlotChannel', TMP_BCDice_setPrintPlotChannel_96 = function $$setPrintPlotChannel() {
       var self = this, nick = nil, $writer = nil;
       if ($gvars.plotPrintChannels == null) $gvars.plotPrintChannels = nil;
 
@@ -27606,9 +27626,9 @@ if (member == null) member = nil;
       $writer = [nick, self.channel];
       $send($gvars.plotPrintChannels, '[]=', Opal.to_a($writer));
       return $writer[$rb_minus($writer["length"], 1)];;
-    }, TMP_BCDice_setPrintPlotChannel_95.$$arity = 0);
+    }, TMP_BCDice_setPrintPlotChannel_96.$$arity = 0);
     
-    Opal.defn(self, '$choice_random', TMP_BCDice_choice_random_96 = function $$choice_random(string) {
+    Opal.defn(self, '$choice_random', TMP_BCDice_choice_random_97 = function $$choice_random(string) {
       var $a, self = this, output = nil, targetList = nil, targets = nil, index = nil, target = nil;
 
       
@@ -27628,18 +27648,18 @@ if (member == null) member = nil;
       target = targets['$[]'](index);
       output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (target);
       return output;
-    }, TMP_BCDice_choice_random_96.$$arity = 1);
+    }, TMP_BCDice_choice_random_97.$$arity = 1);
     
-    Opal.defn(self, '$getMarshaledSignOfInequality', TMP_BCDice_getMarshaledSignOfInequality_97 = function $$getMarshaledSignOfInequality(text) {
+    Opal.defn(self, '$getMarshaledSignOfInequality', TMP_BCDice_getMarshaledSignOfInequality_98 = function $$getMarshaledSignOfInequality(text) {
       var self = this;
 
       
       if ($truthy(text['$nil?']())) {
         return ""};
       return self.$marshalSignOfInequality(text);
-    }, TMP_BCDice_getMarshaledSignOfInequality_97.$$arity = 1);
+    }, TMP_BCDice_getMarshaledSignOfInequality_98.$$arity = 1);
     
-    Opal.defn(self, '$marshalSignOfInequality', TMP_BCDice_marshalSignOfInequality_98 = function $$marshalSignOfInequality(signOfInequality) {
+    Opal.defn(self, '$marshalSignOfInequality', TMP_BCDice_marshalSignOfInequality_99 = function $$marshalSignOfInequality(signOfInequality) {
       var self = this, $case = nil;
 
       
@@ -27651,9 +27671,9 @@ if (member == null) member = nil;
       else if (/[>]+/['$===']($case)) {return ">"}
       else if (/[=]+/['$===']($case)) {return "="};
       return signOfInequality;
-    }, TMP_BCDice_marshalSignOfInequality_98.$$arity = 1);
+    }, TMP_BCDice_marshalSignOfInequality_99.$$arity = 1);
     
-    Opal.defn(self, '$check_hit', TMP_BCDice_check_hit_99 = function $$check_hit(dice_now, signOfInequality, diff) {
+    Opal.defn(self, '$check_hit', TMP_BCDice_check_hit_100 = function $$check_hit(dice_now, signOfInequality, diff) {
       var self = this, suc = nil, $case = nil;
 
       
@@ -27679,9 +27699,9 @@ if (member == null) member = nil;
       else if (/[=]+/['$===']($case)) {if (dice_now['$=='](diff)) {
         suc = $rb_plus(suc, 1)}};
       return suc;
-    }, TMP_BCDice_check_hit_99.$$arity = 3);
+    }, TMP_BCDice_check_hit_100.$$arity = 3);
     
-    Opal.defn(self, '$check_suc', TMP_BCDice_check_suc_100 = function $$check_suc($a_rest) {
+    Opal.defn(self, '$check_suc', TMP_BCDice_check_suc_101 = function $$check_suc($a_rest) {
       var $b, self = this, check_param, total_n = nil, dice_n = nil, signOfInequality = nil, diff = nil, dice_cnt = nil, dice_max = nil, n1 = nil, n_max = nil, check_paramNew = nil, text = nil;
 
       var $args_len = arguments.length, $rest_len = $args_len - 0;
@@ -27708,9 +27728,9 @@ if (member == null) member = nil;
           self.$debug("どれでもないけど判定するとき");
           return $send(self, 'check_nDx', Opal.to_a(check_param));}};
       return text;
-    }, TMP_BCDice_check_suc_100.$$arity = -1);
+    }, TMP_BCDice_check_suc_101.$$arity = -1);
     
-    Opal.defn(self, '$getSuccessText', TMP_BCDice_getSuccessText_101 = function $$getSuccessText($a_rest) {
+    Opal.defn(self, '$getSuccessText', TMP_BCDice_getSuccessText_102 = function $$getSuccessText($a_rest) {
       var $b, self = this, check_param, total_n = nil, dice_n = nil, signOfInequality = nil, diff = nil, dice_cnt = nil, dice_max = nil, n1 = nil, n_max = nil, result = nil;
 
       var $args_len = arguments.length, $rest_len = $args_len - 0;
@@ -27748,9 +27768,9 @@ if (member == null) member = nil;
         self.$debug("xD6判定");
         return $send(self.diceBot, 'check_nD6', Opal.to_a(check_param));};
       return "";
-    }, TMP_BCDice_getSuccessText_101.$$arity = -1);
+    }, TMP_BCDice_getSuccessText_102.$$arity = -1);
     
-    Opal.defn(self, '$check_nDx', TMP_BCDice_check_nDx_102 = function $$check_nDx(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nDx', TMP_BCDice_check_nDx_103 = function $$check_nDx(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
       var self = this, success = nil;
 
       
@@ -27760,9 +27780,9 @@ if (member == null) member = nil;
       if ($truthy($rb_ge(success, 1))) {
         return " ＞ 成功"};
       return " ＞ 失敗";
-    }, TMP_BCDice_check_nDx_102.$$arity = 8);
+    }, TMP_BCDice_check_nDx_103.$$arity = 8);
     
-    Opal.defn(self, '$broadmsg', TMP_BCDice_broadmsg_103 = function $$broadmsg(output, nick) {
+    Opal.defn(self, '$broadmsg', TMP_BCDice_broadmsg_104 = function $$broadmsg(output, nick) {
       var self = this;
 
       
@@ -27775,18 +27795,18 @@ if (member == null) member = nil;
         } else {
         return self.$sendMessage(nick, output)
       };
-    }, TMP_BCDice_broadmsg_103.$$arity = 2);
+    }, TMP_BCDice_broadmsg_104.$$arity = 2);
     
-    Opal.defn(self, '$sendMessage', TMP_BCDice_sendMessage_104 = function $$sendMessage(to, message) {
+    Opal.defn(self, '$sendMessage', TMP_BCDice_sendMessage_105 = function $$sendMessage(to, message) {
       var self = this;
 
       
       self.$debug("sendMessage to, message", to, message);
       self.ircClient.$sendMessage(to, message);
       return (self.isMessagePrinted = true);
-    }, TMP_BCDice_sendMessage_104.$$arity = 2);
+    }, TMP_BCDice_sendMessage_105.$$arity = 2);
     
-    Opal.defn(self, '$sendMessageToOnlySender', TMP_BCDice_sendMessageToOnlySender_105 = function $$sendMessageToOnlySender(message) {
+    Opal.defn(self, '$sendMessageToOnlySender', TMP_BCDice_sendMessageToOnlySender_106 = function $$sendMessageToOnlySender(message) {
       var self = this;
 
       
@@ -27794,18 +27814,18 @@ if (member == null) member = nil;
       self.$debug("@nick_e", self.nick_e);
       self.ircClient.$sendMessageToOnlySender(self.nick_e, message);
       return (self.isMessagePrinted = true);
-    }, TMP_BCDice_sendMessageToOnlySender_105.$$arity = 1);
+    }, TMP_BCDice_sendMessageToOnlySender_106.$$arity = 1);
     
-    Opal.defn(self, '$sendMessageToChannels', TMP_BCDice_sendMessageToChannels_106 = function $$sendMessageToChannels(message) {
+    Opal.defn(self, '$sendMessageToChannels', TMP_BCDice_sendMessageToChannels_107 = function $$sendMessageToChannels(message) {
       var self = this;
 
       
       self.ircClient.$sendMessageToChannels(message);
       return (self.isMessagePrinted = true);
-    }, TMP_BCDice_sendMessageToChannels_106.$$arity = 1);
+    }, TMP_BCDice_sendMessageToChannels_107.$$arity = 1);
     
-    Opal.defn(self, '$parren_killer', TMP_BCDice_parren_killer_109 = function $$parren_killer(string) {
-      var $a, $b, $c, TMP_107, TMP_108, self = this, str_before = nil, str_after = nil, dice_cmd = nil, rolled = nil, dmy = nil, round_type = nil;
+    Opal.defn(self, '$parren_killer', TMP_BCDice_parren_killer_110 = function $$parren_killer(string) {
+      var $a, $b, $c, TMP_108, TMP_109, self = this, str_before = nil, str_after = nil, dice_cmd = nil, rolled = nil, dmy = nil, round_type = nil;
 
       
       self.$debug("parren_killer input", string);
@@ -27823,20 +27843,20 @@ if (member == null) member = nil;
       };
       string = self.$changeRangeTextToNumberText(string);
       round_type = self.diceBot.$fractionType().$to_sym();
-      string = $send(string, 'gsub', [/\([\d\/\+\*\-\(\)]+\)/], (TMP_107 = function(expr){var self = TMP_107.$$s || this;
+      string = $send(string, 'gsub', [/\([\d\/\+\*\-\(\)]+\)/], (TMP_108 = function(expr){var self = TMP_108.$$s || this;
 if (expr == null) expr = nil;
-      return Opal.const_get_relative($nesting, 'ArithmeticEvaluator').$new().$eval(expr, round_type)}, TMP_107.$$s = self, TMP_107.$$arity = 1, TMP_107));
+      return Opal.const_get_relative($nesting, 'ArithmeticEvaluator').$new().$eval(expr, round_type)}, TMP_108.$$s = self, TMP_108.$$arity = 1, TMP_108));
       self.$debug("diceBot.changeText(string) begin", string);
       string = self.diceBot.$changeText(string);
       self.$debug("diceBot.changeText(string) end", string);
-      string = $send(string, 'gsub', [/([\d]+[dD])([^\d\w]|$)/], (TMP_108 = function(){var self = TMP_108.$$s || this, $d;
+      string = $send(string, 'gsub', [/([\d]+[dD])([^\d\w]|$)/], (TMP_109 = function(){var self = TMP_109.$$s || this, $d;
 
-      return "" + ((($d = $gvars['~']) === nil ? nil : $d['$[]'](1))) + "6" + ((($d = $gvars['~']) === nil ? nil : $d['$[]'](2)))}, TMP_108.$$s = self, TMP_108.$$arity = 0, TMP_108));
+      return "" + ((($d = $gvars['~']) === nil ? nil : $d['$[]'](1))) + "6" + ((($d = $gvars['~']) === nil ? nil : $d['$[]'](2)))}, TMP_109.$$s = self, TMP_109.$$arity = 0, TMP_109));
       self.$debug("parren_killer output", string);
       return string;
-    }, TMP_BCDice_parren_killer_109.$$arity = 1);
+    }, TMP_BCDice_parren_killer_110.$$arity = 1);
     
-    Opal.defn(self, '$rollDiceAddingUp', TMP_BCDice_rollDiceAddingUp_110 = function $$rollDiceAddingUp($a_rest) {
+    Opal.defn(self, '$rollDiceAddingUp', TMP_BCDice_rollDiceAddingUp_111 = function $$rollDiceAddingUp($a_rest) {
       var self = this, arg, dice = nil;
 
       var $args_len = arguments.length, $rest_len = $args_len - 0;
@@ -27848,9 +27868,9 @@ if (expr == null) expr = nil;
       
       dice = Opal.const_get_relative($nesting, 'AddDice').$new(self, self.diceBot);
       return $send(dice, 'rollDiceAddingUp', Opal.to_a(arg));
-    }, TMP_BCDice_rollDiceAddingUp_110.$$arity = -1);
+    }, TMP_BCDice_rollDiceAddingUp_111.$$arity = -1);
     
-    Opal.defn(self, '$changeRangeTextToNumberText', TMP_BCDice_changeRangeTextToNumberText_111 = function $$changeRangeTextToNumberText(string) {
+    Opal.defn(self, '$changeRangeTextToNumberText', TMP_BCDice_changeRangeTextToNumberText_112 = function $$changeRangeTextToNumberText(string) {
       var $a, $b, $c, self = this, beforeText = nil, rangeBegin = nil, rangeEnd = nil, afterText = nil, range = nil, rolledNumber = nil, resultNumber = nil;
 
       
@@ -27873,9 +27893,9 @@ if (expr == null) expr = nil;
       };
       self.$debug("[st...ed] after string", string);
       return string;
-    }, TMP_BCDice_changeRangeTextToNumberText_111.$$arity = 1);
+    }, TMP_BCDice_changeRangeTextToNumberText_112.$$arity = 1);
     
-    Opal.defn(self, '$setGameByTitle', TMP_BCDice_setGameByTitle_112 = function $$setGameByTitle(gameTitle) {
+    Opal.defn(self, '$setGameByTitle', TMP_BCDice_setGameByTitle_113 = function $$setGameByTitle(gameTitle) {
       var $a, self = this, loader = nil, diceBot = nil, message = nil;
 
       
@@ -27892,14 +27912,14 @@ if (expr == null) expr = nil;
       message = "" + "Game設定を" + (diceBot.$gameName()) + "に設定しました";
       self.$debug("setGameByTitle message", message);
       return message;
-    }, TMP_BCDice_setGameByTitle_112.$$arity = 1);
+    }, TMP_BCDice_setGameByTitle_113.$$arity = 1);
     
-    Opal.defn(self, '$setIrcMode', TMP_BCDice_setIrcMode_113 = function $$setIrcMode(mode) {
+    Opal.defn(self, '$setIrcMode', TMP_BCDice_setIrcMode_114 = function $$setIrcMode(mode) {
       var self = this;
 
       return (self.isIrcMode = mode)
-    }, TMP_BCDice_setIrcMode_113.$$arity = 1);
-    return (Opal.defn(self, '$sleepForIrc', TMP_BCDice_sleepForIrc_114 = function $$sleepForIrc(second) {
+    }, TMP_BCDice_setIrcMode_114.$$arity = 1);
+    return (Opal.defn(self, '$sleepForIrc', TMP_BCDice_sleepForIrc_115 = function $$sleepForIrc(second) {
       var self = this;
 
       if ($truthy(self.isIrcMode)) {
@@ -27907,7 +27927,7 @@ if (expr == null) expr = nil;
         } else {
         return nil
       }
-    }, TMP_BCDice_sleepForIrc_114.$$arity = 1), nil) && 'sleepForIrc';
+    }, TMP_BCDice_sleepForIrc_115.$$arity = 1), nil) && 'sleepForIrc';
   })($nesting[0], null, $nesting);
 };
 
@@ -27923,7 +27943,7 @@ if (expr == null) expr = nil;
   if ($gvars.LOAD_PATH == null) $gvars.LOAD_PATH = nil;
   if ($gvars["0"] == null) $gvars["0"] = nil;
 
-  Opal.add_stubs(['$expand_path', '$dirname', '$include?', '$unshift', '$require', '$attr', '$new', '$params', '$rollFromCgiParams', '$cgiParams', '$[]', '$+', '$getDiceBotParamText', '$roll', '$executeDiceBot', '$gsub', '$empty?', '$newBcDice', '$setIrcClient', '$setRandomValues', '$isKeepSecretDice', '$setTest', '$setCollectRandResult', '$setDir', '$setIrcMode', '$!=', '$getGameType', '$setGameByTitle', '$setMessage', '$setChannel', '$recievePublicMessage', '$getRandResults', '$nil?', '$===', '$>', '$length', '$rollFromCgiParamsDummy', '$print']);
+  Opal.add_stubs(['$expand_path', '$dirname', '$include?', '$unshift', '$require', '$attr', '$new', '$params', '$rollFromCgiParams', '$cgiParams', '$[]', '$+', '$getDiceBotParamText', '$roll', '$executeDiceBot', '$gsub', '$empty?', '$newBcDice', '$setIrcClient', '$setRandomValues', '$isKeepSecretDice', '$setTest', '$setCollectRandResult', '$setDir', '$setIrcMode', '$!=', '$getGameType', '$setGameByTitle', '$setMessage', '$setChannel', '$recievePublicMessage', '$getRandResults', '$nil?', '$getGameCommandInfos', '$===', '$>', '$length', '$rollFromCgiParamsDummy', '$print']);
   
   bcDiceRoot = Opal.const_get_relative($nesting, 'File').$expand_path(Opal.const_get_relative($nesting, 'File').$dirname("cgiDiceBot"));
   if ($truthy($gvars.LOAD_PATH['$include?'](bcDiceRoot))) {
@@ -28084,9 +28104,14 @@ if (expr == null) expr = nil;
     }, TMP_CgiDiceBot_newBcDice_10.$$arity = 0);
     
     Opal.defn(self, '$getGameCommandInfos', TMP_CgiDiceBot_getGameCommandInfos_11 = function $$getGameCommandInfos(dir, prefix) {
-      var self = this;
+      var self = this, tableFileData = nil, infos = nil;
 
-      return []
+      
+      self.$require("TableFileData");
+      tableFileData = Opal.const_get_relative($nesting, 'TableFileData').$new();
+      tableFileData.$setDir(dir, prefix);
+      infos = tableFileData.$getGameCommandInfos();
+      return infos;
     }, TMP_CgiDiceBot_getGameCommandInfos_11.$$arity = 2);
     
     Opal.defn(self, '$sendMessage', TMP_CgiDiceBot_sendMessage_12 = function $$sendMessage(to, message) {

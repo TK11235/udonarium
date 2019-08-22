@@ -139,8 +139,13 @@ class CgiDiceBot
   end
 
   # Unused method
-  def getGameCommandInfos(dir, prefix)
-    return []
+  def getGameCommandInfos(dir, prefix) # TKfix extratables互換性
+    require 'TableFileData'
+    
+    tableFileData = TableFileData.new
+    tableFileData.setDir(dir, prefix)
+    infos = tableFileData.getGameCommandInfos
+    return infos
   end
 
   def sendMessage(to, message)
