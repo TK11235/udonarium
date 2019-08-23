@@ -12,14 +12,14 @@
 </label>
 <hr/>
 <div id="search">
-  検索：  <input [(ngModel)]="searchWord"  placeholder="部分一致で検索" />  <button (click)="searchImageFromTag()">検索</button>
+  検索： <input [(ngModel)]="searchWord" placeholder="部分一致で検索 スペース区切りで複数指定" />
 </div>
 <div id="edit-tag">
-  選択した画像のタグ：  <input [(ngModel)]="selectedImageTag" (input)="changeTagTextBox()" placeholder="" /> <button id="change-tag-button" (click)="changeTag()" [disabled]="!isTagTextBoxChanged">変更</button>
+  選択した画像のタグ： <input [(ngModel)]="selectedTag" placeholder="スペース区切りで複数タグ名" /> <button id="change-tag-button" (click)="changeTag()" [disabled]="!hasEdited">変更</button>
 </div>
 <hr/>
 <div id="file-list">
-  <span *ngFor="let file of fileStorageService.images" class="image">
+  <span *ngFor="let file of images" class="image">
     <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
     <img *ngIf="file.url.length <= 0" src="assets/images/loading.gif" alt="{{file.name}}">
   </span>

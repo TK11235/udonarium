@@ -20,6 +20,12 @@ export class ImageStorage {
     return images;
   }
 
+  getImagesByIdentifiers(identifiers: string[]): ImageFile[] {
+    return identifiers
+      .map(identifier => this.imageHash[identifier])
+      .filter(image => image);
+  }
+
   private lazyTimer: NodeJS.Timer;
 
   private constructor() {
