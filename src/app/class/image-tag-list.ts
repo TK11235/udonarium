@@ -6,36 +6,38 @@ import { PeerCursor } from './peer-cursor';
 
 @SyncObject('ImageTagList')
 export class ImageTagList extends ObjectNode implements InnerXml {
-    // todo:シングルトン化するのは妥当？
-    private static _instance: ImageTagList;
-    static get instance(): ImageTagList {
-        if (!ImageTagList._instance) {
-        ImageTagList._instance = new ImageTagList('ImageTagList');
-        ImageTagList._instance.initialize();
-        }
-        return ImageTagList._instance;
+  // todo:シングルトン化するのは妥当？
+  private static _instance: ImageTagList;
+  static get instance(): ImageTagList {
+    if (!ImageTagList._instance) {
+      ImageTagList._instance = new ImageTagList('ImageTagList');
+      ImageTagList._instance.initialize();
+    }
+    return ImageTagList._instance;
+  }
+
+  getTagsByWords(searchWords: string[]): ImageTag[] {
+    const resultTags: ImageTag[] = [];
+
+    for (const target of this.children as ImageTag[]) {
+      if (target.containsWords(searchWords)) {
+        resultTags.push(target);
+      }
     }
 
-    getMatchTags(searchWord: string) :ImageTag[] {
-        let resultTags: ImageTag[] = [];
+    return resultTags;
+  }
 
-        for(let target of this.imageTags) {
-            if(target.isContainsWord(searchWord)) {
-                resultTags.push(target);
-            }
-        }
-
-        return resultTags;
+  getTagFromIdentifier(imageIdentifier: string): ImageTag {
+    for (const target of this.children as ImageTag[]) {
+      if (target.imageIdentifier === imageIdentifier) {
+        return target;
+      }
     }
 
-    getTagFromIdentifier(ide:string) :ImageTag {
-        for(let target of this.imageTags) {
-            if(target.imageIdentifier == ide) return target;
-        }
-
-        console.log('NotFound Target ImageTag from ImageTagList',ide);
-        return null;
-    }
+    console.log('NotFound Target ImageTag from ImageTagList', imageIdentifier);
+    return null;
+  }
 
     pushTag(ide:string ,newtag:string = PeerCursor.myCursor.name ) :ImageTag {
         let retTag =this.getTagFromIdentifier(ide);

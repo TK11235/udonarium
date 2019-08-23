@@ -7,6 +7,7 @@ import { ImageTagList } from '@udonarium/image-tag-list';
 import { EventSystem, Network } from '@udonarium/core/system';
 
 import { PanelService } from 'service/panel.service';
+import { ImageTag } from '@udonarium/image-tag';
 
 @Component({
   selector: 'file-storage',
@@ -15,11 +16,29 @@ import { PanelService } from 'service/panel.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
-  searchWord:string = 'default';
-  selectedImageTag:string = '';
-  isTagTextBoxChanged:boolean = false;
+  searchWord: string = 'default';
 
-  fileStorageService = ImageStorage.instance;
+  private _searchWord: string;
+  private _searchWords: string[];
+  get searchWords(): string[] {
+    if (this._searchWord !== this.searchWord) {
+      this._searchWord = this.searchWord;
+      this._searchWords = this.searchWord != null && 0 < this.searchWord.trim().length ? this.searchWord.trim().split(/\s+/) : [];
+    }
+    return this._searchWords;
+  }
+
+  get images(): ImageFile[] {
+    const identifiers = ImageTagList.instance
+      .getTagsByWords(this.searchWords)
+      .map(imageTag => imageTag.imageIdentifier);
+    return ImageStorage.instance.getImagesByIdentifiers(identifiers);
+  }
+
+  selectImageTag: ImageTag = null;
+  selectedTag: string = '';
+  get hasEdited(): boolean { return this.selectImageTag && this.selectImageTag.tag !== this.selectedTag; }
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService
@@ -50,18 +69,11 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('onSelectedFile', file);
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
 
-    this.selectedImageTag = ImageTagList.instance.getTagFromIdentifier(file.identifier).tag;
-  }
-
-  searchImageFromTag() {
-    console.log('検索ボタン押下/検索ワード：' + this.searchWord );
+    this.selectImageTag = ImageTagList.instance.getTagFromIdentifier(file.identifier);
+    this.selectedTag = this.selectImageTag ? this.selectImageTag.tag : '';
   }
 
   changeTag() {
-    console.log('変更ボタン押下/変更後タグ：' + this.selectedImageTag );
-  }
-
-  changeTagTextBox() {
-    this.isTagTextBoxChanged = true;
+    this.selectImageTag.tag = this.selectedTag;
   }
 }
