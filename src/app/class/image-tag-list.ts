@@ -1,5 +1,5 @@
 import { ImageTag } from './image-tag';
-import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
+import { SyncObject } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { InnerXml } from './core/synchronize-object/object-serializer';
 import { PeerCursor } from './peer-cursor';
@@ -39,32 +39,33 @@ export class ImageTagList extends ObjectNode implements InnerXml {
     return null;
   }
 
-    pushTag(ide:string ,newtag:string = PeerCursor.myCursor.name ) :ImageTag {
-        let retTag =this.getTagFromIdentifier(ide);
+  pushTag(imageIdentifier: string, newtag: string = PeerCursor.myCursor.name): ImageTag {
+    let imageTag = this.getTagFromIdentifier(imageIdentifier);
 
-        if(retTag == null) {
-            retTag = new ImageTag();
-            retTag.imageIdentifier = ide;
-            retTag.tag = newtag;
-            this.appendChild(retTag);
-            return retTag;
-        }
-
-        if(retTag.tag != newtag) {
-            retTag.tag = newtag;
-        }
-        return retTag;
+    if (!imageTag) {
+      imageTag = new ImageTag();
+      imageTag.imageIdentifier = imageIdentifier;
+      imageTag.tag = newtag;
+      imageTag.initialize();
+      this.appendChild(imageTag);
+      return imageTag;
     }
 
-    innerXml(): string { return ''; }
-
-    parseInnerXml(element: Element) {
-      // XMLからの新規作成を許可せず、既存のオブジェクトを更新する
-      let context = ImageTagList.instance.toContext();
-      context.syncData = this.toContext().syncData;
-      ImageTagList.instance.apply(context);
-      ImageTagList.instance.update();
-  
-      this.destroy();
+    if (imageTag.tag !== newtag) {
+      imageTag.tag = newtag;
     }
+    return imageTag;
+  }
+
+  innerXml(): string { return ''; }
+
+  parseInnerXml(element: Element) {
+    // XMLからの新規作成を許可せず、既存のオブジェクトを更新する
+    const context = ImageTagList.instance.toContext();
+    context.syncData = this.toContext().syncData;
+    ImageTagList.instance.apply(context);
+    ImageTagList.instance.update();
+
+    this.destroy();
+  }
 }
