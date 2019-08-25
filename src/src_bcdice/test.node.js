@@ -17,11 +17,12 @@ const cgiDiceBot = Opal.CgiDiceBot.$new();
 
 files.forEach(file => {
   const gameType = file.replace(/\.txt$/, '');
-  if (!diceBots.includes(gameType + '.js')) return;
+  const existJs = diceBots.includes(gameType + '.js');
+  if (!existJs && gameType != 'None') return;
 
   process.stdout.write(`\n${gameType} `);
 
-  require(DiceBotDir + gameType);
+  if (existJs) require(DiceBotDir + gameType);
   fs.readFileSync(path.join(DataDir, file)).toString()
     .replace(/\r/g, '')
     .split(/=+\n/g)
