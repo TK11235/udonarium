@@ -69,13 +69,11 @@ export class EventSystem implements Subject {
   unregisterListener(listener: Listener): Listener {
     let listeners = this.getListeners(listener.eventName);
     let index = listeners.indexOf(listener);
-    if (-1 < index) {
-      listeners.splice(index, 1);
-      listener.unregister();
-      if (listeners.length < 1) this.listenerMap.delete(listener.eventName);
-      return listener;
-    }
-    return null;
+    if (index < 0) return null;
+    listeners.splice(index, 1);
+    listener.unregister();
+    if (listeners.length < 1) this.listenerMap.delete(listener.eventName);
+    return listener;
   }
 
   call<T>(eventName: string, data: T, sendTo?: string)
