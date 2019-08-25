@@ -3,7 +3,7 @@
 class TokyoGhostResearch < DiceBot
   # ダイスボットで使用するコマンドを配列で列挙する
   setPrefixes([
-  'OP', 'TB', 'TK?\(\d+\)'
+    'OP', 'TB', 'TK?\(\d+\)'
   ])
 
   def initialize
@@ -51,7 +51,7 @@ MESSAGETEXT
     diff = 0
 
     if /TK?<=(\d+)/i =~ command
-      diff = $2.to_i
+      diff = Regexp.last_match(2).to_i
     end
 
     if diff > 0

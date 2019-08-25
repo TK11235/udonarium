@@ -34,11 +34,11 @@ INFO_MESSAGE_TEXT
   def changeText(string)
     return string unless string =~ /DB/i
 
-    string = string.gsub(/DB(\d),(\d)/) { "DB#{$1}#{$2}" }
-    string = string.gsub(/DB\@(\d)\@(\d)/) { "DB#{$1}#{$2}" }
-    string = string.gsub(/DB(\d)(\d)(#([\d][\+\-\d]*))/) { "3R6+#{$4}[#{$1},#{$2}]" }
-    string = string.gsub(/DB(\d)(\d)(#([\+\-\d]*))/) { "3R6#{$4}[#{$1},#{$2}]" }
-    string = string.gsub(/DB(\d)(\d)/) { "3R6[#{$1},#{$2}]" }
+    string = string.gsub(/DB(\d),(\d)/) { "DB#{Regexp.last_match(1)}#{Regexp.last_match(2)}" }
+    string = string.gsub(/DB\@(\d)\@(\d)/) { "DB#{Regexp.last_match(1)}#{Regexp.last_match(2)}" }
+    string = string.gsub(/DB(\d)(\d)(#([\d][\+\-\d]*))/) { "3R6+#{Regexp.last_match(4)}[#{Regexp.last_match(1)},#{Regexp.last_match(2)}]" }
+    string = string.gsub(/DB(\d)(\d)(#([\+\-\d]*))/) { "3R6#{Regexp.last_match(4)}[#{Regexp.last_match(1)},#{Regexp.last_match(2)}]" }
+    string = string.gsub(/DB(\d)(\d)/) { "3R6[#{Regexp.last_match(1)},#{Regexp.last_match(2)}]" }
 
     return string
   end
@@ -48,7 +48,7 @@ INFO_MESSAGE_TEXT
   end
 
   # ゲーム別成功度判定(nD6)
-  def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == ">="
 
     return '' if diff == "?"
@@ -140,7 +140,7 @@ INFO_MESSAGE_TEXT
   def rollDiceCommand(command)
     case command
     when /BT(\d+)?/i
-      dice = $1
+      dice = Regexp.last_match(1)
       dice ||= 1
       return get_horidasibukuro_table(dice)
     end

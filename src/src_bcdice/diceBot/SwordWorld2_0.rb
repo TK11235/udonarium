@@ -67,8 +67,8 @@ INFO_MESSAGE_TEXT
   def rollDiceCommand(command)
     case command
     when /^Gr(\d+)?/i
-      if command =~ /^Gr(\d+)/i then
-        growth($1.to_i)
+      if command =~ /^Gr(\d+)/i
+        growth(Regexp.last_match(1).to_i)
       else
         growth
       end
@@ -87,7 +87,7 @@ INFO_MESSAGE_TEXT
     regexp = /r\[(\d+)\]/i
 
     if regexp === string
-      rateUp = $1.to_i
+      rateUp = Regexp.last_match(1).to_i
       string = string.gsub(regexp, '')
     end
 
@@ -161,7 +161,7 @@ INFO_MESSAGE_TEXT
     superSuccessValue = 41
 
     if /@(\d+)/ === string
-      critical = $1.to_i
+      critical = Regexp.last_match(1).to_i
       if dice_n >= critical
         if  total_n >= superSuccessValue
           return " ＞ 超成功"
@@ -173,7 +173,7 @@ INFO_MESSAGE_TEXT
   end
 
   def growth(count = 1)
-    ((1..count).map do growth_step end).join " | "
+    ((1..count).map { growth_step }).join " | "
   end
 
   def growth_step
@@ -205,12 +205,12 @@ INFO_MESSAGE_TEXT
 
   def get_tangle_table()
     table = [
-        '頭や顔：牙や噛みつきなどにおける命中力判定及び、魔法の行使やブレスに-2のペナルティ修正を受ける',
-        '武器や盾：武器の使用不可、又は盾の回避力修正及び防護点を無効化する',
-        '腕や手：武器や爪などにおける命中力判定に-2のペナルティ修正、盾を持つ腕方の腕ならその盾の回避力修正及び防護点を無効化する',
-        '脚や足：移動不可、更に回避力判定に-2のペナルティ修正を受ける ※両足に絡んでも累積しない',
-        '胴体：生命・精神抵抗力を基準値に用いる判定を除き、あらゆる行為判定に-1のペナルティ修正を受ける',
-        '特殊：尻尾や翼などに命中。絡められた部位を使用する判定において-2のペナルティ修正、またはそこが使えていたことによるボーナス修正を失う ※存在しない場合は決め直し'
+      '頭や顔：牙や噛みつきなどにおける命中力判定及び、魔法の行使やブレスに-2のペナルティ修正を受ける',
+      '武器や盾：武器の使用不可、又は盾の回避力修正及び防護点を無効化する',
+      '腕や手：武器や爪などにおける命中力判定に-2のペナルティ修正、盾を持つ腕方の腕ならその盾の回避力修正及び防護点を無効化する',
+      '脚や足：移動不可、更に回避力判定に-2のペナルティ修正を受ける ※両足に絡んでも累積しない',
+      '胴体：生命・精神抵抗力を基準値に用いる判定を除き、あらゆる行為判定に-1のペナルティ修正を受ける',
+      '特殊：尻尾や翼などに命中。絡められた部位を使用する判定において-2のペナルティ修正、またはそこが使えていたことによるボーナス修正を失う ※存在しない場合は決め直し'
     ]
     text, num = get_table_by_1d6(table)
     return "絡み効果表(#{num}) → #{text}"

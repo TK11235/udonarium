@@ -65,10 +65,10 @@ INFO_MESSAGE_TEXT
 
     return output unless /^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string
 
-    modText = $1
-    target = $2.to_i
-    crit = $4.to_i if $4
-    fumble = $6.to_i if $6
+    modText = Regexp.last_match(1)
+    target = Regexp.last_match(2).to_i
+    crit = Regexp.last_match(4).to_i if Regexp.last_match(4)
+    fumble = Regexp.last_match(6).to_i if Regexp.last_match(6)
 
     mod = 0
     mod = parren_killer("(0#{modText})") unless modText.nil?

@@ -39,10 +39,10 @@ MESSAGETEXT
       case command.upcase
 
       when /(TS|OP)(\d+)?(([\+\-]\d+)*)(\@(\d+))?$/i
-        hasCritical = ($1 == "OP")
-        target = ($6 || 0).to_i
-        modify = ($2 || 0).to_i
-        modifyAddString = $3
+        hasCritical = (Regexp.last_match(1) == "OP")
+        target = (Regexp.last_match(6) || 0).to_i
+        modify = (Regexp.last_match(2) || 0).to_i
+        modifyAddString = Regexp.last_match(3)
 
         modify_list = modifyAddString.scan(/[\+\-]\d+/) # 修正値を分割して配列へ
         modify_list.each { |i| modify += i.to_i }

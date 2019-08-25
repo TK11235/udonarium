@@ -34,8 +34,8 @@ MESSAGETEXT
 
   def rollDiceCommand(command)
     if /(\d+)?OR([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?$/i === command
-      diceCount = ($1 || 1).to_i
-      countNo = [($2 || -1).to_i, ($3 || -1).to_i, ($4 || -1).to_i, ($5 || -1).to_i, ($6 || -1).to_i, ($7 || -1).to_i]
+      diceCount = (Regexp.last_match(1) || 1).to_i
+      countNo = [(Regexp.last_match(2) || -1).to_i, (Regexp.last_match(3) || -1).to_i, (Regexp.last_match(4) || -1).to_i, (Regexp.last_match(5) || -1).to_i, (Regexp.last_match(6) || -1).to_i, (Regexp.last_match(7) || -1).to_i]
       countNo.delete(-1)
       countNo = countNo.sort
 
@@ -50,7 +50,7 @@ MESSAGETEXT
     diceText2 = diceText.gsub('10', '0')
     diceArray = diceText2.split(/,/).collect { |i| i.to_i }
 
-    resultArray = Array.new
+    resultArray = []
     success = 0
     diceArray.each do |i|
       multiple = countNo.count(i)

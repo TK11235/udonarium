@@ -47,12 +47,12 @@ INFO_MESSAGE_TEXT
   def rollDiceCommand(command)
     case command.upcase
     when /^(\d+)A(\d*)([CF]?)(\d*)([CF]?)(\d*)$/
-      counts = $1.to_i
-      judgment = $2.to_i
-      option1 = $3
-      argument1 = $4
-      option2 = $5
-      argument2 = $6
+      counts = Regexp.last_match(1).to_i
+      judgment = Regexp.last_match(2).to_i
+      option1 = Regexp.last_match(3)
+      argument1 = Regexp.last_match(4)
+      option2 = Regexp.last_match(5)
+      argument2 = Regexp.last_match(6)
       return nil if (option1.empty? != argument1.empty?) || (option2.empty? != argument2.empty?) || (!option2.empty? && (option1 == option2))
 
       if option1 == 'C'
@@ -65,7 +65,7 @@ INFO_MESSAGE_TEXT
       return rollAct(counts, judgment, critical, fumble)
 
     when /^CT3([\+\-]?)$/
-      sign = $1
+      sign = Regexp.last_match(1)
       title = '因縁表(The 3rd)　『BoA3』P292'
       table = [
         "【他生】",
@@ -94,7 +94,7 @@ INFO_MESSAGE_TEXT
       return tableText(title, table, sign)
 
     when /^CTR([\+\-]?)$/
-      sign = $1
+      sign = Regexp.last_match(1)
       title = '因縁表(リインカーネイション)　『BAR』P51、299'
       table = [
         "【他生】",
@@ -123,7 +123,7 @@ INFO_MESSAGE_TEXT
       return tableText(title, table, sign)
 
     when /^DJV(\-?)$/
-      sign = $1
+      sign = Regexp.last_match(1)
       title = '前世邂逅表（デジャブ）　『BAR』P235'
       table = [
         "【鮮烈な風】\n風は懐かしい匂いを、香りを運んでくる。それは……。",
@@ -152,7 +152,7 @@ INFO_MESSAGE_TEXT
       return tableText(title, table, sign)
 
     when /^AKST([\+\-]?)$/
-      sign = $1
+      sign = Regexp.last_match(1)
       title = '悪徳シーン表　『GoV』P16、164'
       table = [
         "▼ウェントス／止まない風\n【行動】殺戮者の狂気に当てられたのか、通り魔的殺人者が現れる。切り裂かれた人々の悲鳴が響き渡る。",

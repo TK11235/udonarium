@@ -48,9 +48,9 @@ INFO_MESSAGE_TEXT
     result = ''
     return result unless /^(\d+)SR([\+\-]?\d+)?(>=(\d+))?$/i === command
 
-    diceCount = $1.to_i
-    modify = $2.to_i
-    difficulty = $4.to_i if $4
+    diceCount = Regexp.last_match(1).to_i
+    modify = Regexp.last_match(2).to_i
+    difficulty = Regexp.last_match(4).to_i if Regexp.last_match(4)
 
     dice, diceText = roll(diceCount, 6)
     diceList = diceText.split(/,/).collect { |i| i.to_i }.sort
@@ -71,7 +71,7 @@ INFO_MESSAGE_TEXT
     end
 
     unless difficulty.nil?
-      result += (totalValue >= difficulty) ? ' ＞ 成功' : ' ＞ 失敗'
+      result += totalValue >= difficulty ? ' ＞ 成功' : ' ＞ 失敗'
     end
 
     return result

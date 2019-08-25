@@ -23,7 +23,7 @@ class TokumeiTenkousei < DiceBot
 INFO_MESSAGE_TEXT
   end
 
-  def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(nD6)
+  def check_nD6(total_n, _dice_n, _signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD6)
     return '' unless $signOfInequality == ">="
 
     return '' if diff == "?"
@@ -36,7 +36,7 @@ INFO_MESSAGE_TEXT
   end
 
   # 特命転校生用エキストラパワーポイント獲得
-  def getDiceRolledAdditionalText(n1, n_max, dice_max)
+  def getDiceRolledAdditionalText(n1, _n_max, dice_max)
     debug('getExtraPowerPointTextForTokumeiTenkousei n1, dice_max', n1, dice_max)
 
     if (n1 != 0) && (dice_max == 6)

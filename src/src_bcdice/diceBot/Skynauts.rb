@@ -128,7 +128,7 @@ MESSAGETEXT
   end
 
   def getFireResult(command)
-    return nil unless (m = /^D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/.match(command))
+    return nil unless (m = %r{^D([1-4, 6-9]*)(\[.+\])*/(\d+)(@([2,4,6,8]))?$}.match(command))
 
     debug("====getFireResult====")
 
@@ -191,7 +191,7 @@ MESSAGETEXT
     return firePoint
   end
 
-  def getFirePointText(firePoint, fireCount, direction = 0)
+  def getFirePointText(firePoint, _fireCount, direction = 0)
     debug("====getFirePointText====")
 
     fireTextList = []
@@ -235,7 +235,7 @@ MESSAGETEXT
   end
 
   def getBomberResult(command)
-    return nil unless (m = /^BOM(\d*)?\/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/i.match(command))
+    return nil unless (m = %r{^BOM(\d*)?/D([1-4, 6-9]*)(\[.+\])*/(\d+)(@([2,4,6,8]))?$}i.match(command))
 
     debug("====getBomberResult====", command)
 
@@ -249,7 +249,7 @@ MESSAGETEXT
     return text unless /成功/ === text
 
     # ダメージチェック部分
-    fireCommand = command.slice(/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?/)
+    fireCommand = command.slice(%r{D([1-4, 6-9]*)(\[.+\])*/(\d+)(@([2,4,6,8]))?})
 
     text += "\n ＞ #{getFireResult(fireCommand)}"
 
@@ -266,7 +266,7 @@ MESSAGETEXT
 
     judgeCommand = command.slice(/^AVO(\d*)?(@([2,4,6,8]))/) # 判定部分
     text = "#{judgeCommand} ＞ 《回避運動》"
-    text += getJudgeResult("SN" + $1.to_s) # 操舵判定
+    text += getJudgeResult("SN" + Regexp.last_match(1).to_s) # 操舵判定
 
     return text unless /成功/ === text
 
@@ -305,8 +305,8 @@ MESSAGETEXT
 
         next unless /[^\d]*(\d+),[^\d]*(\d+)/ === point
 
-        y = $1.to_i
-        x = $2.to_i
+        y = Regexp.last_match(1).to_i
+        x = Regexp.last_match(2).to_i
 
         firePoint[-1][-1] = [x, y]
 

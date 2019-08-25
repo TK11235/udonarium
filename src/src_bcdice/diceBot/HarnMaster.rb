@@ -25,7 +25,7 @@ class HarnMaster < DiceBot
 MESSAGETEXT
   end
 
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == "<="
 
     result = getCheckResult(total_n, diff)
@@ -55,11 +55,11 @@ MESSAGETEXT
 
     case command
     when /^SHK(\d*),(\d+)/i
-      toughness = $1.to_i
-      damage = $2.to_i
+      toughness = Regexp.last_match(1).to_i
+      damage = Regexp.last_match(2).to_i
       result = getCheckShockResult(damage, toughness)
     when /SLH(U|D)?/i
-      type = $1
+      type = Regexp.last_match(1)
       result = getStrikeLocationHuman(type)
     else
       result = nil
@@ -70,7 +70,7 @@ MESSAGETEXT
 
   def getCheckShockResult(damage, toughness)
     dice, diceText = roll(damage, 6)
-    result = ((dice <= toughness) ? '成功' : '失敗')
+    result = (dice <= toughness ? '成功' : '失敗')
 
     text = "ショック判定(ダメージ:#{damage}, 耐久力:#{toughness}) ＞ (#{dice}[#{diceText}]) ＞ #{result}"
     return text
@@ -112,7 +112,7 @@ MESSAGETEXT
 
     debug("part has side", part)
 
-    side = (((number % 2) == 1) ? "左" : "右")
+    side = (number.odd? ? "左" : "右")
 
     part.sub(/\*/, side)
   end
@@ -128,13 +128,13 @@ MESSAGETEXT
     debug("is Face")
 
     table = [
-             [ 15, "顎"],
-             [ 30, "*目"],
-             [ 64, "*頬"],
-             [ 80, "鼻"],
-             [ 90, "*耳"],
-             [100, "口"],
-            ]
+      [ 15, "顎"],
+      [ 30, "*目"],
+      [ 64, "*頬"],
+      [ 80, "鼻"],
+      [ 90, "*耳"],
+      [100, "口"],
+    ]
 
     number, = roll(1, 100)
     faceLocation = get_table_by_number(number, table)
@@ -148,55 +148,55 @@ MESSAGETEXT
 
   def getStrikeLocationHumanUpperTable()
     table = [
-             [ 15, "頭部"],
-             [ 30, "顔+"],
-             [ 45, "首"],
-             [ 57, "*肩"],
-             [ 69, "*上腕"],
-             [ 73, "*肘"],
-             [ 81, "*前腕"],
-             [ 85, "*手"],
-             [ 95, "胸部"],
-             [100, "腹部"],
-            ]
+      [ 15, "頭部"],
+      [ 30, "顔+"],
+      [ 45, "首"],
+      [ 57, "*肩"],
+      [ 69, "*上腕"],
+      [ 73, "*肘"],
+      [ 81, "*前腕"],
+      [ 85, "*手"],
+      [ 95, "胸部"],
+      [100, "腹部"],
+    ]
     return table
   end
 
   def getStrikeLocationHumanNormalTable()
     table = [
-             [ 5, "頭部"],
-             [ 10, "顔+"],
-             [ 15, "首"],
-             [ 27, "*肩"],
-             [ 33, "*上腕"],
-             [ 35, "*肘"],
-             [ 39, "*前腕"],
-             [ 43, "*手"],
-             [ 60, "胸部"],
-             [ 70, "腹部"],
-             [ 74, "股間"],
-             [ 80, "*臀部"],
-             [ 88, "*腿"],
-             [ 90, "*膝"],
-             [ 96, "*脛"],
-             [100, "*足"],
-            ]
+      [ 5, "頭部"],
+      [ 10, "顔+"],
+      [ 15, "首"],
+      [ 27, "*肩"],
+      [ 33, "*上腕"],
+      [ 35, "*肘"],
+      [ 39, "*前腕"],
+      [ 43, "*手"],
+      [ 60, "胸部"],
+      [ 70, "腹部"],
+      [ 74, "股間"],
+      [ 80, "*臀部"],
+      [ 88, "*腿"],
+      [ 90, "*膝"],
+      [ 96, "*脛"],
+      [100, "*足"],
+    ]
     return table
   end
 
   def getStrikeLocationHumanDownTable()
     table = [
-             [ 6, "*前腕"],
-             [ 12, "*手"],
-             [ 19, "胸部"],
-             [ 29, "腹部"],
-             [ 35, "股間"],
-             [ 49, "*臀部"],
-             [ 70, "*腿"],
-             [ 78, "*膝"],
-             [ 92, "*脛"],
-             [100, "*足"],
-            ]
+      [ 6, "*前腕"],
+      [ 12, "*手"],
+      [ 19, "胸部"],
+      [ 29, "腹部"],
+      [ 35, "股間"],
+      [ 49, "*臀部"],
+      [ 70, "*腿"],
+      [ 78, "*膝"],
+      [ 92, "*脛"],
+      [100, "*足"],
+    ]
     return table
   end
 end

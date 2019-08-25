@@ -75,7 +75,7 @@ INFO_MESSAGE_TEXT
     debug('parren_killer_add before string', string)
 
     string = string.gsub(/#([\+\-]?[\d]+)/i) do
-      value = $1.to_i
+      value = Regexp.last_match(1).to_i
       if value >= 0
         "a[+#{value}]"
       else
@@ -116,7 +116,7 @@ INFO_MESSAGE_TEXT
     keptDiceChangeModify = 0
     regexp = /a\[([\+\-]\d+)\]/i
     if regexp =~ string
-      keptDiceChangeModify = $1
+      keptDiceChangeModify = Regexp.last_match(1)
       string = string.gsub(regexp, '')
     end
     return keptDiceChangeModify, string

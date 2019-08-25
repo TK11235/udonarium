@@ -38,8 +38,8 @@ INFO_MESSAGE_TEXT
     # ダメージペナルティ表
     if /(\w)DPT([\+\-\d]*)/i =~ string
       ttype = 'ダメージペナルティー'
-      head = $1
-      mod = parren_killer("(0#{$2})").to_i if $2
+      head = Regexp.last_match(1)
+      mod = parren_killer("(0#{Regexp.last_match(2)})").to_i if Regexp.last_match(2)
 
       type, table = getDamageTypeAndTable(head)
     end
@@ -47,8 +47,8 @@ INFO_MESSAGE_TEXT
     # ファンブル表
     if /(\w)FT([\+\-\d]*)/i =~ string
       ttype = 'ファンブル'
-      head = $1
-      mod = parren_killer("(0#{$2})").to_i if $2
+      head = Regexp.last_match(1)
+      mod = parren_killer("(0#{Regexp.last_match(2)})").to_i if Regexp.last_match(2)
 
       type, table = getFumbleTypeAndTable(head)
     end

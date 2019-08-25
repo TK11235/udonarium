@@ -32,8 +32,8 @@ INFO_MESSAGE_TEXT
   def changeText(string)
     debug('parren_killer_add begin stirng', string)
 
-    string = string.gsub(/(\d+)RS([\+\-][\+\-\d]+)<=(\d+)/i) { "3R6#{$2}<=#{$3}[#{$1}]" }
-    string = string.gsub(/(\d+)RS<=(\d+)/i) { "3R6<=#{$2}[#{$1}]" }
+    string = string.gsub(/(\d+)RS([\+\-][\+\-\d]+)<=(\d+)/i) { "3R6#{Regexp.last_match(2)}<=#{Regexp.last_match(3)}[#{Regexp.last_match(1)}]" }
+    string = string.gsub(/(\d+)RS<=(\d+)/i) { "3R6<=#{Regexp.last_match(2)}[#{Regexp.last_match(1)}]" }
 
     debug('parren_killer_add end stirng', string)
 
@@ -51,9 +51,9 @@ INFO_MESSAGE_TEXT
       return output
     end
 
-    modText = $1
-    target = $2.to_i
-    abl = $3.to_i
+    modText = Regexp.last_match(1)
+    target = Regexp.last_match(2).to_i
+    abl = Regexp.last_match(3).to_i
 
     mod = 0
     if modText
@@ -61,7 +61,7 @@ INFO_MESSAGE_TEXT
     end
 
     dstr, suc, sum = rokumon2_roll(mod, target, abl)
-    output = "#{sum}[#{dstr}] ＞ #{suc} ＞ 評価#{ rokumon2_suc_rank(suc) }"
+    output = "#{sum}[#{dstr}] ＞ #{suc} ＞ 評価#{rokumon2_suc_rank(suc)}"
 
     if suc != 0
       output += "(+#{suc}d6)"
@@ -79,7 +79,7 @@ INFO_MESSAGE_TEXT
 
     dice = dicestr.split(/,/).collect { |i| i.to_i }
 
-    mod.abs.times do |i|
+    mod.abs.times do |_i|
       if mod < 0
         dice.shift
       else
@@ -112,6 +112,6 @@ INFO_MESSAGE_TEXT
 
   def rokumon2_suc_rank(suc)
     suc_rank = ['E', 'D', 'C', 'B', 'A', 'S']
-    return suc_rank[ suc ]
+    return suc_rank[suc]
   end
 end

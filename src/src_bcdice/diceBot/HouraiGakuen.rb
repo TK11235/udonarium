@@ -65,7 +65,7 @@ INFO_MESSAGE_TEXT
     return nil unless /rol([-\d]+)/i =~ command
 
     # 目標値セット
-    target = $1.to_i
+    target = Regexp.last_match(1).to_i
 
     total, diceText = roll(3, 6)
 
@@ -109,8 +109,8 @@ INFO_MESSAGE_TEXT
   def getMedResult(command)
     return nil unless /med\((\d+),(\d+)\)/i =~ command
 
-    yourValue = $1.to_i # あなたの値
-    enemyValue = $2.to_i # 相手の値
+    yourValue = Regexp.last_match(1).to_i # あなたの値
+    enemyValue = Regexp.last_match(2).to_i # 相手の値
     target = getTargetFromValue(yourValue, enemyValue) # 値から目標値を作出
 
     total, diceText = roll(3, 6)
@@ -127,8 +127,8 @@ INFO_MESSAGE_TEXT
   def getResResult(command)
     return nil unless /res\((\d+),(\d+)\)/i =~ command
 
-    yourValue = $1.to_i # あなたの値
-    enemyValue = $2.to_i # 相手の値
+    yourValue = Regexp.last_match(1).to_i # あなたの値
+    enemyValue = Regexp.last_match(2).to_i # 相手の値
 
     # 値から目標値を作出
     yourTarget = getTargetFromValue(yourValue, enemyValue)
@@ -165,24 +165,24 @@ INFO_MESSAGE_TEXT
 
   def getResultRank(result)
     ranks = [
-     @@famble,
-     @@failure,
-     @@success,
-     @@critical,
+      @@famble,
+      @@failure,
+      @@success,
+      @@critical,
     ]
 
     return ranks.index(result)
   end
 
   # 陰陽コマンド
-  def getInnyouResult(command)
+  def getInnyouResult(_command)
     oddCount = 0
     evenCount = 0
 
     3.times do
       dice, = roll(1, 6)
 
-      if (dice % 2) == 0
+      if dice.even?
         evenCount += 1 # 偶数カウント
       else
         oddCount += 1 # 奇数カウント
@@ -197,7 +197,7 @@ INFO_MESSAGE_TEXT
   end
 
   # 八徳コマンド
-  def getHattokuResult(command)
+  def getHattokuResult(_command)
     # 3回振って、奇数・偶数がどの順序で出たかを記録する
     oddEvenList = []
     3.times do
@@ -231,12 +231,12 @@ INFO_MESSAGE_TEXT
   def getOddEven
     dice, = roll(1, 6)
 
-    return "偶数" if (dice % 2) == 0
+    return "偶数" if dice.even?
 
     return "奇数"
   end
 
-  def getGogyouResult(command)
+  def getGogyouResult(_command)
     type = '五行表'
 
     table = getGogyouTable
@@ -249,13 +249,13 @@ INFO_MESSAGE_TEXT
   # 五行コマンド
   def getGogyouTable
     table = [
-             '五行【木】',
-             '五行【火】',
-             '五行【土】',
-             '五行【金】',
-             '五行【水】',
-             '五行は【任意選択】',
-            ]
+      '五行【木】',
+      '五行【火】',
+      '五行【土】',
+      '五行【金】',
+      '五行【水】',
+      '五行は【任意選択】',
+    ]
     return table
   end
 end

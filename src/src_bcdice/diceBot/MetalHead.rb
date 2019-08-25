@@ -51,24 +51,24 @@ MESSAGETEXT
     when /^ACS/
       tableName, tableResult, tableNumber = mh_acs_table
     when /^CRC(\w)(\d+)/
-      tableName, tableResult, tableNumber = mh_crc_table($1, $2)
+      tableName, tableResult, tableNumber = mh_crc_table(Regexp.last_match(1), Regexp.last_match(2))
     when /^HR<=(.+)$/
-      target = parren_killer("(" + $1 + ")").to_i
+      target = parren_killer("(" + Regexp.last_match(1) + ")").to_i
       return rollHit(target)
     end
 
-    if ! tableName.empty?
+    unless tableName.empty?
       return "#{tableName} ＞ #{tableNumber} ＞ #{tableResult}"
     end
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?AR/i) { "#{$1}2D6" }
-    string = string.gsub(/^(S)?SR/i) { "#{$1}1D100" }
+    string = string.gsub(/^(S)?AR/i) { "#{Regexp.last_match(1)}2D6" }
+    string = string.gsub(/^(S)?SR/i) { "#{Regexp.last_match(1)}1D100" }
     return string
   end
 
-  def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' if signOfInequality != ">="
     return '' if diff == "?"
 
@@ -89,13 +89,13 @@ MESSAGETEXT
     return text
   end
 
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_1D100(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == '<='
 
     return getResult(total_n, dice_n, diff)
   end
 
-  def getHitResult(total_n, dice_n, diff)
+  def getHitResult(total_n, _dice_n, diff)
     diceValue = total_n % 100
     dice1 = diceValue % 10 # 1の位を代入
 
@@ -184,26 +184,26 @@ MESSAGETEXT
     num_d1 = numbuf % 10
     debug("num_d1[#{num_d1}]")
     if num_d1 == 1
-      numbuf = numbuf + 1
+      numbuf += 1
     end
     if num_d1 == 0
-      numbuf = numbuf - 1
+      numbuf -= 1
     end
     num_d1 = numbuf % 10
     debug("num_d1[#{num_d1}]")
 
     table_point = [
-    nil, # 0
-    nil, # 1
-    "腕部", # 2
-    "腕部", # 3
-    "脚部", # 4
-    "脚部", # 5
-    "胴部", # 6
-    "胴部", # 7
-    "胴部", # 8
-    "頭部", # 9
-  ]
+      nil, # 0
+      nil, # 1
+      "腕部", # 2
+      "腕部", # 3
+      "脚部", # 4
+      "脚部", # 5
+      "胴部", # 6
+      "胴部", # 7
+      "胴部", # 8
+      "頭部", # 9
+    ]
 
     table_damage = {
       'S' => [ {'N' => 2}, {'LW' => 16}, {'MD' => 46}, {'MW' => 56}, {'HD' => 76}, {'HW' => 96}, {'MO' => 106}, {'K' => 116} ],
@@ -222,14 +222,14 @@ MESSAGETEXT
     end
 
     damage_level = ''
-    table_damage[suv].each { |v|
-      v.each { |d, n|
+    table_damage[suv].each do |v|
+      v.each do |d, n|
         debug("suv[#{suv}] #{v} #{d} #{n}")
         if n <= numbuf
           damage_level = d
         end
-      }
-    }
+      end
+    end
 
     result = ""
 

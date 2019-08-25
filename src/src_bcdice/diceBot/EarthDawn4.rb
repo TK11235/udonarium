@@ -102,13 +102,13 @@ INFO_MESSAGE_TEXT
     stepTotal = 0
     @isFailed = true
 
-    step = $1.to_i # ステップ
-    targetNumber = $2.to_i # 目標値
+    step = Regexp.last_match(1).to_i # ステップ
+    targetNumber = Regexp.last_match(2).to_i # 目標値
     return nil if targetNumber < 0
 
-    hasKarmaDice = !$3.nil? # カルマダイスの有無
-    diceModify = $4.to_i
-    nextText = $6
+    hasKarmaDice = !Regexp.last_match(3).nil? # カルマダイスの有無
+    diceModify = Regexp.last_match(4).to_i
+    nextText = Regexp.last_match(6)
 
     stepInfo = getStepInfo(step)
     debug('stepInfo', stepInfo)
@@ -143,15 +143,15 @@ INFO_MESSAGE_TEXT
   def getBaseStepTable
     stepTable =
       [
-       #      dice
-       #      D20  D12  D10  D8  D6  D4  mod
-       [ 1,  [  0,   0,   0,  0,  0,  1,  -2] ],
-       [ 2,  [  0,   0,   0,  0,  0,  1,  -1] ],
-       [ 3,  [  0,   0,   0,  0,  0,  1,   0] ],
-       [ 4,  [  0,   0,   0,  0,  1,  0,   0] ],
-       [ 5,  [  0,   0,   0,  1,  0,  0,   0] ],
-       [ 6,  [  0,   0,   1,  0,  0,  0,   0] ],
-       [ 7,  [  0,   1,   0,  0,  0,  0,   0] ],
+        #      dice
+        #      D20  D12  D10  D8  D6  D4  mod
+        [ 1, [ 0, 0, 0, 0, 0, 1, -2] ],
+        [ 2,  [  0,   0,   0,  0,  0,  1, -1] ],
+        [ 3,  [  0,   0,   0,  0,  0,  1,   0] ],
+        [ 4,  [  0,   0,   0,  0,  1,  0,   0] ],
+        [ 5,  [  0,   0,   0,  1,  0,  0,   0] ],
+        [ 6,  [  0,   0,   1,  0,  0,  0,   0] ],
+        [ 7,  [  0,   1,   0,  0,  0,  0,   0] ],
       ]
 
     return stepTable
@@ -172,19 +172,19 @@ INFO_MESSAGE_TEXT
 
     stepRythm =
       [
-       # dice
-       # D20  D12  D10  D8  D6  D4  mod
-       [  0,   0,   0,  0,  2,  0,   0],
-       [  0,   0,   0,  1,  1,  0,   0],
-       [  0,   0,   0,  2,  0,  0,   0],
-       [  0,   0,   1,  1,  0,  0,   0],
-       [  0,   0,   2,  0,  0,  0,   0],
-       [  0,   1,   1,  0,  0,  0,   0],
-       [  0,   2,   0,  0,  0,  0,   0],
-       [  0,   1,   0,  0,  2,  0,   0],
-       [  0,   1,   0,  1,  1,  0,   0],
-       [  0,   1,   0,  2,  0,  0,   0],
-       [  0,   1,   1,  1,  0,  0,   0],
+        # dice
+        # D20  D12  D10  D8  D6  D4  mod
+        [ 0, 0, 0, 0, 2, 0, 0],
+        [  0,   0,   0,  1,  1,  0,   0],
+        [  0,   0,   0,  2,  0,  0,   0],
+        [  0,   0,   1,  1,  0,  0,   0],
+        [  0,   0,   2,  0,  0,  0,   0],
+        [  0,   1,   1,  0,  0,  0,   0],
+        [  0,   2,   0,  0,  0,  0,   0],
+        [  0,   1,   0,  0,  2,  0,   0],
+        [  0,   1,   0,  1,  1,  0,   0],
+        [  0,   1,   0,  2,  0,  0,   0],
+        [  0,   1,   1,  1,  0,  0,   0],
       ]
 
     # [  1,   0,   0,  0,  2,  0,   0],

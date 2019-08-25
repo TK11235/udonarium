@@ -60,15 +60,15 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/(\d+)BB6/i) { "#{$1}R6" }
-    string = string.gsub(/(\d+)BB/i)  { "#{$1}R6" }
-    string = string.gsub(/(\d+)BF6/i) { "#{$1}Q6" }
-    string = string.gsub(/(\d+)BF/i)  { "#{$1}Q6" }
-    string = string.gsub(/\%([\-\d]+)/i) { "[H:#{$1}]" }
-    string = string.gsub(/\@([\+\-\d]+)/i) { "[C#{$1}]" }
-    string = string.gsub(/\#([A]?[\+\-\d]+)/i) { "[F#{$1}]" }
-    string = string.gsub(/\$([1-6]+)/i) { "[S#{$1}]" }
-    string = string.gsub(/\&(\d)/i) { "[U#{$1}]" }
+    string = string.gsub(/(\d+)BB6/i) { "#{Regexp.last_match(1)}R6" }
+    string = string.gsub(/(\d+)BB/i)  { "#{Regexp.last_match(1)}R6" }
+    string = string.gsub(/(\d+)BF6/i) { "#{Regexp.last_match(1)}Q6" }
+    string = string.gsub(/(\d+)BF/i)  { "#{Regexp.last_match(1)}Q6" }
+    string = string.gsub(/\%([\-\d]+)/i) { "[H:#{Regexp.last_match(1)}]" }
+    string = string.gsub(/\@([\+\-\d]+)/i) { "[C#{Regexp.last_match(1)}]" }
+    string = string.gsub(/\#([A]?[\+\-\d]+)/i) { "[F#{Regexp.last_match(1)}]" }
+    string = string.gsub(/\$([1-6]+)/i) { "[S#{Regexp.last_match(1)}]" }
+    string = string.gsub(/\&(\d)/i) { "[U#{Regexp.last_match(1)}]" }
     return string
   end
 
@@ -77,7 +77,7 @@ INFO_MESSAGE_TEXT
     return bbt_check(string)
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+  def check_2D6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
     return '' unless signOfInequality == ">="
 
     if total_n >= diff
@@ -180,7 +180,7 @@ INFO_MESSAGE_TEXT
 
     # 出目予約の有無を確認
     if str_dicesubs
-      for i in str_dicesubs.split(//) do dicesubs.push(i.to_i) if dicesubs.size < dice_c end
+      str_dicesubs.split(//).each { |i| dicesubs.push(i.to_i) if dicesubs.size < dice_c }
       debug("▼ダイス出目予約 #{dicesubs}")
     end
 
@@ -199,7 +199,7 @@ INFO_MESSAGE_TEXT
     if dice_tc > 0
       _, dice_str, = roll(dice_tc, 6, (sortType & 1)) # ダイス数修正、並べ替えせずに出力
       dice_num = (dice_str.split(/,/) + dicesubs).collect { |n| n.to_i }	# 差し換え指定のダイスを挿入
-    elsif dicesubs.size == 0
+    elsif dicesubs.empty?
       return "ERROR:振るダイスの数が0個です"
     else
       dice_num = dicesubs # 差し換えのみの場合は差し換え指定のみ（ダイスを振らない）
@@ -210,8 +210,8 @@ INFO_MESSAGE_TEXT
     if dicepull # 出目引き上げ機能
       debug("▼出目引き上げ #{dicepull}")
       dice_num_old = dice_num.dup
-      for i in 0...dice_num.size do dice_num[i] = [dice_num[i], dicepull].max end
-      pul_flg = dice_num == dice_num_old ? false : true
+      (0...dice_num.size).each { |i| dice_num[i] = [dice_num[i], dicepull].max }
+      pul_flg = dice_num != dice_num_old
       debug("▼出目引き上げの有無について #{pul_flg}")
 
       dice_num.sort! # 置換後、再度並べ替え
@@ -303,7 +303,7 @@ INFO_MESSAGE_TEXT
 
     # 暴露表
     when /^EXPO_([ABIJ])/
-      case $1
+      case Regexp.last_match(1)
       when /A/
         type = '暴露表'
         tabletype = 1
@@ -321,7 +321,7 @@ INFO_MESSAGE_TEXT
 
     # 正体判明チャート
     when /^FACE_([ABC])/
-      case $1
+      case Regexp.last_match(1)
       when /A/
         type = '正体判明チャートA'
         tabletype = 1

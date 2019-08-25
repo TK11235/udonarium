@@ -30,9 +30,9 @@ MESSAGETEXT
 
     # $x の結果は正規表現マッチングすると新しい値に書き換わってしまうので、
     # マッチングした直後に変数に格納してしまうのが大事なポイント！
-    diceCount = $1.to_i
-    targetNumber = $2.to_i
-    criticalValue = $4
+    diceCount = Regexp.last_match(1).to_i
+    targetNumber = Regexp.last_match(2).to_i
+    criticalValue = Regexp.last_match(4)
     criticalValue ||= 1
     criticalValue = criticalValue.to_i
 

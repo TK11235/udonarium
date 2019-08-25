@@ -31,9 +31,9 @@ INFO_MESSAGE_TEXT
   def changeText(string)
     return string unless /ArS/i =~ string
 
-    string = string.gsub(/ArS(\d+)([^\d\s][\+\-\d]+)/i) { "1R10#{$2}[#{$1}]" }
-    string = string.gsub(/ArS([^\d\s][\+\-\d]+)/i) { "1R10#{$1}" }
-    string = string.gsub(/ArS(\d+)/i) { "1R10[#{$1}]" }
+    string = string.gsub(/ArS(\d+)([^\d\s][\+\-\d]+)/i) { "1R10#{Regexp.last_match(2)}[#{Regexp.last_match(1)}]" }
+    string = string.gsub(/ArS([^\d\s][\+\-\d]+)/i) { "1R10#{Regexp.last_match(1)}" }
+    string = string.gsub(/ArS(\d+)/i) { "1R10[#{Regexp.last_match(1)}]" }
     string = string.gsub(/ArS/i) { "1R10" }
 
     return string
@@ -43,7 +43,7 @@ INFO_MESSAGE_TEXT
     arsmagica_stress(string, nick_e)
   end
 
-  def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)# ゲーム別成功度判定(nD10)
+  def check_nD10(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD10)
     if signOfInequality != ">="
       return ""
     end
@@ -55,7 +55,7 @@ INFO_MESSAGE_TEXT
     return " ＞ 失敗"
   end
 
-  def check_1D10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(1D10)
+  def check_1D10(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(1D10)
     if signOfInequality != ">="
       return ""
     end
@@ -67,7 +67,7 @@ INFO_MESSAGE_TEXT
     return " ＞ 失敗"
   end
 
-  def arsmagica_stress(string, nick_e)
+  def arsmagica_stress(string, _nick_e)
     output = "1"
 
     return "1" unless (m = /(^|\s)S?(1[rR]10([\+\-\d]*)(\[(\d+)\])?(([>=]+)(\d+))?)(\s|$)/i.match(string))
@@ -95,7 +95,7 @@ INFO_MESSAGE_TEXT
       count0 = 0
       dice_n = []
 
-      botch.times do |i|
+      botch.times do |_i|
         botch_die = rand(10)
         count0 += 1 if botch_die == 0
         dice_n.push(botch_die)
@@ -103,7 +103,7 @@ INFO_MESSAGE_TEXT
 
       dice_n = dice_n.sort if sortType != 0
 
-      output += "0[#{die},#{ dice_n.join(',') }]"
+      output += "0[#{die},#{dice_n.join(',')}]"
 
       if count0 != 0
         bonus = 0
@@ -149,7 +149,7 @@ INFO_MESSAGE_TEXT
       if bonus > 0
         output += "#{die}+#{bonus} ＞ #{total}"
       elsif bonus < 0
-        output += "#{die$bonus} ＞ #{total}"
+        output += "#{die $bonus} ＞ #{total}"
       else
         output += total.to_s
       end

@@ -17,7 +17,7 @@ class Chill3 < DiceBot
 INFO_MESSAGE_TEXT
   end
 
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(1D100)
+  def check_1D100(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(1D100)
     return '' unless signOfInequality == "<="
 
     # ゾロ目ならC-ResultかBotch

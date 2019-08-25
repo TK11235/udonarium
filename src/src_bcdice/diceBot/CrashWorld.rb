@@ -24,7 +24,7 @@ INFO_MESSAGE_TEXT
 
     case command
     when /CW(\d+)/i
-      result = getCrashWorldRoll($1.to_i)
+      result = getCrashWorldRoll(Regexp.last_match(1).to_i)
     end
 
     return result
@@ -51,7 +51,7 @@ INFO_MESSAGE_TEXT
       if num <= target || num == 11
         # 成功/クリティカル(11)。 次回の目標値を変更して継続
         target = num
-        successness = successness + 1
+        successness += 1
       elsif num == 12
         # ファンブルなら終了。
         isEnd = true

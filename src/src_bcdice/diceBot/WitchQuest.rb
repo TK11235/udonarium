@@ -29,10 +29,10 @@ MESSAGETEXT
   def rollDiceCommand(command)
     case command
     when /WQ(\d+)/
-      number = $1.to_i
+      number = Regexp.last_match(1).to_i
       return challenge(number)
     when /SET(\d+)/
-      number = $1.to_i
+      number = Regexp.last_match(1).to_i
       return getStructureEncounter(number)
     end
 
@@ -65,8 +65,7 @@ MESSAGETEXT
              [3, "３レベル成功(奇跡的大成功)"],
              [4, "４レベル成功(歴史的大成功)"],
              [5, "５レベル成功(伝説的大成功)"],
-             [6, "６レベル成功(神話的大成功)"],
-            ]
+             [6, "６レベル成功(神話的大成功)"],]
 
     if success >= table.last.first
       return table.last.last
@@ -125,8 +124,7 @@ MESSAGETEXT
               [45, %w{馬にブラシをかけている 気性の激しい 騎手を探している 馬と話ができる 馬の生まれ変わりという 馬を安楽死させようか迷っている}],
               [46, %w{いたずら好きな ライバル意識の強い 魔法の下手な 魔法を信じない 自分を神と思っている 魔法を使って人を化かしたがる}],
               [47, %w{傷だらけな 両手に宝物を持った かわいい 地図を見ながら出てきている 剣を持った ダンジョンの主といわれる}],
-              [48, %w{墓参りをしている 耳の遠い 死んでしまった 葬式をしている きもだめしをしている 墓守をしている}],
-             ]
+              [48, %w{墓参りをしている 耳の遠い 死んでしまった 葬式をしている きもだめしをしている 墓守をしている}],]
 
     table = get_table_by_number(number, tables, nil)
     return nil if table.nil?
@@ -166,8 +164,7 @@ MESSAGETEXT
              [55, "お姫様"],
              [56, gotoNextTable],
 
-             [66, gotoNextTable],
-            ]
+             [66, gotoNextTable],]
 
     getPersonTable(table)
   end
@@ -200,8 +197,7 @@ MESSAGETEXT
              [55, "蛇"],
              [56, gotoNextTable],
 
-             [66, gotoNextTable],
-            ]
+             [66, gotoNextTable],]
 
     getPersonTable(table)
   end
@@ -234,8 +230,7 @@ MESSAGETEXT
              [55, "ロボット"],
              [56, "恐ろしい人"],
 
-             [66, gotoNextTable],
-            ]
+             [66, gotoNextTable],]
 
     getPersonTable(table)
   end
@@ -266,8 +261,7 @@ MESSAGETEXT
              [55, "初恋の人"],
              [56, "分かれた女(男)、不倫中の相手、または独身PCの場合、二股をかけている二人の両方"],
 
-             [66, "宇宙人"],
-            ]
+             [66, "宇宙人"],]
 
     getPersonTable(table)
   end

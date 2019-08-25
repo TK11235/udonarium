@@ -51,16 +51,16 @@ MESSAGETEXT
   def rollDiceCommand(command)
     # AA/ALコマンド：調査判定, 成功判定
     if /(\d+)?A(A|L)(\d+)?((x|\*)(\d+)(\+(\d+))?)?(C(\d+))?$/i === command
-      diceCount = ($1 || 2).to_i
-      target = ($3 || 6).to_i
-      damage = ($6 || 0).to_i
+      diceCount = (Regexp.last_match(1) || 2).to_i
+      target = (Regexp.last_match(3) || 6).to_i
+      damage = (Regexp.last_match(6) || 0).to_i
 
-      if $2 == 'L' # 旧Ver対応
+      if Regexp.last_match(2) == 'L' # 旧Ver対応
         criticalTrigger = 0
         criticalNumber = 0
       else
-        criticalTrigger = ($8 || 0).to_i
-        criticalNumber = ($10 || 1).to_i
+        criticalTrigger = (Regexp.last_match(8) || 0).to_i
+        criticalNumber = (Regexp.last_match(10) || 1).to_i
       end
       criticalNumber = 3 if criticalNumber > 4
 

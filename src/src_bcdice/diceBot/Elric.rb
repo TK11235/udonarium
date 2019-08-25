@@ -16,7 +16,7 @@ INFO_MESSAGE_TEXT
   end
 
   # ゲーム別成功度判定(1d100)
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == "<="
 
     # 1は常に貫通

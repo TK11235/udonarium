@@ -76,7 +76,7 @@ MESSAGETEXT
 
   def getValue(text)
     text ||= ""
-    return parren_killer("(0#{ text })").to_i
+    return parren_killer("(0#{text})").to_i
   end
 
   def getValueText(value)

@@ -18,7 +18,7 @@ class Chill < DiceBot
 INFO_MESSAGE_TEXT
   end
 
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(1D10)
+  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(1D10)
     return '' if signOfInequality != "<="
 
     return " ＞ ファンブル" if total_n >= 100
@@ -50,7 +50,7 @@ INFO_MESSAGE_TEXT
       return "1"
     end
 
-    strikeRank = $3.to_i
+    strikeRank = Regexp.last_match(3).to_i
     dice_w = ''
     dice_ws = ''
     dice_wa = ''
@@ -67,7 +67,7 @@ INFO_MESSAGE_TEXT
       wounds, dice_ws = roll(4, 10)
       dice = '5d10*3, 4d10+' + ((strikeRank - 13) * 2).to_s + 'd10'
       dice_add += ', ' + wounds.to_s
-      dice_str = "#{dice_str}, #{dice_ws.to_s}"
+      dice_str = "#{dice_str}, #{dice_ws}"
       wounds_wk, dice_ws = roll((strikeRank - 13) * 2, 10)
       dice_str += "+#{dice_ws}"
       dice_add += "+#{wounds_wk}"
@@ -133,13 +133,13 @@ INFO_MESSAGE_TEXT
       dice = (strikeRank - 6).to_s + 'd10*2'
       damage, dice_str = roll(strikeRank - 6, 10)
       dice_add = damage.to_s + '*2'
-      damage = damage * 2
+      damage *= 2
       dice_str = "(#{dice_str})*2"
     else
       dice = '5d10*3'
       damage, dice_str = roll(5, 10)
       dice_add = damage.to_s + '*3'
-      damage = damage * 3
+      damage *= 3
       dice_str = "(#{dice_str})*3"
     end
 

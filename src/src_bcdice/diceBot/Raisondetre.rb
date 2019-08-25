@@ -43,19 +43,19 @@ MESSAGETEXT
 
   def rollDiceCommand(command)
     if /(-)?(\d+)?RD(\d+)?(@(\d+))?$/i === command
-      diceCount = ($2 || 1).to_i
-      diceCount *= -1 if !$1.nil?
-      choiceCount = ($3 || 1).to_i
-      target = ($5 || 0).to_i
+      diceCount = (Regexp.last_match(2) || 1).to_i
+      diceCount *= -1 unless Regexp.last_match(1).nil?
+      choiceCount = (Regexp.last_match(3) || 1).to_i
+      target = (Regexp.last_match(5) || 0).to_i
 
       return checkRoll(diceCount, choiceCount, target)
 
     elsif /(-)?(\d+)?DD([1-9])?([\+\-]\d+)?$/i === command
-      diceCount = ($2 || 1).to_i
-      diceCount *= -1 if !$1.nil?
-      armor = ($3 || 0).to_i
+      diceCount = (Regexp.last_match(2) || 1).to_i
+      diceCount *= -1 unless Regexp.last_match(1).nil?
+      armor = (Regexp.last_match(3) || 0).to_i
       if armor > 0
-        armor += ($4 || 0).to_i
+        armor += (Regexp.last_match(4) || 0).to_i
         armor = 1 if  armor < 1
         armor = 9 if  armor > 9
       end
@@ -87,7 +87,7 @@ MESSAGETEXT
 
     dice = 0
     success = 0
-    if !isFunble
+    unless isFunble
       criticalCount = diceArray.count(0)
       critical = criticalCount * 10
 
@@ -142,7 +142,7 @@ MESSAGETEXT
     result += " ＞ [#{diceText}] ＞ [#{diceText2}]"
 
     if armor > 0
-      resultArray = Array.new
+      resultArray = []
       success = 0
 
       diceArray.each do |i|

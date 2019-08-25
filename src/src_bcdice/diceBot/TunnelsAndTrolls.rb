@@ -41,15 +41,15 @@ INFO_MESSAGE_TEXT
     debug('Tunnels & Trolls parren_killer begin string', string)
 
     if /(\d+)LV/i =~ string
-      level_diff = $1.to_i * 5 + 15
+      level_diff = Regexp.last_match(1).to_i * 5 + 15
       string = string.sub(/(\d+)LV/i) { level_diff.to_s }
     end
 
     if /BS/i =~ string
-      string = string.gsub(/(\d+)HBS([^\d\s][\+\-\d]+)/i) { "#{$1}R6#{$2}[H]" }
-      string = string.gsub(/(\d+)HBS/i) { "#{$1}R6[H]" }
-      string = string.gsub(/(\d+)BS([^\d\s][\+\-\d]+)/i) { "#{$1}R6#{$2}" }
-      string = string.gsub(/(\d+)BS/i) { "#{$1}R6" }
+      string = string.gsub(/(\d+)HBS([^\d\s][\+\-\d]+)/i) { "#{Regexp.last_match(1)}R6#{Regexp.last_match(2)}[H]" }
+      string = string.gsub(/(\d+)HBS/i) { "#{Regexp.last_match(1)}R6[H]" }
+      string = string.gsub(/(\d+)BS([^\d\s][\+\-\d]+)/i) { "#{Regexp.last_match(1)}R6#{Regexp.last_match(2)}" }
+      string = string.gsub(/(\d+)BS/i) { "#{Regexp.last_match(1)}R6" }
     end
 
     return string
@@ -59,7 +59,7 @@ INFO_MESSAGE_TEXT
     return tandt_berserk(string, nick_e)
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
     debug('Tunnels & Trolls check_2D6 begin')
 
     return '' unless signOfInequality == ">="
@@ -116,7 +116,7 @@ INFO_MESSAGE_TEXT
     if is_int?(experiencePoint)
       experiencePoint = experiencePoint.to_i
     else
-      experiencePoint = sprintf("%.1f", experiencePoint)
+      experiencePoint = format("%.1f", experiencePoint)
     end
 
     debug("experiencePoint", experiencePoint)
@@ -175,7 +175,7 @@ INFO_MESSAGE_TEXT
         diceType = 6
 
         dice_face = []
-        diceType.times do |i|
+        diceType.times do |_i|
           dice_face.push(0)
         end
 
@@ -190,7 +190,7 @@ INFO_MESSAGE_TEXT
           end
         end
 
-        if isFirstLoop && (dice_arr.length < 1)
+        if isFirstLoop && dice_arr.empty?
           min1 = 0
           min2 = 0
 
@@ -223,7 +223,7 @@ INFO_MESSAGE_TEXT
 
       debug('loop last chek dice_arr', dice_arr)
 
-      break unless dice_arr.length != 0
+      break if dice_arr.empty?
     end
 
     debug('loop breaked')

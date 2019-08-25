@@ -41,9 +41,9 @@ MESSAGETEXT
 
     case command
     when /(\d+)?UK(\@?(\d))?(>=(\d+))?/i
-      base = ($1 || 2).to_i
-      crit = $3.to_i
-      diff = $5.to_i
+      base = (Regexp.last_match(1) || 2).to_i
+      crit = Regexp.last_match(3).to_i
+      diff = Regexp.last_match(5).to_i
       result = checkRoll(base, crit, diff)
     end
 
@@ -80,7 +80,7 @@ MESSAGETEXT
     result = ""
 
     if isDragonDice(crit)
-      result += "龍のダイス「#{@arrayDragonDiceName[crit]}」(#{crit.to_s})を使用 ＞ "
+      result += "龍のダイス「#{@arrayDragonDiceName[crit]}」(#{crit})を使用 ＞ "
     end
 
     if  success
@@ -101,7 +101,7 @@ MESSAGETEXT
     return result
   end
 
-  def getSuccessInfo(diceList, crit, diff)
+  def getSuccessInfo(diceList, crit, _diff)
     debug("checkSuccess diceList, crit", diceList, crit)
 
     diceCountHash = getDiceCountHash(diceList, crit)

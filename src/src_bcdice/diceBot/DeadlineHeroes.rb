@@ -38,12 +38,12 @@ INFO_MESSAGE_TEXT
   def rollDiceCommand(command)
     case command
     when /^DLH(\d+([\+\-]\d+)*)/i
-      expressions = $1
+      expressions = Regexp.last_match(1)
       return resolute_action(expressions)
 
     when /^DC(L||S|C)(\d+)/i
-      type = $1
-      minusScore = $2.to_i
+      type = Regexp.last_match(1)
+      minusScore = Regexp.last_match(2).to_i
 
       chartName =
         case type
@@ -58,8 +58,8 @@ INFO_MESSAGE_TEXT
       return fetchDeathChart(chartName, minusScore)
 
     when /^RNC([JO])/i
-      type = $1
-      chartName = ((type == 'J') ? '日本' : '海外')
+      type = Regexp.last_match(1)
+      chartName = (type == 'J' ? '日本' : '海外')
 
       roll_result, dice10, dice01 = roll_d100
 
@@ -88,8 +88,8 @@ INFO_MESSAGE_TEXT
     roll_result, dice10, dice01 = roll_d100
 
     text = "行為判定(成功率:#{success_rate}％)"
-    text += " ＞ 1D100[#{dice10},#{dice01}]=#{'%02d' % [roll_result]}"
-    text += " ＞ #{'%02d' % [roll_result]}"
+    text += " ＞ 1D100[#{dice10},#{dice01}]=#{format('%02d', roll_result)}"
+    text += " ＞ #{format('%02d', roll_result)}"
 
     if roll_result == 100 || success_rate <= 0
       text += FUMBLE_STR
@@ -133,14 +133,14 @@ INFO_MESSAGE_TEXT
 
       return ["#{minKey}以下", chart[minKey]] if keyNumber < minKey
       return ["#{maxKey}以上", chart[maxKey]] if keyNumber > maxKey
-      return [keyNumber.to_s, chart[keyNumber]] if chart.has_key? keyNumber
+      return [keyNumber.to_s, chart[keyNumber]] if chart.key? keyNumber
     end
 
     return ["未定義", "？？？"]
   end
 
   def getDeathChartByName(chartName)
-    return {} unless @@deathCharts.has_key? chartName
+    return {} unless @@deathCharts.key? chartName
 
     return @@deathCharts[chartName]
   end
@@ -190,7 +190,7 @@ INFO_MESSAGE_TEXT
   def fetchResultFromRealNameChart(keyNumber, chartInfo)
     columns, chart, = chartInfo
 
-    range, elements = chart.find do |range, elements|
+    range, elements = chart.find do |range, _elements|
       range.include?(keyNumber)
     end
 
@@ -218,15 +218,15 @@ INFO_MESSAGE_TEXT
   end
 
   def getRealNameChartByName(chartName)
-    return {} unless @@realNameCharts.has_key? chartName
+    return {} unless @@realNameCharts.key? chartName
 
     return @@realNameCharts[chartName]
   end
 
   @@realNameCharts = {
     '日本' => [['姓', '名（男）', '名（女）'], [
-      [01..06, ['アイカワ／相川、愛川', 'アキラ／晶、章', 'アン／杏']],
-      [07..12, ['アマミヤ／雨宮', 'エイジ／映司、英治', 'イノリ／祈鈴、祈']],
+      [ 1..6, ['アイカワ／相川、愛川', 'アキラ／晶、章', 'アン／杏']],
+      [ 7..12, ['アマミヤ／雨宮', 'エイジ／映司、英治', 'イノリ／祈鈴、祈']],
       [13..18, ['イブキ／伊吹', 'カズキ／和希、一輝', 'エマ／英真、恵茉']],
       [19..24, ['オガミ／尾上', 'ギンガ／銀河', 'カノン／花音、観音']],
       [25..30, ['カイ／甲斐', 'ケンイチロウ／健一郎', 'サラ／沙羅']],
@@ -244,8 +244,8 @@ INFO_MESSAGE_TEXT
       [97..100, ['名無し（何らかの理由で名前を持たない、もしくは失った）']],
     ]],
     '海外' => [['名（男）', '名（女）', '姓'], [
-      [01..06, ['アルバス', 'アイリス', 'アレン']],
-      [07..12, ['クリス', 'オリーブ', 'ウォーケン']],
+      [ 1..6, ['アルバス', 'アイリス', 'アレン']],
+      [ 7..12, ['クリス', 'オリーブ', 'ウォーケン']],
       [13..18, ['サミュエル', 'カーラ', 'ウルフマン']],
       [19..24, ['シドニー', 'キルスティン', 'オルセン']],
       [25..30, ['スパイク', 'グウェン', 'カーター']],
@@ -290,9 +290,9 @@ INFO_MESSAGE_TEXT
 
   def getHeroNameElementText(info)
     result = ""
-    result += (info[:chartName]).to_s if info.has_key?(:chartName)
-    result += "(1D10[#{info[:dice]}]) ＞ " if info.has_key?(:dice)
-    result += "［#{info[:innerChartName]}］ ＞ 1D10[#{info[:innerResult][:dice]}] ＞ " if info.has_key?(:innerChartName)
+    result += (info[:chartName]).to_s if info.key?(:chartName)
+    result += "(1D10[#{info[:dice]}]) ＞ " if info.key?(:dice)
+    result += "［#{info[:innerChartName]}］ ＞ 1D10[#{info[:innerResult][:dice]}] ＞ " if info.key?(:innerChartName)
     result += "「#{info[:coreResult]}」"
   end
 
@@ -303,13 +303,13 @@ INFO_MESSAGE_TEXT
     return defaultResult if chart.nil?
 
     dice, = roll(1, 10)
-    return defaultResult unless chart.has_key?(dice)
+    return defaultResult unless chart.key?(dice)
 
     result = {:dice => dice, :result => chart[dice], :chartName => chartName}
     result[:coreResult] = result[:result]
 
     if result[:result] =~ /［(.+)］/
-      innerResult = rollHeroNameElementChart($1.to_s)
+      innerResult = rollHeroNameElementChart(Regexp.last_match(1).to_s)
       result[:innerResult] = innerResult
       result[:innerChartName] = innerResult[:chartName]
       result[:coreResult] = innerResult[:name]
@@ -324,7 +324,7 @@ INFO_MESSAGE_TEXT
     return nil if chart.nil?
 
     dice, = roll(1, 10)
-    return nil unless chart.has_key?(dice)
+    return nil unless chart.key?(dice)
 
     name, mean, = chart[dice]
 

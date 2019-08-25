@@ -31,11 +31,11 @@ MESSAGETEXT
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?G/i) { "#{$1}2D6" }
+    string = string.gsub(/^(S)?G/i) { "#{Regexp.last_match(1)}2D6" }
     return string
   end
 
-  def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+  def check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
     if dice_n == 10
       diceList = getDiceList()
       if diceList[0] == 5

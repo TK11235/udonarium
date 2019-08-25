@@ -36,12 +36,12 @@ MESSAGETEXT
 
   def rollDiceCommand(command)
     if /(\d+)?IL([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?(P)?$/i === command
-      diceCount = ($1 || 1).to_i
-      blockNo = [($2 || 0).to_i, ($3 || 0).to_i, ($4 || 0).to_i, ($5 || 0).to_i, ($6 || 0).to_i, ($7 || 0).to_i]
+      diceCount = (Regexp.last_match(1) || 1).to_i
+      blockNo = [(Regexp.last_match(2) || 0).to_i, (Regexp.last_match(3) || 0).to_i, (Regexp.last_match(4) || 0).to_i, (Regexp.last_match(5) || 0).to_i, (Regexp.last_match(6) || 0).to_i, (Regexp.last_match(7) || 0).to_i]
       blockNo.delete(0)
       blockNo = blockNo.sort
       blockNo = blockNo.uniq
-      isParry = !$8.nil?
+      isParry = !Regexp.last_match(8).nil?
 
       return checkRoll(diceCount, blockNo, isParry)
     end
@@ -53,7 +53,7 @@ MESSAGETEXT
     dice, diceText = roll(diceCount, 6, @sortTye)
     diceArray = diceText.split(/,/).collect { |i| i.to_i }
 
-    resultArray = Array.new
+    resultArray = []
     success = 0
     diceArray.each do |i|
       if blockNo.count(i) > 0

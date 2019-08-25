@@ -6,14 +6,14 @@ class DiceBot
 
   # 接頭辞（反応するコマンド）の配列を返す
   # @return [Array<String>]
-  def self.prefixes
-    @prefixes
+  class << self
+    attr_reader :prefixes
   end
 
   # 接頭辞（反応するコマンド）の正規表現を返す
   # @return [Regexp]
-  def self.prefixesPattern
-    @prefixesPattern
+  class << self
+    attr_reader :prefixesPattern
   end
 
   # 接頭辞（反応するコマンド）を設定する
@@ -21,10 +21,10 @@ class DiceBot
   # @return [self]
   def self.setPrefixes(prefixes)
     @prefixes = prefixes.
-      # 最適化が効くように内容の文字列を変更不可にする
-      map(&:freeze).
-      # 配列全体を変更不可にする
-      freeze
+                # 最適化が効くように内容の文字列を変更不可にする
+                map(&:freeze).
+                # 配列全体を変更不可にする
+                freeze
     @prefixesPattern = /(^|\s)(S)?(#{prefixes.join('|')})(\s|$)/i.freeze
 
     self
@@ -71,7 +71,7 @@ class DiceBot
     if !prefixs.empty? && self.class.prefixes.empty?
       # 従来の方法（#prefixs）で接頭辞を設定していた場合でも
       # クラス側に接頭辞が設定されるようにする
-      $stderr.puts("#{gameType}: #prefixs is deprecated. Please use .setPrefixes.")
+      warn("#{gameType}: #prefixs is deprecated. Please use .setPrefixes.")
       self.class.setPrefixes(prefixs)
     end
   end
@@ -112,9 +112,7 @@ class DiceBot
   # @deprecated 代わりに {#prefixes} を使ってください
   alias prefixs prefixes
 
-  def gameType
-    @gameType
-  end
+  attr_reader :gameType
 
   def setGameType(type)
     @gameType = type
@@ -124,9 +122,7 @@ class DiceBot
     @sendMode = m
   end
 
-  def upplerRollThreshold=(v)
-    @upplerRollThreshold = v
-  end
+  attr_writer :upplerRollThreshold
 
   def bcdice=(b)
     @@bcdice = b
@@ -156,9 +152,7 @@ class DiceBot
     @@bcdice.unlimitedRollDiceType
   end
 
-  def sortType
-    @sortType
-  end
+  attr_reader :sortType
 
   def setSortType(s)
     @sortType = s
@@ -196,8 +190,8 @@ class DiceBot
       return '1', secret_flg
     end
 
-    secretMarker = $2
-    command = $3
+    secretMarker = Regexp.last_match(2)
+    command = Regexp.last_match(3)
 
     command = removeDiceCommandMessage(command)
     debug("dicebot after command", command)
@@ -233,9 +227,9 @@ class DiceBot
     begin
       debug('call rollDiceCommand command', command)
       result, secret_flg = rollDiceCommand(command)
-    rescue => e
-      #debug("executeCommand exception", e.to_s, $@.join("\n"))
-      debug("executeCommand exception", e.to_s, ($@ || []).join("\n"), $!) # TKfix $@ is nil
+    rescue StandardError => e
+      # debug("executeCommand exception", e.to_s, $@.join("\n"))
+      debug("executeCommand exception", e.to_s, ($@ || []).join("\n")) # TKfix $@ is nil
     end
 
     debug('rollDiceCommand result', result)
@@ -243,7 +237,7 @@ class DiceBot
     return result, secret_flg
   end
 
-  def rollDiceCommand(command)
+  def rollDiceCommand(_command)
     nil
   end
 
@@ -256,27 +250,27 @@ class DiceBot
     @diffText = diffText
   end
 
-  def dice_command_xRn(string, nick_e)
+  def dice_command_xRn(_string, _nick_e)
     ''
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+  def check_2D6(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
     ''
   end
 
-  def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(nD6)
+  def check_nD6(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD6)
     ''
   end
 
-  def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)# ゲーム別成功度判定(nD10)
+  def check_nD10(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD10)
     ''
   end
 
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)    # ゲーム別成功度判定(1d100)
+  def check_1D100(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max)    # ゲーム別成功度判定(1d100)
     ''
   end
 
-  def check_1D20(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)     # ゲーム別成功度判定(1d20)
+  def check_1D20(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max)     # ゲーム別成功度判定(1d20)
     ''
   end
 
@@ -347,27 +341,27 @@ class DiceBot
   end
 
   # ダイスロールによるポイント等の取得処理用（T&T悪意、ナイトメアハンター・ディープ宿命、特命転校生エクストラパワーポイントなど）
-  def getDiceRolledAdditionalText(n1, n_max, dice_max)
+  def getDiceRolledAdditionalText(_n1, _n_max, _dice_max)
     ''
   end
 
   # ダイス目による補正処理（現状ナイトメアハンターディープ専用）
-  def getDiceRevision(n_max, dice_max, total_n)
+  def getDiceRevision(_n_max, _dice_max, _total_n)
     return '', 0
   end
 
   # ダイス目文字列からダイス値を変更する場合の処理（現状クトゥルフ・テック専用）
-  def changeDiceValueByDiceText(dice_now, dice_str, isCheckSuccess, dice_max)
+  def changeDiceValueByDiceText(dice_now, _dice_str, _isCheckSuccess, _dice_max)
     dice_now
   end
 
   # SW専用
-  def setRatingTable(nick_e, tnick, channel_to_list)
+  def setRatingTable(_nick_e, _tnick, _channel_to_list)
     '1'
   end
 
   # 振り足し時のダイス読み替え処理用（ダブルクロスはクリティカルでダイス10に読み替える)
-  def getJackUpValueOnAddRoll(dice_n)
+  def getJackUpValueOnAddRoll(_dice_n)
     0
   end
 
@@ -377,13 +371,12 @@ class DiceBot
   end
 
   # シャドウラン4版用グリッチ判定
-  def getGrichText(numberSpot1, dice_cnt_total, suc)
+  def getGrichText(_numberSpot1, _dice_cnt_total, _suc)
     ''
   end
 
   # SW2.0 の超成功用
-  def check2dCritical(critical, dice_new, dice_arry, loop_count)
-  end
+  def check2dCritical(critical, dice_new, dice_arry, loop_count); end
 
   def is2dCritical
     false
@@ -399,12 +392,12 @@ class DiceBot
     diceList = []
 
     if /\[([\d,]+)\]/ =~ diceText
-      diceText = $1
+      diceText = Regexp.last_match(1)
     end
 
     return diceList unless /([\d,]+)/ =~ diceText
 
-    diceString = $1
+    diceString = Regexp.last_match(1)
     diceList = diceString.split(/,/).collect { |i| i.to_i }
 
     debug("diceList", diceList)
@@ -462,7 +455,8 @@ class DiceBot
   end
 
   def getTableCommandResult(command, tables, isPrintDiceText = true)
-    info = tables[command]
+    # info = tables[command]
+    info = tables[command.upcase] # TKfix extratables互換性
     return nil if info.nil?
 
     name = info[:name]
@@ -476,8 +470,8 @@ class DiceBot
     text, number, diceText =
       case type
       when /(\d+)D(\d+)/
-        count = $1.to_i
-        diceType = $2.to_i
+        count = Regexp.last_match(1).to_i
+        diceType = Regexp.last_match(2).to_i
         limit = diceType * count - (count - 1)
         table = getTableInfoFromExtraTableText(table, limit)
         get_table_by_nDx_extratable(table, count, diceType)
@@ -486,14 +480,14 @@ class DiceBot
         item, value = get_table_by_d66(table)
         value = value.to_i
         output = item[1]
-        #diceText = (value / 10).to_s  + "," + (value % 10).to_s
+        #diceText = (value / 10).to_s + "," + (value % 10).to_s
         diceText = (value / 10).floor.to_s  + "," + (value % 10).to_s # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
         [output, value, diceText]
       when 'D66S'
         table = getTableInfoFromExtraTableText(table, 21)
         output, value = get_table_by_d66_swap(table)
         value = value.to_i
-        #diceText = (value / 10).to_s  + "," + (value % 10).to_s
+        #diceText = (value / 10).to_s + "," + (value % 10).to_s
         diceText = (value / 10).floor.to_s  + "," + (value % 10).to_s # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
         [output, value, diceText]
       else
@@ -511,13 +505,13 @@ class DiceBot
   end
 
   def getTableInfoFromExtraTableText(text, count = nil)
-    if text.kind_of?(String)
+    if text.is_a?(String)
       text = text.split(/\n/)
     end
 
     newTable = text.map do |item|
-      if item.kind_of?(String) && (/^(\d+):(.*)/ === item)
-        [$1.to_i, $2]
+      if item.is_a?(String) && (/^(\d+):(.*)/ === item)
+        [Regexp.last_match(1).to_i, Regexp.last_match(2)]
       else
         item
       end

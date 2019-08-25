@@ -27,7 +27,7 @@ INFO_MESSAGE_TEXT
     check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
   end
 
-  def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(nD6)
+  def check_nD6(total_n, _dice_n, signOfInequality, diff, dice_cnt, _dice_max, n1, n_max) # ゲーム別成功度判定(nD6)
     debug("check_nD6 begin")
 
     # 全部１の目ならファンブル

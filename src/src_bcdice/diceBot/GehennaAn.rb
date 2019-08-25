@@ -30,10 +30,10 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/(\d+)GA(\d+)([\+\-][\+\-\d]+)/) { "#{$1}R6#{$3}>=#{$2}[1]" }
-    string = string.gsub(/(\d+)GA(\d+)/) { "#{$1}R6>=#{$2}[1]" }
-    string = string.gsub(/(\d+)G(\d+)([\+\-][\+\-\d]+)/) { "#{$1}R6#{$3}>=#{$2}[0]" }
-    string = string.gsub(/(\d+)G(\d+)/) { "#{$1}R6>=#{$2}[0]" }
+    string = string.gsub(/(\d+)GA(\d+)([\+\-][\+\-\d]+)/) { "#{Regexp.last_match(1)}R6#{Regexp.last_match(3)}>=#{Regexp.last_match(2)}[1]" }
+    string = string.gsub(/(\d+)GA(\d+)/) { "#{Regexp.last_match(1)}R6>=#{Regexp.last_match(2)}[1]" }
+    string = string.gsub(/(\d+)G(\d+)([\+\-][\+\-\d]+)/) { "#{Regexp.last_match(1)}R6#{Regexp.last_match(3)}>=#{Regexp.last_match(2)}[0]" }
+    string = string.gsub(/(\d+)G(\d+)/) { "#{Regexp.last_match(1)}R6>=#{Regexp.last_match(2)}[0]" }
   end
 
   def dice_command_xRn(string, nick_e)
@@ -45,11 +45,11 @@ INFO_MESSAGE_TEXT
 
     return output unless /(^|\s)S?((\d+)[rR]6([\+\-\d]+)?([>=]+(\d+))(\[(\d)\]))(\s|$)/i =~ string
 
-    string = $2
-    diceCount = $3.to_i
-    modText = $4
-    diff = $6.to_i
-    mode = $8.to_i
+    string = Regexp.last_match(2)
+    diceCount = Regexp.last_match(3).to_i
+    modText = Regexp.last_match(4)
+    diff = Regexp.last_match(6).to_i
+    mode = Regexp.last_match(8).to_i
 
     mod = parren_killer("(0#{modText})").to_i
 
@@ -115,12 +115,12 @@ INFO_MESSAGE_TEXT
 
   def getTougiBonus(success)
     table = [
-             [ 6, '1'],
-             [13, '2'],
-             [18, '3'],
-             [22, '4'],
-             [99, '5'],
-            ]
+      [ 6, '1'],
+      [13, '2'],
+      [18, '3'],
+      [22, '4'],
+      [99, '5'],
+    ]
 
     return get_table_by_number(success, table)
   end

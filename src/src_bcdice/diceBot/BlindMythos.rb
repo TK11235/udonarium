@@ -62,11 +62,11 @@ MESSAGETEXT
   def judgeRoll(command)
     return nil unless /^BM(S)?(\d*)(@(\d+))?>=(\d+)$/i =~ command
 
-    isStop = !$1.nil?
-    skillRank = $2.to_i
-    judgeNumberText = $3
-    judgeNumber = ($4 || 4).to_i
-    targetNumber = ($5 || 1).to_i
+    isStop = !Regexp.last_match(1).nil?
+    skillRank = Regexp.last_match(2).to_i
+    judgeNumberText = Regexp.last_match(3)
+    judgeNumber = (Regexp.last_match(4) || 4).to_i
+    targetNumber = (Regexp.last_match(5) || 1).to_i
 
     message = ""
     diceCount = skillRank + 2
@@ -87,10 +87,10 @@ MESSAGETEXT
 
     debug("ReRoll pass")
 
-    rerollCountsText = $1
-    judgeNumberText = $2
-    judgeNumber = ($3 || 4).to_i
-    targetNumber = $4.to_i
+    rerollCountsText = Regexp.last_match(1)
+    judgeNumberText = Regexp.last_match(2)
+    judgeNumber = (Regexp.last_match(3) || 4).to_i
+    targetNumber = Regexp.last_match(4).to_i
 
     rerollCounts = rerollCountsText.split(/,/).collect { |i| i.to_i }
 
@@ -129,9 +129,9 @@ MESSAGETEXT
       commandName = "ReRoll#{diceCount}"
       unless isReRoll
         if isStop
-          commandName = "BMS#{diceCount - 2 }"
+          commandName = "BMS#{diceCount - 2}"
         else
-          commandName = "BM#{diceCount - 2 }"
+          commandName = "BM#{diceCount - 2}"
         end
       end
       commandText = "#{commandName}#{judgeNumberText}>=#{targetNumber}"
@@ -151,18 +151,17 @@ MESSAGETEXT
       message += resultText
 
       sameDiceList = getSameDieList(diceList)
-      unless sameDiceList.empty?
+      next if sameDiceList.empty?
 
-        rerollText = ""
-        sameDiceList.each do |list|
-          rerollText += "," unless rerollText.empty?
-          rerollText += list.join('')
-        end
-
-        rerollTargetList << sameDiceList.collect { |i| i.count }.join(",")
-
-        message += "、リロール[#{rerollText}]"
+      rerollText = ""
+      sameDiceList.each do |list|
+        rerollText += "," unless rerollText.empty?
+        rerollText += list.join('')
       end
+
+      rerollTargetList << sameDiceList.collect { |i| i.count }.join(",")
+
+      message += "、リロール[#{rerollText}]"
     end
 
     rerollCommand = ""
@@ -258,7 +257,7 @@ MESSAGETEXT
   def getRulingPlanetDiceCommandResult(command)
     return nil unless /^RP(\d+)/i === command
 
-    targetNumbers = $1.split(//).collect { |i| i.to_i }
+    targetNumbers = Regexp.last_match(1).split(//).collect { |i| i.to_i }
     diceList = getRulingPlanetDice
 
     matchResult = "失敗"
@@ -345,121 +344,128 @@ __TABLE_END__
 
   @@tables =
     {
-    'LE' => {
-      :name => "失う感情表",
-      :type => '1D6',
-      :table => %w{
-喜：喜びは消えた。嬉しい気持ちとは、なんだっただろう。
-怒：激情は失われ、憎しみもどこかへと消える。
-哀：どんなに辛くても、悲しさを感じない。どうやら涙も涸れたらしい。
-楽：もはや楽しいことなどない。希望を抱くだけ無駄なのだ。
-愛：愛など幻想……無力で儚い、役に立たない世迷い言だ。
-感：なにを見ても、感動はない。心は凍てついている。
-},},
+      'LE' => {
+        :name => "失う感情表",
+        :type => '1D6',
+        :table => %w{
+          喜：喜びは消えた。嬉しい気持ちとは、なんだっただろう。
+          怒：激情は失われ、憎しみもどこかへと消える。
+          哀：どんなに辛くても、悲しさを感じない。どうやら涙も涸れたらしい。
+          楽：もはや楽しいことなどない。希望を抱くだけ無駄なのだ。
+          愛：愛など幻想……無力で儚い、役に立たない世迷い言だ。
+          感：なにを見ても、感動はない。心は凍てついている。
+        },
+      },
 
-    'ESH' => {
-      :name => "「喜」の感情後遺症表",
-      :type => '2D6',
-      :table => %w{
-日々喜びを求めてしまう。
-日々喜びを求めてしまう。
-嬉しい時間が長続きしない。
-素直に喜びを共有できないことがある。
-小さなことで大きく喜びを感じる。
-小さなことで大きく喜びを感じる。
-影響なし。
-影響なし。
-「喜」の後遺症をひとつ消してもよい。
-「喜」の後遺症をひとつ消してもよい。
-「喜」の後遺症をひとつ消してもよい。
-},},
+      'ESH' => {
+        :name => "「喜」の感情後遺症表",
+        :type => '2D6',
+        :table => %w{
+          日々喜びを求めてしまう。
+          日々喜びを求めてしまう。
+          嬉しい時間が長続きしない。
+          素直に喜びを共有できないことがある。
+          小さなことで大きく喜びを感じる。
+          小さなことで大きく喜びを感じる。
+          影響なし。
+          影響なし。
+          「喜」の後遺症をひとつ消してもよい。
+          「喜」の後遺症をひとつ消してもよい。
+          「喜」の後遺症をひとつ消してもよい。
+        },
+      },
 
-    'ESA' => {
-      :name => "「怒」の感情後遺症表",
-      :type => '2D6',
-      :table => %w{
-始終不機嫌になる。
-始終不機嫌になる。
-一度怒ると、なかなか収まらない。
-怒りっぽくなる
-怒りかたが激しくなる。
-怒りかたが激しくなる。
-影響なし。
-影響なし。
-「怒」の後遺症をひとつ消してもよい。
-「怒」の後遺症をひとつ消してもよい。
-「怒」の後遺症をひとつ消してもよい。
-},},
+      'ESA' => {
+        :name => "「怒」の感情後遺症表",
+        :type => '2D6',
+        :table => %w{
+          始終不機嫌になる。
+          始終不機嫌になる。
+          一度怒ると、なかなか収まらない。
+          怒りっぽくなる
+          怒りかたが激しくなる。
+          怒りかたが激しくなる。
+          影響なし。
+          影響なし。
+          「怒」の後遺症をひとつ消してもよい。
+          「怒」の後遺症をひとつ消してもよい。
+          「怒」の後遺症をひとつ消してもよい。
+        },
+      },
 
-    'ESS' => {
-      :name => "「哀」の感情後遺症表",
-      :type => '2D6',
-      :table => %w{
-一度涙が出るとなかなか止まらない。
-一度涙が出るとなかなか止まらない。
-夜、哀しいことを思い出して目が覚める。
-不意に哀しい気持ちになる。
-涙もろくなる。
-涙もろくなる。
-影響なし。
-影響なし。
-「哀」の後遺症をひとつ消してもよい。
-「哀」の後遺症をひとつ消してもよい。
-「哀」の後遺症をひとつ消してもよい。
-},},
+      'ESS' => {
+        :name => "「哀」の感情後遺症表",
+        :type => '2D6',
+        :table => %w{
+          一度涙が出るとなかなか止まらない。
+          一度涙が出るとなかなか止まらない。
+          夜、哀しいことを思い出して目が覚める。
+          不意に哀しい気持ちになる。
+          涙もろくなる。
+          涙もろくなる。
+          影響なし。
+          影響なし。
+          「哀」の後遺症をひとつ消してもよい。
+          「哀」の後遺症をひとつ消してもよい。
+          「哀」の後遺症をひとつ消してもよい。
+        },
+      },
 
-    'ESP' => {
-      :name => "「楽」の感情後遺症表",
-      :type => '2D6',
-      :table => %w{
-突然陽気になったり、不意に笑い出してしまう。
-突然陽気になったり、不意に笑い出してしまう。
-周りが楽しくなさそうだと不安になる。
-楽しいことがないと落ち着かない。
-些細なことでも笑ってしまう。
-些細なことでも笑ってしまう。
-影響なし。
-影響なし。
-「楽」の後遺症をひとつ消してもよい。
-「楽」の後遺症をひとつ消してもよい。
-「楽」の後遺症をひとつ消してもよい。
-},},
+      'ESP' => {
+        :name => "「楽」の感情後遺症表",
+        :type => '2D6',
+        :table => %w{
+          突然陽気になったり、不意に笑い出してしまう。
+          突然陽気になったり、不意に笑い出してしまう。
+          周りが楽しくなさそうだと不安になる。
+          楽しいことがないと落ち着かない。
+          些細なことでも笑ってしまう。
+          些細なことでも笑ってしまう。
+          影響なし。
+          影響なし。
+          「楽」の後遺症をひとつ消してもよい。
+          「楽」の後遺症をひとつ消してもよい。
+          「楽」の後遺症をひとつ消してもよい。
+        },
+      },
 
-    'ESL' => {
-      :name => "「愛」の感情後遺症表",
-      :type => '2D6',
-      :table => %w{
-少しでも気になる相手に愛を求めてしまう。
-少しでも気になる相手に愛を求めてしまう。
-愛する相手（恋人・家族・ペット・空想）から離れたくない。
-誰彼構わず優しくしてしまう。
-ひとりでいると不安を感じる。
-ひとりでいると不安を感じる。
-影響なし。
-影響なし。
-「愛」の後遺症をひとつ消してもよい。
-「愛」の後遺症をひとつ消してもよい。
-「愛」の後遺症をひとつ消してもよい。
-},},
+      'ESL' => {
+        :name => "「愛」の感情後遺症表",
+        :type => '2D6',
+        :table => %w{
+          少しでも気になる相手に愛を求めてしまう。
+          少しでも気になる相手に愛を求めてしまう。
+          愛する相手（恋人・家族・ペット・空想）から離れたくない。
+          誰彼構わず優しくしてしまう。
+          ひとりでいると不安を感じる。
+          ひとりでいると不安を感じる。
+          影響なし。
+          影響なし。
+          「愛」の後遺症をひとつ消してもよい。
+          「愛」の後遺症をひとつ消してもよい。
+          「愛」の後遺症をひとつ消してもよい。
+        },
+      },
 
-    'ESE' => {
-      :name => "「感」の感情後遺症表",
-      :type => '2D6',
-      :table => %w{
-感動を共有できない相手を不信に思ってしまう。
-感動を共有できない相手を不信に思ってしまう。
-嬉しくても哀しくてもすぐに涙が出る。
-リアクションがオーバーになる。
-ちょっとしたことで感動する。
-ちょっとしたことで感動する。
-影響なし。
-影響なし。
-「感」の後遺症をひとつ消してもよい。
-「感」の後遺症をひとつ消してもよい。
-「感」の後遺症をひとつ消してもよい。
-},},
+      'ESE' => {
+        :name => "「感」の感情後遺症表",
+        :type => '2D6',
+        :table => %w{
+          感動を共有できない相手を不信に思ってしまう。
+          感動を共有できない相手を不信に思ってしまう。
+          嬉しくても哀しくてもすぐに涙が出る。
+          リアクションがオーバーになる。
+          ちょっとしたことで感動する。
+          ちょっとしたことで感動する。
+          影響なし。
+          影響なし。
+          「感」の後遺症をひとつ消してもよい。
+          「感」の後遺症をひとつ消してもよい。
+          「感」の後遺症をひとつ消してもよい。
+        },
+      },
 
-  }
+    }
 
   setPrefixes(['BM.*', 'ReRoll\d+.*', 'RP\d+', 'DT'] + @@tables.keys)
 end

@@ -44,20 +44,17 @@ TENKAI: シーン展開表 奔走シーン 練習シーンで使用
 INFO_MESSAGE_TEXT
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-  end
-
-  def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == ">="
+
     if dice_n <= 2
-      return " ＞ ファンブル！ (ドラマフェイズ: 【ディスコード】+2 / ライブフェイズ: 【コンディション】-2)"
+      " ＞ ファンブル！ (ドラマフェイズ: 【ディスコード】+2 / ライブフェイズ: 【コンディション】-2)"
     elsif dice_n >= 12
-      return " ＞ スペシャル！ (【コンディション】+2)"
+      " ＞ スペシャル！ (【コンディション】+2)"
     elsif total_n >= diff
-      return " ＞ 成功"
+      " ＞ 成功"
     else
-      return " ＞ 失敗"
+      " ＞ 失敗"
     end
   end
 
@@ -130,7 +127,7 @@ INFO_MESSAGE_TEXT
       ]
       return textFrom1D6Table(title, table)
     when /^AT([1-6]?)$/
-      value = $1.to_i
+      value = Regexp.last_match(1).to_i
       return getSkillList(value)
     when "SCENE"
       title = "シーン表(P199)"
@@ -284,13 +281,13 @@ INFO_MESSAGE_TEXT
   def getSkillList(field = 0)
     title = '特技リスト'
     table = [
-             ['主義', ['過去', '恋人', '仲間', '家族', '自分', '今', '理由', '夢', '世界', '幸せ', '未来']],
-             ['身体', ['頭', '目', '耳', '口', '胸', '心臓', '血', '背中', '手', 'XXX', '足']],
-             ['モチーフ', ['闇', '武器', '魔法', '獣', '町', '歌', '食べ物', '花', '空', '季節', '光']],
-             ['エモーション', ['悲しい', '怒り', '不安', '恐怖', '驚き', '高鳴り', '情熱', '確信', '期待', '楽しい', '喜び']],
-             ['行動', ['泣く', '忘れる', '消す', '壊す', '叫ぶ', '歌う', '踊る', '走る', '鳴らす', '呼ぶ', '笑う']],
-             ['逆境', ['死', '喪失', '暴力', '孤独', '後悔', '実力', '退屈', '権力', '富', '恋愛', '生']],
-            ]
+      ['主義', ['過去', '恋人', '仲間', '家族', '自分', '今', '理由', '夢', '世界', '幸せ', '未来']],
+      ['身体', ['頭', '目', '耳', '口', '胸', '心臓', '血', '背中', '手', 'XXX', '足']],
+      ['モチーフ', ['闇', '武器', '魔法', '獣', '町', '歌', '食べ物', '花', '空', '季節', '光']],
+      ['エモーション', ['悲しい', '怒り', '不安', '恐怖', '驚き', '高鳴り', '情熱', '確信', '期待', '楽しい', '喜び']],
+      ['行動', ['泣く', '忘れる', '消す', '壊す', '叫ぶ', '歌う', '踊る', '走る', '鳴らす', '呼ぶ', '笑う']],
+      ['逆境', ['死', '喪失', '暴力', '孤独', '後悔', '実力', '退屈', '権力', '富', '恋愛', '生']],
+    ]
 
     number1 = 0
     if field == 0

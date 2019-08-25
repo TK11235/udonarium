@@ -28,7 +28,7 @@ INFO_MESSAGE_TEXT
 
   # ---- 以降、Gundog.rbよりほぼコピペ（絶対成功→ベアリーに用語変更対応の為、継承だと不都合）
   # ゲーム別成功度判定(1d100)
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == "<="
 
     if total_n >= 100
@@ -72,8 +72,8 @@ INFO_MESSAGE_TEXT
     # ダメージペナルティ表
     if /(\w)DPT([\+\-\d]*)/i =~ string
       ttype = 'ダメージペナルティー'
-      head = $1
-      mod = parren_killer("(0#{$2})").to_i if $2
+      head = Regexp.last_match(1)
+      mod = parren_killer("(0#{Regexp.last_match(2)})").to_i if Regexp.last_match(2)
 
       type, table = getDamageTypeAndTable(head)
     end
@@ -81,8 +81,8 @@ INFO_MESSAGE_TEXT
     # ファンブル表
     if /(\w)FT([\+\-\d]*)/i =~ string
       ttype = 'ファンブル'
-      head = $1
-      mod = parren_killer("(0#{$2})").to_i if $2
+      head = Regexp.last_match(1)
+      mod = parren_killer("(0#{Regexp.last_match(2)})").to_i if Regexp.last_match(2)
 
       type, table = getFumbleTypeAndTable(head)
     end

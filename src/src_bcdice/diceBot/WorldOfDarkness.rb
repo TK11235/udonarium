@@ -44,19 +44,13 @@ INFO_MESSAGE_TEXT
     output = ''
     rerollNumber = 11
 
-    if /STS/ =~ string
-      string = string.gsub(/(\d+)STS(\d*)([^\d\s][\+\-\d]+)/i) { "#{$1}STS#{$2}[#{$3}]" }
-      string = string.gsub(/(\d+)STS(\d*)/i) { "#{$1}STS#{$2}" } unless $3
-      rerollNumber = 10
-      else
-        string = string.gsub(/(\d+)ST(\d*)([^\d\s][\+\-\d]+)/i) { "#{$1}ST#{$2}[#{$3}]" }
-        string = string.gsub(/(\d+)ST(\d*)/i) { "#{$1}ST#{$2}" } unless $3
-    end
+    m = string.match(/(\d+)(STS?)(\d*)([^\d\s][\+\-\d]+)?/i)
+    diceCount = m[1].to_i
+    rerollNumber = 10 if m[2] == 'STS'
+    difficulty = m[3].to_i
+    automaticSuccess = m[4].to_i if m[4]
 
-    diceCount = $1.to_i if $1
-    difficulty = $2.to_i if $2
     difficulty = 6 if difficulty < 2
-    automaticSuccess = $3.to_i if $3
 
     output = 'DicePool=' + diceCount.to_s + ', Difficulty=' + difficulty.to_s + ', AutomaticSuccess=' + automaticSuccess.to_s
 
@@ -65,7 +59,7 @@ INFO_MESSAGE_TEXT
     @rerollDice = 0
 
     output += rollDiceWorldOfDarknessSpecial(diceCount, difficulty, rerollNumber)
-    while @rerollDice > 0 do
+    while @rerollDice > 0
       diceCount = @rerollDice
       @rerollDice = 0
       output += rollDiceWorldOfDarknessSpecial(diceCount, difficulty, rerollNumber)

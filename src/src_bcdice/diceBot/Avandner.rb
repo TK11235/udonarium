@@ -42,11 +42,11 @@ MESSAGETEXT
   def rollDiceCommand(command)
     # AVコマンド：調査判定, 成功判定
     if /(\d+)AV(\d+)((x|\*)(\d+))?(\+(\d+))?(C(\d+))?$/i === command
-      diceCount = $1.to_i
-      target = $2.to_i
-      damage = ($5 || 0).to_i
-      criticalTrigger = ($7 || 0).to_i
-      criticalNumber = ($9 || 1).to_i
+      diceCount = Regexp.last_match(1).to_i
+      target = Regexp.last_match(2).to_i
+      damage = (Regexp.last_match(5) || 0).to_i
+      criticalTrigger = (Regexp.last_match(7) || 0).to_i
+      criticalNumber = (Regexp.last_match(9) || 1).to_i
       criticalNumber = 2 if criticalNumber > 3
       return checkRoll(diceCount, target, damage, criticalTrigger, criticalNumber)
     end

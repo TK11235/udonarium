@@ -53,10 +53,10 @@ INFO_MESSAGE_TEXT
   def changeText(string)
     debug('parren_killer_add begin string', string)
 
-    string = string.gsub(/(\d+)BKC(\d)/) { "#{$1}R6[0,#{$2}]" }
-    string = string.gsub(/(\d+)BAC(\d)/) { "#{$1}R6[1,#{$2}]" }
-    string = string.gsub(/(\d+)BK/) { "#{$1}R6[0,0]" }
-    string = string.gsub(/(\d+)BA/) { "#{$1}R6[1,0]" }
+    string = string.gsub(/(\d+)BKC(\d)/) { "#{Regexp.last_match(1)}R6[0,#{Regexp.last_match(2)}]" }
+    string = string.gsub(/(\d+)BAC(\d)/) { "#{Regexp.last_match(1)}R6[1,#{Regexp.last_match(2)}]" }
+    string = string.gsub(/(\d+)BK/) { "#{Regexp.last_match(1)}R6[0,0]" }
+    string = string.gsub(/(\d+)BA/) { "#{Regexp.last_match(1)}R6[1,0]" }
 
     debug('parren_killer_add end string', string)
     return string
@@ -72,9 +72,9 @@ INFO_MESSAGE_TEXT
 
     return output unless /(^|\s)S?((\d+)[rR]6(\[([,\d]+)\])?)(\s|$)/i =~ string
 
-    string = $2
-    option = $5
-    dice_n = $3
+    string = Regexp.last_match(2)
+    option = Regexp.last_match(5)
+    dice_n = Regexp.last_match(3)
     dice_n ||= 1
 
     @isBattleMode = false # 0=判定モード, 1=戦闘モード
@@ -117,7 +117,7 @@ INFO_MESSAGE_TEXT
     at_str = ''
     diceCountList = [0, 0, 0, 0, 0, 0]
 
-    dice_n.times do |i|
+    dice_n.times do |_i|
       index = rand(6)
       diceCountList[index] += 1
       if diceCountList[index] > suc
@@ -130,7 +130,7 @@ INFO_MESSAGE_TEXT
 
       next if diceCount == 0
 
-      diceCount.times do |j|
+      diceCount.times do |_j|
         output += "#{i + 1},"
       end
 
@@ -197,12 +197,12 @@ INFO_MESSAGE_TEXT
   # 命中部位表
   def getAttackHitLocation(num)
     table = [
-             [1, '頭部' ],
-             [2, '右腕' ],
-             [3, '左腕' ],
-             [4, '右脚' ],
-             [5, '左脚' ],
-             [6, '胴体' ],
+      [1, '頭部' ],
+      [2, '右腕' ],
+      [3, '左腕' ],
+      [4, '右脚' ],
+      [5, '左脚' ],
+      [6, '胴体' ],
     ]
 
     return get_table_by_number(num, table)

@@ -148,7 +148,7 @@ INFO_MESSAGE_TEXT
     check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
   end
 
-  def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_nD6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == ">="
     if dice_n <= 2
       return " ＞ ファンブル(変調がランダムに1つ発生し、PCは【思い出】を1つ獲得する)"
@@ -164,11 +164,11 @@ INFO_MESSAGE_TEXT
   def rollDiceCommand(command)
     case command.upcase
     when /^([1-7]*)PD(\d+)([\+\-]\d+)?$/
-      counts = $2.to_i
+      counts = Regexp.last_match(2).to_i
       return nil if counts <= 0
 
-      residual = $1
-      adjust = $3.to_i
+      residual = Regexp.last_match(1)
+      adjust = Regexp.last_match(3).to_i
 
       return rollPerformance(counts, residual, adjust)
 
@@ -293,7 +293,7 @@ INFO_MESSAGE_TEXT
       return textFromD66Table(title, table)
 
     when /^LO(\d{0,2})$/
-      value = $1
+      value = Regexp.last_match(1)
       title = '로컬 아이돌 업무표'
       table = [
         [11, "오프", ''],
@@ -807,7 +807,7 @@ INFO_MESSAGE_TEXT
       return textFromD66Table(title, table)
 
     when /^AT([1-6]?)$/
-      value = $1.to_i
+      value = Regexp.last_match(1).to_i
       return getSkillList(value)
 
     when 'LUR'
@@ -931,7 +931,7 @@ INFO_MESSAGE_TEXT
       return textFrom1D6Table(title, table1, table2)
 
     when /^BT(\d+)?$/
-      counts = ($1 || 1).to_i
+      counts = (Regexp.last_match(1) || 1).to_i
       return badStatus(counts)
 
     when 'SGT'
@@ -1293,7 +1293,7 @@ INFO_MESSAGE_TEXT
       nameParts.sort!
 
       numberString = ""
-      nameParts.each do |index, src, text1, number1|
+      nameParts.each do |_index, src, text1, number1|
         name = name.gsub(src, text1)
         numberString += "#{src}#{number1},"
       end
@@ -1400,7 +1400,7 @@ INFO_MESSAGE_TEXT
       return textFrom1D6Table(title, table)
 
     when /^IT(\d+)?$/
-      counts = ($1 || 1).to_i
+      counts = (Regexp.last_match(1) || 1).to_i
       return getItem(counts)
 
     when 'ACT'
@@ -1596,7 +1596,7 @@ INFO_MESSAGE_TEXT
       ]
       text = textFrom1D6Table(title, table)
       /『(.+)』/ =~ text
-      bookTitle = $1
+      bookTitle = Regexp.last_match(1)
       return text + "\n" + costume('의상(' + bookTitle + ')', true)
 
     when 'ACE'
@@ -1757,7 +1757,7 @@ INFO_MESSAGE_TEXT
 
     when /^(\d{2})C$/
       title = 'バーストタイム'
-      degrees = $1.to_i
+      degrees = Regexp.last_match(1).to_i
       counts = 6
       if (degrees < 45) || (degrees > 55)
         return nil
@@ -1800,12 +1800,12 @@ INFO_MESSAGE_TEXT
 
     when /^(\d+)(S?)A([1-6]*)([\+\-]\d+)?$/
       title = '攻撃'
-      counts = $1.to_i
+      counts = Regexp.last_match(1).to_i
       return nil if counts <= 0
 
-      sure = !$2.empty?
-      remove = $3
-      adjust = $4
+      sure = !Regexp.last_match(2).empty?
+      remove = Regexp.last_match(3)
+      adjust = Regexp.last_match(4)
       adjust ||= ''
 
       result = roll(counts, 6, 1)
@@ -2047,7 +2047,7 @@ INFO_MESSAGE_TEXT
 
     total = 0
     diceUse = []
-    for i in 1..7
+    (1..7).each do |i|
       if diceAll.count(i.to_s) == 1
         total += i
         diceUse.push(i)
@@ -2106,7 +2106,7 @@ INFO_MESSAGE_TEXT
     return text, skill if chance.empty?
     return text, skill unless /チャンスが(\d{1,2})以下なら오프。/ === text
 
-    target = $1.to_i
+    target = Regexp.last_match(1).to_i
     matchedText = $&
 
     if target >= chance.to_i
@@ -2132,8 +2132,8 @@ INFO_MESSAGE_TEXT
     end
 
     if /랜덤으로 지정한 특기가 지정 특기인 아이돌 스킬\(신장분야、(속성|재능)분야、출신분야가 나올경우 재굴림\)$/ =~ text
-      category = $1
-      while true
+      category = Regexp.last_match(1)
+      loop do
         skill = getSkillList()
         text += "\n#{skill}"
         break unless skill.include?("신장") || skill.include?(category) || skill.include?("출신")
@@ -2148,13 +2148,13 @@ INFO_MESSAGE_TEXT
   def getSkillList(field = 0)
     title = '特技リスト'
     table = [
-             ['신장', ['～125', '131', '136', '141', '146', '156', '166', '171', '176', '180', '190～']],
-             ['속성', ['에스닉', '다크', '섹시', '페미닌', '큐트', '플레인', '패션', '팝', '버닝', '쿨', '스타']],
-             ['재능', ['이국문화', '스타일', '집중력', '담력', '체력', '미소', '운동신경', '배려', '학력', '기품', '연기력']],
-             ['캐릭터', ['중2병', '신비', '마이페이스', '유순', '말버릇', '캐릭터분야의 공백', '건강', '외고집', '언행정중', '덜렁이', '바보']],
-             ['취미', ['오컬트', '펫', '스포츠', '멋내기', '요리', '취미분야의 공백', '쇼핑', '댄스', 'ゲーム', '음악', '아이돌']],
-             ['출신', ['오키나와', '큐슈', '시코쿠', '주코쿠', '킨키', '주부', '간토', '호쿠리쿠', '도호쿠', '훗카이도', '해외']],
-            ]
+      ['신장', ['～125', '131', '136', '141', '146', '156', '166', '171', '176', '180', '190～']],
+      ['속성', ['에스닉', '다크', '섹시', '페미닌', '큐트', '플레인', '패션', '팝', '버닝', '쿨', '스타']],
+      ['재능', ['이국문화', '스타일', '집중력', '담력', '체력', '미소', '운동신경', '배려', '학력', '기품', '연기력']],
+      ['캐릭터', ['중2병', '신비', '마이페이스', '유순', '말버릇', '캐릭터분야의 공백', '건강', '외고집', '언행정중', '덜렁이', '바보']],
+      ['취미', ['오컬트', '펫', '스포츠', '멋내기', '요리', '취미분야의 공백', '쇼핑', '댄스', 'ゲーム', '음악', '아이돌']],
+      ['출신', ['오키나와', '큐슈', '시코쿠', '주코쿠', '킨키', '주부', '간토', '호쿠리쿠', '도호쿠', '훗카이도', '해외']],
+    ]
 
     number1 = 0
     if field == 0
@@ -2179,13 +2179,13 @@ INFO_MESSAGE_TEXT
   def badStatus(counts = 1)
     title = '변조'
     table = [
-             "「불온한 공기」　PC의 【멘탈】이 감소할 때, 감소하는 수치가 1점 상승한다.",
-             "「미묘한 거리감」　【이해도】가 상승하지 않게 된다.",
-             "「유리의 마음」　PC의 펌블치가 1점 상승한다.",
-             "「부상」　막간 때, 프로듀서는 「회상」만 실시할 수 있다.",
-             "「믿지 못하는」　PC전원의 【이해도】를 1점 낮은 것으로 취급한다.",
-             "「엇갈림」　PC는 아이템 사용과 리절트 페이즈에 「부탁」을 할 수 없게 된다.",
-            ]
+      "「불온한 공기」　PC의 【멘탈】이 감소할 때, 감소하는 수치가 1점 상승한다.",
+      "「미묘한 거리감」　【이해도】가 상승하지 않게 된다.",
+      "「유리의 마음」　PC의 펌블치가 1점 상승한다.",
+      "「부상」　막간 때, 프로듀서는 「회상」만 실시할 수 있다.",
+      "「믿지 못하는」　PC전원의 【이해도】를 1점 낮은 것으로 취급한다.",
+      "「엇갈림」　PC는 아이템 사용과 리절트 페이즈에 「부탁」을 할 수 없게 된다.",
+    ]
 
     return '' if counts <= 0
 
@@ -2211,7 +2211,7 @@ INFO_MESSAGE_TEXT
 
     text = skill
     if /^AT([1-6]?)$/ =~ text
-      text = getSkillList($1.to_i)
+      text = getSkillList(Regexp.last_match(1).to_i)
     else
       text = "特技 : #{text}"
     end
@@ -2272,7 +2272,7 @@ INFO_MESSAGE_TEXT
     return text unless /変調がランダムに(一|二|三)つ発生する。/ =~ text
 
     counts = 1
-    case $1
+    case Regexp.last_match(1)
     when '二'
       counts = 2
     when '三'
@@ -2290,28 +2290,28 @@ INFO_MESSAGE_TEXT
     table = []
     if title.include?('의상(챌린지 걸즈)')
       table = [
-       [11, "12&88\n자신의 【퍼포먼스치】가 결정되었을 때, 그 값을 2점 상승한다."],
-       [12, "Glow Up Princess\n퍼포먼스를 할 때 주사위를 추가로 1개 더 굴린다."],
-       [13, "시즈쿠\n라이브페이즈 개시 시 【멘탈】이 5점 상승한다."],
-       [14, "Pop☆Sweet\n자신의 【멘탈】이 상승할 때 추가로 1점 더 상승한다."],
-       [15, "Ttype\n단기돌파 시 【멘탈】이 감소하지 않는다. 또한 단기돌파를 할 때 달성치가 1점 상승한다."],
-       [16, "Vampire Story\n퍼포먼스의 【퍼포먼스치】가 10이상일 경우, 자신의 【멘탈】이 3점 상승한다."],
-       [22, "Pure Mermaid\n【비주얼】 공연 중 지정 특기를 《스타일》로 변경할 수 있다. 지정 특기가 《스타일》인 공연에서는 【퍼포먼스치】가 2점 상승한다."],
-       [23, "I'm cute\n라이브 페이즈 개시 시 【멘탈】이 1점 상승한다. 막간 개시 시 능력치를 1개 선택한다. 선택된 능력치는 이 라이브 페이즈 간에 1점 상승한다."],
-       [24, "No.1 Girl\n【퍼포먼스치】가 결정될 때 【멘탈】을 1점 감소시키고 【퍼포먼스치】가 3점 상승한다."],
-       [25, "Final Romance\n【비주얼】 퍼포먼스를 실시할 때 캐릭터를 1인 선택한다. 선택한 캐릭터의 자신에 대한 【이해도】와 같은 【퍼포먼스치】가 상승한다."],
-       [26, "Prism Line\n퍼포먼스 1회에 1번만 퍼포먼스에 사용한 주사위 1개를 다시 굴릴 수 있다."],
-       [33, "서번트 서비스\n심포니를 할 때마다 그 퍼포먼스 스의 【퍼포먼스치】가 3점 상승한다."],
-       [34, "Travel Bag\n막간에 자신의 【이해도】 체크 1개를 해제할 수 있다."],
-       [35, "JewelC\n개막공연과 막간에 아이템을 1개 선택해 획득한다."],
-       [36, "Sweet Girl\n퍼포먼스를 실시한 PC는 【멘탈】이 2점 상승한다."],
-       [44, "Satisfaction West\n미라클, 미라클 싱크로, 퍼펙트 미라클이 발생했을 때 【퍼포먼스치】가 5점 상승한다."],
-       [45, "Under Big Ben\n사용 능력이 【보이스】인 퍼포먼스의 【퍼포먼스치】가 10이상인 경우 자신에 대한 【이해도】 체크 1개를 해제할 수 있다."],
-       [46, "PIERO\n단기돌파의 달성치가 2점 상승한다."],
-       [55, "캉캉냥냥\n사용 능력이 【비주얼】인 퍼포먼스를 실시 할 때 【퍼포먼스치】가 3점 상승한다."],
-       [56, "화조풍월\n심포니를 실시할 때 굴리는 주사위의 수를 1개 늘린다, 혹은 1개 줄일 수 있다."],
-       [66, "Jingle Bells\n리절트페이즈에서 이하의 효과가 발생한다. 리절트페이즈에서 【획득 팬 인원수】가 1D6점 상승한다. 또 PC전원은 조건을 채우지 않아도 「부탁」을 할 수 있다."],
-     ]
+        [11, "12&88\n자신의 【퍼포먼스치】가 결정되었을 때, 그 값을 2점 상승한다."],
+        [12, "Glow Up Princess\n퍼포먼스를 할 때 주사위를 추가로 1개 더 굴린다."],
+        [13, "시즈쿠\n라이브페이즈 개시 시 【멘탈】이 5점 상승한다."],
+        [14, "Pop☆Sweet\n자신의 【멘탈】이 상승할 때 추가로 1점 더 상승한다."],
+        [15, "Ttype\n단기돌파 시 【멘탈】이 감소하지 않는다. 또한 단기돌파를 할 때 달성치가 1점 상승한다."],
+        [16, "Vampire Story\n퍼포먼스의 【퍼포먼스치】가 10이상일 경우, 자신의 【멘탈】이 3점 상승한다."],
+        [22, "Pure Mermaid\n【비주얼】 공연 중 지정 특기를 《스타일》로 변경할 수 있다. 지정 특기가 《스타일》인 공연에서는 【퍼포먼스치】가 2점 상승한다."],
+        [23, "I'm cute\n라이브 페이즈 개시 시 【멘탈】이 1점 상승한다. 막간 개시 시 능력치를 1개 선택한다. 선택된 능력치는 이 라이브 페이즈 간에 1점 상승한다."],
+        [24, "No.1 Girl\n【퍼포먼스치】가 결정될 때 【멘탈】을 1점 감소시키고 【퍼포먼스치】가 3점 상승한다."],
+        [25, "Final Romance\n【비주얼】 퍼포먼스를 실시할 때 캐릭터를 1인 선택한다. 선택한 캐릭터의 자신에 대한 【이해도】와 같은 【퍼포먼스치】가 상승한다."],
+        [26, "Prism Line\n퍼포먼스 1회에 1번만 퍼포먼스에 사용한 주사위 1개를 다시 굴릴 수 있다."],
+        [33, "서번트 서비스\n심포니를 할 때마다 그 퍼포먼스 스의 【퍼포먼스치】가 3점 상승한다."],
+        [34, "Travel Bag\n막간에 자신의 【이해도】 체크 1개를 해제할 수 있다."],
+        [35, "JewelC\n개막공연과 막간에 아이템을 1개 선택해 획득한다."],
+        [36, "Sweet Girl\n퍼포먼스를 실시한 PC는 【멘탈】이 2점 상승한다."],
+        [44, "Satisfaction West\n미라클, 미라클 싱크로, 퍼펙트 미라클이 발생했을 때 【퍼포먼스치】가 5점 상승한다."],
+        [45, "Under Big Ben\n사용 능력이 【보이스】인 퍼포먼스의 【퍼포먼스치】가 10이상인 경우 자신에 대한 【이해도】 체크 1개를 해제할 수 있다."],
+        [46, "PIERO\n단기돌파의 달성치가 2점 상승한다."],
+        [55, "캉캉냥냥\n사용 능력이 【비주얼】인 퍼포먼스를 실시 할 때 【퍼포먼스치】가 3점 상승한다."],
+        [56, "화조풍월\n심포니를 실시할 때 굴리는 주사위의 수를 1개 늘린다, 혹은 1개 줄일 수 있다."],
+        [66, "Jingle Bells\n리절트페이즈에서 이하의 효과가 발생한다. 리절트페이즈에서 【획득 팬 인원수】가 1D6점 상승한다. 또 PC전원은 조건을 채우지 않아도 「부탁」을 할 수 있다."],
+      ]
     elsif title.include?('의상(로드 투 프린스)')
       table = [
         [11, "Angel kiss\n퍼포먼스를 할 때 1의 눈이 나온 주사위는 제거되지 않는다. 심포니를 실시했을 때, 1의 눈이 나온 주사위는 제거한다."],

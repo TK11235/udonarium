@@ -16,7 +16,7 @@ INFO_MESSAGE_TEXT
   end
 
   # ゲーム別成功度判定(1d20)
-  def check_1D20(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_1D20(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
     return '' unless signOfInequality == "<="
 
     return " ＞ 失敗" unless total_n <= diff

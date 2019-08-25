@@ -8,7 +8,7 @@ class DiceBotLoader
   #
   # * 最初の文字は大文字のアルファベット
   # * 2文字目以降は英数字かアンダースコア（_）
-  BOT_NAME_PATTERN = /\A[A-Z]\w*\z/
+  BOT_NAME_PATTERN = /\A[A-Z]\w*\z/.freeze
 
   # 収集時に無視するボット名
   #
@@ -20,7 +20,7 @@ class DiceBotLoader
     'DiceBot',
     'DiceBotLoader',
     'DiceBotLoaderList'
-  ]
+  ].freeze
 
   # 有効なゲームタイプかを返す
   # @param [String] gameType ゲームタイプ
@@ -68,8 +68,8 @@ class DiceBotLoader
 
     begin
       # require(fileName) # TKfix dynamic requireは不可
-      # Object.const_get(gameType).new
-      Object.const_get(gameType).new # TKfix ダイスボットファイルがこのディレクトリ内に存在すると仮定して読み込む
+      # TKfix ダイスボットファイルがこのディレクトリ内に存在すると仮定して読み込む
+      Object.const_get(gameType).new
     rescue LoadError, StandardError => e
       debug('DiceBotLoader.loadUnknownGame: ダイスボットの読み込みに失敗しました',
             e.to_s)
@@ -94,7 +94,7 @@ class DiceBotLoader
     #   # 正しいクラス名になるものだけ選ぶ
     #   select { |botName| BOT_NAME_PATTERN === botName }
 
-    # validBotNames.map { |botName|
+    # validBotNames.map do |botName|
     #   require("#{diceBotDir}/#{botName}")
     #   Object.const_get(botName).new
     # }

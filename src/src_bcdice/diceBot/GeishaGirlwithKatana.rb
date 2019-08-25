@@ -37,7 +37,7 @@ MESSAGETEXT
       return output
     end
 
-    chomba_counter = $2
+    chomba_counter = Regexp.last_match(2)
 
     if isChomba(chomba_counter)
       return getChombaResultText()

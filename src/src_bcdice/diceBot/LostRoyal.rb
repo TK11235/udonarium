@@ -45,7 +45,7 @@ INFO_MESSAGE_TEXT
   def rollDiceCommand(command)
     case command
     when /LR\[([0-5]),([0-5]),([0-5]),([0-5]),([0-5]),([0-5])\]/i
-      return check_lostroyal([$1.to_i, $2.to_i, $3.to_i, $4.to_i, $5.to_i, $6.to_i,])
+      return check_lostroyal([Regexp.last_match(1).to_i, Regexp.last_match(2).to_i, Regexp.last_match(3).to_i, Regexp.last_match(4).to_i, Regexp.last_match(5).to_i, Regexp.last_match(6).to_i,])
     when /FC/
       return roll_fumble_chart
     when /WPC/
@@ -53,7 +53,7 @@ INFO_MESSAGE_TEXT
     when /EC/
       return roll_emotion_chart
     when /HR([1-2])/
-      return roll_hope($1.to_i)
+      return roll_hope(Regexp.last_match(1).to_i)
     end
 
     return nil
@@ -62,27 +62,27 @@ INFO_MESSAGE_TEXT
   def check_lostroyal(checking_table)
     keys = []
 
-    for i in 0...3
+    (0...3).each do |_i|
       key, = roll(1, 6)
       keys << key
     end
 
-    scores = (keys.map do |k| checking_table[k - 1] end).to_a
+    scores = (keys.map { |k| checking_table[k - 1] }).to_a
     total_score = scores.inject(:+)
 
     chained_sequence = find_sequence(keys)
 
-    text = "3D6 => [#{keys.join(",")}] => (#{scores.join("+")}) => #{total_score}"
+    text = "3D6 => [#{keys.join(',')}] => (#{scores.join('+')}) => #{total_score}"
 
-    unless chained_sequence.nil? || chained_sequence.empty? then
+    unless chained_sequence.nil? || chained_sequence.empty?
       bonus = is_fumble?(keys, chained_sequence) ? 3 : chained_sequence.size
-      text += " | #{chained_sequence.size} chain! (#{chained_sequence.join(",")}) => #{total_score + bonus}"
+      text += " | #{chained_sequence.size} chain! (#{chained_sequence.join(',')}) => #{total_score + bonus}"
 
-      if chained_sequence.size >= 3 then
+      if chained_sequence.size >= 3
         text += " [スペシャル]"
       end
 
-      if is_fumble?(keys, chained_sequence) then
+      if is_fumble?(keys, chained_sequence)
         text += " [ファンブル]"
       end
     end
@@ -97,9 +97,9 @@ INFO_MESSAGE_TEXT
       find_sequence_from_start_key(keys, start_key)
     end.find_all do |x|
       x.size > 1
-    end.sort do |a, b|
+    end.max do |a, b|
       a.size <=> b.size
-    end.last
+    end
 
     sequence
   end
@@ -114,7 +114,7 @@ INFO_MESSAGE_TEXT
       key += 1
     end
 
-    if chained_keys.size > 0 && chained_keys[0] == 1 then
+    if !chained_keys.empty? && chained_keys[0] == 1
       key = 6
       while keys.include? key
         chained_keys.unshift key
@@ -126,8 +126,8 @@ INFO_MESSAGE_TEXT
   end
 
   def is_fumble?(keys, chained_sequence)
-    for k in chained_sequence
-      if keys.count(k) >= 2 then
+    chained_sequence.each do |k|
+      if keys.count(k) >= 2
         return true
       end
     end
@@ -155,7 +155,7 @@ INFO_MESSAGE_TEXT
     total_bonus = 0
     text = ""
 
-    while true
+    loop do
       dice, = roll(1, 6)
       key += dice
 
@@ -171,19 +171,19 @@ INFO_MESSAGE_TEXT
 
       total_bonus += bonus
 
-      if key != dice then
+      if key != dice
         current_text = "1D6[#{dice}]+#{key - dice} #{current_text}"
       else
         current_text = "1D6[#{dice}] #{current_text}"
       end
 
-      unless text.empty? then
-        text = "#{text} => #{current_text}"
-      else
+      if text.empty?
         text = current_text
+      else
+        text = "#{text} => #{current_text}"
       end
 
-      unless add then
+      unless add
         text += " [合計：儀式点 +#{total_bonus} ]"
         return text
       end
@@ -209,23 +209,23 @@ INFO_MESSAGE_TEXT
     total = 0
     text = ""
 
-    while true
+    loop do
       d1, = roll(1, 6)
       d2 = 0
 
-      if number_of_dice >= 2 then
+      if number_of_dice >= 2
         d2, = roll(1, 6)
       end
 
       total += d1 + d2
 
-      if number_of_dice == 2 then
+      if number_of_dice == 2
         text += "2D6[#{d1},#{d2}]"
       else
         text += "1D6[#{d1}]"
       end
 
-      if is_1or2(d1) || is_1or2(d2) then
+      if is_1or2(d1) || is_1or2(d2)
         text += " （振り足し） => "
       else
         text += " => 合計 #{total}"

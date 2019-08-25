@@ -31,9 +31,9 @@ MESSAGETEXT
 
     case command
     when /(\d+)?CL(\@?(\d))?(>=(\d+))?/i
-      base = ($1 || 1).to_i
-      target = ($3 || 6).to_i
-      diff = $5.to_i
+      base = (Regexp.last_match(1) || 1).to_i
+      target = (Regexp.last_match(3) || 6).to_i
+      diff = Regexp.last_match(5).to_i
       result = checkRoll(base, target, diff)
     end
 

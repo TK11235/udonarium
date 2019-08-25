@@ -23,7 +23,7 @@ class CthulhuTech < DiceBot
 INFO_MESSAGE_TEXT
   end
 
-  def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)# ゲーム別成功度判定(nD10)
+  def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(nD10)
     if signOfInequality == ">=" # 通常のテスト
       @isCombatTest = false
       return check_nD10_nomalTest(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
@@ -35,9 +35,9 @@ INFO_MESSAGE_TEXT
     end
   end
 
-  def check_nD10_nomalTest(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    #if( n1 >= (dice_cnt / 2 + 0.9).to_i )
-    if( n1 >= ((dice_cnt / 2).floor + 0.9).to_i ) # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+  def check_nD10_nomalTest(total_n, _dice_n, _signOfInequality, diff, dice_cnt, _dice_max, n1, _n_max)
+    # if n1 >= (dice_cnt / 2 + 0.9).to_i
+    if n1 >= ((dice_cnt / 2).floor + 0.9).to_i # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
       return " ＞ ファンブル"
     end
 
@@ -95,7 +95,7 @@ INFO_MESSAGE_TEXT
 
   ####################           CthulhuTech         ########################
   # CthulhuTechの判定用ダイス計算
-  def cthulhutech_check (dice_str)
+  def cthulhutech_check(dice_str)
     dice_aRR = dice_str.split(/,/).collect { |i| i.to_i }
 
     dice_num = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -119,21 +119,21 @@ INFO_MESSAGE_TEXT
 
       if dice_aRR.length >= 3 # ダイスが3個以上ロールされている
         10.times do |i|
-          break if  dice_num[i + 2] == nil
+          break if  dice_num[i + 2].nil?
 
-          if dice_num[i] > 0
-            if (dice_num[i + 1] > 0) && (dice_num[i + 2] > 0) # 3.連続する出目の合計
-              dice_now = i * 3 + 6 # ($i+1) + ($i+2) + ($i+3) = $i*3 + 6
+          next unless dice_num[i] > 0
 
-              ((i + 3)...10).step do |i2|
-                break if dice_num[i2] == 0
+          next unless (dice_num[i + 1] > 0) && (dice_num[i + 2] > 0) # 3.連続する出目の合計
 
-                dice_now += i2 + 1
-              end
+          dice_now = i * 3 + 6 # ($i+1) + ($i+2) + ($i+3) = $i*3 + 6
 
-              max_num = dice_now if dice_now > max_num
-            end
+          ((i + 3)...10).step do |i2|
+            break if dice_num[i2] == 0
+
+            dice_now += i2 + 1
           end
+
+          max_num = dice_now if dice_now > max_num
         end
       end
     end

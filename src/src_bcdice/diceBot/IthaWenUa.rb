@@ -19,7 +19,7 @@ class IthaWenUa < DiceBot
 MESSAGETEXT
   end
 
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(1d100)
+  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(1d100)
     return '' unless signOfInequality == '<='
 
     diceValue = total_n % 100

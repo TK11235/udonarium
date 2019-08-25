@@ -42,12 +42,12 @@ INFO_MESSAGE_TEXT
 
     debug("DoubleCross parren_killer_add string", string)
 
-    string = string.gsub(/(\d+)DX(\d*)([^\d\s][\+\-\d]+)/i) { "#{$1}R10#{$3}[#{$2}]" }
-    string = string.gsub(/(\d+)DX(\d+)/i) { "#{$1}R10[#{$2}]" }
-    string = string.gsub(/(\d+)DX([^\d\s][\+\-\d]+)/i) { "#{$1}R10#{$2}" }
-    string = string.gsub(/(\d+)DX/i) { "#{$1}R10" }
+    string = string.gsub(/(\d+)DX(\d*)([^\d\s][\+\-\d]+)/i) { "#{Regexp.last_match(1)}R10#{Regexp.last_match(3)}[#{Regexp.last_match(2)}]" }
+    string = string.gsub(/(\d+)DX(\d+)/i) { "#{Regexp.last_match(1)}R10[#{Regexp.last_match(2)}]" }
+    string = string.gsub(/(\d+)DX([^\d\s][\+\-\d]+)/i) { "#{Regexp.last_match(1)}R10#{Regexp.last_match(2)}" }
+    string = string.gsub(/(\d+)DX/i) { "#{Regexp.last_match(1)}R10" }
     if /\@(\d+)/ =~ string
-      crit = $1
+      crit = Regexp.last_match(1)
       string = string.gsub(/\[\]/) { "\[#{crit}\]" }
       string = string.gsub(/\@(\d+)/, "")
     end
@@ -65,7 +65,7 @@ INFO_MESSAGE_TEXT
     return "#{nick_e}: #{output_msg}"
   end
 
-  def check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)# ゲーム別成功度判定(nD10)
+  def check_nD10(total_n, _dice_n, signOfInequality, diff, dice_cnt, _dice_max, n1, _n_max) # ゲーム別成功度判定(nD10)
     return '' unless signOfInequality == ">="
 
     if n1 >= dice_cnt
@@ -78,7 +78,7 @@ INFO_MESSAGE_TEXT
   end
 
   # 振り足し時のダイス読み替え処理用（ダブルクロスはクリティカルでダイス10に読み替える)
-  def getJackUpValueOnAddRoll(dice_n, round)
+  def getJackUpValueOnAddRoll(dice_n, _round)
     return (10 - dice_n)
   end
 
@@ -103,9 +103,9 @@ INFO_MESSAGE_TEXT
       return nil
     end
 
-    string = $2
+    string = Regexp.last_match(2)
 
-    critical = $4
+    critical = Regexp.last_match(4)
     critical ||= rerollNumber
     critical = critical.to_i
 
@@ -115,13 +115,13 @@ INFO_MESSAGE_TEXT
       return "クリティカル値が低すぎます。2以上を指定してください。"
     end
 
-    if !$5.nil?
-      diff = $7.to_i
-      signOfInequality = marshalSignOfInequality($6)
+    if !Regexp.last_match(5).nil?
+      diff = Regexp.last_match(7).to_i
+      signOfInequality = marshalSignOfInequality(Regexp.last_match(6))
     elsif defaultSuccessTarget != ""
       if /([<>=]+)(\d+)/ =~ defaultSuccessTarget
-        diff = $2.to_i
-        signOfInequality = marshalSignOfInequality($1)
+        diff = Regexp.last_match(2).to_i
+        signOfInequality = marshalSignOfInequality(Regexp.last_match(1))
       end
     end
 
@@ -196,8 +196,8 @@ INFO_MESSAGE_TEXT
         output += "#{subtotal}[#{dice_dat[1]}]"
         total_n += subtotal
 
-        # break unless ( @@bcdice.isReRollAgain(dice_cnt, round) )
-        break unless ( bcdice.isReRollAgain(dice_cnt, round) ) # TKfix @@bcdice が参照できない (Opal 0.11.4)
+        # break unless @@bcdice.isReRollAgain(dice_cnt, round)
+        break unless bcdice.isReRollAgain(dice_cnt, round) # TKfix @@bcdice が参照できない (Opal 0.11.4)
       end
     end
 
@@ -232,7 +232,7 @@ INFO_MESSAGE_TEXT
     return output
   end
 
-  def rollDiceCommand(command)
+  def rollDiceCommand(_command)
     get_emotion_table()
   end
 

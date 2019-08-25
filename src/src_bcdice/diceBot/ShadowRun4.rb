@@ -25,7 +25,7 @@ INFO_MESSAGE_TEXT
 
   def changeText(string)
     if string =~ /(\d+)S6/i
-      string = string.gsub(/(\d+)S6/i) { "#{$1}B6" }
+      string = string.gsub(/(\d+)S6/i) { "#{Regexp.last_match(1)}B6" }
     end
 
     return string

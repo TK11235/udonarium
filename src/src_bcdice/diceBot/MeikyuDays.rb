@@ -39,8 +39,8 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/(\d+)MD6/i) { "#{$1}R6" }
-    string = string.gsub(/(\d+)MD/i) { "#{$1}R6" }
+    string = string.gsub(/(\d+)MD6/i) { "#{Regexp.last_match(1)}R6" }
+    string = string.gsub(/(\d+)MD/i) { "#{Regexp.last_match(1)}R6" }
     return string
   end
 
@@ -49,7 +49,7 @@ INFO_MESSAGE_TEXT
     return checkRoll(string)
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(2D6)
+  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
     return '' unless signOfInequality == ">="
 
     if dice_n <= 2

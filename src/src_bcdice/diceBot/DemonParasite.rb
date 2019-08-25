@@ -36,7 +36,7 @@ INFO_MESSAGE_TEXT
   end
 
   # ゲーム別成功度判定(nD6)
-  def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, n1, n_max)
     if n1 >= 2 # １の目が２個以上ならファンブル
       return " ＞ 致命的失敗"
     end
