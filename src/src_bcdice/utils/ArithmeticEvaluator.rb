@@ -60,13 +60,18 @@ class ArithmeticEvaluator
   end
 
   def div(left, right)
+    if right.zero?
+      @error = true
+      return 0
+    end
+
     case @round_type
     when :roundUp
-      (left.to_f / right).ceil
+      return (left.to_f / right).ceil
     when :roundOff
-      (left.to_f / right).round
+      return (left.to_f / right).round
     else
-      left / right
+      return (left / right).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     end
   end
 

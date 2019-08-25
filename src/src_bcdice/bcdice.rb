@@ -1,19 +1,18 @@
 #!/bin/ruby -Ku
 # -*- coding: utf-8 -*-
 
-$LOAD_PATH.push(File.dirname(__FILE__)) # require_relative対策
+$:.push(File.dirname(__FILE__)) # require_relative対策
 
 require 'configBcDice.rb'
 
 class Cli
-  def quit
-  end
+  def quit; end
 
-  def sendMessage(to, message)
+  def sendMessage(_to, message)
     print message
   end
 
-  def sendMessageToOnlySender(nick_e, message)
+  def sendMessageToOnlySender(_nick_e, message)
     print message
   end
 
@@ -46,7 +45,7 @@ end
 
 if $0 === __FILE__
 
-  if  (ARGV.length < 1) || (ARGV[0] == "createExe")
+  if  ARGV.empty? || (ARGV[0] == "createExe")
     require 'bcdiceGui.rb'
     mainBcDiceGui
   else

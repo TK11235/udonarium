@@ -75,40 +75,40 @@ class CountHolder
     debug("@command", @command)
 
     case @command
-    when /^#([^:：]+)(:|：)(\w+?)\s*(\d+)(\/(\d+))?/
+    when %r{^#([^:：]+)(:|：)(\w+?)\s*(\d+)(/(\d+))?}
       debug(" #(識別名):(タグ)(現在値)/(最大値) で指定します。最大値がないものは省略できます。")
       # #Zako1:HP9/9　　　#orc1:HP10/10　　#商人:HP8/8
-      @characterName = $1
-      @tagName = $3
-      @currentValue = $4.to_i
-      @maxValue = $6
+      @characterName = Regexp.last_match(1)
+      @tagName = Regexp.last_match(3)
+      @currentValue = Regexp.last_match(4).to_i
+      @maxValue = Regexp.last_match(6)
     when /^#([^:：]+)(:|：)(\w+?)\s*([\+\-]\d+)/
       debug(" #(識別名):(タグ)(変更量)")
       # #Zako1:HP-1
-      @characterName = $1
-      @tagName = $3
-      @modifyText = $4
-    when /^#(\w+?)\s*(\d+)\/(\d+)/
+      @characterName = Regexp.last_match(1)
+      @tagName = Regexp.last_match(3)
+      @modifyText = Regexp.last_match(4)
+    when %r{^#(\w+?)\s*(\d+)/(\d+)}
       debug(" #(タグ)(現在値)/(最大値) 現在値/最大値指定は半角のみ。")
       # #HP12/12　　　#衝動0/10
-      @tagName = $1
-      @currentValue = $2.to_i
-      @maxValue = $3
+      @tagName = Regexp.last_match(1)
+      @currentValue = Regexp.last_match(2).to_i
+      @maxValue = Regexp.last_match(3)
     when /^#(\w+?)\s*([\+\-]\d+)/
       debug(" #(タグ)(変更量)")
       # #HP-1
-      @tagName = $1
-      @modifyText = $2
+      @tagName = Regexp.last_match(1)
+      @modifyText = Regexp.last_match(2)
     when /^#(\w+?)\s*(\d+)/
       debug(" #(タグ)(現在値) で指定します。現在値は半角です。")
       # #DEX12　　　#浸食率0
-      @tagName = $1
-      @currentValue = $2.to_i
+      @tagName = Regexp.last_match(1)
+      @currentValue = Regexp.last_match(2).to_i
     when /^#(\w+?)\s*([\+\-]\d+)/
       debug(" #(タグ)(変更量) ")
       # #DEX-1
-      @tagName = $1
-      @modifyText = $2
+      @tagName = Regexp.last_match(1)
+      @modifyText = Regexp.last_match(2)
     else
       debug("not match command", @command)
       return ''
@@ -164,7 +164,7 @@ class CountHolder
   def changeCount
     debug("changeCount begin")
 
-    modifyValue = @bcdice.parren_killer("(0#{ @modifyText })").to_i
+    modifyValue = @bcdice.parren_killer("(0#{@modifyText})").to_i
     characterInfo = getCharacterInfo(@channel, @characterName)
 
     info = characterInfo[@tagName]
@@ -228,7 +228,7 @@ class CountHolder
 
     return output unless /^#OPEN![\s]*(\w*)(\s|$)/ =~ @command
 
-    tag = $1
+    tag = Regexp.last_match(1)
     case @pointerMode
     when :sameNick
       debug("same nick")
@@ -254,34 +254,34 @@ class CountHolder
     if pc_list
       sort_pc = {}
       pc_list.each do |pc_o|
-        if $point_counter["#{nick},#{pc_o}"]
-          tag_out = ""
-          if tag
-            check_name = "#{nick},#{pc_o}"
-            if $point_counter["#{check_name},#{tag},0"]
-              sort_pc[check_name] = $point_counter["#{check_name},#{tag},0"]
-            end
-            if $point_counter["#{check_name},#{tag},1"]
-              sort_pc[check_name] = $point_counter["#{check_name},#{tag},1"]
-            end
-          else
-            tag_arr = $point_counter["#{nick},#{pc_o}"]
-            tag_arr.each do |tag_o|
-              check_name = "#{nick},#{pc_o},#{tag_o}"
-              if $point_counter["#{check_name},0"]
-                tag_out += "$tag_o(" + $point_counter["#{check_name},0"] + ") "
-              end
-              if $point_counter["#{check_name},1"]
-                tag_out += "#{tag_o}[" + $point_counter["#{check_name},1"] + "] "
-              end
-            end
+        next unless $point_counter["#{nick},#{pc_o}"]
+
+        tag_out = ""
+        if tag
+          check_name = "#{nick},#{pc_o}"
+          if $point_counter["#{check_name},#{tag},0"]
+            sort_pc[check_name] = $point_counter["#{check_name},#{tag},0"]
           end
-          if tag_out
-            debug("中身があるなら")
-            pc_out += ", " if pc_out
-            pc_out += "#{pc_o.downcase}:#{tag_out}"
+          if $point_counter["#{check_name},#{tag},1"]
+            sort_pc[check_name] = $point_counter["#{check_name},#{tag},1"]
+          end
+        else
+          tag_arr = $point_counter["#{nick},#{pc_o}"]
+          tag_arr.each do |tag_o|
+            check_name = "#{nick},#{pc_o},#{tag_o}"
+            if $point_counter["#{check_name},0"]
+              tag_out += "$tag_o(" + $point_counter["#{check_name},0"] + ") "
+            end
+            if $point_counter["#{check_name},1"]
+              tag_out += "#{tag_o}[" + $point_counter["#{check_name},1"] + "] "
+            end
           end
         end
+        next unless tag_out
+
+        debug("中身があるなら")
+        pc_out += ", " if pc_out
+        pc_out += "#{pc_o.downcase}:#{tag_out}"
       end
 
       if tag
@@ -377,8 +377,8 @@ class CountHolder
 
     return output unless /^#RENAME!\s*(.+?)\s*\-\>\s*(.+?)(\s|$)/ =~ @command
 
-    oldName = $1
-    newName = $2
+    oldName = Regexp.last_match(1)
+    newName = Regexp.last_match(2)
     debug("oldName, newName", oldName, newName)
 
     # {:channelName => {:characterName => (カウンター情報) }
@@ -444,9 +444,9 @@ class CountHolder
   end
 
   def getPointHashCurrentAndMax(key)
-    if /(\d+)[\/](\d+)/ =~ key
-      current = $1
-      max = $2
+    if %r{(\d+)[/](\d+)} =~ key
+      current = Regexp.last_match(1)
+      max = Regexp.last_match(2)
       return current, max
     end
     return 0, 0

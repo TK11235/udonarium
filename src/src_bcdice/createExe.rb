@@ -4,14 +4,14 @@
 require 'fileutils'
 
 bcdiceRoot = File.expand_path(File.dirname(__FILE__))
-$LOAD_PATH.unshift(bcdiceRoot) unless $LOAD_PATH.include?(bcdiceRoot)
+$:.unshift(bcdiceRoot) unless $:.include?(bcdiceRoot)
 
 require 'diceBot/DiceBotLoader'
 
 def updateConfig
   nameList = DiceBotLoader.collectDiceBots.
-    map { |diceBot| diceBot.gameType.gsub(' ', '_') }.
-    sort
+             map { |diceBot| diceBot.gameType.gsub(' ', '_') }.
+             sort
   writeToConfig(nameList)
 end
 

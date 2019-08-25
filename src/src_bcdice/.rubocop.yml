@@ -1,5 +1,33 @@
 inherit_from: .rubocop_todo.yml
 
+# Due to old Ruby 1.8.x
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+# Due to old Ruby 1.9.x
+Style/Dir:
+  Enabled: false
+
+# Dut to old Ruby 1.8.x
+Style/EachWithObject:
+  Enabled: false
+
+# Dut to old Ruby 1.8.x
+Style/EmptyBlockParameter:
+  Enabled: false
+
+# Due to old Ruby 1.8.x
+Style/Lambda:
+  EnforcedStyle: lambda
+
+# Due to old Ruby 2.2.x
+Style/SafeNavigation:
+  Enabled: false
+
+# Due to old Ruby 1.8.x
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_perl_names
+
 Layout/EndOfLine:
   EnforcedStyle: lf
 
@@ -25,6 +53,10 @@ Naming/VariableNumber:
 Style/AsciiComments:
   Enabled: false
 
+# Due to old Ruby 1.9.x
+Style/BracesAroundHashParameters:
+  Enabled: false
+
 Style/CommentedKeyword:
   Enabled: false
 
@@ -44,6 +76,9 @@ Style/Encoding:
 # Due to old Ruby
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
+
+Style/NegatedWhile:
+  Enabled: false
 
 Style/NumericLiterals:
   MinDigits: 6
@@ -75,6 +110,10 @@ Style/RedundantReturn:
 Style/StringLiterals:
   Enabled: false
 
+# Due to old Ruby 1.8.x
+Style/SymbolArray:
+  Enabled: false
+
 Style/SymbolProc:
   Enabled: false
 
@@ -83,3 +122,9 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/TrailingCommaInHashLiteral:
   Enabled: false
+
+Style/WhileUntilModifier:
+  Enabled: false
+
+Style/YodaCondition:
+  EnforcedStyle: forbid_for_equality_operators_only

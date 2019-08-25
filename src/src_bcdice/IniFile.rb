@@ -21,12 +21,12 @@ class IniFile
       when /^;/
         next
       when /^\[(.+)\]/
-        section = $1
+        section = Regexp.last_match(1)
       when /^([^=]*)=(.*)/
         next if section.nil?
 
-        key = $1
-        value = $2
+        key = Regexp.last_match(1)
+        value = Regexp.last_match(2)
         @infos[section] ||= {}
         @infos[section][key] = value
       end

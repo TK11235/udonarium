@@ -5,7 +5,7 @@ require 'configBcDiceForSystem.rb'
 
 $isDebug = false
 
-$bcDiceVersion = "2.03.02"
+$bcDiceVersion = "2.03.03"
 
 $SEND_STR_MAX = 405; # 最大送信文字数(本来は500byte上限)
 $isRollVoidDiceAtAnyRecive = true; # 発言の度に空ダイスを振るか？
@@ -33,161 +33,164 @@ $extraCardFileName = "" # 拡張カードファイル名
 $iniFileName = 'bcdice.ini'
 
 $allGameTypes = %w{
-AceKillerGene
-Airgetlamh
-Alsetto
-Alshard
-Alter_raise
-Amadeus
-Amadeus:Korean
-Arianrhod
-ArsMagica
-Avandner
-BadLife
-BarnaKronika
-BattleTech
-BeastBindTrinity
-BeginningIdol
-BeginningIdol:Korean
-BladeOfArcana
-BlindMythos
-BloodCrusade
-BloodMoon
-CardRanker
-Chaos_Flare
-Chill
-Chill3
-CodeLayerd
-ColossalHunter
-CrashWorld
-Cthulhu
-Cthulhu7th
-Cthulhu7th:ChineseTraditional
-Cthulhu7th:Korean
-Cthulhu:ChineseTraditional
-Cthulhu:Korean
-CthulhuTech
-DarkBlaze
-DarkDaysDrive
-DarkSouls
-DeadlineHeroes
-DemonParasite
-DetatokoSaga
-DetatokoSaga:Korean
-DiceOfTheDead
-DoubleCross
-Dracurouge
-Dracurouge:Korean
-DungeonsAndDoragons
-EarthDawn
-EarthDawn3
-EarthDawn4
-EclipsePhase
-Elric!
-Elysion
-EmbryoMachine
-EndBreaker
-EtrianOdysseySRS
-FilledWith
-FullMetalPanic
-FutariSousa
-GURPS
-Garako
-GardenOrder
-GehennaAn
-GeishaGirlwithKatana
-GoldenSkyStories
-Gorilla
-GranCrest
-Gundog
-GundogRevised
-GundogZero
-GurpsFW
-HarnMaster
-HatsuneMiku
-Hieizan
-HouraiGakuen
-HuntersMoon
-Illusio
-InfiniteFantasia
-Insane
-Insane:Korean
-IthaWenUa
-JamesBond
-Kamigakari
-Kamigakari:Korean
-KanColle
-KillDeathBusiness
-KillDeathBusiness:Korean
-KurayamiCrying
-LiveraDoll
-LogHorizon
-LogHorizon:Korean
-LostRoyal
-MagicaLogia
-MeikyuDays
-MeikyuKingdom
-MetalHead
-MetalHeadExtream
-MetallicGuadian
-MonotoneMusium
-MonotoneMusium:Korean
-NJSLYRBATTLE
-Nechronica
-Nechronica:Korean
-NightWizard
-NightWizard3rd
-NightmareHunterDeep
-Nuekagami
-OneWayHeroics
-OrgaRain
-Oukahoushin3rd
-Paranoia
-ParasiteBlood
-Pathfinder
-Peekaboo
-Pendragon
-PhantasmAdventure
-Postman
-Raisondetre
-RecordOfSteam
-RokumonSekai2
-RoleMaster
-RuneQuest
-Ryutama
-SMTKakuseihen
-SRS
-Satasupe
-SevenFortressMobius
-ShadowRun
-ShadowRun4
-SharedFantasia
-ShinkuuGakuen
-ShinobiGami
-ShoujoTenrankai
-Skynauts
-StellarKnights
-StrangerOfSwordCity
-StratoShout
-Strave
-SwordWorld
-SwordWorld2.0
-SwordWorld2.5
-TORG
-TORG1.5
-TherapieSein
-TokumeiTenkousei
-TokyoGhostResearch
-TokyoNova
-TrinitySeven
-Tunnels_&_Trolls
-TwilightGunsmoke
-Utakaze
-WARPS
-WaresBlade
-Warhammer
-WitchQuest
-WorldOfDarkness
-YankeeYogSothoth
-ZettaiReido
+  AceKillerGene
+  Airgetlamh
+  Alsetto
+  Alshard
+  Alter_raise
+  Amadeus
+  Amadeus:Korean
+  Arianrhod
+  ArsMagica
+  Avandner
+  BadLife
+  BarnaKronika
+  BattleTech
+  BeastBindTrinity
+  BeginningIdol
+  BeginningIdol:Korean
+  BladeOfArcana
+  BlindMythos
+  BloodCrusade
+  BloodMoon
+  CardRanker
+  Chaos_Flare
+  Chill
+  Chill3
+  CodeLayerd
+  ColossalHunter
+  CrashWorld
+  Cthulhu
+  Cthulhu7th
+  Cthulhu7th:ChineseTraditional
+  Cthulhu7th:Korean
+  Cthulhu:ChineseTraditional
+  Cthulhu:Korean
+  CthulhuTech
+  DarkBlaze
+  DarkDaysDrive
+  DarkSouls
+  DeadlineHeroes
+  DemonParasite
+  DetatokoSaga
+  DetatokoSaga:Korean
+  DiceOfTheDead
+  DoubleCross
+  Dracurouge
+  Dracurouge:Korean
+  DungeonsAndDoragons
+  EarthDawn
+  EarthDawn3
+  EarthDawn4
+  EclipsePhase
+  Elric!
+  Elysion
+  EmbryoMachine
+  EndBreaker
+  EtrianOdysseySRS
+  FilledWith
+  FullMetalPanic
+  FutariSousa
+  GURPS
+  Garako
+  GardenOrder
+  GehennaAn
+  GeishaGirlwithKatana
+  GoldenSkyStories
+  Gorilla
+  GranCrest
+  Gundog
+  GundogRevised
+  GundogZero
+  GurpsFW
+  HarnMaster
+  HatsuneMiku
+  Hieizan
+  HouraiGakuen
+  HuntersMoon
+  Illusio
+  InfiniteFantasia
+  Insane
+  Insane:Korean
+  IthaWenUa
+  JamesBond
+  Kamigakari
+  Kamigakari:Korean
+  KanColle
+  KillDeathBusiness
+  KillDeathBusiness:Korean
+  KurayamiCrying
+  LiveraDoll
+  LogHorizon
+  LogHorizon:Korean
+  LostRoyal
+  MagicaLogia
+  MeikyuDays
+  MeikyuKingdom
+  MetalHead
+  MetalHeadExtream
+  MetallicGuadian
+  MonotoneMusium
+  MonotoneMusium:Korean
+  NJSLYRBATTLE
+  Nechronica
+  Nechronica:Korean
+  NightWizard
+  NightWizard3rd
+  NightmareHunterDeep
+  NinjaSlayer
+  Nuekagami
+  OneWayHeroics
+  OrgaRain
+  Oukahoushin3rd
+  Paranoia
+  ParasiteBlood
+  Pathfinder
+  Peekaboo
+  Pendragon
+  PhantasmAdventure
+  Postman
+  Raisondetre
+  RecordOfSteam
+  RokumonSekai2
+  RoleMaster
+  RuneQuest
+  Ryutama
+  SMTKakuseihen
+  SRS
+  Satasupe
+  SevenFortressMobius
+  ShadowRun
+  ShadowRun4
+  ShadowRun5
+  SharedFantasia
+  ShinkuuGakuen
+  ShinobiGami
+  ShoujoTenrankai
+  Skynauts
+  StellarKnights
+  StrangerOfSwordCity
+  StratoShout
+  Strave
+  SwordWorld
+  SwordWorld2.0
+  SwordWorld2.5
+  TORG
+  TORG1.5
+  TherapieSein
+  TokumeiTenkousei
+  TokyoGhostResearch
+  TokyoNova
+  TrinitySeven
+  Tunnels_&_Trolls
+  TwilightGunsmoke
+  Utakaze
+  Villaciel
+  WARPS
+  WaresBlade
+  Warhammer
+  WitchQuest
+  WorldOfDarkness
+  YankeeYogSothoth
+  ZettaiReido
 }

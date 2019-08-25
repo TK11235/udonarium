@@ -98,7 +98,7 @@ class UpperDice
     return output
   end
 
-  def getMaxAndTotalValueResultStirng(maxValue, totalValue, totalDiceCount)
+  def getMaxAndTotalValueResultStirng(maxValue, totalValue, _totalDiceCount)
     return " ＞ #{maxValue}/#{totalValue}(最大/合計)"
   end
 

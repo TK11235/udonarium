@@ -17,13 +17,13 @@ end
 def debug(target, *values)
   return unless $isDebug
 
-  targetStr = target.kind_of?(String) ? target : target.inspect
+  targetStr = target.is_a?(String) ? target : target.inspect
 
   if values.empty?
     debugPuts(targetStr)
   else
     valueStrs = values.map do |value|
-      value.kind_of?(String) ? %Q("#{value}") : value.inspect
+      value.is_a?(String) ? %("#{value}") : value.inspect
     end
 
     debugPuts("#{targetStr}: #{valueStrs.join(', ')}")

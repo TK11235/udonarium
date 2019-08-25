@@ -13,9 +13,9 @@ group :development, :test do
     gem 'rake', '~> 10.5'
     gem 'test-unit', '1.2.3'
   else
+    gem 'codecov', :require => false
     gem 'rake'
     gem 'test-unit'
-    gem 'codecov', :require => false
   end
 
   if RUBY_VERSION >= '2.3'

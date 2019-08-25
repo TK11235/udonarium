@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-$LOAD_PATH.push(File.dirname(__FILE__) + "/..")
+$:.push(File.dirname(__FILE__) + "/..")
 require 'test/unit'
 require 'CardTrader'
 require 'Kconv'

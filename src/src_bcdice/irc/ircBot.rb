@@ -39,7 +39,7 @@ class IrcClient < Net::IRC::Client
     bcdice.setGameByTitle(game_type)
   end
 
-  def on_connected(*args)
+  def on_connected(*_args)
     printText('  -> IRC server is connected.')
 
     channelNames = @loginChannelList.join(',')
@@ -51,7 +51,7 @@ class IrcClient < Net::IRC::Client
     printText("login to channels(#{channelNames}), so wait a moment...")
   end
 
-  def on_rpl_welcome(message)
+  def on_rpl_welcome(_message)
     printText('  -> login to channel successed.')
     # post JOIN, @room.encode($ircCode).force_encoding_maybe('external')
     post(JOIN, encode($ircCode, @room))
@@ -81,7 +81,7 @@ class IrcClient < Net::IRC::Client
 
     if host_j =~ /^someone\@somewhere\.else\.com$/ # Auto-ops anyone who
       debug_out("Give  to #{nick_e}\n")
-      self.mode(encode($ircCode, channel), "+o", nick_e); # matches hostmask.
+      mode(encode($ircCode, channel), "+o", nick_e); # matches hostmask.
     end
   end
 
@@ -92,14 +92,14 @@ class IrcClient < Net::IRC::Client
               event.nick, event.userhost, channel)
 
     addChannel(channel)
-    self.join(encode($ircCode, channel))
-    self.topic(encode($ircCode, channel))
+    join(encode($ircCode, channel))
+    topic(encode($ircCode, channel))
   end
 
   def on_kick(event)
     channel = getChannel(event)
 
-    mynick = self.nick
+    mynick = nick
     target = event.to[0]
 
     debug_out("%s Kicked on %s by %s.\n", target, channel)
@@ -180,7 +180,7 @@ class IrcClient < Net::IRC::Client
     @printFunction.call(text)
   end
 
-  def on_err_nicknameinuse(event)
+  def on_err_nicknameinuse(_event)
     debug_out("on_err_nicknameinuse being !")
     debug_out("@opts.nick", @opts.nick)
 
@@ -201,7 +201,7 @@ class IrcClient < Net::IRC::Client
     @nickIndex += 1
     @log.debug("@nickIndex:#{@nickIndex}")
 
-    nickIndexText = sprintf("%d", @nickIndex)
+    nickIndexText = format("%d", @nickIndex)
     @log.debug("nickIndexText:#{nickIndexText}")
 
     newNick = nick + nickIndexText
@@ -305,8 +305,8 @@ end
 
 def getInitializedIrcBot()
   ircBot = IrcClient.new($server, $port, {
-               :nick => $nick, :user => $userName, :real => $ircName
-             })
+                           :nick => $nick, :user => $userName, :real => $ircName
+                         })
   debug("$server, $port, $nick, $userName, $ircName", $server, $port, $nick, $userName, $ircName)
 
   room = $defaultLoginChannelsText.split(',').first

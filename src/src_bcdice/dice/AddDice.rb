@@ -253,7 +253,7 @@ class AddDice
     return dice_max, dice_now, output, n1_count, max_number, result_dice_count
   end
 
-  def addDiceArrayByAddDiceCount(dice_dat, dice_max, dice_queue, roll_times)
+  def addDiceArrayByAddDiceCount(dice_dat, _dice_max, dice_queue, roll_times)
     values = dice_dat[1].split(",").map(&:to_i)
     count_bucket = {}
 

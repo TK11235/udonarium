@@ -30,7 +30,7 @@ class DiceBotTest
     readTestDataSet
 
     if @testDataSet.empty?
-      $stderr.puts('No matched test data!')
+      warn('No matched test data!')
       return false
     end
 
@@ -74,10 +74,10 @@ class DiceBotTest
         end
 
       dataSetSources = source.
-        gsub("\r\n", "\n").
-        tr("\r", "\n").
-        split("============================\n").
-        map(&:chomp)
+                       gsub("\r\n", "\n").
+                       tr("\r", "\n").
+                       split("============================\n").
+                       map(&:chomp)
 
       # ゲームシステムをファイル名から判断する
       gameType = File.basename(filename, '.txt')
@@ -117,7 +117,7 @@ class DiceBotTest
           # テスト失敗、次へ
           next
         end
-      rescue => e
+      rescue StandardError => e
         @errorLog << logTextForException(e, testData)
         print('E')
 
@@ -191,9 +191,9 @@ EOS
   # インデントした結果を返す
   def indent(s)
     target =
-      if s.kind_of?(Array)
+      if s.is_a?(Array)
         s
-      elsif s.kind_of?(String)
+      elsif s.is_a?(String)
         s.lines
       else
         raise TypeError

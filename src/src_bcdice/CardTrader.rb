@@ -25,9 +25,9 @@ class CardTrader
 
     @card_channels = {}
     @card_spell = [
-                   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                  ]; # 64種類の記号
+      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    ]; # 64種類の記号
   end
 
   # カードをデフォルトに戻す
@@ -181,7 +181,7 @@ class CardTrader
   def setCardMode()
     return unless /(\d+)/ =~ @tnick
 
-    @card_place = $1.to_i
+    @card_place = Regexp.last_match(1).to_i
 
     if @card_place > 0
       sendMessageToChannels("カード置き場ありに変更しました")
@@ -191,12 +191,10 @@ class CardTrader
   end
 
   def readCardSet()
-    begin
-      readExtraCard(@tnick)
-      sendMessageToOnlySender("カードセットの読み込み成功しました")
-    rescue => e
-      sendMessageToOnlySender(e.to_s)
-    end
+    readExtraCard(@tnick)
+    sendMessageToOnlySender("カードセットの読み込み成功しました")
+  rescue StandardError => e
+    sendMessageToOnlySender(e.to_s)
   end
 
   def sendMessage(to, message)
@@ -230,8 +228,8 @@ class CardTrader
       lines.each do |line|
         next unless /^(\d+)->(.+)$/ =~ line # 番号->タイトル
 
-        cardNumber = $1.to_i
-        cardTitle = $2
+        cardNumber = Regexp.last_match(1).to_i
+        cardTitle = Regexp.last_match(2)
         @card_val.push(cardNumber)
         @cardTitles[cardNumber] = cardTitle
       end
@@ -241,7 +239,7 @@ class CardTrader
       @deal_cards = {'card_played' => []}
 
       debug("Load Finished...\n")
-    rescue => e
+    rescue StandardError => e
       raise ("カードデータを開けません :『#{cardFileName}』" + e.to_s)
     end
   end
@@ -264,14 +262,14 @@ class CardTrader
       drawCardByCommandText(arg)
 
     when /(c-odraw|c-opend)(\[[\d]+\])?($|\s)/
-      value = $2
+      value = Regexp.last_match(2)
       drawCardOpen(value)
 
     when /c-hand($|\s)/
       sendMessageToOnlySender(getHandAndPlaceCardInfoText(arg, @nick_e))
 
     when /c-vhand\s*(#{$ircNickRegExp})($|\s)/
-      name = $1
+      name = Regexp.last_match(1)
       debug("c-vhand name", name)
       messageText = ("#{name} の手札は" + getHandAndPlaceCardInfoText("c-hand", name) + "です")
       sendMessageToOnlySender(messageText)
@@ -297,7 +295,7 @@ class CardTrader
       sendMessage(@channel, place_msg)
 
     when /c-pass(\d)*(\[#{@cardRegExp}(,#{@cardRegExp})*\])?\s*(#{$ircNickRegExp})($|\s)/
-      sendTo = $4
+      sendTo = Regexp.last_match(4)
       transferCardsByCommandText(arg, sendTo)
 
     when /c-pick\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
@@ -307,32 +305,32 @@ class CardTrader
       backCardCommandText(arg)
 
     when /c-deal(\[[\d]+\]|\s)\s*(#{$ircNickRegExp})($|\s)/
-      count = $1
-      targetNick = $2
+      count = Regexp.last_match(1)
+      targetNick = Regexp.last_match(2)
       dealCard(count, targetNick)
 
     when /c-vdeal(\[[\d]+\]|\s)\s*(#{$ircNickRegExp})($|\s)/
-      count = $1
-      targetNick = $2
+      count = Regexp.last_match(1)
+      targetNick = Regexp.last_match(2)
       lookAndDealCard(count, targetNick)
 
     when /c-(dis|discard)(\d)*\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
       discardCardCommandText(arg)
 
     when /c-place(\d)*(\[#{@cardRegExp}(,#{@cardRegExp})*\])?\s*(#{$ircNickRegExp})($|\s)/
-      targetNick = $4
+      targetNick = Regexp.last_match(4)
       sendCardToTargetNickPlaceCommandText(arg, targetNick)
 
     when /c-(un)?tap(\d+)\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
       tapCardCommandText(arg)
 
     when /c-spell(\[(#{$ircNickRegExp}[^\]]+?)\])?($|\s)/
-      spellText = $2
+      spellText = Regexp.last_match(2)
       printCardRestorationSpellResult(spellText)
       # c_spell_caller(arg)
 
     when /(c-mil(stone)?(\[[\d]+\])?)($|\s)/
-      commandText = $1
+      commandText = Regexp.last_match(1)
       printMilStoneResult(commandText)
     end
   end
@@ -353,7 +351,7 @@ class CardTrader
     cards = drawCard(arg)
     debug("drawCardByCommandText cards", cards)
 
-    if cards.length > 0
+    if !cards.empty?
       sendMessageToOnlySender(getCardsTextFromCards(cards))
       sendMessage(@channel, "#{@nick_e}: #{cards.length}枚引きました")
     else
@@ -369,7 +367,7 @@ class CardTrader
 
     cards = drawCard(cmd)
 
-    if cards.length > 0
+    if !cards.empty?
       sendMessage(@channel, "#{@nick_e}: " + getCardsTextFromCards(cards) + 'を引きました')
     else
       sendMessage(@channel, "カードが残っていません")
@@ -394,19 +392,19 @@ class CardTrader
       return outputCards
     end
 
-    count = $3
+    count = Regexp.last_match(3)
     count ||= 1
     count = count.to_i
     debug("draw count", count)
 
-    count.times do |i|
+    count.times do |_i|
       break if @cardRest.length <= 0
 
       card = ejectOneCardRandomFromCards(@cardRest)
       break if  card.nil?
 
-      @deal_cards[ destination ] ||= []
-      @deal_cards[ destination ] << card
+      @deal_cards[destination] ||= []
+      @deal_cards[destination] << card
 
       outputCards << card
     end
@@ -432,7 +430,7 @@ class CardTrader
     ngCardList = []
 
     if /(c-pick\[((,)?#{@cardRegExp})+\])/ =~ string
-      cardName = $1
+      cardName = Regexp.last_match(1)
       okCount, ngCardList = pickupCardByCardName(cardName)
     end
 
@@ -446,7 +444,7 @@ class CardTrader
     ngCardList = []
 
     if /\[(#{@cardRegExp}(,#{@cardRegExp})*)\]/ =~ cardName
-      cards = $1.split(/,/)
+      cards = Regexp.last_match(1).split(/,/)
       okCount, ngCardList = pickupCardByCards(cards)
     end
 
@@ -507,8 +505,8 @@ class CardTrader
     ngCards = []
 
     if /(c-back(\d*)\[((,)?#{@cardRegExp})+\])/ =~ command
-      commandset = $1
-      place = $2.to_i
+      commandset = Regexp.last_match(1)
+      place = Regexp.last_match(2).to_i
       okCount, ngCards = backCardByCommandSetAndPlace(commandset, place)
     end
 
@@ -521,7 +519,7 @@ class CardTrader
     destination = @nick_e.upcase
 
     if /\[(#{@cardRegExp}(,#{@cardRegExp})*)\]/ =~ commandset
-      cards = $1.split(/,/)
+      cards = Regexp.last_match(1).split(/,/)
 
       cards.each do |card|
         string = backOneCard(card, destination, place)
@@ -564,7 +562,7 @@ class CardTrader
     debug("dealCard count, targetNick", count, targetNick)
 
     cards = drawCard("c-draw#{count}", targetNick)
-    if cards.length > 0
+    if !cards.empty?
       sendDealResult(targetNick, count, getCardsTextFromCards(cards), isLook)
     else
       sendMessage(@channel, "カードが残っていません")
@@ -632,8 +630,8 @@ class CardTrader
     ngCardList = []
 
     if /(c-play(\d*)\[((,)?#{@cardRegExp})+\])/ =~ cardPlayCommandText
-      cardsBlockText = $1
-      place = $2.to_i
+      cardsBlockText = Regexp.last_match(1)
+      place = Regexp.last_match(2).to_i
       debug("cardsBlockText", cardsBlockText)
       debug("place", place)
       okCardList, ngCardList = playCardByCardsBlockTextAndPlaceNo(cardsBlockText, place)
@@ -654,7 +652,7 @@ class CardTrader
     ngCardList = []
 
     if /\[(#{@cardRegExp}(,#{@cardRegExp})*)\]/ =~ cardsBlockText
-      cardsText = $1
+      cardsText = Regexp.last_match(1)
       okCardList, ngCardList = playCardByCardsTextAndPlaceNo(cardsText, place)
     end
 
@@ -727,8 +725,8 @@ class CardTrader
 
     if /(c-(dis|discard)(\d*)\[((,)?#{@cardRegExp})+\])/ =~ command
       debug("discardCards reg OK")
-      commandSet = $1
-      place = $3.to_i
+      commandSet = Regexp.last_match(1)
+      place = Regexp.last_match(3).to_i
       okList, ngList = discardCardsByCommandSetAndPlaceAndDestination(commandSet, place, destination)
     end
 
@@ -743,7 +741,7 @@ class CardTrader
     ngList = []
 
     if /\[(#{@cardRegExp}(,#{@cardRegExp})*)\]/ =~ commandSet
-      cards = $1.split(/,/)
+      cards = Regexp.last_match(1).split(/,/)
       okList, ngList = discardCardsByCardsAndPlace(cards, place, destination)
     end
 
@@ -855,9 +853,9 @@ class CardTrader
     ngCardList = []
 
     if /(c-pass(\d*)(\[(((,)?#{@cardRegExp})*)\])?)\s*(#{$ircNickRegExp})/ =~ command
-      destination = $7.upcase
-      commandset = $1
-      place = $2.to_i
+      destination = Regexp.last_match(7).upcase
+      commandset = Regexp.last_match(1)
+      place = Regexp.last_match(2).to_i
       place ||= 0
       okCount, ngCardList = transferCardsByCommand(commandset, place, destination)
 
@@ -883,7 +881,7 @@ class CardTrader
 
     cards = ['']
     if /\[(#{@cardRegExp}(,#{@cardRegExp})*)\]/ =~ commandset
-      cards = $1.split(/,/)
+      cards = Regexp.last_match(1).split(/,/)
     end
 
     debug('transferCardsByCommand cards', cards)
@@ -945,7 +943,7 @@ class CardTrader
 
     debug("transferOneCard isTargetCardInHand", isTargetCardInHand)
 
-    if !isTargetCardInHand
+    unless isTargetCardInHand
       return targetCard
     end
 
@@ -1015,7 +1013,7 @@ class CardTrader
 
       if /^\d+(.+)/ =~ destination
         # 渡すNickが数字で始まっていたら、場に出す処理の最初の一枚目
-        placeName = $1
+        placeName = Regexp.last_match(1)
         debug("placeName", placeName)
 
         if @deal_cards[placeName]
@@ -1047,7 +1045,7 @@ class CardTrader
       return
     end
 
-    if okCardList.length > 0
+    unless okCardList.empty?
       printRegistCardResult(targetNick, okCards)
     end
 
@@ -1055,15 +1053,15 @@ class CardTrader
   end
 
   # 相手の場にカードを置く
-  def getSendCardToTargetNickPlace(commandText, nick_e)
+  def getSendCardToTargetNickPlace(commandText, _nick_e)
     ngCardList = []
     okCardList = []
 
     debug("commandText", commandText)
     if /(c-place(\d*)(\[(((,)?#{@cardRegExp})*)\])?)\s*(#{$ircNickRegExp})/ =~ commandText
-      cardset = $1
-      placeNumber = $2.to_i
-      destination = $7.upcase
+      cardset = Regexp.last_match(1)
+      placeNumber = Regexp.last_match(2).to_i
+      destination = Regexp.last_match(7).upcase
 
       getSendCardToTargetNickPlaceByCardSetAndDestination(cardset, placeNumber, destination)
     end
@@ -1085,7 +1083,7 @@ class CardTrader
     debug("from", from)
 
     if /\[(#{@cardRegExp}(,#{@cardRegExp})*)\]/ =~ cardset
-      cards = $1.split(/,/)
+      cards = Regexp.last_match(1).split(/,/)
       okCardList, ngCardList = getSendCardToTargetNickPlaceByCards(cards, from, toSend)
     end
 
@@ -1114,7 +1112,7 @@ class CardTrader
   end
 
   def printRegistCardResult(targetNick, okCards)
-    sendMessage(@channel, "#{@nick_e}: #{ okCards.length }枚場に置きました")
+    sendMessage(@channel, "#{@nick_e}: #{okCards.length}枚場に置きました")
 
     unless @cardTitles.empty?
       cardText = getCardsTextFromCards(okCards)
@@ -1130,13 +1128,13 @@ class CardTrader
 
     okList, ngList, isUntap = tapCard(commandText)
 
-    if okList.length > 0
+    unless okList.empty?
       tapTypeName = (isUntap ? 'アンタップ' : 'タップ')
       sendMessage(@channel, "#{@nick_e}: #{okList.length}枚#{tapTypeName}しました")
       sendMessage(@channel, "[#{getCardsTextFromCards(okList)}]") unless @cardTitles.empty?
     end
 
-    if ngList.length > 0
+    unless ngList.empty?
       sendMessage(@channel, "[#{getCardsTextFromCards(ngList)}]は場にありません")
     end
 
@@ -1155,9 +1153,9 @@ class CardTrader
       return okCardList, ngCardList
     end
 
-    place = $3.to_i
-    isUntap = $2
-    cardsText = $1
+    place = Regexp.last_match(3).to_i
+    isUntap = Regexp.last_match(2)
+    cardsText = Regexp.last_match(1)
 
     okCardList, ngCardList = tapCardByCardsTextAndPlace(cardsText, place, isUntap)
     return okCardList, ngCardList, isUntap
@@ -1168,7 +1166,7 @@ class CardTrader
     ngCardList = []
 
     if /\[(#{@cardRegExp}(,#{@cardRegExp})*)\]/ =~ cardsText
-      cards = $1.split(/,/)
+      cards = Regexp.last_match(1).split(/,/)
       cards.each do |card|
         okCard, ngCard = tapOneCardByCardAndPlace(card, place, isUntap)
 
@@ -1226,7 +1224,7 @@ class CardTrader
     command = "c-draw"
     count = 0
     if /\[(\d+)\]/ =~ commandText
-      count = $1.to_i
+      count = Regexp.last_match(1).to_i
       command += "[#{count}]"
     end
 
@@ -1235,9 +1233,9 @@ class CardTrader
 
     text = ""
 
-    if cards.length > 0
+    if !cards.empty?
       cardInfo = getCardsTextFromCards(cards)
-      okCount, ngCount, text = discardCards("c-discard[#{ cardInfo }]")
+      okCount, ngCount, text = discardCards("c-discard[#{cardInfo}]")
       debug("discardCards okCount, ngCount, text", okCount, ngCount, text)
       count = okCount
     else
@@ -1275,10 +1273,10 @@ class CardTrader
 
   # 捨て札をデッキに戻す
   def returnCards
-    @deal_cards[ 'card_played' ] ||= []
-    cards = @deal_cards[ 'card_played' ]
+    @deal_cards['card_played'] ||= []
+    cards = @deal_cards['card_played']
 
-    while cards.length > 0
+    while !cards.empty?
       @cardRest.push(cards.shift)
     end
 
@@ -1286,8 +1284,8 @@ class CardTrader
   end
 
   def getBurriedCard
-    @deal_cards[ 'card_played' ] ||= []
-    cards = @deal_cards[ 'card_played' ]
+    @deal_cards['card_played'] ||= []
+    cards = @deal_cards['card_played']
 
     cards.length
   end
@@ -1298,7 +1296,7 @@ class CardTrader
   end
 
   def getAllCardLocation # 今のカード配置を見る
-    allText = "山札:#{ @cardRest.length }枚 捨札:#{ getBurriedCard }枚"
+    allText = "山札:#{@cardRest.length}枚 捨札:#{getBurriedCard}枚"
     allPlaceText = ""
 
     @deal_cards.each do |place, cards|
@@ -1317,8 +1315,8 @@ class CardTrader
     placeText = ""
 
     if place =~ /^(\d+)(#{$ircNickRegExp})/
-      placeNumber = $1
-      cnick = $2
+      placeNumber = Regexp.last_match(1)
+      cnick = Regexp.last_match(2)
       placeText = getCardLocationOnNumberdPlace(cards, placeNumber, cnick)
     else
       text = " #{place}:#{cards.length}枚"
@@ -1389,12 +1387,12 @@ class CardTrader
 
   def compareCardByCardNumber(a, b)
     /([^\d]+)(\d+)/ =~ a
-    a1 = $1
-    a2 = $2
+    a1 = Regexp.last_match(1)
+    a2 = Regexp.last_match(2)
 
     /([^\d]+)(\d+)/ =~ b
-    b1 = $1
-    b2 = $2
+    b1 = Regexp.last_match(1)
+    b2 = Regexp.last_match(2)
 
     result = [a1, a2] <=> [b1, b2]
 
@@ -1465,7 +1463,7 @@ class CardTrader
   def isTapCardPlace(index)
     return false unless @canTapCard
 
-    return ((index % 2) == 0)
+    return index.even?
   end
 
   ####################           復活の呪文          ########################
@@ -1543,7 +1541,7 @@ class CardTrader
 
   def shrinkSpellWords(spellWords)
     @card_spell.each do |word|
-      spellWords = spellWords.gsub(/#{word}(#{word}+)/) { word + ($1.length + 1).to_s }
+      spellWords = spellWords.gsub(/#{word}(#{word}+)/) { word + (Regexp.last_match(1).length + 1).to_s }
     end
 
     return spellWords
@@ -1575,7 +1573,7 @@ class CardTrader
 
   def expandSpellWords(spellWords)
     @card_spell.each do |word|
-      spellWords = spellWords.gsub(/#{word}(\d+)/) { word * $1.to_i }
+      spellWords = spellWords.gsub(/#{word}(\d+)/) { word * Regexp.last_match(1).to_i }
     end
 
     return spellWords

@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
 dodontof_root = File.expand_path('..', File.dirname(__FILE__))
-unless $LOAD_PATH.include?(dodontof_root)
-  $LOAD_PATH.unshift(dodontof_root)
+unless $:.include?(dodontof_root)
+  $:.unshift(dodontof_root)
 end
 
-require 'test/setup'
 require 'test/unit'
 require 'diceBot/DiceBot'
 
 class TestDiceBotPrefixesCompatibility < Test::Unit::TestCase
   def test_prefixesCompatibility
-    kariDiceClass = Class.new(DiceBot) { |_|
+    kariDiceClass = Class.new(DiceBot) do |_|
       def gameName
         '仮ダイス'
       end
@@ -24,7 +23,7 @@ class TestDiceBotPrefixesCompatibility < Test::Unit::TestCase
       def prefixs
         ['KD\d+>=\d+']
       end
-    }
+    end
 
     # 一回インスタンスを生成し、従来の方法で接頭辞が設定されているか
     # 判定されるようにする

@@ -10,7 +10,7 @@ require 'ArgsAnalizer.rb'
 require 'IniFile.rb'
 require 'diceBot/DiceBotLoader'
 
-$LOAD_PATH.push(File.dirname(__FILE__) + "/irc")
+$:.push(File.dirname(__FILE__) + "/irc")
 require 'ircLib.rb'
 require 'ircBot.rb'
 
@@ -63,11 +63,11 @@ class BCDiceDialog < Wx::Dialog
     @extraCardFileText = createAddedTextInput($extraCardFileName, "拡張カードファイル名")
 
     @executeButton = createButton('接続')
-    evt_button(@executeButton.get_id) { |event| on_execute }
+    evt_button(@executeButton.get_id) { |_event| on_execute }
 
     @stopButton = createButton('切断')
     @stopButton.enable(false)
-    evt_button(@stopButton.get_id) { |event| on_stop }
+    evt_button(@stopButton.get_id) { |_event| on_stop }
 
     addCtrlOnLine(@executeButton, @stopButton)
 
@@ -101,13 +101,13 @@ class BCDiceDialog < Wx::Dialog
 
     initServerSetChoiseList
 
-    evt_combobox(@serverSetChoise.get_id) { |event| on_load }
+    evt_combobox(@serverSetChoise.get_id) { |_event| on_load }
 
     @saveButton = createButton('この設定で保存')
-    evt_button(@saveButton.get_id) { |event| on_save }
+    evt_button(@saveButton.get_id) { |_event| on_save }
 
     @deleteButton = createButton('この設定を削除')
-    evt_button(@deleteButton.get_id) { |event| on_delete }
+    evt_button(@deleteButton.get_id) { |_event| on_delete }
 
     addCtrl(@serverSetChoise, "設定", @saveButton, @deleteButton)
   end
@@ -128,7 +128,7 @@ class BCDiceDialog < Wx::Dialog
 
     sectionNames.each do |name|
       if /#{@@serverSertPrefix}(.+)/ === name
-        serverSetNameList << $1
+        serverSetNameList << Regexp.last_match(1)
       end
     end
 
@@ -273,7 +273,7 @@ class BCDiceDialog < Wx::Dialog
 
     setChoiseText(@gameType, $defaultGameType)
 
-    evt_choice(@gameType.get_id) { |event| onChoiseGame }
+    evt_choice(@gameType.get_id) { |_event| onChoiseGame }
   end
 
   def setChoiseText(choise, text)
@@ -298,12 +298,12 @@ class BCDiceDialog < Wx::Dialog
 
   @@characterCodeInfo = {
     'ISO-2022-JP' => Kconv::JIS,
-    'EUC-JP'      => Kconv::EUC,
-    'Shift_JIS'   => Kconv::SJIS,
+    'EUC-JP' => Kconv::EUC,
+    'Shift_JIS' => Kconv::SJIS,
     'バイナリ' => Kconv::BINARY,
-    'ASCII'       => Kconv::ASCII,
-    'UTF-8'       => Kconv::UTF8,
-    'UTF-16'      => Kconv::UTF16,
+    'ASCII' => Kconv::ASCII,
+    'UTF-8' => Kconv::UTF8,
+    'UTF-16' => Kconv::UTF16,
   }
 
   def initCharacterCode
@@ -316,13 +316,13 @@ class BCDiceDialog < Wx::Dialog
       @characterCode.insert(type, index)
     end
 
-    found = @@characterCodeInfo.find { |key, value| value == $ircCode }
+    found = @@characterCodeInfo.find { |_key, value| value == $ircCode }
     unless  found.nil?
       codeText = found.first
       setChoiseText(@characterCode, codeText)
     end
 
-    evt_choice(@characterCode.get_id) { |event| onChoiseCharacterCode }
+    evt_choice(@characterCode.get_id) { |_event| onChoiseCharacterCode }
   end
 
   def onChoiseCharacterCode
@@ -341,9 +341,9 @@ class BCDiceDialog < Wx::Dialog
                                   :style => Wx::TE_PROCESS_ENTER,
                                   :size => inputSize)
 
-    evt_text_enter(@testInput.get_id) { |event| expressTestInput }
+    evt_text_enter(@testInput.get_id) { |_event| expressTestInput }
     @testButton = createButton('テスト実施')
-    evt_button(@testButton.get_id) { |event| expressTestInput }
+    evt_button(@testButton.get_id) { |_event| expressTestInput }
 
     addCtrlOnLine(label, @testInput, @testButton)
 
@@ -369,11 +369,9 @@ class BCDiceDialog < Wx::Dialog
   end
 
   def expressTestInput
-    begin
-      onEnterTestInputCatched
-    rescue => e
-      debug("onEnterTestInput error " + e.to_s)
-    end
+    onEnterTestInputCatched
+  rescue StandardError => e
+    debug("onEnterTestInput error " + e.to_s)
   end
 
   def onEnterTestInputCatched
@@ -394,11 +392,11 @@ class BCDiceDialog < Wx::Dialog
     bcdice.recievePublicMessage(nick_e)
   end
 
-  def sendMessage(to, message)
+  def sendMessage(_to, message)
     printText(message)
   end
 
-  def sendMessageToOnlySender(nick_e, message)
+  def sendMessageToOnlySender(_nick_e, message)
     sendMessage(to, message)
   end
 
@@ -416,14 +414,12 @@ class BCDiceDialog < Wx::Dialog
   end
 
   def on_execute
-    begin
-      setConfig
-      startIrcBot
-      @executeButton.enable(false)
-      @stopButton.enable(true)
-    rescue => e
-      Wx::message_box(e.to_s)
-    end
+    setConfig
+    startIrcBot
+    @executeButton.enable(false)
+    @stopButton.enable(true)
+  rescue StandardError => e
+    Wx.message_box(e.to_s)
   end
 
   def setConfig
@@ -439,8 +435,8 @@ class BCDiceDialog < Wx::Dialog
   def startIrcBot
     @ircBot = getInitializedIrcBot()
 
-    @ircBot.setQuitFuction(Proc.new { destroy })
-    @ircBot.setPrintFuction(Proc.new { |message| printText(message) })
+    @ircBot.setQuitFuction(proc { destroy })
+    @ircBot.setPrintFuction(proc { |message| printText(message) })
 
     startIrcBotOnThread
     startThreadTimer
@@ -486,7 +482,7 @@ class BCDiceDialog < Wx::Dialog
     printText("IRC disconnected.")
   end
 
-  def setAllGames(ircBot)
+  def setAllGames(_ircBot)
     getAllGameTypes.each do |type|
       @ircBot.setGameByTitle(type)
     end

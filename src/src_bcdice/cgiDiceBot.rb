@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 bcDiceRoot = File.expand_path(File.dirname(__FILE__))
-unless $LOAD_PATH.include?(bcDiceRoot)
-  $LOAD_PATH.unshift(bcDiceRoot)
+unless $:.include?(bcDiceRoot)
+  $:.unshift(bcDiceRoot)
 end
 
 require 'bcdiceCore.rb'
@@ -18,7 +18,7 @@ class CgiDiceBot
     $SEND_STR_MAX = 99999 # 最大送信文字数(本来は500byte上限)
   end
 
-  attr :isSecret
+  attr_reader :isSecret
 
   def rollFromCgi()
     cgi = CGI.new
@@ -139,20 +139,21 @@ class CgiDiceBot
   end
 
   # Unused method
-  def getGameCommandInfos(dir, prefix) # TKfix extratables互換性
+  def getGameCommandInfos(_dir, _prefix)
+    # TKfix extratables互換性
     require 'TableFileData'
     
     tableFileData = TableFileData.new
-    tableFileData.setDir(dir, prefix)
+    tableFileData.setDir(_dir, _prefix)
     infos = tableFileData.getGameCommandInfos
     return infos
   end
 
-  def sendMessage(to, message)
+  def sendMessage(_to, message)
     @rollResult += message
   end
 
-  def sendMessageToOnlySender(nick_e, message)
+  def sendMessageToOnlySender(_nick_e, message)
     @isSecret = true
     @rollResult += message
   end
@@ -166,7 +167,7 @@ if $0 === __FILE__
   bot = CgiDiceBot.new
 
   result = ''
-  if ARGV.length > 0
+  if !ARGV.empty?
     result, randResults = bot.roll(ARGV[0], ARGV[1])
   else
     result = bot.rollFromCgiParamsDummy

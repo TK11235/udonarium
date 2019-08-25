@@ -11,7 +11,7 @@ if RUBY_VERSION > '1.8.x'
   SimpleCov.use_merging true
 
   SimpleCov.at_exit do
-    SimpleCov.command_name "fork-#{$PID}"
+    SimpleCov.command_name "fork-#{$$}"
     SimpleCov.result.format!
   end
 

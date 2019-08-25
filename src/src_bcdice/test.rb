@@ -20,7 +20,7 @@ libPaths = [
   "#{rootDir}/irc"
 ]
 libPaths.each do |libPath|
-  $LOAD_PATH.push(libPath)
+  $:.push(libPath)
 end
 
 require 'test/setup'
@@ -36,7 +36,7 @@ testDataPath = nil
 # テストデータ番号
 dataIndex = nil
 
-HELP_MESSAGE = "Usage: #{File.basename($0)} [TEST_DATA_PATH] [DATA_INDEX]"
+HELP_MESSAGE = "Usage: #{File.basename($0)} [TEST_DATA_PATH] [DATA_INDEX]".freeze
 
 if ARGV.include?('-h') || ARGV.include?('--help')
   $stdout.puts(HELP_MESSAGE)
@@ -53,7 +53,7 @@ when 2
   testDataPath = getTestDataPath[ARGV[0]]
   dataIndex = ARGV[1].to_i
 else
-  $stderr.puts(HELP_MESSAGE)
+  warn(HELP_MESSAGE)
   abort
 end
 
