@@ -95,6 +95,7 @@ export class DiceBot extends GameObject {
     { script: 'SwordWorld', game: 'ソードワールド' },
     { script: 'SwordWorld2_0', game: 'ソードワールド2.0' },
     { script: 'SwordWorld2_5', game: 'ソードワールド2.5' },
+    { script: 'Villaciel', game: '蒼天のヴィラシエル' },
     { script: 'DarkSouls', game: 'ダークソウルTRPG' },
     { script: 'DarkDaysDrive', game: 'ダークデイズドライブ' },
     { script: 'DarkBlaze', game: 'ダークブレイズ' },
