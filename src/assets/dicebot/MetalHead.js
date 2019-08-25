@@ -18,9 +18,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$===', '$mh_cc_table', '$mh_acl_table', '$mh_acs_table', '$mh_crc_table', '$to_i', '$parren_killer', '$+', '$rollHit', '$!', '$empty?', '$gsub', '$!=', '$==', '$>=', '$<=', '$roll', '$getHitResult', '$getResult', '$%', '$>', '$get_table_by_nDx', '$to_s', '$<', '$-', '$nil?', '$[]', '$each']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$===', '$mh_cc_table', '$mh_acl_table', '$mh_acs_table', '$mh_crc_table', '$last_match', '$to_i', '$parren_killer', '$+', '$rollHit', '$empty?', '$gsub', '$!=', '$==', '$>=', '$<=', '$roll', '$getHitResult', '$getResult', '$%', '$>', '$get_table_by_nDx', '$to_s', '$<', '$-', '$nil?', '$[]', '$each']);
   return (function($base, $super, $parent_nesting) {
     function $MetalHead(){};
     var self = $MetalHead = $klass($base, $super, 'MetalHead', $MetalHead);
@@ -60,7 +60,7 @@
     }, TMP_MetalHead_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_MetalHead_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, $c, self = this, tableName = nil, tableNumber = nil, tableResult = nil, $case = nil, target = nil;
+      var $a, $b, self = this, tableName = nil, tableNumber = nil, tableResult = nil, $case = nil, target = nil;
 
       
       self.$debug("rollDiceCommand", command);
@@ -71,14 +71,14 @@
       if (/^CC/['$===']($case)) {$b = self.$mh_cc_table(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (tableResult = ($a[1] == null ? nil : $a[1])), (tableNumber = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^ACL/['$===']($case)) {$b = self.$mh_acl_table(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (tableResult = ($a[1] == null ? nil : $a[1])), (tableNumber = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^ACS/['$===']($case)) {$b = self.$mh_acs_table(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (tableResult = ($a[1] == null ? nil : $a[1])), (tableNumber = ($a[2] == null ? nil : $a[2])), $b}
-      else if (/^CRC(\w)(\d+)/['$===']($case)) {$b = self.$mh_crc_table((($c = $gvars['~']) === nil ? nil : $c['$[]'](1)), (($c = $gvars['~']) === nil ? nil : $c['$[]'](2))), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (tableResult = ($a[1] == null ? nil : $a[1])), (tableNumber = ($a[2] == null ? nil : $a[2])), $b}
+      else if (/^CRC(\w)(\d+)/['$===']($case)) {$b = self.$mh_crc_table(Opal.const_get_relative($nesting, 'Regexp').$last_match(1), Opal.const_get_relative($nesting, 'Regexp').$last_match(2)), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (tableResult = ($a[1] == null ? nil : $a[1])), (tableNumber = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^HR<=(.+)$/['$===']($case)) {
-      target = self.$parren_killer($rb_plus($rb_plus("(", (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))), ")")).$to_i();
+      target = self.$parren_killer($rb_plus($rb_plus("(", Opal.const_get_relative($nesting, 'Regexp').$last_match(1)), ")")).$to_i();
       return self.$rollHit(target);};
-      if ($truthy(tableName['$empty?']()['$!']())) {
-        return "" + (tableName) + " ＞ " + (tableNumber) + " ＞ " + (tableResult)
-        } else {
+      if ($truthy(tableName['$empty?']())) {
         return nil
+        } else {
+        return "" + (tableName) + " ＞ " + (tableNumber) + " ＞ " + (tableResult)
       };
     }, TMP_MetalHead_rollDiceCommand_5.$$arity = 1);
     
@@ -86,16 +86,16 @@
       var TMP_6, TMP_7, self = this;
 
       
-      string = $send(string, 'gsub', [/^(S)?AR/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      string = $send(string, 'gsub', [/^(S)?AR/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "2D6"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/^(S)?SR/i], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "2D6"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      string = $send(string, 'gsub', [/^(S)?SR/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "1D100"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "1D100"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
       return string;
     }, TMP_MetalHead_changeText_8.$$arity = 1);
     
-    Opal.defn(self, '$check_2D6', TMP_MetalHead_check_2D6_9 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_MetalHead_check_2D6_9 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -122,7 +122,7 @@
       return text;
     }, TMP_MetalHead_rollHit_10.$$arity = 1);
     
-    Opal.defn(self, '$check_1D100', TMP_MetalHead_check_1D100_11 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_MetalHead_check_1D100_11 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -133,7 +133,7 @@
       return self.$getResult(total_n, dice_n, diff);
     }, TMP_MetalHead_check_1D100_11.$$arity = 8);
     
-    Opal.defn(self, '$getHitResult', TMP_MetalHead_getHitResult_12 = function $$getHitResult(total_n, dice_n, diff) {
+    Opal.defn(self, '$getHitResult', TMP_MetalHead_getHitResult_12 = function $$getHitResult(total_n, _dice_n, diff) {
       var self = this, diceValue = nil, dice1 = nil;
 
       

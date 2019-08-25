@@ -9,9 +9,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$hm_city_location_table', '$hm_small_location_table', '$hm_hot_location_table', '$hm_freezing_location_table', '$hm_hit_location_table', '$hm_monobeast_action_table', '$!', '$nil?', '$to_i', '$get_strange_ability_table_result', '$hm_social_skill_table', '$hm_head_skill_table', '$hm_arm_skill_table', '$hm_trunk_skill_table', '$hm_leg_skill_table', '$hm_environmental_skill_table', '$hm_encount_table', '$getTableCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$get_strange_ability_table_1', '$get_strange_ability_table_2', '$times', '$!=', '$+', '$roll', '$%', '$[]', '$get_table_by_d66', '$to_s', '$empty?', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$hm_city_location_table', '$hm_small_location_table', '$hm_hot_location_table', '$hm_freezing_location_table', '$hm_hit_location_table', '$hm_monobeast_action_table', '$!', '$nil?', '$last_match', '$to_i', '$get_strange_ability_table_result', '$hm_social_skill_table', '$hm_head_skill_table', '$hm_arm_skill_table', '$hm_trunk_skill_table', '$hm_leg_skill_table', '$hm_environmental_skill_table', '$hm_encount_table', '$getTableCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$get_strange_ability_table_1', '$get_strange_ability_table_2', '$times', '$!=', '$+', '$roll', '$odd?', '$[]', '$get_table_by_d66', '$to_s', '$empty?', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $HuntersMoon(){};
     var self = $HuntersMoon = $klass($base, $super, 'HuntersMoon', $HuntersMoon);
@@ -54,7 +54,7 @@
       return "" + "・判定\n" + "　判定時にクリティカルとファンブルを自動判定します。\n" + "・各種表\n" + "　・遭遇表　(ET)\n" + "　・都市ロケーション表　(CLT)\n" + "　・閉所ロケーション表　(SLT)\n" + "　・炎熱ロケーション表　(HLT)\n" + "　・冷暗ロケーション表　(FLT)\n" + "　・部位ダメージ決定表　(DLT)\n" + "　・モノビースト行動表　(MAT)\n" + "　・異形アビリティー表　(SATx) (xは個数)\n" + "　・異形アビリティー表2　(SA2Tx) (xは個数)\n" + "　　→表１と表２の振り分けも判定\n" + "　・指定特技(社会)表　　(TST)\n" + "　・指定特技(頭部)表　　(THT)\n" + "　・指定特技(腕部)表　　(TAT)\n" + "　・指定特技(胴部)表　　(TBT)\n" + "　・指定特技(脚部)表　　(TLT)\n" + "　・指定特技(環境)表　　(TET)\n" + "　・異形化表　　　　　　(MST)\n" + "　・代償表　　　　　　　(ERT)\n" + "　・ディフェンス遭遇表1/2/3 (DS1ET/DS2ET/DS3ET)\n" + "　・エスケープ遭遇表1/2/3 (EE1ET/EE2ET/EE3ET)\n" + "　・エスコート遭遇表1/2/3 (ET1ET/ET2ET/ET3ET)\n" + "　・トラッキング遭遇表1/2/3 (TK1ET/TK2ET/TK3ET)\n" + "・D66ダイスあり\n"
     }, TMP_HuntersMoon_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_HuntersMoon_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_HuntersMoon_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -101,8 +101,8 @@
       type = "モノビースト行動";
       $b = self.$hm_monobeast_action_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/SA(2)?T(\d*)/i['$===']($case)) {
-      isType2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$nil?']()['$!']();
-      count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      isType2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$nil?']()['$!']();
+      count = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       if (count['$=='](0)) {
         count = 1};
       type = "異形アビリティー";
@@ -216,7 +216,7 @@ if (i == null) i = nil;
         if ($truthy(isType2)) {
           
           $b = self.$roll(1, 6), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), $b;
-          index = (function() {if (number['$%'](2)['$=='](1)) {
+          index = (function() {if ($truthy(number['$odd?']())) {
             return 0
             } else {
             return 1

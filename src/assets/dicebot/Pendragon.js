@@ -37,7 +37,7 @@
 
       return "クリティカル、成功、失敗、ファンブルの自動判定を行います。\n"
     }, TMP_Pendragon_getHelpMessage_3.$$arity = 0);
-    return (Opal.defn(self, '$check_1D20', TMP_Pendragon_check_1D20_4 = function $$check_1D20(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D20', TMP_Pendragon_check_1D20_4 = function $$check_1D20(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, self = this;
 
       

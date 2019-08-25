@@ -17,7 +17,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars, $send = Opal.send;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$to_i', '$>=', '$getDiceRollResult', '$>', '$length', '$getRoundCountText', '$getSuccessText', '$getSpecialText', '$getFumbleText', '$roll', '$debug', '$!=', '$+', '$collect', '$split', '$==', '$uniq', '$<=', '$first', '$*', '$map']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$to_i', '$last_match', '$>=', '$getDiceRollResult', '$>', '$length', '$getRoundCountText', '$getSuccessText', '$getSpecialText', '$getFumbleText', '$roll', '$debug', '$!=', '$+', '$collect', '$split', '$==', '$uniq', '$<=', '$first', '$*', '$map']);
   return (function($base, $super, $parent_nesting) {
     function $RecordOfSteam(){};
     var self = $RecordOfSteam = $klass($base, $super, 'RecordOfSteam', $RecordOfSteam);
@@ -54,9 +54,9 @@
         } else {
         return "1"
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      targetNumber = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      criticalValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      targetNumber = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      criticalValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       criticalValue = ($truthy($a = criticalValue) ? $a : 1);
       criticalValue = criticalValue.$to_i();
       if ($truthy($rb_ge(diceCount, 150))) {

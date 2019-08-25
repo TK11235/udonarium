@@ -9,9 +9,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$getRandomSkillTableResult', '$getTableDiceCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$[]', '$nil?', '$getD66Table', '$get_table_by_d66_swap', '$getD66', '$bcdice', '$get_table_by_number', '$map', '$kind_of?', '$to_i', '$setPrefixes', '$+', '$keys']);
+  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$getRandomSkillTableResult', '$getTableDiceCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$[]', '$nil?', '$getD66Table', '$get_table_by_d66_swap', '$getD66', '$bcdice', '$get_table_by_number', '$map', '$is_a?', '$to_i', '$last_match', '$setPrefixes', '$+', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $DarkDaysDrive(){};
     var self = $DarkDaysDrive = $klass($base, $super, 'DarkDaysDrive', $DarkDaysDrive);
@@ -51,7 +51,7 @@
       return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "RTT\tランダム特技決定表\n" + "ABRT アビリティ決定表\n" + "DT ダメージ表\n" + "FT 失敗表\n" + "GJT 大成功表\n" + "ITT 移動トラブル表\n" + "NTT 任務トラブル表\n" + "STT 襲撃トラブル表\n" + "HTT 変身トラブル表\n" + "DET ドライブイベント表\n" + "BET ブレイクイベント表\n" + "CT キャンプ表\n" + "KZT 関係属性表\n" + "IA イケメンアクション決定表\n" + " IAA 遠距離\n" + " IAB 移動\n" + " IAC 近距離\n" + " IAD 善人\n" + " IAE 悪人\n" + " IAF 幼い\n" + " IAG バカ\n" + " IAH 渋い\n" + " IAI 賢い\n" + " IAJ 超自然\n" + "・D66ダイスあり\n"
     }, TMP_DarkDaysDrive_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_DarkDaysDrive_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_DarkDaysDrive_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, output = nil;
 
       
@@ -81,7 +81,7 @@
       return self.$getTableDiceCommandResult(command);
     }, TMP_DarkDaysDrive_rollDiceCommand_6.$$arity = 1);
     
-    Opal.defn(self, '$getRandomSkillTableResult', TMP_DarkDaysDrive_getRandomSkillTableResult_7 = function $$getRandomSkillTableResult(command) {
+    Opal.defn(self, '$getRandomSkillTableResult', TMP_DarkDaysDrive_getRandomSkillTableResult_7 = function $$getRandomSkillTableResult(_command) {
       var $a, $b, self = this, name = nil, skillTableFull = nil, skillTable = nil, total_n = nil, tableName = nil, skill = nil, total_n2 = nil, output = nil;
 
       
@@ -127,8 +127,8 @@
 
       return $send(table, 'map', [], (TMP_9 = function(item){var self = TMP_9.$$s || this, $a;
 if (item == null) item = nil;
-      if ($truthy(($truthy($a = item['$kind_of?'](Opal.const_get_relative($nesting, 'String'))) ? /^(\d+):(.*)/['$==='](item) : $a))) {
-          return [(($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))]
+      if ($truthy(($truthy($a = item['$is_a?'](Opal.const_get_relative($nesting, 'String'))) ? /^(\d+):(.*)/['$==='](item) : $a))) {
+          return [Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(2)]
           } else {
           return item
         }}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9))

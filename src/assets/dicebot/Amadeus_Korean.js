@@ -9,9 +9,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$amadeusDice', '$nil?', '$[]', '$upcase', '$===', '$get_table_by_1d6', '$get_table_by_2d6', '$get_table_by_d66_swap', '$=~', '$|', '$to_i', '$parren_killer', '$+', '$roll', '$collect', '$split', '$==', '$min', '$each', '$>', '$length', '$check_success', '$>=', '$check_hit', '$bcdice', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$amadeusDice', '$nil?', '$[]', '$upcase', '$===', '$get_table_by_1d6', '$get_table_by_2d6', '$get_table_by_d66_swap', '$=~', '$last_match', '$|', '$to_i', '$parren_killer', '$+', '$roll', '$collect', '$split', '$==', '$min', '$each', '$>', '$length', '$check_success', '$>=', '$check_hit', '$bcdice', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $Amadeus_Korean(){};
     var self = $Amadeus_Korean = $klass($base, $super, 'Amadeus_Korean', $Amadeus_Korean);
@@ -79,30 +79,30 @@
     }, TMP_Amadeus_Korean_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$amadeusDice', TMP_Amadeus_Korean_amadeusDice_8 = function $$amadeusDice(command) {
-      var $a, $b, TMP_6, TMP_7, self = this, commandText = nil, skillRank = nil, modifyText = nil, signOfInequality = nil, targetText = nil, specialNum = nil, diceCount = nil, modify = nil, target = nil, _ = nil, diceText = nil, diceList = nil, specialText = nil, message = nil, is_loop = nil, dice = nil, achieve = nil, result = nil;
+      var $a, $b, TMP_6, TMP_7, self = this, commandText = nil, skillRank = nil, modifyText = nil, signOfInequality = nil, targetText = nil, specialNum = nil, diceCount = nil, modify = nil, target = nil, _ = nil, diceText = nil, diceList = nil, specialText = nil, message = nil, is_loop = nil;
 
       
       if ($truthy(/^(R([A-DS])([\+\-\d]*))(@(\d))?((>(=)?)([\+\-\d]*))?(@(\d))?$/i['$=~'](command))) {
         } else {
         return nil
       };
-      commandText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      skillRank = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      modifyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      signOfInequality = (function() {if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](7))['$nil?']())) {
+      commandText = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      skillRank = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      modifyText = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      signOfInequality = (function() {if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(7)['$nil?']())) {
         return ">="
         } else {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](7))
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(7)
       }; return nil; })();
-      targetText = (function() {if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](9))['$nil?']())) {
+      targetText = (function() {if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(9)['$nil?']())) {
         return "4"
         } else {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](9))
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(9)
       }; return nil; })();
-      if ($truthy(nil['$|']((($a = $gvars['~']) === nil ? nil : $a['$[]'](5))))) {
-        specialNum = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i()
-      } else if ($truthy(nil['$|']((($a = $gvars['~']) === nil ? nil : $a['$[]'](11))))) {
-        specialNum = (($a = $gvars['~']) === nil ? nil : $a['$[]'](11)).$to_i()
+      if ($truthy(nil['$|'](Opal.const_get_relative($nesting, 'Regexp').$last_match(5)))) {
+        specialNum = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i()
+      } else if ($truthy(nil['$|'](Opal.const_get_relative($nesting, 'Regexp').$last_match(11)))) {
+        specialNum = Opal.const_get_relative($nesting, 'Regexp').$last_match(11).$to_i()
         } else {
         specialNum = 6
       };
@@ -122,16 +122,9 @@ if (i == null) i = nil;
       if (skillRank['$==']("D")) {
         diceList = [diceList.$min()]};
       is_loop = false;
+      $send(diceList, 'each', [], (TMP_7 = function(dice){var self = TMP_7.$$s || this, $c, achieve = nil, result = nil;
+if (dice == null) dice = nil;
       
-      ;
-      ;
-      ;
-      ;
-      ;
-      $send(diceList, 'each', [], (TMP_7 = function($for_tmp1){var self = TMP_7.$$s || this, $c;
-if ($for_tmp1 == null) $for_tmp1 = nil;
-      
-        dice = $for_tmp1;
         if ($truthy(is_loop)) {
           message = $rb_plus(message, " / ")
         } else if ($truthy($rb_gt(diceList.$length(), 1))) {
@@ -142,7 +135,7 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
           return (message = $rb_plus(message, "" + (achieve) + "_" + (result) + "[" + (dice) + ((($c = $Amadeus_Korean.$$cvars['@@checkInga']) == null ? nil : $c)['$[]'](dice)) + "]"))
           } else {
           return (message = $rb_plus(message, "" + (achieve) + "_" + (result) + "[" + (dice) + "]"))
-        };}, TMP_7.$$s = self, TMP_7.$$arity = 1, TMP_7));;
+        };}, TMP_7.$$s = self, TMP_7.$$arity = 1, TMP_7));
       return message;
     }, TMP_Amadeus_Korean_amadeusDice_8.$$arity = 1);
     

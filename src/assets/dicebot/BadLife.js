@@ -15,9 +15,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$judgeDice', '$nil?', '$===', '$get_name_table', '$get_skill_table', '$match', '$to_i', '$[]', '$==', '$-', '$+', '$get_value', '$get_critival_fumble', '$checkRoll', '$include?', '$roll', '$collect', '$split', '$each', '$>', '$<=', '$>=', '$!=', '$to_s', '$get_badlife_1d20_table_result', '$get_table_by_number', '$get_badlife_table_result', '$parren_killer']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$judgeDice', '$nil?', '$===', '$last_match', '$get_name_table', '$get_skill_table', '$match', '$to_i', '$[]', '$==', '$-', '$+', '$get_value', '$get_critival_fumble', '$checkRoll', '$include?', '$roll', '$collect', '$split', '$each', '$>', '$<=', '$>=', '$!=', '$to_s', '$get_badlife_1d20_table_result', '$get_table_by_number', '$get_badlife_table_result', '$parren_killer']);
   return (function($base, $super, $parent_nesting) {
     function $BadLife(){};
     var self = $BadLife = $klass($base, $super, 'BadLife', $BadLife);
@@ -57,7 +57,7 @@
     }, TMP_BadLife_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_BadLife_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, result = nil, output = nil, $case = nil, initials = nil;
+      var self = this, result = nil, output = nil, $case = nil, initials = nil;
 
       
       command = command.$upcase();
@@ -68,7 +68,7 @@
       };
       output = (function() {$case = command;
       if (/([TDGKSB])RN/i['$===']($case)) {
-      initials = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      initials = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       return self.$get_name_table(initials);}
       else if ("SKL"['$===']($case)) {return self.$get_skill_table()}
       else { return nil }})();

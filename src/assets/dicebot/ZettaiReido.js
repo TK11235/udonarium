@@ -15,9 +15,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$roll2DR', '$roll2DarkDice', '$getModInfo', '$getDiffInfo', '$+', '$-', '$getSuccessText', '$getDarkPointResult', '$roll', '$collect', '$split', '$changeDiceToDarkDice', '$==', '$parren_killer', '$<', '$to_s', '$>', '$nil?', '$>=']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$roll2DR', '$roll2DarkDice', '$getModInfo', '$getDiffInfo', '$+', '$-', '$getSuccessText', '$getDarkPointResult', '$roll', '$collect', '$split', '$changeDiceToDarkDice', '$==', '$parren_killer', '$<', '$to_s', '$>', '$nil?', '$>=']);
   return (function($base, $super, $parent_nesting) {
     function $ZettaiReido(){};
     var self = $ZettaiReido = $klass($base, $super, 'ZettaiReido', $ZettaiReido);
@@ -63,16 +63,16 @@
     }, TMP_ZettaiReido_changeText_5.$$arity = 1);
     
     Opal.defn(self, '$rollDiceCommand', TMP_ZettaiReido_rollDiceCommand_6 = function $$rollDiceCommand(command) {
-      var $a, self = this, baseAvility = nil, modText = nil, diffValue = nil;
+      var self = this, baseAvility = nil, modText = nil, diffValue = nil;
 
       
       if ($truthy(/^(\d+)-2DR([\+\-\d]*)(>=(\d+))?$/i['$==='](command))) {
         } else {
         return nil
       };
-      baseAvility = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      modText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      diffValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      baseAvility = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      modText = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      diffValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       return self.$roll2DR(baseAvility, modText, diffValue);
     }, TMP_ZettaiReido_rollDiceCommand_6.$$arity = 1);
     
@@ -153,7 +153,7 @@ if (i == null) i = nil;
       return [diffValue, diffText];
     }, TMP_ZettaiReido_getDiffInfo_12.$$arity = 1);
     
-    Opal.defn(self, '$getDarkPointResult', TMP_ZettaiReido_getDarkPointResult_13 = function $$getDarkPointResult(total, diff, darkPoint) {
+    Opal.defn(self, '$getDarkPointResult', TMP_ZettaiReido_getDarkPointResult_13 = function $$getDarkPointResult(_total, _diff, darkPoint) {
       var self = this, text = nil;
 
       

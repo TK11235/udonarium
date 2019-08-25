@@ -58,7 +58,7 @@
       return self.$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     }, TMP_GranCrest_check_2D6_5.$$arity = 8);
     
-    Opal.defn(self, '$check_nD6', TMP_GranCrest_check_nD6_6 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_GranCrest_check_nD6_6 = function $$check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, n_max) {
       var self = this, result = nil;
 
       

@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$==', '$<=', '$>=', '$+', '$getRandumMonster', '$upcase', '$===', '$to_i', '$getMonster', '$getTableCommandResult', '$getColorTable', '$get_table_by_1d6', '$getMonsterTables', '$-', '$get_table_by_2d6', '$[]', '$<', '$index', '$debug', '$nil?', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$==', '$<=', '$>=', '$+', '$getRandumMonster', '$upcase', '$===', '$last_match', '$to_i', '$getMonster', '$getTableCommandResult', '$getColorTable', '$get_table_by_1d6', '$getMonsterTables', '$-', '$get_table_by_2d6', '$[]', '$<', '$index', '$debug', '$nil?', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $CardRanker(){};
     var self = $CardRanker = $klass($base, $super, 'CardRanker', $CardRanker);
@@ -59,7 +59,7 @@
       return "" + "ランダムでモンスターカードを選ぶ (RM)\n" + "特定のモンスターカードを選ぶ (CMxy　x：色、y：番号）\n" + "　白：W、青：U、緑：V、金：G、赤：R、黒：B\n" + "　例）CMW1→白の2：白竜　CMG12→金の12：土精霊\n" + "場所表 (ST)\n" + "街中場所表 (CST)\n" + "郊外場所表 (OST)\n" + "学園場所表 (SST)\n" + "運命表 (DT)\n" + "大会運命表 (TDT)\n" + "学園運命表 (GDT)\n" + "崩壊運命表 (CDT)\n"
     }, TMP_CardRanker_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_CardRanker_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_CardRanker_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -86,8 +86,8 @@
       $case = command;
       if (/^RM$/i['$===']($case)) {return self.$getRandumMonster()}
       else if (/^CM(\w)(\d+)$/i['$===']($case)) {
-      color = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$upcase();
-      index = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      color = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$upcase();
+      index = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       return self.$getMonster(color, index);}
       else {return self.$getTableCommandResult(command, (($a = $CardRanker.$$cvars['@@tables']) == null ? nil : $a))};
       return nil;

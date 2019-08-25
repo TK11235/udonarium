@@ -9,9 +9,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$checkRoll', '$empty?', '$debug', '$rollTableCommand', '$=~', '$to_i', '$nil?', '$parren_killer', '$roll', '$+', '$>=', '$<=', '$===', '$tgs_conection_table', '$tgs_opening_real_table', '$tgs_opening_cinema_table', '$tgs_ending_real_table', '$tgs_ending_cinema_table', '$tgs_reserch_wasteland_table', '$tgs_reserch_web_table', '$tgs_reserch_street_table', '$tgs_reserch_upperclass_table', '$tgs_drop_corporate_table', '$tgs_drop_bandit_table', '$tgs_drop_criminal_table', '$tgs_drop_ninja_table', '$tgs_drop_robot_table', '$tgs_drop_busousyaryou_table', '$tgs_drop_turret_table', '$tgs_drop_merkava_table', '$tgs_drop_heli_table', '$tgs_drop_machinelife_table', '$tgs_drop_zombie_table', '$tgs_drop_mutant_table', '$tgs_drop_hiryu_table', '$tgs_drop_kyosou_table', '$tgs_drop_fiend_table', '$!=', '$get_table_by_d66', '$get_table_by_2d6']);
+  Opal.add_stubs(['$setPrefixes', '$checkRoll', '$empty?', '$debug', '$rollTableCommand', '$=~', '$last_match', '$to_i', '$nil?', '$parren_killer', '$roll', '$+', '$>=', '$<=', '$===', '$tgs_conection_table', '$tgs_opening_real_table', '$tgs_opening_cinema_table', '$tgs_ending_real_table', '$tgs_ending_cinema_table', '$tgs_reserch_wasteland_table', '$tgs_reserch_web_table', '$tgs_reserch_street_table', '$tgs_reserch_upperclass_table', '$tgs_drop_corporate_table', '$tgs_drop_bandit_table', '$tgs_drop_criminal_table', '$tgs_drop_ninja_table', '$tgs_drop_robot_table', '$tgs_drop_busousyaryou_table', '$tgs_drop_turret_table', '$tgs_drop_merkava_table', '$tgs_drop_heli_table', '$tgs_drop_machinelife_table', '$tgs_drop_zombie_table', '$tgs_drop_mutant_table', '$tgs_drop_hiryu_table', '$tgs_drop_kyosou_table', '$tgs_drop_fiend_table', '$!=', '$get_table_by_d66', '$get_table_by_2d6']);
   return (function($base, $super, $parent_nesting) {
     function $TwilightGunsmoke(){};
     var self = $TwilightGunsmoke = $klass($base, $super, 'TwilightGunsmoke', $TwilightGunsmoke);
@@ -80,12 +80,12 @@
         } else {
         return output
       };
-      modText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](4)))) {
-        crit = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i()};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](6)))) {
-        fumble = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)).$to_i()};
+      modText = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(4))) {
+        crit = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i()};
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(6))) {
+        fumble = Opal.const_get_relative($nesting, 'Regexp').$last_match(6).$to_i()};
       mod = 0;
       if ($truthy(modText['$nil?']())) {
         } else {

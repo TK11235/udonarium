@@ -12,9 +12,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash = Opal.hash, $hash2 = Opal.hash2, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash = Opal.hash, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$getJudgeResult', '$nil?', '$navigationResult', '$getFireResult', '$getBomberResult', '$getAvoidResult', '$match', '$empty?', '$[]', '$to_i', '$roll', '$<=', '$floor', '$/', '$+', '$to_s', '$min', '$getFirePoint', '$getFirePointText', '$!=', '$getDirectionInfo', '$times', '$<<', '$each', '$split', '$getMovePoint', '$isInMapPosition', '$join', '$===', '$slice', '$scanFirePoints', '$size', '$gsub', '$[]=', '$-']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$getJudgeResult', '$nil?', '$navigationResult', '$getFireResult', '$getBomberResult', '$getAvoidResult', '$match', '$empty?', '$[]', '$to_i', '$roll', '$<=', '$floor', '$/', '$+', '$to_s', '$min', '$getFirePoint', '$getFirePointText', '$!=', '$getDirectionInfo', '$times', '$<<', '$each', '$split', '$getMovePoint', '$isInMapPosition', '$join', '$===', '$slice', '$last_match', '$scanFirePoints', '$size', '$gsub', '$[]=', '$-']);
   return (function($base, $super, $parent_nesting) {
     function $Skynauts(){};
     var self = $Skynauts = $klass($base, $super, 'Skynauts', $Skynauts);
@@ -212,7 +212,7 @@ if (rangeText == null) rangeText = nil;
       return firePoint;
     }, TMP_Skynauts_getFirePoint_12.$$arity = 2);
     
-    Opal.defn(self, '$getFirePointText', TMP_Skynauts_getFirePointText_15 = function $$getFirePointText(firePoint, fireCount, direction) {
+    Opal.defn(self, '$getFirePointText', TMP_Skynauts_getFirePointText_15 = function $$getFirePointText(firePoint, _fireCount, direction) {
       var TMP_13, self = this, fireTextList = nil, fireText = nil;
 
       if (direction == null) {
@@ -287,7 +287,7 @@ if (x == null) x = nil;if (y == null) y = nil;
     }, TMP_Skynauts_getBomberResult_18.$$arity = 1);
     
     Opal.defn(self, '$getAvoidResult', TMP_Skynauts_getAvoidResult_19 = function $$getAvoidResult(command) {
-      var $a, self = this, m = nil, direction = nil, judgeCommand = nil, text = nil, pointCommand = nil, firePoint = nil, fireCount = nil;
+      var self = this, m = nil, direction = nil, judgeCommand = nil, text = nil, pointCommand = nil, firePoint = nil, fireCount = nil;
 
       
       if ($truthy((m = /^AVO(\d*)?(@([2,4,6,8]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.$match(command)))) {
@@ -299,7 +299,7 @@ if (x == null) x = nil;if (y == null) y = nil;
       self.$debug("回避方向", direction);
       judgeCommand = command.$slice(/^AVO(\d*)?(@([2,4,6,8]))/);
       text = "" + (judgeCommand) + " ＞ 《回避運動》";
-      text = $rb_plus(text, self.$getJudgeResult($rb_plus("SN", (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_s())));
+      text = $rb_plus(text, self.$getJudgeResult($rb_plus("SN", Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_s())));
       if ($truthy(/成功/['$==='](text))) {
         } else {
         return text
@@ -326,7 +326,7 @@ if (pointText == null) pointText = nil;
       
         self.$debug("pointText", pointText);
         firePoint['$<<']([]);
-        return $send(pointText.$split(/\]/), 'each', [], (TMP_21 = function(point){var self = TMP_21.$$s || this, $a, y = nil, x = nil, $writer = nil;
+        return $send(pointText.$split(/\]/), 'each', [], (TMP_21 = function(point){var self = TMP_21.$$s || this, y = nil, x = nil, $writer = nil;
 if (point == null) point = nil;
         
           self.$debug("point", point);
@@ -335,8 +335,8 @@ if (point == null) point = nil;
             } else {
             return nil;
           };
-          y = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-          x = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+          y = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+          x = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
           
           $writer = [-1, [x, y]];
           $send(firePoint['$[]'](-1), '[]=', Opal.to_a($writer));

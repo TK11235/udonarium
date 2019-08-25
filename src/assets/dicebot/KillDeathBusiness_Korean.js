@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$==', '$<=', '$>=', '$===', '$judgeDice', '$rollTableCommand', '$to_i', '$>', '$+', '$<', '$roll', '$getHistoryTableResult', '$getSceneTableResult', '$getWishTableResult', '$getNameTableResult', '$getSubprotTableResult', '$getCmTableResult', '$getErTableResult', '$getWKTableResult', '$getServiceSceneTableResult', '$getSoulTableResult', '$getSceneTelopGenericTableResult', '$getHairStylistAbuseTableResult', '$getExtraTableResult', '$getSkillTableResult', '$getpcTableResult', '$getohTableResult', '$getplTableResult', '$getprTableResult', '$getpnTableResult', '$getpdTableResult', '$getpfTableResult', '$getpgTableResult', '$getpbTableResult', '$empty?', '$get_table_by_1d6', '$get_table_by_d66_swap', '$get_table_by_2d6', '$[]']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$==', '$<=', '$>=', '$===', '$judgeDice', '$rollTableCommand', '$to_i', '$last_match', '$>', '$+', '$<', '$roll', '$getHistoryTableResult', '$getSceneTableResult', '$getWishTableResult', '$getNameTableResult', '$getSubprotTableResult', '$getCmTableResult', '$getErTableResult', '$getWKTableResult', '$getServiceSceneTableResult', '$getSoulTableResult', '$getSceneTelopGenericTableResult', '$getHairStylistAbuseTableResult', '$getExtraTableResult', '$getSkillTableResult', '$getpcTableResult', '$getohTableResult', '$getplTableResult', '$getprTableResult', '$getpnTableResult', '$getpdTableResult', '$getpfTableResult', '$getpgTableResult', '$getpbTableResult', '$empty?', '$get_table_by_1d6', '$get_table_by_d66_swap', '$get_table_by_2d6', '$[]']);
   return (function($base, $super, $parent_nesting) {
     function $KillDeathBusiness_Korean(){};
     var self = $KillDeathBusiness_Korean = $klass($base, $super, 'KillDeathBusiness_Korean', $KillDeathBusiness_Korean);
@@ -103,9 +103,9 @@
         } else {
         return "1"
       };
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
-      fumble = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
+      fumble = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
       result = "";
       if ($truthy($rb_gt(target, 12))) {
         
@@ -150,11 +150,11 @@
       $case = command;
       if ("HST"['$===']($case)) {$b = self.$getHistoryTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^ST(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getSceneTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^.+WT$/i['$===']($case)) {$b = self.$getWishTableResult(command), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^NAME(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getNameTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^.+SPT$/i['$===']($case)) {$b = self.$getSubprotTableResult(command), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if ("CMT"['$===']($case)) {$b = self.$getCmTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
@@ -164,13 +164,13 @@
       else if ("SOUL"['$===']($case)) {$b = self.$getSoulTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if ("STGT"['$===']($case)) {$b = self.$getSceneTelopGenericTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^HSAT(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getHairStylistAbuseTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^EXT(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getExtraTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^SKL(T|J)$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       $b = self.$getSkillTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if ("PCDT"['$===']($case)) {$b = self.$getpcTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if ("OHT"['$===']($case)) {$b = self.$getohTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
@@ -482,7 +482,7 @@
 
       
       tableName = "헬 라이온터스크 표";
-      table = ["" + "\n" + "       「프랑스어.」지정 특기는《예술가》. 왠지 등장 인물 전원이 프랑스어로 밖에 회화할 수 없는 씬이 설정된다. 할 수 있는 한, 프랑스어를 구사하고 의사소통을 시도해라!", "" + "\n" + "       「회화가 없다.」지정 특기는《뛰다》. 회화 그 자체가 비열하고 엔터테인먼트적이라고 하는 것으로, 모든 말을 발언하는 것이 허락되지 않는 씬표가 설정된다. 제스처로 힘내라!", "" + "\n" + "       「명언의 인용.」지정 특기는《머리장식》. 과거의 명작 영화나 소설, 역사상의 사건등에서 따라한 명언 밖에 말할 수 없는 씬이 설정된다. 교양이 없으면 말할 수 없다!", "" + "\n" + "       「등장인물의증가。」지정 특기는《트레드》. 등장 인물이 쓸데 없이 두배로 늘어나서 각각 개성적인 고민이나 사건을 말하기 시작한다. 이대로는 귀찮고 개런티도 늘어나므로, 전부 죽이자.", "" + "\n" + "       「막연한 불안.」지정 특기는《자부》. 특별히 무언가 정해지지않고, 멍하니  불안감에 연연 괴로워하거나 침체하거나 하는 씬을 강요 당한다. 이것을 지루하게 하지 않는 것은 어렵다!", "「길게 끌기.」지정 특기는《삶》. 컷 없이 30분 정도 같은 씬이 계속 된다. NG는 용서되지 않는다. 이것으로 중간을 가지게할 수 있는 것은 프로의 배우정도의 것이지만, 회수인은 연기의 아마추어다."];
+      table = ["" + "\n" + "「프랑스어.」지정 특기는《예술가》. 왠지 등장 인물 전원이 프랑스어로 밖에 회화할 수 없는 씬이 설정된다. 할 수 있는 한, 프랑스어를 구사하고 의사소통을 시도해라!", "" + "\n" + "「회화가 없다.」지정 특기는《뛰다》. 회화 그 자체가 비열하고 엔터테인먼트적이라고 하는 것으로, 모든 말을 발언하는 것이 허락되지 않는 씬표가 설정된다. 제스처로 힘내라!", "" + "\n" + "「명언의 인용.」지정 특기는《머리장식》. 과거의 명작 영화나 소설, 역사상의 사건등에서 따라한 명언 밖에 말할 수 없는 씬이 설정된다. 교양이 없으면 말할 수 없다!", "" + "\n" + "「등장인물의증가。」지정 특기는《트레드》. 등장 인물이 쓸데 없이 두배로 늘어나서 각각 개성적인 고민이나 사건을 말하기 시작한다. 이대로는 귀찮고 개런티도 늘어나므로, 전부 죽이자.", "" + "\n" + "「막연한 불안.」지정 특기는《자부》. 특별히 무언가 정해지지않고, 멍하니  불안감에 연연 괴로워하거나 침체하거나 하는 씬을 강요 당한다. 이것을 지루하게 하지 않는 것은 어렵다!", "「길게 끌기.」지정 특기는《삶》. 컷 없이 30분 정도 같은 씬이 계속 된다. NG는 용서되지 않는다. 이것으로 중간을 가지게할 수 있는 것은 프로의 배우정도의 것이지만, 회수인은 연기의 아마추어다."];
       $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
       return [tableName, result, number];
     }, TMP_KillDeathBusiness_Korean_getplTableResult_25.$$arity = 0);

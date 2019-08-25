@@ -15,9 +15,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$ed_step', '$getStepResult', '$=~', '$to_i', '$>', '$<', '$getStepTable', '$[]', '$-', '$===', '$+', '$debug', '$rollStep', '$!=', '$to_s', '$==', '$>=', '$empty?', '$times', '$roll']);
+  Opal.add_stubs(['$setPrefixes', '$ed_step', '$getStepResult', '$=~', '$to_i', '$last_match', '$>', '$<', '$getStepTable', '$[]', '$-', '$===', '$+', '$debug', '$rollStep', '$!=', '$to_s', '$==', '$>=', '$empty?', '$times', '$roll']);
   return (function($base, $super, $parent_nesting) {
     function $EarthDawn(){};
     var self = $EarthDawn = $klass($base, $super, 'EarthDawn', $EarthDawn);
@@ -75,7 +75,7 @@
     }, TMP_EarthDawn_ed_step_6.$$arity = 1);
     
     Opal.defn(self, '$getStepResult', TMP_EarthDawn_getStepResult_7 = function $$getStepResult(str) {
-      var $a, self = this, stepTotal = nil, step2 = nil, step = nil, targetNumber = nil, hasKarmaDice = nil, karmaDiceCount = nil, karmaDiceType = nil, stable = nil, nmod = nil, d20step = nil, d12step = nil, d10step = nil, d8step = nil, d6step = nil, d4step = nil, $case = nil, output = nil, excelentSuccessNumber = nil, superSuccessNumber = nil, goodSuccessNumber = nil, failedNumber = nil;
+      var self = this, stepTotal = nil, step2 = nil, step = nil, targetNumber = nil, hasKarmaDice = nil, karmaDiceCount = nil, karmaDiceType = nil, stable = nil, nmod = nil, d20step = nil, d12step = nil, d10step = nil, d8step = nil, d6step = nil, d4step = nil, $case = nil, output = nil, excelentSuccessNumber = nil, superSuccessNumber = nil, goodSuccessNumber = nil, failedNumber = nil;
 
       
       if ($truthy(/(\d+)E(\d+)?(\+)?(\d+)?(d\d+)?/i['$=~'](str))) {
@@ -85,7 +85,7 @@
       stepTotal = 0;
       self.isFailed = true;
       step2 = 0;
-      step = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      step = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       targetNumber = 0;
       hasKarmaDice = false;
       karmaDiceCount = 0;
@@ -94,17 +94,17 @@
         
         step2 = step;
         step = 40;};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))) {
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2))) {
         
-        targetNumber = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+        targetNumber = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
         if ($truthy($rb_gt(targetNumber, 43))) {
           targetNumber = 42};};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)))) {
-        hasKarmaDice = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i()};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](4)))) {
-        karmaDiceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i()};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](5)))) {
-        karmaDiceType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5))};
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(3))) {
+        hasKarmaDice = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i()};
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(4))) {
+        karmaDiceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i()};
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(5))) {
+        karmaDiceType = Opal.const_get_relative($nesting, 'Regexp').$last_match(5)};
       if ($truthy($rb_lt(targetNumber, 0))) {
         return nil};
       stable = self.$getStepTable();
@@ -252,9 +252,9 @@ Opal.loaded(["diceBot/EarthDawn"]);
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$ed_step', '$getStepResult', '$getStepResultInfos', '$nil?', '$==', '$getSuccess', '$!', '$empty?', '$debug', '$getStepResultInfo', '$<<', '$join', '$inject', '$+', '$>', '$size', '$=~', '$to_i', '$<', '$getStepInfo', '$each', '$rollStep', '$shift', '$getModifyText', '$to_s', '$getBaseStepTable', '$first', '$last', '$<=', '$get_table_by_number', '$-', '$floor', '$/', '$times', '$addStepToResult', '$%', '$[]', '$[]=', '$roll', '$!=']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$ed_step', '$getStepResult', '$getStepResultInfos', '$nil?', '$==', '$getSuccess', '$!', '$empty?', '$debug', '$getStepResultInfo', '$<<', '$join', '$inject', '$+', '$>', '$size', '$=~', '$to_i', '$last_match', '$<', '$getStepInfo', '$each', '$rollStep', '$shift', '$getModifyText', '$to_s', '$getBaseStepTable', '$first', '$last', '$<=', '$get_table_by_number', '$-', '$floor', '$/', '$times', '$addStepToResult', '$%', '$[]', '$[]=', '$roll', '$!=']);
   
   self.$require("diceBot/EarthDawn");
   return (function($base, $super, $parent_nesting) {
@@ -370,7 +370,7 @@ if (sum == null) sum = nil;if (i == null) i = nil;
     }, TMP_EarthDawn4_getStepResultInfos_9.$$arity = 1);
     
     Opal.defn(self, '$getStepResultInfo', TMP_EarthDawn4_getStepResultInfo_11 = function $$getStepResultInfo(str) {
-      var $a, TMP_10, self = this, stepTotal = nil, step = nil, targetNumber = nil, hasKarmaDice = nil, diceModify = nil, nextText = nil, stepInfo = nil, diceTypes = nil, modify = nil, stepText = nil;
+      var TMP_10, self = this, stepTotal = nil, step = nil, targetNumber = nil, hasKarmaDice = nil, diceModify = nil, nextText = nil, stepInfo = nil, diceTypes = nil, modify = nil, stepText = nil;
 
       
       if ($truthy(/^(\d+)E(\d+)?(K)?(\+\d+$)?(\+(.*))?/i['$=~'](str))) {
@@ -379,13 +379,13 @@ if (sum == null) sum = nil;if (i == null) i = nil;
       };
       stepTotal = 0;
       self.isFailed = true;
-      step = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      targetNumber = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      step = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      targetNumber = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_lt(targetNumber, 0))) {
         return nil};
-      hasKarmaDice = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3))['$nil?']()['$!']();
-      diceModify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i();
-      nextText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
+      hasKarmaDice = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)['$nil?']()['$!']();
+      diceModify = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i();
+      nextText = Opal.const_get_relative($nesting, 'Regexp').$last_match(6);
       stepInfo = self.$getStepInfo(step);
       self.$debug("stepInfo", stepInfo);
       self.calcText = "";

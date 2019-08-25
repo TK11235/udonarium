@@ -18,9 +18,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$nechronica_check', '$==', '$>=', '$<=', '$>', '$+', '$debug', '$=~', '$to_i', '$parren_killer', '$roll', '$<', '$to_s', '$collect', '$split', '$times', '$length', '$[]', '$[]=', '$-', '$join', '$check_suc', '$getHitLocation', '$!=']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$last_match', '$nechronica_check', '$==', '$>=', '$<=', '$>', '$+', '$debug', '$=~', '$to_i', '$parren_killer', '$roll', '$<', '$to_s', '$collect', '$split', '$times', '$length', '$[]', '$[]=', '$-', '$join', '$check_suc', '$getHitLocation', '$!=']);
   return (function($base, $super, $parent_nesting) {
     function $Nechronica_Korean(){};
     var self = $Nechronica_Korean = $klass($base, $super, 'Nechronica_Korean', $Nechronica_Korean);
@@ -68,18 +68,18 @@
       var TMP_5, TMP_6, TMP_7, TMP_8, self = this;
 
       
-      string = $send(string, 'gsub', [/(\d+)NC(10)?([\+\-][\+\-\d]+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/(\d+)NC(10)?([\+\-][\+\-\d]+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3))) + "[0]"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'gsub', [/(\d+)NC(10)?/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) + "[0]"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/(\d+)NC(10)?/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10[0]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/(\d+)NA(10)?([\+\-][\+\-\d]+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10[0]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      string = $send(string, 'gsub', [/(\d+)NA(10)?([\+\-][\+\-\d]+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3))) + "[1]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-      string = $send(string, 'gsub', [/(\d+)NA(10)?/i], (TMP_8 = function(){var self = TMP_8.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) + "[1]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      string = $send(string, 'gsub', [/(\d+)NA(10)?/i], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10[1]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10[1]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
       return string;
     }, TMP_Nechronica_Korean_changeText_9.$$arity = 1);
     
@@ -91,7 +91,7 @@
       return self.$nechronica_check(string);
     }, TMP_Nechronica_Korean_dice_command_xRn_10.$$arity = 2);
     
-    Opal.defn(self, '$check_nD10', TMP_Nechronica_Korean_check_nD10_11 = function $$check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD10', TMP_Nechronica_Korean_check_nD10_11 = function $$check_nD10(total_n, _dice_n, signOfInequality, diff, dice_cnt, _dice_max, n1, _n_max) {
       var self = this, result = nil;
 
       
@@ -123,13 +123,13 @@
         self.$debug("nechronica_check unmuched");
         return output;
       };
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      string = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       signOfInequality = ">=";
       dice_n = 1;
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)))) {
-        dice_n = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i()};
-      battleMode = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)).$to_i();
-      modText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(3))) {
+        dice_n = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i()};
+      battleMode = Opal.const_get_relative($nesting, 'Regexp').$last_match(6).$to_i();
+      modText = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       mod = self.$parren_killer("" + "(0" + (modText) + ")").$to_i();
       isBattleMode = battleMode['$=='](1);
       self.$debug("nechronica_check string", string);

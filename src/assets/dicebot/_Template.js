@@ -47,36 +47,36 @@
       return string
     }, TMP_Template_changeText_5.$$arity = 1);
     
-    Opal.defn(self, '$rollDiceCommand', TMP_Template_rollDiceCommand_6 = function $$rollDiceCommand(command) {
+    Opal.defn(self, '$rollDiceCommand', TMP_Template_rollDiceCommand_6 = function $$rollDiceCommand(_command) {
       var self = this;
 
       return ""
     }, TMP_Template_rollDiceCommand_6.$$arity = 1);
     
-    Opal.defn(self, '$check_2D6', TMP_Template_check_2D6_7 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_Template_check_2D6_7 = function $$check_2D6(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       return ""
     }, TMP_Template_check_2D6_7.$$arity = 8);
     
-    Opal.defn(self, '$check_nD6', TMP_Template_check_nD6_8 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_Template_check_nD6_8 = function $$check_nD6(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       return ""
     }, TMP_Template_check_nD6_8.$$arity = 8);
     
-    Opal.defn(self, '$check_nD10', TMP_Template_check_nD10_9 = function $$check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD10', TMP_Template_check_nD10_9 = function $$check_nD10(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       return ""
     }, TMP_Template_check_nD10_9.$$arity = 8);
     
-    Opal.defn(self, '$check_1D100', TMP_Template_check_1D100_10 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_Template_check_1D100_10 = function $$check_1D100(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       return ""
     }, TMP_Template_check_1D100_10.$$arity = 8);
-    return (Opal.defn(self, '$check_1D20', TMP_Template_check_1D20_11 = function $$check_1D20(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D20', TMP_Template_check_1D20_11 = function $$check_1D20(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       return ""

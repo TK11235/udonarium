@@ -37,7 +37,7 @@
 
       return "大成功、自動成功、失敗、自動失敗、大失敗の自動判定を行います。\n"
     }, TMP_Hieizan_getHelpMessage_3.$$arity = 0);
-    return (Opal.defn(self, '$check_1D100', TMP_Hieizan_check_1D100_4 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D100', TMP_Hieizan_check_1D100_4 = function $$check_1D100(total_n, _dice_n, _signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       

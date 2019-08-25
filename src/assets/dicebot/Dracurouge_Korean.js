@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$getConductResult', '$nil?', '$getResistResult', '$getReactionResult', '$getCorruptionResult', '$getTableResult', '$===', '$to_i', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$floor', '$/', '$count', '$select', '$rindex', '$<=', '$each_with_index', '$to_s', '$[]', '$[]=', '$-', '$upcase', '$getReactionTable', '$get_table_by_d66', '$<', '$getReactionTextFull', '$index', '$getReactionTex', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$getConductResult', '$nil?', '$getResistResult', '$getReactionResult', '$getCorruptionResult', '$getTableResult', '$===', '$to_i', '$last_match', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$floor', '$/', '$count', '$select', '$rindex', '$<=', '$each_with_index', '$to_s', '$[]', '$[]=', '$-', '$upcase', '$getReactionTable', '$get_table_by_d66', '$<', '$getReactionTextFull', '$index', '$getReactionTex', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $Dracurouge_Korean(){};
     var self = $Dracurouge_Korean = $klass($base, $super, 'Dracurouge_Korean', $Dracurouge_Korean);
@@ -91,17 +91,17 @@
     }, TMP_Dracurouge_Korean_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$getConductResult', TMP_Dracurouge_Korean_getConductResult_7 = function $$getConductResult(command) {
-      var $a, TMP_6, $b, self = this, diceCount = nil, thirstyPoint = nil, diceList = nil, gloryDiceCount = nil, calculationProcess = nil, thirstyPointMarker = nil, result = nil;
+      var TMP_6, $a, $b, self = this, diceCount = nil, thirstyPoint = nil, diceList = nil, gloryDiceCount = nil, calculationProcess = nil, thirstyPointMarker = nil, result = nil;
 
       
       if ($truthy(/^DR(\d*)(\+(\d+))?$/['$==='](command))) {
         } else {
         return nil
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       if (diceCount['$=='](0)) {
         diceCount = 4};
-      thirstyPoint = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      thirstyPoint = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
       diceList = self.$rollDiceList(diceCount);
       gloryDiceCount = self.$getGloryDiceCount(diceList);
       $send(gloryDiceCount, 'times', [], (TMP_6 = function(){var self = TMP_6.$$s || this;
@@ -178,14 +178,14 @@ if (item == null) item = nil;if (index == null) index = nil;
     }, TMP_Dracurouge_Korean_getThirstyAddedResult_15.$$arity = 2);
     
     Opal.defn(self, '$getResistResult', TMP_Dracurouge_Korean_getResistResult_16 = function $$getResistResult(command) {
-      var $a, self = this, diceCount = nil, diceList = nil, result = nil;
+      var self = this, diceCount = nil, diceList = nil, result = nil;
 
       
       if ($truthy(/^DRR(\d+)$/['$==='](command))) {
         } else {
         return nil
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       if (diceCount['$=='](0)) {
         diceCount = 4};
       diceList = self.$rollDiceList(diceCount);
@@ -200,8 +200,8 @@ if (item == null) item = nil;if (index == null) index = nil;
         } else {
         return nil
       };
-      typeText1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      typeText2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      typeText1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      typeText2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       name = "반응표";
       table = self.$getReactionTable();
       $b = self.$get_table_by_d66(table), $a = Opal.to_ary($b), (tableText = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
@@ -276,7 +276,7 @@ if (index == null) index = nil;
         } else {
         return nil
       };
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       name = "타락표";
       table = [[0, "당신은 완전히 타락했다. 이 시점에서 당신은 [월 플라워]가 되어 늑대인간, 검은 산양, 야수 중 하나가 된다. 그 [막]의 종료 후에 세션에서 퇴장한다. 247페이지의 「소멸・완전한 타락」을 참조한다."], [1, "당신의 육체는 정신에 걸맞는 변화를 일으킨다……. 「타락의 전조표」를 2번 굴리고 특징을 얻는다. 이 세션 종료 후, 【길】을 「야수」로 변경한다.(이미「야수」라면 【길】은 변하지 않는다)"], [3, "당신의 육체는 정신에 걸맞는 변화를 일으킨다……. 「타락의 전조표」를 1번 굴리고 특징을 얻는다. 이 세션 종료 후, 【길】을 「야수」로 변경한다.(이미「야수」라면 【길】은 변하지 않는다)"], [5, "고귀한 마음도 언젠가는 타락한다. 당신이 지금 가장 많은 루주를 얻은 대상에 대한 루주를 전부 잃고, 같은 수 만큼의 누아르를 얻는다. 누아르를 얻은 결과, 【갈증】이 3점 이상이 된 경우 다시 타락표를 굴린다."], [6, "내면에 잠든 짐승의 숨결……당신이 지금 【갈증】을 얻은 누아르의 대상에게 임의의 누아르 2점을 획득한다."], [7, "내면에 잠든 짐승의 숨결……당신이 지금 【갈증】을 얻은 누아르의 대상에게 임의의 누아르 1점을 획득한다."], [8, "날뛰는 마음을 가라앉힌다……다행히 아무 일도 없었다."], [99, "당신은 미쳐 날뛰는 감정을 억누르고 이성을 되찾았다! 【갈증】이 1 감소한다!"]];
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (number_text = ($a[1] == null ? nil : $a[1])), $b;

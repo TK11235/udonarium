@@ -24,7 +24,7 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $range = Opal.range;
 
   Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$last_match', '$[]', '$to_i', '$get_value', '$!', '$nil?', '$scan', '$each', '$get_roll_parameter', '$checkRoll', '$get_hit_table', '$get_SUV_table', '$get_damageEffect_table', '$get_critical_table', '$get_accident_table', '$get_mechanicAccident_table', '$get_strategyEvent_chart', '$get_NPCAttack_chart', '$get_loserDestiny_chart', '$get_randomEncounter_table', '$*', '$/', '$**', '$roll', '$getRollResultTextAndSuccesValue', '$+', '$>', '$>=', '$to_s', '$getFormulaText', '$include?', '$-', '$<=', '$==', '$<', '$get_MetalHeadExtream_1d10_table_result', '$index', '$to_a', '$each_with_index', '$first', '$get_table_by_number', '$get_roc_dice', '$get_MetalHeadExtream_1d100_table_result', '$get_MetalHeadExtream_1dX_table_result', '$to_f', '$=~']);
   return (function($base, $super, $parent_nesting) {
@@ -66,7 +66,7 @@
     }, TMP_MetalHeadExtream_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_MetalHeadExtream_rollDiceCommand_6 = function $$rollDiceCommand(command) {
-      var $a, TMP_5, $b, self = this, text = nil, $case = nil, m = nil, type = nil, target = nil, modify = nil, paramText = nil, isMuse = nil, accidentValue = nil, advancedRoll = nil, luckPoint = nil, params = nil, hitPart = nil, roc = nil, armorGrade = nil, damage = nil, damageStage = nil, damageType = nil, locationType = nil, correction = nil;
+      var $a, TMP_5, self = this, text = nil, $case = nil, m = nil, type = nil, target = nil, modify = nil, paramText = nil, isMuse = nil, accidentValue = nil, advancedRoll = nil, luckPoint = nil, params = nil, hitPart = nil, roc = nil, armorGrade = nil, damage = nil, damageStage = nil, damageType = nil, locationType = nil, correction = nil;
 
       
       text = (function() {$case = command.$upcase();
@@ -86,35 +86,35 @@ if (marker == null) marker = nil;if (value == null) value = nil;
       return $c = self.$get_roll_parameter(accidentValue, advancedRoll, luckPoint, marker, value), $b = Opal.to_ary($c), (accidentValue = ($b[0] == null ? nil : $b[0])), (advancedRoll = ($b[1] == null ? nil : $b[1])), (luckPoint = ($b[2] == null ? nil : $b[2])), $c}, TMP_5.$$s = self, TMP_5.$$arity = 2, TMP_5));
       return self.$checkRoll(type, target, modify, accidentValue, advancedRoll, luckPoint, isMuse);}
       else if (/(HU|BK|WA|SC|BG|IN|PT|HT|TA|AC|HE|TR|VT|BO|CS|TH|AM|GD|HC|BI|BT|AI)HIT(\d+)?/i['$===']($case)) {
-      hitPart = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
+      hitPart = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
       return self.$get_hit_table(hitPart, roc);}
       else if (/SUV([A-Z])(\d+)/i['$===']($case)) {
-      armorGrade = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      damage = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      armorGrade = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      damage = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       return self.$get_SUV_table(armorGrade, damage);}
       else if (/([HTALMEBPD])DMG([LMHO])/i['$===']($case)) {
-      hitPart = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      damageStage = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      hitPart = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      damageStage = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       return self.$get_damageEffect_table(hitPart, damageStage);}
       else if (/CRT(\d+)?/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_critical_table(roc);}
       else if (/([GSME])AC(\d+)?/i['$===']($case)) {
-      damageType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
+      damageType = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
       return self.$get_accident_table(damageType, roc);}
       else if (/([ASL])MA(\d+)?(\+(\d+))?/i['$===']($case)) {
-      locationType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
-      correction = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : 0).$to_i();
+      locationType = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
+      correction = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : 0).$to_i();
       return self.$get_mechanicAccident_table(locationType, roc, correction);}
       else if ("SEC"['$===']($case)) {return self.$get_strategyEvent_chart()}
       else if ("NAC"['$===']($case)) {return self.$get_NPCAttack_chart()}
       else if ("LDC"['$===']($case)) {return self.$get_loserDestiny_chart()}
       else if (/([W])ENC(\d+)?/i['$===']($case)) {
-      locationType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
+      locationType = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
       return self.$get_randomEncounter_table(locationType, roc);}
       else { return nil }})();
       return text;
@@ -477,14 +477,14 @@ if (type == null) type = nil;
       
       result = originalValue.$to_f();
       calculateArray = calculateText.$to_s().$scan(/[\*\/]\d*/);
-      $send(calculateArray, 'each', [], (TMP_27 = function(i){var self = TMP_27.$$s || this, $a;
+      $send(calculateArray, 'each', [], (TMP_27 = function(i){var self = TMP_27.$$s || this;
 if (i == null) i = nil;
       
         i['$=~'](/([\*\/])(\d*)/i);
-        if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$==']("*")) {
-          result = $rb_times(result, (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i())};
-        if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$==']("/")) {
-          return (result = $rb_divide(result, (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()))
+        if (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$==']("*")) {
+          result = $rb_times(result, Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i())};
+        if (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$==']("/")) {
+          return (result = $rb_divide(result, Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()))
           } else {
           return nil
         };}, TMP_27.$$s = self, TMP_27.$$arity = 1, TMP_27));

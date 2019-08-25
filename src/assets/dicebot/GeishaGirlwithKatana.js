@@ -3,9 +3,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars, $send = Opal.send, $hash = Opal.hash;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send, $hash = Opal.hash;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$getChombaResultText', '$isChomba', '$roll', '$collect', '$split', '$to_i', '$sort!', '$getYaku', '$nil?', '$getResultTextByDice', '$getDemeZorome', '$==', '$debug', '$<=', '$getResultText', '$[]', '$join']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$getChombaResultText', '$last_match', '$isChomba', '$roll', '$collect', '$split', '$to_i', '$sort!', '$getYaku', '$nil?', '$getResultTextByDice', '$getDemeZorome', '$==', '$debug', '$<=', '$getResultText', '$[]', '$join']);
   return (function($base, $super, $parent_nesting) {
     function $GeishaGirlwithKatana(){};
     var self = $GeishaGirlwithKatana = $klass($base, $super, 'GeishaGirlwithKatana', $GeishaGirlwithKatana);
@@ -44,7 +44,7 @@
         } else {
         return output
       };
-      chomba_counter = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      chomba_counter = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       if ($truthy(self.$isChomba(chomba_counter))) {
         return self.$getChombaResultText()};
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (_ = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;

@@ -9,9 +9,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getCheckResult', '$tgr_opening_table', '$tgr_common_trouble_table', '$=~', '$to_i', '$>', '$+', '$roll', '$to_s', '$getCheckResultText', '$>=', '$get_1d10_table_result', '$get_table_by_number', '$get_table_result']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getCheckResult', '$tgr_opening_table', '$tgr_common_trouble_table', '$=~', '$to_i', '$last_match', '$>', '$+', '$roll', '$to_s', '$getCheckResultText', '$>=', '$get_1d10_table_result', '$get_table_by_number', '$get_table_result']);
   return (function($base, $super, $parent_nesting) {
     function $TokyoGhostResearch(){};
     var self = $TokyoGhostResearch = $klass($base, $super, 'TokyoGhostResearch', $TokyoGhostResearch);
@@ -69,7 +69,7 @@
       output = "";
       diff = 0;
       if ($truthy(/TK?<=(\d+)/i['$=~'](command))) {
-        diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()};
+        diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()};
       if ($truthy($rb_gt(diff, 0))) {
         
         output = $rb_plus(output, "" + "(1D10<=" + (diff) + ")");

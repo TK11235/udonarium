@@ -9,9 +9,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$checkRoll', '$empty?', '$===', '$to_i', '$roll', '$sort', '$collect', '$split', '$+', '$getModifyText', '$join', '$getCriticalResult', '$nil?', '$isFumble', '$>=', '$==', '$<', '$to_s', '$size', '$select']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$checkRoll', '$empty?', '$===', '$to_i', '$last_match', '$roll', '$sort', '$collect', '$split', '$+', '$getModifyText', '$join', '$getCriticalResult', '$nil?', '$isFumble', '$>=', '$==', '$<', '$to_s', '$size', '$select']);
   return (function($base, $super, $parent_nesting) {
     function $StrangerOfSwordCity(){};
     var self = $StrangerOfSwordCity = $klass($base, $super, 'StrangerOfSwordCity', $StrangerOfSwordCity);
@@ -80,10 +80,10 @@
         } else {
         return result
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](4)))) {
-        difficulty = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i()};
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(4))) {
+        difficulty = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i()};
       $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceList = $send(diceText.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;

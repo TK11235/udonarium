@@ -9,9 +9,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$checkRoll', '$empty?', '$debug', '$rollTableCommand', '$=~', '$to_i', '$nil?', '$parren_killer', '$roll', '$+', '$>=', '$<=', '$===', '$mm_emotion_table_ver2', '$mm_emotion_table', '$mm_omens_table_ver2', '$mm_omens_table', '$mm_world_distortion_table_ver2', '$mm_world_distortion_table', '$mm_distortion_table_outdoor', '$mm_distortion_table_sea', '$mm_distortion_table_ver2', '$mm_distortion_table', '$!=', '$get_table_by_d66', '$get_table_by_2d6']);
+  Opal.add_stubs(['$setPrefixes', '$checkRoll', '$empty?', '$debug', '$rollTableCommand', '$=~', '$last_match', '$to_i', '$nil?', '$parren_killer', '$roll', '$+', '$>=', '$<=', '$===', '$mm_emotion_table_ver2', '$mm_emotion_table', '$mm_omens_table_ver2', '$mm_omens_table', '$mm_world_distortion_table_ver2', '$mm_world_distortion_table', '$mm_distortion_table_outdoor', '$mm_distortion_table_sea', '$mm_distortion_table_ver2', '$mm_distortion_table', '$!=', '$get_table_by_d66', '$get_table_by_2d6']);
   return (function($base, $super, $parent_nesting) {
     function $MonotoneMusium(){};
     var self = $MonotoneMusium = $klass($base, $super, 'MonotoneMusium', $MonotoneMusium);
@@ -80,12 +80,12 @@
         } else {
         return output
       };
-      modText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](4)))) {
-        crit = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i()};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](6)))) {
-        fumble = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)).$to_i()};
+      modText = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(4))) {
+        crit = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i()};
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(6))) {
+        fumble = Opal.const_get_relative($nesting, 'Regexp').$last_match(6).$to_i()};
       mod = 0;
       if ($truthy(modText['$nil?']())) {
         } else {

@@ -12,9 +12,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$gsub', '$checkRoll', '$=~', '$to_i', '$parren_killer', '$rokumon2_roll', '$rokumon2_suc_rank', '$!=', '$+', '$roll', '$abs', '$collect', '$split', '$times', '$<', '$shift', '$pop', '$each', '$>=', '$<=', '$==', '$[]']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$gsub', '$last_match', '$checkRoll', '$=~', '$to_i', '$parren_killer', '$rokumon2_roll', '$rokumon2_suc_rank', '$!=', '$+', '$roll', '$abs', '$collect', '$split', '$times', '$<', '$shift', '$pop', '$each', '$>=', '$<=', '$==', '$[]']);
   return (function($base, $super, $parent_nesting) {
     function $RokumonSekai2(){};
     var self = $RokumonSekai2 = $klass($base, $super, 'RokumonSekai2', $RokumonSekai2);
@@ -61,12 +61,12 @@
 
       
       self.$debug("parren_killer_add begin stirng", string);
-      string = $send(string, 'gsub', [/(\d+)RS([\+\-][\+\-\d]+)<=(\d+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/(\d+)RS([\+\-][\+\-\d]+)<=(\d+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + "3R6" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "<=" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "]"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'gsub', [/(\d+)RS<=(\d+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      return "" + "3R6" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "<=" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) + "[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/(\d+)RS<=(\d+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + "3R6<=" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      return "" + "3R6<=" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
       self.$debug("parren_killer_add end stirng", string);
       return string;
     }, TMP_RokumonSekai2_changeText_7.$$arity = 1);
@@ -86,9 +86,9 @@
         } else {
         return output
       };
-      modText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      abl = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      modText = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      abl = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
       mod = 0;
       if ($truthy(modText)) {
         mod = self.$parren_killer("" + "(0" + (modText) + ")").$to_i()};
@@ -109,8 +109,8 @@
       dice = $send(dicestr.$split(/,/), 'collect', [], (TMP_10 = function(i){var self = TMP_10.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_10.$$s = self, TMP_10.$$arity = 1, TMP_10));
-      $send(mod.$abs(), 'times', [], (TMP_11 = function(i){var self = TMP_11.$$s || this;
-if (i == null) i = nil;
+      $send(mod.$abs(), 'times', [], (TMP_11 = function(_i){var self = TMP_11.$$s || this;
+if (_i == null) _i = nil;
       if ($truthy($rb_lt(mod, 0))) {
           return dice.$shift()
           } else {

@@ -9,9 +9,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$empty?', '$checkRoll', '$==', '$>=', '$debug', '$to_i', '$marshalSignOfInequality', '$split', '$parren_killer', '$nw_dice', '$!=', '$+', '$check_suc', '$<', '$to_s', '$getValuesFromText', '$roll', '$include?', '$getFumbleTextAndTotal', '$checkCritical', '$collect', '$getCriticalValue']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$empty?', '$last_match', '$checkRoll', '$==', '$>=', '$debug', '$to_i', '$marshalSignOfInequality', '$split', '$parren_killer', '$nw_dice', '$!=', '$+', '$check_suc', '$<', '$to_s', '$getValuesFromText', '$roll', '$include?', '$getFumbleTextAndTotal', '$checkCritical', '$collect', '$getCriticalValue']);
   return (function($base, $super, $parent_nesting) {
     function $NightWizard(){};
     var self = $NightWizard = $klass($base, $super, 'NightWizard', $NightWizard);
@@ -61,21 +61,21 @@
         } else {
         return string
       };
-      string = $send(string, 'gsub', [/([\-\d]+)NW([\+\-\d]*)@([,\d]+)#([,\d]+)([\+\-\d]*)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a, modify = nil;
+      string = $send(string, 'gsub', [/([\-\d]+)NW([\+\-\d]*)@([,\d]+)#([,\d]+)([\+\-\d]*)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, modify = nil;
 
       
-        modify = (function() {if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](5))['$empty?']())) {
+        modify = (function() {if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(5)['$empty?']())) {
           return ""
           } else {
-          return "" + "," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](5)))
+          return "" + "," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(5))
         }; return nil; })();
-        return "" + "2R6m[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + (modify) + "]c[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3))) + "]f[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](4))) + "]";}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'gsub', [/([\-\d]+)NW([\+\-\d]*)/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+        return "" + "2R6m[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + (modify) + "]c[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) + "]f[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) + "]";}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/([\-\d]+)NW([\+\-\d]*)/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + "2R6m[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      return (string = $send(string, 'gsub', [/NW([\+\-\d]*)/i], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + "2R6m[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      return (string = $send(string, 'gsub', [/NW([\+\-\d]*)/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + "2R6m[0" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7)));
+      return "" + "2R6m[0" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7)));
     }, TMP_NightWizard_changeText_8.$$arity = 1);
     
     Opal.defn(self, '$dice_command_xRn', TMP_NightWizard_dice_command_xRn_9 = function $$dice_command_xRn(string, nick_e) {
@@ -84,7 +84,7 @@
       return self.$checkRoll(string, nick_e)
     }, TMP_NightWizard_dice_command_xRn_9.$$arity = 2);
     
-    Opal.defn(self, '$check_2D6', TMP_NightWizard_check_2D6_10 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_NightWizard_check_2D6_10 = function $$check_2D6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -109,15 +109,15 @@
         return output
       };
       self.$debug("is valid string");
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      base_and_modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      criticalText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      criticalValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      fumbleText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      fumbleValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      judgeText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
-      judgeOperator = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9));
-      judgeValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](10)).$to_i();
+      string = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      base_and_modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      criticalText = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
+      criticalValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
+      fumbleText = Opal.const_get_relative($nesting, 'Regexp').$last_match(6);
+      fumbleValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(7);
+      judgeText = Opal.const_get_relative($nesting, 'Regexp').$last_match(8);
+      judgeOperator = Opal.const_get_relative($nesting, 'Regexp').$last_match(9);
+      judgeValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(10).$to_i();
       crit = "0";
       fumble = "0";
       signOfInequality = "";
@@ -177,7 +177,7 @@
       return [total, output];
     }, TMP_NightWizard_nw_dice_13.$$arity = 4);
     
-    Opal.defn(self, '$getFumbleTextAndTotal', TMP_NightWizard_getFumbleTextAndTotal_14 = function $$getFumbleTextAndTotal(base, modify, dice_str) {
+    Opal.defn(self, '$getFumbleTextAndTotal', TMP_NightWizard_getFumbleTextAndTotal_14 = function $$getFumbleTextAndTotal(base, _modify, dice_str) {
       var self = this, total = nil, text = nil;
 
       

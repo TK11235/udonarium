@@ -24,9 +24,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getAttackResult', '$getCriticalResult', '$==', '$<=', '$floor', '$/', '$-', '$=~', '$to_i', '$>', '$<', '$roll', '$*', '$[]', '$+', '$>=', '$debug', '$!=', '$each', '$get_wh_atpos_message', '$step', '$length', '$check_suc', '$%', '$wh_atpos']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$last_match', '$getAttackResult', '$getCriticalResult', '$==', '$<=', '$floor', '$/', '$-', '$=~', '$to_i', '$>', '$<', '$roll', '$*', '$[]', '$+', '$>=', '$debug', '$!=', '$each', '$get_wh_atpos_message', '$step', '$length', '$check_suc', '$%', '$wh_atpos']);
   return (function($base, $super, $parent_nesting) {
     function $Warhammer(){};
     var self = $Warhammer = $klass($base, $super, 'Warhammer', $Warhammer);
@@ -69,21 +69,21 @@
     }, TMP_Warhammer_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Warhammer_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, output_msg = nil, $case = nil, attackCommand = nil, criticalCommand = nil;
+      var self = this, output_msg = nil, $case = nil, attackCommand = nil, criticalCommand = nil;
 
       
       output_msg = nil;
       $case = command.$upcase();
       if (/^(WH\d+(@[\dWH]*)?)/i['$===']($case)) {
-      attackCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      attackCommand = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       output_msg = self.$getAttackResult(attackCommand);}
       else if (/^(WH[HABTLW]\d+)/i['$===']($case)) {
-      criticalCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      criticalCommand = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       output_msg = self.$getCriticalResult(criticalCommand);};
       return output_msg;
     }, TMP_Warhammer_rollDiceCommand_5.$$arity = 1);
     
-    Opal.defn(self, '$check_1D100', TMP_Warhammer_check_1D100_6 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_Warhammer_check_1D100_6 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -111,8 +111,8 @@
         } else {
         return "1"
       };
-      partsWord = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      criticalValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      partsWord = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      criticalValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_gt(criticalValue, 10))) {
         criticalValue = 10};
       if ($truthy($rb_lt(criticalValue, 1))) {
@@ -214,14 +214,14 @@ if (i == null) i = nil;
       pos_type = "";
       if ($truthy(/(.+)(@.*)/['$=~'](string))) {
         
-        string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-        pos_type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+        string = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+        pos_type = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
         self.$debug("pos_type", pos_type);};
       if ($truthy(/WH(\d+)/i['$=~'](string))) {
         } else {
         return "1"
       };
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = "" + "(" + (string) + ") ＞ " + (total_n);
       output = $rb_plus(output, self.$check_suc(total_n, 0, "<=", diff, 1, 100, 0, total_n));

@@ -12,9 +12,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$analyzeDiceCommandResultMethod', '$debug', '$===', '$to_i', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isFamble', '$isCritical', '$getJudgeResultString', '$>=', '$==', '$empty?', '$parren_killer', '$<=', '$getBig6Table', '$getYearTableResult', '$get_table_by_d66', '$getYear', '$gsub', '$getD6xResult', '$length', '$times', '$*', '$to_s', '$getD66Item', '$[]', '$get_table_by_2d6', '$get_table_by_1d6', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$analyzeDiceCommandResultMethod', '$debug', '$===', '$to_i', '$last_match', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isFamble', '$isCritical', '$getJudgeResultString', '$>=', '$empty?', '$parren_killer', '$<=', '$getBig6Table', '$getYearTableResult', '$get_table_by_d66', '$getYear', '$gsub', '$getD6xResult', '$length', '$==', '$times', '$*', '$to_s', '$getD66Item', '$[]', '$get_table_by_2d6', '$get_table_by_1d6', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $ColossalHunter(){};
     var self = $ColossalHunter = $klass($base, $super, 'ColossalHunter', $ColossalHunter);
@@ -69,9 +69,9 @@
         } else {
         return nil
       };
-      diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 3).$to_i();
-      modifyText = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : "");
-      difficultyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 3).$to_i();
+      modifyText = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : "");
+      difficultyText = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       modify = self.$getValue(modifyText, 0);
       difficulty = self.$getValue(difficultyText, nil);
       $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
@@ -110,7 +110,7 @@ if (i == null) i = nil;
       var $a, self = this;
 
       
-      if ($truthy(($truthy($a = text['$=='](nil)) ? $a : text['$empty?']()))) {
+      if ($truthy(($truthy($a = text['$nil?']()) ? $a : text['$empty?']()))) {
         return defaultValue};
       return self.$parren_killer($rb_plus($rb_plus("(0", text), ")")).$to_i();
     }, TMP_ColossalHunter_getValue_9.$$arity = 2);
@@ -166,9 +166,9 @@ if (i == null) i = nil;
       var TMP_14, self = this, text = nil, calculateText = nil, year = nil;
 
       
-      text = $send(yearText, 'gsub', [/(\d+)D(6+)/], (TMP_14 = function(){var self = TMP_14.$$s || this, $a;
+      text = $send(yearText, 'gsub', [/(\d+)D(6+)/], (TMP_14 = function(){var self = TMP_14.$$s || this;
 
-      return self.$getD6xResult((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$length())}, TMP_14.$$s = self, TMP_14.$$arity = 0, TMP_14));
+      return self.$getD6xResult(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$length())}, TMP_14.$$s = self, TMP_14.$$arity = 0, TMP_14));
       calculateText = "" + "(" + (text) + ")";
       year = self.$parren_killer(calculateText.$gsub(/×/, "*"));
       if (year['$=='](calculateText)) {
@@ -183,12 +183,12 @@ if (i == null) i = nil;
 
       
       total = 0;
-      $send(count, 'times', [], (TMP_16 = function(i){var self = TMP_16.$$s || this, TMP_17, number = nil;
-if (i == null) i = nil;
+      $send(count, 'times', [], (TMP_16 = function(_i){var self = TMP_16.$$s || this, TMP_17, number = nil;
+if (_i == null) _i = nil;
       
         number = 0;
-        $send(dice6Count, 'times', [], (TMP_17 = function(i){var self = TMP_17.$$s || this, $a, $b, dice = nil;
-if (i == null) i = nil;
+        $send(dice6Count, 'times', [], (TMP_17 = function(_i){var self = TMP_17.$$s || this, $a, $b, dice = nil;
+if (_i == null) _i = nil;
         
           number = $rb_times(number, 10);
           $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;

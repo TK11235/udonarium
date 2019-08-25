@@ -18,9 +18,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$=~', '$get_NAME_table', '$get_NAMEtwo_table', '$+', '$to_i', '$rollHit', '$rollDamage', '$roll', '$getHitRollResult', '$>=', '$<=', '$<', '$getRollDamageCritialText', '$empty?', '$join', '$>', '$to_s', '$==', '$collect', '$split', '$sort!', '$clone', '$times', '$shift', '$push', '$pop', '$nil?', '$*', '$**', '$each', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$=~', '$get_NAME_table', '$get_NAMEtwo_table', '$+', '$to_i', '$last_match', '$rollHit', '$rollDamage', '$roll', '$getHitRollResult', '$>=', '$<=', '$<', '$getRollDamageCritialText', '$empty?', '$join', '$>', '$to_s', '$==', '$collect', '$split', '$sort!', '$clone', '$times', '$shift', '$push', '$pop', '$nil?', '$*', '$**', '$each', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $TrinitySeven(){};
     var self = $TrinitySeven = $klass($base, $super, 'TrinitySeven', $TrinitySeven);
@@ -72,16 +72,16 @@
         return "" + (firstName) + " , " + (secondName);};
       if ($truthy(/^TR([\+\-\d]*)<=([\d]*)([\+\-\d]*)/['$=~'](command))) {
         
-        critical = $rb_plus((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), 7);
-        target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-        modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+        critical = $rb_plus(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), 7);
+        target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+        modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
         return self.$rollHit(command, critical, target, modify);};
       critical = 0;
       if ($truthy(/([\d]*)DM([\d]*)([\+\-\d]*)/['$=~'](command))) {
         
-        diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-        critical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-        modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+        diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+        critical = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+        modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
         return self.$rollDamage(command, diceCount, critical, modify);};
       return "";
     }, TMP_TrinitySeven_rollDiceCommand_5.$$arity = 1);
@@ -165,7 +165,7 @@ if (i == null) i = nil;
       return [total, diceList];
     }, TMP_TrinitySeven_getRollDamageCritialText_12.$$arity = 5);
     
-    Opal.defn(self, '$check_1D100', TMP_TrinitySeven_check_1D100_13 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_TrinitySeven_check_1D100_13 = function $$check_1D100(_total_n, dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       

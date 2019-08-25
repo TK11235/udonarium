@@ -18,9 +18,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$sub', '$===', '$to_i', '$debug', '$getCriticalResult', '$getDownResult', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$getXrmDamageTable', '$collect', '$*', '$get_table_by_2d6', '$raise', '$getBaseValue', '$getHitPart', '$times', '$getHitText', '$+', '$getDamages', '$<<', '$join', '$>=', '$length', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$roll', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]', '$[]=', '$-', '$empty?', '$to_s', '$each', '$delete', '$inject', '$size', '$inspect', '$getPart', '$gsub', '$index', '$!', '$==', '$get_table_by_nD6', '$get_table_by_number', '$get_table_by_1d6']);
+  Opal.add_stubs(['$setPrefixes', '$sub', '$===', '$to_i', '$last_match', '$debug', '$getCriticalResult', '$getDownResult', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$getXrmDamageTable', '$collect', '$*', '$get_table_by_2d6', '$raise', '$getBaseValue', '$getHitPart', '$times', '$getHitText', '$+', '$getDamages', '$<<', '$join', '$>=', '$length', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$roll', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]', '$[]=', '$-', '$empty?', '$to_s', '$each', '$delete', '$inject', '$size', '$inspect', '$getPart', '$gsub', '$index', '$!', '$==', '$get_table_by_nD6', '$get_table_by_number', '$get_table_by_1d6']);
   return (function($base, $super, $parent_nesting) {
     function $BattleTech(){};
     var self = $BattleTech = $klass($base, $super, 'BattleTech', $BattleTech);
@@ -78,8 +78,8 @@
       count = 1;
       if ($truthy(/^(\d+)(.+)/['$==='](command))) {
         
-        count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-        command = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));};
+        count = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+        command = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);};
       self.$debug("executeCommandCatched count", count);
       self.$debug("executeCommandCatched command", command);
       $case = command;
@@ -88,19 +88,19 @@
       return "" + (criticalDice) + " ＞ " + (criticalText);}
       else if (/^DW$/['$===']($case)) {return self.$getDownResult()}
       else if (/^CD(\d+)$/['$===']($case)) {
-      damage = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      damage = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$getCheckDieResult(damage);}
       else if (/^((S|L)RM\d+)(.+)/['$===']($case)) {
-      tail = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      tail = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       damageFunc = $send(self, 'lambda', [], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
       return self.$getXrmDamage(type)}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
       return self.$getHitResult(count, damageFunc, tail);}
       else if (/^BT(\d+)(.+)/['$===']($case)) {
       self.$debug("BT pattern");
-      tail = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      damageValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      tail = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      damageValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       damageFunc = $send(self, 'lambda', [], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
       return damageValue}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
@@ -139,7 +139,7 @@ if (i == null) i = nil;
     (Opal.class_variable_set($BattleTech, '@@lrmLimit', 5));
     
     Opal.defn(self, '$getHitResult', TMP_BattleTech_getHitResult_14 = function $$getHitResult(count, damageFunc, tail) {
-      var $a, TMP_13, self = this, side = nil, baseString = nil, target = nil, base = nil, partTable = nil, resultTexts = nil, damages = nil, hitCount = nil, totalResultText = nil;
+      var TMP_13, self = this, side = nil, baseString = nil, target = nil, base = nil, partTable = nil, resultTexts = nil, damages = nil, hitCount = nil, totalResultText = nil;
       if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       
@@ -147,23 +147,23 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      side = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      baseString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      side = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      baseString = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
       base = self.$getBaseValue(baseString);
       self.$debug("side, base, target", side, base, target);
       partTable = self.$getHitPart(side);
       resultTexts = [];
       damages = $hash2([], {});
       hitCount = 0;
-      $send(count, 'times', [], (TMP_13 = function(){var self = TMP_13.$$s || this, $b, $c, isHit = nil, hitResult = nil, damageText = nil;
+      $send(count, 'times', [], (TMP_13 = function(){var self = TMP_13.$$s || this, $a, $b, isHit = nil, hitResult = nil, damageText = nil;
 
       
-        $c = self.$getHitText(base, target), $b = Opal.to_ary($c), (isHit = ($b[0] == null ? nil : $b[0])), (hitResult = ($b[1] == null ? nil : $b[1])), $c;
+        $b = self.$getHitText(base, target), $a = Opal.to_ary($b), (isHit = ($a[0] == null ? nil : $a[0])), (hitResult = ($a[1] == null ? nil : $a[1])), $b;
         if ($truthy(isHit)) {
           
           hitCount = $rb_plus(hitCount, 1);
-          $c = self.$getDamages(damageFunc, partTable, damages), $b = Opal.to_ary($c), (damages = ($b[0] == null ? nil : $b[0])), (damageText = ($b[1] == null ? nil : $b[1])), $c;
+          $b = self.$getDamages(damageFunc, partTable, damages), $a = Opal.to_ary($b), (damages = ($a[0] == null ? nil : $a[0])), (damageText = ($a[1] == null ? nil : $a[1])), $b;
           hitResult = $rb_plus(hitResult, damageText);};
         return resultTexts['$<<'](hitResult);}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13));
       totalResultText = resultTexts.$join("\n");
@@ -299,8 +299,10 @@ if (sum == null) sum = nil;if (i == null) i = nil;
           text = $rb_plus(text, "" + " " + (criticals.$join(" ")))
         };
         return damageTexts['$<<'](text);}, TMP_21.$$s = self, TMP_21.$$arity = 1, TMP_21));
-      if ($truthy($rb_gt(damages.$length(), 0))) {
-        self.$raise("" + "damages rest!! " + (damages.$inspect()))};
+      if ($truthy(damages['$empty?']())) {
+        } else {
+        self.$raise("" + "damages rest!! " + (damages.$inspect()))
+      };
       result = damageTexts.$join(" ／ ");
       result = $rb_plus(result, "" + " ＞ 合計ダメージ " + (allDamage) + "点");
       return result;

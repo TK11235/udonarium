@@ -37,7 +37,7 @@
 
       return (info = "" + "・1D100で判定時に成否、Botchを判定\n" + "　例）1D100<=50\n" + "　　　Chill3 : (1D100<=50) ＞ 55 ＞ Botch\n")
     }, TMP_Chill3_getHelpMessage_3.$$arity = 0);
-    return (Opal.defn(self, '$check_1D100', TMP_Chill3_check_1D100_4 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D100', TMP_Chill3_check_1D100_4 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, self = this, s10 = nil, s1 = nil;
 
       

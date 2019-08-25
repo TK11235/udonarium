@@ -21,9 +21,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$checkRoll', '$empty?', '$check_seigou', '$rollTableCommand', '$=~', '$to_i', '$getRollParams', '$>', '$+', '$-', '$<', '$>=', '$getJudgeInfo', '$checkRollLoop', '$nil?', '$!=', '$!', '$getcriticalString', '$==', '$to_s', '$times', '$roll', '$<=', '$*', '$upcase', '$===', '$getTagTableResult', '$getCreateSatasupeResult', '$getNpcTableResult', '$getAnotherTableResult', '$join', '$get_table_by_d66', '$push', '$<<', '$d66', '$get_table_by_number', '$uniq', '$sort', '$[]', '$split', '$rollDiceAddingUp', '$rand', '$get2d6TableInfo', '$getTableIndex', '$max', '$min']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$checkRoll', '$empty?', '$check_seigou', '$rollTableCommand', '$=~', '$to_i', '$last_match', '$getRollParams', '$>', '$+', '$-', '$<', '$>=', '$getJudgeInfo', '$checkRollLoop', '$nil?', '$!=', '$!', '$getcriticalString', '$==', '$to_s', '$times', '$roll', '$<=', '$*', '$upcase', '$===', '$getTagTableResult', '$getCreateSatasupeResult', '$getNpcTableResult', '$getAnotherTableResult', '$join', '$get_table_by_d66', '$push', '$<<', '$d66', '$get_table_by_number', '$uniq', '$sort', '$[]', '$split', '$rollDiceAddingUp', '$rand', '$get2d6TableInfo', '$getTableIndex', '$max', '$min']);
   return (function($base, $super, $parent_nesting) {
     function $Satasupe(){};
     var self = $Satasupe = $klass($base, $super, 'Satasupe', $Satasupe);
@@ -97,9 +97,9 @@
         } else {
         return ""
       };
-      roll_times = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      params = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      roll_times = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      params = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       $b = self.$getRollParams(params), $a = Opal.to_ary($b), (min_suc = ($a[0] == null ? nil : $a[0])), (fumble = ($a[1] == null ? nil : $a[1])), (critical = ($a[2] == null ? nil : $a[2])), (isCriticalStop = ($a[3] == null ? nil : $a[3])), $b;
       result = "";
       if ($truthy($rb_gt(target, 12))) {
@@ -131,7 +131,7 @@
     }, TMP_Satasupe_checkRoll_6.$$arity = 1);
     
     Opal.defn(self, '$getRollParams', TMP_Satasupe_getRollParams_7 = function $$getRollParams(params) {
-      var $a, self = this, min_suc = nil, fumble = nil, critical = nil, isCriticalStop = nil;
+      var self = this, min_suc = nil, fumble = nil, critical = nil, isCriticalStop = nil;
 
       
       min_suc = 0;
@@ -141,12 +141,12 @@
       if ($truthy(params['$nil?']())) {
       } else if ($truthy(/\[(\d*)(,(\d*)?)?(,(\d*)(S)?)?\]/['$=~'](params))) {
         
-        min_suc = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i()['$!='](0))) {
-          fumble = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i()};
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](4)))) {
-          critical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i()};
-        isCriticalStop = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6))['$nil?']()['$!']();};
+        min_suc = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+        if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i()['$!='](0))) {
+          fumble = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i()};
+        if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(4))) {
+          critical = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i()};
+        isCriticalStop = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)['$nil?']()['$!']();};
       return [min_suc, fumble, critical, isCriticalStop];
     }, TMP_Satasupe_getRollParams_7.$$arity = 1);
     
@@ -176,8 +176,8 @@
       isFumble = false;
       isCritical = false;
       total_suc = 0;
-      (function(){var $brk = Opal.new_brk(); try {return $send(roll_times, 'times', [], (TMP_10 = function(i){var self = TMP_10.$$s || this, $a, $b, d1 = nil, d2 = nil, dice_suc = nil;
-if (i == null) i = nil;
+      (function(){var $brk = Opal.new_brk(); try {return $send(roll_times, 'times', [], (TMP_10 = function(_i){var self = TMP_10.$$s || this, $a, $b, d1 = nil, d2 = nil, dice_suc = nil;
+if (_i == null) _i = nil;
       
         self.$debug("roll_times", roll_times);
         self.$debug("min_suc, total_suc", min_suc, total_suc);
@@ -227,9 +227,9 @@ if (i == null) i = nil;
         } else {
         return ""
       };
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      operator = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      operator = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      value = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i();
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       modify = 0;
       if ($truthy(operator['$nil?']())) {
@@ -258,7 +258,7 @@ if (i == null) i = nil;
     }, TMP_Satasupe_check_seigou_12.$$arity = 1);
     
     Opal.defn(self, '$rollTableCommand', TMP_Satasupe_rollTableCommand_13 = function $$rollTableCommand(command) {
-      var $a, self = this, result = nil, counts = nil, operator = nil, value = nil, $case = nil;
+      var self = this, result = nil, counts = nil, operator = nil, value = nil, $case = nil;
 
       
       command = command.$upcase();
@@ -267,12 +267,12 @@ if (i == null) i = nil;
         } else {
         return result
       };
-      command = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      command = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       counts = 1;
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))) {
-        counts = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()};
-      operator = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2))) {
+        counts = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()};
+      operator = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
+      value = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
       self.$debug("rollDiceCommand command", command);
       $case = command;
       if ("TAGT"['$===']($case)) {result = self.$getTagTableResult(counts)}
@@ -289,8 +289,8 @@ if (i == null) i = nil;
       name = "タグ決定表";
       table = ["情報イベント", "アブノーマル(サ)", "カワイイ(サ)", "トンデモ(サ)", "マニア(サ)", "ヲタク(サ)", "音楽(ア)", "好きなタグ", "トレンド(ア)", "読書(ア)", "パフォーマンス(ア)", "美術(ア)", "アラサガシ(マ)", "おせっかい(マ)", "好きなタグ", "家事(マ)", "ガリ勉(マ)", "健康(マ)", "アウトドア(休)", "工作(休)", "スポーツ(休)", "同一タグ", "ハイソ(休)", "旅行(休)", "育成(イ)", "サビシガリヤ(イ)", "ヒマツブシ(イ)", "宗教(イ)", "同一タグ", "ワビサビ(イ)", "アダルト(風)", "飲食(風)", "ギャンブル(風)", "ゴシップ(風)", "ファッション(風)", "情報ハプニング"];
       result = [];
-      $send(counts, 'times', [], (TMP_14 = function(i){var self = TMP_14.$$s || this, $a, $b, info = nil, number = nil, text = nil;
-if (i == null) i = nil;
+      $send(counts, 'times', [], (TMP_14 = function(_i){var self = TMP_14.$$s || this, $a, $b, info = nil, number = nil, text = nil;
+if (_i == null) _i = nil;
       
         $b = self.$get_table_by_d66(table), $a = Opal.to_ary($b), (info = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
         text = "" + (name) + ":" + (number) + ":" + (info);
@@ -355,8 +355,8 @@ if (i == null) i = nil;
       armsTable = [[11, "「パチンコ玉」"], [12, "「釘や画鋲、針」"], [13, "「砂利や小石、ガラスの破片」"], [14, "「口紅」"], [15, "「バネやゼンマイ」"], [16, "「捻子やビス」"], [22, "「生ゴミ」"], [23, "「ゴム」"], [24, "「歯車」"], [25, "「歯や牙、骨」"], [26, "「ワイヤー」"], [33, "「メガネなどのレンズ」"], [34, "「マッチ」"], [35, "「ガムテープや接着剤」"], [36, "「洗濯ばさみ」"], [44, "「花火」"], [45, "「食玩」"], [46, "「真空管やトランジスタ」"], [55, "「エアコンプレッサ」"], [56, "「豆」"], [66, "「ガスボンベや殺虫剤」"]];
       armsEffectTable = [[11, "「武器破壊」"], [12, "「毒」"], [13, "「散弾」"], [14, "「（判定前宣言）一度だけ必殺10」"], [15, "「フル」"], [16, "「ダメージ＋１」"], [22, "「衝撃」"], [23, "「ダメージ＋１」"], [24, "「リボルバー」"], [25, "「（判定前宣言）1D6回、ダメージ＋２」"], [26, "「耐久度＋１」"], [33, "「命中－１」"], [34, "「必殺12」"], [35, "「耐久度＋１」"], [36, "「命中－１」"], [44, "「弾幕1」"], [45, "「暗器」"], [46, "「神秘」"], [55, "「ダメージ＋１」"], [56, "「マヒ」"], [66, "「爆発3」"]];
       baseParts = $rb_plus(baseParts, "  アクセサリ部品：");
-      $send(counts, 'times', [], (TMP_16 = function(i){var self = TMP_16.$$s || this, $c, $d, number2 = nil;
-if (i == null) i = nil;
+      $send(counts, 'times', [], (TMP_16 = function(_i){var self = TMP_16.$$s || this, $c, $d, number2 = nil;
+if (_i == null) _i = nil;
       
         number2 = self.$d66(2);
         baseParts = $rb_plus(baseParts, self.$get_table_by_number(number2, armsTable));
@@ -404,8 +404,8 @@ if (i == null) i = nil;
       agen = ["6+2D6", "10+2D6", "15+3D6", "25+4D6", "40+5D6", "60+6D6"];
       name = "NPC表:";
       result = [];
-      $send(counts, 'times', [], (TMP_18 = function(i){var self = TMP_18.$$s || this, $a, $b, age_type = nil, dummy = nil, agen_text = nil, age_num = nil, total = nil, ysold = nil, lmodValue = nil, lageValue = nil, text = nil;
-if (i == null) i = nil;
+      $send(counts, 'times', [], (TMP_18 = function(_i){var self = TMP_18.$$s || this, $a, $b, age_type = nil, dummy = nil, agen_text = nil, age_num = nil, total = nil, ysold = nil, lmodValue = nil, lageValue = nil, text = nil;
+if (_i == null) _i = nil;
       
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (age_type = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
         age_type = $rb_minus(age_type, 1);
@@ -428,8 +428,8 @@ if (i == null) i = nil;
       $b = self.$get2d6TableInfo(command), $a = Opal.to_ary($b), (name = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(name['$empty?']())) {
         return result};
-      $send(counts, 'times', [], (TMP_20 = function(i){var self = TMP_20.$$s || this, $c, $d, _ = nil, index = nil, info = nil, text = nil;
-if (i == null) i = nil;
+      $send(counts, 'times', [], (TMP_20 = function(_i){var self = TMP_20.$$s || this, $c, $d, _ = nil, index = nil, info = nil, text = nil;
+if (_i == null) _i = nil;
       
         $d = self.$getTableIndex(operator, value, 2, 6), $c = Opal.to_ary($d), (_ = ($c[0] == null ? nil : $c[0])), (index = ($c[1] == null ? nil : $c[1])), $d;
         info = table['$[]']($rb_minus(index, 2));

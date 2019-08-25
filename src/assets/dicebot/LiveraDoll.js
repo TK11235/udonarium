@@ -6,9 +6,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$delete', '$sort', '$uniq', '$checkRoll', '$get_card_text', '$roll', '$collect', '$split', '$new', '$each', '$>', '$count', '$push', '$+', '$join', '$==', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$delete', '$sort', '$uniq', '$checkRoll', '$get_card_text', '$roll', '$collect', '$split', '$each', '$>', '$count', '$push', '$+', '$join', '$==', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $LiveraDoll(){};
     var self = $LiveraDoll = $klass($base, $super, 'LiveraDoll', $LiveraDoll);
@@ -51,21 +51,21 @@
     }, TMP_LiveraDoll_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_LiveraDoll_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, output = nil, $case = nil, diceCount = nil, blockNo = nil, color = nil, cardtype = nil, cardindex = nil;
+      var $a, self = this, output = nil, $case = nil, diceCount = nil, blockNo = nil, color = nil, cardtype = nil, cardindex = nil;
 
       
       output = (function() {$case = command.$upcase();
       if (/^(\d+)?ATK([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?$/i['$===']($case)) {
-      diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 1).$to_i();
-      blockNo = [($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](5))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i()];
+      diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
+      blockNo = [($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(5)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i()];
       blockNo.$delete(0);
       blockNo = blockNo.$sort();
       blockNo = blockNo.$uniq();
       return (output = self.$checkRoll(diceCount, blockNo));}
       else if (/^(C|K|W|R|B|G|E)(L|D|O)(\d+)$/i['$===']($case)) {
-      color = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$upcase();
-      cardtype = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$upcase();
-      cardindex = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      color = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$upcase();
+      cardtype = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$upcase();
+      cardindex = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
       return self.$get_card_text(color, cardtype, cardindex);}
       else { return nil }})();
       return output;
@@ -79,7 +79,7 @@
       diceArray = $send(diceText.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));
-      resultArray = Opal.const_get_relative($nesting, 'Array').$new();
+      resultArray = [];
       success = 0;
       $send(diceArray, 'each', [], (TMP_7 = function(i){var self = TMP_7.$$s || this;
 if (i == null) i = nil;

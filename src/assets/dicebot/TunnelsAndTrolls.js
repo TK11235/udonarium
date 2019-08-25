@@ -24,9 +24,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$=~', '$+', '$*', '$to_i', '$sub', '$to_s', '$gsub', '$tandt_berserk', '$==', '$getMaxSuccessLevel', '$>=', '$getExperiencePoint', '$-', '$<=', '$>', '$/', '$is_int?', '$sprintf', '$match', '$[]', '$parren_killer', '$push', '$loop', '$shift', '$roll', '$&', '$sortType', '$collect', '$split', '$times', '$each', '$[]=', '$<', '$length', '$-@', '$!=', '$sendMode']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$=~', '$+', '$*', '$to_i', '$last_match', '$sub', '$to_s', '$gsub', '$tandt_berserk', '$==', '$getMaxSuccessLevel', '$>=', '$getExperiencePoint', '$-', '$<=', '$>', '$/', '$is_int?', '$format', '$match', '$[]', '$parren_killer', '$push', '$loop', '$shift', '$roll', '$&', '$sortType', '$collect', '$split', '$times', '$each', '$[]=', '$empty?', '$-@', '$!=', '$<', '$sendMode']);
   return (function($base, $super, $parent_nesting) {
     function $TunnelsAndTrolls(){};
     var self = $TunnelsAndTrolls = $klass($base, $super, 'TunnelsAndTrolls', $TunnelsAndTrolls);
@@ -71,30 +71,30 @@
     }, TMP_TunnelsAndTrolls_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_TunnelsAndTrolls_changeText_10 = function $$changeText(string) {
-      var $a, TMP_5, TMP_6, TMP_7, TMP_8, TMP_9, self = this, level_diff = nil;
+      var TMP_5, TMP_6, TMP_7, TMP_8, TMP_9, self = this, level_diff = nil;
 
       
       self.$debug("Tunnels & Trolls parren_killer begin string", string);
       if ($truthy(/(\d+)LV/i['$=~'](string))) {
         
-        level_diff = $rb_plus($rb_times((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), 5), 15);
+        level_diff = $rb_plus($rb_times(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), 5), 15);
         string = $send(string, 'sub', [/(\d+)LV/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
         return level_diff.$to_s()}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));};
       if ($truthy(/BS/i['$=~'](string))) {
         
-        string = $send(string, 'gsub', [/(\d+)HBS([^\d\s][\+\-\d]+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $b;
+        string = $send(string, 'gsub', [/(\d+)HBS([^\d\s][\+\-\d]+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-        return "" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) + "R6" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) + "[H]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-        string = $send(string, 'gsub', [/(\d+)HBS/i], (TMP_7 = function(){var self = TMP_7.$$s || this, $b;
+        return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "[H]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+        string = $send(string, 'gsub', [/(\d+)HBS/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-        return "" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) + "R6[H]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-        string = $send(string, 'gsub', [/(\d+)BS([^\d\s][\+\-\d]+)/i], (TMP_8 = function(){var self = TMP_8.$$s || this, $b;
+        return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6[H]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+        string = $send(string, 'gsub', [/(\d+)BS([^\d\s][\+\-\d]+)/i], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-        return "" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) + "R6" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](2)))}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
-        string = $send(string, 'gsub', [/(\d+)BS/i], (TMP_9 = function(){var self = TMP_9.$$s || this, $b;
+        return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2))}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
+        string = $send(string, 'gsub', [/(\d+)BS/i], (TMP_9 = function(){var self = TMP_9.$$s || this;
 
-        return "" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) + "R6"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));};
+        return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));};
       return string;
     }, TMP_TunnelsAndTrolls_changeText_10.$$arity = 1);
     
@@ -104,7 +104,7 @@
       return self.$tandt_berserk(string, nick_e)
     }, TMP_TunnelsAndTrolls_dice_command_xRn_11.$$arity = 2);
     
-    Opal.defn(self, '$check_2D6', TMP_TunnelsAndTrolls_check_2D6_12 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_TunnelsAndTrolls_check_2D6_12 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, experiencePoint = nil;
 
       
@@ -159,7 +159,7 @@
       if ($truthy(self['$is_int?'](experiencePoint))) {
         experiencePoint = experiencePoint.$to_i()
         } else {
-        experiencePoint = self.$sprintf("%.1f", experiencePoint)
+        experiencePoint = self.$format("%.1f", experiencePoint)
       };
       self.$debug("experiencePoint", experiencePoint);
       return experiencePoint;
@@ -214,8 +214,8 @@ if (i == null) i = nil;
           self.$debug("dice_num", dice_num);
           diceType = 6;
           dice_face = [];
-          $send(diceType, 'times', [], (TMP_19 = function(i){var self = TMP_19.$$s || this;
-if (i == null) i = nil;
+          $send(diceType, 'times', [], (TMP_19 = function(_i){var self = TMP_19.$$s || this;
+if (_i == null) _i = nil;
           return dice_face.$push(0)}, TMP_19.$$s = self, TMP_19.$$arity = 1, TMP_19));
           $send(dice_num, 'each', [], (TMP_20 = function(dice_o){var self = TMP_20.$$s || this, $writer = nil;
 if (dice_o == null) dice_o = nil;
@@ -233,7 +233,7 @@ if (dice_o == null) dice_o = nil;
               } else {
               return nil
             }}, TMP_21.$$s = self, TMP_21.$$arity = 1, TMP_21));
-          if ($truthy(($truthy($b = isFirstLoop) ? $rb_lt(dice_arr.$length(), 1) : $b))) {
+          if ($truthy(($truthy($b = isFirstLoop) ? dice_arr['$empty?']() : $b))) {
             
             min1 = 0;
             min2 = 0;
@@ -265,11 +265,11 @@ if (i == null) i = nil;
         n_max = $rb_plus(n_max, rollDiceMaxCount);
         isFirstLoop = false;
         self.$debug("loop last chek dice_arr", dice_arr);
-        if ($truthy(dice_arr.$length()['$!='](0))) {
-          return nil
-          } else {
+        if ($truthy(dice_arr['$empty?']())) {
           
           Opal.brk(nil, $brk)
+          } else {
+          return nil
         };}, TMP_17.$$s = self, TMP_17.$$brk = $brk, TMP_17.$$arity = 0, TMP_17))
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       self.$debug("loop breaked");

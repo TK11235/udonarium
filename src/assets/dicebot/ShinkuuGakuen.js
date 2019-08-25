@@ -12,9 +12,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$join', '$collect', '$prefixes', '$sub', '$===', '$debug', '$to_i', '$getWeaponTable', '$rollJudge', '$[]', '$getJudgeDiceList', '$inject', '$+', '$nil?', '$>=', '$length', '$getSuccessText', '$getWeaponSkillText', '$max', '$loop', '$roll', '$<<', '$%', '$==', '$first', '$<=', '$!=', '$getSkillText', '$empty?', '$to_s', '$upcase', '$getWeaponTableSword', '$getWeaponTableSwordCounter', '$getWeaponTableLongSword', '$getWeaponTableLongSwordCounter', '$getWeaponTableShortSword', '$getWeaponTableShortSwordCounter', '$getWeaponTableSpear', '$getWeaponTableSpearCounter', '$getWeaponTableAx', '$getWeaponTableAxCounter', '$getWeaponTableClub', '$getWeaponTableClubCounter', '$getWeaponTableBow', '$getWeaponTableMartialArt', '$getWeaponTableMartialArtCounter', '$getWeaponTableBoxing', '$getWeaponTableBoxingCounter', '$getWeaponTableProWrestling', '$getWeaponTableProWrestlingCounter', '$getWeaponTableStand', '$getWeaponTableStandCounter', '$getRandMartialArtCounter', '$*', '$each']);
+  Opal.add_stubs(['$setPrefixes', '$join', '$collect', '$prefixes', '$sub', '$===', '$debug', '$last_match', '$to_i', '$getWeaponTable', '$rollJudge', '$[]', '$getJudgeDiceList', '$inject', '$+', '$nil?', '$>=', '$length', '$getSuccessText', '$getWeaponSkillText', '$max', '$loop', '$roll', '$<<', '$%', '$==', '$first', '$<=', '$!=', '$getSkillText', '$empty?', '$to_s', '$upcase', '$getWeaponTableSword', '$getWeaponTableSwordCounter', '$getWeaponTableLongSword', '$getWeaponTableLongSwordCounter', '$getWeaponTableShortSword', '$getWeaponTableShortSwordCounter', '$getWeaponTableSpear', '$getWeaponTableSpearCounter', '$getWeaponTableAx', '$getWeaponTableAxCounter', '$getWeaponTableClub', '$getWeaponTableClubCounter', '$getWeaponTableBow', '$getWeaponTableMartialArt', '$getWeaponTableMartialArtCounter', '$getWeaponTableBoxing', '$getWeaponTableBoxingCounter', '$getWeaponTableProWrestling', '$getWeaponTableProWrestlingCounter', '$getWeaponTableStand', '$getWeaponTableStandCounter', '$getRandMartialArtCounter', '$*', '$each']);
   return (function($base, $super, $parent_nesting) {
     function $ShinkuuGakuen(){};
     var self = $ShinkuuGakuen = $klass($base, $super, 'ShinkuuGakuen', $ShinkuuGakuen);
@@ -43,7 +43,7 @@
     }, TMP_ShinkuuGakuen_getHelpMessage_3.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_ShinkuuGakuen_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var TMP_4, $a, self = this, prefixesRegText = nil, weaponCommand = nil, base = nil, diff = nil, weaponInfo = nil, output_msg = nil;
+      var TMP_4, self = this, prefixesRegText = nil, weaponCommand = nil, base = nil, diff = nil, weaponInfo = nil, output_msg = nil;
 
       
       prefixesRegText = $send(self.$prefixes(), 'collect', [], (TMP_4 = function(i){var self = TMP_4.$$s || this;
@@ -56,9 +56,9 @@ if (i == null) i = nil;
         return nil;
       };
       self.$debug("matched.");
-      weaponCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      base = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i();
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
+      weaponCommand = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      base = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(6);
       weaponInfo = self.$getWeaponTable(weaponCommand);
       output_msg = self.$rollJudge(base, diff, weaponInfo);
       return output_msg;

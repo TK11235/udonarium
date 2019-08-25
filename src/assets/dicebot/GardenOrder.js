@@ -12,9 +12,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$get_critical_border', '$check_roll_repeat_attack', '$look_up_damage_chart', '$nil?', '$max', '$floor', '$/', '$check_roll', '$<', '$roll', '$get_check_result', '$<=', '$>=', '$get_damage_table_info_by_type', '$get_table_by_number', '$[]']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$get_critical_border', '$check_roll_repeat_attack', '$look_up_damage_chart', '$nil?', '$max', '$floor', '$/', '$check_roll', '$<', '$roll', '$get_check_result', '$<=', '$>=', '$get_damage_table_info_by_type', '$get_table_by_number', '$[]']);
   return (function($base, $super, $parent_nesting) {
     function $GardenOrder(){};
     var self = $GardenOrder = $klass($base, $super, 'GardenOrder', $GardenOrder);
@@ -43,19 +43,19 @@
     }, TMP_GardenOrder_getHelpMessage_3.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_GardenOrder_rollDiceCommand_4 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, $case = nil, success_rate = nil, repeat_count = nil, critical_border_text = nil, critical_border = nil, type = nil, damage_value = nil;
+      var $a, self = this, $case = nil, success_rate = nil, repeat_count = nil, critical_border_text = nil, critical_border = nil, type = nil, damage_value = nil;
 
       
       $case = command;
       if (/GO(\d+)(\/(\d+))?(@(\d+))?/i['$===']($case)) {
-      success_rate = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      repeat_count = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 1).$to_i();
-      critical_border_text = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
+      success_rate = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      repeat_count = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 1).$to_i();
+      critical_border_text = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
       critical_border = self.$get_critical_border(critical_border_text, success_rate);
       return self.$check_roll_repeat_attack(success_rate, repeat_count, critical_border);}
       else if (/^DC(SL|BL|IM|BR|RF|EL)(\d+)/i['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      damage_value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      damage_value = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       return self.$look_up_damage_chart(type, damage_value);};
       return nil;
     }, TMP_GardenOrder_rollDiceCommand_4.$$arity = 1);

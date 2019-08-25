@@ -18,14 +18,14 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $range = Opal.range, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$check_nD6', '$==', '$<=', '$>=', '$upcase', '$===', '$to_i', '$rollPerformance', '$textFrom1D6Table', '$textFromD66Table', '$getSkillList', '$badStatus', '$roll', '$+', '$[]', '$-', '$getSkillText', '$=~', '$getItem', '$get_table_by_1d6', '$index', '$nil?', '$push', '$setArrayFromD66Table', '$sort!', '$each', '$gsub', '$length', '$include?', '$costume', '$<', '$>', '$!', '$empty?', '$split', '$count', '$join', '$uniq', '$inject', '$map', '$to_proc', '$to_s', '$delete', '$sort', '$getD66', '$assoc', '$checkChance', '$replaceBadStatus', '$sub', '$chomp', '$get_table_by_2d6', '$times', '$clone', '$first']);
+  Opal.add_stubs(['$setPrefixes', '$check_nD6', '$==', '$<=', '$>=', '$upcase', '$===', '$to_i', '$last_match', '$rollPerformance', '$textFrom1D6Table', '$textFromD66Table', '$getSkillList', '$badStatus', '$roll', '$+', '$[]', '$-', '$getSkillText', '$=~', '$getItem', '$get_table_by_1d6', '$index', '$nil?', '$push', '$setArrayFromD66Table', '$sort!', '$each', '$gsub', '$length', '$include?', '$costume', '$<', '$>', '$!', '$empty?', '$split', '$count', '$join', '$uniq', '$inject', '$map', '$to_proc', '$to_s', '$delete', '$sort', '$getD66', '$assoc', '$checkChance', '$replaceBadStatus', '$sub', '$chomp', '$loop', '$get_table_by_2d6', '$times', '$clone', '$first']);
   return (function($base, $super, $parent_nesting) {
     function $BeginningIdol_Korean(){};
     var self = $BeginningIdol_Korean = $klass($base, $super, 'BeginningIdol_Korean', $BeginningIdol_Korean);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_BeginningIdol_Korean_initialize_1, TMP_BeginningIdol_Korean_gameName_2, TMP_BeginningIdol_Korean_gameType_3, TMP_BeginningIdol_Korean_getHelpMessage_4, TMP_BeginningIdol_Korean_check_2D6_5, TMP_BeginningIdol_Korean_check_nD6_6, TMP_BeginningIdol_Korean_rollDiceCommand_8, TMP_BeginningIdol_Korean_rollPerformance_10, TMP_BeginningIdol_Korean_textFromD66Table_11, TMP_BeginningIdol_Korean_checkChance_12, TMP_BeginningIdol_Korean_textFrom1D6Table_13, TMP_BeginningIdol_Korean_getSkillList_14, TMP_BeginningIdol_Korean_badStatus_16, TMP_BeginningIdol_Korean_getSkillText_17, TMP_BeginningIdol_Korean_setArrayFromD66Table_18, TMP_BeginningIdol_Korean_getItem_20, TMP_BeginningIdol_Korean_replaceBadStatus_21, TMP_BeginningIdol_Korean_costume_22;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_BeginningIdol_Korean_initialize_1, TMP_BeginningIdol_Korean_gameName_2, TMP_BeginningIdol_Korean_gameType_3, TMP_BeginningIdol_Korean_getHelpMessage_4, TMP_BeginningIdol_Korean_check_2D6_5, TMP_BeginningIdol_Korean_check_nD6_6, TMP_BeginningIdol_Korean_rollDiceCommand_8, TMP_BeginningIdol_Korean_rollPerformance_10, TMP_BeginningIdol_Korean_textFromD66Table_11, TMP_BeginningIdol_Korean_checkChance_12, TMP_BeginningIdol_Korean_textFrom1D6Table_14, TMP_BeginningIdol_Korean_getSkillList_15, TMP_BeginningIdol_Korean_badStatus_17, TMP_BeginningIdol_Korean_getSkillText_18, TMP_BeginningIdol_Korean_setArrayFromD66Table_19, TMP_BeginningIdol_Korean_getItem_21, TMP_BeginningIdol_Korean_replaceBadStatus_22, TMP_BeginningIdol_Korean_costume_23;
 
     
     self.$setPrefixes(["[1-7]*PD\\d+(?:[\\+\\-]\\d+)?", "HW", "BWT", "LWT", "TWT", "CWT", "LO\\d{0,2}", "SU", "WI", "NA", "GA", "BA", "WT", "VA", "MU", "DR", "VI", "SP", "CHR", "PAR", "SW", "AN", "MOV", "FA", "HA", "AT[1-6]?", "LUR", "SUR", "WUR", "NUR", "GUR", "BUR", "BT\\d*", "SGT", "RS", "SH", "MO", "SEA", "SPA", "TN", "CG", "GG", "FL", "LN", "MS", "MSE", "ST", "FST", "CHO", "SCH", "WCH", "NCH", "IT\\d*", "ACT", "ACB", "ACE", "DT", "RC", "FC", "CBT", "RCB", "HBT", "RHB", "RU", "\\d{2}C", "BU", "\\d+S?A[1-6]*(?:[\\+\\-]\\d+)?", "SIP", "BVT", "LVT", "TVT", "CVT", "BST", "LST", "TST", "CST", "BPT", "LPT", "TPT", "CPT", "BIT", "LIT", "TIT", "CIT"]);
@@ -69,7 +69,7 @@
       return self.$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     }, TMP_BeginningIdol_Korean_check_2D6_5.$$arity = 8);
     
-    Opal.defn(self, '$check_nD6', TMP_BeginningIdol_Korean_check_nD6_6 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_BeginningIdol_Korean_check_nD6_6 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -94,11 +94,11 @@
       
       $case = command.$upcase();
       if (/^([1-7]*)PD(\d+)([\+\-]\d+)?$/['$===']($case)) {
-      counts = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      counts = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_le(counts, 0))) {
         return nil};
-      residual = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      adjust = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      residual = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      adjust = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
       return self.$rollPerformance(counts, residual, adjust);}
       else if ("HW"['$===']($case)) {
       title = "向かい風シーン表";
@@ -121,7 +121,7 @@
       table = [[11, "오프", ""], [12, "선생님에게 부탁 받고 입학 희망자들의 교내 안내를 맡게 되었다.", "《언행정중／캐릭터10》"], [13, "교내 이벤트의 사회 진행을 하게 되었다. 잘 분위기를 북돋울 수 있을까?", "《팝／속성9》"], [14, "교내 방송에 출연. 전교생 앞에서 긴장하지 하지 않으려면.。", "《담력／재능5》"], [15, "동아리 대회에 응원을 하러 간다. 긴 시합은 체력 승부다.", "《체력／재능6》"], [16, "아이돌 부를 취재하는 기자가 왔다. 스스로의 말을 잘할 수 있을까?", "《배려／재능9》"], [22, "오프", ""], [23, "가까운 유치원에서 노래를 선보이게 되었다. 작은 아이와 시선을 맞추지 않으면…….", "《～125／신장2》"], [24, "메이드 카페를 하게 되었다. 파트너 플레이어의 「좋아하는 것」이 주된 메뉴다.", "파트너 플레이어가 보유한 취미분야의특기"], [25, "교내의 이벤트를 취재하게 되었다. 거기에는 파트너 플레이어의 「싫은 것」이…….", "파트너 플레이어가 보유한 캐릭터분야의특기"], [26, "파트너 플레이어의 「패션 특징」을 살린 교내 패션 쇼.", "파트너 플레이어가 보유한 속성분야의특기"], [33, "오프", ""], [34, "현지 상가에 가게의 심부름을 의뢰 받는다. 마을을 북돋워 주러 가자.", "《쇼핑／취미8》"], [35, "현지 이벤트에 출연. 향토애를 시험 받는다!", "프로듀서가 출신분야의특기를 골라준다"], [36, "파트너 플레이어의 「신체적 특징」에 매료된 기업으로부터 섭외가 왔다!", "《섹시／속성4》"], [44, "오프", ""], [45, "오프", ""], [46, "오프", ""], [55, "오프", ""], [56, "오프", ""], [66, "오프", ""]];
       return self.$textFromD66Table(title, table);}
       else if (/^LO(\d{0,2})$/['$===']($case)) {
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      value = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       title = "로컬 아이돌 업무표";
       table = [[11, "오프", ""], [12, "오프", ""], [13, "握手会をすることになった。遠方から自分たち目当てにやって来るお客さんも多数見える。チャンスが5以下なら오프。", "《아이돌／취미12》"], [14, "ミニコンサートが全国放送で小さく紹介される。ちょっとだけ、外見が注目されたみたいだ。チャンスが4以下なら오프。", "《스타일／재능3》"], [15, "地元ラジオ局で自分たちの番組が始まる。チャンスが3以下なら오프。", "《캐릭터분야의 공백／취미7》"], [16, "地元のテレビ局にゲスト出演。うまく自分たちを紹介できるだろうか？　チャンスが3以下なら오프。", "好きな출신분야의특기"], [22, "오프", ""], [23, "街頭でティッシュ配りの手伝いをする。미소を忘れずに、がんばろう。", "《미소／재능7》"], [24, "地元のお手伝いの一環として、害虫退治に駆り出された。なぜ、こんなことに。", "《담력／재능5》"], [25, "畑仕事のお手伝いをすることになった。とりあえず、体力が要求される。", "《체력／재능6》"], [26, "ショッピングモールのお手伝いをすることになった。うまくお手伝いができれば、繁盛するかも。", "《쇼핑／취미8》"], [33, "오프", ""], [34, "インターネットラジオに出演。声とトークで。地域のことを伝えていこう。", "《이국문화／재능2》"], [35, "地元のテレビ局の取材が入る。テーマは、地方でがんばっている人たちだ。", "《건강／캐릭터8》"], [36, "デパートで風船を配るお手伝い。子どもたち相手のお仕事は、ちょっと大変です。", "《배려／재능9》"], [44, "오프", ""], [45, "着ぐるみを着て、市民と交流。暑くてつらい仕事だけど、大切な交流の時間です。", "《버닝／속성10》"], [46, "観光地の物販コーナーで地元の特産品を売るお手伝い。로컬 아이돌的に、大切なお仕事。", "好きな출신분야의특기"], [55, "오프", ""], [56, "動画サイトのチャンネルで、自分たちの宣伝を行なうことに。世界中に発信！", "《스타／속성12》"], [66, "오프", ""]];
       return self.$textFromD66Table(title, table, value);}
@@ -198,7 +198,7 @@
       table = [[11, "ハプニングなし", ""], [12, "ハプニングなし", ""], [13, "ハプニングなし", ""], [14, "ハプニングなし", ""], [15, "ハプニングなし", ""], [16, "ハプニングなし", ""], [22, "パートナープレイヤーに、地方からオファーが来た。その土地独特の文化を学んで、パートナープレイヤーに伝えよう。", "AT6"], [23, "グラビア撮影だが、用意された衣装のサイズがパートナープレイヤーに合わなかった。何とかして、衣装を合わせなければいけない。", "パートナープレイヤーが修得している身長分野の特技"], [24, "ダンス撮影中。パートナープレイヤーのダンスに迷いが見えた。何かアドバイスをして、迷いを取り払いたい。", "《ダンス／趣味9》"], [25, "歌の仕事だが、パートナープレイヤーの歌がどこかぎこちない。うまく本来の歌を取り戻させよう。", "パートナープレイヤーが修得している属性分野の特技"], [26, "体力を消費する仕事の最中に、パートナープレイヤーが倒れてしまった！　急いで処置をしなければ！", "《気配り／才能9》"], [33, "パートナープレイヤーにマイナースポーツのCMが回ってきたが、知らない様子だ。ルールを教えよう。", "《スポーツ／趣味4》"], [34, "パートナープレイヤーのキャラに合わない仕事が舞い込んだ。演技力で乗り切ってほしい。", "《演技力／才能12》"], [35, "パートナープレイヤーが風邪をひいてしまう。次の仕事までに、なんとか治してもらわなければ。", "《元気／キャラ8》"], [36, "パートナープレイヤーの属性らしくない衣装が来てしまった。うまくアレンジできればいいけど。", "《おしゃれ／趣味5》"], [44, "パートナープレイヤーのテンションが低い。テンションを上げるようなことを言おう。", "《バーニング／属性10》"], [45, "パートナープレイヤーの仕事に必要な小道具が足りなくなった。調達しよう。", "《ショッピング／趣味8》"], [46, "パートナープレイヤーに外国から仕事が舞い込んできた。外国の文化に合わせた仕事をしなければ。", "《異国文化／才能2》"], [55, "パートナープレイヤーに大会社からの仕事のオファーがやって来る。プレッシャーに負けないように後押ししよう。", "《胆力／才能5》"], [56, "パートナープレイヤーと他のアイドルグループとのコラボイベントが行われる。そのアイドルの情報を集めてこよう。", "《アイドル／趣味12》"], [66, "パートナープレイヤーの周りで、幽霊騒ぎが起こる。安心させるためにも、調査に乗り出そう。", "《オカルト／趣味2》"]];
       return self.$textFromD66Table(title, table);}
       else if (/^AT([1-6]?)$/['$===']($case)) {
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      value = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$getSkillList(value);}
       else if ("LUR"['$===']($case)) {
       title = "로컬 아이돌 엉망진창표";
@@ -231,7 +231,7 @@
       table2 = ["反省会", "ゲリラライブ", "宿題をこなす", "食事を作る", "自作の歌を披露", "自作のポエムを披露"];
       return self.$textFrom1D6Table(title, table1, table2);}
       else if (/^BT(\d+)?$/['$===']($case)) {
-      counts = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 1).$to_i();
+      counts = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
       return self.$badStatus(counts);}
       else if ("SGT"['$===']($case)) {
       title = "아이돌 스킬 습득표(챌린지 걸즈)";
@@ -316,8 +316,8 @@
       self.$setArrayFromD66Table(nameParts, name, actionTitle, actionTable);
       nameParts['$sort!']();
       numberString = "";
-      $send(nameParts, 'each', [], (TMP_7 = function(index, src, text1, number1){var self = TMP_7.$$s || this;
-if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) text1 = nil;if (number1 == null) number1 = nil;
+      $send(nameParts, 'each', [], (TMP_7 = function(_index, src, text1, number1){var self = TMP_7.$$s || this;
+if (_index == null) _index = nil;if (src == null) src = nil;if (text1 == null) text1 = nil;if (number1 == null) number1 = nil;
       
         name = name.$gsub(src, text1);
         return (numberString = $rb_plus(numberString, "" + (src) + (number1) + ","));}, TMP_7.$$s = self, TMP_7.$$arity = 4, TMP_7));
@@ -352,7 +352,7 @@ if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) tex
       table = ["야생의\n전원 【멘탈】이 1D6점 상승.", "파워로\n이 공연간에 PC 1명의 【퍼포먼스치】가 1D6점 상승.", "단련된 몸\n전원 【멘탈】이 3점상승.", "잡고 있는\n이 공연 간에 PC 전원 【파포먼스치】가 1점 상승.", "부축 하는\n이 공연 간에 PC 1명의 【퍼포먼스치】가 3점 상승.", "매일 싸워 나가는\nPC 1명의 【획득 팬 인원수】가 2D6에 【랭크계수】 걸친 수만큼 상승."];
       return self.$textFrom1D6Table(title, table);}
       else if (/^IT(\d+)?$/['$===']($case)) {
-      counts = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 1).$to_i();
+      counts = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
       return self.$getItem(counts);}
       else if ("ACT"['$===']($case)) {
       title = "アクセサリー種別決定表";
@@ -394,7 +394,7 @@ if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) tex
       table = ["『챌린지 걸즈』の衣装ブランドからランダムに決定する。", "『챌린지 걸즈』の衣装ブランドからランダムに決定する。", "『로드 투 프린스』の衣装ブランドからランダムに決定する。", "『로드 투 프린스』の衣装ブランドからランダムに決定する。", "『フォーチュンスターズ』の衣装ブランドからランダムに決定する。", "『フォーチュンスターズ』の衣装ブランドからランダムに決定する。"];
       text = self.$textFrom1D6Table(title, table);
       /『(.+)』/['$=~'](text);
-      bookTitle = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      bookTitle = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       return $rb_plus($rb_plus(text, "\n"), self.$costume($rb_plus($rb_plus("의상(", bookTitle), ")"), true));}
       else if ("ACE"['$===']($case)) {
       title = "アクセサリー効果表";
@@ -425,7 +425,7 @@ if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) tex
       return self.$textFrom1D6Table(title, table);}
       else if (/^(\d{2})C$/['$===']($case)) {
       title = "バーストタイム";
-      degrees = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      degrees = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       counts = 6;
       if ($truthy(($truthy($a = $rb_lt(degrees, 45)) ? $a : $rb_gt(degrees, 55)))) {
         return nil
@@ -456,12 +456,12 @@ if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) tex
       return self.$textFrom1D6Table(title, table);}
       else if (/^(\d+)(S?)A([1-6]*)([\+\-]\d+)?$/['$===']($case)) {
       title = "攻撃";
-      counts = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      counts = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       if ($truthy($rb_le(counts, 0))) {
         return nil};
-      sure = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$empty?']()['$!']();
-      remove = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      adjust = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      sure = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$empty?']()['$!']();
+      remove = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      adjust = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       adjust = ($truthy($a = adjust) ? $a : "");
       result = self.$roll(counts, 6, 1);
       dice = $rb_minus(result['$[]'](1).$split(","), remove.$split(""));
@@ -556,7 +556,7 @@ if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) tex
     }, TMP_BeginningIdol_Korean_rollDiceCommand_8.$$arity = 1);
     
     Opal.defn(self, '$rollPerformance', TMP_BeginningIdol_Korean_rollPerformance_10 = function $$rollPerformance(counts, residual, adjust) {
-      var TMP_9, $a, self = this, title = nil, string = nil, result = nil, diceAll = nil, total = nil, diceUse = nil, i = nil, text = nil;
+      var TMP_9, $a, self = this, title = nil, string = nil, result = nil, diceAll = nil, total = nil, diceUse = nil, text = nil;
 
       
       title = "パフォーマンス";
@@ -571,20 +571,15 @@ if (index == null) index = nil;if (src == null) src = nil;if (text1 == null) tex
       diceAll = $rb_plus(result['$[]'](1).$delete(","), residual);
       total = 0;
       diceUse = [];
-      
-      ;
-      ;
-      $send($range(1, 7, false), 'each', [], (TMP_9 = function($for_tmp1){var self = TMP_9.$$s || this;
-if ($for_tmp1 == null) $for_tmp1 = nil;
-      
-        i = $for_tmp1;
-        if (diceAll.$count(i.$to_s())['$=='](1)) {
+      $send($range(1, 7, false), 'each', [], (TMP_9 = function(i){var self = TMP_9.$$s || this;
+if (i == null) i = nil;
+      if (diceAll.$count(i.$to_s())['$=='](1)) {
           
           total = $rb_plus(total, i);
           return diceUse.$push(i);
           } else {
           return nil
-        };}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9));;
+        }}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9));
       text = $rb_plus($rb_plus(" ＞ [", result['$[]'](1)), "]");
       if ($truthy(residual['$empty?']())) {
         text = "" + (title) + (text)
@@ -650,7 +645,7 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
         } else {
         return [text, skill]
       };
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       matchedText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](0));
       if ($truthy($rb_ge(target, chance.$to_i()))) {
         
@@ -664,8 +659,8 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
       return [text, skill];
     }, TMP_BeginningIdol_Korean_checkChance_12.$$arity = 3);
     
-    Opal.defn(self, '$textFrom1D6Table', TMP_BeginningIdol_Korean_textFrom1D6Table_13 = function $$textFrom1D6Table(title, table1, table2) {
-      var $a, $b, $c, self = this, text1 = nil, number1 = nil, text = nil, text2 = nil, number2 = nil, category = nil, skill = nil;
+    Opal.defn(self, '$textFrom1D6Table', TMP_BeginningIdol_Korean_textFrom1D6Table_14 = function $$textFrom1D6Table(title, table1, table2) {
+      var $a, $b, TMP_13, self = this, text1 = nil, number1 = nil, text = nil, text2 = nil, number2 = nil, category = nil;
 
       if (table2 == null) {
         table2 = nil;
@@ -682,21 +677,23 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
       };
       if ($truthy(/랜덤으로 지정한 특기가 지정 특기인 아이돌 스킬\(신장분야、(속성|재능)분야、출신분야가 나올경우 재굴림\)$/['$=~'](text))) {
         
-        category = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-        while ($truthy(true)) {
-          
+        category = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+        (function(){var $brk = Opal.new_brk(); try {return $send(self, 'loop', [], (TMP_13 = function(){var self = TMP_13.$$s || this, $c, $d, skill = nil;
+
+        
           skill = self.$getSkillList();
           text = $rb_plus(text, "" + "\n" + (skill));
-          if ($truthy(($truthy($b = ($truthy($c = skill['$include?']("신장")) ? $c : skill['$include?'](category))) ? $b : skill['$include?']("출신")))) {
+          if ($truthy(($truthy($c = ($truthy($d = skill['$include?']("신장")) ? $d : skill['$include?'](category))) ? $c : skill['$include?']("출신")))) {
             } else {
-            break;
+            
+            Opal.brk(nil, $brk)
           };
-          text = $rb_plus(text, " ＞ 振り直し");
-        };};
+          return (text = $rb_plus(text, " ＞ 振り直し"));}, TMP_13.$$s = self, TMP_13.$$brk = $brk, TMP_13.$$arity = 0, TMP_13))
+        } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();};
       return self.$replaceBadStatus(text);
-    }, TMP_BeginningIdol_Korean_textFrom1D6Table_13.$$arity = -3);
+    }, TMP_BeginningIdol_Korean_textFrom1D6Table_14.$$arity = -3);
     
-    Opal.defn(self, '$getSkillList', TMP_BeginningIdol_Korean_getSkillList_14 = function $$getSkillList(field) {
+    Opal.defn(self, '$getSkillList', TMP_BeginningIdol_Korean_getSkillList_15 = function $$getSkillList(field) {
       var $a, $b, self = this, title = nil, table = nil, number1 = nil, fieldName = nil, skill = nil, number2 = nil, text = nil;
 
       if (field == null) {
@@ -720,10 +717,10 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
         text = $rb_plus(text, "" + "(" + (fieldName) + "분야) ＞ [" + (number2) + "]")
       };
       return "" + (text) + " ＞ 《" + (skill) + "／" + (fieldName) + (number2) + "》";
-    }, TMP_BeginningIdol_Korean_getSkillList_14.$$arity = -1);
+    }, TMP_BeginningIdol_Korean_getSkillList_15.$$arity = -1);
     
-    Opal.defn(self, '$badStatus', TMP_BeginningIdol_Korean_badStatus_16 = function $$badStatus(counts) {
-      var TMP_15, self = this, title = nil, table = nil, result = nil, numbers = nil, text = nil, occurrences = nil;
+    Opal.defn(self, '$badStatus', TMP_BeginningIdol_Korean_badStatus_17 = function $$badStatus(counts) {
+      var TMP_16, self = this, title = nil, table = nil, result = nil, numbers = nil, text = nil, occurrences = nil;
 
       if (counts == null) {
         counts = 1;
@@ -739,13 +736,13 @@ if ($for_tmp1 == null) $for_tmp1 = nil;
       occurrences = numbers.$count();
       if ($truthy($rb_gt(occurrences, 1))) {
         text = $rb_plus(text, "" + "以下の" + (occurrences) + "つが発生する。\n")};
-      $send(occurrences, 'times', [], (TMP_15 = function(i){var self = TMP_15.$$s || this;
+      $send(occurrences, 'times', [], (TMP_16 = function(i){var self = TMP_16.$$s || this;
 if (i == null) i = nil;
-      return (text = $rb_plus(text, $rb_plus(table['$[]']($rb_minus(numbers['$[]'](i).$to_i(), 1)), "\n")))}, TMP_15.$$s = self, TMP_15.$$arity = 1, TMP_15));
+      return (text = $rb_plus(text, $rb_plus(table['$[]']($rb_minus(numbers['$[]'](i).$to_i(), 1)), "\n")))}, TMP_16.$$s = self, TMP_16.$$arity = 1, TMP_16));
       return text['$[]'](0, $rb_minus(text.$length(), 1));
-    }, TMP_BeginningIdol_Korean_badStatus_16.$$arity = -1);
+    }, TMP_BeginningIdol_Korean_badStatus_17.$$arity = -1);
     
-    Opal.defn(self, '$getSkillText', TMP_BeginningIdol_Korean_getSkillText_17 = function $$getSkillText(skill) {
+    Opal.defn(self, '$getSkillText', TMP_BeginningIdol_Korean_getSkillText_18 = function $$getSkillText(skill) {
       var $a, self = this, text = nil;
 
       
@@ -753,14 +750,14 @@ if (i == null) i = nil;
         return ""};
       text = skill;
       if ($truthy(/^AT([1-6]?)$/['$=~'](text))) {
-        text = self.$getSkillList((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i())
+        text = self.$getSkillList(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i())
         } else {
         text = "" + "特技 : " + (text)
       };
       return "" + "\n" + (text);
-    }, TMP_BeginningIdol_Korean_getSkillText_17.$$arity = 1);
+    }, TMP_BeginningIdol_Korean_getSkillText_18.$$arity = 1);
     
-    Opal.defn(self, '$setArrayFromD66Table', TMP_BeginningIdol_Korean_setArrayFromD66Table_18 = function $$setArrayFromD66Table(array, name, src, table) {
+    Opal.defn(self, '$setArrayFromD66Table', TMP_BeginningIdol_Korean_setArrayFromD66Table_19 = function $$setArrayFromD66Table(array, name, src, table) {
       var $a, $b, self = this, index = nil, isSwap = nil, dice = nil, number = nil, text = nil;
 
       
@@ -771,10 +768,10 @@ if (i == null) i = nil;
       dice = self.$getD66(isSwap);
       $b = table.$assoc(dice), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), $b;
       return array.$push([index, src, text, number]);
-    }, TMP_BeginningIdol_Korean_setArrayFromD66Table_18.$$arity = 4);
+    }, TMP_BeginningIdol_Korean_setArrayFromD66Table_19.$$arity = 4);
     
-    Opal.defn(self, '$getItem', TMP_BeginningIdol_Korean_getItem_20 = function $$getItem(counts) {
-      var TMP_19, self = this, title = nil, table = nil, result = nil, numbers = nil, unique = nil, text = nil, acquisitions = nil, kinds = nil;
+    Opal.defn(self, '$getItem', TMP_BeginningIdol_Korean_getItem_21 = function $$getItem(counts) {
+      var TMP_20, self = this, title = nil, table = nil, result = nil, numbers = nil, unique = nil, text = nil, acquisitions = nil, kinds = nil;
 
       if (counts == null) {
         counts = 1;
@@ -790,7 +787,7 @@ if (i == null) i = nil;
       text = $rb_plus($rb_plus("" + (title) + " ＞ [", result['$[]'](1)), "] ＞ ");
       acquisitions = numbers.$count();
       kinds = unique.$count();
-      $send(kinds, 'times', [], (TMP_19 = function(i){var self = TMP_19.$$s || this, string = nil;
+      $send(kinds, 'times', [], (TMP_20 = function(i){var self = TMP_20.$$s || this, string = nil;
 if (i == null) i = nil;
       
         string = table['$[]']($rb_minus(unique['$[]'](i).$to_i(), 1));
@@ -803,12 +800,12 @@ if (i == null) i = nil;
           } else {
           text = $rb_plus(text, $rb_plus(numbers.$count(unique['$[]'](i)).$to_s(), "つ"))
         };
-        return (text = $rb_plus(text, "と"));}, TMP_19.$$s = self, TMP_19.$$arity = 1, TMP_19));
+        return (text = $rb_plus(text, "と"));}, TMP_20.$$s = self, TMP_20.$$arity = 1, TMP_20));
       text = text.$sub(/と$/, "");
       return text;
-    }, TMP_BeginningIdol_Korean_getItem_20.$$arity = -1);
+    }, TMP_BeginningIdol_Korean_getItem_21.$$arity = -1);
     
-    Opal.defn(self, '$replaceBadStatus', TMP_BeginningIdol_Korean_replaceBadStatus_21 = function $$replaceBadStatus(text) {
+    Opal.defn(self, '$replaceBadStatus', TMP_BeginningIdol_Korean_replaceBadStatus_22 = function $$replaceBadStatus(text) {
       var $a, self = this, counts = nil, $case = nil, substitution = nil;
 
       
@@ -817,7 +814,7 @@ if (i == null) i = nil;
         return text
       };
       counts = 1;
-      $case = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      $case = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       if ("二"['$===']($case)) {counts = 2}
       else if ("三"['$===']($case)) {counts = 3};
       substitution = text.$clone();
@@ -827,8 +824,8 @@ if (i == null) i = nil;
         substitution = $rb_plus(substitution, "\n")
       };
       return $rb_plus(substitution, self.$badStatus(counts));
-    }, TMP_BeginningIdol_Korean_replaceBadStatus_21.$$arity = 1);
-    return (Opal.defn(self, '$costume', TMP_BeginningIdol_Korean_costume_22 = function $$costume(title, brandOnly) {
+    }, TMP_BeginningIdol_Korean_replaceBadStatus_22.$$arity = 1);
+    return (Opal.defn(self, '$costume', TMP_BeginningIdol_Korean_costume_23 = function $$costume(title, brandOnly) {
       var self = this, table = nil, text = nil;
 
       if (brandOnly == null) {
@@ -849,7 +846,7 @@ if (i == null) i = nil;
       if ($truthy(brandOnly)) {
         text = text.$split("\n").$first()};
       return text;
-    }, TMP_BeginningIdol_Korean_costume_22.$$arity = -2), nil) && 'costume';
+    }, TMP_BeginningIdol_Korean_costume_23.$$arity = -2), nil) && 'costume';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

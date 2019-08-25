@@ -9,9 +9,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$=~', '$gsub', '$debug', '$/', '$*', '$>=', '$==']);
+  Opal.add_stubs(['$=~', '$gsub', '$last_match', '$debug', '$/', '$*', '$>=', '$==']);
   return (function($base, $super, $parent_nesting) {
     function $ShadowRun4(){};
     var self = $ShadowRun4 = $klass($base, $super, 'ShadowRun4', $ShadowRun4);
@@ -58,9 +58,9 @@
 
       
       if ($truthy(string['$=~'](/(\d+)S6/i))) {
-        string = $send(string, 'gsub', [/(\d+)S6/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+        string = $send(string, 'gsub', [/(\d+)S6/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-        return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "B6"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5))};
+        return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "B6"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5))};
       return string;
     }, TMP_ShadowRun4_changeText_6.$$arity = 1);
     return (Opal.defn(self, '$getGrichText', TMP_ShadowRun4_getGrichText_7 = function $$getGrichText(numberSpot1, dice_cnt_total, successCount) {

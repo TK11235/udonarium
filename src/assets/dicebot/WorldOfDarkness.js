@@ -12,14 +12,14 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$rollWorldOfDarkness', '$empty?', '$=~', '$gsub', '$to_i', '$<', '$+', '$to_s', '$rollDiceWorldOfDarknessSpecial', '$>', '$new', '$times', '$roll', '$===', '$-', '$[]=', '$sort!', '$each', '$chop']);
+  Opal.add_stubs(['$setPrefixes', '$rollWorldOfDarkness', '$empty?', '$match', '$to_i', '$[]', '$==', '$<', '$+', '$to_s', '$rollDiceWorldOfDarknessSpecial', '$>', '$new', '$times', '$roll', '$===', '$-', '$[]=', '$sort!', '$each', '$chop']);
   return (function($base, $super, $parent_nesting) {
     function $WorldOfDarkness(){};
     var self = $WorldOfDarkness = $klass($base, $super, 'WorldOfDarkness', $WorldOfDarkness);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_WorldOfDarkness_initialize_1, TMP_WorldOfDarkness_gameName_2, TMP_WorldOfDarkness_gameType_3, TMP_WorldOfDarkness_getHelpMessage_4, TMP_WorldOfDarkness_rollDiceCommand_5, TMP_WorldOfDarkness_rollWorldOfDarkness_10, TMP_WorldOfDarkness_rollDiceWorldOfDarknessSpecial_13;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_WorldOfDarkness_initialize_1, TMP_WorldOfDarkness_gameName_2, TMP_WorldOfDarkness_gameType_3, TMP_WorldOfDarkness_getHelpMessage_4, TMP_WorldOfDarkness_rollDiceCommand_5, TMP_WorldOfDarkness_rollWorldOfDarkness_6, TMP_WorldOfDarkness_rollDiceWorldOfDarknessSpecial_9;
 
     def.rerollDice = def.successDice = def.botchDice = nil;
     
@@ -70,8 +70,8 @@
       };
     }, TMP_WorldOfDarkness_rollDiceCommand_5.$$arity = 1);
     
-    Opal.defn(self, '$rollWorldOfDarkness', TMP_WorldOfDarkness_rollWorldOfDarkness_10 = function $$rollWorldOfDarkness(string) {
-      var TMP_6, $a, TMP_7, TMP_8, TMP_9, self = this, diceCount = nil, difficulty = nil, automaticSuccess = nil, output = nil, rerollNumber = nil;
+    Opal.defn(self, '$rollWorldOfDarkness', TMP_WorldOfDarkness_rollWorldOfDarkness_6 = function $$rollWorldOfDarkness(string) {
+      var $a, self = this, diceCount = nil, difficulty = nil, automaticSuccess = nil, output = nil, rerollNumber = nil, m = nil;
 
       
       diceCount = 1;
@@ -79,38 +79,15 @@
       automaticSuccess = 0;
       output = "";
       rerollNumber = 11;
-      if ($truthy(/STS/['$=~'](string))) {
-        
-        string = $send(string, 'gsub', [/(\d+)STS(\d*)([^\d\s][\+\-\d]+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
-
-        return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "STS" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3))) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)))) {
-          } else {
-          string = $send(string, 'gsub', [/(\d+)STS(\d*)/i], (TMP_7 = function(){var self = TMP_7.$$s || this, $b;
-
-          return "" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) + "STS" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](2)))}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7))
-        };
-        rerollNumber = 10;
-        } else {
-        
-        string = $send(string, 'gsub', [/(\d+)ST(\d*)([^\d\s][\+\-\d]+)/i], (TMP_8 = function(){var self = TMP_8.$$s || this, $b;
-
-        return "" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) + "ST" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) + "[" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)))) {
-          } else {
-          string = $send(string, 'gsub', [/(\d+)ST(\d*)/i], (TMP_9 = function(){var self = TMP_9.$$s || this, $b;
-
-          return "" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) + "ST" + ((($b = $gvars['~']) === nil ? nil : $b['$[]'](2)))}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9))
-        };
-      };
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)))) {
-        diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i()};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))) {
-        difficulty = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()};
+      m = string.$match(/(\d+)(STS?)(\d*)([^\d\s][\+\-\d]+)?/i);
+      diceCount = m['$[]'](1).$to_i();
+      if (m['$[]'](2)['$==']("STS")) {
+        rerollNumber = 10};
+      difficulty = m['$[]'](3).$to_i();
+      if ($truthy(m['$[]'](4))) {
+        automaticSuccess = m['$[]'](4).$to_i()};
       if ($truthy($rb_lt(difficulty, 2))) {
         difficulty = 6};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)))) {
-        automaticSuccess = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i()};
       output = $rb_plus($rb_plus($rb_plus($rb_plus($rb_plus("DicePool=", diceCount.$to_s()), ", Difficulty="), difficulty.$to_s()), ", AutomaticSuccess="), automaticSuccess.$to_s());
       self.successDice = 0;
       self.botchDice = 0;
@@ -131,14 +108,14 @@
         output = $rb_plus(output, " ＞ 失敗")
       };
       return output;
-    }, TMP_WorldOfDarkness_rollWorldOfDarkness_10.$$arity = 1);
-    return (Opal.defn(self, '$rollDiceWorldOfDarknessSpecial', TMP_WorldOfDarkness_rollDiceWorldOfDarknessSpecial_13 = function $$rollDiceWorldOfDarknessSpecial(diceCount, difficulty, rerollNumber) {
-      var TMP_11, TMP_12, self = this, diceType = nil, diceResults = nil, result = nil;
+    }, TMP_WorldOfDarkness_rollWorldOfDarkness_6.$$arity = 1);
+    return (Opal.defn(self, '$rollDiceWorldOfDarknessSpecial', TMP_WorldOfDarkness_rollDiceWorldOfDarknessSpecial_9 = function $$rollDiceWorldOfDarknessSpecial(diceCount, difficulty, rerollNumber) {
+      var TMP_7, TMP_8, self = this, diceType = nil, diceResults = nil, result = nil;
 
       
       diceType = 10;
       diceResults = Opal.const_get_relative($nesting, 'Array').$new(diceCount);
-      $send(diceCount, 'times', [], (TMP_11 = function(i){var self = TMP_11.$$s || this, $a, $b, dice_now = nil, $case = nil, $writer = nil;
+      $send(diceCount, 'times', [], (TMP_7 = function(i){var self = TMP_7.$$s || this, $a, $b, dice_now = nil, $case = nil, $writer = nil;
         if (self.successDice == null) self.successDice = nil;
         if (self.rerollDice == null) self.rerollDice = nil;
         if (self.botchDice == null) self.botchDice = nil;
@@ -156,15 +133,15 @@ if (i == null) i = nil;
         
         $writer = [i, dice_now];
         $send(diceResults, '[]=', Opal.to_a($writer));
-        return $writer[$rb_minus($writer["length"], 1)];;}, TMP_11.$$s = self, TMP_11.$$arity = 1, TMP_11));
+        return $writer[$rb_minus($writer["length"], 1)];;}, TMP_7.$$s = self, TMP_7.$$arity = 1, TMP_7));
       diceResults['$sort!']();
       result = " ＞ ";
-      $send(diceResults, 'each', [], (TMP_12 = function(diceResult){var self = TMP_12.$$s || this;
+      $send(diceResults, 'each', [], (TMP_8 = function(diceResult){var self = TMP_8.$$s || this;
 if (diceResult == null) diceResult = nil;
-      return (result = $rb_plus(result, $rb_plus(diceResult.$to_s(), ",")))}, TMP_12.$$s = self, TMP_12.$$arity = 1, TMP_12));
+      return (result = $rb_plus(result, $rb_plus(diceResult.$to_s(), ",")))}, TMP_8.$$s = self, TMP_8.$$arity = 1, TMP_8));
       result = result.$chop();
       return result;
-    }, TMP_WorldOfDarkness_rollDiceWorldOfDarknessSpecial_13.$$arity = 3), nil) && 'rollDiceWorldOfDarknessSpecial';
+    }, TMP_WorldOfDarkness_rollDiceWorldOfDarknessSpecial_9.$$arity = 3), nil) && 'rollDiceWorldOfDarknessSpecial';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

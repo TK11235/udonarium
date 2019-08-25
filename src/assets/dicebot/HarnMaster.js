@@ -6,9 +6,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$==', '$getCheckResult', '$>', '$getFailResult', '$getSuccessResult', '$%', '$===', '$to_i', '$getCheckShockResult', '$getStrikeLocationHuman', '$roll', '$<=', '$getStrikeLocationHumanUpperTable', '$getStrikeLocationHumanDownTable', '$getStrikeLocationHumanNormalTable', '$raise', '$get_table_by_number', '$getLocationSide', '$getFaceLocation', '$debug', '$sub']);
+  Opal.add_stubs(['$setPrefixes', '$==', '$getCheckResult', '$>', '$getFailResult', '$getSuccessResult', '$%', '$===', '$to_i', '$last_match', '$getCheckShockResult', '$getStrikeLocationHuman', '$roll', '$<=', '$getStrikeLocationHumanUpperTable', '$getStrikeLocationHumanDownTable', '$getStrikeLocationHumanNormalTable', '$raise', '$get_table_by_number', '$getLocationSide', '$getFaceLocation', '$debug', '$odd?', '$sub']);
   return (function($base, $super, $parent_nesting) {
     function $HarnMaster(){};
     var self = $HarnMaster = $klass($base, $super, 'HarnMaster', $HarnMaster);
@@ -47,7 +47,7 @@
       return "" + "・判定\n" + "　1D100<=XX の判定時に致命的失敗・決定的成功を判定\n" + "・ショック判定（SHKx）\n" + "　例）SHK13,3\n" + "・人型用　中段命中部位表 (SLH)／上段命中部位 (SLHU)／上段命中部位 (SLHD)\n"
     }, TMP_HarnMaster_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_1D100', TMP_HarnMaster_check_1D100_5 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_HarnMaster_check_1D100_5 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, result = nil;
 
       
@@ -87,17 +87,17 @@
     }, TMP_HarnMaster_getSuccessResult_8.$$arity = 1);
     
     Opal.defn(self, '$rollDiceCommand', TMP_HarnMaster_rollDiceCommand_9 = function $$rollDiceCommand(command) {
-      var $a, self = this, result = nil, $case = nil, toughness = nil, damage = nil, type = nil;
+      var self = this, result = nil, $case = nil, toughness = nil, damage = nil, type = nil;
 
       
       result = nil;
       $case = command;
       if (/^SHK(\d*),(\d+)/i['$===']($case)) {
-      toughness = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      damage = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      toughness = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      damage = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       result = self.$getCheckShockResult(damage, toughness);}
       else if (/SLH(U|D)?/i['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       result = self.$getStrikeLocationHuman(type);}
       else {result = nil};
       return result;
@@ -153,7 +153,7 @@
         return part;
       };
       self.$debug("part has side", part);
-      side = (function() {if ($truthy(number['$%'](2)['$=='](1))) {
+      side = (function() {if ($truthy(number['$odd?']())) {
         return "左"
         } else {
         return "右"

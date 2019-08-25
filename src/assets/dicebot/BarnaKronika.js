@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$bcdice', '$set1Deck2Jokers', '$cardTrader', '$card_place=', '$-', '$canTapCard=', '$debug', '$gsub', '$check_barna_kronika', '$=~', '$collect', '$split', '$to_i', '$==', '$roll_barna_kronika', '$+', '$>', '$times', '$rand', '$[]', '$[]=', '$isCriticalCall', '$getAttackStringWhenCriticalCall', '$isNomalAttack', '$getAttackStringWhenNomal', '$!=', '$*', '$<', '$sub', '$getAttackHitLocation', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$bcdice', '$set1Deck2Jokers', '$cardTrader', '$card_place=', '$-', '$canTapCard=', '$debug', '$gsub', '$last_match', '$check_barna_kronika', '$=~', '$collect', '$split', '$to_i', '$==', '$roll_barna_kronika', '$+', '$>', '$times', '$rand', '$[]', '$[]=', '$isCriticalCall', '$getAttackStringWhenCriticalCall', '$isNomalAttack', '$getAttackStringWhenNomal', '$!=', '$*', '$<', '$sub', '$getAttackHitLocation', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $BarnaKronika(){};
     var self = $BarnaKronika = $klass($base, $super, 'BarnaKronika', $BarnaKronika);
@@ -84,18 +84,18 @@
 
       
       self.$debug("parren_killer_add begin string", string);
-      string = $send(string, 'gsub', [/(\d+)BKC(\d)/], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      string = $send(string, 'gsub', [/(\d+)BKC(\d)/], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R6[0," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/(\d+)BAC(\d)/], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6[0," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      string = $send(string, 'gsub', [/(\d+)BAC(\d)/], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R6[1," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-      string = $send(string, 'gsub', [/(\d+)BK/], (TMP_8 = function(){var self = TMP_8.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6[1," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      string = $send(string, 'gsub', [/(\d+)BK/], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R6[0,0]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
-      string = $send(string, 'gsub', [/(\d+)BA/], (TMP_9 = function(){var self = TMP_9.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6[0,0]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
+      string = $send(string, 'gsub', [/(\d+)BA/], (TMP_9 = function(){var self = TMP_9.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R6[1,0]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6[1,0]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
       self.$debug("parren_killer_add end string", string);
       return string;
     }, TMP_BarnaKronika_changeText_10.$$arity = 1);
@@ -117,9 +117,9 @@
         } else {
         return output
       };
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      option = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      dice_n = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      string = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      option = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
+      dice_n = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       dice_n = ($truthy($a = dice_n) ? $a : 1);
       self.isBattleMode = false;
       criticalCallDice = 0;
@@ -159,8 +159,8 @@ if (i == null) i = nil;
       set = 0;
       at_str = "";
       diceCountList = [0, 0, 0, 0, 0, 0];
-      $send(dice_n, 'times', [], (TMP_14 = function(i){var self = TMP_14.$$s || this, index = nil, $writer = nil;
-if (i == null) i = nil;
+      $send(dice_n, 'times', [], (TMP_14 = function(_i){var self = TMP_14.$$s || this, index = nil, $writer = nil;
+if (_i == null) _i = nil;
       
         index = self.$rand(6);
         
@@ -178,8 +178,8 @@ if (i == null) i = nil;
         diceCount = diceCountList['$[]'](i);
         if (diceCount['$=='](0)) {
           return nil;};
-        $send(diceCount, 'times', [], (TMP_16 = function(j){var self = TMP_16.$$s || this;
-if (j == null) j = nil;
+        $send(diceCount, 'times', [], (TMP_16 = function(_j){var self = TMP_16.$$s || this;
+if (_j == null) _j = nil;
         return (output = $rb_plus(output, "" + ($rb_plus(i, 1)) + ","))}, TMP_16.$$s = self, TMP_16.$$arity = 1, TMP_16));
         if ($truthy(self.$isCriticalCall(i, criticalCallDice))) {
           

@@ -6,9 +6,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$delete', '$sort', '$checkRoll', '$roll', '$gsub', '$collect', '$split', '$new', '$each', '$count', '$>', '$push', '$+', '$join']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$delete', '$sort', '$checkRoll', '$roll', '$gsub', '$collect', '$split', '$each', '$count', '$>', '$push', '$+', '$join']);
   return (function($base, $super, $parent_nesting) {
     function $OrgaRain(){};
     var self = $OrgaRain = $klass($base, $super, 'OrgaRain', $OrgaRain);
@@ -51,13 +51,13 @@
     }, TMP_OrgaRain_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_OrgaRain_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, diceCount = nil, countNo = nil;
+      var $a, self = this, diceCount = nil, countNo = nil;
 
       
       if ($truthy(/(\d+)?OR([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?$/i['$==='](command))) {
         
-        diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 1).$to_i();
-        countNo = [($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : -1).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : -1).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : -1).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](5))) ? $a : -1).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : -1).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : -1).$to_i()];
+        diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
+        countNo = [($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : -1).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : -1).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : -1).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(5)) ? $a : -1).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : -1).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : -1).$to_i()];
         countNo.$delete(-1);
         countNo = countNo.$sort();
         return self.$checkRoll(diceCount, countNo);};
@@ -72,7 +72,7 @@
       diceArray = $send(diceText2.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));
-      resultArray = Opal.const_get_relative($nesting, 'Array').$new();
+      resultArray = [];
       success = 0;
       $send(diceArray, 'each', [], (TMP_7 = function(i){var self = TMP_7.$$s || this, multiple = nil;
 if (i == null) i = nil;

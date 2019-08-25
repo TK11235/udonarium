@@ -12,9 +12,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$>', '$checkRoll', '$roll', '$collect', '$split', '$count', '$<=', '$+', '$empty?', '$!=', '$*']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$>', '$checkRoll', '$roll', '$collect', '$split', '$count', '$<=', '$+', '$empty?', '$!=', '$*']);
   return (function($base, $super, $parent_nesting) {
     function $Avandner(){};
     var self = $Avandner = $klass($base, $super, 'Avandner', $Avandner);
@@ -57,16 +57,16 @@
     }, TMP_Avandner_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Avandner_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, diceCount = nil, target = nil, damage = nil, criticalTrigger = nil, criticalNumber = nil;
+      var $a, self = this, diceCount = nil, target = nil, damage = nil, criticalTrigger = nil, criticalNumber = nil;
 
       
       if ($truthy(/(\d+)AV(\d+)((x|\*)(\d+))?(\+(\d+))?(C(\d+))?$/i['$==='](command))) {
         
-        diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-        target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-        damage = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](5))) ? $a : 0).$to_i();
-        criticalTrigger = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i();
-        criticalNumber = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](9))) ? $a : 1).$to_i();
+        diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+        target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+        damage = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(5)) ? $a : 0).$to_i();
+        criticalTrigger = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i();
+        criticalNumber = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(9)) ? $a : 1).$to_i();
         if ($truthy($rb_gt(criticalNumber, 3))) {
           criticalNumber = 2};
         return self.$checkRoll(diceCount, target, damage, criticalTrigger, criticalNumber);};

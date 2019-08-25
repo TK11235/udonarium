@@ -18,9 +18,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$checkRoll', '$==', '$<=', '$>=', '$debug', '$match', '$[]', '$to_i', '$nil?', '$parren_killer', '$+', '$roll', '$&', '$sortType', '$collect', '$split', '$-', '$>', '$<', '$to_s', '$sendMode', '$=~', '$!=', '$check_suc', '$===', '$md_research_table', '$md_break_table', '$md_happening_table', '$md_market_price_table', '$md_treasure1_table', '$md_treasure2_table', '$md_treasure3_table', '$md_treasure4_table', '$md_connection_table', '$md_monster_connection_table', '$md_pc_connection_table', '$md_love_connection_table', '$md_critical_attack_table', '$md_fatal_wounds_table', '$md_combat_fumble_table', '$md_negotiation_table', '$md_appearance_table', '$md_kernel_stop_table', '$get_table_by_2d6', '$get_table_by_1d6']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$last_match', '$checkRoll', '$==', '$<=', '$>=', '$debug', '$match', '$[]', '$to_i', '$nil?', '$parren_killer', '$+', '$roll', '$&', '$sortType', '$collect', '$split', '$-', '$>', '$<', '$to_s', '$sendMode', '$=~', '$!=', '$check_suc', '$===', '$md_research_table', '$md_break_table', '$md_happening_table', '$md_market_price_table', '$md_treasure1_table', '$md_treasure2_table', '$md_treasure3_table', '$md_treasure4_table', '$md_connection_table', '$md_monster_connection_table', '$md_pc_connection_table', '$md_love_connection_table', '$md_critical_attack_table', '$md_fatal_wounds_table', '$md_combat_fumble_table', '$md_negotiation_table', '$md_appearance_table', '$md_kernel_stop_table', '$get_table_by_2d6', '$get_table_by_1d6']);
   return (function($base, $super, $parent_nesting) {
     function $MeikyuDays(){};
     var self = $MeikyuDays = $klass($base, $super, 'MeikyuDays', $MeikyuDays);
@@ -68,12 +68,12 @@
       var TMP_5, TMP_6, self = this;
 
       
-      string = $send(string, 'gsub', [/(\d+)MD6/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/(\d+)MD6/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R6"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'gsub', [/(\d+)MD/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/(\d+)MD/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R6"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R6"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
       return string;
     }, TMP_MeikyuDays_changeText_7.$$arity = 1);
     
@@ -85,7 +85,7 @@
       return self.$checkRoll(string);
     }, TMP_MeikyuDays_dice_command_xRn_8.$$arity = 2);
     
-    Opal.defn(self, '$check_2D6', TMP_MeikyuDays_check_2D6_9 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_MeikyuDays_check_2D6_9 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       

@@ -9,9 +9,9 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$upcase', '$===', '$getReimonCompensationTableResult', '$to_i', '$getGetMaterialTableResult', '$getTableCommandResult', '$empty?', '$get_table_by_1d6', '$get_table_by_d66', '$+', '$getMaterialEffect', '$getPrice', '$nil?', '$roll', '$<', '$getMaterialEffectNomal', '$getMaterialEffectRare', '$getD66', '$bcdice', '$get_table_by_number', '$getMaterialEffectPower', '$sub', '$>', '$getAttribute', '$to_s', '$[]', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$upcase', '$===', '$getReimonCompensationTableResult', '$last_match', '$to_i', '$getGetMaterialTableResult', '$getTableCommandResult', '$empty?', '$get_table_by_1d6', '$get_table_by_d66', '$+', '$getMaterialEffect', '$getPrice', '$nil?', '$roll', '$<', '$getMaterialEffectNomal', '$getMaterialEffectRare', '$getD66', '$bcdice', '$get_table_by_number', '$getMaterialEffectPower', '$sub', '$>', '$getAttribute', '$to_s', '$[]', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $Kamigakari(){};
     var self = $Kamigakari = $klass($base, $super, 'Kamigakari', $Kamigakari);
@@ -63,7 +63,7 @@
       $case = command.$upcase();
       if ("RT"['$===']($case)) {$b = self.$getReimonCompensationTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^MT(\d*)$/['$===']($case)) {
-      rank = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      rank = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       rank = ($truthy($a = rank) ? $a : 1);
       rank = rank.$to_i();
       $b = self.$getGetMaterialTableResult(rank), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
@@ -181,12 +181,12 @@
     }, TMP_Kamigakari_getAttribute_12.$$arity = 0);
     
     Opal.defn(self, '$getPrice', TMP_Kamigakari_getPrice_13 = function $$getPrice(effect) {
-      var $a, self = this, power = nil, $case = nil, table = nil, price = nil;
+      var self = this, power = nil, $case = nil, table = nil, price = nil;
 
       
       power = 0;
       $case = effect;
-      if (/\+(\d+)/['$===']($case)) {power = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i()}
+      if (/\+(\d+)/['$===']($case)) {power = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i()}
       else if (/付与/['$===']($case)) {power = 3}
       else if (/半減/['$===']($case)) {power = 4}
       else {power = 0};

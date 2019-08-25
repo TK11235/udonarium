@@ -15,9 +15,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$get_emancipation_table', '$get_personality_table', '$get_location_table', '$get_quiet_table', '$get_delight_table', '$get_trauma_table', '$get_scene_production_table', '$get_stance_table', '$get_emotion_table', '$>', '$roll', '$get_table_by_number', '$>=', '$+', '$get_Alter_raise_1d6_table_result', '$get_Alter_raise_d66_table_result', '$to_s', '$[]', '$<', '$*']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$get_emancipation_table', '$get_personality_table', '$get_location_table', '$get_quiet_table', '$get_delight_table', '$get_trauma_table', '$get_scene_production_table', '$get_stance_table', '$get_emotion_table', '$>', '$roll', '$get_table_by_number', '$>=', '$+', '$get_Alter_raise_1d6_table_result', '$get_Alter_raise_d66_table_result', '$to_s', '$[]', '$<', '$*']);
   return (function($base, $super, $parent_nesting) {
     function $Alter_raise(){};
     var self = $Alter_raise = $klass($base, $super, 'Alter_raise', $Alter_raise);
@@ -57,36 +57,36 @@
     }, TMP_Alter_raise_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Alter_raise_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, output = nil, $case = nil, roc = nil;
+      var $a, self = this, output = nil, $case = nil, roc = nil;
 
       
       output = (function() {$case = command.$upcase();
       if (/EMA(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_emancipation_table(roc);}
       else if (/PER(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_personality_table(roc);}
       else if (/LOC(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_location_table(roc);}
       else if (/QUI(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_quiet_table(roc);}
       else if (/DEL(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_delight_table(roc);}
       else if (/TRA(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_trauma_table(roc);}
       else if (/SCE(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_scene_production_table(roc);}
       else if (/STA(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_stance_table(roc);}
       else if (/EMO(\d+)?$/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_emotion_table(roc);}
       else { return nil }})();
       return output;

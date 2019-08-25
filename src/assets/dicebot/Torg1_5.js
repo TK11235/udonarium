@@ -18,9 +18,9 @@
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$torg_check', '$=~', '$debug', '$to_i', '$parren_killer', '$torg_dice', '$get_torg_bonus', '$>', '$+', '$to_s', '$!=', '$roll', '$shift', '$empty?', '$==', '$upcase', '$===', '$get_torg_success_level', '$get_torg_interaction_result_intimidate_test', '$get_torg_interaction_result_taunt_trick', '$get_torg_interaction_result_maneuver', '$get_torg_damage_ords', '$get_torg_damage_posibility', '$get_torg_bonus_text', '$get_torg_table_result', '$each', '$[]', '$get_torg_damage', '$<', '$-', '$length', '$<=', '$/', '$split', '$join', '$getTorgBonusOutputTextWhenModDefined']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$last_match', '$torg_check', '$=~', '$debug', '$to_i', '$parren_killer', '$torg_dice', '$get_torg_bonus', '$>', '$+', '$to_s', '$!=', '$roll', '$shift', '$empty?', '$==', '$upcase', '$===', '$get_torg_success_level', '$get_torg_interaction_result_intimidate_test', '$get_torg_interaction_result_taunt_trick', '$get_torg_interaction_result_maneuver', '$get_torg_damage_ords', '$get_torg_damage_posibility', '$get_torg_bonus_text', '$get_torg_table_result', '$each', '$[]', '$get_torg_damage', '$<', '$-', '$length', '$<=', '$/', '$split', '$join', '$getTorgBonusOutputTextWhenModDefined']);
   return (function($base, $super, $parent_nesting) {
     function $Torg(){};
     var self = $Torg = $klass($base, $super, 'Torg', $Torg);
@@ -72,9 +72,9 @@
       string = string.$gsub(/(ords|odamage)/i, "ODT");
       string = string.$gsub(/damage/i, "DT");
       string = string.$gsub(/(bonus|total)/i, "BT");
-      string = $send(string, 'gsub', [/TG(\d+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/TG(\d+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + "1R20+" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      return "" + "1R20+" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
       string = string.$gsub(/TG/i, "1R20");
       return string;
     }, TMP_Torg_changeText_6.$$arity = 1);
@@ -94,8 +94,8 @@
         } else {
         return "1"
       };
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      mod = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      string = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      mod = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       self.$debug(mod);
       if ($truthy(mod)) {
         mod = self.$parren_killer("" + "(0" + (mod) + ")").$to_i()};
@@ -162,8 +162,8 @@
         } else {
         return "1"
       };
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      num = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      num = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       $case = type;
       if ("RT"['$===']($case)) {
       value = self.$parren_killer("" + "(0" + (num) + ")").$to_i();

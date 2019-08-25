@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$check_dice', '$nil?', '$==', '$>=', '$-', '$rerollNumber', '$to_i', '$<=', '$!', '$marshalSignOfInequality', '$!=', '$defaultSuccessTarget', '$split', '$each', '$push', '$shift', '$+', '$join', '$parren_killer', '$collect', '$roll', '$&', '$sortType', '$[]', '$>', '$loop', '$isReRollAgain', '$bcdice', '$<', '$length', '$check_suc', '$get_emotion_table', '$dx_feel_positive_table', '$dx_feel_negative_table', '$dx_feel_table', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$last_match', '$check_dice', '$nil?', '$==', '$>=', '$-', '$rerollNumber', '$to_i', '$<=', '$!', '$marshalSignOfInequality', '$!=', '$defaultSuccessTarget', '$split', '$each', '$push', '$shift', '$+', '$join', '$parren_killer', '$collect', '$roll', '$&', '$sortType', '$[]', '$>', '$loop', '$isReRollAgain', '$bcdice', '$<', '$length', '$check_suc', '$get_emotion_table', '$dx_feel_positive_table', '$dx_feel_negative_table', '$dx_feel_table', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $DoubleCross(){};
     var self = $DoubleCross = $klass($base, $super, 'DoubleCross', $DoubleCross);
@@ -67,7 +67,7 @@
     }, TMP_DoubleCross_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_DoubleCross_changeText_10 = function $$changeText(string) {
-      var TMP_5, TMP_6, TMP_7, TMP_8, $a, TMP_9, self = this, crit = nil;
+      var TMP_5, TMP_6, TMP_7, TMP_8, TMP_9, self = this, crit = nil;
 
       
       if ($truthy(/(\d+)DX/i['$=~'](string))) {
@@ -75,21 +75,21 @@
         return string
       };
       self.$debug("DoubleCross parren_killer_add string", string);
-      string = $send(string, 'gsub', [/(\d+)DX(\d*)([^\d\s][\+\-\d]+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/(\d+)DX(\d*)([^\d\s][\+\-\d]+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'gsub', [/(\d+)DX(\d+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) + "[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/(\d+)DX(\d+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/(\d+)DX([^\d\s][\+\-\d]+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      string = $send(string, 'gsub', [/(\d+)DX([^\d\s][\+\-\d]+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-      string = $send(string, 'gsub', [/(\d+)DX/i], (TMP_8 = function(){var self = TMP_8.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2))}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      string = $send(string, 'gsub', [/(\d+)DX/i], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "R10"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "R10"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
       if ($truthy(/\@(\d+)/['$=~'](string))) {
         
-        crit = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+        crit = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
         string = $send(string, 'gsub', [/\[\]/], (TMP_9 = function(){var self = TMP_9.$$s || this;
 
         return "" + "[" + (crit) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
@@ -109,7 +109,7 @@
       return "" + (nick_e) + ": " + (output_msg);
     }, TMP_DoubleCross_dice_command_xRn_11.$$arity = 2);
     
-    Opal.defn(self, '$check_nD10', TMP_DoubleCross_check_nD10_12 = function $$check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD10', TMP_DoubleCross_check_nD10_12 = function $$check_nD10(total_n, _dice_n, signOfInequality, diff, dice_cnt, _dice_max, n1, _n_max) {
       var self = this;
 
       
@@ -126,7 +126,7 @@
       };
     }, TMP_DoubleCross_check_nD10_12.$$arity = 8);
     
-    Opal.defn(self, '$getJackUpValueOnAddRoll', TMP_DoubleCross_getJackUpValueOnAddRoll_13 = function $$getJackUpValueOnAddRoll(dice_n, round) {
+    Opal.defn(self, '$getJackUpValueOnAddRoll', TMP_DoubleCross_getJackUpValueOnAddRoll_13 = function $$getJackUpValueOnAddRoll(dice_n, _round) {
       var self = this;
 
       return $rb_minus(10, dice_n)
@@ -154,22 +154,22 @@
         self.$debug("invaid string", string);
         return nil;
       };
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      critical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      string = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      critical = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       critical = ($truthy($a = critical) ? $a : self.$rerollNumber());
       critical = critical.$to_i();
       self.$debug("critical", critical);
       if ($truthy($rb_le(critical, 1))) {
         return "クリティカル値が低すぎます。2以上を指定してください。"};
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](5))['$nil?']()['$!']())) {
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(5)['$nil?']()['$!']())) {
         
-        diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7)).$to_i();
-        signOfInequality = self.$marshalSignOfInequality((($a = $gvars['~']) === nil ? nil : $a['$[]'](6)));
+        diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(7).$to_i();
+        signOfInequality = self.$marshalSignOfInequality(Opal.const_get_relative($nesting, 'Regexp').$last_match(6));
       } else if ($truthy(self.$defaultSuccessTarget()['$!='](""))) {
         if ($truthy(/([<>=]+)(\d+)/['$=~'](self.$defaultSuccessTarget()))) {
           
-          diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-          signOfInequality = self.$marshalSignOfInequality((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)));}};
+          diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+          signOfInequality = self.$marshalSignOfInequality(Opal.const_get_relative($nesting, 'Regexp').$last_match(1));}};
       dice_cmd = [];
       dice_bns = [];
       dice_a = string.$split(/\+/);
@@ -272,7 +272,7 @@ if (s == null) s = nil;
       return output;
     }, TMP_DoubleCross_check_dice_18.$$arity = 1);
     
-    Opal.defn(self, '$rollDiceCommand', TMP_DoubleCross_rollDiceCommand_19 = function $$rollDiceCommand(command) {
+    Opal.defn(self, '$rollDiceCommand', TMP_DoubleCross_rollDiceCommand_19 = function $$rollDiceCommand(_command) {
       var self = this;
 
       return self.$get_emotion_table()

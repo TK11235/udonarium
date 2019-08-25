@@ -15,9 +15,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars, $send = Opal.send;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$+', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$getSuccessResultText', '$==', '$to_s', '$>=', '$each', '$<=']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$last_match', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$+', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$getSuccessResultText', '$==', '$to_s', '$>=', '$each', '$<=']);
   return (function($base, $super, $parent_nesting) {
     function $CodeLayerd(){};
     var self = $CodeLayerd = $klass($base, $super, 'CodeLayerd', $CodeLayerd);
@@ -52,16 +52,16 @@
     }, TMP_CodeLayerd_isGetOriginalMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_CodeLayerd_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, result = nil, $case = nil, base = nil, target = nil, diff = nil;
+      var $a, self = this, result = nil, $case = nil, base = nil, target = nil, diff = nil;
 
       
       self.$debug("rollDiceCommand command", command);
       result = "";
       $case = command;
       if (/(\d+)?CL(\@?(\d))?(>=(\d+))?/i['$===']($case)) {
-      base = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 1).$to_i();
-      target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 6).$to_i();
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
+      base = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
+      target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 6).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
       result = self.$checkRoll(base, target, diff);};
       if ($truthy(result['$empty?']())) {
         return nil};

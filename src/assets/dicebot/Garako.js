@@ -6,9 +6,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$checkRoll', '$to_i', '$get_damage_chart', '$get_nametable_pm', '$get_nametable_pf', '$get_nametable_em', '$get_nametable_ef', '$get_nametable_nm', '$get_nametable_nf', '$get_nametable_rm', '$get_nametable_rf', '$get_nametable_b1', '$get_nametable_b2', '$get_nametable_t1', '$get_nametable_t2', '$get_idiosyncrasy_table', '$get_motivation_table', '$get_damage_region_chart', '$get_garako_custom_chart', '$get_weapon_custom_chart', '$get_event_chart', '$get_battle_start_distance', '$roll', '$+', '$getResultText', '$==', '$<', '$get_garako_1d10_table_result', '$get_table_by_number', '$get_garako_table_result', '$get_damagechart_cockpit', '$get_damagechart_engine', '$get_damagechart_frame', '$get_damagechart_arm', '$get_damagechart_leg', '$nil?', '$[]', '$last', '$min']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$last_match', '$checkRoll', '$to_i', '$get_damage_chart', '$get_nametable_pm', '$get_nametable_pf', '$get_nametable_em', '$get_nametable_ef', '$get_nametable_nm', '$get_nametable_nf', '$get_nametable_rm', '$get_nametable_rf', '$get_nametable_b1', '$get_nametable_b2', '$get_nametable_t1', '$get_nametable_t2', '$get_idiosyncrasy_table', '$get_motivation_table', '$get_damage_region_chart', '$get_garako_custom_chart', '$get_weapon_custom_chart', '$get_event_chart', '$get_battle_start_distance', '$roll', '$+', '$getResultText', '$==', '$<', '$get_garako_1d10_table_result', '$get_table_by_number', '$get_garako_table_result', '$get_damagechart_cockpit', '$get_damagechart_engine', '$get_damagechart_frame', '$get_damagechart_arm', '$get_damagechart_leg', '$nil?', '$[]', '$last', '$min']);
   return (function($base, $super, $parent_nesting) {
     function $Garako(){};
     var self = $Garako = $klass($base, $super, 'Garako', $Garako);
@@ -48,17 +48,17 @@
     }, TMP_Garako_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Garako_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, output = nil, $case = nil, modifyString = nil, targetString = nil, part = nil, damage = nil;
+      var self = this, output = nil, $case = nil, modifyString = nil, targetString = nil, part = nil, damage = nil;
 
       
       output = (function() {$case = command.$upcase();
       if (/^GR((\+|\-)\d+)?>=(\d+)$/i['$===']($case)) {
-      modifyString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      targetString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      modifyString = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      targetString = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       return self.$checkRoll(modifyString, targetString);}
       else if (/(\w)DC(\d+)/i['$===']($case)) {
-      part = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$upcase();
-      damage = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      part = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$upcase();
+      damage = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       return self.$get_damage_chart(part, damage);}
       else if ("PNM"['$===']($case)) {return self.$get_nametable_pm()}
       else if ("PNF"['$===']($case)) {return self.$get_nametable_pf()}

@@ -51,7 +51,7 @@
 
       return "1D100<=m 方式の判定で成否、クリティカル・ファンブルを自動判定\n"
     }, TMP_EclipsePhase_getHelpMessage_4.$$arity = 0);
-    return (Opal.defn(self, '$check_1D100', TMP_EclipsePhase_check_1D100_5 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D100', TMP_EclipsePhase_check_1D100_5 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, diceValue = nil, dice_ten_place = nil, dice_one_place = nil, diff_threshold = nil;
 
       

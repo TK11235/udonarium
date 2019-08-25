@@ -12,9 +12,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$==', '$>', '$checkRoll', '$roll', '$collect', '$split', '$count', '$<=', '$+', '$empty?', '$!=', '$*']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$==', '$>', '$checkRoll', '$roll', '$collect', '$split', '$count', '$<=', '$+', '$empty?', '$!=', '$*']);
   return (function($base, $super, $parent_nesting) {
     function $Airgetlamh(){};
     var self = $Airgetlamh = $klass($base, $super, 'Airgetlamh', $Airgetlamh);
@@ -57,22 +57,22 @@
     }, TMP_Airgetlamh_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Airgetlamh_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, diceCount = nil, target = nil, damage = nil, criticalTrigger = nil, criticalNumber = nil;
+      var $a, self = this, diceCount = nil, target = nil, damage = nil, criticalTrigger = nil, criticalNumber = nil;
 
       
       if ($truthy(/(\d+)?A(A|L)(\d+)?((x|\*)(\d+)(\+(\d+))?)?(C(\d+))?$/i['$==='](command))) {
         
-        diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
-        target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 6).$to_i();
-        damage = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i();
-        if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("L")) {
+        diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
+        target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 6).$to_i();
+        damage = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : 0).$to_i();
+        if (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$==']("L")) {
           
           criticalTrigger = 0;
           criticalNumber = 0;
           } else {
           
-          criticalTrigger = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](8))) ? $a : 0).$to_i();
-          criticalNumber = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](10))) ? $a : 1).$to_i();
+          criticalTrigger = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(8)) ? $a : 0).$to_i();
+          criticalNumber = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(10)) ? $a : 1).$to_i();
         };
         if ($truthy($rb_gt(criticalNumber, 4))) {
           criticalNumber = 3};

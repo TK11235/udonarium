@@ -21,9 +21,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$!=', '$>=', '$>', '$*', '$/', '$roll_strike_rank_result', '$debug', '$=~', '$to_i', '$<', '$check_strike_rank', '$-', '$+', '$roll', '$to_s', '$sendMode', '$empty?']);
+  Opal.add_stubs(['$setPrefixes', '$!=', '$>=', '$>', '$*', '$/', '$roll_strike_rank_result', '$debug', '$=~', '$to_i', '$last_match', '$<', '$check_strike_rank', '$-', '$+', '$roll', '$to_s', '$sendMode', '$empty?']);
   return (function($base, $super, $parent_nesting) {
     function $Chill(){};
     var self = $Chill = $klass($base, $super, 'Chill', $Chill);
@@ -45,7 +45,7 @@
       return "" + "・ストライク・ランク　(SRx)\n" + "　\"SRストライク・ランク\"の形で記入します。\n" + "　ストライク・ランク・チャートに従って自動でダイスロールを行い、\n" + "　負傷とスタミナロスを計算します。\n" + "　ダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）SR7　　　sr13　　　SR(7+4)　　　Ssr10\n"
     }, TMP_Chill_getHelpMessage_2.$$arity = 0);
     
-    Opal.defn(self, '$check_1D100', TMP_Chill_check_1D100_3 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_Chill_check_1D100_3 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -87,7 +87,7 @@
         self.$debug("invalid string", string);
         return "1";
       };
-      strikeRank = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      strikeRank = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
       dice_w = "";
       dice_ws = "";
       dice_wa = "";
@@ -105,7 +105,7 @@
         $b = self.$roll(4, 10), $a = Opal.to_ary($b), (wounds = ($a[0] == null ? nil : $a[0])), (dice_ws = ($a[1] == null ? nil : $a[1])), $b;
         dice = $rb_plus($rb_plus("5d10*3, 4d10+", $rb_times($rb_minus(strikeRank, 13), 2).$to_s()), "d10");
         dice_add = $rb_plus(dice_add, $rb_plus(", ", wounds.$to_s()));
-        dice_str = "" + (dice_str) + ", " + (dice_ws.$to_s());
+        dice_str = "" + (dice_str) + ", " + (dice_ws);
         $b = self.$roll($rb_times($rb_minus(strikeRank, 13), 2), 10), $a = Opal.to_ary($b), (wounds_wk = ($a[0] == null ? nil : $a[0])), (dice_ws = ($a[1] == null ? nil : $a[1])), $b;
         dice_str = $rb_plus(dice_str, "" + "+" + (dice_ws));
         dice_add = $rb_plus(dice_add, "" + "+" + (wounds_wk));

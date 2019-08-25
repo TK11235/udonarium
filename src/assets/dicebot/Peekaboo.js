@@ -54,7 +54,7 @@
       return "" + "・判定\n" + "　判定時にクリティカルとファンブルを自動判定します。\n" + "・各種表\n" + "　・学校イベント表　　　　　　　　SET\n" + "　・個別学校イベント表　　　　　　PSET\n" + "　・オバケ屋敷イベント表　　　　　OET\n" + "　・イノセント用バタンキュー！表　IBT\n" + "　・スプーキー用バタンキュー！表　SBT\n" + "　・日中ブラブラ表　　　　　　　　NET\n" + "　・オバケぶらり旅表　　　　　　　STT\n" + "　・仲間効果表　　　　　　　　　　NST\n" + "　・ランダム特技決定表　　　　　　RTT\n" + "　・指定特技(不良)表　　　　　　　TNT\n" + "　・指定特技(運動)表　　　　　　　TET\n" + "　・指定特技(友達)表　　　　　　　TFT\n" + "　・指定特技(遊び)表　　　　　　　TPT\n" + "　・指定特技(勉強)表　　　　　　　TST\n" + "　・指定特技(大人)表　　　　　　　TAT\n" + "・D66ダイスあり\n"
     }, TMP_Peekaboo_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_Peekaboo_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_Peekaboo_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -83,7 +83,7 @@
       return self.$getTableCommandResult(command, Opal.const_get_relative($nesting, 'TABLES'));
     }, TMP_Peekaboo_rollDiceCommand_6.$$arity = 1);
     
-    Opal.defn(self, '$getRandomSkillTableResult', TMP_Peekaboo_getRandomSkillTableResult_7 = function $$getRandomSkillTableResult(command) {
+    Opal.defn(self, '$getRandomSkillTableResult', TMP_Peekaboo_getRandomSkillTableResult_7 = function $$getRandomSkillTableResult(_command) {
       var $a, $b, self = this, name = nil, skillTableFull = nil, skillTable = nil, total_n = nil, tableName = nil, skill = nil, total_n2 = nil, output = nil;
 
       

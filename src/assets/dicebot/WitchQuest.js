@@ -6,9 +6,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $send = Opal.send, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$challenge', '$getStructureEncounter', '$times', '$roll', '$==', '$+', '$<<', '$join', '$getSuccessText', '$>=', '$first', '$last', '$get_table_by_number', '$debug', '$nil?', '$get_table_by_1d6', '$getPersonTable1', '$lambda', '$getPersonTable2', '$getPersonTable', '$getPersonTable3', '$getPersonTable4', '$getD66', '$bcdice']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$challenge', '$getStructureEncounter', '$times', '$roll', '$==', '$+', '$<<', '$join', '$getSuccessText', '$>=', '$first', '$last', '$get_table_by_number', '$debug', '$nil?', '$get_table_by_1d6', '$getPersonTable1', '$lambda', '$getPersonTable2', '$getPersonTable', '$getPersonTable3', '$getPersonTable4', '$getD66', '$bcdice']);
   return (function($base, $super, $parent_nesting) {
     function $WitchQuest(){};
     var self = $WitchQuest = $klass($base, $super, 'WitchQuest', $WitchQuest);
@@ -43,15 +43,15 @@
     }, TMP_WitchQuest_changeText_4.$$arity = 1);
     
     Opal.defn(self, '$rollDiceCommand', TMP_WitchQuest_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, $case = nil, number = nil;
+      var self = this, $case = nil, number = nil;
 
       
       $case = command;
       if (/WQ(\d+)/['$===']($case)) {
-      number = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      number = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$challenge(number);}
       else if (/SET(\d+)/['$===']($case)) {
-      number = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      number = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$getStructureEncounter(number);};
       return nil;
     }, TMP_WitchQuest_rollDiceCommand_5.$$arity = 1);

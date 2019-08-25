@@ -12,9 +12,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$nil?', '$==', '$checkRoll', '$>', '$roll', '$collect', '$split', '$each', '$<=', '$+', '$empty?', '$!=', '$*']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$nil?', '$==', '$checkRoll', '$>', '$roll', '$collect', '$split', '$each', '$<=', '$+', '$empty?', '$!=', '$*']);
   return (function($base, $super, $parent_nesting) {
     function $Alsetto(){};
     var self = $Alsetto = $klass($base, $super, 'Alsetto', $Alsetto);
@@ -57,24 +57,24 @@
     }, TMP_Alsetto_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Alsetto_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, rapid = nil, isCritical = nil, criticalNumber = nil, target = nil, damage = nil;
+      var $a, self = this, rapid = nil, isCritical = nil, criticalNumber = nil, target = nil, damage = nil;
 
       
       if ($truthy(/(\d+)AL(C|G)?(\d+)?((x|\*)(\d+))?$/i['$==='](command))) {
         
-        rapid = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-        isCritical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$nil?']();
+        rapid = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+        isCritical = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$nil?']();
         if ($truthy(isCritical)) {
           criticalNumber = 1
-        } else if ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("G")) {
+        } else if (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$==']("G")) {
           
           isCritical = true;
           criticalNumber = 2;
           } else {
           criticalNumber = 0
         };
-        target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 3).$to_i();
-        damage = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i();
+        target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 3).$to_i();
+        damage = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : 0).$to_i();
         return self.$checkRoll(rapid, target, damage, isCritical, criticalNumber);};
       return nil;
     }, TMP_Alsetto_rollDiceCommand_5.$$arity = 1);

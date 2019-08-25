@@ -9,9 +9,9 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$checkRoll', '$getLifeAndDeathUnknownResult', '$debug', '$!=', '$roll', '$sort', '$collect', '$split', '$concat', '$*', '$size', '$select', '$==', '$+', '$join', '$>', '$each', '$get_table_by_d66']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$checkRoll', '$getLifeAndDeathUnknownResult', '$debug', '$!=', '$roll', '$sort', '$collect', '$split', '$concat', '$*', '$size', '$select', '$==', '$+', '$join', '$>', '$each', '$get_table_by_d66']);
   return (function($base, $super, $parent_nesting) {
     function $EndBreaker(){};
     var self = $EndBreaker = $klass($base, $super, 'EndBreaker', $EndBreaker);
@@ -59,7 +59,7 @@
       
       if ($truthy(/(\d+)EB/i['$==='](command))) {
         
-        diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+        diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
         return self.$checkRoll(diceCount);};
       tableName = "";
       text = "";
@@ -74,7 +74,7 @@
     }, TMP_EndBreaker_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$checkRoll', TMP_EndBreaker_checkRoll_10 = function $$checkRoll(diceCount) {
-      var $a, $b, $c, TMP_6, TMP_7, TMP_8, self = this, rollCount = nil, result = nil, diceFullList = nil, _ = nil, dice_str = nil, diceList = nil, num = nil, count = nil;
+      var $a, $b, $c, TMP_6, TMP_7, TMP_8, self = this, rollCount = nil, result = nil, diceFullList = nil, _ = nil, dice_str = nil, diceList = nil;
 
       
       self.$debug("EndBreaker diceCount", diceCount);
@@ -96,14 +96,9 @@ if (i == null) i = nil;
           result = $rb_plus(result, " ダブルトリガー! ")};
       };
       result = $rb_plus(result, " ＞");
+      $send($range(2, 6, false), 'each', [], (TMP_8 = function(num){var self = TMP_8.$$s || this, TMP_9, count = nil;
+if (num == null) num = nil;
       
-      ;
-      ;
-      ;
-      $send($range(2, 6, false), 'each', [], (TMP_8 = function($for_tmp1){var self = TMP_8.$$s || this, TMP_9;
-if ($for_tmp1 == null) $for_tmp1 = nil;
-      
-        num = $for_tmp1;
         count = $send(diceFullList, 'select', [], (TMP_9 = function(i){var self = TMP_9.$$s || this;
 if (i == null) i = nil;
         return i['$=='](num)}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9)).$size();
@@ -111,7 +106,7 @@ if (i == null) i = nil;
           return nil
           } else {
           return (result = $rb_plus(result, "" + " [" + (num) + ":" + (count) + "個]"))
-        };}, TMP_8.$$s = self, TMP_8.$$arity = 1, TMP_8));;
+        };}, TMP_8.$$s = self, TMP_8.$$arity = 1, TMP_8));
       return result;
     }, TMP_EndBreaker_checkRoll_10.$$arity = 1);
     return (Opal.defn(self, '$getLifeAndDeathUnknownResult', TMP_EndBreaker_getLifeAndDeathUnknownResult_11 = function $$getLifeAndDeathUnknownResult() {

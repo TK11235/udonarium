@@ -3,9 +3,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$===', '$to_i', '$[]', '$getTableInfoFromExtraTableText', '$getTableCommandResult', '$nil?', '$setPrefixes', '$+', '$keys']);
+  Opal.add_stubs(['$===', '$to_i', '$last_match', '$[]', '$getTableInfoFromExtraTableText', '$getTableCommandResult', '$nil?', '$setPrefixes', '$+', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $KurayamiCrying(){};
     var self = $KurayamiCrying = $klass($base, $super, 'KurayamiCrying', $KurayamiCrying);
@@ -49,7 +49,7 @@
       
       $case = command;
       if (/^ACT(\d+)$/i['$===']($case)) {
-      number = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      number = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       info = (($a = $KurayamiCrying.$$cvars['@@tables']) == null ? nil : $a)['$[]']("ACT");
       name = info['$[]']("name");
       table = self.$getTableInfoFromExtraTableText(info['$[]']("table"));

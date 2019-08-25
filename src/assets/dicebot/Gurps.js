@@ -18,9 +18,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$==', '$-', '$<=', '$>=', '$getRollDiceResult', '$nil?', '$getCFTableResult', '$getFearResult', '$getReactResult', '$getHitResult', '$===', '$roll', '$sort', '$collect', '$split', '$to_i', '$size', '$select', '$getValue', '$+', '$check_nD6', '$get_table_by_nD6', '$>', '$[]', '$<', '$empty?', '$parren_killer']);
+  Opal.add_stubs(['$setPrefixes', '$==', '$-', '$<=', '$>=', '$getRollDiceResult', '$nil?', '$getCFTableResult', '$getFearResult', '$getReactResult', '$getHitResult', '$===', '$last_match', '$roll', '$sort', '$collect', '$split', '$to_i', '$size', '$select', '$getValue', '$+', '$check_nD6', '$get_table_by_nD6', '$>', '$[]', '$<', '$empty?', '$parren_killer']);
   return (function($base, $super, $parent_nesting) {
     function $Gurps(){};
     var self = $Gurps = $klass($base, $super, 'Gurps', $Gurps);
@@ -62,7 +62,7 @@
       return "" + "・判定においてクリティカル・ファンブルの自動判別、成功度の自動計算。(3d6<=目標値／目標値-3d6)\n" + " ・祝福等のダイス目にかかる修正は「3d6-1<=目標値」といった記述で計算されます。(ダイス目の修正値はクリティカル・ファンブルに影響を与えません)\n" + " ・クリティカル値・ファンブル値への修正については現在対応していません。\n" + "・クリティカル表 (CRT)\n" + "・頭部打撃クリティカル表 (HCRT)\n" + "・ファンブル表 (FMB)\n" + "・呪文ファンブル表 (MFMB)\n" + "・妖魔夜行スペシャルクリティカル表 (YSCRT)\n" + "・妖魔夜行スペシャルファンブル表 (YSFMB)\n" + "・妖術ファンブル表 (YFMB)\n" + "・命中部位表 (HIT)\n" + "・恐怖表 (FEAR+n)\n" + "　nには恐怖判定の失敗度を入れてください。\n" + "・反応判定表 (REACT, REACT±n)\n" + "　nには反応修正を入れてください。\n" + "・D66ダイスあり\n"
     }, TMP_Gurps_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_nD6', TMP_Gurps_check_nD6_5 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_Gurps_check_nD6_5 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, _dice_max, _n1, _n_max) {
       var $a, self = this, success = nil, crt_string = nil, fmb_string = nil, fail_string = nil;
 
       
@@ -135,8 +135,8 @@
         } else {
         return nil
       };
-      diffStr = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      modStr = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : "");
+      diffStr = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      modStr = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : "");
       dice_cnt = 3;
       dice_max = 6;
       $b = self.$roll(dice_cnt, dice_max), $a = Opal.to_ary($b), (dice_n = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
@@ -199,7 +199,7 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       tableName = "恐怖表";
       table = ["1ターン朦朧状態。2ターン目に自動回復。", "1ターン朦朧状態。2ターン目に自動回復。", "1ターン朦朧状態。以後、毎ターン不利な修正を無視した意志判定を行い、成功すると回復。", "1ターン朦朧状態。以後、毎ターン不利な修正を無視した意志判定を行い、成功すると回復。", "1ターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1ターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "2Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "思考不能。15ターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "新たな癖をひとつ植え付けられる。", "1D点疲労。さらに1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1D点疲労。さらに1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "新たな癖をひとつ獲得。さらに1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "生命力判定を行い、失敗すると1点の負傷を受ける。さらに1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "1点負傷。2D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "卒倒。4D分間意識不明。1D点疲労。", "パニック。1D分間のあいだ、叫びながら走り回ったり、座り込んで泣きわめいたりする。以後、1分ごとに知力判定(修正なし)を行い、成功すると回復。", "-10CPの妄想を植え付けられる。", "-10CPの軽い恐怖症を植え付けられる。", "肉体的な変化。髪が真白になったり、老化したりする。-15CPぶんの肉体的特徴に等しい。", "その恐怖に関連する軽い恐怖症を持っているならそれが強い恐怖症(CP2倍)になる。そうでなければ、-10CPぶんの精神的特徴を植え付けられる。", "-10CPの妄想を植え付けられる。生命力判定を行い、失敗すると1点の負傷を受ける。さらに1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "-10CPの軽い恐怖症を植え付けられる。生命力判定を行い、失敗すると1点の負傷を受ける。さらに1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "浅い昏睡状態。30分ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。", "硬直。1D日のあいだ身動きしない。その時点で生命力判定を行い、成功すると動けるようになる。失敗するとさらに1D日硬直。その間、適切な医学的処置を受けていないかぎり、初日に1点、2日目に2点、3日目に3点と生命力を失っていく。動けるようになってからも、硬直していたのと同じ日数だけ、あらゆる判定に-2の修正。", "痙攣。1D分間地面に倒れて痙攣する。2D点疲労。また、生命力判定に失敗すると1D点負傷。これがファンブルなら生命力1点を永遠に失う。", "発作。軽い心臓発作を起こし、地面に倒れる。2D点負傷。", "大パニック。キャラクターは支離滅裂な行動に出る。GMが3Dを振り、目が大きければ大きいほど馬鹿げた行動を行う。その行動が終わったら知力判定を行い、成功すると我に返る。失敗すると新たな馬鹿げた行動をとる。", "強い妄想(-15CP)を植え付けられる。", "強い恐怖症、ないし-15CPぶんの精神的特徴を植え付けられる。", "激しい肉体的変化。髪が真白になったり、老化したりする。-20CPぶんの肉体的特徴に等しい。", "激しい肉体的変化。髪が真白になったり、老化したりする。-30CPぶんの肉体的特徴に等しい。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い妄想(-15CP)を植え付けられる。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い恐怖症、ないし-30CPぶんの精神的特徴を植え付けられる。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い恐怖症、ないし-30CPぶんの精神的特徴を植え付けられる。知力が1点永遠に低下する。あわせて精神系の技能、呪文、超能力のレベルも低下する。"];
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
@@ -221,7 +221,7 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       tableName = "反応表";
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
       number = $rb_plus(dice, modify);
@@ -262,7 +262,7 @@ if (i == null) i = nil;
       var $a, self = this;
 
       
-      if ($truthy(($truthy($a = text['$=='](nil)) ? $a : text['$empty?']()))) {
+      if ($truthy(($truthy($a = text['$nil?']()) ? $a : text['$empty?']()))) {
         return defaultValue};
       return self.$parren_killer($rb_plus($rb_plus("(0", text), ")")).$to_i();
     }, TMP_Gurps_getValue_15.$$arity = 2), nil) && 'getValue';

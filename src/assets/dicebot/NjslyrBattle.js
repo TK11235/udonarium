@@ -38,7 +38,7 @@
       return "" + "・カラテロール\n" + "2d6<=(カラテ点)\n" + "例）2d6<=5\n" + "(2D6<=5) ＞ 2[1,1] ＞ 2 ＞ 成功 重点 3 溜まる\n"
     }, TMP_NjslyrBattle_getHelpMessage_3.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_NjslyrBattle_check_2D6_4 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_NjslyrBattle_check_2D6_4 = function $$check_2D6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, success = nil, juuten = nil;
 
       

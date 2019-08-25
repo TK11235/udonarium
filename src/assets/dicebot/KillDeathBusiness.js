@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$==', '$<=', '$>=', '$===', '$judgeDice', '$rollTableCommand', '$to_i', '$>', '$+', '$<', '$roll', '$getTableCommandResult', '$nil?', '$getHistoryTableResult', '$getSceneTableResult', '$getWishTableResult', '$getNameTableResult', '$getSubprotTableResult', '$getCmTableResult', '$getErTableResult', '$getWKTableResult', '$getServiceSceneTableResult', '$getSoulTableResult', '$getSceneTelopGenericTableResult', '$getHairStylistAbuseTableResult', '$getExtraTableResult', '$getSkillTableResult', '$getpcTableResult', '$getohTableResult', '$getplTableResult', '$getprTableResult', '$getpnTableResult', '$getpdTableResult', '$getpfTableResult', '$getpgTableResult', '$getpbTableResult', '$empty?', '$get_table_by_1d6', '$get_table_by_d66_swap', '$get_table_by_2d6', '$[]', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$==', '$<=', '$>=', '$===', '$judgeDice', '$rollTableCommand', '$to_i', '$last_match', '$>', '$+', '$<', '$roll', '$getTableCommandResult', '$nil?', '$getHistoryTableResult', '$getSceneTableResult', '$getWishTableResult', '$getNameTableResult', '$getSubprotTableResult', '$getCmTableResult', '$getErTableResult', '$getWKTableResult', '$getServiceSceneTableResult', '$getSoulTableResult', '$getSceneTelopGenericTableResult', '$getHairStylistAbuseTableResult', '$getExtraTableResult', '$getSkillTableResult', '$getpcTableResult', '$getohTableResult', '$getplTableResult', '$getprTableResult', '$getpnTableResult', '$getpdTableResult', '$getpfTableResult', '$getpgTableResult', '$getpbTableResult', '$empty?', '$get_table_by_1d6', '$get_table_by_d66_swap', '$get_table_by_2d6', '$[]', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $KillDeathBusiness(){};
     var self = $KillDeathBusiness = $klass($base, $super, 'KillDeathBusiness', $KillDeathBusiness);
@@ -102,9 +102,9 @@
         } else {
         return "1"
       };
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
-      fumble = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
+      fumble = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
       result = "";
       if ($truthy($rb_gt(target, 12))) {
         
@@ -154,11 +154,11 @@
       $case = command;
       if ("HST"['$===']($case)) {$b = self.$getHistoryTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^ST(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getSceneTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^.+WT$/i['$===']($case)) {$b = self.$getWishTableResult(command), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^NAME(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getNameTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^.+SPT$/i['$===']($case)) {$b = self.$getSubprotTableResult(command), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if ("CMT"['$===']($case)) {$b = self.$getCmTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
@@ -168,13 +168,13 @@
       else if ("SOUL"['$===']($case)) {$b = self.$getSoulTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if ("STGT"['$===']($case)) {$b = self.$getSceneTelopGenericTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if (/^HSAT(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getHairStylistAbuseTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^EXT(\d)?$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$getExtraTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if (/^SKL(T|J)$/['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       $b = self.$getSkillTableResult(type), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b;}
       else if ("PCDT"['$===']($case)) {$b = self.$getpcTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}
       else if ("OHT"['$===']($case)) {$b = self.$getohTableResult(), $a = Opal.to_ary($b), (tableName = ($a[0] == null ? nil : $a[0])), (result = ($a[1] == null ? nil : $a[1])), (number = ($a[2] == null ? nil : $a[2])), $b}

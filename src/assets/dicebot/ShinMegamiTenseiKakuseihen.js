@@ -14,7 +14,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$==', '$%', '$getTwoDice', '$+', '$*', '$getCheckResultText', '$min', '$max', '$first', '$getDiceList', '$floor', '$/', '$getCheckResult', '$sprintf', '$>=', '$getSuccessResult', '$getFailResult']);
+  Opal.add_stubs(['$==', '$%', '$getTwoDice', '$+', '$*', '$getCheckResultText', '$min', '$max', '$first', '$getDiceList', '$floor', '$/', '$getCheckResult', '$format', '$>=', '$getSuccessResult', '$getFailResult']);
   return (function($base, $super, $parent_nesting) {
     function $ShinMegamiTenseiKakuseihen(){};
     var self = $ShinMegamiTenseiKakuseihen = $klass($base, $super, 'ShinMegamiTenseiKakuseihen', $ShinMegamiTenseiKakuseihen);
@@ -52,7 +52,7 @@
       return "" + "・判定\n" + "1D100<=(目標値) でスワップ・通常・逆スワップ判定を判定。\n" + "威力ダイスは nU6[6] (nはダイス個数)でロール可能です。\n"
     }, TMP_ShinMegamiTenseiKakuseihen_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_1D100', TMP_ShinMegamiTenseiKakuseihen_check_1D100_5 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_ShinMegamiTenseiKakuseihen_check_1D100_5 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, $b, self = this, dice1 = nil, dice2 = nil, total1 = nil, total2 = nil, isRepdigit = nil, result = nil;
 
       
@@ -91,7 +91,7 @@
 
       
       checkResult = self.$getCheckResult(diff, total, isRepdigit);
-      text = self.$sprintf("(%02d)%s", total, checkResult);
+      text = self.$format("(%02d)%s", total, checkResult);
       return text;
     }, TMP_ShinMegamiTenseiKakuseihen_getCheckResultText_7.$$arity = 3);
     

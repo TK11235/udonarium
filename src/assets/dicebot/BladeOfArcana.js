@@ -18,9 +18,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$!=', '$empty?', '$!', '$==', '$rollAct', '$tableText', '$<', '$<=', '$>', '$-', '$roll', '$min', '$map', '$split', '$to_proc', '$+', '$>=', '$[]']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$!=', '$empty?', '$!', '$==', '$rollAct', '$tableText', '$<', '$<=', '$>', '$-', '$roll', '$min', '$map', '$split', '$to_proc', '$+', '$>=', '$[]']);
   return (function($base, $super, $parent_nesting) {
     function $BladeOfArcana(){};
     var self = $BladeOfArcana = $klass($base, $super, 'BladeOfArcana', $BladeOfArcana);
@@ -68,12 +68,12 @@
       
       $case = command.$upcase();
       if (/^(\d+)A(\d*)([CF]?)(\d*)([CF]?)(\d*)$/['$===']($case)) {
-      counts = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      judgment = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      option1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      argument1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      option2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      argument2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
+      counts = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      judgment = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      option1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      argument1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
+      option2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
+      argument2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(6);
       if ($truthy(($truthy($a = ($truthy($b = option1['$empty?']()['$!='](argument1['$empty?']())) ? $b : option2['$empty?']()['$!='](argument2['$empty?']()))) ? $a : ($truthy($b = option2['$empty?']()['$!']()) ? option1['$=='](option2) : $b)))) {
         return nil};
       if (option1['$==']("C")) {
@@ -87,22 +87,22 @@
       };
       return self.$rollAct(counts, judgment, critical, fumble);}
       else if (/^CT3([\+\-]?)$/['$===']($case)) {
-      sign = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      sign = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       title = "因縁表(The 3rd)　『BoA3』P292";
       table = ["【他生】", "【師弟】", "【忘却】", "【兄姉】", "【貸し】", "【慕情】", "【主従】", "【強敵】", "【秘密】", "【恩人】", "【告発】", "【友人】", "【仇敵】", "【父母】", "【借り】", "【信頼】", "【幼子】", "【取引】", "【地縁】", "【同志】", "【不審】", "【自身】"];
       return self.$tableText(title, table, sign);}
       else if (/^CTR([\+\-]?)$/['$===']($case)) {
-      sign = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      sign = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       title = "因縁表(リインカーネイション)　『BAR』P51、299";
       table = ["【他生】", "【師弟】", "【忘却】", "【兄姉】", "【貸し】", "【憧憬】", "【主従】", "【強敵】", "【秘密】", "【恩人】", "【取引】", "【友人】", "【怨敵】", "【後援】", "【借り】", "【信頼】", "【弟妹】", "【商売】", "【奇縁】", "【同志】", "【有為】", "【自身】"];
       return self.$tableText(title, table, sign);}
       else if (/^DJV(\-?)$/['$===']($case)) {
-      sign = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      sign = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       title = "前世邂逅表（デジャブ）　『BAR』P235";
       table = ["【鮮烈な風】\n風は懐かしい匂いを、香りを運んでくる。それは……。", "【薄暗い影】\nまるで時が止まってしまっているかのようだ。", "【操りの糸】\nそれはあなたを導く蜘蛛の糸。", "【天上の光】\n偉大なるものがもたらす、天上からの御しるし。", "【温もり】\n春のひなたのような温かさを感じる。", "【鋭いナイフ】\n鋭いナイフのような視線を感じる。これは……。", "【共鳴】\n同じ感覚を感じる、ふたりは通じ合っている。", "【城壁】\n厳しく高い城壁のように重く堅く厚い。", "【砕ける器】\n落ちれば砕ける。砕ければそれは器ではない。", "【陽炎】\n求めれば揺らいで消える。", "【終わりなき円環】\nそれはあなたを捉え巡る輪廻の輪。", "【天秤】\n揺れるバランス、揺れ続ける安定。", "【流れる水】\nひとつ所にとどまらず、姿を固めることはない", "【光る刃】\n鋭く光る刃のような、鋭いまなざし。", "【悪魔】\nあまりにも危険な魅力、それは悪魔的だった。", "【牙】\n獲物を引き裂く鋭く長い、牙。", "【輝く星】\n星は暗く小さい。だがそこに輝く。", "【冴え渡る月光】\n冷たさと安らかさが同居している。", "【照りつける太陽】\n暑い。", "【燃えさかる炎】\n炎はすべてを破壊し、すべてを滅ぼす。", "【世界】\nすべてはこの世界の中で起こり、終わる。", "【なし】"];
       return self.$tableText(title, table, sign);}
       else if (/^AKST([\+\-]?)$/['$===']($case)) {
-      sign = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      sign = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       title = "悪徳シーン表　『GoV』P16、164";
       table = ["▼ウェントス／止まない風\n【行動】殺戮者の狂気に当てられたのか、通り魔的殺人者が現れる。切り裂かれた人々の悲鳴が響き渡る。", "▼エフェクトス／原初の力\n【行動】殺戮者の配下が無法を働く。店先で金品を要求したり、暴力を振るったりしている。", "▼クレアータ／傀儡人形の王\n【行動】殺戮者の配下が人々の行動を監視している。違反した者には即座に罰が与えられる。", "▼マーテル／生ける神\n【行動】殺戮者の配下が人々に殺戮者への信仰を告白し、忠誠を宣誓するように強要している。", "▼コロナ／簒奪者\n【行動】嘆き悲しんでいる者がいる。殺戮者によって、財産、地位、家族あるいは、恋人を奪い取られたという。", "▼フィニス／永遠の人\n【行動】怪物が人々を虐殺している。この地には人間が多すぎるのだという。それが彼らの主の決定だ。", "▼エルス／無私なる愛\n【行動】殺戮者の配下が略奪を働いている。どうやら、殺戮者に献上するものを争っているようだ。", "▼アダマス／万物の保護者\n【行動】反逆者と名指しされる。人々は君たちに接触しようとしない。情報を集めるにも苦労しそうだ。", "▼アルドール／終わりなき戦い\n【行動】ならず者の集団が人々を襲っている。力を示さなければ切り捨てられるのは彼らなのだ。", "▼ファンタスマ／謀略の渦\n【行動】人々は君を見るなり逃げ出した。どうやら恐ろしい殺人者だと思われているようだ。", "▼アクシス／真理の探究者\n【行動】殺戮者の配下の手によって、人々が連れ去られている。誰ひとりもどってこない。", "▼レクス／捕縛者\n【行動】殺戮者への恐怖に駆られた人々はその命令にしたがって徒党を組み、PCたちを捜索している。", "▼アクア／澱んだ水\n【行動】人々は獣のように生きている。言葉は通じない。有効なのは力、暴力だけだ。", "▼グラディウス／暗き死の刃\n【行動】殺戮者とその配下によって虐殺が行なわれている。見渡す限り、死者ばかりだ。", "▼アングルス／純白の恐怖\n【行動】遊びとして人間狩りが行なわれている。人々は逃げ惑い、殺戮者は愉悦に笑う。", "▼ディアボルス／悪魔の囁き\n【行動】殺戮者は少年少女を召し上げている。召し上げられた者たちは音信不通となってしまう。", "▼フルキフェル／裏切り者\n【行動】人々は猜疑の目で君を見る。嘘を吐くのが普通の場所で真実を見いだせるだろうか。", "▼ステラ／破滅への愛\n【行動】街や村落が破壊されている。焼け野原の中、人々は力なくうずくまる。ここには絶望だけがあった。", "▼ルナ／奪う者\n【行動】君たちの目の前に略奪が繰り返される。略奪のために略奪を行なう殺戮者の配下たち。", "▼デクストラ／邪悪な技\n【行動】殺戮者による非道な人体実験が繰り返されている。そのための実験材料が集められている。", "▼イグニス／根源たる炎\n【行動】街や集落、あるいは店舗や住宅が焼き討ちに合う。人々は互いに陥れ、磔刑が行なわれている。", "▼オービス／闇の鎖\n【行動】世界の完全なる破滅、人類の絶滅、無作為で広範囲な虐殺が行なわれる。"];
       return self.$tableText(title, table, sign);};

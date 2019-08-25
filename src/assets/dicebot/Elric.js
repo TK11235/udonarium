@@ -43,7 +43,7 @@
 
       return "貫通、クリティカル、ファンブルの自動判定を行います。\n"
     }, TMP_Elric_getHelpMessage_3.$$arity = 0);
-    return (Opal.defn(self, '$check_1D100', TMP_Elric_check_1D100_4 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D100', TMP_Elric_check_1D100_4 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, self = this;
 
       

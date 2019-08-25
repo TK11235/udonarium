@@ -6,9 +6,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$getCrashWorldRoll', '$to_i', '$debug', '$!', '$roll', '$==', '$<=', '$+']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$getCrashWorldRoll', '$to_i', '$last_match', '$debug', '$!', '$roll', '$==', '$<=', '$+']);
   return (function($base, $super, $parent_nesting) {
     function $CrashWorld(){};
     var self = $CrashWorld = $klass($base, $super, 'CrashWorld', $CrashWorld);
@@ -37,12 +37,12 @@
     }, TMP_CrashWorld_getHelpMessage_3.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_CrashWorld_rollDiceCommand_4 = function $$rollDiceCommand(command) {
-      var $a, self = this, result = nil, $case = nil;
+      var self = this, result = nil, $case = nil;
 
       
       result = nil;
       $case = command;
-      if (/CW(\d+)/i['$===']($case)) {result = self.$getCrashWorldRoll((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i())};
+      if (/CW(\d+)/i['$===']($case)) {result = self.$getCrashWorldRoll(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i())};
       return result;
     }, TMP_CrashWorld_rollDiceCommand_4.$$arity = 1);
     return (Opal.defn(self, '$getCrashWorldRoll', TMP_CrashWorld_getCrashWorldRoll_5 = function $$getCrashWorldRoll(target) {

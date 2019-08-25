@@ -45,7 +45,7 @@
 
       return "1D100<=m 方式の判定で成否、クリティカル(01)・ファンブル(00)を自動判定します。\n"
     }, TMP_IthaWenUa_getHelpMessage_4.$$arity = 0);
-    return (Opal.defn(self, '$check_1D100', TMP_IthaWenUa_check_1D100_5 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D100', TMP_IthaWenUa_check_1D100_5 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, self = this, diceValue = nil, dice0 = nil, dice1 = nil;
 
       

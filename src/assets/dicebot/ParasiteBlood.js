@@ -57,7 +57,7 @@
       return "" + "・衝動表　(URGEx)\n" + "　\"URGE衝動レベル\"の形で指定します。\n" + "　衝動表に従って自動でダイスロールを行い、結果を表示します。\n" + "　ダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　頭に識別文字を追加して、デフォルト以外の衝動表もロールできます。\n" + "　・NURGEx　頭に「N」を付けると「新衝動表」。\n" + "　・AURGEx　頭に「A」を付けると「誤作動表」。\n" + "　・MURGEx　頭に「M」を付けると「ミュータント衝動表」になります。\n" + "　・UURGEx　頭に「U」が付くと鬼御魂の戦闘外衝動表。\n" + "　・CURGEx　頭に「C」で鬼御魂の戦闘中衝動表になります。\n" + "例）URGE1　　　urge5　　　Surge2\n" + "・D66ダイスあり\n"
     }, TMP_DemonParasite_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_nD6', TMP_DemonParasite_check_nD6_5 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_DemonParasite_check_nD6_5 = function $$check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, n1, n_max) {
       var self = this, $case = nil;
 
       
@@ -153,9 +153,9 @@ Opal.loaded(["diceBot/DemonParasite"]);
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$=~', '$to_i', '$===', '$<', '$>', '$==', '$roll', '$get_pb_urge_table', '$<=', '$get_pb_normal_urge_table', '$get_pb_aas_urge_table', '$[]', '$-']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$=~', '$last_match', '$to_i', '$===', '$<', '$>', '$==', '$roll', '$get_pb_urge_table', '$<=', '$get_pb_normal_urge_table', '$get_pb_aas_urge_table', '$[]', '$-']);
   
   self.$require("diceBot/DemonParasite");
   return (function($base, $super, $parent_nesting) {
@@ -194,8 +194,8 @@ Opal.loaded(["diceBot/DemonParasite"]);
         } else {
         return "1"
       };
-      initialWord = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      urgelv = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      initialWord = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      urgelv = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       $case = initialWord;
       if (""['$===']($case)) {urge_type = 1}
       else if (/A/i['$===']($case)) {urge_type = 2}

@@ -57,7 +57,7 @@
       return string
     }, TMP_Insane_Korean_changeText_5.$$arity = 1);
     
-    Opal.defn(self, '$dice_command_xRn', TMP_Insane_Korean_dice_command_xRn_6 = function $$dice_command_xRn(string, nick_e) {
+    Opal.defn(self, '$dice_command_xRn', TMP_Insane_Korean_dice_command_xRn_6 = function $$dice_command_xRn(_string, _nick_e) {
       var self = this;
 
       return ""

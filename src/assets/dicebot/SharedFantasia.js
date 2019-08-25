@@ -64,7 +64,7 @@
         return "2D6"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7))};
       return string;
     }, TMP_SharedFantasia_changeText_8.$$arity = 1);
-    return (Opal.defn(self, '$check_2D6', TMP_SharedFantasia_check_2D6_9 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_2D6', TMP_SharedFantasia_check_2D6_9 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, resultString = nil, critical = nil, fumble = nil, totalValueBonus = nil;
 
       

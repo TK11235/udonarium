@@ -12,9 +12,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$judgeRoll', '$nil?', '$upcase', '$===', '$getRandomSkillTableResult', '$getTableDiceCommandResult', '$=~', '$to_i', '$==', '$getChangedModifyText', '$[]', '$parren_killer', '$+', '$roll', '$collect', '$split', '$min', '$<=', '$length', '$first', '$check_success', '$each_with_index', '$clone', '$delete_at', '$max', '$-', '$<<', '$uniq!', '$join', '$each', '$>=', '$check_hit', '$bcdice', '$get_table_by_2d6', '$get_table_by_1d6', '$getD66Table', '$get_table_by_d66_swap', '$raise', '$map', '$kind_of?', '$!=', '$size', '$inspect', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$judgeRoll', '$nil?', '$upcase', '$===', '$getRandomSkillTableResult', '$getTableDiceCommandResult', '$=~', '$last_match', '$to_i', '$==', '$getChangedModifyText', '$[]', '$parren_killer', '$+', '$roll', '$collect', '$split', '$min', '$<=', '$length', '$first', '$check_success', '$each_with_index', '$clone', '$delete_at', '$max', '$-', '$<<', '$uniq!', '$join', '$each', '$>=', '$check_hit', '$bcdice', '$get_table_by_2d6', '$get_table_by_1d6', '$getD66Table', '$get_table_by_d66_swap', '$raise', '$map', '$is_a?', '$!=', '$size', '$inspect', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $HatsuneMiku(){};
     var self = $HatsuneMiku = $klass($base, $super, 'HatsuneMiku', $HatsuneMiku);
@@ -78,20 +78,20 @@
         } else {
         return nil
       };
-      skillRank = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      modifyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      signOfInequality = (function() {if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](7))['$nil?']())) {
+      skillRank = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      modifyText = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      signOfInequality = (function() {if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(7)['$nil?']())) {
         return ">="
         } else {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](7))
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(7)
       }; return nil; })();
-      targetText = (function() {if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](9))['$nil?']())) {
+      targetText = (function() {if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(9)['$nil?']())) {
         return "4"
         } else {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](9))
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(9)
       }; return nil; })();
-      specialNum = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      specialNum = ($truthy($a = specialNum) ? $a : (($b = $gvars['~']) === nil ? nil : $b['$[]'](11)));
+      specialNum = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
+      specialNum = ($truthy($a = specialNum) ? $a : Opal.const_get_relative($nesting, 'Regexp').$last_match(11));
       specialNum = ($truthy($a = specialNum) ? $a : 6);
       specialNum = specialNum.$to_i();
       specialText = (function() {if (specialNum['$=='](6)) {
@@ -198,8 +198,8 @@ if (value == null) value = nil;
       
       newTable = $send(table, 'map', [], (TMP_13 = function(item){var self = TMP_13.$$s || this, $a;
 if (item == null) item = nil;
-      if ($truthy(($truthy($a = item['$kind_of?'](Opal.const_get_relative($nesting, 'String'))) ? /^(\d+):(.*)/['$==='](item) : $a))) {
-          return [(($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))]
+      if ($truthy(($truthy($a = item['$is_a?'](Opal.const_get_relative($nesting, 'String'))) ? /^(\d+):(.*)/['$==='](item) : $a))) {
+          return [Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(2)]
           } else {
           return item
         }}, TMP_13.$$s = self, TMP_13.$$arity = 1, TMP_13));

@@ -52,7 +52,7 @@
 
       return self.$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
     }, TMP_Arianrhod_check_2D6_5.$$arity = 8);
-    return (Opal.defn(self, '$check_nD6', TMP_Arianrhod_check_nD6_6 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_nD6', TMP_Arianrhod_check_nD6_6 = function $$check_nD6(total_n, _dice_n, signOfInequality, diff, dice_cnt, _dice_max, n1, n_max) {
       var self = this, result = nil;
 
       

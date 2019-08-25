@@ -21,9 +21,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$checkRoll', '$get_affiliation_table', '$get_identity_table', '$get_affiliation_table2', '$get_identity_table2', '$<', '$>', '$roll', '$collect', '$split', '$size', '$find_all', '$<=', '$!', '$nil?', '$*', '$+', '$get_strave_1d100_table_result', '$floor', '$/', '$-', '$get_table_by_number', '$get_strave_table_result']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$checkRoll', '$get_affiliation_table', '$get_identity_table', '$get_affiliation_table2', '$get_identity_table2', '$<', '$>', '$roll', '$collect', '$split', '$size', '$find_all', '$<=', '$!', '$nil?', '$*', '$+', '$get_strave_1d100_table_result', '$floor', '$/', '$-', '$get_table_by_number', '$get_strave_table_result']);
   return (function($base, $super, $parent_nesting) {
     function $Strave(){};
     var self = $Strave = $klass($base, $super, 'Strave', $Strave);
@@ -66,18 +66,18 @@
     }, TMP_Strave_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Strave_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, output = nil, $case = nil, diceCount = nil, target = nil, damage = nil;
+      var $a, self = this, output = nil, $case = nil, diceCount = nil, target = nil, damage = nil;
 
       
       output = (function() {$case = command.$upcase();
       if (/MP(\d+)$/i['$===']($case)) {
       diceCount = 2;
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$checkRoll(diceCount, target, nil);}
       else if (/(\d+)ST(\d+)(x|\*)(\d+)$/i['$===']($case)) {
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      damage = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : 0).$to_i();
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      damage = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : 0).$to_i();
       return self.$checkRoll(diceCount, target, damage);}
       else if ("AFF"['$===']($case)) {return self.$get_affiliation_table()}
       else if ("IDT"['$===']($case)) {return self.$get_identity_table()}

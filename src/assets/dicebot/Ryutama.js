@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$getDiceType', '$==', '$parren_killer', '$+', '$getDiffculty', '$getRollValue', '$getResultText', '$empty?', '$getModifyString', '$getBaseText', '$!=', '$isValidDiceOne', '$isValidDice', '$floor', '$/', '$%', '$include?', '$nil?', '$rand', '$isFamble', '$isCritical', '$>=', '$>', '$to_s', '$<']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$last_match', '$getDiceType', '$==', '$parren_killer', '$+', '$getDiffculty', '$getRollValue', '$getResultText', '$empty?', '$getModifyString', '$getBaseText', '$!=', '$isValidDiceOne', '$isValidDice', '$floor', '$/', '$%', '$include?', '$nil?', '$rand', '$isFamble', '$isCritical', '$>=', '$>', '$to_s', '$<']);
   return (function($base, $super, $parent_nesting) {
     function $Ryutama(){};
     var self = $Ryutama = $klass($base, $super, 'Ryutama', $Ryutama);
@@ -71,10 +71,10 @@
         return "";
       };
       self.$debug("matched");
-      dice1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      dice2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
-      modifyString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      difficulty = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
+      dice1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      dice2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
+      modifyString = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
+      difficulty = Opal.const_get_relative($nesting, 'Regexp').$last_match(6);
       $b = self.$getDiceType(dice1, dice2), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), (dice2 = ($a[1] == null ? nil : $a[1])), $b;
       if (dice1['$=='](0)) {
         return ""};
@@ -90,7 +90,7 @@
         result = "" + " ＞ " + (result)
       };
       value1Text = "" + (value1) + "(" + (dice1) + ")";
-      value2Text = (function() {if ($truthy(value2['$=='](0))) {
+      value2Text = (function() {if (value2['$=='](0)) {
         return ""
         } else {
         return "" + "+" + (value2) + "(" + (dice2) + ")"

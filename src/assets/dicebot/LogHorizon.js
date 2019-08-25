@@ -24,9 +24,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$==', '$empty?', '$parren_killer', '$size', '$select', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$floor', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$match', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getOtherTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$getOtherTresureResultStringEx', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$to_s', '$getEastalExplorationResultTable', '$chomp']);
+  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$last_match', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$empty?', '$parren_killer', '$size', '$select', '$==', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$floor', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$match', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getOtherTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$getOtherTresureResultStringEx', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$to_s', '$getEastalExplorationResultTable', '$chomp']);
   return (function($base, $super, $parent_nesting) {
     function $LogHorizon(){};
     var self = $LogHorizon = $klass($base, $super, 'LogHorizon', $LogHorizon);
@@ -81,9 +81,9 @@
         } else {
         return nil
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      modifyText = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : "");
-      difficultyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      modifyText = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : "");
+      difficultyText = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       modify = self.$getValue(modifyText, 0);
       difficulty = self.$getValue(difficultyText, nil);
       $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
@@ -124,7 +124,7 @@ if (i == null) i = nil;
       var $a, self = this;
 
       
-      if ($truthy(($truthy($a = text['$=='](nil)) ? $a : text['$empty?']()))) {
+      if ($truthy(($truthy($a = text['$nil?']()) ? $a : text['$empty?']()))) {
         return defaultValue};
       return self.$parren_killer($rb_plus($rb_plus("(0", text), ")")).$to_i();
     }, TMP_LogHorizon_getValue_9.$$arity = 2);
@@ -155,20 +155,19 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      is_special = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $rb_gt((($b = $gvars['~']) === nil ? nil : $b['$[]'](1)).$length(), 1) : $a);
-      rank = (function() {if ($truthy(($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))['$!=']("") : $a))) {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      is_special = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $rb_gt(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$length(), 1) : $a);
+      rank = (function() {if ($truthy(($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$!=']("") : $a))) {
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()
         } else {
         return nil
       }; return nil; })();
       if ($truthy(($truthy($a = rank['$!']()) ? is_special['$!']() : $a))) {
         return nil};
-      if ($truthy(rank['$!']())) {
-        rank = 0};
-      is_choice = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4))['$nil?']()['$!']();
-      dice_value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      modifyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      rank = ($truthy($a = rank) ? $a : 0);
+      is_choice = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)['$nil?']()['$!']();
+      dice_value = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
+      modifyText = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       modify = self.$getValue(modifyText, 0);
       tableName = "";
       tables = nil;
@@ -479,7 +478,7 @@ if (e == null) e = nil;
         } else {
         return nil
       };
-      rank = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      rank = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       table_1 = ["接頭語：気合の　対応タグ：すべての武器\nアイテム効果：この武器の【攻撃力】に＋１する。", "接頭語：秘術の　対応タグ：[杖][魔石]\nアイテム効果：このアイテムの【魔力】を＋１する。", "接頭語：一撃の　対応タグ：[白兵攻撃]可能な武器\nアイテム効果：〔起動：ダメージロール〕この武器による[白兵攻撃]のダメージロールに＋７する。シナリオ１回使用可能。", "接頭語：狙撃の　対応タグ：[弓][投擲]\nアイテム効果：〔起動：行動〕この武器による[射撃攻撃]と同時に使用する。攻撃の射程を＋２Ｓｑする。シナリオ１回使用可能。", "接頭語：必殺の　対応タグ：すべての武器\nアイテム効果：〔起動：判定直後〕この武器による[武器攻撃]による[命中判定]のダイスに６の出目が１つ以上あれば、判定をクリティカルにする。シナリオ１回使用可能。", "接頭語：火炎の　対応タグ：すべての武器、楽器\nアイテム効果：アイテムに[火炎]タグを追加する。（この効果を選んだ時、タグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「冷気の」「電撃の」のように変更すること）", "接頭語：気合の　対応タグ：すべての武器\nアイテム効果：この武器の【攻撃力】に＋１する。", "接頭語：秘術の　対応タグ：[杖][魔石]\nアイテム効果：このアイテムの【魔力】を＋１する。", "接頭語：一撃の　対応タグ：[白兵攻撃]可能な武器\nアイテム効果：〔起動：ダメージロール〕この武器による[白兵攻撃]のダメージロールに＋７する。シナリオ１回使用可能。", "接頭語：狙撃の　対応タグ：[弓][投擲]\nアイテム効果：〔起動：行動〕この武器による[射撃攻撃]と同時に使用する。攻撃の射程を＋２Ｓｑする。シナリオ１回使用可能。", "接頭語：必殺の　対応タグ：すべての武器\nアイテム効果：〔起動：判定直後〕この武器による[武器攻撃]による[命中判定]のダイスに６の出目が１つ以上あれば、判定をクリティカルにする。シナリオ１回使用可能。", "接頭語：火炎の　対応タグ：すべての武器、楽器\nアイテム効果：アイテムに[火炎]タグを追加する。（この効果を選んだ時、タグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「冷気の」「電撃の」のように変更すること）", "接頭語：炎使いの　対応タグ：[杖][魔石][腕部]\nアイテム効果：〔起動：ダメージロール〕あなたが行う[火炎]タグを持つ攻撃のダメージロールに＋７する。シナリオ１回使用可能。（この効果を選んだ時、タグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「氷使いの」「雷使いの」のように変更すること）", "接頭語：鉄身の　対応タグ：[盾][重鎧][中鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近距離からの攻撃）：３]を得る。", "接頭語：矢除けの　対応タグ：[盾][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近以外からの攻撃）：３]を得る。", "接頭語：火除けの　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（火炎）：１０]を得る。（この効果を選んだ時、タグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「氷除けの」「雷除けの」のように変更すること）", "接頭語：根性の　対応タグ：[重鎧][頭部]\nアイテム効果：〔起動：本文〕あなたがBSを受けた直後に使用する。直前に受けたBSから１つ選んで解除する。シナリオ１回使用可能。", "接頭語：癒しの　対応タグ：[腕部]\nアイテム効果：あなたの【回復力】を＋２する。", "接頭語：炎使いの　対応タグ：[杖][魔石][腕部]\nアイテム効果：〔起動：ダメージロール〕あなたが行う[火炎]タグを持つ攻撃のダメージロールに＋７する。シナリオ１回使用可能。（この効果を選んだ時、タグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「氷使いの」「雷使いの」のように変更すること）", "接頭語：鉄身の　対応タグ：[盾][重鎧][中鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近距離からの攻撃）：３]を得る。", "接頭語：矢除けの　対応タグ：[盾][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近以外からの攻撃）：３]を得る。", "接頭語：火除けの　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（火炎）：１０]を得る。（この効果を選んだ時、タグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「氷除けの」「雷除けの」のように変更すること）", "接頭語：根性の　対応タグ：[重鎧][頭部]\nアイテム効果：〔起動：本文〕あなたがBSを受けた直後に使用する。直前に受けたBSから１つ選んで解除する。シナリオ１回使用可能。", "接頭語：癒しの　対応タグ：[腕部]\nアイテム効果：あなたの【回復力】を＋２する。", "接頭語：スナネズミの　対応タグ：[腕部][外套]\nアイテム効果：〔起動：クリンナップ〕あなたの【ヘイト】をー２する。シナリオ１回使用可能。", "接頭語：フクロウの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：インスタント〕あなたは[暗視]タグを得る。この効果はCSとして扱う。シナリオ１回使用可能。", "接頭語：ヤマイワナの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：インスタント〕あなたは[水棲]タグを得る。この効果はCSとして扱う。シナリオ１回使用可能。", "接頭語：目利きの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたがドロップ品ロールを行った直後に使用する。そのロールを振り直す。シナリオ１回使用可能。", "接頭語：宝探しの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたが財宝表ロールを行った直後に使用する。そのロールを振り直す。シナリオ１回使用可能。", "接頭語：早変わりの　対応タグ：[鞄]\nアイテム効果：〔起動：インスタント〕あなたは即座に《装備の変更》を行う。シーン１回使用可能。", "接頭語：スナネズミの　対応タグ：[腕部][外套]\nアイテム効果：〔起動：クリンナップ〕あなたの【ヘイト】をー２する。シナリオ１回使用可能。", "接頭語：フクロウの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：インスタント〕あなたは[暗視]タグを得る。この効果はCSとして扱う。シナリオ１回使用可能。", "接頭語：ヤマイワナの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：インスタント〕あなたは[水棲]タグを得る。この効果はCSとして扱う。シナリオ１回使用可能。", "接頭語：目利きの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたがドロップ品ロールを行った直後に使用する。そのロールを振り直す。シナリオ１回使用可能。", "接頭語：宝探しの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたが財宝表ロールを行った直後に使用する。そのロールを振り直す。シナリオ１回使用可能。", "接頭語：早変わりの　対応タグ：[鞄]\nアイテム効果：〔起動：インスタント〕あなたは即座に《装備の変更》を行う。シーン１回使用可能。"];
       table_2 = ["接頭語：怒りの　対応タグ：[両手]武器\nアイテム効果：〔起動：ダメージロール〕この武器による[武器攻撃]のダメージロールに＋[あなたの【ヘイト】]する。シーン１回使用可能。", "接頭語：連撃の　対応タグ：[片手]武器\nアイテム効果：〔起動：判定直後〕この武器による[武器攻撃]の[命中判定]を振り直す。シーン１回使用可能。", "接頭語：鋭刃の　対応タグ：[剣][刀][槍]\nアイテム効果：この武器による[武器攻撃]のダメージロールに＋１Ｄする。", "接頭語：痛撃の　対応タグ：[槌斧][格闘][鞭][杖]\nアイテム効果：この武器による[武器攻撃]のダメージロールに＋１Ｄする。", "接頭語：魔弾の　対応タグ：[弓][投擲]\nアイテム効果：この武器による[武器攻撃]のダメージロールに＋１Ｄする。", "接頭語：理力の　対応タグ：すべての武器、[魔石][楽器]\nアイテム効果：あなたの[魔法攻撃][特殊攻撃]のダメージロールに＋１Ｄする。この効果は複数累積しない。", "接頭語：怒りの　対応タグ：[両手]武器\nアイテム効果：〔起動：ダメージロール〕この武器による[武器攻撃]のダメージロールに＋[あなたの【ヘイト】]する。シーン１回使用可能。", "接頭語：連撃の　対応タグ：[片手]武器\nアイテム効果：〔起動：判定直後〕この武器による[武器攻撃]の[命中判定]を振り直す。シーン１回使用可能。", "接頭語：鋭刃の　対応タグ：[剣][刀][槍]\nアイテム効果：この武器による[武器攻撃]のダメージロールに＋１Ｄする。", "接頭語：痛撃の　対応タグ：[槌斧][格闘][鞭][杖]\nアイテム効果：この武器による[武器攻撃]のダメージロールに＋１Ｄする。", "接頭語：魔弾の　対応タグ：[弓][投擲]\nアイテム効果：この武器による[武器攻撃]のダメージロールに＋１Ｄする。", "接頭語：理力の　対応タグ：すべての武器、[魔石][楽器]\nアイテム効果：あなたの[魔法攻撃][特殊攻撃]のダメージロールに＋１Ｄする。この効果は複数累積しない。", "接頭語：鬼殺しの　対応タグ：すべての武器\nアイテム効果：この武器による[人型]への[武器攻撃]のダメージロールに＋１Ｄする。（この効果を選んだ時、種族のタグを[自然][精霊][幻獣][不死][人造][人間]のいずれかに変更してもよい。その場合は接頭語も「精霊殺しの」「幻獣殺しの」のように変更すること）", "接頭語：堅守の　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：この防具の【物理防御力】に＋４する。", "接頭語：抗魔の　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：この防具の【魔法防御力】に＋４する。", "接頭語：防壁の　対応タグ：[盾][頭部]\nアイテム効果：あなたはシーン開始時に[障壁：１０]を得る。", "接頭語：忍耐の　対応タグ：[盾][頭部]\nアイテム効果：〔起動：本文〕あなたが強制的な移動を受けた時に使用する。その移動距離をー１Ｓｑする。", "接頭語：護法の　対応タグ：[腕部]\nアイテム効果：あなたが与える[障壁]の強度は＋５される。", "接頭語：鬼殺しの　対応タグ：すべての武器\nアイテム効果：この武器による[人型]への[武器攻撃]のダメージロールに＋１Ｄする。（この効果を選んだ時、種族のタグを[自然][精霊][幻獣][不死][人造][人間]のいずれかに変更してもよい。その場合は接頭語も「精霊殺しの」「幻獣殺しの」のように変更すること）", "接頭語：堅守の　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：この防具の【物理防御力】に＋４する。", "接頭語：抗魔の　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：この防具の【魔法防御力】に＋４する。", "接頭語：防壁の　対応タグ：[盾][頭部]\nアイテム効果：あなたはシーン開始時に[障壁：１０]を得る。", "接頭語：忍耐の　対応タグ：[盾][頭部]\nアイテム効果：〔起動：本文〕あなたが強制的な移動を受けた時に使用する。その移動距離をー１Ｓｑする。", "接頭語：護法の　対応タグ：[腕部]\nアイテム効果：あなたが与える[障壁]の強度は＋５される。", "接頭語：脈動の　対応タグ：[腕部]\nアイテム効果：あなたが与える[再生]の強度は＋３される。", "接頭語：疾走の　対応タグ：[脚部][外套]\nアイテム効果：〔起動：行動〕あなたが《ラン》《ダッシュ》を行う時に使用する。その移動距離に＋１Ｓｑする。シーン１回使用可能。", "接頭語：瞬速の　対応タグ：[脚部][外套]\nアイテム効果：このアイテムの[行動修正]に＋３する。", "接頭語：逆境の　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたが[戦闘不能]になった直後に使用できる。あなたは【因果力】１点を得る。シーン１回使用可能。", "接頭語：森渡りの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：あなたはシーン開始時に[軽減（[天然]プロップ、ギミックからのダメージ）：１５]を得る。（この効果を選んだ時、タグを[魔法][機械]のいずれかに変えてもよい。その場合は、接頭語も「魔渡りの」「罠渡りの」のように変更すること）", "接頭語：旅人の　対応タグ：[鞄]\nアイテム効果：このアイテムに[所持品スロット]４個を追加する。", "接頭語：脈動の　対応タグ：[腕部]\nアイテム効果：あなたが与える[再生]の強度は＋３される。", "接頭語：疾走の　対応タグ：[脚部][外套]\nアイテム効果：〔起動：行動〕あなたが《ラン》《ダッシュ》を行う時に使用する。その移動距離に＋１Ｓｑする。シーン１回使用可能。", "接頭語：瞬速の　対応タグ：[脚部][外套]\nアイテム効果：このアイテムの[行動修正]に＋３する。", "接頭語：逆境の　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたが[戦闘不能]になった直後に使用できる。あなたは【因果力】１点を得る。シーン１回使用可能。", "接頭語：森渡りの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：あなたはシーン開始時に[軽減（[天然]プロップ、ギミックからのダメージ）：１５]を得る。（この効果を選んだ時、タグを[魔法][機械]のいずれかに変えてもよい。その場合は、接頭語も「魔渡りの」「罠渡りの」のように変更すること）", "接頭語：旅人の　対応タグ：[鞄]\nアイテム効果：このアイテムに[所持品スロット]４個を追加する。"];
       table_3 = ["接頭語：気迫の　対応タグ：すべての武器\nアイテム効果：この武器の【攻撃力】に＋３する。", "接頭語：神秘の　対応タグ：[杖][魔石]\nアイテム効果：このアイテムの【魔力】に＋３する。", "接頭語：遠当ての　対応タグ：[弓][投擲]\nアイテム効果：この武器の射程に＋１Ｓｑする。", "接頭語：吸血の　対応タグ：[白兵攻撃]可能な武器\nアイテム効果：この武器による[白兵攻撃]でダメージを与えた時、あなたの【HP】は５点回復する。", "接頭語：衝撃の　対応タグ：[片手]武器\nアイテム効果：この武器による《基本武器攻撃》でダメージを与えた時、攻撃の対象に[放心]を与える。", "接頭語：怒号の　対応タグ：[両手]武器\nアイテム効果：この武器による《基本武器攻撃》でダメージを与えた時、攻撃の対象に[萎縮]を与える。", "接頭語：気迫の　対応タグ：すべての武器\nアイテム効果：この武器の【攻撃力】に＋３する。", "接頭語：神秘の　対応タグ：[杖][魔石]\nアイテム効果：このアイテムの【魔力】に＋３する。", "接頭語：遠当ての　対応タグ：[弓][投擲]\nアイテム効果：この武器の射程に＋１Ｓｑする。", "接頭語：吸血の　対応タグ：[白兵攻撃]可能な武器\nアイテム効果：この武器による[白兵攻撃]でダメージを与えた時、あなたの【HP】は５点回復する。", "接頭語：衝撃の　対応タグ：[片手]武器\nアイテム効果：この武器による《基本武器攻撃》でダメージを与えた時、攻撃の対象に[放心]を与える。", "接頭語：怒号の　対応タグ：[両手]武器\nアイテム効果：この武器による《基本武器攻撃》でダメージを与えた時、攻撃の対象に[萎縮]を与える。", "接頭語：甲羅の　対応タグ：[盾][重鎧][中鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近距離からの攻撃）：１０]を得る。", "接頭語：矢弾きの　対応タグ：[盾][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近以外からの攻撃）：１０]を得る。", "接頭語：耐火の　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（火炎）：２５]を得る。（この効果を選んだ時、軽減するタグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「耐冷の」「耐電の」のように変更すること）", "接頭語：城砦の　対応タグ：[盾][頭部]\nアイテム効果：あなたはシーン開始時に【障壁：２０】を得る。", "接頭語：物見の　対応タグ：[頭部]\nアイテム効果：あなたが行う[偵察]タグを持つ行動、および《異常探知》の判定に＋１Ｄする。", "接頭語：快癒の　対応タグ：[腕部]\nアイテム効果：あなたの【回復力】に＋５する。", "接頭語：甲羅の　対応タグ：[盾][重鎧][中鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近距離からの攻撃）：１０]を得る。", "接頭語：矢弾きの　対応タグ：[盾][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（至近以外からの攻撃）：１０]を得る。", "接頭語：耐火の　対応タグ：[重鎧][中鎧][軽鎧]\nアイテム効果：あなたはシーン開始時に[軽減（火炎）：２５]を得る。（この効果を選んだ時、軽減するタグを[冷気][電撃][邪毒][光輝][精神]のいずれかに変えてもよい。その場合は接頭語も「耐冷の」「耐電の」のように変更すること）", "接頭語：城砦の　対応タグ：[盾][頭部]\nアイテム効果：あなたはシーン開始時に【障壁：２０】を得る。", "接頭語：物見の　対応タグ：[頭部]\nアイテム効果：あなたが行う[偵察]タグを持つ行動、および《異常探知》の判定に＋１Ｄする。", "接頭語：快癒の　対応タグ：[腕部]\nアイテム効果：あなたの【回復力】に＋５する。", "接頭語：罠外しの　対応タグ：[腕部]\nアイテム効果：〔起動：判定直前〕あなたが《プロップ解除》を行う時に使用する。その判定はクリティカルとなる。シーン１回使用可能。", "接頭語：不動の　対応タグ：[脚部][外套]\nアイテム効果：あなたは[阻止能力]を失わない。", "接頭語：影走りの　対応タグ：[脚部][外套]\nアイテム効果：あなたが[隠密状態]の時に《ラン》を行っても、[隠密状態]は解除されない。", "接頭語：深海の　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：あなたは[暗視][水棲]タグを得る。", "接頭語：金運の　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたが財宝表ロールまたはドロップ表ロールを行った直後に使用する。そのロールを振り直す。シーン１回使用可能。", "接頭語：罠避けの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：ダメージ適用直前〕あなたに適用される予定のプロップおよび[ギミック]によるダメージを無効にする。シナリオ１回使用可能。", "接頭語：罠外しの　対応タグ：[腕部]\nアイテム効果：〔起動：判定直前〕あなたが《プロップ解除》を行う時に使用する。その判定はクリティカルとなる。シーン１回使用可能。", "接頭語：不動の　対応タグ：[脚部][外套]\nアイテム効果：あなたは[阻止能力]を失わない。", "接頭語：影走りの　対応タグ：[脚部][外套]\nアイテム効果：あなたが[隠密状態]の時に《ラン》を行っても、[隠密状態]は解除されない。", "接頭語：深海の　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：あなたは[暗視][水棲]タグを得る。", "接頭語：金運の　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：本文〕あなたが財宝表ロールまたはドロップ表ロールを行った直後に使用する。そのロールを振り直す。シーン１回使用可能。", "接頭語：罠避けの　対応タグ：[補助装備][鞄][楽器]\nアイテム効果：〔起動：ダメージ適用直前〕あなたに適用される予定のプロップおよび[ギミック]によるダメージを無効にする。シナリオ１回使用可能。"];
@@ -529,7 +528,7 @@ if (e == null) e = nil;
     }, TMP_LogHorizon_getPCNameDiceCommandResult_41.$$arity = 1);
     
     Opal.defn(self, '$getInventionAttributeTextDiceCommandResult', TMP_LogHorizon_getInventionAttributeTextDiceCommandResult_47 = function $$getInventionAttributeTextDiceCommandResult(command) {
-      var $a, $b, TMP_42, self = this, tableName = nil, table_indicate_string = nil, is_single = nil, result = nil, number = nil;
+      var $a, TMP_42, self = this, tableName = nil, table_indicate_string = nil, is_single = nil, result = nil, number = nil;
 
       
       if ($truthy(/IAT([ABMDLT]*)/['$==='](command))) {
@@ -537,18 +536,18 @@ if (e == null) e = nil;
         return nil
       };
       tableName = "ロデ研の新発明";
-      table_indicate_string = (function() {if ($truthy(($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))['$!=']("") : $a))) {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))
+      table_indicate_string = (function() {if ($truthy(($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$!=']("") : $a))) {
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(1)
         } else {
         return "MDLT"
       }; return nil; })();
       is_single = table_indicate_string.$length()['$=='](1);
       result = [];
       number = [];
-      $send(table_indicate_string.$split(/(?:)/), 'each', [], (TMP_42 = function(char$){var self = TMP_42.$$s || this, $c, $d, TMP_43, TMP_44, TMP_45, TMP_46, dice_result = nil, dice_str = nil, $case = nil;
+      $send(table_indicate_string.$split(/(?:)/), 'each', [], (TMP_42 = function(char$){var self = TMP_42.$$s || this, $b, $c, TMP_43, TMP_44, TMP_45, TMP_46, dice_result = nil, dice_str = nil, $case = nil;
 if (char$ == null) char$ = nil;
       
-        $d = self.$roll(1, 6), $c = Opal.to_ary($d), (dice_result = ($c[0] == null ? nil : $c[0])), (dice_str = ($c[1] == null ? nil : $c[1])), $d;
+        $c = self.$roll(1, 6), $b = Opal.to_ary($c), (dice_result = ($b[0] == null ? nil : $b[0])), (dice_str = ($b[1] == null ? nil : $b[1])), $c;
         number['$<<'](dice_str);
         return result['$<<']((function() {$case = char$;
         if ("A"['$===']($case) || "M"['$===']($case)) {return $send(["光って回って音が鳴る", "何かに目覚める", "硬くて強い", "すごく速い", "大量生産できる", "よい手触り"], 'map', [], (TMP_43 = function(e){var self = TMP_43.$$s || this;
@@ -636,15 +635,15 @@ if (table == null) table = nil;
     }, TMP_LogHorizon_getAbandonedChildDiceCommandResult_57.$$arity = 1);
     
     Opal.defn(self, '$getMusicalInstrumentTypeDiceCommandResult', TMP_LogHorizon_getMusicalInstrumentTypeDiceCommandResult_58 = function $$getMusicalInstrumentTypeDiceCommandResult(command) {
-      var $a, $b, $c, $d, self = this, type = nil, is_roll = nil, tableName = nil, type_name = nil, dice = nil, result = nil;
+      var $a, $b, $c, self = this, type = nil, is_roll = nil, tableName = nil, type_name = nil, dice = nil, result = nil;
 
       
       if ($truthy(/MII(\d?)/['$==='](command))) {
         } else {
         return nil
       };
-      $b = (function() {if ($truthy(($truthy($c = (($d = $gvars['~']) === nil ? nil : $d['$[]'](1))) ? (($d = $gvars['~']) === nil ? nil : $d['$[]'](1))['$!=']("") : $c))) {
-        return [(($c = $gvars['~']) === nil ? nil : $c['$[]'](1)).$to_i(), false]
+      $b = (function() {if ($truthy(($truthy($c = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$!=']("") : $c))) {
+        return [Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), false]
         } else {
         return self.$roll(1, 6)
       }; return nil; })(), $a = Opal.to_ary($b), (type = ($a[0] == null ? nil : $a[0])), (is_roll = ($a[1] == null ? nil : $a[1])), $b;

@@ -62,7 +62,7 @@
 
       return "成功、失敗、決定的成功、決定的失敗の表示とクリティカル・ファンブル値計算の実装。\n"
     }, TMP_PhantasmAdventure_getHelpMessage_4.$$arity = 0);
-    return (Opal.defn(self, '$check_1D20', TMP_PhantasmAdventure_check_1D20_5 = function $$check_1D20(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_1D20', TMP_PhantasmAdventure_check_1D20_5 = function $$check_1D20(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, $b, self = this, skill_mod = nil, fumble = nil, critical = nil, dice_now = nil, fum_num = nil, fum_str = nil, crit_num = nil;
 
       

@@ -59,7 +59,7 @@
       return "" + "・各種表\n" + "　・(無印)シーン表　ST／ファンブル表　FT／感情表　ET\n" + "　　　／変調表　WT／戦場表　BT／異形表　MT／ランダム特技決定表　RTT\n" + "　・(弐)都市シーン表　CST／館シーン表　　MST／出島シーン表　DST\n" + "　・(参)トラブルシーン表　TST／日常シーン表　NST／回想シーン表　KST\n" + "　・(死)東京シーン表　TKST／戦国シーン表　GST\n" + "　・(乱)戦国変調表　GWT\n" + "　・(リプレイ戦1〜2巻)学校シーン表　GAST／京都シーン表　KYST\n" + "　　　／神社仏閣シーン表　JBST\n" + "　・(怪)怪ファンブル表　KFT／怪変調表　KWT\n" + "　・（その他）秋空に雪舞えばシーン表　AKST／災厄シーン表　CLST\n" + "　　／出島EXシーン表　DXST／斜歯ラボシーン表　HLST\n" + "　　／夏の終わりシーン表　NTST／培養プラントシーン表　　PLST\n" + "　　・忍秘伝　　中忍試験シーン表　HC/滅びの塔シーン表　HT/影の街でシーン表　HK\n" + "　　/夜行列車シーン表　HY/病院シーン表　HO/龍動シーン表　HR/密室シーン表　HM/催眠シーン表　HS\n" + "・D66ダイスあり\n"
     }, TMP_ShinobiGami_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_ShinobiGami_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_ShinobiGami_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       

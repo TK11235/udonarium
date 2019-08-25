@@ -21,9 +21,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$===', '$check', '$getDateBothResult', '$to_i', '$getDateResult', '$getDateValue', '$checkAnyCommand', '$empty?', '$getTableCommandResult', '$upcase', '$getClassRoomBreakTable', '$getSchoolStoreBrakeTable', '$getClubRoomBrakeTable', '$getStudentCouncilBrakeTable', '$getDormitoryBrakeTable', '$getLibraryBrakeTable', '$getRoofBrakeTable', '$getLaboratoryBrakeTable', '$getPoolBrakeTable', '$getInnerCourtBrakeTable', '$getShoppingAvenueBrakeTable', '$getDevastationBrakeTable', '$getGateBrakeTable', '$getBattleFieldTable', '$getFatalWoundsTable', '$getFumbleTable', '$getRandomNpcSchoolLife', '$getRandomNpcOther', '$getRandomNpcDownClassmen', '$getRandomNpcUpperClassmen', '$getUsuallyEncount', '$getBossEncount', '$getValue', '$roll', '$+', '$getValueString', '$==', '$getSpecialResult', '$getCheckResult', '$nil?', '$>', '$<', '$getSuccessRank', '$getSuccessResult', '$>=', '$ceil', '$/', '$-', '$getCriticalResult', '$getFambleResultText', '$*', '$getDateTableByType', '$get_table_by_number', '$changePcName', '$getDateTable', '$getFrindDateTable', '$getOnewayDateTable', '$getMidnightDateTable', '$gsub', '$to_s', '$getBreakTable', '$[]', '$getD6Table', '$getRandomNpc', '$get_table_by_d66_swap', '$getEncountTableResult', '$last', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$===', '$last_match', '$check', '$getDateBothResult', '$to_i', '$getDateResult', '$getDateValue', '$checkAnyCommand', '$empty?', '$getTableCommandResult', '$upcase', '$getClassRoomBreakTable', '$getSchoolStoreBrakeTable', '$getClubRoomBrakeTable', '$getStudentCouncilBrakeTable', '$getDormitoryBrakeTable', '$getLibraryBrakeTable', '$getRoofBrakeTable', '$getLaboratoryBrakeTable', '$getPoolBrakeTable', '$getInnerCourtBrakeTable', '$getShoppingAvenueBrakeTable', '$getDevastationBrakeTable', '$getGateBrakeTable', '$getBattleFieldTable', '$getFatalWoundsTable', '$getFumbleTable', '$getRandomNpcSchoolLife', '$getRandomNpcOther', '$getRandomNpcDownClassmen', '$getRandomNpcUpperClassmen', '$getUsuallyEncount', '$getBossEncount', '$getValue', '$roll', '$+', '$getValueString', '$==', '$getSpecialResult', '$getCheckResult', '$nil?', '$>', '$<', '$getSuccessRank', '$getSuccessResult', '$>=', '$ceil', '$/', '$-', '$getCriticalResult', '$getFambleResultText', '$*', '$getDateTableByType', '$get_table_by_number', '$changePcName', '$getDateTable', '$getFrindDateTable', '$getOnewayDateTable', '$getMidnightDateTable', '$gsub', '$to_s', '$getBreakTable', '$[]', '$getD6Table', '$getRandomNpc', '$get_table_by_d66_swap', '$getEncountTableResult', '$last', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $Elysion(){};
     var self = $Elysion = $klass($base, $super, 'Elysion', $Elysion);
@@ -83,19 +83,19 @@
       result = "";
       $case = command;
       if (/^EL(\d*)(\+\d+)?/i['$===']($case)) {
-      base = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      base = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       result = self.$check(base, modify);}
       else if (/^(F|O|M)?DATE\[(.*),(.*)\]/i['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      pc1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      pc2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      pc1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      pc2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       result = self.$getDateBothResult(type, pc1, pc2);}
       else if (/^(F|O|M)?DATE(\d\d)(\[(.*),(.*)\])?/i['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      number = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      pc1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      pc2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      number = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      pc1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
+      pc2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
       result = self.$getDateResult(type, number, pc1, pc2);}
       else if (/^(F|O|M)?DATE/i['$===']($case)) {result = self.$getDateValue()}
       else {
@@ -108,7 +108,7 @@
     }, TMP_Elysion_rollDiceCommand_7.$$arity = 1);
     
     Opal.defn(self, '$checkAnyCommand', TMP_Elysion_checkAnyCommand_8 = function $$checkAnyCommand(command) {
-      var $a, self = this, result = nil, $case = nil, level = nil;
+      var self = this, result = nil, $case = nil, level = nil;
 
       
       result = (function() {$case = command.$upcase();
@@ -133,10 +133,10 @@
       else if ("DRT"['$===']($case)) {return self.$getRandomNpcDownClassmen()}
       else if ("URT"['$===']($case)) {return self.$getRandomNpcUpperClassmen()}
       else if (/^NJ(\d+)$/i['$===']($case)) {
-      level = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      level = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$getUsuallyEncount(level);}
       else if (/^BS(\d+)$/i['$===']($case)) {
-      level = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      level = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$getBossEncount(level);}
       else {return ""}})();
       return result;
@@ -330,9 +330,9 @@
       
       if ($truthy(($truthy($a = name['$nil?']()) ? $a : name['$empty?']()))) {
         return text};
-      return $send(text, 'gsub', [new RegExp("" + "(" + (base) + ")")], (TMP_25 = function(){var self = TMP_25.$$s || this, $b;
+      return $send(text, 'gsub', [new RegExp("" + "(" + (base) + ")")], (TMP_25 = function(){var self = TMP_25.$$s || this;
 
-      return $rb_plus((($b = $gvars['~']) === nil ? nil : $b['$[]'](1)), "" + "(" + (name) + ")")}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25));
+      return $rb_plus(Opal.const_get_relative($nesting, 'Regexp').$last_match(1), "" + "(" + (name) + ")")}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25));
     }, TMP_Elysion_changePcName_26.$$arity = 3);
     
     Opal.defn(self, '$getDateValue', TMP_Elysion_getDateValue_27 = function $$getDateValue() {

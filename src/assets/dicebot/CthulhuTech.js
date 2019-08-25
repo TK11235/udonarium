@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$==', '$check_nD10_nomalTest', '$check_nD10_combatTest', '$>=', '$to_i', '$+', '$floor', '$/', '$>', '$===', '$getDamageDice', '$debug', '$ceil', '$-', '$cthulhutech_check', '$collect', '$split', '$each', '$[]', '$[]=', '$length', '$times', '$*', '$step']);
+  Opal.add_stubs(['$==', '$check_nD10_nomalTest', '$check_nD10_combatTest', '$>=', '$to_i', '$+', '$floor', '$/', '$>', '$===', '$getDamageDice', '$debug', '$ceil', '$-', '$cthulhutech_check', '$collect', '$split', '$each', '$[]', '$[]=', '$length', '$times', '$*', '$nil?', '$step']);
   return (function($base, $super, $parent_nesting) {
     function $CthulhuTech(){};
     var self = $CthulhuTech = $klass($base, $super, 'CthulhuTech', $CthulhuTech);
@@ -79,7 +79,7 @@
       };
     }, TMP_CthulhuTech_check_nD10_5.$$arity = 8);
     
-    Opal.defn(self, '$check_nD10_nomalTest', TMP_CthulhuTech_check_nD10_nomalTest_6 = function $$check_nD10_nomalTest(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD10_nomalTest', TMP_CthulhuTech_check_nD10_nomalTest_6 = function $$check_nD10_nomalTest(total_n, _dice_n, _signOfInequality, diff, dice_cnt, _dice_max, n1, _n_max) {
       var self = this, isSuccess = nil;
 
       
@@ -174,29 +174,28 @@ if (i == null) i = nil;
           (function(){var $brk = Opal.new_brk(); try {return $send((10), 'times', [], (TMP_13 = function(i){var self = TMP_13.$$s || this, $a, TMP_14, dice_now = nil;
 if (i == null) i = nil;
           
-            if (dice_num['$[]']($rb_plus(i, 2))['$=='](nil)) {
+            if ($truthy(dice_num['$[]']($rb_plus(i, 2))['$nil?']())) {
               
               Opal.brk(nil, $brk)};
             if ($truthy($rb_gt(dice_num['$[]'](i), 0))) {
-              if ($truthy(($truthy($a = $rb_gt(dice_num['$[]']($rb_plus(i, 1)), 0)) ? $rb_gt(dice_num['$[]']($rb_plus(i, 2)), 0) : $a))) {
-                
-                dice_now = $rb_plus($rb_times(i, 3), 6);
-                (function(){var $brk = Opal.new_brk(); try {return $send(Opal.Range.$new($rb_plus(i, 3),10, true), 'step', [], (TMP_14 = function(i2){var self = TMP_14.$$s || this;
+              } else {
+              return nil;
+            };
+            if ($truthy(($truthy($a = $rb_gt(dice_num['$[]']($rb_plus(i, 1)), 0)) ? $rb_gt(dice_num['$[]']($rb_plus(i, 2)), 0) : $a))) {
+              } else {
+              return nil;
+            };
+            dice_now = $rb_plus($rb_times(i, 3), 6);
+            (function(){var $brk = Opal.new_brk(); try {return $send(Opal.Range.$new($rb_plus(i, 3),10, true), 'step', [], (TMP_14 = function(i2){var self = TMP_14.$$s || this;
 if (i2 == null) i2 = nil;
+            
+              if (dice_num['$[]'](i2)['$=='](0)) {
                 
-                  if (dice_num['$[]'](i2)['$=='](0)) {
-                    
-                    Opal.brk(nil, $brk)};
-                  return (dice_now = $rb_plus(dice_now, $rb_plus(i2, 1)));}, TMP_14.$$s = self, TMP_14.$$brk = $brk, TMP_14.$$arity = 1, TMP_14))
-                } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
-                if ($truthy($rb_gt(dice_now, max_num))) {
-                  return (max_num = dice_now)
-                  } else {
-                  return nil
-                };
-                } else {
-                return nil
-              }
+                Opal.brk(nil, $brk)};
+              return (dice_now = $rb_plus(dice_now, $rb_plus(i2, 1)));}, TMP_14.$$s = self, TMP_14.$$brk = $brk, TMP_14.$$arity = 1, TMP_14))
+            } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
+            if ($truthy($rb_gt(dice_now, max_num))) {
+              return (max_num = dice_now)
               } else {
               return nil
             };}, TMP_13.$$s = self, TMP_13.$$brk = $brk, TMP_13.$$arity = 1, TMP_13))

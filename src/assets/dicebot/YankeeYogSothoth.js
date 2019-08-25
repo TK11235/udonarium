@@ -9,9 +9,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$getRandomSkillTableResult', '$getTableDiceCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$[]', '$nil?', '$getD66Table', '$get_table_by_d66_swap', '$map', '$kind_of?', '$to_i', '$setPrefixes', '$+', '$keys']);
+  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$getRandomSkillTableResult', '$getTableDiceCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$[]', '$nil?', '$getD66Table', '$get_table_by_d66_swap', '$map', '$is_a?', '$to_i', '$last_match', '$setPrefixes', '$+', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $YankeeYogSothoth(){};
     var self = $YankeeYogSothoth = $klass($base, $super, 'YankeeYogSothoth', $YankeeYogSothoth);
@@ -51,7 +51,7 @@
       return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "※うろつき～決闘フェイズ\n" + "FT\tファンブル表\n" + "WT\t変調表\n" + "RTT\tランダム特技決定表\n" + "KKT\t関係表\n" + "DBRT\t他愛のない会話表\n" + "TKT\t戦う理由表\n" + "\n" + "※武勇伝フェイズ\n" + "BUDT\t武勇伝表\n" + "GUDT\tガイヤンキー武勇伝表\n" + "FTNT\t二つ名表\n" + "DAIT\t第一印象表\n" + "TKKT\tツレ関係表\n" + "\n" + "※帰還フェイズ\n" + "GSST\t現実世界生活表\n" + "GYST\tガイヤンキー生活表\n" + "HPST\t病院生活表\n" + "・D66ダイスあり\n"
     }, TMP_YankeeYogSothoth_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_YankeeYogSothoth_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_YankeeYogSothoth_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, output = nil;
 
       
@@ -81,7 +81,7 @@
       return self.$getTableDiceCommandResult(command);
     }, TMP_YankeeYogSothoth_rollDiceCommand_6.$$arity = 1);
     
-    Opal.defn(self, '$getRandomSkillTableResult', TMP_YankeeYogSothoth_getRandomSkillTableResult_7 = function $$getRandomSkillTableResult(command) {
+    Opal.defn(self, '$getRandomSkillTableResult', TMP_YankeeYogSothoth_getRandomSkillTableResult_7 = function $$getRandomSkillTableResult(_command) {
       var $a, $b, self = this, name = nil, skillTableFull = nil, skillTable = nil, total_n = nil, tableName = nil, skill = nil, total_n2 = nil, output = nil;
 
       
@@ -121,8 +121,8 @@
 
       return $send(table, 'map', [], (TMP_9 = function(item){var self = TMP_9.$$s || this, $a;
 if (item == null) item = nil;
-      if ($truthy(($truthy($a = item['$kind_of?'](Opal.const_get_relative($nesting, 'String'))) ? /^(\d+):(.*)/['$==='](item) : $a))) {
-          return [(($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))]
+      if ($truthy(($truthy($a = item['$is_a?'](Opal.const_get_relative($nesting, 'String'))) ? /^(\d+):(.*)/['$==='](item) : $a))) {
+          return [Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(2)]
           } else {
           return item
         }}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9))

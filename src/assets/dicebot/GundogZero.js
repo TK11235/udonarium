@@ -47,7 +47,7 @@
       return "" + "失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。\n" + "nD9ロールも対応。\n"
     }, TMP_Gundog_getHelpMessage_3.$$arity = 0);
     
-    Opal.defn(self, '$check_1D100', TMP_Gundog_check_1D100_4 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_Gundog_check_1D100_4 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, dig10 = nil, dig1 = nil;
 
       
@@ -99,9 +99,9 @@ Opal.loaded(["diceBot/Gundog"]);
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$upcase', '$=~', '$to_i', '$parren_killer', '$getDamageTypeAndTable', '$getFumbleTypeAndTable', '$empty?', '$+', '$rand', '$<', '$>', '$[]', '$===']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$upcase', '$=~', '$last_match', '$to_i', '$parren_killer', '$getDamageTypeAndTable', '$getFumbleTypeAndTable', '$empty?', '$+', '$rand', '$<', '$>', '$[]', '$===']);
   
   self.$require("diceBot/Gundog");
   return (function($base, $super, $parent_nesting) {
@@ -144,16 +144,16 @@ Opal.loaded(["diceBot/Gundog"]);
       if ($truthy(/(\w)DPT([\+\-\d]*)/i['$=~'](string))) {
         
         ttype = "ダメージペナルティー";
-        head = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))) {
-          mod = self.$parren_killer("" + "(0" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + ")").$to_i()};
+        head = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+        if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2))) {
+          mod = self.$parren_killer("" + "(0" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + ")").$to_i()};
         $b = self.$getDamageTypeAndTable(head), $a = Opal.to_ary($b), (type = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;};
       if ($truthy(/(\w)FT([\+\-\d]*)/i['$=~'](string))) {
         
         ttype = "ファンブル";
-        head = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))) {
-          mod = self.$parren_killer("" + "(0" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + ")").$to_i()};
+        head = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+        if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2))) {
+          mod = self.$parren_killer("" + "(0" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + ")").$to_i()};
         $b = self.$getFumbleTypeAndTable(head), $a = Opal.to_ary($b), (type = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;};
       if ($truthy(type['$empty?']())) {
         return "1"};

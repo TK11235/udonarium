@@ -8,7 +8,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$[]', '$upcase', '$nil?', '$getEventTableResult', '$getTensionText', '$abs', '$-', '$==', '$roll', '$%', '$+', '$getTableValue']);
+  Opal.add_stubs(['$setPrefixes', '$[]', '$upcase', '$nil?', '$getEventTableResult', '$getTensionText', '$abs', '$-', '$==', '$roll', '$even?', '$+', '$getTableValue']);
   return (function($base, $super, $parent_nesting) {
     function $ShoujoTenrankai(){};
     var self = $ShoujoTenrankai = $klass($base, $super, 'ShoujoTenrankai', $ShoujoTenrankai);
@@ -78,7 +78,7 @@
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (number1 = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (number2 = ($a[0] == null ? nil : $a[0])), $b;
-      isOdd = number1['$%'](2)['$=='](0);
+      isOdd = number1['$even?']();
       index = $rb_minus(number2, 1);
       if ($truthy(isOdd)) {
         index = $rb_plus(index, 6)};

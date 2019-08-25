@@ -18,9 +18,9 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $gvars = Opal.gvars, $truthy = Opal.truthy, $hash2 = Opal.hash2, $hash = Opal.hash, $send = Opal.send, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $hash2 = Opal.hash2, $hash = Opal.hash, $send = Opal.send, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$resolute_action', '$to_i', '$fetchDeathChart', '$==', '$roll_d100', '$+', '$fetchResultFromRealNameChart', '$getRealNameChartByName', '$rollHeroNameTemplateChart', '$nil?', '$[]', '$freeze', '$parren_killer', '$%', '$<=', '$-', '$roll', '$*', '$fetchFromChart', '$getDeathChartByName', '$empty?', '$min', '$keys', '$max', '$<', '$>', '$has_key?', '$to_s', '$find', '$include?', '$size', '$first', '$each_with_index', '$<<', '$join', '$getHeroNameTemplateChart', '$map', '$rollHeroNameBaseChart', '$getHeroNameElementText', '$sub', '$[]=', '$getHeroNameBaseChartByName', '$=~', '$rollHeroNameElementChart', '$getHeroNameElementChartByName']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$last_match', '$resolute_action', '$to_i', '$fetchDeathChart', '$==', '$roll_d100', '$+', '$fetchResultFromRealNameChart', '$getRealNameChartByName', '$rollHeroNameTemplateChart', '$nil?', '$[]', '$freeze', '$parren_killer', '$format', '$<=', '$-', '$roll', '$*', '$fetchFromChart', '$getDeathChartByName', '$empty?', '$min', '$keys', '$max', '$<', '$>', '$key?', '$to_s', '$find', '$include?', '$size', '$first', '$each_with_index', '$<<', '$join', '$getHeroNameTemplateChart', '$map', '$rollHeroNameBaseChart', '$getHeroNameElementText', '$sub', '$[]=', '$getHeroNameBaseChartByName', '$=~', '$rollHeroNameElementChart', '$getHeroNameElementChartByName']);
   return (function($base, $super, $parent_nesting) {
     function $DeadlineHeroes(){};
     var self = $DeadlineHeroes = $klass($base, $super, 'DeadlineHeroes', $DeadlineHeroes);
@@ -54,11 +54,11 @@
       
       $case = command;
       if (/^DLH(\d+([\+\-]\d+)*)/i['$===']($case)) {
-      expressions = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      expressions = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       return self.$resolute_action(expressions);}
       else if (/^DC(L||S|C)(\d+)/i['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      minusScore = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      minusScore = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       chartName = (function() {$case = type;
       if ("L"['$===']($case)) {return "肉体"}
       else if ("S"['$===']($case)) {return "精神"}
@@ -66,8 +66,8 @@
       else { return nil }})();
       return self.$fetchDeathChart(chartName, minusScore);}
       else if (/^RNC([JO])/i['$===']($case)) {
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      chartName = (function() {if ($truthy(type['$==']("J"))) {
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      chartName = (function() {if (type['$==']("J")) {
         return "日本"
         } else {
         return "海外"
@@ -97,8 +97,8 @@
       success_rate = self.$parren_killer($rb_plus($rb_plus("(", expressions), ")")).$to_i();
       $b = self.$roll_d100(), $a = Opal.to_ary($b), (roll_result = ($a[0] == null ? nil : $a[0])), (dice10 = ($a[1] == null ? nil : $a[1])), (dice01 = ($a[2] == null ? nil : $a[2])), $b;
       text = "" + "行為判定(成功率:" + (success_rate) + "％)";
-      text = $rb_plus(text, "" + " ＞ 1D100[" + (dice10) + "," + (dice01) + "]=" + ("%02d"['$%']([roll_result])));
-      text = $rb_plus(text, "" + " ＞ " + ("%02d"['$%']([roll_result])));
+      text = $rb_plus(text, "" + " ＞ 1D100[" + (dice10) + "," + (dice01) + "]=" + (self.$format("%02d", roll_result)));
+      text = $rb_plus(text, "" + " ＞ " + (self.$format("%02d", roll_result)));
       if ($truthy(($truthy($a = roll_result['$=='](100)) ? $a : $rb_le(success_rate, 0)))) {
         text = $rb_plus(text, Opal.const_get_relative($nesting, 'FUMBLE_STR'))
       } else if ($truthy($rb_le(roll_result, $rb_minus(success_rate, 100)))) {
@@ -158,7 +158,7 @@
           return ["" + (minKey) + "以下", chart['$[]'](minKey)]};
         if ($truthy($rb_gt(keyNumber, maxKey))) {
           return ["" + (maxKey) + "以上", chart['$[]'](maxKey)]};
-        if ($truthy(chart['$has_key?'](keyNumber))) {
+        if ($truthy(chart['$key?'](keyNumber))) {
           return [keyNumber.$to_s(), chart['$[]'](keyNumber)]};
       };
       return ["未定義", "？？？"];
@@ -168,7 +168,7 @@
       var $a, self = this;
 
       
-      if ($truthy((($a = $DeadlineHeroes.$$cvars['@@deathCharts']) == null ? nil : $a)['$has_key?'](chartName))) {
+      if ($truthy((($a = $DeadlineHeroes.$$cvars['@@deathCharts']) == null ? nil : $a)['$key?'](chartName))) {
         } else {
         return $hash2([], {})
       };
@@ -181,8 +181,8 @@
 
       
       $b = chartInfo, $a = Opal.to_ary($b), (columns = ($a[0] == null ? nil : $a[0])), (chart = ($a[1] == null ? nil : $a[1])), $b;
-      $b = $send(chart, 'find', [], (TMP_10 = function(range, elements){var self = TMP_10.$$s || this;
-if (range == null) range = nil;if (elements == null) elements = nil;
+      $b = $send(chart, 'find', [], (TMP_10 = function(range, _elements){var self = TMP_10.$$s || this;
+if (range == null) range = nil;if (_elements == null) _elements = nil;
       return range['$include?'](keyNumber)}, TMP_10.$$s = self, TMP_10.$$arity = 2, TMP_10)), $a = Opal.to_ary($b), (range = ($a[0] == null ? nil : $a[0])), (elements = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(range['$nil?']())) {
         return nil};
@@ -207,7 +207,7 @@ if (title == null) title = nil;if (i == null) i = nil;
       var $a, self = this;
 
       
-      if ($truthy((($a = $DeadlineHeroes.$$cvars['@@realNameCharts']) == null ? nil : $a)['$has_key?'](chartName))) {
+      if ($truthy((($a = $DeadlineHeroes.$$cvars['@@realNameCharts']) == null ? nil : $a)['$key?'](chartName))) {
         } else {
         return $hash2([], {})
       };
@@ -251,11 +251,11 @@ if (i == null) i = nil;
 
       
       result = "";
-      if ($truthy(info['$has_key?']("chartName"))) {
+      if ($truthy(info['$key?']("chartName"))) {
         result = $rb_plus(result, info['$[]']("chartName").$to_s())};
-      if ($truthy(info['$has_key?']("dice"))) {
+      if ($truthy(info['$key?']("dice"))) {
         result = $rb_plus(result, "" + "(1D10[" + (info['$[]']("dice")) + "]) ＞ ")};
-      if ($truthy(info['$has_key?']("innerChartName"))) {
+      if ($truthy(info['$key?']("innerChartName"))) {
         result = $rb_plus(result, "" + "［" + (info['$[]']("innerChartName")) + "］ ＞ 1D10[" + (info['$[]']("innerResult")['$[]']("dice")) + "] ＞ ")};
       return (result = $rb_plus(result, "" + "「" + (info['$[]']("coreResult")) + "」"));
     }, TMP_DeadlineHeroes_getHeroNameElementText_18.$$arity = 1);
@@ -269,7 +269,7 @@ if (i == null) i = nil;
       if ($truthy(chart['$nil?']())) {
         return defaultResult};
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
-      if ($truthy(chart['$has_key?'](dice))) {
+      if ($truthy(chart['$key?'](dice))) {
         } else {
         return defaultResult
       };
@@ -280,7 +280,7 @@ if (i == null) i = nil;
       $writer[$rb_minus($writer["length"], 1)];;
       if ($truthy(result['$[]']("result")['$=~'](/［(.+)］/))) {
         
-        innerResult = self.$rollHeroNameElementChart((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_s());
+        innerResult = self.$rollHeroNameElementChart(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_s());
         
         $writer = ["innerResult", innerResult];
         $send(result, '[]=', Opal.to_a($writer));
@@ -308,7 +308,7 @@ if (i == null) i = nil;
       if ($truthy(chart['$nil?']())) {
         return nil};
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
-      if ($truthy(chart['$has_key?'](dice))) {
+      if ($truthy(chart['$key?'](dice))) {
         } else {
         return nil
       };

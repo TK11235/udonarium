@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$debug', '$sub', '$-', '$*', '$to_i', '$+', '$==', '$!=', '$>=', '$<=', '$>']);
+  Opal.add_stubs(['$debug', '$sub', '$last_match', '$-', '$*', '$to_i', '$+', '$==', '$!=', '$>=', '$<=', '$>']);
   return (function($base, $super, $parent_nesting) {
     function $NightmareHunterDeep(){};
     var self = $NightmareHunterDeep = $klass($base, $super, 'NightmareHunterDeep', $NightmareHunterDeep);
@@ -66,17 +66,17 @@
 
       
       self.$debug("parren_killer_add before string", string);
-      string = $send(string, 'sub', [/^(.+?)Lv(\d+)(.*)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'sub', [/^(.+?)Lv(\d+)(.*)/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ($rb_minus($rb_times((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i(), 5), 1)) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'sub', [/^(.+?)NL(\d+)(.*)/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + ($rb_minus($rb_times(Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i(), 5), 1)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(3))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'sub', [/^(.+?)NL(\d+)(.*)/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ($rb_plus($rb_times((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i(), 5), 5)) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](3)))}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + ($rb_plus($rb_times(Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i(), 5), 5)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(3))}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
       self.$debug("parren_killer_add after string", string);
       return string;
     }, TMP_NightmareHunterDeep_changeText_7.$$arity = 1);
     
-    Opal.defn(self, '$check_nD6', TMP_NightmareHunterDeep_check_nD6_8 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_NightmareHunterDeep_check_nD6_8 = function $$check_nD6(total_n, _dice_n, _signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, self = this, sucLv = nil, sucNL = nil;
       if ($gvars.signOfInequality == null) $gvars.signOfInequality = nil;
 

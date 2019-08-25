@@ -62,7 +62,7 @@
 
       return "" + "失敗、成功の判定。差分値の計算も行います。\n" + "ファンブル時は達成値を-20します。\n"
     }, TMP_ChaosFlare_getHelpMessage_4.$$arity = 0);
-    return (Opal.defn(self, '$check_2D6', TMP_ChaosFlare_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_2D6', TMP_ChaosFlare_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, output = nil;
 
       

@@ -37,7 +37,7 @@
 
       return "失敗、成功度の自動判定を行います。\n"
     }, TMP_WARPS_getHelpMessage_3.$$arity = 0);
-    return (Opal.defn(self, '$check_2D6', TMP_WARPS_check_2D6_4 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_2D6', TMP_WARPS_check_2D6_4 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, success = nil;
 
       

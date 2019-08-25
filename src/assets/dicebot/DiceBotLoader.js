@@ -2,7 +2,7 @@
 (function(Opal) {
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$===', '$!', '$include?', '$debug', '$new', '$const_get', '$to_s', '$downcase', '$map', '$to_proc', '$[]', '$raise', '$first', '$each']);
+  Opal.add_stubs(['$freeze', '$===', '$!', '$include?', '$debug', '$new', '$const_get', '$to_s', '$downcase', '$map', '$to_proc', '$[]', '$raise', '$first', '$each']);
   return (function($base, $super, $parent_nesting) {
     function $DiceBotLoader(){};
     var self = $DiceBotLoader = $klass($base, $super, 'DiceBotLoader', $DiceBotLoader);
@@ -11,8 +11,8 @@
 
     def.filenames = def.gameTitlePattern = def.diceBotClass = nil;
     
-    Opal.const_set($nesting[0], 'BOT_NAME_PATTERN', /^[A-Z]\w*$/);
-    Opal.const_set($nesting[0], 'BOT_NAMES_TO_IGNORE', ["DiceBot", "DiceBotLoader", "DiceBotLoaderList"]);
+    Opal.const_set($nesting[0], 'BOT_NAME_PATTERN', /^[A-Z]\w*$/.$freeze());
+    Opal.const_set($nesting[0], 'BOT_NAMES_TO_IGNORE', ["DiceBot", "DiceBotLoader", "DiceBotLoaderList"].$freeze());
     Opal.defs(self, '$validGameType?', TMP_DiceBotLoader_validGameType$q_1 = function(gameType) {
       var $a, self = this;
 

@@ -12,14 +12,14 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$check_nD6', '$==', '$<=', '$>=', '$upcase', '$===', '$textFrom1D6Table', '$to_i', '$getSkillList', '$textFrom2D6Table', '$textFromD66Table', '$getD66', '$assoc', '$get_table_by_1d6', '$nil?', '$+', '$get_table_by_2d6', '$[]', '$-']);
+  Opal.add_stubs(['$setPrefixes', '$==', '$<=', '$>=', '$upcase', '$===', '$textFrom1D6Table', '$to_i', '$last_match', '$getSkillList', '$textFrom2D6Table', '$textFromD66Table', '$getD66', '$assoc', '$get_table_by_1d6', '$nil?', '$+', '$get_table_by_2d6', '$[]', '$-']);
   return (function($base, $super, $parent_nesting) {
     function $StratoShout(){};
     var self = $StratoShout = $klass($base, $super, 'StratoShout', $StratoShout);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_StratoShout_initialize_1, TMP_StratoShout_gameName_2, TMP_StratoShout_gameType_3, TMP_StratoShout_getHelpMessage_4, TMP_StratoShout_check_2D6_5, TMP_StratoShout_check_nD6_6, TMP_StratoShout_rollDiceCommand_7, TMP_StratoShout_textFromD66Table_8, TMP_StratoShout_textFrom1D6Table_9, TMP_StratoShout_textFrom2D6Table_10, TMP_StratoShout_getSkillList_11;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_StratoShout_initialize_1, TMP_StratoShout_gameName_2, TMP_StratoShout_gameType_3, TMP_StratoShout_getHelpMessage_4, TMP_StratoShout_check_2D6_5, TMP_StratoShout_rollDiceCommand_6, TMP_StratoShout_textFromD66Table_7, TMP_StratoShout_textFrom1D6Table_8, TMP_StratoShout_textFrom2D6Table_9, TMP_StratoShout_getSkillList_10;
 
     
     self.$setPrefixes(["VOT", "GUT", "BAT", "KEYT", "DRT", "EMO", "AT[1-6]?", "SCENE", "MACHI", "GAKKO", "BAND", "TENKAI"]);
@@ -57,13 +57,7 @@
       return "" + "\n" + "VOT, GUT, BAT, KEYT, DRT: (ボーカル、ギター、ベース、キーボード、ドラム)トラブル表\n" + "EMO: 感情表\n" + "AT[1-6]: 特技表(空: ランダム 1: 主義 2: 身体 3: モチーフ 4: エモーション 5: 行動 6: 逆境)\n" + "SCENE, MACHI, GAKKO, BAND: (汎用、街角、学校、バンド)シーン表 接近シーンで使用\n" + "TENKAI: シーン展開表 奔走シーン 練習シーンで使用\n" + "\n" + "[]内は省略可　D66入れ替えあり\n"
     }, TMP_StratoShout_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_StratoShout_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
-      var self = this;
-
-      return self.$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    }, TMP_StratoShout_check_2D6_5.$$arity = 8);
-    
-    Opal.defn(self, '$check_nD6', TMP_StratoShout_check_nD6_6 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_StratoShout_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -80,10 +74,10 @@
         } else {
         return " ＞ 失敗"
       };
-    }, TMP_StratoShout_check_nD6_6.$$arity = 8);
+    }, TMP_StratoShout_check_2D6_5.$$arity = 8);
     
-    Opal.defn(self, '$rollDiceCommand', TMP_StratoShout_rollDiceCommand_7 = function $$rollDiceCommand(command) {
-      var $a, self = this, $case = nil, title = nil, table = nil, value = nil;
+    Opal.defn(self, '$rollDiceCommand', TMP_StratoShout_rollDiceCommand_6 = function $$rollDiceCommand(command) {
+      var self = this, $case = nil, title = nil, table = nil, value = nil;
 
       
       $case = command.$upcase();
@@ -112,7 +106,7 @@
       table = ["共感/不信", "友情/嫉妬", "好敵手/苛立ち", "不可欠/敬遠", "尊敬/劣等感", "愛情/負い目"];
       return self.$textFrom1D6Table(title, table);}
       else if (/^AT([1-6]?)$/['$===']($case)) {
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      value = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       return self.$getSkillList(value);}
       else if ("SCENE"['$===']($case)) {
       title = "シーン表(P199)";
@@ -135,9 +129,9 @@
       table = [[11, "絶望: ステップを更に大きくする、あるいはシーンプレイヤーを破滅に追い込むような状況に陥ります。【ディスコード】+2点。"], [12, "崩壊: ステップによってシーンプレイヤーの大切なものが崩壊する、あるいは崩壊目前に追い込まれます。【ディスコード】+2点。"], [13, "断絶: シーンプレイヤーはステップによって何かと絶縁状態になります。【ディスコード】+2点。"], [14, "恐怖: ステップに恐怖するような出来事に遭遇します。【ディスコード】+2点。"], [15, "誤解: シーンプレイヤーがステップに関するなんらかの誤解を受けます。【ディスコード】+2点。"], [16, "試練: シーンプレイヤーはステップに関連した試練に直面します。【ディスコード】+2点。"], [22, "悪心: シーンプレイヤーの心に魔が差し、ステップを不合理に解決しようとします。【ディスコード】+1点。"], [23, "束縛: ステップに関わるなんらかに束縛され、自由な行動ができなくなります。【ディスコード】+1点。"], [24, "凶兆: ステップについて、悪いことが起きそうな前触れが訪れます。【ディスコード】+1点。"], [25, "加速: シーンプレイヤーはステップの解決に追われます。【ディスコード】+1点。"], [26, "日常: シーンプレイヤーはのんびりとした日常を送ります。【コンディション】+1点。"], [33, "休息: ステップを忘れられるような、穏やかなひとときを過ごします。【コンディション】+1点。"], [34, "吉兆: ステップについて、いいことが起きそうな前触れが訪れます。【コンディション】+1点。"], [35, "発見: シーンプレイヤーはステップについて何かを発見します。【コンディション】+1点。"], [36, "希望: シーンプレイヤーの中に、ステップに対して前向きに取り組む意思が生まれます。【コンディション】+1点。"], [44, "成長: ステップを通して、シーンプレイヤーが成長します。【コンディション】+2点。"], [45, "愛情: ステップを通して、シーンプレイヤーが愛情に触れます。【コンディション】+2点。"], [46, "朗報: ステップに関する良い知らせが舞い込みます。【コンディション】+2点。"], [55, "好転: ステップが良い方向に向かうような事件が起きます。【コンディション】+3点。"], [56, "直感: ステップを解決させる決定的な閃きを得ます。【コンディション】+3点。"], [66, "奇跡: ステップに関して、奇跡的な幸運が舞い込みます。【コンディション】+3点。"]];
       return self.$textFromD66Table(title, table);};
       return nil;
-    }, TMP_StratoShout_rollDiceCommand_7.$$arity = 1);
+    }, TMP_StratoShout_rollDiceCommand_6.$$arity = 1);
     
-    Opal.defn(self, '$textFromD66Table', TMP_StratoShout_textFromD66Table_8 = function $$textFromD66Table(title, table) {
+    Opal.defn(self, '$textFromD66Table', TMP_StratoShout_textFromD66Table_7 = function $$textFromD66Table(title, table) {
       var $a, $b, self = this, isSwap = nil, dice = nil, number = nil, text = nil;
 
       
@@ -145,9 +139,9 @@
       dice = self.$getD66(isSwap);
       $b = table.$assoc(dice), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), $b;
       return "" + (title) + " ＞ [" + (number) + "] ＞ " + (text);
-    }, TMP_StratoShout_textFromD66Table_8.$$arity = 2);
+    }, TMP_StratoShout_textFromD66Table_7.$$arity = 2);
     
-    Opal.defn(self, '$textFrom1D6Table', TMP_StratoShout_textFrom1D6Table_9 = function $$textFrom1D6Table(title, table1, table2) {
+    Opal.defn(self, '$textFrom1D6Table', TMP_StratoShout_textFrom1D6Table_8 = function $$textFrom1D6Table(title, table1, table2) {
       var $a, $b, self = this, text1 = nil, number1 = nil, text = nil, text2 = nil, number2 = nil;
 
       if (table2 == null) {
@@ -164,16 +158,16 @@
         text = $rb_plus(text, "" + "[" + (number1) + "," + (number2) + "] ＞ " + (text1) + (text2));
       };
       return text;
-    }, TMP_StratoShout_textFrom1D6Table_9.$$arity = -3);
+    }, TMP_StratoShout_textFrom1D6Table_8.$$arity = -3);
     
-    Opal.defn(self, '$textFrom2D6Table', TMP_StratoShout_textFrom2D6Table_10 = function $$textFrom2D6Table(title, table) {
+    Opal.defn(self, '$textFrom2D6Table', TMP_StratoShout_textFrom2D6Table_9 = function $$textFrom2D6Table(title, table) {
       var $a, $b, self = this, text = nil, number = nil;
 
       
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
       return "" + (title) + " ＞ [" + (number) + "] ＞ " + (text);
-    }, TMP_StratoShout_textFrom2D6Table_10.$$arity = 2);
-    return (Opal.defn(self, '$getSkillList', TMP_StratoShout_getSkillList_11 = function $$getSkillList(field) {
+    }, TMP_StratoShout_textFrom2D6Table_9.$$arity = 2);
+    return (Opal.defn(self, '$getSkillList', TMP_StratoShout_getSkillList_10 = function $$getSkillList(field) {
       var $a, $b, self = this, title = nil, table = nil, number1 = nil, fieldName = nil, skill = nil, number2 = nil, text = nil;
 
       if (field == null) {
@@ -197,7 +191,7 @@
         text = $rb_plus(text, "" + "(" + (fieldName) + "分野) ＞ [" + (number2) + "]")
       };
       return "" + (text) + " ＞ 《" + (skill) + "／" + (fieldName) + (number2) + "》";
-    }, TMP_StratoShout_getSkillList_11.$$arity = -1), nil) && 'getSkillList';
+    }, TMP_StratoShout_getSkillList_10.$$arity = -1), nil) && 'getSkillList';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

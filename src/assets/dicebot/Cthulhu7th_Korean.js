@@ -24,9 +24,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $range = Opal.range, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $range = Opal.range, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$=~', '$to_i', '$<=', '$include?', '$min', '$max', '$+', '$rollPercentD10', '$getTotalLists', '$getTotal', '$getCheckResultText', '$join', '$roll', '$==', '$abs', '$times', '$*', '$push', '$>=', '$/', '$<', '$debug', '$>', '$rollFullAuto', '$each', '$getNextDifficltyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]', '$[]=', '$-', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$!', '$isLastBulletTurn', '$floor', '$ceil', '$getLastHitBulletCount']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$=~', '$to_i', '$last_match', '$<=', '$include?', '$min', '$max', '$+', '$rollPercentD10', '$getTotalLists', '$getTotal', '$getCheckResultText', '$join', '$roll', '$==', '$abs', '$times', '$*', '$push', '$>=', '$/', '$<', '$debug', '$>', '$rollFullAuto', '$each', '$getNextDifficltyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]', '$[]=', '$-', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$!', '$isLastBulletTurn', '$floor', '$ceil', '$getLastHitBulletCount']);
   return (function($base, $super, $parent_nesting) {
     function $Cthulhu7th_Korean(){};
     var self = $Cthulhu7th_Korean = $klass($base, $super, 'Cthulhu7th_Korean', $Cthulhu7th_Korean);
@@ -80,15 +80,15 @@
     }, TMP_Cthulhu7th_Korean_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$getCheckResult', TMP_Cthulhu7th_Korean_getCheckResult_6 = function $$getCheckResult(command) {
-      var $a, self = this, bonus_dice_count = nil, diff = nil, output = nil, units_digit = nil, total_list = nil, total = nil, result_text = nil;
+      var self = this, bonus_dice_count = nil, diff = nil, output = nil, units_digit = nil, total_list = nil, total = nil, result_text = nil;
 
       
       if ($truthy(/^CC([-\d]+)?<=(\d+)/i['$=~'](command))) {
         } else {
         nil
       };
-      bonus_dice_count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      bonus_dice_count = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_le(diff, 0))) {
         return "에러. 목표치는 1 이상입니다."};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
@@ -177,8 +177,8 @@
         } else {
         return nil
       };
-      diff_1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      diff_2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      diff_1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      diff_2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
@@ -200,17 +200,17 @@
     }, TMP_Cthulhu7th_Korean_getCombineRoll_12.$$arity = 1);
     
     Opal.defn(self, '$getFullAutoResult', TMP_Cthulhu7th_Korean_getFullAutoResult_13 = function $$getFullAutoResult(command) {
-      var $a, $b, self = this, bullet_count = nil, diff = nil, broken_number = nil, bonus_dice_count = nil, output = nil, bullet_count_limit = nil;
+      var $a, self = this, bullet_count = nil, diff = nil, broken_number = nil, bonus_dice_count = nil, output = nil, bullet_count_limit = nil;
 
       
       if ($truthy(/^FAR\((-?\d+)(,(-?\d+))(,(-?\d+))(,(-?\d+))?\)/i['$=~'](command))) {
         } else {
         return nil
       };
-      bullet_count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
-      broken_number = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
-      bonus_dice_count = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i();
+      bullet_count = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
+      broken_number = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
+      bonus_dice_count = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i();
       output = "";
       bullet_count_limit = 100;
       if ($truthy($rb_gt(bullet_count, bullet_count_limit))) {

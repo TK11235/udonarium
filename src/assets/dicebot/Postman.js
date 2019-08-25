@@ -12,9 +12,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$<', '$to_s', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$>=', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$<', '$to_s', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$>=', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $Postman(){};
     var self = $Postman = $klass($base, $super, 'Postman', $Postman);
@@ -57,19 +57,19 @@
     }, TMP_Postman_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Postman_rollDiceCommand_7 = function $$rollDiceCommand(command) {
-      var $a, $b, TMP_5, TMP_6, self = this, text = nil, $case = nil, diceCount = nil, modify = nil, modifyAddString = nil, type = nil, target = nil, targetAddString = nil, modify_list = nil, target_list = nil, roc = nil;
+      var $a, TMP_5, TMP_6, self = this, text = nil, $case = nil, diceCount = nil, modify = nil, modifyAddString = nil, type = nil, target = nil, targetAddString = nil, modify_list = nil, target_list = nil, roc = nil;
 
       
       text = (function() {$case = command.$upcase();
       if (/(\d+)?PO(\d+)?(([+-]\d+)*)?((>|>=|@)(\d+)(([+-]\d+)*)?)?/i['$===']($case)) {
-      diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
+      diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
       if ($truthy($rb_lt(diceCount, 2))) {
         diceCount = 2};
-      modify = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
-      modifyAddString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_s();
-      type = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : "");
-      target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i();
-      targetAddString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8)).$to_s();
+      modify = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
+      modifyAddString = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_s();
+      type = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : "");
+      target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i();
+      targetAddString = Opal.const_get_relative($nesting, 'Regexp').$last_match(8).$to_s();
       modify_list = modifyAddString.$scan(/[+-]\d+/);
       $send(modify_list, 'each', [], (TMP_5 = function(i){var self = TMP_5.$$s || this;
 if (i == null) i = nil;
@@ -82,7 +82,7 @@ if (j == null) j = nil;
         return (target = $rb_plus(target, j.$to_i()))}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));};
       return self.$checkRoll(diceCount, modify, type, target);}
       else if (/WEA(\d+)?/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_weather_table(roc);}
       else if ("FRE"['$===']($case)) {return self.$get_free_situation_table()}
       else { return nil }})();

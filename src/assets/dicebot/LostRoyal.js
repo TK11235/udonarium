@@ -12,14 +12,14 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $range = Opal.range, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $range = Opal.range, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$check_lostroyal', '$to_i', '$roll_fumble_chart', '$roll_wind_power_chart', '$roll_emotion_chart', '$roll_hope', '$each', '$roll', '$<<', '$to_a', '$map', '$[]', '$-', '$inject', '$find_sequence', '$join', '$nil?', '$empty?', '$is_fumble?', '$size', '$+', '$>=', '$sort', '$last', '$find_all', '$find_sequence_from_start_key', '$>', '$<=>', '$include?', '$==', '$unshift', '$count', '$min', '$!=', '$is_1or2']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$check_lostroyal', '$to_i', '$last_match', '$roll_fumble_chart', '$roll_wind_power_chart', '$roll_emotion_chart', '$roll_hope', '$each', '$roll', '$<<', '$to_a', '$map', '$[]', '$-', '$inject', '$find_sequence', '$join', '$nil?', '$empty?', '$is_fumble?', '$size', '$+', '$>=', '$sort', '$max', '$find_all', '$find_sequence_from_start_key', '$>', '$<=>', '$include?', '$!', '$==', '$unshift', '$count', '$loop', '$min', '$!=', '$is_1or2']);
   return (function($base, $super, $parent_nesting) {
     function $LostRoyal(){};
     var self = $LostRoyal = $klass($base, $super, 'LostRoyal', $LostRoyal);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_LostRoyal_initialize_1, TMP_LostRoyal_gameName_2, TMP_LostRoyal_gameType_3, TMP_LostRoyal_getHelpMessage_4, TMP_LostRoyal_rollDiceCommand_5, TMP_LostRoyal_check_lostroyal_8, TMP_LostRoyal_find_sequence_12, TMP_LostRoyal_find_sequence_from_start_key_13, TMP_LostRoyal_is_fumble$q_15, TMP_LostRoyal_roll_fumble_chart_16, TMP_LostRoyal_roll_wind_power_chart_17, TMP_LostRoyal_roll_emotion_chart_18, TMP_LostRoyal_roll_hope_19, TMP_LostRoyal_is_1or2_20;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_LostRoyal_initialize_1, TMP_LostRoyal_gameName_2, TMP_LostRoyal_gameType_3, TMP_LostRoyal_getHelpMessage_4, TMP_LostRoyal_rollDiceCommand_5, TMP_LostRoyal_check_lostroyal_8, TMP_LostRoyal_find_sequence_12, TMP_LostRoyal_find_sequence_from_start_key_13, TMP_LostRoyal_is_fumble$q_15, TMP_LostRoyal_roll_fumble_chart_16, TMP_LostRoyal_roll_wind_power_chart_18, TMP_LostRoyal_roll_emotion_chart_19, TMP_LostRoyal_roll_hope_21, TMP_LostRoyal_is_1or2_22;
 
     
     self.$setPrefixes(["LR\\[[0-5],[0-5],[0-5],[0-5],[0-5],[0-5]\\]", "FC", "WPC", "EC", "HR[1-2]"]);
@@ -58,32 +58,28 @@
     }, TMP_LostRoyal_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_LostRoyal_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, $case = nil;
+      var self = this, $case = nil;
 
       
       $case = command;
-      if (/LR\[([0-5]),([0-5]),([0-5]),([0-5]),([0-5]),([0-5])\]/i['$===']($case)) {return self.$check_lostroyal([(($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](6)).$to_i()])}
+      if (/LR\[([0-5]),([0-5]),([0-5]),([0-5]),([0-5]),([0-5])\]/i['$===']($case)) {return self.$check_lostroyal([Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(6).$to_i()])}
       else if (/FC/['$===']($case)) {return self.$roll_fumble_chart()}
       else if (/WPC/['$===']($case)) {return self.$roll_wind_power_chart()}
       else if (/EC/['$===']($case)) {return self.$roll_emotion_chart()}
-      else if (/HR([1-2])/['$===']($case)) {return self.$roll_hope((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i())};
+      else if (/HR([1-2])/['$===']($case)) {return self.$roll_hope(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i())};
       return nil;
     }, TMP_LostRoyal_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$check_lostroyal', TMP_LostRoyal_check_lostroyal_8 = function $$check_lostroyal(checking_table) {
-      var TMP_6, TMP_7, $a, self = this, keys = nil, i = nil, key = nil, scores = nil, total_score = nil, chained_sequence = nil, text = nil, bonus = nil;
+      var TMP_6, TMP_7, $a, self = this, keys = nil, scores = nil, total_score = nil, chained_sequence = nil, text = nil, bonus = nil;
 
       
       keys = [];
+      $send($range(0, 3, true), 'each', [], (TMP_6 = function(_i){var self = TMP_6.$$s || this, $a, $b, key = nil;
+if (_i == null) _i = nil;
       
-      ;
-      ;
-      $send($range(0, 3, true), 'each', [], (TMP_6 = function($for_tmp1){var self = TMP_6.$$s || this, $a, $b;
-if ($for_tmp1 == null) $for_tmp1 = nil;
-      
-        i = $for_tmp1;
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (key = ($a[0] == null ? nil : $a[0])), $b;
-        return keys['$<<'](key);}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));;
+        return keys['$<<'](key);}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));
       scores = $send(keys, 'map', [], (TMP_7 = function(k){var self = TMP_7.$$s || this;
 if (k == null) k = nil;
       return checking_table['$[]']($rb_minus(k, 1))}, TMP_7.$$s = self, TMP_7.$$arity = 1, TMP_7)).$to_a();
@@ -116,9 +112,9 @@ if (k == null) k = nil;
 if (start_key == null) start_key = nil;
       return self.$find_sequence_from_start_key(keys, start_key)}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9)), 'find_all', [], (TMP_10 = function(x){var self = TMP_10.$$s || this;
 if (x == null) x = nil;
-      return $rb_gt(x.$size(), 1)}, TMP_10.$$s = self, TMP_10.$$arity = 1, TMP_10)), 'sort', [], (TMP_11 = function(a, b){var self = TMP_11.$$s || this;
+      return $rb_gt(x.$size(), 1)}, TMP_10.$$s = self, TMP_10.$$arity = 1, TMP_10)), 'max', [], (TMP_11 = function(a, b){var self = TMP_11.$$s || this;
 if (a == null) a = nil;if (b == null) b = nil;
-      return a.$size()['$<=>'](b.$size())}, TMP_11.$$s = self, TMP_11.$$arity = 2, TMP_11)).$last();
+      return a.$size()['$<=>'](b.$size())}, TMP_11.$$s = self, TMP_11.$$arity = 2, TMP_11));
       return sequence;
     }, TMP_LostRoyal_find_sequence_12.$$arity = 1);
     
@@ -133,7 +129,7 @@ if (a == null) a = nil;if (b == null) b = nil;
         chained_keys['$<<'](key);
         key = $rb_plus(key, 1);
       };
-      if ($truthy(($truthy($a = $rb_gt(chained_keys.$size(), 0)) ? chained_keys['$[]'](0)['$=='](1) : $a))) {
+      if ($truthy(($truthy($a = chained_keys['$empty?']()['$!']()) ? chained_keys['$[]'](0)['$=='](1) : $a))) {
         
         key = 6;
         while ($truthy(keys['$include?'](key))) {
@@ -146,20 +142,16 @@ if (a == null) a = nil;if (b == null) b = nil;
     
     Opal.defn(self, '$is_fumble?', TMP_LostRoyal_is_fumble$q_15 = function(keys, chained_sequence) {try {
 
-      var TMP_14, self = this, k = nil;
+      var TMP_14, self = this;
 
       
-      
-      ;
-      $send(chained_sequence, 'each', [], (TMP_14 = function($for_tmp2){var self = TMP_14.$$s || this;
-if ($for_tmp2 == null) $for_tmp2 = nil;
-      
-        k = $for_tmp2;
-        if ($truthy($rb_ge(keys.$count(k), 2))) {
+      $send(chained_sequence, 'each', [], (TMP_14 = function(k){var self = TMP_14.$$s || this;
+if (k == null) k = nil;
+      if ($truthy($rb_ge(keys.$count(k), 2))) {
           Opal.ret(true)
           } else {
           return nil
-        };}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14));;
+        }}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14));
       return false;
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
     }, TMP_LostRoyal_is_fumble$q_15.$$arity = 2);
@@ -173,18 +165,20 @@ if ($for_tmp2 == null) $for_tmp2 = nil;
       return "" + "1D6 => [" + (key) + "] " + (text);
     }, TMP_LostRoyal_roll_fumble_chart_16.$$arity = 0);
     
-    Opal.defn(self, '$roll_wind_power_chart', TMP_LostRoyal_roll_wind_power_chart_17 = function $$roll_wind_power_chart() {
-      var $a, $b, $c, self = this, key = nil, total_bonus = nil, text = nil, dice = nil, add = nil, bonus = nil, current_text = nil;
+    Opal.defn(self, '$roll_wind_power_chart', TMP_LostRoyal_roll_wind_power_chart_18 = function $$roll_wind_power_chart() {try {
+
+      var TMP_17, self = this, key = nil, total_bonus = nil, text = nil;
 
       
       key = 0;
       total_bonus = 0;
       text = "";
-      while ($truthy(true)) {
-        
-        $c = self.$roll(1, 6), $b = Opal.to_ary($c), (dice = ($b[0] == null ? nil : $b[0])), $c;
+      return $send(self, 'loop', [], (TMP_17 = function(){var self = TMP_17.$$s || this, $a, $b, dice = nil, add = nil, bonus = nil, current_text = nil;
+
+      
+        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
         key = $rb_plus(key, dice);
-        $c = [[true, 0, "ほぼ凪（振り足し）"], [true, 0, "弱い風（振り足し）"], [false, 0, "ゆるやかな風"], [false, 0, "ゆるやかな風"], [false, 1, "やや強い風（儀式点プラス１）"], [false, 2, "強い風（龍を幻視、儀式点プラス２）"], [false, 3, "体が揺らぐほどの風（龍を幻視、儀式点プラス３）"]]['$[]']($rb_minus([key, 7].$min(), 1)), $b = Opal.to_ary($c), (add = ($b[0] == null ? nil : $b[0])), (bonus = ($b[1] == null ? nil : $b[1])), (current_text = ($b[2] == null ? nil : $b[2])), $c;
+        $b = [[true, 0, "ほぼ凪（振り足し）"], [true, 0, "弱い風（振り足し）"], [false, 0, "ゆるやかな風"], [false, 0, "ゆるやかな風"], [false, 1, "やや強い風（儀式点プラス１）"], [false, 2, "強い風（龍を幻視、儀式点プラス２）"], [false, 3, "体が揺らぐほどの風（龍を幻視、儀式点プラス３）"]]['$[]']($rb_minus([key, 7].$min(), 1)), $a = Opal.to_ary($b), (add = ($a[0] == null ? nil : $a[0])), (bonus = ($a[1] == null ? nil : $a[1])), (current_text = ($a[2] == null ? nil : $a[2])), $b;
         total_bonus = $rb_plus(total_bonus, bonus);
         if ($truthy(key['$!='](dice))) {
           current_text = "" + "1D6[" + (dice) + "]+" + ($rb_minus(key, dice)) + " " + (current_text)
@@ -197,55 +191,58 @@ if ($for_tmp2 == null) $for_tmp2 = nil;
           text = "" + (text) + " => " + (current_text)
         };
         if ($truthy(add)) {
+          return nil
           } else {
           
           text = $rb_plus(text, "" + " [合計：儀式点 +" + (total_bonus) + " ]");
-          return text;
-        };
-      };
-    }, TMP_LostRoyal_roll_wind_power_chart_17.$$arity = 0);
+          Opal.ret(text);
+        };}, TMP_17.$$s = self, TMP_17.$$arity = 0, TMP_17));
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_LostRoyal_roll_wind_power_chart_18.$$arity = 0);
     
-    Opal.defn(self, '$roll_emotion_chart', TMP_LostRoyal_roll_emotion_chart_18 = function $$roll_emotion_chart() {
+    Opal.defn(self, '$roll_emotion_chart', TMP_LostRoyal_roll_emotion_chart_19 = function $$roll_emotion_chart() {
       var $a, $b, self = this, key = nil, text = nil;
 
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (key = ($a[0] == null ? nil : $a[0])), $b;
       text = ["愛情／殺意", "友情／負目", "崇拝／嫌悪", "興味／侮蔑", "信頼／嫉妬", "守護／欲情"]['$[]']($rb_minus(key, 1));
       return "" + "1D6 => [" + (key) + "] " + (text);
-    }, TMP_LostRoyal_roll_emotion_chart_18.$$arity = 0);
+    }, TMP_LostRoyal_roll_emotion_chart_19.$$arity = 0);
     
-    Opal.defn(self, '$roll_hope', TMP_LostRoyal_roll_hope_19 = function $$roll_hope(number_of_dice) {
-      var $a, $b, $c, self = this, total = nil, text = nil, d1 = nil, d2 = nil;
+    Opal.defn(self, '$roll_hope', TMP_LostRoyal_roll_hope_21 = function $$roll_hope(number_of_dice) {try {
+
+      var TMP_20, self = this, total = nil, text = nil;
 
       
       total = 0;
       text = "";
-      while ($truthy(true)) {
-        
-        $c = self.$roll(1, 6), $b = Opal.to_ary($c), (d1 = ($b[0] == null ? nil : $b[0])), $c;
+      return $send(self, 'loop', [], (TMP_20 = function(){var self = TMP_20.$$s || this, $a, $b, d1 = nil, d2 = nil;
+
+      
+        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (d1 = ($a[0] == null ? nil : $a[0])), $b;
         d2 = 0;
         if ($truthy($rb_ge(number_of_dice, 2))) {
-          $c = self.$roll(1, 6), $b = Opal.to_ary($c), (d2 = ($b[0] == null ? nil : $b[0])), $c};
+          $b = self.$roll(1, 6), $a = Opal.to_ary($b), (d2 = ($a[0] == null ? nil : $a[0])), $b};
         total = $rb_plus(total, $rb_plus(d1, d2));
         if (number_of_dice['$=='](2)) {
           text = $rb_plus(text, "" + "2D6[" + (d1) + "," + (d2) + "]")
           } else {
           text = $rb_plus(text, "" + "1D6[" + (d1) + "]")
         };
-        if ($truthy(($truthy($b = self.$is_1or2(d1)) ? $b : self.$is_1or2(d2)))) {
-          text = $rb_plus(text, " （振り足し） => ")
+        if ($truthy(($truthy($a = self.$is_1or2(d1)) ? $a : self.$is_1or2(d2)))) {
+          return (text = $rb_plus(text, " （振り足し） => "))
           } else {
           
           text = $rb_plus(text, "" + " => 合計 " + (total));
-          return text;
-        };
-      };
-    }, TMP_LostRoyal_roll_hope_19.$$arity = 1);
-    return (Opal.defn(self, '$is_1or2', TMP_LostRoyal_is_1or2_20 = function $$is_1or2(n) {
+          Opal.ret(text);
+        };}, TMP_20.$$s = self, TMP_20.$$arity = 0, TMP_20));
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_LostRoyal_roll_hope_21.$$arity = 1);
+    return (Opal.defn(self, '$is_1or2', TMP_LostRoyal_is_1or2_22 = function $$is_1or2(n) {
       var $a, self = this;
 
       return ($truthy($a = n['$=='](1)) ? $a : n['$=='](2))
-    }, TMP_LostRoyal_is_1or2_20.$$arity = 1), nil) && 'is_1or2';
+    }, TMP_LostRoyal_is_1or2_22.$$arity = 1), nil) && 'is_1or2';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

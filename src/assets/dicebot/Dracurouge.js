@@ -18,9 +18,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$floor', '$/', '$count', '$select', '$rindex', '$<=', '$nil?', '$each_with_index', '$to_s', '$[]', '$[]=', '$-', '$getReactionText', '$getReactionInfoBlood', '$getReactionInfoStyle', '$getHeresyReactionInfoBlood', '$getHeresyReactionInfoStyle', '$checkTypeText', '$<', '$*', '$getReactionTextFull', '$find', '$getReactionTex', '$include?', '$each', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$get_table_by_d66', '$getSourceSceneTable', '$getTitleD66TableResult', '$getPassionTable', '$getConfermentTable', '$getYearTableResult', '$getConfermentAfterTable', '$getElderPastTable', '$getOriginalSinTable', '$getRecentStateTable', '$getPeacefulPastTable', '$getYear', '$gsub', '$getD6xResult', '$length', '$parren_killer', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$last_match', '$==', '$rollDiceList', '$getGloryDiceCount', '$times', '$<<', '$getThirstyAddedResult', '$empty?', '$+', '$join', '$roll', '$sort', '$collect', '$split', '$countTargetDice', '$floor', '$/', '$count', '$select', '$rindex', '$<=', '$nil?', '$each_with_index', '$to_s', '$[]', '$[]=', '$-', '$getReactionText', '$getReactionInfoBlood', '$getReactionInfoStyle', '$getHeresyReactionInfoBlood', '$getHeresyReactionInfoStyle', '$checkTypeText', '$<', '$*', '$getReactionTextFull', '$find', '$getReactionTex', '$include?', '$each', '$get_table_by_number', '$get_table_by_2d6', '$get_table_by_1d6', '$get_table_by_d66', '$getSourceSceneTable', '$getTitleD66TableResult', '$getPassionTable', '$getConfermentTable', '$getYearTableResult', '$getConfermentAfterTable', '$getElderPastTable', '$getOriginalSinTable', '$getRecentStateTable', '$getPeacefulPastTable', '$getYear', '$gsub', '$getD6xResult', '$length', '$parren_killer', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $Dracurouge(){};
     var self = $Dracurouge = $klass($base, $super, 'Dracurouge', $Dracurouge);
@@ -69,17 +69,17 @@
     }, TMP_Dracurouge_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$getConductDiceCommandResult', TMP_Dracurouge_getConductDiceCommandResult_7 = function $$getConductDiceCommandResult(command) {
-      var $a, TMP_6, $b, self = this, diceCount = nil, thirstyPoint = nil, diceList = nil, gloryDiceCount = nil, calculationProcess = nil, thirstyPointMarker = nil, result = nil;
+      var TMP_6, $a, $b, self = this, diceCount = nil, thirstyPoint = nil, diceList = nil, gloryDiceCount = nil, calculationProcess = nil, thirstyPointMarker = nil, result = nil;
 
       
       if ($truthy(/^DR(\d*)(\+(\d+))?$/['$==='](command))) {
         } else {
         return nil
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       if (diceCount['$=='](0)) {
         diceCount = 4};
-      thirstyPoint = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
+      thirstyPoint = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
       diceList = self.$rollDiceList(diceCount);
       gloryDiceCount = self.$getGloryDiceCount(diceList);
       $send(gloryDiceCount, 'times', [], (TMP_6 = function(){var self = TMP_6.$$s || this;
@@ -156,14 +156,14 @@ if (item == null) item = nil;if (index == null) index = nil;
     }, TMP_Dracurouge_getThirstyAddedResult_15.$$arity = 2);
     
     Opal.defn(self, '$getResistDiceCommandResult', TMP_Dracurouge_getResistDiceCommandResult_16 = function $$getResistDiceCommandResult(command) {
-      var $a, self = this, diceCount = nil, diceList = nil, result = nil;
+      var self = this, diceCount = nil, diceList = nil, result = nil;
 
       
       if ($truthy(/^DRR(\d+)$/['$==='](command))) {
         } else {
         return nil
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       if (diceCount['$=='](0)) {
         diceCount = 4};
       diceList = self.$rollDiceList(diceCount);
@@ -172,29 +172,29 @@ if (item == null) item = nil;if (index == null) index = nil;
     }, TMP_Dracurouge_getResistDiceCommandResult_16.$$arity = 1);
     
     Opal.defn(self, '$getReactionDiceCommandResult', TMP_Dracurouge_getReactionDiceCommandResult_17 = function $$getReactionDiceCommandResult(command) {
-      var $a, self = this, typeText1 = nil, typeText2 = nil, name = nil;
+      var self = this, typeText1 = nil, typeText2 = nil, name = nil;
 
       
       if ($truthy(/^RT((\w\d*)(\w\d*))?/['$==='](command))) {
         } else {
         return nil
       };
-      typeText1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      typeText2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      typeText1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      typeText2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       name = "反応表";
       return self.$getReactionText(name, typeText1, typeText2, self.$getReactionInfoBlood(), self.$getReactionInfoStyle());
     }, TMP_Dracurouge_getReactionDiceCommandResult_17.$$arity = 1);
     
     Opal.defn(self, '$getHeresyReactionDiceCommandResult', TMP_Dracurouge_getHeresyReactionDiceCommandResult_18 = function $$getHeresyReactionDiceCommandResult(command) {
-      var $a, self = this, typeText1 = nil, typeText2 = nil, name = nil;
+      var self = this, typeText1 = nil, typeText2 = nil, name = nil;
 
       
       if ($truthy(/^HRT((\w\d*)(\w\d*))?/['$==='](command))) {
         } else {
         return nil
       };
-      typeText1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      typeText2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      typeText1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      typeText2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       name = "異端の反応表";
       return self.$getReactionText(name, typeText1, typeText2, self.$getHeresyReactionInfoBlood(), self.$getHeresyReactionInfoStyle());
     }, TMP_Dracurouge_getHeresyReactionDiceCommandResult_18.$$arity = 1);
@@ -320,7 +320,7 @@ if (info == null) info = nil;
         } else {
         return nil
       };
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       name = "堕落表";
       table = [[0, "あなたは完全に堕落した。この時点であなたは［壁の華］となり、人狼、黒山羊、夜獣卿のいずれかとなる。その［幕］の終了後にセッションから退場する。247ページの「消滅・完全なる堕落」も参照すること。"], [1, "あなたの肉体は精神にふさわしい変異を起こす……。「堕落の兆し表」を2回振って特徴を得る。このセッション終了後、【道】を「夜獣」にすること。（既に「夜獣」なら【道】は変わらない）"], [3, "あなたの肉体は精神にふさわしい変異を起こす……。「堕落の兆し表」を1回振って特徴を得る。このセッション終了後、【道】を「夜獣」にすること。（既に「夜獣」なら【道】は変わらない）"], [5, "気高き心もやがて堕ちる。あなたが今、最も多くルージュを持つ対象へのルージュを全て失い、同じだけのノワールを得る。ノワールを得た結果【渇き】が3点以上になった場合は、再度堕落表を振ること。"], [6, "内なる獣の息遣い……あなたが今【渇き】を得たノワールの対象へ、任意のノワール2点を獲得する。"], [7, "内なる獣の息遣い……あなたが今【渇き】を得たノワールの対象へ、任意のノワール1点を獲得する。"], [8, "荒ぶる心を鎮める……幸いにも何も起きなかった。"], [99, "あなたは荒れ狂う感情を抑え、己を律した！　【渇き】が1減少する！"]];
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (number_text = ($a[1] == null ? nil : $a[1])), $b;
@@ -488,9 +488,9 @@ if (info == null) info = nil;
       var TMP_42, self = this, text = nil, year = nil;
 
       
-      text = $send(yearText, 'gsub', [/(\d+)D(6+)/], (TMP_42 = function(){var self = TMP_42.$$s || this, $a;
+      text = $send(yearText, 'gsub', [/(\d+)D(6+)/], (TMP_42 = function(){var self = TMP_42.$$s || this;
 
-      return self.$getD6xResult((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i(), (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$length())}, TMP_42.$$s = self, TMP_42.$$arity = 0, TMP_42));
+      return self.$getD6xResult(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$length())}, TMP_42.$$s = self, TMP_42.$$arity = 0, TMP_42));
       text = "" + "(" + (text) + ")";
       year = self.$parren_killer(text.$gsub(/×/, "*"));
       return [year, text];
@@ -501,12 +501,12 @@ if (info == null) info = nil;
 
       
       total = 0;
-      $send(count, 'times', [], (TMP_44 = function(i){var self = TMP_44.$$s || this, TMP_45, number = nil;
-if (i == null) i = nil;
+      $send(count, 'times', [], (TMP_44 = function(_i){var self = TMP_44.$$s || this, TMP_45, number = nil;
+if (_i == null) _i = nil;
       
         number = 0;
-        $send(dice6Count, 'times', [], (TMP_45 = function(i){var self = TMP_45.$$s || this, $a, $b, dice = nil;
-if (i == null) i = nil;
+        $send(dice6Count, 'times', [], (TMP_45 = function(_i){var self = TMP_45.$$s || this, $a, $b, dice = nil;
+if (_i == null) _i = nil;
         
           number = $rb_times(number, 10);
           $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;

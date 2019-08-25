@@ -53,7 +53,7 @@
       return "" + "例) 2D6 ： 単純に2D6した値を出します。\n" + "例) 2D6>=7 ： 行為判定。2D6して目標値7以上出れば成功。\n" + "例) 2D6+2>=7 ： 行為判定。2D6に修正+2をした上で目標値7以上になれば成功。\n" + "\n" + "2D6での行為判定時は1ゾロでファンブル、6ゾロでスペシャル扱いになります。\n" + "天龍ちゃんスペシャルは手動で判定してください。\n" + "\n" + "・各種表\n" + "　・感情表　ET／アクシデント表　ACT\n" + "　・日常イベント表　EVNT／交流イベント表　EVKT／遊びイベント表　EVAT\n" + "　　演習イベント表　EVET／遠征イベント表　EVENT／作戦イベント表　EVST\n" + "　・ほのぼのイベント表　ETHT／航海イベント表　ETVT　外出イベント表　ETGT\n" + "　　激戦イベント表　ETBT／任務イベント表　ETMT／恐怖イベント表　ETFT／侵攻効果表　ETIT\n" + "　・大規模部隊表 LSFT／艦隊敗北表 LFDT／艦隊勝利表 LFVT\n" + "　・開発表　DVT／開発表（一括）DVTM\n" + "　　　装備１種表　WP1T／装備２種表　WP2T／装備３種表　WP3T／装備４種表　WP4T\n" + "　・アイテム表　ITT／目標表　MHT／戦果表　SNT／特殊戦果表　SPSNT\n" + "　・ランダム個性選択：一括　KTM／分野　BT\n" + "　　　背景　KHT／魅力　KMT／性格　KST／趣味　KSYT／航海　KKT／戦闘　KSNT\n" + "　・戦場表　SNZ　暴走表／RNT\n" + "　・特殊開発表　WPMC　(燃料6/弾薬3/鋼材6/ボーキ3)\n" + "　・新・特殊開発表　WPMCN\n" + "　・艦載機関開発表　WPFA　(燃料3/弾薬6/鋼材3/ボーキ6)\n" + "　・砲類開発表　WPCN　(燃料3/弾薬6/鋼材6/ボーキ3)　\n" + "　・敵深海棲艦の装備決定 BT2～BT12\n" + "・D66ダイス(D66S相当=低い方が10の桁になる)\n"
     }, TMP_KanColle_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_KanColle_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_KanColle_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       

@@ -24,9 +24,9 @@
   function $rb_le(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$==', '$empty?', '$parren_killer', '$size', '$select', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$floor', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$match', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$to_s', '$=~']);
+  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$===', '$to_i', '$last_match', '$getValue', '$roll', '$sort', '$collect', '$split', '$+', '$nil?', '$isCritical', '$isFamble', '$getJudgeResultString', '$>=', '$empty?', '$parren_killer', '$size', '$select', '$==', '$>', '$length', '$!=', '$!', '$getPhysicalConsumptionResultTables', '$getEnergyConsumptionResultTables', '$getGoodsConsumptionResultTables', '$getCashConsumptionResultTables', '$getExplosionSpecialConsumptionResultTables', '$getCurseSpecialConsumptionResultTables', '$getTableByRank', '$getAdjustNumber', '$get_table_by_number', '$floor', '$/', '$-', '$max', '$min', '$[]', '$getAdjustNumberMin', '$getAdjustNumberMax', '$getTableMinimum', '$first', '$last', '$match', '$getCashTresureResultTable', '$getMagicTresureResultTable', '$getItemTresureResultTable', '$getHeroineTresureResultTable', '$getGoblinTresureResultTable', '$*', '$<', '$getHiroineTresureResultString', '$getOtherTresureResultString', '$map', '$<=', '$get_table_by_d66', '$each', '$<<', '$join', '$to_s', '$=~']);
   return (function($base, $super, $parent_nesting) {
     function $LogHorizon_Korean(){};
     var self = $LogHorizon_Korean = $klass($base, $super, 'LogHorizon_Korean', $LogHorizon_Korean);
@@ -81,9 +81,9 @@
         } else {
         return nil
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      modifyText = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : "");
-      difficultyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      modifyText = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : "");
+      difficultyText = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
       modify = self.$getValue(modifyText, 0);
       difficulty = self.$getValue(difficultyText, nil);
       $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
@@ -124,7 +124,7 @@ if (i == null) i = nil;
       var $a, self = this;
 
       
-      if ($truthy(($truthy($a = text['$=='](nil)) ? $a : text['$empty?']()))) {
+      if ($truthy(($truthy($a = text['$nil?']()) ? $a : text['$empty?']()))) {
         return defaultValue};
       return self.$parren_killer($rb_plus($rb_plus("(0", text), ")")).$to_i();
     }, TMP_LogHorizon_Korean_getValue_9.$$arity = 2);
@@ -155,20 +155,19 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      is_special = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $rb_gt((($b = $gvars['~']) === nil ? nil : $b['$[]'](1)).$length(), 1) : $a);
-      rank = (function() {if ($truthy(($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))['$!=']("") : $a))) {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      is_special = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $rb_gt(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$length(), 1) : $a);
+      rank = (function() {if ($truthy(($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$!=']("") : $a))) {
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()
         } else {
         return nil
       }; return nil; })();
       if ($truthy(($truthy($a = rank['$!']()) ? is_special['$!']() : $a))) {
         return nil};
-      if ($truthy(rank['$!']())) {
-        rank = 0};
-      is_choice = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4))['$nil?']()['$!']();
-      dice_value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      modifyText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      rank = ($truthy($a = rank) ? $a : 0);
+      is_choice = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)['$nil?']()['$!']();
+      dice_value = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
+      modifyText = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       modify = self.$getValue(modifyText, 0);
       tableName = "";
       tables = nil;
@@ -450,7 +449,7 @@ if (e == null) e = nil;
         } else {
         return nil
       };
-      rank = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      rank = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       table_1 = ["접두어：기합의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋１한다.", "접두어：비술의　해당태그：[지팡이][마석]\n아이 템효과：이 아이템의【마력】에 ＋１한다.", "접두어：일격의　해당태그：[백병공격]가능한 무기\n아이템 효과：〔기동：대미지굴림〕이 무기에 의한 [백병공격]의 대미지 굴림에 ＋７. 시나리오 당 1회 사용 가능.", "접두어：저격의　해당태그：[활][투척]\n아이템 효과：〔기동：행동〕이 무기에 의한 [사격공격]과 동시에 사용한다. 공격의 사정거리에 ＋２Ｓｑ. 시나리오당 1회사용가능", "접두어：필살의　해당태그：모든 무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한[무기공격]의 [명중판정] 다이스에 ６이 하나 이상 있다면 판정을 크리티컬로 간주한다. 시나리오당 1회 사용 가능.", "접두어：화염의　해당태그：모든 무기, [악기]\n아이템 효과：아이템에 [화염]태그를 추가한다.（이 효과를 선택할 때 태그를[냉기][전격][광휘][사독][정신] 중 하나로 바뀌어도 좋다. 그 경우「냉기의」「전격의」와 같이 변경할 것）", "접두어：기합의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋１한다.", "접두어：비술의　해당태그：[지팡이][마석]\n아이 템효과：이 아이템의【마력】에 ＋１한다.", "접두어：일격의　해당태그：[백병공격]가능한 무기\n아이템 효과：〔기동：대미지굴림〕이 무기에 의한 [백병공격]의 대미지 굴림에 ＋７. 시나리오 당 1회 사용 가능.", "접두어：저격의　해당태그：[활][투척]\n아이템 효과：〔기동：행동〕이 무기에 의한 [사격공격]과 동시에 사용한다. 공격의 사정거리에 ＋２Ｓｑ. 시나리오당 1회사용가능", "접두어：필살의　해당태그：모든 무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한[무기공격]의 [명중판정] 다이스에 ６이 하나 이상 있다면 판정을 크리티컬로 간주한다. 시나리오당 1회 사용 가능.", "접두어：화염의　해당태그：모든 무기, [악기]\n아이템 효과：아이템에 [화염]태그를 추가한다.（이 효과를 선택할 때 태그를[냉기][전격][광휘][사독][정신] 중 하나로 바뀌어도 좋다. 그 경우「냉기의」「전격의」와 같이 변경할 것）", "접두어：화염술사의　해당태그：[지팡이][마석][다리]\n아이템 효과：〔기동：대미지 굴림〕당신이 행할 [화염]태그를 가진 대미지굴림에 +7, 시나리오당 1회 사용가능 (이 효과를 선택할 때에는 태그를 [냉기], [전격], [광휘], [사독], [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [빙술사의], [뇌술사의]와 같이 플레이 할것)", "접두어：철신의　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리부터의 공격) ：３]을 얻는다.", "접두어：화살막이의　해당태그：[盾][中鎧][軽鎧]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리 이외로부터의 공격) ：３]을 얻는다.", "접두어：화염막이의　해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면 개시시에 [경감（화염）：１０]을 받는다.（이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘] [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도「얼음막이의」,「벼락막이의」와 같이 변경할 것）", "접두어：근성의　해당태그：[중갑][머리]\n아이템 효과：〔기동：본문〕당신이 BS를 입은 직후에 사용한다. 직전에 입은 BS에서 하나를 선택해 해제한다. 시나리오당 1회 사용 가능", "접두어：치유의　해당태그：[팔]\n아이템 효과：당신의【회복력】에 ＋２한다.", "접두어：화염술사의　해당태그：[지팡이][마석][다리]\n아이템 효과：〔기동：대미지 굴림〕당신이 행할 [화염]태그를 가진 대미지굴림에 +7, 시나리오당 1회 사용가능 (이 효과를 선택할 때에는 태그를 [냉기], [전격], [광휘], [사독], [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [빙술사의], [뇌술사의]와 같이 플레이 할것)", "접두어：철신의　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리부터의 공격) ：３]을 얻는다.", "접두어：화살막이의　해당태그：[盾][中鎧][軽鎧]\n아이템 효과：당신은 장면이 시작될 때[경감(지근거리 이외로부터의 공격) ：３]을 얻는다.", "접두어：화염막이의　해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면 개시시에 [경감（화염）：１０]을 받는다.（이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘] [정신] 중 하나로 바꾸어도 좋다. 그 경우 접두어도「얼음막이의」,「벼락막이의」와 같이 변경할 것）", "접두어：근성의　해당태그：[중갑][머리]\n아이템 효과：〔기동：본문〕당신이 BS를 입은 직후에 사용한다. 직전에 입은 BS에서 하나를 선택해 해제한다. 시나리오당 1회 사용 가능", "접두어：치유의　해당태그：[팔]\n아이템 효과：당신의【회복력】에 ＋２한다.", "접두어：모래쥐의　해당태그：[다리][외투]\n아이템 효과：〔기동：클린업〕당신의【헤이트】에 ー２한다. 시나리오당１회 사용가능.", "접두어：올뺴미의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [암시]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 1회 사용가능.", "접두어：곤들매기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [수생]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 １회 사용가능.", "접두어：눈썰미의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 드롭 아이템 굴림을 한 직후에 사용해 해당 굴림을 다시 굴린다. 시나리오당 １회 사용가능.", "접두어：보물 찾기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림을 한 직후에 사용해 해당 굴림을 다시 굴린다.. 시나리오당 １회 사용가능.", "접두어：돌변의　해당태그：[가방]\n아이템 효과：〔기동：인스턴트〕당신은 곧바로《장비 변경》을 한다. 시나리오당 １회 사용가능.", "접두어：모래쥐의　해당태그：[다리][외투]\n아이템 효과：〔기동：클린업〕당신의【헤이트】에 ー２한다. 시나리오당１회 사용가능.", "접두어：올뺴미의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [암시]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 1회 사용가능.", "접두어：곤들매기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：인스턴트〕당신은 [수생]태그를 얻는다. 이 효과는 CS로 간주한다. 시나리오당 １회 사용가능.", "접두어：눈썰미의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 드롭 아이템 굴림을 한 직후에 사용해 해당 굴림을 다시 굴린다. 시나리오당 １회 사용가능.", "접두어：보물 찾기의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림을 한 직후에 사용해 해당 굴림을 다시 굴린다.. 시나리오당 １회 사용가능.", "접두어：돌변의　해당태그：[가방]\n아이템 효과：〔기동：인스턴트〕당신은 곧바로《장비 변경》을 한다. 시나리오당 １회 사용가능."];
       table_2 = ["접두어：분노의　해당태그：[양손]무기\n아이템 효과：〔기동：대미지굴림〕이 무기에 의한 [무기공격]의 대미지 굴림에＋[당신의【헤이트】]. 장면에 1회 사용가능.", "접두어：연격의　해당태그：[한손]무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한 [무기공격]의 [명중판정]을 다시 굴린다. 장면에 1회 사용가능.", "접두어：예리한　해당태그：[검][카타나][창]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ", "접두어：치명타의　해당태그：[둔기/도끼][격투][채찍][지팡이]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ", "접두어：마탄의　해당태그：[활][투척]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ", "접두어：지력의　해당태그：모든무기, [마석][악기]\n아이템 효과：당신의 [마법공격], [특수공격]의 대미지 굴림에 ＋１Ｄ. 이 효과는 중첩되지 않는다.", "접두어：분노의　해당태그：[양손]무기\n아이템 효과：〔기동：대미지굴림〕이 무기에 의한 [무기공격]의 대미지 굴림에＋[당신의【헤이트】]. 장면에 1회 사용가능.", "접두어：연격의　해당태그：[한손]무기\n아이템 효과：〔기동：판정 직후〕이 무기에 의한 [무기공격]의 [명중판정]을 다시 굴린다. 장면에 1회 사용가능.", "접두어：예리한　해당태그：[검][카타나][창]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ", "접두어：치명타의　해당태그：[둔기/도끼][격투][채찍][지팡이]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ", "접두어：마탄의　해당태그：[활][투척]\n아이템 효과：이 무기에 의한 [무기공격]의 대미지 굴림에 ＋１Ｄ", "접두어：지력의　해당태그：모든무기, [마석][악기]\n아이템 효과：당신의 [마법공격], [특수공격]의 대미지 굴림에 ＋１Ｄ. 이 효과는 중첩되지 않는다.", "접두어：악귀퇴치의　해당태그：모든 무기\n아이템 효과：이 무기에 의한 [인간형]에 대한 [무기공격]의 대미지에 ＋１0 (이효과를 선택할 때 태그를 [자연],[정령],[환수],[불사],[인조],[인간]중 하나로 바꾸어도 좋다. 그 경우 접두어도「정령퇴치의」 「환수퇴치의」와 같이 변경할 것)", "접두어：견고한　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【물리방어력】에 ＋４", "접두어：항마의　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【마법방어력】에 ＋４", "접두어：방벽의　해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작될 때 [장벽：１０]을 얻는다.", "접두어：인내의　해당태그：[방패][머리]\n아이템 효과：〔기동：본문〕당신이 강제적인 이동을 받았을 때에 사용해 해당 거리를ー１Ｓｑ한다.", "접두어：호법의　해당태그：[팔]\n아이템 효과：당신이 부여할 [장벽]의 강도에 ＋５.", "접두어：악귀퇴치의　해당태그：모든 무기\n아이템 효과：이 무기에 의한 [인간형]에 대한 [무기공격]의 대미지에 ＋１0 (이효과를 선택할 때 태그를 [자연],[정령],[환수],[불사],[인조],[인간]중 하나로 바꾸어도 좋다. 그 경우 접두어도「정령퇴치의」 「환수퇴치의」와 같이 변경할 것)", "접두어：견고한　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【물리방어력】에 ＋４", "접두어：항마의　해당태그：[중갑][경갑][연갑]\n아이템 효과：이 방어구의 【마법방어력】에 ＋４", "접두어：방벽의　해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작될 때 [장벽：１０]을 얻는다.", "접두어：인내의　해당태그：[방패][머리]\n아이템 효과：〔기동：본문〕당신이 강제적인 이동을 받았을 때에 사용해 해당 거리를ー１Ｓｑ한다.", "접두어：호법의　해당태그：[팔]\n아이템 효과：당신이 부여할 [장벽]의 강도에 ＋５.", "접두어：맥동하는　해당태그：[팔]\n아이템 효과：당신이 부여하는 [재생]의 강도에＋３.", "접두어：질주하는　해당태그：[다리][외투]\n아이템 효과：〔기동：행동〕당신이 《런》, 《대시》를 사용했을  때에 사용해 이동거리를 +1Sq 한다. ", "접두어：신속의　해당태그：[다리][외투]\n아이템 효과：이 아이템의 [행동수정]에 ＋３.", "접두어：역경의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 [전투불능]이 된 직후 사용할 수 있다.당신은 【인과력】１점 얻는다. 장면에 1회사용 가능", "접두어：숲지름　해당태그：[보조장비][악기][가방]\n아이템 효과：당신이 장면을 시작 될 때 [경감([천연]프롭, 기믹에서 오는 데미지): 15]를 얻는다.(이 효과를 선택할 때 태그를[마법], [기계] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [지옥지름], [함정지름]과 같이 변경할 것)", "접두어：여행자의　해당태그：[가방]\n아이템 효과：이 아이템에 [소지품 슬롯] 4개를 추가한다.", "접두어：맥동하는　해당태그：[팔]\n아이템 효과：당신이 부여하는 [재생]의 강도에＋３.", "접두어：질주하는　해당태그：[다리][외투]\n아이템 효과：〔기동：행동〕당신이 《런》, 《대시》를 사용했을  때에 사용해 이동거리를 +1Sq 한다. ", "접두어：신속의　해당태그：[다리][외투]\n아이템 효과：이 아이템의 [행동수정]에 ＋３.", "접두어：역경의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 [전투불능]이 된 직후 사용할 수 있다.당신은 【인과력】１점 얻는다. 장면에 1회사용 가능", "접두어：숲지름　해당태그：[보조장비][악기][가방]\n아이템 효과：당신이 장면을 시작 될 때 [경감([천연]프롭, 기믹에서 오는 데미지): 15]를 얻는다.(이 효과를 선택할 때 태그를[마법], [기계] 중 하나로 바꾸어도 좋다. 그 경우 접두어도 [지옥지름], [함정지름]과 같이 변경할 것)", "접두어：여행자의　해당태그：[가방]\n아이템 효과：이 아이템에 [소지품 슬롯] 4개를 추가한다."];
       table_3 = ["접두어：기백의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋３한다.", "접두어：신비의　해당태그：[지팡이][마석]\n아이템 효과：이 무기의【마력】에 ＋３한다.", "접두어：원격의　해당태그：[활][트착]\n아이템 효과：이 무기의 사정거리에 ＋１Ｓｑ한다.", "접두어：흡혈의　해당태그：[백병공격]가능한 무기\n아이템 효과：이 무기에의한[백병공격]으로 데미지를 입혔을 때【HP】는５점 회복된다.", "접두어：충격의　해당태그：[한손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [멍함]을 입힌다.", "접두어：노호의　해당태그：[양손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [위축]을 입힌다.", "접두어：기백의　해당태그：모든 무기\n아이템 효과：이 무기의【공격력】에 ＋３한다.", "접두어：신비의　해당태그：[지팡이][마석]\n아이템 효과：이 무기의【마력】에 ＋３한다.", "접두어：원격의　해당태그：[활][트착]\n아이템 효과：이 무기의 사정거리에 ＋１Ｓｑ한다.", "접두어：흡혈의　해당태그：[백병공격]가능한 무기\n아이템 효과：이 무기에의한[백병공격]으로 데미지를 입혔을 때【HP】는５점 회복된다.", "접두어：충격의　해당태그：[한손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [멍함]을 입힌다.", "접두어：노호의　해당태그：[양손]무기\n아이템 효과：이 무기에 의한《기본무기공격》으로 데미지를 입혔을 때 공격 대상에게 [위축]을 입힌다.", "접두어：갑주비늘　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리로부터의 공격)：10]을 얻는다.", "접두어：화살반사　해당태그：[방패][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리 이외로부터의 공격) ：10]을 얻는다.", "접두어：내화의　\t해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(화염) ：25]를 얻는다. (이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘], [정신]중 하나로 바꾸어도 좋다. 이경우 접두어도「내빙의」「내전의」와 같이 변경했어)", "접두어：성채의　\t해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작 될 때 【장벽：２０】을 얻는다.", "접두어：정찰의　\t해당태그：[머리]\n아이템 효과：당신이 행할[정찰]태그를 가진 행동 및《이상탐지》판정에＋１Ｄ.", "접두어：쾌유의　\t해당태그：[머리]\n아이템 효과：당신의【회복력】에＋５.", "접두어：갑주비늘　해당태그：[방패][중갑][경갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리로부터의 공격：10]을 얻는다.", "접두어：화살반사　해당태그：[방패][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(지근거리 이외로부터의 공격) ：10]을 얻는다.", "접두어：내화의　\t해당태그：[중갑][경갑][연갑]\n아이템 효과：당신은 장면이 시작 될 때 [경감(화염) ：25]를 얻는다. (이 효과를 선택할 때 경감할 태그를 [냉기], [전격], [사독], [광휘], [정신]중 하나로 바꾸어도 좋다. 이경우 접두어도「내빙의」「내전의」와 같이 변경했어)", "접두어：성채의　\t해당태그：[방패][머리]\n아이템 효과：당신은 장면이 시작 될 때 【장벽：２０】을 얻는다.", "접두어：정찰의　\t해당태그：[머리]\n아이템 효과：당신이 행할[정찰]태그를 가진 행동 및《이상탐지》판정에＋１Ｄ.", "접두어：쾌유의　\t해당태그：[머리]\n아이템 효과：당신의【회복력】에＋５.", "접두어：함정해제의　해당태그：[팔]\n아이템 효과：〔기동：판정 직전〕당신이 《프롭 해제》를 행할 때 사용하며그 판정은 크리티컬이 된다. 장면에１회 사용 가능", "접두어：부동의\t　해당태그：[다리][외투]\n아이템 효과：당신은 [멍함],[경직]상태가 되어도 [저지능력]을 잃지 않는다.", "접두어：그림자질주　해당태그：[다리][외투]\n아이템 효과：당신이 [은밀상태]일 때《런》을 해도 [은밀상태]는 해제되지 않는다.", "접두어：심해의\t　해당태그：[보조장비][악기][가방]\n아이템 효과： 당신은 [암시],[수생]태그를 얻는다.", "접두어：금전운의\t　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림 또는 드롭 아이템 굴림을 한 직후에 사용하며 해당 굴림을 다시 굴린다. 장면에１회 사용할 수 있다.", "접두어：함정회피의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：데미지 적용 직전〕당신에게 적용될 예정인 프롭 및[기믹]에 의한 데미지를 무효로 할 수 있다. 시나리오당１회 사용할 수 있다.", "접두어：함정해제의　해당태그：[팔]\n아이템 효과：〔기동：판정 직전〕당신이 《프롭 해제》를 행할 때 사용하며그 판정은 크리티컬이 된다. 장면에１회 사용 가능", "접두어：부동의\t　해당태그：[다리][외투]\n아이템 효과：당신은 [멍함],[경직]상태가 되어도 [저지능력]을 잃지 않는다.", "접두어：그림자질주　해당태그：[다리][외투]\n아이템 효과：당신이 [은밀상태]일 때《런》을 해도 [은밀상태]는 해제되지 않는다.", "접두어：심해의\t　해당태그：[보조장비][악기][가방]\n아이템 효과： 당신은 [암시],[수생]태그를 얻는다.", "접두어：금전운의\t　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：본문〕당신이 재물표 굴림 또는 드롭 아이템 굴림을 한 직후에 사용하며 해당 굴림을 다시 굴린다. 장면에１회 사용할 수 있다.", "접두어：함정회피의　해당태그：[보조장비][악기][가방]\n아이템 효과：〔기동：데미지 적용 직전〕당신에게 적용될 예정인 프롭 및[기믹]에 의한 데미지를 무효로 할 수 있다. 시나리오당１회 사용할 수 있다."];
@@ -500,7 +499,7 @@ if (e == null) e = nil;
     }, TMP_LogHorizon_Korean_getPCNameDiceCommandResult_39.$$arity = 1);
     
     Opal.defn(self, '$getInventionAttributeTextDiceCommandResult', TMP_LogHorizon_Korean_getInventionAttributeTextDiceCommandResult_45 = function $$getInventionAttributeTextDiceCommandResult(command) {
-      var $a, $b, TMP_40, self = this, tableName = nil, table_indicate_string = nil, is_single = nil, result = nil, number = nil;
+      var $a, TMP_40, self = this, tableName = nil, table_indicate_string = nil, is_single = nil, result = nil, number = nil;
 
       
       if ($truthy(/IAT([ABMDLT]*)/['$==='](command))) {
@@ -508,18 +507,18 @@ if (e == null) e = nil;
         return nil
       };
       tableName = "로데릭 연구소의 새로운 발명";
-      table_indicate_string = (function() {if ($truthy(($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))['$!=']("") : $a))) {
-        return (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))
+      table_indicate_string = (function() {if ($truthy(($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$!=']("") : $a))) {
+        return Opal.const_get_relative($nesting, 'Regexp').$last_match(1)
         } else {
         return "MDLT"
       }; return nil; })();
       is_single = table_indicate_string.$length()['$=='](1);
       result = [];
       number = [];
-      $send(table_indicate_string.$split(/(?:)/), 'each', [], (TMP_40 = function(char$){var self = TMP_40.$$s || this, $c, $d, TMP_41, TMP_42, TMP_43, TMP_44, dice_result = nil, dice_str = nil, $case = nil;
+      $send(table_indicate_string.$split(/(?:)/), 'each', [], (TMP_40 = function(char$){var self = TMP_40.$$s || this, $b, $c, TMP_41, TMP_42, TMP_43, TMP_44, dice_result = nil, dice_str = nil, $case = nil;
 if (char$ == null) char$ = nil;
       
-        $d = self.$roll(1, 6), $c = Opal.to_ary($d), (dice_result = ($c[0] == null ? nil : $c[0])), (dice_str = ($c[1] == null ? nil : $c[1])), $d;
+        $c = self.$roll(1, 6), $b = Opal.to_ary($c), (dice_result = ($b[0] == null ? nil : $b[0])), (dice_str = ($b[1] == null ? nil : $b[1])), $c;
         number['$<<'](dice_str);
         return result['$<<']((function() {$case = char$;
         if ("A"['$===']($case) || "M"['$===']($case)) {return $send(["빛나고 돌며 소리가 울리는", "무언가를 자각한", "단단하고 강한", "굉장히 빠르거나 거친", "대량 생산이 가능한", "좋은 감촉의"], 'map', [], (TMP_41 = function(e){var self = TMP_41.$$s || this;
@@ -607,15 +606,15 @@ if (table == null) table = nil;
     }, TMP_LogHorizon_Korean_getAbandonedChildDiceCommandResult_55.$$arity = 1);
     
     Opal.defn(self, '$getMusicalInstrumentTypeDiceCommandResult', TMP_LogHorizon_Korean_getMusicalInstrumentTypeDiceCommandResult_56 = function $$getMusicalInstrumentTypeDiceCommandResult(command) {
-      var $a, $b, $c, $d, self = this, type = nil, is_roll = nil, tableName = nil, type_name = nil, dice = nil, result = nil;
+      var $a, $b, $c, self = this, type = nil, is_roll = nil, tableName = nil, type_name = nil, dice = nil, result = nil;
 
       
       if ($truthy(/MII(\d?)/['$==='](command))) {
         } else {
         return nil
       };
-      $b = (function() {if ($truthy(($truthy($c = (($d = $gvars['~']) === nil ? nil : $d['$[]'](1))) ? (($d = $gvars['~']) === nil ? nil : $d['$[]'](1))['$!=']("") : $c))) {
-        return [(($c = $gvars['~']) === nil ? nil : $c['$[]'](1)).$to_i(), false]
+      $b = (function() {if ($truthy(($truthy($c = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$!=']("") : $c))) {
+        return [Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), false]
         } else {
         return self.$roll(1, 6)
       }; return nil; })(), $a = Opal.to_ary($b), (type = ($a[0] == null ? nil : $a[0])), (is_roll = ($a[1] == null ? nil : $a[1])), $b;
@@ -639,7 +638,7 @@ if (table == null) table = nil;
         } else {
         return nil
       };
-      cr = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      cr = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       if ($truthy(($truthy($a = $rb_ge(cr, 1)) ? $rb_le(cr, 10) : $a))) {
         } else {
         return nil

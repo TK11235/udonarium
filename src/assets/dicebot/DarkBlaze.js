@@ -18,9 +18,9 @@
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$check_roll', '$==', '$>=', '$match', '$[]', '$to_i', '$parren_killer', '$marshalSignOfInequality', '$get_dice', '$!=', '$+', '$check_suc', '$abs', '$roll', '$shift', '$collect', '$split', '$times', '$<', '$-', '$<=', '$===', '$get_horidasibukuro_table', '$debug', '$/']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$last_match', '$check_roll', '$==', '$>=', '$match', '$[]', '$to_i', '$parren_killer', '$marshalSignOfInequality', '$get_dice', '$!=', '$+', '$check_suc', '$abs', '$roll', '$shift', '$collect', '$split', '$times', '$<', '$-', '$<=', '$===', '$get_horidasibukuro_table', '$debug', '$/']);
   return (function($base, $super, $parent_nesting) {
     function $DarkBlaze(){};
     var self = $DarkBlaze = $klass($base, $super, 'DarkBlaze', $DarkBlaze);
@@ -69,21 +69,21 @@
         } else {
         return string
       };
-      string = $send(string, 'gsub', [/DB(\d),(\d)/], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/DB(\d),(\d)/], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + "DB" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'gsub', [/DB\@(\d)\@(\d)/], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      return "" + "DB" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/DB\@(\d)\@(\d)/], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + "DB" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\d][\+\-\d]*))/], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + "DB" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2))}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\d][\+\-\d]*))/], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + "3R6+" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](4))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\+\-\d]*))/], (TMP_8 = function(){var self = TMP_8.$$s || this, $a;
+      return "" + "3R6+" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) + "[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\+\-\d]*))/], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-      return "" + "3R6" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](4))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
-      string = $send(string, 'gsub', [/DB(\d)(\d)/], (TMP_9 = function(){var self = TMP_9.$$s || this, $a;
+      return "" + "3R6" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) + "[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
+      string = $send(string, 'gsub', [/DB(\d)(\d)/], (TMP_9 = function(){var self = TMP_9.$$s || this;
 
-      return "" + "3R6[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
+      return "" + "3R6[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
       return string;
     }, TMP_DarkBlaze_changeText_10.$$arity = 1);
     
@@ -93,7 +93,7 @@
       return self.$check_roll(string, nick_e)
     }, TMP_DarkBlaze_dice_command_xRn_11.$$arity = 2);
     
-    Opal.defn(self, '$check_nD6', TMP_DarkBlaze_check_nD6_12 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_DarkBlaze_check_nD6_12 = function $$check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -190,7 +190,7 @@ if (i == null) i = nil;
       
       $case = command;
       if (/BT(\d+)?/i['$===']($case)) {
-      dice = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      dice = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       dice = ($truthy($a = dice) ? $a : 1);
       return self.$get_horidasibukuro_table(dice);};
       return nil;

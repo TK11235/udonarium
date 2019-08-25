@@ -6,9 +6,9 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$==', '$getDiceList', '$[]', '$>=', '$>']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$last_match', '$==', '$getDiceList', '$[]', '$>=', '$>']);
   return (function($base, $super, $parent_nesting) {
     function $Gorilla(){};
     var self = $Gorilla = $klass($base, $super, 'Gorilla', $Gorilla);
@@ -53,12 +53,12 @@
       var TMP_6, self = this;
 
       
-      string = $send(string, 'gsub', [/^(S)?G/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      string = $send(string, 'gsub', [/^(S)?G/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "2D6"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      return "" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "2D6"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
       return string;
     }, TMP_Gorilla_changeText_7.$$arity = 1);
-    return (Opal.defn(self, '$check_2D6', TMP_Gorilla_check_2D6_8 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_2D6', TMP_Gorilla_check_2D6_8 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this, diceList = nil;
 
       
