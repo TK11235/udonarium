@@ -4,6 +4,8 @@ import { Listener } from './listener';
 import { Callback } from './observer';
 import { Subject } from './subject';
 
+type EventName = string;
+
 export class EventSystem implements Subject {
   private static _instance: EventSystem
   static get instance(): EventSystem {
@@ -14,7 +16,7 @@ export class EventSystem implements Subject {
     return EventSystem._instance;
   }
 
-  private listenersHash: { [eventName: string]: Listener[] } = {};
+  private listenerMap: Map<EventName, Listener[]> = new Map();
   private constructor() {
     console.log('EventSystem ready...');
   }
@@ -43,7 +45,9 @@ export class EventSystem implements Subject {
   }
 
   private _unregister(key: any = this, eventName: string, callback: Callback<any>) {
-    for (let _eventName in this.listenersHash) {
+    let _eventNames = this.listenerMap.keys();
+    for (let _eventName of _eventNames) {
+      this.listenerMap.keys()
       let listeners = this.getListeners(_eventName).concat();
       for (let listener of listeners) {
         if (listener.isEqual(key, eventName, callback)) {
@@ -58,6 +62,7 @@ export class EventSystem implements Subject {
 
     listeners.push(listener);
     listeners.sort((a, b) => b.priority - a.priority);
+    this.listenerMap.set(listener.eventName, listeners);
     return listener;
   }
 
@@ -67,6 +72,7 @@ export class EventSystem implements Subject {
     if (-1 < index) {
       listeners.splice(index, 1);
       listener.unregister();
+      if (listeners.length < 1) this.listenerMap.delete(listener.eventName);
       return listener;
     }
     return null;
@@ -109,10 +115,7 @@ export class EventSystem implements Subject {
   }
 
   private getListeners(eventName: string): Listener[] {
-    if (!(eventName in this.listenersHash)) {
-      this.listenersHash[eventName] = [];
-    }
-    return this.listenersHash[eventName];
+    return this.listenerMap.has(eventName) ? this.listenerMap.get(eventName) : [];
   }
 
   private initializeNetworkEvent() {
