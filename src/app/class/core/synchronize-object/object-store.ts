@@ -3,6 +3,7 @@ import { setZeroTimeout } from '../system/util/zero-timeout';
 import { GameObject, ObjectContext } from './game-object';
 import { Type } from './object-factory';
 
+type ObjectAliasName = string;
 type ObjectIdentifier = string;
 type TimeStamp = number;
 
@@ -15,11 +16,11 @@ export class ObjectStore {
     return ObjectStore._instance;
   }
 
-  private identifierHash: { [identifier: string]: GameObject } = {};
-  private classHash: { [aliasName: string]: GameObject[] } = {};
+  private identifierMap: Map<ObjectIdentifier, GameObject> = new Map();
+  private aliasNameMap: Map<ObjectAliasName, Map<ObjectIdentifier, GameObject>> = new Map();
   private garbageMap: Map<ObjectIdentifier, TimeStamp> = new Map();
 
-  private queue: { [identifier: string]: ObjectContext } = {};
+  private queueMap: Map<ObjectIdentifier, ObjectContext> = new Map();
   private updateInterval: number = null;
   private garbageCollectionInterval: NodeJS.Timer = null;
   private updateCallback = () => { this.updateQueue(); }
@@ -28,22 +29,20 @@ export class ObjectStore {
 
   add(object: GameObject, shouldBroadcast: boolean = true): GameObject {
     if (this.get(object.identifier) != null || this.isDeleted(object.identifier)) return null;
-    this.identifierHash[object.identifier] = object;
-    let objects = this._getObjects(object.aliasName);
-    objects.push(object);
+    this.identifierMap.set(object.identifier, object);
+    let objectsMap = this.aliasNameMap.has(object.aliasName) ? this.aliasNameMap.get(object.aliasName) : this.aliasNameMap.set(object.aliasName, new Map()).get(object.aliasName);
+    objectsMap.set(object.identifier, object);
     object.onStoreAdded();
     if (shouldBroadcast) this.update(object.toContext());
     return object;
   }
 
   remove(object: GameObject): GameObject {
-    if (!this.identifierHash[object.identifier]) return null;
+    if (!this.identifierMap.has(object.identifier)) return null;
 
-    let objects = this._getObjects(object.aliasName);
-    let index = objects.indexOf(object);
-    if (-1 < index) objects.splice(index, 1);
-    delete this.identifierHash[object.identifier];
-
+    this.identifierMap.delete(object.identifier);
+    let objectsMap = this.aliasNameMap.get(object.aliasName);
+    if (objectsMap) objectsMap.delete(object.identifier);
     object.onStoreRemoved();
     return object;
   }
@@ -77,27 +76,15 @@ export class ObjectStore {
   }
 
   get<T extends GameObject>(identifier: string): T {
-    let object: T = <T>this.identifierHash[identifier];
-    return object ? object : null;
+    return this.identifierMap.has(identifier) ? <T>this.identifierMap.get(identifier) : null;
   }
 
   getObjects<T extends GameObject>(constructor: Type<T>): T[]
   getObjects<T extends GameObject>(aliasName: string): T[]
   getObjects<T extends GameObject>(): T[]
   getObjects<T extends GameObject>(arg?: any): T[] {
-    return this._getObjects<T>(arg).concat();
-  }
-
-  private _getObjects<T extends GameObject>(constructor: Type<T>): T[]
-  private _getObjects<T extends GameObject>(aliasName: string): T[]
-  private _getObjects<GameObject>(): GameObject[]
-  private _getObjects<T extends GameObject>(arg?: any): T[] {
     if (arg == null) {
-      let objects: T[] = [];
-      for (let identifier in this.identifierHash) {
-        objects.push(<T>this.identifierHash[identifier]);
-      }
-      return objects;
+      return <T[]>Array.from(this.identifierMap.values());
     }
     let aliasName = '';
     if (typeof arg === 'string') {
@@ -106,11 +93,7 @@ export class ObjectStore {
       aliasName = arg.aliasName;
     }
 
-    if (!(aliasName in this.classHash)) {
-      this.classHash[aliasName] = [];
-    }
-
-    return <T[]>this.classHash[aliasName];
+    return this.aliasNameMap.has(aliasName) ? <T[]>Array.from(this.aliasNameMap.get(aliasName).values()) : [];
   }
 
   update(identifier: string)
@@ -125,22 +108,22 @@ export class ObjectStore {
     }
     if (!context) return;
 
-    if (this.queue[context.identifier]) {
-      let queue = this.queue[context.identifier];
+    if (this.queueMap.has(context.identifier)) {
+      let queue = this.queueMap.get(context.identifier);
       for (let key in context) {
         queue[key] = context[key];
       }
       return;
     }
     EventSystem.call('UPDATE_GAME_OBJECT', context);
-    this.queue[context.identifier] = context;
+    this.queueMap.set(context.identifier, context);
     if (this.updateInterval === null) {
       this.updateInterval = setZeroTimeout(this.updateCallback);
     }
   }
 
   private updateQueue() {
-    this.queue = {};
+    this.queueMap.clear();
     this.updateInterval = null;
   }
 
@@ -151,8 +134,8 @@ export class ObjectStore {
 
   getCatalog(): CatalogItem[] {
     let catalog: CatalogItem[] = [];
-    for (let identifier in this.identifierHash) {
-      catalog.push({ identifier: identifier, version: this.identifierHash[identifier].version });
+    for (let object of this.identifierMap.values()) {
+      catalog.push({ identifier: object.identifier, version: object.version });
     }
     return catalog;
   }
