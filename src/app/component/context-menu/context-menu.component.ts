@@ -63,7 +63,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private setForeground() {
     let $stacks: JQuery = $('.draggable-panel')
-    let topZIndex: number = 0;
+    let topZIndex: number = 9900;
     let bottomZindex: number = 99999;
     $stacks.each(function () {
       let zIndex = parseInt($(this).css('zIndex'));

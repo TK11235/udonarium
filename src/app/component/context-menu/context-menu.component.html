@@ -1,4 +1,4 @@
-<div class="draggable-panel" [ngClass]="{'submenu-panel': isSubmenu, 'is-max-limit': !isSubmenu}" (mouseleave)="hideSubMenu()" #root>
+<div class="component" [ngClass]="{'submenu-panel': isSubmenu, 'is-max-limit': !isSubmenu}" (mouseleave)="hideSubMenu()" #root>
   <div *ngIf="0 < title.length" class="title">{{title}}</div>
   <ul>
     <ng-container *ngFor="let action of actions">
