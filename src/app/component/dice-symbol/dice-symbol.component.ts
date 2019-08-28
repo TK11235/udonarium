@@ -66,6 +66,8 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   set owner(owner: string) { this.diceSymbol.owner = owner; }
   get rotate(): number { return this.diceSymbol.rotate; }
   set rotate(rotate: number) { this.diceSymbol.rotate = rotate; }
+  get isLock(): boolean { return this.diceSymbol.isLock; }
+  set isLock(isLock: boolean) { this.diceSymbol.isLock = isLock; }
 
   get name(): string { return this.diceSymbol.name; }
   set name(name: string) { this.diceSymbol.name = name; }
@@ -169,7 +171,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     this.doubleClickTimer = null;
     if (this.doubleClickPoint.x === this.pointerDeviceService.pointers[0].x
       && this.doubleClickPoint.y === this.pointerDeviceService.pointers[0].y) {
-      if (this.isVisible) this.diceRoll();
+      if (this.isVisible && !this.isLock) this.diceRoll();
     }
   }
 
@@ -183,7 +185,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
 
     let actions: ContextMenuAction[] = [];
 
-    if (this.isVisible) {
+    if (this.isVisible && !this.isLock) {
       actions.push({
         name: 'ダイスを振る', action: () => {
           this.diceRoll();
@@ -208,7 +210,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.isVisible) {
+    if (this.isVisible && !this.isLock) {
       let subActions: ContextMenuAction[] = [];
       this.faces.forEach(face => {
         subActions.push({
@@ -219,6 +221,23 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
         });
       });
       actions.push({ name: `ダイス目を設定`, action: null, subActions: subActions });
+    }
+
+    if(this.isLock) {
+      actions.push({
+        name: 'ダイス目を固定解除', action: () => {
+          this.isLock = false;
+          SoundEffect.play(PresetSound.unlock);
+        }
+      });
+    }
+    if(!this.isLock) {
+      actions.push({
+        name: 'ダイス目を固定', action: () => {
+          this.isLock = true;
+          SoundEffect.play(PresetSound.lock);
+        }
+      });
     }
 
     actions.push(ContextMenuSeparator);

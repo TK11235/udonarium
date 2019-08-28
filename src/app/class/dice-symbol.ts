@@ -21,6 +21,7 @@ export class DiceSymbol extends TabletopObject {
   @SyncVar() face: string = '0';
   @SyncVar() owner: string = '';
   @SyncVar() rotate: number = 0;
+  @SyncVar() isLock: boolean = false;
 
   get name(): string { return this.getCommonValue('name', ''); }
   set name(name: string) { this.setCommonValue('name', name); }
