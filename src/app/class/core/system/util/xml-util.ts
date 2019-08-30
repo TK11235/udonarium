@@ -3,7 +3,7 @@ export namespace XmlUtil {
     let domParser: DOMParser = new DOMParser();
     let xmlDocument: Document = null;
     try {
-      xml = xml.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '');
+      xml = sanitizeXml(xml);
       xmlDocument = domParser.parseFromString(xml, 'application/xml');
       let parsererror = xmlDocument.getElementsByTagName('parsererror');
       if (parsererror.length) {
@@ -22,5 +22,9 @@ export namespace XmlUtil {
 
   export function decodeEntityReference(string: string): string {
     return string.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"').replace(/&amp;/g, '&');
+  }
+
+  function sanitizeXml(xml: string): string {
+    return xml.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '').trim();
   }
 }
