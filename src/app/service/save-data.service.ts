@@ -47,12 +47,12 @@ export class SaveDataService {
   }
 
   private searchImageFiles(xml: string): File[] {
-    let xmlElement: Element = XmlUtil.xml2element('<root>' + xml + '</root>');
+    let xmlElement: Element = XmlUtil.xml2element(xml);
     let files: File[] = [];
     if (!xmlElement) return files;
 
     let images: { [identifier: string]: ImageFile } = {};
-    let imageElements = xmlElement.querySelectorAll('*[type="image"]');
+    let imageElements = xmlElement.ownerDocument.querySelectorAll('*[type="image"]');
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].innerHTML;
