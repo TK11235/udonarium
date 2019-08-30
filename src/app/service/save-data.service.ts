@@ -43,7 +43,8 @@ export class SaveDataService {
   }
 
   private convertToXml(gameObject: GameObject): string {
-    return Beautify.xml(gameObject.toXml(), 2);
+    let xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
+    return xmlDeclaration + '\n' + Beautify.xml(gameObject.toXml(), 2);
   }
 
   private searchImageFiles(xml: string): File[] {
