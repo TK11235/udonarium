@@ -128,6 +128,9 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       })
       .on('UPDATE_FILE_RESOURE', -1000, event => {
         this.changeDetector.markForCheck();
+      })
+      .on('DISCONNECT_PEER', event => {
+        if (this.diceSymbol.owner === event.data.peer) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.diceSymbol,

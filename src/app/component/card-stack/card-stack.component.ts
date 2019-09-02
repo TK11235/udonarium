@@ -113,6 +113,9 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       .on('UPDATE_FILE_RESOURE', -1000, event => {
         this.changeDetector.markForCheck();
+      })
+      .on('DISCONNECT_PEER', event => {
+        if (this.cardStack.owner === event.data.peer) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.cardStack,
