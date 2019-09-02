@@ -60,7 +60,7 @@ export class SaveDataService {
       images[identifier] = ImageStorage.instance.get(identifier);
     }
 
-    imageElements = xmlElement.querySelectorAll('*[imageIdentifier], *[backgroundImageIdentifier]');
+    imageElements = xmlElement.ownerDocument.querySelectorAll('*[imageIdentifier], *[backgroundImageIdentifier]');
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].getAttribute('imageIdentifier');
