@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output } from '@angular/core';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';
@@ -18,7 +18,7 @@ export interface MovableOption {
 @Directive({
   selector: '[appMovable]'
 })
-export class MovableDirective implements OnInit, OnDestroy, AfterViewInit {
+export class MovableDirective implements AfterViewInit, OnDestroy {
   private static layerHash: { [layerName: string]: MovableDirective[] } = {};
 
   private tabletopObject: TabletopObject;
@@ -69,8 +69,6 @@ export class MovableDirective implements OnInit, OnDestroy, AfterViewInit {
     private elementRef: ElementRef,
     private tabletopService: TabletopService,
   ) { }
-
-  ngOnInit() { }
 
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {

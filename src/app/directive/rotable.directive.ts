@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
@@ -19,7 +19,7 @@ export interface RotableOption {
 @Directive({
   selector: '[appRotable]'
 })
-export class RotableDirective implements OnInit, OnDestroy, AfterViewInit {
+export class RotableDirective implements AfterViewInit, OnDestroy {
   protected tabletopObject: RotableTabletopObject;
 
   private transformCssOffset: string = '';
@@ -67,8 +67,6 @@ export class RotableDirective implements OnInit, OnDestroy, AfterViewInit {
     private elementRef: ElementRef,
     private tabletopService: TabletopService,
   ) { }
-
-  ngOnInit() { }
 
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
