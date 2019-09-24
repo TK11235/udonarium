@@ -74,9 +74,9 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       this.input = new InputHandler(this.elementRef.nativeElement);
     });
-    this.input.onDown = this.onMouseDown.bind(this);
-    this.input.onMove = this.onMouseMove.bind(this);
-    this.input.onUp = this.onMouseUp.bind(this);
+    this.input.onDown = this.onInputDown.bind(this);
+    this.input.onMove = this.onInputMove.bind(this);
+    this.input.onUp = this.onInputUp.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
 
     EventSystem.register(this)
@@ -112,7 +112,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setCollidableLayer(false);
   }
 
-  protected onMouseDown(e: PointerEvent) {
+  onInputDown(e: MouseEvent | TouchEvent) {
     this.callSelectedEvent();
     if (this.collidableElements.length < 1) this.findCollidableElements(); // 稀にcollidableElementsの取得に失敗している
 
@@ -144,7 +144,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.height = this.input.target.clientHeight;
   }
 
-  protected onMouseMove(e: PointerEvent) {
+  onInputMove(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     if (!this.input.isGrabbing) return this.cancel();
@@ -167,7 +167,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.posZ = this.pointer.z;
   }
 
-  protected onMouseUp(e: PointerEvent) {
+  onInputUp(e: MouseEvent | TouchEvent) {
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
 
     if (this.isDisable) return this.cancel();
@@ -178,7 +178,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.onend.emit(e);
   }
 
-  protected onContextMenu(e: PointerEvent) {
+  onContextMenu(e: MouseEvent | TouchEvent) {
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
 
     if (this.isDisable) return this.cancel();

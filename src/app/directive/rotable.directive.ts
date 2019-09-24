@@ -72,9 +72,9 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       this.input = new InputHandler(this.elementRef.nativeElement);
     });
-    this.input.onDown = this.onMouseDown.bind(this);
-    this.input.onMove = this.onMouseMove.bind(this);
-    this.input.onUp = this.onMouseUp.bind(this);
+    this.input.onDown = this.onInputDown.bind(this);
+    this.input.onMove = this.onInputMove.bind(this);
+    this.input.onUp = this.onInputUp.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
 
     if (this.tabletopObject) {
@@ -108,7 +108,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.setAnimatedTransition(true);
   }
 
-  protected onMouseDown(e: PointerEvent) {
+  onInputDown(e: MouseEvent | TouchEvent) {
     this.grabbingElement = <HTMLElement>e.target;
     if (this.isDisable || !this.isAllowedToRotate || e.button === 1 || e.button === 2) return this.cancel();
     e.stopPropagation();
@@ -119,7 +119,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.setAnimatedTransition(false);
   }
 
-  protected onMouseMove(e: PointerEvent) {
+  onInputMove(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.stopPropagation();
     let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.input.target.parentElement);
@@ -131,7 +131,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     }
   }
 
-  protected onMouseUp(e: PointerEvent) {
+  onInputUp(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     if (this.input.isDragging) this.ondragend.emit(e);
@@ -140,7 +140,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.onend.emit(e);
   }
 
-  protected onContextMenu(e: PointerEvent) {
+  onContextMenu(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
     this.cancel();
