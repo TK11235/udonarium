@@ -115,7 +115,6 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.callSelectedEvent();
     if (this.collidableElements.length < 1) this.findCollidableElements(); // 稀にcollidableElementsの取得に失敗している
 
-    e.preventDefault();
     if (this.isDisable || (e as MouseEvent).button === 1 || (e as MouseEvent).button === 2) return this.cancel();
     this.onstart.emit(e as PointerEvent);
 
@@ -145,7 +144,6 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
 
   onInputMove(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
-    e.preventDefault();
     if (!this.input.isGrabbing) return this.cancel();
 
     this.pointer = this.calcLocalCoordinate(<HTMLElement>e.target);
@@ -170,7 +168,6 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
 
     if (this.isDisable) return this.cancel();
-    e.preventDefault();
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
     this.cancel();
     if (tableSelecter.gridSnap) this.snapToGrid();

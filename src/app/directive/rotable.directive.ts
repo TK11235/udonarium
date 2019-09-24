@@ -131,7 +131,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
 
   onInputUp(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
-    e.preventDefault();
+    e.stopPropagation();
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
     this.cancel();
     this.snapToPolygonal();
