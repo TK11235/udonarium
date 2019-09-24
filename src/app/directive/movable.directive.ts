@@ -1,14 +1,12 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-
-import { EventSystem } from '@udonarium/core/system';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
-import { TabletopObject } from '@udonarium/tabletop-object';
+import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';
-
+import { TabletopObject } from '@udonarium/tabletop-object';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
 
-import { Grabbable } from './grabbable';
+import { InputHandler } from './input-handler';
 
 export interface MovableOption {
   readonly tabletopObject?: TabletopObject;
@@ -20,9 +18,10 @@ export interface MovableOption {
 @Directive({
   selector: '[appMovable]'
 })
-export class MovableDirective extends Grabbable implements OnInit, OnDestroy, AfterViewInit {
+export class MovableDirective implements OnInit, OnDestroy, AfterViewInit {
   private static layerHash: { [layerName: string]: MovableDirective[] } = {};
 
+  private tabletopObject: TabletopObject;
   private layerName: string = '';
   private colideLayers: string[] = [];
   private transformCssOffset: string = '';
@@ -62,23 +61,31 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   private updateTimer: NodeJS.Timer = null;
 
   private collidableElements: HTMLElement[] = [];
-  private transformElement: HTMLElement;
+
+  private input: InputHandler = null;
 
   constructor(
+    private ngZone: NgZone,
     private elementRef: ElementRef,
-    protected tabletopService: TabletopService,
-  ) {
-    super();
-  }
+    private tabletopService: TabletopService,
+  ) { }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
+    this.ngZone.runOutsideAngular(() => {
+      this.input = new InputHandler(this.elementRef.nativeElement);
+    });
+    this.input.onDown = this.onMouseDown.bind(this);
+    this.input.onMove = this.onMouseMove.bind(this);
+    this.input.onUp = this.onMouseUp.bind(this);
+    this.input.onContextMenu = this.onContextMenu.bind(this);
+
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if ((event.isSendFromSelf && this.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
+        if ((event.isSendFromSelf && this.input.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
         this.tabletopService.addBatch(() => {
-          if (this.isGrabbing) {
+          if (this.input.isGrabbing) {
             this.cancel();
           } else {
             this.setAnimatedTransition(true);
@@ -88,24 +95,20 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
         }, this);
       });
     if (this.layerName.length < 1 && this.tabletopObject) this.layerName = this.tabletopObject.aliasName;
-    this.transformElement = this.elementRef.nativeElement;
     this.register();
     this.findCollidableElements();
     this.setPosition(this.tabletopObject);
-    this.tabletopService.ngZone.runOutsideAngular(() => {
-      this.transformElement.addEventListener('mousedown', this.callbackOnMouseDown, false);
-    });
   }
 
   ngOnDestroy() {
     this.cancel();
+    this.input.destroy();
     this.unregister();
     EventSystem.unregister(this);
   }
 
   cancel() {
-    this._isDragging = this._isGrabbing = false;
-    this.removeEventListeners();
+    this.input.cancel();
     this.setPointerEvents(true);
     this.setAnimatedTransition(true);
     this.setCollidableLayer(false);
@@ -119,9 +122,6 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     e.preventDefault();
     this.onstart.emit(e);
 
-    this._isGrabbing = true;
-    this._isDragging = false;
-    this.addEventListeners();
     this.setPointerEvents(false);
     this.setAnimatedTransition(false);
     this.setCollidableLayer(true);
@@ -142,20 +142,19 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
       this.ratio /= Math.abs(this.pointer.z - this.posZ) / 2;
     }
 
-    this.width = this.transformElement.clientWidth;
-    this.height = this.transformElement.clientHeight;
+    this.width = this.input.target.clientWidth;
+    this.height = this.input.target.clientHeight;
   }
 
   protected onMouseMove(e: PointerEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
-    if (!this._isGrabbing) return this.cancel();
+    if (!this.input.isGrabbing) return this.cancel();
 
     this.pointer = this.calcLocalCoordinate(<HTMLElement>e.target);
     if (this.pointerPrev.x === this.pointer.x && this.pointerPrev.y === this.pointer.y && this.pointerPrev.z === this.pointer.z) return;
 
-    if (!this.isDragging) this.ondragstart.emit(e);
-    this._isDragging = true;
+    if (!this.input.isDragging) this.ondragstart.emit(e);
     this.ondrag.emit(e);
 
     let ratio = this.calcDistanceRatio(this.pointerStart, this.pointer);
@@ -175,7 +174,7 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
 
     if (this.isDisable) return this.cancel();
     e.preventDefault();
-    if (this.isDragging) this.ondragend.emit(e);
+    if (this.input.isDragging) this.ondragend.emit(e);
     this.cancel();
     if (tableSelecter.gridSnap) this.snapToGrid();
     this.onend.emit(e);
@@ -188,6 +187,11 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     e.preventDefault();
     this.cancel();
     if (tableSelecter.gridSnap) this.snapToGrid();
+  }
+
+  private callSelectedEvent() {
+    if (this.tabletopObject)
+      EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.tabletopObject.identifier, className: this.tabletopObject.aliasName });
   }
 
   private calcLocalCoordinate(target: HTMLElement): PointerCoordinate {
@@ -247,11 +251,11 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
 
   private findCollidableElements() {
     this.collidableElements = [];
-    if (getComputedStyle(this.transformElement).pointerEvents !== 'none') {
-      this.collidableElements = [this.transformElement];
+    if (getComputedStyle(this.input.target).pointerEvents !== 'none') {
+      this.collidableElements = [this.input.target];
       return;
     }
-    this.findNestedCollidableElements(this.transformElement);
+    this.findNestedCollidableElements(this.input.target);
   }
 
   private findNestedCollidableElements(element: HTMLElement) {
@@ -279,8 +283,8 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private setAnimatedTransition(isEnable: boolean) {
-    if (!this.transformElement) return;
-    this.transformElement.style.transition = isEnable ? 'transform 132ms linear' : '';
+    if (!this.input) return;
+    this.input.target.style.transition = isEnable ? 'transform 132ms linear' : '';
   }
 
   private shouldTransition(object: TabletopObject): boolean {
@@ -288,13 +292,13 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
   }
 
   private stopTransition() {
-    this.transformElement.style.transform = window.getComputedStyle(this.transformElement).transform;
+    this.input.target.style.transform = window.getComputedStyle(this.input.target).transform;
   }
 
   private updateTransformCss() {
-    if (!this.transformElement) return;
+    if (!this.input) return;
     let css = this.transformCssOffset + ' translateX(' + this.posX + 'px) translateY(' + this.posY + 'px) translateZ(' + this.posZ + 'px)';
-    this.transformElement.style.transform = css;
+    this.input.target.style.transform = css;
   }
 
   private setCollidableLayer(isCollidable: boolean) {
@@ -302,12 +306,12 @@ export class MovableDirective extends Grabbable implements OnInit, OnDestroy, Af
     let isEnable = isCollidable;
     for (let layerName in MovableDirective.layerHash) {
       if (-1 < this.colideLayers.indexOf(layerName)) {
-        isEnable = this.isGrabbing ? isCollidable : true;
+        isEnable = this.input.isGrabbing ? isCollidable : true;
       } else {
         isEnable = !isCollidable;
       }
       MovableDirective.layerHash[layerName].forEach(movable => {
-        if (movable === this || movable.isGrabbing) return;
+        if (movable === this || movable.input.isGrabbing) return;
         movable.setPointerEvents(isEnable);
       });
     }
