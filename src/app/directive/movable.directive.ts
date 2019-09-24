@@ -25,6 +25,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   private layerName: string = '';
   private colideLayers: string[] = [];
   private transformCssOffset: string = '';
+
   @Input('movable.option') set option(option: MovableOption) {
     this.tabletopObject = option.tabletopObject != null ? option.tabletopObject : this.tabletopObject;
     this.layerName = option.layerName != null ? option.layerName : this.layerName;
@@ -59,9 +60,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   private ratio: number = 1.0;
 
   private updateTimer: NodeJS.Timer = null;
-
   private collidableElements: HTMLElement[] = [];
-
   private input: InputHandler = null;
 
   constructor(
@@ -116,9 +115,9 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.callSelectedEvent();
     if (this.collidableElements.length < 1) this.findCollidableElements(); // 稀にcollidableElementsの取得に失敗している
 
-    if (this.isDisable || e.button === 1 || e.button === 2) return this.cancel();
     e.preventDefault();
-    this.onstart.emit(e);
+    if (this.isDisable || (e as MouseEvent).button === 1 || (e as MouseEvent).button === 2) return this.cancel();
+    this.onstart.emit(e as PointerEvent);
 
     this.setPointerEvents(false);
     this.setAnimatedTransition(false);
@@ -152,10 +151,10 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.pointer = this.calcLocalCoordinate(<HTMLElement>e.target);
     if (this.pointerPrev.x === this.pointer.x && this.pointerPrev.y === this.pointer.y && this.pointerPrev.z === this.pointer.z) return;
 
-    if (!this.input.isDragging) this.ondragstart.emit(e);
-    this.ondrag.emit(e);
 
     let ratio = this.calcDistanceRatio(this.pointerStart, this.pointer);
+    if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);
+    this.ondrag.emit(e as PointerEvent);
     if (ratio < this.ratio) this.ratio = ratio;
 
     this.pointerPrev.x = this.pointer.x;
@@ -172,10 +171,10 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
 
     if (this.isDisable) return this.cancel();
     e.preventDefault();
-    if (this.input.isDragging) this.ondragend.emit(e);
+    if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
     this.cancel();
     if (tableSelecter.gridSnap) this.snapToGrid();
-    this.onend.emit(e);
+    this.onend.emit(e as PointerEvent);
   }
 
   onContextMenu(e: MouseEvent | TouchEvent) {

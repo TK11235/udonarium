@@ -55,11 +55,8 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   }
 
   private rotateOffset: number = 0;
-
   private updateTimer: NodeJS.Timer = null;
-
   private grabbingElement: HTMLElement = null;
-
   private input: InputHandler = null;
 
   constructor(
@@ -105,14 +102,15 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
 
   cancel() {
     this.input.cancel();
+    this.grabbingElement = null;
     this.setAnimatedTransition(true);
   }
 
   onInputDown(e: MouseEvent | TouchEvent) {
-    this.grabbingElement = <HTMLElement>e.target;
-    if (this.isDisable || !this.isAllowedToRotate || e.button === 1 || e.button === 2) return this.cancel();
+    this.grabbingElement = e.target as HTMLElement;
+    if (this.isDisable || !this.isAllowedToRotate || (e as MouseEvent).button === 1 || (e as MouseEvent).button === 2) return this.cancel();
     e.stopPropagation();
-    this.onstart.emit(e);
+    this.onstart.emit(e as PointerEvent);
 
     let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.input.target.parentElement);
     this.rotateOffset = this.calcRotate(pointer, this.rotate);
@@ -134,10 +132,10 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   onInputUp(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
-    if (this.input.isDragging) this.ondragend.emit(e);
+    if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
     this.cancel();
     this.snapToPolygonal();
-    this.onend.emit(e);
+    this.onend.emit(e as PointerEvent);
   }
 
   onContextMenu(e: MouseEvent | TouchEvent) {
