@@ -8,7 +8,7 @@ export interface PointerCoordinate {
   z: number;
 }
 
-interface PointerData extends PointerCoordinate {
+export interface PointerData extends PointerCoordinate {
   identifier: number;
 }
 
