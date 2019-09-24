@@ -112,7 +112,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     e.stopPropagation();
     this.onstart.emit(e as PointerEvent);
 
-    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.input.target.parentElement);
+    let pointer = PointerDeviceService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
     this.rotateOffset = this.calcRotate(pointer, this.rotate);
     this.setAnimatedTransition(false);
   }
@@ -120,13 +120,12 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   onInputMove(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.stopPropagation();
-    let pointer = PointerDeviceService.convertLocalToLocal(this.tabletopService.pointerDeviceService.pointers[0], this.grabbingElement, this.input.target.parentElement);
-    let angle = this.calcRotate(pointer, this.rotateOffset);
-    if (this.rotate !== angle) {
-      if (!this.input.isDragging) this.ondragstart.emit(e);
-      this.ondrag.emit(e);
-      this.rotate = angle;
-    }
+    let pointer3d = PointerDeviceService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
+    let angle = this.calcRotate(pointer3d, this.rotateOffset);
+
+    if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);
+    this.ondrag.emit(e as PointerEvent);
+    this.rotate = angle;
   }
 
   onInputUp(e: MouseEvent | TouchEvent) {

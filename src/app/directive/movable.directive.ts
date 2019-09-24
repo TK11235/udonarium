@@ -50,10 +50,10 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   get posZ(): number { return this._posZ; }
   set posZ(posZ: number) { this._posZ = posZ; this.setUpdateTimer(); }
 
-  private pointer: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerOffset: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerStart: PointerCoordinate = { x: 0, y: 0, z: 0 };
-  private pointerPrev: PointerCoordinate = { x: 0, y: 0, z: 0 };
+  private pointer3d: PointerCoordinate = { x: 0, y: 0, z: 0 };
+  private pointerOffset3d: PointerCoordinate = { x: 0, y: 0, z: 0 };
+  private pointerStart3d: PointerCoordinate = { x: 0, y: 0, z: 0 };
+  private pointerPrev3d: PointerCoordinate = { x: 0, y: 0, z: 0 };
 
   private height: number = 0;
   private width: number = 0;
@@ -122,20 +122,20 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setAnimatedTransition(false);
     this.setCollidableLayer(true);
 
-    let target = <HTMLElement>document.elementFromPoint(this.tabletopService.pointerDeviceService.pointerX, this.tabletopService.pointerDeviceService.pointerY);
-    this.pointer = this.calcLocalCoordinate(target);
+    let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
+    this.pointer3d = this.calcLocalCoordinate(target, this.input.pointer);
 
-    this.pointerOffset.x = this.posX - this.pointer.x;
-    this.pointerOffset.y = this.posY - this.pointer.y;
-    this.pointerOffset.z = this.posZ - this.pointer.z;
+    this.pointerOffset3d.x = this.posX - this.pointer3d.x;
+    this.pointerOffset3d.y = this.posY - this.pointer3d.y;
+    this.pointerOffset3d.z = this.posZ - this.pointer3d.z;
 
-    this.pointerStart.x = this.pointerPrev.x = this.pointer.x;
-    this.pointerStart.y = this.pointerPrev.y = this.pointer.y;
-    this.pointerStart.z = this.pointerPrev.z = this.pointer.z;
+    this.pointerStart3d.x = this.pointerPrev3d.x = this.pointer3d.x;
+    this.pointerStart3d.y = this.pointerPrev3d.y = this.pointer3d.y;
+    this.pointerStart3d.z = this.pointerPrev3d.z = this.pointer3d.z;
 
     this.ratio = 1.0;
-    if (this.pointer.z !== this.posZ) {
-      this.ratio /= Math.abs(this.pointer.z - this.posZ) / 2;
+    if (this.pointer3d.z !== this.posZ) {
+      this.ratio /= Math.abs(this.pointer3d.z - this.posZ) / 2;
     }
 
     this.width = this.input.target.clientWidth;
@@ -146,22 +146,28 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     if (this.isDisable) return this.cancel();
     if (!this.input.isGrabbing) return this.cancel();
 
-    this.pointer = this.calcLocalCoordinate(<HTMLElement>e.target);
-    if (this.pointerPrev.x === this.pointer.x && this.pointerPrev.y === this.pointer.y && this.pointerPrev.z === this.pointer.z) return;
+    let target = (e as TouchEvent).touches
+      ? <HTMLElement>document.elementFromPoint(this.input.pointer.x, this.input.pointer.y)
+      : <HTMLElement>e.target;
 
+    if (target == null) return;
 
-    let ratio = this.calcDistanceRatio(this.pointerStart, this.pointer);
+    this.pointer3d = this.calcLocalCoordinate(target, this.input.pointer);
+    if (this.pointerPrev3d.x === this.pointer3d.x && this.pointerPrev3d.y === this.pointer3d.y && this.pointerPrev3d.z === this.pointer3d.z) return;
+
     if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);
     this.ondrag.emit(e as PointerEvent);
+
+    let ratio = this.calcDistanceRatio(this.pointerStart3d, this.pointer3d);
     if (ratio < this.ratio) this.ratio = ratio;
 
-    this.pointerPrev.x = this.pointer.x;
-    this.pointerPrev.y = this.pointer.y;
-    this.pointerPrev.z = this.pointer.z;
+    this.pointerPrev3d.x = this.pointer3d.x;
+    this.pointerPrev3d.y = this.pointer3d.y;
+    this.pointerPrev3d.z = this.pointer3d.z;
 
-    this.posX = this.pointer.x + (this.pointerOffset.x * this.ratio) + (-(this.width / 2) * (1.0 - this.ratio));
-    this.posY = this.pointer.y + (this.pointerOffset.y * this.ratio) + (-(this.height / 2) * (1.0 - this.ratio));
-    this.posZ = this.pointer.z;
+    this.posX = this.pointer3d.x + (this.pointerOffset3d.x * this.ratio) + (-(this.width / 2) * (1.0 - this.ratio));
+    this.posY = this.pointer3d.y + (this.pointerOffset3d.y * this.ratio) + (-(this.height / 2) * (1.0 - this.ratio));
+    this.posZ = this.pointer3d.z;
   }
 
   onInputUp(e: MouseEvent | TouchEvent) {
@@ -186,8 +192,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
       EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.tabletopObject.identifier, className: this.tabletopObject.aliasName });
   }
 
-  private calcLocalCoordinate(target: HTMLElement): PointerCoordinate {
-    let coordinate: PointerCoordinate = this.tabletopService.pointerDeviceService.pointers[0];
+  private calcLocalCoordinate(target: HTMLElement, coordinate: PointerCoordinate): PointerCoordinate {
     if (target.contains(this.tabletopService.dragAreaElement)) {
       coordinate = PointerDeviceService.convertToLocal(coordinate, this.tabletopService.dragAreaElement);
       coordinate.z = 0;
