@@ -8,9 +8,9 @@ interface InputHandlerOption {
 }
 
 export class InputHandler {
-  onDown: (ev: MouseEvent | TouchEvent) => void;
+  onStart: (ev: MouseEvent | TouchEvent) => void;
   onMove: (ev: MouseEvent | TouchEvent) => void;
-  onUp: (ev: MouseEvent | TouchEvent) => void;
+  onEnd: (ev: MouseEvent | TouchEvent) => void;
   onContextMenu: (ev: MouseEvent | TouchEvent) => void;
 
   private callbackOnMouse = this.onMouse.bind(this);
@@ -96,7 +96,7 @@ export class InputHandler {
         this._isGrabbing = true;
         this._isDragging = false;
         this.addEventListeners();
-        if (this.onDown) this.onDown(e);
+        if (this.onStart) this.onStart(e);
         break;
       case 'mousemove':
       case 'touchmove':
@@ -104,7 +104,7 @@ export class InputHandler {
         this._isDragging = this._isGrabbing;
         break;
       default:
-        if (this.onUp) this.onUp(e);
+        if (this.onEnd) this.onEnd(e);
         this.cancel();
         break;
     }

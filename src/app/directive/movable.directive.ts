@@ -73,9 +73,9 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       this.input = new InputHandler(this.elementRef.nativeElement);
     });
-    this.input.onDown = this.onInputDown.bind(this);
+    this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
-    this.input.onUp = this.onInputUp.bind(this);
+    this.input.onEnd = this.onInputEnd.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
 
     EventSystem.register(this)
@@ -111,7 +111,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setCollidableLayer(false);
   }
 
-  onInputDown(e: MouseEvent | TouchEvent) {
+  onInputStart(e: MouseEvent | TouchEvent) {
     this.callSelectedEvent();
     if (this.collidableElements.length < 1) this.findCollidableElements(); // 稀にcollidableElementsの取得に失敗している
 
@@ -170,7 +170,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.posZ = this.pointer3d.z;
   }
 
-  onInputUp(e: MouseEvent | TouchEvent) {
+  onInputEnd(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
     this.cancel();

@@ -69,9 +69,9 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       this.input = new InputHandler(this.elementRef.nativeElement);
     });
-    this.input.onDown = this.onInputDown.bind(this);
+    this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
-    this.input.onUp = this.onInputUp.bind(this);
+    this.input.onEnd = this.onInputEnd.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
 
     if (this.tabletopObject) {
@@ -106,7 +106,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.setAnimatedTransition(true);
   }
 
-  onInputDown(e: MouseEvent | TouchEvent) {
+  onInputStart(e: MouseEvent | TouchEvent) {
     this.grabbingElement = e.target as HTMLElement;
     if (this.isDisable || !this.isAllowedToRotate || (e as MouseEvent).button === 1 || (e as MouseEvent).button === 2) return this.cancel();
     e.stopPropagation();
@@ -128,7 +128,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.rotate = angle;
   }
 
-  onInputUp(e: MouseEvent | TouchEvent) {
+  onInputEnd(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.stopPropagation();
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
