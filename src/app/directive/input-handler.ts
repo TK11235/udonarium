@@ -29,7 +29,7 @@ export class InputHandler {
   private _isDestroyed: boolean = false;
   get isDestroyed(): boolean { return this._isDestroyed; }
 
-  readonly option: InputHandlerOption = null;
+  private readonly option: InputHandlerOption = null;
 
   constructor(readonly target: HTMLElement, option: InputHandlerOption = { capture: false, always: false }) {
     this.option = {
