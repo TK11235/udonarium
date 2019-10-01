@@ -70,8 +70,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   animeState: string = 'inactive';
 
-  private callbackOnMouseUp = (e) => this.onMouseUp(e);
-
   private iconHiddenTimer: NodeJS.Timer = null;
   get isIconHidden(): boolean { return this.iconHiddenTimer != null };
 
@@ -131,7 +129,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    this.removeMouseEventListeners();
   }
 
   animationShuffleStarted(event: any) {
@@ -193,7 +190,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cardStack.toTopmost();
     this.onDoubleClick(e);
 
-    this.addMouseEventListeners();
     this.startIconHiddenTimer();
 
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.cardStack.identifier, className: 'GameCharacter' });
@@ -201,17 +197,10 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     e.preventDefault();
   }
 
-  onMouseUp(e: any) {
-    this.removeMouseEventListeners();
-    this.dispatchCardDropEvent();
-    e.preventDefault();
-  }
-
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
     e.stopPropagation();
     e.preventDefault();
-    this.removeMouseEventListeners();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
@@ -311,6 +300,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onMoved() {
     SoundEffect.play(PresetSound.cardPut);
+    this.dispatchCardDropEvent();
   }
 
   private drawCard(): Card {
@@ -393,14 +383,6 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let i = 0; i < children.length; i++) {
       children[i].dispatchEvent(event);
     }
-  }
-
-  private addMouseEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-  }
-
-  private removeMouseEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
   }
 
   private showDetail(gameObject: CardStack) {

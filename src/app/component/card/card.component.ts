@@ -66,8 +66,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
 
-  private callbackOnMouseUp = (e) => this.onMouseUp(e);
-
   constructor(
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
@@ -111,7 +109,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    this.removeMouseEventListeners();
   }
 
   @HostListener('carddrop', ['$event'])
@@ -163,26 +160,19 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
+    console.log(e);
     this.onDoubleClick(e);
     this.card.toTopmost();
 
-    this.addMouseEventListeners();
     this.startIconHiddenTimer();
 
     e.preventDefault();
-  }
-
-  onMouseUp(e: any) {
-    e.preventDefault();
-    this.dispatchCardDropEvent();
-    this.removeMouseEventListeners();
   }
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
     e.stopPropagation();
     e.preventDefault();
-    this.removeMouseEventListeners();
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
     this.contextMenuService.open(position, [
@@ -247,14 +237,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onMoved() {
     SoundEffect.play(PresetSound.cardPut);
-  }
-
-  private addMouseEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-  }
-
-  private removeMouseEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
+    this.dispatchCardDropEvent();
   }
 
   private createStack() {
