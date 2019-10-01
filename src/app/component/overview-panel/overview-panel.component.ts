@@ -75,11 +75,8 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit,
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.ngZone.runOutsideAngular(() => {
-      this.$panel = $(this.draggablePanel.nativeElement);
-      $(this.draggablePanel.nativeElement).draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', opacity: 0.7 });
-      this.initPanelPosition();
-    });
+    this.$panel = $(this.draggablePanel.nativeElement);
+    this.initPanelPosition();
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
@@ -98,30 +95,6 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit,
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-  }
-
-  ngAfterViewChecked() {
-    this.adjustPosition();
-  }
-
-  private adjustPosition() {
-    let outerWidth = this.$panel.outerWidth();
-    let outerHeight = this.$panel.outerHeight();
-
-    let offsetLeft = this.$panel.offset().left;
-    let offsetTop = this.$panel.offset().top;
-
-    if (window.innerWidth < offsetLeft + outerWidth) {
-      offsetLeft = window.innerWidth - outerWidth;
-    }
-    if (window.innerHeight < offsetTop + outerHeight) {
-      offsetTop = window.innerHeight - outerHeight;
-    }
-
-    if (offsetLeft < 0) offsetLeft = 0;
-    if (offsetTop < 0) offsetTop = 0;
-
-    this.$panel.offset({ left: offsetLeft, top: offsetTop });
   }
 
   private initPanelPosition() {

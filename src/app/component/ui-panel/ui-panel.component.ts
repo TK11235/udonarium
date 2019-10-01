@@ -61,98 +61,15 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private $draggablePanel: JQuery;
 
-  private callbackOnScrollablePanelMouseDown = (e) => this.onScrollablePanelMouseDown(e);
-  private callbackOnDraggablePanelMouseDown = (e) => this.onDraggablePanelMouseDown(e);
-  private callbackOnMouseUp: any = (e) => this.onMouseUp(e);
-
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   constructor(
-    private ngZone: NgZone,
     public panelService: PanelService,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
-
-  }
-
-  ngAfterViewInit() {
-    this.ngZone.runOutsideAngular(() => {
-      this.initDraggablePanel();
-    });
-    this.setForeground();
-    this.adjustPosition();
-  }
-
-  private initDraggablePanel() {
-    this.$draggablePanel = $(this.draggablePanel.nativeElement);
-
-    this.$draggablePanel.draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', stack: '.draggable-panel', opacity: 0.7 });
-    this.$draggablePanel.resizable({ handles: 'all', minHeight: 100, minWidth: 100 });
-
-    this.scrollablePanel.nativeElement.addEventListener('mousedown', this.callbackOnScrollablePanelMouseDown, false);
-    this.draggablePanel.nativeElement.addEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
-
-    this.preLeft = this.left;
-    this.preTop = this.top;
-    this.preWidth = this.width;
-    this.preHeight = this.height;
-
     this.panelService.scrollablePanel = this.scrollablePanel.nativeElement;
-  }
-
-  ngOnDestroy() {
-    this.scrollablePanel.nativeElement.removeEventListener('mousedown', this.callbackOnScrollablePanelMouseDown, false);
-    this.draggablePanel.nativeElement.removeEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
-  }
-
-  private adjustPosition() {
-    let $panel = $(this.draggablePanel.nativeElement);
-
-    let offsetLeft = $panel.offset().left;
-    let offsetTop = $panel.offset().top;
-
-    if (window.innerWidth < offsetLeft + $panel.outerWidth()) {
-      offsetLeft -= (offsetLeft + $panel.outerWidth()) - window.innerWidth;
-    }
-    if (window.innerHeight < offsetTop + $panel.outerHeight()) {
-      offsetTop -= (offsetTop + $panel.outerHeight()) - window.innerHeight;
-    }
-
-    if (offsetLeft < 0) {
-      offsetLeft = 0;
-    }
-    if (offsetTop < 0) {
-      offsetTop = 0;
-    }
-
-    $panel.offset({ left: offsetLeft, top: offsetTop });
-
-    setTimeout(() => {
-      this.left = offsetLeft;
-      this.top = offsetTop;
-    }, 0);
-  }
-
-  private onScrollablePanelMouseDown(e: MouseEvent) {
-    if (e.target === this.scrollablePanel.nativeElement) {
-      if (e.offsetX >= this.scrollablePanel.nativeElement.clientWidth || e.offsetY >= this.scrollablePanel.nativeElement.clientHeight) {
-        this.$draggablePanel.draggable('option', 'handle', '.draggable-panel');
-        document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-        return;
-      }
-    }
-    this.$draggablePanel.draggable('option', 'handle', false);
-  }
-
-  private onDraggablePanelMouseDown(e: MouseEvent) {
-    this.setForeground();
-  }
-
-  private onMouseUp(e: any) {
-    this.$draggablePanel.draggable('option', 'handle', false);
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
   }
 
   toggleFullScreen() {
@@ -190,21 +107,6 @@ export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
       this.width = this.preWidth;
       this.height = this.preHeight;
     }
-  }
-
-  private setForeground() {
-    let $stacks: JQuery = $('.draggable-panel')
-    let topZIndex: number = 0;
-    let bottomZindex: number = 99999;
-    $stacks.each(function () {
-      let zIndex = parseInt($(this).css('zIndex'));
-      if (topZIndex < zIndex) topZIndex = zIndex;
-      if (zIndex < bottomZindex) bottomZindex = zIndex;
-    });
-    $stacks.each(function () {
-      $(this).css('zIndex', parseInt($(this).css('zIndex')) - bottomZindex);
-    });
-    this.$draggablePanel.css('zIndex', topZIndex + 1);
   }
 
   close() {
