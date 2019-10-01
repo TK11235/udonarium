@@ -39,6 +39,7 @@ import { TextViewComponent } from 'component/text-view/text-view.component';
 import { UIPanelComponent } from 'component/ui-panel/ui-panel.component';
 import { DraggableDirective } from 'directive/draggable.directive';
 import { MovableDirective } from 'directive/movable.directive';
+import { ResizableDirective } from 'directive/resizable.directive';
 import { RotableDirective } from 'directive/rotable.directive';
 import { TooltipDirective } from 'directive/tooltip.directive';
 import { SafePipe } from 'pipe/safe.pipe';
@@ -97,6 +98,7 @@ import { AppComponent } from './app.component';
     DiceSymbolComponent,
     TooltipDirective,
     DraggableDirective,
+    ResizableDirective,
   ],
   imports: [
     BrowserModule,
