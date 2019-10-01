@@ -145,8 +145,10 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
   private isScrollableElement(target: HTMLElement) {
     let boundsElm = this.elementRef.nativeElement.ownerDocument.querySelector(this.boundsSelector);
     let node = target;
+    let overflowType = ['scroll', 'auto'];
     while (node && boundsElm !== node && this.elementRef.nativeElement !== node) {
-      if (node.offsetHeight < node.scrollHeight) return true;
+      let css: CSSStyleDeclaration = window.getComputedStyle(node);
+      if (0 <= overflowType.indexOf(css.overflowY) && node.offsetHeight < node.scrollHeight) return true;
       node = node.parentElement;
     }
     return false;
