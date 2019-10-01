@@ -1,6 +1,6 @@
 .draggable-panel{
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   position: absolute;
   /*
   color: #CCC;
