@@ -1,16 +1,5 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
-
+import { Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -35,7 +24,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class UIPanelComponent implements OnInit, OnDestroy, AfterViewInit {
+export class UIPanelComponent implements OnInit {
   @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef;
   @ViewChild('scrollablePanel', { static: true }) scrollablePanel: ElementRef;
   @ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;

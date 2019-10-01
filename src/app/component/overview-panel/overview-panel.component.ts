@@ -8,9 +8,7 @@ import {
   Input,
   NgZone,
   OnDestroy,
-  OnInit,
   ViewChild,
-  AfterViewChecked,
 } from '@angular/core';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
@@ -42,7 +40,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
+export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
   @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef;
   @Input() tabletopObject: TabletopObject = null;
 
@@ -71,8 +69,6 @@ export class OverviewPanelComponent implements OnInit, OnDestroy, AfterViewInit,
     private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
-
-  ngOnInit() { }
 
   ngAfterViewInit() {
     this.$panel = $(this.draggablePanel.nativeElement);
