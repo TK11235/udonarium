@@ -29,6 +29,7 @@ nav ul > li > a {
   height: 128px;
   width: 128px;
   font-size: 8px;
+  user-select: none;
 }
 nav ul i {
   font-size: 24px;

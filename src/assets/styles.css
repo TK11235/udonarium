@@ -61,11 +61,14 @@ button.danger:disabled {
   body {
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: hsl(0, 0%, 97%);
   }
   
    body {
-    margin: 0;
-    background-color: hsl(0, 0%, 97%);
+    position: relative;
   }
   
   .sk-cube-grid {
