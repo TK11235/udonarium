@@ -4,6 +4,7 @@ const MOUSE_IDENTIFIER = -9999;
 
 interface InputHandlerOption {
   readonly capture?: boolean
+  readonly passive?: boolean
   readonly always?: boolean
 }
 
@@ -31,9 +32,10 @@ export class InputHandler {
 
   private readonly option: InputHandlerOption = null;
 
-  constructor(readonly target: HTMLElement, option: InputHandlerOption = { capture: false, always: false }) {
+  constructor(readonly target: HTMLElement, option: InputHandlerOption = { capture: false, passive: false, always: false }) {
     this.option = {
       capture: option.capture === true,
+      passive: option.passive === true,
       always: option.always === true
     };
     this.initialize();
@@ -127,22 +129,29 @@ export class InputHandler {
   }
 
   private addEventListeners() {
-    this.target.ownerDocument.addEventListener('mousemove', this.callbackOnMouse, this.option.capture);
-    this.target.ownerDocument.addEventListener('mouseup', this.callbackOnMouse, this.option.capture);
-    this.target.ownerDocument.addEventListener('touchmove', this.callbackOnTouch, this.option.capture);
-    this.target.ownerDocument.addEventListener('touchend', this.callbackOnTouch, this.option.capture);
-    this.target.ownerDocument.addEventListener('touchcancel', this.callbackOnTouch, this.option.capture);
-    this.target.ownerDocument.addEventListener('contextmenu', this.callbackOnMenu, this.option.capture);
-    this.target.ownerDocument.addEventListener('drop', this.callbackOnMouse, this.option.capture);
+    let option: AddEventListenerOptions = {
+      capture: this.option.capture,
+      passive: this.option.passive
+    }
+    this.target.ownerDocument.addEventListener('mousemove', this.callbackOnMouse, option);
+    this.target.ownerDocument.addEventListener('mouseup', this.callbackOnMouse, option);
+    this.target.ownerDocument.addEventListener('touchmove', this.callbackOnTouch, option);
+    this.target.ownerDocument.addEventListener('touchend', this.callbackOnTouch, option);
+    this.target.ownerDocument.addEventListener('touchcancel', this.callbackOnTouch, option);
+    this.target.ownerDocument.addEventListener('contextmenu', this.callbackOnMenu, option);
+    this.target.ownerDocument.addEventListener('drop', this.callbackOnMouse, option);
   }
 
   private removeEventListeners() {
-    this.target.ownerDocument.removeEventListener('mousemove', this.callbackOnMouse, this.option.capture);
-    this.target.ownerDocument.removeEventListener('mouseup', this.callbackOnMouse, this.option.capture);
-    this.target.ownerDocument.removeEventListener('touchmove', this.callbackOnTouch, this.option.capture);
-    this.target.ownerDocument.removeEventListener('touchend', this.callbackOnTouch, this.option.capture);
-    this.target.ownerDocument.removeEventListener('touchcancel', this.callbackOnTouch, this.option.capture);
-    this.target.ownerDocument.removeEventListener('contextmenu', this.callbackOnMenu, this.option.capture);
-    this.target.ownerDocument.removeEventListener('drop', this.callbackOnMouse, this.option.capture);
+    let option: EventListenerOptions = {
+      capture: this.option.capture
+    }
+    this.target.ownerDocument.removeEventListener('mousemove', this.callbackOnMouse, option);
+    this.target.ownerDocument.removeEventListener('mouseup', this.callbackOnMouse, option);
+    this.target.ownerDocument.removeEventListener('touchmove', this.callbackOnTouch, option);
+    this.target.ownerDocument.removeEventListener('touchend', this.callbackOnTouch, option);
+    this.target.ownerDocument.removeEventListener('touchcancel', this.callbackOnTouch, option);
+    this.target.ownerDocument.removeEventListener('contextmenu', this.callbackOnMenu, option);
+    this.target.ownerDocument.removeEventListener('drop', this.callbackOnMouse, option);
   }
 }
