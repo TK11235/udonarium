@@ -74,7 +74,7 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
       this.cancel();
       return;
     }
-    if (e instanceof TouchEvent === false) e.preventDefault();
+    if (e instanceof TouchEvent === false && e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 
@@ -109,7 +109,7 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
 
   private onInputEnd(e: MouseEvent | TouchEvent) {
     this.elementRef.nativeElement.style.opacity = null;
-    if (this.input.isDragging) e.preventDefault();
+    if (this.input.isDragging && e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 
