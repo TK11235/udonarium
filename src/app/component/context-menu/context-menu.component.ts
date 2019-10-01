@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-
 import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
 
 @Component({
@@ -8,7 +7,7 @@ import { ContextMenuAction, ContextMenuService } from 'service/context-menu.serv
   styleUrls: ['./context-menu.component.css']
 })
 export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root', { static: true }) rootElementRef: ElementRef;
+  @ViewChild('root', { static: true }) rootElementRef: ElementRef<HTMLElement>;
 
   @Input() title: string = '';
   @Input() actions: ContextMenuAction[] = [];
@@ -37,7 +36,6 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     if (!this.isSubmenu) {
-      this.setForeground();
       this.adjustPositionRoot();
       document.addEventListener('mousedown', this.callbackOnOutsideClick, false);
     } else {
@@ -50,7 +48,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onOutsideClick(event) {
-    if (!$(event.target).closest($(this.rootElementRef.nativeElement)).length) {
+    if (this.rootElementRef.nativeElement.contains(event.target) === false) {
       this.close();
     }
   }
@@ -61,34 +59,22 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
   }
 
-  private setForeground() {
-    let $stacks: JQuery = $('.draggable-panel')
-    let topZIndex: number = 9900;
-    let bottomZindex: number = 99999;
-    $stacks.each(function () {
-      let zIndex = parseInt($(this).css('zIndex'));
-      if (topZIndex < zIndex) topZIndex = zIndex;
-      if (zIndex < bottomZindex) bottomZindex = zIndex;
-    });
-    $stacks.each(function () {
-      $(this).css('zIndex', parseInt($(this).css('zIndex')) - bottomZindex);
-    });
-    $(this.rootElementRef.nativeElement).css('zIndex', topZIndex + 1);
-  }
-
   private adjustPositionRoot() {
-    let $panel = $(this.rootElementRef.nativeElement);
+    let panel: HTMLElement = this.rootElementRef.nativeElement;
 
-    $panel.offset({ left: this.contextMenuService.position.x, top: this.contextMenuService.position.y });
+    panel.style.left = this.contextMenuService.position.x + 'px';
+    panel.style.top = this.contextMenuService.position.y + 'px';
 
-    let offsetLeft = $panel.offset().left;
-    let offsetTop = $panel.offset().top;
+    let offsetLeft = panel.offsetLeft;
+    let offsetTop = panel.offsetTop;
+    let offsetWidth = panel.offsetWidth;
+    let offsetHeight = panel.offsetHeight;
 
-    if (window.innerWidth < offsetLeft + $panel.outerWidth()) {
-      offsetLeft -= (offsetLeft + $panel.outerWidth()) - window.innerWidth;
+    if (window.innerWidth < offsetLeft + offsetWidth) {
+      offsetLeft -= (offsetLeft + offsetWidth) - window.innerWidth;
     }
-    if (window.innerHeight < offsetTop + $panel.outerHeight()) {
-      offsetTop -= (offsetTop + $panel.outerHeight()) - window.innerHeight;
+    if (window.innerHeight < offsetTop + offsetHeight) {
+      offsetTop -= (offsetTop + offsetHeight) - window.innerHeight;
     }
 
     if (offsetLeft < 0) {
@@ -98,21 +84,25 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       offsetTop = 0;
     }
 
-    $panel.offset({ left: offsetLeft, top: offsetTop });
+    panel.style.left = offsetLeft + 'px';
+    panel.style.top = offsetTop + 'px';
   }
 
   private adjustPositionSub() {
-    let $parent = $(this.elementRef.nativeElement.parentElement);
-    let $submenu = $(this.rootElementRef.nativeElement);
-    let offsetLeft = $submenu.offset().left;
-    let offsetTop = $submenu.offset().top;
+    let parent: HTMLElement = this.elementRef.nativeElement.parentElement;
+    let submenu: HTMLElement = this.rootElementRef.nativeElement;
 
-    if (window.innerWidth < offsetLeft + $submenu.outerWidth()) {
-      offsetLeft -= (offsetLeft + $submenu.outerWidth()) - $parent.offset().left;
+    let offsetLeft = submenu.offsetLeft;
+    let offsetTop = submenu.offsetTop;
+    let offsetWidth = submenu.offsetWidth;
+    let offsetHeight = submenu.offsetHeight;
+
+    if (window.innerWidth < offsetLeft + offsetWidth) {
+      offsetLeft -= (offsetLeft + offsetWidth) - parent.offsetLeft;
       offsetLeft += 8;
     }
-    if (window.innerHeight < offsetTop + $submenu.outerHeight()) {
-      offsetTop -= (offsetTop + $submenu.outerHeight()) - window.innerHeight;
+    if (window.innerHeight < offsetTop + offsetHeight) {
+      offsetTop -= (offsetTop + offsetHeight) - window.innerHeight;
     }
 
     if (offsetLeft < 0) {
@@ -122,7 +112,8 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       offsetTop = 0;
     }
 
-    $submenu.offset({ left: offsetLeft, top: offsetTop });
+    submenu.style.left = offsetLeft + 'px';
+    submenu.style.top = offsetTop + 'px';
   }
 
   doAction(action: ContextMenuAction) {

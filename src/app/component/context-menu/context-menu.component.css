@@ -15,10 +15,10 @@
 
   -moz-user-drag: none;
   -webkit-user-drag: none;
+  z-index: 9900;
 }
 .submenu-panel {
   position: absolute;
-  z-index: 1;
   left: calc(100% - 4px);
   top: -16px;
 }

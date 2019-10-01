@@ -6,7 +6,6 @@ import {
   Component,
   ElementRef,
   Input,
-  NgZone,
   OnDestroy,
   ViewChild,
 } from '@angular/core';
@@ -41,7 +40,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   ]
 })
 export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef;
+  @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef<HTMLElement>;
   @Input() tabletopObject: TabletopObject = null;
 
   @Input() left: number = 0;
@@ -61,17 +60,13 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
 
   isOpenImageView: boolean = false;
 
-  private $panel: JQuery;
-
   constructor(
-    private ngZone: NgZone,
     private inventoryService: GameObjectInventoryService,
     private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngAfterViewInit() {
-    this.$panel = $(this.draggablePanel.nativeElement);
     this.initPanelPosition();
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
@@ -94,8 +89,9 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
   }
 
   private initPanelPosition() {
-    let outerWidth = this.$panel.outerWidth();
-    let outerHeight = this.$panel.outerHeight();
+    let panel: HTMLElement = this.draggablePanel.nativeElement;
+    let outerWidth = panel.offsetWidth;
+    let outerHeight = panel.offsetHeight;
 
     let offsetLeft = this.left + 100;
     let offsetTop = this.top - outerHeight - 50;
@@ -113,14 +109,15 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
       isCollideTop = true;
     }
 
-    if (isCollideLeft && isCollideTop) {
+    if (isCollideLeft) {
       offsetLeft = this.left - outerWidth - 100;
     }
 
     if (offsetLeft < 0) offsetLeft = 0;
     if (offsetTop < 0) offsetTop = 0;
 
-    this.$panel.offset({ left: offsetLeft, top: offsetTop });
+    panel.style.left = offsetLeft + 'px';
+    panel.style.top = offsetTop + 'px';
   }
 
   chanageImageView(isOpen: boolean) {

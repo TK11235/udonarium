@@ -25,8 +25,8 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   ]
 })
 export class UIPanelComponent implements OnInit {
-  @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef;
-  @ViewChild('scrollablePanel', { static: true }) scrollablePanel: ElementRef;
+  @ViewChild('draggablePanel', { static: true }) draggablePanel: ElementRef<HTMLElement>;
+  @ViewChild('scrollablePanel', { static: true }) scrollablePanel: ElementRef<HTMLDivElement>;
   @ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;
 
   @Input() set title(title: string) { this.panelService.title = title; }
@@ -48,8 +48,6 @@ export class UIPanelComponent implements OnInit {
 
   private isFullScreen: boolean = false;
 
-  private $draggablePanel: JQuery;
-
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   constructor(
@@ -62,35 +60,32 @@ export class UIPanelComponent implements OnInit {
   }
 
   toggleFullScreen() {
-    if (this.$draggablePanel.offset().left <= 0
-      && this.$draggablePanel.offset().top <= 0
-      && this.$draggablePanel.outerWidth() >= window.innerWidth
-      && this.$draggablePanel.outerHeight() >= window.innerHeight) {
+    let panel = this.draggablePanel.nativeElement;
+    if (panel.offsetLeft <= 0
+      && panel.offsetTop <= 0
+      && panel.offsetWidth >= window.innerWidth
+      && panel.offsetHeight >= window.innerHeight) {
       this.isFullScreen = false;
     } else {
       this.isFullScreen = true;
     }
 
     if (this.isFullScreen) {
-      this.preLeft = this.$draggablePanel.offset().left;
-      this.preTop = this.$draggablePanel.offset().top;
-      this.preWidth = this.$draggablePanel.outerWidth();
-      this.preHeight = this.$draggablePanel.outerHeight();
+      this.preLeft = panel.offsetLeft;
+      this.preTop = panel.offsetTop;
+      this.preWidth = panel.offsetWidth;
+      this.preHeight = panel.offsetHeight;
 
       this.left = 0;
       this.top = 0;
       this.width = window.innerWidth;
       this.height = window.innerHeight;
 
-      this.$draggablePanel.offset({ left: this.left, top: this.top });
-      this.$draggablePanel.outerWidth(this.width);
-      this.$draggablePanel.outerHeight(this.height);
-
-      console.log(this.preWidth, this.width, window.innerWidth);
-
+      panel.style.left = this.left + 'px';
+      panel.style.top = this.top + 'px';
+      panel.style.width = this.width + 'px';
+      panel.style.height = this.height + 'px';
     } else {
-      console.log(this.preWidth);
-
       this.left = this.preLeft;
       this.top = this.preTop;
       this.width = this.preWidth;
