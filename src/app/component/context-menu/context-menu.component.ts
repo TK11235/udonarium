@@ -23,7 +23,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   private callbackOnOutsideClick = (e) => this.onOutsideClick(e);
 
   constructor(
-    private elementRef: ElementRef,
+    private elementRef: ElementRef<HTMLElement>,
     public contextMenuService: ContextMenuService
   ) { }
 
@@ -65,55 +65,56 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     panel.style.left = this.contextMenuService.position.x + 'px';
     panel.style.top = this.contextMenuService.position.y + 'px';
 
-    let offsetLeft = panel.offsetLeft;
-    let offsetTop = panel.offsetTop;
-    let offsetWidth = panel.offsetWidth;
-    let offsetHeight = panel.offsetHeight;
+    let panelBox = panel.getBoundingClientRect();
 
-    if (window.innerWidth < offsetLeft + offsetWidth) {
-      offsetLeft -= (offsetLeft + offsetWidth) - window.innerWidth;
-    }
-    if (window.innerHeight < offsetTop + offsetHeight) {
-      offsetTop -= (offsetTop + offsetHeight) - window.innerHeight;
-    }
+    let diffLeft = 0;
+    let diffTop = 0;
 
-    if (offsetLeft < 0) {
-      offsetLeft = 0;
+    if (window.innerWidth < panelBox.right + diffLeft) {
+      diffLeft += window.innerWidth - (panelBox.right + diffLeft);
     }
-    if (offsetTop < 0) {
-      offsetTop = 0;
+    if (panelBox.left + diffLeft < 0) {
+      diffLeft += 0 - (panelBox.left);
     }
 
-    panel.style.left = offsetLeft + 'px';
-    panel.style.top = offsetTop + 'px';
+    if (window.innerHeight < panelBox.bottom + diffTop) {
+      diffTop += window.innerHeight - (panelBox.bottom + diffTop);
+    }
+    if (panelBox.top + diffTop < 0) {
+      diffTop += 0 - (panelBox.top);
+    }
+
+    panel.style.left = panel.offsetLeft + diffLeft + 'px';
+    panel.style.top = panel.offsetTop + diffTop + 'px';
   }
 
   private adjustPositionSub() {
     let parent: HTMLElement = this.elementRef.nativeElement.parentElement;
     let submenu: HTMLElement = this.rootElementRef.nativeElement;
 
-    let offsetLeft = submenu.offsetLeft;
-    let offsetTop = submenu.offsetTop;
-    let offsetWidth = submenu.offsetWidth;
-    let offsetHeight = submenu.offsetHeight;
+    let parentBox = parent.getBoundingClientRect();
+    let submenuBox = submenu.getBoundingClientRect();
 
-    if (window.innerWidth < offsetLeft + offsetWidth) {
-      offsetLeft -= (offsetLeft + offsetWidth) - parent.offsetLeft;
-      offsetLeft += 8;
-    }
-    if (window.innerHeight < offsetTop + offsetHeight) {
-      offsetTop -= (offsetTop + offsetHeight) - window.innerHeight;
-    }
+    let diffLeft = 0;
+    let diffTop = 0;
 
-    if (offsetLeft < 0) {
-      offsetLeft = 0;
+    if (window.innerWidth < submenuBox.right + diffLeft) {
+      diffLeft -= parentBox.width + submenuBox.width;
+      diffLeft += 8;
     }
-    if (offsetTop < 0) {
-      offsetTop = 0;
+    if (submenuBox.left + diffLeft < 0) {
+      diffLeft += 0 - (submenuBox.left + diffLeft);
     }
 
-    submenu.style.left = offsetLeft + 'px';
-    submenu.style.top = offsetTop + 'px';
+    if (window.innerHeight < submenuBox.bottom + diffTop) {
+      diffTop += window.innerHeight - (submenuBox.bottom + diffTop);
+    }
+    if (submenuBox.top + diffTop < 0) {
+      diffTop += 0 - (submenuBox.top + diffTop);
+    }
+
+    submenu.style.left = submenu.offsetLeft + diffLeft + 'px';
+    submenu.style.top = submenu.offsetTop + diffTop + 'px';
   }
 
   doAction(action: ContextMenuAction) {
