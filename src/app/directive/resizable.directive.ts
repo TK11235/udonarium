@@ -52,6 +52,7 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.cancel();
+    this.destroy();
   }
 
   private initialize() {
@@ -69,6 +70,10 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
 
   cancel() {
     this.handleMap.forEach(handle => handle.input.cancel());
+  }
+
+  destroy() {
+    this.handleMap.forEach(handle => handle.input.destroy());
   }
 
   private onResizeStart(e: MouseEvent | TouchEvent, handle: ResizeHandler) {
