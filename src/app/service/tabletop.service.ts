@@ -124,6 +124,10 @@ export class TabletopService {
     }, 66);
   }
 
+  removeBatch(key: any = {}) {
+    this.batchTask.delete(key);
+  }
+
   private execBatch() {
     this.batchTask.forEach(task => task());
     this.batchTask.clear();

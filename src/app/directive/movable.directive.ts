@@ -102,6 +102,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.input.destroy();
     this.unregister();
     EventSystem.unregister(this);
+    this.tabletopService.removeBatch(this);
   }
 
   cancel() {

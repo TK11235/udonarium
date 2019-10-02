@@ -98,6 +98,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.cancel();
     this.input.destroy();
     EventSystem.unregister(this);
+    this.tabletopService.removeBatch(this);
   }
 
   cancel() {
