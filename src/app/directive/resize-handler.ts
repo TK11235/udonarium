@@ -25,7 +25,7 @@ export class ResizeHandler {
 
   private initialize() {
     this.handle = this.target.ownerDocument.createElement('div');
-    this.handle.classList.add('ui-test-handler-' + this.type);
+    this.handle.classList.add('ui-resize-handler-' + this.type);
     this.input = new InputHandler(this.handle);
     this.target.appendChild(this.handle);
 
