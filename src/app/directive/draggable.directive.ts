@@ -38,9 +38,8 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    window.removeEventListener('resize', this.callbackOnResize, false);
     this.cancel();
-    this.input.destroy();
+    this.destroy();
   }
 
   private initialize() {
@@ -56,6 +55,11 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
 
   cancel() {
     this.input.cancel();
+  }
+
+  destroy() {
+    window.removeEventListener('resize', this.callbackOnResize, false);
+    this.input.destroy();
   }
 
   private onInputStart(e: MouseEvent | TouchEvent) {
