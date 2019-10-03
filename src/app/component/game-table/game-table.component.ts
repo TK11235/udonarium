@@ -31,10 +31,10 @@ import { TabletopService } from 'service/tabletop.service';
   ],
 })
 export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root', { static: true }) rootElementRef: ElementRef;
-  @ViewChild('gameTable', { static: true }) gameTable: ElementRef;
-  @ViewChild('gameObjects', { static: true }) gameObjects: ElementRef;
-  @ViewChild('gridCanvas', { static: true }) gridCanvas: ElementRef;
+  @ViewChild('root', { static: true }) rootElementRef: ElementRef<HTMLElement>;
+  @ViewChild('gameTable', { static: true }) gameTable: ElementRef<HTMLElement>;
+  @ViewChild('gameObjects', { static: true }) gameObjects: ElementRef<HTMLElement>;
+  @ViewChild('gridCanvas', { static: true }) gridCanvas: ElementRef<HTMLCanvasElement>;
 
   get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
   get currentTable(): GameTable { return this.tabletopService.currentTable; }
@@ -101,7 +101,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
         let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-        this.gridCanvas.nativeElement.style.opacity = opacity;
+        this.gridCanvas.nativeElement.style.opacity = opacity + '';
       });
     this.tabletopService.makeDefaultTable();
     this.tabletopService.makeDefaultTabletopObjects();
@@ -135,7 +135,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.isTransformMode = false;
       this.pointerDeviceService.isDragging = true;
-      this.gridCanvas.nativeElement.style.opacity = 1.0;
+      this.gridCanvas.nativeElement.style.opacity = 1.0 + '';
     }
 
     this.buttonCode = e.button;
@@ -149,7 +149,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   onMouseUp(e: any) {
     this.pointerDeviceService.isDragging = false;
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-    this.gridCanvas.nativeElement.style.opacity = opacity;
+    this.gridCanvas.nativeElement.style.opacity = opacity + '';
   }
 
   onMouseMove(e: any) {
@@ -345,7 +345,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-    this.gridCanvas.nativeElement.style.opacity = opacity;
+    this.gridCanvas.nativeElement.style.opacity = opacity + '';
   }
 
   private removeSelectionRanges() {
