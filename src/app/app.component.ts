@@ -218,7 +218,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       option.top = (this.openPanelCount % 10 + 1) * 20;
       option.left = 100 + (this.openPanelCount % 20 + 1) * 5;
       this.openPanelCount = this.openPanelCount + 1;
-      console.log('openPanelCount:', this.openPanelCount);
       this.panelService.open(component, option);
     }
   }

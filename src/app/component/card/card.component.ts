@@ -160,7 +160,6 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
-    console.log(e);
     this.onDoubleClick(e);
     this.card.toTopmost();
 

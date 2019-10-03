@@ -99,7 +99,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.sender = this.myPeer.identifier;
-    console.log(this.chatMessageService.chatTabs);
     this._chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
 
     EventSystem.register(this)
