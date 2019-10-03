@@ -136,14 +136,14 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.doubleClickTimer = setTimeout(() => {
         clearTimeout(this.doubleClickTimer);
         this.doubleClickTimer = null;
-      }, 400);
+      }, 300);
       this.doubleClickPoint = this.pointerDeviceService.pointers[0];
       return;
     }
     clearTimeout(this.doubleClickTimer);
     this.doubleClickTimer = null;
-    if (this.doubleClickPoint.x === this.pointerDeviceService.pointers[0].x
-      && this.doubleClickPoint.y === this.pointerDeviceService.pointers[0].y) {
+    let distance = (this.doubleClickPoint.x - this.pointerDeviceService.pointers[0].x) ** 2 + (this.doubleClickPoint.y - this.pointerDeviceService.pointers[0].y) ** 2;
+    if (distance < 10 ** 2) {
       console.log('onDoubleClick !!!!');
       if (this.hasOwner && !this.isHand) return;
       this.state = this.isVisible && !this.isHand ? CardState.BACK : CardState.FRONT;
@@ -280,7 +280,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.iconHiddenTimer = setTimeout(() => {
       this.iconHiddenTimer = null;
       this.changeDetector.markForCheck();
-    }, 400);
+    }, 300);
     this.changeDetector.markForCheck();
   }
 
