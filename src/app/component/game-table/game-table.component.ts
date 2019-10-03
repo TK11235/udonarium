@@ -55,8 +55,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private isTransformMode: boolean = false;
 
-  private mouseDownPositionX: number = 0;
-  private mouseDownPositionY: number = 0;
+  private currentPositionX: number = 0;
+  private currentPositionY: number = 0;
 
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
@@ -111,9 +111,9 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ngZone.runOutsideAngular(() => {
       this.input = new InputHandler(this.elementRef.nativeElement);
     });
-    this.input.onStart = this.onMouseDown.bind(this);
-    this.input.onMove = this.onMouseMove.bind(this);
-    this.input.onEnd = this.onMouseUp.bind(this);
+    this.input.onStart = this.onInputStart.bind(this);
+    this.input.onMove = this.onInputMove.bind(this);
+    this.input.onEnd = this.onInputEnd.bind(this);
 
     this.setGameTableGrid(this.currentTable.width, this.currentTable.height, this.currentTable.gridSize, this.currentTable.gridType, this.currentTable.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
@@ -125,9 +125,9 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.input.destroy();
   }
 
-  onMouseDown(e: any) {
-    this.mouseDownPositionX = this.input.pointer.x;
-    this.mouseDownPositionY = this.input.pointer.y;
+  onInputStart(e: any) {
+    this.currentPositionX = this.input.pointer.x;
+    this.currentPositionY = this.input.pointer.y;
 
     if (e.target.contains(this.gameObjects.nativeElement) || e.button === 1 || e.button === 2) {
       this.isTransformMode = true;
@@ -145,13 +145,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onMouseUp(e: any) {
+  onInputEnd(e: any) {
     this.pointerDeviceService.isDragging = false;
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity + '';
   }
 
-  onMouseMove(e: any) {
+  onInputMove(e: any) {
     let x = this.input.pointer.x;
     let y = this.input.pointer.y;
 
@@ -165,20 +165,20 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       let rotateZ = 0;
 
       if (this.buttonCode === 2) {
-        rotateZ = (this.mouseDownPositionX - x) / 5;
-        rotateX = (this.mouseDownPositionY - y) / 5;
+        rotateZ = (this.currentPositionX - x) / 5;
+        rotateX = (this.currentPositionY - y) / 5;
       } else {
         let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
-        transformX = -(this.mouseDownPositionX - x) * scale;
-        transformY = -(this.mouseDownPositionY - y) * scale;
+        transformX = -(this.currentPositionX - x) * scale;
+        transformY = -(this.currentPositionY - y) * scale;
       }
 
       if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
         this.ngZone.run(() => { this.contextMenuService.close(); });
       }
 
-      this.mouseDownPositionX = x;
-      this.mouseDownPositionY = y;
+      this.currentPositionX = x;
+      this.currentPositionY = y;
 
       this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
       return;
