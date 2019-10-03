@@ -37,6 +37,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     if (!this.isSubmenu) {
       this.adjustPositionRoot();
+      document.addEventListener('touchstart', this.callbackOnOutsideClick, false);
       document.addEventListener('mousedown', this.callbackOnOutsideClick, false);
     } else {
       this.adjustPositionSub();
@@ -44,6 +45,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    document.removeEventListener('touchstart', this.callbackOnOutsideClick, false);
     document.removeEventListener('mousedown', this.callbackOnOutsideClick, false);
   }
 
