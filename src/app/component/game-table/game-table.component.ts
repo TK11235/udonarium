@@ -146,9 +146,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onInputEnd(e: any) {
-    this.pointerDeviceService.isDragging = false;
-    let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-    this.gridCanvas.nativeElement.style.opacity = opacity + '';
+    this.cancelInput();
   }
 
   onInputMove(e: any) {
@@ -183,6 +181,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
       return;
     }
+  }
+
+  cancelInput() {
+    this.input.cancel();
+    this.pointerDeviceService.isDragging = false;
+    let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
+    this.gridCanvas.nativeElement.style.opacity = opacity + '';
   }
 
   @HostListener('wheel', ['$event'])
