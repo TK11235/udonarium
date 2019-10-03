@@ -16,6 +16,7 @@ import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
 
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
+import { InputHandler } from 'directive/input-handler';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
@@ -67,11 +68,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private viewRotateY: number = 0;
   private viewRotateZ: number = 10;
 
-  private callbackOnMouseDown = (e) => this.onMouseDown(e);
-  private callbackOnMouseUp = (e) => this.onMouseUp(e);
-  private callbackOnMouseMove = (e) => this.onMouseMove(e);
-
   private buttonCode: number = 0;
+  private input: InputHandler = null;
 
   get characters(): GameCharacter[] { return this.tabletopService.characters; }
   get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
@@ -110,7 +108,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.elementRef.nativeElement.addEventListener('mousedown', this.callbackOnMouseDown, true);
+    this.ngZone.runOutsideAngular(() => {
+      this.input = new InputHandler(this.elementRef.nativeElement);
+    });
+    this.input.onStart = this.onMouseDown.bind(this);
+    this.input.onMove = this.onMouseMove.bind(this);
+    this.input.onEnd = this.onMouseUp.bind(this);
+
     this.setGameTableGrid(this.currentTable.width, this.currentTable.height, this.currentTable.gridSize, this.currentTable.gridType, this.currentTable.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
     this.tabletopService.dragAreaElement = this.gameObjects.nativeElement;
@@ -118,13 +122,12 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    this.removeMouseEventListeners();
-    this.elementRef.nativeElement.removeEventListener('mousedown', this.callbackOnMouseDown, true);
+    this.input.destroy();
   }
 
   onMouseDown(e: any) {
-    this.mouseDownPositionX = this.pointerDeviceService.pointerX;
-    this.mouseDownPositionY = this.pointerDeviceService.pointerY;
+    this.mouseDownPositionX = this.input.pointer.x;
+    this.mouseDownPositionY = this.input.pointer.y;
 
     if (e.target.contains(this.gameObjects.nativeElement) || e.button === 1 || e.button === 2) {
       this.isTransformMode = true;
@@ -141,20 +144,17 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       this.removeSelectionRanges();
       this.removeFocus();
     }
-    this.addMouseEventListeners();
   }
 
   onMouseUp(e: any) {
     this.pointerDeviceService.isDragging = false;
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity;
-
-    this.removeMouseEventListeners();
   }
 
   onMouseMove(e: any) {
-    let x = this.pointerDeviceService.pointerX;
-    let y = this.pointerDeviceService.pointerY;
+    let x = this.input.pointer.x;
+    let y = this.input.pointer.y;
 
     if (this.isTransformMode) {
       let transformX = 0;
@@ -359,20 +359,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-  }
-
-  private addMouseEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    this.ngZone.runOutsideAngular(() => {
-      document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
-      document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
-    });
-  }
-
-  private removeMouseEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
-    document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
   }
 
   trackByGameObject(index: number, gameObject: GameObject) {
