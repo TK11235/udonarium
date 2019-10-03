@@ -150,37 +150,36 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onInputMove(e: any) {
+    if (!this.isTransformMode) return;
+
     let x = this.input.pointer.x;
     let y = this.input.pointer.y;
 
-    if (this.isTransformMode) {
-      let transformX = 0;
-      let transformY = 0;
-      let transformZ = 0;
+    let transformX = 0;
+    let transformY = 0;
+    let transformZ = 0;
 
-      let rotateX = 0;
-      let rotateY = 0;
-      let rotateZ = 0;
+    let rotateX = 0;
+    let rotateY = 0;
+    let rotateZ = 0;
 
-      if (this.buttonCode === 2) {
-        rotateZ = (this.currentPositionX - x) / 5;
-        rotateX = (this.currentPositionY - y) / 5;
-      } else {
-        let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
-        transformX = -(this.currentPositionX - x) * scale;
-        transformY = -(this.currentPositionY - y) * scale;
-      }
-
-      if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
-        this.ngZone.run(() => { this.contextMenuService.close(); });
-      }
-
-      this.currentPositionX = x;
-      this.currentPositionY = y;
-
-      this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
-      return;
+    if (this.buttonCode === 2) {
+      rotateZ = (this.currentPositionX - x) / 5;
+      rotateX = (this.currentPositionY - y) / 5;
+    } else {
+      let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
+      transformX = -(this.currentPositionX - x) * scale;
+      transformY = -(this.currentPositionY - y) * scale;
     }
+
+    if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
+      this.ngZone.run(() => { this.contextMenuService.close(); });
+    }
+
+    this.currentPositionX = x;
+    this.currentPositionY = y;
+
+    this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
 
   cancelInput() {
