@@ -90,8 +90,8 @@ export class PointerDeviceService {
   }
 
   private onContextMenu(e: any) {
+    this._isAllowedToOpenContextMenu = true;
     this.onPointerUp(e);
-    if (e.touches) this._isAllowedToOpenContextMenu = true;
   }
 
   private preventContextMenuIfNeeded(pointer: PointerCoordinate, threshold: number = 3) {

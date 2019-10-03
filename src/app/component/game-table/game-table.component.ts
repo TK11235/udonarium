@@ -131,7 +131,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (e.target.contains(this.gameObjects.nativeElement) || e.button === 1 || e.button === 2) {
       this.isTransformMode = true;
-      e.preventDefault();
     } else {
       this.isTransformMode = false;
       this.pointerDeviceService.isDragging = true;
