@@ -183,9 +183,19 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   onContextMenu(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     e.preventDefault();
-    this.cancel();
+
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
     if (tableSelecter.gridSnap) this.snapToGrid();
+
+    let needsDispatch = this.input.isGrabbing;
+    this.cancel();
+
+    if (needsDispatch) {
+      // ロングプレスによるタッチ操作でコンテキストメニューを開く場合、イベントを適切なDOMに伝搬させる
+      e.stopPropagation();
+      let ev = new MouseEvent(e.type, e);
+      this.input.target.dispatchEvent(ev);
+    }
   }
 
   private callSelectedEvent() {
