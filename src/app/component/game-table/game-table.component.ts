@@ -71,6 +71,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private buttonCode: number = 0;
   private input: InputHandler = null;
 
+  private hammer: HammerManager = null;
+  private currentHammerDeltaY = 1.0;
+  private currentHammerScale = 1.0;
+  private currentHammerRotation = 0;
+
   get characters(): GameCharacter[] { return this.tabletopService.characters; }
   get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
   get cards(): Card[] { return this.tabletopService.cards; }
@@ -110,6 +115,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
       this.input = new InputHandler(this.elementRef.nativeElement, { capture: true });
+      this.initializeHammer();
     });
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
@@ -123,6 +129,73 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     EventSystem.unregister(this);
     this.input.destroy();
+    this.hammer.destroy();
+  }
+
+  initializeHammer() {
+    this.hammer = new Hammer.Manager(this.rootElementRef.nativeElement, { inputClass: Hammer.TouchInput });
+
+    let pan = new Hammer.Pan({ pointers: 2, threshold: 0 });
+    let pinch = new Hammer.Pinch();
+    let rotate = new Hammer.Rotate();
+
+    pan.recognizeWith(pinch);
+    pan.recognizeWith(rotate);
+    pinch.recognizeWith(rotate);
+
+    this.hammer.add([pan, pinch, rotate]);
+
+    this.hammer.on('panstart', this.onPanStart.bind(this));
+    this.hammer.on('panmove', this.onPanMove.bind(this));
+    this.hammer.on('pinchstart', this.onPinchStart.bind(this));
+    this.hammer.on('pinchmove', this.onPinchMove.bind(this));
+    this.hammer.on('rotatestart', this.onRotateStart.bind(this));
+    this.hammer.on('rotatemove', this.onRotateMove.bind(this));
+  }
+
+  onPanStart(ev: HammerInput) {
+    this.cancelInput();
+    this.currentHammerDeltaY = ev.deltaY;
+  }
+
+  onPanMove(ev: HammerInput) {
+    this.cancelInput();
+    let rotateX = -(ev.deltaY - this.currentHammerDeltaY) / window.innerHeight * 100;
+
+    if (80 < rotateX + this.viewRotateX) rotateX += 80 - (rotateX + this.viewRotateX);
+    if (rotateX + this.viewRotateX < 0) rotateX += 0 - (rotateX + this.viewRotateX);
+
+    this.setTransform(0, 0, 0, rotateX, 0, 0);
+    this.currentHammerDeltaY = ev.deltaY;
+  }
+
+  onPinchStart(ev: HammerInput) {
+    this.cancelInput();
+    this.currentHammerScale = ev.scale;
+  }
+
+  onPinchMove(ev: HammerInput) {
+    this.cancelInput();
+    let scale = ev.scale - this.currentHammerScale;
+    let transformZ = scale * 500;
+
+    if (750 < transformZ + this.viewPotisonZ) transformZ += 750 - (transformZ + this.viewPotisonZ);
+
+    this.setTransform(0, 0, transformZ, 0, 0, 0);
+    this.currentHammerScale = ev.scale;
+  }
+
+  onRotateStart(ev: HammerInput) {
+    this.cancelInput();
+    this.currentHammerRotation = ev.rotation;
+  }
+
+  onRotateMove(ev: HammerInput) {
+    this.cancelInput();
+    let rotation = ev.rotation - this.currentHammerRotation;
+    let rotateZ = rotation;
+    this.setTransform(0, 0, 0, 0, 0, rotateZ);
+    this.currentHammerRotation = ev.rotation;
   }
 
   onInputStart(e: any) {
