@@ -18,6 +18,8 @@ export class GameCharacter extends TabletopObject {
     return null;
   }
 
+  set name(value:string) { this.setCommonValue('name', value); }
+
   static create(name: string, size: number, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
