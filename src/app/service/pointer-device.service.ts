@@ -99,7 +99,7 @@ export class PointerDeviceService {
     if (threshold ** 2 < distance) this._isAllowedToOpenContextMenu = false;
   }
 
-  private isSyntheticEvent(mosuePointer: PointerData, threshold: number = 3): boolean {
+  private isSyntheticEvent(mosuePointer: PointerData, threshold: number = 15): boolean {
     for (let pointer of this.pointers) {
       if (pointer.identifier === mosuePointer.identifier) continue;
       let distance = (mosuePointer.x - pointer.x) ** 2 + (mosuePointer.y - pointer.y) ** 2;

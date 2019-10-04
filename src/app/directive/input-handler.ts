@@ -117,7 +117,7 @@ export class InputHandler {
     if (this.onContextMenu) this.onContextMenu(e);
   }
 
-  private isSyntheticEvent(mosuePointer: PointerData, threshold: number = 5): boolean {
+  private isSyntheticEvent(mosuePointer: PointerData, threshold: number = 15): boolean {
     for (let pointer of this.lastPointers) {
       if (pointer.identifier === mosuePointer.identifier) continue;
       let distance = (mosuePointer.x - pointer.x) ** 2 + (mosuePointer.y - pointer.y) ** 2;
