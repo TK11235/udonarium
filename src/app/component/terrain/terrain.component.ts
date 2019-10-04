@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
@@ -6,6 +6,7 @@ import { EventSystem } from '@udonarium/core/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { Terrain, TerrainViewState } from '@udonarium/terrain';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
@@ -44,9 +45,12 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   movableOption: MovableOption = {};
   rotableOption: RotableOption = {};
 
+  private input: InputHandler = null;
+
   constructor(
     private tabletopService: TabletopService,
     private contextMenuService: ContextMenuService,
+    private elementRef: ElementRef<HTMLElement>,
     private panelService: PanelService,
     private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
@@ -76,9 +80,13 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.input = new InputHandler(this.elementRef.nativeElement);
+    this.input.onStart = this.onInputStart.bind(this);
+  }
 
   ngOnDestroy() {
+    this.input.destroy();
     EventSystem.unregister(this);
   }
 
@@ -88,9 +96,8 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
   }
 
-  @HostListener('mousedown', ['$event'])
-  onDragMouseDown(e: any) {
-    e.preventDefault();
+  onInputStart(e: any) {
+    this.input.cancel();
 
     // TODO:もっと良い方法考える
     if (this.isLocked) {

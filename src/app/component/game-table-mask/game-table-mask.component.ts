@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   HostListener,
   Input,
   OnDestroy,
@@ -15,6 +16,7 @@ import { EventSystem } from '@udonarium/core/system';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
@@ -43,9 +45,12 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
 
   movableOption: MovableOption = {};
 
+  private input: InputHandler = null;
+
   constructor(
     private tabletopService: TabletopService,
     private contextMenuService: ContextMenuService,
+    private elementRef: ElementRef<HTMLElement>,
     private panelService: PanelService,
     private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
@@ -73,9 +78,13 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     };
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.input = new InputHandler(this.elementRef.nativeElement);
+    this.input.onStart = this.onInputStart.bind(this);
+  }
 
   ngOnDestroy() {
+    this.input.destroy();
     EventSystem.unregister(this);
   }
 
@@ -85,9 +94,8 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     e.preventDefault();
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(e: any) {
-    e.preventDefault();
+  onInputStart(e: any) {
+    this.input.cancel();
 
     // TODO:もっと良い方法考える
     if (this.isLock) {

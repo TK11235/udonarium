@@ -18,6 +18,7 @@ import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
@@ -66,10 +67,12 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
 
+  private input: InputHandler = null;
+
   constructor(
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
-    private elementRef: ElementRef,
+    private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
     private tabletopService: TabletopService,
     private pointerDeviceService: PointerDeviceService
@@ -105,9 +108,13 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.input = new InputHandler(this.elementRef.nativeElement);
+    this.input.onStart = this.onInputStart.bind(this);
+  }
 
   ngOnDestroy() {
+    this.input.destroy();
     EventSystem.unregister(this);
   }
 
@@ -158,14 +165,11 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(e: any) {
+  onInputStart(e: MouseEvent | TouchEvent) {
+    this.input.cancel();
     this.onDoubleClick(e);
     this.card.toTopmost();
-
-    this.startIconHiddenTimer();
-
-    e.preventDefault();
+    if (e instanceof MouseEvent) this.startIconHiddenTimer();
   }
 
   @HostListener('contextmenu', ['$event'])

@@ -1,8 +1,10 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   HostListener,
   Input,
   NgZone,
@@ -17,6 +19,7 @@ import { DiceSymbol } from '@udonarium/dice-symbol';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
@@ -56,7 +59,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class DiceSymbolComponent implements OnInit, OnDestroy {
+export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() diceSymbol: DiceSymbol = null;
   @Input() is3D: boolean = false;
 
@@ -96,10 +99,13 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
 
+  private input: InputHandler = null;
+
   constructor(
     private ngZone: NgZone,
     private panelService: PanelService,
     private contextMenuService: ContextMenuService,
+    private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService) { }
 
@@ -142,7 +148,13 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     };
   }
 
+  ngAfterViewInit() {
+    this.input = new InputHandler(this.elementRef.nativeElement);
+    this.input.onStart = this.onInputStart.bind(this);
+  }
+
   ngOnDestroy() {
+    this.input.destroy();
     EventSystem.unregister(this);
   }
 
@@ -151,12 +163,10 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     this.changeDetector.markForCheck();
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(e: any) {
+  onInputStart(e: MouseEvent | TouchEvent) {
+    this.input.cancel();
     this.onDoubleClick(e);
-    this.startIconHiddenTimer();
-
-    e.preventDefault();
+    if (e instanceof MouseEvent) this.startIconHiddenTimer();
   }
 
   onDoubleClick(e) {
