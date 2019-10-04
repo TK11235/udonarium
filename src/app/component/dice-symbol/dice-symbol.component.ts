@@ -175,12 +175,12 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         clearTimeout(this.doubleClickTimer);
         this.doubleClickTimer = null;
       }, 300);
-      this.doubleClickPoint = this.pointerDeviceService.pointers[0];
+      this.doubleClickPoint = this.input.pointer;
       return;
     }
     clearTimeout(this.doubleClickTimer);
     this.doubleClickTimer = null;
-    let distance = (this.doubleClickPoint.x - this.pointerDeviceService.pointers[0].x) ** 2 + (this.doubleClickPoint.y - this.pointerDeviceService.pointers[0].y) ** 2;
+    let distance = (this.doubleClickPoint.x - this.input.pointer.x) ** 2 + (this.doubleClickPoint.y - this.input.pointer.y) ** 2;
     if (distance < 10 ** 2) {
       if (this.isVisible) this.diceRoll();
     }
