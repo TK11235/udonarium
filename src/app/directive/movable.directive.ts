@@ -144,8 +144,10 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   }
 
   onInputMove(e: MouseEvent | TouchEvent) {
-    if (this.isDisable) return this.cancel();
-    if (!this.input.isGrabbing) return this.cancel();
+    if (this.input.isGrabbing && !this.tabletopService.pointerDeviceService.isDragging) {
+      return this.cancel(); // todo
+    }
+    if (this.isDisable || !this.input.isGrabbing) return this.cancel();
 
     let target = (e as TouchEvent).touches
       ? <HTMLElement>document.elementFromPoint(this.input.pointer.x, this.input.pointer.y)
