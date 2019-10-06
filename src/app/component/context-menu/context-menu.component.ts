@@ -76,14 +76,14 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       diffLeft += window.innerWidth - (panelBox.right + diffLeft);
     }
     if (panelBox.left + diffLeft < 0) {
-      diffLeft += 0 - (panelBox.left);
+      diffLeft += 0 - (panelBox.left + diffLeft);
     }
 
     if (window.innerHeight < panelBox.bottom + diffTop) {
       diffTop += window.innerHeight - (panelBox.bottom + diffTop);
     }
     if (panelBox.top + diffTop < 0) {
-      diffTop += 0 - (panelBox.top);
+      diffTop += 0 - (panelBox.top + diffTop);
     }
 
     panel.style.left = panel.offsetLeft + diffLeft + 'px';
