@@ -71,10 +71,10 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
     this.prevTrans = { x: 0, y: 0, z: 0 };
 
     let isHandle = this.isHandleElement(e.target as HTMLElement);
-    let isUnHandle = this.isUnhandleElement(e.target as HTMLElement);
+    let isUnhandle = this.isUnhandleElement(e.target as HTMLElement);
     let isScrollable = e instanceof TouchEvent ? this.isScrollableElement(e.target as HTMLElement) : false;
 
-    if (!isHandle || isUnHandle || isScrollable) {
+    if (!isHandle || isUnhandle || isScrollable) {
       this.cancel();
       return;
     }
@@ -191,19 +191,19 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
   private setForeground() {
     if (this.stackSelector.length < 1) return;
     let stacks = this.elementRef.nativeElement.ownerDocument.querySelectorAll<HTMLElement>(this.stackSelector);
-    let topZIndex: number = 0;
+    let topZindex: number = 0;
     let bottomZindex: number = 99999;
     stacks.forEach(elm => {
       let zIndex = parseInt(elm.style.zIndex);
-      if (topZIndex < zIndex) topZIndex = zIndex;
+      if (topZindex < zIndex) topZindex = zIndex;
       if (zIndex < bottomZindex) bottomZindex = zIndex;
     });
 
-    if (topZIndex <= parseInt(this.elementRef.nativeElement.style.zIndex)) return;
+    if (topZindex <= parseInt(this.elementRef.nativeElement.style.zIndex)) return;
 
     stacks.forEach(elm => {
       elm.style.zIndex = (parseInt(elm.style.zIndex) - bottomZindex) + '';
     });
-    this.elementRef.nativeElement.style.zIndex = (topZIndex + 1) + '';
+    this.elementRef.nativeElement.style.zIndex = (topZindex + 1) + '';
   }
 }
