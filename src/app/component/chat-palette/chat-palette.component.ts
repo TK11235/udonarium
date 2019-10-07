@@ -20,7 +20,8 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./chat-palette.component.css']
 })
 export class ChatPaletteComponent implements OnInit, OnDestroy {
-  @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
+  @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('chatPlette', { static: false }) chatPletteElementRef: ElementRef<HTMLSelectElement>;
   @Input() character: GameCharacter = null;
 
   get palette(): ChatPalette { return this.character.chatPalette; }
@@ -104,6 +105,12 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   }
 
   selectPalette(line: string) {
+    this.text = line;
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.value = this.text;
+  }
+
+  clickPalette(line: string) {
     if (this.doubleClickTimer && this.text === line) {
       clearTimeout(this.doubleClickTimer);
       this.doubleClickTimer = null;
@@ -175,7 +182,13 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
     this.previousWritingLength = this.text.length;
     let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
     textArea.value = '';
+    this.resetPletteSelect();
     this.calcFitHeight();
+  }
+
+  resetPletteSelect() {
+    if (!this.chatPletteElementRef.nativeElement) return;
+    this.chatPletteElementRef.nativeElement.selectedIndex = -1;
   }
 
   toggleEditMode() {
