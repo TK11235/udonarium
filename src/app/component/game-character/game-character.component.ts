@@ -107,17 +107,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     e.preventDefault();
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(e: any) {
-    e.preventDefault();
-
-    // TODO:もっと良い方法考える
-    if (e.button === 2) {
-      EventSystem.trigger('DRAG_LOCKED_OBJECT', {});
-      return;
-    }
-  }
-
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
     e.stopPropagation();
