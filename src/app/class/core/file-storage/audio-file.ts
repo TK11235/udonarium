@@ -66,24 +66,21 @@ export class AudioFile {
   static async createAsync(blob: Blob): Promise<AudioFile>
   static async createAsync(arg: any): Promise<AudioFile> {
     if (arg instanceof File) {
-      return await AudioFile._createAsync(new Blob([arg.slice()], { type: arg.type }), arg.name);
+      return await AudioFile._createAsync(arg, arg.name);
     } else if (arg instanceof Blob) {
       return await AudioFile._createAsync(arg);
     }
   }
 
   private static async _createAsync(blob: Blob, name?: string): Promise<AudioFile> {
-    let audio = new AudioFile();
-    audio.context.name = name;
-    audio.context.blob = blob;
-    audio.context.type = blob.type;
-    audio.context.url = window.URL.createObjectURL(blob);
+    let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob);
 
-    try {
-      audio.context.identifier = await FileReaderUtil.calcSHA256Async(blob);
-    } catch (e) {
-      throw e;
-    }
+    let audio = new AudioFile();
+    audio.context.identifier = await FileReaderUtil.calcSHA256Async(arrayBuffer);
+    audio.context.name = name;
+    audio.context.blob = new Blob([arrayBuffer], { type: blob.type });
+    audio.context.type = audio.context.blob.type;
+    audio.context.url = window.URL.createObjectURL(audio.context.blob);
 
     if (!audio.context.name) audio.context.name = audio.context.identifier;
 

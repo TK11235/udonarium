@@ -85,7 +85,7 @@ export class ImageFile {
   }
 
   private static async _createAsync(blob: Blob, name?: string): Promise<ImageFile> {
-    let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob); // ローカルから読み込んだファイルは一度FileReaderを通さないと表示できない
+    let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob);
 
     let imageFile = new ImageFile();
     imageFile.context.identifier = await FileReaderUtil.calcSHA256Async(arrayBuffer);
