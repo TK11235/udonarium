@@ -158,6 +158,12 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     EventSystem.unregister(this);
   }
 
+  @HostListener('dragstart', ['$event'])
+  onDragstart(e: any) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
   animationShuffleDone(event: any) {
     this.animeState = 'inactive';
     this.changeDetector.markForCheck();
