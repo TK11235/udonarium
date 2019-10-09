@@ -72,13 +72,13 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
 
     let isHandle = this.isHandleElement(e.target as HTMLElement);
     let isUnhandle = this.isUnhandleElement(e.target as HTMLElement);
-    let isScrollable = e instanceof TouchEvent ? this.isScrollableElement(e.target as HTMLElement) : false;
+    let isScrollable = (e as TouchEvent).touches != null ? this.isScrollableElement(e.target as HTMLElement) : false;
 
     if (!isHandle || isUnhandle || isScrollable) {
       this.cancel();
       return;
     }
-    if (e instanceof TouchEvent === false && e.cancelable) e.preventDefault();
+    if ((e as TouchEvent).touches == null && e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 
