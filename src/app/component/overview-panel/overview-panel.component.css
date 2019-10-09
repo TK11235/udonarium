@@ -3,7 +3,7 @@
   max-height: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow: hidden auto;
+  overflow: visible;
   color: #444;
   z-index: 9000;
 }
