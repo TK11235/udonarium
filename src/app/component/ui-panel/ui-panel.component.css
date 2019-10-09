@@ -21,6 +21,8 @@
 
   max-height: 100%;
   max-width: 100%;
+
+  overscroll-behavior: contain;
 }
 .scrollable-panel{
   box-sizing: border-box;
