@@ -1,42 +1,34 @@
-.draggable-panel{
+.draggable-panel {
   box-sizing: border-box;
   overflow: visible;
   position: absolute;
-  /*
-  color: #CCC;
-  background-color: rgba(30, 30, 30, 0.8);
-  border:solid 1px #999;
-  */
+
   color: #444;
-  /*
-  background: linear-gradient(-30deg, rgba(231,194,145, 0.9), rgba(255, 244, 232, 0.9));
-  background: linear-gradient(-30deg, rgba(242,233,221, 0.9), rgba(245, 245, 245, 0.9));
-  */
   background: linear-gradient(-30deg, rgba(240,218,189, 0.9), rgba(255, 244, 232, 0.9));
-  border:solid 1px #999;
+  border: solid 1px #999;
+
   padding: 0px;
   top: 200px;
+
   height: 200px;
   width: 300px;
-
   max-height: 100%;
   max-width: 100%;
 
   overscroll-behavior: contain;
 }
-.scrollable-panel{
+
+.scrollable-panel {
   box-sizing: border-box;
   overflow: auto;
   position: absolute;
-  /*margin: auto 0 0 0;*/
-  /*top: 0px;*/
   top: 25px;
   bottom: 0;
-  /*height: 100%;*/
   width: 100%;
   padding: 8px;
 }
-.title{
+
+.title {
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
@@ -44,15 +36,16 @@
   height: 25px;
   padding: 2px 5px;
   width: 100%;
-  /*border-bottom:1px solid #999;*/
   background-color: #555;
   color: #CCC;
 }
+
 .title-button {
   position: absolute;
   right: 0;
   top: 0;
 }
+
 .title button {
   background: none;
   border: none;
@@ -60,6 +53,7 @@
   outline: none;
   color: #CCC;
 }
+
 .pointer-events-none {
   pointer-events: none;
 }
