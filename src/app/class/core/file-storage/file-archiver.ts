@@ -94,7 +94,7 @@ export class FileArchiver {
     if (file.type.indexOf('audio/') < 0) return;
     console.log(file.name + ' type:' + file.type);
     if (10 * 1024 * 1024 < file.size) return;
-    let audio = await AudioStorage.instance.addAsync(file);
+    await AudioStorage.instance.addAsync(file);
   }
 
   private async handleText(file: File): Promise<void> {
