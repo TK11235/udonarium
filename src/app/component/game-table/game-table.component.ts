@@ -82,6 +82,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private prevHammerScale: number = 0;
   private prevHammerRotation: number = 0;
 
+  private tappedPanTimer: NodeJS.Timer = null;
+
   get characters(): GameCharacter[] { return this.tabletopService.characters; }
   get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
   get cards(): Card[] { return this.tabletopService.cards; }
@@ -141,17 +143,24 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   initializeHammer() {
     this.hammer = new Hammer.Manager(this.rootElementRef.nativeElement, { inputClass: Hammer.TouchInput });
 
-    let pan = new Hammer.Pan({ pointers: 2, threshold: 0 });
+    let tap = new Hammer.Tap();
+    let pan1p = new Hammer.Pan({ event: 'pan1p', pointers: 1, threshold: 0 });
+    let pan2p = new Hammer.Pan({ event: 'pan2p', pointers: 2, threshold: 0 });
     let pinch = new Hammer.Pinch();
     let rotate = new Hammer.Rotate();
 
-    pan.recognizeWith(pinch);
-    pan.recognizeWith(rotate);
+    pan1p.recognizeWith(pan2p);
+    pan1p.recognizeWith(rotate);
+    pan1p.recognizeWith(pinch);
+
+    pan2p.recognizeWith(pinch);
+    pan2p.recognizeWith(rotate);
     pinch.recognizeWith(rotate);
 
-    this.hammer.add([pan, pinch, rotate]);
+    this.hammer.add([tap, pan1p, pan2p, pinch, rotate]);
 
     this.hammer.on('hammer.input', this.onHammer.bind(this));
+    this.hammer.on('tap', this.onTap.bind(this));
     this.hammer.on('pan1pstart', this.onTappedPanStart.bind(this));
     this.hammer.on('pan1pmove', this.onTappedPanMove.bind(this));
     this.hammer.on('pan1pend', this.onTappedPanEnd.bind(this));
@@ -182,7 +191,54 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.prevHammerDeltaY = ev.deltaY;
   }
 
+  onTap(ev: HammerInput) {
+    this.cancelInput();
+    this.tappedPanTimer = setTimeout(() => { this.tappedPanTimer = null; }, 400);
+  }
+
+  onTappedPanStart(ev: HammerInput) {
+    if (this.tappedPanTimer == null) return;
+    clearTimeout(this.tappedPanTimer);
+    this.cancelInput();
+  }
+
+  onTappedPanEnd(ev: HammerInput) {
+    this.tappedPanTimer = null;
+  }
+
+  onTappedPanMove(ev: HammerInput) {
+    if (this.tappedPanTimer == null) {
+      if (!this.isTransformMode || this.input.isGrabbing) return;
+
+      let transformX = 0;
+      let transformY = 0;
+      let transformZ = 0;
+
+      let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
+      transformX = this.deltaHammerDeltaX * scale;
+      transformY = this.deltaHammerDeltaY * scale;
+
+      if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
+        this.ngZone.run(() => { this.contextMenuService.close(); });
+      }
+
+      this.setTransform(transformX, transformY, transformZ, 0, 0, 0);
+
+    } else {
+      clearTimeout(this.tappedPanTimer);
+      this.cancelInput();
+
+      let scale = this.deltaHammerDeltaY;
+      let transformZ = scale * 10;
+
+      if (750 < transformZ + this.viewPotisonZ) transformZ += 750 - (transformZ + this.viewPotisonZ);
+
+      this.setTransform(0, 0, transformZ, 0, 0, 0);
+    }
+  }
+
   onPanStart(ev: HammerInput) {
+    this.tappedPanTimer = null;
     this.cancelInput();
   }
 
@@ -197,6 +253,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPinchStart(ev: HammerInput) {
+    this.tappedPanTimer = null;
     this.cancelInput();
   }
 
@@ -211,6 +268,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onRotateStart(ev: HammerInput) {
+    this.tappedPanTimer = null;
     this.cancelInput();
   }
 
@@ -246,7 +304,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onInputMove(e: any) {
-    if (!this.isTransformMode) return;
+    if (!this.isTransformMode || this.tappedPanTimer != null) return;
 
     let x = this.input.pointer.x;
     let y = this.input.pointer.y;
