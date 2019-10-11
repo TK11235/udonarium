@@ -227,6 +227,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let x = this.input.pointer.x;
     let y = this.input.pointer.y;
+    let deltaX = x - this.currentPositionX;
+    let deltaY = y - this.currentPositionY;
 
     let transformX = 0;
     let transformY = 0;
@@ -237,12 +239,12 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let rotateZ = 0;
 
     if (this.buttonCode === 2) {
-      rotateZ = (this.currentPositionX - x) / 5;
-      rotateX = (this.currentPositionY - y) / 5;
+      rotateZ = -deltaX / 5;
+      rotateX = -deltaY / 5;
     } else {
       let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
-      transformX = -(this.currentPositionX - x) * scale;
-      transformY = -(this.currentPositionY - y) * scale;
+      transformX = deltaX * scale;
+      transformY = deltaY * scale;
     }
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
