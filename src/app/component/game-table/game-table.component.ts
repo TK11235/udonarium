@@ -72,10 +72,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private input: InputHandler = null;
 
   private hammer: HammerManager = null;
-  private currentHammerDeltaX: number = 0;
-  private currentHammerDeltaY = 1.0;
-  private currentHammerScale = 1.0;
-  private currentHammerRotation = 0;
+  private deltaHammerDeltaX: number = 0;
+  private deltaHammerDeltaY = 1.0;
+  private deltaHammerScale = 1.0;
+  private deltaHammerRotation = 0;
 
   private prevHammerDeltaX: number = 0;
   private prevHammerDeltaY: number = 0;
@@ -166,15 +166,15 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onHammer(ev: HammerInput) {
     if (ev.isFirst) {
-      this.currentHammerScale = ev.scale;
-      this.currentHammerRotation = ev.rotation;
-      this.currentHammerDeltaX = ev.deltaX;
-      this.currentHammerDeltaY = ev.deltaY;
+      this.deltaHammerScale = ev.scale;
+      this.deltaHammerRotation = ev.rotation;
+      this.deltaHammerDeltaX = ev.deltaX;
+      this.deltaHammerDeltaY = ev.deltaY;
     } else {
-      this.currentHammerScale = ev.scale - this.prevHammerScale;
-      this.currentHammerRotation = ev.rotation - this.prevHammerRotation;
-      this.currentHammerDeltaX = ev.deltaX - this.prevHammerDeltaX;
-      this.currentHammerDeltaY = ev.deltaY - this.prevHammerDeltaY;
+      this.deltaHammerScale = ev.scale - this.prevHammerScale;
+      this.deltaHammerRotation = ev.rotation - this.prevHammerRotation;
+      this.deltaHammerDeltaX = ev.deltaX - this.prevHammerDeltaX;
+      this.deltaHammerDeltaY = ev.deltaY - this.prevHammerDeltaY;
     }
     this.prevHammerScale = ev.scale;
     this.prevHammerRotation = ev.rotation;
@@ -188,7 +188,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onPanMove(ev: HammerInput) {
     this.cancelInput();
-    let rotateX = -this.currentHammerDeltaY / window.innerHeight * 100;
+    let rotateX = -this.deltaHammerDeltaY / window.innerHeight * 100;
 
     if (80 < rotateX + this.viewRotateX) rotateX += 80 - (rotateX + this.viewRotateX);
     if (rotateX + this.viewRotateX < 0) rotateX += 0 - (rotateX + this.viewRotateX);
@@ -202,7 +202,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onPinchMove(ev: HammerInput) {
     this.cancelInput();
-    let scale = this.currentHammerScale;
+    let scale = this.deltaHammerScale;
     let transformZ = scale * 500;
 
     if (750 < transformZ + this.viewPotisonZ) transformZ += 750 - (transformZ + this.viewPotisonZ);
@@ -216,7 +216,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onRotateMove(ev: HammerInput) {
     this.cancelInput();
-    let rotation = this.currentHammerRotation;
+    let rotation = this.deltaHammerRotation;
     let rotateZ = rotation;
     this.setTransform(0, 0, 0, 0, 0, rotateZ);
   }
