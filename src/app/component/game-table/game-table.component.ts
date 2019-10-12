@@ -165,11 +165,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.hammer.on('pan1pmove', this.onTappedPanMove.bind(this));
     this.hammer.on('pan1pend', this.onTappedPanEnd.bind(this));
     this.hammer.on('pan1pcancel', this.onTappedPanEnd.bind(this));
-    this.hammer.on('pan2pstart', this.onPanStart.bind(this));
     this.hammer.on('pan2pmove', this.onPanMove.bind(this));
-    this.hammer.on('pinchstart', this.onPinchStart.bind(this));
     this.hammer.on('pinchmove', this.onPinchMove.bind(this));
-    this.hammer.on('rotatestart', this.onRotateStart.bind(this));
     this.hammer.on('rotatemove', this.onRotateMove.bind(this));
   }
 
@@ -203,6 +200,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onTappedPanEnd(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
     this.tappedPanTimer = null;
   }
 
@@ -237,11 +235,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onPanStart(ev: HammerInput) {
-    this.tappedPanTimer = null;
-    this.cancelInput();
-  }
-
   onPanMove(ev: HammerInput) {
     this.cancelInput();
     let rotateX = -this.deltaHammerDeltaY / window.innerHeight * 100;
@@ -252,30 +245,20 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setTransform(0, 0, 0, rotateX, 0, 0);
   }
 
-  onPinchStart(ev: HammerInput) {
+  onPinchMove(ev: HammerInput) {
     this.tappedPanTimer = null;
     this.cancelInput();
-  }
-
-  onPinchMove(ev: HammerInput) {
-    this.cancelInput();
-    let scale = this.deltaHammerScale;
-    let transformZ = scale * 500;
+    let transformZ = this.deltaHammerScale * 500;
 
     if (750 < transformZ + this.viewPotisonZ) transformZ += 750 - (transformZ + this.viewPotisonZ);
 
     this.setTransform(0, 0, transformZ, 0, 0, 0);
   }
 
-  onRotateStart(ev: HammerInput) {
+  onRotateMove(ev: HammerInput) {
     this.tappedPanTimer = null;
     this.cancelInput();
-  }
-
-  onRotateMove(ev: HammerInput) {
-    this.cancelInput();
-    let rotation = this.deltaHammerRotation;
-    let rotateZ = rotation;
+    let rotateZ = this.deltaHammerRotation;
     this.setTransform(0, 0, 0, 0, 0, rotateZ);
   }
 
