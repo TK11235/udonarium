@@ -236,6 +236,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPanMove(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
+    this.tappedPanTimer = null;
     this.cancelInput();
     let rotateX = -this.deltaHammerDeltaY / window.innerHeight * 100;
 
@@ -246,6 +248,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPinchMove(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
     this.tappedPanTimer = null;
     this.cancelInput();
     let transformZ = this.deltaHammerScale * 500;
@@ -256,6 +259,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onRotateMove(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
     this.tappedPanTimer = null;
     this.cancelInput();
     let rotateZ = this.deltaHammerRotation;
