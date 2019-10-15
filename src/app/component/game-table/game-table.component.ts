@@ -236,7 +236,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cancelInput();
 
       let scale = this.deltaHammerDeltaY;
-      let transformZ = scale * 10;
+      let transformZ = scale * 7.5;
 
       if (750 < transformZ + this.viewPotisonZ) transformZ += 750 - (transformZ + this.viewPotisonZ);
 
