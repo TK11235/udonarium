@@ -83,6 +83,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private prevHammerRotation: number = 0;
 
   private tappedPanTimer: NodeJS.Timer = null;
+  private tappedPanCenter: HammerPoint = { x: 0, y: 0 };
 
   get characters(): GameCharacter[] { return this.tabletopService.characters; }
   get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
@@ -186,10 +187,18 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.prevHammerRotation = ev.rotation;
     this.prevHammerDeltaX = ev.deltaX;
     this.prevHammerDeltaY = ev.deltaY;
+
+    if (this.tappedPanTimer == null || ev.eventType != Hammer.INPUT_START) return;
+    let distance = (this.tappedPanCenter.x - ev.center.x) ** 2 + (this.tappedPanCenter.y - ev.center.y) ** 2;
+    if (75 ** 2 < distance) {
+      clearTimeout(this.tappedPanTimer);
+      this.tappedPanTimer = null;
+    }
   }
 
   onTap(ev: HammerInput) {
     this.cancelInput();
+    this.tappedPanCenter = ev.center;
     this.tappedPanTimer = setTimeout(() => { this.tappedPanTimer = null; }, 400);
   }
 
