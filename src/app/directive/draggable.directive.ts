@@ -45,8 +45,8 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
   private initialize() {
     this.ngZone.runOutsideAngular(() => {
       this.input = new InputHandler(this.elementRef.nativeElement);
+      window.addEventListener('resize', this.callbackOnResize, false);
     });
-    window.addEventListener('resize', this.callbackOnResize, false);
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
     this.input.onEnd = this.onInputEnd.bind(this);
