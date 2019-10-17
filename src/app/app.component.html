@@ -1,7 +1,7 @@
 <div id="app-table-layer" style="position: absolute; width: 100%; height: 100%; overflow: hidden;">
   <game-table></game-table>
 </div>
-<ui-panel [top]="0" [left]="0" [width]="100" [height]="470" [title]="'メニュー'">
+<ui-panel [top]="0" [left]="0" [width]="100" [height]="520" [title]="'メニュー'">
   <nav>
     <ul>
       <li (click)="open('PeerMenuComponent')">
@@ -46,20 +46,16 @@
           <div>インベントリ</div>
         </a>
       </li>
-      <!--
-        <li (click)="open('GameObjectInventoryComponent')">
-          <a routerLink="/" routerLinkActive="active">
-            <div><i class="material-icons icon-size">folder</i></div>
-            <div>あなたのインベントリ</div>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/" routerLinkActive="active">
-            <div><i class="material-icons">local_florist</i></div>
-            <div>墓場</div>
-          </a>
-        </li>
-         -->
+      <li>
+        <a routerLink="/" routerLinkActive="active">
+          <label>
+            <div><i class="material-icons">open_in_browser</i></div>
+            <div>ファイル読込</div>
+            <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple
+              accept="image/*,audio/*,application/zip" />
+          </label>
+        </a>
+      </li>
       <li (click)="save()">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons">sd_storage</i></div>

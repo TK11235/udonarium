@@ -229,6 +229,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.saveDataService.saveRoom(roomName);
   }
 
+  handleFileSelect(event: Event) {
+    let files = (<HTMLInputElement>event.target).files;
+    if (files.length) FileArchiver.instance.load(files);
+  }
+
   private lazyNgZoneUpdate(isImmediate: boolean) {
     if (isImmediate) {
       if (this.immediateUpdateTimer !== null) return;
