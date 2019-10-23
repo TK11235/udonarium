@@ -108,6 +108,7 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
     this.elementRef.nativeElement.style.top = trans.y + this.startPosition.y + 'px';
 
     this.prevTrans = trans;
+    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 
@@ -150,9 +151,11 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
     let boundsElm = this.elementRef.nativeElement.ownerDocument.querySelector(this.boundsSelector);
     let node = target;
     let overflowType = ['scroll', 'auto'];
+    let positionType = ['fixed', 'sticky'];
     while (node && boundsElm !== node && this.elementRef.nativeElement !== node) {
       let css: CSSStyleDeclaration = window.getComputedStyle(node);
       if (0 <= overflowType.indexOf(css.overflowY) && node.offsetHeight < node.scrollHeight) return true;
+      if (0 <= positionType.indexOf(css.position)) return false;
       node = node.parentElement;
     }
     return false;
