@@ -74,12 +74,12 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
     this.openTooltipTimer = setTimeout(() => {
       let magnitude = (pointerX - this.pointerDeviceService.pointerX) ** 2 + (pointerY - this.pointerDeviceService.pointerY) ** 2;
-      if (9 < magnitude) {
+      if (4 < magnitude) {
         this.startOpenTimer();
       } else {
         this.ngZone.run(() => this.open());
       }
-    }, 150);
+    }, 100);
   }
 
   private startCloseTimer() {
