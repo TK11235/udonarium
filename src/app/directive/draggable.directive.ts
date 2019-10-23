@@ -15,7 +15,7 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
   @Input('draggable.stack') stackSelector: string = '';
   @Input('draggable.opacity') opacity: number = 0.7;
 
-  @Output('draggable.start') ostart: EventEmitter<MouseEvent | TouchEvent> = new EventEmitter();
+  @Output('draggable.start') onstart: EventEmitter<MouseEvent | TouchEvent> = new EventEmitter();
   @Output('draggable.move') onmove: EventEmitter<MouseEvent | TouchEvent> = new EventEmitter();
   @Output('draggable.end') onend: EventEmitter<MouseEvent | TouchEvent> = new EventEmitter();
 
