@@ -20,7 +20,7 @@ import { EventSystem } from '@udonarium/core/system';
 
 import { PanelService } from 'service/panel.service';
 
-const DEFAULT_MESSAGE_LENGTH = 100;
+const DEFAULT_MESSAGE_LENGTH = 200;
 
 @Component({
   selector: 'chat-tab',
