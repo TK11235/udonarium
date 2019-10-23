@@ -6,6 +6,7 @@ import {
   ElementRef,
   HostListener,
   Input,
+  NgZone,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -70,6 +71,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   private input: InputHandler = null;
 
   constructor(
+    private ngZone: NgZone,
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
     private elementRef: ElementRef<HTMLElement>,
@@ -240,7 +242,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onMoved() {
     SoundEffect.play(PresetSound.cardPut);
-    this.dispatchCardDropEvent();
+    this.ngZone.run(() => this.dispatchCardDropEvent());
   }
 
   private createStack() {

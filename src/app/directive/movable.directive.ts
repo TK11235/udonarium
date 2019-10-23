@@ -196,7 +196,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
       // ロングプレスによるタッチ操作でコンテキストメニューを開く場合、イベントを適切なDOMに伝搬させる
       e.stopPropagation();
       let ev = new MouseEvent(e.type, e);
-      this.input.target.dispatchEvent(ev);
+      this.ngZone.run(() => this.input.target.dispatchEvent(ev));
     }
   }
 
