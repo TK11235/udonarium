@@ -1,5 +1,6 @@
-<div>試聴音量：<input [(ngModel)]="auditionVolume" type="range" min="0" max="1" step="0.01" /></div>
-<div>BGM音量：<input [(ngModel)]="volume" type="range" min="0" max="1" step="0.01" /></div>
+<div class="volume-wrapper"><div class="volume-label">試聴音量：</div><input class="volume-controller" [(ngModel)]="auditionVolume" type="range" min="0" max="1" step="0.01" /></div>
+<div class="volume-wrapper"><div class="volume-label">BGM音量：</div><input class="volume-controller" [(ngModel)]="volume" type="range" min="0" max="1" step="0.01" /></div>
+<div class="volume-wrapper"><div class="volume-label">効果音音量：</div><input class="volume-controller" [(ngModel)]="sfxVolume" type="range" min="0" max="1" step="0.01" /></div>
 <hr/>
 <div>
   <div *ngFor="let audio of audios" class="box">
