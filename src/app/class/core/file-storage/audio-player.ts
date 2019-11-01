@@ -6,10 +6,17 @@ export enum VolumeType {
   AUDITION,
 }
 
+declare global {
+  interface Window {
+    AudioContext: typeof AudioContext;
+    webkitAudioContext: typeof AudioContext;
+  }
+}
+
 export class AudioPlayer {
   private static _audioContext: AudioContext
   static get audioContext(): AudioContext {
-    if (!AudioPlayer._audioContext) AudioPlayer._audioContext = new AudioContext();
+    if (!AudioPlayer._audioContext) AudioPlayer._audioContext = new (window.AudioContext || window.webkitAudioContext)();
     return AudioPlayer._audioContext;
   }
 
