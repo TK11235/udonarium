@@ -118,6 +118,7 @@ export class AudioPlayer {
 
     this.mediaElementSource.connect(this.getConnectingAudioNode());
     this.audioElm.src = url;
+    this.audioElm.load();
     this.audioElm.play().catch(reason => { console.warn(reason); });
   }
 
