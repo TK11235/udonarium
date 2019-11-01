@@ -106,7 +106,7 @@ export class AudioPlayer {
       if (AudioPlayer.cacheMap.has(audio.identifier)) {
         url = AudioPlayer.cacheMap.get(audio.identifier).url;
       } else {
-        let cache = { url: url, blob: null }
+        let cache = { url: url, blob: null };
         AudioPlayer.cacheMap.set(audio.identifier, cache);
         AudioPlayer.getBlobAsync(audio).then(blob => {
           cache.url = URL.createObjectURL(blob);
