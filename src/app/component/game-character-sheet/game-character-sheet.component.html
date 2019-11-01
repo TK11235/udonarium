@@ -19,6 +19,7 @@
     <button (click)="openModal('imageIdentifier', true)">画像変更</button>
   </ng-container>
 </ng-container>
+<button (click)="clone()">コピーを作る</button>
 <button (click)="saveToXML()">保存</button>
 <ng-container *ngIf="tabletopObject.aliasName === 'character'">
   <select *ngIf="tabletopObject" (change)="setLocation($event.target.value)" [ngModel]="tabletopObject.location.name">
