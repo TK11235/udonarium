@@ -114,8 +114,8 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
     this.addEventListeners(this.tooltipComponentRef.location.nativeElement);
     this.ngZone.runOutsideAngular(() => {
-      document.body.addEventListener('touchstart', this.callbackOnMouseDown, false);
-      document.body.addEventListener('mousedown', this.callbackOnMouseDown, false);
+      document.body.addEventListener('touchstart', this.callbackOnMouseDown, true);
+      document.body.addEventListener('mousedown', this.callbackOnMouseDown, true);
     });
 
     EventSystem.register(this)
@@ -125,8 +125,8 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
     this.tooltipComponentRef.onDestroy(() => {
       this.removeEventListeners(this.tooltipComponentRef.location.nativeElement);
-      document.body.removeEventListener('touchstart', this.callbackOnMouseDown, false);
-      document.body.removeEventListener('mousedown', this.callbackOnMouseDown, false);
+      document.body.removeEventListener('touchstart', this.callbackOnMouseDown, true);
+      document.body.removeEventListener('mousedown', this.callbackOnMouseDown, true);
       this.clearTimer();
       this.tooltipComponentRef = null;
       EventSystem.unregister(this);
