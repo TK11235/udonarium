@@ -14,8 +14,6 @@
   width: 300px;
   max-height: 100%;
   max-width: 100%;
-
-  overscroll-behavior: contain;
 }
 
 .scrollable-panel {
@@ -26,6 +24,8 @@
   bottom: 0;
   width: 100%;
   padding: 8px;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .title {
