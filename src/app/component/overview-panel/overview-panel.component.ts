@@ -68,6 +68,9 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.initPanelPosition();
+    setTimeout(() => {
+      this.adjustPositionRoot();
+    }, 16);
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
@@ -118,6 +121,32 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
 
     panel.style.left = offsetLeft + 'px';
     panel.style.top = offsetTop + 'px';
+  }
+
+  private adjustPositionRoot() {
+    let panel: HTMLElement = this.draggablePanel.nativeElement;
+
+    let panelBox = panel.getBoundingClientRect();
+
+    let diffLeft = 0;
+    let diffTop = 0;
+
+    if (window.innerWidth < panelBox.right + diffLeft) {
+      diffLeft += window.innerWidth - (panelBox.right + diffLeft);
+    }
+    if (panelBox.left + diffLeft < 0) {
+      diffLeft += 0 - (panelBox.left + diffLeft);
+    }
+
+    if (window.innerHeight < panelBox.bottom + diffTop) {
+      diffTop += window.innerHeight - (panelBox.bottom + diffTop);
+    }
+    if (panelBox.top + diffTop < 0) {
+      diffTop += 0 - (panelBox.top + diffTop);
+    }
+
+    panel.style.left = panel.offsetLeft + diffLeft + 'px';
+    panel.style.top = panel.offsetTop + diffTop + 'px';
   }
 
   chanageImageView(isOpen: boolean) {
