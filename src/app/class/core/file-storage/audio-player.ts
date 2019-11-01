@@ -223,11 +223,11 @@ export class AudioPlayer {
     AudioPlayer.audioContext.resume();
     let callback = () => {
       AudioPlayer.audioContext.resume();
-      document.removeEventListener('touchend', callback);
-      document.removeEventListener('mouseup', callback);
+      document.removeEventListener('touchstart', callback, true);
+      document.removeEventListener('mousedown', callback, true);
       console.log('resumeAudioContext');
     }
-    document.addEventListener('touchend', callback);
-    document.addEventListener('mouseup', callback);
+    document.addEventListener('touchstart', callback, true);
+    document.addEventListener('mousedown', callback, true);
   }
 }
