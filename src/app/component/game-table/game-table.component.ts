@@ -205,7 +205,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.tappedPanTimer == null || ev.eventType != Hammer.INPUT_START) return;
     let distance = (this.tappedPanCenter.x - ev.center.x) ** 2 + (this.tappedPanCenter.y - ev.center.y) ** 2;
-    if (75 ** 2 < distance) {
+    if (50 ** 2 < distance) {
       clearTimeout(this.tappedPanTimer);
       this.tappedPanTimer = null;
     }
