@@ -17,6 +17,19 @@ export class Jukebox extends GameObject {
   private audioPlayer: AudioPlayer = new AudioPlayer();
 
   // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    let callback = () => {
+      document.removeEventListener('touchstart', callback, true);
+      document.removeEventListener('mousedown', callback, true);
+      this.audioPlayer.stop();
+      if (this.isPlaying) this._play();
+    }
+    document.addEventListener('touchstart', callback, true);
+    document.addEventListener('mousedown', callback, true);
+  }
+
+  // GameObject Lifecycle
   onStoreRemoved() {
     super.onStoreRemoved();
     this._stop();
