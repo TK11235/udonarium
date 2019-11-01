@@ -189,7 +189,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
     if (tableSelecter.gridSnap) this.snapToGrid();
 
-    let needsDispatch = this.input.isGrabbing;
+    let needsDispatch = this.input.isGrabbing && e.isTrusted;
     this.cancel();
 
     if (needsDispatch) {

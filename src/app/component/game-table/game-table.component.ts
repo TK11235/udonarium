@@ -169,6 +169,21 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.hammer.on('pan2pmove', this.onPanMove.bind(this));
     this.hammer.on('pinchmove', this.onPinchMove.bind(this));
     this.hammer.on('rotatemove', this.onRotateMove.bind(this));
+
+    // iOS で contextmenu が発火しない問題へのworkaround.
+    let ua = window.navigator.userAgent.toLowerCase();
+    let isiOS = ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document;
+    if (!isiOS) return;
+    this.hammer.add(new Hammer.Press({ time: 251 }));
+    this.hammer.on('press', ev => {
+      let event = new MouseEvent('contextmenu', {
+        bubbles: true,
+        cancelable: true,
+        clientX: ev.center.x,
+        clientY: ev.center.y,
+      });
+      this.ngZone.run(() => ev.srcEvent.target.dispatchEvent(event));
+    });
   }
 
   onHammer(ev: HammerInput) {
