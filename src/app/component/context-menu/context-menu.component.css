@@ -22,6 +22,9 @@
   left: calc(100% - 4px);
   top: -16px;
 }
+.pointer-events-none {
+  pointer-events: none;
+}
 .is-max-limit {
   max-height: 100%;
   max-width: 100%;
