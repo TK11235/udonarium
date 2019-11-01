@@ -91,11 +91,8 @@ export class AudioPlayer {
     this.audio = audio;
   }
 
-  static play(audio: AudioFile, volume: number = 1.0): AudioPlayer {
-    let audioPlayer = new AudioPlayer(audio);
-    audioPlayer.volume = volume;
-    audioPlayer.play();
-    return audioPlayer;
+  static play(audio: AudioFile, volume: number = 1.0) {
+    this.playBufferAsync(audio, volume);
   }
 
   play(audio: AudioFile = this.audio) {
@@ -146,20 +143,57 @@ export class AudioPlayer {
     }
   }
 
-  private static async createBufferSourceAsync(audio: AudioFile): Promise<AudioBuffer> {
+  private static async playBufferAsync(audio: AudioFile, volume: number = 1.0) {
+    let source = await AudioPlayer.createBufferSourceAsync(audio);
+    if (!source) return;
+
+    let gain = AudioPlayer.audioContext.createGain();
+    gain.gain.setValueAtTime(volume, AudioPlayer.audioContext.currentTime);
+
+    gain.connect(AudioPlayer.rootNode);
+    source.connect(gain);
+
+    source.onended = () => {
+      source.disconnect();
+      gain.disconnect();
+    };
+
+    source.start();
+  }
+
+  private static async createBufferSourceAsync(audio: AudioFile): Promise<AudioBufferSourceNode> {
     if (!audio) return null;
-    let decodedData: AudioBuffer = null;
     try {
-      decodedData = await AudioPlayer.audioContext.decodeAudioData(await this.getArrayBufferAsync(audio));
+      let blob = audio.blob;
+      if (audio.state === AudioState.URL) {
+        if (AudioPlayer.cacheMap.has(audio.identifier)) {
+          blob = AudioPlayer.cacheMap.get(audio.identifier).blob;
+        } else {
+          let cache = { url: audio.url, blob: null };
+          AudioPlayer.cacheMap.set(audio.identifier, cache);
+          blob = await AudioPlayer.getBlobAsync(audio);
+          cache.url = URL.createObjectURL(blob);
+          cache.blob = blob;
+          AudioPlayer.cacheMap.set(audio.identifier, cache);
+        }
+      }
+      let decodedData = await this.decodeAudioDataAsync(blob);
+      let source = AudioPlayer.audioContext.createBufferSource();
+      source.buffer = decodedData;
+      return source;
     } catch (reason) {
       console.warn(reason);
-    } finally {
-      return decodedData;
+      return null;
     }
   }
 
-  private static async getArrayBufferAsync(audio: AudioFile): Promise<ArrayBuffer> {
-    return FileReaderUtil.readAsArrayBufferAsync(await AudioPlayer.getBlobAsync(audio));
+  private static decodeAudioDataAsync(blob: Blob): Promise<AudioBuffer> {
+    return new Promise(async (resolve, reject) => {
+      AudioPlayer.audioContext.decodeAudioData(
+        await FileReaderUtil.readAsArrayBufferAsync(blob),
+        decodedData => resolve(decodedData),
+        error => reject(error));
+    });
   }
 
   private static getBlobAsync(audio: AudioFile): Promise<Blob> {
