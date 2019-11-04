@@ -13,6 +13,8 @@ declare global {
   }
 }
 
+type AudioCache = { url: string, blob: Blob };
+
 export class AudioPlayer {
   private static _audioContext: AudioContext
   static get audioContext(): AudioContext {
@@ -85,7 +87,7 @@ export class AudioPlayer {
   set loop(loop) { this.audioElm.loop = loop; }
   get paused(): boolean { return this.audioElm.paused; }
 
-  private static cacheMap: Map<string, { url: string, blob: Blob }> = new Map();
+  private static cacheMap: Map<string, AudioCache> = new Map();
 
   constructor(audio?: AudioFile) {
     this.audio = audio;
