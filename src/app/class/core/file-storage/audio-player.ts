@@ -190,27 +190,20 @@ export class AudioPlayer {
     });
   }
 
-  private static getBlobAsync(audio: AudioFile): Promise<Blob> {
-    return new Promise((resolve, reject) => {
-      if (audio.blob) {
-        resolve(audio.blob);
-      } else if (0 < audio.url.length) {
-        fetch(audio.url)
-          .then(response => {
-            if (response.ok) return response.blob();
-            reject(new Error('Network response was not ok.'));
-          })
-          .then(blob => {
-            resolve(blob);
-          })
-          .catch(error => {
-            console.warn('There has been a problem with your fetch operation: ', error.message);
-            reject(error);
-          });
-      } else {
-        reject(new Error('えっ なにそれ怖い'));
-      }
-    });
+  private static async getBlobAsync(audio: AudioFile): Promise<Blob> {
+    if (audio.blob) return audio.blob;
+    if (audio.url.length < 1) throw new Error('えっ なにそれ怖い');
+
+    try {
+      let response = await fetch(audio.url);
+      if (!response.ok) throw new Error('Network response was not ok.');
+      let blob = await response.blob();
+      return blob;
+    } catch (error) {
+      console.warn('There has been a problem with your fetch operation: ', error.message);
+      throw error;
+    }
+  }
 
   private static async createCacheAsync(audio: AudioFile): Promise<AudioCache> {
     let cache = { url: audio.url, blob: null };
