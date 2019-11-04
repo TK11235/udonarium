@@ -108,13 +108,7 @@ export class AudioPlayer {
       if (AudioPlayer.cacheMap.has(audio.identifier)) {
         url = AudioPlayer.cacheMap.get(audio.identifier).url;
       } else {
-        let cache = { url: url, blob: null };
-        AudioPlayer.cacheMap.set(audio.identifier, cache);
-        AudioPlayer.getBlobAsync(audio).then(blob => {
-          cache.url = URL.createObjectURL(blob);
-          cache.blob = blob;
-          AudioPlayer.cacheMap.set(audio.identifier, cache);
-        });
+        AudioPlayer.createCacheAsync(audio);
       }
     }
 
@@ -172,14 +166,11 @@ export class AudioPlayer {
         if (AudioPlayer.cacheMap.has(audio.identifier)) {
           blob = AudioPlayer.cacheMap.get(audio.identifier).blob;
         } else {
-          let cache = { url: audio.url, blob: null };
-          AudioPlayer.cacheMap.set(audio.identifier, cache);
-          blob = await AudioPlayer.getBlobAsync(audio);
-          cache.url = URL.createObjectURL(blob);
-          cache.blob = blob;
-          AudioPlayer.cacheMap.set(audio.identifier, cache);
+          let cache = await AudioPlayer.createCacheAsync(audio);
+          blob = cache && cache.blob ? cache.blob : null;
         }
       }
+      if (!blob) return null;
       let decodedData = await this.decodeAudioDataAsync(blob);
       let source = AudioPlayer.audioContext.createBufferSource();
       source.buffer = decodedData;
@@ -220,6 +211,23 @@ export class AudioPlayer {
         reject(new Error('えっ なにそれ怖い'));
       }
     });
+
+  private static async createCacheAsync(audio: AudioFile): Promise<AudioCache> {
+    let cache = { url: audio.url, blob: null };
+    try {
+      cache.blob = await AudioPlayer.getBlobAsync(audio);
+    } catch (e) {
+      console.error(e);
+      return cache;
+    }
+
+    if (AudioPlayer.cacheMap.has(audio.identifier)) {
+      return AudioPlayer.cacheMap.get(audio.identifier);
+    }
+
+    cache.url = URL.createObjectURL(cache.blob);
+    AudioPlayer.cacheMap.set(audio.identifier, cache);
+    return cache;
   }
 
   static resumeAudioContext() {
