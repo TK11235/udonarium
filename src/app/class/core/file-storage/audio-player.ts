@@ -151,8 +151,10 @@ export class AudioPlayer {
     source.connect(gain);
 
     source.onended = () => {
+      source.stop();
       source.disconnect();
       gain.disconnect();
+      source.buffer = null;
     };
 
     source.start();
