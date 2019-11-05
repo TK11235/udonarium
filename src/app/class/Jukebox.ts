@@ -67,13 +67,13 @@ export class Jukebox extends GameObject {
 
   private unlockAfterUserInteraction() {
     let callback = () => {
-      document.removeEventListener('touchstart', callback, true);
-      document.removeEventListener('mousedown', callback, true);
+      document.body.removeEventListener('touchstart', callback, true);
+      document.body.removeEventListener('mousedown', callback, true);
       this.audioPlayer.stop();
       if (this.isPlaying) this._play();
     }
-    document.addEventListener('touchstart', callback, true);
-    document.addEventListener('mousedown', callback, true);
+    document.body.addEventListener('touchstart', callback, true);
+    document.body.addEventListener('mousedown', callback, true);
   }
 
   private unregisterEvent() {
