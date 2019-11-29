@@ -138,22 +138,7 @@ export class ObjectSerializer {
       let obj: Object | Array<any> = syncData;
 
       if (1 < split.length) {
-        // 階層構造の解析 foo.bar.0="abc" 等
-        // 処理として実装こそしているが、xmlの仕様としては良くないので使用するべきではない.
-        let parentObj: Object | Array<any> = null;
-        for (let j = 0; j < split.length; j++) {
-          let index = parseInt(split[j]);
-          if (parentObj && !Number.isNaN(index) && !Array.isArray(obj) && Object.keys(parentObj).length) {
-            parentObj[key] = [];
-            obj = parentObj[key];
-          }
-          key = Number.isNaN(index) ? split[j] : index;
-          if (j + 1 < split.length) {
-            if (obj[key] === undefined) obj[key] = typeof key === 'number' ? [] : {};
-            parentObj = obj;
-            obj = obj[key];
-          }
-        }
+        ({ obj, key } = ObjectSerializer.attributes2object(split, obj, key));
       }
 
       let type = typeof obj[key];
@@ -163,6 +148,27 @@ export class ObjectSerializer {
       obj[key] = value;
     }
     return syncData;
+  }
+
+  private static attributes2object(split: string[], obj: Object | any[], key: string | number) {
+    // 階層構造の解析 foo.bar.0="abc" 等
+    // 処理として実装こそしているが、xmlの仕様としては良くないので使用するべきではない.
+    let parentObj: Object | Array<any> = null;
+    for (let i = 0; i < split.length; i++) {
+      let index = parseInt(split[i]);
+      if (parentObj && !Number.isNaN(index) && !Array.isArray(obj) && Object.keys(parentObj).length) {
+        parentObj[key] = [];
+        obj = parentObj[key];
+      }
+      key = Number.isNaN(index) ? split[i] : index;
+      if (i + 1 < split.length) {
+        if (obj[key] === undefined)
+          obj[key] = typeof key === 'number' ? [] : {};
+        parentObj = obj;
+        obj = obj[key];
+      }
+    }
+    return { obj, key };
   }
 
   private static parseInnerXml(element: Element): GameObject {
