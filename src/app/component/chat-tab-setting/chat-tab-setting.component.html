@@ -25,6 +25,9 @@
     </ng-container>
   </div>
 </div>
+<div>
+    <button class="danger" (click)="allMessageClear()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">全タブのメッセージを消去</button>
+</div>
 <ng-container *ngIf="isEmpty">
   <div style="font-size: 12px;">※チャットタブが１つも作成されていません。「チャットタブを作る」からチャットタブを作成することができます。</div>
 </ng-container>
