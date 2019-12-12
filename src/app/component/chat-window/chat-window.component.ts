@@ -72,7 +72,6 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updatePanelTitle();
     if (hasChanged) {
       this.scrollToBottom(true);
-      if (this.chatTab) this.chatTab.markForRead();
     }
   }
 
