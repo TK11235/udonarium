@@ -129,7 +129,9 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     let actions: ContextMenuAction[] = [];
 
     actions.push({ name: '詳細を表示', action: () => { this.showDetail(gameObject); } });
-    actions.push({ name: 'チャットパレットを表示', action: () => { this.showChatPalette(gameObject) } });
+    if (gameObject.location.name !== 'graveyard') {
+      actions.push({ name: 'チャットパレットを表示', action: () => { this.showChatPalette(gameObject) } });
+    }
     actions.push(ContextMenuSeparator);
     let locations = [
       { name: 'table', alias: 'テーブルに移動' },
