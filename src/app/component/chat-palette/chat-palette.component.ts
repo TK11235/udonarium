@@ -88,6 +88,9 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
         if (this.character && this.character.identifier === event.data.identifier) {
           this.panelService.close();
         }
+        if (this.chatTabidentifier === event.data.identifier) {
+          this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
+        }
       })
       .on('DISCONNECT_PEER', event => {
         let object = ObjectStore.instance.get(this.sendTo);
