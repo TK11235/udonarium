@@ -120,19 +120,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   ngOnChanges() {
-    this.needUpdate = true;
-    this.maxMessages = 10;
-
-    clearInterval(this.asyncMessagesInitializeTimer);
-    let length = DEFAULT_MESSAGE_LENGTH;
-    this.asyncMessagesInitializeTimer = setInterval(() => {
-      if (this.hasMany && 0 < length) {
-        length -= 10;
-        this.moreMessages(10);
-      } else {
-        clearInterval(this.asyncMessagesInitializeTimer);
-      }
-    }, 0);
+    this.resetMessages();
   }
 
   ngAfterViewChecked() {
@@ -156,6 +144,22 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   onMessageInit() {
     this.onAddMessage.emit();
+  }
+
+  resetMessages() {
+    this.needUpdate = true;
+    this.maxMessages = 10;
+
+    clearInterval(this.asyncMessagesInitializeTimer);
+    let length = DEFAULT_MESSAGE_LENGTH;
+    this.asyncMessagesInitializeTimer = setInterval(() => {
+      if (this.hasMany && 0 < length) {
+        length -= 10;
+        this.moreMessages(10);
+      } else {
+        clearInterval(this.asyncMessagesInitializeTimer);
+      }
+    }, 0);
   }
 
   trackByChatMessage(index: number, message: ChatMessage) {
