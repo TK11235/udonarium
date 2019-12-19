@@ -102,13 +102,14 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
+        if (event.data.tabIdentifier !== this.chatTabidentifier) return;
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
-        if (message && message.isSendFromSelf && event.data.tabIdentifier === this.chatTabidentifier) {
+        if (message && message.isSendFromSelf) {
           this.isAutoScroll = true;
         } else {
           this.checkAutoScroll();
         }
-        if (this.isAutoScroll && event.data.tabIdentifier === this.chatTabidentifier && this.chatTab) this.chatTab.markForRead();
+        if (this.isAutoScroll && this.chatTab) this.chatTab.markForRead();
         let sendFrom = message ? message.from : '?';
         if (this.writingPeers.has(sendFrom)) {
           clearTimeout(this.writingPeers.get(sendFrom));
