@@ -107,10 +107,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.ngZone.runOutsideAngular(() => {
-        this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false);
-      });
+    this.ngZone.runOutsideAngular(() => {
+      setTimeout(() => this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false));
     });
   }
 
