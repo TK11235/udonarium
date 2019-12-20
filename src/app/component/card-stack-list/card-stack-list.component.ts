@@ -30,10 +30,8 @@ export class CardStackListComponent implements OnInit, OnDestroy {
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.data.aliasName === Card.aliasName) this.changeDetector.markForCheck();
-        if (event.data.identifier !== this.cardStack.identifier) {
-          return;
-        } else {
-          if (this.cardStack.owner !== this.owner) this.panelService.close();
+        if (event.data.identifier === this.cardStack.identifier && this.cardStack.owner !== this.owner) {
+          this.panelService.close();
         }
       });
   }
