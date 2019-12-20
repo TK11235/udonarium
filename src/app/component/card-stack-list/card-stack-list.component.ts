@@ -33,6 +33,11 @@ export class CardStackListComponent implements OnInit, OnDestroy {
         if (event.data.identifier === this.cardStack.identifier && this.cardStack.owner !== this.owner) {
           this.panelService.close();
         }
+      })
+      .on('DELETE_GAME_OBJECT', -1000, event => {
+        if (this.cardStack && this.cardStack.identifier === event.data.identifier) {
+          this.panelService.close();
+        }
       });
   }
 
