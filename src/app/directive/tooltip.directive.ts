@@ -64,7 +64,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     if (!this.tooltipComponentRef) return;
     if (!this.tooltipComponentRef.location.nativeElement.contains(e.target)
       && !this.viewContainerRef.element.nativeElement.contains(e.target)) {
-      this.ngZone.run(() => this.close());
+      this.ngZone.run(() => this.closeAll());
     }
   }
 
@@ -87,7 +87,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
       if (this.tooltipComponentRef && this.tooltipComponentRef.location.nativeElement.contains(document.activeElement)) {
         this.startCloseTimer();
       } else {
-        this.ngZone.run(() => this.close());
+        this.ngZone.run(() => this.closeAll());
       }
     }, 400);
   }
@@ -98,7 +98,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private open() {
-    this.close();
+    this.closeAll();
     if (this.pointerDeviceService.isDragging) return;
 
     let parentViewContainerRef = ContextMenuService.defaultParentViewContainerRef;
@@ -120,7 +120,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', -1000, event => {
-        if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) this.close();
+        if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) this.closeAll();
       });
 
     this.tooltipComponentRef.onDestroy(() => {
@@ -134,7 +134,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     TooltipDirective.activeTooltips.push(this.tooltipComponentRef);
   }
 
-  private close() {
+  private closeAll() {
     TooltipDirective.activeTooltips.forEach(componentRef => componentRef.destroy());
     TooltipDirective.activeTooltips = [];
 
