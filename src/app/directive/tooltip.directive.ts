@@ -48,6 +48,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.removeEventListeners(this.viewContainerRef.element.nativeElement);
     this.clearTimer();
+    this.close();
   }
 
   private onMouseEnter(e: any) {
@@ -134,12 +135,19 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     TooltipDirective.activeTooltips.push(this.tooltipComponentRef);
   }
 
+  private close() {
+    if (!this.tooltipComponentRef) return;
+    let index = TooltipDirective.activeTooltips.indexOf(this.tooltipComponentRef);
+    if (0 <= index) TooltipDirective.activeTooltips.splice(index, 1);
+
+    this.tooltipComponentRef.destroy();
+    this.tooltipComponentRef = null;
+  }
+
   private closeAll() {
     TooltipDirective.activeTooltips.forEach(componentRef => componentRef.destroy());
     TooltipDirective.activeTooltips = [];
-
-    if (!this.tooltipComponentRef) return;
-    this.tooltipComponentRef.destroy();
+    this.close();
   }
 
   private addEventListeners(element: Element) {
