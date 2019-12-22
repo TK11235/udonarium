@@ -97,4 +97,8 @@ export class CardStackListComponent implements OnInit, OnDestroy {
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
   }
+
+  trackByCard(index: number, card: Card) {
+    return card.identifier;
+  }
 }
