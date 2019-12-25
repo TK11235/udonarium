@@ -1,9 +1,11 @@
 import { EventSystem } from '../system';
 import { ImageContext, ImageFile, ImageState } from './image-file';
+import { Network } from '@udonarium/core/system';
 
 export type CatalogItem = { identifier: string, state: number };
 
 export class ImageStorage {
+  isPrivate: boolean = false;
   private static _instance: ImageStorage
   static get instance(): ImageStorage {
     if (!ImageStorage._instance) ImageStorage._instance = new ImageStorage();
@@ -16,6 +18,23 @@ export class ImageStorage {
     let images: ImageFile[] = [];
     for (let identifier in this.imageHash) {
       images.push(this.imageHash[identifier]);
+    }
+    return images;
+  }
+
+  get publicImages(): ImageFile[] {
+    let images: ImageFile[] = [];
+    for (let identifier in this.imageHash) {
+      let image: ImageFile = this.imageHash[identifier];
+      if (!image.owner) images.push(image);
+    }
+    return images;
+  }
+  get privateImages(): ImageFile[] {
+    let images: ImageFile[] = [];
+    for (let identifier in this.imageHash) {
+      let image: ImageFile = this.imageHash[identifier];
+      if (image.owner === Network.peerId) images.push(image);
     }
     return images;
   }
@@ -36,6 +55,7 @@ export class ImageStorage {
   async addAsync(blob: Blob): Promise<ImageFile>
   async addAsync(arg: any): Promise<ImageFile> {
     let image: ImageFile = await ImageFile.createAsync(arg);
+    if (this.isPrivate) image.owner = Network.peerId;
 
     return this._add(image);
   }

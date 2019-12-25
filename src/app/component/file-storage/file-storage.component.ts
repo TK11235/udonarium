@@ -21,6 +21,9 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     private panelService: PanelService
   ) { }
 
+  get isPrivate(): boolean { return this.fileStorageService.isPrivate; }
+  set isPrivate(isPrivate: boolean) { this.fileStorageService.isPrivate = isPrivate; }
+
   ngOnInit() {
     this.panelService.title = 'ファイル一覧';
   }

@@ -1,9 +1,18 @@
+<div id="private-images-checkbox">
+  <label>非公開画像:
+    <input type="checkbox" [(ngModel)]="isPrivate" name="isPrivate" />
+  </label>
+</div>
 <div id="file-list">
   <span class="empty" *ngIf="isAllowedEmpty">
     <button (click)="onSelectedFile(empty)">画像なし</button>
   </span>
-  <span *ngFor="let file of images" class="image">
+  <span *ngFor="let file of publicImages" class="image">
     <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
+    <img *ngIf="file.url.length <= 0" src="./assets/images/loading.gif" alt="{{file.name}}">
+  </span>
+  <span *ngFor="let file of privateImages" class="image">
+    <img *ngIf="0 < file.url.length && isPrivate" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
     <img *ngIf="file.url.length <= 0" src="./assets/images/loading.gif" alt="{{file.name}}">
   </span>
 </div>

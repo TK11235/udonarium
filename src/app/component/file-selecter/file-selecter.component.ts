@@ -22,7 +22,8 @@ import { PanelService } from 'service/panel.service';
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() isAllowedEmpty: boolean = false;
-  get images(): ImageFile[] { return ImageStorage.instance.images; }
+  get publicImages(): ImageFile[] { return ImageStorage.instance.publicImages; }
+  get privateImages(): ImageFile[] { return ImageStorage.instance.privateImages; }
   get empty(): ImageFile { return ImageFile.Empty; }
 
   constructor(

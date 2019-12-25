@@ -10,6 +10,7 @@ export enum ImageState {
 export interface ImageContext {
   identifier: string;
   name: string;
+  owner: string;
   type: string;
   blob: Blob;
   url: string;
@@ -26,6 +27,7 @@ export class ImageFile {
   private context: ImageContext = {
     identifier: '',
     name: '',
+    owner: '',
     blob: null,
     type: '',
     url: '',
@@ -38,6 +40,8 @@ export class ImageFile {
 
   get identifier(): string { return this.context.identifier };
   get name(): string { return this.context.name };
+  get owner(): string { return this.context.owner };
+  set owner(owner: string) { this.context.owner = owner };
   get blob(): Blob { return this.context.blob ? this.context.blob : this.context.thumbnail.blob; };
   get url(): string { return this.context.url ? this.context.url : this.context.thumbnail.url; };
   get thumbnail(): ThumbnailContext { return this.context.thumbnail };
@@ -111,6 +115,7 @@ export class ImageFile {
   apply(context: ImageContext) {
     if (!this.context.identifier && context.identifier) this.context.identifier = context.identifier;
     if (!this.context.name && context.name) this.context.name = context.name;
+    if (!this.context.owner && context.owner) this.context.owner = context.owner;
     if (!this.context.blob && context.blob) this.context.blob = context.blob;
     if (!this.context.type && context.type) this.context.type = context.type;
     if (!this.context.url && context.url) {
@@ -130,6 +135,7 @@ export class ImageFile {
     return {
       identifier: this.context.identifier,
       name: this.context.name,
+      owner: this.context.owner,
       blob: this.context.blob,
       type: this.context.type,
       url: this.context.url,
