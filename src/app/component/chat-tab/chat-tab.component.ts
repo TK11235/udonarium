@@ -18,6 +18,7 @@ import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 
+import { ChatMessageService } from 'service/chat-message.service';
 import { PanelService } from 'service/panel.service';
 
 const DEFAULT_MESSAGE_LENGTH = 200;
@@ -41,6 +42,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'チュートリアルは以上です。このチュートリアルは最初のチャットを入力すると非表示になります。' },
   ];
 
+  private oldestTimestamp = 0;
   private needUpdate = true;
   private _chatMessages: ChatMessage[] = [];
   get chatMessages(): ChatMessage[] {
@@ -51,6 +53,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       this._chatMessages = length <= this.maxMessages
         ? chatMessages
         : chatMessages.slice(length - this.maxMessages);
+      this.oldestTimestamp = 0 < this._chatMessages.length ? this._chatMessages[0].timestamp : 0;
       this.needUpdate = false;
     }
     return this._chatMessages;
@@ -71,6 +74,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   constructor(
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
+    private chatMessageService: ChatMessageService,
     private panelService: PanelService
   ) { }
 
@@ -95,10 +99,24 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
-        if (message && message.parent === this.chatTab) {
-          if (!this.needUpdate) this.changeDetector.markForCheck();
-          this.needUpdate = true;
-          this.maxMessages += 1;
+        if (!message || message.parent !== this.chatTab) return;
+        let time = this.chatMessageService.getTime();
+
+        if (!this.needUpdate && this.oldestTimestamp < message.timestamp) this.changeDetector.markForCheck();
+        this.needUpdate = true;
+
+        if (time - (1000 * 60 * 3) < message.timestamp) {
+          let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+          if (this.panelService.scrollablePanel.scrollTop < top - 150) {
+            this.maxMessages += 1;
+          }
+        } else {
+          this.maxMessages = 3;
+          clearInterval(this.asyncMessagesInitializeTimer);
+          this.asyncMessagesInitializeTimer = setInterval(() => {
+            clearInterval(this.asyncMessagesInitializeTimer);
+            this.ngZone.run(() => this.resetMessages());
+          }, 2000);
         }
       })
       .on('UPDATE_GAME_OBJECT', event => {
