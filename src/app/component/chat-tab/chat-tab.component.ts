@@ -120,7 +120,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
         }
       })
       .on('UPDATE_GAME_OBJECT', event => {
-        if (event.data.aliasName === ChatMessage.aliasName) this.changeDetector.markForCheck();
+        let message = ObjectStore.instance.get(event.data.identifier);
+        if (message && message instanceof ChatMessage && this.oldestTimestamp <= message.timestamp && this.chatTab.contains(message)) this.changeDetector.markForCheck();
       });
   }
 
