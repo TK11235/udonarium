@@ -90,10 +90,12 @@ export class ImageFile {
 
   private static async _createAsync(blob: Blob, name?: string): Promise<ImageFile> {
     let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob);
+    let tag = name.match(/(?<=\.).+?(?=\.)/);
 
     let imageFile = new ImageFile();
     imageFile.context.identifier = await FileReaderUtil.calcSHA256Async(arrayBuffer);
     imageFile.context.name = name;
+    if(tag) imageFile.context.tag = tag[0];
     imageFile.context.blob = new Blob([arrayBuffer], { type: blob.type });
     imageFile.context.url = window.URL.createObjectURL(imageFile.context.blob);
 

@@ -37,7 +37,7 @@ export class ImageStorage {
   async addAsync(blob: Blob): Promise<ImageFile>
   async addAsync(arg: any): Promise<ImageFile> {
     let image: ImageFile = await ImageFile.createAsync(arg);
-    image.tag = this.imageTag;
+    if(!image.tag) image.tag = this.imageTag;
 
     return this._add(image);
   }

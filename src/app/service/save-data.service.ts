@@ -72,7 +72,8 @@ export class SaveDataService {
     for (let identifier in images) {
       let image = images[identifier];
       if (image && image.state === ImageState.COMPLETE) {
-        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+        let tag = image.tag && !/\.|\*|\?|\\|\/|\<|\>|\|/.test(image.tag) ? '.' + image.tag : ''
+        files.push(new File([image.blob], image.identifier + tag + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
       }
     }
     return files;
