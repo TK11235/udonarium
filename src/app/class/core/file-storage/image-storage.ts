@@ -20,12 +20,6 @@ export class ImageStorage {
     return images;
   }
 
-  getImagesByIdentifiers(identifiers: string[]): ImageFile[] {
-    return identifiers
-      .map(identifier => this.imageHash[identifier])
-      .filter(image => image);
-  }
-
   private lazyTimer: NodeJS.Timer;
 
   private constructor() {
@@ -67,7 +61,6 @@ export class ImageStorage {
     if (this.update(image)) return this.imageHash[image.identifier];
     this.imageHash[image.identifier] = image;
     console.log('addNewFile()', image);
-
     return image;
   }
 

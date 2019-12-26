@@ -11,6 +11,7 @@ import { DataSummarySetting } from '@udonarium/data-summary-setting';
 import { Room } from '@udonarium/room';
 
 import * as Beautify from 'vkbeautify';
+import { ImageTagList } from '@udonarium/image-tag-list';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,16 @@ export class SaveDataService {
     let files: File[] = [];
     let roomXml = this.convertToXml(new Room());
     let chatXml = this.convertToXml(new ChatTabList());
+    let imageTagXml = this.convertToXml(ImageTagList.instance);
     let summarySetting = this.convertToXml(DataSummarySetting.instance);
     files.push(new File([roomXml], 'data.xml', { type: 'text/plain' }));
     files.push(new File([chatXml], 'chat.xml', { type: 'text/plain' }));
+    files.push(new File([imageTagXml], 'imagetag.xml', { type: 'text/plain' }));
     files.push(new File([summarySetting], 'summary.xml', { type: 'text/plain' }));
 
     files = files.concat(this.searchImageFiles(roomXml));
     files = files.concat(this.searchImageFiles(chatXml));
+    files = files.concat(this.searchImageFiles(imageTagXml));
 
     FileArchiver.instance.save(files, fileName);
   }
@@ -76,7 +80,4 @@ export class SaveDataService {
     }
     return files;
   }
-
-  //NktAts-20190716：ここに、以下のメソッドを足す
-  //イメージタグとXMLを引数として、存在するイメージタグの保存フラグをtrueにするメソッド
 }

@@ -7,7 +7,6 @@ import { AudioStorage } from './audio-storage';
 import { FileReaderUtil } from './file-reader-util';
 import { ImageStorage } from './image-storage';
 import { MimeType } from './mime-type';
-import {ImageTagList} from '../../image-tag-list';
 
 export class FileArchiver {
   private static _instance: FileArchiver
@@ -88,9 +87,7 @@ export class FileArchiver {
     if (file.type.indexOf('image/') < 0) return;
     console.log(file.name + ' type:' + file.type);
     if (2 * 1024 * 1024 < file.size) return;
-
-    let newImage = await ImageStorage.instance.addAsync(file);
-    ImageTagList.instance.pushTag(newImage.identifier);
+    await ImageStorage.instance.addAsync(file);
   }
 
   private async handleAudio(file: File) {

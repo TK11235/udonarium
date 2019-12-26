@@ -16,7 +16,7 @@ import { ImageTag } from '@udonarium/image-tag';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
-  searchWord: string = 'default';
+  searchWord: string = '';
 
   private _searchWord: string;
   private _searchWords: string[];
@@ -29,15 +29,18 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get images(): ImageFile[] {
-    const identifiers = ImageTagList.instance
-      .getTagsByWords(this.searchWords)
-      .map(imageTag => imageTag.imageIdentifier);
-    return ImageStorage.instance.getImagesByIdentifiers(identifiers);
+    if (this.searchWords.length < 1) return ImageStorage.instance.images;
+    return ImageTagList.instance
+      .getTags(this.searchWords)
+      .map(imageTag => ImageStorage.instance.get(imageTag.imageIdentifier))
+      .filter(image => image);
   }
 
-  selectImageTag: ImageTag = null;
-  selectedTag: string = '';
-  get hasEdited(): boolean { return this.selectImageTag && this.selectImageTag.tag !== this.selectedTag; }
+  selectedIdentifier: string = '';
+  get selectedImageTag(): ImageTag { return ImageTagList.instance.getTag(this.selectedIdentifier); }
+  get selectedTag(): string { return this.selectedImageTag ? this.selectedImageTag.tag : ''; }
+  editTag: string = '';
+  get hasEdited(): boolean { return this.editTag !== this.selectedTag; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -69,11 +72,16 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('onSelectedFile', file);
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
 
-    this.selectImageTag = ImageTagList.instance.getTagFromIdentifier(file.identifier);
-    this.selectedTag = this.selectImageTag ? this.selectImageTag.tag : '';
+    this.selectedIdentifier = file.identifier;
+    this.editTag = this.selectedTag;
   }
 
   changeTag() {
-    this.selectImageTag.tag = this.selectedTag;
+    if (this.selectedImageTag) {
+      this.selectedImageTag.tag = this.editTag;
+      return;
+    }
+    const imageTag = ImageTag.create(this.selectedIdentifier, this.editTag);
+    ImageTagList.instance.add(imageTag);
   }
 }

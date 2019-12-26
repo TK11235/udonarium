@@ -1,10 +1,9 @@
 import { ImageTag } from './image-tag';
 import { SyncObject } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { InnerXml } from './core/synchronize-object/object-serializer';
-import { PeerCursor } from './peer-cursor';
+import { InnerXml, ObjectSerializer } from './core/synchronize-object/object-serializer';
 
-@SyncObject('ImageTagList')
+@SyncObject('image-tag-list')
 export class ImageTagList extends ObjectNode implements InnerXml {
   // todo:シングルトン化するのは妥当？
   private static _instance: ImageTagList;
@@ -16,48 +15,31 @@ export class ImageTagList extends ObjectNode implements InnerXml {
     return ImageTagList._instance;
   }
 
-  getTagsByWords(searchWords: string[]): ImageTag[] {
-    const resultTags: ImageTag[] = [];
+  private imageTagHash: { [imageIdentifier: string]: ImageTag } = {};
 
-    for (const target of this.children as ImageTag[]) {
-      if (target.containsWords(searchWords)) {
-        resultTags.push(target);
-      }
-    }
-
-    return resultTags;
+  getTags(searchWords: string[]): ImageTag[] {
+    return (this.children as ImageTag[]).filter(tag => tag.containsWords(searchWords));
   }
 
-  getTagFromIdentifier(imageIdentifier: string): ImageTag {
-    for (const target of this.children as ImageTag[]) {
-      if (target.imageIdentifier === imageIdentifier) {
-        return target;
-      }
-    }
-
-    console.log('NotFound Target ImageTag from ImageTagList', imageIdentifier);
-    return null;
+  getTag(imageIdentifier: string): ImageTag {
+    const imageTag = this.imageTagHash[imageIdentifier];
+    return imageTag ? imageTag : null;
   }
 
-  pushTag(imageIdentifier: string, newtag: string = PeerCursor.myCursor.name): ImageTag {
-    let imageTag = this.getTagFromIdentifier(imageIdentifier);
+  add(object: ImageTag) {
+    let imageTag = this.getTag(object.imageIdentifier);
 
-    if (!imageTag) {
-      imageTag = new ImageTag();
-      imageTag.imageIdentifier = imageIdentifier;
-      imageTag.tag = newtag;
-      imageTag.initialize();
-      this.appendChild(imageTag);
-      return imageTag;
+    if (imageTag) {
+      imageTag.tag += ' ' + object.tag;
+      object.destroy();
+    } else {
+      imageTag = object;
+      this.imageTagHash[object.imageIdentifier] = object;
+      this.appendChild(object);
     }
 
-    if (imageTag.tag !== newtag) {
-      imageTag.tag = newtag;
-    }
     return imageTag;
   }
-
-  innerXml(): string { return ''; }
 
   parseInnerXml(element: Element) {
     // XMLからの新規作成を許可せず、既存のオブジェクトを更新する
@@ -65,6 +47,11 @@ export class ImageTagList extends ObjectNode implements InnerXml {
     context.syncData = this.toContext().syncData;
     ImageTagList.instance.apply(context);
     ImageTagList.instance.update();
+
+    for (let i = 0; i < element.children.length; i++) {
+      const child = ObjectSerializer.instance.parseXml(element.children[i]);
+      if (child instanceof ImageTag) ImageTagList.instance.add(child);
+    }
 
     this.destroy();
   }

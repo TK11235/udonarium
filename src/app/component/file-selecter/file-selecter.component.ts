@@ -21,7 +21,7 @@ import { ImageTagList } from '@udonarium/image-tag-list';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
-  searchWord: string = 'default';
+  searchWord: string = '';
 
   private _searchWord: string;
   private _searchWords: string[];
@@ -35,10 +35,11 @@ export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() isAllowedEmpty: boolean = false;
   get images(): ImageFile[] {
-    const identifiers = ImageTagList.instance
-      .getTagsByWords(this.searchWords)
-      .map(imageTag => imageTag.imageIdentifier);
-    return ImageStorage.instance.getImagesByIdentifiers(identifiers);
+    if (this.searchWords.length < 1) return ImageStorage.instance.images;
+    return ImageTagList.instance
+      .getTags(this.searchWords)
+      .map(imageTag => ImageStorage.instance.get(imageTag.imageIdentifier))
+      .filter(image => image);
   }
   get empty(): ImageFile { return ImageFile.Empty; }
 
