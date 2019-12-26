@@ -6,6 +6,7 @@ import { XmlUtil } from '../system/util/xml-util';
 import { AudioStorage } from './audio-storage';
 import { FileReaderUtil } from './file-reader-util';
 import { ImageStorage } from './image-storage';
+import { ImageTagStorage } from './image-tag-storage';
 import { MimeType } from './mime-type';
 
 export class FileArchiver {
@@ -100,6 +101,10 @@ export class FileArchiver {
   private async handleText(file: File): Promise<void> {
     if (file.type.indexOf('text/') < 0) return;
     console.log(file.name + ' type:' + file.type);
+    if (file.type === 'text/csv') {
+      await ImageTagStorage.instance.loadAsync(file);
+      return;
+    }
     try {
       let xmlElement: Element = XmlUtil.xml2element(await FileReaderUtil.readAsTextAsync(file));
       if (xmlElement) EventSystem.trigger('XML_LOADED', { xmlElement: xmlElement });

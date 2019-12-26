@@ -1,3 +1,8 @@
+<div id="input-tag">
+  <label>タグ
+    <input type="text" [(ngModel)]="inputTag" name="inputTag" placeholder="allで全て表示" />
+  </label>
+</div>
 <div id="file-list">
   <span class="empty" *ngIf="isAllowedEmpty">
     <button (click)="onSelectedFile(empty)">画像なし</button>

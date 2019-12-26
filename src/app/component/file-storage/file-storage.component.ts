@@ -3,6 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ImageTagStorage } from '@udonarium/core/file-storage/image-tag-storage';
 import { EventSystem, Network } from '@udonarium/core/system';
 
 import { PanelService } from 'service/panel.service';
@@ -20,6 +21,10 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService
   ) { }
+
+  get images(): ImageFile[] { return this.fileStorageService.search(this.inputTag); }
+  get inputTag(): string { return ImageTagStorage.instance.inputTag; }
+  set inputTag(inputTag: string) { ImageTagStorage.instance.inputTag = inputTag; }
 
   ngOnInit() {
     this.panelService.title = 'ファイル一覧';

@@ -8,6 +8,8 @@ import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { FileSharingSystem } from '@udonarium/core/file-storage/image-sharing-system';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ImageTagStorage } from '@udonarium/core/file-storage/image-tag-storage';
+import { ImageTagSharingSystem } from '@udonarium/core/file-storage/image-tag-sharing-system';
 import { ObjectFactory } from '@udonarium/core/synchronize-object/object-factory';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
@@ -64,6 +66,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       FileArchiver.instance.initialize();
       FileSharingSystem.instance.initialize();
       ImageStorage.instance;
+      ImageTagStorage.instance;
+      ImageTagSharingSystem.instance.initialize();
       AudioSharingSystem.instance.initialize();
       AudioStorage.instance;
       ObjectFactory.instance;
@@ -139,6 +143,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       .on('DELETE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(event.isSendFromSelf); })
       .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
       .on('SYNCHRONIZE_FILE_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
+      .on('SYNCHRONIZE_IMAGETAG', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
       .on<AppConfig>('LOAD_CONFIG', event => {
         console.log('LOAD_CONFIG !!!', event.data);
         Network.setApiKey(event.data.webrtc.key);

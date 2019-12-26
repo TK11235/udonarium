@@ -15,6 +15,7 @@ export namespace MimeType {
     xml: 'text/xml',
     yml: 'text/yaml',
     yaml: 'text/yaml',
+    csv: 'text/csv',
     json: 'application/json',
     map: 'application/json',
     zip: 'application/zip',

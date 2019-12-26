@@ -4,6 +4,7 @@ import { ChatTabList } from '@udonarium/chat-tab-list';
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ImageTagStorage } from '@udonarium/core/file-storage/image-tag-storage';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { XmlUtil } from '@udonarium/core/system/util/xml-util';
@@ -26,6 +27,30 @@ export class SaveDataService {
     files.push(new File([chatXml], 'chat.xml', { type: 'text/plain' }));
     files.push(new File([summarySetting], 'summary.xml', { type: 'text/plain' }));
 
+    let imageTagCsvLines = [];
+    let roomImageFiles = this.searchImageFiles(roomXml);
+    if(roomImageFiles) {
+      for (let roomImageFile of roomImageFiles) {
+        let identifier = roomImageFile.name.replace('.' + MimeType.extension(roomImageFile.type),'');
+        let imageTag = ImageTagStorage.instance.get(identifier);
+        if (imageTag) imageTagCsvLines.push(identifier + ',' + imageTag.tag);
+      }
+    }
+    let chatImageFiles = this.searchImageFiles(chatXml);
+    if(chatImageFiles) {
+      for (let chatImageFile of chatImageFiles) {
+        let identifier = chatImageFile.name.replace('.' + MimeType.extension(chatImageFile.type),'');
+        let imageTag = ImageTagStorage.instance.get(identifier);
+        if (imageTag) imageTagCsvLines.push(identifier + ',' + imageTag.tag);
+      }
+    }
+    if (imageTagCsvLines) {
+      let imageTagCsvData = imageTagCsvLines.join('\r\n')
+      let imageTagCsvBom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      let imageTagCsvBlob = new Blob([imageTagCsvBom, imageTagCsvData], {type: 'text/csv'});
+      files.push(new File([imageTagCsvBlob], 'imageTag.csv', {type: imageTagCsvBlob.type}));
+    }
+
     files = files.concat(this.searchImageFiles(roomXml));
     files = files.concat(this.searchImageFiles(chatXml));
 
@@ -35,6 +60,22 @@ export class SaveDataService {
   saveGameObject(gameObject: GameObject, fileName: string = 'xml_data') {
     let files: File[] = [];
     let xml: string = this.convertToXml(gameObject);
+
+    let imageTagCsvLines = [];
+    let imageFiles = this.searchImageFiles(xml);
+    if(imageFiles) {
+      for (let imageFile of imageFiles) {
+        let identifier = imageFile.name.replace('.' + MimeType.extension(imageFile.type),'');
+        let imageTag = ImageTagStorage.instance.get(identifier);
+        if (imageTag) imageTagCsvLines.push(identifier + ',' + imageTag.tag);
+      }
+    }
+    if (imageTagCsvLines) {
+      let imageTagCsvData = imageTagCsvLines.join('\r\n');
+      let imageTagCsvBom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      let imageTagCsvBlob = new Blob([imageTagCsvBom, imageTagCsvData], {type: 'text/csv'});
+      files.push(new File([imageTagCsvBlob], 'imageTag.csv', {type: imageTagCsvBlob.type}));
+    }
 
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
     files = files.concat(this.searchImageFiles(xml));
