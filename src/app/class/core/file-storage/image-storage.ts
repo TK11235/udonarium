@@ -4,6 +4,7 @@ import { ImageContext, ImageFile, ImageState } from './image-file';
 export type CatalogItem = { identifier: string, state: number };
 
 export class ImageStorage {
+  imageTag: string = '';
   private static _instance: ImageStorage
   static get instance(): ImageStorage {
     if (!ImageStorage._instance) ImageStorage._instance = new ImageStorage();
@@ -36,6 +37,7 @@ export class ImageStorage {
   async addAsync(blob: Blob): Promise<ImageFile>
   async addAsync(arg: any): Promise<ImageFile> {
     let image: ImageFile = await ImageFile.createAsync(arg);
+    image.tag = this.imageTag;
 
     return this._add(image);
   }

@@ -192,6 +192,7 @@ export class FileSharingSystem {
       let context: ImageContext = {
         identifier: image.identifier,
         name: image.name,
+        tag: image.tag,
         type: '',
         blob: null,
         url: null,
