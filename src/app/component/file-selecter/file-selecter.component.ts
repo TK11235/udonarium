@@ -12,7 +12,7 @@ import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
-import { ImageTagList } from '@udonarium/image-tag-list';
+import { ImageTag } from '@udonarium/image-tag';
 
 @Component({
   selector: 'file-selector',
@@ -36,10 +36,7 @@ export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() isAllowedEmpty: boolean = false;
   get images(): ImageFile[] {
     if (this.searchWords.length < 1) return ImageStorage.instance.images;
-    return ImageTagList.instance
-      .getTags(this.searchWords)
-      .map(imageTag => ImageStorage.instance.get(imageTag.imageIdentifier))
-      .filter(image => image);
+    return ImageTag.searchImages(this.searchWords);
   }
   get empty(): ImageFile { return ImageFile.Empty; }
 
