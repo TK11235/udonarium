@@ -30,22 +30,18 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get images(): ImageFile[] {
     if (this.searchWords.length < 1) return ImageStorage.instance.images;
-    return ImageTagList.instance
-      .getTags(this.searchWords)
-      .map(imageTag => ImageStorage.instance.get(imageTag.imageIdentifier))
-      .filter(image => image);
+    return ImageTag.searchImages(this.searchWords);
   }
 
   selectedIdentifier: string = '';
-  get selectedImageTag(): ImageTag { return ImageTagList.instance.getTag(this.selectedIdentifier); }
+  get selectedImageTag(): ImageTag { return ImageTag.getTag(this.selectedIdentifier); }
   get selectedTag(): string { return this.selectedImageTag ? this.selectedImageTag.tag : ''; }
   set selectedTag(selectedTag: string) {
     if (this.selectedImageTag) {
       this.selectedImageTag.tag = selectedTag;
       return;
     }
-    const imageTag = ImageTag.create(this.selectedIdentifier, selectedTag);
-    ImageTagList.instance.add(imageTag);
+    ImageTag.create(this.selectedIdentifier, selectedTag);
   }
 
   constructor(
