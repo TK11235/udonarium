@@ -31,7 +31,9 @@ export class SaveDataService {
     images = images.concat(this.searchImageFiles(roomXml));
     images = images.concat(this.searchImageFiles(chatXml));
     for (const image of images) {
-      files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+      if (image.state === ImageState.COMPLETE) {
+        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+      }
     }
 
     let imageTagXml = this.convertToXml(ImageTagList.create(images));
@@ -48,7 +50,9 @@ export class SaveDataService {
     let images: ImageFile[] = [];
     images = images.concat(this.searchImageFiles(xml));
     for (const image of images) {
-      files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+      if (image.state === ImageState.COMPLETE) {
+        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+      }
     }
 
     let imageTagXml = this.convertToXml(ImageTagList.create(images));
@@ -85,7 +89,7 @@ export class SaveDataService {
     }
     for (let identifier in images) {
       let image = images[identifier];
-      if (image && image.state === ImageState.COMPLETE) {
+      if (image) {
         files.push(image);
       }
     }
