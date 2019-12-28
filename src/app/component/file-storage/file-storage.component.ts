@@ -3,7 +3,6 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
-import { ImageTagList } from '@udonarium/image-tag-list';
 import { EventSystem, Network } from '@udonarium/core/system';
 
 import { PanelService } from 'service/panel.service';
@@ -34,14 +33,13 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   selectedIdentifier: string = '';
-  get selectedImageTag(): ImageTag { return ImageTag.getTag(this.selectedIdentifier); }
+  selectedImageTag: ImageTag = null;
   get selectedTag(): string { return this.selectedImageTag ? this.selectedImageTag.tag : ''; }
   set selectedTag(selectedTag: string) {
-    if (this.selectedImageTag) {
-      this.selectedImageTag.tag = selectedTag;
-      return;
+    if (!this.selectedImageTag) {
+      this.selectedImageTag = ImageTag.create(this.selectedIdentifier);
     }
-    ImageTag.create(this.selectedIdentifier, selectedTag);
+    this.selectedImageTag.tag = selectedTag;
   }
 
   constructor(
@@ -75,5 +73,6 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
 
     this.selectedIdentifier = file.identifier;
+    this.selectedImageTag = ImageTag.getTag(file.identifier);
   }
 }

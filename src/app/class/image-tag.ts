@@ -55,15 +55,14 @@ export class ImageTag extends ObjectNode {
     return null;
   }
 
-  static create(imageIdentifier: string, tag: string) {
+  static create(imageIdentifier: string, identifier?: string) {
     if (ImageTag.getTag(imageIdentifier)) {
       console.warn(`ImageTag: ${imageIdentifier} is already created.`);
       return ImageTag.getTag(imageIdentifier);
     }
-    const object: ImageTag = new ImageTag();
+    const object: ImageTag = identifier ? new ImageTag(identifier) : new ImageTag();
 
     object.imageIdentifier = imageIdentifier;
-    object.tag = tag;
 
     object.initialize();
     return object;
