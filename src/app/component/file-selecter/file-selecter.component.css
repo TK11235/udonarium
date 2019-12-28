@@ -14,3 +14,16 @@
 .empty button {
   height: 100px;
 }
+
+.sticky-top {
+  padding: 5px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(240, 218, 189, 0.8);
+  border-top: 1px dotted #666;
+  border-bottom: 1px dotted #666;
+}
+
+.sticky-top input {
+  width: calc(100% - 50px);
+}

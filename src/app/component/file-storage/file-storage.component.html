@@ -10,14 +10,14 @@
       <br>１ファイルにつき2MBまで</div>
   </div>
 </label>
-<hr/>
-<div id="search">
-  検索： <input [(ngModel)]="searchWord" placeholder="部分一致で検索 スペース区切りで複数指定" />
+<div class="sticky-top">
+  <div>
+    検索: <input [(ngModel)]="searchWord" placeholder="部分一致で検索 スペース区切りで複数指定" />
+  </div>
+  <div>
+    タグ: <input [(ngModel)]="selectedTag" placeholder="タグ名" [attr.disabled]="isSelected ? null : ''" />
+  </div>
 </div>
-<div>
-  選択した画像のタグ： <input [(ngModel)]="selectedTag" placeholder="スペース区切りで複数タグ名" [attr.disabled]="isSelected ? null : ''" />
-</div>
-<hr/>
 <div id="file-list">
   <div *ngFor="let file of images" [ngClass]="{ image: true, selected: selectedFile === file }" >
     <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
