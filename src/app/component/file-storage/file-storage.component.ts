@@ -33,14 +33,12 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   selectedIdentifier: string = '';
-  selectedImageTag: ImageTag = null;
-  get selectedTag(): string { return this.selectedImageTag ? this.selectedImageTag.tag : ''; }
-  set selectedTag(selectedTag: string) {
-    if (!this.selectedImageTag) {
-      this.selectedImageTag = ImageTag.create(this.selectedIdentifier);
-    }
-    this.selectedImageTag.tag = selectedTag;
+  get selectedImageTag(): ImageTag {
+    const imageTag = ImageTag.get(this.selectedIdentifier);
+    return imageTag ? imageTag : ImageTag.create(this.selectedIdentifier);
   }
+  get selectedTag(): string { return this.selectedImageTag.tag; }
+  set selectedTag(selectedTag: string) { this.selectedImageTag.tag = selectedTag; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -73,6 +71,5 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
 
     this.selectedIdentifier = file.identifier;
-    this.selectedImageTag = ImageTag.getTag(file.identifier);
   }
 }

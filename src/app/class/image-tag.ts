@@ -9,8 +9,6 @@ export class ImageTag extends ObjectNode {
   @SyncVar() imageIdentifier: string = '';
   @SyncVar() tag: string = '';
 
-  get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
-
   containsWords(words: string[]): boolean {
     return words.every(word => this.tag.indexOf(word) >= 0);
   }
@@ -19,11 +17,11 @@ export class ImageTag extends ObjectNode {
     return ObjectStore.instance
       .getObjects<ImageTag>(ImageTag)
       .filter(tag => tag.containsWords(searchWords))
-      .map(tag => tag.image)
+      .map(tag => ImageStorage.instance.get(tag.imageIdentifier))
       .filter(image => image);
   }
 
-  static getTag(imageIdentifier: string): ImageTag {
+  static get(imageIdentifier: string): ImageTag {
     return ObjectStore.instance.get<ImageTag>(`imagetag_${imageIdentifier}`);
   }
 
@@ -38,7 +36,7 @@ export class ImageTag extends ObjectNode {
 
   parseInnerXml(element: Element) {
     // 既存のオブジェクトを更新する
-    let imageTag = ImageTag.getTag(this.imageIdentifier);
+    let imageTag = ImageTag.get(this.imageIdentifier);
     if (!imageTag) imageTag = ImageTag.create(this.imageIdentifier);
     const context = imageTag.toContext();
     context.syncData = this.toContext().syncData;
