@@ -19,9 +19,18 @@
 }
 
 .image {
+  display: inline-block;
   font-size: 0;
+  padding: 2px;
+  border: transparent 2px solid;
+  border-top: transparent 6px solid;
 }
 
 .image img {
   vertical-align: bottom;
+}
+
+.selected {
+  border: 2px dotted #666;
+  border-top: 6px solid #444;
 }

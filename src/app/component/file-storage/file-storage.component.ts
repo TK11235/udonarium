@@ -32,13 +32,15 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     return ImageTag.searchImages(this.searchWords);
   }
 
-  selectedIdentifier: string = '';
+  selectedFile: ImageFile = null;
+  get isSelected(): boolean { return this.selectedFile != null; }
   get selectedImageTag(): ImageTag {
-    const imageTag = ImageTag.get(this.selectedIdentifier);
-    return imageTag ? imageTag : ImageTag.create(this.selectedIdentifier);
+    if (!this.isSelected) return null;
+    const imageTag = ImageTag.get(this.selectedFile.identifier);
+    return imageTag ? imageTag : ImageTag.create(this.selectedFile.identifier);
   }
-  get selectedTag(): string { return this.selectedImageTag.tag; }
-  set selectedTag(selectedTag: string) { this.selectedImageTag.tag = selectedTag; }
+  get selectedTag(): string { return this.isSelected ? this.selectedImageTag.tag : ''; }
+  set selectedTag(selectedTag: string) { if (this.isSelected) this.selectedImageTag.tag = selectedTag; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -70,6 +72,6 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('onSelectedFile', file);
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
 
-    this.selectedIdentifier = file.identifier;
+    this.selectedFile = file;
   }
 }
