@@ -17,7 +17,7 @@ export class ImageTagList extends ObjectNode implements InnerXml {
 
   innerXml(): string {
     return Array.from(new Set(this.identifiers))
-      .map(identifier => ImageTag.getTag(identifier))
+      .map(identifier => ImageTag.get(identifier))
       .filter(imageTag => imageTag)
       .map(imageTag => imageTag.toXml())
       .join('');
