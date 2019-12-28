@@ -7,28 +7,9 @@ import { ImageStorage } from './core/file-storage/image-storage';
 @SyncObject('image-tag')
 export class ImageTag extends ObjectNode {
   @SyncVar() imageIdentifier: string = '';
-
-  private static map: Map<string, string> = new Map<string, string>();
-
-  get tag(): string { return this.value as string; }
-  set tag(tag: string) { this.value = tag; }
+  @SyncVar() tag: string = '';
 
   get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
-
-  // GameObject Lifecycle
-  onStoreAdded() {
-    super.onStoreAdded();
-    if (ImageTag.map.has(this.imageIdentifier)) {
-      const imageTag = ImageTag.getTag(this.imageIdentifier);
-      if (imageTag) imageTag.destroy();
-    }
-    ImageTag.map.set(this.imageIdentifier, this.identifier);
-  }
-
-  onStoreRemoved() {
-    super.onStoreRemoved();
-    ImageTag.map.delete(this.imageIdentifier);
-  }
 
   containsWords(words: string[]): boolean {
     return words.every(word => this.tag.indexOf(word) >= 0);
@@ -43,28 +24,26 @@ export class ImageTag extends ObjectNode {
   }
 
   static getTag(imageIdentifier: string): ImageTag {
-    const identifier = ImageTag.map.get(imageIdentifier);
-    if (identifier != null && ObjectStore.instance.get(identifier)) return ObjectStore.instance.get<ImageTag>(identifier);
-    const imageTags = ObjectStore.instance.getObjects<ImageTag>(ImageTag);
-    for (const imageTag of imageTags) {
-      if (imageTag.imageIdentifier === imageIdentifier) {
-        ImageTag.map.set(imageIdentifier, imageTag.identifier);
-        return imageTag;
-      }
-    }
-    return null;
+    return ObjectStore.instance.get<ImageTag>(`imagetag_${imageIdentifier}`);
   }
 
-  static create(imageIdentifier: string, identifier?: string) {
-    if (ImageTag.getTag(imageIdentifier)) {
-      console.warn(`ImageTag: ${imageIdentifier} is already created.`);
-      return ImageTag.getTag(imageIdentifier);
-    }
-    const object: ImageTag = identifier ? new ImageTag(identifier) : new ImageTag();
+  static create(imageIdentifier: string) {
+    const object: ImageTag = new ImageTag(`imagetag_${imageIdentifier}`);
 
     object.imageIdentifier = imageIdentifier;
 
     object.initialize();
     return object;
+  }
+
+  parseInnerXml(element: Element) {
+    // 既存のオブジェクトを更新する
+    let imageTag = ImageTag.getTag(this.imageIdentifier);
+    if (!imageTag) imageTag = ImageTag.create(this.imageIdentifier);
+    const context = imageTag.toContext();
+    context.syncData = this.toContext().syncData;
+    imageTag.apply(context);
+    imageTag.update();
+    this.destroy();
   }
 }
