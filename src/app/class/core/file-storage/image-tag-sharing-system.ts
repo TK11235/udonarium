@@ -27,10 +27,11 @@ export class ImageTagSharingSystem {
         for (let item of otherCatalog) {
           let imageTag: ImageTag = ImageTagStorage.instance.get(item.identifier);
           let itemVersion = item.imageTagContext.majorVersion + item.imageTagContext.minorVersion;
-          if (imageTag === null || imageTag.version < itemVersion) {
-            let updateImageTag = ImageTag.copy(item.imageTagContext);
-            ImageTagStorage.instance.add(updateImageTag);
+          if (!imageTag) {
+            imageTag = ImageTag.createEmpty(item.identifier);
+            ImageTagStorage.instance.add(imageTag);
           }
+          if (imageTag.version < itemVersion) imageTag.apply(item.imageTagContext);
         }
       });
   }

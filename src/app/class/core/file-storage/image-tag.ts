@@ -1,3 +1,9 @@
+enum ImageState {
+  EMPTY = 0,
+  USER_CREATE = 1,
+  FILE_LOAD = 2,
+}
+
 export interface ImageTagContext {
   identifier: string;
   tag: string;
@@ -19,18 +25,9 @@ export class ImageTag {
 
   private constructor() {}
 
-  static copy(context: ImageTagContext): ImageTag {
-    let imageTag = new ImageTag();
-    imageTag.apply(context);
-    return imageTag;
-  }
-
-  static async createAsync(identifier: string, tag: string): Promise<ImageTag> {
+  static createEmpty(identifier: string): ImageTag {
     let imageTag = new ImageTag();
     imageTag.context.identifier = identifier;
-    imageTag.context.tag = tag;
-    imageTag.context.majorVersion = 0;
-    imageTag.context.minorVersion = 0;
     return imageTag;
   }
 
@@ -38,19 +35,23 @@ export class ImageTag {
     let imageTag = new ImageTag();
     imageTag.context.identifier = identifier;
     imageTag.context.tag = tag;
-    imageTag.context.majorVersion = 1;
-    imageTag.context.minorVersion = Math.random();
+    imageTag.context.majorVersion = ImageState.FILE_LOAD;
+    imageTag.context.minorVersion = 0;
     return imageTag;
   }
 
-  update() {
-    this.context.majorVersion += 1;
-    this.context.minorVersion = Math.random();
+  static async createAsync(identifier: string, tag: string): Promise<ImageTag> {
+    let imageTag = new ImageTag();
+    imageTag.context.identifier = identifier;
+    imageTag.context.tag = tag;
+    imageTag.context.majorVersion = ImageState.USER_CREATE;
+    imageTag.context.minorVersion = 0;
+    return imageTag;
   }
 
   apply(context: ImageTagContext) {
     let version = context.majorVersion + context.minorVersion;
-    if (context !== null && this.version < version) {
+    if (context && this.version < version) {
       if(!this.context.identifier && context.identifier) this.context.identifier = context.identifier; 
       this.context.tag = context.tag;
       this.context.majorVersion = context.majorVersion;

@@ -43,14 +43,12 @@ export class ImageTagStorage {
       let identifier = tagLine.split(",")[0];
       let tag = tagLine.split(",")[1];
       let imageTag = await ImageTag.loadAsync(identifier, tag);
-      imageTag.update();
       this._add(imageTag);
     }
   }
 
   async addAsync(identifier: string): Promise<ImageTag> {
     let imageTag: ImageTag = await ImageTag.createAsync(identifier, this.inputTag);
-    imageTag.update();
     return this._add(imageTag);
   }
 
