@@ -44,7 +44,7 @@ export class ImageTagStorage {
     for (let tagLine of tagLines) {
       let identifier = tagLine.split(",")[0];
       let tag = tagLine.split(",")[1];
-      let imageTag = await ImageTag.loadAsync(identifier, tag);
+      let imageTag = await ImageTag.createAsync(identifier, tag);
       this._add(imageTag);
     }
   }
@@ -78,7 +78,7 @@ export class ImageTagStorage {
     }
     let updatingImageTag: ImageTag = this.imageTagHash[imageTag.identifier];
     if (updatingImageTag) {
-      updatingImageTag.apply(context);
+      updatingImageTag.update(context);
       return true;
     }
     return false;
