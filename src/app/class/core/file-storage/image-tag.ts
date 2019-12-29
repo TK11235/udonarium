@@ -47,7 +47,7 @@ export class ImageTag {
     if (context) {
       if(!this.context.identifier && context.identifier) this.context.identifier = context.identifier; 
       this.context.tag = context.tag;
-      this.context.majorVersion += context.majorVersion;
+      this.context.majorVersion += 1;
       this.context.minorVersion = Math.random();
     }
   }
