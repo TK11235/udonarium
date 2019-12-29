@@ -6,6 +6,8 @@ export type CatalogItem = { identifier: string, imageTagContext: ImageTagContext
 
 export class ImageTagStorage {
   inputTag: string = '';
+  isActive = false;
+
   private static _instance: ImageTagStorage
   static get instance(): ImageTagStorage {
     if (!ImageTagStorage._instance) ImageTagStorage._instance = new ImageTagStorage();
@@ -49,7 +51,8 @@ export class ImageTagStorage {
 
   async addAsync(identifier: string): Promise<ImageTag> {
     let imageTag: ImageTag = await ImageTag.createAsync(identifier, this.inputTag);
-    return this._add(imageTag);
+    if (this.isActive) return this._add(imageTag);
+    return imageTag;
   }
 
   add(imageTag: ImageTag): ImageTag {

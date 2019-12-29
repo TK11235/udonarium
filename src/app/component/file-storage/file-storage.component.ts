@@ -28,6 +28,7 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.panelService.title = 'ファイル一覧';
+    ImageTagStorage.instance.isActive = true;
   }
 
   ngAfterViewInit() {
@@ -39,6 +40,7 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    ImageTagStorage.instance.isActive = false;
     EventSystem.unregister(this);
   }
 
