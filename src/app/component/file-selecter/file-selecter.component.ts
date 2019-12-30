@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ImageTagStorage } from '@udonarium/core/file-storage/image-tag-storage';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
@@ -22,9 +23,20 @@ import { PanelService } from 'service/panel.service';
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() isAllowedEmpty: boolean = false;
-  get images(): ImageFile[] { return ImageStorage.instance.search(this.inputTag); }
+  get images(): ImageFile[] { return this.search(this.inputTag); }
   get empty(): ImageFile { return ImageFile.Empty; }
   inputTag: string = '';
+
+  private search(tag: string): ImageFile[] {
+    let imageFiles: ImageFile[] = [];
+    if (tag === 'all') return ImageStorage.instance.images;
+    for (let image of ImageStorage.instance.images) {
+      let imageTag = ImageTagStorage.instance.get(image.identifier);
+      if (!imageTag && tag === '') imageFiles.push(image);
+      if (imageTag && tag === imageTag.tag) imageFiles.push(image);
+    }
+    return imageFiles;
+  }
 
   constructor(
     private changeDetector: ChangeDetectorRef,

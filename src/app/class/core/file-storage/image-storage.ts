@@ -1,6 +1,5 @@
 import { EventSystem } from '../system';
 import { ImageContext, ImageFile, ImageState } from './image-file';
-import { ImageTagStorage } from './image-tag-storage';
 
 export type CatalogItem = { identifier: string, state: number };
 
@@ -37,7 +36,6 @@ export class ImageStorage {
   async addAsync(blob: Blob): Promise<ImageFile>
   async addAsync(arg: any): Promise<ImageFile> {
     let image: ImageFile = await ImageFile.createAsync(arg);
-    await ImageTagStorage.instance.addAsync(image.identifier);
 
     return this._add(image);
   }
@@ -97,17 +95,6 @@ export class ImageStorage {
     let image: ImageFile = this.imageHash[identifier];
     if (image) return image;
     return null;
-  }
-
-  search(tag: string): ImageFile[] {
-    if (tag === 'all') return this.images;
-    let images: ImageFile[] = [];
-    for (let image of this.images) {
-      let imageTag = ImageTagStorage.instance.get(image.identifier);
-      if (!imageTag && tag === '') images.push(image);
-      if (imageTag && tag === imageTag.tag) images.push(image);
-    }
-    return images;
   }
 
   synchronize(peer?: string) {

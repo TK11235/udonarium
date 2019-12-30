@@ -6,6 +6,7 @@ import { XmlUtil } from '../system/util/xml-util';
 import { AudioStorage } from './audio-storage';
 import { FileReaderUtil } from './file-reader-util';
 import { ImageStorage } from './image-storage';
+import { ImageFile } from './image-file';
 import { ImageTagStorage } from './image-tag-storage';
 import { MimeType } from './mime-type';
 
@@ -88,7 +89,8 @@ export class FileArchiver {
     if (file.type.indexOf('image/') < 0) return;
     console.log(file.name + ' type:' + file.type);
     if (2 * 1024 * 1024 < file.size) return;
-    await ImageStorage.instance.addAsync(file);
+    let image: ImageFile = await ImageStorage.instance.addAsync(file);
+    await ImageTagStorage.instance.addAsync(image.identifier);
   }
 
   private async handleAudio(file: File) {

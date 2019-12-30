@@ -22,9 +22,20 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     private panelService: PanelService
   ) { }
 
-  get images(): ImageFile[] { return this.fileStorageService.search(this.inputTag); }
+  get images(): ImageFile[] { return this.search(this.inputTag); }
   get inputTag(): string { return ImageTagStorage.instance.inputTag; }
   set inputTag(inputTag: string) { ImageTagStorage.instance.inputTag = inputTag; }
+
+  private search(tag: string): ImageFile[] {
+    let imageFiles: ImageFile[] = [];
+    if (tag === 'all') return this.fileStorageService.images;
+    for (let image of this.fileStorageService.images) {
+      let imageTag = ImageTagStorage.instance.get(image.identifier);
+      if (!imageTag && tag === '') imageFiles.push(image);
+      if (imageTag && tag === imageTag.tag) imageFiles.push(image);
+    }
+    return imageFiles;
+  }
 
   ngOnInit() {
     this.panelService.title = 'ファイル一覧';
