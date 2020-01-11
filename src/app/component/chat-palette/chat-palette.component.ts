@@ -14,6 +14,9 @@ import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
+
 @Component({
   selector: 'chat-palette',
   templateUrl: './chat-palette.component.html',
@@ -65,7 +68,8 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   constructor(
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private pointerDeviceService: PointerDeviceService
+    private pointerDeviceService: PointerDeviceService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -243,4 +247,14 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
         return true;
     }
   }
+
+  openCharacterImageChange() {
+    this.modalService.open<string>(FileSelecterComponent, { isAllowedEmpty: true }).then(value => {
+      if (!this.character || !this.character.imageDataElement || !value) return;
+      let element = this.character.imageDataElement.getFirstElementByName('imageIdentifier');
+      if (!element) return;
+      element.value = value;
+    });
+  }
+
 }
