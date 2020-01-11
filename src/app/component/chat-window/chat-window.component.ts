@@ -16,6 +16,9 @@ import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
+
 @Component({
   selector: 'chat-window',
   templateUrl: './chat-window.component.html',
@@ -94,7 +97,8 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     private ngZone: NgZone,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private pointerDeviceService: PointerDeviceService
+    private pointerDeviceService: PointerDeviceService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -321,5 +325,16 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   trackByChatTab(index: number, chatTab: ChatTab) {
     return chatTab.identifier;
+  }
+
+  openCharacterImageChange() {
+    this.modalService.open<string>(FileSelecterComponent, { isAllowedEmpty: true }).then(value => {
+      if (!this.gameCharacter || !this.gameCharacter.imageDataElement || !value) return;
+      let element = this.gameCharacter.imageDataElement.getFirstElementByName('imageIdentifier');
+      if (!element) return;
+      element.value = value;
+    });
+
+    return;
   }
 }
