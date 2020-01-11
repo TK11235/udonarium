@@ -39,7 +39,7 @@
     </div>
     <div>
       <form #chatWindowForm="ngForm">
-        <textarea #textArea [(ngModel)]="text" placeholder="Enterで送信  Shift+Enterで改行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
+        <textarea #textArea [(ngModel)]="text" placeholder="Enterで送信  Shift+Enterで改行  アイコンクリックで画像変更" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
         <button type="submit" (click)="sendChat(null)">SEND</button>
       </form>
     </div>
