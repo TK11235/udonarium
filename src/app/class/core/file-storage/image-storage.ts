@@ -61,7 +61,6 @@ export class ImageStorage {
     if (this.update(image)) return this.imageHash[image.identifier];
     this.imageHash[image.identifier] = image;
     console.log('addNewFile()', image);
-
     return image;
   }
 

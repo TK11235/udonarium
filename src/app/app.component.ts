@@ -14,7 +14,6 @@ import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { ObjectSynchronizer } from '@udonarium/core/synchronize-object/object-synchronizer';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { DataSummarySetting } from '@udonarium/data-summary-setting';
-import { ImageTagList } from '@udonarium/image-tag-list';
 import { DiceBot } from '@udonarium/dice-bot';
 import { Jukebox } from '@udonarium/Jukebox';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -77,7 +76,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.pointerDeviceService.initialize();
 
     DataSummarySetting.instance.initialize();
-    ImageTagList.instance.initialize();
 
     let diceBot: DiceBot = new DiceBot('DiceBot');
     diceBot.initialize();
@@ -99,10 +97,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let fileContext = ImageFile.createEmpty('none_icon').toContext();
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';
     let noneIconImage = ImageStorage.instance.add(fileContext);
-    let noneIconImageTag = new ImageTag();
-    noneIconImageTag.imageIdentifier = noneIconImage.identifier;
-    noneIconImageTag.tag = 'default';
-    ImageTagList.instance.appendChild(noneIconImageTag);
+    ImageTag.create(noneIconImage.identifier).tag = 'default';
 
     AudioPlayer.resumeAudioContext();
     PresetSound.dicePick = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/shoulder-touch1.mp3').identifier;

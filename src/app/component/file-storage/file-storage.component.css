@@ -8,6 +8,7 @@
   font: 24px bold 'Vollkorn';
   color: #444;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .large-font {
@@ -19,9 +20,31 @@
 }
 
 .image {
+  display: inline-block;
   font-size: 0;
+  padding: 2px;
+  border: transparent 2px solid;
+  border-top: transparent 6px solid;
 }
 
 .image img {
   vertical-align: bottom;
+}
+
+.selected {
+  border: 2px dotted #666;
+  border-top: 6px solid #444;
+}
+
+.sticky-top {
+  padding: 5px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(240, 218, 189, 0.8);
+  border-top: 1px dotted #666;
+  border-bottom: 1px dotted #666;
+}
+
+.sticky-top input {
+  width: calc(100% - 50px);
 }
