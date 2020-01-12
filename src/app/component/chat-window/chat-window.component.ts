@@ -337,4 +337,14 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     return;
   }
+
+  openPeerIconChange() {
+    this.modalService.open<string>(FileSelecterComponent).then(value => {
+      if (!this.myPeer || !value) return;
+      this.myPeer.imageIdentifier = value;
+    });
+
+    return;
+    
+  }
 }

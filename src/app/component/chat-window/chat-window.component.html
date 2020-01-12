@@ -18,7 +18,7 @@
   <div class="table-cell imagebox">
     <img class="image" (click)="openCharacterImageChange()" *ngIf="gameCharacter && gameCharacter.imageFile != null && 0 < gameCharacter.imageFile?.url?.length" [src]="gameCharacter.imageFile?.url | safe: 'resourceUrl'"
     />
-    <img class="image" *ngIf="!gameCharacter && myPeer && myPeer?.image != null" [src]="myPeer?.image?.url | safe: 'resourceUrl'"
+    <img class="image" (click)="openPeerIconChange()" *ngIf="!gameCharacter && myPeer && myPeer?.image != null" [src]="myPeer?.image?.url | safe: 'resourceUrl'"
     />
   </div>
   <div class="table-cell">
