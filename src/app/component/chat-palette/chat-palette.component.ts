@@ -13,6 +13,7 @@ import { TextViewComponent } from 'component/text-view/text-view.component';
 import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { GameObjectInventoryService} from 'service/game-object-inventory.service';
 
 @Component({
   selector: 'chat-palette',
@@ -65,13 +66,20 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   constructor(
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private pointerDeviceService: PointerDeviceService
+    private pointerDeviceService: PointerDeviceService,
+    private inventoryService: GameObjectInventoryService
   ) { }
 
   ngOnInit() {
     this.panelService.title = this.character.name + ' のチャットパレット';
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
-    this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
+
+    if(this.character.chatPalette != null && this.character.chatPalette.dicebot != '') {
+      this.gameType = this.character.chatPalette.dicebot;
+    } else {
+      this.gameType = this.inventoryService.gameType;
+    }
+
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.data.aliasName !== GameCharacter.aliasName) return;
