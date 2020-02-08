@@ -325,26 +325,46 @@ C({レンジャー}+({知力}/6)) 【魔香水】
         continue;
       }
       const hitGinouName = skillList[vHitGinou - 1];
-      const skillLevel = skillLevelList[vHitGinou - 1];
       const isSenyou = json.arms_is_senyou[i];
       const hitMod = SwordWorld2.formatSign(json.arms_hit_mod[i]);
-      const iryoku = json.arms_iryoku[i];
-      const critical = json.arms_critical[i];
-      const muscle = Number.parseInt(json.NP3, 10);
+      const critical = Number.parseInt(json.arms_critical[i], 10);
       const damage = Number.parseInt(json.arms_damage[i], 10);
-      const damageMod = SwordWorld2.formatSign(
-        damage - skillLevel - Math.floor(muscle / 6)
-      );
       cpBattle += `//-----${armsName}\n`;
       if (isSenyou === "1") {
         cpBattle += `2d+{${hitGinouName}}+(({器用度}+2)/6)${hitMod}+{命中} 【命中力判定】${armsName}\n`;
       } else {
         cpBattle += `2d+{${hitGinouName}}+({器用度}/6)${hitMod}+{命中} 【命中力判定】${armsName}\n`;
       }
-      cpBattle += `k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical} 【威力】${armsName}
+      if (json.arms_cate[i] === "ガン") {
+        const magitecLevel = skillLevelList[8];
+        const tiryoku = Number.parseInt(json.NP5, 10);
+        const damageMod = SwordWorld2.formatSign(
+          damage - magitecLevel - Math.floor(tiryoku / 6)
+        );
+        cpBattle += `k0+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力0】${armsName}
+k10+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力10】${armsName}
+k20+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力20】${armsName}
+k20+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical -
+          1} 【威力20】${armsName}/C値-1
+k30+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力30】${armsName}
+k30+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical -
+          1} 【威力30】${armsName}/C値-1
+k40+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力40】${armsName}
+k70+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力70】${armsName}
+k90+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力90】${armsName}
+`;
+      } else {
+        const skillLevel = skillLevelList[vHitGinou - 1];
+        const iryoku = json.arms_iryoku[i];
+        const muscle = Number.parseInt(json.NP3, 10);
+        const damageMod = SwordWorld2.formatSign(
+          damage - skillLevel - Math.floor(muscle / 6)
+        );
+        cpBattle += `k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical} 【威力】${armsName}
 k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical}$+{クリレイ} 【威力】${armsName}/クリレイ
 k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical}\${出目固定} 【威力】${armsName}/出目固定
 `;
+      }
     }
     cpBattle += "\n";
 
@@ -371,7 +391,7 @@ k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical}\${出
       {
         id: 9,
         alias: "魔導機術",
-        attack: [10, 20, 30, 40, 70, 90],
+        attack: [30, 50, 100],
         heel: [0, 30, 50]
       },
       { id: 17, alias: "召異魔法", attack: [10, 20, 30, 40, 50], heel: [] },
