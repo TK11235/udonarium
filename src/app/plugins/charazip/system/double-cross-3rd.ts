@@ -298,7 +298,7 @@ export class DoubleCross3rd {
       if (!armName) {
         continue;
       }
-      const hit = json.arms_hit[i].replace("r", "dx10");
+      const hit = json.arms_hit[i].replace("r", "dx");
       const guardLevel = json.arms_guard_level[i];
       const power = json.arms_power[i];
       const range = json.arms_range[i];
@@ -501,7 +501,7 @@ export class DoubleCross3rd {
       if (!armName) {
         continue;
       }
-      const hit = json.arms_hit[i].replace("r", "dx10");
+      const hit = json.arms_hit[i].replace("r", "dx");
       const guardLevel = json.arms_guard_level[i];
       const power = json.arms_power[i];
       const range = json.arms_range[i];
