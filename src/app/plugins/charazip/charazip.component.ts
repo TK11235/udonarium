@@ -108,8 +108,13 @@ export class CharazipComponent implements OnInit {
   errorMsg = "";
 
   private static async generateByVampireBloodCharacter(
-    id: string
+    url: URL
   ): Promise<CustomCharacter[]> {
+    // pathnameは常に"/"から始まる
+    const id = url.pathname.substring(1);
+    if (!id) {
+      throw new Error("URLが正しくありません。");
+    }
     const sheetUrl = `https://charasheet.vampire-blood.net/${id}`;
     const json = await fetchJsonp(
       `//charasheet.vampire-blood.net/${id}.js`
@@ -120,7 +125,6 @@ export class CharazipComponent implements OnInit {
     }
 
     if (!json.game) {
-      console.error("game要素がありません。");
       throw new Error("このキャラクターシートは使用できません。");
     }
     const systemInfo = CharazipComponent.vampireBloodInfos.find(
@@ -133,9 +137,17 @@ export class CharazipComponent implements OnInit {
   }
 
   private static async generateByAppspotCharacter(
-    system: string,
-    key: string
+    url: URL
   ): Promise<CustomCharacter[]> {
+    if (!url.searchParams || !url.searchParams.has("key")) {
+      throw new Error("URLが正しくありません。");
+    }
+    const key = url.searchParams.get("key");
+    if (!key) {
+      throw new Error("URLが正しくありません。");
+    }
+    // pathnameは常に"/"から始まる
+    const system = url.pathname.substring(1, url.pathname.lastIndexOf("/"));
     const systemInfo = CharazipComponent.appspotInfos.find(
       info => info.system === system
     );
@@ -166,11 +178,31 @@ export class CharazipComponent implements OnInit {
   }
 
   private static async generateByLhrpgCharacter(
-    id: string
+    url: URL
   ): Promise<CustomCharacter[]> {
-    const json = await fetchJsonp(
-      `//lhrpg.com/lhz/api/${id}.json`
-    ).then(response => response.json<LhrpgCharacter>());
+    if (
+      !url.pathname.startsWith("/lhz/pc") ||
+      !url.searchParams ||
+      !url.searchParams.has("id")
+    ) {
+      throw new Error(
+        'URLが正しくありません。\nパーソナルファクターのページのURL"https://lhrpg.com/lhz/pc?id=xxxxxx"を入力してください。'
+      );
+    }
+    const id = url.searchParams.get("id");
+    if (!id) {
+      throw new Error(
+        'URLが正しくありません。\nパーソナルファクターのページのURL"https://lhrpg.com/lhz/pc?id=xxxxxx"を入力してください。'
+      );
+    }
+    const json = await fetchJsonp(`//lhrpg.com/lhz/api/${id}.json`)
+      .then(response => response.json<LhrpgCharacter>())
+      .catch((err): never => {
+        console.error(err);
+        throw new Error(
+          `「基本情報を変更する」→「外部ツールからの〈冒険者〉データ参照を許可する」にチェックが入っているか確認してください。`
+        );
+      });
     // URLが正しくない場合、空のjsonが帰ってくる
     if (!json || Object.keys(json).length < 1) {
       throw new Error("URLが正しくありません。");
@@ -216,81 +248,40 @@ export class CharazipComponent implements OnInit {
       this.errorMsg = "URLを入力してください。";
       return;
     }
-    let urlObj: URL = null;
+    let url: URL = null;
     try {
-      urlObj = new URL(this.url);
+      url = new URL(this.url);
     } catch (err) {
       console.error(err);
       this.errorMsg = "入力されたURLが正しくありません。";
       return;
     }
-    console.log(urlObj);
     let gameCharacters: CustomCharacter[] = null;
-    if (urlObj.host === "charasheet.vampire-blood.net") {
-      // pathnameは常に"/"から始まる
-      const id = urlObj.pathname.substring(1);
-      if (!id) {
-        this.errorMsg = "URLが正しくありません。";
-        return;
+    try {
+      switch (url.host) {
+        case "charasheet.vampire-blood.net":
+          gameCharacters = await CharazipComponent.generateByVampireBloodCharacter(
+            url
+          );
+          break;
+        case "character-sheets.appspot.com":
+          gameCharacters = await CharazipComponent.generateByAppspotCharacter(
+            url
+          );
+          break;
+        case "lhrpg.com":
+          gameCharacters = await CharazipComponent.generateByLhrpgCharacter(
+            url
+          );
+          break;
+        default:
+          this.errorMsg =
+            "URLが正しくありません。もしくは未対応のキャラクターシートサービスです。";
+          return;
       }
-      try {
-        gameCharacters = await CharazipComponent.generateByVampireBloodCharacter(
-          id
-        );
-      } catch (err) {
-        console.error(err);
-        this.errorMsg = `キャラクターシートの取り込みに失敗しました。\n${err.message}`;
-        return;
-      }
-    } else if (urlObj.host === "character-sheets.appspot.com") {
-      if (!urlObj.searchParams || !urlObj.searchParams.has("key")) {
-        this.errorMsg = "URLが正しくありません。";
-        return;
-      }
-      const key = urlObj.searchParams.get("key");
-      if (!key) {
-        this.errorMsg = "URLが正しくありません。";
-        return;
-      }
-      // pathnameは常に"/"から始まる
-      const system = urlObj.pathname.substring(
-        1,
-        urlObj.pathname.lastIndexOf("/")
-      );
-      try {
-        gameCharacters = await CharazipComponent.generateByAppspotCharacter(
-          system,
-          key
-        );
-      } catch (err) {
-        console.error(err);
-        this.errorMsg = `キャラクターシートの取り込みに失敗しました。\n${err.message}`;
-        return;
-      }
-    } else if (urlObj.host === "lhrpg.com") {
-      if (!urlObj.searchParams || !urlObj.searchParams.has("id")) {
-        this.errorMsg =
-          'URLが正しくありません。\nパーソナルファクターのページのURL"https://lhrpg.com/lhz/pc?id=xxxxxx"を入力してください。';
-        return;
-      }
-      const id = urlObj.searchParams.get("id");
-      if (!id) {
-        this.errorMsg =
-          'URLが正しくありません。\nパーソナルファクターのページのURL"https://lhrpg.com/lhz/pc?id=xxxxxx"を入力してください。';
-        return;
-      }
-      try {
-        gameCharacters = await CharazipComponent.generateByLhrpgCharacter(id);
-      } catch (err) {
-        console.error(err);
-        this.errorMsg = `キャラクターシートの取り込みに失敗しました。
-「基本情報を変更する」→「外部ツールからの〈冒険者〉データ参照を許可する」にチェックが入っているか確認してください。
-${err.message}`;
-        return;
-      }
-    } else {
-      this.errorMsg =
-        "URLが正しくありません。もしくは未対応のキャラクターシートサービスです。";
+    } catch (err) {
+      console.error(err);
+      this.errorMsg = `キャラクターシートの取り込みに失敗しました。\n${err.message}`;
       return;
     }
     if (!gameCharacters || gameCharacters.length <= 0) {
