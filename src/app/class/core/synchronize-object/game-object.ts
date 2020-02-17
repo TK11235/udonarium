@@ -1,8 +1,7 @@
-import { UUID } from './uuid';
+import { UUID } from '../system/util/uuid';
 import { ObjectFactory } from './object-factory';
-import { ObjectStore } from './object-store';
 import { ObjectSerializer } from './object-serializer';
-import { EventSystem } from '../system/system';
+import { ObjectStore } from './object-store';
 
 export interface ObjectContext {
   aliasName: string;
@@ -14,15 +13,14 @@ export interface ObjectContext {
 
 export class GameObject {
   private context: ObjectContext = {
-    aliasName: ObjectFactory.instance.getAlias(this),
+    aliasName: (<typeof GameObject>this.constructor).aliasName,
     identifier: '',
     majorVersion: 0,
     minorVersion: 0,
     syncData: {}
   }
 
-  static get aliasName() { return new this().aliasName; }
-
+  static get aliasName() { return ObjectFactory.instance.getAlias(this); }
   get aliasName() { return this.context.aliasName; }
   get identifier() { return this.context.identifier; }
   get version() { return this.context.majorVersion + this.context.minorVersion; }
@@ -31,18 +29,22 @@ export class GameObject {
     this.context.identifier = identifier;
   }
 
-  initialize(needUpdate: boolean = true) {
+  initialize() {
     ObjectStore.instance.add(this);
-    if (needUpdate) this.update(false);
   }
 
   destroy() {
-    EventSystem.unregister(this);
     ObjectStore.instance.delete(this);
   }
 
-  update(needVersionUp: boolean = true) {
-    if (needVersionUp) this.versionUp();
+  // GameObject Lifecycle
+  onStoreAdded() { }
+
+  // GameObject Lifecycle
+  onStoreRemoved() { }
+
+  update() {
+    this.versionUp();
     ObjectStore.instance.update(this.identifier);
   }
 

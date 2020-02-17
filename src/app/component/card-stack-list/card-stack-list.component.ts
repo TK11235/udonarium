@@ -1,15 +1,13 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
+import { Card } from '@udonarium/card';
+import { CardStack } from '@udonarium/card-stack';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
-import { CardStack } from '../../class/card-stack';
-import { Card, CardState } from '../../class/card';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ImageFile } from '../../class/core/file-storage/image-file';
+import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+
+import { PanelOption, PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'card-stack-list',
@@ -17,25 +15,18 @@ import { ImageFile } from '../../class/core/file-storage/image-file';
   styleUrls: ['./card-stack-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardStackListComponent implements OnInit {
+export class CardStackListComponent implements OnInit, OnDestroy {
   @Input() cardStack: CardStack = null;
 
   owner: string = Network.peerId;
 
   constructor(
-    private ngZone: NgZone,
-    //private gameRoomService: GameRoomService,
-    //private contextMenuService: ContextMenuService,
-    //private modalService: ModalService,
     private panelService: PanelService,
-    private elementRef: ElementRef,
     private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
     this.panelService.title = this.cardStack.name + ' のカード一覧';
-    //this.cardStack = this.modalService.option instanceof CardStack ? this.modalService.option : this.cardStack;
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.data.aliasName === Card.aliasName) this.changeDetector.markForCheck();
@@ -61,8 +52,8 @@ export class CardStackListComponent implements OnInit {
     card.location.name = this.cardStack.location.name;
     card.rotate += this.cardStack.rotate;
     if (360 < card.rotate) card.rotate -= 360;
-    card.moveToTop();
-    card.update();
+    card.toTopmost();
+    SoundEffect.play(PresetSound.cardDraw);
   }
 
   up(card: Card) {
@@ -85,9 +76,22 @@ export class CardStackListComponent implements OnInit {
 
   close(needShuffle: boolean = false) {
     if (needShuffle) {
+      this.cardStack.shuffle();
       EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
-      //this.cardStack.shuffle();
+      SoundEffect.play(PresetSound.cardShuffle);
     }
     this.panelService.close();
+  }
+
+  showDetail(gameObject: Card) {
+    let coordinate = {
+      x: this.panelService.left,
+      y: this.panelService.top
+    };
+    let title = 'カード設定';
+    if (gameObject.name.length) title += ' - ' + gameObject.name;
+    let option: PanelOption = { title: title, left: coordinate.x + 10, top: coordinate.y + 20, width: 600, height: 600 };
+    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
+    component.tabletopObject = gameObject;
   }
 }

@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
-import { LobbyComponent } from '../lobby/lobby.component';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
-import { PanelService } from '../../service/panel.service';
-import { ModalService } from '../../service/modal.service';
-import { AppConfigService } from '../../service/app-config.service';
-
-import { PeerContext } from '../../class/core/system/network/peer-context';
-import { PeerCursor } from '../../class/peer-cursor';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { LobbyComponent } from 'component/lobby/lobby.component';
+import { AppConfigService } from 'service/app-config.service';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'peer-menu',
@@ -24,23 +23,29 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   gameRoomService = ObjectStore.instance;
   help: string = '';
 
-  //get myPeer(): PeerCursor { return this.getPeerCursor(this.networkService.peerId); }
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }
 
   constructor(
-    //private networkService: NetworkService,
-    //private gameRoomService: GameRoomService,
+    private ngZone: NgZone,
     private modalService: ModalService,
     private panelService: PanelService,
     public appConfigService: AppConfigService
   ) { }
 
   ngOnInit() {
-    this.panelService.title = 'Peer情報';
+    this.panelService.title = '接続情報';
   }
 
-  ngAfterViewInit() { }
-  ngOnDestroy() { }
+  ngAfterViewInit() {
+    EventSystem.register(this)
+      .on('OPEN_NETWORK', event => {
+        this.ngZone.run(() => { });
+      });
+  }
+
+  ngOnDestroy() {
+    EventSystem.unregister(this);
+  }
 
   changeIcon() {
     this.modalService.open<string>(FileSelecterComponent).then(value => {
@@ -60,10 +65,11 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.help = '';
     let context = PeerContext.create(this.targetPeerId);
     if (!context.isRoom) {
+      ObjectStore.instance.clearDeleteHistory();
       Network.connect(this.targetPeerId);
     } else {
       if (Network.peerContexts.length) {
-        this.help = '入力されたPeer IDはルーム用のPeer IDのようですが、ルーム用Peer IDと通常のPeer IDを混在させることはできません。通常Peerとの接続を切ってください。（※ページリロードでPeer切断ができます）';
+        this.help = '入力されたIDはルーム用のIDのようですが、ルーム用IDと通常のIDを混在させることはできません。プライベート接続を切ってください。（※ページリロードで切断ができます）';
         return;
       }
 
@@ -72,16 +78,17 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let dummy = {};
       EventSystem.register(dummy)
-        .on('OPEN_PEER', 0, event => {
+        .on('OPEN_NETWORK', event => {
+          ObjectStore.instance.clearDeleteHistory();
           Network.connect(this.targetPeerId);
           EventSystem.unregister(dummy);
           EventSystem.register(dummy)
-            .on('OPEN_OTHER_PEER', 0, event => {
+            .on('CONNECT_PEER', event => {
               console.log('接続成功！', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
             })
-            .on('CLOSE_OTHER_PEER', 0, event => {
+            .on('DISCONNECT_PEER', event => {
               console.warn('接続失敗', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
@@ -132,9 +139,10 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let listener = EventSystem.register(this);
-    listener.on('OPEN_PEER', 0, event => {
-      console.log('OPEN_PEER', event.data.peer);
+    listener.on('OPEN_NETWORK', event => {
+      console.log('OPEN_NETWORK', event.data.peer);
       EventSystem.unregisterListener(listener);
+      ObjectStore.instance.clearDeleteHistory();
       for (let context of conectPeers) {
         Network.connect(context.fullstring);
       }
@@ -143,5 +151,10 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showLobby() {
     this.modalService.open(LobbyComponent, { width: 700, height: 400, left: 0, top: 400 });
+  }
+
+  findPeerName(peerId: string) {
+    const peerCursor = PeerCursor.find(peerId);
+    return peerCursor ? peerCursor.name : '';
   }
 }

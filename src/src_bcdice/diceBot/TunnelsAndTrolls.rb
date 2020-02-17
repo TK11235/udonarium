@@ -9,6 +9,7 @@ class TunnelsAndTrolls < DiceBot
     @sortType = 1
     @sameDiceRerollCount = 1
   end
+
   def gameName
     'トンネルズ＆トロールズ'
   end
@@ -16,7 +17,7 @@ class TunnelsAndTrolls < DiceBot
   def gameType
     "Tunnels & Trolls"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・行為判定　(nD6+x>=nLV)
@@ -35,120 +36,114 @@ SAVEの難易度を「レベル」で表記することが出来ます。
 　下から２番目の出目をずらした分だけ合計にマイナス修正を追加して表示します。
 INFO_MESSAGE_TEXT
   end
-  
+
   def changeText(string)
     debug('Tunnels & Trolls parren_killer begin string', string)
-    
-    if(/(\d+)LV/i =~ string)
-      level_diff = ($1.to_i) * 5 + 15
-      string = string.sub(/(\d+)LV/i) {"#{level_diff}"}
+
+    if /(\d+)LV/i =~ string
+      level_diff = Regexp.last_match(1).to_i * 5 + 15
+      string = string.sub(/(\d+)LV/i) { level_diff.to_s }
     end
-    
-    if(/BS/i =~ string)
-      string = string.gsub(/(\d+)HBS([^\d\s][\+\-\d]+)/i) {"#{$1}R6#{$2}[H]"}
-      string = string.gsub(/(\d+)HBS/i) {"#{$1}R6[H]"}
-      string = string.gsub(/(\d+)BS([^\d\s][\+\-\d]+)/i) {"#{$1}R6#{$2}"}
-      string = string.gsub(/(\d+)BS/i) {"#{$1}R6"}
+
+    if /BS/i =~ string
+      string = string.gsub(/(\d+)HBS([^\d\s][\+\-\d]+)/i) { "#{Regexp.last_match(1)}R6#{Regexp.last_match(2)}[H]" }
+      string = string.gsub(/(\d+)HBS/i) { "#{Regexp.last_match(1)}R6[H]" }
+      string = string.gsub(/(\d+)BS([^\d\s][\+\-\d]+)/i) { "#{Regexp.last_match(1)}R6#{Regexp.last_match(2)}" }
+      string = string.gsub(/(\d+)BS/i) { "#{Regexp.last_match(1)}R6" }
     end
-    
+
     return string
   end
-  
+
   def dice_command_xRn(string, nick_e)
     return tandt_berserk(string, nick_e)
   end
-  
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)  # ゲーム別成功度判定(2D6)
+
+  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
     debug('Tunnels & Trolls check_2D6 begin')
-    
-    return '' unless(signOfInequality == ">=")
-    
+
+    return '' unless signOfInequality == ">="
+
     debug('Tunnels & Trolls check_2D6 pass1')
-    
-    if(dice_n == 3)
+
+    if dice_n == 3
       return " ＞ 自動失敗"
     end
-    
-    if(@diffText == "?")
+
+    if @diffText == "?"
       return getMaxSuccessLevel(total_n, dice_n)
     end
-    
-    if(total_n >= diff)
+
+    if total_n >= diff
       experiencePoint = getExperiencePoint(diff, dice_n)
       return " ＞ 成功 ＞ 経験値#{experiencePoint}"
     end
-    
+
     return " ＞ 失敗"
   end
-  
+
   def getMaxSuccessLevel(total_n, dice_n)
     sucLv = 1
-    
-    while(total_n >= (sucLv * 5 + 15) )
+
+    while total_n >= (sucLv * 5 + 15)
       sucLv += 1
     end
-    
+
     sucLv -= 1
-    
-    if(sucLv <= 0)
+
+    if sucLv <= 0
       return " ＞ 失敗 ＞ 経験値#{dice_n}"
     end
-    
+
     return " ＞ #{sucLv}Lv成功 ＞ 経験値#{dice_n}"
   end
-  
+
   def getDiceRolledAdditionalText(n1, n_max, dice_max)
     debug("getDiceRolledAdditionalText n1, n_max, dice_max", n1, n_max, dice_max)
-    if((n_max > 0) and (dice_max == 6))
+    if (n_max > 0) && (dice_max == 6)
       return " ＞ 悪意#{n_max}"
     end
-    
+
     return ''
   end
-  
+
   def getExperiencePoint(diff, dice_n)
     debug("diff", diff)
     debug("dice_n", dice_n)
-    
-    experiencePoint = ( 1.0 * (diff - 15) / 5 * dice_n )
-    
-    if( is_int?(experiencePoint) )
+
+    experiencePoint = (1.0 * (diff - 15) / 5 * dice_n)
+
+    if is_int?(experiencePoint)
       experiencePoint = experiencePoint.to_i
     else
-      experiencePoint = sprintf("%.1f",experiencePoint )
+      experiencePoint = format("%.1f", experiencePoint)
     end
-    
+
     debug("experiencePoint", experiencePoint)
-    
+
     return experiencePoint
   end
-  
+
   def is_int?(v)
     return (v == v.to_i)
   end
-  
-  
-####################   Tunnels and Trolls Berserk  ########################
+
+  ####################   Tunnels and Trolls Berserk  ########################
   def tandt_berserk(string, nick_e)
     debug('tandt_berserk string', string)
-    
+
     output = "1"
-    
-    return output unless(/(^|\s)S?((\d+)[rR]6([\+\-\d]*)(\[(\w+)\])?)(\s|$)/i =~ string)
+
+    return output unless (m = /(^|\s)S?((\d+)[rR]6([\+\-\d]*)(\[(\w+)\])?)(\s|$)/i.match(string))
+
     debug('tandt_berserk matched')
-    #TKfix メソッドをまたぐと$xの中身がnilになっている
-    reg2 = $2
-    reg3 = $3
-    reg4 = $4
-    reg5 = $5
-    reg6 = $6
-    
-    string = reg2#$2
-    dice_c = reg3.to_i#$3.to_i
+
+    string = m[2]
+    dice_c = m[3].to_i
     bonus = 0
-    bonus = parren_killer("(0#{reg4})").to_i if(reg4)#parren_killer("(0#{$4})").to_i if($4)
+    bonus = parren_killer("(0#{m[4]})").to_i if m[4]
     isHyperBerserk = false
-    isHyperBerserk = true if(reg5 and (reg6 =~ /[Hh]/))#true if($5 and ($6 =~ /[Hh]/))
+    isHyperBerserk = true if m[5] && (m[6] =~ /[Hh]/)
     dice_arr = []
     dice_now = 0
     dice_str = ""
@@ -156,105 +151,103 @@ INFO_MESSAGE_TEXT
     n_max = 0
     total_n = 0
     bonus2 = 0
-    
+
     debug('isHyperBerserk', isHyperBerserk)
-    
+
     # ２回目以降
     dice_arr.push(dice_c)
-    
-    #TKfix end while -> loop do
-    #begin
+
     loop do
       debug('loop dice_arr', dice_arr)
       dice_wk = dice_arr.shift
-      
+
       debug('roll dice_wk d6', dice_wk)
       rollTotal, rollDiceResultText, roll_cnt1, rollDiceMaxCount, roll_n_max, roll_cnt_suc, roll_cnt_re = roll(dice_wk, 6, (sortType & 1))
-      
+
       debug('rollTotal, rollDiceResultText, roll_cnt1, rollDiceMaxCount, roll_n_max, roll_cnt_suc, roll_cnt_re',
-      rollTotal, rollDiceResultText, roll_cnt1, rollDiceMaxCount, roll_n_max, roll_cnt_suc, roll_cnt_re)
-      
-      if(dice_wk >= 2) # ダイスが二個以上
-        
-        dice_num = rollDiceResultText.split(/,/).collect{|i|i.to_i}
+            rollTotal, rollDiceResultText, roll_cnt1, rollDiceMaxCount, roll_n_max, roll_cnt_suc, roll_cnt_re)
+
+      if dice_wk >= 2 # ダイスが二個以上
+
+        dice_num = rollDiceResultText.split(/,/).collect { |i| i.to_i }
         debug('dice_num', dice_num)
-        
+
         diceType = 6
-        
+
         dice_face = []
-        diceType.times do |i|
+        diceType.times do |_i|
           dice_face.push(0)
         end
-        
+
         dice_num.each do |dice_o|
           dice_face[dice_o - 1] += 1
         end
-        
+
         dice_face.each do |dice_o|
-          if( dice_o >= 2 )
-            dice_o += 1 if(isHyperBerserk)
+          if dice_o >= 2
+            dice_o += 1 if isHyperBerserk
             dice_arr.push(dice_o)
           end
         end
-        
-        if(isFirstLoop and (dice_arr.length < 1))
+
+        if isFirstLoop && dice_arr.empty?
           min1 = 0
           min2 = 0
-          
-          diceType.times do|i|
+
+          diceType.times do |i|
             index = diceType - i - 1
             debug('diceType index', index)
-            if( dice_face[index] > 0 )
+            if dice_face[index] > 0
               min2 = min1
               min1 = index
             end
           end
-          
+
           debug("min1, min2", min1, min2)
           bonus2 = -(min2 - min1)
-          rollDiceMaxCount -= 1 if(min2 == 5)
-          
-          if( isHyperBerserk )
+          rollDiceMaxCount -= 1 if min2 == 5
+
+          if isHyperBerserk
             dice_arr.push(3)
           else
             dice_arr.push(2)
           end
         end
       end
-        
+
       dice_now += rollTotal
-      dice_str += "][" if(dice_str != "")
+      dice_str += "][" if dice_str != ""
       dice_str += rollDiceResultText
       n_max += rollDiceMaxCount
       isFirstLoop = false
-      
+
       debug('loop last chek dice_arr', dice_arr)
-      break if (dice_arr.length == 0)
+
+      break if dice_arr.empty?
     end
-    #end while(dice_arr.length != 0)
-    
+
     debug('loop breaked')
-    
+
     debug('dice_now, bonus, bonus2', dice_now, bonus, bonus2)
     total_n = dice_now + bonus + bonus2
-    
+
     dice_str = "[#{dice_str}]"
     output = "#{dice_now}#{dice_str}"
-    
-    if(bonus2 < 0)
+
+    if bonus2 < 0
       debug('bonus2', bonus2)
-      output += "#{bonus2}"
+      output += bonus2.to_s
     end
-    
+
     debug('bonus', bonus)
-    if(bonus > 0)
+    if bonus > 0
       output += "+#{bonus}"
-    elsif(bonus < 0)
-      output += "#{bonus}"
+    elsif bonus < 0
+      output += bonus.to_s
     end
-    
-    if(sendMode > 0)
-      if(output =~ /[^\d\[\]]+/)
+
+    if sendMode > 0
+      if output =~ /[^\d\[\]]+/
         output = "#{nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
       else
         output = "#{nick_e}: (#{string}) ＞ #{total_n}"
@@ -262,10 +255,9 @@ INFO_MESSAGE_TEXT
     else
       output = "#{nick_e}: (#{string}) ＞ #{total_n}"
     end
-    
-    output += " ＞ 悪意#{n_max}" if((n_max > 0))
-    
+
+    output += " ＞ 悪意#{n_max}" if n_max > 0
+
     return output
   end
-  
 end

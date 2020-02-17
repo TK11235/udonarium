@@ -1,0 +1,179 @@
+.is-grab {
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.is-grabbing {
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+.is-3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.is-transition {
+  -webkit-transition: -webkit-transform 132ms linear;
+  transition: transform 132ms linear;
+}
+
+.is-pointer-events-none {
+  pointer-events: none;
+}
+
+.is-pointer-events-auto {
+  pointer-events: auto;
+}
+
+.component {
+  position: absolute;
+  backface-visibility: hidden;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  
+  -moz-user-drag: none;
+  -webkit-user-drag: none;
+
+  width: 0;
+  height:0;
+}
+
+.component-content {
+  height: 100%;
+  width: 100%;
+  transform : translateX(-50%);
+}
+
+.upright-transform {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform-origin: 50% 100%;
+  transform: rotateX(-90deg);
+}
+
+.is-bg-texture {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.is-bg-color {
+  box-sizing: border-box;
+  color: #444;
+  background-color: rgba(240,218,189, 0.9);
+  border: solid 1px #999;
+}
+
+.title {
+  box-sizing: border-box;
+  font-size: 15px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  backface-visibility: hidden;
+}
+
+.is-black-background {
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  overflow: hidden;
+  
+  box-sizing: border-box;
+  background: none;
+  border: none;
+  border-radius: 0px;
+  outline: none;
+
+  color: #444;
+  font-family: Cambria, Georgia;
+  font-size: 1.0rem;
+  padding: 2px;
+  margin: 0;
+  word-break: break-all;
+
+  backface-visibility: hidden;
+}
+
+textarea:focus {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.is-black-background {
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+.is-outline-text {
+  font-size: 24px;
+  color: #444;
+  text-shadow: 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px, 
+  #f2f2f2 0px 0px 0.5px,
+  #f2f2f2 0px 0px 0.5px,
+  #f2f2f2 0px 0px 0.5px;
+}
+
+.rotate-grab {
+  position: absolute;
+  width: 42px;
+  height: 28px;
+  box-sizing: border-box;
+  cursor: -moz-default;
+  cursor: -webkit-default;
+  cursor: default;
+  z-index: 1;
+  text-align: center;
+  padding: 2px;
+  background-color: #CCCCCC;
+  border-radius: 28px;
+  color: #444;
+  font-size: 8px;
+}
+
+.of-left-top {
+  top: -14px;
+  left: -21px;
+}
+
+.of-right-top {
+  top: -14px;
+  right: -21px;
+}
+
+.rotate-grab {
+  opacity: 0;
+}
+
+.component:hover .rotate-grab {
+  opacity: 0.5;
+}
+
+.component:active .rotate-grab {
+  opacity: 0;
+}
+
+.component .rotate-grab:hover, .component .rotate-grab:active {
+  opacity: 1;
+}
+
+.material-icons {
+  display: none;
+}
+
+.component:hover .material-icons, .component:active .material-icons {
+  display: inline;
+}

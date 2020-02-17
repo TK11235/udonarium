@@ -9,7 +9,7 @@
 }
 
 .is-transition {
-  transition: transform 99ms linear, opacity 0.5s ease-out;
+  transition: transform 133ms linear, opacity 0.5s ease-out;
 }
 
 .peer-cursor {

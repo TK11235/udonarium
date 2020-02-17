@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy, NgZone, AfterViewInit, Input } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { TextViewComponent } from '../text-view/text-view.component';
+import { ChatMessage } from '@udonarium/chat-message';
+import { ChatTab } from '@udonarium/chat-tab';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { DiceBot } from '@udonarium/dice-bot';
+import { GameCharacter } from '@udonarium/game-character';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
-import { ChatMessageService } from '../../service/chat-message.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
-
-import { ChatTab } from '../../class/chat-tab';
-import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
-import { GameCharacter } from '../../class/game-character';
-import { PeerCursor } from '../../class/peer-cursor';
-import { DiceBot } from '../../class/dice-bot';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { PeerContext } from '../../class/core/system/network/peer-context';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
+import { ChatTabSettingComponent } from 'component/chat-tab-setting/chat-tab-setting.component';
+import { TextViewComponent } from 'component/text-view/text-view.component';
+import { ChatMessageService } from 'service/chat-message.service';
+import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'chat-window',
@@ -24,8 +24,6 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
     trigger('flyInOut', [
       state('in', style({ transform: 'scale3d(1, 1, 1)' })),
       transition('void => *', [
-        //style({ transform: 'scale3d(0, 0, 0)' }),
-        //animate(100)
         animate('600ms ease', keyframes([
           style({ transform: 'scale3d(0, 0, 0)', offset: 0 }),
           style({ transform: 'scale3d(1.5, 1.5, 1.5)', offset: 0.5 }),
@@ -42,97 +40,143 @@ import { ObjectStore } from '../../class/core/synchronize-object/object-store';
 })
 
 export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
+
   sender: string = 'Guest';
   text: string = '';
   sendTo: string = '';
   get isDirect(): boolean { return this.sendTo != null && this.sendTo.length ? true : false }
-  //gameType: string = '';
   get gameType(): string { return this.chatMessageService.gameType; }
   set gameType(gameType: string) { this.chatMessageService.gameType = gameType; }
   gameHelp: string = '';
 
-  gameCharacters: GameCharacter[] = [];
+  private shouldUpdateCharacterList: boolean = true;
+  private _gameCharacters: GameCharacter[] = [];
+  get gameCharacters(): GameCharacter[] {
+    if (this.shouldUpdateCharacterList) {
+      this.shouldUpdateCharacterList = false;
+      this._gameCharacters = ObjectStore.instance
+        .getObjects<GameCharacter>(GameCharacter)
+        .filter(character => this.allowsChat(character));
+    }
+    return this._gameCharacters;
+  }
+
   gameCharacter: GameCharacter = null;
-  chatTabidentifier: string = '';
-  get chatTab(): ChatTab { return this.objectStore.get<ChatTab>(this.chatTabidentifier); }
+
+  private _chatTabidentifier: string = '';
+  get chatTabidentifier(): string { return this._chatTabidentifier; }
+  set chatTabidentifier(chatTabidentifier: string) {
+    let hasChanged: boolean = this._chatTabidentifier !== chatTabidentifier;
+    this._chatTabidentifier = chatTabidentifier;
+    this.updatePanelTitle();
+    if (hasChanged) {
+      this.scrollToBottom(true);
+      if (this.chatTab) this.chatTab.markForRead();
+    }
+  }
+
+  get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
   maxLogLength: number = 1000;
   isAutoScroll: boolean = true;
+  scrollToBottomTimer: NodeJS.Timer = null;
 
-  eventSystem = EventSystem;
-  objectStore = ObjectStore.instance;
-  //network = Network;
+  private writingEventInterval: NodeJS.Timer = null;
+  private previousWritingLength: number = 0;
+  writingPeers: Map<string, NodeJS.Timer> = new Map();
+  writingPeerNames: string[] = [];
 
-  get network() { return Network; };
   get diceBotInfos() { return DiceBot.diceBotInfos }
-  get myPeer(): PeerCursor { return PeerCursor.myCursor; }//this.objectStore.get<PeerCursor>(this.network.peerId); }
+  get myPeer(): PeerCursor { return PeerCursor.myCursor; }
   get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
     private ngZone: NgZone,
-    //private eventSystem: EventSystem,
-    //private objectStore: objectStore,
-    //private network: Network,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
-    this.sender = this.network.peerId;
-    console.log(this.chatMessageService.chatTabs);
-    this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
+    this.sender = this.myPeer.identifier;
+    this._chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
 
-    this.eventSystem.register(this)
-      .on('BROADCAST_MESSAGE', -1000, event => {
-        if (event.isSendFromSelf) this.scrollToBottom(true);
-        this.checkAutoScroll();
+    EventSystem.register(this)
+      .on('MESSAGE_ADDED', event => {
+        let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
+        if (message && message.isSendFromSelf && event.data.tabIdentifier === this.chatTabidentifier) {
+          this.isAutoScroll = true;
+        } else {
+          this.checkAutoScroll();
+        }
+        if (this.isAutoScroll && event.data.tabIdentifier === this.chatTabidentifier && this.chatTab) this.chatTab.markForRead();
+        let sendFrom = message ? message.from : '?';
+        if (this.writingPeers.has(sendFrom)) {
+          clearTimeout(this.writingPeers.get(sendFrom));
+          this.writingPeers.delete(sendFrom);
+          this.updateWritingPeerNames();
+        }
       })
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        this.gameCharacters = this.objectStore.getObjects<GameCharacter>(GameCharacter);
-      }).on('CLOSE_OTHER_PEER', event => {
-        let object = this.objectStore.get(this.sendTo);
+        if (event.data.aliasName !== GameCharacter.aliasName) return;
+        this.shouldUpdateCharacterList = true;
+        if (this.gameCharacter && !this.allowsChat(this.gameCharacter)) {
+          this.gameCharacter = null;
+          this.sender = this.myPeer.identifier;
+        }
+      })
+      .on('DISCONNECT_PEER', event => {
+        let object = ObjectStore.instance.get(this.sendTo);
         if (object instanceof PeerCursor && object.peerId === event.data.peer) {
           this.sendTo = '';
         }
+      })
+      .on<string>('WRITING_A_MESSAGE', event => {
+        if (event.isSendFromSelf || event.data !== this.chatTabidentifier) return;
+        this.ngZone.run(() => {
+          if (this.writingPeers.has(event.sendFrom)) clearTimeout(this.writingPeers.get(event.sendFrom));
+          this.writingPeers.set(event.sendFrom, setTimeout(() => {
+            this.writingPeers.delete(event.sendFrom);
+            this.updateWritingPeerNames();
+          }, 2000));
+          this.updateWritingPeerNames();
+        });
       });
     this.updatePanelTitle();
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.scrollToBottom(true);
-    }, 0);
+    this.scrollToBottom(true);
   }
 
   ngOnDestroy() {
-    this.eventSystem.unregister(this);
+    EventSystem.unregister(this);
+  }
+
+  private updateWritingPeerNames() {
+    this.writingPeerNames = Array.from(this.writingPeers.keys()).map(peerId => {
+      let peer = PeerCursor.find(peerId);
+      return peer ? peer.name : '';
+    });
   }
 
   // @TODO やり方はもう少し考えた方がいいい
   scrollToBottom(isForce: boolean = false) {
-    if (!this.panelService.scrollablePanel) return;
-    /*
-    console.log('scrollToBottom scrollTop', this.panelService.scrollablePanel.scrollTop);
-    console.log('scrollToBottom scrollHeight', this.panelService.scrollablePanel.scrollHeight);
-    console.log('scrollToBottom offsetHeight', this.panelService.scrollablePanel.offsetHeight);
-    console.log('scrollToBottom clientHeight', this.panelService.scrollablePanel.clientHeight);
-    */
-    let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
-
-    if (isForce || this.isAutoScroll) {
-      //console.log('scrollToBottom!!!!!!');
-      setTimeout(() => {
-        //console.log('scrollToBottom scrollHeight2', this.panelService.scrollablePanel.scrollHeight);
-        this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
-      }, 0);
-    }
+    if (isForce) this.isAutoScroll = true;
+    if (this.scrollToBottomTimer != null || !this.isAutoScroll) return;
+    this.scrollToBottomTimer = setTimeout(() => {
+      if (this.chatTab) this.chatTab.markForRead();
+      this.scrollToBottomTimer = null;
+      this.isAutoScroll = false;
+      if (this.panelService.scrollablePanel) this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
+    }, 0);
   }
 
   // @TODO
   checkAutoScroll() {
     if (!this.panelService.scrollablePanel) return;
     let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
-    if (top <= this.panelService.scrollablePanel.scrollTop) {
+    if (top - 150 <= this.panelService.scrollablePanel.scrollTop) {
       this.isAutoScroll = true;
     } else {
       this.isAutoScroll = false;
@@ -148,12 +192,11 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSelectedTab(identifier: string) {
-    //this.chatTabidentifier = identifier;
     this.updatePanelTitle();
   }
 
   onSelectedCharacter(identifier: string) {
-    let object = this.objectStore.get(identifier);
+    let object = ObjectStore.instance.get(identifier);
     if (object instanceof GameCharacter) {
       this.gameCharacter = object;
     } else {
@@ -208,49 +251,75 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  sendChat() {
+  sendChat(event: KeyboardEvent) {
+    if (event) event.preventDefault();
+
     if (!this.text.length) return;
+    if (event && event.keyCode !== 13) return;
 
-    if (!this.sender.length) this.sender = this.network.peerId;
-
-    let time = this.chatMessageService.getTime();
-    console.log('time:' + time);
-    let chatMessage: ChatMessageContext = {
-      from: this.network.peerContext.id,
-      name: this.sender,
-      text: this.text,
-      timestamp: time,
-      tag: this.gameType,
-      imageIdentifier: '',
-      responseIdentifier: '',
-    };
-
-    if (this.sender === this.network.peerId || !this.gameCharacter) {
-      chatMessage.imageIdentifier = this.myPeer.imageIdentifier;
-      chatMessage.name = this.myPeer.name;
-    } else if (this.gameCharacter) {
-      chatMessage.imageIdentifier = (this.gameCharacter.imageFile ? this.gameCharacter.imageFile.identifier : '');
-      chatMessage.name = this.gameCharacter.name;
+    if (!this.sender.length) this.sender = this.myPeer.identifier;
+    if (this.chatTab) {
+      this.chatMessageService.sendMessage(this.chatTab, this.text, this.gameType, this.sender, this.sendTo);
     }
+    this.text = '';
+    this.previousWritingLength = this.text.length;
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.value = '';
+    this.calcFitHeight();
+  }
 
-    if (this.sendTo != null && this.sendTo.length) {
-      let name = '';
-      let object = this.objectStore.get(this.sendTo);
-      if (object instanceof GameCharacter) {
-        name = object.name;
-        chatMessage.to = object.identifier;
-      } else if (object instanceof PeerCursor) {
-        name = object.name;
-        let peer = PeerContext.create(object.peerId);
-        if (peer) chatMessage.to = peer.id;
+  showTabSetting() {
+    let coordinate = this.pointerDeviceService.pointers[0];
+    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 500, height: 350 };
+    let component = this.panelService.open<ChatTabSettingComponent>(ChatTabSettingComponent, option);
+    component.selectedTab = this.chatTab;
+  }
+
+  onInput() {
+    if (this.writingEventInterval === null && this.previousWritingLength <= this.text.length) {
+      let sendTo: string = null;
+      if (this.isDirect) {
+        let object = ObjectStore.instance.get(this.sendTo);
+        if (object instanceof PeerCursor) {
+          let peer = PeerContext.create(object.peerId);
+          if (peer) sendTo = peer.id;
+        }
       }
-      chatMessage.name += ' > ' + name;
+      EventSystem.call('WRITING_A_MESSAGE', this.chatTabidentifier, sendTo);
+      this.writingEventInterval = setTimeout(() => {
+        this.writingEventInterval = null;
+      }, 200);
     }
-    console.log(chatMessage);
+    this.previousWritingLength = this.text.length;
+    this.calcFitHeight();
+  }
 
-    //this.eventSystem.call('BROADCAST_MESSAGE', chatMessage);
-    if (this.chatTab) this.chatTab.addMessage(chatMessage);
-    //this.scrollToBottom(true);
-    this.text = "";
+  calcFitHeight() {
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.style.height = '';
+    if (textArea.scrollHeight >= textArea.offsetHeight) {
+      textArea.style.height = textArea.scrollHeight + 'px';
+    }
+  }
+
+  private allowsChat(gameCharacter: GameCharacter): boolean {
+    switch (gameCharacter.location.name) {
+      case 'table':
+      case this.myPeer.peerId:
+        return true;
+      case 'graveyard':
+        return false;
+      default:
+        for (const conn of Network.peerContexts) {
+          if (conn.isOpen && gameCharacter.location.name === conn.fullstring) {
+            return false;
+          }
+        }
+        return true;
+    }
+  }
+
+  trackByChatTab(index: number, chatTab: ChatTab) {
+    return chatTab.identifier;
   }
 }

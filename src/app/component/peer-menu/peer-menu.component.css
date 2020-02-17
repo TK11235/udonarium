@@ -14,8 +14,8 @@
   vertical-align: bottom;
 }
 
-.contain {
-  background-position: center center;
+.cover {
+  background-position: center top;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 }

@@ -1,6 +1,13 @@
+import { EventSystem } from '../system';
+import { setZeroTimeout } from '../system/util/zero-timeout';
 import { GameObject, ObjectContext } from './game-object';
-import { ObjectFactory, Type } from './object-factory';
-import { EventSystem } from '../system/system';
+import { Type } from './object-factory';
+
+type ObjectAliasName = string;
+type ObjectIdentifier = string;
+type TimeStamp = number;
+
+export type CatalogItem = { identifier: string, version: number };
 
 export class ObjectStore {
   private static _instance: ObjectStore
@@ -9,71 +16,75 @@ export class ObjectStore {
     return ObjectStore._instance;
   }
 
-  private identifierHash: { [identifier: string]: GameObject } = {};
-  private classHash: { [aliasName: string]: GameObject[] } = {};
-  //private garbageHash: { [identifier: string]: { context: ObjectContext, timeStamp: number } } = {};
-  private garbageHash: { [identifier: string]: { aliasName: string, timeStamp: number } } = {};
+  private identifierMap: Map<ObjectIdentifier, GameObject> = new Map();
+  private aliasNameMap: Map<ObjectAliasName, Map<ObjectIdentifier, GameObject>> = new Map();
+  private garbageMap: Map<ObjectIdentifier, TimeStamp> = new Map();
 
-  private queue: { [identifier: string]: ObjectContext } = {};
-  private updateInterval: NodeJS.Timer = null;
+  private queueMap: Map<ObjectIdentifier, ObjectContext> = new Map();
+  private updateInterval: number = null;
   private garbageCollectionInterval: NodeJS.Timer = null;
   private updateCallback = () => { this.updateQueue(); }
 
   private constructor() { console.log('ObjectStore ready...'); };
 
-  add(object: GameObject) {
-    //console.log('addGameObject() ' + object.identifier);
-    if (this.identifierHash[object.identifier] != null) return;
-    this.identifierHash[object.identifier] = object;
-    let objects = this._getObjects(object.aliasName);
-    objects.push(object);
-  }
-
-  delete(object: GameObject, needCallEvent: boolean = true): GameObject {
-    if (!this.identifierHash[object.identifier]) return null;
-    //console.warn('deleteGameObject()', object.identifier);
-
-    let objects = this._getObjects(object.aliasName);
-    let index = objects.indexOf(object);
-    if (-1 < index) objects.splice(index, 1);
-    delete this.identifierHash[object.identifier];
-
-    this.garbageCollection(10 * 60 * 1000);
-
-    //let garbage: ObjectContext = object.destroy();
-    /* */
-    EventSystem.unregister(object);
-    //let garbage = object.toContext();
-    /* */
-    if (needCallEvent) {
-      this.garbageHash[object.identifier] = { aliasName: object.identifier, timeStamp: performance.now() };
-      EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
-    }
+  add(object: GameObject, shouldBroadcast: boolean = true): GameObject {
+    if (this.get(object.identifier) != null || this.isDeleted(object.identifier)) return null;
+    this.identifierMap.set(object.identifier, object);
+    let objectsMap = this.aliasNameMap.has(object.aliasName) ? this.aliasNameMap.get(object.aliasName) : this.aliasNameMap.set(object.aliasName, new Map()).get(object.aliasName);
+    objectsMap.set(object.identifier, object);
+    object.onStoreAdded();
+    if (shouldBroadcast) this.update(object.toContext());
     return object;
   }
 
+  remove(object: GameObject): GameObject {
+    if (!this.identifierMap.has(object.identifier)) return null;
+
+    this.identifierMap.delete(object.identifier);
+    let objectsMap = this.aliasNameMap.get(object.aliasName);
+    if (objectsMap) objectsMap.delete(object.identifier);
+    object.onStoreRemoved();
+    return object;
+  }
+
+  delete(object: GameObject, shouldBroadcast?: boolean): GameObject
+  delete(identifier: string, shouldBroadcast?: boolean): GameObject
+  delete(arg: any, shouldBroadcast: boolean = true) {
+    let object: GameObject = null;
+    let identifier: string = null;
+    if (typeof arg === 'string') {
+      object = this.get(arg);
+      identifier = arg;
+    } else {
+      object = arg;
+      identifier = arg.identifier;
+    }
+    this.markForDelete(identifier);
+    return object == null ? null : this._delete(object, shouldBroadcast);
+  }
+
+  private _delete(object: GameObject, shouldBroadcast: boolean): GameObject {
+    if (this.remove(object) === null) return null;
+    if (shouldBroadcast) EventSystem.call('DELETE_GAME_OBJECT', { identifier: object.identifier });
+
+    return object;
+  }
+
+  private markForDelete(identifier: string) {
+    this.garbageMap.set(identifier, performance.now());
+    this.garbageCollection(10 * 60 * 1000);
+  }
+
   get<T extends GameObject>(identifier: string): T {
-    let object: T = <T>this.identifierHash[identifier];
-    return object ? object : null;
+    return this.identifierMap.has(identifier) ? <T>this.identifierMap.get(identifier) : null;
   }
 
   getObjects<T extends GameObject>(constructor: Type<T>): T[]
   getObjects<T extends GameObject>(aliasName: string): T[]
   getObjects<T extends GameObject>(): T[]
   getObjects<T extends GameObject>(arg?: any): T[] {
-    return this._getObjects<T>(arg).concat();
-  }
-
-  private _getObjects<T extends GameObject>(constructor: Type<T>): T[]
-  private _getObjects<T extends GameObject>(aliasName: string): T[]
-  private _getObjects<GameObject>(): GameObject[]
-  private _getObjects<T extends GameObject>(arg?: any): T[] {
     if (arg == null) {
-      let objects: T[] = [];
-      for (let identifier in this.identifierHash) {
-        objects.push(<T>this.identifierHash[identifier]);
-      }
-      return objects;
+      return <T[]>Array.from(this.identifierMap.values());
     }
     let aliasName = '';
     if (typeof arg === 'string') {
@@ -82,17 +93,7 @@ export class ObjectStore {
       aliasName = arg.aliasName;
     }
 
-    if (!(aliasName in this.classHash)) {
-      this.classHash[aliasName] = [];
-    }
-
-    return <T[]>this.classHash[aliasName];
-  }
-
-  getDeletedObject(identifier: string): string {
-    this.garbageCollection(10 * 60 * 1000);
-    let garbage = this.garbageHash[identifier];
-    return garbage ? garbage.aliasName : null;
+    return this.aliasNameMap.has(aliasName) ? <T[]>Array.from(this.aliasNameMap.get(aliasName).values()) : [];
   }
 
   update(identifier: string)
@@ -107,35 +108,40 @@ export class ObjectStore {
     }
     if (!context) return;
 
-    if (this.queue[context.identifier]) {
-      let queue = this.queue[context.identifier];
+    if (this.queueMap.has(context.identifier)) {
+      let queue = this.queueMap.get(context.identifier);
       for (let key in context) {
         queue[key] = context[key];
       }
       return;
     }
     EventSystem.call('UPDATE_GAME_OBJECT', context);
-    this.queue[context.identifier] = context;
+    this.queueMap.set(context.identifier, context);
     if (this.updateInterval === null) {
-      this.updateInterval = setTimeout(this.updateCallback, 0);
+      this.updateInterval = setZeroTimeout(this.updateCallback);
     }
   }
 
   private updateQueue() {
-    this.queue = {};
+    this.queueMap.clear();
     this.updateInterval = null;
   }
 
-  synchronize() {
-    for (let identifier in this.identifierHash) {
-      this.identifierHash[identifier].update(false);
-    }
+  isDeleted(identifier: string) {
+    let timeStamp = this.garbageMap.get(identifier);
+    return timeStamp != null;
   }
 
-  isDeleted(identifier: string, compare?: ObjectContext) {
-    let garbage = this.getDeletedObject(identifier);
-    if (!garbage) return false;
-    return true;
+  getCatalog(): CatalogItem[] {
+    let catalog: CatalogItem[] = [];
+    for (let object of this.identifierMap.values()) {
+      catalog.push({ identifier: object.identifier, version: object.version });
+    }
+    return catalog;
+  }
+
+  clearDeleteHistory() {
+    this.garbageMap.clear();
   }
 
   private garbageCollection(garbage: ObjectContext)
@@ -143,21 +149,31 @@ export class ObjectStore {
   private garbageCollection(arg: any) {
     if (typeof arg === 'number') {
       if (this.garbageCollectionInterval === null) {
-        this.garbageCollectionInterval = setTimeout(() => { this.garbageCollectionInterval = null }, 100);
+        this.garbageCollectionInterval = setTimeout(() => { this.garbageCollectionInterval = null }, 1000);
         this._garbageCollection(arg);
       }
     } else {
-      delete this.garbageHash[arg.identifier];
+      this.garbageMap.delete(arg.identifier);
     }
   }
 
   private _garbageCollection(ms: number) {
-    let nowDate = performance.now();//Date.now();
-    for (let identifier in this.garbageHash) {
-      if (this.garbageHash[identifier].timeStamp + ms < nowDate) {
-        delete this.garbageHash[identifier];
-      }
+    let nowDate = performance.now();
+
+    let checkLength = this.garbageMap.size - 100000;
+    if (checkLength < 1) return;
+
+    let entries = this.garbageMap.entries();
+    while (checkLength < 1) {
+      checkLength--;
+      let item = entries.next();
+      if (item.done) break;
+
+      let identifier = item.value[0];
+      let timeStamp = item.value[1];
+
+      if (timeStamp + ms < nowDate) continue;
+      this.garbageMap.delete(identifier);
     }
   }
 }
-setTimeout(function () { ObjectStore.instance; }, 0);

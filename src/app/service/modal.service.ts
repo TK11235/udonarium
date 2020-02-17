@@ -1,16 +1,10 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef, } from "@angular/core";
-//import { ModalComponent } from '../component/modal/modal.component';
+import { ComponentFactoryResolver, ComponentRef, Injectable, Injector, ViewContainerRef } from '@angular/core';
 
 /*
 thanks
 http://qiita.com/Quramy/items/ccfcfa0e45dd9e43f041
 http://qiita.com/alclimb/items/1c740a432c10b6dc700a
 */
-
-declare var Type: FunctionConstructor;
-interface Type<T> extends Function {
-  new (...args: any[]): T;
-}
 
 class ModalContext {
   constructor(
@@ -33,12 +27,12 @@ class ModalContext {
 export class ModalService {
   private modalContext: ModalContext = null;
   private count = 0;
-  
+
   title: string = '無名のモーダル';
 
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
-  static ModalComponentClass: { new (...args: any[]): any } = null;
+  static ModalComponentClass: { new(...args: any[]): any } = null;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver
@@ -52,11 +46,9 @@ export class ModalService {
     return this.count > 0;
   }
 
-  open<T>(childComponent: { new (...args: any[]) }, option?, parentViewContainerRef?: ViewContainerRef): Promise<T> {
-    if (this.isShow) return;
+  open<T>(childComponent: { new(...args: any[]) }, option?, parentViewContainerRef?: ViewContainerRef): Promise<T> {
     if (!parentViewContainerRef) {
       parentViewContainerRef = ModalService.defaultParentViewContainerRef;
-      console.log('Modal Open', parentViewContainerRef);
     }
     let panelComponentRef: ComponentRef<any>;
     return new Promise<T>((resolve, reject) => {
@@ -77,37 +69,20 @@ export class ModalService {
         }
       };
 
-      /*
-      const bindings = ReflectiveInjector.resolve([
-        { provide: ModalContext, useValue: new ModalContext(_resolve, _reject) }
-      ]);
-      */
       const childModalService: ModalService = new ModalService(this.componentFactoryResolver);
       childModalService.modalContext = new ModalContext(_resolve, _reject, option);
 
-      const providers = ReflectiveInjector.resolve([
-        { provide: ModalService, useValue: childModalService }
-      ]);
       const parentInjector = parentViewContainerRef.injector;//parentViewContainerRef.parentInjector;
-      const injector = ReflectiveInjector.fromResolvedProviders(providers, parentInjector);
-
-      // componentRef作成
-      /* 基本コード */
-      //componentRef = parentViewContainerRef.createComponent(componentFactory, parentViewContainerRef.length, injector);
-      //parentViewContainerRef.element.nativeElement.appendChild(componentRef.location.nativeElement);
-      /* ---------- */
+      const injector = Injector.create([{ provide: ModalService, useValue: childModalService }], parentInjector);
 
       const panelComponentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalService.ModalComponentClass);
       const bodyComponentFactory = this.componentFactoryResolver.resolveComponentFactory(childComponent);
       panelComponentRef = parentViewContainerRef.createComponent(panelComponentFactory, parentViewContainerRef.length, injector);
       panelComponentRef.instance.content.createComponent(bodyComponentFactory);
-      //panelComponentRef.instance.modalService = childModalService;
 
       panelComponentRef.onDestroy(() => {
         this.count--;
       });
-
-      //panelComponentRef = createModalComponent(this.componentFactoryResolver, parentViewContainerRef, childComponent, injector);
 
       this.count++;
     });

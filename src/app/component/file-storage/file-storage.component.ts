@@ -1,22 +1,22 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
-import { PanelService } from '../../service/panel.service';
-import { ModalService } from '../../service/modal.service';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { Network, EventSystem } from '../../class/core/system/system';
+import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { EventSystem, Network } from '@udonarium/core/system';
+
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'file-storage',
   templateUrl: './file-storage.component.html',
   styleUrls: ['./file-storage.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  fileStorageService = FileStorage.instance;
+  fileStorageService = ImageStorage.instance;
   constructor(
-    //private fileStorageService: FileStorageService,
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService
   ) { }
@@ -26,9 +26,8 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    EventSystem.register(this).on('SYNCHRONIZE_FILE_LIST', 0, event => {
+    EventSystem.register(this).on('SYNCHRONIZE_FILE_LIST', event => {
       if (event.isSendFromSelf) {
-        console.log('FileStorageComponent changeDetector.markForCheck');
         this.changeDetector.markForCheck();
       }
     });
@@ -38,9 +37,13 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.unregister(this);
   }
 
+  handleFileSelect(event: Event) {
+    let files = (<HTMLInputElement>event.target).files;
+    if (files.length) FileArchiver.instance.load(files);
+  }
+
   onSelectedFile(file: ImageFile) {
     console.log('onSelectedFile', file);
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
   }
-
 }

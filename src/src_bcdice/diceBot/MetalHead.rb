@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
 class MetalHead < DiceBot
-  setPrefixes(['AR','SR','HR<=.+','CC','ACT','ACL','ACS','CRC[A-Z]\d+'])
+  setPrefixes(['AR', 'SR', 'HR<=.+', 'CC', 'ACT', 'ACL', 'ACS', 'CRC[A-Z]\d+'])
 
   def initialize
     super
   end
-  
+
   def gameName
     'メタルヘッド'
   end
-  
+
   def gameType
     "MetalHead"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 ・アビリティロール  AR>=目標値
@@ -37,13 +37,12 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     debug("rollDiceCommand", command)
-    
+
     tableName   = ""
     tableNumber = ""
     tableResult = ""
-    
+
     case command.upcase
     when /^CC/
       tableName, tableResult, tableNumber = mh_cc_table
@@ -52,73 +51,72 @@ MESSAGETEXT
     when /^ACS/
       tableName, tableResult, tableNumber = mh_acs_table
     when /^CRC(\w)(\d+)/
-      tableName, tableResult, tableNumber = mh_crc_table($1, $2)
+      tableName, tableResult, tableNumber = mh_crc_table(Regexp.last_match(1), Regexp.last_match(2))
     when /^HR<=(.+)$/
-      target = parren_killer("(" + $1 + ")").to_i
+      target = parren_killer("(" + Regexp.last_match(1) + ")").to_i
       return rollHit(target)
     end
-    
-    if(! tableName.empty?)
+
+    unless tableName.empty?
       return "#{tableName} ＞ #{tableNumber} ＞ #{tableResult}"
     end
-
   end
-  
+
   def changeText(string)
-    string = string.gsub(/^(S)?AR/i) { "#{$1}2D6" }
-    string = string.gsub(/^(S)?SR/i) { "#{$1}1D100" }
+    string = string.gsub(/^(S)?AR/i) { "#{Regexp.last_match(1)}2D6" }
+    string = string.gsub(/^(S)?SR/i) { "#{Regexp.last_match(1)}1D100" }
     return string
   end
-  
-  def check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    return '' if(signOfInequality != ">=")
-    return '' if(diff == "?")
-    
-    return " ＞ 絶対成功" if(dice_n >= 12)
-    return " ＞ 絶対失敗" if(dice_n <=2)
-    
-    return " ＞ 成功" if(totalValue >= diff)
+
+  def check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
+    return '' if signOfInequality != ">="
+    return '' if diff == "?"
+
+    return " ＞ 絶対成功" if dice_n >= 12
+    return " ＞ 絶対失敗" if dice_n <= 2
+
+    return " ＞ 成功" if totalValue >= diff
+
     return " ＞ 失敗"
   end
-  
-  
+
   def rollHit(target)
     total, = roll(1, 100)
     resultText = getHitResult(total, total, target)
-    
+
     text = "(1D100<=#{target}) ＞ #{total}#{resultText}"
-    
+
     return text
   end
-  
-  def check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    return '' unless( signOfInequality == '<=' )
-    
+
+  def check_1D100(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
+    return '' unless signOfInequality == '<='
+
     return getResult(total_n, dice_n, diff)
   end
-  
-  def getHitResult(total_n, dice_n, diff)
+
+  def getHitResult(total_n, _dice_n, diff)
     diceValue = total_n % 100
     dice1 = diceValue % 10 # 1の位を代入
-    
+
     debug("total_n", total_n)
-    
-    return ' ＞ 失敗' if(total_n > diff)
-    
-    return ' ＞ 成功（クリティカル）' if( dice1 == 1 )
-    return ' ＞ 失敗（アクシデント）' if( dice1 == 0 )
+
+    return ' ＞ 失敗' if total_n > diff
+
+    return ' ＞ 成功（クリティカル）' if  dice1 == 1
+    return ' ＞ 失敗（アクシデント）' if  dice1 == 0
+
     return ' ＞ 成功'
   end
-  
+
   def getResult(total_n, dice_n, diff)
-    
-    return ' ＞ 絶対成功' if( dice_n <= 5)
-    return ' ＞ 絶対失敗' if( dice_n >= 96 )
-    
-    return ' ＞ 成功' if(total_n <= diff)
+    return ' ＞ 絶対成功' if  dice_n <= 5
+    return ' ＞ 絶対失敗' if  dice_n >= 96
+
+    return ' ＞ 成功' if total_n <= diff
+
     return ' ＞ 失敗'
   end
-
 
   def mh_cc_table
     name = "クリティカルチャート"
@@ -179,33 +177,33 @@ MESSAGETEXT
 
     suv = suv.to_s.upcase
     numbuf = num.to_i
-    if(numbuf < 1)
+    if numbuf < 1
       return name, '数値が不正です', num
     end
 
     num_d1 = numbuf % 10
     debug("num_d1[#{num_d1}]")
-    if( num_d1 == 1 )
-      numbuf = numbuf + 1
+    if num_d1 == 1
+      numbuf += 1
     end
-    if( num_d1 == 0 )
-      numbuf = numbuf - 1
+    if num_d1 == 0
+      numbuf -= 1
     end
     num_d1 = numbuf % 10
     debug("num_d1[#{num_d1}]")
 
     table_point = [
-		nil, #0
-		nil, #1
-		"腕部", #2
-		"腕部", #3
-		"脚部", #4
-		"脚部", #5
-		"胴部", #6
-		"胴部", #7
-		"胴部", #8
-		"頭部", #9
-	]
+      nil, # 0
+      nil, # 1
+      "腕部", # 2
+      "腕部", # 3
+      "脚部", # 4
+      "脚部", # 5
+      "胴部", # 6
+      "胴部", # 7
+      "胴部", # 8
+      "頭部", # 9
+    ]
 
     table_damage = {
       'S' => [ {'N' => 2}, {'LW' => 16}, {'MD' => 46}, {'MW' => 56}, {'HD' => 76}, {'HW' => 96}, {'MO' => 106}, {'K' => 116} ],
@@ -219,34 +217,32 @@ MESSAGETEXT
       'M' => [ {'0'  => 2}, {'1' => 22}, {'2' => 42}, {'3' => 62}, {'4' => 82}, {'5' => 92}, {'6' => 102}, {'8' => 112} ],
     }
 
-    if(table_damage[suv].nil?)
+    if table_damage[suv].nil?
       return name, "耐久レベル(SUV)[#{suv}] ＞ 耐久レベル(SUV)の値が不正です", num
     end
 
     damage_level = ''
-    table_damage[suv].each {|v|
-      v.each{|d,n|
+    table_damage[suv].each do |v|
+      v.each do |d, n|
         debug("suv[#{suv}] #{v} #{d} #{n}")
-        if(n <= numbuf)
+        if n <= numbuf
           damage_level = d
-        end 
-      }
-    }
+        end
+      end
+    end
 
     result = ""
-    
-    if(numbuf != num.to_i)
+
+    if numbuf != num.to_i
       result = "#{numbuf} ＞ "
     end
 
-    if(suv == 'M')
+    if suv == 'M'
       result += "耐物 ＞ HP[#{damage_level}]"
     else
       result += "耐久レベル(SUV)[#{suv}] ＞ 部位[#{table_point[num_d1]}] ： 損傷種別[#{damage_level}]"
     end
-    
+
     return name, result, num
   end
-
 end
-

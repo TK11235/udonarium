@@ -1,11 +1,12 @@
-import { FileStorage } from './file-storage';
-import { AudioStorage } from './audio-storage';
-import { Base64 } from './base64';
-import { MimeType } from './mime-type';
-import { EventSystem } from '../system/system';
-
+import { saveAs } from 'file-saver';
 import * as JSZip from 'jszip/dist/jszip.min.js';
-//import * as JSZip from 'jszip';
+
+import { EventSystem } from '../system';
+import { XmlUtil } from '../system/util/xml-util';
+import { AudioStorage } from './audio-storage';
+import { FileReaderUtil } from './file-reader-util';
+import { ImageStorage } from './image-storage';
+import { MimeType } from './mime-type';
 
 export class FileArchiver {
   private static _instance: FileArchiver
@@ -20,9 +21,6 @@ export class FileArchiver {
 
   private constructor() {
     console.log('FileArchiver ready...');
-    window.addEventListener('beforeunload', event => {
-      this.destroy();
-    });
   }
 
   initialize() {
@@ -67,9 +65,9 @@ export class FileArchiver {
     event.stopPropagation();
     event.preventDefault();
 
-    let dataTransfer = event.dataTransfer;
     console.log('onDrop', event.dataTransfer);
-    this.load(dataTransfer.files);
+    let files = event.dataTransfer.files
+    this.load(files);
   };
 
   async load(files: File[])
@@ -79,8 +77,9 @@ export class FileArchiver {
     for (let i = 0; i < length; i++) {
       await this.handleImage(files[i]);
       await this.handleAudio(files[i]);
-      this.handleText(files[i]);
+      await this.handleText(files[i]);
       await this.handleZip(files[i]);
+      EventSystem.trigger('FILE_LOADED', { file: files[i] });
     }
   }
 
@@ -88,29 +87,25 @@ export class FileArchiver {
     if (file.type.indexOf('image/') < 0) return;
     console.log(file.name + ' type:' + file.type);
     if (2 * 1024 * 1024 < file.size) return;
-    await FileStorage.instance.addAsync(file);
+    await ImageStorage.instance.addAsync(file);
   }
 
   private async handleAudio(file: File) {
     if (file.type.indexOf('audio/') < 0) return;
     console.log(file.name + ' type:' + file.type);
     if (10 * 1024 * 1024 < file.size) return;
-    //await FileStorage.instance.addAsync(file);
-    console.warn('handleAudio() is not implemented. test play....');
-    let audio = await AudioStorage.instance.addAsync(file);
+    await AudioStorage.instance.addAsync(file);
   }
 
-  private handleText(file: File) {
+  private async handleText(file: File): Promise<void> {
     if (file.type.indexOf('text/') < 0) return;
     console.log(file.name + ' type:' + file.type);
-    if (10 * 1024 * 1024 < file.size) return;
-
-    let reader = new FileReader();
-    reader.onload = (event) => {
-      let xml: string = reader.result;
-      EventSystem.trigger('XML_PARSE', { xml: xml });
+    try {
+      let xmlElement: Element = XmlUtil.xml2element(await FileReaderUtil.readAsTextAsync(file));
+      if (xmlElement) EventSystem.trigger('XML_LOADED', { xmlElement: xmlElement });
+    } catch (reason) {
+      console.warn(reason);
     }
-    reader.readAsText(file);
   }
 
   private async handleZip(file: File) {
@@ -122,7 +117,9 @@ export class FileArchiver {
       console.warn(reason);
       return;
     }
-    zip.forEach(async (relativePath, zipEntry) => {
+    let zipEntrys = [];
+    zip.forEach((relativePath, zipEntry) => zipEntrys.push(zipEntry));
+    for (let zipEntry of zipEntrys) {
       try {
         let arraybuffer = await zipEntry.async('arraybuffer');
         console.log(zipEntry.name + ' 解凍...', arraybuffer);
@@ -130,7 +127,7 @@ export class FileArchiver {
       } catch (reason) {
         console.warn(reason);
       }
-    });
+    }
   }
 
   save(files: File[], zipName: string)
@@ -145,15 +142,12 @@ export class FileArchiver {
       zip.file(file.name, file);
     }
 
-    zip.generateAsync({ type: 'blob' }).then(blob => {
-      let a = document.createElement('a');
-      a.href = window.URL.createObjectURL(blob);
-      a.target = '_blank';
-      a.download = zipName + '.zip';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(a.href);
-    });
+    zip.generateAsync({
+      type: 'blob',
+      compression: 'DEFLATE',
+      compressionOptions: {
+        level: 6
+      }
+    }).then(blob => saveAs(blob, zipName + '.zip'));
   }
 }
-setTimeout(function () { FileArchiver.instance; }, 0);

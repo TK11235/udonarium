@@ -1,12 +1,9 @@
-import { GameTableMask } from './game-table-mask';
-import { TabletopObject } from './tabletop-object';
-
-import { AudioFile, AudioFileContext } from './core/file-storage/audio-file';
+import { AudioFile } from './core/file-storage/audio-file';
+import { AudioPlayer } from './core/file-storage/audio-player';
 import { AudioStorage } from './core/file-storage/audio-storage';
-import { Network, EventSystem } from './core/system/system';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { GameObject, ObjectContext } from './core/synchronize-object/game-object';
+import { EventSystem } from './core/system';
 
 @SyncObject('jukebox')
 export class Jukebox extends GameObject {
@@ -17,21 +14,23 @@ export class Jukebox extends GameObject {
 
   get audio(): AudioFile { return AudioStorage.instance.get(this.audioIdentifier); }
 
-  private source: AudioBufferSourceNode = null;
+  private audioPlayer: AudioPlayer = new AudioPlayer();
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
-    EventSystem.register(this)
-      .on('PLAY_BGM', 0, event => {
-      })
-      .on('STOP_BGM', 0, event => {
-      });
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    this.unlockAfterUserInteraction();
+  }
+
+  // GameObject Lifecycle
+  onStoreRemoved() {
+    super.onStoreRemoved();
+    this._stop();
   }
 
   play(identifier: string, isLoop: boolean = false) {
     let audio = AudioStorage.instance.get(identifier);
-    if (!audio) return;
-    this.stop();
+    if (!audio || !audio.isReady) return;
     this.audioIdentifier = identifier;
     this.isPlaying = true;
     this.isLoop = isLoop;
@@ -39,73 +38,46 @@ export class Jukebox extends GameObject {
   }
 
   private _play() {
-    if (!this.isPlaying) return;
-    let audio = AudioStorage.instance.get(this.audioIdentifier);
-    EventSystem.unregister(this, 'UPDATE_AUDIO_RESOURE');
-    if (!audio || !audio.blob) {
-      EventSystem.register(this)
-        .on('UPDATE_AUDIO_RESOURE', -100, event => {
-          this.stop();
-          this.play(this.audioIdentifier, this.isLoop);
-        });
+    this._stop();
+    if (!this.audio || !this.audio.isReady) {
+      this.playAfterFileUpdate();
       return;
     }
-    this.createBufferSourceAsync(audio).then(() => {
-      if (audio.buffer) {
-        let source = AudioStorage.audioContext.createBufferSource();
-        source.buffer = audio.buffer;
-        source.onended = () => {
-          console.log('Jukebox has finished playing. ');
-          this.stop();
-        }
-        source.connect(AudioStorage.rootNode);
-        source.loop = this.isLoop;
-        source.start(0);
-        this.source = source;
-        console.log('Jukebox has started. ');
-      }
-    });
+    this.audioPlayer.loop = true;
+    this.audioPlayer.play(this.audio);
   }
 
   stop() {
-    if (this.source) {
-      this.audioIdentifier = '';
-      this.isPlaying = false;
-    }
+    this.audioIdentifier = '';
+    this.isPlaying = false;
     this._stop();
   }
 
   private _stop() {
-    if (this.source) {
-      this.source.onended = null;
-      this.source.stop(0);
-      this.source = null;
-      console.log('Jukebox has stoped. ');
-    }
+    this.unregisterEvent()
+    this.audioPlayer.stop();
   }
 
-  private async createBufferSourceAsync(audio: AudioFile): Promise<{}> {
-    return new Promise((resolve, reject) => {
-      if (!audio || audio.buffer) {
-        resolve();
-        return;
-      }
-      console.log('createBufferSourceAsync...');
-      let reader = new FileReader();
-      reader.onload = event => {
-        AudioStorage.audioContext.decodeAudioData(reader.result).then((decodedData) => {
-          audio.buffer = decodedData;
-          resolve();
-        }).catch(reason => {
-          console.warn(reason);
-          resolve();
-        });
-      }
-      reader.onabort = reader.onerror = () => {
-        resolve();
-      }
-      reader.readAsArrayBuffer(audio.blob);
-    });
+  private playAfterFileUpdate() {
+    EventSystem.register(this)
+      .on('UPDATE_AUDIO_RESOURE', -100, event => {
+        this._play();
+      });
+  }
+
+  private unlockAfterUserInteraction() {
+    let callback = () => {
+      document.body.removeEventListener('touchstart', callback, true);
+      document.body.removeEventListener('mousedown', callback, true);
+      this.audioPlayer.stop();
+      if (this.isPlaying) this._play();
+    }
+    document.body.addEventListener('touchstart', callback, true);
+    document.body.addEventListener('mousedown', callback, true);
+  }
+
+  private unregisterEvent() {
+    EventSystem.unregister(this, 'UPDATE_AUDIO_RESOURE');
   }
 
   // override
@@ -114,9 +86,8 @@ export class Jukebox extends GameObject {
     let isPlaying = this.isPlaying;
     super.apply(context);
     if ((audioIdentifier !== this.audioIdentifier || !isPlaying) && this.isPlaying) {
-      this._stop();
       this._play();
-    } else if (this.isPlaying === false && isPlaying !== this.isPlaying) {
+    } else if (isPlaying !== this.isPlaying && !this.isPlaying) {
       this._stop();
     }
   }

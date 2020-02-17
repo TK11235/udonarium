@@ -1,63 +1,56 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef, } from "@angular/core";
-import { Transform } from '../class/transform/transform';
+import { Injectable, NgZone } from '@angular/core';
 
-export var PointerDeviceProxy: PointerDeviceService = null;
+import { Transform } from '@udonarium/transform/transform';
 
 export interface PointerCoordinate {
-  x: number,
-  y: number,
-  z?: number,
+  x: number;
+  y: number;
+  z: number;
 }
 
-export interface PointerType extends String { }
-export namespace PointerType {
-  export const MOUSE: PointerType = 'mouse';
-  export const PEN: PointerType = 'pen';
-  export const TOUCH: PointerType = 'touch';
-  export const UNKNOWN: PointerType = 'unknown';
+export interface PointerData extends PointerCoordinate {
+  identifier: number;
 }
 
-@Injectable()
+const MOUSE_IDENTIFIER = -9999;
+
+@Injectable({
+  providedIn: 'root'
+})
 export class PointerDeviceService {
-  private callbackOnPointerMove: any = null;
+  private callbackOnPointerDown = (e) => this.onPointerDown(e);
+  private callbackOnPointerMove = (e) => this.onPointerMove(e);
+  private callbackOnPointerUp = (e) => this.onPointerUp(e);
+  private callbackOnContextMenu = (e) => this.onContextMenu(e);
 
-  isDragging: boolean = false;
+  private _isAllowedToOpenContextMenu: boolean = false;
+  get isAllowedToOpenContextMenu(): boolean { return this._isAllowedToOpenContextMenu; }
 
-  pointers: PointerCoordinate[] = [{ x: 0, y: 0, z: 0 }];
-  pointerType: PointerType = PointerType.UNKNOWN;
+  targetElement: HTMLElement;
 
-  get pointerX(): number {
-    return this.pointers[0].x;
-  }
+  pointers: PointerData[] = [{ x: 0, y: 0, z: 0, identifier: -1 }];
+  private startPostion: PointerData = this.pointers[0];
+  private primaryPointer: PointerData = this.pointers[0];
+  get pointer(): PointerCoordinate { return this.primaryPointer; }
+  get pointerX(): number { return this.primaryPointer.x; }
+  get pointerY(): number { return this.primaryPointer.y; }
 
-  get pointerY(): number {
-    return this.pointers[0].y;
-  }
+  isDragging: boolean = false; // todo
 
-  constructor() {
-    if (PointerDeviceProxy === null) {
-      PointerDeviceProxy = this;
-    }
-  }
+  constructor(private ngZone: NgZone) { }
 
   initialize() {
-    this.callbackOnPointerMove = (e) => this.onPointerMove(e);
-    document.body.addEventListener('mousedown', this.callbackOnPointerMove, true);
-    document.body.addEventListener('touchdown', this.callbackOnPointerMove, true);
-    document.body.addEventListener('mousemove', this.callbackOnPointerMove, true);
-    document.body.addEventListener('touchmove', this.callbackOnPointerMove, true);
-    document.body.addEventListener('mouseup', this.callbackOnPointerMove, true);
-    document.body.addEventListener('touchup', this.callbackOnPointerMove, true);
+    this.addEventListeners();
   }
 
   destroy() {
-    document.body.removeEventListener('mousedown', this.callbackOnPointerMove, true);
-    document.body.removeEventListener('touchdown', this.callbackOnPointerMove, true);
-    document.body.removeEventListener('mousemove', this.callbackOnPointerMove, true);
-    document.body.removeEventListener('touchmove', this.callbackOnPointerMove, true);
-    document.body.removeEventListener('mouseup', this.callbackOnPointerMove, true);
-    document.body.removeEventListener('touchup', this.callbackOnPointerMove, true);
-    this.callbackOnPointerMove = null;
+    this.removeEventListeners();
+  }
+
+  private onPointerDown(e: any) {
+    this.onPointerMove(e);
+    this._isAllowedToOpenContextMenu = true;
+    this.startPostion = this.pointers[0];
   }
 
   private onPointerMove(e: MouseEvent)
@@ -68,31 +61,77 @@ export class PointerDeviceService {
     } else {
       this.onMouseMove(e);
     }
+    this.targetElement = e.target;
+  }
+
+  private onPointerUp(e: any) {
+    this.onPointerMove(e);
   }
 
   private onMouseMove(e: MouseEvent) {
-    if (1 < this.pointers.length) Array.prototype.slice.call(this.pointers, 0, 1);
-    if (1 < this.pointers.length) Array.prototype.slice.call(this.pointers, 0, 1);
-    this.pointers[0] = {
-      x: e.pageX,
-      y: e.pageY,
-      z: 0
-    };
-    this.pointerType = PointerType.MOUSE;
+    let mosuePointer: PointerData = { x: e.pageX, y: e.pageY, z: 0, identifier: MOUSE_IDENTIFIER };
+    if (this.isSyntheticEvent(mosuePointer)) return;
+    if (this._isAllowedToOpenContextMenu) this.preventContextMenuIfNeeded(mosuePointer);
+    this.pointers = [mosuePointer];
+    this.primaryPointer = mosuePointer;
   }
 
   private onTouchMove(e: TouchEvent) {
     let length = e.touches.length;
-    for (let i; i < length; i++) {
-      this.pointers[i] = {
-        x: e.touches[i].pageX,
-        y: e.touches[i].pageY,
-        z: 0
-      };
+    if (length < 1) return;
+    this.pointers = [];
+    for (let i = 0; i < length; i++) {
+      let touch = e.touches[i];
+      let touchPointer: PointerData = { x: touch.pageX, y: touch.pageY, z: 0, identifier: touch.identifier };
+      if (this._isAllowedToOpenContextMenu) this.preventContextMenuIfNeeded(touchPointer);
+      this.pointers.push(touchPointer);
     }
-    this.pointerType = PointerType.TOUCH;
-    if (length < this.pointers.length) Array.prototype.slice.call(this.pointers, 0, length);
-    if (length < this.pointers.length) Array.prototype.slice.call(this.pointers, 0, length);
+    this.primaryPointer = this.pointers[0];
+  }
+
+  private onContextMenu(e: any) {
+    this._isAllowedToOpenContextMenu = true;
+    this.onPointerUp(e);
+  }
+
+  private preventContextMenuIfNeeded(pointer: PointerCoordinate, threshold: number = 3) {
+    let distance = (pointer.x - this.startPostion.x) ** 2 + (pointer.y - this.startPostion.y) ** 2;
+    if (threshold ** 2 < distance) this._isAllowedToOpenContextMenu = false;
+  }
+
+  private isSyntheticEvent(mosuePointer: PointerData, threshold: number = 15): boolean {
+    for (let pointer of this.pointers) {
+      if (pointer.identifier === mosuePointer.identifier) continue;
+      let distance = (mosuePointer.x - pointer.x) ** 2 + (mosuePointer.y - pointer.y) ** 2;
+      if (distance < threshold ** 2) return true;
+    }
+    return false;
+  }
+
+  private addEventListeners() {
+    this.ngZone.runOutsideAngular(() => {
+      document.body.addEventListener('mousedown', this.callbackOnPointerDown, true);
+      document.body.addEventListener('mousemove', this.callbackOnPointerMove, true);
+      document.body.addEventListener('mouseup', this.callbackOnPointerUp, true);
+      document.body.addEventListener('touchstart', this.callbackOnPointerDown, true);
+      document.body.addEventListener('touchmove', this.callbackOnPointerMove, true);
+      document.body.addEventListener('touchend', this.callbackOnPointerUp, true);
+      document.body.addEventListener('touchcancel', this.callbackOnPointerUp, true);
+      document.body.addEventListener('drop', this.callbackOnPointerUp, true);
+      document.body.addEventListener('contextmenu', this.callbackOnContextMenu, true);
+    });
+  }
+
+  private removeEventListeners() {
+    document.body.removeEventListener('mousedown', this.callbackOnPointerDown, true);
+    document.body.removeEventListener('mousemove', this.callbackOnPointerMove, true);
+    document.body.removeEventListener('mouseup', this.callbackOnPointerUp, true);
+    document.body.removeEventListener('touchstart', this.callbackOnPointerDown, true);
+    document.body.removeEventListener('touchmove', this.callbackOnPointerMove, true);
+    document.body.removeEventListener('touchend', this.callbackOnPointerUp, true);
+    document.body.removeEventListener('touchcancel', this.callbackOnPointerUp, true);
+    document.body.removeEventListener('drop', this.callbackOnPointerUp, true);
+    document.body.removeEventListener('contextmenu', this.callbackOnContextMenu, true);
   }
 
   public static convertToLocal(pointer: PointerCoordinate, element: HTMLElement = document.body): PointerCoordinate {

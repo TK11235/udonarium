@@ -1,28 +1,26 @@
 import { Network } from '../network/network';
 
-export class Event<T> {
-  isCancelled: boolean = false;
+export class Event<T> implements EventContext<T>{
+  readonly isSendFromSelf: boolean = false;
 
   constructor(
-    public eventName: string,
+    readonly eventName: string,
     public data: T,
-    public sendFrom?: string) { }
+    readonly sendFrom: string = Network.instance.peerId) {
+    this.isSendFromSelf = this.sendFrom === Network.instance.peerId;
+  }
 
-  get isSendFromSelf(): boolean { return this.sendFrom === Network.instance.peerId; }
-
-  toContext(): EventContext {
+  toContext(): EventContext<T> {
     return {
       sendFrom: this.sendFrom,
-      sendTo: null,
       eventName: this.eventName,
       data: this.data,
     };
   }
 }
 
-export interface EventContext {
+export interface EventContext<T> {
   sendFrom: string;
-  sendTo: string;
   eventName: string;
-  data: any;
+  data: T;
 }

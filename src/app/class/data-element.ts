@@ -1,4 +1,5 @@
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
+import { Attributes } from './core/synchronize-object/attributes';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 
 @SyncObject('data')
@@ -7,8 +8,8 @@ export class DataElement extends ObjectNode {
   @SyncVar() type: string;
   @SyncVar() currentValue: number | string;
 
-  get isNumberResource(): boolean { return this.attributes['type'] != null && this.attributes['type'] === 'numberResource'; }
-  get isNote(): boolean { return this.attributes['type'] != null && this.attributes['type'] === 'note'; }
+  get isNumberResource(): boolean { return this.type != null && this.type === 'numberResource'; }
+  get isNote(): boolean { return this.type != null && this.type === 'note'; }
 
   public static create(name: string, value: number | string = '', attributes: Attributes = {}, identifier: string = ''): DataElement {
     let dataElement: DataElement;
@@ -48,14 +49,13 @@ export class DataElement extends ObjectNode {
   }
 
   getFirstElementByName(name: string): DataElement {
-    let children: DataElement[] = this.getElementsByName(name);
-    if (0 < children.length) {
-      return children[0];
+    for (let child of this.children) {
+      if (child instanceof DataElement) {
+        if (child.getAttribute('name') === name) return child;
+        let match = child.getFirstElementByName(name);
+        if (match) return match;
+      }
     }
     return null;
   }
-}
-
-interface Attributes {
-  [attribute: string]: number | string;
 }

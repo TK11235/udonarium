@@ -1,10 +1,17 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-
-import { PanelService } from '../../service/panel.service';
-import { ModalService } from '../../service/modal.service';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { Network, EventSystem } from '../../class/core/system/system';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'file-selector',
@@ -14,22 +21,25 @@ import { Network, EventSystem } from '../../class/core/system/system';
 })
 export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  fileStorageService = FileStorage.instance;
+  @Input() isAllowedEmpty: boolean = false;
+  get images(): ImageFile[] { return ImageStorage.instance.images; }
+  get empty(): ImageFile { return ImageFile.Empty; }
+
   constructor(
-    //private fileStorageService: FileStorageService,
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
     private modalService: ModalService
-  ) { }
+  ) {
+    this.isAllowedEmpty = this.modalService.option && this.modalService.option.isAllowedEmpty ? true : false;
+  }
 
   ngOnInit() {
     this.modalService.title = this.panelService.title = 'ファイル一覧';
   }
 
   ngAfterViewInit() {
-    EventSystem.register(this).on('SYNCHRONIZE_FILE_LIST', 0, event => {
+    EventSystem.register(this).on('SYNCHRONIZE_FILE_LIST', event => {
       if (event.isSendFromSelf) {
-        console.log('FileStorageComponent changeDetector.markForCheck');
         this.changeDetector.markForCheck();
       }
     });

@@ -1,54 +1,100 @@
-<!--
-    <select [(ngModel)]="inventoryType">
-      <option value="table">テーブル</option>
-      <option value="common">共有インベントリ</option>
-      <option value="{{networkService.myPeerId}}">個人インベントリ</option>
-      <option value="graveyard">墓地</option>
-    </select>
-    -->
-<div class="flex-container">
-  <div class="flex-item" style="width: 200px;">
-    <ng-container *ngFor="let inventoryType of inventoryTypes">
-      <div *ngIf="inventoryType !== networkService.peerId">{{inventoryType}}</div>
-      <div *ngIf="inventoryType === networkService.peerId">{{networkService.peerContext.id}}</div>
-      <div *ngFor="let gameObject of getGameObjects(inventoryType)" (click)="selectGameObject(gameObject)" [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}">
-        <div style="display: inline-block;">
-          <div style="min-width:50px; min-height:50px; display: inline-block; vertical-align:text-top;">
-            <img *ngIf="gameObject.imageFile" height="50" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
-          </div>
-          <div style="display: inline-block; vertical-align:text-top;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
-            <div style="font-size: 0.8rem;">{{gameObject.name}}</div>
-            <div *ngIf="gameObject.detailDataElement">
-              <div *ngFor="let gameDataElement of gameObject.detailDataElement.getElementsByType('numberResource')" style="display: inline-block;" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}">
-                <input style="width:90%; height: 5px;" (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" type="range"
-                  min="0" max="{{gameDataElement.value}}" />
-                <br> {{gameDataElement.name}}
-                <input class="input" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}" style="width:auto;" size="1"
-                  (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.currentValue" placeholder="Value" />                /
-                <input class="input" [ngClass]="{'input_selected': (selectedIdentifier === gameObject.identifier)}" style="width:auto;" size="1"
-                  (change)="gameDataElement.update()" [(ngModel)]="gameDataElement.value" placeholder="Value" />
-              </div>
-            </div>
-            <div *ngIf="selectedIdentifier === gameObject.identifier">
-              <select (change)="gameObject.setLocation($event.target.value)" [ngModel]="gameObject.location.name">
-                  <option value="table">テーブル</option>
-                  <option value="common">共有インベントリ</option>
-                  <option value="{{networkService.peerId}}">個人インベントリ</option>
-                  <option value="graveyard">墓地</option>
-                </select>
-              <button (click)="showDetail(gameObject)">詳細</button>
-              <button (click)="cloneGameObject(gameObject)">コピー</button>
-              <button *ngIf="inventoryType === 'graveyard'" (click)="deleteGameObject(gameObject)">削除</button>
+<div class="component">
+  <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
+  <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
+  <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}インベントリは空です</div>
+  <div (contextmenu)="onContextMenu($event, gameObject)" *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject"
+    (click)="selectGameObject(gameObject)" [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}">
+    <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}"></ng-container>
+  </div>
+  <div *ngIf="selectTab === 'graveyard'" style="padding-top: 6px;">
+    <button class="danger" (click)="cleanInventory()" [attr.disabled]="getGameObjects(selectTab).length < 1 ? '' : null">墓場を空にする</button>
+  </div>
+</div>
+<ng-template #inventoryTab>
+  <form class="is-sticky-top">
+    <div class="tab">
+      <label *ngFor="let inventoryType of inventoryTypes">
+        <input name="tab" type="radio" value="{{inventoryType}}" ng-control="options" [(ngModel)]="selectTab">
+        <div>{{getTabTitle(inventoryType)}} ({{getInventory(inventoryType).length}})</div>
+      </label>
+    </div>
+  </form>
+</ng-template>
+<ng-template #inventoryViewSetting>
+  <ng-container *ngIf="isEdit">
+    <div>
+      <div style="font-size: 12px;">並び順</div>
+      <input [(ngModel)]="sortTag" placeholder="タグ名" />
+      <select [(ngModel)]="sortOrder">
+        <option value="ASC">昇順</option>
+        <option value="DESC">降順</option>
+      </select>
+    </div>
+    <div style="font-size: 12px; padding-top: 6px;">表示項目</div>
+    <input style="width: 100%; box-sizing: border-box;" [(ngModel)]="dataTag" placeholder="スペース区切りでタグ名 スラッシュで改行 ex.「HP MP / メモ」" />
+    <div style="padding-top: 6px;">
+      <button class="tab-setting small-font" (click)="toggleEdit()"><i class="material-icons small-font">settings</i>完了</button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!isEdit">
+    <table style="font-size: 0.8em;">
+      <tr>
+        <th style=" vertical-align:middle;">並び順:</th>
+        <td style=" vertical-align:middle;">
+          <ng-container *ngIf="0 < sortTag.length">{{sortTag}} ({{sortOrderName}})</ng-container>
+          <ng-container *ngIf="sortTag.length < 1">-</ng-container>
+        </td>
+        <td><button class="tab-setting small-font" (click)="toggleEdit()"><i class="material-icons small-font">settings</i>設定</button></td>
+      </tr>
+    </table>
+  </ng-container>
+</ng-template>
+<ng-template #gameObjectTags let-gameObject="gameObject">
+  <div class="inventory-object">
+    <div class="object-name">{{gameObject.name}}
+      <button style="font-size: 0.8em; padding: 2px 5px;" *ngIf="selectedIdentifier === gameObject.identifier" (click)="onContextMenu($event, gameObject)">
+        <i class="material-icons" style="font-size: 1em;">settings</i>
+      </button>
+    </div>
+    <div class="object-tags-box">
+      <div class="table-cell image-box">
+        <img *ngIf="gameObject.imageFile.url" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
+      </div>
+      <div class="table-cell">
+        <div *ngIf="gameObject.rootDataElement">
+          <ng-container *ngFor="let dataElm of getInventoryTags(gameObject); trackBy: trackByGameObject">
+            <ng-container *ngTemplateOutlet="dataElmTag; context:{ dataElm: dataElm}"></ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #dataElmTag let-dataElm="dataElm">
+  <ng-container *ngIf="dataElm?.name === newLineString"><br></ng-container>
+  <div *ngIf="dataElm && dataElm.name !== newLineString" class="object-tag">
+    <ng-container [ngSwitch]="dataElm.attributes['type']">
+      <ng-container *ngSwitchCase="'numberResource'">
+        <div class="resource-tag">
+          <div style="font-size: 0.8em; display: inline-block; margin-right: 0.5em;">{{dataElm.name}}</div>
+          <input class="input resource-value" type="number" size="1" [(ngModel)]="dataElm.currentValue" placeholder="Value" />
+        </div>
+        <div class="resource-tag">
+          <input type="range" [style]="'font-size: 0.8em; min-width: 1em; width:' + (dataElm.name.length + 4.5) + 'em; --min: 0; --max: ' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
+            min="0" max="{{dataElm.value}}" [ngStyle]="{'background-color':'green'}" [(ngModel)]="dataElm.currentValue" />
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <div class="tag-name">{{dataElm.name}}</div>
+        <div style="text-align: center;">
+          <div style="display: inline-block;">
+            <div class="tag-value-box">
+              <div class="hidden-spacer" style="font-weight: bold;">{{dataElm.value}}</div>
+              <input class="input tag-value" size="1" [(ngModel)]="dataElm.value" placeholder="" />
             </div>
           </div>
         </div>
-      </div>
-      <hr/>
+      </ng-container>
     </ng-container>
   </div>
-  <!--
-    <div class="flex-item" style="width: 400px;">
-      <game-character-sheet></game-character-sheet>
-    </div>
-    -->
-</div>
+</ng-template>

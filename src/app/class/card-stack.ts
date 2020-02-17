@@ -1,19 +1,25 @@
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
-import { EventSystem } from './core/system/system';
-import { ObjectNode } from './core/synchronize-object/object-node';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { FileStorage } from './core/file-storage/file-storage';
-import { ImageFile } from './core/file-storage/image-file';
-import { TabletopObject } from './tabletop-object';
 import { Card } from './card';
+import { ImageFile } from './core/file-storage/image-file';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
+import { ObjectNode } from './core/synchronize-object/object-node';
 import { DataElement } from './data-element';
 import { PeerCursor } from './peer-cursor';
+import { TabletopObject } from './tabletop-object';
+import { moveToTopmost } from './tabletop-object-util';
 
 @SyncObject('card-stack')
 export class CardStack extends TabletopObject {
   @SyncVar() rotate: number = 0;
   @SyncVar() zindex: number = 0;
   @SyncVar() owner: string = '';
+  @SyncVar() isShowTotal: boolean = true;
+
+  get name(): string { return this.getCommonValue('name', ''); }
+  get ownerName(): string {
+    let object = PeerCursor.find(this.owner);
+    return object ? object.name : '';
+  }
+  get hasOwner(): boolean { return PeerCursor.find(this.owner) != null; }
 
   private get cardRoot(): ObjectNode {
     for (let node of this.children) {
@@ -21,47 +27,30 @@ export class CardStack extends TabletopObject {
     }
     return null;
   }
-
-  get hasOwner(): boolean {
-    return PeerCursor.find(this.owner) != null;//ObjectStore.instance.get<PeerCursor>(this.owner) != null;
-  }
-
-  get ownerName(): string {
-    let object = PeerCursor.find(this.owner);//ObjectStore.instance.get<PeerCursor>(this.owner);
-    return object ? object.name : '';
-  }
-
-  get name(): string {
-    let element = this.getElement('name', this.commonDataElement);
-    return element ? <string>element.value : '';
-  }
-
-  get cards(): Card[] { return this.cardRoot ? <Card[]>this.cardRoot.children.concat() : []; }
-  get topCard(): Card { return 0 < this.cards.length ? this.cards[0] : null; }
+  get cards(): Card[] { return this.cardRoot ? <Card[]>this.cardRoot.children : []; }
+  get topCard(): Card { return this.isEmpty ? null : this.cards[0]; }
+  get isEmpty(): boolean { return this.cards.length < 1 }
   get imageFile(): ImageFile { return this.topCard ? this.topCard.imageFile : null; }
 
   shuffle(): Card[] {
+    if (!this.cardRoot) return;
     let length = this.cardRoot.children.length;
     for (let card of this.cards) {
       card.index = Math.random() * length;
       card.rotate = Math.floor(Math.random() * 2) * 180;
+      this.setSamePositionFor(card);
     }
-    console.log('shuffle!!!!', this.cards.length, this.cards);
     return this.cards;
   }
 
   drawCard(): Card {
     let card = this.topCard ? <Card>this.cardRoot.removeChild(this.topCard) : null;
     if (card) {
-      card.location.name = this.location.name;
-      card.location.x = this.location.x;
-      card.location.y = this.location.y;
       card.rotate += this.rotate;
       if (360 < card.rotate) card.rotate -= 360;
-      card.moveToTop();
-      card.update();
+      this.setSamePositionFor(card);
+      card.toTopmost();
     }
-    console.log('drawCard', card, this.topCard);
     return card;
   }
 
@@ -69,88 +58,93 @@ export class CardStack extends TabletopObject {
     let cards = this.cards;
     for (let card of cards) {
       this.cardRoot.removeChild(card);
-      card.location.name = this.location.name;
-      card.location.x = this.location.x;
-      card.location.y = this.location.y;
       card.rotate += this.rotate;
+      this.setSamePositionFor(card);
       if (360 < card.rotate) card.rotate -= 360;
     }
     return cards;
   }
 
   faceUp() {
-    if (!this.topCard) return;
-    this.topCard.faceUp();
+    if (this.topCard) {
+      this.topCard.faceUp();
+      this.setSamePositionFor(this.topCard);
+    }
   }
 
   faceDown() {
-    if (!this.topCard) return;
-    this.topCard.faceDown();
+    if (this.topCard) {
+      this.topCard.faceDown();
+      this.setSamePositionFor(this.topCard);
+    }
   }
 
   faceUpAll() {
-    if (this.cards.length < 1) return;
     for (let card of this.cards) {
       card.faceUp();
+      this.setSamePositionFor(card);
     }
   }
 
   faceDownAll() {
-    if (this.cards.length < 1) return;
     for (let card of this.cards) {
       card.faceDown();
+      this.setSamePositionFor(card);
     }
   }
 
   uprightAll() {
     for (let card of this.cards) {
       card.rotate = 0;
+      this.setSamePositionFor(card);
     }
   }
 
-  placeToTop(card: Card): Card {
-    if (!this.topCard) return this.placeToBottom(card);
+  unifyCardsSize(size: number): void {
+    for (const card of this.cards) {
+      if (card.size !== size) card.size = size;
+    }
+  }
+
+  putOnTop(card: Card): Card {
+    if (!this.cardRoot) return null;
+    if (!this.topCard) return this.putOnBottom(card);
     card.owner = '';
     card.zindex = 0;
     let delta = Math.abs(card.rotate - this.rotate);
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
-    //card.rotate = this.rotate;
-    card.location.name = this.identifier;
-    card.update();
+    this.setSamePositionFor(card);
     return <Card>this.cardRoot.insertBefore(card, this.topCard);
   }
 
-  placeToBottom(card: Card): Card {
+  putOnBottom(card: Card): Card {
+    if (!this.cardRoot) return null;
     card.owner = '';
     card.zindex = 0;
     let delta = Math.abs(card.rotate - this.rotate);
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
-    //card.rotate = this.rotate;
-    card.location.name = this.identifier;
-    card.update();
+    this.setSamePositionFor(card);
     return <Card>this.cardRoot.appendChild(card);
   }
 
-  moveToTop() {
-    let object: any[] = ObjectStore.instance.getObjects('card-stack');
-    object = object.concat(ObjectStore.instance.getObjects('card'));
-    object.sort((a, b) => {
-      if (a.zindex < b.zindex) return -1;
-      if (a.zindex > b.zindex) return 1;
-      return 0;
-    });
-    let last = object[object.length - 1];
-    if (last === this) return;
-    let max = last.zindex;
-    if (this.zindex <= max) this.zindex = max + 1;
+  toTopmost() {
+    moveToTopmost(this, ['card']);
+  }
 
-    if (object.length * 16 < max) {
-      for (let i = 0; i < object.length; i++) {
-        object[i].zindex = i;
-      }
-    }
+  // override
+  setLocation(location: string) {
+    super.setLocation(location);
+    let cards = this.cards;
+    for (let card of cards) card.setLocation(location);
+  }
+
+  private setSamePositionFor(card: Card) {
+    card.location.name = this.location.name;
+    card.location.x = this.location.x;
+    card.location.y = this.location.y;
+    card.posZ = this.posZ;
   }
 
   static create(name: string, identifier?: string): CardStack {

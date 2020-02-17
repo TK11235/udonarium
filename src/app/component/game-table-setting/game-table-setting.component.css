@@ -17,9 +17,16 @@
   -webkit-flex: 1 0 auto; /* Safari */
   flex: 1 0 auto;
   box-sizing: border-box;
+  -webkit-flex-grow: 1; /* Safari */
+  flex-grow: 1;
+  max-width: 100%;
 }
 
 .no-grow{
   -webkit-flex-grow: 0; /* Safari */
   flex-grow: 0;
+}
+
+.images-select {
+  display: flex;
 }

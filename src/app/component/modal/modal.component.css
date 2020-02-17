@@ -1,10 +1,6 @@
-.modal-background{
+.component {
   box-sizing: border-box;
   position: absolute;
-  color: #CCC;
-  background-color: rgba(30, 30, 30, 0.3);
-  height: 100%;
-  width: 100%;
   top :0;
   bottom :0;
   left :0;
@@ -15,11 +11,25 @@
   align-items: center;
   justify-content: center;
 
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
-.modal-panel{
+.modal-background {
   box-sizing: border-box;
-  overflow: auto;
+  position: absolute;
+  color: #CCC;
+  background-color: rgba(30, 30, 30, 0.3);
+  top :0;
+  bottom :0;
+  left :0;
+  right :0;
+  z-index: -1;
+}
+
+.modal-panel {
+  box-sizing: border-box;
+  overflow: hidden;
 
   color: #444;
   background: linear-gradient(-30deg, rgba(240,218,189, 0.9), rgba(255, 244, 232, 0.9));
@@ -32,6 +42,7 @@
 }
 
 .title{
+  position: relative;
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
@@ -40,20 +51,20 @@
   padding: 2px 5px;
   width: 100%;
   background-color: #CCC;
-  /*color: #CCC;*/
   color: #444;
 }
+
 .title-button {
   position: absolute;
   right: 0;
   top: 0;
 }
+
 .title button {
   background: none;
   border: none;
   border-radius: 0;
   outline: none;
-  /*color: #CCC;*/
   color: #444;
 }
 
@@ -61,14 +72,10 @@
   padding: 10px;
 }
 
-.scrollable-panel{
+.scrollable-panel {
   box-sizing: border-box;
   overflow: auto;
-  /*margin: auto 0 0 0;*/
-  /*top: 0px;*/
-  top: 25px;
-  bottom: 0;
-  max-height: 100%;
+  max-height: calc(100vh - 41px);
   width: 100%;
   padding: 8px;
 }

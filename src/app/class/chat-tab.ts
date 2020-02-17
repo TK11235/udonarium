@@ -1,48 +1,58 @@
-import { Network, EventSystem } from './core/system/system';
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
-import { ObjectNode } from './core/synchronize-object/object-node';
 import { ChatMessage, ChatMessageContext } from './chat-message';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
+import { ObjectNode } from './core/synchronize-object/object-node';
+import { InnerXml, ObjectSerializer } from './core/synchronize-object/object-serializer';
+import { EventSystem } from './core/system';
 
 @SyncObject('chat-tab')
 export class ChatTab extends ObjectNode implements InnerXml {
   @SyncVar() name: string = 'タブ';
   get chatMessages(): ChatMessage[] { return <ChatMessage[]>this.children; }
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
-    EventSystem.register(this)
-      .on<ChatMessageContext>('BROADCAST_MESSAGE', 200, event => {
-        if (!event.isSendFromSelf) return;
-        if (event.data.tabIdentifier !== this.identifier) return;
-        let chat = new ChatMessage();
-        let message = event.data;
-        for (let key in message) {
-          if (key === 'identifier') continue;
-          if (key === 'tabIdentifier') continue;
-          if (key === 'text') {
-            chat.value = message[key];
-            continue;
-          }
-          if (message[key] == null || message[key] === '') continue;
-          chat.setAttribute(key, message[key]);
-        }
-        chat.initialize();
-        this.appendChild(chat);
+  private _unreadLength: number = 0;
+  get unreadLength(): number { return this._unreadLength; }
+  get hasUnread(): boolean { return 0 < this.unreadLength; }
 
-        event.data.identifier = chat.identifier;
-      });
+  get latestTimeStamp(): number {
+    let lastIndex = this.chatMessages.length - 1;
+    return lastIndex < 0 ? 0 : this.chatMessages[lastIndex].timestamp;
   }
 
-  addMessage(message: ChatMessageContext) {
+  // ObjectNode Lifecycle
+  onChildAdded(child: ObjectNode) {
+    super.onChildAdded(child);
+    if (child.parent === this && child instanceof ChatMessage && child.isDisplayable) {
+      this._unreadLength++;
+      EventSystem.trigger('MESSAGE_ADDED', { tabIdentifier: this.identifier, messageIdentifier: child.identifier });
+    }
+  }
+
+  addMessage(message: ChatMessageContext): ChatMessage {
     message.tabIdentifier = this.identifier;
-    EventSystem.call('BROADCAST_MESSAGE', message);
+
+    let chat = new ChatMessage();
+    for (let key in message) {
+      if (key === 'identifier') continue;
+      if (key === 'tabIdentifier') continue;
+      if (key === 'text') {
+        chat.value = message[key];
+        continue;
+      }
+      if (message[key] == null || message[key] === '') continue;
+      chat.setAttribute(key, message[key]);
+    }
+    chat.initialize();
+    EventSystem.trigger('SEND_MESSAGE', { tabIdentifier: this.identifier, messageIdentifier: chat.identifier });
+    this.appendChild(chat);
+    return chat;
+  }
+
+  markForRead() {
+    this._unreadLength = 0;
   }
 
   innerXml(): string {
     let xml = '';
-    xml += (this.value + '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     for (let child of this.children) {
       if (child instanceof ChatMessage && !child.isDisplayable) continue;
       xml += ObjectSerializer.instance.toXml(child);

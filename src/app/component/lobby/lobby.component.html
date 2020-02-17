@@ -3,10 +3,10 @@
   <button (click)="showRoomSetting()">新しいルームを作成する</button>
   <hr/>
   <ng-container *ngIf="rooms.length">
-    <table style="font-size:12px; border: 0; border-spacing: 0;">
+    <table style="font-size:12px; border: 0; border-spacing: 0; width: 100%;">
       <tr>
         <th style="padding: 0 1em;">ルームID</th>
-        <th style="padding: 0 1em; min-width: 24em;">ルーム名</th>
+        <th style="padding: 0 1em; min-width: 50%;">ルーム名</th>
         <th style="padding: 0 1em;">パスワード</th>
         <th style="padding: 0 1em;">参加者</th>
         <th style="padding: 0 1em;"></th>
@@ -27,11 +27,11 @@
           <td *ngIf="0 < room.peers[0].password.length" style="text-align: center; padding: 0 1em;"><i class="material-icons" style="vertical-align: middle; font-size:0.9rem;">lock</i></td>
           <td *ngIf="room.peers[0].password.length < 1" style="text-align: center; padding: 0 1em;">-</td>
           <td style="text-align: center; padding: 0 1em;">{{room.peers.length}}人</td>
-          <td><button [disabled]="room.room === currentRoom" *ngIf="0 < room.room.length" type="submit" (click)="connect(room.peers)">接続する</button></td>
+          <td><button [disabled]="room.peers[0]?.room === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peers)">接続</button></td>
         </tr>
       </ng-container>
     </table>
   </ng-container>
   <span *ngIf="rooms.length < 1" style="font-size: 12px;">{{help}}</span>
 </div>
-<ng-template #other_content><span style="font-size: 12px;">別のルームに接続したい場合は、他のPeerとの接続を切ってください。<br>（※ページリロードで切断できます。）</span></ng-template>
+<ng-template #other_content><span style="font-size: 12px;">別のルームに接続したい場合は、他の参加者との接続を切ってください。<br>（※ページリロードで切断できます。）</span></ng-template>

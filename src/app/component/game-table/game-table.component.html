@@ -1,18 +1,17 @@
-<div class="game-room game-room_3d" [ngClass]="{'grabbing': isPointerDragging}" #gameTableBase>
-  <div class="game-table game-table_3d game-3d" #gameTable>
-    <div id="app-game-table" class="game-objects game-objects_3d game-3d" [style.background-image]="'url(' + bgImage.url + ')' | safe: 'style'" #gameObjects>
-      <!--<img class="game-background-image game-table_3d game-3d"  [src]=" file.url | safe: 'resourceUrl'" #gameBackgroundImage>-->
-      <!--<img class="game-background-image" *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'"
-        #gameBackgroundImage>-->
-      <canvas class="grid-canvas pointer-events-none" width="2000" height="2000" #gridCanvas></canvas>
-      <terrain class="game-3d" *ngFor="let terrain of getTerrain()" [terrain]="terrain"></terrain>
-      <game-table-mask class="game-3d" *ngFor="let gameTableMask of getGameTableMasks()" [gameTableMask]="gameTableMask"></game-table-mask>
-      <div class="game-3d">
-        <card-stack class="game-3d" *ngFor="let cardStack of getCardStacks()" [cardStack]="cardStack" [ngStyle]="{'z-index' : cardStack.zindex}"></card-stack>
-        <card class="game-3d" *ngFor="let card of getCards()" [card]="card" [ngStyle]="{'z-index' : card.zindex}"></card>
-      </div>
-      <game-character class="game-3d" *ngFor="let gameCharacter of getTabletopCharacters()" [gameCharacter]="gameCharacter"></game-character>
-      <peer-cursor class="game-3d" *ngFor="let cursor of getPeerCursor()" [cursor]="cursor"></peer-cursor>
+<div class="background-image is-pointer-events-none" [ngClass]="[(backgroundFilterType ? 'is-filter' : ''), backgroundFilterType]" 
+[style.background-image]="'url(' + backgroundImage.url + ')' | safe: 'style'"></div>
+<div class="component is-fill is-perspective" [ngClass]="{'is-grabbing': isPointerDragging}" #root>
+  <div class="component-content is-fill is-3d" #gameTable>
+    <div id="app-game-table" class="game-table table-image is-3d" [style.background-image]="'url(' + tableImage.url + ')' | safe: 'style'" #gameObjects>
+      <canvas class="grid-canvas is-fill is-pointer-events-none" #gridCanvas></canvas>
+      <terrain class="is-3d" *ngFor="let terrain of terrains; trackBy: trackByGameObject" [terrain]="terrain"></terrain>
+      <game-table-mask class="is-3d" *ngFor="let mask of tableMasks; trackBy: trackByGameObject" [gameTableMask]="mask"></game-table-mask>
+      <text-note class="is-3d" *ngFor="let textNote of textNotes; trackBy: trackByGameObject" [textNote]="textNote" [appTooltip]="textNote" [ngStyle]="{'z-index' : textNote.zindex}"></text-note>
+      <card-stack class="is-3d" *ngFor="let cardStack of cardStacks; trackBy: trackByGameObject" [cardStack]="cardStack" [appTooltip]="cardStack" [ngStyle]="{'z-index' : cardStack.zindex, 'transform': 'translateZ(' + (cardStack.zindex * 0.001) +'px)'}"></card-stack>
+      <card class="is-3d" *ngFor="let card of cards; trackBy: trackByGameObject" [card]="card" [appTooltip]="card" [ngStyle]="{'z-index' : card.zindex, 'transform': 'translateZ(' + (card.zindex * 0.001) +'px)'}"></card>
+      <dice-symbol class="is-3d" *ngFor="let diceSymbol of diceSymbols; trackBy: trackByGameObject" [diceSymbol]="diceSymbol" [appTooltip]="diceSymbol"></dice-symbol>
+      <game-character class="is-3d" *ngFor="let character of characters; trackBy: trackByGameObject" [gameCharacter]="character" [appTooltip]="character"></game-character>
+      <peer-cursor class="is-3d" *ngFor="let cursor of peerCursors; trackBy: trackByGameObject" [cursor]="cursor"></peer-cursor>
     </div>
   </div>
 </div>

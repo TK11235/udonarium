@@ -1,48 +1,40 @@
-import { NgZone, Component, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { ModalService } from './service/modal.service';
-import { PanelService, PanelOption } from './service/panel.service';
-import { PointerDeviceService } from './service/pointer-device.service';
-import { ContextMenuService } from './service/context-menu.service';
-import { AppConfigService, AppConfig } from './service/app-config.service';
+import { ChatTab } from '@udonarium/chat-tab';
+import { AudioPlayer } from '@udonarium/core/file-storage/audio-player';
+import { AudioSharingSystem } from '@udonarium/core/file-storage/audio-sharing-system';
+import { AudioStorage } from '@udonarium/core/file-storage/audio-storage';
+import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { FileSharingSystem } from '@udonarium/core/file-storage/image-sharing-system';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ObjectFactory } from '@udonarium/core/synchronize-object/object-factory';
+import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { ObjectSynchronizer } from '@udonarium/core/synchronize-object/object-synchronizer';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { DataSummarySetting } from '@udonarium/data-summary-setting';
+import { DiceBot } from '@udonarium/dice-bot';
+import { Jukebox } from '@udonarium/Jukebox';
+import { PeerCursor } from '@udonarium/peer-cursor';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
-import { ModalComponent } from './component/modal/modal.component';
-import { UIPanelComponent } from './component/ui-panel/ui-panel.component';
-import { PeerMenuComponent } from './component/peer-menu/peer-menu.component';
-import { GameObjectInventoryComponent } from './component/game-object-inventory/game-object-inventory.component';
-import { ChatWindowComponent } from './component/chat-window/chat-window.component';
-import { GameTableSettingComponent } from './component/game-table-setting/game-table-setting.component';
-import { FileStorageComponent } from './component/file-storage/file-storage.component';
-import { GameCharacterSheetComponent } from './component/game-character-sheet/game-character-sheet.component';
-import { GameCharacterGeneratorComponent } from './component/game-character-generator/game-character-generator.component';
-import { ChatPaletteComponent } from './component/chat-palette/chat-palette.component';
-import { JukeboxComponent } from './component/jukebox/jukebox.component'
-import { LobbyComponent } from './component/lobby/lobby.component';
-import { TextViewComponent } from './component/text-view/text-view.component';
-
-import { ChatMessage } from './class/chat-message';
-import { ChatTabList } from './class/chat-tab-list';
-import { ChatTab } from './class/chat-tab';
-import { DiceBot } from './class/dice-bot';
-import { Room } from './class/room';
-import { EventSystem, Network } from './class/core/system/system';
-import { MimeType } from './class/core/file-storage/mime-type';
-import { FileArchiver } from './class/core/file-storage/file-archiver';
-import { FileSharingSystem } from './class/core/file-storage/file-sharing-system';
-import { FileStorage } from './class/core/file-storage/file-storage';
-import { AudioSharingSystem } from './class/core/file-storage/audio-sharing-system';
-import { AudioStorage } from './class/core/file-storage/audio-storage';
-import { ImageFile } from './class/core/file-storage/image-file';
-import { ObjectNode } from './class/core/synchronize-object/object-node';
-import { ObjectFactory } from './class/core/synchronize-object/object-factory';
-import { ObjectSerializer } from './class/core/synchronize-object/object-serializer';
-import { ObjectStore } from './class/core/synchronize-object/object-store';
-import { ObjectSynchronizer } from './class/core/synchronize-object/object-synchronizer';
-import { PeerCursor } from './class/peer-cursor';
-import { Jukebox } from './class/Jukebox';
-
-import * as Beautify from 'vkbeautify';
-import { XmlUtil } from './class/core/synchronize-object/xml-util';
+import { ChatWindowComponent } from 'component/chat-window/chat-window.component';
+import { FileStorageComponent } from 'component/file-storage/file-storage.component';
+import { GameCharacterGeneratorComponent } from 'component/game-character-generator/game-character-generator.component';
+import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { GameObjectInventoryComponent } from 'component/game-object-inventory/game-object-inventory.component';
+import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
+import { JukeboxComponent } from 'component/jukebox/jukebox.component';
+import { PeerMenuComponent } from 'component/peer-menu/peer-menu.component';
+import { TextViewComponent } from 'component/text-view/text-view.component';
+import { AppConfig, AppConfigService } from 'service/app-config.service';
+import { ChatMessageService } from 'service/chat-message.service';
+import { ContextMenuService } from 'service/context-menu.service';
+import { ModalService } from 'service/modal.service';
+import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
+import { SaveDataService } from 'service/save-data.service';
 
 @Component({
   selector: 'app-root',
@@ -50,9 +42,9 @@ import { XmlUtil } from './class/core/synchronize-object/xml-util';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
-  title = 'Unreal Dice Online';//'TRPG Tool-X';
 
-  @ViewChild('modalLayer', { read: ViewContainerRef }) modalLayerViewContainerRef: ViewContainerRef;
+  @ViewChild('modalLayer', { read: ViewContainerRef, static: true }) modalLayerViewContainerRef: ViewContainerRef;
+  private immediateUpdateTimer: NodeJS.Timer = null;
   private lazyUpdateTimer: NodeJS.Timer = null;
   private openPanelCount: number = 0;
 
@@ -60,25 +52,29 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private modalService: ModalService,
     private panelService: PanelService,
     private pointerDeviceService: PointerDeviceService,
+    private chatMessageService: ChatMessageService,
     private appConfigService: AppConfigService,
+    private saveDataService: SaveDataService,
     private ngZone: NgZone
   ) {
 
-    EventSystem;
-    Network;
-    FileArchiver.instance.initialize();
-    FileSharingSystem.instance.initialize();
-    FileStorage.instance;
-    AudioSharingSystem.instance.initialize();
-    AudioStorage.instance;
-    ObjectFactory.instance;
-    ObjectSerializer.instance;
-    ObjectStore.instance;
-    ObjectSynchronizer.instance.initialize();
+    this.ngZone.runOutsideAngular(() => {
+      EventSystem;
+      Network;
+      FileArchiver.instance.initialize();
+      FileSharingSystem.instance.initialize();
+      ImageStorage.instance;
+      AudioSharingSystem.instance.initialize();
+      AudioStorage.instance;
+      ObjectFactory.instance;
+      ObjectSerializer.instance;
+      ObjectStore.instance;
+      ObjectSynchronizer.instance.initialize();
+    });
+    this.appConfigService.initialize();
+    this.pointerDeviceService.initialize();
 
-    appConfigService.initialize();
-    pointerDeviceService.initialize();
-    //Network.open();
+    DataSummarySetting.instance.initialize();
 
     let diceBot: DiceBot = new DiceBot('DiceBot');
     diceBot.initialize();
@@ -86,58 +82,99 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let jukebox: Jukebox = new Jukebox('Jukebox');
     jukebox.initialize();
 
-    //let chatTabList: ChatTabList = new ChatTabList('MainTabList');
-    //chatTabList.initialize();
+    let soundEffect: SoundEffect = new SoundEffect('SoundEffect');
+    soundEffect.initialize();
 
     let chatTab: ChatTab = new ChatTab('MainTab');
     chatTab.name = 'メインタブ';
     chatTab.initialize();
-    //chatTabList.appendChild(chatTab);
 
     chatTab = new ChatTab('SubTab');
     chatTab.name = 'サブタブ';
     chatTab.initialize();
-    //chatTabList.appendChild(chatTab);
-    //let tabletopIndexer = new ObjectNode('TabletopIndexer');
-    //tabletopIndexer.initialize();
 
     let fileContext = ImageFile.createEmpty('none_icon').toContext();
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';
-    let noneIconImage = FileStorage.instance.add(fileContext);
+    let noneIconImage = ImageStorage.instance.add(fileContext);
+
+    AudioPlayer.resumeAudioContext();
+    PresetSound.dicePick = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/shoulder-touch1.mp3').identifier;
+    PresetSound.dicePut = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/book-stack1.mp3').identifier;
+    PresetSound.diceRoll1 = AudioStorage.instance.add('./assets/sounds/on-jin/spo_ge_saikoro_teburu01.mp3').identifier;
+    PresetSound.diceRoll2 = AudioStorage.instance.add('./assets/sounds/on-jin/spo_ge_saikoro_teburu02.mp3').identifier;
+    PresetSound.cardDraw = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/card-turn-over1.mp3').identifier;
+    PresetSound.cardPick = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/shoulder-touch1.mp3').identifier;
+    PresetSound.cardPut = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/book-stack1.mp3').identifier;
+    PresetSound.cardShuffle = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/card-open1.mp3').identifier;
+    PresetSound.piecePick = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/shoulder-touch1.mp3').identifier;
+    PresetSound.piecePut = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/book-stack1.mp3').identifier;
+    PresetSound.blockPick = AudioStorage.instance.add('./assets/sounds/tm2/tm2_pon002.wav').identifier;
+    PresetSound.blockPut = AudioStorage.instance.add('./assets/sounds/tm2/tm2_pon002.wav').identifier;
+    PresetSound.lock = AudioStorage.instance.add('./assets/sounds/tm2/tm2_switch001.wav').identifier;
+    PresetSound.unlock = AudioStorage.instance.add('./assets/sounds/tm2/tm2_switch001.wav').identifier;
+    PresetSound.sweep = AudioStorage.instance.add('./assets/sounds/tm2/tm2_swing003.wav').identifier;
+
+    AudioStorage.instance.get(PresetSound.dicePick).isHidden = true;
+    AudioStorage.instance.get(PresetSound.dicePut).isHidden = true;
+    AudioStorage.instance.get(PresetSound.diceRoll1).isHidden = true;
+    AudioStorage.instance.get(PresetSound.diceRoll2).isHidden = true;
+    AudioStorage.instance.get(PresetSound.cardDraw).isHidden = true;
+    AudioStorage.instance.get(PresetSound.cardPick).isHidden = true;
+    AudioStorage.instance.get(PresetSound.cardPut).isHidden = true;
+    AudioStorage.instance.get(PresetSound.cardShuffle).isHidden = true;
+    AudioStorage.instance.get(PresetSound.piecePick).isHidden = true;
+    AudioStorage.instance.get(PresetSound.piecePut).isHidden = true;
+    AudioStorage.instance.get(PresetSound.blockPick).isHidden = true;
+    AudioStorage.instance.get(PresetSound.blockPut).isHidden = true;
+    AudioStorage.instance.get(PresetSound.lock).isHidden = true;
+    AudioStorage.instance.get(PresetSound.unlock).isHidden = true;
+    AudioStorage.instance.get(PresetSound.sweep).isHidden = true;
 
     PeerCursor.createMyCursor();
     PeerCursor.myCursor.name = 'プレイヤー';
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
     EventSystem.register(this)
-      .on('*', () => {
-        if (this.lazyUpdateTimer === null) {
-          this.lazyUpdateTimer = setTimeout(() => {
-            this.lazyUpdateTimer = null;
-            this.ngZone.run(() => { });
-          }, 100);
-        }
-      }).on<AppConfig>('LOAD_CONFIG', 0, event => {
+      .on('UPDATE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(event.isSendFromSelf); })
+      .on('DELETE_GAME_OBJECT', event => { this.lazyNgZoneUpdate(event.isSendFromSelf); })
+      .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
+      .on('SYNCHRONIZE_FILE_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
+      .on<AppConfig>('LOAD_CONFIG', event => {
         console.log('LOAD_CONFIG !!!', event.data);
         Network.setApiKey(event.data.webrtc.key);
         Network.open();
       })
-      .on('OPEN_PEER', 0, event => {
-        console.log('OPEN_PEER', event.data.peer);
+      .on<File>('FILE_LOADED', event => {
+        this.lazyNgZoneUpdate(false);
+      })
+      .on('OPEN_NETWORK', event => {
+        console.log('OPEN_NETWORK', event.data.peer);
         PeerCursor.myCursor.peerId = event.data.peer;
-      }).on('CLOSE_OTHER_PEER', 0, event => {
+      })
+      .on('CLOSE_NETWORK', event => {
+        console.log('CLOSE_NETWORK', event.data.peer);
+        this.ngZone.run(async () => {
+          if (1 < Network.peerIds.length) {
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'ネットワーク接続に何らかの異常が発生しました。\nこの表示以後、接続が不安定であれば、ページリロードと再接続を試みてください。' });
+          } else {
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: '接続情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
+            Network.open();
+          }
+        });
+      })
+      .on('CONNECT_PEER', event => {
+        if (event.isSendFromSelf) this.chatMessageService.calibrateTimeOffset();
+      })
+      .on('DISCONNECT_PEER', event => {
         //
-      }).on('LOST_CONNECTION_PEER', 0, async event => {
-        console.log('LOST_CONNECTION_PEER', event.data.peer);
-        await this.modalService.open(TextViewComponent, { title: 'Peer情報の再取得', text: 'Peer情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
-        Network.open();
       });
   }
+
   ngAfterViewInit() {
     PanelService.defaultParentViewContainerRef = ModalService.defaultParentViewContainerRef = ContextMenuService.defaultParentViewContainerRef = this.modalLayerViewContainerRef;
     setTimeout(() => {
       this.panelService.open(PeerMenuComponent, { width: 500, height: 450, left: 100 });
-      this.panelService.open(ChatWindowComponent, { width: 700, height: 400, left: 0, top: 450 });
+      this.panelService.open(ChatWindowComponent, { width: 700, height: 400, left: 100, top: 450 });
     }, 0);
   }
 
@@ -146,7 +183,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   open(componentName: string) {
-    let component: { new (...args: any[]): any } = null;
+    let component: { new(...args: any[]): any } = null;
     let option: PanelOption = { width: 450, height: 600, left: 100 }
     switch (componentName) {
       case 'PeerMenuComponent':
@@ -154,11 +191,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         break;
       case 'ChatWindowComponent':
         component = ChatWindowComponent;
-        option.width = 600;
+        option.width = 700;
         break;
       case 'GameTableSettingComponent':
         component = GameTableSettingComponent;
-        option = { width: 540, height: 350, left: 100 };
+        option = { width: 630, height: 400, left: 100 };
         break;
       case 'FileStorageComponent':
         component = FileStorageComponent;
@@ -181,61 +218,43 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       option.top = (this.openPanelCount % 10 + 1) * 20;
       option.left = 100 + (this.openPanelCount % 20 + 1) * 5;
       this.openPanelCount = this.openPanelCount + 1;
-      console.log('openPanelCount:', this.openPanelCount);
       this.panelService.open(component, option);
     }
   }
 
   save() {
-    let files: File[] = [];
-    let roomXml = this.getRoomXml();
-    let chatXml = this.getChatXml();
-    files.push(new File([roomXml], 'data.xml', { type: 'text/plain' }));
-    files.push(new File([chatXml], 'chat.xml', { type: 'text/plain' }));
-
-    files = files.concat(this.getImageFiles(roomXml));
-    files = files.concat(this.getImageFiles(chatXml));
-
-    FileArchiver.instance.save(files, 'ルームデータ');
+    let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
+      ? Network.peerContext.roomName
+      : 'ルームデータ';
+    this.saveDataService.saveRoom(roomName);
   }
 
-  private getRoomXml(): string {
-    let xml = new Room().toXml();
-    xml = Beautify.xml(xml, 2);
-    return xml;
+  handleFileSelect(event: Event) {
+    let files = (<HTMLInputElement>event.target).files;
+    if (files.length) FileArchiver.instance.load(files);
   }
 
-  private getChatXml(): string {
-    let xml = new ChatTabList().toXml();
-    xml = Beautify.xml(xml, 2);
-    return xml;
-  }
-
-  private getImageFiles(xml: string): File[] {
-    let xmlElement: Element = XmlUtil.xml2element(xml);
-    let files: File[] = [];
-    if (!xmlElement) return files;
-
-    let images: { [identifier: string]: ImageFile } = {};
-    let imageElements = xmlElement.querySelectorAll('*[type="image"]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].innerHTML;
-      images[identifier] = FileStorage.instance.get(identifier);
+  private lazyNgZoneUpdate(isImmediate: boolean) {
+    if (isImmediate) {
+      if (this.immediateUpdateTimer !== null) return;
+      this.immediateUpdateTimer = setTimeout(() => {
+        this.immediateUpdateTimer = null;
+        if (this.lazyUpdateTimer != null) {
+          clearTimeout(this.lazyUpdateTimer);
+          this.lazyUpdateTimer = null;
+        }
+        this.ngZone.run(() => { });
+      }, 0);
+    } else {
+      if (this.lazyUpdateTimer !== null) return;
+      this.lazyUpdateTimer = setTimeout(() => {
+        this.lazyUpdateTimer = null;
+        if (this.immediateUpdateTimer != null) {
+          clearTimeout(this.immediateUpdateTimer);
+          this.immediateUpdateTimer = null;
+        }
+        this.ngZone.run(() => { });
+      }, 100);
     }
-
-    imageElements = xmlElement.querySelectorAll('*[imageIdentifier]');
-
-    for (let i = 0; i < imageElements.length; i++) {
-      let identifier = imageElements[i].getAttribute('imageIdentifier');
-      images[identifier] = FileStorage.instance.get(identifier);
-    }
-    for (let identifier in images) {
-      let image = images[identifier];
-      if (image && image.blob) {
-        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
-      }
-    }
-    return files;
   }
 }

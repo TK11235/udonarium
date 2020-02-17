@@ -1,23 +1,4 @@
-class PromiseQueue {
-  private length: number = 0;
-  private queue: Promise<any> = Promise.resolve();
-
-  add<T>(task: () => PromiseLike<T>): Promise<T>
-  add<T>(task: () => T): Promise<T> {
-    this.length++
-    //console.warn('Database PromiseQueue Add:' + this.length)
-    this.queue = this.queue.then(task);
-    let ret = this.queue;
-    this.queue = this.queue.catch((reason) => {
-      //console.error('Database PromiseQueue Error:', reason);
-    });
-    this.queue = this.queue.then(() => {
-      this.length--;
-      //console.warn('Database PromiseQueue Done:' + this.length);
-    });
-    return ret;
-  }
-}
+import { PromiseQueue } from '../core/system/util/promise-queue';
 
 interface PeerHistory {
   peerId: string,
@@ -30,7 +11,7 @@ export class Database {
   private static DB_NAME: string = 'UdonariumDataBase';
   private static VERSION: number = 1;
 
-  private queue: PromiseQueue = new PromiseQueue();
+  private queue: PromiseQueue = new PromiseQueue('DatabaseQueue');
   private db: IDBDatabase;
 
   constructor() {
@@ -38,7 +19,7 @@ export class Database {
   }
 
   private openDB(dbName: string, version: number): Promise<IDBDatabase> {
-    return this.queue.add(() => new Promise<IDBDatabase>((resolve, reject) => {
+    return this.queue.add((resolve, reject) => {
       console.log('openDB');
       let request = indexedDB.open(dbName, version);
       request.onerror = (event) => {
@@ -66,7 +47,7 @@ export class Database {
         this.initializeDB(request.result);
         resolve();
       };
-    }));
+    });
   }
 
   private createStores() {
@@ -111,13 +92,13 @@ export class Database {
   }
 
   addPeerHistory(myPeer: string, otherPeers: string[]) {
-    this.queue.add(() => new Promise<void>((resolve, reject) => {
+    this.queue.add((resolve, reject) => {
       console.log('addPeerHistory');
       let transaction = this.db.transaction(['PeerHistory'], 'readwrite');
       let store = transaction.objectStore('PeerHistory');
 
       transaction.oncomplete = (event) => {
-        console.log('addPeerHistory done.', IDBTransaction.READ_WRITE);
+        console.log('addPeerHistory done.', 'readwrite');
         resolve();
       };
 
@@ -133,15 +114,15 @@ export class Database {
       }
 
       store.put(history);
-    }));
+    });
   }
 
   deletePeerHistory(peerId: string) {
-    this.queue.add(() => new Promise<void>((resolve, reject) => {
+    this.queue.add((resolve, reject) => {
       let transaction = this.db.transaction(['PeerHistory'], 'readwrite');
       let store = transaction.objectStore('PeerHistory');
       transaction.oncomplete = (event) => {
-        console.log('addPeerHistory done.', IDBTransaction.READ_WRITE);
+        console.log('addPeerHistory done.', 'readwrite');
         resolve();
       };
 
@@ -151,11 +132,11 @@ export class Database {
       };
 
       store.delete(peerId);
-    }));
+    });
   }
 
   getPeerHistory(): Promise<PeerHistory[]> {
-    return this.queue.add(() => new Promise<PeerHistory[]>((resolve, reject) => {
+    return this.queue.add((resolve, reject) => {
       console.log('getPeerHistory');
       let transaction = this.db.transaction(['PeerHistory'], 'readonly');
       let store = transaction.objectStore('PeerHistory');
@@ -187,6 +168,6 @@ export class Database {
           console.log('Entries all displayed.');
         }
       };
-    }));
+    });
   }
 }

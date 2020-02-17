@@ -1,0 +1,16 @@
+.sk-cube-grid {
+  font-size: 8px;
+  color: #444;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(247, 247, 247, 0.6);
+}
+
+.sk-cube {
+  background-color: #555;
+}
+
+.sk-title {
+  padding: 2px 0;
+  background-color: rgba(247, 247, 247, 0.6);
+}

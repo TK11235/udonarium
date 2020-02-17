@@ -1,38 +1,28 @@
 import { ChatMessage, ChatMessageContext } from './chat-message';
-import { Network, EventSystem } from './core/system/system';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject } from './core/synchronize-object/anotation';
-import { GameObject } from './core/synchronize-object/game-object';
 import { ChatTab } from './chat-tab';
+import { SyncObject } from './core/synchronize-object/decorator';
+import { GameObject } from './core/synchronize-object/game-object';
+import { ObjectStore } from './core/synchronize-object/object-store';
+import { EventSystem } from './core/system';
+import { PromiseQueue } from './core/system/util/promise-queue';
+import { StringUtil } from './core/system/util/string-util';
 
 declare var Opal
 
-type Callback<T> = () => T;
+interface DiceBotInfo {
+  script: string;
+  game: string;
+}
 
-class PromiseQueue {
-  private length: number = 0;
-  private queue: Promise<any> = Promise.resolve();
-
-  add<T>(task: Callback<T>): Promise<T> {
-    this.length++
-    console.log('PromiseQueue Add:' + this.length)
-    this.queue = this.queue.then(task);
-    let ret = this.queue;
-    this.queue = this.queue.catch((reason) => {
-      console.error(reason);
-    });
-    this.queue = this.queue.then(() => {
-      this.length--;
-      console.log('PromiseQueue Done:' + this.length);
-    });
-    return ret;
-  }
+interface DiceRollResult {
+  result: string;
+  isSecret: boolean;
 }
 
 @SyncObject('dice-bot')
 export class DiceBot extends GameObject {
   private static loadedDiceBots: { [gameType: string]: boolean } = {};
-  private static queue: PromiseQueue = new PromiseQueue();
+  private static queue: PromiseQueue = new PromiseQueue('DiceBotQueue');
 
   public static diceBotInfos: DiceBotInfo[] = [
     { script: 'EarthDawn', game: 'アースドーン' },
@@ -41,6 +31,7 @@ export class DiceBot extends GameObject {
     { script: 'Airgetlamh', game: '朱の孤塔のエアゲトラム' },
     { script: 'Amadeus', game: 'アマデウス' },
     { script: 'Arianrhod', game: 'アリアンロッド' },
+    { script: 'OrgaRain', game: '在りて遍くオルガレイン' },
     { script: 'Alshard', game: 'アルシャード' },
     { script: 'ArsMagica', game: 'アルスマギカ' },
     { script: 'IthaWenUa', game: 'イサー・ウェン＝アー' },
@@ -69,16 +60,20 @@ export class DiceBot extends GameObject {
     { script: 'GundogZero', game: 'ガンドッグ・ゼロ' },
     { script: 'GundogRevised', game: 'ガンドッグ・リヴァイズド' },
     { script: 'KillDeathBusiness', game: 'キルデスビジネス' },
+    { script: 'StellarKnights', game: '銀剣のステラナイツ' },
     { script: 'Cthulhu', game: 'クトゥルフ' },
     { script: 'Cthulhu7th', game: 'クトゥルフ第7版' },
     { script: 'CthulhuTech', game: 'クトゥルフテック' },
+    { script: 'KurayamiCrying', game: 'クラヤミクライン' },
     { script: 'GranCrest', game: 'グランクレスト' },
     { script: 'GeishaGirlwithKatana', game: 'ゲイシャ・ガール・ウィズ・カタナ' },
     { script: 'GehennaAn', game: 'ゲヘナ・アナスタシス' },
+    { script: 'Illusio', game: '晃天のイルージオ' },
     { script: 'CodeLayerd', game: 'コード：レイヤード' },
     { script: 'Avandner', game: '黒絢のアヴァンドナー' },
     { script: 'Gorilla', game: 'ゴリラTRPG' },
     { script: 'ColossalHunter', game: 'コロッサルハンター' },
+    { script: 'Postman', game: '壊れた世界のポストマン' },
     { script: 'Satasupe', game: 'サタスペ' },
     { script: 'SharedFantasia', game: 'Shared†Fantasia' },
     { script: 'JamesBond', game: 'ジェームズ・ボンド007' },
@@ -86,16 +81,21 @@ export class DiceBot extends GameObject {
     { script: 'ShinobiGami', game: 'シノビガミ' },
     { script: 'ShadowRun', game: 'シャドウラン' },
     { script: 'ShadowRun4', game: 'シャドウラン第４版' },
+    { script: 'ShadowRun5', game: 'シャドウラン第５版' },
     { script: 'ShoujoTenrankai', game: '少女展爛会' },
+    { script: 'Alter_raise', game: '心衝想機TRPGアルトレイズ' },
     { script: 'ShinkuuGakuen', game: '真空学園' },
     { script: 'ShinMegamiTenseiKakuseihen', game: '真・女神転生TRPG　覚醒編' },
     { script: 'SRS', game: 'Standard RPG System' },
+    { script: 'StratoShout', game: 'ストラトシャウト' },
     { script: 'TherapieSein', game: '青春疾患セラフィザイン' },
     { script: 'EtrianOdysseySRS', game: '世界樹の迷宮SRS' },
     { script: 'ZettaiReido', game: '絶対隷奴' },
     { script: 'SevenFortressMobius', game: 'セブン＝フォートレス メビウス' },
     { script: 'SwordWorld', game: 'ソードワールド' },
     { script: 'SwordWorld2_0', game: 'ソードワールド2.0' },
+    { script: 'SwordWorld2_5', game: 'ソードワールド2.5' },
+    { script: 'Villaciel', game: '蒼天のヴィラシエル' },
     { script: 'DarkSouls', game: 'ダークソウルTRPG' },
     { script: 'DarkDaysDrive', game: 'ダークデイズドライブ' },
     { script: 'DarkBlaze', game: 'ダークブレイズ' },
@@ -107,16 +107,19 @@ export class DiceBot extends GameObject {
     { script: 'DetatokoSaga', game: 'でたとこサーガ' },
     { script: 'DeadlineHeroes', game: 'デッドラインヒーローズ' },
     { script: 'DemonParasite', game: 'デモンパラサイト' },
+    { script: 'TokyoGhostResearch', game: '東京ゴーストリサーチ' },
     { script: 'TokyoNova', game: 'トーキョーＮ◎ＶＡ' },
     { script: 'Torg', game: 'トーグ' },
     { script: 'Torg1_5', game: 'トーグ1.5版' },
     { script: 'TokumeiTenkousei', game: '特命転攻生' },
     { script: 'Dracurouge', game: 'ドラクルージュ' },
+    { script: 'TrinitySeven', game: 'トリニティセブンRPG' },
     { script: 'TwilightGunsmoke', game: 'トワイライト・ガンスモーク' },
     { script: 'TunnelsAndTrolls', game: 'トンネルズ＆トロールズ' },
     { script: 'NightWizard', game: 'ナイトウィザード2版' },
     { script: 'NightWizard3rd', game: 'ナイトウィザード3版' },
     { script: 'NightmareHunterDeep', game: 'ナイトメアハンター=ディープ' },
+    { script: 'NinjaSlayer', game: 'ニンジャスレイヤーTRPG' },
     { script: 'Nuekagami', game: '鵺鏡' },
     { script: 'Nechronica', game: 'ネクロニカ' },
     { script: 'HarnMaster', game: 'ハーンマスター' },
@@ -126,6 +129,7 @@ export class DiceBot extends GameObject {
     { script: 'ParasiteBlood', game: 'パラサイトブラッド' },
     { script: 'Paranoia', game: 'パラノイア' },
     { script: 'BarnaKronika', game: 'バルナ・クロニカ' },
+    { script: 'Raisondetre', game: '叛逆レゾンデートル' },
     { script: 'BadLife', game: '犯罪活劇RPGバッドライフ' },
     { script: 'HuntersMoon', game: 'ハンターズムーン' },
     { script: 'Peekaboo', game: 'ピーカーブー' },
@@ -133,6 +137,8 @@ export class DiceBot extends GameObject {
     { script: 'BeginningIdol', game: 'ビギニングアイドル' },
     { script: 'PhantasmAdventure', game: 'ファンタズムアドベンチャー' },
     { script: 'FilledWith', game: 'フィルトウィズ' },
+    { script: 'FutariSousa', game: 'フタリソウサ' },
+    { script: 'BlindMythos', game: 'ブラインド・ミトス' },
     { script: 'BloodCrusade', game: 'ブラッド・クルセイド' },
     { script: 'BloodMoon', game: 'ブラッド・ムーン' },
     { script: 'FullMetalPanic', game: 'フルメタル・パニック！' },
@@ -156,6 +162,7 @@ export class DiceBot extends GameObject {
     { script: 'RoleMaster', game: 'ロールマスター' },
     { script: 'LostRoyal', game: 'ロストロイヤル' },
     { script: 'WaresBlade', game: 'ワースブレイド' },
+    { script: 'WorldOfDarkness', game: 'ワールドオブダークネス' },
     { script: 'WARPS', game: 'ワープス' },
     { script: 'Hieizan', game: '比叡山炎上' },
     { script: 'InfiniteFantasia', game: '無限のファンタジア' },
@@ -274,73 +281,33 @@ export class DiceBot extends GameObject {
     'BloodCrusade_TD1T.txt'
   ];
 
-  initialize(needUpdate: boolean = true) {
-    super.initialize(needUpdate);
-    //DiceBot.queue.add(() => DiceBot.loadScriptAsync('./assets/bcdice.js'));
-    DiceBot.queue.add(() => DiceBot.loadScriptAsync('./assets/cgiDiceBot.js'));
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    DiceBot.queue.add(DiceBot.loadScriptAsync('./assets/cgiDiceBot.js'));
     EventSystem.register(this)
-      .on<ChatMessageContext>('BROADCAST_MESSAGE', 100, async event => {
-        if (!event.isSendFromSelf) return;
-        let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.identifier);
-        if (!chatMessage || chatMessage.isSystem) return;
-        console.log('BROADCAST_MESSAGE DiceBot...?');
-        let text: string = chatMessage.text;
+      .on('SEND_MESSAGE', async event => {
+        let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
+        if (!chatMessage || !chatMessage.isSendFromSelf || chatMessage.isSystem) return;
 
-        text = text.replace(/[Ａ-Ｚａ-ｚ０-９！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝]/g, function (s) {
-          return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-        });
-
+        let text: string = StringUtil.toHalfWidth(chatMessage.text);
         let gameType: string = chatMessage.tag;
 
         try {
-          let rollResult = await DiceBot.diceRollAsync(text, gameType);
-          let result: string = rollResult.result;
-          let isSecret: boolean = rollResult.isSecret;
+          let regArray = /^((\d+)?\s+)?([^\s]*)?/ig.exec(text);
+          let repeat: number = (regArray[2] != null) ? Number(regArray[2]) : 1;
+          let rollText: string = (regArray[3] != null) ? regArray[3] : text;
 
-          if (result.length < 1) return;
+          let finalResult: DiceRollResult = { result: '', isSecret: false };
+          for (let i = 0; i < repeat && i < 32; i++) {
+            let rollResult = await DiceBot.diceRollAsync(rollText, gameType);
+            if (rollResult.result.length < 1) break;
 
-          result = result.replace(/[＞]/g, function (s) {
-            return '→';
-          });
-          result = result.trim();
-
-          let diceBotMessage: ChatMessageContext = {
-            identifier: '',
-            tabIdentifier: chatMessage.tabIdentifier,
-            from: 'System-BCDice',
-            timestamp: chatMessage.timestamp + 2,
-            imageIdentifier: '',
-            tag: 'system',
-            name: isSecret ? '<Secret-BCDice：' + chatMessage.name + '>（非公開）' : '<BCDice：' + chatMessage.name + '>',
-            text: result
-          };
-
-          if (chatMessage.to != null && 0 < chatMessage.to.length) {
-            diceBotMessage.to = chatMessage.to;
-            if (chatMessage.to.indexOf(chatMessage.from) < 0) {
-              diceBotMessage.to += ' ' + chatMessage.from;
-            }
+            finalResult.result += rollResult.result;
+            finalResult.isSecret = finalResult.isSecret || rollResult.isSecret;
+            if (1 < repeat) finalResult.result += ` #${i + 1}`;
           }
-
-          if (isSecret) {
-            let secretDiceBotMessage: ChatMessageContext = {
-              identifier: '',
-              tabIdentifier: chatMessage.tabIdentifier,
-              from: 'System-BCDice',
-              timestamp: chatMessage.timestamp + 1,
-              imageIdentifier: '',
-              tag: 'system',
-              name: '<BCDice：' + chatMessage.name + '>',
-              text: '(シークレットダイス)'
-            };
-            secretDiceBotMessage.to = diceBotMessage.to;
-            diceBotMessage.to = chatMessage.from;
-            diceBotMessage.responseIdentifier = event.data.identifier;
-            diceBotMessage.tag += ' secret';
-            EventSystem.call('BROADCAST_MESSAGE', secretDiceBotMessage);
-          }
-
-          EventSystem.call('BROADCAST_MESSAGE', diceBotMessage);
+          this.sendResultMessage(finalResult, chatMessage);
         } catch (e) {
           console.error(e);
         }
@@ -348,19 +315,56 @@ export class DiceBot extends GameObject {
       });
   }
 
-  static diceRollAsync(message: string, gameType: string): Promise<{ result: string, isSecret: boolean }> {
-    DiceBot.queue.add(() => DiceBot.loadDiceBotAsync(gameType));
+  // GameObject Lifecycle
+  onStoreRemoved() {
+    super.onStoreRemoved();
+    EventSystem.unregister(this);
+  }
+
+  private sendResultMessage(rollResult: DiceRollResult, originalMessage: ChatMessage) {
+    let result: string = rollResult.result;
+    let isSecret: boolean = rollResult.isSecret;
+
+    if (result.length < 1) return;
+
+    result = result.replace(/[＞]/g, s => '→').trim();
+
+    let diceBotMessage: ChatMessageContext = {
+      identifier: '',
+      tabIdentifier: originalMessage.tabIdentifier,
+      originFrom: originalMessage.from,
+      from: 'System-BCDice',
+      timestamp: originalMessage.timestamp + 1,
+      imageIdentifier: '',
+      tag: isSecret ? 'system secret' : 'system',
+      name: isSecret ? '<Secret-BCDice：' + originalMessage.name + '>' : '<BCDice：' + originalMessage.name + '>',
+      text: result
+    };
+
+    if (originalMessage.to != null && 0 < originalMessage.to.length) {
+      diceBotMessage.to = originalMessage.to;
+      if (originalMessage.to.indexOf(originalMessage.from) < 0) {
+        diceBotMessage.to += ' ' + originalMessage.from;
+      }
+    }
+    let chatTab = ObjectStore.instance.get<ChatTab>(originalMessage.tabIdentifier);
+    if (chatTab) chatTab.addMessage(diceBotMessage);
+  }
+
+  static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult> {
+    DiceBot.queue.add(DiceBot.loadDiceBotAsync(gameType));
     return DiceBot.queue.add(() => {
       if ('Opal' in window === false) {
         console.warn('Opal is not loaded...');
         return { result: '', isSecret: false };
       }
       let result = [];
-      let dir = []
-      let diceBotTablePrefix = 'diceBotTable_'
+      let dir = [];
+      let diceBotTablePrefix = 'diceBotTable_';
       let isNeedResult = true;
       try {
-        let cgiDiceBot = Opal.get('CgiDiceBot').$new();
+        Opal.gvars.isDebug = false;
+        let cgiDiceBot = Opal.CgiDiceBot.$new();
         result = cgiDiceBot.$roll(message, gameType, dir, diceBotTablePrefix, isNeedResult);
         console.log('diceRoll!!!', result);
         console.log('isSecret!!!', cgiDiceBot.isSecret);
@@ -373,19 +377,17 @@ export class DiceBot extends GameObject {
   }
 
   static getHelpMessage(gameType: string): Promise<string> {
-    DiceBot.queue.add(() => DiceBot.loadDiceBotAsync(gameType));
+    DiceBot.queue.add(DiceBot.loadDiceBotAsync(gameType));
     return DiceBot.queue.add(() => {
-      console.log('getHelpMessage');
       if ('Opal' in window === false) {
         console.warn('Opal is not loaded...');
         return '';
       }
       let help = '';
       try {
-        let bcdice = Opal.get('CgiDiceBot').$new().$newBcDice();
+        let bcdice = Opal.CgiDiceBot.$new().$newBcDice();
         bcdice.$setGameByTitle(gameType);
         help = bcdice.diceBot.$getHelpMessage();
-        console.log('bot.getHelpMessage()!!!', help);
       } catch (e) {
         console.error(e);
       }
@@ -425,7 +427,7 @@ export class DiceBot extends GameObject {
     });
   }
 
-  private static loadScriptAsync(path: string) {
+  private static loadScriptAsync(path: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       let head = document.head;
       let script = document.createElement('script');
@@ -438,13 +440,7 @@ export class DiceBot extends GameObject {
         resolve();
       };
 
-      script.onabort = (e) => {
-        if (head && script.parentNode) head.removeChild(script);
-        console.error(e);
-        resolve();
-      }
-
-      script.onerror = (e) => {
+      script.onabort = script.onerror = (e) => {
         if (head && script.parentNode) head.removeChild(script);
         console.error(e);
         resolve();
@@ -452,41 +448,23 @@ export class DiceBot extends GameObject {
     });
   }
 
-  private static loadExtratablesAsync(path: string, table: string) {
+  private static loadExtratablesAsync(path: string, table: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      let http = new XMLHttpRequest();
-      http.open('get', path, true);
-      http.onerror = (event) => {
-        console.error(event);
-        resolve();
-      };
-      http.onreadystatechange = (event) => {
-        if (http.readyState !== 4) {
-          return;
-        }
-        if (http.status === 200) {
-          console.log(table + ' is loading OK!!!');
-          let tableFileData = Opal.get('TableFileData');
+      fetch(path)
+        .then(response => {
+          if (response.ok) return response.text();
+          throw new Error('Network response was not ok.');
+        })
+        .then(text => {
           let array = /((.+)_(.+)).txt$/ig.exec(table);
-          tableFileData.$setVirtualTableData(array[1], array[2], array[3], http.responseText);
-        } else {
-          console.warn(table + 'fail...? status:' + http.status);
-        }
-        resolve();
-      };
-      http.send(null);
+          Opal.TableFileData.$setVirtualTableData(array[1], array[2], array[3], text);
+          console.log(table + ' is loading OK!!!');
+          resolve();
+        })
+        .catch(error => {
+          console.warn('There has been a problem with your fetch operation: ', error.message);
+          resolve();
+        });
     });
   }
-}
-
-interface DiceBotInfo {
-  script: string;
-  game: string;
-}
-
-interface DiceBotStackContainer {
-  originalString: string;
-  operater: string;
-  calculationResult: number;
-  diplayResult: string;
 }

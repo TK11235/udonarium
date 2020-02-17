@@ -1,26 +1,22 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { RoomSettingComponent } from '../room-setting/room-setting.component';
-import { PasswordCheckComponent } from '../password-check/password-check.component';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
-
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { PeerContext } from '../../class/core/system/network/peer-context';
-import { PeerCursor } from '../../class/peer-cursor';
+import { PasswordCheckComponent } from 'component/password-check/password-check.component';
+import { RoomSettingComponent } from 'component/room-setting/room-setting.component';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'lobby',
   templateUrl: './lobby.component.html',
   styleUrls: ['./lobby.component.css'],
-  //changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LobbyComponent implements OnInit {
-  rooms: { room: string, roomName: string, peers: PeerContext[] }[] = [];
+export class LobbyComponent implements OnInit, OnDestroy {
+  rooms: { alias: string, roomName: string, peers: PeerContext[] }[] = [];
 
   isReloading: boolean = false;
 
@@ -32,23 +28,20 @@ export class LobbyComponent implements OnInit {
     return Network.peerIds.length <= 1 ? false : true;
   }
   constructor(
-    private ngZone: NgZone,
     private panelService: PanelService,
-    private modalService: ModalService,
-    private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
     this.changeTitle();
     EventSystem.register(this)
-      .on('OPEN_PEER', 0, event => {
+      .on('OPEN_NETWORK', event => {
         this.changeTitle();
       })
-      .on('OTHER_PEERS', event => {
+      .on('CONNECT_PEER', event => {
         this.changeTitle();
       });
+    this.reload();
   }
 
   private changeTitle() {
@@ -71,22 +64,26 @@ export class LobbyComponent implements OnInit {
     for (let id of peerIds) {
       let context = new PeerContext(id);
       if (context.isRoom) {
-        let roomIdentifier = context.room + context.roomName;
-        if (!(roomIdentifier in peersOfroom)) {
-          peersOfroom[roomIdentifier] = [];
+        let alias = context.room + context.roomName;
+        if (!(alias in peersOfroom)) {
+          peersOfroom[alias] = [];
         }
-        peersOfroom[roomIdentifier].push(context);
+        peersOfroom[alias].push(context);
       }
     }
-    for (let room in peersOfroom) {
-      this.rooms.push({ room: room, roomName: peersOfroom[room][0].roomName, peers: peersOfroom[room] });
+    for (let alias in peersOfroom) {
+      this.rooms.push({ alias: alias, roomName: peersOfroom[alias][0].roomName, peers: peersOfroom[alias] });
     }
+    this.rooms.sort((a, b) => {
+      if (a.alias < b.alias) return -1;
+      if (a.alias > b.alias) return 1;
+      return 0;
+    });
     this.help = '接続可能なルームが見つかりませんでした。「新しいルームを作成する」で新規ルームを作成できます。';
     this.isReloading = false;
   }
 
   async connect(peerContexts: PeerContext[]) {
-    //Network.connect(peer);
     let context = peerContexts[0];
 
     if (context.password.length) {
@@ -100,14 +97,15 @@ export class LobbyComponent implements OnInit {
 
     let triedPeer: string[] = [];
     EventSystem.register(triedPeer)
-      .on('OPEN_PEER', 0, event => {
+      .on('OPEN_NETWORK', event => {
         console.log('LobbyComponent OPEN_PEER', event.data.peer);
         EventSystem.unregister(triedPeer);
+        ObjectStore.instance.clearDeleteHistory();
         for (let peer of peerContexts) {
           Network.connect(peer.fullstring);
         }
         EventSystem.register(triedPeer)
-          .on('OPEN_OTHER_PEER', 0, event => {
+          .on('CONNECT_PEER', event => {
             console.log('接続成功！', event.data.peer);
             triedPeer.push(event.data.peer);
             console.log('接続成功 ' + triedPeer.length + '/' + peerContexts.length);
@@ -116,7 +114,7 @@ export class LobbyComponent implements OnInit {
               EventSystem.unregister(triedPeer);
             }
           })
-          .on('CLOSE_OTHER_PEER', 0, event => {
+          .on('DISCONNECT_PEER', event => {
             console.warn('接続失敗', event.data.peer);
             triedPeer.push(event.data.peer);
             console.warn('接続失敗 ' + triedPeer.length + '/' + peerContexts.length);
@@ -137,7 +135,7 @@ export class LobbyComponent implements OnInit {
 
   async showRoomSetting() {
     await this.modalService.open(RoomSettingComponent, { width: 700, height: 400, left: 0, top: 400 });
-    this.rooms = [];
+    this.reload();
     this.help = '「一覧を更新」ボタンを押すと接続可能なルーム一覧を表示します。';
   }
 }

@@ -1,22 +1,15 @@
-import { SyncObject } from './core/synchronize-object/anotation';
-import { GameObject } from './core/synchronize-object/game-object';
+import { ChatPalette } from './chat-palette';
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
-import { ChatPalette } from './chat-palette';
 
 @SyncObject('character')
 export class GameCharacter extends TabletopObject {
+  @SyncVar() rotate: number = 0;
+  @SyncVar() roll: number = 0;
 
-  get size(): number {
-    let element = this.getElement('size', this.commonDataElement);
-    let num = element ? +element.value : 0;
-    return Number.isNaN(num) ? 1 : num;
-  }
-
-  get name(): string {
-    let element = this.getElement('name', this.commonDataElement);
-    return element ? <string>element.value : '???';
-  }
+  get name(): string { return this.getCommonValue('name', ''); }
+  get size(): number { return this.getCommonValue('size', 1); }
 
   get chatPalette(): ChatPalette {
     for (let child of this.children) {
@@ -25,18 +18,9 @@ export class GameCharacter extends TabletopObject {
     return null;
   }
 
-  setLocation(location: string) {
-    //this.syncData.location.locationName = location;
-    this.location.name = location;
-    this.update();
-  }
-
-  static createGameCharacter(name: string, size: number, imageIdentifier: string): GameCharacter {
+  static create(name: string, size: number, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
-    //gameCharacter.syncData.imageIdentifier = imageIdentifier;
-    //gameCharacter.syncData.name = name;
-    //gameCharacter.syncData.size = size;
     gameCharacter.initialize();
     gameCharacter.createTestGameDataElement(name, size, imageIdentifier);
 
@@ -51,7 +35,6 @@ export class GameCharacter extends TabletopObject {
 
     if (this.imageDataElement.getFirstElementByName('imageIdentifier')) {
       this.imageDataElement.getFirstElementByName('imageIdentifier').value = imageIdentifier;
-      this.imageDataElement.getFirstElementByName('imageIdentifier').update();
     }
 
     let resourceElement: DataElement = DataElement.create('リソース', '', {}, 'リソース' + this.identifier);
@@ -91,13 +74,8 @@ export class GameCharacter extends TabletopObject {
     testElement.appendChild(DataElement.create('Lv9', '薙ぎ払い', {}, 'Lv9' + this.identifier));
     testElement.appendChild(DataElement.create('自動', '治癒適正', {}, '自動' + this.identifier));
 
-    //console.log('serializeToXmlString\n' + this.rootDataElement.toXml());
-
     let domParser: DOMParser = new DOMParser();
     let gameCharacterXMLDocument: Document = domParser.parseFromString(this.rootDataElement.toXml(), 'application/xml');
-    //console.log(gameCharacterXMLDocument);
-
-    //console.log('serializeToJson\n' + GameDataElement.serializeToJson(this.rootDataElement));
 
     let palette: ChatPalette = new ChatPalette('ChatPalette_' + this.identifier);
     palette.setPalette(`チャットパレット入力例：
@@ -108,21 +86,5 @@ export class GameCharacter extends TabletopObject {
 //格闘＝１`);
     palette.initialize();
     this.appendChild(palette);
-
-    this.update();
   }
-}
-
-export interface GameCharacterContainer {
-  name: string;
-  size: number;
-  imageIdentifier: string;
-  dataElementIdentifier: string;
-  location: GameObjectLocationContainer;
-}
-
-export interface GameObjectLocationContainer {
-  locationName: string;
-  x: number;
-  y: number;
 }

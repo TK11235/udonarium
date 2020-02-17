@@ -1,0 +1,35 @@
+<div class="component is-3d is-grab is-pointer-events-none" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
+  appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
+  <div class="component-content is-3d" [@bounceInOut]="'in'">
+    <div appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()"
+      class="component-content is-3d is-pointer-events-auto">
+      <div class="pedestal-inner" [ngClass]="{'is-gray-border': hasOwner}"></div>
+      <div class="pedestal-outer"></div>
+      <ng-container *ngIf="!isIconHidden">
+      <div class="pedestal-grab rotate-grab">
+        <div class="pedestal-grab-border">
+          <div class="material-icons of-front">autorenew</div>
+          <div class="material-icons of-back">autorenew</div>
+        </div>
+      </div>
+      </ng-container>
+      <div class="component-content is-3d" [@diceRoll]="animeState" (@diceRoll.done)="animationShuffleDone($event)">
+        <div class="upright-transform is-fit-width is-3d">
+          <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize">
+            <div class="rotate-inner is-3d">
+              <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background is-3d" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+                <div class="fornt-tag is-3d">{{name}}:<span *ngIf="isVisible">{{face}}</span><span *ngIf="!isVisible">???</span></div>
+                <div class="back-tag is-3d">{{name}}:<span *ngIf="isVisible">{{face}}</span><span *ngIf="!isVisible">???</span></div>
+              </div>
+              <div *ngIf="hasOwner" class="owner-tag is-nowrap is-black-background is-3d" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+                <div class="fornt-tag has-length-limit is-3d">{{ownerName}}</div>
+                <div class="back-tag has-length-limit is-3d">{{ownerName}}</div>
+              </div>
+              <img class="image" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'" [ngClass]="{'is-black-mask': !isVisible, 'is-harf-black-mask': isMine}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

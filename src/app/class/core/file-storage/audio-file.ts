@@ -1,6 +1,4 @@
-import * as CryptoJS from 'crypto-js/core.js';
-import * as WordArray from 'crypto-js/lib-typedarrays.js';
-import * as SHA256 from 'crypto-js/sha256.js';
+import { FileReaderUtil } from './file-reader-util';
 
 export enum AudioState {
   NULL = 0,
@@ -30,19 +28,14 @@ export class AudioFile {
   get name(): string { return this.context.name };
   get blob(): Blob { return this.context.blob; };
   get url(): string { return this.context.url; };
-
-  private _isPlaying: boolean = false;
-  get isPlaying(): boolean { return this._isPlaying };
-  set isPlaying(isPlaying: boolean) { this._isPlaying = isPlaying };
-
-  buffer: AudioBuffer = null;
-  source: AudioBufferSourceNode = null;
-
+  get isReady(): boolean { return AudioState.NULL < this.state; }
   get state(): AudioState {
     if (!this.url && !this.blob) return AudioState.NULL;
     if (this.url && !this.blob) return AudioState.URL;
     return AudioState.COMPLETE;
   }
+
+  isHidden: boolean = false;
 
   private constructor() { }
 
@@ -73,23 +66,21 @@ export class AudioFile {
   static async createAsync(blob: Blob): Promise<AudioFile>
   static async createAsync(arg: any): Promise<AudioFile> {
     if (arg instanceof File) {
-      return await AudioFile._createAsync(new Blob([arg.slice()], { type: arg.type }), arg.name);
+      return await AudioFile._createAsync(arg, arg.name);
     } else if (arg instanceof Blob) {
       return await AudioFile._createAsync(arg);
     }
   }
 
   private static async _createAsync(blob: Blob, name?: string): Promise<AudioFile> {
-    let audio = new AudioFile();
-    audio.context.name = name;
-    audio.context.blob = blob;
-    audio.context.url = window.URL.createObjectURL(blob);
+    let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob);
 
-    try {
-      audio.context.identifier = await AudioFile.calHashAsync(blob);
-    } catch (e) {
-      throw e;
-    }
+    let audio = new AudioFile();
+    audio.context.identifier = await FileReaderUtil.calcSHA256Async(arrayBuffer);
+    audio.context.name = name;
+    audio.context.blob = new Blob([arrayBuffer], { type: blob.type });
+    audio.context.type = audio.context.blob.type;
+    audio.context.url = window.URL.createObjectURL(audio.context.blob);
 
     if (!audio.context.name) audio.context.name = audio.context.identifier;
 
@@ -97,12 +88,11 @@ export class AudioFile {
   }
 
   destroy() {
-    if (this.source) this.source.stop();
+    this.revokeURLs();
   }
 
   apply(context: AudioFileContext) {
     if (!this.context.identifier && context.identifier) this.context.identifier = context.identifier;
-    //if (!this.context.name && context.name) this.context.name = context.name;
     if (context.name) this.context.name = context.name;
     if (!this.context.blob && context.blob) this.context.blob = context.blob;
     if (!this.context.type && context.type) this.context.type = context.type;
@@ -110,6 +100,17 @@ export class AudioFile {
       if (this.state !== AudioState.URL) window.URL.revokeObjectURL(this.context.url);
       this.context.url = context.url;
     }
+    this.createURLs();
+  }
+
+  private createURLs() {
+    if (this.state === AudioState.URL) return;
+    if (this.context.blob && this.context.url === '') this.context.url = window.URL.createObjectURL(this.context.blob);
+  }
+
+  private revokeURLs() {
+    if (this.state === AudioState.URL) return;
+    window.URL.revokeObjectURL(this.context.url);
   }
 
   toContext(): AudioFileContext {
@@ -120,23 +121,5 @@ export class AudioFile {
       type: this.context.type,
       url: this.context.url
     }
-  }
-
-  private static calHashAsync(blob: Blob): Promise<string> {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      reader.onload = event => {
-
-        let wordArray = WordArray.create(reader.result);
-        let hash: string = SHA256(<any>wordArray, 'key').toString();
-
-        console.log('calHashAsync => ' + hash);
-        resolve(hash);
-      }
-      reader.onabort = reader.onerror = () => {
-        reject();
-      }
-      reader.readAsArrayBuffer(blob);
-    });
   }
 }

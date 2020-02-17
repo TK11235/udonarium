@@ -7,7 +7,7 @@
       <li (click)="open('PeerMenuComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons icon-size">people</i></div>
-          <div>Peer</div>
+          <div>接続</div>
         </a>
       </li>
       <li (click)="open('ChatWindowComponent')">
@@ -34,32 +34,22 @@
           <div>音楽</div>
         </a>
       </li>
-      <li (click)="open('GameCharacterGeneratorComponent')">
-        <a routerLink="/" routerLinkActive="active">
-          <div><i class="material-icons icon-size">nature_people</i></div>
-          <div>キャラ作成</div>
-        </a>
-      </li>
       <li (click)="open('GameObjectInventoryComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons icon-size">folder_shared</i></div>
           <div>インベントリ</div>
         </a>
       </li>
-      <!--
-        <li (click)="open('GameObjectInventoryComponent')">
-          <a routerLink="/" routerLinkActive="active">
-            <div><i class="material-icons icon-size">folder</i></div>
-            <div>あなたのインベントリ</div>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/" routerLinkActive="active">
-            <div><i class="material-icons">local_florist</i></div>
-            <div>墓場</div>
-          </a>
-        </li>
-         -->
+      <li>
+        <a routerLink="/" routerLinkActive="active">
+          <label>
+            <div><i class="material-icons">open_in_browser</i></div>
+            <div>ZIP読込</div>
+            <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple
+              accept="application/xml,text/xml,application/zip" />
+          </label>
+        </a>
+      </li>
       <li (click)="save()">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons">sd_storage</i></div>
@@ -70,3 +60,4 @@
   </nav>
 </ui-panel>
 <div #modalLayer></div>
+<network-indicator class="networkIndicator"></network-indicator>

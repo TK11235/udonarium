@@ -2,7 +2,7 @@ import { GameObject } from './game-object';
 
 export declare var Type: FunctionConstructor;
 export interface Type<T> extends Function {
-  new (...args: any[]): T;
+  new(...args: any[]): T;
 }
 
 export class ObjectFactory {
@@ -12,18 +12,28 @@ export class ObjectFactory {
     return ObjectFactory._instance;
   }
 
-  private classConstructors: { [alias: string]: Type<GameObject> } = {};
+  private constructorMap: Map<string, Type<GameObject>> = new Map();
+  private aliasMap: Map<Type<GameObject>, string> = new Map();
 
   private constructor() { console.log('ObjectFactory ready...'); };
 
   register<T extends GameObject>(constructor: Type<T>, alias?: string) {
     if (!alias) alias = constructor.name || constructor.toString().match(/function\s*([^(]*)\(/)[1];
+    if (this.constructorMap.has(alias)) {
+      console.error('その alias<' + alias + '> はすでに割り当て済みじゃねー？');
+      return;
+    }
+    if (this.aliasMap.has(constructor)) {
+      console.error('その constructor はすでに登録済みじゃねー？', constructor);
+      return;
+    }
     console.log('addGameObjectFactory -> ' + alias);
-    this.classConstructors[alias] = constructor;
+    this.constructorMap.set(alias, constructor);
+    this.aliasMap.set(constructor, alias);
   }
 
   create<T extends GameObject>(alias: string, identifer?: string): T {
-    let classConstructor = this.classConstructors[alias];
+    let classConstructor = this.constructorMap.get(alias);
     if (!classConstructor) {
       console.error(alias + 'という名のＧameObjectクラスは定義されていません');
       return null;
@@ -32,11 +42,7 @@ export class ObjectFactory {
     return <T>gameObject;
   }
 
-  getAlias<T extends GameObject>(object: T): string {
-    for (let alias in this.classConstructors) {
-      if (this.classConstructors[alias] === object.constructor) return alias;
-    }
-    return '';
+  getAlias<T extends GameObject>(constructor: Type<T>): string {
+    return this.aliasMap.get(constructor);
   }
 }
-setTimeout(function () { ObjectFactory.instance; }, 0);

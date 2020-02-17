@@ -1,5 +1,5 @@
-import { Matrix3D } from './matrix-3d';
 import { CSSNumber } from './css-number';
+import { Matrix3D } from './matrix-3d';
 
 export interface IPoint2D {
   x: number;

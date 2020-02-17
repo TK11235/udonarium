@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 
 class MonotoneMusium < DiceBot
-  setPrefixes(['2D6.*', 'ET','ET2', 'OT', 'DT', 'DT2', 'WDT', 'WDT2', 'OT2', 'DTO', 'DTS'])
+  setPrefixes(['2D6.*', 'ET', 'ET2', 'OT', 'DT', 'DT2', 'WDT', 'WDT2', 'OT2', 'DTO', 'DTS'])
 
   def initialize
     super
-    
+
     @sendMode = 2
     @d66Type = 1
     @sortType = 1
   end
+
   def gameName
     'モノトーン・ミュージアム'
   end
-  
+
   def gameType
     "MonotoneMusium"
   end
-  
+
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定
@@ -33,74 +34,69 @@ class MonotoneMusium < DiceBot
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
-  
-  
+
   def rollDiceCommand(command)
-    
     result = checkRoll(command)
-    return result unless(result.empty?)
-    
+    return result unless result.empty?
+
     debug("判定ロールではなかった")
-    
+
     debug("各種表として処理")
     return rollTableCommand(command)
   end
-  
-  
+
   def checkRoll(string)
     output = ''
-    
+
     crit = 12
     fumble = 2
-    
-    return output unless(/^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string)
-    
-    modText = $1
-    target = $2.to_i
-    crit = $4.to_i if($4)
-    fumble = $6.to_i if($6)
-    
+
+    return output unless /^2D6([\+\-\d]*)>=(\d+)(\[(\d+)?(,(\d+))?\])?$/i =~ string
+
+    modText = Regexp.last_match(1)
+    target = Regexp.last_match(2).to_i
+    crit = Regexp.last_match(4).to_i if Regexp.last_match(4)
+    fumble = Regexp.last_match(6).to_i if Regexp.last_match(6)
+
     mod = 0
-    mod = parren_killer("(0#{modText})") unless( modText.nil? )
-    
+    mod = parren_killer("(0#{modText})") unless modText.nil?
+
     total, dice_str, = roll(2, 6, @sortType && 1)
     total_n = total + mod.to_i
-    
+
     output = "#{total}[#{dice_str}]＋#{mod} → #{total_n}"
-    
-    if(total >= crit)
+
+    if total >= crit
       output += " ＞ 自動成功"
-    elsif(total <= fumble)
+    elsif total <= fumble
       output += " ＞ 自動失敗"
-    elsif(total_n >= target)
+    elsif total_n >= target
       output += " ＞ 成功"
     else
       output += " ＞ 失敗"
     end
-    
+
     output = "(#{string}) ＞ #{output}"
-    
+
     return output
-    
   end
-  
-  
+
   def rollTableCommand(command)
     output = ''
     type = ""
-    
+
     case command
     when /ET2/i
-      type ="感情表2.0"
+      type = "感情表2.0"
       output, total_n = mm_emotion_table_ver2()
     when /ET/i
-      type ="感情表"
+      type = "感情表"
       output, total_n = mm_emotion_table()
     when /OT2/i
-      type ="兆候表ver2.0"
+      type = "兆候表ver2.0"
       output, total_n = mm_omens_table_ver2()
     when /OT/i
-      type ="兆候表"
+      type = "兆候表"
       output, total_n = mm_omens_table()
     when /WDT2/i
       type = "世界歪曲表ver2.0"
@@ -121,9 +117,9 @@ INFO_MESSAGE_TEXT
       type = "歪み表"
       output, total_n = mm_distortion_table()
     end
-    
-    output = "#{type}(#{total_n}) ＞ #{output}" if(output != '')
-    
+
+    output = "#{type}(#{total_n}) ＞ #{output}" if output != ''
+
     return output
   end
 
@@ -213,7 +209,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_d66(table)
   end
 
- # 兆候表(2d6)[OT]
+  # 兆候表(2d6)[OT]
   def mm_omens_table
     table = [
       "【信念の喪失】\n[出自]を喪失する。特徴は失われない。",
@@ -228,7 +224,7 @@ INFO_MESSAGE_TEXT
       "【理由の喪失】\n[境遇]を喪失する。特徴は失われない。",
       "【存在の喪失】\nあなたの存在は一瞬、この世界から消失する。",
     ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -240,7 +236,7 @@ INFO_MESSAGE_TEXT
       "【空間消失】\n演目の舞台の一部（建物一棟程度）が消失する。",
       "【天候悪化】\n激しい雷雨に見舞われる。",
       "【生命繁茂】\nシーン内に植物が爆発的に増加し、建物はイバラのトゲと蔓草に埋没する。",
-      "【色彩喪失】\n世界から色彩が失われる。紡ぎ手（PC）以外の人々は世界のすべてをモノクロームになったかのように認識する。",
+      "【色彩喪失】\n世界から色彩が失われる。世界のすべてをモノクロームになったかのように認識する。",
       "【神権音楽】\n美しいが不安を覚える音が流れる。音は人々にストレスを与え、街の雰囲気は悪化している。",
       "【鏡面世界】\n演目の舞台に存在するあらゆる文字は鏡文字になる。",
       "【時空歪曲】\n昼夜が逆転する。昼間であれば夜になり、夜であれば朝となる。",
@@ -249,7 +245,7 @@ INFO_MESSAGE_TEXT
     ]
     return get_table_by_2d6(table)
   end
- 
+
   # 歪み表ver2.0(d66)[DT2]
   def mm_distortion_table_ver2
     table = [
@@ -308,7 +304,7 @@ INFO_MESSAGE_TEXT
       "【自己死】\nもっとも剥離値の高いPCひとりが［戦闘不能］になる。複数のPCが該当した場合はGMがランダムに決定する。",
       "【世界死】\n世界の破滅。難易度12の【縫製】判定に成功すると破滅から逃れられる。失敗すると行方不明になる。エンディングフェイズへ。",
     ]
-    
+
     return get_table_by_2d6(table)
   end
 
@@ -441,7 +437,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_d66(table)
   end
 
-# 歪み表(海)(d66)[DTS]
+  # 歪み表(海)(d66)[DTS]
   def mm_distortion_table_sea
     table = [
       "【海域汚染】\n赤潮が発生する。あるいは海水そのものが毒に変わる。登場している全てのキャラクターは【体力】難易度10の判定を行い、失敗すると邪毒5を受ける。エキストラがどうなるかはGMが決定するが、治療されなければ早晩死亡するだろう。",
@@ -484,5 +480,4 @@ INFO_MESSAGE_TEXT
 
     return get_table_by_d66(table)
   end
-
 end

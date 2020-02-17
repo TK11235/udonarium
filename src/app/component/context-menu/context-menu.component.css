@@ -1,10 +1,10 @@
-.draggable-panel{
+.component {
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   position: absolute;
 
   background: linear-gradient(-30deg, rgba(240,218,189, 0.9), rgba(255, 244, 232, 0.9));
-  border:solid 1px #999;
+  border: solid 1px #999;
   padding: 0px;
 
   white-space: nowrap;
@@ -15,35 +15,64 @@
 
   -moz-user-drag: none;
   -webkit-user-drag: none;
-
+  z-index: 9900;
+}
+.submenu-panel {
+  position: absolute;
+  left: calc(100% - 4px);
+  top: -16px;
+}
+.pointer-events-none {
+  pointer-events: none;
+}
+.is-max-limit {
   max-height: 100%;
   max-width: 100%;
 }
 .title{
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 18em;
   font-size: 12px;
   text-align: center;
-  padding: 2px 0px;
+  padding: 4px 16px;
   margin: 0 2px;
   color: #444;
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid #AAA;
+}
+.menu-title {
+  display: inline-block;
+}
+hr.separator {
+  margin: 0.1em -12px;
+  height: 1px;
+  border: 0;
+  background-color: #AAA;
+}
+.sub-menu-arrow {
+  display: inline-block;
+  position: absolute;
+  top: 2px;
+  bottom: 0;
+  right: 1px;
 }
 ul {
   list-style: none;
-  padding: 0px;
-  margin: 0px;
+  padding: 2px 0;
+  margin: 0;
 }
 ul > li {
+  position: relative;
   cursor: -moz-default;
   cursor: -webkit-default;
   cursor: default;
 
-  padding: 2px 8px;
+  padding: 2px 20px;
   font-size: 12px;
   color: #444;
 }
-ul > li:hover {
+ul > li.hasHighlight:hover {
   color: #CCC;
   background-color: rgba(30, 30, 30, 0.8);
 }

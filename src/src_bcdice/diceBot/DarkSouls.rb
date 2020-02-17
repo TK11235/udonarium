@@ -29,75 +29,60 @@ class DarkSouls < DiceBot
 MESSAGETEXT
   end
 
-
   def rollDiceCommand(command)
-    
-    output = 
-      case command.upcase
-      
-      when /(\d+)?(A)?DS([\+\-\d+]*)(\@(\d+))?$/i
-        #TKfix メソッドをまたぐと$xの中身がnilになっている
-        reg1 = $1
-        reg2 = $2
-        reg3 = $3
-        reg5 = $5
+    return nil unless (m = /(\d+)?(A)?DS([\+\-\d+]*)(\@(\d+))?$/i.match(command.upcase))
 
-        diceCount = (reg1 || 2).to_i#($1 || 2).to_i
-        isActive = !reg2.nil?#!$2.nil?
-        modify = getValue(reg3)#getValue($3)
-        target = (reg5 || 0).to_i#($5 || 0).to_i
-        
-        checkRoll(diceCount, isActive, modify, target)
-        
-      else
-        nil
-      end
-    
+    diceCount = (m[1] || 2).to_i
+    isActive = !m[2].nil?
+    modify = getValue(m[3])
+    target = (m[5] || 0).to_i
+
+    output = checkRoll(diceCount, isActive, modify, target)
+
     return output
   end
-  
+
   def checkRoll(diceCount, isActive, modify, target)
     dice, diceText = roll(diceCount, 6)
     successValue = dice + modify
     modifyText = getValueText(modify)
     targetText = (target == 0 ? '' : ">=#{target}")
-    
-    if( isActive )
-      diceArray = diceText.split(/,/).collect{|i|i.to_i}
-      focusDamage = diceArray.count{|i| i == 1 }
-      
-      if( focusDamage > 0 )
+
+    if isActive
+      diceArray = diceText.split(/,/).collect { |i| i.to_i }
+      focusDamage = diceArray.count { |i| i == 1 }
+
+      if focusDamage > 0
         focusText = "■" * focusDamage
         focusText = "（FP#{focusText}消費）"
       end
     end
-    
+
     result = "(#{diceCount}D6#{modifyText}#{targetText})"
     result += " ＞ #{dice}(#{diceText})#{modifyText}"
     result += " ＞ #{successValue}#{targetText}"
-    
-    if( target > 0 )
-      if( successValue >= target )
+
+    if target > 0
+      if  successValue >= target
         result += " ＞ 【成功】"
       else
         result += " ＞ 【失敗】"
       end
     end
-    
-    result += "#{focusText}"
+
+    result += focusText.to_s
     return result
   end
-  
+
   def getValue(text)
     text ||= ""
-    return parren_killer("(0#{ text })").to_i
+    return parren_killer("(0#{text})").to_i
   end
-  
+
   def getValueText(value)
-    return "" if( value == 0 )
-    return "#{value}" if( value < 0 )
+    return "" if value == 0
+    return value.to_s if value < 0
+
     return "\+#{value}"
   end
-  
-  
 end

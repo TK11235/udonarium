@@ -1,0 +1,28 @@
+.flex-container {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+
+  -webkit-flex-flow: row wrap; /* Safari */
+  flex-flow:  row wrap;
+
+  -webkit-justify-content: flex-start; /* Safari */
+  justify-content: flex-start;
+
+  -webkit-align-items: stretch; /* Safari */
+  align-items: stretch;
+
+}
+.flex-item {
+  margin: 5px;
+  -webkit-flex: 1 0 auto; /* Safari */
+  flex: 1 0 auto;
+  box-sizing: border-box;
+  -webkit-flex-grow: 1; /* Safari */
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.no-grow{
+  -webkit-flex-grow: 0; /* Safari */
+  flex-grow: 0;
+}

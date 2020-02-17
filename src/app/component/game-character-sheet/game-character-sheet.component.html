@@ -1,17 +1,27 @@
 <button (click)="toggleEditMode()">編集切り替え</button>
-<ng-container *ngIf="!isCard && !isTerrain">
-  <button (click)="openModal('imageIdentifier')">画像変更</button>
+<ng-container [ngSwitch]="tabletopObject.aliasName">
+  <ng-container *ngSwitchCase="'numberResource'">
+  </ng-container>
+  <ng-container *ngSwitchCase="'card'">
+    <button (click)="openModal('front')">表面の画像を変更</button>
+    <button (click)="openModal('back')">裏面の画像を変更</button>
+  </ng-container>
+  <ng-container *ngSwitchCase="'card-stack'">
+  </ng-container>
+  <ng-container *ngSwitchCase="'terrain'">
+    <button (click)="openModal('floor')">床の画像を変更</button>
+    <button (click)="openModal('wall')">壁の画像を変更</button>
+  </ng-container>
+  <ng-container *ngSwitchCase="'dice-symbol'">
+    <button (click)="openModal(tabletopObject['face'])" [disabled]="!tabletopObject['isVisible']">ダイス目の画像を変更</button>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <button (click)="openModal('imageIdentifier', true)">画像変更</button>
+  </ng-container>
 </ng-container>
-<ng-container *ngIf="isCard">
-  <button (click)="openModal('front')">表面の画像を変更</button>
-  <button (click)="openModal('back')">裏面の画像を変更</button>
-</ng-container>
-<ng-container *ngIf="isTerrain">
-  <button (click)="openModal('floor')">床の画像を変更</button>
-  <button (click)="openModal('wall')">壁の画像を変更</button>
-</ng-container>
+<button (click)="clone()">コピーを作る</button>
 <button (click)="saveToXML()">保存</button>
-<ng-container *ngIf="isCharacter">
+<ng-container *ngIf="tabletopObject.aliasName === 'character'">
   <select *ngIf="tabletopObject" (change)="setLocation($event.target.value)" [ngModel]="tabletopObject.location.name">
     <option value="table">テーブル</option>
     <option value="common">共有インベントリ</option>
@@ -20,14 +30,14 @@
   </select>
 </ng-container>
 <div *ngIf="tabletopObject" class="flex-container">
-  <div *ngIf="0 < tabletopObject.imageFile.url.length" class="box main-image-box">
+  <div *ngIf="0 < tabletopObject.imageFile?.url.length" class="box main-image-box">
     <img class="main-image" [src]="tabletopObject.imageFile.url | safe: 'resourceUrl'" [alt]="tabletopObject.imageFile.name"
     />
   </div>
   <ng-container *ngIf="tabletopObject.commonDataElement">
     <div class="flex-item">
       <div class="table">
-        <div class="table-row" game-data-element [gameDataElement]="tabletopObject.commonDataElement"></div>
+        <div class="table-row" game-data-element [gameDataElement]="tabletopObject.commonDataElement" [isTagLocked]="true"></div>
       </div>
     </div>
   </ng-container>

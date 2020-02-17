@@ -1,147 +1,152 @@
-import { Component, ComponentRef, ViewRef, ViewContainerRef, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
-
-import { ContextMenuService } from '../../service/context-menu.service';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'context-menu',
   templateUrl: './context-menu.component.html',
-  styleUrls: ['./context-menu.component.css'],
-  /*
-  providers: [
-    ContextMenuService,
-  ]
-  */
+  styleUrls: ['./context-menu.component.css']
 })
 export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('draggablePanel') draggablePanel: ElementRef;
+  @ViewChild('root', { static: true }) rootElementRef: ElementRef<HTMLElement>;
 
-  @Input() set left(left: number) { this.contextMenuService.position.x = left; }
-  @Input() set top(top: number) { this.contextMenuService.position.y = top; }
+  @Input() title: string = '';
+  @Input() actions: ContextMenuAction[] = [];
 
-  get left() { return this.contextMenuService.position.x; }
-  get top() { return this.contextMenuService.position.y; }
+  @Input() isSubmenu: boolean = false;
 
-  private preLeft: number = 0
-  private preTop: number = 0;
-  private preWidth: number = 100;
-  private preHeight: number = 100;
+  parentMenu: ContextMenuAction;
+  subMenu: ContextMenuAction[];
 
-  private isFullScreen: boolean = false;
+  showSubMenuTimer: NodeJS.Timer;
+  hideSubMenuTimer: NodeJS.Timer;
 
-  private $draggablePanelElement: JQuery;
-  private $scrollablePanelElement: JQuery;
+  private callbackOnOutsideClick = (e) => this.onOutsideClick(e);
 
-  private callbackOnScrollablePanelMouseDown: any = null;
-  private callbackOnDraggablePanelMouseDown: any = null;
-  private callbackOnOutsideClick: any = null;
+  get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
+
   constructor(
-    public contextMenuService: ContextMenuService
+    private elementRef: ElementRef<HTMLElement>,
+    public contextMenuService: ContextMenuService,
+    private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
-
+    if (!this.isSubmenu) {
+      this.title = this.contextMenuService.title;
+      this.actions = this.contextMenuService.actions;
+    }
   }
 
   ngAfterViewInit() {
-    // TODO ウィンドウタイトルって下側のほうがいい？ 
-    this.$draggablePanelElement = $(this.draggablePanel.nativeElement);
-
-    //this.$draggablePanelElement.draggable({ containment: 'body', cancel: 'input,textarea,button,select,option,span', stack: '.draggable-panel', opacity: 0.7 });
-    //this.$draggablePanelElement.resizable({ handles: 'all', minHeight: 100, minWidth: 100 });
-
-    this.callbackOnScrollablePanelMouseDown = (e) => this.onScrollablePanelMouseDown(e);
-    this.callbackOnDraggablePanelMouseDown = (e) => this.onDraggablePanelMouseDown(e);
-    this.callbackOnOutsideClick = (e) => this.onOutsideClick(e);
-
-    this.draggablePanel.nativeElement.addEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
-    document.body.addEventListener('mousedown', this.callbackOnOutsideClick, true);
-
-    this.preLeft = this.left;
-    this.preTop = this.top;
-
-    this.setForeground();
-    this.adjustPosition();
+    if (!this.isSubmenu) {
+      this.adjustPositionRoot();
+      document.addEventListener('touchstart', this.callbackOnOutsideClick, true);
+      document.addEventListener('mousedown', this.callbackOnOutsideClick, true);
+    } else {
+      this.adjustPositionSub();
+    }
   }
 
   ngOnDestroy() {
-    this.draggablePanel.nativeElement.removeEventListener('mousedown', this.callbackOnDraggablePanelMouseDown, false);
-    document.body.removeEventListener('mousedown', this.callbackOnOutsideClick, true);
-    this.callbackOnScrollablePanelMouseDown = null;
-    this.callbackOnDraggablePanelMouseDown = null;
-    this.callbackOnOutsideClick = null;
+    document.removeEventListener('touchstart', this.callbackOnOutsideClick, true);
+    document.removeEventListener('mousedown', this.callbackOnOutsideClick, true);
   }
 
-  private onScrollablePanelMouseDown(e: MouseEvent) {
-
-  }
-
-  private onDraggablePanelMouseDown(e: MouseEvent) {
-    console.log('onDraggablePanelMouseDown');
-    this.setForeground();
-  }
-
-  //@HostListener('document:mousedown', ['$event'])
-  private onOutsideClick(event) {
-    if (!$(event.target).closest(this.$draggablePanelElement).length) {
+  onOutsideClick(event) {
+    if (this.rootElementRef.nativeElement.contains(event.target) === false) {
       this.close();
     }
   }
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
-    console.log('onContextMenu');
     e.stopPropagation();
     e.preventDefault();
   }
 
-  private setForeground() {
-    let $stacks: JQuery = $('.draggable-panel')
-    let topZIndex: number = 0;
-    let bottomZindex: number = 99999;
-    $stacks.each(function () {
-      let zIndex = parseInt($(this).css('zIndex'));
-      if (topZIndex < zIndex) topZIndex = zIndex;
-      if (zIndex < bottomZindex) bottomZindex = zIndex;
-    });
-    $stacks.each(function () {
-      $(this).css('zIndex', parseInt($(this).css('zIndex')) - bottomZindex);
-    });
-    this.$draggablePanelElement.css('zIndex', topZIndex + 1);
+  private adjustPositionRoot() {
+    let panel: HTMLElement = this.rootElementRef.nativeElement;
+
+    panel.style.left = this.contextMenuService.position.x + 'px';
+    panel.style.top = this.contextMenuService.position.y + 'px';
+
+    let panelBox = panel.getBoundingClientRect();
+
+    let diffLeft = 0;
+    let diffTop = 0;
+
+    if (window.innerWidth < panelBox.right + diffLeft) {
+      diffLeft += window.innerWidth - (panelBox.right + diffLeft);
+    }
+    if (panelBox.left + diffLeft < 0) {
+      diffLeft += 0 - (panelBox.left + diffLeft);
+    }
+
+    if (window.innerHeight < panelBox.bottom + diffTop) {
+      diffTop += window.innerHeight - (panelBox.bottom + diffTop);
+    }
+    if (panelBox.top + diffTop < 0) {
+      diffTop += 0 - (panelBox.top + diffTop);
+    }
+
+    panel.style.left = panel.offsetLeft + diffLeft + 'px';
+    panel.style.top = panel.offsetTop + diffTop + 'px';
   }
 
-  private adjustPosition() {
-    let $panel = $(this.draggablePanel.nativeElement);
+  private adjustPositionSub() {
+    let parent: HTMLElement = this.elementRef.nativeElement.parentElement;
+    let submenu: HTMLElement = this.rootElementRef.nativeElement;
 
-    let offsetLeft = $panel.offset().left;
-    let offsetTop = $panel.offset().top;
+    let parentBox = parent.getBoundingClientRect();
+    let submenuBox = submenu.getBoundingClientRect();
 
-    if (window.innerWidth < offsetLeft + $panel.outerWidth()) {
-      offsetLeft -= (offsetLeft + $panel.outerWidth()) - window.innerWidth;
-    }
-    if (window.innerHeight < offsetTop + $panel.outerHeight()) {
-      offsetTop -= (offsetTop + $panel.outerHeight()) - window.innerHeight;
-    }
+    let diffLeft = 0;
+    let diffTop = 0;
 
-    if (offsetLeft < 0) {
-      offsetLeft = 0;
+    if (window.innerWidth < submenuBox.right + diffLeft) {
+      diffLeft -= parentBox.width + submenuBox.width;
+      diffLeft += 8;
     }
-    if (offsetTop < 0) {
-      offsetTop = 0;
+    if (submenuBox.left + diffLeft < 0) {
+      diffLeft += 0 - (submenuBox.left + diffLeft);
     }
 
-    $panel.offset({ left: offsetLeft, top: offsetTop });
+    if (window.innerHeight < submenuBox.bottom + diffTop) {
+      diffTop += window.innerHeight - (submenuBox.bottom + diffTop);
+    }
+    if (submenuBox.top + diffTop < 0) {
+      diffTop += 0 - (submenuBox.top + diffTop);
+    }
 
-    setTimeout(() => {
-      this.left = offsetLeft;
-      this.top = offsetTop;
-    }, 0);
+    submenu.style.left = submenu.offsetLeft + diffLeft + 'px';
+    submenu.style.top = submenu.offsetTop + diffTop + 'px';
   }
 
-  doAction(func: Function) {
-    console.log('ContextMenu action');
-    if (func) func();
-    this.close();
+  doAction(action: ContextMenuAction) {
+    this.showSubMenu(action);
+    if (action.action != null) {
+      action.action();
+      this.close();
+    }
+  }
+
+  showSubMenu(action: ContextMenuAction) {
+    this.hideSubMenu();
+    clearTimeout(this.showSubMenuTimer);
+    if (action.subActions == null || action.subActions.length < 1) return;
+    this.showSubMenuTimer = setTimeout(() => {
+      this.parentMenu = action;
+      this.subMenu = action.subActions;
+      clearTimeout(this.hideSubMenuTimer);
+    }, 250);
+  }
+
+  hideSubMenu() {
+    clearTimeout(this.hideSubMenuTimer);
+    this.hideSubMenuTimer = setTimeout(() => {
+      this.subMenu = null;
+    }, 1200);
   }
 
   close() {

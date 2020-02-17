@@ -29,6 +29,12 @@ nav ul > li > a {
   height: 128px;
   width: 128px;
   font-size: 8px;
+  user-select: none;
+}
+nav ul > li > a > label {
+  cursor: -moz-pointer;
+  cursor: -webkit-pointer;
+  cursor: pointer;
 }
 nav ul i {
   font-size: 24px;
@@ -53,4 +59,15 @@ nav ul a, nav ul a:hover, nav ul a:active, nav ul a:visited {
   padding: 0px;
   height: 100%;
   width: 300px;
+}
+
+.networkIndicator {
+  display: none;
+  z-index: 9999;
+  pointer-events: none;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  height: 30px;
+  width: 30px;
 }

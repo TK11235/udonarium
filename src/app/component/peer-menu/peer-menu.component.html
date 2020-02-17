@@ -1,47 +1,45 @@
 <div *ngIf="myPeer">
   <button (click)="changeIcon()">アイコンを変更する</button>
-  <div *ngIf="myPeer.image" class="image contain" [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' "
+  <div *ngIf="myPeer.image" class="image cover" [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' "
     (click)="changeIcon()">
     <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
   </div>
   <span>あなたのニックネーム：  <input [(ngModel)]="myPeer.name"  placeholder="ニックネーム" /></span>
 </div>
 <div>
-  <span>あなたのPeer ID：<span *ngIf="networkService.isConnected" style="font-weight: bold;">{{networkService.peerContext.id}}</span>
-  <span *ngIf="!networkService.isConnected" style="font-weight: bold;">???</span>
+  <span>あなたのID：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.id}}</span>
+  <span *ngIf="!networkService.isOpen" style="font-weight: bold;">???</span>
   </span>
 </div>
 <!--<div>host ID:{{networkService.hostPeerID}}</div>-->
 <ng-container *ngIf="18 < networkService.peerId.length">
   <hr/>
   <div>
-    <span>ルーム名：<span *ngIf="networkService.isConnected" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
+    <span>ルーム名：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
   </div>
   <div>
-    <span>パスワード：<span *ngIf="networkService.isConnected" style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>
+    <span>パスワード：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>
   </div>
 </ng-container>
 <hr/>
 <div *ngFor="let conn of networkService.peerContexts">
   <div>
     <span *ngIf="!conn.isOpen">[接続中]</span>
-    <span>他のPeer：{{conn.id}}</span>
+    <span>他の参加者：{{conn.id}} [{{findPeerName(conn.fullstring)}}]</span>
   </div>
 </div>
 <div>
   <ng-container *ngIf="networkService.peerId.length <= 18">
-    <input [(ngModel)]="targetPeerId" placeholder="Peer ID" name="targetPeerId" />
-    <button (click)="connectPeer()" [disabled]="!networkService.isConnected">他のPeerと接続</button><br>
+    <input [(ngModel)]="targetPeerId" placeholder="接続したい相手のID" name="targetPeerId" />
+    <button (click)="connectPeer()" [disabled]="!networkService.isOpen">プライベート接続</button><br>
   </ng-container>
-  <button *ngIf="networkService.peerIds.length <= 1 && 0 < appConfigService.peerHistory.length && !appConfigService.isOpen"
-    (click)="connectPeerHistory()">前回接続していたPeerに再接続</button><br>
-  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()">ルーム機能を使う</button>
+  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isOpen">ロビー（ルーム一覧）を表示</button>
 </div>
 <div><span style="font-size: 12px;">{{help}}</span></div>
 <ng-container *ngIf="networkService.peerId.length <= 18">
-  <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※他の人のPeer IDを入力して「他のPeerと接続」を押すと接続できます。</div>
+  <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※プライベート接続を使用する場合は、お互いのIDをユドナリウム外で共有してください。</div>
   <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※一人で動作確認を行いたい場合はブラウザを2つ開くと良いと思います。</div>
 </ng-container>
 <ng-container *ngIf="18 < networkService.peerId.length">
-  <div style="font-size: 12px;">※ルーム機能を利用している時はPeer ID指定接続を利用できません。</div>
+  <div style="font-size: 12px;">※ルーム機能を利用している時はプライベート接続を利用できません。</div>
 </ng-container>

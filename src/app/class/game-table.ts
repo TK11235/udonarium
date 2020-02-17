@@ -1,12 +1,8 @@
+import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
+import { ObjectNode } from './core/synchronize-object/object-node';
+import { EventSystem } from './core/system';
 import { GameTableMask } from './game-table-mask';
-import { TabletopObject } from './tabletop-object';
 import { Terrain } from './terrain';
-
-import { Network, EventSystem } from './core/system/system';
-import { ObjectStore } from './core/synchronize-object/object-store';
-import { SyncObject, SyncVar } from './core/synchronize-object/anotation';
-import { GameObject } from './core/synchronize-object/game-object';
-import { ObjectSerializer, InnerXml } from './core/synchronize-object/object-serializer';
 
 export enum GridType {
   SQUARE = 0,
@@ -14,51 +10,44 @@ export enum GridType {
   HEX_HORIZONTAL = 2,
 }
 
-export interface GameTableDataContainer {
-  width: number;
-  height: number;
-  gridSize: number;
-  imageIdentifier: string;
-  gridType: GridType;
+export enum FilterType {
+  NONE = '',
+  WHITE = 'white',
+  BLACK = 'black',
 }
 
 @SyncObject('game-table')
-export class GameTable extends GameObject implements InnerXml {
+export class GameTable extends ObjectNode {
   @SyncVar() name: string = 'テーブル';
   @SyncVar() width: number = 20;
   @SyncVar() height: number = 20;
   @SyncVar() gridSize: number = 50;
   @SyncVar() imageIdentifier: string = 'imageIdentifier';
+  @SyncVar() backgroundImageIdentifier: string = 'imageIdentifier';
+  @SyncVar() backgroundFilterType: FilterType = FilterType.NONE;
   @SyncVar() selected: boolean = false;
-  @SyncVar() gridType: GridType = GridType.SQUARE; // 0=square 1=hex(縦揃え) 2=hex(横揃え)
+  @SyncVar() gridType: GridType = GridType.SQUARE;
   @SyncVar() gridColor: string = '#000000e6';
 
-  innerXml(): string {
-    let xml = '';
-    let masks = ObjectStore.instance.getObjects<GameTableMask>(GameTableMask);
-    for (let mask of masks) {
-      if (mask.location.name === this.identifier) {
-        xml += mask.toXml();
-      }
-    }
-    let terrains = ObjectStore.instance.getObjects<Terrain>(Terrain);
-    for (let terrain of terrains) {
-      if (terrain.location.name === this.identifier) {
-        xml += terrain.toXml();
-      }
-    }
-    return xml;
+  get terrains(): Terrain[] {
+    let terrains: Terrain[] = [];
+    this.children.forEach(object => {
+      if (object instanceof Terrain) terrains.push(object);
+    });
+    return terrains;
   }
 
-  parseInnerXml(element: Element) {
-    for (let i = 0; i < element.children.length; i++) {
-      console.log('GameTable.parseInnerXml() [' + i + ']', element.children[i]);
-      let object = ObjectSerializer.instance.parseXml(element.children[i]);
-      if (object instanceof TabletopObject) {
-        object.location.name = this.identifier;
-        object.update();
-      }
-    }
-    if (this.selected) EventSystem.call('SELECT_GAME_TABLE', { identifier: this.identifier }, Network.peerId);
+  get masks(): GameTableMask[] {
+    let masks: GameTableMask[] = [];
+    this.children.forEach(object => {
+      if (object instanceof GameTableMask) masks.push(object);
+    });
+    return masks;
+  }
+
+  // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    if (this.selected) EventSystem.trigger('SELECT_GAME_TABLE', { identifier: this.identifier });
   }
 }

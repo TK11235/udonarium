@@ -3,10 +3,19 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  padding: 10px;
+  padding: 25px;
   text-align: center;
-  font: 20px bold 'Vollkorn';
-  color: #555;
+  font: 24px bold 'Vollkorn';
+  color: #444;
+  cursor: pointer;
+}
+
+.large-font {
+  font-size: 64px;
+}
+
+.small-font {
+  font-size: 12px;
 }
 
 .box {

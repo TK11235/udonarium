@@ -1,21 +1,16 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
+import { EventSystem, Network } from '@udonarium/core/system';
 
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { PeerContext } from '../../class/core/system/network/peer-context';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
 
 @Component({
   selector: 'password-check',
   templateUrl: './password-check.component.html',
-  styleUrls: ['./password-check.component.css'],
-  //changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./password-check.component.css']
 })
-export class PasswordCheckComponent implements OnInit {
+export class PasswordCheckComponent implements OnInit, OnDestroy {
   password: string = '';
   help: string = '';
 
@@ -27,12 +22,8 @@ export class PasswordCheckComponent implements OnInit {
   }
 
   constructor(
-    private ngZone: NgZone,
     private panelService: PanelService,
-    private modalService: ModalService,
-    private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService
+    private modalService: ModalService
   ) {
     this.needPassword = modalService.option.password ? modalService.option.password : '';
   }

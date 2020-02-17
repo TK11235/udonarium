@@ -1,21 +1,26 @@
-<div #tableMask class="game-char game-char_3d" [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}"
-  [style.width.px]="card.size * gridSize" (contextmenu)="onContextMenu($event)" [ngStyle]="{'z-index' : card.zindex, 'pointer-events': 'none'}">
-  <div *ngIf="card && card.imageFile" class="block-1" [ngStyle]="{'transform': 'rotateZ(' + card.rotate +'deg)', 'pointer-events': 'auto'}"
-    [ngClass]="{'grab': (!isDragging), 'grabbing': (isDragging), 'transition': !isDragging}">
-    <img *ngIf="card.isFront" class="background-image" [src]="card.frontImage.url | safe: 'resourceUrl'">
-    <img *ngIf="!card.isFront" class="background-image" [src]="card.backImage.url | safe: 'resourceUrl'">
-
-    <div class="rotate-grab left-top" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
-    <div class="rotate-grab left-bottom" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
-    <div class="rotate-grab right-bottom" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
-    <div class="rotate-grab right-top" (mousedown)="onRotateMouseDown($event)"><i class="material-icons">autorenew</i></div>
-
+<div class="component is-3d is-pointer-events-none is-grab" [style.width.px]="size * gridSize"
+  appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
+  <div class="component-content is-pointer-events-auto"
+    appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
+    <img *ngIf="imageFile" class="card-image" [src]="(isFront ? frontImage.url : backImage.url) | safe: 'resourceUrl'">
+    <div *ngIf="!isFront && hasOwner" class="name-tag is-nowrap has-length-limit is-black-background" [ngStyle]="{'transform': 'translateY(-75%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+      <span>{{ownerName}}</span>
+    </div>
+    <img *ngIf="isHand && frontImage" class="card-image thumbnail-transform is-translucent" [src]="frontImage.url | safe: 'resourceUrl'">
+    <ng-container *ngIf="!isIconHidden">
+      <div class="rotate-grab of-left-top">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-left-bottom">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-right-bottom">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="rotate-grab of-right-top">
+        <i class="material-icons">autorenew</i>
+      </div>
+      <div class="border-bg is-pointer-events-none"></div>
+    </ng-container>
   </div>
-  <img *ngIf="card.isHand && card.frontImage" class="game-char-image2 game-char_3d game-char-image_3d" [src]="card.frontImage.url | safe: 'resourceUrl'">
-  <div *ngIf="!card.isFront && card.hasOwner" class="title" [ngStyle]="{'transform': 'translateY(0%) translateX(-50%) translateX(' + card.size * gridSize / 2 +'px)'}"
-    style="position: absolute; top: 50%;background-color: #fcc; color: #CCC; background-color: rgba(30, 30, 30, 0.8);">
-    <span style="white-space: nowrap;">{{card.ownerName}}</span>
-  </div>
-  <!--<div *ngIf="card.isHand" class="lock-icon"><i class="material-icons">visibility</i></div>　screen_rotation　autorenew-->
-  <!--  -->
 </div>

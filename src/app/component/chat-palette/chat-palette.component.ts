@@ -1,29 +1,27 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone, Input, ViewChild, AfterViewInit, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { TextViewComponent } from '../text-view/text-view.component';
+import { ChatPalette } from '@udonarium/chat-palette';
+import { ChatTab } from '@udonarium/chat-tab';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { DiceBot } from '@udonarium/dice-bot';
+import { GameCharacter } from '@udonarium/game-character';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
-import { ModalService } from '../../service/modal.service';
-import { PanelService, PanelOption } from '../../service/panel.service';
-import { PointerDeviceService } from '../../service/pointer-device.service';
-import { ChatMessageService } from '../../service/chat-message.service';
-
-import { ChatTab } from '../../class/chat-tab';
-import { ChatPalette } from '../../class/chat-palette';
-import { ChatMessage, ChatMessageContext } from '../../class/chat-message';
-import { PeerCursor } from '../../class/peer-cursor';
-import { DiceBot } from '../../class/dice-bot';
-import { GameCharacter, GameCharacterContainer } from '../../class/game-character';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { PeerContext } from '../../class/core/system/network/peer-context';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { ImageFile } from '../../class/core/file-storage/image-file';
+import { TextViewComponent } from 'component/text-view/text-view.component';
+import { ChatMessageService } from 'service/chat-message.service';
+import { PanelOption, PanelService } from 'service/panel.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'chat-palette',
   templateUrl: './chat-palette.component.html',
   styleUrls: ['./chat-palette.component.css']
 })
-export class ChatPaletteComponent implements OnInit {
+export class ChatPaletteComponent implements OnInit, OnDestroy {
+  @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('chatPlette', { static: false }) chatPletteElementRef: ElementRef<HTMLSelectElement>;
   @Input() character: GameCharacter = null;
 
   get palette(): ChatPalette { return this.character.chatPalette; }
@@ -41,6 +39,21 @@ export class ChatPaletteComponent implements OnInit {
   isEdit: boolean = false;
   editPalette: string = '';
 
+  private shouldUpdateCharacterList: boolean = true;
+  private _gameCharacters: GameCharacter[] = [];
+  get gameCharacters(): GameCharacter[] {
+    if (this.shouldUpdateCharacterList) {
+      this.shouldUpdateCharacterList = false;
+      this._gameCharacters = ObjectStore.instance
+        .getObjects<GameCharacter>(GameCharacter)
+        .filter(character => this.allowsChat(character));
+    }
+    return this._gameCharacters;
+  }
+
+  private writingEventInterval: NodeJS.Timer = null;
+  private previousWritingLength: number = 0;
+
   private doubleClickTimer: NodeJS.Timer = null;
 
   get diceBotInfos() { return DiceBot.diceBotInfos }
@@ -50,14 +63,8 @@ export class ChatPaletteComponent implements OnInit {
   get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
-    private ngZone: NgZone,
-    //private gameRoomService: GameRoomService,
-    //private contextMenuService: ContextMenuService,
-    //private modalService: ModalService,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private elementRef: ElementRef,
-    private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
@@ -66,7 +73,14 @@ export class ChatPaletteComponent implements OnInit {
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
     this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
     EventSystem.register(this)
-      .on('CLOSE_OTHER_PEER', event => {
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        if (event.data.aliasName !== GameCharacter.aliasName) return;
+        this.shouldUpdateCharacterList = true;
+        if (this.character && !this.allowsChat(this.character)) {
+          if (0 < this.gameCharacters.length) this.onSelectedCharacter(this.gameCharacters[0].identifier);
+        }
+      })
+      .on('DISCONNECT_PEER', event => {
         let object = ObjectStore.instance.get(this.sendTo);
         if (object instanceof PeerCursor && object.peerId === event.data.peer) {
           this.sendTo = '';
@@ -76,15 +90,35 @@ export class ChatPaletteComponent implements OnInit {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
+    if (this.isEdit) this.toggleEditMode();
+  }
+
+  updatePanelTitle() {
+    this.panelService.title = this.character.name + ' のチャットパレット';
+  }
+
+  onSelectedCharacter(identifier: string) {
+    if (this.isEdit) this.toggleEditMode();
+    let object = ObjectStore.instance.get(identifier);
+    if (object instanceof GameCharacter) this.character = object;
+    this.updatePanelTitle();
   }
 
   selectPalette(line: string) {
+    this.text = line;
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.value = this.text;
+  }
+
+  clickPalette(line: string) {
     if (this.doubleClickTimer && this.text === line) {
       clearTimeout(this.doubleClickTimer);
       this.doubleClickTimer = null;
-      this.sendChat();
+      this.sendChat(null);
     } else {
       this.text = line;
+      let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+      textArea.value = this.text;
       this.doubleClickTimer = setTimeout(() => { this.doubleClickTimer = null }, 400);
     }
   }
@@ -134,37 +168,27 @@ export class ChatPaletteComponent implements OnInit {
     });
   }
 
-  sendChat() {
+  sendChat(event: KeyboardEvent) {
+    if (event) event.preventDefault();
+
     if (!this.text.length) return;
+    if (event && event.keyCode !== 13) return;
 
-    let time = this.chatMessageService.getTime();
-    console.log('time:' + time);
-    let chatMessage: ChatMessageContext = {
-      from: Network.peerContext.id,
-      name: this.character.name,
-      text: this.palette.evaluate(this.text, this.character.rootDataElement),
-      timestamp: time,
-      tag: this.gameType,
-      imageIdentifier: this.character.imageFile ? this.character.imageFile.identifier : '',
-      responseIdentifier: '',
-    };
-
-    if (this.sendTo != null && this.sendTo.length) {
-      let name = '';
-      let object = ObjectStore.instance.get(this.sendTo);
-      if (object instanceof GameCharacter) {
-        name = object.name;
-        chatMessage.to = object.identifier;
-      } else if (object instanceof PeerCursor) {
-        name = object.name;
-        let peer = PeerContext.create(object.peerId);
-        if (peer) chatMessage.to = peer.id;
-      }
-      chatMessage.name += ' > ' + name;
+    if (this.chatTab) {
+      let text = this.palette.evaluate(this.text, this.character.rootDataElement);
+      this.chatMessageService.sendMessage(this.chatTab, text, this.gameType, this.character.identifier, this.sendTo);
     }
-
-    if (this.chatTab) this.chatTab.addMessage(chatMessage);
     this.text = '';
+    this.previousWritingLength = this.text.length;
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.value = '';
+    this.resetPletteSelect();
+    this.calcFitHeight();
+  }
+
+  resetPletteSelect() {
+    if (!this.chatPletteElementRef.nativeElement) return;
+    this.chatPletteElementRef.nativeElement.selectedIndex = -1;
   }
 
   toggleEditMode() {
@@ -173,6 +197,50 @@ export class ChatPaletteComponent implements OnInit {
       this.editPalette = this.palette.value + '';
     } else {
       this.palette.setPalette(this.editPalette);
+    }
+  }
+
+  onInput() {
+    if (this.writingEventInterval === null && this.previousWritingLength <= this.text.length) {
+      let sendTo: string = null;
+      if (this.isDirect) {
+        let object = ObjectStore.instance.get(this.sendTo);
+        if (object instanceof PeerCursor) {
+          let peer = PeerContext.create(object.peerId);
+          if (peer) sendTo = peer.id;
+        }
+      }
+      EventSystem.call('WRITING_A_MESSAGE', this.chatTabidentifier, sendTo);
+      this.writingEventInterval = setTimeout(() => {
+        this.writingEventInterval = null;
+      }, 200);
+    }
+    this.previousWritingLength = this.text.length;
+    this.calcFitHeight();
+  }
+
+  calcFitHeight() {
+    let textArea: HTMLTextAreaElement = this.textAreaElementRef.nativeElement;
+    textArea.style.height = '';
+    if (textArea.scrollHeight >= textArea.offsetHeight) {
+      textArea.style.height = textArea.scrollHeight + 'px';
+    }
+  }
+
+  private allowsChat(gameCharacter: GameCharacter): boolean {
+    switch (gameCharacter.location.name) {
+      case 'table':
+      case this.myPeer.peerId:
+        return true;
+      case 'graveyard':
+        return false;
+      default:
+        for (const conn of Network.peerContexts) {
+          if (conn.isOpen && gameCharacter.location.name === conn.fullstring) {
+            return false;
+          }
+        }
+        return true;
     }
   }
 }

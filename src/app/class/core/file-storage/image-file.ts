@@ -1,11 +1,4 @@
-import * as CryptoJS from 'crypto-js/core.js';
-//import * as CryptoJS from 'crypto-js/crypto-js.js';
-import * as WordArray from 'crypto-js/lib-typedarrays.js';
-import * as SHA256 from 'crypto-js/sha256.js';
-
-//import { SHA256 } from 'crypto-js';
-//import * as CryptoJS from 'crypto-js';
-//import * as CryptoJS from 'crypto-js/crypto-js.js';
+import { FileReaderUtil } from './file-reader-util';
 
 export enum ImageState {
   NULL = 0,
@@ -85,26 +78,28 @@ export class ImageFile {
   static async createAsync(blob: Blob): Promise<ImageFile>
   static async createAsync(arg: any): Promise<ImageFile> {
     if (arg instanceof File) {
-      return await ImageFile._createAsync(new Blob([arg.slice()], { type: arg.type }), arg.name);
+      return await ImageFile._createAsync(arg, arg.name);
     } else if (arg instanceof Blob) {
       return await ImageFile._createAsync(arg);
     }
   }
 
   private static async _createAsync(blob: Blob, name?: string): Promise<ImageFile> {
+    let arrayBuffer = await FileReaderUtil.readAsArrayBufferAsync(blob);
+
     let imageFile = new ImageFile();
+    imageFile.context.identifier = await FileReaderUtil.calcSHA256Async(arrayBuffer);
     imageFile.context.name = name;
-    imageFile.context.blob = blob;
-    imageFile.context.url = window.URL.createObjectURL(blob);
+    imageFile.context.blob = new Blob([arrayBuffer], { type: blob.type });
+    imageFile.context.url = window.URL.createObjectURL(imageFile.context.blob);
 
     try {
-      imageFile.context.identifier = await ImageFile.calHashAsync(blob);
       imageFile.context.thumbnail = await ImageFile.createThumbnailAsync(imageFile.context);
     } catch (e) {
       throw e;
     }
 
-    if (!imageFile.context.name) imageFile.context.name = imageFile.context.identifier;
+    if (imageFile.context.name != null) imageFile.context.name = imageFile.context.identifier;
 
     return imageFile;
   }
@@ -148,38 +143,14 @@ export class ImageFile {
 
   private createURLs() {
     if (this.state === ImageState.URL) return;
-    this.revokeURLs();
-    if (this.context.blob) this.context.url = window.URL.createObjectURL(this.context.blob);
-    if (this.context.thumbnail.blob) this.context.thumbnail.url = window.URL.createObjectURL(this.context.thumbnail.blob);
+    if (this.context.blob && this.context.url === '') this.context.url = window.URL.createObjectURL(this.context.blob);
+    if (this.context.thumbnail.blob && this.context.thumbnail.url === '') this.context.thumbnail.url = window.URL.createObjectURL(this.context.thumbnail.blob);
   }
 
   private revokeURLs() {
     if (this.state === ImageState.URL) return;
     window.URL.revokeObjectURL(this.context.url);
     window.URL.revokeObjectURL(this.context.thumbnail.url);
-  }
-
-  private static calHashAsync(blob: Blob): Promise<string> {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      reader.onload = event => {
-        
-        /*
-        let wordArray = (<any>CryptoJS).lib.WordArray.create(reader.result);
-        let hash: string = CryptoJS.SHA256(wordArray, 'key').toString();
-        */
-
-        let wordArray = WordArray.create(reader.result);
-        let hash: string = SHA256(<any>wordArray, 'key').toString();
-        
-        console.log('calHashAsync => ' + hash);
-        resolve(hash);
-      }
-      reader.onabort = reader.onerror = () => {
-        reject();
-      }
-      reader.readAsArrayBuffer(blob);
-    });
   }
 
   private static createThumbnailAsync(context: ImageContext): Promise<ThumbnailContext> {

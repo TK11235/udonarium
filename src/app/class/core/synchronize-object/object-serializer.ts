@@ -1,8 +1,7 @@
+import { XmlUtil } from '../system/util/xml-util';
+import { Attributes } from './attributes';
 import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory } from './object-factory';
-import { EventSystem } from '../system/system';
-import { Attributes } from './attributes';
-import { XmlUtil } from './xml-util';
 
 export interface XmlAttributes extends GameObject {
   toAttributes(): Attributes;
@@ -32,53 +31,55 @@ export class ObjectSerializer {
 
     let attrStr = '';
     for (let name in attributes) {
-      let attribute = (attributes[name] + '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      let attribute = XmlUtil.encodeEntityReference(attributes[name] + '');
       if (attribute == null) continue;
       attrStr += ' ' + name + '="' + attribute + '"';
     }
-    xml += '<' + tagName + attrStr + '>';
+    xml += `<${tagName + attrStr}>`;
     xml += 'innerXml' in gameObject ? (<InnerXml>gameObject).innerXml() : '';
-    xml += '</' + tagName + '>';
+    xml += `</${tagName}>`;
     return xml;
   }
 
   static toAttributes(syncData: Object): Attributes {
     let attributes = {};
     for (let syncVar in syncData) {
-      if (Array.isArray(syncData[syncVar])) {
-        console.warn('Array', syncData[syncVar]);
-        let arrayAttributes = ObjectSerializer.array2attributes(syncData[syncVar], syncVar);
-        for (let name in arrayAttributes) {
-          attributes[name] = arrayAttributes[name];
-        }
-      } else if (typeof syncData[syncVar] === 'object') {
-        let objAttributes = ObjectSerializer.object2attributes(syncData[syncVar], syncVar);
-        for (let name in objAttributes) {
-          attributes[name] = objAttributes[name];
-        }
-      } else {
-        attributes[syncVar] = syncData[syncVar];
+      let item = syncData[syncVar];
+      let key = syncVar;
+      let childAttr = ObjectSerializer.make2Attributes(item, key);
+      for (let name in childAttr) {
+        attributes[name] = childAttr[name];
       }
+    }
+    return attributes;
+  }
+
+  private static make2Attributes(item: any, key: string): Attributes {
+    let attributes = {};
+    if (Array.isArray(item)) {
+      let arrayAttributes = ObjectSerializer.array2attributes(item, key);
+      for (let name in arrayAttributes) {
+        attributes[name] = arrayAttributes[name];
+      }
+    } else if (typeof item === 'object') {
+      let objAttributes = ObjectSerializer.object2attributes(item, key);
+      for (let name in objAttributes) {
+        attributes[name] = objAttributes[name];
+      }
+    } else {
+      attributes[key] = item;
     }
     return attributes;
   }
 
   private static object2attributes(obj: any, rootKey: string): Attributes {
     let attributes = {};
-    for (let key in obj) {
-      if (Array.isArray(obj[key])) {
-        let arrayAttributes = ObjectSerializer.array2attributes(obj[key], key);
-        for (let name in arrayAttributes) {
-          attributes[name] = arrayAttributes[name];
-        }
-      }
-      if (typeof obj[key] === 'object') {
-        let childAttributes = ObjectSerializer.object2attributes(obj[key], key);
-        for (let name in childAttributes) {
-          attributes[name] = childAttributes[name];
-        }
-      } else {
-        attributes[rootKey + '.' + key] = obj[key];
+    for (let objKey in obj) {
+      let item = obj[objKey];
+      let key = rootKey + '.' + objKey;
+      let childAttr = ObjectSerializer.make2Attributes(item, key);
+      for (let name in childAttr) {
+        attributes[name] = childAttr[name];
       }
     }
     return attributes;
@@ -89,18 +90,9 @@ export class ObjectSerializer {
     for (let i = 0; i < array.length; i++) {
       let item = array[i];
       let key = rootKey + '.' + i;
-      if (Array.isArray(item)) {
-        let arrayAttributes = ObjectSerializer.array2attributes(item, key);
-        for (let name in arrayAttributes) {
-          attributes[name] = arrayAttributes[name];
-        }
-      } else if (typeof item === 'object') {
-        let childAttributes = ObjectSerializer.object2attributes(item, key);
-        for (let name in childAttributes) {
-          attributes[name] = childAttributes[name];
-        }
-      } else {
-        attributes[key] = item;
+      let childAttr = ObjectSerializer.make2Attributes(item, key);
+      for (let name in childAttr) {
+        attributes[name] = childAttr[name];
       }
     }
     return attributes;
@@ -129,7 +121,6 @@ export class ObjectSerializer {
       gameObject.apply(context);
     }
 
-    console.log('' + gameObject.identifier, gameObject);
     gameObject.initialize();
     if ('parseInnerXml' in gameObject) {
       (<InnerXml>gameObject).parseInnerXml(xmlElement);
@@ -140,41 +131,36 @@ export class ObjectSerializer {
   static parseAttributes(syncData: Object, attributes: NamedNodeMap): Object {
     for (let i = 0; i < attributes.length; i++) {
       let value = attributes[i].value;
-      value = value.replace(/&#34;/g, '"');
-      /* */
+      value = XmlUtil.decodeEntityReference(value);
+
       let split: string[] = attributes[i].name.split('.');
       let key: string | number = split[0];
       let obj: Object | Array<any> = syncData;
-      let parentObj: Object | Array<any> = null;
-      //console.log('---------------------start obj is ', obj);
+
       if (1 < split.length) {
+        // 階層構造の解析 foo.bar.0="abc" 等
+        // 処理として実装こそしているが、xmlの仕様としては良くないので使用するべきではない.
+        let parentObj: Object | Array<any> = null;
         for (let j = 0; j < split.length; j++) {
           let index = parseInt(split[j]);
           if (parentObj && !Number.isNaN(index) && !Array.isArray(obj) && Object.keys(parentObj).length) {
-            //console.log('A:key:' + key +  ' to Array', obj);
             parentObj[key] = [];
             obj = parentObj[key];
-            //console.log('B:key:' + key +  ' to Array', obj);
           }
           key = Number.isNaN(index) ? split[j] : index;
           if (j + 1 < split.length) {
-            //console.log('A:key is ' + key + '<' + typeof key + '>...' + split[j], obj[key]);
             if (obj[key] === undefined) obj[key] = typeof key === 'number' ? [] : {};
-            //console.log('B:key is ' + key + '<' + typeof key + '>...' + split[j], obj[key]);
             parentObj = obj;
             obj = obj[key];
           }
         }
       }
-      /* */
+
       let type = typeof obj[key];
       if (type !== 'string' && obj[key] != null) {
-        let json = JSON.parse(value);
-        value = json;
+        value = JSON.parse(value);
       }
       obj[key] = value;
-      //console.log('key is ' + key + '<' + typeof key + '> :value is ' + typeof obj[key], value);
-      //console.log('---------------------end obj is ', obj);
     }
     return syncData;
   }
@@ -183,4 +169,3 @@ export class ObjectSerializer {
     return null;
   }
 }
-setTimeout(function () { ObjectSerializer.instance; }, 0);

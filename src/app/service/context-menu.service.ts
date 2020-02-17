@@ -1,19 +1,31 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector, ComponentRef } from "@angular/core";
+import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 
 interface ContextMenuPoint {
   x: number,
   y: number
 }
-interface ContextMenuAction {
+
+export enum ContextMenuType {
+  ACTION = 'action',
+  SEPARATOR = 'separator',
+}
+
+export const ContextMenuSeparator: ContextMenuAction = {
+  name: '',
+  enabled: true,
+  type: ContextMenuType.SEPARATOR
+}
+
+export interface ContextMenuAction {
   name: string,
-  action: Function
+  action?: Function,
+  enabled?: boolean,
+  type?: ContextMenuType,
+  subActions?: ContextMenuAction[]
 }
 
 @Injectable()
 export class ContextMenuService {
-  //private context: PanelContext = null;
-  private count = 0;
-
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
   static UIPanelComponentClass: { new(...args: any[]): any } = null;
@@ -36,7 +48,7 @@ export class ContextMenuService {
     this.close();
     if (!parentViewContainerRef) {
       parentViewContainerRef = ContextMenuService.defaultParentViewContainerRef;
-      console.log('Context Open', parentViewContainerRef);
+      console.log('Context Open');
     }
     let panelComponentRef: ComponentRef<any>;
 

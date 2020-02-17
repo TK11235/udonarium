@@ -1,20 +1,17 @@
-import { Component, ViewContainerRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 
-import { FileSelecterComponent } from '../file-selecter/file-selecter.component';
-import { ModalService } from '../../service/modal.service';
-import { PanelService } from '../../service/panel.service';
+import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem, Network } from '@udonarium/core/system';
+import { GameTable, GridType, FilterType } from '@udonarium/game-table';
+import { TableSelecter } from '@udonarium/table-selecter';
 
-import * as Beautify from 'vkbeautify';
-
-import { GameTable, GameTableDataContainer, GridType } from '../../class/game-table';
-import { TableSelecter } from '../../class/table-selecter';
-import { Network, EventSystem } from '../../class/core/system/system';
-import { ObjectStore } from '../../class/core/synchronize-object/object-store';
-import { FileStorage } from '../../class/core/file-storage/file-storage';
-import { FileArchiver } from '../../class/core/file-storage/file-archiver';
-import { ImageFile } from '../../class/core/file-storage/image-file';
-import { MimeType } from '../../class/core/file-storage/mime-type';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
+import { PanelService } from 'service/panel.service';
+import { SaveDataService } from 'service/save-data.service';
 
 @Component({
   selector: 'game-table-setting',
@@ -22,66 +19,79 @@ import { MimeType } from '../../class/core/file-storage/mime-type';
   styleUrls: ['./game-table-setting.component.css']
 })
 export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewInit {
-
-  _tableName: string = '';
-  _tableWidth: number = 20;
-  _tableHeight: number = 20;
-  _tableGridType: GridType = GridType.SQUARE;
-  _tableGridColor: string = '#000000e6';
   minSize: number = 1;
   maxSize: number = 100;
-  tableBackgroundImage: ImageFile = ImageFile.createEmpty('null');
-
-  get tableName(): string { return this._tableName };
-  set tableName(tableName: string) {
-    this._tableName = tableName;
-    this.updateGameTableSettings();
+  get tableBackgroundImage(): ImageFile {
+    if (!this.selectedTable) return ImageFile.Empty;
+    let file = ImageStorage.instance.get(this.selectedTable.imageIdentifier);
+    return file ? file : ImageFile.Empty;
   }
 
-  get tableWidth(): number { return this._tableWidth };
-  set tableWidth(tableWidth: number) {
-    this._tableWidth = tableWidth;
-    this.updateGameTableSettings();
+  get tableDistanceviewImage(): ImageFile {
+    if (!this.selectedTable) return ImageFile.Empty;
+    let file = ImageStorage.instance.get(this.selectedTable.backgroundImageIdentifier);
+    return file ? file : ImageFile.Empty;
   }
 
-  get tableHeight(): number { return this._tableHeight };
-  set tableHeight(tableHeight: number) {
-    this._tableHeight = tableHeight;
-    this.updateGameTableSettings();
+  get tableName(): string { return this.selectedTable.name; }
+  set tableName(tableName: string) { if (this.isEditable) this.selectedTable.name = tableName; }
+
+  get tableWidth(): number { return this.selectedTable.width; }
+  set tableWidth(tableWidth: number) { if (this.isEditable) this.selectedTable.width = tableWidth; }
+
+  get tableHeight(): number { return this.selectedTable.height; }
+  set tableHeight(tableHeight: number) { if (this.isEditable) this.selectedTable.height = tableHeight; }
+
+  get tableGridColor(): string { return this.selectedTable.gridColor; }
+  set tableGridColor(tableGridColor: string) { if (this.isEditable) this.selectedTable.gridColor = tableGridColor; }
+
+  get tableGridShow(): boolean { return this.tableSelecter.gridShow; }
+  set tableGridShow(tableGridShow: boolean) {
+    this.tableSelecter.gridShow = tableGridShow;
   }
 
-  get tableGridColor(): string { return this._tableGridColor };
-  set tableGridColor(tableGridColor: string) {
-    this._tableGridColor = tableGridColor;
-    this.updateGameTableSettings();
+  get tableGridSnap(): boolean { return this.tableSelecter.gridSnap; }
+  set tableGridSnap(tableGridSnap: boolean) {
+    this.tableSelecter.gridSnap = tableGridSnap;
   }
 
-  get tableGridShow(): boolean { return this.tableSelecter.gridShow };
+  get tableGridType(): GridType { return this.selectedTable.gridType; }
+  set tableGridType(gridType: GridType) { if (this.isEditable) this.selectedTable.gridType = Number(gridType); }
 
-  get tableGridType(): GridType { return this._tableGridType };
+  get tableDistanceviewFilter(): FilterType { return this.selectedTable.backgroundFilterType; }
+  set tableDistanceviewFilter(filterType: FilterType) { if (this.isEditable) this.selectedTable.backgroundFilterType = filterType; }
 
   get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
-  get viewTable(): GameTable { return ObjectStore.instance.get<TableSelecter>('tableSelecter').viewTable; }
+
+  selectedTable: GameTable = null;
+  selectedTableXml: string = '';
+
+  get isEmpty(): boolean { return this.tableSelecter ? (this.tableSelecter.viewTable ? false : true) : true; }
+  get isDeleted(): boolean {
+    if (!this.selectedTable) return true;
+    return ObjectStore.instance.get<GameTable>(this.selectedTable.identifier) == null;
+  }
+  get isEditable(): boolean {
+    return !this.isEmpty && !this.isDeleted;
+  }
 
   constructor(
-    //private gameRoomService: GameRoomService,
-    private viewContainerRef: ViewContainerRef,
     private modalService: ModalService,
+    private saveDataService: SaveDataService,
     private panelService: PanelService
   ) { }
 
   ngOnInit() {
     this.modalService.title = this.panelService.title = 'テーブル設定';
-    this.update();
-
+    this.selectedTable = this.tableSelecter.viewTable;
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.isSendFromSelf || event.data.identifier !== this.viewTable.identifier) return;
-        this.update();
-      })
-      .on('SELECT_GAME_TABLE', -1000, event => {
-        this.update();
-      })
+      .on('DELETE_GAME_OBJECT', 1000, event => {
+        if (!this.selectedTable || event.data.identifier !== this.selectedTable.identifier) return;
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (object !== null) {
+          this.selectedTableXml = object.toXml();
+        }
+      });
   }
 
   ngAfterViewInit() { }
@@ -90,38 +100,10 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     EventSystem.unregister(this);
   }
 
-  private update() {
-    let gameTable = this.viewTable;
-    let file = FileStorage.instance.get(gameTable.imageIdentifier);
-    if (file) {
-      this.tableBackgroundImage = file;
-    }
-    this._tableName = gameTable.name;
-    this._tableHeight = gameTable.height;
-    this._tableWidth = gameTable.width;
-    this._tableGridType = gameTable.gridType;
-    this._tableGridColor = gameTable.gridColor;
-  }
-
-  updateGameTableSettings() {
-    if (this.tableWidth < this.minSize) this.tableWidth = this.minSize;
-    if (this.tableHeight < this.minSize) this.tableHeight = this.minSize;
-    if (this.maxSize < this.tableWidth) this.tableWidth = this.maxSize;
-    if (this.maxSize < this.tableHeight) this.tableHeight = this.maxSize;
-
-    let gameTable = this.viewTable;
-    gameTable.name = this.tableName;
-    gameTable.width = this.tableWidth;
-    gameTable.height = this.tableHeight;
-    gameTable.imageIdentifier = this.tableBackgroundImage.identifier;
-    gameTable.gridSize = 50;
-    gameTable.gridType = this.tableGridType;
-    gameTable.gridColor = this.tableGridColor;
-    gameTable.update();
-  }
-
   selectGameTable(identifier: string) {
     EventSystem.call('SELECT_GAME_TABLE', { identifier: identifier }, Network.peerId);
+    this.selectedTable = ObjectStore.instance.get<GameTable>(identifier);
+    this.selectedTableXml = '';
   }
 
   getGameTables(): GameTable[] {
@@ -137,45 +119,39 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   save() {
-    //let gameObjects = this.gameRoomService.getGameObjectsWithType<GameTable>('GameTable');
-    //for (let identifier in gameObjects) {
-    let gameTable = this.viewTable;//gameObjects[identifier];
-    gameTable.selected = true;
-    let xml = gameTable.toXml();
-
-    xml = Beautify.xml(xml, 2);
-    console.log(xml);
-
-    let files: File[] = [new File([xml], 'data.xml', { type: 'text/plain' })];
-
-    let image = FileStorage.instance.get(gameTable.imageIdentifier);
-    if (image.blob) {
-      files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
-    }
-
-    FileArchiver.instance.save(files, 'map_' + gameTable.name);
+    if (!this.selectedTable) return;
+    this.selectedTable.selected = true;
+    this.saveDataService.saveGameObject(this.selectedTable, 'map_' + this.selectedTable.name);
   }
 
-  openModal() {
+  delete() {
+    if (!this.isEmpty && this.selectedTable) {
+      this.selectedTableXml = this.selectedTable.toXml();
+      this.selectedTable.destroy();
+    }
+  }
+
+  restore() {
+    if (this.selectedTable && this.selectedTableXml) {
+      let restoreTable = ObjectSerializer.instance.parseXml(this.selectedTableXml);
+      this.selectGameTable(restoreTable.identifier);
+      this.selectedTableXml = '';
+    }
+  }
+
+  openBgImageModal() {
+    if (this.isDeleted) return;
     this.modalService.open<string>(FileSelecterComponent).then(value => {
-      if (!this.viewTable || !value) return;
-      let file: ImageFile = FileStorage.instance.get(value);
-      if (file) this.tableBackgroundImage = file;
-      this.viewTable.imageIdentifier = value;
+      if (!this.selectedTable || !value) return;
+      this.selectedTable.imageIdentifier = value;
     });
   }
 
-  changeGridType(gridType: string) {
-    console.log('changeGridType', gridType);
-    this._tableGridType = Number(gridType);
-    this.updateGameTableSettings();
-  }
-
-  changeGridShow(isShow: boolean) {
-    console.log('changeGridShow', isShow);
-    //this._tableGridShow = target;
-    this.tableSelecter.gridShow = isShow;
-    this.updateGameTableSettings();
+  openDistanceViewImageModal() {
+    if (this.isDeleted) return;
+    this.modalService.open<string>(FileSelecterComponent, { isAllowedEmpty: true }).then(value => {
+      if (!this.selectedTable || !value) return;
+      this.selectedTable.backgroundImageIdentifier = value;
+    });
   }
 }
-

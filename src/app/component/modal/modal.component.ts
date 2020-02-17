@@ -1,6 +1,6 @@
-import { Component, ViewContainerRef, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
-import { ModalService } from '../../service/modal.service';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { ModalService } from 'service/modal.service';
 
 @Component({
   selector: 'modal',
@@ -8,7 +8,6 @@ import { ModalService } from '../../service/modal.service';
   styleUrls: ['./modal.component.css'],
   animations: [
     trigger('flyInOut', [
-      state('in', style({ transform: 'scale(1.0, 1.0)' })),
       transition('void => *', [
         animate('100ms ease-out', keyframes([
           style({ transform: 'scale(0.8, 0.8)', opacity: '0', offset: 0 }),
@@ -30,18 +29,11 @@ import { ModalService } from '../../service/modal.service';
     ]),
   ]
 })
-export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
-
-  //modalService: ModalService;
+export class ModalComponent {
+  @ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;
 
   constructor(
-    private viewContainerRef: ViewContainerRef,
     public modalService: ModalService) { }
-
-  ngOnInit() { }
-  ngAfterViewInit() { }
-  ngOnDestroy() { }
 
   clickBackground(event: MouseEvent) {
     if (event.target === event.currentTarget) this.resolve();
