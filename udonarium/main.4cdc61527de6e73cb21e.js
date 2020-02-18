@@ -15299,11 +15299,11 @@
                             case "list-error":
                                 return "SkyWay APIキーのREST APIが許可されてません。";
                             case "server-error":
-                                return "SkyWayのシグナリングサーバからPeer一覧を取得できませんでした。";
+                                return "SkyWayのシグナリングサーバからPeer列表を取得できませんでした。";
                             case "disconnected":
-                                return "SkyWayのシグナリングサーバに接続されていません。";
+                                return "SkyWayのシグナリングサーバに連線されていません。";
                             case "socket-error":
-                                return "SkyWayのシグナリングサーバとの接続が失われました。";
+                                return "SkyWayのシグナリングサーバとの連線が失われました。";
                             default:
                                 return "SkyWayに関する不明なエラーが発生しました(" + e + ")"
                         }
@@ -16024,7 +16024,7 @@
                         return r
                     }, e.prototype.parseXml = function (t) {
                         var n;
-                        if (!(n = "string" == typeof t ? Ia.xml2element(t) : t)) return console.error("xmlElementが空です"), null;
+                        if (!(n = "string" == typeof t ? Ia.xml2element(t) : t)) return console.error("xmlElement空空如也"), null;
                         var r = Na.instance.create(n.tagName);
                         if (!r) return null;
                         if ("parseAttributes" in r) r.parseAttributes(n.attributes);
@@ -16498,7 +16498,7 @@
                 Za = function (e) {
                     function t() {
                         var t = null !== e && e.apply(this, arguments) || this;
-                        return t.name = "タブ", t._unreadLength = 0, t
+                        return t.name = "分頁", t._unreadLength = 0, t
                     }
                     return r.__extends(t, e), Object.defineProperty(t.prototype, "chatMessages", {
                         get: function () {
@@ -19024,7 +19024,7 @@
                             type: "note"
                         }, "メモ" + this.identifier)), s = gs.create("能力", "", {}, "能力" + this.identifier), this.detailDataElement.appendChild(s), s.appendChild(gs.create("器用度", 24, {}, "器用度" + this.identifier)), s.appendChild(gs.create("敏捷度", 24, {}, "敏捷度" + this.identifier)), s.appendChild(gs.create("筋力", 24, {}, "筋力" + this.identifier)), s.appendChild(gs.create("生命力", 24, {}, "生命力" + this.identifier)), s.appendChild(gs.create("知力", 24, {}, "知力" + this.identifier)), s.appendChild(gs.create("精神力", 24, {}, "精神力" + this.identifier)), s = gs.create("戦闘特技", "", {}, "戦闘特技" + this.identifier), this.detailDataElement.appendChild(s), s.appendChild(gs.create("Lv1", "全力攻撃", {}, "Lv1" + this.identifier)), s.appendChild(gs.create("Lv3", "武器習熟/ソード", {}, "Lv3" + this.identifier)), s.appendChild(gs.create("Lv5", "武器習熟/ソードⅡ", {}, "Lv5" + this.identifier)), s.appendChild(gs.create("Lv7", "頑強", {}, "Lv7" + this.identifier)), s.appendChild(gs.create("Lv9", "薙ぎ払い", {}, "Lv9" + this.identifier)), s.appendChild(gs.create("自動", "治癒適正", {}, "自動" + this.identifier)), (new DOMParser).parseFromString(this.rootDataElement.toXml(), "application/xml");
                         var u = new fs("ChatPalette_" + this.identifier);
-                        u.setPalette("チャットパレット入力例：\n2d6+1 ダイスロール\n１ｄ２０＋{敏捷}＋｛格闘｝　{name}の格闘！\n//敏捷=10+{敏捷A}\n//敏捷A=10\n//格闘＝１"), u.initialize(), this.appendChild(u)
+                        u.setPalette("聊天パレット入力例：\n2d6+1 ダイスロール\n１ｄ２０＋{敏捷}＋｛格闘｝　{name}の格闘！\n//敏捷=10+{敏捷A}\n//敏捷A=10\n//格闘＝１"), u.initialize(), this.appendChild(u)
                     }, r.__decorate([Va()], t.prototype, "rotate", void 0), r.__decorate([Va()], t.prototype, "roll", void 0), n = r.__decorate([Ua("character")], t)
                 }(ms),
                 vs = function () {
@@ -19066,7 +19066,7 @@
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
                         var e = this;
-                        this.modalService.title = this.panelService.title = "チャットタブ設定", Oa.register(this).on("DELETE_GAME_OBJECT", 1e3, (function (t) {
+                        this.modalService.title = this.panelService.title = "聊天分頁設定", Oa.register(this).on("DELETE_GAME_OBJECT", 1e3, (function (t) {
                             if (e.selectedTab && t.data.identifier === e.selectedTab.identifier) {
                                 var n = Fa.instance.get(t.data.identifier);
                                 null !== n && (e.selectedTabXml = n.toXml())
@@ -19078,7 +19078,7 @@
                         this.selectedTab = Fa.instance.get(e), this.selectedTabXml = ""
                     }, e.prototype.create = function () {
                         var e = new Za;
-                        e.name = "タブ", e.initialize()
+                        e.name = "分頁", e.initialize()
                     }, e.prototype.save = function () {
                         this.selectedTab && this.saveDataService.saveGameObject(this.selectedTab, "chat_" + this.selectedTab.name)
                     }, e.prototype.delete = function () {
@@ -19193,7 +19193,7 @@
                     }, e.prototype.checkAutoScroll = function () {
                         this.panelService.scrollablePanel && (this.isAutoScroll = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight - 150 <= this.panelService.scrollablePanel.scrollTop)
                     }, e.prototype.updatePanelTitle = function () {
-                        this.panelService.title = this.chatTab ? "チャットウィンドウ - " + this.chatTab.name : "チャットウィンドウ"
+                        this.panelService.title = this.chatTab ? "聊天視窗 - " + this.chatTab.name : "聊天視窗"
                     }, e.prototype.onSelectedTab = function (e) {
                         this.updatePanelTitle()
                     }, e.prototype.onSelectedCharacter = function (e) {
@@ -19233,7 +19233,7 @@
                                     width: 600,
                                     height: 500
                                 });
-                            c.title = l, c.text = "【ダイスボット】チャットにダイス用の文字を入力するとダイスロールが可能\n入力例）２ｄ６＋１　攻撃！\n出力例）2d6+1　攻撃！\n　　　　  diceBot: (2d6) → 7\n上記のようにダイス文字の後ろに空白を入れて発言する事も可能。\n以下、使用例\n　3D6+1>=9 ：3d6+1で目標値9以上かの判定\n　1D100<=50 ：D100で50％目標の下方ロールの例\n　3U6[5] ：3d6のダイス目が5以上の場合に振り足しして合計する(上方無限)\n　3B6 ：3d6のダイス目をバラバラのまま出力する（合計しない）\n　10B6>=4 ：10d6を振り4以上のダイス目の個数を数える\n　(8/2)D(4+6)<=(5*3)：個数・ダイス・達成値には四則演算も使用可能\n　C(10-4*3/2+2)：C(計算式）で計算だけの実行も可能\n　choice[a,b,c]：列挙した要素から一つを選択表示。ランダム攻撃対象決定などに\n　S3d6 ： 各コマンドの先頭に「S」を付けると他人結果の見えないシークレットロール\n　3d6/2 ： ダイス出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n　D66 ： D66ダイス。順序はゲームに依存。D66N：そのまま、D66S：昇順。\n===================================\n" + e.gameHelp
+                            c.title = l, c.text = "【ダイスボット】聊天にダイス用の文字を入力するとダイスロールが可能\n入力例）２ｄ６＋１　攻撃！\n出力例）2d6+1　攻撃！\n　　　　  diceBot: (2d6) → 7\n上記のようにダイス文字の後ろに空白を入れて発言する事も可能。\n以下、使用例\n　3D6+1>=9 ：3d6+1で目標値9以上かの判定\n　1D100<=50 ：D100で50％目標の下方ロールの例\n　3U6[5] ：3d6のダイス目が5以上の場合に振り足しして合計する(上方無限)\n　3B6 ：3d6のダイス目をバラバラのまま出力する（合計しない）\n　10B6>=4 ：10d6を振り4以上のダイス目の個数を数える\n　(8/2)D(4+6)<=(5*3)：個数・ダイス・達成値には四則演算も使用可能\n　C(10-4*3/2+2)：C(計算式）で計算だけの実行も可能\n　choice[a,b,c]：列挙した要素から一つを選択顯示。ランダム攻撃対象決定などに\n　S3d6 ： 各コマンドの先頭に「S」を付けると他人結果の見えないシークレットロール\n　3d6/2 ： ダイス出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n　D66 ： D66ダイス。順序はゲームに依存。D66N：そのまま、D66S：升序。\n===================================\n" + e.gameHelp
                         }))
                     }, e.prototype.sendChat = function (e) {
                         e && e.preventDefault(), this.text.length && (e && 13 !== e.keyCode || (this.sender.length || (this.sender = this.myPeer.identifier), this.chatTab && this.chatMessageService.sendMessage(this.chatTab, this.text, this.gameType, this.sender, this.sendTo), this.text = "", this.previousWritingLength = this.text.length, this.textAreaElementRef.nativeElement.value = "", this.calcFitHeight()))
@@ -19300,7 +19300,7 @@
                         this.changeDetector = e, this.panelService = t, this.fileStorageService = Aa.instance
                     }
                     return e.prototype.ngOnInit = function () {
-                        this.panelService.title = "ファイル一覧"
+                        this.panelService.title = "檔案清單"
                     }, e.prototype.ngAfterViewInit = function () {
                         var e = this;
                         Oa.register(this).on("SYNCHRONIZE_FILE_LIST", (function (t) {
@@ -19374,7 +19374,7 @@
                         enumerable: !0,
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
-                        this.modalService.title = this.panelService.title = "ファイル一覧"
+                        this.modalService.title = this.panelService.title = "檔案清單"
                     }, e.prototype.ngAfterViewInit = function () {
                         var e = this;
                         Oa.register(this).on("SYNCHRONIZE_FILE_LIST", (function (t) {
@@ -19406,7 +19406,7 @@
                     }, e.prototype.createGameTableMask = function () {
                         var e = Fa.instance.get("tableSelecter").viewTable;
                         if (e) {
-                            var t = Cs.create("マップマスク", 5, 5, 100);
+                            var t = Cs.create("迷霧", 5, 5, 100);
                             e.appendChild(t)
                         }
                     }, e.prototype.createGameCharacterForXML = function (e) {
@@ -19533,7 +19533,7 @@
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
                         var e = this;
-                        this.panelService.title = this.character.name + " のチャットパレット", this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : "", this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : "", Oa.register(this).on("UPDATE_GAME_OBJECT", -1e3, (function (t) {
+                        this.panelService.title = this.character.name + " の聊天パレット", this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : "", this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : "", Oa.register(this).on("UPDATE_GAME_OBJECT", -1e3, (function (t) {
                             t.data.aliasName === ys.aliasName && (e.shouldUpdateCharacterList = !0, e.character && !e.allowsChat(e.character) && 0 < e.gameCharacters.length && e.onSelectedCharacter(e.gameCharacters[0].identifier))
                         })).on("DISCONNECT_PEER", (function (t) {
                             var n = Fa.instance.get(e.sendTo);
@@ -19542,7 +19542,7 @@
                     }, e.prototype.ngOnDestroy = function () {
                         Oa.unregister(this), this.isEdit && this.toggleEditMode()
                     }, e.prototype.updatePanelTitle = function () {
-                        this.panelService.title = this.character.name + " のチャットパレット"
+                        this.panelService.title = this.character.name + " の聊天パレット"
                     }, e.prototype.onSelectedCharacter = function (e) {
                         this.isEdit && this.toggleEditMode();
                         var t = Fa.instance.get(e);
@@ -19586,7 +19586,7 @@
                                     width: 600,
                                     height: 500
                                 });
-                            c.title = l, c.text = "【ダイスボット】チャットにダイス用の文字を入力するとダイスロールが可能\n入力例）２ｄ６＋１　攻撃！\n出力例）2d6+1　攻撃！\n　　　　  diceBot: (2d6) → 7\n上記のようにダイス文字の後ろに空白を入れて発言する事も可能。\n以下、使用例\n　3D6+1>=9 ：3d6+1で目標値9以上かの判定\n　1D100<=50 ：D100で50％目標の下方ロールの例\n　3U6[5] ：3d6のダイス目が5以上の場合に振り足しして合計する(上方無限)\n　3B6 ：3d6のダイス目をバラバラのまま出力する（合計しない）\n　10B6>=4 ：10d6を振り4以上のダイス目の個数を数える\n　(8/2)D(4+6)<=(5*3)：個数・ダイス・達成値には四則演算も使用可能\n　C(10-4*3/2+2)：C(計算式）で計算だけの実行も可能\n　choice[a,b,c]：列挙した要素から一つを選択表示。ランダム攻撃対象決定などに\n　S3d6 ： 各コマンドの先頭に「S」を付けると他人結果の見えないシークレットロール\n　3d6/2 ： ダイス出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n　D66 ： D66ダイス。順序はゲームに依存。D66N：そのまま、D66S：昇順。\n===================================\n" + t, console.log("onChangeGameType done")
+                            c.title = l, c.text = "【ダイスボット】聊天にダイス用の文字を入力するとダイスロールが可能\n入力例）２ｄ６＋１　攻撃！\n出力例）2d6+1　攻撃！\n　　　　  diceBot: (2d6) → 7\n上記のようにダイス文字の後ろに空白を入れて発言する事も可能。\n以下、使用例\n　3D6+1>=9 ：3d6+1で目標値9以上かの判定\n　1D100<=50 ：D100で50％目標の下方ロールの例\n　3U6[5] ：3d6のダイス目が5以上の場合に振り足しして合計する(上方無限)\n　3B6 ：3d6のダイス目をバラバラのまま出力する（合計しない）\n　10B6>=4 ：10d6を振り4以上のダイス目の個数を数える\n　(8/2)D(4+6)<=(5*3)：個数・ダイス・達成値には四則演算も使用可能\n　C(10-4*3/2+2)：C(計算式）で計算だけの実行も可能\n　choice[a,b,c]：列挙した要素から一つを選択顯示。ランダム攻撃対象決定などに\n　S3d6 ： 各コマンドの先頭に「S」を付けると他人結果の見えないシークレットロール\n　3d6/2 ： ダイス出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n　D66 ： D66ダイス。順序はゲームに依存。D66N：そのまま、D66S：升序。\n===================================\n" + t, console.log("onChangeGameType done")
                         }))
                     }, e.prototype.sendChat = function (e) {
                         if (e && e.preventDefault(), this.text.length && (!e || 13 === e.keyCode)) {
@@ -19720,7 +19720,7 @@
                         configurable: !0
                     }), Object.defineProperty(e.prototype, "sortOrderName", {
                         get: function () {
-                            return this.sortOrder === os.ASC ? "昇順" : "降順"
+                            return this.sortOrder === os.ASC ? "升序" : "降序"
                         },
                         enumerable: !0,
                         configurable: !0
@@ -19732,7 +19732,7 @@
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
                         var e = this;
-                        this.panelService.title = "インベントリ", Oa.register(this).on("SELECT_TABLETOP_OBJECT", -1e3, (function (t) {
+                        this.panelService.title = "倉庫", Oa.register(this).on("SELECT_TABLETOP_OBJECT", -1e3, (function (t) {
                             Fa.instance.get(t.data.identifier) instanceof ms && (e.selectedIdentifier = t.data.identifier, e.changeDetector.markForCheck())
                         })).on("SYNCHRONIZE_FILE_LIST", (function (t) {
                             t.isSendFromSelf && e.changeDetector.markForCheck()
@@ -19746,7 +19746,7 @@
                     }, e.prototype.getTabTitle = function (e) {
                         switch (e) {
                             case "table":
-                                return "テーブル";
+                                return "桌面";
                             case Sa.peerId:
                                 return "個人";
                             case "graveyard":
@@ -19776,28 +19776,28 @@
                             var o = this.pointerDeviceService.pointers[0],
                                 a = [];
                             a.push({
-                                name: "詳細を表示",
+                                name: "顯示詳情",
                                 action: function () {
                                     l.showDetail(t)
                                 }
                             }), a.push({
-                                name: "チャットパレットを表示",
+                                name: "顯示對話組合板",
                                 action: function () {
                                     l.showChatPalette(t)
                                 }
                             }), a.push(Ss);
                             var s = [{
                                     name: "table",
-                                    alias: "テーブルに移動"
+                                    alias: "移動到桌面"
                                 }, {
                                     name: "common",
-                                    alias: "共有イベントリに移動"
+                                    alias: "移動到共有倉庫"
                                 }, {
                                     name: Sa.peerId,
-                                    alias: "個人イベントリに移動"
+                                    alias: "移動到個人倉庫"
                                 }, {
                                     name: "graveyard",
-                                    alias: "墓場に移動"
+                                    alias: "移動墓場"
                                 }],
                                 u = function (e) {
                                     if (t.location.name === e.name) return "continue";
@@ -19822,12 +19822,12 @@
                                 }
                             }
                             "graveyard" === t.location.name && a.push({
-                                name: "削除する",
+                                name: "刪除",
                                 action: function () {
                                     l.deleteGameObject(t), hs.play(ds.sweep)
                                 }
                             }), a.push(Ss), a.push({
-                                name: "コピーを作る",
+                                name: "複製",
                                 action: function () {
                                     l.cloneGameObject(t), hs.play(ds.piecePut)
                                 }
@@ -19862,7 +19862,7 @@
                             className: e.aliasName
                         });
                         var t = this.pointerDeviceService.pointers[0],
-                            n = "キャラクターシート";
+                            n = "角色卡";
                         e.name.length && (n += " - " + e.name), this.panelService.open(ks, {
                             title: n,
                             left: t.x - 800,
@@ -19976,7 +19976,7 @@
                 Ns = function (e) {
                     function t() {
                         var t = null !== e && e.apply(this, arguments) || this;
-                        return t.name = "テーブル", t.width = 20, t.height = 20, t.gridSize = 50, t.imageIdentifier = "imageIdentifier", t.backgroundImageIdentifier = "imageIdentifier", t.backgroundFilterType = As.NONE, t.selected = !1, t.gridType = Ds.SQUARE, t.gridColor = "#000000e6", t
+                        return t.name = "桌面", t.width = 20, t.height = 20, t.gridSize = 50, t.imageIdentifier = "imageIdentifier", t.backgroundImageIdentifier = "imageIdentifier", t.backgroundFilterType = As.NONE, t.selected = !1, t.gridType = Ds.SQUARE, t.gridColor = "#000000e6", t
                     }
                     return r.__extends(t, e), Object.defineProperty(t.prototype, "terrains", {
                         get: function () {
@@ -20116,7 +20116,7 @@
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
                         var e = this;
-                        this.modalService.title = this.panelService.title = "テーブル設定", this.selectedTable = this.tableSelecter.viewTable, Oa.register(this).on("DELETE_GAME_OBJECT", 1e3, (function (t) {
+                        this.modalService.title = this.panelService.title = "桌面設定", this.selectedTable = this.tableSelecter.viewTable, Oa.register(this).on("DELETE_GAME_OBJECT", 1e3, (function (t) {
                             if (e.selectedTable && t.data.identifier === e.selectedTable.identifier) {
                                 var n = Fa.instance.get(t.data.identifier);
                                 null !== n && (e.selectedTableXml = n.toXml())
@@ -20132,7 +20132,7 @@
                         return Fa.instance.getObjects(Ns)
                     }, e.prototype.createGameTable = function () {
                         var e = new Ns;
-                        e.name = "白紙のテーブル", e.imageIdentifier = "testTableBackgroundImage_image", e.initialize(), this.selectGameTable(e.identifier)
+                        e.name = "空白的桌面", e.imageIdentifier = "testTableBackgroundImage_image", e.initialize(), this.selectGameTable(e.identifier)
                     }, e.prototype.save = function () {
                         this.selectedTable && (this.selectedTable.selected = !0, this.saveDataService.saveGameObject(this.selectedTable, "map_" + this.selectedTable.name))
                     }, e.prototype.delete = function () {
@@ -20194,7 +20194,7 @@
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
                         var e = this;
-                        this.modalService.title = this.panelService.title = "ジュークボックス", this.auditionPlayer.volumeType = qa.AUDITION, Oa.register(this).on("*", (function (t) {
+                        this.modalService.title = this.panelService.title = "點唱機", this.auditionPlayer.volumeType = qa.AUDITION, Oa.register(this).on("*", (function (t) {
                             t.eventName.startsWith("FILE_") && e.lazyNgZoneUpdate()
                         }))
                     }, e.prototype.ngOnDestroy = function () {
@@ -20234,18 +20234,18 @@
                         enumerable: !0,
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
-                        this.modalService.title = this.panelService.title = "パスワード", Oa.register(this)
+                        this.modalService.title = this.panelService.title = "密碼", Oa.register(this)
                     }, e.prototype.ngOnDestroy = function () {
                         Oa.unregister(this)
                     }, e.prototype.onInputChange = function (e) {
                         this.help = ""
                     }, e.prototype.submit = function () {
-                        this.needPassword === this.password && this.modalService.resolve(this.password), this.help = "パスワードが違います"
+                        this.needPassword === this.password && this.modalService.resolve(this.password), this.help = "密碼錯誤"
                     }, e
                 }(),
                 Fs = function () {
                     function e(e, t) {
-                        this.panelService = e, this.modalService = t, this.peers = [], this.isReloading = !1, this.roomName = "ふつうの部屋", this.password = "", this.isPrivate = !1, this.validateLength = !1
+                        this.panelService = e, this.modalService = t, this.peers = [], this.isReloading = !1, this.roomName = "普通的房間", this.password = "", this.isPrivate = !1, this.validateLength = !1
                     }
                     return Object.defineProperty(e.prototype, "peerId", {
                         get: function () {
@@ -20260,7 +20260,7 @@
                         enumerable: !0,
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
-                        this.modalService.title = this.panelService.title = "ルーム作成", Oa.register(this), this.calcPeerId(this.roomName, this.password)
+                        this.modalService.title = this.panelService.title = "房間製作", Oa.register(this), this.calcPeerId(this.roomName, this.password)
                     }, e.prototype.ngOnDestroy = function () {
                         Oa.unregister(this)
                     }, e.prototype.calcPeerId = function (e, t) {
@@ -20274,7 +20274,7 @@
                 }(),
                 Ls = function () {
                     function e(e, t) {
-                        this.panelService = e, this.modalService = t, this.rooms = [], this.isReloading = !1, this.help = "「一覧を更新」ボタンを押すと接続可能なルーム一覧を表示します。"
+                        this.panelService = e, this.modalService = t, this.rooms = [], this.isReloading = !1, this.help = "「更新列表」ボタンを押すと連線可能な房間列表を顯示します。"
                     }
                     return Object.defineProperty(e.prototype, "currentRoom", {
                         get: function () {
@@ -20334,7 +20334,7 @@
                                         });
                                         return this.rooms.sort((function (e, t) {
                                             return e.alias < t.alias ? -1 : e.alias > t.alias ? 1 : 0
-                                        })), this.help = "接続可能なルームが見つかりませんでした。「新しいルームを作成する」で新規ルームを作成できます。", this.isReloading = !1, [2]
+                                        })), this.help = "找不到可以加入的房間。請按下「製作新房間」以製作新的房間", this.isReloading = !1, [2]
                                 }
                             }))
                         }))
@@ -20368,9 +20368,9 @@
                                                 }
                                             }
                                             Oa.register(i).on("CONNECT_PEER", (function (t) {
-                                                console.log("接続成功！", t.data.peer), i.push(t.data.peer), console.log("接続成功 " + i.length + "/" + e.length), e.length <= i.length && (l.resetNetwork(), Oa.unregister(i))
+                                                console.log("連線成功！", t.data.peer), i.push(t.data.peer), console.log("連線成功 " + i.length + "/" + e.length), e.length <= i.length && (l.resetNetwork(), Oa.unregister(i))
                                             })).on("DISCONNECT_PEER", (function (t) {
-                                                console.warn("接続失敗", t.data.peer), i.push(t.data.peer), console.warn("接続失敗 " + i.length + "/" + e.length), e.length <= i.length && (l.resetNetwork(), Oa.unregister(i))
+                                                console.warn("連線失敗", t.data.peer), i.push(t.data.peer), console.warn("連線失敗 " + i.length + "/" + e.length), e.length <= i.length && (l.resetNetwork(), Oa.unregister(i))
                                             }))
                                         })), [2]
                                 }
@@ -20390,7 +20390,7 @@
                                             top: 400
                                         })];
                                     case 1:
-                                        return e.sent(), this.reload(), this.help = "「一覧を更新」ボタンを押すと接続可能なルーム一覧を表示します。", [2]
+                                        return e.sent(), this.reload(), this.help = "「更新列表」ボタンを押すと連線可能な房間列表を顯示します。", [2]
                                 }
                             }))
                         }))
@@ -20407,7 +20407,7 @@
                         enumerable: !0,
                         configurable: !0
                     }), e.prototype.ngOnInit = function () {
-                        this.panelService.title = "接続情報"
+                        this.panelService.title = "連線情報"
                     }, e.prototype.ngAfterViewInit = function () {
                         var e = this;
                         Oa.register(this).on("OPEN_NETWORK", (function (t) {
@@ -20427,14 +20427,14 @@
                         this.help = "";
                         var t = ma.create(this.targetPeerId);
                         if (t.isRoom) {
-                            if (Sa.peerContexts.length) return void(this.help = "入力されたIDはルーム用のIDのようですが、ルーム用IDと通常のIDを混在させることはできません。プライベート接続を切ってください。（※ページリロードで切断ができます）");
+                            if (Sa.peerContexts.length) return void(this.help = "入力されたIDは房間用のIDのようですが、房間用IDと通常のIDを混在させることはできません。プライベート連線を切ってください。（※ページリロードで切断ができます）");
                             Sa.open(Sa.peerContext.id, t.room, t.roomName, t.password), ps.myCursor.peerId = Sa.peerId;
                             var n = {};
                             Oa.register(n).on("OPEN_NETWORK", (function (t) {
                                 Fa.instance.clearDeleteHistory(), Sa.connect(e.targetPeerId), Oa.unregister(n), Oa.register(n).on("CONNECT_PEER", (function (t) {
-                                    console.log("接続成功！", t.data.peer), e.resetPeerIfNeeded(), Oa.unregister(n)
+                                    console.log("連線成功！", t.data.peer), e.resetPeerIfNeeded(), Oa.unregister(n)
                                 })).on("DISCONNECT_PEER", (function (t) {
-                                    console.warn("接続失敗", t.data.peer), e.resetPeerIfNeeded(), Oa.unregister(n)
+                                    console.warn("連線失敗", t.data.peer), e.resetPeerIfNeeded(), Oa.unregister(n)
                                 }))
                             }))
                         } else Fa.instance.clearDeleteHistory(), Sa.connect(this.targetPeerId)
@@ -20474,7 +20474,7 @@
                                                 if (f) throw f.error
                                             }
                                         }
-                                        return l.length < 1 ? (this.help = "前回接続していたルームが見つかりませんでした。既に解散しているかもしれません。", console.warn("Room is already closed..."), [2]) : (Sa.open(ma.generateId(), l[0].room, l[0].roomName, l[0].password), [3, 3]);
+                                        return l.length < 1 ? (this.help = "前回連線していた房間が見つかりませんでした。既に解散しているかもしれません。", console.warn("Room is already closed..."), [2]) : (Sa.open(ma.generateId(), l[0].room, l[0].roomName, l[0].password), [3, 3]);
                                     case 2:
                                         console.warn("connectPeers " + e.length), Sa.open(), m.label = 3;
                                     case 3:
@@ -20593,11 +20593,11 @@
                             ns.instance.initialize(), rs.instance.initialize(), Qa.instance.initialize(), ls.instance.initialize()
                         })), this.appConfigService.initialize(), this.pointerDeviceService.initialize(), as.instance.initialize(), new us("DiceBot").initialize(), new cs("Jukebox").initialize(), new hs("SoundEffect").initialize();
                         var u = new Za("MainTab");
-                        u.name = "メインタブ", u.initialize(), (u = new Za("SubTab")).name = "サブタブ", u.initialize();
+                        u.name = "主要分頁", u.initialize(), (u = new Za("SubTab")).name = "閒聊分頁", u.initialize();
                         var c = Da.createEmpty("none_icon").toContext();
                         c.url = "./assets/images/ic_account_circle_black_24dp_2x.png";
                         var p = Aa.instance.add(c);
-                        Ka.resumeAudioContext(), ds.dicePick = Ya.instance.add("./assets/sounds/soundeffect-lab/shoulder-touch1.mp3").identifier, ds.dicePut = Ya.instance.add("./assets/sounds/soundeffect-lab/book-stack1.mp3").identifier, ds.diceRoll1 = Ya.instance.add("./assets/sounds/on-jin/spo_ge_saikoro_teburu01.mp3").identifier, ds.diceRoll2 = Ya.instance.add("./assets/sounds/on-jin/spo_ge_saikoro_teburu02.mp3").identifier, ds.cardDraw = Ya.instance.add("./assets/sounds/soundeffect-lab/card-turn-over1.mp3").identifier, ds.cardPick = Ya.instance.add("./assets/sounds/soundeffect-lab/shoulder-touch1.mp3").identifier, ds.cardPut = Ya.instance.add("./assets/sounds/soundeffect-lab/book-stack1.mp3").identifier, ds.cardShuffle = Ya.instance.add("./assets/sounds/soundeffect-lab/card-open1.mp3").identifier, ds.piecePick = Ya.instance.add("./assets/sounds/soundeffect-lab/shoulder-touch1.mp3").identifier, ds.piecePut = Ya.instance.add("./assets/sounds/soundeffect-lab/book-stack1.mp3").identifier, ds.blockPick = Ya.instance.add("./assets/sounds/tm2/tm2_pon002.wav").identifier, ds.blockPut = Ya.instance.add("./assets/sounds/tm2/tm2_pon002.wav").identifier, ds.lock = Ya.instance.add("./assets/sounds/tm2/tm2_switch001.wav").identifier, ds.unlock = Ya.instance.add("./assets/sounds/tm2/tm2_switch001.wav").identifier, ds.sweep = Ya.instance.add("./assets/sounds/tm2/tm2_swing003.wav").identifier, Ya.instance.get(ds.dicePick).isHidden = !0, Ya.instance.get(ds.dicePut).isHidden = !0, Ya.instance.get(ds.diceRoll1).isHidden = !0, Ya.instance.get(ds.diceRoll2).isHidden = !0, Ya.instance.get(ds.cardDraw).isHidden = !0, Ya.instance.get(ds.cardPick).isHidden = !0, Ya.instance.get(ds.cardPut).isHidden = !0, Ya.instance.get(ds.cardShuffle).isHidden = !0, Ya.instance.get(ds.piecePick).isHidden = !0, Ya.instance.get(ds.piecePut).isHidden = !0, Ya.instance.get(ds.blockPick).isHidden = !0, Ya.instance.get(ds.blockPut).isHidden = !0, Ya.instance.get(ds.lock).isHidden = !0, Ya.instance.get(ds.unlock).isHidden = !0, Ya.instance.get(ds.sweep).isHidden = !0, ps.createMyCursor(), ps.myCursor.name = "プレイヤー", ps.myCursor.imageIdentifier = p.identifier, Oa.register(this).on("UPDATE_GAME_OBJECT", (function (e) {
+                        Ka.resumeAudioContext(), ds.dicePick = Ya.instance.add("./assets/sounds/soundeffect-lab/shoulder-touch1.mp3").identifier, ds.dicePut = Ya.instance.add("./assets/sounds/soundeffect-lab/book-stack1.mp3").identifier, ds.diceRoll1 = Ya.instance.add("./assets/sounds/on-jin/spo_ge_saikoro_teburu01.mp3").identifier, ds.diceRoll2 = Ya.instance.add("./assets/sounds/on-jin/spo_ge_saikoro_teburu02.mp3").identifier, ds.cardDraw = Ya.instance.add("./assets/sounds/soundeffect-lab/card-turn-over1.mp3").identifier, ds.cardPick = Ya.instance.add("./assets/sounds/soundeffect-lab/shoulder-touch1.mp3").identifier, ds.cardPut = Ya.instance.add("./assets/sounds/soundeffect-lab/book-stack1.mp3").identifier, ds.cardShuffle = Ya.instance.add("./assets/sounds/soundeffect-lab/card-open1.mp3").identifier, ds.piecePick = Ya.instance.add("./assets/sounds/soundeffect-lab/shoulder-touch1.mp3").identifier, ds.piecePut = Ya.instance.add("./assets/sounds/soundeffect-lab/book-stack1.mp3").identifier, ds.blockPick = Ya.instance.add("./assets/sounds/tm2/tm2_pon002.wav").identifier, ds.blockPut = Ya.instance.add("./assets/sounds/tm2/tm2_pon002.wav").identifier, ds.lock = Ya.instance.add("./assets/sounds/tm2/tm2_switch001.wav").identifier, ds.unlock = Ya.instance.add("./assets/sounds/tm2/tm2_switch001.wav").identifier, ds.sweep = Ya.instance.add("./assets/sounds/tm2/tm2_swing003.wav").identifier, Ya.instance.get(ds.dicePick).isHidden = !0, Ya.instance.get(ds.dicePut).isHidden = !0, Ya.instance.get(ds.diceRoll1).isHidden = !0, Ya.instance.get(ds.diceRoll2).isHidden = !0, Ya.instance.get(ds.cardDraw).isHidden = !0, Ya.instance.get(ds.cardPick).isHidden = !0, Ya.instance.get(ds.cardPut).isHidden = !0, Ya.instance.get(ds.cardShuffle).isHidden = !0, Ya.instance.get(ds.piecePick).isHidden = !0, Ya.instance.get(ds.piecePut).isHidden = !0, Ya.instance.get(ds.blockPick).isHidden = !0, Ya.instance.get(ds.blockPut).isHidden = !0, Ya.instance.get(ds.lock).isHidden = !0, Ya.instance.get(ds.unlock).isHidden = !0, Ya.instance.get(ds.sweep).isHidden = !0, ps.createMyCursor(), ps.myCursor.name = "玩家", ps.myCursor.imageIdentifier = p.identifier, Oa.register(this).on("UPDATE_GAME_OBJECT", (function (e) {
                             s.lazyNgZoneUpdate(e.isSendFromSelf)
                         })).on("DELETE_GAME_OBJECT", (function (e) {
                             s.lazyNgZoneUpdate(e.isSendFromSelf)
@@ -20619,14 +20619,14 @@
                                             case 0:
                                                 return 1 < Sa.peerIds.length ? [4, this.modalService.open(bs, {
                                                     title: "ネットワークエラー",
-                                                    text: "ネットワーク接続に何らかの異常が発生しました。\nこの表示以後、接続が不安定であれば、ページリロードと再接続を試みてください。"
+                                                    text: "ネットワーク連線に何らかの異常が発生しました。\nこの顯示以後、連線が不安定であれば、ページリロードと再連線を試みてください。"
                                                 })] : [3, 2];
                                             case 1:
                                                 return e.sent(), [3, 4];
                                             case 2:
                                                 return [4, this.modalService.open(bs, {
                                                     title: "ネットワークエラー",
-                                                    text: "接続情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。"
+                                                    text: "連線情報が破棄されました。\nこのウィンドウを閉じると再連線を試みます。"
                                                 })];
                                             case 3:
                                                 e.sent(), Sa.open(), e.label = 4;
@@ -20698,7 +20698,7 @@
                         }
                         t && (n.top = 20 * (this.openPanelCount % 10 + 1), n.left = 100 + 5 * (this.openPanelCount % 20 + 1), this.openPanelCount = this.openPanelCount + 1, this.panelService.open(t, n))
                     }, e.prototype.save = function () {
-                        this.saveDataService.saveRoom(Sa.peerContext && 0 < Sa.peerContext.roomName.length ? Sa.peerContext.roomName : "ルームデータ")
+                        this.saveDataService.saveRoom(Sa.peerContext && 0 < Sa.peerContext.roomName.length ? Sa.peerContext.roomName : "房間データ")
                     }, e.prototype.handleFileSelect = function (e) {
                         var t = e.target.files;
                         t.length && ns.instance.load(t)
@@ -25454,8 +25454,8 @@
                     [8, null]
                 ], null, null), Jr(2048, null, Op, null, [fd]), $r(4, 16384, null, 0, Mp, [
                     [4, Op]
-                ], null, null), (e()(), Il(5, 0, null, null, 8, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["パスワード: "])), (e()(), Il(7, 0, null, null, 6, "input", [
-                    ["placeholder", "パスワード"]
+                ], null, null), (e()(), Il(5, 0, null, null, 8, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["密碼: "])), (e()(), Il(7, 0, null, null, 6, "input", [
+                    ["placeholder", "密碼"]
                 ], [
                     [2, "ng-untouched", null],
                     [2, "ng-touched", null],
@@ -25548,7 +25548,7 @@
                             l.onerror = function (i) {
                                 console.error(l.error, i), "VersionError" === l.error.name && (indexedDB.deleteDatabase(e), n.openDB(e, t)), r()
                             }, l.onblocked = function (e) {
-                                console.warn("openDB onblocked"), alert("このサイトを開いている他のタブをすべて閉じてください!")
+                                console.warn("openDB onblocked"), alert("このサイトを開いている他の分頁をすべて閉じてください!")
                             }, l.onupgradeneeded = function (e) {
                                 console.log("openDB onupgradeneeded"), n.initializeDB(l.result), n.createStores()
                             }, l.onsuccess = function (e) {
@@ -25567,7 +25567,7 @@
                         }
                     }, e.prototype.initializeDB = function (e) {
                         console.log("initializeDB"), e.onversionchange = function (t) {
-                            console.warn("db.onversionchange."), e.close(), alert("新しいバージョンのページが使用可能になりました。再読み込みしてください!")
+                            console.warn("db.onversionchange."), e.close(), alert("頁面有新的版本。請重新加載！")
                         }, e.onabort = function (e) {
                             console.error(e)
                         }, e.onerror = function (e) {
@@ -25736,10 +25736,10 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.changeIcon() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["アイコンを変更する"])), (e()(), Pl(16777216, null, null, 1, null, Rd)), $r(4, 16384, null, 0, ju, [Cn, _n], {
+                }), null, null)), (e()(), Zl(-1, null, ["頭像變更"])), (e()(), Pl(16777216, null, null, 1, null, Rd)), $r(4, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
-                }, null), (e()(), Il(5, 0, null, null, 7, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["あなたのニックネーム： "])), (e()(), Il(7, 0, null, null, 5, "input", [
-                    ["placeholder", "ニックネーム"]
+                }, null), (e()(), Il(5, 0, null, null, 7, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["你的名字： "])), (e()(), Il(7, 0, null, null, 5, "input", [
+                    ["placeholder", "暱稱"]
                 ], [
                     [2, "ng-untouched", null],
                     [2, "ng-touched", null],
@@ -25811,9 +25811,9 @@
             }
 
             function Vd(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 11, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 0, "hr", [], null, null, null, null, null)), (e()(), Il(2, 0, null, null, 4, "div", [], null, null, null, null, null)), (e()(), Il(3, 0, null, null, 3, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["ルーム名："])), (e()(), Pl(16777216, null, null, 1, null, Bd)), $r(6, 16384, null, 0, ju, [Cn, _n], {
+                return ql(0, [(e()(), Il(0, 0, null, null, 11, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 0, "hr", [], null, null, null, null, null)), (e()(), Il(2, 0, null, null, 4, "div", [], null, null, null, null, null)), (e()(), Il(3, 0, null, null, 3, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["房間名："])), (e()(), Pl(16777216, null, null, 1, null, Bd)), $r(6, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
-                }, null), (e()(), Il(7, 0, null, null, 4, "div", [], null, null, null, null, null)), (e()(), Il(8, 0, null, null, 3, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["パスワード："])), (e()(), Pl(16777216, null, null, 1, null, Ud)), $r(11, 16384, null, 0, ju, [Cn, _n], {
+                }, null), (e()(), Il(7, 0, null, null, 4, "div", [], null, null, null, null, null)), (e()(), Il(8, 0, null, null, 3, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["密碼："])), (e()(), Pl(16777216, null, null, 1, null, Ud)), $r(11, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
                 }, null)], (function (e, t) {
                     var n = t.component;
@@ -25822,7 +25822,7 @@
             }
 
             function Hd(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["[接続中]"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["[連線中]"]))], null, null)
             }
 
             function Gd(e) {
@@ -25838,7 +25838,7 @@
             function Zd(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 9, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 5, "input", [
                     ["name", "targetPeerId"],
-                    ["placeholder", "接続したい相手のID"]
+                    ["placeholder", "連線對像的ID"]
                 ], [
                     [2, "ng-untouched", null],
                     [2, "ng-touched", null],
@@ -25878,7 +25878,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.connectPeer() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["プライベート接続"])), (e()(), Il(9, 0, null, null, 0, "br", [], null, null, null, null, null))], (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["私人連線"])), (e()(), Il(9, 0, null, null, 0, "br", [], null, null, null, null, null))], (function (e, t) {
                     e(t, 4, 0, "targetPeerId", t.component.targetPeerId)
                 }), (function (e, t) {
                     var n = t.component;
@@ -25894,7 +25894,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.showLobby() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["ロビー（ルーム一覧）を表示"]))], null, (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["顯示大廳（房間列表）"]))], null, (function (e, t) {
                     e(t, 0, 0, !t.component.networkService.isOpen)
                 }))
             }
@@ -25902,13 +25902,13 @@
             function Xd(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※プライベート接続を使用する場合は、お互いのIDをユドナリウム外で共有してください。"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※若要使用私人連線，請與對方分享彼此的ID。"]))], null, null)
             }
 
             function qd(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※一人で動作確認を行いたい場合はブラウザを2つ開くと良いと思います。"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※可以自己打開兩頁這個網站，進行測試。"]))], null, null)
             }
 
             function Kd(e) {
@@ -25925,13 +25925,13 @@
             function Yd(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 2, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※ルーム機能を利用している時はプライベート接続を利用できません。"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※房間機能を利用している時はプライベート連線を利用できません。"]))], null, null)
             }
 
             function $d(e) {
                 return ql(0, [Qr(0, Md, [up]), (e()(), Pl(16777216, null, null, 1, null, zd)), $r(2, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
-                }, null), (e()(), Il(3, 0, null, null, 6, "div", [], null, null, null, null, null)), (e()(), Il(4, 0, null, null, 5, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["あなたのID："])), (e()(), Pl(16777216, null, null, 1, null, Fd)), $r(7, 16384, null, 0, ju, [Cn, _n], {
+                }, null), (e()(), Il(3, 0, null, null, 6, "div", [], null, null, null, null, null)), (e()(), Il(4, 0, null, null, 5, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["你的ID："])), (e()(), Pl(16777216, null, null, 1, null, Fd)), $r(7, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
                 }, null), (e()(), Pl(16777216, null, null, 1, null, Ld)), $r(9, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
@@ -26234,7 +26234,7 @@
             }
 
             function lh(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(1, null, ["", "インベントリは空です"]))], null, (function (e, t) {
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(1, null, ["", "倉庫空空如也"]))], null, (function (e, t) {
                     var n = t.component;
                     e(t, 1, 0, n.getTabTitle(n.selectTab))
                 }))
@@ -26282,7 +26282,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.cleanInventory() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["墓場を空にする"]))], null, (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["墓場空空如也"]))], null, (function (e, t) {
                     var n = t.component;
                     e(t, 1, 0, n.getGameObjects(n.selectTab).length < 1 ? "" : null)
                 }))
@@ -26375,8 +26375,8 @@
             function ph(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 36, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 22, "div", [], null, null, null, null, null)), (e()(), Il(2, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["並び順"])), (e()(), Il(4, 0, null, null, 5, "input", [
-                    ["placeholder", "タグ名"]
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["排列次序"])), (e()(), Il(4, 0, null, null, 5, "input", [
+                    ["placeholder", "標籤名稱"]
                 ], [
                     [2, "ng-untouched", null],
                     [2, "ng-touched", null],
@@ -26443,16 +26443,16 @@
                     value: [0, "value"]
                 }, null), $r(18, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["昇順"])), (e()(), Il(20, 0, null, null, 3, "option", [
+                }, null), (e()(), Zl(-1, null, ["升序"])), (e()(), Il(20, 0, null, null, 3, "option", [
                     ["value", "DESC"]
                 ], null, null, null, null, null)), $r(21, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
                 }, null), $r(22, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["降順"])), (e()(), Il(24, 0, null, null, 1, "div", [
+                }, null), (e()(), Zl(-1, null, ["降序"])), (e()(), Il(24, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px; padding-top: 6px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["表示項目"])), (e()(), Il(26, 0, null, null, 5, "input", [
-                    ["placeholder", "スペース区切りでタグ名 スラッシュで改行 ex.「HP MP / メモ」"],
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["顯示項目"])), (e()(), Il(26, 0, null, null, 5, "input", [
+                    ["placeholder", "用空格將標籤名稱隔開 斜線換行 ex.「HP MP / 備註」"],
                     ["style", "width: 100%; box-sizing: border-box;"]
                 ], [
                     [2, "ng-untouched", null],
@@ -26520,7 +26520,7 @@
                     ["style", "font-size: 0.8em;"]
                 ], null, null, null, null, null)), (e()(), Il(2, 0, null, null, 12, "tr", [], null, null, null, null, null)), (e()(), Il(3, 0, null, null, 1, "th", [
                     ["style", " vertical-align:middle;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["並び順:"])), (e()(), Il(5, 0, null, null, 4, "td", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["排列次序:"])), (e()(), Il(5, 0, null, null, 4, "td", [
                     ["style", " vertical-align:middle;"]
                 ], null, null, null, null, null)), (e()(), Pl(16777216, null, null, 1, null, dh)), $r(7, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
@@ -27087,7 +27087,7 @@
             }
 
             function Lh(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, null, null, null, null, null, null, null)), (e()(), Zl(-1, null, ["（あなた）"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, null, null, null, null, null, null, null)), (e()(), Zl(-1, null, ["（你）"]))], null, null)
             }
 
             function Bh(e) {
@@ -27123,7 +27123,7 @@
                 ], null, null, null, null, null)), (e()(), Il(1, 0, null, null, 1, "i", [
                     ["class", "material-icons"],
                     ["style", "vertical-align: bottom; size:0.8rem;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["info_outline"])), (e()(), Zl(-1, null, [" チャットパレット編集中です"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["info_outline"])), (e()(), Zl(-1, null, [" 聊天パレット編集中です"]))], null, null)
             }
 
             function Hh(e) {
@@ -27175,7 +27175,7 @@
                     ["style", "flex-grow: 1; height: 0; min-height: 100px;"]
                 ], null, null, null, null, null)), (e()(), Il(1, 0, null, null, 5, "textarea", [
                     ["class", "palette"],
-                    ["placeholder", "チャットパレット"],
+                    ["placeholder", "聊天パレット"],
                     ["style", "resize: none;"]
                 ], [
                     [2, "ng-untouched", null],
@@ -27216,11 +27216,11 @@
             }
 
             function Xh(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["チャットパレットの編集"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["聊天パレットの編集"]))], null, null)
             }
 
             function qh(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["チャットパレットを確定"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["聊天パレットを確定"]))], null, null)
             }
 
             function Kh(e) {
@@ -27337,7 +27337,7 @@
                     value: [0, "value"]
                 }, null), $r(39, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["全員"])), (e()(), Pl(16777216, null, null, 1, null, Bh)), $r(42, 278528, null, 0, Au, [Cn, _n, gn], {
+                }, null), (e()(), Zl(-1, null, ["所有人"])), (e()(), Pl(16777216, null, null, 1, null, Bh)), $r(42, 278528, null, 0, Au, [Cn, _n, gn], {
                     ngForOf: [0, "ngForOf"]
                 }, null), (e()(), Il(43, 0, null, null, 12, "select", [
                     ["style", "width: 12em;"]
@@ -27379,7 +27379,7 @@
                     value: [0, "value"]
                 }, null), $r(52, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["ダイスボット指定なし"])), (e()(), Pl(16777216, null, null, 1, null, Uh)), $r(55, 278528, null, 0, Au, [Cn, _n, gn], {
+                }, null), (e()(), Zl(-1, null, ["沒有指定擲骰系統"])), (e()(), Pl(16777216, null, null, 1, null, Uh)), $r(55, 278528, null, 0, Au, [Cn, _n, gn], {
                     ngForOf: [0, "ngForOf"]
                 }, null), (e()(), Il(56, 0, null, null, 1, "button", [], null, [
                     [null, "click"]
@@ -27765,7 +27765,7 @@
                     }
                     return e.prototype.ngOnInit = function () {
                         var e = this;
-                        this.panelService.title = this.cardStack.name + " のカード一覧", Oa.register(this).on("UPDATE_GAME_OBJECT", -1e3, (function (t) {
+                        this.panelService.title = this.cardStack.name + " 卡牌列表", Oa.register(this).on("UPDATE_GAME_OBJECT", -1e3, (function (t) {
                             t.data.aliasName === nf.aliasName && e.changeDetector.markForCheck(), t.data.identifier === e.cardStack.identifier && e.cardStack.owner !== e.owner && e.panelService.close()
                         }))
                     }, e.prototype.ngOnDestroy = function () {
@@ -28370,7 +28370,7 @@
                 yf = function () {
                     function e() {}
                     return e.prototype.saveRoom = function (e) {
-                        void 0 === e && (e = "ルームデータ");
+                        void 0 === e && (e = "房間データ");
                         var t = [],
                             n = this.convertToXml(new gf),
                             r = this.convertToXml(new cf),
@@ -28466,7 +28466,7 @@
             }
 
             function Cf(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 14, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 7, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["タブ名 : "])), (e()(), Il(3, 0, null, null, 5, "input", [
+                return ql(0, [(e()(), Il(0, 0, null, null, 14, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 7, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["分頁名 : "])), (e()(), Il(3, 0, null, null, 5, "input", [
                     ["placeholder", "Name"]
                 ], [
                     [1, "disabled", 0],
@@ -28515,7 +28515,7 @@
             function xf(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 2, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※チャットタブが１つも作成されていません。「チャットタブを作る」からチャットタブを作成することができます。"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※聊天分頁が１つも作成されていません。「聊天分頁を作る」から聊天分頁を作成することができます。"]))], null, null)
             }
 
             function Ef(e) {
@@ -28528,7 +28528,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.create() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["チャットタブを作る"])), (e()(), Il(5, 0, null, null, 7, "select", [
+                }), null, null)), (e()(), Zl(-1, null, ["聊天分頁を作る"])), (e()(), Il(5, 0, null, null, 7, "select", [
                     ["size", "10"],
                     ["style", "width: 10em;"]
                 ], [
@@ -28744,45 +28744,23 @@
                             timestamp: 0,
                             imageIdentifier: "",
                             tag: "",
-                            name: "チュートリアル",
-                            text: "サーバーを使用しないTRPGオンセツールです。参加者同士で接続し、コマや画像ファイルなどを同期します。"
-                        }, {
-                            from: "System",
-                            timestamp: 0,
-                            imageIdentifier: "",
-                            tag: "",
-                            name: "チュートリアル",
-                            text: "全てのデータが各参加者のブラウザ内にあるため、ルームの状態を次回に持ち越したい場合は、必ず「保存」を実行してセーブデータ（zip）を生成してください。保存したzipの読み込みはブラウザ画面へのファイルドロップで行えます。"
+                            name: "教學Zzzzzz",
+                            text: "在這個平台中，主要的資料由使用者之間彼此傳送，HKTRPG只是提供一個平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存》生成ZIP檔案，下次再使用時按《ZIP讀取》上傳檔案，不然房間就會像煙火一樣燒光。"
                         }, {
                             from: "System",
                             to: "???",
                             timestamp: 0,
                             imageIdentifier: "",
                             tag: "",
-                            name: "チュートリアル > プレイヤー",
-                            text: "ダイレクトメッセージ（秘密会話）はセーブデータに記録されません。"
-                        }, {
-                            from: "System",
-                            to: "???",
-                            timestamp: 0,
-                            imageIdentifier: "",
-                            tag: "",
-                            name: "チュートリアル > プレイヤー",
-                            text: "また、過去のダイレクトメッセージはあなたのIDが更新されると同じルーム内であっても見えなくなります。注意してください。"
+                            name: "教學Zzzzzz > 玩家",
+                            text: "密語並不會儲存到ZIP中。而當你的ID更新之後，你將無法再看見之前傳給您的密語，還請多加注意。\n 使用教學: 對桌面右鍵->新增角色(或其他)，再對它按右鍵->顯示詳情，編輯內容，以後可以收進倉庫中。而在倉庫中，也是按右鍵，把角色移到桌面"
                         }, {
                             from: "System",
                             timestamp: 0,
                             imageIdentifier: "",
                             tag: "",
-                            name: "チュートリアル",
-                            text: "動作推奨環境はデスクトップChromeです。今のところ、スマホからだと上手く操作できません。"
-                        }, {
-                            from: "System",
-                            timestamp: 0,
-                            imageIdentifier: "",
-                            tag: "",
-                            name: "チュートリアル",
-                            text: "チュートリアルは以上です。このチュートリアルは最初のチャットを入力すると非表示になります。"
+                            name: "教學Zzzzzz",
+                            text: "推薦使用桌面版Chrome。目前不支援以手機進行操作。\n因為渣技術，只簡單加了一個關上網頁前會彈出提示的功能。"
                         }], this.needUpdate = !0, this._chatMessages = [], this.callbackOnScroll = function (e) {
                             return r.onScroll(e)
                         }, this.onAddMessage = new Ci
@@ -29057,7 +29035,7 @@
             }
 
             function Wf(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["※チャットタブの内容が更新されました。チャットタブを選択しなおすか、このチャットウィンドウを開きなおしてください。"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["※聊天分頁の内容が更新されました。聊天分頁を選択しなおすか、この聊天視窗を開きなおしてください。"]))], null, null)
             }
 
             function Xf(e) {
@@ -29158,7 +29136,7 @@
             }
 
             function Qf(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, null, null, null, null, null, null, null)), (e()(), Zl(-1, null, ["（あなた）"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, null, null, null, null, null, null, null)), (e()(), Zl(-1, null, ["（你）"]))], null, null)
             }
 
             function Jf(e) {
@@ -29260,7 +29238,7 @@
                     return "click" === t && (r = !1 !== e.component.showTabSetting() && r), r
                 }), null, null)), (e()(), Il(18, 0, null, null, 1, "i", [
                     ["class", "material-icons small-font"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["settings"])), (e()(), Zl(-1, null, ["タブ設定"])), (e()(), Il(21, 0, null, null, 63, "div", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["settings"])), (e()(), Zl(-1, null, ["分頁設定"])), (e()(), Il(21, 0, null, null, 63, "div", [
                     ["class", "table"]
                 ], null, null, null, null, null)), Jr(512, null, Pu, Iu, [gn, mn, Yt, tn]), $r(23, 278528, null, 0, Mu, [Pu], {
                     klass: [0, "klass"],
@@ -29325,7 +29303,7 @@
                     value: [0, "value"]
                 }, null), $r(48, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["全員"])), (e()(), Pl(16777216, null, null, 1, null, Jf)), $r(51, 278528, null, 0, Au, [Cn, _n, gn], {
+                }, null), (e()(), Zl(-1, null, ["所有人"])), (e()(), Pl(16777216, null, null, 1, null, Jf)), $r(51, 278528, null, 0, Au, [Cn, _n, gn], {
                     ngForOf: [0, "ngForOf"]
                 }, null), (e()(), Il(52, 0, null, null, 12, "select", [
                     ["style", "width: 12em;"]
@@ -29367,7 +29345,7 @@
                     value: [0, "value"]
                 }, null), $r(61, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["ダイスボット指定なし"])), (e()(), Pl(16777216, null, null, 1, null, eg)), $r(64, 278528, null, 0, Au, [Cn, _n, gn], {
+                }, null), (e()(), Zl(-1, null, ["沒有指定擲骰系統"])), (e()(), Pl(16777216, null, null, 1, null, eg)), $r(64, 278528, null, 0, Au, [Cn, _n, gn], {
                     ngForOf: [0, "ngForOf"]
                 }, null), (e()(), Il(65, 0, null, null, 1, "button", [], null, [
                     [null, "click"]
@@ -29402,7 +29380,7 @@
                     ["textArea", 1]
                 ], null, 6, "textarea", [
                     ["class", "chat-input"],
-                    ["placeholder", "Enterで送信  Shift+Enterで改行"]
+                    ["placeholder", "Enter發送訊息  Shift+Enter換行"]
                 ], [
                     [2, "ng-untouched", null],
                     [2, "ng-touched", null],
@@ -29943,7 +29921,7 @@
                     update: "ngModelChange"
                 }), Jr(2048, null, Tp, null, [_d]), $r(52, 16384, null, 0, Ip, [
                     [4, Tp]
-                ], null, null), (e()(), Il(53, 0, null, null, 34, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, [" グリッド: "])), (e()(), Il(55, 0, null, null, 17, "select", [
+                ], null, null), (e()(), Il(53, 0, null, null, 34, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, [" 格線方式: "])), (e()(), Il(55, 0, null, null, 17, "select", [
                     ["name", "tableGridType"]
                 ], [
                     [1, "disabled", 0],
@@ -29982,19 +29960,19 @@
                     value: [0, "value"]
                 }, null), $r(63, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["スクエア"])), (e()(), Il(65, 0, null, null, 3, "option", [
+                }, null), (e()(), Zl(-1, null, ["方格"])), (e()(), Il(65, 0, null, null, 3, "option", [
                     ["value", "1"]
                 ], null, null, null, null, null)), $r(66, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
                 }, null), $r(67, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["ヘクス（縦揃え）"])), (e()(), Il(69, 0, null, null, 3, "option", [
+                }, null), (e()(), Zl(-1, null, ["六角格（緃向對齊）"])), (e()(), Il(69, 0, null, null, 3, "option", [
                     ["value", "2"]
                 ], null, null, null, null, null)), $r(70, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
                 }, null), $r(71, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["ヘクス（横揃え）"])), (e()(), Zl(-1, null, [" 色: "])), (e()(), Il(74, 0, null, null, 13, "select", [
+                }, null), (e()(), Zl(-1, null, ["六角格（横向對齊）"])), (e()(), Zl(-1, null, [" 顏色: "])), (e()(), Il(74, 0, null, null, 13, "select", [
                     ["name", "tableGridColor"]
                 ], [
                     [1, "disabled", 0],
@@ -30039,7 +30017,7 @@
                     value: [0, "value"]
                 }, null), $r(86, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["白"])), (e()(), Il(88, 0, null, null, 19, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, [" 背景フィルタ "])), (e()(), Il(90, 0, null, null, 17, "select", [
+                }, null), (e()(), Zl(-1, null, ["白"])), (e()(), Il(88, 0, null, null, 19, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, [" 背景濾鏡 "])), (e()(), Il(90, 0, null, null, 17, "select", [
                     ["name", "tableDistanceviewFilter"]
                 ], [
                     [1, "disabled", 0],
@@ -30078,19 +30056,19 @@
                     value: [0, "value"]
                 }, null), $r(98, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["なし"])), (e()(), Il(100, 0, null, null, 3, "option", [
+                }, null), (e()(), Zl(-1, null, ["無"])), (e()(), Il(100, 0, null, null, 3, "option", [
                     ["value", "white"]
                 ], null, null, null, null, null)), $r(101, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
                 }, null), $r(102, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["ホワイト"])), (e()(), Il(104, 0, null, null, 3, "option", [
+                }, null), (e()(), Zl(-1, null, ["白色"])), (e()(), Il(104, 0, null, null, 3, "option", [
                     ["value", "black"]
                 ], null, null, null, null, null)), $r(105, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
                 }, null), $r(106, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["ブラック"])), (e()(), Il(108, 0, null, null, 0, "hr", [], null, null, null, null, null)), (e()(), Il(109, 0, null, null, 20, "div", [], null, null, null, null, null)), (e()(), Il(110, 0, null, null, 7, "label", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["グリッドを常に表示: "])), (e()(), Il(112, 0, null, null, 5, "input", [
+                }, null), (e()(), Zl(-1, null, ["黑色"])), (e()(), Il(108, 0, null, null, 0, "hr", [], null, null, null, null, null)), (e()(), Il(109, 0, null, null, 20, "div", [], null, null, null, null, null)), (e()(), Il(110, 0, null, null, 7, "label", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["始終顯示網格: "])), (e()(), Il(112, 0, null, null, 5, "input", [
                     ["name", "tableGridShow"],
                     ["type", "checkbox"]
                 ], [
@@ -30123,7 +30101,7 @@
                     update: "ngModelChange"
                 }), Jr(2048, null, Tp, null, [_d]), $r(117, 16384, null, 0, Ip, [
                     [4, Tp]
-                ], null, null), (e()(), Il(118, 0, null, null, 7, "label", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["スナップ: "])), (e()(), Il(120, 0, null, null, 5, "input", [
+                ], null, null), (e()(), Il(118, 0, null, null, 7, "label", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["對齊格線: "])), (e()(), Il(120, 0, null, null, 5, "input", [
                     ["name", "tableGridSnap"],
                     ["type", "checkbox"]
                 ], [
@@ -30173,7 +30151,7 @@
             function Og(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 2, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※テーブルが１つも作成されていません。「新しいテーブルを作る」から新しいテーブルを作成することができます。"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※桌面が１つも作成されていません。「製作新的桌面」から新しい桌面を作成することができます。"]))], null, null)
             }
 
             function Sg(e) {
@@ -30186,7 +30164,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.createGameTable() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["新しいテーブルを作る"])), (e()(), Il(6, 0, null, null, 7, "select", [
+                }), null, null)), (e()(), Zl(-1, null, ["製作新的桌面"])), (e()(), Il(6, 0, null, null, 7, "select", [
                     ["size", "10"],
                     ["style", "width: 10em;"]
                 ], [
@@ -31081,17 +31059,17 @@
                     value: [0, "value"]
                 }, null), $r(8, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["テーブル"])), (e()(), Il(10, 0, null, null, 3, "option", [
+                }, null), (e()(), Zl(-1, null, ["桌面"])), (e()(), Il(10, 0, null, null, 3, "option", [
                     ["value", "common"]
                 ], null, null, null, null, null)), $r(11, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
                 }, null), $r(12, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["共有インベントリ"])), (e()(), Il(14, 0, null, null, 3, "option", [], null, null, null, null, null)), $r(15, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
+                }, null), (e()(), Zl(-1, null, ["共有倉庫"])), (e()(), Il(14, 0, null, null, 3, "option", [], null, null, null, null, null)), $r(15, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
                 }, null), $r(16, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(-1, null, ["個人インベントリ"])), (e()(), Il(18, 0, null, null, 3, "option", [
+                }, null), (e()(), Zl(-1, null, ["個人倉庫"])), (e()(), Il(18, 0, null, null, 3, "option", [
                     ["value", "graveyard"]
                 ], null, null, null, null, null)), $r(19, 147456, null, 0, Kp, [Yt, tn, [2, qp]], {
                     value: [0, "value"]
@@ -31221,7 +31199,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.clone() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["コピーを作る"])), (e()(), Il(19, 0, null, null, 1, "button", [], null, [
+                }), null, null)), (e()(), Zl(-1, null, ["複製"])), (e()(), Il(19, 0, null, null, 1, "button", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
@@ -31376,12 +31354,12 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.createGameCharacter() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["キャラクターを作る"])), (e()(), Il(31, 0, null, null, 1, "button", [], null, [
+                }), null, null)), (e()(), Zl(-1, null, ["新增角色"])), (e()(), Il(31, 0, null, null, 1, "button", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.createGameTableMask() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["マップマスクを作る"]))], (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["新增地圖迷霧"]))], (function (e, t) {
                     var n = t.component;
                     e(t, 9, 0, "name", n.name), e(t, 18, 0, "size", n.size), e(t, 26, 0, n.size)
                 }), (function (e, t) {
@@ -31413,7 +31391,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.play(e.parent.context.$implicit) && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["試聴/再生"]))], null, (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["試聽/再生"]))], null, (function (e, t) {
                     e(t, 0, 0, !t.parent.context.$implicit.isReady)
                 }))
             }
@@ -31426,7 +31404,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.stop() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["試聴/停止"]))], null, (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["試聽/停止"]))], null, (function (e, t) {
                     e(t, 0, 0, !t.parent.context.$implicit.isReady)
                 }))
             }
@@ -31458,7 +31436,7 @@
             }
 
             function Fm(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["【試聴中】"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["【試聽中】"]))], null, null)
             }
 
             function Lm(e) {
@@ -31489,11 +31467,11 @@
             }
 
             function Um(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["アップロードされた音楽ファイルはここに表示されます。"]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["アップロードされた音楽ファイルはここに顯示されます。"]))], null, null)
             }
 
             function Vm(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["試聴音量："])), (e()(), Il(2, 0, null, null, 6, "input", [
+                return ql(0, [(e()(), Il(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["試聽音量："])), (e()(), Il(2, 0, null, null, 6, "input", [
                     ["max", "1"],
                     ["min", "0"],
                     ["step", "0.01"],
@@ -31591,9 +31569,9 @@
                     ["class", "small-font"]
                 ], null, null, null, null, null)), (e()(), Il(35, 0, null, null, 0, "br", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["１ファイルにつき10MBまで"])), (e()(), Il(37, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※「試聴」は自分のスピーカーだけで音楽を1回再生します。"])), (e()(), Il(39, 0, null, null, 1, "div", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※「試聽」は自分のスピーカーだけで音楽を1回再生します。"])), (e()(), Il(39, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※「BGM」はルーム内の全員で1つの音楽をループ再生します。"])), (e()(), Il(41, 0, null, null, 1, "div", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※「BGM」は房間内の所有人で1つの音楽をループ再生します。"])), (e()(), Il(41, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
                 ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※現行バージョンのセーブデータ（zip）には音楽ファイルは含まれません。（毎回アップロードが必要です）"]))], (function (e, t) {
                     var n = t.component;
@@ -31642,7 +31620,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.connect(e.parent.context.$implicit.peers) && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["接続"]))], null, (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["連線"]))], null, (function (e, t) {
                     e(t, 0, 0, (null == t.parent.context.$implicit.peers[0] ? null : t.parent.context.$implicit.peers[0].room) === t.component.currentRoom)
                 }))
             }
@@ -31672,11 +31650,11 @@
                     ["style", "font-size:12px; border: 0; border-spacing: 0; width: 100%;"]
                 ], null, null, null, null, null)), (e()(), Il(2, 0, null, null, 9, "tr", [], null, null, null, null, null)), (e()(), Il(3, 0, null, null, 1, "th", [
                     ["style", "padding: 0 1em;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["ルームID"])), (e()(), Il(5, 0, null, null, 1, "th", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["房間ID"])), (e()(), Il(5, 0, null, null, 1, "th", [
                     ["style", "padding: 0 1em; min-width: 50%;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["ルーム名"])), (e()(), Il(7, 0, null, null, 1, "th", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["房間名"])), (e()(), Il(7, 0, null, null, 1, "th", [
                     ["style", "padding: 0 1em;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["パスワード"])), (e()(), Il(9, 0, null, null, 1, "th", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["密碼"])), (e()(), Il(9, 0, null, null, 1, "th", [
                     ["style", "padding: 0 1em;"]
                 ], null, null, null, null, null)), (e()(), Zl(-1, null, ["参加者"])), (e()(), Il(11, 0, null, null, 0, "th", [
                     ["style", "padding: 0 1em;"]
@@ -31703,12 +31681,12 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.reload() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["一覧を更新"])), (e()(), Il(3, 0, null, null, 1, "button", [], null, [
+                }), null, null)), (e()(), Zl(-1, null, ["更新列表"])), (e()(), Il(3, 0, null, null, 1, "button", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.showRoomSetting() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["新しいルームを作成する"])), (e()(), Il(5, 0, null, null, 0, "hr", [], null, null, null, null, null)), (e()(), Pl(16777216, null, null, 1, null, Ym)), $r(7, 16384, null, 0, ju, [Cn, _n], {
+                }), null, null)), (e()(), Zl(-1, null, ["製作新的房間"])), (e()(), Il(5, 0, null, null, 0, "hr", [], null, null, null, null, null)), (e()(), Pl(16777216, null, null, 1, null, Ym)), $r(7, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
                 }, null), (e()(), Pl(16777216, null, null, 1, null, $m)), $r(9, 16384, null, 0, ju, [Cn, _n], {
                     ngIf: [0, "ngIf"]
@@ -31723,7 +31701,7 @@
             function Jm(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 3, "span", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["別のルームに接続したい場合は、他の参加者との接続を切ってください。"])), (e()(), Il(2, 0, null, null, 0, "br", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["（※ページリロードで切断できます。）"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["別の房間に連線したい場合は、他の参加者との連線を切ってください。"])), (e()(), Il(2, 0, null, null, 0, "br", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["（※ページリロードで切断できます。）"]))], null, null)
             }
 
             function ey(e) {
@@ -31754,11 +31732,11 @@
             function iy(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (e()(), Il(1, 0, null, null, 1, "div", [], [
                     [8, "hidden", 0]
-                ], null, null, null, null)), (e()(), Zl(-1, null, [" ルームの名前は必須です。 "])), (e()(), Il(3, 0, null, null, 1, "div", [], [
+                ], null, null, null, null)), (e()(), Zl(-1, null, [" 房間の名前は必須です。 "])), (e()(), Il(3, 0, null, null, 1, "div", [], [
                     [8, "hidden", 0]
-                ], null, null, null, null)), (e()(), Zl(-1, null, [" ルームの名前は必須です。 "])), (e()(), Il(5, 0, null, null, 1, "div", [], [
+                ], null, null, null, null)), (e()(), Zl(-1, null, [" 房間の名前は必須です。 "])), (e()(), Il(5, 0, null, null, 1, "div", [], [
                     [8, "hidden", 0]
-                ], null, null, null, null)), (e()(), Zl(-1, null, [" ルーム名前の長さは128以内にしてください。 "]))], null, (function (e, t) {
+                ], null, null, null, null)), (e()(), Zl(-1, null, [" 房間名前の長さは128以内にしてください。 "]))], null, (function (e, t) {
                     e(t, 1, 0, !Fr(t.parent, 10).errors.required), e(t, 3, 0, !Fr(t.parent, 10).errors.minlength), e(t, 5, 0, !Fr(t.parent, 10).errors.maxlength)
                 }))
             }
@@ -31766,21 +31744,21 @@
             function ly(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(1, 0, null, null, 1, "div", [], [
                     [8, "hidden", 0]
-                ], null, null, null, null)), (e()(), Zl(-1, null, [" パスワードの長さは12以内にしてください。 "]))], null, (function (e, t) {
+                ], null, null, null, null)), (e()(), Zl(-1, null, [" 密碼の長さは12以内にしてください。 "]))], null, (function (e, t) {
                     e(t, 1, 0, !Fr(t.parent, 20).errors.maxlength)
                 }))
             }
 
             function oy(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, [" ルームの名前とパスワードの合計が長すぎるようです。どちらかを少し短くしてみてください。 "]))], null, null)
+                return ql(0, [(e()(), Il(0, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, [" 房間の名前と密碼の合計が長すぎるようです。どちらかを少し短くしてみてください。 "]))], null, null)
             }
 
             function ay(e) {
-                return ql(0, [(e()(), Il(0, 0, null, null, 32, "div", [], null, null, null, null, null)), (e()(), Il(1, 0, null, null, 11, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["ルーム名 : "])), (e()(), Il(3, 0, null, null, 9, "input", [
+                return ql(0, [(e()(), Il(0, 0, null, null, 32, "div", [], null, null, null, null, null)), (e()(), Il(1, 0, null, null, 11, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["房間名 : "])), (e()(), Il(3, 0, null, null, 9, "input", [
                     ["class", "input"],
                     ["maxlength", "128"],
                     ["minlength", "1"],
-                    ["placeholder", "ルームの名前は必須"],
+                    ["placeholder", "必須有房間名稱"],
                     ["required", ""]
                 ], [
                     [1, "required", 0],
@@ -31826,10 +31804,10 @@
                     update: "ngModelChange"
                 }), Jr(2048, null, Tp, null, [_d]), $r(12, 16384, null, 0, Ip, [
                     [4, Tp]
-                ], null, null), (e()(), Il(13, 0, null, null, 9, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["パスワード: "])), (e()(), Il(15, 0, null, null, 7, "input", [
+                ], null, null), (e()(), Il(13, 0, null, null, 9, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["密碼: "])), (e()(), Il(15, 0, null, null, 7, "input", [
                     ["class", "input"],
                     ["maxlength", "12"],
-                    ["placeholder", "空ならパスワードなし"]
+                    ["placeholder", "空白則代表沒有密碼"]
                 ], [
                     [1, "maxlength", 0],
                     [2, "ng-untouched", null],
@@ -31881,7 +31859,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.createRoom() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["新しいルームを作成"]))], (function (e, t) {
+                }), null, null)), (e()(), Zl(-1, null, ["製作新的房間"]))], (function (e, t) {
                     var n = t.component;
                     e(t, 5, 0, ""), e(t, 6, 0, "1"), e(t, 7, 0, "128"), e(t, 10, 0, n.roomName), e(t, 17, 0, "12"), e(t, 20, 0, n.password), e(t, 25, 0, Fr(t, 10).errors && (Fr(t, 10).dirty || Fr(t, 10).touched)), e(t, 27, 0, Fr(t, 20).errors && (Fr(t, 20).dirty || Fr(t, 20).touched)), e(t, 29, 0, !n.validateLength)
                 }), (function (e, t) {
@@ -31893,7 +31871,7 @@
             function sy(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 5, "span", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["他の参加者と接続したままではルーム作成を行えません。"])), (e()(), Il(2, 0, null, null, 0, "br", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["別のルームに接続したい場合は、他の参加者との接続を切ってください。"])), (e()(), Il(4, 0, null, null, 0, "br", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["（※ページリロードで切断できます。）"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["他の参加者と連線したままでは房間作成を行えません。"])), (e()(), Il(2, 0, null, null, 0, "br", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["別の房間に連線したい場合は、他の参加者との連線を切ってください。"])), (e()(), Il(4, 0, null, null, 0, "br", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["（※ページリロードで切断できます。）"]))], null, null)
             }
 
             function uy(e) {
@@ -31902,7 +31880,7 @@
                     ngIfElse: [1, "ngIfElse"]
                 }, null), (e()(), Il(2, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(3, 0, null, null, 1, "span", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※作成したルームは参加者が0人になった時点で解散します。ルームの状態を次回に持ち越したい場合は必ず「保存」してください。"])), (e()(), Pl(0, [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※作成した房間は参加者が0人になった時点で解散します。房間の状態を次回に持ち越したい場合は必ず「保存」してください。"])), (e()(), Pl(0, [
                     ["other_content", 2]
                 ], null, 0, null, sy))], (function (e, t) {
                     e(t, 1, 0, !t.component.isConnected, Fr(t, 5))
@@ -32292,12 +32270,12 @@
                             z: 0 < r.z ? r.z : 0
                         }
                     }, e.prototype.createGameCharacter = function (e) {
-                        var t = ys.create("新しいキャラクター", 1, "");
+                        var t = ys.create("新的角色", 1, "");
                         return t.location.x = e.x - 25, t.location.y = e.y - 25, t.posZ = e.z, t
                     }, e.prototype.createGameTableMask = function (e) {
                         var t = this.tableSelecter.viewTable;
                         if (t) {
-                            var n = Cs.create("マップマスク", 5, 5, 100);
+                            var n = Cs.create("迷霧", 5, 5, 100);
                             return n.location.x = e.x - 25, n.location.y = e.y - 25, n.posZ = e.z, t.appendChild(n), n
                         }
                     }, e.prototype.createTerrain = function (e) {
@@ -32310,7 +32288,7 @@
                             return i.location.x = e.x - 50, i.location.y = e.y - 50, i.posZ = e.z, r.appendChild(i), i
                         }
                     }, e.prototype.createTextNote = function (e) {
-                        var t = ff.create("共有メモ", "テキストを入力してください", 5, 4, 3);
+                        var t = ff.create("共有筆記", "請輸入文字", 5, 4, 3);
                         return t.location.x = e.x, t.location.y = e.y, t.posZ = e.z, t
                     }, e.prototype.createDiceSymbol = function (e, t, n, r) {
                         var i = hf.create(t, n, 1),
@@ -32320,7 +32298,7 @@
                             (l = Aa.instance.get(t)) || (l = Aa.instance.add(t)), i.imageDataElement.getFirstElementByName(e).value = l.identifier
                         })), i.location.x = e.x - 25, i.location.y = e.y - 25, i.posZ = e.z, i
                     }, e.prototype.createTrump = function (e) {
-                        var t, n, i = pf.create("トランプ山札");
+                        var t, n, i = pf.create("撲克牌");
                         i.location.x = e.x - 25, i.location.y = e.y - 25, i.posZ = e.z;
                         var l = "./assets/images/trump/z02.gif";
                         Aa.instance.get(l) || Aa.instance.add(l);
@@ -32329,7 +32307,7 @@
                                 for (var s = a.value, u = 1; u <= 13; u++) {
                                     var c = s + ("00" + u).slice(-2);
                                     Aa.instance.get(d = "./assets/images/trump/" + c + ".gif") || Aa.instance.add(d);
-                                    var p = nf.create("カード", d, l);
+                                    var p = nf.create("卡牌", d, l);
                                     i.putOnBottom(p)
                                 }
                         } catch (h) {
@@ -32353,18 +32331,18 @@
                         e.initialize();
                         var t, n = new Ns("gameTable"),
                             r = Da.createEmpty("testTableBackgroundImage_image").toContext();
-                        r.url = "./assets/images/BG10a_80.jpg", t = Aa.instance.add(r), n.name = "最初のテーブル", n.imageIdentifier = t.identifier, n.width = 20, n.height = 15, n.initialize(), e.viewTableIdentifier = n.identifier
+                        r.url = "./assets/images/BG10a_80.jpg", t = Aa.instance.add(r), n.name = "最初的桌面", n.imageIdentifier = t.identifier, n.width = 20, n.height = 15, n.initialize(), e.viewTableIdentifier = n.identifier
                     }, e.prototype.makeDefaultTabletopObjects = function () {
                         var e = null,
                             t = null,
                             n = null;
-                        e = new ys("testCharacter_1"), (n = Da.createEmpty("testCharacter_1_image").toContext()).url = "./assets/images/mon_052.gif", t = Aa.instance.add(n), e.location.x = 250, e.location.y = 450, e.initialize(), e.createTestGameDataElement("モンスターA", 1, t.identifier), (e = new ys("testCharacter_2")).location.x = 400, e.location.y = 400, e.initialize(), e.createTestGameDataElement("モンスターB", 1, t.identifier), e = new ys("testCharacter_3"), (n = Da.createEmpty("testCharacter_3_image").toContext()).url = "./assets/images/mon_128.gif", t = Aa.instance.add(n), e.location.x = 200, e.location.y = 100, e.initialize(), e.createTestGameDataElement("モンスターC", 3, t.identifier), e = new ys("testCharacter_4"), (n = Da.createEmpty("testCharacter_4_image").toContext()).url = "./assets/images/mon_150.gif", t = Aa.instance.add(n), e.location.x = 300, e.location.y = 550, e.initialize(), e.createTestGameDataElement("キャラクターA", 1, t.identifier), e = new ys("testCharacter_5"), (n = Da.createEmpty("testCharacter_5_image").toContext()).url = "./assets/images/mon_211.gif", t = Aa.instance.add(n), e.location.x = 600, e.location.y = 600, e.initialize(), e.createTestGameDataElement("キャラクターB", 1, t.identifier), e = new ys("testCharacter_6"), (n = Da.createEmpty("testCharacter_6_image").toContext()).url = "./assets/images/mon_135.gif", t = Aa.instance.add(n), e.initialize(), e.location.x = 250, e.location.y = 650, e.createTestGameDataElement("キャラクターC", 1, t.identifier)
+                        e = new ys("testCharacter_1"), (n = Da.createEmpty("testCharacter_1_image").toContext()).url = "./assets/images/mon_052.gif", t = Aa.instance.add(n), e.location.x = 250, e.location.y = 450, e.initialize(), e.createTestGameDataElement("怪物A", 1, t.identifier), (e = new ys("testCharacter_2")).location.x = 400, e.location.y = 400, e.initialize(), e.createTestGameDataElement("怪物B", 1, t.identifier), e = new ys("testCharacter_3"), (n = Da.createEmpty("testCharacter_3_image").toContext()).url = "./assets/images/mon_128.gif", t = Aa.instance.add(n), e.location.x = 200, e.location.y = 100, e.initialize(), e.createTestGameDataElement("怪物C", 3, t.identifier), e = new ys("testCharacter_4"), (n = Da.createEmpty("testCharacter_4_image").toContext()).url = "./assets/images/mon_150.gif", t = Aa.instance.add(n), e.location.x = 300, e.location.y = 550, e.initialize(), e.createTestGameDataElement("角色A", 1, t.identifier), e = new ys("testCharacter_5"), (n = Da.createEmpty("testCharacter_5_image").toContext()).url = "./assets/images/mon_211.gif", t = Aa.instance.add(n), e.location.x = 600, e.location.y = 600, e.initialize(), e.createTestGameDataElement("角色B", 1, t.identifier), e = new ys("testCharacter_6"), (n = Da.createEmpty("testCharacter_6_image").toContext()).url = "./assets/images/mon_135.gif", t = Aa.instance.add(n), e.initialize(), e.location.x = 250, e.location.y = 650, e.createTestGameDataElement("角色C", 1, t.identifier)
                     }, e.prototype.getContextMenuActionsForCreateObject = function (e) {
                         return [this.getCreateCharacterMenu(e), this.getCreateTableMaskMenu(e), this.getCreateTerrainMenu(e), this.getCreateTextNoteMenu(e), this.getCreateTrumpMenu(e), this.getCreateDiceSymbolMenu(e)]
                     }, e.prototype.getCreateCharacterMenu = function (e) {
                         var t = this;
                         return {
-                            name: "キャラクターを作成",
+                            name: "新增角色",
                             action: function () {
                                 var n = t.createGameCharacter(e);
                                 Oa.trigger("SELECT_TABLETOP_OBJECT", {
@@ -32376,7 +32354,7 @@
                     }, e.prototype.getCreateTableMaskMenu = function (e) {
                         var t = this;
                         return {
-                            name: "マップマスクを作成",
+                            name: "新增地圖迷霧",
                             action: function () {
                                 t.createGameTableMask(e), hs.play(ds.cardPut)
                             }
@@ -32384,7 +32362,7 @@
                     }, e.prototype.getCreateTerrainMenu = function (e) {
                         var t = this;
                         return {
-                            name: "地形を作成",
+                            name: "新增地形",
                             action: function () {
                                 t.createTerrain(e), hs.play(ds.blockPut)
                             }
@@ -32392,7 +32370,7 @@
                     }, e.prototype.getCreateTextNoteMenu = function (e) {
                         var t = this;
                         return {
-                            name: "共有メモを作成",
+                            name: "新增共用筆記",
                             action: function () {
                                 t.createTextNote(e), hs.play(ds.cardPut)
                             }
@@ -32400,7 +32378,7 @@
                     }, e.prototype.getCreateTrumpMenu = function (e) {
                         var t = this;
                         return {
-                            name: "トランプの山札を作成",
+                            name: "新增撲克牌牌堆",
                             action: function () {
                                 t.createTrump(e), hs.play(ds.cardPut)
                             }
@@ -32451,7 +32429,7 @@
                                 }
                             })
                         })), {
-                            name: "ダイスを作成",
+                            name: "新增骰子",
                             action: null,
                             subActions: n
                         }
@@ -32652,18 +32630,18 @@
                     }, e.prototype.onContextMenu = function (e) {
                         var t = this;
                         this.removeMouseEventListeners(), this.isSelected || (e.stopPropagation(), e.preventDefault(), this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.open(this.pointerDeviceService.pointers[0], [{
-                            name: "メモを編集",
+                            name: "編輯筆記",
                             action: function () {
                                 t.showDetail(t.textNote)
                             }
                         }, {
-                            name: "コピーを作る",
+                            name: "製作副本",
                             action: function () {
                                 var e = t.textNote.clone();
-                                console.log("コピー", e), e.location.x += t.gridSize, e.location.y += t.gridSize, e.toTopmost(), hs.play(ds.cardPut)
+                                console.log("複製", e), e.location.x += t.gridSize, e.location.y += t.gridSize, e.toTopmost(), hs.play(ds.cardPut)
                             }
                         }, {
-                            name: "削除する",
+                            name: "刪除",
                             action: function () {
                                 t.textNote.destroy(), hs.play(ds.sweep)
                             }
@@ -33921,12 +33899,12 @@
                                     t.isLocked = !0, hs.play(ds.lock)
                                 }
                             }, Ss, this.hasWall ? {
-                                name: "壁を非表示",
+                                name: "壁を非顯示",
                                 action: function () {
                                     t.mode = Is.FLOOR, t.depth * t.width == 0 && (t.terrain.width = t.width <= 0 ? 1 : t.width, t.terrain.depth = t.depth <= 0 ? 1 : t.depth)
                                 }
                             } : {
-                                name: "壁を表示",
+                                name: "壁を顯示",
                                 action: function () {
                                     t.mode = Is.ALL
                                 }
@@ -33936,13 +33914,13 @@
                                     t.showDetail(t.terrain)
                                 }
                             }, {
-                                name: "コピーを作る",
+                                name: "複製",
                                 action: function () {
                                     var e = t.terrain.clone();
                                     e.location.x += t.gridSize, e.location.y += t.gridSize, e.isLocked = !1, t.terrain.parent && t.terrain.parent.appendChild(e), hs.play(ds.blockPut)
                                 }
                             }, {
-                                name: "削除する",
+                                name: "刪除",
                                 action: function () {
                                     t.terrain.destroy(), hs.play(ds.sweep)
                                 }
@@ -34237,18 +34215,18 @@
                                     t.isLock = !0, hs.play(ds.lock)
                                 }
                             }, Ss, {
-                                name: "マップマスクを編集",
+                                name: "迷霧を編集",
                                 action: function () {
                                     t.showDetail(t.gameTableMask)
                                 }
                             }, {
-                                name: "コピーを作る",
+                                name: "複製",
                                 action: function () {
                                     var e = t.gameTableMask.clone();
                                     console.log("コピー", e), e.location.x += t.gridSize, e.location.y += t.gridSize, e.isLock = !1, t.gameTableMask.parent && t.gameTableMask.parent.appendChild(e), hs.play(ds.cardPut)
                                 }
                             }, {
-                                name: "削除する",
+                                name: "刪除",
                                 action: function () {
                                     t.gameTableMask.destroy(), hs.play(ds.sweep)
                                 }
@@ -34266,7 +34244,7 @@
                         return void 0 === t && (t = 0), e < t ? t : e
                     }, e.prototype.showDetail = function (e) {
                         var t = this.pointerDeviceService.pointers[0],
-                            n = "マップマスク設定";
+                            n = "迷霧設定";
                         e.name.length && (n += " - " + e.name), this.panelService.open(ks, {
                             title: n,
                             left: t.x - 200,
@@ -34500,27 +34478,27 @@
                     }, e.prototype.onContextMenu = function (e) {
                         var t = this;
                         e.stopPropagation(), e.preventDefault(), this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.open(this.pointerDeviceService.pointers[0], [{
-                            name: "１枚引く",
+                            name: "抽一張",
                             action: function () {
                                 null != t.drawCard() && hs.play(ds.cardDraw)
                             }
                         }, Ss, {
-                            name: "一番上を表にする",
+                            name: "第一張以正面顯示",
                             action: function () {
                                 t.cardStack.faceUp(), hs.play(ds.cardDraw)
                             }
                         }, {
-                            name: "一番上を裏にする",
+                            name: "第一張以背面顯示",
                             action: function () {
                                 t.cardStack.faceDown(), hs.play(ds.cardDraw)
                             }
                         }, Ss, {
-                            name: "すべて表にする",
+                            name: "所有牌以正面顯示",
                             action: function () {
                                 t.cardStack.faceUpAll(), hs.play(ds.cardDraw)
                             }
                         }, {
-                            name: "すべて裏にする",
+                            name: "所有牌以背面顯示",
                             action: function () {
                                 t.cardStack.faceDownAll(), hs.play(ds.cardDraw)
                             }
@@ -34530,24 +34508,24 @@
                                 t.cardStack.uprightAll(), hs.play(ds.cardDraw)
                             }
                         }, Ss, {
-                            name: "シャッフル",
+                            name: "洗牌",
                             action: function () {
                                 t.cardStack.shuffle(), hs.play(ds.cardShuffle), Oa.call("SHUFFLE_CARD_STACK", {
                                     identifier: t.cardStack.identifier
                                 })
                             }
                         }, {
-                            name: "カード一覧",
+                            name: "卡牌列表",
                             action: function () {
                                 t.showStackList(t.cardStack)
                             }
                         }, Ss, this.isShowTotal ? {
-                            name: "枚数を非表示にする",
+                            name: "不顯示卡牌數量",
                             action: function () {
                                 t.cardStack.isShowTotal = !1
                             }
                         } : {
-                            name: "枚数を表示する",
+                            name: "顯示卡牌數量",
                             action: function () {
                                 t.cardStack.isShowTotal = !0
                             }
@@ -34557,28 +34535,28 @@
                                 t.cardStack.topCard && t.cardStack.unifyCardsSize(t.cardStack.topCard.size)
                             }
                         }, Ss, {
-                            name: "山札を人数分に分割する",
+                            name: "按人數分發卡牌",
                             action: function () {
                                 t.splitStack(Sa.peerIds.length), hs.play(ds.cardDraw)
                             }
                         }, {
-                            name: "山札を崩す",
+                            name: "打散卡牌",
                             action: function () {
                                 t.breakStack(), hs.play(ds.cardShuffle)
                             }
                         }, Ss, {
-                            name: "詳細を表示",
+                            name: "顯示詳細內容",
                             action: function () {
                                 t.showDetail(t.cardStack)
                             }
                         }, {
-                            name: "コピーを作る",
+                            name: "複製",
                             action: function () {
                                 var e = t.cardStack.clone();
                                 e.location.x += t.gridSize, e.location.y += t.gridSize, e.owner = "", e.toTopmost(), hs.play(ds.cardPut)
                             }
                         }, {
-                            name: "山札を削除する",
+                            name: "山札を刪除",
                             action: function () {
                                 t.cardStack.setLocation("graveyard"), t.cardStack.destroy(), hs.play(ds.sweep)
                             }
@@ -35072,13 +35050,13 @@
                                 t.showDetail(t.card)
                             }
                         }, {
-                            name: "コピーを作る",
+                            name: "複製",
                             action: function () {
                                 var e = t.card.clone();
                                 e.location.x += t.gridSize, e.location.y += t.gridSize, e.toTopmost(), hs.play(ds.cardPut)
                             }
                         }, {
-                            name: "削除する",
+                            name: "刪除",
                             action: function () {
                                 t.card.destroy(), hs.play(ds.sweep)
                             }
@@ -35398,17 +35376,17 @@
                             var n = this.pointerDeviceService.pointers[0],
                                 r = [];
                             if (this.isVisible && r.push({
-                                    name: "ダイスを振る",
+                                    name: "擲骰",
                                     action: function () {
                                         t.diceRoll()
                                     }
                                 }), r.push(Ss), (this.isMine || this.hasOwner) && r.push({
-                                    name: "ダイスを公開",
+                                    name: "公開骰子",
                                     action: function () {
                                         t.owner = "", hs.play(ds.unlock)
                                     }
                                 }), this.isMine || r.push({
-                                    name: "自分だけ見る",
+                                    name: "只有自己看見",
                                     action: function () {
                                         t.owner = Sa.peerId, hs.play(ds.lock)
                                     }
@@ -35422,24 +35400,24 @@
                                         }
                                     })
                                 })), r.push({
-                                    name: "ダイス目を設定",
+                                    name: "設定骰面",
                                     action: null,
                                     subActions: i
                                 })
                             }
                             r.push(Ss), r.push({
-                                name: "詳細を表示",
+                                name: "顯示詳情",
                                 action: function () {
                                     t.showDetail(t.diceSymbol)
                                 }
                             }), r.push({
-                                name: "コピーを作る",
+                                name: "複製",
                                 action: function () {
                                     var e = t.diceSymbol.clone();
                                     e.location.x += t.gridSize, e.location.y += t.gridSize, e.update(), hs.play(ds.dicePut)
                                 }
                             }), r.push({
-                                name: "削除する",
+                                name: "刪除",
                                 action: function () {
                                     t.diceSymbol.destroy(), hs.play(ds.sweep)
                                 }
@@ -35855,32 +35833,32 @@
                     }, e.prototype.onContextMenu = function (e) {
                         var t = this;
                         e.stopPropagation(), e.preventDefault(), this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.open(this.pointerDeviceService.pointers[0], [{
-                            name: "詳細を表示",
+                            name: "顯示詳情",
                             action: function () {
                                 t.showDetail(t.gameCharacter)
                             }
                         }, {
-                            name: "チャットパレットを表示",
+                            name: "顯示對話組合板",
                             action: function () {
                                 t.showChatPalette(t.gameCharacter)
                             }
                         }, Ss, {
-                            name: "共有イベントリに移動",
+                            name: "移動到共有倉庫",
                             action: function () {
                                 t.gameCharacter.setLocation("common"), hs.play(ds.piecePut)
                             }
                         }, {
-                            name: "個人イベントリに移動",
+                            name: "移動到個人倉庫",
                             action: function () {
                                 t.gameCharacter.setLocation(Sa.peerId), hs.play(ds.piecePut)
                             }
                         }, {
-                            name: "墓場に移動",
+                            name: "移動墓場",
                             action: function () {
                                 t.gameCharacter.setLocation("graveyard"), hs.play(ds.sweep)
                             }
                         }, Ss, {
-                            name: "コピーを作る",
+                            name: "複製",
                             action: function () {
                                 var e = t.gameCharacter.clone();
                                 e.location.x += t.gridSize, e.location.y += t.gridSize, e.update(), hs.play(ds.piecePut)
@@ -35894,7 +35872,7 @@
                         return void 0 === t && (t = 0), e < t ? t : e
                     }, e.prototype.showDetail = function (e) {
                         var t = this.pointerDeviceService.pointers[0],
-                            n = "キャラクターシート";
+                            n = "角色卡";
                         e.name.length && (n += " - " + e.name), this.panelService.open(ks, {
                             title: n,
                             left: t.x - 400,
@@ -36468,7 +36446,7 @@
                                 r = this.tabletopService.calcTabletopLocalCoordinate(),
                                 i = [];
                             Array.prototype.push.apply(i, this.tabletopService.getContextMenuActionsForCreateObject(r)), i.push(Ss), i.push({
-                                name: "テーブル設定",
+                                name: "桌面設定",
                                 action: function () {
                                     t.modalService.open(js)
                                 }
@@ -36839,7 +36817,7 @@
                     ["routerLinkActive", "active"]
                 ], null, null, null, null, null)), (e()(), Il(12, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(13, 0, null, null, 1, "i", [
                     ["class", "material-icons icon-size"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["people"])), (e()(), Il(15, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["接続"])), (e()(), Il(17, 0, null, null, 6, "li", [], null, [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["people"])), (e()(), Il(15, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["連線"])), (e()(), Il(17, 0, null, null, 6, "li", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
@@ -36849,7 +36827,7 @@
                     ["routerLinkActive", "active"]
                 ], null, null, null, null, null)), (e()(), Il(19, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(20, 0, null, null, 1, "i", [
                     ["class", "material-icons icon-size"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["speaker_notes"])), (e()(), Il(22, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["チャット画面"])), (e()(), Il(24, 0, null, null, 6, "li", [], null, [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["speaker_notes"])), (e()(), Il(22, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["聊天視窗"])), (e()(), Il(24, 0, null, null, 6, "li", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
@@ -36859,7 +36837,7 @@
                     ["routerLinkActive", "active"]
                 ], null, null, null, null, null)), (e()(), Il(26, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(27, 0, null, null, 1, "i", [
                     ["class", "material-icons icon-size"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["layers"])), (e()(), Il(29, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["テーブル設定"])), (e()(), Il(31, 0, null, null, 6, "li", [], null, [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["layers"])), (e()(), Il(29, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["桌面設定"])), (e()(), Il(31, 0, null, null, 6, "li", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
@@ -36869,7 +36847,7 @@
                     ["routerLinkActive", "active"]
                 ], null, null, null, null, null)), (e()(), Il(33, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(34, 0, null, null, 1, "i", [
                     ["class", "material-icons icon-size"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["photo_library"])), (e()(), Il(36, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["画像"])), (e()(), Il(38, 0, null, null, 6, "li", [], null, [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["photo_library"])), (e()(), Il(36, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["圖片庫"])), (e()(), Il(38, 0, null, null, 6, "li", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
@@ -36879,7 +36857,7 @@
                     ["routerLinkActive", "active"]
                 ], null, null, null, null, null)), (e()(), Il(40, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(41, 0, null, null, 1, "i", [
                     ["class", "material-icons"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["queue_music"])), (e()(), Il(43, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["音楽"])), (e()(), Il(45, 0, null, null, 6, "li", [], null, [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["queue_music"])), (e()(), Il(43, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["音樂庫"])), (e()(), Il(45, 0, null, null, 6, "li", [], null, [
                     [null, "click"]
                 ], (function (e, t, n) {
                     var r = !0;
@@ -36889,12 +36867,12 @@
                     ["routerLinkActive", "active"]
                 ], null, null, null, null, null)), (e()(), Il(47, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(48, 0, null, null, 1, "i", [
                     ["class", "material-icons icon-size"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["folder_shared"])), (e()(), Il(50, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["インベントリ"])), (e()(), Il(52, 0, null, null, 8, "li", [], null, null, null, null, null)), (e()(), Il(53, 0, null, null, 7, "a", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["folder_shared"])), (e()(), Il(50, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["倉庫"])), (e()(), Il(52, 0, null, null, 8, "li", [], null, null, null, null, null)), (e()(), Il(53, 0, null, null, 7, "a", [
                     ["routerLink", "/"],
                     ["routerLinkActive", "active"]
                 ], null, null, null, null, null)), (e()(), Il(54, 0, null, null, 6, "label", [], null, null, null, null, null)), (e()(), Il(55, 0, null, null, 2, "div", [], null, null, null, null, null)), (e()(), Il(56, 0, null, null, 1, "i", [
                     ["class", "material-icons"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["open_in_browser"])), (e()(), Il(58, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["ZIP読込"])), (e()(), Il(60, 0, null, null, 0, "input", [
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["open_in_browser"])), (e()(), Il(58, 0, null, null, 1, "div", [], null, null, null, null, null)), (e()(), Zl(-1, null, ["ZIP讀取"])), (e()(), Il(60, 0, null, null, 0, "input", [
                     ["accept", "application/xml,text/xml,application/zip"],
                     ["multiple", ""],
                     ["style", "display: none;"],
