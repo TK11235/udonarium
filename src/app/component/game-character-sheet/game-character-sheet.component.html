@@ -1,16 +1,16 @@
-<button (click)="toggleEditMode()">編輯切り替え</button>
+<button (click)="toggleEditMode()">編輯界面</button>
 <ng-container [ngSwitch]="tabletopObject.aliasName">
   <ng-container *ngSwitchCase="'numberResource'">
   </ng-container>
   <ng-container *ngSwitchCase="'card'">
-    <button (click)="openModal('front')">變更表面圖片を</button>
+    <button (click)="openModal('front')">變更表面圖片</button>
     <button (click)="openModal('back')">變更裏面圖片</button>
   </ng-container>
   <ng-container *ngSwitchCase="'card-stack'">
   </ng-container>
   <ng-container *ngSwitchCase="'terrain'">
-    <button (click)="openModal('floor')">床的圖片變更</button>
-    <button (click)="openModal('wall')">壁的圖片變更</button>
+    <button (click)="openModal('floor')">變更頂部的圖片</button>
+    <button (click)="openModal('wall')">變更四面的圖片</button>
   </ng-container>
   <ng-container *ngSwitchCase="'dice-symbol'">
     <button (click)="openModal(tabletopObject['face'])" [disabled]="!tabletopObject['isVisible']">更換骰子圖片</button>

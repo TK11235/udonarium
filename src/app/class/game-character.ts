@@ -40,6 +40,7 @@ export class GameCharacter extends TabletopObject {
     let resourceElement: DataElement = DataElement.create('資源', '', {}, '資源' + this.identifier);
     let hpElement: DataElement = DataElement.create('HP', 200, { 'type': 'numberResource', 'currentValue': '200' }, 'HP_' + this.identifier);
     let mpElement: DataElement = DataElement.create('MP', 100, { 'type': 'numberResource', 'currentValue': '100' }, 'MP_' + this.identifier);
+    let SANElement: DataElement = DataElement.create('SAN', 100, { 'type': 'numberResource', 'currentValue': '100' }, 'SAN_' + this.identifier);
 
     this.commonDataElement.appendChild(nameElement);
     this.commonDataElement.appendChild(sizeElement);
@@ -47,11 +48,11 @@ export class GameCharacter extends TabletopObject {
     this.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(hpElement);
     resourceElement.appendChild(mpElement);
-
+    resourceElement.appendChild(SANElement);
     //TEST
     let testElement: DataElement = DataElement.create('情報', '', {}, '情報' + this.identifier);
     this.detailDataElement.appendChild(testElement);
-    testElement.appendChild(DataElement.create('説明', '在此處寫說明\n', { 'type': 'note' }, '説明' + this.identifier));
+    testElement.appendChild(DataElement.create('説明', '在此處輸入說明\n', { 'type': 'note' }, '説明' + this.identifier));
     testElement.appendChild(DataElement.create('筆記', '任意文字\n１\n２\n３\n４\n５', { 'type': 'note' }, '筆記' + this.identifier));
 
     //TEST
