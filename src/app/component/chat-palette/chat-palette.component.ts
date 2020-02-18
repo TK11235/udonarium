@@ -74,11 +74,8 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
     this.panelService.title = this.character.name + ' 的對話組合版';
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
 
-    if(this.character.chatPalette != null && this.character.chatPalette.dicebot != '') {
-      this.gameType = this.character.chatPalette.dicebot;
-    } else {
-      this.gameType = this.inventoryService.gameType;
-    }
+    this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
+    this.color = this.character.chatPalette ? this.character.chatPalette.color : '#000000';
 
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
@@ -150,6 +147,17 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
     });
   }
 
+  private _color: string = "#000000";
+  get color(): string { return this._color };
+  set color(color: string) {
+    this._color = color;
+    if (this.character.chatPalette) this.character.chatPalette.color = color;
+  };
+  onChangeColor(new_color: string) {
+    this._color = new_color;
+    if (this.character.chatPalette) this.character.chatPalette.color = new_color;
+  }
+
   showDicebotHelp() {
     DiceBot.getHelpMessage(this.gameType).then(help => {
       let gameName: string = '骰子機械人';
@@ -196,7 +204,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
 
     if (this.chatTab) {
       let text = this.palette.evaluate(this.text, this.character.rootDataElement);
-      this.chatMessageService.sendMessage(this.chatTab, text, this.gameType, this.character.identifier, this.sendTo);
+      this.chatMessageService.sendMessage(this.chatTab, text, this.gameType, this.character.identifier, this.sendTo, this._color);
     }
     this.text = '';
     this.previousWritingLength = this.text.length;

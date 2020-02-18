@@ -23,6 +23,9 @@
   </div>
   <div class="table-cell">
     <div>
+      <div class="color-picker-container">
+        <input class="color-picker" type="color" name="favcolor" value="#000000" (change)="onChangeColor($event.target.value)">
+      </div>
       <select style="width: 12em;" (change)="onSelectedCharacter($event.target.value)">
         <option value="{{myPeer?.identifier}}">{{myPeer?.name}}（自己）</option>
         <option *ngFor="let gameCharacter of gameCharacters" value="{{gameCharacter.identifier}}">{{gameCharacter.name}}</option>

@@ -15,6 +15,7 @@
       <hr/>
       <div>
         <ng-container *ngIf="!isDeleted">
+          <button (click)="save_log()">Export Log</button>
           <button (click)="save()">保存</button>
           <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
         </ng-container>
