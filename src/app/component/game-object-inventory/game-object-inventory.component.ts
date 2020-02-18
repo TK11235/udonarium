@@ -15,6 +15,7 @@ import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'ser
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { DiceBot } from '@udonarium/dice-bot';
 
 @Component({
   selector: 'game-object-inventory',
@@ -37,6 +38,9 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   get dataTag(): string { return this.inventoryService.dataTag; }
   set dataTag(dataTag: string) { this.inventoryService.dataTag = dataTag; }
   get dataTags(): string[] { return this.inventoryService.dataTags; }
+  get diceBotInfos() { return DiceBot.diceBotInfos }
+  get gameType(): string { return this.inventoryService.gameType; }
+  set gameType(gameType: string) { this.inventoryService.gameType = gameType; }
 
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '升序' : '降序'; }
 
@@ -217,5 +221,12 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   trackByGameObject(index: number, gameObject: GameObject) {
     return gameObject ? gameObject.identifier : index;
+  }
+
+  onChangeGameType(gameType: string) {
+    console.log('onChangeGameType ready');
+    DiceBot.getHelpMessage(this.gameType).then(help => {
+      console.log('onChangeGameType done\n' + help + this.gameType);
+    });
   }
 }
