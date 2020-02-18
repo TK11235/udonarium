@@ -48,6 +48,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.removeEventListeners(this.viewContainerRef.element.nativeElement);
     this.clearTimer();
+    this.close();
   }
 
   private onMouseEnter(e: any) {
@@ -64,7 +65,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     if (!this.tooltipComponentRef) return;
     if (!this.tooltipComponentRef.location.nativeElement.contains(e.target)
       && !this.viewContainerRef.element.nativeElement.contains(e.target)) {
-      this.ngZone.run(() => this.close());
+      this.ngZone.run(() => this.closeAll());
     }
   }
 
@@ -87,7 +88,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
       if (this.tooltipComponentRef && this.tooltipComponentRef.location.nativeElement.contains(document.activeElement)) {
         this.startCloseTimer();
       } else {
-        this.ngZone.run(() => this.close());
+        this.ngZone.run(() => this.closeAll());
       }
     }, 400);
   }
@@ -98,7 +99,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private open() {
-    this.close();
+    this.closeAll();
     if (this.pointerDeviceService.isDragging) return;
 
     let parentViewContainerRef = ContextMenuService.defaultParentViewContainerRef;
@@ -120,7 +121,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', -1000, event => {
-        if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) this.close();
+        if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) this.closeAll();
       });
 
     this.tooltipComponentRef.onDestroy(() => {
@@ -135,11 +136,18 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private close() {
+    if (!this.tooltipComponentRef) return;
+    let index = TooltipDirective.activeTooltips.indexOf(this.tooltipComponentRef);
+    if (0 <= index) TooltipDirective.activeTooltips.splice(index, 1);
+
+    this.tooltipComponentRef.destroy();
+    this.tooltipComponentRef = null;
+  }
+
+  private closeAll() {
     TooltipDirective.activeTooltips.forEach(componentRef => componentRef.destroy());
     TooltipDirective.activeTooltips = [];
-
-    if (!this.tooltipComponentRef) return;
-    this.tooltipComponentRef.destroy();
+    this.close();
   }
 
   private addEventListeners(element: Element) {

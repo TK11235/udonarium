@@ -77,7 +77,19 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
         if (event.data.aliasName !== GameCharacter.aliasName) return;
         this.shouldUpdateCharacterList = true;
         if (this.character && !this.allowsChat(this.character)) {
-          if (0 < this.gameCharacters.length) this.onSelectedCharacter(this.gameCharacters[0].identifier);
+          if (0 < this.gameCharacters.length) {
+            this.onSelectedCharacter(this.gameCharacters[0].identifier);
+          } else {
+            this.panelService.close();
+          }
+        }
+      })
+      .on('DELETE_GAME_OBJECT', -1000, event => {
+        if (this.character && this.character.identifier === event.data.identifier) {
+          this.panelService.close();
+        }
+        if (this.chatTabidentifier === event.data.identifier) {
+          this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
         }
       })
       .on('DISCONNECT_PEER', event => {
