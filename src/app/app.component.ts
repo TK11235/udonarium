@@ -225,7 +225,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   save() {
     let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
       ? Network.peerContext.roomName
-      : 'ルームデータ';
+      : 'UdoZ房間的數據';
     this.saveDataService.saveRoom(roomName);
   }
 
