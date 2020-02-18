@@ -10,7 +10,7 @@
     </form>
     <div class="table" [ngClass]="{ 'direct-message': isDirect }">
       <div class="table-cell imagebox">
-        <img class="image" (click)="openCharacterImageChange()" *ngIf="character && character.imageFile != null && 0 < character.imageFile.url.length" [src]="character.imageFile.url | safe: 'resourceUrl'"
+        <img class="image" *ngIf="character && character.imageFile != null && 0 < character.imageFile.url.length" [src]="character.imageFile.url | safe: 'resourceUrl'"
         />
       </div>
       <div class="table-cell">
@@ -31,11 +31,8 @@
         <div>
           <form>
             <!--<input [(ngModel)]="text" placeholder="message" [ngModelOptions]="{standalone: true}" style="width: 25em;">-->
-
-            <textarea #textArea [(ngModel)]="text" placeholder=Enter發送訊息  Shift+Enter換行  單擊圖標更改頭像" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
-
+            <textarea #textArea [(ngModel)]="text" placeholder="Enter發送訊息  Shift+Enter換行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
             <button type="submit" (click)="sendChat(null)">SEND</button>
-                                                          
           </form>
         </div>
       </div>

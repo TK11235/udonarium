@@ -16,9 +16,9 @@
   </form>
 <div class="table" [ngClass]="{'direct-message': isDirect}">
   <div class="table-cell imagebox">
-    <img class="image" (click)="openCharacterImageChange()" *ngIf="gameCharacter && gameCharacter.imageFile != null && 0 < gameCharacter.imageFile?.url?.length" [src]="gameCharacter.imageFile?.url | safe: 'resourceUrl'"
+    <img class="image" *ngIf="gameCharacter && gameCharacter.imageFile != null && 0 < gameCharacter.imageFile?.url?.length" [src]="gameCharacter.imageFile?.url | safe: 'resourceUrl'"
     />
-    <img class="image" (click)="openPeerIconChange()" *ngIf="!gameCharacter && myPeer && myPeer?.image != null" [src]="myPeer?.image?.url | safe: 'resourceUrl'"
+    <img class="image" *ngIf="!gameCharacter && myPeer && myPeer?.image != null" [src]="myPeer?.image?.url | safe: 'resourceUrl'"
     />
   </div>
   <div class="table-cell">
@@ -39,9 +39,7 @@
     </div>
     <div>
       <form #chatWindowForm="ngForm">
-
-        <textarea #textArea [(ngModel)]="text" placeholder="Enter發送訊息  Shift+Enter換行  單擊圖標更改頭像" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
-
+        <textarea #textArea [(ngModel)]="text" placeholder="Enter發送訊息  Shift+Enter換行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
         <button type="submit" (click)="sendChat(null)">SEND</button>
       </form>
     </div>
