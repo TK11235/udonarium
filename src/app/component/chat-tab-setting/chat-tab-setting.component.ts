@@ -35,7 +35,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = 'チャットタブ設定';
+    this.modalService.title = this.panelService.title = '聊天分頁設定';
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', 1000, event => {
         if (!this.selectedTab || event.data.identifier !== this.selectedTab.identifier) return;
@@ -57,7 +57,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
   create() {
     let chatTab = new ChatTab();
-    chatTab.name = 'タブ';
+    chatTab.name = '分頁';
     chatTab.initialize();
   }
 
@@ -114,6 +114,18 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
       this.selectedTabXml = this.selectedTab.toXml();
       this.selectedTab.destroy();
     }
+  }
+
+  allMessageClear() {
+    this.chatTabs.map(function(nowTab) {
+      let chatTab = new ChatTab();
+      chatTab.name = nowTab.name;
+      
+      nowTab.destroy();
+      chatTab.initialize();
+    });
+
+    this.selectedTab = null;
   }
 
   restore() {

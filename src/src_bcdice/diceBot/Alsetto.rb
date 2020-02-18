@@ -5,7 +5,7 @@ class Alsetto < DiceBot
 
   def initialize
     super
-    @sortType = 1 # ダイスのソート有
+    @sortType = 1 # 骰子のソート有
   end
 
   def gameName
@@ -24,7 +24,7 @@ class Alsetto < DiceBot
 []内は省略可能。
 
 ALコマンドはトライアンフの分だけ、自動で振り足し処理を行います。
-「n」でダイス数を指定。
+「n」で骰子数を指定。
 「m」で目標値を指定。省略時は、デフォルトの「3」が使用されます。
 「p」で攻撃力を指定。「*」は「x」でも可。
 攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。

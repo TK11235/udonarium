@@ -107,17 +107,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     e.preventDefault();
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(e: any) {
-    e.preventDefault();
-
-    // TODO:もっと良い方法考える
-    if (e.button === 2) {
-      EventSystem.trigger('DRAG_LOCKED_OBJECT', {});
-      return;
-    }
-  }
-
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
     e.stopPropagation();
@@ -127,30 +116,30 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
     let position = this.pointerDeviceService.pointers[0];
     this.contextMenuService.open(position, [
-      { name: '詳細を表示', action: () => { this.showDetail(this.gameCharacter); } },
-      { name: 'チャットパレットを表示', action: () => { this.showChatPalette(this.gameCharacter) } },
+      { name: '顯示詳情', action: () => { this.showDetail(this.gameCharacter); } },
+      { name: '顯示聊天視窗', action: () => { this.showChatPalette(this.gameCharacter) } },
       ContextMenuSeparator,
       {
-        name: '共有イベントリに移動', action: () => {
+        name: '移動到共有倉庫', action: () => {
           this.gameCharacter.setLocation('common');
           SoundEffect.play(PresetSound.piecePut);
         }
       },
       {
-        name: '個人イベントリに移動', action: () => {
+        name: '移動到個人倉庫', action: () => {
           this.gameCharacter.setLocation(Network.peerId);
           SoundEffect.play(PresetSound.piecePut);
         }
       },
       {
-        name: '墓場に移動', action: () => {
+        name: '移動到墓場', action: () => {
           this.gameCharacter.setLocation('graveyard');
           SoundEffect.play(PresetSound.sweep);
         }
       },
       ContextMenuSeparator,
       {
-        name: 'コピーを作る', action: () => {
+        name: '複製', action: () => {
           let cloneObject = this.gameCharacter.clone();
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
@@ -175,7 +164,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private showDetail(gameObject: GameCharacter) {
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = 'キャラクターシート';
+    let title = '角色卡';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x - 400, top: coordinate.y - 300, width: 800, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);

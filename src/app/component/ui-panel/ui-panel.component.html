@@ -1,13 +1,15 @@
-    <div [@flyInOut]="'in'" [ngClass]="{'pointer-events-none': isPointerDragging}" class="draggable-panel" [style.left.px]="left" [style.top.px]="top" [style.width.px]="width" [style.height.px]="height" #draggablePanel>
-      <div class="title">
-        <div class="title-button">
-          <button (click)="toggleFullScreen()"><i class="material-icons" style="font-size: 14px;">fullscreen</i></button>
-          <button (click)="close()"><i class="material-icons" style="font-size: 14px;">close</i></button>
-        </div>
-        {{panelService.title}}
-      </div>
-      <div class="scrollable-panel" #scrollablePanel>
-        <ng-content></ng-content>
-        <div #content></div>
-      </div>
+<div [@flyInOut]="'in'" [ngClass]="{'pointer-events-none': isPointerDragging}" class="draggable-panel"
+  [style.left.px]="left" [style.top.px]="top" [style.width.px]="width" [style.height.px]="height"
+  [draggable.stack]="'.draggable-panel'" appDraggable appResizable #draggablePanel>
+  <div class="title">
+    <div class="title-button">
+      <button (click)="toggleFullScreen()"><i class="material-icons" style="font-size: 14px;">fullscreen</i></button>
+      <button (click)="close()"><i class="material-icons" style="font-size: 14px;">close</i></button>
     </div>
+    {{panelService.title}}
+  </div>
+  <div class="scrollable-panel" #scrollablePanel>
+    <ng-content></ng-content>
+    <div #content></div>
+  </div>
+</div>

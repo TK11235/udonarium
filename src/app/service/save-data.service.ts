@@ -11,13 +11,14 @@ import { DataSummarySetting } from '@udonarium/data-summary-setting';
 import { Room } from '@udonarium/room';
 
 import * as Beautify from 'vkbeautify';
+import { ImageTagList } from '@udonarium/image-tag-list';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaveDataService {
 
-  saveRoom(fileName: string = 'ルームデータ') {
+  saveRoom(fileName: string = 'UdoZ房間數據') {
     let files: File[] = [];
     let roomXml = this.convertToXml(new Room());
     let chatXml = this.convertToXml(new ChatTabList());
@@ -26,8 +27,17 @@ export class SaveDataService {
     files.push(new File([chatXml], 'chat.xml', { type: 'text/plain' }));
     files.push(new File([summarySetting], 'summary.xml', { type: 'text/plain' }));
 
-    files = files.concat(this.searchImageFiles(roomXml));
-    files = files.concat(this.searchImageFiles(chatXml));
+    let images: ImageFile[] = [];
+    images = images.concat(this.searchImageFiles(roomXml));
+    images = images.concat(this.searchImageFiles(chatXml));
+    for (const image of images) {
+      if (image.state === ImageState.COMPLETE) {
+        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+      }
+    }
+
+    let imageTagXml = this.convertToXml(ImageTagList.create(images));
+    files.push(new File([imageTagXml], 'imagetag.xml', { type: 'text/plain' }));
 
     FileArchiver.instance.save(files, fileName);
   }
@@ -35,31 +45,41 @@ export class SaveDataService {
   saveGameObject(gameObject: GameObject, fileName: string = 'xml_data') {
     let files: File[] = [];
     let xml: string = this.convertToXml(gameObject);
-
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
-    files = files.concat(this.searchImageFiles(xml));
+
+    let images: ImageFile[] = [];
+    images = images.concat(this.searchImageFiles(xml));
+    for (const image of images) {
+      if (image.state === ImageState.COMPLETE) {
+        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+      }
+    }
+
+    let imageTagXml = this.convertToXml(ImageTagList.create(images));
+    files.push(new File([imageTagXml], 'imagetag.xml', { type: 'text/plain' }));
 
     FileArchiver.instance.save(files, fileName);
   }
 
   private convertToXml(gameObject: GameObject): string {
-    return Beautify.xml(gameObject.toXml(), 2);
+    let xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
+    return xmlDeclaration + '\n' + Beautify.xml(gameObject.toXml(), 2);
   }
 
-  private searchImageFiles(xml: string): File[] {
-    let xmlElement: Element = XmlUtil.xml2element('<root>' + xml + '</root>');
-    let files: File[] = [];
+  private searchImageFiles(xml: string): ImageFile[] {
+    let xmlElement: Element = XmlUtil.xml2element(xml);
+    let files: ImageFile[] = [];
     if (!xmlElement) return files;
 
     let images: { [identifier: string]: ImageFile } = {};
-    let imageElements = xmlElement.querySelectorAll('*[type="image"]');
+    let imageElements = xmlElement.ownerDocument.querySelectorAll('*[type="image"]');
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].innerHTML;
       images[identifier] = ImageStorage.instance.get(identifier);
     }
 
-    imageElements = xmlElement.querySelectorAll('*[imageIdentifier], *[backgroundImageIdentifier]');
+    imageElements = xmlElement.ownerDocument.querySelectorAll('*[imageIdentifier], *[backgroundImageIdentifier]');
 
     for (let i = 0; i < imageElements.length; i++) {
       let identifier = imageElements[i].getAttribute('imageIdentifier');
@@ -70,8 +90,8 @@ export class SaveDataService {
     }
     for (let identifier in images) {
       let image = images[identifier];
-      if (image && image.state === ImageState.COMPLETE) {
-        files.push(new File([image.blob], image.identifier + '.' + MimeType.extension(image.blob.type), { type: image.blob.type }));
+      if (image) {
+        files.push(image);
       }
     }
     return files;

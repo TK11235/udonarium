@@ -14,10 +14,10 @@ class WitchQuest < DiceBot
   def getHelpMessage
     return <<MESSAGETEXT
 ・チャレンジ(成功判定)(WQn)
-　n回2d6ダイスを振って判定を行います。
+　n回2d6骰子を振って判定を行います。
 　例）WQ3
-・SET（ストラクチャーカードの遭遇表(SETn)
-　ストラクチャーカードの番号(n)の遭遇表結果を得ます。
+・SET（ストラクチャー卡牌の遭遇表(SETn)
+　ストラクチャー卡牌の番号(n)の遭遇表結果を得ます。
 　例）SET1　SET48
 MESSAGETEXT
   end
@@ -274,7 +274,7 @@ MESSAGETEXT
     " ＞ #{number}:" + get_table_by_number(number, table)
   end
 
-  # 以下のメソッドはテーブルの参照用に便利
+  # 以下のメソッドは桌面の参照用に便利
   # get_table_by_2d6(table)
   # get_table_by_1d6(table)
   # get_table_by_nD6(table, 1)
@@ -282,5 +282,5 @@ MESSAGETEXT
   # get_table_by_1d3(table)
   # get_table_by_number(index, table)
 
-  # ダイス目が知りたくなったら getDiceList を呼び出すこと(DiceBot.rbにて定義)
+  # 骰子目が知りたくなったら getDiceList を呼び出すこと(DiceBot.rbにて定義)
 end

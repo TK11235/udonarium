@@ -22,7 +22,7 @@ require 'utils/ArithmeticEvaluator.rb'
 # -n Nick設定        「-n(Nick)」                    (ex. -nDicebot)
 # -g ゲーム設定      「-g(ゲーム指定文字列)」        (ex. -gCthulhu)
 # -m メッセージ設定  「-m(Notice_flgの番号)」        (ex. -m0)
-# -e エクストラカード「-e(カードセットのファイル名)」(ex. -eTORG_SET.txt)
+# -e エクストラ卡牌「-e(卡牌セットのファイル名)」(ex. -eTORG_SET.txt)
 # -i IRC文字コード   「-i(文字コード名称)」          (ex. -iISO-2022-JP)
 #
 # ex. ruby bcdice.rb -sirc.trpg.net:6667 -c#CoCtest -gCthulhu
@@ -272,7 +272,7 @@ class BCDice
       setSortMode()
 
     when 'cardplace', 'cp'
-      # カードモード設定
+      # 卡牌モード設定
       setCardMode()
 
     when 'shortspell', 'ss'
@@ -284,7 +284,7 @@ class BCDice
       setTapMode()
 
     when 'cardset', 'cs'
-      # カード読み込み
+      # 卡牌読み込み
       readCardSet()
     end
   end
@@ -518,11 +518,11 @@ class BCDice
     send_to_sender = lambda { |message| sendMessageToOnlySender message }
 
     [
-      "・加算ロール　　　　　　　　(xDn) (n面体ダイスをx個)",
+      "・加算ロール　　　　　　　　(xDn) (n面体骰子をx個)",
       "・バラバラロール　　　　　　(xBn)",
       "・個数振り足しロール　　　　(xRn[振り足し値])",
       "・上方無限ロール　　　　　　(xUn[境界値])",
-      "・シークレットロール　　　　(Sダイスコマンド)",
+      "・シークレットロール　　　　(S骰子コマンド)",
       "・シークレットをオープンする(#{$OPEN_DICE})",
       "・四則計算(端数切捨て)　　　(C(式))"
     ].each(&send_to_sender)
@@ -565,7 +565,7 @@ class BCDice
 
     sleepForIrc 2
 
-    sendMessageToOnlySender "・カード機能ヘルプ　　　　　　(c-help)"
+    sendMessageToOnlySender "・卡牌機能ヘルプ　　　　　　(c-help)"
 
     sendMessageToOnlySender "  -- END ---"
   end
@@ -591,7 +591,7 @@ class BCDice
     mynick = '' # self.nick
     secret = false
 
-    # プロットやシークレットダイス用に今のチャンネル名を記憶
+    # プロットやシークレット骰子用に今のチャンネル名を記憶
     setChannelForPlotOrSecretDice
 
     # プロットの表示
@@ -609,7 +609,7 @@ class BCDice
     # ポイントカウンター関係
     executePointCounterPublic
 
-    # ダイスロールの処理
+    # 骰子ロールの処理
     executeDiceRoll
 
     # 四則計算代行
@@ -623,10 +623,10 @@ class BCDice
     # ここから大文字・小文字を考慮するようにメッセージを変更
     changeMessageOriginal
 
-    # カード処理
+    # 卡牌処理
     executeCard
 
-    unless @isMessagePrinted # ダイスロール以外の発言では捨てダイス処理を
+    unless @isMessagePrinted # 骰子ロール以外の発言では捨て骰子処理を
       # rand 100 if($isRollVoidDiceAtAnyRecive)
     end
 
@@ -749,7 +749,7 @@ class BCDice
   #=========================================================================
   # **                           コマンド分岐
   #=========================================================================
-  def dice_command # ダイスコマンドの分岐処理
+  def dice_command # 骰子コマンドの分岐処理
     arg = @message.upcase
 
     debug('dice_command arg', arg)
@@ -915,7 +915,7 @@ class BCDice
   #=========================================================================
   # **                           ランダマイザ
   #=========================================================================
-  # ダイスロール
+  # 骰子ロール
   def roll(dice_cnt, dice_max, dice_sort = 0, dice_add = 0, dice_ul = '', dice_diff = 0, dice_re = nil)
     dice_cnt = dice_cnt.to_i
     dice_max = dice_max.to_i
@@ -957,7 +957,7 @@ class BCDice
 
       loop do
         if round >= 1
-          # 振り足し時のダイス読み替え処理用（ダブルクロスはクリティカルでダイス10に読み替える)
+          # 振り足し時の骰子読み替え処理用（ダブルクロスはクリティカルで骰子10に読み替える)
           dice_now += @diceBot.getJackUpValueOnAddRoll(dice_n)
         end
 
@@ -1070,18 +1070,18 @@ class BCDice
   end
 
   #==========================================================================
-  # **                            ダイスコマンド処理
+  # **                            骰子コマンド処理
   #==========================================================================
 
-  ####################         バラバラダイス       ########################
-  def bdice(string) # 個数判定型ダイスロール
+  ####################         バラバラ骰子       ########################
+  def bdice(string) # 個数判定型骰子ロール
     total_n = 0
     suc = 0
     signOfInequality = ""
     diff = 0
     output = ""
 
-    string = string.gsub(/-[\d]+B[\d]+/, '') # バラバラダイスを引き算しようとしているのを除去
+    string = string.gsub(/-[\d]+B[\d]+/, '') # バラバラ骰子を引き算しようとしているのを除去
 
     unless /(^|\s)S?(([\d]+B[\d]+(\+[\d]+B[\d]+)*)(([<>=]+)([\d]+))?)($|\s)/ =~ string
       output = '1'
@@ -1130,7 +1130,7 @@ class BCDice
     ((dice_cnt > 0) && ((round < @diceBot.rerollLimitCount) || (@diceBot.rerollLimitCount == 0)))
   end
 
-  ####################             D66ダイス        ########################
+  ####################             D66骰子        ########################
   def rollD66(string)
     return nil unless /^S?D66/i === string
     return nil if @diceBot.d66Type == 0
@@ -1217,7 +1217,7 @@ class BCDice
     return output
   end
 
-  ####################        その他ダイス関係      ########################
+  ####################        その他骰子関係      ########################
   def openSecretRoll(channel, mode)
     debug("openSecretRoll begin")
     channel = channel.upcase
@@ -1273,7 +1273,7 @@ class BCDice
     # まずはチャンネルごとの管理リストに追加
     addToSecretRollMembersHolder(channel, mode)
 
-    # 次にダイスの出力結果を保存
+    # 次に骰子の出力結果を保存
     saveSecretDiceResult(diceResult, channel, mode)
 
     @isMessagePrinted = true
@@ -1477,7 +1477,7 @@ class BCDice
     return ""
   end
 
-  def check_nDx(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(ダイスごちゃ混ぜ系)
+  def check_nDx(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(骰子ごちゃ混ぜ系)
     debug('check_nDx begin diff', diff)
     success = check_hit(total_n, signOfInequality, diff)
     debug('check_nDx success', success)

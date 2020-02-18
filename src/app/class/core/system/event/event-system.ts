@@ -45,10 +45,9 @@ export class EventSystem implements Subject {
   }
 
   private _unregister(key: any = this, eventName: string, callback: Callback<any>) {
-    let _eventNames = this.listenerMap.keys();
-    for (let _eventName of _eventNames) {
-      let listeners = this.getListeners(_eventName).concat();
-      for (let listener of listeners) {
+    let listenersIterator = this.listenerMap.values();
+    for (let listeners of listenersIterator) {
+      for (let listener of listeners.concat()) {
         if (listener.isEqual(key, eventName, callback)) {
           listener.unregister();
         }

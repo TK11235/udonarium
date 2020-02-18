@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { BadgeComponent } from 'component/badge/badge.component';
 import { CardStackListComponent } from 'component/card-stack-list/card-stack-list.component';
 import { CardStackComponent } from 'component/card-stack/card-stack.component';
@@ -38,8 +37,9 @@ import { TerrainComponent } from 'component/terrain/terrain.component';
 import { TextNoteComponent } from 'component/text-note/text-note.component';
 import { TextViewComponent } from 'component/text-view/text-view.component';
 import { UIPanelComponent } from 'component/ui-panel/ui-panel.component';
-
+import { DraggableDirective } from 'directive/draggable.directive';
 import { MovableDirective } from 'directive/movable.directive';
+import { ResizableDirective } from 'directive/resizable.directive';
 import { RotableDirective } from 'directive/rotable.directive';
 import { TooltipDirective } from 'directive/tooltip.directive';
 import { SafePipe } from 'pipe/safe.pipe';
@@ -97,6 +97,8 @@ import { AppComponent } from './app.component';
     NetworkIndicatorComponent,
     DiceSymbolComponent,
     TooltipDirective,
+    DraggableDirective,
+    ResizableDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,12 @@
 .box {
   border-bottom:1px dotted #888;
 }
+
+.image-box {
+  display: inline-block;
+  vertical-align: top;
+}
+
 .image {
   padding: 0px;
   width: 64px;

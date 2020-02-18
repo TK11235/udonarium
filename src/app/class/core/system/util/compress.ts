@@ -41,5 +41,5 @@ async function processAsync<T extends Pako.Deflate | Pako.Inflate>(pakoObj: T, d
 }
 
 function waitTickAsync() {
-  return new Promise(resolve => setZeroTimeout(() => resolve()));
+  return new Promise(resolve => setZeroTimeout(resolve));
 }

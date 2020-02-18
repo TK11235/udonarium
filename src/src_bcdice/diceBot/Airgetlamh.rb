@@ -3,7 +3,7 @@
 class Airgetlamh < DiceBot
   def initialize
     super
-    @sortType = 1 # ダイスのソート有
+    @sortType = 1 # 骰子のソート有
   end
 
   setPrefixes([
@@ -29,7 +29,7 @@ class Airgetlamh < DiceBot
 ----------------------------------------
 []内のコマンドは省略可能。
 
-「n」でダイス数（攻撃回数）を指定。省略時は「2」。
+「n」で骰子数（攻撃回数）を指定。省略時は「2」。
 「m」で目標値を指定。省略時は「6」。
 「p」で威力を指定。「*」は「x」で代用可。
 「+t」でクリティカルトリガーを指定。省略可。

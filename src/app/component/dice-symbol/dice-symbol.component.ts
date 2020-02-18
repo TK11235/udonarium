@@ -1,8 +1,10 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   HostListener,
   Input,
   NgZone,
@@ -17,6 +19,7 @@ import { DiceSymbol } from '@udonarium/dice-symbol';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
+import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
@@ -56,7 +59,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class DiceSymbolComponent implements OnInit, OnDestroy {
+export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() diceSymbol: DiceSymbol = null;
   @Input() is3D: boolean = false;
 
@@ -96,10 +99,13 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   private doubleClickTimer: NodeJS.Timer = null;
   private doubleClickPoint = { x: 0, y: 0 };
 
+  private input: InputHandler = null;
+
   constructor(
     private ngZone: NgZone,
     private panelService: PanelService,
     private contextMenuService: ContextMenuService,
+    private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
     private pointerDeviceService: PointerDeviceService) { }
 
@@ -128,6 +134,9 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       })
       .on('UPDATE_FILE_RESOURE', -1000, event => {
         this.changeDetector.markForCheck();
+      })
+      .on('DISCONNECT_PEER', event => {
+        if (this.diceSymbol.owner === event.data.peer) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.diceSymbol,
@@ -139,8 +148,20 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     };
   }
 
+  ngAfterViewInit() {
+    this.input = new InputHandler(this.elementRef.nativeElement);
+    this.input.onStart = this.onInputStart.bind(this);
+  }
+
   ngOnDestroy() {
+    this.input.destroy();
     EventSystem.unregister(this);
+  }
+
+  @HostListener('dragstart', ['$event'])
+  onDragstart(e: any) {
+    e.stopPropagation();
+    e.preventDefault();
   }
 
   animationShuffleDone(event: any) {
@@ -148,12 +169,10 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     this.changeDetector.markForCheck();
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(e: any) {
+  onInputStart(e: MouseEvent | TouchEvent) {
+    this.input.cancel();
     this.onDoubleClick(e);
-    this.startIconHiddenTimer();
-
-    e.preventDefault();
+    if (e instanceof MouseEvent) this.startIconHiddenTimer();
   }
 
   onDoubleClick(e) {
@@ -161,14 +180,14 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       this.doubleClickTimer = setTimeout(() => {
         clearTimeout(this.doubleClickTimer);
         this.doubleClickTimer = null;
-      }, 400);
-      this.doubleClickPoint = this.pointerDeviceService.pointers[0];
+      }, 300);
+      this.doubleClickPoint = this.input.pointer;
       return;
     }
     clearTimeout(this.doubleClickTimer);
     this.doubleClickTimer = null;
-    if (this.doubleClickPoint.x === this.pointerDeviceService.pointers[0].x
-      && this.doubleClickPoint.y === this.pointerDeviceService.pointers[0].y) {
+    let distance = (this.doubleClickPoint.x - this.input.pointer.x) ** 2 + (this.doubleClickPoint.y - this.input.pointer.y) ** 2;
+    if (distance < 10 ** 2) {
       if (this.isVisible) this.diceRoll();
     }
   }
@@ -185,7 +204,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
 
     if (this.isVisible) {
       actions.push({
-        name: 'ダイスを振る', action: () => {
+        name: '擲骰', action: () => {
           this.diceRoll();
         }
       });
@@ -193,7 +212,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     actions.push(ContextMenuSeparator);
     if (this.isMine || this.hasOwner) {
       actions.push({
-        name: 'ダイスを公開', action: () => {
+        name: '公開骰子', action: () => {
           this.owner = '';
           SoundEffect.play(PresetSound.unlock);
         }
@@ -201,7 +220,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     }
     if (!this.isMine) {
       actions.push({
-        name: '自分だけ見る', action: () => {
+        name: '只供自己看見', action: () => {
           this.owner = Network.peerId;
           SoundEffect.play(PresetSound.lock);
         }
@@ -218,14 +237,14 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
           }
         });
       });
-      actions.push({ name: `ダイス目を設定`, action: null, subActions: subActions });
+      actions.push({ name: `設定骰子結果`, action: null, subActions: subActions });
     }
 
     actions.push(ContextMenuSeparator);
 
-    actions.push({ name: '詳細を表示', action: () => { this.showDetail(this.diceSymbol); } });
+    actions.push({ name: '顯示詳情', action: () => { this.showDetail(this.diceSymbol); } });
     actions.push({
-      name: 'コピーを作る', action: () => {
+      name: '複製', action: () => {
         let cloneObject = this.diceSymbol.clone();
         cloneObject.location.x += this.gridSize;
         cloneObject.location.y += this.gridSize;
@@ -234,7 +253,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
       }
     });
     actions.push({
-      name: '削除する', action: () => {
+      name: '刪除', action: () => {
         this.diceSymbol.destroy();
         SoundEffect.play(PresetSound.sweep);
       }
@@ -259,7 +278,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
   showDetail(gameObject: DiceSymbol) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = 'ダイスシンボル設定';
+    let title = '骰子內容設定';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
@@ -271,7 +290,7 @@ export class DiceSymbolComponent implements OnInit, OnDestroy {
     this.iconHiddenTimer = setTimeout(() => {
       this.iconHiddenTimer = null;
       this.changeDetector.markForCheck();
-    }, 400);
+    }, 300);
     this.changeDetector.markForCheck();
   }
 

@@ -29,6 +29,12 @@ nav ul > li > a {
   height: 128px;
   width: 128px;
   font-size: 8px;
+  user-select: none;
+}
+nav ul > li > a > label {
+  cursor: -moz-pointer;
+  cursor: -webkit-pointer;
+  cursor: pointer;
 }
 nav ul i {
   font-size: 24px;

@@ -1,4 +1,4 @@
-<div class="component is-pointer-events-none" [@fadeInOut]="'in'" #draggablePanel>
+<div class="component is-pointer-events-none" [@fadeInOut]="'in'" appDraggable #draggablePanel>
   <ng-container [ngSwitch]="tabletopObject.aliasName">
     <ng-container *ngSwitchCase="'numberResource'">
     </ng-container>
@@ -43,7 +43,7 @@
     <div *ngIf="0 < card?.name?.length" class="component-title title-background"
       [ngClass]="{'with-button-marign': hasImage}">
       <ng-container *ngIf="card.isVisible == null || card.isVisible">{{card.name}}</ng-container>
-      <ng-container *ngIf="card.isVisible != null && !card.isVisible">カード</ng-container>
+      <ng-container *ngIf="card.isVisible != null && !card.isVisible">卡牌</ng-container>
     </div>
     <div class="component-background">
       <div class="grid-container-root" *ngIf="hasDataElms && card.isVisible">
