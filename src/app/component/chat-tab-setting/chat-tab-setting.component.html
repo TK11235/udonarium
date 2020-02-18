@@ -26,7 +26,7 @@
   </div>
 </div>
 <div>
-    <button class="danger" (click)="allMessageClear()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">全タブのメッセージを消去</button>
+    <button class="danger" (click)="allMessageClear()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">清除所有聊天紀錄</button>
 </div>
 <ng-container *ngIf="isEmpty">
   <div style="font-size: 12px;">*尚未新增聊天分頁。 您可以使用「新增聊天分頁」。</div>
