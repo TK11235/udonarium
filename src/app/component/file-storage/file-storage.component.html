@@ -12,10 +12,10 @@
 </label>
 <div class="sticky-top">
   <div>
-    検索: <input [(ngModel)]="searchWord" placeholder="部分一致で検索 スペース区切りで複数指定" />
+    検索: <input [(ngModel)]="searchWord" placeholder="部分匹配搜索 如指定多個標籤 加上空格" />
   </div>
   <div>
-    タグ: <input [(ngModel)]="selectedTag" placeholder="タグ名" [attr.disabled]="isSelected ? null : ''" />
+    標籤: <input [(ngModel)]="selectedTag" placeholder="標籤名" [attr.disabled]="isSelected ? null : ''" />
   </div>
 </div>
 <div id="file-list">
