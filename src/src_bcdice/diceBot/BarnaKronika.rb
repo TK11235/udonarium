@@ -9,18 +9,18 @@ class BarnaKronika < DiceBot
     @sortType = 3
   end
 
-  # ダイスボット設定後に行う処理
+  # 骰子ボット設定後に行う処理
   # @return [void]
   def postSet
     #if @@bcdice # TKfix @@bcdice が参照できない (Opal 0.11.4)
     #  @@bcdice.cardTrader.set1Deck2Jokers
-    #  # 手札の他のカード置き場
+    #  # 手札の他の卡牌置き場
     #  @@bcdice.cardTrader.card_place = 0
     #  # 場札のタップ処理の必要があるか？
     #  @@bcdice.cardTrader.canTapCard = false
     if bcdice
       bcdice.cardTrader.set1Deck2Jokers
-      # 手札の他のカード置き場
+      # 手札の他の卡牌置き場
       bcdice.cardTrader.card_place = 0
       # 場札のタップ処理の必要があるか？
       bcdice.cardTrader.canTapCard = false
@@ -38,14 +38,14 @@ class BarnaKronika < DiceBot
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・通常判定　nBK
-　ダイス数nで判定ロールを行います。
+　骰子数nで判定ロールを行います。
 　セット数が1以上の時はセット数も表示します。
 ・攻撃判定　nBA
-　ダイス数nで判定ロールを行い、攻撃値と命中部位も表示します。
+　骰子数nで判定ロールを行い、攻撃値と命中部位も表示します。
 ・クリティカルコール　nBKCt　nBACt
 　判定コマンドの後ろに「Ct」を付けるとクリティカルコールです。
-　ダイス数n,コール数tで判定ロールを行います。
-　ダイス数nで判定ロールを行います。
+　骰子数n,コール数tで判定ロールを行います。
+　骰子数nで判定ロールを行います。
 　セット数が1以上の時はセット数も表示し、攻撃判定の場合は命中部位も表示します。
 INFO_MESSAGE_TEXT
   end

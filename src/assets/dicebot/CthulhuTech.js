@@ -59,7 +59,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_CthulhuTech_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "テストのダイス計算を実装。\n" + "成功、失敗、クリティカル、ファンブルの自動判定。\n" + "コンバットテスト(防御側有利なので「>=」ではなく「>」で入力)の時はダメージダイスも表示。\n"
+      return "" + "テストの骰子計算を実装。\n" + "成功、失敗、クリティカル、ファンブルの自動判定。\n" + "コンバットテスト(防御側有利なので「>=」ではなく「>」で入力)の時はダメージ骰子も表示。\n"
     }, TMP_CthulhuTech_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$check_nD10', TMP_CthulhuTech_check_nD10_5 = function $$check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {

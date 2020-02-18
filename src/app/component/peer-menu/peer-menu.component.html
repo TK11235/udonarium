@@ -1,5 +1,5 @@
 <div *ngIf="myPeer">
-  <button (click)="changeIcon()">アイコンを変更する</button>
+  <button (click)="changeIcon()">變更頭像</button>
   <div *ngIf="myPeer.image" class="image cover" [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' "
     (click)="changeIcon()">
     <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
