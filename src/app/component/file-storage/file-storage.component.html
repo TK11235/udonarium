@@ -10,9 +10,17 @@
       <br>每張圖片最大2MB</div>
   </div>
 </label>
+<div class="sticky-top">
+  <div>
+    検索: <input [(ngModel)]="searchWord" placeholder="部分一致で検索 スペース区切りで複数指定" />
+  </div>
+  <div>
+    タグ: <input [(ngModel)]="selectedTag" placeholder="タグ名" [attr.disabled]="isSelected ? null : ''" />
+  </div>
+</div>
 <div id="file-list">
-  <span *ngFor="let file of fileStorageService.images" class="image">
+  <div *ngFor="let file of images" [ngClass]="{ image: true, selected: selectedFile === file }" >
     <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
     <img *ngIf="file.url.length <= 0" src="assets/images/loading.gif" alt="{{file.name}}">
-  </span>
+  </div>
 </div>
