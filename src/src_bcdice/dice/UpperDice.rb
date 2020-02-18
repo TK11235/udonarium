@@ -7,7 +7,7 @@ class UpperDice
     @nick_e = @bcdice.nick_e
   end
 
-  # 上方無限型ダイスロール
+  # 上方無限型骰子ロール
   def rollDice(string)
     debug('udice begin string', string)
 

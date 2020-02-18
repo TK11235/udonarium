@@ -39,7 +39,7 @@
     Opal.defn(self, '$gameName', TMP_DiceOfTheDead_gameName_2 = function $$gameName() {
       var self = this;
 
-      return "ダイス・オブ・ザ・デッド"
+      return "骰子・オブ・ザ・デッド"
     }, TMP_DiceOfTheDead_gameName_2.$$arity = 0);
     
     Opal.defn(self, '$gameType', TMP_DiceOfTheDead_gameType_3 = function $$gameType() {
@@ -51,7 +51,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_DiceOfTheDead_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this, info = nil;
 
-      return (info = "" + "・ゾンビ化表　ZMB+x\n" + "（x=オープン中の感染度マスの数。+xは省略可能、省略時は0）\n" + "・感染度表　BIOx\n" + "（xは被弾回数。xは省略可能、省略時は1）\n" + "（上記二つは最初からシークレットダイスで行われます）\n")
+      return (info = "" + "・ゾンビ化表　ZMB+x\n" + "（x=オープン中の感染度マスの数。+xは省略可能、省略時は0）\n" + "・感染度表　BIOx\n" + "（xは被弾回数。xは省略可能、省略時は1）\n" + "（上記二つは最初からシークレット骰子で行われます）\n")
     }, TMP_DiceOfTheDead_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_DiceOfTheDead_rollDiceCommand_5 = function $$rollDiceCommand(command) {

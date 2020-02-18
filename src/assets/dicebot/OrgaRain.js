@@ -47,7 +47,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_OrgaRain_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "判定：[n]OR(count)\n" + "\n" + "[]内のコマンドは省略可能。\n" + "「n」でダイス数を指定。省略時は「1」。\n" + "(count)で命数を指定。「3111」のように記述。最大6つ。順不同可。\n" + "\n" + "【書式例】\n" + "・5OR6042 → 5dで命数「0,2,4,6」の判定\n" + "・6OR33333 → 6dで命数「3,3,3,3,3」の判定。\n"
+      return "" + "判定：[n]OR(count)\n" + "\n" + "[]内のコマンドは省略可能。\n" + "「n」で骰子数を指定。省略時は「1」。\n" + "(count)で命数を指定。「3111」のように記述。最大6つ。順不同可。\n" + "\n" + "【書式例】\n" + "・5OR6042 → 5dで命数「0,2,4,6」の判定\n" + "・6OR33333 → 6dで命数「3,3,3,3,3」の判定。\n"
     }, TMP_OrgaRain_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_OrgaRain_rollDiceCommand_5 = function $$rollDiceCommand(command) {

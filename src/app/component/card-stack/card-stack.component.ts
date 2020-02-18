@@ -216,7 +216,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     let position = this.pointerDeviceService.pointers[0];
     this.contextMenuService.open(position, [
       {
-        name: '１枚引く', action: () => {
+        name: '抽取一張', action: () => {
           if (this.drawCard() != null) {
             SoundEffect.play(PresetSound.cardDraw);
           }
@@ -224,68 +224,68 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       ContextMenuSeparator,
       {
-        name: '一番上を表にする', action: () => {
+        name: '表面顯示第一張', action: () => {
           this.cardStack.faceUp();
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
       {
-        name: '一番上を裏にする', action: () => {
+        name: '背面顯示第一張', action: () => {
           this.cardStack.faceDown();
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
       ContextMenuSeparator,
       {
-        name: 'すべて表にする', action: () => {
+        name: '表面顯示整副', action: () => {
           this.cardStack.faceUpAll();
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
       {
-        name: 'すべて裏にする', action: () => {
+        name: '背面顯示整副', action: () => {
           this.cardStack.faceDownAll();
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
       {
-        name: 'すべて正位置にする', action: () => {
+        name: '放正位置', action: () => {
           this.cardStack.uprightAll();
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
       ContextMenuSeparator,
       {
-        name: 'シャッフル', action: () => {
+        name: '洗牌', action: () => {
           this.cardStack.shuffle();
           SoundEffect.play(PresetSound.cardShuffle);
           EventSystem.call('SHUFFLE_CARD_STACK', { identifier: this.cardStack.identifier });
         }
       },
-      { name: 'カード一覧', action: () => { this.showStackList(this.cardStack); } },
+      { name: '卡牌列表', action: () => { this.showStackList(this.cardStack); } },
       ContextMenuSeparator,
       (this.isShowTotal
-        ? { name: '枚数を非表示にする', action: () => { this.cardStack.isShowTotal = false; } }
-        : { name: '枚数を表示する', action: () => { this.cardStack.isShowTotal = true; } }
+        ? { name: ',不顯示數量', action: () => { this.cardStack.isShowTotal = false; } }
+        : { name: '顯示數量', action: () => { this.cardStack.isShowTotal = true; } }
       ),
-      { name: 'カードサイズを揃える', action: () => { if (this.cardStack.topCard) this.cardStack.unifyCardsSize(this.cardStack.topCard.size); } },
+      { name: '對齊格線', action: () => { if (this.cardStack.topCard) this.cardStack.unifyCardsSize(this.cardStack.topCard.size); } },
       ContextMenuSeparator,
       {
-        name: '山札を人数分に分割する', action: () => {
+        name: '按人數分發卡牌', action: () => {
           this.splitStack(Network.peerIds.length);
           SoundEffect.play(PresetSound.cardDraw);
         }
       },
       {
-        name: '山札を崩す', action: () => {
+        name: '打散牌堆', action: () => {
           this.breakStack();
           SoundEffect.play(PresetSound.cardShuffle);
         }
       },
       ContextMenuSeparator,
-      { name: '詳細を表示', action: () => { this.showDetail(this.cardStack); } },
+      { name: '顯示詳情', action: () => { this.showDetail(this.cardStack); } },
       {
-        name: 'コピーを作る', action: () => {
+        name: '複製', action: () => {
           let cloneObject = this.cardStack.clone();
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
@@ -295,7 +295,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       },
       {
-        name: '山札を削除する', action: () => {
+        name: '刪除牌堆', action: () => {
           this.cardStack.setLocation('graveyard');
           this.cardStack.destroy();
           SoundEffect.play(PresetSound.sweep);
@@ -398,7 +398,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   private showDetail(gameObject: CardStack) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = '山札設定';
+    let title = '牌堆設定';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);

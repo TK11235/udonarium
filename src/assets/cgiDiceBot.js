@@ -22557,13 +22557,13 @@ Opal.modules["CardTrader"] = function(Opal) {
       send_to_sender = $send(self, 'lambda', [], (TMP_10 = function(message){var self = TMP_10.$$s || this;
 if (message == null) message = nil;
       return self.$sendMessageToOnlySender(message)}, TMP_10.$$s = self, TMP_10.$$arity = 1, TMP_10));
-      $send([["・カードを引く　　　　　　　(c-draw[n]) (nは枚数)", "・オープンでカードを引く　　(c-odraw[n])", "・カードを選んで引く　　　　(c-pick[c[,c]]) (cはカード。カンマで複数指定可)", "・捨てたカードを手札に戻す　(c-back[c[,c]])", "・置いたカードを手札に戻す　(c-back1[c[,c]])"], ["・手札と場札を見る　　　　　(c-hand) (Talk可)", "・カードを出す　　　　　　　(c-play[c[,c]]", "・カードを場に出す　　　　　(c-play1[c[,c]]", "・カードを捨てる　　　　　　(c-discard[c[,c]]) (Talk可)", "・場のカードを選んで捨てる　(c-discard1[c[,c]])", "・山札からめくって捨てる　  (c-milstone[n])"], ["・カードを相手に一枚渡す　　(c-pass[c]相手) (カード指定が無いときはランダム)", "・場のカードを相手に渡す　　(c-pass1[c]相手) (カード指定が無いときはランダム)", "・カードを相手の場に出す　　(c-place[c[,c]]相手)", "・場のカードを相手の場に出す(c-place1[c[,c]]相手)"], ["・場のカードをタップする　　(c-tap1[c[,c]]相手)", "・場のカードをアンタップする(c-untap1[c[,c]]相手)", "  ---"]], 'each', [], (TMP_11 = function(messages){var self = TMP_11.$$s || this;
+      $send([["・卡牌を引く　　　　　　　(c-draw[n]) (nは枚数)", "・オープンで卡牌を引く　　(c-odraw[n])", "・卡牌を選んで引く　　　　(c-pick[c[,c]]) (cは卡牌。カンマで複数指定可)", "・捨てた卡牌を手札に戻す　(c-back[c[,c]])", "・置いた卡牌を手札に戻す　(c-back1[c[,c]])"], ["・手札と場札を見る　　　　　(c-hand) (Talk可)", "・卡牌を出す　　　　　　　(c-play[c[,c]]", "・卡牌を場に出す　　　　　(c-play1[c[,c]]", "・卡牌を捨てる　　　　　　(c-discard[c[,c]]) (Talk可)", "・場の卡牌を選んで捨てる　(c-discard1[c[,c]])", "・山札からめくって捨てる　  (c-milstone[n])"], ["・卡牌を相手に一枚渡す　　(c-pass[c]相手) (卡牌指定が無いときはランダム)", "・場の卡牌を相手に渡す　　(c-pass1[c]相手) (卡牌指定が無いときはランダム)", "・卡牌を相手の場に出す　　(c-place[c[,c]]相手)", "・場の卡牌を相手の場に出す(c-place1[c[,c]]相手)"], ["・場の卡牌をタップする　　(c-tap1[c[,c]]相手)", "・場の卡牌をアンタップする(c-untap1[c[,c]]相手)", "  ---"]], 'each', [], (TMP_11 = function(messages){var self = TMP_11.$$s || this;
 if (messages == null) messages = nil;
       
         $send(messages, 'each', [], send_to_sender.$to_proc());
         return self.$sleep(1);}, TMP_11.$$s = self, TMP_11.$$arity = 1, TMP_11));
       self.$sleep(1);
-      $send(["・カードを配る　　　　　　　(c-deal[n]相手)", "・カードを見てから配る　　　(c-vdeal[n]相手)", "・カードのシャッフル　　　　(c-shuffle)", "・捨てカードを山に戻す　　　(c-rshuffle)", "・全員の場のカードを捨てる　(c-clean)"], 'each', [], send_to_sender.$to_proc());
+      $send(["・卡牌を配る　　　　　　　(c-deal[n]相手)", "・卡牌を見てから配る　　　(c-vdeal[n]相手)", "・卡牌のシャッフル　　　　(c-shuffle)", "・捨て卡牌を山に戻す　　　(c-rshuffle)", "・全員の場の卡牌を捨てる　(c-clean)"], 'each', [], send_to_sender.$to_proc());
       self.$sleep(1);
       $send(["・相手の手札と場札を見る　　(c-vhand) (Talk不可)", "・枚数配置を見る　　　　　　(c-check)", "・復活の呪文　　　　　　　　(c-spell[呪文]) (c-spellで呪文の表示)"], 'each', [], send_to_sender.$to_proc());
       return self.$sendMessageToOnlySender("  -- END ---");
@@ -22579,9 +22579,9 @@ if (messages == null) messages = nil;
       };
       self.card_place = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       if ($truthy($rb_gt(self.card_place, 0))) {
-        return self.$sendMessageToChannels("カード置き場ありに変更しました")
+        return self.$sendMessageToChannels("卡牌置き場ありに変更しました")
         } else {
-        return self.$sendMessageToChannels("カード置き場無しに変更しました")
+        return self.$sendMessageToChannels("卡牌置き場無しに変更しました")
       };
     }, TMP_CardTrader_setCardMode_13.$$arity = 0);
     
@@ -22591,7 +22591,7 @@ if (messages == null) messages = nil;
       try {
         
         self.$readExtraCard(self.tnick);
-        return self.$sendMessageToOnlySender("カードセットの読み込み成功しました");
+        return self.$sendMessageToOnlySender("卡牌セットの読み込み成功しました");
       } catch ($err) {
         if (Opal.rescue($err, [Opal.const_get_relative($nesting, 'StandardError')])) {e = $err;
           try {
@@ -22656,7 +22656,7 @@ if (line == null) line = nil;
       } catch ($err) {
         if (Opal.rescue($err, [Opal.const_get_relative($nesting, 'StandardError')])) {e = $err;
           try {
-            return self.$raise($rb_plus("" + "カードデータを開けません :『" + (cardFileName) + "』", e.$to_s()))
+            return self.$raise($rb_plus("" + "卡牌データを開けません :『" + (cardFileName) + "』", e.$to_s()))
           } finally { Opal.pop_exception() }
         } else { throw $err; }
       };;
@@ -22751,7 +22751,7 @@ if (line == null) line = nil;
         self.$sendMessageToOnlySender(self.$getCardsTextFromCards(cards));
         self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (cards.$length()) + "枚引きました");
         } else {
-        self.$sendMessage(self.channel, "カードが残っていません")
+        self.$sendMessage(self.channel, "卡牌が残っていません")
       };
       return ($truthy($a = self.card_channels['$[]'](self.nick_e)) ? $a : (($writer = [self.nick_e, self.channel]), $send(self.card_channels, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)]));
     }, TMP_CardTrader_drawCardByCommandText_22.$$arity = 1);
@@ -22769,7 +22769,7 @@ if (line == null) line = nil;
       if ($truthy(cards['$empty?']()['$!']())) {
         self.$sendMessage(self.channel, $rb_plus($rb_plus("" + (self.nick_e) + ": ", self.$getCardsTextFromCards(cards)), "を引きました"))
         } else {
-        self.$sendMessage(self.channel, "カードが残っていません")
+        self.$sendMessage(self.channel, "卡牌が残っていません")
       };
       return ($truthy($a = self.card_channels['$[]'](self.nick_e)) ? $a : (($writer = [self.nick_e, self.channel]), $send(self.card_channels, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)]));
     }, TMP_CardTrader_drawCardOpen_23.$$arity = 1);
@@ -22984,7 +22984,7 @@ if (i == null) i = nil;
       if ($truthy(cards['$empty?']()['$!']())) {
         self.$sendDealResult(targetNick, count, self.$getCardsTextFromCards(cards), isLook)
         } else {
-        self.$sendMessage(self.channel, "カードが残っていません")
+        self.$sendMessage(self.channel, "卡牌が残っていません")
       };
       ($truthy($a = self.card_channels['$[]'](targetNick)) ? $a : (($writer = [targetNick, self.channel]), $send(self.card_channels, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)]));
       return count;
@@ -23373,13 +23373,13 @@ if (card == null) card = nil;
       self.$debug("from, cards, @deal_cards", from, cards, self.deal_cards);
       if (targetCard['$==']("")) {
         
-        self.$debug("カード指定がないのでランダムで一枚渡す");
+        self.$debug("卡牌指定がないのでランダムで一枚渡す");
         thisCard = self.$ejectOneCardRandomFromCards(cards);
         isTargetCardInHand = true;
         restCards = self.deal_cards['$[]'](from);
         } else {
         
-        self.$debug("カード指定あり targetCard", targetCard);
+        self.$debug("卡牌指定あり targetCard", targetCard);
         $b = self.$transferTargetCard(targetCard, cards, toSend, from), $a = Opal.to_ary($b), (thisCard = ($a[0] == null ? nil : $a[0])), (restCards = ($a[1] == null ? nil : $a[1])), (isTargetCardInHand = ($a[2] == null ? nil : $a[2])), $b;
       };
       self.$debug("transferOneCard isTargetCardInHand", isTargetCardInHand);
@@ -23673,7 +23673,7 @@ if (card == null) card = nil;
       if ($truthy($rb_gt(count, 0))) {
         return self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (self.$getCardsText(output_msg)) + "が出ました")
         } else {
-        return self.$sendMessage(self.channel, "カードが残っていません")
+        return self.$sendMessage(self.channel, "卡牌が残っていません")
       };
     }, TMP_CardTrader_printMilStoneResult_79.$$arity = 1);
     
@@ -23711,7 +23711,7 @@ if (card == null) card = nil;
       $send(self.deal_cards, 'each', [], (TMP_81 = function(place, cards){var self = TMP_81.$$s || this;
 if (place == null) place = nil;if (cards == null) cards = nil;
       return self.$clearAllPlayerCardsWhenPlayedPlace(place, cards)}, TMP_81.$$s = self, TMP_81.$$arity = 2, TMP_81));
-      return "場のカードを捨てました";
+      return "場の卡牌を捨てました";
     }, TMP_CardTrader_clearAllPlaceAllPlayerCards_82.$$arity = 0);
     
     Opal.defn(self, '$clearAllPlayerCardsWhenPlayedPlace', TMP_CardTrader_clearAllPlayerCardsWhenPlayedPlace_83 = function $$clearAllPlayerCardsWhenPlayedPlace(place, cards) {
@@ -23834,7 +23834,7 @@ if (place == null) place = nil;if (cards == null) cards = nil;
       self.$debug("getHandCardInfoText destination", destination);
       out_msg = self.$getDealCardsText(destination);
       if ($truthy(out_msg['$empty?']())) {
-        out_msg = "カードを持っていません"};
+        out_msg = "卡牌を持っていません"};
       return out_msg;
     }, TMP_CardTrader_getHandCardInfoText_93.$$arity = 1);
     
@@ -23958,7 +23958,7 @@ if (cardNumber == null) cardNumber = nil;
       
       output_msg = self.$throwCardRestorationSpell(spellText);
       if (output_msg['$==']("readSpell")) {
-        return self.$sendMessage(self.channel, "" + (self.nick_e) + ": カード配置を復活しました")
+        return self.$sendMessage(self.channel, "" + (self.nick_e) + ": 卡牌配置を復活しました")
         } else {
         return self.$sendMessage(self.channel, output_msg)
       };
@@ -25329,7 +25329,7 @@ Opal.modules["diceBot/DiceBotLoader"] = function(Opal) {
         if (Opal.rescue($err, [Opal.const_get_relative($nesting, 'LoadError'), Opal.const_get_relative($nesting, 'StandardError')])) {e = $err;
           try {
             
-            self.$debug("DiceBotLoader.loadUnknownGame: ダイスボットの読み込みに失敗しました", e.$to_s());
+            self.$debug("DiceBotLoader.loadUnknownGame: 骰子ボットの読み込みに失敗しました", e.$to_s());
             return nil;
           } finally { Opal.pop_exception() }
         } else { throw $err; }
@@ -26753,7 +26753,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       send_to_sender = $send(self, 'lambda', [], (TMP_40 = function(message){var self = TMP_40.$$s || this;
 if (message == null) message = nil;
       return self.$sendMessageToOnlySender(message)}, TMP_40.$$s = self, TMP_40.$$arity = 1, TMP_40));
-      $send(["・加算ロール　　　　　　　　(xDn) (n面体ダイスをx個)", "・バラバラロール　　　　　　(xBn)", "・個数振り足しロール　　　　(xRn[振り足し値])", "・上方無限ロール　　　　　　(xUn[境界値])", "・シークレットロール　　　　(Sダイスコマンド)", "" + "・シークレットをオープンする(" + ($gvars.OPEN_DICE) + ")", "・四則計算(端数切捨て)　　　(C(式))"], 'each', [], send_to_sender.$to_proc());
+      $send(["・加算ロール　　　　　　　　(xDn) (n面体骰子をx個)", "・バラバラロール　　　　　　(xBn)", "・個数振り足しロール　　　　(xRn[振り足し値])", "・上方無限ロール　　　　　　(xUn[境界値])", "・シークレットロール　　　　(S骰子コマンド)", "" + "・シークレットをオープンする(" + ($gvars.OPEN_DICE) + ")", "・四則計算(端数切捨て)　　　(C(式))"], 'each', [], send_to_sender.$to_proc());
       self.$sleepForIrc(2);
       $send(self.diceBot.$getHelpMessage().$lines(), 'each_slice', [5], (TMP_41 = function(lines){var self = TMP_41.$$s || this;
 if (lines == null) lines = nil;
@@ -26768,7 +26768,7 @@ if (lines == null) lines = nil;
       self.$sleepForIrc(1);
       $send(["・同一タグのカウンタ値一覧　　(#OPEN!タグ)", "・自キャラのカウンタ値一覧　　(Talkで#OPEN![タグ]) (全カウンタ表示時、タグ省略)", "・自キャラのカウンタ削除　　　(#[名前:]DIED!) (デフォルト時、識別名省略)", "・全自キャラのカウンタ削除　　(#ALL!:DIED!)", "" + "・カウンタ表示チャンネル登録　(" + ($gvars.READY_CMD) + ")", "  ---"], 'each', [], send_to_sender.$to_proc());
       self.$sleepForIrc(2);
-      self.$sendMessageToOnlySender("・カード機能ヘルプ　　　　　　(c-help)");
+      self.$sendMessageToOnlySender("・卡牌機能ヘルプ　　　　　　(c-help)");
       return self.$sendMessageToOnlySender("  -- END ---");
     }, TMP_BCDice_printHelp_42.$$arity = 0);
     

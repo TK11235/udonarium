@@ -41,7 +41,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Paranoia_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "※「パラノイア」は完璧なゲームであるため特殊なダイスコマンドを必要としません。\n" + "※このダイスボットは部屋のシステム名表示用となります。\n"
+      return "" + "※「パラノイア」は完璧なゲームであるため特殊な骰子コマンドを必要としません。\n" + "※この骰子ボットは部屋のシステム名表示用となります。\n"
     }, TMP_Paranoia_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$isGetOriginalMessage', TMP_Paranoia_isGetOriginalMessage_5 = function $$isGetOriginalMessage() {
