@@ -35,6 +35,7 @@ import { ModalService } from 'service/modal.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { SaveDataService } from 'service/save-data.service';
+import { ImageTag } from '@udonarium/image-tag';
 
 @Component({
   selector: 'app-root',
@@ -86,16 +87,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     soundEffect.initialize();
 
     let chatTab: ChatTab = new ChatTab('MainTab');
-    chatTab.name = 'メインタブ';
+    chatTab.name = '主要分頁';
     chatTab.initialize();
 
     chatTab = new ChatTab('SubTab');
-    chatTab.name = 'サブタブ';
+    chatTab.name = '閒聊分頁';
     chatTab.initialize();
 
     let fileContext = ImageFile.createEmpty('none_icon').toContext();
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';
     let noneIconImage = ImageStorage.instance.add(fileContext);
+    ImageTag.create(noneIconImage.identifier).tag = 'default';
 
     AudioPlayer.resumeAudioContext();
     PresetSound.dicePick = AudioStorage.instance.add('./assets/sounds/soundeffect-lab/shoulder-touch1.mp3').identifier;
@@ -131,7 +133,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     AudioStorage.instance.get(PresetSound.sweep).isHidden = true;
 
     PeerCursor.createMyCursor();
-    PeerCursor.myCursor.name = 'プレイヤー' + ('000' + (Math.floor(Math.random() * 1000))).slice(-3);
+
+    PeerCursor.myCursor.name = '玩家' + ('000' + (Math.floor(Math.random() * 1000))).slice(-3);
+
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
     EventSystem.register(this)
@@ -155,9 +159,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         console.log('CLOSE_NETWORK', event.data.peer);
         this.ngZone.run(async () => {
           if (1 < Network.peerIds.length) {
-            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'ネットワーク接続に何らかの異常が発生しました。\nこの表示以後、接続が不安定であれば、ページリロードと再接続を試みてください。' });
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: '網絡連線發生錯誤。 \n如果顯示後連接繼續不穩定，請嘗試重新加載頁面並重新連接。' });
           } else {
-            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: '接続情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: '連線情報已損壞。 \ n關閉此頁面，然後嘗試重新連接。' });
             Network.open();
           }
         });
@@ -225,7 +229,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   save() {
     let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
       ? Network.peerContext.roomName
-      : 'ルームデータ';
+      : 'UdoZ房間的數據';
     this.saveDataService.saveRoom(roomName);
   }
 

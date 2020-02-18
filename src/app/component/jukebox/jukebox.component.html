@@ -1,17 +1,17 @@
-<div>試聴音量：<input [(ngModel)]="auditionVolume" type="range" min="0" max="1" step="0.01" /></div>
+<div>試聽音量：<input [(ngModel)]="auditionVolume" type="range" min="0" max="1" step="0.01" /></div>
 <div>BGM音量：<input [(ngModel)]="volume" type="range" min="0" max="1" step="0.01" /></div>
 <hr/>
 <div>
   <div *ngFor="let audio of audios" class="box">
-    <button *ngIf="audio !== auditionPlayer?.audio || auditionPlayer?.paused" (click)="play(audio)" [disabled]="!audio.isReady" >試聴/再生</button>
-    <button *ngIf="audio === auditionPlayer?.audio && !auditionPlayer?.paused" (click)="stop()" [disabled]="!audio.isReady" >試聴/停止</button>
-    <button *ngIf="audio !== jukebox?.audio" (click)="playBGM(audio)" [disabled]="!audio.isReady" >BGM/再生</button>
+    <button *ngIf="audio !== auditionPlayer?.audio || auditionPlayer?.paused" (click)="play(audio)" [disabled]="!audio.isReady" >試聽/播放</button>
+    <button *ngIf="audio === auditionPlayer?.audio && !auditionPlayer?.paused" (click)="stop()" [disabled]="!audio.isReady" >試聽/停止</button>
+    <button *ngIf="audio !== jukebox?.audio" (click)="playBGM(audio)" [disabled]="!audio.isReady" >BGM/播放</button>
     <button *ngIf="audio === jukebox?.audio" (click)="stopBGM(audio)" [disabled]="!audio.isReady" >BGM/停止</button>
-    <span *ngIf="audio === auditionPlayer?.audio && !auditionPlayer?.paused">【試聴中】</span>
+    <span *ngIf="audio === auditionPlayer?.audio && !auditionPlayer?.paused">【試聽中】</span>
     <span *ngIf="audio === jukebox?.audio">【BGM】</span>
     <span>{{audio.name}}</span>
   </div>
-  <div *ngIf="audios.length < 1" >アップロードされた音楽ファイルはここに表示されます。</div>
+  <div *ngIf="audios.length < 1" >上傳的音樂檔案將顯示在此處。</div>
 </div>
 
 <label>
@@ -19,13 +19,13 @@
     <div>
       <i class="material-icons large-font">playlist_add</i>
     </div>
-    <div>ここに音楽をドロップ</div>
-    <div class="small-font">またはここをクリックして選択</div>
+    <div>將音樂檔案拖曳到這裡上傳</div>
+    <div class="small-font">或點解這裡選擇檔案</div>
     <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple accept="audio/*"/>
     <div class="small-font">
-      <br>１ファイルにつき10MBまで</div>
+      <br>一個檔案最大10MB</div>
   </div>
 </label>
-<div style="font-size: 12px;">※「試聴」は自分のスピーカーだけで音楽を1回再生します。</div>
-<div style="font-size: 12px;">※「BGM」はルーム内の全員で1つの音楽をループ再生します。</div>
-<div style="font-size: 12px;">※現行バージョンのセーブデータ（zip）には音楽ファイルは含まれません。（毎回アップロードが必要です）</div>
+<div style="font-size: 12px;">※「試聽」只會播放給自己一次。</div>
+<div style="font-size: 12px;">※「BGM」會把音樂播放給所有房間成員。</div>
+<div style="font-size: 12px;">※現行版本不會保存音樂到ZIP裡。（毎次都要重新上傳）</div>

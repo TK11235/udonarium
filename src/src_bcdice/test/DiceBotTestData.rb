@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# ダイスボットのテストデータを表すクラス
+# 骰子ボットのテストデータを表すクラス
 class DiceBotTestData
   # ゲームシステム
   attr_reader :gameType

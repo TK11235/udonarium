@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
 class Template < DiceBot
-  # ダイスボットで使用するコマンドを配列で列挙する
+  # 骰子ボットで使用するコマンドを配列で列挙する
   setPrefixes([])
 
   def initialize
     super
 
-    # @sendMode = @@DEFAULT_SEND_MODE #(0=結果のみ,1=0+式,2=1+ダイス個別)
-    # @sortType = 0;      #ソート設定(1 = 足し算ダイスでソート有, 2 = バラバラロール（Bコマンド）でソート有, 3 = １と２両方ソート有）
-    # @sameDiceRerollCount = 0;     #ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=ダイスのうち2個以上同じ目)
+    # @sendMode = @@DEFAULT_SEND_MODE #(0=結果のみ,1=0+式,2=1+骰子個別)
+    # @sortType = 0;      #ソート設定(1 = 足し算骰子でソート有, 2 = バラバラロール（Bコマンド）でソート有, 3 = １と２両方ソート有）
+    # @sameDiceRerollCount = 0;     #ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=骰子のうち2個以上同じ目)
     # @sameDiceRerollType = 0;   #ゾロ目で振り足しのロール種別(0=判定のみ, 1=ダメージのみ, 2=両方)
     # @d66Type = 0;        #d66の差し替え
     # @isPrintMaxDice = false;      #最大値表示
     # @upplerRollThreshold = 0;      #上方無限
-    # @unlimitedRollDiceType = 0;    #無限ロールのダイス
+    # @unlimitedRollDiceType = 0;    #無限ロールの骰子
     # @rerollNumber = 0;      #振り足しする条件
     # @defaultSuccessTarget = "";      #目標値が空欄の時の目標値
     # @rerollLimitCount = 0;    #振り足し回数上限
@@ -32,7 +32,7 @@ class Template < DiceBot
   def getHelpMessage
     return <<MESSAGETEXT
 ヘルプメッセージ
-ダイスボットの使い方をここに記述します。
+骰子ボットの使い方をここに記述します。
 MESSAGETEXT
   end
 
@@ -69,7 +69,7 @@ MESSAGETEXT
     ''
   end
 
-  # 以下のメソッドはテーブルの参照用に便利
+  # 以下のメソッドは桌面の参照用に便利
   # get_table_by_2d6(table)
   # get_table_by_1d6(table)
   # get_table_by_nD6(table, 1)
@@ -78,5 +78,5 @@ MESSAGETEXT
   # get_table_by_number(index, table)
   # get_table_by_d66(table)
 
-  # getDiceList を呼び出すとロース結果のダイス目の配列が手に入ります。
+  # getDiceList を呼び出すとロース結果の骰子目の配列が手に入ります。
 end

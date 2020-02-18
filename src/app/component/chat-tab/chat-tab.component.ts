@@ -18,6 +18,7 @@ import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 
+import { ChatMessageService } from 'service/chat-message.service';
 import { PanelService } from 'service/panel.service';
 
 const DEFAULT_MESSAGE_LENGTH = 200;
@@ -33,14 +34,40 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   preScrollBottom: number = -1;
 
   sampleMessages: ChatMessageContext[] = [
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'サーバーを使用しないTRPGオンセツールです。参加者同士で接続し、コマや画像ファイルなどを同期します。' },
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: '全てのデータが各参加者のブラウザ内にあるため、ルームの状態を次回に持ち越したい場合は、必ず「保存」を実行してセーブデータ（zip）を生成してください。保存したzipの読み込みはブラウザ画面へのファイルドロップで行えます。' },
-    { from: 'System', to: '???', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル > プレイヤー', text: 'ダイレクトメッセージ（秘密会話）はセーブデータに記録されません。' },
-    { from: 'System', to: '???', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル > プレイヤー', text: 'また、過去のダイレクトメッセージはあなたのIDが更新されると同じルーム内であっても見えなくなります。注意してください。' },
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: '動作推奨環境はデスクトップChromeです。今のところ、スマホからだと上手く操作できません。' },
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'チュートリアルは以上です。このチュートリアルは最初のチャットを入力すると非表示になります。' },
+    {
+                            from: "System",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz",
+                            text: "在這個平台中，主要的資料由使用者之間彼此傳送，HKTRPG只是提供一個平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存》生成ZIP檔案，下次再使用時按《ZIP讀取》上傳檔案，不然房間就會像煙火一樣燒光。"
+                        }, {
+                            from: "System",
+                            to: "???",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz > 玩家",
+                            text: "使用教學: 對桌面右鍵->新增角色(或其他)，再對它按右鍵->顯示詳情，編輯內容，以後可以收進倉庫中。而在倉庫中，也是按右鍵，把角色移到桌面"
+                        }, {
+                            from: "System",
+                            to: "???",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz > 玩家",
+                            text: "密語並不會儲存到ZIP中。而當你的ID更新之後，你將無法再看見之前傳給您的密語，還請多加注意。"
+                        }, {
+                            from: "System",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz",
+                            text: "推薦使用桌面版Chrome。目前不支援以手機進行操作。\n因為渣技術，只簡單加了一個關上網頁前會彈出提示的功能。"
+                        },
   ];
 
+  private oldestTimestamp = 0;
   private needUpdate = true;
   private _chatMessages: ChatMessage[] = [];
   get chatMessages(): ChatMessage[] {
@@ -51,6 +78,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       this._chatMessages = length <= this.maxMessages
         ? chatMessages
         : chatMessages.slice(length - this.maxMessages);
+      this.oldestTimestamp = 0 < this._chatMessages.length ? this._chatMessages[0].timestamp : 0;
       this.needUpdate = false;
     }
     return this._chatMessages;
@@ -71,6 +99,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   constructor(
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
+    private chatMessageService: ChatMessageService,
     private panelService: PanelService
   ) { }
 
@@ -95,22 +124,35 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
-        if (message && message.parent === this.chatTab) {
-          if (!this.needUpdate) this.changeDetector.markForCheck();
-          this.needUpdate = true;
-          this.maxMessages += 1;
+        if (!message || message.parent !== this.chatTab) return;
+        let time = this.chatMessageService.getTime();
+
+        if (!this.needUpdate && this.oldestTimestamp < message.timestamp) this.changeDetector.markForCheck();
+        this.needUpdate = true;
+
+        if (time - (1000 * 60 * 3) < message.timestamp) {
+          let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+          if (this.panelService.scrollablePanel.scrollTop < top - 150) {
+            this.maxMessages += 1;
+          }
+        } else {
+          this.maxMessages = 3;
+          clearInterval(this.asyncMessagesInitializeTimer);
+          this.asyncMessagesInitializeTimer = setInterval(() => {
+            clearInterval(this.asyncMessagesInitializeTimer);
+            this.ngZone.run(() => this.resetMessages());
+          }, 2000);
         }
       })
       .on('UPDATE_GAME_OBJECT', event => {
-        if (event.data.aliasName === ChatMessage.aliasName) this.changeDetector.markForCheck();
+        let message = ObjectStore.instance.get(event.data.identifier);
+        if (message && message instanceof ChatMessage && this.oldestTimestamp <= message.timestamp && this.chatTab.contains(message)) this.changeDetector.markForCheck();
       });
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.ngZone.runOutsideAngular(() => {
-        this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false);
-      });
+    this.ngZone.runOutsideAngular(() => {
+      setTimeout(() => this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false));
     });
   }
 
@@ -120,19 +162,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   ngOnChanges() {
-    this.needUpdate = true;
-    this.maxMessages = 10;
-
-    clearInterval(this.asyncMessagesInitializeTimer);
-    let length = DEFAULT_MESSAGE_LENGTH;
-    this.asyncMessagesInitializeTimer = setInterval(() => {
-      if (this.hasMany && 0 < length) {
-        length -= 10;
-        this.moreMessages(10);
-      } else {
-        clearInterval(this.asyncMessagesInitializeTimer);
-      }
-    }, 0);
+    this.resetMessages();
   }
 
   ngAfterViewChecked() {
@@ -156,6 +186,22 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   onMessageInit() {
     this.onAddMessage.emit();
+  }
+
+  resetMessages() {
+    this.needUpdate = true;
+    this.maxMessages = 10;
+
+    clearInterval(this.asyncMessagesInitializeTimer);
+    let length = DEFAULT_MESSAGE_LENGTH;
+    this.asyncMessagesInitializeTimer = setInterval(() => {
+      if (this.hasMany && 0 < length) {
+        length -= 10;
+        this.moreMessages(10);
+      } else {
+        clearInterval(this.asyncMessagesInitializeTimer);
+      }
+    }, 0);
   }
 
   trackByChatMessage(index: number, message: ChatMessage) {

@@ -26,14 +26,17 @@ export class CardStackListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.panelService.title = this.cardStack.name + ' のカード一覧';
+    this.panelService.title = this.cardStack.name + ' 卡牌列表';
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         if (event.data.aliasName === Card.aliasName) this.changeDetector.markForCheck();
-        if (event.data.identifier !== this.cardStack.identifier) {
-          return;
-        } else {
-          if (this.cardStack.owner !== this.owner) this.panelService.close();
+        if (event.data.identifier === this.cardStack.identifier && this.cardStack.owner !== this.owner) {
+          this.panelService.close();
+        }
+      })
+      .on('DELETE_GAME_OBJECT', -1000, event => {
+        if (this.cardStack && this.cardStack.identifier === event.data.identifier) {
+          this.panelService.close();
         }
       });
   }
@@ -88,10 +91,14 @@ export class CardStackListComponent implements OnInit, OnDestroy {
       x: this.panelService.left,
       y: this.panelService.top
     };
-    let title = 'カード設定';
+    let title = '卡牌設定';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x + 10, top: coordinate.y + 20, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
     component.tabletopObject = gameObject;
+  }
+
+  trackByCard(index: number, card: Card) {
+    return card.identifier;
   }
 }

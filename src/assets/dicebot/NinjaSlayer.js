@@ -709,7 +709,7 @@ Opal.loaded(["diceBot/DiceBot"]);
     Opal.defn(self, '$getHelpMessage', TMP_NinjaSlayer_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・通常判定　NJ\n" + "　NJx[y] or NJx@y or NJx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4)\n" + "　例:NJ4@H 難易度HARD、判定ダイス4で判定\n" + "・回避判定　EV\n" + "　EVx[y]/z or EVx@y/z or EVx/z or EVx[y] or EVx@y or EVx\n" + "　x=判定ダイス y=難易度 z=攻撃側の成功数(省略可) 難易度を省略時はNORMAL(4)\n" + "　攻撃側の成功数を指定した場合、カウンターカラテ発生時には表示\n" + "　例:EV5/3 難易度NORMAL(省略時)、判定ダイス5、攻撃側の成功数3で判定\n" + "・近接攻撃　AT\n" + "　ATx[y] or ATx@y or ATx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4) サツバツ！発生時には表示\n" + "　例:AT6[H] 難易度HARD,判定ダイス5で近接攻撃の判定\n" + "\n" + "・難易度\n" + "　KIDS=K,EASY=E,NORMAL=N,HARD=H,ULTRA HARD=UH 数字にも対応\n"
+      return "" + "・通常判定　NJ\n" + "　NJx[y] or NJx@y or NJx\n" + "　x=判定骰子 y=難易度 省略時はNORMAL(4)\n" + "　例:NJ4@H 難易度HARD、判定骰子4で判定\n" + "・回避判定　EV\n" + "　EVx[y]/z or EVx@y/z or EVx/z or EVx[y] or EVx@y or EVx\n" + "　x=判定骰子 y=難易度 z=攻撃側の成功数(省略可) 難易度を省略時はNORMAL(4)\n" + "　攻撃側の成功数を指定した場合、カウンターカラテ発生時には表示\n" + "　例:EV5/3 難易度NORMAL(省略時)、判定骰子5、攻撃側の成功数3で判定\n" + "・近接攻撃　AT\n" + "　ATx[y] or ATx@y or ATx\n" + "　x=判定骰子 y=難易度 省略時はNORMAL(4) サツバツ！発生時には表示\n" + "　例:AT6[H] 難易度HARD,判定骰子5で近接攻撃の判定\n" + "\n" + "・難易度\n" + "　KIDS=K,EASY=E,NORMAL=N,HARD=H,ULTRA HARD=UH 数字にも対応\n"
     }, TMP_NinjaSlayer_getHelpMessage_4.$$arity = 0);
     Opal.const_set($nesting[0], 'DIFFICULTY_VALUE_RE', /UH|[2-6KENH]/i.$freeze());
     Opal.const_set($nesting[0], 'DIFFICULTY_RE', new RegExp("" + "\\[(" + (Opal.const_get_relative($nesting, 'DIFFICULTY_VALUE_RE')) + ")\\]|@(" + (Opal.const_get_relative($nesting, 'DIFFICULTY_VALUE_RE')) + ")", 'i').$freeze());

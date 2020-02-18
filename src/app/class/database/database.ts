@@ -6,10 +6,16 @@ interface PeerHistory {
   history: string[]
 }
 
+interface NicknameHistory {
+  peerId: string,
+  timestamp: number,
+  nickname: string
+}
+
 // 試験実装中
 export class Database {
   private static DB_NAME: string = 'UdonariumDataBase';
-  private static VERSION: number = 1;
+  private static VERSION: number = 2;
 
   private queue: PromiseQueue = new PromiseQueue('DatabaseQueue');
   private db: IDBDatabase;
@@ -33,9 +39,9 @@ export class Database {
       };
       request.onblocked = (event) => {
         console.warn('openDB onblocked');
-        // 他のタブがデータベースを読み込んでいる場合は、処理を進める前に
+        // 他的タブがデータベースを読み込んでいる場合は、処理を進める前に
         // それらを閉じなければなりません。
-        alert('このサイトを開いている他のタブをすべて閉じてください!');
+        alert('こ的サイトを開いている他的タブをすべて閉じてください!');
       };
       request.onupgradeneeded = (event) => {
         console.log('openDB onupgradeneeded');
@@ -55,12 +61,17 @@ export class Database {
     if (this.db.objectStoreNames.contains('PeerHistory')) {
       this.db.deleteObjectStore('PeerHistory');
     }
-    let objectStore = this.db.createObjectStore('PeerHistory', { keyPath: 'peerId' });
-    objectStore.createIndex('timestamp', 'timestamp', { unique: false });
-    // データを追加する前に objectStore の作成を完了させるため、 
+
+    if (this.db.objectStoreNames.contains('NicknameHistory')) {
+      this.db.deleteObjectStore('NicknameHistory');
+    }
+    const peerObjectStore = this.db.createObjectStore('PeerHistory', { keyPath: 'peerId' });
+    peerObjectStore.createIndex('timestamp', 'timestamp', { unique: false });
+    // データを追加する前に objectStore の作成を完了させるため、
+
     // transaction oncomplete を使用します。
-    objectStore.transaction.oncomplete = (event) => {
-      console.log('createStores oncomplete');
+    peerObjectStore.transaction.oncomplete = (event) => {
+      console.log('PeerHistory createStores oncomplete');
       // 新たに作成した objectStore に値を保存します。
       /*
       var customerObjectStore = db.transaction("customers", "readwrite").objectStore("customers");
@@ -69,17 +80,22 @@ export class Database {
       }
       */
     };
+    const nicknameObjectStore = this.db.createObjectStore('NicknameHistory', { keyPath: 'peerId' });
+    nicknameObjectStore.createIndex('timestamp', 'timestamp', { unique: false });
+    peerObjectStore.transaction.oncomplete = (event) => {
+      console.log('NicknameHistory createStores oncomplete');
+    };
   }
 
   private initializeDB(db: IDBDatabase) {
     console.log('initializeDB');
-    // 別のページがバージョン変更を求めた場合に、通知されるようにするためのハンドラを追加するようにしてください。
-    // データベースを閉じなければなりません。データベースを閉じると、別のページがデータベースをアップグレードできます。
+    // 別的ページがバージョン変更を求めた場合に、通知されるようにするため的ハンドラを追加するようにしてください。
+    // データベースを閉じなければなりません。データベースを閉じると、別的ページがデータベースをアップグレードできます。
     // これを行わなければ、ユーザがタブを閉じるまでデータベースはアップグレードされません。
     db.onversionchange = (event) => {
       console.warn('db.onversionchange.');
       db.close();
-      alert('新しいバージョンのページが使用可能になりました。再読み込みしてください!');
+      alert('新しいバージョン的ページが使用可能になりました。再読み込みしてください!');
     };
     db.onabort = (event) => {
       console.error(event);
@@ -160,6 +176,86 @@ export class Database {
 
       request.onsuccess = (event) => {
         let cursor: IDBCursorWithValue = request.result;
+        if (cursor) {
+          console.log('id:' + cursor.key + ' value:', cursor.value);
+          history.push(cursor.value);
+          cursor.continue();
+        } else {
+          console.log('Entries all displayed.');
+        }
+      };
+    });
+  }
+
+  addNicknameHistory(myPeer: string, nickname: string) {
+    this.queue.add((resolve, reject) => {
+      console.log('addNicknameHistory');
+      const transaction = this.db.transaction(['NicknameHistory'], 'readwrite');
+      const store = transaction.objectStore('NicknameHistory');
+
+      transaction.oncomplete = (event) => {
+        console.log('addNicknameHistory done.', 'readwrite');
+        resolve();
+      };
+
+      transaction.onerror = (event) => {
+        console.error(event);
+        resolve();
+      };
+
+      const history: NicknameHistory = {
+        peerId: myPeer,
+        timestamp: Date.now(),
+        nickname: nickname
+      };
+
+      store.put(history);
+    });
+  }
+
+  deleteNicknameHistory(peerId: string) {
+    this.queue.add((resolve, reject) => {
+      const transaction = this.db.transaction(['NicknameHistory'], 'readwrite');
+      const store = transaction.objectStore('NicknameHistory');
+      transaction.oncomplete = (event) => {
+        console.log('addNicknameHistory done.', 'readwrite');
+        resolve();
+      };
+
+      transaction.onerror = (event) => {
+        console.error(event);
+        resolve();
+      };
+
+      store.delete(peerId);
+    });
+  }
+
+  getNicknameHistory(): Promise<NicknameHistory[]> {
+    return this.queue.add((resolve, reject) => {
+      console.log('getNicknameHistory');
+      const transaction = this.db.transaction(['NicknameHistory'], 'readonly');
+      const store = transaction.objectStore('NicknameHistory');
+      const request = store.openCursor();
+      const history: NicknameHistory[] = [];
+
+      transaction.oncomplete = (event) => {
+        console.log('getNicknameHistory done.');
+        resolve(history);
+      };
+
+      transaction.onerror = (event) => {
+        console.error(event);
+        resolve(history);
+      };
+
+      request.onerror = (event) => {
+        console.error(event);
+        resolve(history);
+      };
+
+      request.onsuccess = (event) => {
+        const cursor: IDBCursorWithValue = request.result;
         if (cursor) {
           console.log('id:' + cursor.key + ' value:', cursor.value);
           history.push(cursor.value);

@@ -42,7 +42,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Chill_getHelpMessage_2 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・ストライク・ランク　(SRx)\n" + "　\"SRストライク・ランク\"の形で記入します。\n" + "　ストライク・ランク・チャートに従って自動でダイスロールを行い、\n" + "　負傷とスタミナロスを計算します。\n" + "　ダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）SR7　　　sr13　　　SR(7+4)　　　Ssr10\n"
+      return "" + "・ストライク・ランク　(SRx)\n" + "　\"SRストライク・ランク\"の形で記入します。\n" + "　ストライク・ランク・チャートに従って自動で骰子ロールを行い、\n" + "　負傷とスタミナロスを計算します。\n" + "　骰子ロールと同様に、他の玩家に隠れてロールすることも可能です。\n" + "　例）SR7　　　sr13　　　SR(7+4)　　　Ssr10\n"
     }, TMP_Chill_getHelpMessage_2.$$arity = 0);
     
     Opal.defn(self, '$check_1D100', TMP_Chill_check_1D100_3 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {

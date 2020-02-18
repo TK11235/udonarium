@@ -1,7 +1,7 @@
 <div class="flex-container">
   <div class="flex-item no-grow">
     <div>
-      <button (click)="createGameTable()">新しいテーブルを作る</button>
+      <button (click)="createGameTable()">新增角色</button>
     </div>
     <select style="width: 10em;" size="10" (change)="selectGameTable($event.target.value)" [ngModel]="selectedTable?.identifier">
       <option *ngFor="let gameTable of getGameTables()" value="{{gameTable.identifier}}">{{gameTable.name}}</option>
@@ -11,7 +11,7 @@
     <ng-container *ngIf="!isEmpty || selectedTable">
       <div class="images-select">
         <div>
-          画像
+          地圖
           <div (click)="openBgImageModal()">
             <img height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'">
           </div>
@@ -19,7 +19,7 @@
         <div>
           背景
           <div *ngIf="!tableDistanceviewImage.url">
-            <button (click)="openDistanceViewImageModal()" style="height: 120px;">背景画像を追加</button>
+            <button (click)="openDistanceViewImageModal()" style="height: 120px;">追加背景圖像</button>
           </div>
           <div *ngIf="tableDistanceviewImage.url" (click)="openDistanceViewImageModal()">
             <img height="120" [src]="tableDistanceviewImage.url | safe: 'resourceUrl'">
@@ -40,45 +40,45 @@
         <input [(ngModel)]="tableHeight" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;" [attr.disabled]="!isEditable ? '' : null">
       </div>
       <div>
-        グリッド:
+        格線方式:
         <select [(ngModel)]="tableGridType" name="tableGridType" [attr.disabled]="!isEditable ? '' : null">
-          <option value="0">スクエア</option>
-          <option value="1">ヘクス（縦揃え）</option>
-          <option value="2">ヘクス（横揃え）</option>
+          <option value="0">方格</option>
+          <option value="1">六角格（縦向對齊）</option>
+          <option value="2">六角格（横向對齊）</option>
         </select>
-        色:
+        顏色:
         <select [(ngModel)]="tableGridColor" name="tableGridColor" [attr.disabled]="!isEditable ? '' : null">
           <option value="#000000e6">黒</option>
           <option value="#dddddde6">白</option>
         </select>
       </div>
       <div>
-        背景フィルタ
+        背景濾鏡
         <select [(ngModel)]="tableDistanceviewFilter" name="tableDistanceviewFilter" [attr.disabled]="!isEditable ? '' : null">
-          <option value="">なし</option>
-          <option value="white">ホワイト</option>
-          <option value="black">ブラック</option>
+          <option value="">無</option>
+          <option value="white">白色</option>
+          <option value="black">黑色</option>
         </select>
       </div>
       <hr/>
       <div>
-        <label>グリッドを常に表示:
+        <label>始終顯示網格:
           <input type="checkbox" [(ngModel)]="tableGridShow" name="tableGridShow" />
         </label>
-        <label>スナップ:
+        <label> 對齊格線:
           <input type="checkbox" [(ngModel)]="tableGridSnap" name="tableGridSnap" />
         </label>
         <ng-container *ngIf="!isDeleted">
           <button (click)="save()">保存</button>
-          <button class="danger" (click)="delete()" [attr.disabled]="getGameTables().length <= 1 ? '' : null">削除</button>
+          <button class="danger" (click)="delete()" [attr.disabled]="getGameTables().length <= 1 ? '' : null">刪除</button>
         </ng-container>
         <ng-container *ngIf="isDeleted">
-          <button (click)="restore()">元に戻す</button>
+          <button (click)="restore()">撒回</button>
         </ng-container>
       </div>
     </ng-container>
   </div>
 </div>
 <ng-container *ngIf="isEmpty">
-  <div style="font-size: 12px;">※テーブルが１つも作成されていません。「新しいテーブルを作る」から新しいテーブルを作成することができます。</div>
+  <div style="font-size: 12px;">※桌面が１つも作成されていません。「新しい桌面を作る」から新しい桌面新增することができます。</div>
 </ng-container>
