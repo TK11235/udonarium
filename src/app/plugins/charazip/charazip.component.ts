@@ -14,6 +14,7 @@ import { MonotoneMusium } from "./system/monotone-musium";
 import { Shinobigami } from "./system/shinobigami";
 import { DeadlineHeroes } from "./system/deadline-heroes";
 import { LogHorizon, LhrpgCharacter } from "./system/log-horizon";
+import { Cthulhu7th } from "./system/cthulhu-7th";
 
 interface SystemInfo {
   system: string;
@@ -47,6 +48,12 @@ export class CharazipComponent implements OnInit {
       name: "クトゥルフ",
       href: "https://charasheet.vampire-blood.net/list_coc.html",
       generater: Cthulhu.generateByVampireVlood
+    },
+    {
+      system: "coc7",
+      name: "新クトゥルフ",
+      href: "https://charasheet.vampire-blood.net/list_coc7.html",
+      generater: Cthulhu7th.generateByVampireVlood
     },
     {
       system: "swordworld2",
@@ -104,8 +111,8 @@ export class CharazipComponent implements OnInit {
   @ViewChild("input", { static: true })
   inputElementRef: ElementRef<HTMLInputElement>;
 
-  url = "";
-  errorMsg = "";
+  url: string = "";
+  errorMsg: string = "";
 
   private static async generateByVampireBloodCharacter(
     url: URL
