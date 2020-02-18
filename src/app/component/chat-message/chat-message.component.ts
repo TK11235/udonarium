@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ChatMessage } from '@udonarium/chat-message';
@@ -10,10 +10,11 @@ import { ImageFile } from '@udonarium/core/file-storage/image-file';
   styleUrls: ['./chat-message.component.css'],
   animations: [
     trigger('flyInOut', [
-      state('in', style({ transform: 'translateX(0)', opacity: '1.0' })),
       transition('void => *', [
-        style({ transform: 'translateX(100px)', opacity: '0.0' }),
-        animate('200ms ease')
+        animate('200ms ease', keyframes([
+          style({ transform: 'translateX(100px)', opacity: '0', offset: 0 }),
+          style({ transform: 'translateX(0)', opacity: '1', offset: 1.0 })
+        ]))
       ]),
       transition('* => void', [
         animate(100, style({ transform: 'translateX(100%)' }))

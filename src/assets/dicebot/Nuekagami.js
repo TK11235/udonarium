@@ -52,7 +52,7 @@
       table = info['$[]']("table");
       $b = (function() {$case = type;
       if ("1D20"['$===']($case)) {return self.$get_table_by_nDx(table, 1, 20)}
-      else {return nil}})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      else { return nil }})(), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(text['$nil?']())) {
         return nil};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);

@@ -41,7 +41,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_GoldenSkyStories_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "※「ゆうやけこやけ」はダイスロールを使用しないシステムです。\n" + "※このダイスボットは部屋のシステム名表示用となります。\n" + "\n" + "・下駄占い (GETA)\n" + "  あーしたてんきになーれ\n"
+      return "" + "※「ゆうやけこやけ」は骰子ロールを使用しないシステムです。\n" + "※この骰子ボットは部屋のシステム名表示用となります。\n" + "\n" + "・下駄占い (GETA)\n" + "  あーしたてんきになーれ\n"
     }, TMP_GoldenSkyStories_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$isGetOriginalMessage', TMP_GoldenSkyStories_isGetOriginalMessage_5 = function $$isGetOriginalMessage() {

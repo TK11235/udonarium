@@ -54,11 +54,11 @@
       return "" + "・各種表\n" + "　・関係属性表　RAT\n" + "　・導入タイプ決定表(ノーマル)　IDT\n" + "　・導入タイプ決定表(ハード込み)　ID2T\n" + "　・シーン表           ST\n" + "　・先制判定指定特技表 IST\n" + "　・身体部位決定表　　 BRT\n" + "　・自信幸福表　　　　 CHT\n" + "　・地位幸福表　　　　 SHT\n" + "　・日常幸福表　　　　 DHT\n" + "　・人脈幸福表　　　　 LHT\n" + "　・退路幸福表　　　　 EHT\n" + "　・ランダム全特技表　 AST\n" + "　・軽度狂気表　　　　 MIT\n" + "　・重度狂気表　　　　 SIT\n" + "・D66ダイスあり\n"
     }, TMP_BloodMoon_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_BloodMoon_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_BloodMoon_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -117,7 +117,7 @@
       type = "重度狂気表";
       $b = self.$getSevereInsanityTable(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else {return self.$getTableCommandResult(command, (($a = $BloodMoon.$$cvars['@@tables']) == null ? nil : $a))};
-      if ($truthy(output['$==']("1"))) {
+      if (output['$==']("1")) {
         return output};
       output = "" + (type) + "(" + (total_n) + ") ＞ " + (output);
       return output;

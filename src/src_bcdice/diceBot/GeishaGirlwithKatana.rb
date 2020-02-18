@@ -14,7 +14,7 @@ class GeishaGirlwithKatana < DiceBot
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定 (GK#n)
-  役やチョムバを含めて1回分のダイスロールを判定します。
+  役やチョムバを含めて1回分の骰子ロールを判定します。
 　役は　（通常判定）／（戦闘時）　の順で両方出力されます。
   GK のみの場合5%の確率でチョムバます。
   GK#3 の様に #n をつけることによってチョムバの確率をn%にすることができます。
@@ -37,18 +37,18 @@ MESSAGETEXT
       return output
     end
 
-    chomba_counter = $2
+    chomba_counter = Regexp.last_match(2)
 
     if isChomba(chomba_counter)
       return getChombaResultText()
     end
 
-    _, dice_str = roll(3,6)
-    diceList = dice_str.split(/,/).collect{|i|i.to_i}
+    _, dice_str = roll(3, 6)
+    diceList = dice_str.split(/,/).collect { |i| i.to_i }
     diceList.sort!
 
     yakuResult = getYaku(diceList)
-    unless( yakuResult.nil? )
+    unless yakuResult.nil?
       return getResultTextByDice(diceList, "【役】#{yakuResult}")
     end
 
@@ -68,7 +68,7 @@ MESSAGETEXT
     chomba_counter ||= 5
     chomba_counter = chomba_counter.to_i
 
-    chomba, = roll(1,100)
+    chomba, = roll(1, 100)
 
     return (chomba <= chomba_counter)
   end

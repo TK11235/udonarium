@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 
 class Airgetlamh < DiceBot
-
   def initialize
     super
-    @sortType = 1 #ダイスのソート有
+    @sortType = 1 # 骰子のソート有
   end
-  
-  
+
   setPrefixes([
     ['(\d+)?A(A|L)(\d+)?((x|\*)(\d+)(\+(\d+))?)?(C(\d+))?']
   ])
-  
+
   def gameName
     '朱の孤塔のエアゲトラム'
   end
@@ -19,7 +17,7 @@ class Airgetlamh < DiceBot
   def gameType
     "Airgetlamh"
   end
-  
+
   def getHelpMessage
     return <<MESSAGETEXT
 【Reg2.0『THE ANSWERER』～】
@@ -31,7 +29,7 @@ class Airgetlamh < DiceBot
 ----------------------------------------
 []内のコマンドは省略可能。
 
-「n」でダイス数（攻撃回数）を指定。省略時は「2」。
+「n」で骰子数（攻撃回数）を指定。省略時は「2」。
 「m」で目標値を指定。省略時は「6」。
 「p」で威力を指定。「*」は「x」で代用可。
 「+t」でクリティカルトリガーを指定。省略可。
@@ -49,70 +47,67 @@ class Airgetlamh < DiceBot
 ・15AAx4c0 → 15d10で目標値6、威力4、クリティカル無しの命中判定。
 MESSAGETEXT
   end
-  
-  
+
   def rollDiceCommand(command)
-    
     # AA/ALコマンド：調査判定, 成功判定
     if /(\d+)?A(A|L)(\d+)?((x|\*)(\d+)(\+(\d+))?)?(C(\d+))?$/i === command
-      diceCount = ($1 || 2).to_i
-      target = ($3 || 6).to_i
-      damage = ($6 || 0).to_i
-      
-      if($2 == 'L')  # 旧Ver対応
+      diceCount = (Regexp.last_match(1) || 2).to_i
+      target = (Regexp.last_match(3) || 6).to_i
+      damage = (Regexp.last_match(6) || 0).to_i
+
+      if Regexp.last_match(2) == 'L' # 旧Ver対応
         criticalTrigger = 0
         criticalNumber = 0
       else
-        criticalTrigger = ($8 || 0).to_i
-        criticalNumber = ($10 || 1).to_i
+        criticalTrigger = (Regexp.last_match(8) || 0).to_i
+        criticalNumber = (Regexp.last_match(10) || 1).to_i
       end
-      criticalNumber = 3 if( criticalNumber > 4 )
-      
+      criticalNumber = 3 if criticalNumber > 4
+
       return checkRoll(diceCount, target, damage, criticalTrigger, criticalNumber)
     end
-    
+
     return nil
   end
-  
+
   def checkRoll(diceCount, target, damage, criticalTrigger, criticalNumber)
     totalSuccessCount = 0
     totalCriticalCount = 0
     text = ""
-    
+
     rollCount = diceCount
-    
+
     while rollCount > 0
       dice, diceText = roll(rollCount, 10, @sortType)
-      diceArray = diceText.split(/,/).collect{|i|i.to_i}
-      
-      successCount = diceArray.count{|i| i <= target}
-      criticalCount = diceArray.count{|i| i <= criticalNumber }
-      
+      diceArray = diceText.split(/,/).collect { |i| i.to_i }
+
+      successCount = diceArray.count { |i| i <= target }
+      criticalCount = diceArray.count { |i| i <= criticalNumber }
+
       totalSuccessCount += successCount
       totalCriticalCount += criticalCount
-      
-      text += "+" unless( text.empty? )
+
+      text += "+" unless text.empty?
       text += "#{successCount}[#{diceText}]"
-      
+
       rollCount = criticalCount
     end
-    
+
     result = ""
     isDamage = (damage != 0)
-    
-    if( isDamage )
+
+    if isDamage
       totalDamage = totalSuccessCount * damage + totalCriticalCount * criticalTrigger
-      
+
       result += "(#{diceCount}D10\<\=#{target}) ＞ #{text} ＞ Hits：#{totalSuccessCount}*#{damage}"
-      result += " + Trigger：#{totalCriticalCount}*#{criticalTrigger}" if( criticalTrigger > 0 )
+      result += " + Trigger：#{totalCriticalCount}*#{criticalTrigger}" if  criticalTrigger > 0
       result += " ＞ #{totalDamage}ダメージ"
     else
       result += "(#{diceCount}D10\<\=#{target}) ＞ #{text} ＞ 成功数：#{totalSuccessCount}"
     end
-    
-    result += " / #{totalCriticalCount}クリティカル" if( totalCriticalCount > 0 )
-    
+
+    result += " / #{totalCriticalCount}クリティカル" if totalCriticalCount > 0
+
     return result
   end
-  
 end

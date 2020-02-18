@@ -24,9 +24,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $range = Opal.range;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$get_value', '$!', '$nil?', '$scan', '$each', '$get_roll_parameter', '$checkRoll', '$get_hit_table', '$get_SUV_table', '$get_damageEffect_table', '$get_critical_table', '$get_accident_table', '$get_mechanicAccident_table', '$get_strategyEvent_chart', '$get_NPCAttack_chart', '$get_loserDestiny_chart', '$get_randomEncounter_table', '$*', '$/', '$**', '$roll', '$getRollResultTextAndSuccesValue', '$+', '$>', '$>=', '$getFormulaText', '$include?', '$-', '$<=', '$==', '$to_s', '$<', '$get_MetalHeadExtream_1d10_table_result', '$index', '$to_a', '$[]', '$each_with_index', '$first', '$get_table_by_number', '$get_roc_dice', '$get_MetalHeadExtream_1d100_table_result', '$get_MetalHeadExtream_1dX_table_result', '$to_f', '$=~']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$last_match', '$[]', '$to_i', '$get_value', '$!', '$nil?', '$scan', '$each', '$get_roll_parameter', '$checkRoll', '$get_hit_table', '$get_SUV_table', '$get_damageEffect_table', '$get_critical_table', '$get_accident_table', '$get_mechanicAccident_table', '$get_strategyEvent_chart', '$get_NPCAttack_chart', '$get_loserDestiny_chart', '$get_randomEncounter_table', '$*', '$/', '$**', '$roll', '$getRollResultTextAndSuccesValue', '$+', '$>', '$>=', '$to_s', '$getFormulaText', '$include?', '$-', '$<=', '$==', '$<', '$get_MetalHeadExtream_1d10_table_result', '$index', '$to_a', '$each_with_index', '$first', '$get_table_by_number', '$get_roc_dice', '$get_MetalHeadExtream_1d100_table_result', '$get_MetalHeadExtream_1dX_table_result', '$to_f', '$=~']);
   return (function($base, $super, $parent_nesting) {
     function $MetalHeadExtream(){};
     var self = $MetalHeadExtream = $klass($base, $super, 'MetalHeadExtream', $MetalHeadExtream);
@@ -66,24 +66,17 @@
     }, TMP_MetalHeadExtream_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_MetalHeadExtream_rollDiceCommand_6 = function $$rollDiceCommand(command) {
-      var $a, TMP_5, $b, self = this, text = nil, $case = nil, reg1 = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, type = nil, target = nil, modify = nil, paramText = nil, isMuse = nil, accidentValue = nil, advancedRoll = nil, luckPoint = nil, params = nil, hitPart = nil, roc = nil, armorGrade = nil, damage = nil, damageStage = nil, damageType = nil, locationType = nil, correction = nil;
+      var $a, TMP_5, self = this, text = nil, $case = nil, m = nil, type = nil, target = nil, modify = nil, paramText = nil, isMuse = nil, accidentValue = nil, advancedRoll = nil, luckPoint = nil, params = nil, hitPart = nil, roc = nil, armorGrade = nil, damage = nil, damageStage = nil, damageType = nil, locationType = nil, correction = nil;
 
       
       text = (function() {$case = command.$upcase();
       if (/([AS])R(\d+)(([\*\/]\d+)*)?(((@|A|L)\d+)*)(\!M)?$/i['$===']($case)) {
-      reg1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
-      type = reg1;
-      target = reg2.$to_i();
-      modify = self.$get_value(1, reg3);
-      paramText = ($truthy($a = reg5) ? $a : "");
-      isMuse = reg8['$nil?']()['$!']();
+      m = Opal.const_get_relative($nesting, 'Regexp').$last_match();
+      type = m['$[]'](1);
+      target = m['$[]'](2).$to_i();
+      modify = self.$get_value(1, m['$[]'](3));
+      paramText = ($truthy($a = m['$[]'](5)) ? $a : "");
+      isMuse = m['$[]'](8)['$nil?']()['$!']();
       accidentValue = 96;
       advancedRoll = 1;
       luckPoint = 0;
@@ -93,37 +86,37 @@ if (marker == null) marker = nil;if (value == null) value = nil;
       return $c = self.$get_roll_parameter(accidentValue, advancedRoll, luckPoint, marker, value), $b = Opal.to_ary($c), (accidentValue = ($b[0] == null ? nil : $b[0])), (advancedRoll = ($b[1] == null ? nil : $b[1])), (luckPoint = ($b[2] == null ? nil : $b[2])), $c}, TMP_5.$$s = self, TMP_5.$$arity = 2, TMP_5));
       return self.$checkRoll(type, target, modify, accidentValue, advancedRoll, luckPoint, isMuse);}
       else if (/(HU|BK|WA|SC|BG|IN|PT|HT|TA|AC|HE|TR|VT|BO|CS|TH|AM|GD|HC|BI|BT|AI)HIT(\d+)?/i['$===']($case)) {
-      hitPart = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
+      hitPart = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
       return self.$get_hit_table(hitPart, roc);}
       else if (/SUV([A-Z])(\d+)/i['$===']($case)) {
-      armorGrade = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      damage = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      armorGrade = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      damage = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       return self.$get_SUV_table(armorGrade, damage);}
       else if (/([HTALMEBPD])DMG([LMHO])/i['$===']($case)) {
-      hitPart = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      damageStage = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      hitPart = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      damageStage = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       return self.$get_damageEffect_table(hitPart, damageStage);}
       else if (/CRT(\d+)?/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_critical_table(roc);}
       else if (/([GSME])AC(\d+)?/i['$===']($case)) {
-      damageType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
+      damageType = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
       return self.$get_accident_table(damageType, roc);}
       else if (/([ASL])MA(\d+)?(\+(\d+))?/i['$===']($case)) {
-      locationType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
-      correction = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : 0).$to_i();
+      locationType = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
+      correction = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : 0).$to_i();
       return self.$get_mechanicAccident_table(locationType, roc, correction);}
       else if ("SEC"['$===']($case)) {return self.$get_strategyEvent_chart()}
       else if ("NAC"['$===']($case)) {return self.$get_NPCAttack_chart()}
       else if ("LDC"['$===']($case)) {return self.$get_loserDestiny_chart()}
       else if (/([W])ENC(\d+)?/i['$===']($case)) {
-      locationType = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
+      locationType = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
       return self.$get_randomEncounter_table(locationType, roc);}
-      else {return nil}})();
+      else { return nil }})();
       return text;
     }, TMP_MetalHeadExtream_rollDiceCommand_6.$$arity = 1);
     
@@ -141,7 +134,7 @@ if (marker == null) marker = nil;if (value == null) value = nil;
       if ($truthy($rb_gt(luckPoint, 0))) {
         complementText = $rb_plus(complementText, "" + ", LUC:" + (luckPoint))};
       if ($truthy($rb_ge(modify, 1))) {
-        modifyText = "" + (modify.$to_i())
+        modifyText = modify.$to_i().$to_s()
         } else {
         modifyText = "" + "1/" + ($rb_divide(1, modify).$to_i())
       };
@@ -335,7 +328,7 @@ if (type == null) type = nil;
       table = [[1, "ダメージ修正+10。焦り。効果は特になし。シーン終了で自然回復。"], [2, "ダメージ修正+20。混乱。1シーン、すべてのロールがSR1/2となる。シーン終了で自然回復。"], [3, "ダメージ修正+30。恐怖。1シーン、すべてのロールがSR1/4となる。シーン終了で自然回復。"], [4, "ダメージ修正+50。喪失。［戦闘不能］。シーン終了で自然回復。"]];}
       else if ("E"['$===']($case)) {
       name = "電子損傷効果表";
-      table = [[1, "ダメージ修正+10。処理落ち。効果は特になし。"], [2, "ダメージ修正+20。ノイズ。1シーン、キャラクターならすべてのロールが、アイテムならそれを使用したロールが1/2となる。"], [3, "ダメージ修正+30。恐怖。1シーン、キャラクターならすべてのロールが、アイテムならそれを使用したロールが1/4となる。"], [4, "ダメージ修正+50。クラッシュ。キャラクターなら［戦闘不能］。アイテムなら1シナリオ中、使用不可。"]];}
+      table = [[1, "ダメージ修正+10。処理落ち。効果は特になし。"], [2, "ダメージ修正+20。ノイズ。1シーン、角色ならすべてのロールが、アイテムならそれを使用したロールが1/2となる。"], [3, "ダメージ修正+30。恐怖。1シーン、角色ならすべてのロールが、アイテムならそれを使用したロールが1/4となる。"], [4, "ダメージ修正+50。クラッシュ。角色なら［戦闘不能］。アイテムなら1シナリオ中、使用不可。"]];}
       else if ("B"['$===']($case)) {
       name = "メカニック損傷効果表：本体";
       table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正シフト1。修理費がフレーム価格の1/4かかる。"], [3, "ダメージ修正シフト2。修理費がフレーム価格の1/2かかる。"], [4, "ダメージ修正シフト3。移動不能。修理費がフレーム価格と同じだけかかる。走行中なら事故表を振ること。"]];}
@@ -390,7 +383,7 @@ if (type == null) type = nil;
       table = [[3, "兵装／貨物。メカニックが装備している一番ENCの大きい武器ひとつが戦闘終了時まで使用不能になる。武器がない場合はメカニックオプションが使用不能になり、それもない場合は一番ENCの重い貨物（乗客をのぞく）が失われる。"], [6, "操作不能。メカニック本体にMWダメージ。操縦者は適切な［メカニック］スキルでSR1/4のロールを行い、成功したら体勢を立て直せる。失敗した場合、次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [8, "不時着。メカニック本体にHWダメージ。次のクリンナッププロセスまで、回復をふくめた一切の行動を取ることができない。"], [9, "墜落。メカニック本体にMOダメージ。すべての乗員は、墜落のショックによってランダムな部位に〈物〉155の固定ダメージを受ける。このダメージは機動回避可能である。"], [10, "爆発。メカニックが爆発し、完全に破壊される。すべての乗員は、爆発と落下によって胴体に〈熱〉205の固定ダメージを受ける。このダメージは機動回避可能だが、SRに1/4の修正がある。"]];}
       else if ("S"['$===']($case)) {
       name = "水上／水中メカニック事故表";
-      table = [[3, "横揺れ。次のクリンナッププロセスまで、このメカニックに乗っているキャラクターの行うすべての［メカニック］ロールに1/2の修正が与えられる。"], [6, "兵装／貨物。メカニックが装備している一番ENCの大きい武器ひとつが戦闘終了時まで使用不能になる。武器がない場合はメカニックオプションが使用不能になり、それもない場合は一番ENCの重い貨物（乗客をのぞく）が失われる。"], [8, "横転。メカニック本体にMWダメージ。操縦者は適切な［メカニック］スキルでSR1/4のロールを行い、成功したら体勢を立て直せる。失敗した場合、次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [9, "激突。メカニック本体に〈物〉255の固定ダメージ。"], [10, "爆発。メカニックが爆発し、完全に破壊される。すべての乗員は、爆発によって胴体に〈熱〉155の固定ダメージを受ける。このダメージは機動回避可能だが、SRに1/4の修正がある。"]];}
+      table = [[3, "横揺れ。次のクリンナッププロセスまで、このメカニックに乗っている角色の行うすべての［メカニック］ロールに1/2の修正が与えられる。"], [6, "兵装／貨物。メカニックが装備している一番ENCの大きい武器ひとつが戦闘終了時まで使用不能になる。武器がない場合はメカニックオプションが使用不能になり、それもない場合は一番ENCの重い貨物（乗客をのぞく）が失われる。"], [8, "横転。メカニック本体にMWダメージ。操縦者は適切な［メカニック］スキルでSR1/4のロールを行い、成功したら体勢を立て直せる。失敗した場合、次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [9, "激突。メカニック本体に〈物〉255の固定ダメージ。"], [10, "爆発。メカニックが爆発し、完全に破壊される。すべての乗員は、爆発によって胴体に〈熱〉155の固定ダメージを受ける。このダメージは機動回避可能だが、SRに1/4の修正がある。"]];}
       else if ("L"['$===']($case)) {
       name = "地上メカニック事故表";
       table = [[3, "接触。メカニック本体にLWダメージ。"], [6, "兵装／貨物。メカニックが装備している一番ENCの大きい武器ひとつが戦闘終了時まで使用不能になる。武器がない場合はメカニックオプションが使用不能になり、それもない場合は一番ENCの重い貨物（乗客をのぞく）が失われる。"], [8, "スピン。メカニック本体にMWダメージ。操縦者は適切な［メカニック］スキルでSR1/4のロールを行い、成功したら体勢を立て直せる。失敗した場合、次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [9, "激突。メカニック本体に〈物〉255の固定ダメージ。次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [10, "爆発。メカニックが爆発し、完全に破壊される。すべての乗員は、爆発によって胴体に〈熱〉155の固定ダメージを受ける。このダメージは機動回避可能だが、SRに1/4の修正がある。"]];}
@@ -412,7 +405,7 @@ if (type == null) type = nil;
 
       
       name = "ストラテジーイベントチャート";
-      table = [[50, "特に何事もなかった。"], [53, "スコール。種別：レーザーを装備している部隊の戦力はこのターン半減する。この効果は重複しない。"], [55, "ただよう不安。味方ユニットはWILのAR1を行い、失敗すると士気の10%を失う。"], [57, "狙撃！　司令官キャラクターは胴体に〈物〉155点の固定ダメージを受ける。機動回避は可能。"], [60, "敵の猛烈な反撃！　味方ユニットはREFのAR1を行い、失敗するとこのターン、移動力がマイナス1。"], [63, "敵弾幕の隙を見いだす。このターン、味方ユニットは突破判定がSR2に。"], [65, "突破のチャンス。このターン、味方ユニットは移動力が1点上昇する。"], [67, "士気高揚。味方ユニットの士気がそれぞれ現在値の10%だけ回復する。"], [70, "敵陣崩壊。敵ユニットの中で士気がもっとも低いユニットが戦場から撤退する。複数いた場合、すべて撤退。PC、ゲストには効果なし。"], [73, "大声援。戦闘がどこかのハッカーによって衛星中継され、喝采を浴びる。"], [75, "雨／雪。種別；レーザーを部隊の戦力はこのターン半減する。この効果は重複しない。"], [77, "磁気嵐。このターン、種別：ミサイルは戦力に数えず、突撃に使用することもできない。"], [80, "膠着した戦況。このターン、味方ユニットは突破判定がSR1/2に。"], [83, "メタルホッパー！　金属イナゴの襲来で視界をふさがれ、このラウンドは全てのMC射程が0となる。"], [85, "大竜巻！　飛行しているユニットの移動力は0となり、飛行ユニットはこのターン自分から突撃を行えない。"], [87, "通信の混乱。味方ユニットはINTのAR1を行い、失敗するとこのターン、移動力がマイナス1。"], [90, "幸運が微笑む。味方ユニットのラックポイントが1点ずつ回復。NPCには無効。"], [93, "致命的な狙撃！　司令官キャラクターは胴体に〈物〉205点の固定ダメージを受ける。機動回避は可能。"], [95, "敵の罠に落ちた。このターン、敵軍ユニットは移動力が1点上昇する。"], [97, "勝利の予感。味方ユニットの士気がそれぞれの現在値の20%だけ回復する。"], [99, "天変地異が襲いかかる！　このターン、すべてのユニットは移動できない。"], [100, "大混乱。後2回振る。"]];
+      table = [[50, "特に何事もなかった。"], [53, "スコール。種別：レーザーを装備している部隊の戦力はこのターン半減する。この効果は重複しない。"], [55, "ただよう不安。味方ユニットはWILのAR1を行い、失敗すると士気の10%を失う。"], [57, "狙撃！　司令官角色は胴体に〈物〉155点の固定ダメージを受ける。機動回避は可能。"], [60, "敵の猛烈な反撃！　味方ユニットはREFのAR1を行い、失敗するとこのターン、移動力がマイナス1。"], [63, "敵弾幕の隙を見いだす。このターン、味方ユニットは突破判定がSR2に。"], [65, "突破のチャンス。このターン、味方ユニットは移動力が1点上昇する。"], [67, "士気高揚。味方ユニットの士気がそれぞれ現在値の10%だけ回復する。"], [70, "敵陣崩壊。敵ユニットの中で士気がもっとも低いユニットが戦場から撤退する。複数いた場合、すべて撤退。PC、ゲストには効果なし。"], [73, "大声援。戦闘がどこかのハッカーによって衛星中継され、喝采を浴びる。"], [75, "雨／雪。種別；レーザーを部隊の戦力はこのターン半減する。この効果は重複しない。"], [77, "磁気嵐。このターン、種別：ミサイルは戦力に数えず、突撃に使用することもできない。"], [80, "膠着した戦況。このターン、味方ユニットは突破判定がSR1/2に。"], [83, "メタルホッパー！　金属イナゴの襲来で視界をふさがれ、このラウンドは全てのMC射程が0となる。"], [85, "大竜巻！　飛行しているユニットの移動力は0となり、飛行ユニットはこのターン自分から突撃を行えない。"], [87, "通信の混乱。味方ユニットはINTのAR1を行い、失敗するとこのターン、移動力がマイナス1。"], [90, "幸運が微笑む。味方ユニットのラックポイントが1点ずつ回復。NPCには無効。"], [93, "致命的な狙撃！　司令官角色は胴体に〈物〉205点の固定ダメージを受ける。機動回避は可能。"], [95, "敵の罠に落ちた。このターン、敵軍ユニットは移動力が1点上昇する。"], [97, "勝利の予感。味方ユニットの士気がそれぞれの現在値の20%だけ回復する。"], [99, "天変地異が襲いかかる！　このターン、すべてのユニットは移動できない。"], [100, "大混乱。後2回振る。"]];
       return self.$get_MetalHeadExtream_1d100_table_result(name, table, 0);
     }, TMP_MetalHeadExtream_get_strategyEvent_chart_19.$$arity = 0);
     
@@ -474,24 +467,24 @@ if (type == null) type = nil;
       dice = roc;
       if ($truthy($rb_gt(dice, diceMax))) {
         dice = diceMax};
-      if ($truthy(dice['$=='](0))) {
+      if (dice['$=='](0)) {
         $b = self.$roll(1, diceMax), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b};
       return dice;
     }, TMP_MetalHeadExtream_get_roc_dice_26.$$arity = 2);
     return (Opal.defn(self, '$get_value', TMP_MetalHeadExtream_get_value_28 = function $$get_value(originalValue, calculateText) {
-      var $a, TMP_27, self = this, result = nil, calculateArray = nil;
+      var TMP_27, self = this, result = nil, calculateArray = nil;
 
       
       result = originalValue.$to_f();
-      calculateArray = ($truthy($a = calculateText) ? $a : "").$scan(/[\*\/]\d*/);
-      $send(calculateArray, 'each', [], (TMP_27 = function(i){var self = TMP_27.$$s || this, $b;
+      calculateArray = calculateText.$to_s().$scan(/[\*\/]\d*/);
+      $send(calculateArray, 'each', [], (TMP_27 = function(i){var self = TMP_27.$$s || this;
 if (i == null) i = nil;
       
         i['$=~'](/([\*\/])(\d*)/i);
-        if ($truthy((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))['$==']("*"))) {
-          result = $rb_times(result, (($b = $gvars['~']) === nil ? nil : $b['$[]'](2)).$to_i())};
-        if ($truthy((($b = $gvars['~']) === nil ? nil : $b['$[]'](1))['$==']("/"))) {
-          return (result = $rb_divide(result, (($b = $gvars['~']) === nil ? nil : $b['$[]'](2)).$to_i()))
+        if (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$==']("*")) {
+          result = $rb_times(result, Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i())};
+        if (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$==']("/")) {
+          return (result = $rb_divide(result, Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()))
           } else {
           return nil
         };}, TMP_27.$$s = self, TMP_27.$$arity = 1, TMP_27));

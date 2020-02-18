@@ -21,9 +21,9 @@
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$debug', '$judgeRoll', '$nil?', '$reRoll', '$getRulingPlanetDiceCommandResult', '$getDurtyTableCommandReuslt', '$getTableCommandResult', '$=~', '$new', '$!', '$to_i', '$+', '$getRollResult', '$getTotalResultMessageText', '$collect', '$split', '$each', '$empty?', '$>', '$size', '$each_with_index', '$==', '$-', '$roll', '$getSuccessResultText', '$find_all', '$>=', '$<<', '$getSameDieList', '$join', '$count', '$inject', '$uniq', '$<=', '$length', '$===', '$getRulingPlanetDice', '$include?', '$changeRulingPlanetDice', '$*', '$ceil', '$/', '$[]', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$debug', '$judgeRoll', '$nil?', '$reRoll', '$getRulingPlanetDiceCommandResult', '$getDurtyTableCommandReuslt', '$getTableCommandResult', '$=~', '$!', '$last_match', '$to_i', '$+', '$getRollResult', '$getTotalResultMessageText', '$collect', '$split', '$each', '$empty?', '$>', '$size', '$each_with_index', '$==', '$-', '$roll', '$getSuccessResultText', '$find_all', '$>=', '$<<', '$getSameDieList', '$join', '$count', '$inject', '$uniq', '$<=', '$length', '$===', '$getRulingPlanetDice', '$include?', '$changeRulingPlanetDice', '$*', '$ceil', '$/', '$[]', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $BlindMythos(){};
     var self = $BlindMythos = $klass($base, $super, 'BlindMythos', $BlindMythos);
@@ -58,7 +58,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_BlindMythos_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定：BMx@y>=z、BMSx@y>=z\n" + "  　x:スキルレベル\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　BMコマンドはダイスの振り足しを常に行い、\n" + "　BMSは振り足しを自動では行いません。\n" + " 例）BM>=1　BM@3>=1　BMS2>=1\n" + "\n" + "・判定振り足し：ReRollx,x,x...@y>=1\n" + "  　x:振るダイスの個数\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　振り足しを自動で行わない場合（BMSコマンド）に使用します。\n" + "\n" + "・LE：失う感情表\n" + "・感情後遺症表 ESx\n" + "　ESH：喜、ESA：怒、ESS：哀、ESP：楽、ESL：愛、ESE：感\n" + "・DT：汚染チャート\n" + "・RPxyz：守護星表チェック\n" + " xyz:守護星ナンバーを指定\n" + " 例）RP123　RP258\n"
+      return "" + "・判定：BMx@y>=z、BMSx@y>=z\n" + "  　x:スキルレベル\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　BMコマンドは骰子の振り足しを常に行い、\n" + "　BMSは振り足しを自動では行いません。\n" + " 例）BM>=1　BM@3>=1　BMS2>=1\n" + "\n" + "・判定振り足し：ReRollx,x,x...@y>=1\n" + "  　x:振る骰子の個数\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　振り足しを自動で行わない場合（BMSコマンド）に使用します。\n" + "\n" + "・LE：失う感情表\n" + "・感情後遺症表 ESx\n" + "　ESH：喜、ESA：怒、ESS：哀、ESP：楽、ESL：愛、ESE：感\n" + "・DT：汚染チャート\n" + "・RPxyz：守護星表チェック\n" + " xyz:守護星ナンバーを指定\n" + " 例）RP123　RP258\n"
     }, TMP_BlindMythos_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_BlindMythos_rollDiceCommand_5 = function $$rollDiceCommand(command) {
@@ -92,19 +92,18 @@
     }, TMP_BlindMythos_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$judgeRoll', TMP_BlindMythos_judgeRoll_6 = function $$judgeRoll(command) {
-      var $a, $b, self = this, pattern = nil, isStop = nil, skillRank = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, message = nil, diceCount = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
+      var $a, $b, self = this, isStop = nil, skillRank = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, message = nil, diceCount = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
 
       
-      pattern = "^BM(S)?(\\d*)(@(\\d+))?>=(\\d+)$";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE'))['$=~'](command))) {
+      if ($truthy(/^BM(S)?(\d*)(@(\d+))?>=(\d+)$/i['$=~'](command))) {
         } else {
         return nil
       };
-      isStop = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$nil?']()['$!']();
-      skillRank = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      judgeNumberText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      judgeNumber = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : 4).$to_i();
-      targetNumber = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](5))) ? $a : 1).$to_i();
+      isStop = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$nil?']()['$!']();
+      skillRank = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      judgeNumberText = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
+      judgeNumber = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : 4).$to_i();
+      targetNumber = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(5)) ? $a : 1).$to_i();
       message = "";
       diceCount = $rb_plus(skillRank, 2);
       isReRoll = false;
@@ -115,20 +114,19 @@
     }, TMP_BlindMythos_judgeRoll_6.$$arity = 1);
     
     Opal.defn(self, '$reRoll', TMP_BlindMythos_reRoll_9 = function $$reRoll(command, isStop) {
-      var $a, $b, TMP_7, TMP_8, self = this, pattern = nil, rerollCountsText = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, rerollCounts = nil, commandText = nil, message = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
+      var $a, TMP_7, TMP_8, $b, self = this, rerollCountsText = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, rerollCounts = nil, commandText = nil, message = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
 
       
       self.$debug("ReRoll Begin", command);
-      pattern = "^ReRoll([\\d,]+)(@(\\d+))?>=(\\d+)$";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern, Opal.const_get_qualified(Opal.const_get_relative($nesting, 'Regexp'), 'IGNORECASE'))['$=~'](command))) {
+      if ($truthy(/^ReRoll([\d,]+)(@(\d+))?>=(\d+)$/i['$=~'](command))) {
         } else {
         return nil
       };
       self.$debug("ReRoll pass");
-      rerollCountsText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      judgeNumberText = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      judgeNumber = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 4).$to_i();
-      targetNumber = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i();
+      rerollCountsText = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      judgeNumberText = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      judgeNumber = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 4).$to_i();
+      targetNumber = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i();
       rerollCounts = $send(rerollCountsText.$split(/,/), 'collect', [], (TMP_7 = function(i){var self = TMP_7.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_7.$$s = self, TMP_7.$$arity = 1, TMP_7));
@@ -197,23 +195,20 @@ if (i == null) i = nil;
         message = $rb_plus(message, resultText);
         sameDiceList = self.$getSameDieList(diceList);
         if ($truthy(sameDiceList['$empty?']())) {
-          return nil
-          } else {
-          
-          rerollText = "";
-          $send(sameDiceList, 'each', [], (TMP_13 = function(list){var self = TMP_13.$$s || this;
+          return nil;};
+        rerollText = "";
+        $send(sameDiceList, 'each', [], (TMP_13 = function(list){var self = TMP_13.$$s || this;
 if (list == null) list = nil;
-          
-            if ($truthy(rerollText['$empty?']())) {
-              } else {
-              rerollText = $rb_plus(rerollText, ",")
-            };
-            return (rerollText = $rb_plus(rerollText, list.$join("")));}, TMP_13.$$s = self, TMP_13.$$arity = 1, TMP_13));
-          rerollTargetList['$<<']($send(sameDiceList, 'collect', [], (TMP_14 = function(i){var self = TMP_14.$$s || this;
+        
+          if ($truthy(rerollText['$empty?']())) {
+            } else {
+            rerollText = $rb_plus(rerollText, ",")
+          };
+          return (rerollText = $rb_plus(rerollText, list.$join("")));}, TMP_13.$$s = self, TMP_13.$$arity = 1, TMP_13));
+        rerollTargetList['$<<']($send(sameDiceList, 'collect', [], (TMP_14 = function(i){var self = TMP_14.$$s || this;
 if (i == null) i = nil;
-          return i.$count()}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14)).$join(","));
-          return (message = $rb_plus(message, "" + "、リロール[" + (rerollText) + "]"));
-        };}, TMP_10.$$s = self, TMP_10.$$arity = 2, TMP_10));
+        return i.$count()}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14)).$join(","));
+        return (message = $rb_plus(message, "" + "、リロール[" + (rerollText) + "]"));}, TMP_10.$$s = self, TMP_10.$$arity = 2, TMP_10));
       rerollCommand = "";
       if ($truthy(rerollTargetList['$empty?']())) {
         } else {
@@ -314,14 +309,14 @@ if (i == null) i = nil;
     }, TMP_BlindMythos_getSuccessResultText_23.$$arity = 2);
     
     Opal.defn(self, '$getRulingPlanetDiceCommandResult', TMP_BlindMythos_getRulingPlanetDiceCommandResult_26 = function $$getRulingPlanetDiceCommandResult(command) {
-      var $a, TMP_24, TMP_25, self = this, targetNumbers = nil, diceList = nil, matchResult = nil, text = nil;
+      var TMP_24, TMP_25, self = this, targetNumbers = nil, diceList = nil, matchResult = nil, text = nil;
 
       
       if ($truthy(/^RP(\d+)/i['$==='](command))) {
         } else {
         return nil
       };
-      targetNumbers = $send((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$split(/(?:)/), 'collect', [], (TMP_24 = function(i){var self = TMP_24.$$s || this;
+      targetNumbers = $send(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$split(/(?:)/), 'collect', [], (TMP_24 = function(i){var self = TMP_24.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_24.$$s = self, TMP_24.$$arity = 1, TMP_24));
       diceList = self.$getRulingPlanetDice();
@@ -372,7 +367,7 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      table = "" + "汚染チャートを２回振り、その効果を適用する（1・2-2,5・6-12 なら振り直す）\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに２ダメージ\n" + "ＰＣ全員の「喪失」２つに４ダメージ\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ。その後さらに汚染が２増える\n" + "ＰＣ全員、１つの【記憶】の両方の値が０になる。このときアクロバットダイス獲得不可\n" + "ＰＣ全員の「喪失」１つに４ダメージ。このときアクロバットダイス獲得不可\n" + "ＰＣ全員の「トラウマ」すべてに１ダメージ。その後さらに汚染が３増える\n" + "ＰＣ全員の「トラウマ」すべてに１ダメージ。その後アクロバットダイスをＰＣ人数分失う\n" + "ＰＣ全員の「喪失」すべてに２ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」２つに３ダメージ。その後さらに汚染が１増える\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「喪失」１つに４ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ\n" + "ＰＣ全員の１つの【記憶】の「トラウマ」「喪失」それぞれに３ダメージ\n" + "ＰＣ全員の「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「トラウマ」３つに２ダメージ\n" + "ＰＣ全員の「トラウマ」と「喪失」それぞれ１つに３ダメージ\n" + "ＰＣ全員の「喪失」３つに２ダメージ\n" + "ＰＣ全員のすべての「トラウマ」に1 ダメージ\n" + "ＰＣ全員のひとつの【記憶】の「トラウマ」「喪失」それぞれに３ダメージ\n" + "ＰＣ全員の「喪失」すべてに２ダメージ\n" + "ＰＣ全員の「トラウマ」ひとつに４ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「喪失」２つに３ダメージ。その後さらに汚染が１増える\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「喪失」すべてに１ダメージ。その後アクロバットダイスをＰＣ人数分失う\n" + "ＰＣ全員の「喪失」すべてに１ダメージ。その後さらに汚染が３増える\n" + "ＰＣ全員の「トラウマ」１つに４ダメージ。このときアクロバットダイス獲得不可\n" + "ＰＣ全員、１つの【記憶】の両方の値が０になる。このときアクロバットダイス獲得不可\n" + "ＰＣ全員の「喪失」すべてに２ダメージ。その後さらに汚染が２増える\n" + "ＰＣ全員の「トラウマ」２つに４ダメージ\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに２ダメージ\n" + "汚染チャートを２回振り、その効果を適用する（1・2-2,5・6-12 なら振り直す）\n";
+      table = "" + "汚染チャートを２回振り、その効果を適用する（1・2-2,5・6-12 なら振り直す）\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに２ダメージ\n" + "ＰＣ全員の「喪失」２つに４ダメージ\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ。その後さらに汚染が２増える\n" + "ＰＣ全員、１つの【記憶】の両方の値が０になる。このときアクロバット骰子獲得不可\n" + "ＰＣ全員の「喪失」１つに４ダメージ。このときアクロバット骰子獲得不可\n" + "ＰＣ全員の「トラウマ」すべてに１ダメージ。その後さらに汚染が３増える\n" + "ＰＣ全員の「トラウマ」すべてに１ダメージ。その後アクロバット骰子をＰＣ人数分失う\n" + "ＰＣ全員の「喪失」すべてに２ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」２つに３ダメージ。その後さらに汚染が１増える\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「喪失」１つに４ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ\n" + "ＰＣ全員の１つの【記憶】の「トラウマ」「喪失」それぞれに３ダメージ\n" + "ＰＣ全員の「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「トラウマ」３つに２ダメージ\n" + "ＰＣ全員の「トラウマ」と「喪失」それぞれ１つに３ダメージ\n" + "ＰＣ全員の「喪失」３つに２ダメージ\n" + "ＰＣ全員のすべての「トラウマ」に1 ダメージ\n" + "ＰＣ全員のひとつの【記憶】の「トラウマ」「喪失」それぞれに３ダメージ\n" + "ＰＣ全員の「喪失」すべてに２ダメージ\n" + "ＰＣ全員の「トラウマ」ひとつに４ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「喪失」２つに３ダメージ。その後さらに汚染が１増える\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「喪失」すべてに１ダメージ。その後アクロバット骰子をＰＣ人数分失う\n" + "ＰＣ全員の「喪失」すべてに１ダメージ。その後さらに汚染が３増える\n" + "ＰＣ全員の「トラウマ」１つに４ダメージ。このときアクロバット骰子獲得不可\n" + "ＰＣ全員、１つの【記憶】の両方の値が０になる。このときアクロバット骰子獲得不可\n" + "ＰＣ全員の「喪失」すべてに２ダメージ。その後さらに汚染が２増える\n" + "ＰＣ全員の「トラウマ」２つに４ダメージ\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに２ダメージ\n" + "汚染チャートを２回振り、その効果を適用する（1・2-2,5・6-12 なら振り直す）\n";
       table = table.$split("\n");
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), $b;

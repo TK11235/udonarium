@@ -130,11 +130,11 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
     this.contextMenuService.open(position, [
-      { name: 'メモを編集', action: () => { this.showDetail(this.textNote); } },
+      { name: '編輯筆記', action: () => { this.showDetail(this.textNote); } },
       {
-        name: 'コピーを作る', action: () => {
+        name: '複製', action: () => {
           let cloneObject = this.textNote.clone();
-          console.log('コピー', cloneObject);
+          console.log('複製', cloneObject);
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.toTopmost();
@@ -142,7 +142,7 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       },
       {
-        name: '削除する', action: () => {
+        name: '刪除', action: () => {
           this.textNote.destroy();
           SoundEffect.play(PresetSound.sweep);
         }
@@ -191,7 +191,7 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
   private showDetail(gameObject: TextNote) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = '共有メモ設定';
+    let title = '設定共用筆記';
     if (gameObject.title.length) title += ' - ' + gameObject.title;
     let option: PanelOption = { title: title, left: coordinate.x - 350, top: coordinate.y - 200, width: 700, height: 400 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);

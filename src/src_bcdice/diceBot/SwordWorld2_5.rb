@@ -4,11 +4,11 @@ require 'diceBot/SwordWorld2_0'
 
 class SwordWorld2_5 < SwordWorld2_0
   setPrefixes(['K\d+.*', 'Gr(\d+)?', 'FT', 'TT'])
-  
+
   def initialize
     super
   end
-  
+
   def gameName
     'ソードワールド2.5'
   end
@@ -25,7 +25,7 @@ class SwordWorld2_5 < SwordWorld2_0
 　"Kキーナンバー+ボーナス"の形で記入します。
 　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。
 　また、ボーナスは複数取ることが出来ます。
-　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。
+　レーティング表も骰子ロールと同様に、他の玩家に隠れてロールすることも可能です。
 　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2
 
 ・クリティカル値の設定
@@ -35,14 +35,14 @@ class SwordWorld2_5 < SwordWorld2_0
 　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。
 　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9
 
-・ダイス目の修正（運命変転やクリティカルレイ用）
-　末尾に「$修正値」でダイス目に修正がかかります。
-　$＋１と修正表記ならダイス目に＋修正、＄９のように固定値ならダイス目をその出目に差し替え。
+・骰子目の修正（運命変転やクリティカルレイ用）
+　末尾に「$修正値」で骰子目に修正がかかります。
+　$＋１と修正表記なら骰子目に＋修正、＄９のように固定値なら骰子目をその出目に差し替え。
 　クリティカルした場合でも固定値や修正値の適用は最初の一回だけです。
 　例）K20$+1　　　K10+5$9　　　k10-5@9$+2　　　k10[9]+10$9
 
-・ダイス目の修正（必殺攻撃用）
-　「＃修正値」でダイス目に修正がかかります。
+・骰子目の修正（必殺攻撃用）
+　「＃修正値」で骰子目に修正がかかります。
 　クリティカルした場合でも修正値の適用は継続されます。
 　例）K20#1　　　k10-5@9#2
 
@@ -66,66 +66,59 @@ class SwordWorld2_5 < SwordWorld2_0
 　絡み効果表を出すことができます。
 INFO_MESSAGE_TEXT
   end
-  
-  
-  
+
   def changeText(string)
-    return string unless( /(^|\s)[sS]?(K[\d]+)/i =~ string )
+    return string unless /(^|\s)[sS]?(K[\d]+)/i =~ string
 
     string = super(string)
-    
+
     debug('parren_killer_add before string', string)
 
     string = string.gsub(/#([\+\-]?[\d]+)/i) do
-      value = $1.to_i
+      value = Regexp.last_match(1).to_i
       if value >= 0
         "a[+#{value}]"
       else
         "a[#{value}]"
       end
     end
-    
+
     debug('parren_killer_add after string', string)
-    
+
     return string
   end
-  
-  
+
   def getRatingCommandStrings
     super + "aA"
   end
-  
-  
+
   def getAdditionalString(string, output)
     output, values = super(string, output)
-    
+
     keptDiceChangeModify, string = getKeptDiceChangesFromString(string)
-    
+
     values['keptDiceChangeModify'] = keptDiceChangeModify
-    output += "a[#{keptDiceChangeModify}]" if( keptDiceChangeModify != 0 )
-    
+    output += "a[#{keptDiceChangeModify}]" if keptDiceChangeModify != 0
+
     return output, values
   end
-  
-  
+
   def getAdditionalDiceValue(dice, values)
     keptDiceChangeModify = values['keptDiceChangeModify'].to_i
-    
+
     value = 0
-    value += keptDiceChangeModify.to_i if( keptDiceChangeModify != 0 and dice != 2 )
-    
+    value += keptDiceChangeModify.to_i if (keptDiceChangeModify != 0) && (dice != 2)
+
     return value
   end
-  
-  
+
   def getKeptDiceChangesFromString(string)
     keptDiceChangeModify = 0
     regexp = /a\[([\+\-]\d+)\]/i
-    if( regexp =~ string )
-      keptDiceChangeModify = $1
+    if regexp =~ string
+      keptDiceChangeModify = Regexp.last_match(1)
       string = string.gsub(regexp, '')
     end
     return keptDiceChangeModify, string
   end
-  
 end

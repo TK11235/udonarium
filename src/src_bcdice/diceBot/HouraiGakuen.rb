@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
 class HouraiGakuen < DiceBot
-  setPrefixes(['ROL.*', 'MED\(\d+,\d+\)', 'RES\(\d+,\d+\)' , 'INY.*' , 'HTK.*' , 'GOG.*'])
+  setPrefixes(['ROL.*', 'MED\(\d+,\d+\)', 'RES\(\d+,\d+\)', 'INY.*', 'HTK.*', 'GOG.*'])
 
-  #ゲームの名前
+  # ゲームの名前
   def gameName
     '蓬莱学園の冒険!!'
   end
 
-  #チャット欄表示名
+  # チャット欄表示名
   def gameType
     "HouraiGakuen"
   end
 
-  #判定用前置文字
-  #説明文
+  # 判定用前置文字
+  # 説明文
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・基本ロール：ROL(x+n)
@@ -35,7 +35,7 @@ class HouraiGakuen < DiceBot
 INFO_MESSAGE_TEXT
   end
 
-  #コマンド分岐
+  # コマンド分岐
   def rollDiceCommand(command)
     case command
     when /^ROL/i
@@ -60,13 +60,12 @@ INFO_MESSAGE_TEXT
   @@failure = "失敗"
   @@famble = "大失敗"
 
-  #基本ロール
+  # 基本ロール
   def getRollResult(command)
-
-    return nil unless(/rol([-\d]+)/i =~ command)
+    return nil unless /rol([-\d]+)/i =~ command
 
     # 目標値セット
-    target = $1.to_i
+    target = Regexp.last_match(1).to_i
 
     total, diceText = roll(3, 6)
 
@@ -76,18 +75,17 @@ INFO_MESSAGE_TEXT
   end
 
   def getCheckResult(diceText, total, target)
-
     diceList = getDiceListFromText(diceText)
 
-    if isFamble( diceList )
+    if isFamble(diceList)
       return @@famble
     end
 
-    if isCritical( diceList )
+    if isCritical(diceList)
       return @@critical
     end
 
-    if(total <= target)
+    if total <= target
       return @@success
     end
 
@@ -95,45 +93,42 @@ INFO_MESSAGE_TEXT
   end
 
   def getDiceListFromText(diceText)
-    diceList = diceText.split(/,/).collect{|i| i.to_i }.sort
+    diceList = diceText.split(/,/).collect { |i| i.to_i }.sort
     return diceList
   end
 
-  def isFamble( diceList )
+  def isFamble(diceList)
     return diceList === [6, 6, 6]
   end
 
-  def isCritical( diceList )
+  def isCritical(diceList)
     return diceList === [1, 2, 3]
   end
 
-  #対人ロール
+  # 対人ロール
   def getMedResult(command)
+    return nil unless /med\((\d+),(\d+)\)/i =~ command
 
-    return nil unless(/med\((\d+),(\d+)\)/i =~ command)
-
-    yourValue = $1.to_i # あなたの値
-    enemyValue = $2.to_i # 相手の値
+    yourValue = Regexp.last_match(1).to_i # あなたの値
+    enemyValue = Regexp.last_match(2).to_i # 相手の値
     target = getTargetFromValue(yourValue, enemyValue) # 値から目標値を作出
 
     total, diceText = roll(3, 6)
     result = getCheckResult(diceText, total, target)
 
     return "(あなたの値#{yourValue}、相手の値#{enemyValue}、3d6<=#{target}) ＞ 出目#{diceText}＝合計#{total} ＞ #{result}"
-
   end
 
   def getTargetFromValue(yourValue, enemyValue)
     yourValue + (10 - enemyValue) # 値から目標値を作出
   end
 
-  #対抗ロール
+  # 対抗ロール
   def getResResult(command)
+    return nil unless /res\((\d+),(\d+)\)/i =~ command
 
-    return nil unless(/res\((\d+),(\d+)\)/i =~ command)
-
-    yourValue = $1.to_i # あなたの値
-    enemyValue = $2.to_i # 相手の値
+    yourValue = Regexp.last_match(1).to_i # あなたの値
+    enemyValue = Regexp.last_match(2).to_i # 相手の値
 
     # 値から目標値を作出
     yourTarget = getTargetFromValue(yourValue, enemyValue)
@@ -154,7 +149,6 @@ INFO_MESSAGE_TEXT
   end
 
   def getResistCheckResult(yourResult, enemyResult)
-
     yourRank = getResultRank(yourResult)
     enemyRank = getResultRank(enemyResult)
 
@@ -171,25 +165,24 @@ INFO_MESSAGE_TEXT
 
   def getResultRank(result)
     ranks = [
-     @@famble,
-     @@failure,
-     @@success,
-     @@critical,
+      @@famble,
+      @@failure,
+      @@success,
+      @@critical,
     ]
 
     return ranks.index(result)
   end
 
-  #陰陽コマンド
-  def getInnyouResult(command)
-
+  # 陰陽コマンド
+  def getInnyouResult(_command)
     oddCount = 0
     evenCount = 0
 
     3.times do
       dice, = roll(1, 6)
 
-      if (dice % 2) == 0
+      if dice.even?
         evenCount += 1 # 偶数カウント
       else
         oddCount += 1 # 奇数カウント
@@ -201,12 +194,10 @@ INFO_MESSAGE_TEXT
     else
       return "陰（偶数の方が多い）"
     end
-
   end
 
-  #八徳コマンド
-  def getHattokuResult(command)
-
+  # 八徳コマンド
+  def getHattokuResult(_command)
     # 3回振って、奇数・偶数がどの順序で出たかを記録する
     oddEvenList = []
     3.times do
@@ -235,17 +226,17 @@ INFO_MESSAGE_TEXT
     else
       return "異常終了"
     end
-
   end
 
   def getOddEven
-    dice, = roll(1,6)
+    dice, = roll(1, 6)
 
-    return "偶数" if (dice % 2) == 0
+    return "偶数" if dice.even?
+
     return "奇数"
   end
 
-  def getGogyouResult(command)
+  def getGogyouResult(_command)
     type = '五行表'
 
     table = getGogyouTable
@@ -255,16 +246,16 @@ INFO_MESSAGE_TEXT
     return output
   end
 
-  #五行コマンド
+  # 五行コマンド
   def getGogyouTable
     table = [
-             '五行【木】',
-             '五行【火】',
-             '五行【土】',
-             '五行【金】',
-             '五行【水】',
-             '五行は【任意選択】',
-            ]
+      '五行【木】',
+      '五行【火】',
+      '五行【土】',
+      '五行【金】',
+      '五行【水】',
+      '五行は【任意選択】',
+    ]
     return table
   end
 end

@@ -9,9 +9,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$hm_city_location_table', '$hm_small_location_table', '$hm_hot_location_table', '$hm_freezing_location_table', '$hm_hit_location_table', '$hm_monobeast_action_table', '$!', '$nil?', '$to_i', '$get_strange_ability_table_result', '$hm_social_skill_table', '$hm_head_skill_table', '$hm_arm_skill_table', '$hm_trunk_skill_table', '$hm_leg_skill_table', '$hm_environmental_skill_table', '$hm_encount_table', '$getTableCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$get_strange_ability_table_1', '$get_strange_ability_table_2', '$times', '$!=', '$+', '$roll', '$%', '$[]', '$get_table_by_d66', '$empty?', '$setPrefixes', '$keys']);
+  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$hm_city_location_table', '$hm_small_location_table', '$hm_hot_location_table', '$hm_freezing_location_table', '$hm_hit_location_table', '$hm_monobeast_action_table', '$!', '$nil?', '$last_match', '$to_i', '$get_strange_ability_table_result', '$hm_social_skill_table', '$hm_head_skill_table', '$hm_arm_skill_table', '$hm_trunk_skill_table', '$hm_leg_skill_table', '$hm_environmental_skill_table', '$hm_encount_table', '$getTableCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$get_strange_ability_table_1', '$get_strange_ability_table_2', '$times', '$!=', '$+', '$roll', '$odd?', '$[]', '$get_table_by_d66', '$to_s', '$empty?', '$setPrefixes', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $HuntersMoon(){};
     var self = $HuntersMoon = $klass($base, $super, 'HuntersMoon', $HuntersMoon);
@@ -51,14 +51,14 @@
     Opal.defn(self, '$getHelpMessage', TMP_HuntersMoon_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定\n" + "　判定時にクリティカルとファンブルを自動判定します。\n" + "・各種表\n" + "　・遭遇表　(ET)\n" + "　・都市ロケーション表　(CLT)\n" + "　・閉所ロケーション表　(SLT)\n" + "　・炎熱ロケーション表　(HLT)\n" + "　・冷暗ロケーション表　(FLT)\n" + "　・部位ダメージ決定表　(DLT)\n" + "　・モノビースト行動表　(MAT)\n" + "　・異形アビリティー表　(SATx) (xは個数)\n" + "　・異形アビリティー表2　(SA2Tx) (xは個数)\n" + "　　→表１と表２の振り分けも判定\n" + "　・指定特技(社会)表　　(TST)\n" + "　・指定特技(頭部)表　　(THT)\n" + "　・指定特技(腕部)表　　(TAT)\n" + "　・指定特技(胴部)表　　(TBT)\n" + "　・指定特技(脚部)表　　(TLT)\n" + "　・指定特技(環境)表　　(TET)\n" + "　・異形化表　　　　　　(MST)\n" + "　・代償表　　　　　　　(ERT)\n" + "　・ディフェンス遭遇表1/2/3 (DS1ET/DS2ET/DS3ET)\n" + "　・エスケープ遭遇表1/2/3 (EE1ET/EE2ET/EE3ET)\n" + "　・エスコート遭遇表1/2/3 (ET1ET/ET2ET/ET3ET)\n" + "　・トラッキング遭遇表1/2/3 (TK1ET/TK2ET/TK3ET)\n" + "・D66ダイスあり\n"
+      return "" + "・判定\n" + "　判定時にクリティカルとファンブルを自動判定します。\n" + "・各種表\n" + "　・遭遇表　(ET)\n" + "　・都市ロケーション表　(CLT)\n" + "　・閉所ロケーション表　(SLT)\n" + "　・炎熱ロケーション表　(HLT)\n" + "　・冷暗ロケーション表　(FLT)\n" + "　・部位ダメージ決定表　(DLT)\n" + "　・モノビースト行動表　(MAT)\n" + "　・異形アビリティー表　(SATx) (xは個数)\n" + "　・異形アビリティー表2　(SA2Tx) (xは個数)\n" + "　　→表１と表２の振り分けも判定\n" + "　・指定特技(社会)表　　(TST)\n" + "　・指定特技(頭部)表　　(THT)\n" + "　・指定特技(腕部)表　　(TAT)\n" + "　・指定特技(胴部)表　　(TBT)\n" + "　・指定特技(脚部)表　　(TLT)\n" + "　・指定特技(環境)表　　(TET)\n" + "　・異形化表　　　　　　(MST)\n" + "　・代償表　　　　　　　(ERT)\n" + "　・ディフェンス遭遇表1/2/3 (DS1ET/DS2ET/DS3ET)\n" + "　・エスケープ遭遇表1/2/3 (EE1ET/EE2ET/EE3ET)\n" + "　・エスコート遭遇表1/2/3 (ET1ET/ET2ET/ET3ET)\n" + "　・トラッキング遭遇表1/2/3 (TK1ET/TK2ET/TK3ET)\n" + "・D66骰子あり\n"
     }, TMP_HuntersMoon_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_HuntersMoon_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_HuntersMoon_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
@@ -101,9 +101,9 @@
       type = "モノビースト行動";
       $b = self.$hm_monobeast_action_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/SA(2)?T(\d*)/i['$===']($case)) {
-      isType2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$nil?']()['$!']();
-      count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      if ($truthy(count['$=='](0))) {
+      isType2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$nil?']()['$!']();
+      count = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      if (count['$=='](0)) {
         count = 1};
       type = "異形アビリティー";
       $b = self.$get_strange_ability_table_result(count, isType2), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
@@ -129,7 +129,7 @@
       type = "遭遇";
       $b = self.$hm_encount_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else {return self.$getTableCommandResult(command, (($a = $HuntersMoon.$$cvars['@@tables']) == null ? nil : $a))};
-      if ($truthy(output['$==']("1"))) {
+      if (output['$==']("1")) {
         return output};
       output = "" + (type) + "表(" + (total_n) + ") ＞ " + (output);
       return output;
@@ -139,7 +139,7 @@
       var self = this, table = nil;
 
       
-      table = ["住宅街/閑静な住宅街。不意打ちに適しているため、ハンターの攻撃判定に+1の修正をつけてもよい。", "学校/夜の学校。遮蔽物が多く入り組んだ構造のため、ハンターはブロック判定によって肩代わりしたダメージを1減少してもよい。", "駅/人のいない駅。全てのキャラクターがファンブル時に砂利に突っ込んだり伝染に接触しかけることで1D6のダメージを受ける。", "高速道路/高速道路の路上。全てのキャラクターが、ファンブル時には走ってきた車に跳ねられて1D6のダメージを受ける。", "ビル屋上/高いビルの屋上。ハンターはファンブル時に屋上から落下して強制的に撤退する。命に別状はない", "繁華街/にぎやかな繁華街の裏路地。大量の人の気配が近くにあるため、モノビーストが撤退するラウンドが1ラウンド早くなる。決戦フェイズでは特に効果なし。"];
+      table = ["住宅街/閑静な住宅街。不意打ちに適しているため、ハンターの攻撃判定に+1の修正をつけてもよい。", "学校/夜の学校。遮蔽物が多く入り組んだ構造のため、ハンターはブロック判定によって肩代わりしたダメージを1減少してもよい。", "駅/人のいない駅。全ての角色がファンブル時に砂利に突っ込んだり伝染に接触しかけることで1D6のダメージを受ける。", "高速道路/高速道路の路上。全ての角色が、ファンブル時には走ってきた車に跳ねられて1D6のダメージを受ける。", "ビル屋上/高いビルの屋上。ハンターはファンブル時に屋上から落下して強制的に撤退する。命に別状はない", "繁華街/にぎやかな繁華街の裏路地。大量の人の気配が近くにあるため、モノビーストが撤退するラウンドが1ラウンド早くなる。決戦フェイズでは特に効果なし。"];
       return self.$get_table_by_1d6(table);
     }, TMP_HuntersMoon_hm_city_location_table_7.$$arity = 0);
     
@@ -147,7 +147,7 @@
       var self = this, table = nil;
 
       
-      table = ["地下倉庫/広々とした倉庫。探してみれば色々なものが転がっている。ハンターは戦闘開始時に好きなアイテムを一つ入手してもよい。", "地下鉄/地下鉄の線路上。全てのキャラクターが、ファンブル時にはなぜか走ってくる列車に撥ねられて1D6ダメージを受ける。", "地下道/暗いトンネル。車道や照明の落ちた地下街。ハンターは、ファンブル時にアイテムを一つランダムに失くしてしまう。", "廃病院/危険な廃物がたくさん落ちているため、誰もここで戦うのは好きではない。キャラクター全員の【モラル】を3点減少してから戦闘を開始する。", "下水道/人が２人並べるくらいの幅の下水道。メンテナンス用の明かりしかなく、非常に視界が悪いため、ハンターの攻撃判定に-1の修正がつく。", "都市の底/都市の全てのゴミが流れ着く場所。広い空洞にゴミが敷き詰められている。この敵対的な環境では、ハンターの攻撃判定に-1の修正がつく。さらにハンターは攻撃失敗時に2ダメージを受ける。"];
+      table = ["地下倉庫/広々とした倉庫。探してみれば色々なものが転がっている。ハンターは戦闘開始時に好きなアイテムを一つ入手してもよい。", "地下鉄/地下鉄の線路上。全ての角色が、ファンブル時にはなぜか走ってくる列車に撥ねられて1D6ダメージを受ける。", "地下道/暗いトンネル。車道や照明の落ちた地下街。ハンターは、ファンブル時にアイテムを一つランダムに失くしてしまう。", "廃病院/危険な廃物がたくさん落ちているため、誰もここで戦うのは好きではない。角色全員の【モラル】を3点減少してから戦闘を開始する。", "下水道/人が２人並べるくらいの幅の下水道。メンテナンス用の明かりしかなく、非常に視界が悪いため、ハンターの攻撃判定に-1の修正がつく。", "都市の底/都市の全てのゴミが流れ着く場所。広い空洞にゴミが敷き詰められている。この敵対的な環境では、ハンターの攻撃判定に-1の修正がつく。さらにハンターは攻撃失敗時に2ダメージを受ける。"];
       return self.$get_table_by_1d6(table);
     }, TMP_HuntersMoon_hm_small_location_table_8.$$arity = 0);
     
@@ -155,7 +155,7 @@
       var self = this, table = nil;
 
       
-      table = ["温室/植物が栽培されている熱く湿った場所。生命に満ち溢れた様子は、戦闘開始時にハンターの【モラル】を1点増加する。", "調理場/調理器具があちこちに放置された、アクションには多大なリスクをともなう場所。全てのキャラクターは、ファンブル時に良くない場所に手をついたり刃物のラックをひっくり返して1D6ダメージを受ける。", "ボイラー室/モノビーストは蒸気機関の周囲を好む傾向があるが、ここはうるさくて気が散るうえに暑い。全てのキャラクターは、感情属性が「怒り」の場合、全てのアビリティの反動が1増加する。", "機関室/何らかの工場。入り組みすぎて周りを見通せないうえ、配置がわからず出たとこ勝負を強いられる。キャラクター全員が戦闘開始時に「妨害」の変調を発動する。", "火事場/事故現場なのかモノビーストの仕業か、あたりは激しく燃え盛っている。ハンターはファンブル時に「炎上」の変調を発動する。", "製鉄所/無人ながら稼働中の製鉄所。安全対策が不十分で、溶けた金属の周囲まで近づくことが可能だ。ハンターは毎ラウンド終了時に《耐熱》で行為判定をし、これに失敗すると「炎上」の変調を発動する。"];
+      table = ["温室/植物が栽培されている熱く湿った場所。生命に満ち溢れた様子は、戦闘開始時にハンターの【モラル】を1点増加する。", "調理場/調理器具があちこちに放置された、アクションには多大なリスクをともなう場所。全ての角色は、ファンブル時に良くない場所に手をついたり刃物のラックをひっくり返して1D6ダメージを受ける。", "ボイラー室/モノビーストは蒸気機関の周囲を好む傾向があるが、ここはうるさくて気が散るうえに暑い。全ての角色は、感情属性が「怒り」の場合、全てのアビリティの反動が1増加する。", "機関室/何らかの工場。入り組みすぎて周りを見通せないうえ、配置がわからず出たとこ勝負を強いられる。角色全員が戦闘開始時に「妨害」の変調を発動する。", "火事場/事故現場なのかモノビーストの仕業か、あたりは激しく燃え盛っている。ハンターはファンブル時に「炎上」の変調を発動する。", "製鉄所/無人ながら稼働中の製鉄所。安全対策が不十分で、溶けた金属の周囲まで近づくことが可能だ。ハンターは毎ラウンド終了時に《耐熱》で行為判定をし、これに失敗すると「炎上」の変調を発動する。"];
       return self.$get_table_by_1d6(table);
     }, TMP_HuntersMoon_hm_hot_location_table_9.$$arity = 0);
     
@@ -163,7 +163,7 @@
       var self = this, table = nil;
 
       
-      table = ["冷凍保管室/食品が氷漬けにされている場所。ここではモノビーストは氷に覆われてしまう。モノビーストは戦闘開始時に「捕縛」の変調を発動する。", "墓地/死んだ人々が眠る場所。ここで激しいアクションを行うことは冒涜的だ。全てのキャラクターは感情属性が恐怖の場合、全てのアビリティの反動が１増加する。", "魚市場/発泡スチロールの箱に鮮魚と氷が詰まり、コンクリートの床は濡れていて滑りやすい。ハンターはファンブル時に転んで1D6ダメージを受ける。", "博物館/すっかり静まり返った博物館で、モノビーストは動物の剥製の間に潜んでいる。紛らわしい展示物だらけであるため、ハンターは攻撃判定に-1の修正を受ける。", "空き地/寒風吹きすさぶ空き地。長くいると凍えてしまいそうだ。ハンターはファンブル時に身体がかじかみ、「重傷」の変調を発動する。", "氷室/氷で満たされた洞窟。こんな場所が都市にあったとは信じがたいが、とにかくひどく寒い。ハンターは毎ラウンド終了時に《耐寒》で判定し、失敗すると「重傷」の変調を発動する。"];
+      table = ["冷凍保管室/食品が氷漬けにされている場所。ここではモノビーストは氷に覆われてしまう。モノビーストは戦闘開始時に「捕縛」の変調を発動する。", "墓地/死んだ人々が眠る場所。ここで激しいアクションを行うことは冒涜的だ。全ての角色は感情属性が恐怖の場合、全てのアビリティの反動が１増加する。", "魚市場/発泡スチロールの箱に鮮魚と氷が詰まり、コンクリートの床は濡れていて滑りやすい。ハンターはファンブル時に転んで1D6ダメージを受ける。", "博物館/すっかり静まり返った博物館で、モノビーストは動物の剥製の間に潜んでいる。紛らわしい展示物だらけであるため、ハンターは攻撃判定に-1の修正を受ける。", "空き地/寒風吹きすさぶ空き地。長くいると凍えてしまいそうだ。ハンターはファンブル時に身体がかじかみ、「重傷」の変調を発動する。", "氷室/氷で満たされた洞窟。こんな場所が都市にあったとは信じがたいが、とにかくひどく寒い。ハンターは毎ラウンド終了時に《耐寒》で判定し、失敗すると「重傷」の変調を発動する。"];
       return self.$get_table_by_1d6(table);
     }, TMP_HuntersMoon_hm_freezing_location_table_10.$$arity = 0);
     
@@ -187,7 +187,7 @@
       var self = this, table = nil;
 
       
-      table = ["脳", "利き腕", "利き脚", "消化器", "感覚器", "攻撃したキャラクターの任意の部分", "口", "呼吸器", "逆脚", "逆腕", "心臓"];
+      table = ["脳", "利き腕", "利き脚", "消化器", "感覚器", "攻撃した角色の任意の部分", "口", "呼吸器", "逆脚", "逆腕", "心臓"];
       return self.$get_table_by_2d6(table);
     }, TMP_HuntersMoon_hm_hit_location_table_13.$$arity = 0);
     
@@ -216,7 +216,7 @@ if (i == null) i = nil;
         if ($truthy(isType2)) {
           
           $b = self.$roll(1, 6), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), $b;
-          index = (function() {if (number['$%'](2)['$=='](1)) {
+          index = (function() {if ($truthy(number['$odd?']())) {
             return 0
             } else {
             return 1
@@ -225,9 +225,9 @@ if (i == null) i = nil;
           dice = $rb_plus(dice, "" + (number) + "-");
           output = $rb_plus(output, "" + "[表" + ($rb_plus(index, 1)) + "]");};
         $b = self.$get_table_by_d66(table), $a = Opal.to_ary($b), (ability = ($a[0] == null ? nil : $a[0])), (indexText = ($a[1] == null ? nil : $a[1])), $b;
-        if ($truthy(ability['$==']("1"))) {
+        if (ability['$==']("1")) {
           return nil;};
-        output = $rb_plus(output, "" + (ability));
+        output = $rb_plus(output, ability.$to_s());
         return (dice = $rb_plus(dice, indexText));}, TMP_15.$$s = self, TMP_15.$$arity = 1, TMP_15));
       if ($truthy(output['$empty?']())) {
         return ["1", dice]};

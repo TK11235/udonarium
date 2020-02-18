@@ -21,9 +21,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$+', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$isDragonDice', '$[]', '$to_s', '$!=', '$>=', '$getDiceCountHash', '$each', '$<<', '$<=', '$size', '$*', '$inject', '$new', '$isNomalDice', '$==', '$[]=', '$-', '$!']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$===', '$to_i', '$last_match', '$checkRoll', '$empty?', '$getValue', '$<', '$>', '$+', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$isDragonDice', '$[]', '$!=', '$>=', '$getDiceCountHash', '$each', '$<<', '$<=', '$size', '$*', '$inject', '$new', '$isNomalDice', '$==', '$[]=', '$-', '$!']);
   return (function($base, $super, $parent_nesting) {
     function $Utakaze(){};
     var self = $Utakaze = $klass($base, $super, 'Utakaze', $Utakaze);
@@ -72,16 +72,16 @@
     }, TMP_Utakaze_isGetOriginalMessage_5.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Utakaze_rollDiceCommand_6 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, result = nil, $case = nil, base = nil, crit = nil, diff = nil;
+      var $a, self = this, result = nil, $case = nil, base = nil, crit = nil, diff = nil;
 
       
       self.$debug("rollDiceCommand command", command);
       result = "";
       $case = command;
       if (/(\d+)?UK(\@?(\d))?(>=(\d+))?/i['$===']($case)) {
-      base = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
-      crit = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
+      base = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
+      crit = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
       result = self.$checkRoll(base, crit, diff);};
       if ($truthy(result['$empty?']())) {
         return nil};
@@ -119,7 +119,7 @@ if (i == null) i = nil;
       $b = self.$getSuccessInfo(diceList, crit, diff), $a = Opal.to_ary($b), (success = ($a[0] == null ? nil : $a[0])), (maxnum = ($a[1] == null ? nil : $a[1])), (setCount = ($a[2] == null ? nil : $a[2])), $b;
       result = "";
       if ($truthy(self.$isDragonDice(crit))) {
-        result = $rb_plus(result, "" + "龍のダイス「" + (self.arrayDragonDiceName['$[]'](crit)) + "」(" + (crit.$to_s()) + ")を使用 ＞ ")};
+        result = $rb_plus(result, "" + "龍のダイス「" + (self.arrayDragonDiceName['$[]'](crit)) + "」(" + (crit) + ")を使用 ＞ ")};
       if ($truthy(success)) {
         
         result = $rb_plus(result, "" + "成功レベル:" + (maxnum) + " (" + (setCount) + "セット)");
@@ -137,7 +137,7 @@ if (i == null) i = nil;
       return result;
     }, TMP_Utakaze_getRollResultString_9.$$arity = 3);
     
-    Opal.defn(self, '$getSuccessInfo', TMP_Utakaze_getSuccessInfo_11 = function $$getSuccessInfo(diceList, crit, diff) {
+    Opal.defn(self, '$getSuccessInfo', TMP_Utakaze_getSuccessInfo_11 = function $$getSuccessInfo(diceList, crit, _diff) {
       var TMP_10, self = this, diceCountHash = nil, maxnum = nil, successDiceList = nil, countThreshold = nil;
 
       

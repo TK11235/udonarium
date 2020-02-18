@@ -18,9 +18,9 @@
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$gsub', '$torg_check', '$=~', '$debug', '$to_i', '$parren_killer', '$torg_dice', '$get_torg_bonus', '$>', '$+', '$to_s', '$!=', '$roll', '$shift', '$empty?', '$==', '$upcase', '$===', '$get_torg_success_level', '$get_torg_interaction_result_intimidate_test', '$get_torg_interaction_result_taunt_trick', '$get_torg_interaction_result_maneuver', '$get_torg_damage_ords', '$get_torg_damage_posibility', '$get_torg_bonus_text', '$get_torg_table_result', '$each', '$[]', '$get_torg_damage', '$<', '$-', '$length', '$<=', '$/', '$split', '$join', '$getTorgBonusOutputTextWhenModDefined']);
+  Opal.add_stubs(['$setPrefixes', '$gsub', '$last_match', '$torg_check', '$=~', '$debug', '$to_i', '$parren_killer', '$torg_dice', '$get_torg_bonus', '$>', '$+', '$to_s', '$!=', '$roll', '$shift', '$empty?', '$==', '$upcase', '$===', '$get_torg_success_level', '$get_torg_interaction_result_intimidate_test', '$get_torg_interaction_result_taunt_trick', '$get_torg_interaction_result_maneuver', '$get_torg_damage_ords', '$get_torg_damage_posibility', '$get_torg_bonus_text', '$get_torg_table_result', '$each', '$[]', '$get_torg_damage', '$<', '$-', '$length', '$<=', '$/', '$split', '$join', '$getTorgBonusOutputTextWhenModDefined']);
   return (function($base, $super, $parent_nesting) {
     function $Torg(){};
     var self = $Torg = $klass($base, $super, 'Torg', $Torg);
@@ -72,9 +72,9 @@
       string = string.$gsub(/(ords|odamage)/i, "ODT");
       string = string.$gsub(/damage/i, "DT");
       string = string.$gsub(/(bonus|total)/i, "BT");
-      string = $send(string, 'gsub', [/TG(\d+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/TG(\d+)/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + "1R20+" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      return "" + "1R20+" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
       string = string.$gsub(/TG/i, "1R20");
       return string;
     }, TMP_Torg_changeText_6.$$arity = 1);
@@ -94,8 +94,8 @@
         } else {
         return "1"
       };
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      mod = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      string = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
+      mod = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       self.$debug(mod);
       if ($truthy(mod)) {
         mod = self.$parren_killer("" + "(0" + (mod) + ")").$to_i()};
@@ -139,8 +139,8 @@
           } else {
           dice_str = $rb_plus(dice_str, ",")
         };
-        dice_str = $rb_plus(dice_str, "" + (dice_n));
-        if ($truthy(dice_n['$=='](20))) {
+        dice_str = $rb_plus(dice_str, dice_n.$to_s());
+        if (dice_n['$=='](20)) {
           isCritical = false
         } else if ($truthy(dice_n['$!='](10))) {
           
@@ -162,8 +162,8 @@
         } else {
         return "1"
       };
-      type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      num = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      type = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      num = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       $case = type;
       if ("RT"['$===']($case)) {
       value = self.$parren_killer("" + "(0" + (num) + ")").$to_i();
@@ -212,7 +212,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, TMP_Torg_get_torg_interaction_result_intimidate_test_12.$$arity = 1);
     
@@ -220,7 +220,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, TMP_Torg_get_torg_interaction_result_taunt_trick_13.$$arity = 1);
     
@@ -228,7 +228,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "疲労"], [10, "萎縮／疲労"], [15, "逆転負け／疲労"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "疲労"], [10, "萎縮／疲労"], [15, "逆転負け／疲労"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, TMP_Torg_get_torg_interaction_result_maneuver_14.$$arity = 1);
     
@@ -288,8 +288,8 @@ if (item == null) item = nil;
       resultValue = self.$get_torg_bonus(value);
       self.$debug("TORG BT resultValue", resultValue);
       self.$debug("TORG BT mod", mod);
-      if ($truthy(mod['$=='](0))) {
-        output = "" + (resultValue)
+      if (mod['$=='](0)) {
+        output = resultValue.$to_s()
         } else {
         
         output = self.$getTorgBonusOutputTextWhenModDefined(value, resultValue, mod);

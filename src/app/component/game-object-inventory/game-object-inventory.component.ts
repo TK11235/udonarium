@@ -15,6 +15,7 @@ import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'ser
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { DiceBot } from '@udonarium/dice-bot';
 
 @Component({
   selector: 'game-object-inventory',
@@ -37,8 +38,11 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   get dataTag(): string { return this.inventoryService.dataTag; }
   set dataTag(dataTag: string) { this.inventoryService.dataTag = dataTag; }
   get dataTags(): string[] { return this.inventoryService.dataTags; }
+  get diceBotInfos() { return DiceBot.diceBotInfos }
+  get gameType(): string { return this.inventoryService.gameType; }
+  set gameType(gameType: string) { this.inventoryService.gameType = gameType; }
 
-  get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '昇順' : '降順'; }
+  get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '升序' : '降序'; }
 
   get newLineString(): string { return this.inventoryService.newLineString; }
 
@@ -51,7 +55,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   ) { }
 
   ngOnInit() {
-    this.panelService.title = 'インベントリ';
+    this.panelService.title = '倉庫';
     EventSystem.register(this)
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         if (ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) {
@@ -84,7 +88,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   getTabTitle(inventoryType: string) {
     switch (inventoryType) {
       case 'table':
-        return 'テーブル';
+        return '桌面';
       case Network.peerId:
         return '個人';
       case 'graveyard':
@@ -128,14 +132,18 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
     let actions: ContextMenuAction[] = [];
 
-    actions.push({ name: '詳細を表示', action: () => { this.showDetail(gameObject); } });
-    actions.push({ name: 'チャットパレットを表示', action: () => { this.showChatPalette(gameObject) } });
+
+    actions.push({ name: '顯示詳情', action: () => { this.showDetail(gameObject); } });
+    if (gameObject.location.name !== 'graveyard') {
+      actions.push({ name: '顯示對話組合版', action: () => { this.showChatPalette(gameObject) } });
+    }
+
     actions.push(ContextMenuSeparator);
     let locations = [
-      { name: 'table', alias: 'テーブルに移動' },
-      { name: 'common', alias: '共有イベントリに移動' },
-      { name: Network.peerId, alias: '個人イベントリに移動' },
-      { name: 'graveyard', alias: '墓場に移動' }
+      { name: 'table', alias: '移動到桌面' },
+      { name: 'common', alias: '移動到共有倉庫' },
+      { name: Network.peerId, alias: '移動到個人倉庫' },
+      { name: 'graveyard', alias: '移動到墓場' }
     ];
     for (let location of locations) {
       if (gameObject.location.name === location.name) continue;
@@ -149,7 +157,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
     if (gameObject.location.name === 'graveyard') {
       actions.push({
-        name: '削除する', action: () => {
+        name: '刪除', action: () => {
           this.deleteGameObject(gameObject);
           SoundEffect.play(PresetSound.sweep);
         }
@@ -157,7 +165,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     }
     actions.push(ContextMenuSeparator);
     actions.push({
-      name: 'コピーを作る', action: () => {
+      name: '複製', action: () => {
         this.cloneGameObject(gameObject);
         SoundEffect.play(PresetSound.piecePut);
       }
@@ -173,7 +181,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   cleanInventory() {
     let tabTitle = this.getTabTitle(this.selectTab);
     let gameObjects = this.getGameObjects(this.selectTab);
-    if (!confirm(`${tabTitle}に存在する${gameObjects.length}個の要素を完全に削除しますか？`)) return;
+    if (!confirm(`${tabTitle}存在的${gameObjects.length}個檔案要永久刪除？`)) return;
     for (const gameObject of gameObjects) {
       this.deleteGameObject(gameObject);
     }
@@ -187,7 +195,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   private showDetail(gameObject: GameCharacter) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = 'キャラクターシート';
+    let title = '角色卡';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x - 800, top: coordinate.y - 300, width: 800, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
@@ -196,7 +204,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   private showChatPalette(gameObject: GameCharacter) {
     let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 615, height: 350 };
+    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 630, height: 350 };
     let component = this.panelService.open<ChatPaletteComponent>(ChatPaletteComponent, option);
     component.character = gameObject;
   }
@@ -213,5 +221,12 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   trackByGameObject(index: number, gameObject: GameObject) {
     return gameObject ? gameObject.identifier : index;
+  }
+
+  onChangeGameType(gameType: string) {
+    console.log('onChangeGameType ready');
+    DiceBot.getHelpMessage(this.gameType).then(help => {
+      console.log('onChangeGameType done\n' + help + this.gameType);
+    });
   }
 }

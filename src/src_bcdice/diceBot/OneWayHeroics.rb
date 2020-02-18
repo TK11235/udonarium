@@ -3,7 +3,7 @@
 class OneWayHeroics < DiceBot
   def initialize
     super
-    @d66Type = 2  #d66の差し替え(0=D66無し, 1=順番そのまま([5,3]->53), 2=昇順入れ替え([5,3]->35)
+    @d66Type = 2 # d66の差し替え(0=D66無し, 1=順番そのまま([5,3]->53), 2=升序入れ替え([5,3]->35)
   end
 
   def gameName
@@ -17,16 +17,16 @@ class OneWayHeroics < DiceBot
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定　aJDx+y,z
-　a:ダイス数（省略時2個)、x:能力値、
+　a:骰子数（省略時2個)、x:能力値、
 　y:修正値（省略可。「＋」のみなら＋１）、z:目標値（省略可）
 　例１）JD2+1,8 or JD2+,8　：能力値２、修正＋１、目標値８
 　例２）JD3,10 能力値３、修正なし、目標値10
-　例３）3JD4+ ダイス3個から2個選択、能力値４、修正なし、目標値なし
+　例３）3JD4+ 骰子3個から2個選択、能力値４、修正なし、目標値なし
 ・ファンブル表 FT／魔王追撃表   DC／進行ルート表 PR／会話テーマ表 TT
 逃走判定表   EC／ランダムNPC特徴表 RNPC／偵察表 SCT
 施設表　FCLT／施設表プラス　FCLTP／希少動物表 RANI／王特徴表プラス KNGFTP
 野外遭遇表 OUTENC／野外遭遇表プラス OUTENCP
-モンスター特徴表 MONFT／モンスター特徴表プラス MONFTP
+怪獸特徴表 MONFT／怪獸特徴表プラス MONFTP
 ドロップアイテム表 DROP／ドロップアイテム表プラス DROPP
 武器ドロップ表 DROPWP／武器ドロップ表2 DROPWP2
 防具ドロップ表 DROPAR／防具ドロップ表2 DROPAR2
@@ -66,18 +66,16 @@ MESSAGETEXT
     number, text =
       case type
       when /^(\d+)D6$/i
-        count = $1.to_i
+        count = Regexp.last_match(1).to_i
         dice, = roll(count, 6)
         getTableResult(table, dice, hasGap)
       when 'D66'
         isSwap = (@d66Type == 2)
         dice = getD66(isSwap)
         getTableResult(table, dice, hasGap)
-      else
-        nil
       end
 
-    return nil if( text.nil? )
+    return nil if text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
@@ -85,23 +83,23 @@ MESSAGETEXT
   def getRollDiceCommandResult(command)
     return nil unless /^(\d*)JD(\d*)(\+(\d*))?(,(\d+))?$/ === command
 
-    diceCount = $1
+    diceCount = Regexp.last_match(1)
     diceCount = 2 if diceCount.empty?
     diceCount = diceCount.to_i
     return nil if diceCount < 2
 
-    ability = $2.to_i
-    target = $6
+    ability = Regexp.last_match(2).to_i
+    target = Regexp.last_match(6)
     target = target.to_i unless target.nil?
 
-    modifyText = ($3 || "")
+    modifyText = (Regexp.last_match(3) || "")
     modifyText = "+1" if modifyText == "+"
     modifyValue = modifyText.to_i
 
     dice, diceText = rollJudgeDice(diceCount)
     total = dice + ability + modifyValue
 
-    text = "#{command}"
+    text = command.to_s
     text += " ＞ #{diceCount}D6[#{diceText}]+#{ability}#{modifyText}"
     text += " ＞ #{total}"
 
@@ -114,7 +112,7 @@ MESSAGETEXT
   def rollJudgeDice(diceCount)
     dice, diceText, = roll(diceCount, 6)
 
-    if( diceCount == 2 )
+    if diceCount == 2
       return dice, diceText
     end
 
@@ -135,16 +133,18 @@ MESSAGETEXT
     return "" if target.nil?
 
     return "成功" if total >= target
+
     return "失敗"
   end
 
   def getTableResult(table, dice, hasGap = false)
     number, text, command = table.assoc(dice)
 
-    if number.nil? and hasGap
+    if number.nil? && hasGap
       params = nil
       table.each do |data|
         break if data.first > dice
+
         params = data
       end
 
@@ -168,6 +168,7 @@ MESSAGETEXT
 
     text = rollDiceCommand(command)
     return " ＞ #{command} is NOT found." if text.nil?
+
     return " ＞ \n #{command} ＞ #{text}"
   end
 
@@ -183,10 +184,10 @@ MESSAGETEXT
 
     if dice <= day
       text += " ＞ 日数[#{day}]以下"
-      text += getAddRoll( command1 )
+      text += getAddRoll(command1)
     else
       text += " ＞ 日数[#{day}]を超えている"
-      text += getAddRoll( command2 )
+      text += getAddRoll(command2)
     end
 
     return text
@@ -200,7 +201,8 @@ MESSAGETEXT
 
   def getRandomEventDiceCommandResult(command)
     return nil unless /^RET(\d+)$/ === command
-    day = $1.to_i
+
+    day = Regexp.last_match(1).to_i
 
     name = "ランダムイベント表"
     table = [
@@ -215,14 +217,15 @@ MESSAGETEXT
     dice, = roll(1, 6)
     number, text = getTableResult(table, dice)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
 
   def getRandomEventPlusDiceCommandResult(command)
     return nil unless /^RETP(\d+)$/ === command
-    day = $1.to_i
+
+    day = Regexp.last_match(1).to_i
 
     name = "ランダムイベント表プラス"
     table = [
@@ -241,25 +244,26 @@ MESSAGETEXT
     dice, = roll(1, 6)
     number, text = getTableResult(table, dice)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
 
   def getDungeonTableDiceCommandResult(command)
     return nil unless /^DNGN(\d+)$/ === command
-    day = $1.to_i
+
+    day = Regexp.last_match(1).to_i
 
     name = "ダンジョン表"
     table =
       [
-       [1, "犬小屋（１５５ページ）。"],
-       [2, "犬小屋（１５５ページ）。"],
-       [3, "「ダンジョン遭遇表」（１５３ページ）へ移動。小型ダンジョンだ。"],
-       [4, "「ダンジョン遭遇表」（１５３ページ）へ移動。小型ダンジョンだ。"],
-       [5, "「ダンジョン遭遇表」（１５３ページ）へ移動。ここは中型ダンジョンなので、モンスターが出現した場合、数が1体増加する。さらにイベントの経験値が1増加する。"],
-       [6, "「ダンジョン遭遇表」（１５３ページ）へ移動。ここは大型ダンジョンなので、モンスターが出現した場合、数が2体増加する。さらにイベントの経験値が2増加する。"],
-       [7, "牢獄遭遇表へ移動（１５４ページ）。牢獄つきダンジョン。"],
+        [1, "犬小屋（１５５ページ）。"],
+        [2, "犬小屋（１５５ページ）。"],
+        [3, "「ダンジョン遭遇表」（１５３ページ）へ移動。小型ダンジョンだ。"],
+        [4, "「ダンジョン遭遇表」（１５３ページ）へ移動。小型ダンジョンだ。"],
+        [5, "「ダンジョン遭遇表」（１５３ページ）へ移動。ここは中型ダンジョンなので、怪獸が出現した場合、数が1体増加する。さらにイベントの経験値が1増加する。"],
+        [6, "「ダンジョン遭遇表」（１５３ページ）へ移動。ここは大型ダンジョンなので、怪獸が出現した場合、数が2体増加する。さらにイベントの経験値が2増加する。"],
+        [7, "牢獄遭遇表へ移動（１５４ページ）。牢獄つきダンジョン。"],
       ]
 
     dice, = roll(1, 6)
@@ -268,31 +272,32 @@ MESSAGETEXT
     hasGap = true
     number, text = getTableResult(table, dice, hasGap)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
 
   def getDungeonPlusTableDiceCommandResult(command)
     return nil unless /^DNGNP(\d+)$/ === command
-    day = $1.to_i
+
+    day = Regexp.last_match(1).to_i
 
     name = "ダンジョン表プラス"
     table =
       [
-       [2, "犬小屋（基本１５５ページ）"],
-       [3, "犬小屋（基本１５５ページ）"],
-       [4, "犬小屋（基本１５５ページ）"],
-       [5, "犬小屋（基本１５５ページ）"],
-       [6, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。小型ダンジョンだ。"],
-       [7, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。小型ダンジョンだ。"],
-       [8, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。ここは中型ダンジョンのため、モンスターが出現した場合、数が１体増加する。またイベントの【経験値】が１増加する。"],
-       [9, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。ここは大型ダンジョンのため、モンスターが出現した場合、数が２体増加する。またイベントの【経験値】が２増加する。"],
-       [10, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。近くに寄っただけで吸い込まれる罠のダンジョンだ。「ダンジョン遭遇表」を使用したあと、中央にあるモニュメントに触れて転移して出るか、【鉄格子】と戦闘して出るか選択する。転移した場合は闇の目の前に出てしまい、全力ダッシュで【ＳＴ】を１Ｄ６消費する。【鉄格子】との戦闘では逃走を選択できない。"],
-       [11, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。水浸しのダンジョンで、「ダンジョン遭遇表」を使用した直後に【ＳＴ】が３減少する。「水泳」"],
-       [12, "水路に囲まれた水上遺跡だ。なかに入るなら【ＳＴ】を４消費（「水泳」）してから「ダンジョン遭遇表」（基本１５３ページ）へ移動。イベントの判定に成功すると追加で【豪華な宝箱】が１つ出現し、戦闘か開錠を試みられる。"],
-       [13, "「牢獄遭遇表」（基本１５４ページ）へ移動。牢獄つきダンジョンだ。"],
-       [14, "砂の遺跡にたどりつき、「牢獄遭遇表」（基本１５４ページ）へ移動。モンスターが出現した場合、数が２体増加する。またイベントの【経験値】が２増加する。イベントの判定に成功すると追加で【珍しい箱】が１つ出現し、戦闘か開錠を試みられる。"],
+        [2, "犬小屋（基本１５５ページ）"],
+        [3, "犬小屋（基本１５５ページ）"],
+        [4, "犬小屋（基本１５５ページ）"],
+        [5, "犬小屋（基本１５５ページ）"],
+        [6, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。小型ダンジョンだ。"],
+        [7, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。小型ダンジョンだ。"],
+        [8, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。ここは中型ダンジョンのため、怪獸が出現した場合、数が１体増加する。またイベントの【経験値】が１増加する。"],
+        [9, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。ここは大型ダンジョンのため、怪獸が出現した場合、数が２体増加する。またイベントの【経験値】が２増加する。"],
+        [10, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。近くに寄っただけで吸い込まれる罠のダンジョンだ。「ダンジョン遭遇表」を使用したあと、中央にあるモニュメントに触れて転移して出るか、【鉄格子】と戦闘して出るか選択する。転移した場合は闇の目の前に出てしまい、全力ダッシュで【ＳＴ】を１Ｄ６消費する。【鉄格子】との戦闘では逃走を選択できない。"],
+        [11, "「ダンジョン遭遇表」（基本１５３ページ）へ移動。水浸しのダンジョンで、「ダンジョン遭遇表」を使用した直後に【ＳＴ】が３減少する。「水泳」"],
+        [12, "水路に囲まれた水上遺跡だ。なかに入るなら【ＳＴ】を４消費（「水泳」）してから「ダンジョン遭遇表」（基本１５３ページ）へ移動。イベントの判定に成功すると追加で【豪華な宝箱】が１つ出現し、戦闘か開錠を試みられる。"],
+        [13, "「牢獄遭遇表」（基本１５４ページ）へ移動。牢獄つきダンジョンだ。"],
+        [14, "砂の遺跡にたどりつき、「牢獄遭遇表」（基本１５４ページ）へ移動。怪獸が出現した場合、数が２体増加する。またイベントの【経験値】が２増加する。イベントの判定に成功すると追加で【珍しい箱】が１つ出現し、戦闘か開錠を試みられる。"],
       ]
 
     dice, = roll(2, 6)
@@ -301,7 +306,7 @@ MESSAGETEXT
     hasGap = true
     number, text = getTableResult(table, dice, hasGap)
 
-    return nil if( text.nil? )
+    return nil if  text.nil?
 
     return "#{name}(#{number}) ＞ #{text}"
   end
@@ -334,8 +339,8 @@ MESSAGETEXT
       :name => "ファンブル表",
       :type => '1D6',
       :table => [
-        [1, "装備以外のアイテムのうちプレイヤー指定の１つを失う"],
-        [2, "装備のうちプレイヤー指定の１つを失う"],
+        [1, "装備以外のアイテムのうち玩家指定の１つを失う"],
+        [2, "装備のうち玩家指定の１つを失う"],
         [3, "１Ｄ６に１００を掛け、それだけの【所持金】を失う", getGoldTextProc(1, 100, "失う")],
         [4, "１Ｄ６に１００を掛け、それだけの【所持金】を拾う", getGoldTextProc(1, 100, "拾う")],
         [5, "【経験値】２を獲得する"],
@@ -417,12 +422,12 @@ MESSAGETEXT
       :name => "偵察表",
       :type => '1D6',
       :table => [
-        [1 ,"山に突き当たる。「登山」判定：【筋力】　ジャッジ：山を登る描写。"],
-        [2 ,"川を流れ下る。「水泳」判定：【敏捷】　ジャッジ：川でピンチに陥る描写。"],
-        [3 ,"広い湖だ……。「水泳」判定：【生命】　ジャッジ：湖面を泳ぐ描写。"],
-        [4 ,"山の楽なルートを探そう。「登山」判定：【知力】　ジャッジ：山の豆知識。"],
-        [5 ,"迫る闇から恐怖のあまり目を離せない。判定：【意志】　ジャッジ：勇者としての決意。"],
-        [6 ,"任意のＮＰＣに会って情報を聞く。判定：【魅力】　ジャッジ：相手を立てる会話。"]
+        [1, "山に突き当たる。「登山」判定：【筋力】　ジャッジ：山を登る描写。"],
+        [2, "川を流れ下る。「水泳」判定：【敏捷】　ジャッジ：川でピンチに陥る描写。"],
+        [3, "広い湖だ……。「水泳」判定：【生命】　ジャッジ：湖面を泳ぐ描写。"],
+        [4, "山の楽なルートを探そう。「登山」判定：【知力】　ジャッジ：山の豆知識。"],
+        [5, "迫る闇から恐怖のあまり目を離せない。判定：【意志】　ジャッジ：勇者としての決意。"],
+        [6, "任意のＮＰＣに会って情報を聞く。判定：【魅力】　ジャッジ：相手を立てる会話。"]
       ]
     },
 
@@ -476,9 +481,9 @@ MESSAGETEXT
       :name => "野外遭遇表",
       :type => '1D6',
       :table => [
-        [1, "エリアの地形ごとの野外モンスター表へ移動。モンスターのうち１体にランダムな特徴がつく。モンスター特徴表（１５６ページ）を使用する。", getAddRollProc("MONFT")],
-        [2, "エリアの地形ごとの野外モンスター表へ移動。"],
-        [3, "エリアの地形ごとの野外モンスター表へ移動。"],
+        [1, "エリアの地形ごとの野外怪獸表へ移動。怪獸のうち１体にランダムな特徴がつく。怪獸特徴表（１５６ページ）を使用する。", getAddRollProc("MONFT")],
+        [2, "エリアの地形ごとの野外怪獸表へ移動。"],
+        [3, "エリアの地形ごとの野外怪獸表へ移動。"],
         [4, "アンデッドの群れ（１５６ページ）。"],
         [5, "盗賊の群れ（１５６ページ）。"],
         [6, "希少動物表（１５６ページ）へ移動。", getAddRollProc("RANI")]
@@ -489,9 +494,9 @@ MESSAGETEXT
       :name => "野外遭遇表プラス",
       :type => '1D6',
       :table => [
-        [1, "エリアの地形ごとの野外モンスター表プラスへ移動。モンスターのうち1体にランダムな特徴がつく。モンスター特徴表プラス（０２７ページ）を使用する。", getAddRollProc("MONFTP")],
-        [2, "エリアの地形ごとの野外モンスター表プラスへ移動し、出現したモンスターとの戦闘が発生する"],
-        [3, "スライムモンスター表プラス（０２７ページ）へ移動。"],
+        [1, "エリアの地形ごとの野外怪獸表プラスへ移動。怪獸のうち1体にランダムな特徴がつく。怪獸特徴表プラス（０２７ページ）を使用する。", getAddRollProc("MONFTP")],
+        [2, "エリアの地形ごとの野外怪獸表プラスへ移動し、出現した怪獸との戦闘が発生する"],
+        [3, "スライム怪獸表プラス（０２７ページ）へ移動。"],
         [4, "アンデッドの群れ（基本１５６ページ）"],
         [5, "盗賊の群れ（基本１５６ページ）"],
         [6, "希少動物表（基本１５６ページ）へ移動", getAddRollProc("RANI")]
@@ -499,7 +504,7 @@ MESSAGETEXT
     },
 
     "MONFT" => {
-      :name => "モンスター特徴表",
+      :name => "怪獸特徴表",
       :type => 'D66',
       :table => [
         [11, "【エッチな】"],
@@ -527,7 +532,7 @@ MESSAGETEXT
     },
 
     "MONFTP" => {
-      :name => "モンスター特徴表プラス",
+      :name => "怪獸特徴表プラス",
       :type => 'D66',
       :table => [
         [11, "【エッチな】（基本１７８ページ）"],
@@ -638,14 +643,14 @@ MESSAGETEXT
       :name => "聖武具ドロップ表",
       :type => '2D6',
       :table => [
-        [2 , "【紅き太陽の剣】"],
-        [3 , "【紅き太陽の剣】"],
-        [4 , "【聖剣カレドヴルフ】 "],
-        [5 , "【聖斧エルサーベス】 "],
-        [6 , "【水霊のマント】"],
-        [7 , "【大地の鎧】"],
-        [8 , "【大気の盾】"],
-        [9 , "【聖弓ル・アルシャ】"],
+        [2, "【紅き太陽の剣】"],
+        [3, "【紅き太陽の剣】"],
+        [4, "【聖剣カレドヴルフ】 "],
+        [5, "【聖斧エルサーベス】 "],
+        [6, "【水霊のマント】"],
+        [7, "【大地の鎧】"],
+        [8, "【大気の盾】"],
+        [9, "【聖弓ル・アルシャ】"],
         [10, " 【聖槍ヴァルキウス】"],
         [11, " 【聖なる月の剣】"],
         [12, " 【聖なる月の剣】"]
@@ -965,7 +970,7 @@ MESSAGETEXT
         [6, "【絶望の王の】（０４７ページ）"],
       ]
     }
-  }
+  }.freeze
 
   setPrefixes(['\d*JD.*', 'RET\d+', 'RETP\d+', 'DNGN\d+'] + TABLES.keys)
 end

@@ -25,33 +25,30 @@ class TherapieSein < DiceBot
 「@t」で目標値を指定。省略時は達成値のみ表示、指定時は判定の正否を追加表示。
 
 【書式例】
-・TS → ダイスの合計値を達成値として表示。
-・TS4 → ダイス合計+4を達成値表示。
-・TS4-1 → ダイス合計+4-1（計+3）を達成値表示。
-・TS2+1@10 → ダイス合計+2+1（計+3）の達成値と、判定の成否を表示。
-・OP4+3+1 → ダイス合計+4+3+1（計+8）を達成値＆クリティカル表示。
-・OP3@12 → ダイス合計+3の達成値＆クリティカル、判定の成否を表示。
+・TS → 骰子の合計値を達成値として表示。
+・TS4 → 骰子合計+4を達成値表示。
+・TS4-1 → 骰子合計+4-1（計+3）を達成値表示。
+・TS2+1@10 → 骰子合計+2+1（計+3）の達成値と、判定の成否を表示。
+・OP4+3+1 → 骰子合計+4+3+1（計+8）を達成値＆クリティカル表示。
+・OP3@12 → 骰子合計+3の達成値＆クリティカル、判定の成否を表示。
 MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-
     output =
       case command.upcase
 
       when /(TS|OP)(\d+)?(([\+\-]\d+)*)(\@(\d+))?$/i
-        hasCritical = ( $1 == "OP" )
-        target = ($6 || 0).to_i
-        modify = ($2 || 0).to_i
-        modifyAddString = $3
+        hasCritical = (Regexp.last_match(1) == "OP")
+        target = (Regexp.last_match(6) || 0).to_i
+        modify = (Regexp.last_match(2) || 0).to_i
+        modifyAddString = Regexp.last_match(3)
 
-        modify_list = modifyAddString.scan(/[\+\-]\d+/)  # 修正値を分割して配列へ
-        modify_list.each{|i| modify += i.to_i }
+        modify_list = modifyAddString.scan(/[\+\-]\d+/) # 修正値を分割して配列へ
+        modify_list.each { |i| modify += i.to_i }
 
         checkRoll(hasCritical, modify, target)
 
-      else
-        nil
       end
 
     return output
@@ -67,16 +64,16 @@ MESSAGETEXT
     result = "(2D6#{modifyText}#{targetText})"
     result += " ＞ #{dice}(#{diceText})#{modifyText}"
 
-    if( hasCritical and dice == 12 )
+    if hasCritical && (dice == 12)
       result += " ＞ クリティカル！"
       return result
     end
 
     result += " ＞ #{successValue}#{targetText}"
 
-    return result if( target == 0 )
+    return result if target == 0
 
-    if( successValue >= target )
+    if  successValue >= target
       result += " ＞ 【成功】"
     else
       result += " ＞ 【失敗】"
@@ -86,9 +83,9 @@ MESSAGETEXT
   end
 
   def getValueText(value)
-    return "" if( value == 0 )
-    return "#{value}" if( value < 0 )
+    return "" if value == 0
+    return value.to_s if value < 0
+
     return "\+#{value}"
   end
-
 end

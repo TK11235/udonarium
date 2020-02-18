@@ -9,9 +9,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$checkRoll', '$empty?', '$===', '$to_i', '$roll', '$sort', '$collect', '$split', '$+', '$getModifyText', '$join', '$getCriticalResult', '$nil?', '$isFumble', '$>=', '$==', '$<', '$size', '$select', '$to_s']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$checkRoll', '$empty?', '$===', '$to_i', '$last_match', '$roll', '$sort', '$collect', '$split', '$+', '$getModifyText', '$join', '$getCriticalResult', '$nil?', '$isFumble', '$>=', '$==', '$<', '$to_s', '$size', '$select']);
   return (function($base, $super, $parent_nesting) {
     function $StrangerOfSwordCity(){};
     var self = $StrangerOfSwordCity = $klass($base, $super, 'StrangerOfSwordCity', $StrangerOfSwordCity);
@@ -52,7 +52,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_StrangerOfSwordCity_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this, info = nil;
 
-      return (info = "" + "・判定　xSR or xSRy or xSR+y or xSR-y or xSR+y>=z\n" + "　x=ダイス数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)\n" + "　判定時はクリティカル、ファンブルの自動判定を行います。\n" + "・通常のnD6ではクリティカル、ファンブルの自動判定は行いません。\n" + "・D66ダイスあり\n")
+      return (info = "" + "・判定　xSR or xSRy or xSR+y or xSR-y or xSR+y>=z\n" + "　x=骰子数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)\n" + "　判定時はクリティカル、ファンブルの自動判定を行います。\n" + "・通常のnD6ではクリティカル、ファンブルの自動判定は行いません。\n" + "・D66骰子あり\n")
     }, TMP_StrangerOfSwordCity_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_StrangerOfSwordCity_rollDiceCommand_5 = function $$rollDiceCommand(command) {
@@ -80,10 +80,10 @@
         } else {
         return result
       };
-      diceCount = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      modify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](4)))) {
-        difficulty = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4)).$to_i()};
+      diceCount = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(4))) {
+        difficulty = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i()};
       $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceList = $send(diceText.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
@@ -117,10 +117,10 @@ if (i == null) i = nil;
       var self = this;
 
       
-      if ($truthy(modify['$=='](0))) {
+      if (modify['$=='](0)) {
         return ""};
       if ($truthy($rb_lt(modify, 0))) {
-        return "" + (modify)};
+        return modify.$to_s()};
       return "" + "+" + (modify);
     }, TMP_StrangerOfSwordCity_getModifyText_8.$$arity = 1);
     

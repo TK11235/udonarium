@@ -6,7 +6,7 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
 
   Opal.add_stubs(['$==', '$>=', '$debug', '$!=', '$*']);
   return (function($base, $super, $parent_nesting) {
@@ -51,16 +51,16 @@
       return "「1の出目でEPP獲得」、判定時の「成功」「失敗」「ゾロ目で自動振り足し」を判定。\n"
     }, TMP_TokumeiTenkousei_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$check_nD6', TMP_TokumeiTenkousei_check_nD6_5 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_TokumeiTenkousei_check_nD6_5 = function $$check_nD6(total_n, _dice_n, _signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
       if ($gvars.signOfInequality == null) $gvars.signOfInequality = nil;
 
       
-      if ($truthy($gvars.signOfInequality['$=='](">="))) {
+      if ($gvars.signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return ""};
       if ($truthy($rb_ge(total_n, diff))) {
         return " ＞ 成功"
@@ -68,7 +68,7 @@
         return " ＞ 失敗"
       };
     }, TMP_TokumeiTenkousei_check_nD6_5.$$arity = 8);
-    return (Opal.defn(self, '$getDiceRolledAdditionalText', TMP_TokumeiTenkousei_getDiceRolledAdditionalText_6 = function $$getDiceRolledAdditionalText(n1, n_max, dice_max) {
+    return (Opal.defn(self, '$getDiceRolledAdditionalText', TMP_TokumeiTenkousei_getDiceRolledAdditionalText_6 = function $$getDiceRolledAdditionalText(n1, _n_max, dice_max) {
       var $a, self = this, point = nil;
 
       

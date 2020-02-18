@@ -1,6 +1,6 @@
+<div class="background-image is-pointer-events-none" [ngClass]="[(backgroundFilterType ? 'is-filter' : ''), backgroundFilterType]" 
+[style.background-image]="'url(' + backgroundImage.url + ')' | safe: 'style'"></div>
 <div class="component is-fill is-perspective" [ngClass]="{'is-grabbing': isPointerDragging}" #root>
-  <div class="background-image is-pointer-events-none" [ngClass]="[(backgroundFilterType ? 'is-filter' : ''), backgroundFilterType]" 
-    [style.background-image]="'url(' + backgroundImage.url + ')' | safe: 'style'"></div>
   <div class="component-content is-fill is-3d" #gameTable>
     <div id="app-game-table" class="game-table table-image is-3d" [style.background-image]="'url(' + tableImage.url + ')' | safe: 'style'" #gameObjects>
       <canvas class="grid-canvas is-fill is-pointer-events-none" #gridCanvas></canvas>

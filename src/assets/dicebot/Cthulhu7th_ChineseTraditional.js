@@ -24,9 +24,9 @@
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $range = Opal.range, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $range = Opal.range, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$=~', '$to_i', '$<=', '$include?', '$min', '$max', '$+', '$rollPercentD10', '$getTotalLists', '$getTotal', '$getCheckResultText', '$join', '$roll', '$==', '$abs', '$times', '$*', '$push', '$>=', '$/', '$<', '$debug', '$>', '$rollFullAuto', '$each', '$getNextDifficltyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]', '$[]=', '$-', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$!', '$isLastBulletTurn', '$floor', '$ceil', '$getLastHitBulletCount']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$=~', '$to_i', '$last_match', '$<=', '$include?', '$min', '$max', '$+', '$rollPercentD10', '$getTotalLists', '$getTotal', '$getCheckResultText', '$join', '$roll', '$==', '$abs', '$times', '$*', '$push', '$>=', '$/', '$<', '$debug', '$>', '$rollFullAuto', '$each', '$getNextDifficltyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]', '$[]=', '$-', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$!', '$isLastBulletTurn', '$floor', '$ceil', '$getLastHitBulletCount']);
   return (function($base, $super, $parent_nesting) {
     function $Cthulhu7th_ChineseTraditional(){};
     var self = $Cthulhu7th_ChineseTraditional = $klass($base, $super, 'Cthulhu7th_ChineseTraditional', $Cthulhu7th_ChineseTraditional);
@@ -80,15 +80,15 @@
     }, TMP_Cthulhu7th_ChineseTraditional_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$getCheckResult', TMP_Cthulhu7th_ChineseTraditional_getCheckResult_6 = function $$getCheckResult(command) {
-      var $a, self = this, bonus_dice_count = nil, diff = nil, output = nil, units_digit = nil, total_list = nil, total = nil, result_text = nil;
+      var self = this, bonus_dice_count = nil, diff = nil, output = nil, units_digit = nil, total_list = nil, total = nil, result_text = nil;
 
       
       if ($truthy(/^CC([-\d]+)?<=(\d+)/i['$=~'](command))) {
         } else {
         nil
       };
-      bonus_dice_count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      bonus_dice_count = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_le(diff, 0))) {
         return "錯誤。目標值需為1以上。"};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
@@ -111,7 +111,7 @@
 
       
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
-      if ($truthy(dice['$=='](10))) {
+      if (dice['$=='](10)) {
         dice = 0};
       return dice;
     }, TMP_Cthulhu7th_ChineseTraditional_rollPercentD10_7.$$arity = 0);
@@ -127,7 +127,7 @@
       
         bonus = self.$rollPercentD10();
         total = $rb_plus($rb_times(bonus, 10), units_digit);
-        if ($truthy(total['$=='](0))) {
+        if (total['$=='](0)) {
           total = 100};
         return total_list.$push(total);}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
       return total_list;
@@ -151,7 +151,7 @@
       
       if ($truthy($rb_le(total, diff))) {
         
-        if ($truthy(total['$=='](1))) {
+        if (total['$=='](1)) {
           return "決定性的成功"};
         if ($truthy($rb_le(total, $rb_divide(diff, 5)))) {
           return "極限的成功"};
@@ -159,7 +159,7 @@
           return "困難的成功"};
         return "通常成功";};
       fumble_text = "致命的失敗";
-      if ($truthy(total['$=='](100))) {
+      if (total['$=='](100)) {
         return fumble_text};
       if ($truthy($rb_ge(total, 96))) {
         if ($truthy($rb_lt(diff, 50))) {
@@ -177,8 +177,8 @@
         } else {
         return nil
       };
-      diff_1 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      diff_2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      diff_1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      diff_2 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
@@ -191,7 +191,7 @@
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
         return "成功"
-      } else if ($truthy(succesCount['$=='](1))) {
+      } else if (succesCount['$=='](1)) {
         return "部分的成功"
         } else {
         return "失敗"
@@ -200,17 +200,17 @@
     }, TMP_Cthulhu7th_ChineseTraditional_getCombineRoll_12.$$arity = 1);
     
     Opal.defn(self, '$getFullAutoResult', TMP_Cthulhu7th_ChineseTraditional_getFullAutoResult_13 = function $$getFullAutoResult(command) {
-      var $a, $b, self = this, bullet_count = nil, diff = nil, broken_number = nil, bonus_dice_count = nil, output = nil, bullet_count_limit = nil;
+      var $a, self = this, bullet_count = nil, diff = nil, broken_number = nil, bonus_dice_count = nil, output = nil, bullet_count_limit = nil;
 
       
       if ($truthy(/^FAR\((-?\d+)(,(-?\d+))(,(-?\d+))(,(-?\d+))?\)/i['$=~'](command))) {
         } else {
         return nil
       };
-      bullet_count = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3)).$to_i();
-      broken_number = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
-      bonus_dice_count = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i();
+      bullet_count = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_i();
+      broken_number = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
+      bonus_dice_count = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i();
       output = "";
       bullet_count_limit = 100;
       if ($truthy($rb_gt(bullet_count, bullet_count_limit))) {
@@ -404,7 +404,7 @@ if (more_difficlty == null) more_difficlty = nil;
       var self = this, count = nil;
 
       
-      if ($truthy(bullet_count['$=='](1))) {
+      if (bullet_count['$=='](1)) {
         return 1};
       count = $rb_divide(bullet_count, (2).$to_f()).$floor();
       return count;

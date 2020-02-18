@@ -24,14 +24,14 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getAtackResult', '$getCriticalResult', '$==', '$<=', '$floor', '$/', '$-', '$=~', '$to_i', '$>', '$<', '$roll', '$*', '$[]', '$+', '$>=', '$debug', '$!=', '$each', '$get_wh_atpos_message', '$step', '$length', '$check_suc', '$%', '$wh_atpos']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$last_match', '$getAttackResult', '$getCriticalResult', '$==', '$<=', '$floor', '$/', '$-', '$=~', '$to_i', '$>', '$<', '$roll', '$*', '$[]', '$+', '$>=', '$debug', '$!=', '$each', '$get_wh_atpos_message', '$step', '$length', '$check_suc', '$%', '$wh_atpos']);
   return (function($base, $super, $parent_nesting) {
     function $Warhammer(){};
     var self = $Warhammer = $klass($base, $super, 'Warhammer', $Warhammer);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Warhammer_initialize_1, TMP_Warhammer_gameName_2, TMP_Warhammer_gameType_3, TMP_Warhammer_getHelpMessage_4, TMP_Warhammer_rollDiceCommand_5, TMP_Warhammer_check_1D100_6, TMP_Warhammer_getCriticalResult_7, TMP_Warhammer_wh_atpos_9, TMP_Warhammer_get_wh_atpos_message_11, TMP_Warhammer_getAtackResult_12;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Warhammer_initialize_1, TMP_Warhammer_gameName_2, TMP_Warhammer_gameType_3, TMP_Warhammer_getHelpMessage_4, TMP_Warhammer_rollDiceCommand_5, TMP_Warhammer_check_1D100_6, TMP_Warhammer_getCriticalResult_7, TMP_Warhammer_wh_atpos_9, TMP_Warhammer_get_wh_atpos_message_11, TMP_Warhammer_getAttackResult_12;
 
     
     self.$setPrefixes(["WH.*"]);
@@ -69,25 +69,25 @@
     }, TMP_Warhammer_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Warhammer_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, output_msg = nil, $case = nil, atackCommand = nil, criticalCommand = nil;
+      var self = this, output_msg = nil, $case = nil, attackCommand = nil, criticalCommand = nil;
 
       
       output_msg = nil;
       $case = command.$upcase();
       if (/^(WH\d+(@[\dWH]*)?)/i['$===']($case)) {
-      atackCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      output_msg = self.$getAtackResult(atackCommand);}
+      attackCommand = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      output_msg = self.$getAttackResult(attackCommand);}
       else if (/^(WH[HABTLW]\d+)/i['$===']($case)) {
-      criticalCommand = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      criticalCommand = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       output_msg = self.$getCriticalResult(criticalCommand);};
       return output_msg;
     }, TMP_Warhammer_rollDiceCommand_5.$$arity = 1);
     
-    Opal.defn(self, '$check_1D100', TMP_Warhammer_check_1D100_6 = function $$check_1D100(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_1D100', TMP_Warhammer_check_1D100_6 = function $$check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
-      if ($truthy(signOfInequality['$==']("<="))) {
+      if (signOfInequality['$==']("<=")) {
         } else {
         return ""
       };
@@ -102,7 +102,7 @@
       
       whh = ["01:打撃で状況が把握出来なくなる。次ターンは1回の半アクションしか行なえない。", "02:耳を強打された為、耳鳴りが酷く目眩がする。1Rに渡って一切のアクションを行なえない。", "03:打撃が頭皮を酷く傷つけた。【武器技術度】に-10%。治療を受けるまで継続。", "04:鎧が損傷し当該部位のAP-1。修理するには(職能:鎧鍛冶)テスト。鎧を着けていないなら1Rの間アクションを行なえない。", "05:転んで倒れ、頭がくらくらする。1Rに渡ってあらゆるテストに-30で、立ち上がるには起立アクションが必要。", "06:1d10R気絶。", "07:1d10分気絶。以後CTはサドンデス。", "08:顔がずたずたになって倒れ、以後無防備状態。治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。以後CTはサドンデスを適用。【頑強】テストに失敗すると片方の視力を失う。", "09:凄まじい打撃により頭蓋骨が粉砕される。死は瞬時に訪れる。", "10:死亡する。いかに盛大に出血し、どのような死に様を見せたのかを説明してもよい。"];
       wha = ["01:手に握っていたものを落とす。盾はくくりつけられている為、影響なし。", "02:打撃で腕が痺れ、1Rの間使えなくなる。", "03:手の機能が失われ、治療を受けるまで回復できない。手で握っていたもの(盾を除く)は落ちる。", "04:鎧が損傷する。当該部位のAP-1。修理するには(職能:鎧鍛冶)テスト。鎧を着けていないなら腕が痺れ、1Rの間使えなくなる。", "05:腕の機能が失われ、治療を受けるまで回復できない。手で握っていたもの(盾を除く)は落ちる。", "06:腕が砕かれる。手で握っていたもの(盾を除く)は落ちる。出血がひどく、治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。以後CTはサドンデスを適用。", "07:手首から先が血まみれの残骸と化す。手で握っていたもの(盾を除く)は落ちる。出血がひどく、治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。以後CTはサドンデスを適用。【頑健】テストに失敗すると手の機能を失う。", "08:腕は血まみれの肉塊がぶら下がっている状態になる。手で握っていたもの(盾を除く)は落ちる。治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。以後CTはサドンデスを適用。【頑健】テストに失敗すると肘から先の機能を失う。", "09:大動脈に傷が及んだ。コンマ数秒の内に損傷した肩から血を噴出して倒れる。ショックと失血により、ほぼ即死する。", "10:死亡する。いかに盛大に出血し、どのような死に様を見せたのかを説明してもよい。"];
-      whb = ["01:打撃で息が詰まる。1Rの間、キャラクターの全てのテストや攻撃に-20%。", "02:股間への一撃。苦痛のあまり、1Rに渡って一切のアクションを行なえない。", "03:打撃で肋骨がぐちゃぐちゃになる。以後治療を受けるまでの間、【武器技術度】に-10%。", "04:鎧が損傷する。当該部位のAP-1。修理するには(職能:鎧鍛冶)テスト。鎧を着けていないなら股間への一撃、1Rに渡って一切のアクションを行なえない。", "05:転んで倒れ、息が詰まって悶絶する。1Rに渡ってあらゆるテストに-30の修正、立ち上がるには起立アクションが必要。", "06:1d10R気絶。", "07:ひどい内出血が起こり、無防備状態。出血がひどく、治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。", "08:脊髄が粉砕されて倒れ、以後治療を受けるまで無防備状態。以後CTはサドンデスを適用。【頑強】テストに失敗すると腰から下が不随になる。", "09:凄まじい打撃により複数の臓器が破裂し、死は数秒のうちに訪れる。", "10:死亡する。いかに盛大に出血し、どのような死に様を見せたのかを説明してもよい。"];
+      whb = ["01:打撃で息が詰まる。1Rの間、角色の全てのテストや攻撃に-20%。", "02:股間への一撃。苦痛のあまり、1Rに渡って一切のアクションを行なえない。", "03:打撃で肋骨がぐちゃぐちゃになる。以後治療を受けるまでの間、【武器技術度】に-10%。", "04:鎧が損傷する。当該部位のAP-1。修理するには(職能:鎧鍛冶)テスト。鎧を着けていないなら股間への一撃、1Rに渡って一切のアクションを行なえない。", "05:転んで倒れ、息が詰まって悶絶する。1Rに渡ってあらゆるテストに-30の修正、立ち上がるには起立アクションが必要。", "06:1d10R気絶。", "07:ひどい内出血が起こり、無防備状態。出血がひどく、治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。", "08:脊髄が粉砕されて倒れ、以後治療を受けるまで無防備状態。以後CTはサドンデスを適用。【頑強】テストに失敗すると腰から下が不随になる。", "09:凄まじい打撃により複数の臓器が破裂し、死は数秒のうちに訪れる。", "10:死亡する。いかに盛大に出血し、どのような死に様を見せたのかを説明してもよい。"];
       whl = ["01:よろめく。次のターン、1回の半アクションしか行なえない。", "02:脚が痺れる。1Rに渡って【移動】は半減し、脚に関連する【敏捷】テストに-20%。回避が出来なくなる。", "03:脚の機能が失われ、治療を受けるまで回復しない。【移動】は半減し、脚に関連する【敏捷】テストに-20%。回避が出来なくなる。", "04:鎧が損傷する。当該部位のAP-1。修理するには(職能:鎧鍛冶)テスト。鎧を着けていないなら脚が痺れる、1Rに渡って【移動】は半減し、脚に関連する【敏捷】テストに-20%、回避不可になる。", "05:転んで倒れ、頭がくらくらする。1Rに渡ってあらゆるテストに-30の修正、立ち上がるには起立アクションが必要。", "06:脚が砕かれ、無防備状態。出血がひどく、治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。以後CTはサドンデスを適用。", "07:脚は血まみれの残骸と化し、無防備状態になる。治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。以後CTはサドンデスを適用。【頑強】テストに失敗すると足首から先を失う。", "08:脚は血まみれの肉塊がぶらさがっている状態。以後無防備状態。治療を受けるまで毎Rの被害者のターン開始時に20%で死亡。以後CTはサドンデスを適用。【頑強】テストに失敗すると膝から下を失う。", "09:大動脈に傷が及ぶ。コンマ数秒の内に脚の残骸から血を噴出して倒れ、ショックと出血で死は瞬時に訪れる。", "10:死亡する。いかに盛大に出血し、どのような死に様を見せたのかを説明してもよい。"];
       whw = ["01:軽打。1ラウンドに渡って、あらゆるテストに-10％。", "02:かすり傷。+10％の【敏捷】テストを行い、失敗なら直ちに高度を1段階失う。地上にいるクリーチャーは、次のターンには飛び立てない。", "03:損傷する。【飛行移動力】が2点低下する。-10％の【敏捷】テストを行い、失敗なら直ちに高度を1段階失う。地上にいるクリーチャーは、次のターンには飛び立てない。", "04:酷く損傷する。【飛行移動力】が4点低下する。-30％の【敏捷】テストを行い、失敗なら直ちに高度を1段階失う。地上にいるクリーチャーは、1d10ターンが経過するまで飛び立てない。", "05:翼が使えなくなる。【飛行移動力】が0に低下する。飛行中のものは落下し、高度に応じたダメージを受ける。地上にいるクリーチャーは、怪我が癒えるまで飛び立てない。", "06:翼の付け根に傷が開く。【飛行移動力】が0に低下する。飛行中のものは落下し、高度に応じたダメージを受ける。地上にいるクリーチャーは、怪我が癒えるまで飛び立てない。治療を受けるまで毎R被害者のターン開始時に20％の確率で死亡。以後CTはサドンデスを適用。", "07:翼は血まみれの残骸と化し、無防備状態になる。【飛行移動力】が0に低下する。飛行中のものは落下し、高度に応じたダメージを受ける。地上にいるクリーチャーは、怪我が癒えるまで飛び立てない。治療を受けるまで毎R被害者のターン開始時に20％の確率で死亡。以後CTはサドンデスを適用。【頑強】テストに失敗すると飛行能力を失う。", "08:翼が千切れてバラバラになり、無防備状態になる。【飛行移動力】が0に低下する。飛行中のものは落下し、高度に応じたダメージを受ける。地上にいるクリーチャーは、怪我が癒えるまで飛び立てない。治療を受けるまで毎R被害者のターン開始時に20％の確率で死亡。以後CTはサドンデスを適用。飛行能力を失う。", "09:大動脈が切断された。コンマ数秒の内に血を噴き上げてくずおれる、ショックと出血で死は瞬時に訪れる。", "10:死亡する。いかに盛大に出血し、どのような死に様を見せたのかを説明してもよい。"];
       criticalTable = [5, 7, 9, 10, 10, 10, 10, 10, 10, 10, 5, 6, 8, 9, 10, 10, 10, 10, 10, 10, 4, 6, 8, 9, 9, 10, 10, 10, 10, 10, 4, 5, 7, 8, 9, 9, 10, 10, 10, 10, 3, 5, 7, 8, 8, 9, 9, 10, 10, 10, 3, 4, 6, 7, 8, 8, 9, 9, 10, 10, 2, 4, 6, 7, 7, 8, 8, 9, 9, 10, 2, 3, 5, 6, 7, 7, 8, 8, 9, 9, 1, 3, 5, 6, 6, 7, 7, 8, 8, 9, 1, 2, 4, 5, 6, 6, 7, 7, 8, 8];
@@ -111,8 +111,8 @@
         } else {
         return "1"
       };
-      partsWord = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-      criticalValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      partsWord = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+      criticalValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_gt(criticalValue, 10))) {
         criticalValue = 10};
       if ($truthy($rb_lt(criticalValue, 1))) {
@@ -206,22 +206,22 @@ if (i == null) i = nil;
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       return output;
     }, TMP_Warhammer_get_wh_atpos_message_11.$$arity = 2);
-    return (Opal.defn(self, '$getAtackResult', TMP_Warhammer_getAtackResult_12 = function $$getAtackResult(string) {
+    return (Opal.defn(self, '$getAttackResult', TMP_Warhammer_getAttackResult_12 = function $$getAttackResult(string) {
       var $a, $b, self = this, pos_type = nil, diff = nil, total_n = nil, output = nil, pos_num = nil;
 
       
-      self.$debug("getAtackResult begin string", string);
+      self.$debug("getAttackResult begin string", string);
       pos_type = "";
       if ($truthy(/(.+)(@.*)/['$=~'](string))) {
         
-        string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-        pos_type = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+        string = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+        pos_type = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
         self.$debug("pos_type", pos_type);};
       if ($truthy(/WH(\d+)/i['$=~'](string))) {
         } else {
         return "1"
       };
-      diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = "" + "(" + (string) + ") ＞ " + (total_n);
       output = $rb_plus(output, self.$check_suc(total_n, 0, "<=", diff, 1, 100, 0, total_n));
@@ -231,7 +231,7 @@ if (i == null) i = nil;
       if ($truthy($rb_le(total_n, diff))) {
         output = $rb_plus(output, self.$wh_atpos(pos_num, pos_type))};
       return output;
-    }, TMP_Warhammer_getAtackResult_12.$$arity = 1), nil) && 'getAtackResult';
+    }, TMP_Warhammer_getAttackResult_12.$$arity = 1), nil) && 'getAttackResult';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

@@ -9,9 +9,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getCheckResult', '$tgr_opening_table', '$tgr_common_trouble_table', '$=~', '$to_i', '$>', '$+', '$roll', '$getCheckResultText', '$>=', '$get_1d10_table_result', '$get_table_by_number', '$get_table_result']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$getCheckResult', '$tgr_opening_table', '$tgr_common_trouble_table', '$=~', '$to_i', '$last_match', '$>', '$+', '$roll', '$to_s', '$getCheckResultText', '$>=', '$get_1d10_table_result', '$get_table_by_number', '$get_table_result']);
   return (function($base, $super, $parent_nesting) {
     function $TokyoGhostResearch(){};
     var self = $TokyoGhostResearch = $klass($base, $super, 'TokyoGhostResearch', $TokyoGhostResearch);
@@ -58,7 +58,7 @@
       if (/TK/i['$===']($case)) {return self.$getCheckResult(command)}
       else if ("OP"['$===']($case)) {return self.$tgr_opening_table()}
       else if ("TB"['$===']($case)) {return self.$tgr_common_trouble_table()}
-      else {return nil}})();
+      else { return nil }})();
       return output;
     }, TMP_TokyoGhostResearch_rollDiceCommand_5.$$arity = 1);
     
@@ -69,12 +69,12 @@
       output = "";
       diff = 0;
       if ($truthy(/TK?<=(\d+)/i['$=~'](command))) {
-        diff = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i()};
+        diff = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()};
       if ($truthy($rb_gt(diff, 0))) {
         
         output = $rb_plus(output, "" + "(1D10<=" + (diff) + ")");
         $b = self.$roll(1, 10), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = $rb_plus(output, $rb_plus(" ＞ ", "" + (total_n)));
+        output = $rb_plus(output, $rb_plus(" ＞ ", total_n.$to_s()));
         output = $rb_plus(output, $rb_plus(" ＞ ", self.$getCheckResultText(total_n, diff)));};
       return output;
     }, TMP_TokyoGhostResearch_getCheckResult_6.$$arity = 1);

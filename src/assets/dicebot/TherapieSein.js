@@ -9,9 +9,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$==', '$to_i', '$scan', '$each', '$+', '$checkRoll', '$roll', '$getValueText', '$>=', '$<']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$==', '$last_match', '$to_i', '$scan', '$each', '$+', '$checkRoll', '$roll', '$getValueText', '$>=', '$<', '$to_s']);
   return (function($base, $super, $parent_nesting) {
     function $TherapieSein(){};
     var self = $TherapieSein = $klass($base, $super, 'TherapieSein', $TherapieSein);
@@ -51,21 +51,21 @@
     }, TMP_TherapieSein_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_TherapieSein_rollDiceCommand_6 = function $$rollDiceCommand(command) {
-      var $a, $b, TMP_5, self = this, output = nil, $case = nil, hasCritical = nil, target = nil, modify = nil, modifyAddString = nil, modify_list = nil;
+      var $a, TMP_5, self = this, output = nil, $case = nil, hasCritical = nil, target = nil, modify = nil, modifyAddString = nil, modify_list = nil;
 
       
       output = (function() {$case = command.$upcase();
       if (/(TS|OP)(\d+)?(([\+\-]\d+)*)(\@(\d+))?$/i['$===']($case)) {
-      hasCritical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1))['$==']("OP");
-      target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i();
-      modify = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
-      modifyAddString = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
+      hasCritical = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)['$==']("OP");
+      target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : 0).$to_i();
+      modify = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
+      modifyAddString = Opal.const_get_relative($nesting, 'Regexp').$last_match(3);
       modify_list = modifyAddString.$scan(/[\+\-]\d+/);
       $send(modify_list, 'each', [], (TMP_5 = function(i){var self = TMP_5.$$s || this;
 if (i == null) i = nil;
       return (modify = $rb_plus(modify, i.$to_i()))}, TMP_5.$$s = self, TMP_5.$$arity = 1, TMP_5));
       return self.$checkRoll(hasCritical, modify, target);}
-      else {return nil}})();
+      else { return nil }})();
       return output;
     }, TMP_TherapieSein_rollDiceCommand_6.$$arity = 1);
     
@@ -88,7 +88,7 @@ if (i == null) i = nil;
         result = $rb_plus(result, " ＞ クリティカル！");
         return result;};
       result = $rb_plus(result, "" + " ＞ " + (successValue) + (targetText));
-      if ($truthy(target['$=='](0))) {
+      if (target['$=='](0)) {
         return result};
       if ($truthy($rb_ge(successValue, target))) {
         result = $rb_plus(result, " ＞ 【成功】")
@@ -101,10 +101,10 @@ if (i == null) i = nil;
       var self = this;
 
       
-      if ($truthy(value['$=='](0))) {
+      if (value['$=='](0)) {
         return ""};
       if ($truthy($rb_lt(value, 0))) {
-        return "" + (value)};
+        return value.$to_s()};
       return "" + "+" + (value);
     }, TMP_TherapieSein_getValueText_8.$$arity = 1), nil) && 'getValueText';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)

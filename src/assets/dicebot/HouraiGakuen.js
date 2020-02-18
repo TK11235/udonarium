@@ -15,9 +15,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars, $send = Opal.send;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$getRollResult', '$getMedResult', '$getResResult', '$getInnyouResult', '$getHattokuResult', '$getGogyouResult', '$=~', '$to_i', '$roll', '$getCheckResult', '$getDiceListFromText', '$isFamble', '$isCritical', '$<=', '$sort', '$collect', '$split', '$getTargetFromValue', '$+', '$-', '$getResistCheckResult', '$getResultRank', '$>', '$<', '$index', '$times', '$==', '$%', '$<<', '$getOddEven', '$join', '$getGogyouTable', '$get_table_by_1d6']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$getRollResult', '$getMedResult', '$getResResult', '$getInnyouResult', '$getHattokuResult', '$getGogyouResult', '$=~', '$to_i', '$last_match', '$roll', '$getCheckResult', '$getDiceListFromText', '$isFamble', '$isCritical', '$<=', '$sort', '$collect', '$split', '$getTargetFromValue', '$+', '$-', '$getResistCheckResult', '$getResultRank', '$>', '$<', '$index', '$times', '$even?', '$<<', '$getOddEven', '$join', '$getGogyouTable', '$get_table_by_1d6']);
   return (function($base, $super, $parent_nesting) {
     function $HouraiGakuen(){};
     var self = $HouraiGakuen = $klass($base, $super, 'HouraiGakuen', $HouraiGakuen);
@@ -71,7 +71,7 @@
         } else {
         return nil
       };
-      target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      target = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       result = self.$getCheckResult(diceText, total, target);
       return "" + "(3d6<=" + (target) + ") ＞ 出目" + (diceText) + "＝合計" + (total) + " ＞ " + (result);
@@ -121,8 +121,8 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      yourValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      enemyValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      yourValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      enemyValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       target = self.$getTargetFromValue(yourValue, enemyValue);
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       result = self.$getCheckResult(diceText, total, target);
@@ -143,8 +143,8 @@ if (i == null) i = nil;
         } else {
         return nil
       };
-      yourValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      enemyValue = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      yourValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      enemyValue = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       yourTarget = self.$getTargetFromValue(yourValue, enemyValue);
       enemyTarget = self.$getTargetFromValue(enemyValue, yourValue);
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (yourTotal = ($a[0] == null ? nil : $a[0])), (yourDiceText = ($a[1] == null ? nil : $a[1])), $b;
@@ -176,7 +176,7 @@ if (i == null) i = nil;
       return ranks.$index(result);
     }, TMP_HouraiGakuen_getResultRank_15.$$arity = 1);
     
-    Opal.defn(self, '$getInnyouResult', TMP_HouraiGakuen_getInnyouResult_17 = function $$getInnyouResult(command) {
+    Opal.defn(self, '$getInnyouResult', TMP_HouraiGakuen_getInnyouResult_17 = function $$getInnyouResult(_command) {
       var TMP_16, self = this, oddCount = nil, evenCount = nil;
 
       
@@ -186,7 +186,7 @@ if (i == null) i = nil;
 
       
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
-        if (dice['$%'](2)['$=='](0)) {
+        if ($truthy(dice['$even?']())) {
           return (evenCount = $rb_plus(evenCount, 1))
           } else {
           return (oddCount = $rb_plus(oddCount, 1))
@@ -198,7 +198,7 @@ if (i == null) i = nil;
       };
     }, TMP_HouraiGakuen_getInnyouResult_17.$$arity = 1);
     
-    Opal.defn(self, '$getHattokuResult', TMP_HouraiGakuen_getHattokuResult_19 = function $$getHattokuResult(command) {
+    Opal.defn(self, '$getHattokuResult', TMP_HouraiGakuen_getHattokuResult_19 = function $$getHattokuResult(_command) {
       var TMP_18, self = this, oddEvenList = nil, oddEvenText = nil, $case = nil;
 
       
@@ -224,12 +224,12 @@ if (i == null) i = nil;
 
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
-      if (dice['$%'](2)['$=='](0)) {
+      if ($truthy(dice['$even?']())) {
         return "偶数"};
       return "奇数";
     }, TMP_HouraiGakuen_getOddEven_20.$$arity = 0);
     
-    Opal.defn(self, '$getGogyouResult', TMP_HouraiGakuen_getGogyouResult_21 = function $$getGogyouResult(command) {
+    Opal.defn(self, '$getGogyouResult', TMP_HouraiGakuen_getGogyouResult_21 = function $$getGogyouResult(_command) {
       var $a, $b, self = this, type = nil, table = nil, text = nil, number = nil, output = nil;
 
       

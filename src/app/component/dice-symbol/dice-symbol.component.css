@@ -85,7 +85,6 @@
 
 .pedestal-outer {
   backface-visibility: hidden;
-  transform: translateZ(0.01px);
   position: absolute;
   height: 100%;
   width: 100%;

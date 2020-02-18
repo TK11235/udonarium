@@ -22,10 +22,10 @@ class StrangerOfSwordCity < DiceBot
   def getHelpMessage
     info = <<INFO_MESSAGE_TEXT
 ・判定　xSR or xSRy or xSR+y or xSR-y or xSR+y>=z
-　x=ダイス数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)
+　x=骰子数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)
 　判定時はクリティカル、ファンブルの自動判定を行います。
 ・通常のnD6ではクリティカル、ファンブルの自動判定は行いません。
-・D66ダイスあり
+・D66骰子あり
 INFO_MESSAGE_TEXT
   end
 
@@ -37,7 +37,7 @@ INFO_MESSAGE_TEXT
     result = ''
 
     result = checkRoll(command)
-    return result unless(result.empty?)
+    return result unless result.empty?
 
     return result
   end
@@ -46,14 +46,14 @@ INFO_MESSAGE_TEXT
     debug("checkRoll begin command", command)
 
     result = ''
-    return result unless(/^(\d+)SR([\+\-]?\d+)?(>=(\d+))?$/i === command)
+    return result unless /^(\d+)SR([\+\-]?\d+)?(>=(\d+))?$/i === command
 
-    diceCount = $1.to_i
-    modify = $2.to_i
-    difficulty = $4.to_i if $4
+    diceCount = Regexp.last_match(1).to_i
+    modify = Regexp.last_match(2).to_i
+    difficulty = Regexp.last_match(4).to_i if Regexp.last_match(4)
 
     dice, diceText = roll(diceCount, 6)
-    diceList = diceText.split(/,/).collect{|i|i.to_i}.sort
+    diceList = diceText.split(/,/).collect { |i| i.to_i }.sort
 
     totalValue = (dice + modify)
     modifyText = getModifyText(modify)
@@ -71,22 +71,23 @@ INFO_MESSAGE_TEXT
     end
 
     unless difficulty.nil?
-      result += (totalValue >= difficulty) ? ' ＞ 成功' : ' ＞ 失敗'
+      result += totalValue >= difficulty ? ' ＞ 成功' : ' ＞ 失敗'
     end
 
     return result
   end
 
   def getModifyText(modify)
-    return "" if( modify == 0 )
-    return "#{modify}" if modify < 0
+    return "" if modify == 0
+    return modify.to_s if modify < 0
+
     return "+#{modify}"
   end
 
   def getCriticalResult(diceList)
-    dice6Count = diceList.select{|i| i == 6 }.size
+    dice6Count = diceList.select { |i| i == 6 }.size
 
-    if ( dice6Count >= 2 )
+    if dice6Count >= 2
       return dice6Count.to_s
     end
 
@@ -94,6 +95,6 @@ INFO_MESSAGE_TEXT
   end
 
   def isFumble(diceList, diceCount)
-    (diceList.select{|i| i == 1 }.size >= diceCount)
+    (diceList.select { |i| i == 1 }.size >= diceCount)
   end
 end

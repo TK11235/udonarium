@@ -9,9 +9,9 @@
   function $rb_lt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$delete', '$sort', '$uniq', '$!', '$nil?', '$checkRoll', '$roll', '$collect', '$split', '$new', '$each', '$>', '$count', '$push', '$+', '$join', '$<']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$delete', '$sort', '$uniq', '$!', '$nil?', '$checkRoll', '$roll', '$collect', '$split', '$each', '$>', '$count', '$push', '$+', '$join', '$<']);
   return (function($base, $super, $parent_nesting) {
     function $Illusio(){};
     var self = $Illusio = $klass($base, $super, 'Illusio', $Illusio);
@@ -54,17 +54,17 @@
     }, TMP_Illusio_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Illusio_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, diceCount = nil, blockNo = nil, isParry = nil;
+      var $a, self = this, diceCount = nil, blockNo = nil, isParry = nil;
 
       
       if ($truthy(/(\d+)?IL([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?(P)?$/i['$==='](command))) {
         
-        diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 1).$to_i();
-        blockNo = [($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](4))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](5))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i(), ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i()];
+        diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
+        blockNo = [($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(5)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : 0).$to_i(), ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i()];
         blockNo.$delete(0);
         blockNo = blockNo.$sort();
         blockNo = blockNo.$uniq();
-        isParry = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8))['$nil?']()['$!']();
+        isParry = Opal.const_get_relative($nesting, 'Regexp').$last_match(8)['$nil?']()['$!']();
         return self.$checkRoll(diceCount, blockNo, isParry);};
       return nil;
     }, TMP_Illusio_rollDiceCommand_5.$$arity = 1);
@@ -76,7 +76,7 @@
       diceArray = $send(diceText.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));
-      resultArray = Opal.const_get_relative($nesting, 'Array').$new();
+      resultArray = [];
       success = 0;
       $send(diceArray, 'each', [], (TMP_7 = function(i){var self = TMP_7.$$s || this;
 if (i == null) i = nil;

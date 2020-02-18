@@ -45,17 +45,17 @@
 
       return "nD10>=m 方式の判定で成否、完全成功、完全失敗を自動判定します。\n"
     }, TMP_WaresBlade_getHelpMessage_4.$$arity = 0);
-    return (Opal.defn(self, '$check_nD10', TMP_WaresBlade_check_nD10_5 = function $$check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    return (Opal.defn(self, '$check_nD10', TMP_WaresBlade_check_nD10_5 = function $$check_nD10(total_n, dice_n, signOfInequality, diff, dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
-      if ($truthy(dice_n['$==']($rb_times(10, dice_cnt)))) {
+      if (dice_n['$==']($rb_times(10, dice_cnt))) {
         return " ＞ 完全成功"
-      } else if ($truthy(dice_n['$==']($rb_times(1, dice_cnt)))) {
+      } else if (dice_n['$==']($rb_times(1, dice_cnt))) {
         return " ＞ 絶対失敗"
       } else if ($truthy($rb_ge(total_n, diff))) {
         return " ＞ 成功"

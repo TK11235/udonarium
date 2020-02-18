@@ -3,7 +3,7 @@
 require 'diceBot/SRS'
 
 class MetallicGuadian < SRS
-  setPrefixes(['2D6.*','MG.*'])
+  setPrefixes(['2D6.*', 'MG.*'])
 
   def initialize
     super
@@ -32,12 +32,12 @@ class MetallicGuadian < SRS
 　　例) 2d6+2>=10[12,4] ↑をクリティカル値12、ファンブル値4で判定
 　　例) MG+2>=10        2d6+2>=10と同じ（MGが2D6のショートカットコマンド）
 
-・D66ダイス(入れ替え無し)あり
+・D66骰子(入れ替え無し)あり
 INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    string = string.gsub(/^(S)?MG/i) {"#{$1}2D6"}
+    string = string.gsub(/^(S)?MG/i) { "#{Regexp.last_match(1)}2D6" }
     return string
   end
 end

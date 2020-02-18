@@ -4,6 +4,8 @@ import { Listener } from './listener';
 import { Callback } from './observer';
 import { Subject } from './subject';
 
+type EventName = string;
+
 export class EventSystem implements Subject {
   private static _instance: EventSystem
   static get instance(): EventSystem {
@@ -14,7 +16,7 @@ export class EventSystem implements Subject {
     return EventSystem._instance;
   }
 
-  private listenersHash: { [eventName: string]: Listener[] } = {};
+  private listenerMap: Map<EventName, Listener[]> = new Map();
   private constructor() {
     console.log('EventSystem ready...');
   }
@@ -43,9 +45,9 @@ export class EventSystem implements Subject {
   }
 
   private _unregister(key: any = this, eventName: string, callback: Callback<any>) {
-    for (let _eventName in this.listenersHash) {
-      let listeners = this.getListeners(_eventName).concat();
-      for (let listener of listeners) {
+    let listenersIterator = this.listenerMap.values();
+    for (let listeners of listenersIterator) {
+      for (let listener of listeners.concat()) {
         if (listener.isEqual(key, eventName, callback)) {
           listener.unregister();
         }
@@ -58,18 +60,18 @@ export class EventSystem implements Subject {
 
     listeners.push(listener);
     listeners.sort((a, b) => b.priority - a.priority);
+    this.listenerMap.set(listener.eventName, listeners);
     return listener;
   }
 
   unregisterListener(listener: Listener): Listener {
     let listeners = this.getListeners(listener.eventName);
     let index = listeners.indexOf(listener);
-    if (-1 < index) {
-      listeners.splice(index, 1);
-      listener.unregister();
-      return listener;
-    }
-    return null;
+    if (index < 0) return null;
+    listeners.splice(index, 1);
+    listener.unregister();
+    if (listeners.length < 1) this.listenerMap.delete(listener.eventName);
+    return listener;
   }
 
   call<T>(eventName: string, data: T, sendTo?: string)
@@ -109,10 +111,7 @@ export class EventSystem implements Subject {
   }
 
   private getListeners(eventName: string): Listener[] {
-    if (!(eventName in this.listenersHash)) {
-      this.listenersHash[eventName] = [];
-    }
-    return this.listenersHash[eventName];
+    return this.listenerMap.has(eventName) ? this.listenerMap.get(eventName) : [];
   }
 
   private initializeNetworkEvent() {

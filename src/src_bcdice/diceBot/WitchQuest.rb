@@ -14,10 +14,10 @@ class WitchQuest < DiceBot
   def getHelpMessage
     return <<MESSAGETEXT
 ・チャレンジ(成功判定)(WQn)
-　n回2d6ダイスを振って判定を行います。
+　n回2d6骰子を振って判定を行います。
 　例）WQ3
-・SET（ストラクチャーカードの遭遇表(SETn)
-　ストラクチャーカードの番号(n)の遭遇表結果を得ます。
+・SET（ストラクチャー卡牌の遭遇表(SETn)
+　ストラクチャー卡牌の番号(n)の遭遇表結果を得ます。
 　例）SET1　SET48
 MESSAGETEXT
   end
@@ -29,10 +29,10 @@ MESSAGETEXT
   def rollDiceCommand(command)
     case command
     when /WQ(\d+)/
-      number = $1.to_i
+      number = Regexp.last_match(1).to_i
       return challenge(number)
     when /SET(\d+)/
-      number = $1.to_i
+      number = Regexp.last_match(1).to_i
       return getStructureEncounter(number)
     end
 
@@ -47,7 +47,7 @@ MESSAGETEXT
       value1, = roll(1, 6)
       value2, = roll(1, 6)
 
-      if( value1 == value2 )
+      if value1 == value2
         success += 1
       end
 
@@ -65,10 +65,9 @@ MESSAGETEXT
              [3, "３レベル成功(奇跡的大成功)"],
              [4, "４レベル成功(歴史的大成功)"],
              [5, "５レベル成功(伝説的大成功)"],
-             [6, "６レベル成功(神話的大成功)"],
-            ]
+             [6, "６レベル成功(神話的大成功)"],]
 
-    if( success >= table.last.first )
+    if success >= table.last.first
       return table.last.last
     end
 
@@ -125,12 +124,12 @@ MESSAGETEXT
               [45, %w{馬にブラシをかけている 気性の激しい 騎手を探している 馬と話ができる 馬の生まれ変わりという 馬を安楽死させようか迷っている}],
               [46, %w{いたずら好きな ライバル意識の強い 魔法の下手な 魔法を信じない 自分を神と思っている 魔法を使って人を化かしたがる}],
               [47, %w{傷だらけな 両手に宝物を持った かわいい 地図を見ながら出てきている 剣を持った ダンジョンの主といわれる}],
-              [48, %w{墓参りをしている 耳の遠い 死んでしまった 葬式をしている きもだめしをしている 墓守をしている}],
-             ]
+              [48, %w{墓参りをしている 耳の遠い 死んでしまった 葬式をしている きもだめしをしている 墓守をしている}],]
 
     table = get_table_by_number(number, tables, nil)
-    return nil if( table.nil? )
-    text, index = get_table_by_1d6( table )
+    return nil if table.nil?
+
+    text, index = get_table_by_1d6(table)
 
     person = getPersonTable1()
 
@@ -138,7 +137,7 @@ MESSAGETEXT
   end
 
   def getPersonTable1()
-    gotoNextTable = lambda{ "表２へ" + getPersonTable2() }
+    gotoNextTable = lambda { "表２へ" + getPersonTable2() }
 
     table = [[11, "おじさん"],
              [12, "おばさん"],
@@ -165,14 +164,13 @@ MESSAGETEXT
              [55, "お姫様"],
              [56, gotoNextTable],
 
-             [66, gotoNextTable],
-            ]
+             [66, gotoNextTable],]
 
     getPersonTable(table)
   end
 
   def getPersonTable2()
-    gotoNextTable = lambda{ "表３へ" + getPersonTable3() }
+    gotoNextTable = lambda { "表３へ" + getPersonTable3() }
 
     table = [[11, "魔法使い"],
              [12, "観光客"],
@@ -199,14 +197,13 @@ MESSAGETEXT
              [55, "蛇"],
              [56, gotoNextTable],
 
-             [66, gotoNextTable],
-            ]
+             [66, gotoNextTable],]
 
     getPersonTable(table)
   end
 
   def getPersonTable3()
-    gotoNextTable = lambda{ "表４へ" + getPersonTable4() }
+    gotoNextTable = lambda { "表４へ" + getPersonTable4() }
 
     table = [[11, "貴族"],
              [12, "いるか"],
@@ -233,8 +230,7 @@ MESSAGETEXT
              [55, "ロボット"],
              [56, "恐ろしい人"],
 
-             [66, gotoNextTable],
-            ]
+             [66, gotoNextTable],]
 
     getPersonTable(table)
   end
@@ -265,8 +261,7 @@ MESSAGETEXT
              [55, "初恋の人"],
              [56, "分かれた女(男)、不倫中の相手、または独身PCの場合、二股をかけている二人の両方"],
 
-             [66, "宇宙人"],
-            ]
+             [66, "宇宙人"],]
 
     getPersonTable(table)
   end
@@ -279,13 +274,13 @@ MESSAGETEXT
     " ＞ #{number}:" + get_table_by_number(number, table)
   end
 
-  #以下のメソッドはテーブルの参照用に便利
-  #get_table_by_2d6(table)
-  #get_table_by_1d6(table)
-  #get_table_by_nD6(table, 1)
-  #get_table_by_nD6(table, count)
-  #get_table_by_1d3(table)
-  #get_table_by_number(index, table)
+  # 以下のメソッドは桌面の参照用に便利
+  # get_table_by_2d6(table)
+  # get_table_by_1d6(table)
+  # get_table_by_nD6(table, 1)
+  # get_table_by_nD6(table, count)
+  # get_table_by_1d3(table)
+  # get_table_by_number(index, table)
 
-  #ダイス目が知りたくなったら getDiceList を呼び出すこと(DiceBot.rbにて定義)
+  # 骰子目が知りたくなったら getDiceList を呼び出すこと(DiceBot.rbにて定義)
 end

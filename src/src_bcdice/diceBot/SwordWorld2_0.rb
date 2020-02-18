@@ -8,8 +8,9 @@ class SwordWorld2_0 < SwordWorld
   def initialize
     rating_table = 2
     super()
-    @rating_table = rating_table;
+    @rating_table = rating_table
   end
+
   def gameName
     'ソードワールド2.0'
   end
@@ -26,7 +27,7 @@ class SwordWorld2_0 < SwordWorld
 　"Kキーナンバー+ボーナス"の形で記入します。
 　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。
 　また、ボーナスは複数取ることが出来ます。
-　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。
+　レーティング表も骰子ロールと同様に、他の玩家に隠れてロールすることも可能です。
 　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2
 
 ・クリティカル値の設定
@@ -36,9 +37,9 @@ class SwordWorld2_0 < SwordWorld
 　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。
 　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9
 
-・ダイス目の修正（運命変転やクリティカルレイ用）
-　末尾に「$修正値」でダイス目に修正がかかります。
-　$＋１と修正表記ならダイス目に＋修正、＄９のように固定値ならダイス目をその出目に差し替え。
+・骰子目の修正（運命変転やクリティカルレイ用）
+　末尾に「$修正値」で骰子目に修正がかかります。
+　$＋１と修正表記なら骰子目に＋修正、＄９のように固定値なら骰子目をその出目に差し替え。
 　クリティカルした場合でも固定値や修正値の適用は最初の一回だけです。
 　例）K20$+1　　　K10+5$9　　　k10-5@9$+2　　　k10[9]+10$9
 
@@ -65,51 +66,46 @@ INFO_MESSAGE_TEXT
 
   def rollDiceCommand(command)
     case command
-      when /^Gr(\d+)?/i
-        if command =~ /^Gr(\d+)/i then
-          growth($1.to_i)
-        else
-          growth
-        end
-      when 'FT'
-        get_fumble_table
-      when 'TT'
-        get_tangle_table
+    when /^Gr(\d+)?/i
+      if command =~ /^Gr(\d+)/i
+        growth(Regexp.last_match(1).to_i)
       else
-        super(command)
+        growth
+      end
+    when 'FT'
+      get_fumble_table
+    when 'TT'
+      get_tangle_table
+    else
+      super(command)
     end
   end
-
 
   def getRateUpFromString(string)
     rateUp = 0
 
     regexp = /r\[(\d+)\]/i
 
-    if( regexp === string )
-      rateUp = $1.to_i
+    if regexp === string
+      rateUp = Regexp.last_match(1).to_i
       string = string.gsub(regexp, '')
     end
 
     return rateUp, string
   end
 
-
   def getAdditionalString(string, output)
-
     output, values = super(string, output)
-    
+
     isGratestFortune, string = getGratestFortuneFromString(string)
-    
+
     values['isGratestFortune'] = isGratestFortune
-    output += "gf" if( isGratestFortune )
-    
+    output += "gf" if isGratestFortune
+
     return output, values
   end
-  
-  
+
   def rollDice(values)
-    
     unless values['isGratestFortune']
       return super(values)
     end
@@ -121,14 +117,13 @@ INFO_MESSAGE_TEXT
 
     return dice, diceText
   end
-  
-  
+
   def getGratestFortuneFromString(string)
     isGratestFortune = false
 
     regexp = /gf/i
 
-    if( regexp === string )
+    if regexp === string
       isGratestFortune = true
       string = string.gsub(regexp, '')
     end
@@ -136,42 +131,39 @@ INFO_MESSAGE_TEXT
     return isGratestFortune, string
   end
 
-
   def is2dCritical
     true
   end
 
-
   # SW2.0 の超成功用
   def check2dCritical(critical, dice_new, dice_arry, loop_count)
-    return if( critical <= 2 )
+    return if critical <= 2
 
-    if( loop_count == 0 )
-      return if( dice_new == 12 )
-      return if( dice_new == 2 )
+    if loop_count == 0
+      return if  dice_new == 12
+      return if  dice_new == 2
     end
 
-    if( dice_new >= critical )
-      dice_arry.push( 2 )
+    if dice_new >= critical
+      dice_arry.push(2)
     end
   end
 
   def check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) # ゲーム別成功度判定(nD6)
-
     debug("check_nD6")
     result = super(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
 
-    return result unless( result == "" )
+    return result unless  result == ""
 
     #string = @@bcdice.getOriginalMessage # TKfix @@bcdice が参照できない (Opal 0.11.4)
     string = bcdice.getOriginalMessage
 
     superSuccessValue = 41
 
-    if( /@(\d+)/ === string )
-      critical = $1.to_i
-      if( dice_n >= critical )
-        if( total_n >= superSuccessValue )
+    if /@(\d+)/ === string
+      critical = Regexp.last_match(1).to_i
+      if dice_n >= critical
+        if  total_n >= superSuccessValue
           return " ＞ 超成功"
         end
       end
@@ -181,7 +173,7 @@ INFO_MESSAGE_TEXT
   end
 
   def growth(count = 1)
-    ((1..count).map do growth_step end).join " | "
+    ((1..count).map { growth_step }).join " | "
   end
 
   def growth_step
@@ -213,12 +205,12 @@ INFO_MESSAGE_TEXT
 
   def get_tangle_table()
     table = [
-        '頭や顔：牙や噛みつきなどにおける命中力判定及び、魔法の行使やブレスに-2のペナルティ修正を受ける',
-        '武器や盾：武器の使用不可、又は盾の回避力修正及び防護点を無効化する',
-        '腕や手：武器や爪などにおける命中力判定に-2のペナルティ修正、盾を持つ腕方の腕ならその盾の回避力修正及び防護点を無効化する',
-        '脚や足：移動不可、更に回避力判定に-2のペナルティ修正を受ける ※両足に絡んでも累積しない',
-        '胴体：生命・精神抵抗力を基準値に用いる判定を除き、あらゆる行為判定に-1のペナルティ修正を受ける',
-        '特殊：尻尾や翼などに命中。絡められた部位を使用する判定において-2のペナルティ修正、またはそこが使えていたことによるボーナス修正を失う ※存在しない場合は決め直し'
+      '頭や顔：牙や噛みつきなどにおける命中力判定及び、魔法の行使やブレスに-2のペナルティ修正を受ける',
+      '武器や盾：武器の使用不可、又は盾の回避力修正及び防護点を無効化する',
+      '腕や手：武器や爪などにおける命中力判定に-2のペナルティ修正、盾を持つ腕方の腕ならその盾の回避力修正及び防護点を無効化する',
+      '脚や足：移動不可、更に回避力判定に-2のペナルティ修正を受ける ※両足に絡んでも累積しない',
+      '胴体：生命・精神抵抗力を基準値に用いる判定を除き、あらゆる行為判定に-1のペナルティ修正を受ける',
+      '特殊：尻尾や翼などに命中。絡められた部位を使用する判定において-2のペナルティ修正、またはそこが使えていたことによるボーナス修正を失う ※存在しない場合は決め直し'
     ]
     text, num = get_table_by_1d6(table)
     return "絡み効果表(#{num}) → #{text}"

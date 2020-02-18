@@ -9,9 +9,9 @@
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$get_dt', '$get_as', '$get_strange_habit_random', '$get_strange_habit_from_mouth', '$get_strange_habit_bull_through', '$get_strange_habit_play_innocent', '$get_strange_habit_engrossed', '$get_strange_habit_with_partner', '$get_strange_habit_do_something', '$get_strange_habit_fantastic', '$get_strange_habit_inspiration', '$get_strange_habit_emotion', '$get_event_scene', '$get_event_why', '$get_event_npc', '$get_event_coming', '$get_event_vs', '$get_obstruction_table', '$get_abnormal_condition', '$get_eyewitness_table', '$get_wrapped_in_mystery_table', '$get_background_detective_destiny', '$get_background_detective_genius', '$get_background_detective_mania', '$get_background_assistant_justice', '$get_background_assistant_passion', '$get_background_assistant_involved', '$get_height_table', '$get_base_table', '$get_guest_relation_table', '$get_memorial_item_table', '$get_job_table_66', '$get_job_table_10', '$get_fashion_table_66', '$get_fashion_table_10', '$get_feeling_table_66', '$get_feeling_table_10', '$get_like_dislike_table_66', '$get_like_dislike_table_10', '$get_name_to_call_table_66', '$get_name_to_call_table_10', '$times', '$roll', '$<<', '$get_dt_result', '$join', '$max', '$<=', '$include?', '$>=', '$get_as_result', '$assoc', '$respond_to?', '$+', '$call', '$lambda', '$getAddRoll', '$rollDiceCommand', '$nil?', '$get_table_by_number', '$get_table_by_1d6', '$get_table_by_d66_swap']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$get_dt', '$get_as', '$get_strange_habit_random', '$get_strange_habit_from_mouth', '$get_strange_habit_bull_through', '$get_strange_habit_play_innocent', '$get_strange_habit_engrossed', '$get_strange_habit_with_partner', '$get_strange_habit_do_something', '$get_strange_habit_fantastic', '$get_strange_habit_inspiration', '$get_strange_habit_emotion', '$get_event_scene', '$get_event_why', '$get_event_npc', '$get_event_coming', '$get_event_vs', '$get_obstruction_table', '$get_abnormal_condition', '$get_eyewitness_table', '$get_wrapped_in_mystery_table', '$get_background_detective_destiny', '$get_background_detective_genius', '$get_background_detective_mania', '$get_background_assistant_justice', '$get_background_assistant_passion', '$get_background_assistant_involved', '$get_height_table', '$get_base_table', '$get_guest_relation_table', '$get_memorial_item_table', '$get_job_table_66', '$get_job_table_10', '$get_fashion_table_66', '$get_fashion_table_10', '$get_feeling_table_66', '$get_feeling_table_10', '$get_like_dislike_table_66', '$get_like_dislike_table_10', '$get_name_to_call_table_66', '$get_name_to_call_table_10', '$times', '$roll', '$<<', '$get_dt_result', '$join', '$max', '$<=', '$include?', '$>=', '$get_as_result', '$assoc', '$respond_to?', '$+', '$call', '$lambda', '$getAddRoll', '$rollDiceCommand', '$nil?', '$get_table_by_number', '$get_table_by_1d6', '$get_table_by_d66_swap']);
   return (function($base, $super, $parent_nesting) {
     function $FutariSousa(){};
     var self = $FutariSousa = $klass($base, $super, 'FutariSousa', $FutariSousa);
@@ -53,7 +53,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_FutariSousa_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定用コマンド\n" + "探偵用：【DT】…10面ダイスを2つ振って判定します。『有利』なら【3DT】、『不利』なら【1DT】を使います。\n" + "助手用：【AS】…6面ダイスを2つ振って判定します。『有利』なら【3AS】、『不利』なら【1AS】を使います。\n" + "・各種表\n" + "【調査時】\n" + "異常な癖決定表 SHRD\n" + "　口から出る表 SHFM／強引な捜査表　　　 SHBT／すっとぼけ表　 SHPI\n" + "　事件に夢中表 SHEG／パートナーと……表 SHWP／何かしている表 SHDS\n" + "　奇想天外表　 SHFT／急なひらめき表　　 SHIN／喜怒哀楽表　　 SHEM\n" + "イベント表\n" + "　現場にて　 EVS／なぜ？　 EVW／協力者と共に EVN\n" + "　向こうから EVC／VS容疑者 EVV\n" + "調査の障害表 OBT　　変調表 ACT　　目撃者表 EWT　　迷宮入り表 WMT\n" + "【設定時】\n" + "背景表\n" + "　探偵　運命の血統 BGDD／天性の才能 BGDG／マニア　　　　 BGDM\n" + "　助手　正義の人　 BGAJ／情熱の人　 BGAP／巻き込まれの人 BGAI\n" + "身長表 HT　　たまり場表 BT　　関係表 GRT　　思い出の品決定表 MIT\n" + "職業表A・B　　JBT66・JBT10　　ファッション特徴表A・B　　　　FST66・FST10\n" + "感情表A／B　　FLT66・FLT10　　好きなもの／嫌いなもの表A・B　LDT66・LDT10\n" + "呼び名表A・B　NCT66・NCT10\n"
+      return "" + "・判定用コマンド\n" + "探偵用：【DT】…10面骰子を2つ振って判定します。『有利』なら【3DT】、『不利』なら【1DT】を使います。\n" + "助手用：【AS】…6面骰子を2つ振って判定します。『有利』なら【3AS】、『不利』なら【1AS】を使います。\n" + "・各種表\n" + "【調査時】\n" + "異常な癖決定表 SHRD\n" + "　口から出る表 SHFM／強引な捜査表　　　 SHBT／すっとぼけ表　 SHPI\n" + "　事件に夢中表 SHEG／パートナーと……表 SHWP／何かしている表 SHDS\n" + "　奇想天外表　 SHFT／急なひらめき表　　 SHIN／喜怒哀楽表　　 SHEM\n" + "イベント表\n" + "　現場にて　 EVS／なぜ？　 EVW／協力者と共に EVN\n" + "　向こうから EVC／VS容疑者 EVV\n" + "調査の障害表 OBT　　変調表 ACT　　目撃者表 EWT　　迷宮入り表 WMT\n" + "【設定時】\n" + "背景表\n" + "　探偵　運命の血統 BGDD／天性の才能 BGDG／マニア　　　　 BGDM\n" + "　助手　正義の人　 BGAJ／情熱の人　 BGAP／巻き込まれの人 BGAI\n" + "身長表 HT　　たまり場表 BT　　関係表 GRT　　思い出の品決定表 MIT\n" + "職業表A・B　　JBT66・JBT10　　ファッション特徴表A・B　　　　FST66・FST10\n" + "感情表A／B　　FLT66・FLT10　　好きなもの／嫌いなもの表A・B　LDT66・LDT10\n" + "呼び名表A・B　NCT66・NCT10\n"
     }, TMP_FutariSousa_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_FutariSousa_changeText_5 = function $$changeText(string) {
@@ -72,11 +72,11 @@
       $case = command;
       if (/^(\d+)?DT$/i['$===']($case)) {
       type = command;
-      count = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
+      count = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
       $b = self.$get_dt(count), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/^(\d+)?AS$/i['$===']($case)) {
       type = command;
-      count = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
+      count = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
       $b = self.$get_as(count), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHRD"['$===']($case)) {
       type = "異常な癖決定表";

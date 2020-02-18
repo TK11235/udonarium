@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class Kamigakari < DiceBot
-
   def initialize
     super
     @sendMode = 2
@@ -42,34 +41,34 @@ INFO_MESSAGE_TEXT
       tableName, result, number = getReimonCompensationTableResult
 
     when /^MT(\d*)$/
-      rank = $1
+      rank = Regexp.last_match(1)
       rank ||= 1
       rank = rank.to_i
       tableName, result, number = getGetMaterialTableResult(rank)
 
     else
       return getTableCommandResult(command, @@tables)
-	end
+    end
 
-    if( result.empty? )
+    if result.empty?
       return ""
     end
 
-	text = "#{tableName}(#{number})：#{result}"
-	return text
+    text = "#{tableName}(#{number})：#{result}"
+    return text
   end
 
   def getReimonCompensationTableResult
     tableName = "霊紋消費の代償表"
 
     table = [
-             '邪神化：物理法則を超過しすぎた代償として、霊魂そのものが歪み、PCは即座にアラミタマへと変貌する。アラミタマ化したPCは、いずこかへと消え去る。',
-             '存在消滅：アラミタマ化を最後の力で抑え込む。だがその結果、PCの霊魂は燃え尽きてしまい、この世界から消滅する。そのPCは[状態変化：死亡]となり死体も残らない。',
-             '死亡：霊魂の歪みをかろうじて食い止めるが、霊魂が崩壊する。PCは[状態変化：死亡]となるが遺体は残る。',
-             '霊魂半壊：霊魂の歪みを食い止めるものの、霊魂そのものに致命的な負傷を受け、全身に障害が残る。それに伴って霊紋も消滅し、一般人へと戻る。',
-             '記憶消滅：奇跡的に霊魂の摩耗による身体的な悪影響を免れる。時間を置くことで霊紋も回復するが、精神的に影響を受け、すべての記憶を失ってしまう。',
-             '影響なし：奇跡的に、霊魂の摩耗による悪影響を完全に退け、さらに霊紋の回復も早期を見込める。肉体や精神にも、特に影響はない。',
-            ]
+      '邪神化：物理法則を超過しすぎた代償として、霊魂そのものが歪み、PCは即座にアラミタマへと変貌する。アラミタマ化したPCは、いずこかへと消え去る。',
+      '存在消滅：アラミタマ化を最後の力で抑え込む。だがその結果、PCの霊魂は燃え尽きてしまい、この世界から消滅する。そのPCは[状態変化：死亡]となり死体も残らない。',
+      '死亡：霊魂の歪みをかろうじて食い止めるが、霊魂が崩壊する。PCは[状態変化：死亡]となるが遺体は残る。',
+      '霊魂半壊：霊魂の歪みを食い止めるものの、霊魂そのものに致命的な負傷を受け、全身に障害が残る。それに伴って霊紋も消滅し、一般人へと戻る。',
+      '記憶消滅：奇跡的に霊魂の摩耗による身体的な悪影響を免れる。時間を置くことで霊紋も回復するが、精神的に影響を受け、すべての記憶を失ってしまう。',
+      '影響なし：奇跡的に、霊魂の摩耗による悪影響を完全に退け、さらに霊紋の回復も早期を見込める。肉体や精神にも、特に影響はない。',
+    ]
     result, number = get_table_by_1d6(table)
 
     return tableName, result, number
@@ -78,43 +77,43 @@ INFO_MESSAGE_TEXT
   def getGetMaterialTableResult(rank)
     tableName = "獲得素材チャート"
     table = [
-             '真紅の',
-             'ざらつく',
-             '紺碧の',
-             '鋭い',
-             '黄金の',
-             '柔らかな',
-             '銀色の',
-             '尖った',
-             '純白の',
-             '硬い',
-             '漆黒の',
-             '輝く',
-             'なめらかな',
-             '濁った',
-             'ふさふさの',
-             '邪悪な',
-             '粘つく',
-             '聖なる',
-             '灼熱の',
-             '炎の',
-             '氷結の',
-             '氷の',
-             '熱い',
-             '風の',
-             '冷たい',
-             '雷の',
-             '土の',
-             '幻の',
-             '骨状の',
-             '刻印の',
-             '牙状の',
-             '鱗状の',
-             '石状の',
-             '宝石状の',
-             '毛皮状の',
-             '羽根状の',
-            ]
+      '真紅の',
+      'ざらつく',
+      '紺碧の',
+      '鋭い',
+      '黄金の',
+      '柔らかな',
+      '銀色の',
+      '尖った',
+      '純白の',
+      '硬い',
+      '漆黒の',
+      '輝く',
+      'なめらかな',
+      '濁った',
+      'ふさふさの',
+      '邪悪な',
+      '粘つく',
+      '聖なる',
+      '灼熱の',
+      '炎の',
+      '氷結の',
+      '氷の',
+      '熱い',
+      '風の',
+      '冷たい',
+      '雷の',
+      '土の',
+      '幻の',
+      '骨状の',
+      '刻印の',
+      '牙状の',
+      '鱗状の',
+      '石状の',
+      '宝石状の',
+      '毛皮状の',
+      '羽根状の',
+    ]
 
     result, number = get_table_by_d66(table)
     result += "断片"
@@ -125,7 +124,7 @@ INFO_MESSAGE_TEXT
     price = getPrice(effect)
 
     result = "#{result}。#{effect}"
-    result += "：#{price}" unless( price.nil? )
+    result += "：#{price}" unless price.nil?
 
     return tableName, result, number
   end
@@ -135,7 +134,7 @@ INFO_MESSAGE_TEXT
 
     result = ""
     type = ""
-    if( number < 6)
+    if number < 6
       result, number2 = getMaterialEffectNomal(rank)
       type = "よく見つかる素材"
     else
@@ -151,20 +150,20 @@ INFO_MESSAGE_TEXT
 
   def getMaterialEffectNomal(rank)
     table = [
-             [13, '体力+n'],
-             [16, '敏捷+n'],
-             [23, '知性+n'],
-             [26, '精神+n'],
-             [33, '幸運+n'],
-             [35, '物D+n'],
-             [41, '魔D+n'],
-             [43, '行動+n'],
-             [46, '生命+n×3'],
-             [53, '装甲+n'],
-             [56, '結界+n'],
-             [63, '移動+nマス'],
-             [66, '※PCの任意'],
-            ]
+      [13, '体力+n'],
+      [16, '敏捷+n'],
+      [23, '知性+n'],
+      [26, '精神+n'],
+      [33, '幸運+n'],
+      [35, '物D+n'],
+      [41, '魔D+n'],
+      [43, '行動+n'],
+      [46, '生命+n×3'],
+      [53, '装甲+n'],
+      [56, '結界+n'],
+      [63, '移動+nマス'],
+      [66, '※PCの任意'],
+    ]
 
     isSwap = false
     number = bcdice.getD66(isSwap)
@@ -172,7 +171,7 @@ INFO_MESSAGE_TEXT
     result = get_table_by_number(number, table)
     debug("getMaterialEffectNomal result", result)
 
-    if( /\+n/ === result )
+    if /\+n/ === result
       power, number2 = getMaterialEffectPower(rank)
 
       result = result.sub(/\+n/, "+#{power}")
@@ -184,12 +183,12 @@ INFO_MESSAGE_TEXT
 
   def getMaterialEffectPower(rank)
     table = [
-             [  4, [1, 1, 1, 2, 2, 3]],
-             [  8, [1, 1, 2, 2, 3, 3]],
-             [  9, [1, 2, 3, 3, 4, 5]],
-            ]
+      [ 4, [1, 1, 1, 2, 2, 3]],
+      [  8, [1, 1, 2, 2, 3, 3]],
+      [  9, [1, 2, 3, 3, 4, 5]],
+    ]
 
-    rank = 9 if( rank > 9 )
+    rank = 9 if rank > 9
     rankTable = get_table_by_number(rank, table)
     power, number = get_table_by_1d6(rankTable)
 
@@ -199,16 +198,15 @@ INFO_MESSAGE_TEXT
   def getMaterialEffectRare()
     table = [[3, '**付与'],
              [5, '**半減'],
-             [6, '※GMの任意'],
-            ]
+             [6, '※GMの任意'],]
 
     number, = roll(1, 6)
     result = get_table_by_number(number, table)
     debug('getMaterialEffectRare result', result)
 
-    if( /\*\*/ === result )
+    if /\*\*/ === result
       attribute, number2 = getAttribute()
-      result = result.sub(/\*\*/, "#{attribute}")
+      result = result.sub(/\*\*/, attribute.to_s)
       number = "#{number},#{number2}"
     end
 
@@ -217,15 +215,15 @@ INFO_MESSAGE_TEXT
 
   def getAttribute()
     table = [
-             [21, '［火炎］'],
-             [33, '［冷気］'],
-             [43, '［電撃］'],
-             [53, '［風圧］'],
-             [56, '［幻覚］'],
-             [62, '［魔毒］'],
-             [64, '［磁力］'],
-             [66, '［閃光］'],
-            ]
+      [21, '［火炎］'],
+      [33, '［冷気］'],
+      [43, '［電撃］'],
+      [53, '［風圧］'],
+      [56, '［幻覚］'],
+      [62, '［魔毒］'],
+      [64, '［磁力］'],
+      [66, '［閃光］'],
+    ]
 
     isSwap = false
     number = bcdice.getD66(isSwap)
@@ -236,12 +234,11 @@ INFO_MESSAGE_TEXT
   end
 
   def getPrice(effect)
-
     power = 0
 
     case effect
     when /\+(\d+)/
-      power = $1.to_i
+      power = Regexp.last_match(1).to_i
     when /付与/
       power = 3
     when /半減/
@@ -255,8 +252,7 @@ INFO_MESSAGE_TEXT
              '1000G(効果値:2)',
              '1500G(効果値:3)',
              '2000G(効果値:4)',
-             '3000G(効果値:5)',
-            ]
+             '3000G(効果値:5)',]
     price = table[power]
 
     return price
@@ -265,10 +261,10 @@ INFO_MESSAGE_TEXT
   @@tables =
     {
 
-    'ET' => {
-      :name => "感情表",
-      :type => 'd66',
-      :table => <<'TABLE_TEXT_END'
+      'ET' => {
+        :name => "感情表",
+        :type => 'd66',
+        :table => <<'TABLE_TEXT_END'
 11:運命/そのキャラクターに、運命的、あるいは宿命的なものを感じている。
 12:運命/そのキャラクターに、運命的、あるいは宿命的なものを感じている。
 13:家族/そのキャラクターに、家族のような親近感をいだいている。
@@ -303,15 +299,15 @@ INFO_MESSAGE_TEXT
 62:愛情/そのキャラクターに愛情、またはそれに近い執着心をいだいている。
 63:信頼/そのキャラクターに、信頼を感じている。
 64:信頼/そのキャラクターに、信頼を感じている。
-65:＊PCの任意/プレイヤー、またはGMが設定した任意の感情をいだいている。
-66:＊PCの任意/プレイヤー、またはGMが設定した任意の感情をいだいている。
+65:＊PCの任意/玩家、またはGMが設定した任意の感情をいだいている。
+66:＊PCの任意/玩家、またはGMが設定した任意の感情をいだいている。
 TABLE_TEXT_END
-    },
+      },
 
-    'KT' => {
-      :name => "魔境臨界表",
-      :type => 'd66',
-      :table => <<'TABLE_TEXT_END'
+      'KT' => {
+        :name => "魔境臨界表",
+        :type => 'd66',
+        :table => <<'TABLE_TEXT_END'
 11:時空の捻じれ\n現在地の時空が捻じれ、PC全員は即時に[侵入エリア]へと戻る。
 12:時空の捻じれ\n現在地の時空が捻じれ、PC全員は即時に[侵入エリア]へと戻る。
 13:強敵登場\n突如、<崇り神>化した[モノノケ]が出撃する。GMは、PCの[世界干渉LV]の平均+3の[LV]を持つ任意の[モノノケ]を1体選び任意の[探索エリア]に配置。そこでは[迂回]不可で[戦闘]が発生する。
@@ -349,12 +345,12 @@ TABLE_TEXT_END
 65:臨界重複\n[魔境臨界]が2回発生する。GMはこの表を2回振り、効果をそれぞれ適応できる。再び「臨界重複」が発生した場合、[GMの任意]１回として扱う。
 66:臨界重複\n[魔境臨界]が2回発生する。GMはこの表を2回振り、効果をそれぞれ適応できる。再び「臨界重複」が発生した場合、[GMの任意]１回として扱う。
 TABLE_TEXT_END
-    },
+      },
 
-    'NT' => {
-      :name => "伝奇名字・名前決定表",
-      :type => 'd66',
-      :table => <<'TABLE_TEXT_END'
+      'NT' => {
+        :name => "伝奇名字・名前決定表",
+        :type => 'd66',
+        :table => <<'TABLE_TEXT_END'
 11:御剣（みつるぎ）　陸/凛
 12:獅子内（ししうち）　大和/楓
 13:白銀（はくぎん）　隼人/桜
@@ -392,9 +388,8 @@ TABLE_TEXT_END
 65:明嵐（めあらし）　八雲/乙葉
 66:草壁（くさかべ）　大悟/文
 TABLE_TEXT_END
-    },
-  }
+      },
+    }
 
   setPrefixes(['RT', 'MT(\d*)'] + @@tables.keys)
-
 end

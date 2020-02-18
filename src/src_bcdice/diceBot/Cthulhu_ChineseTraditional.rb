@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class Cthulhu_ChineseTraditional < DiceBot
-  setPrefixes(['CC(B)?\(\d+\)', 'CC(B)?.*','RES(B)?.*', 'CBR(B)?\(\d+,\d+\)'])
+  setPrefixes(['CC(B)?\(\d+\)', 'CC(B)?.*', 'RES(B)?.*', 'CBR(B)?\(\d+,\d+\)'])
 
   def initialize
-    #$isDebug = true
+    # $isDebug = true
     super
     @special_percentage  = 20
     @critical_percentage = 1
@@ -95,89 +95,81 @@ INFO_MESSAGE_TEXT
   end
 
   def getCheckResult(command)
-
-    output = ""
     broken_num = 0
     diff = 0
 
-    if (/CC(B)?(\d+)<=(\d+)/i =~ command)
-      # /\(\d+\)/の()はpattern-killerにカイシャクされるらしい
-      broken_num = $2.to_i
-      diff = $3.to_i
-    elsif (/CC(B)?<=(\d+)/i =~ command)
-      diff = $2.to_i
+    if (m = /CC(B)?(\d+)<=(\d+)/i.match(command))
+      # /\(\d+\)/の()はpattern-killerにカイシャクされる
+      broken_num = m[2].to_i
+      diff = m[3].to_i
+    elsif (m = /CC(B)?<=(\d+)/i.match(command))
+      diff = m[2].to_i
     end
 
-    if (diff > 0)
-      output += "(1D100<=#{diff})"
+    output = ""
 
-      if (broken_num > 0)
+    if diff > 0
+      output = "(1D100<=#{diff})"
+
+      if broken_num > 0
         output += " 故障率[#{broken_num}]"
       end
 
       total_n, = roll(1, 100)
 
-      output += ' ＞ ' + "#{total_n}"
-      output += ' ＞ ' + getCheckResultText(total_n, diff, broken_num)
+      output += " ＞ #{total_n}"
+      output += " ＞ #{getCheckResultText(total_n, diff, broken_num)}"
     else
-      # 1D100單純交換處理
-      # 或許不需要
-      output += "(1D100)"
       total_n, = roll(1, 100)
-      output += ' ＞ ' + "#{total_n}"
+      output = "(1D100) ＞ #{total_n}"
     end
 
     return output
   end
 
   def getCheckResultText(total_n, diff, broken_num = 0)
-
     result = ""
     diff_special = 0
     fumble = false
 
-    if( @special_percentage > 0)
+    if @special_percentage > 0
       # 需有special的數值設定才能做爆擊/大失敗的判定
       diff_special = (diff * @special_percentage / 100).floor
-      if(diff_special < 1)
+      if diff_special < 1
         diff_special = 1
       end
     end
 
-    if((total_n <= diff) and (total_n < 100))
-
+    if (total_n <= diff) && (total_n < 100)
       result = "成功"
 
-      if( diff_special > 0)
-        if(total_n <= @critical_percentage)
-          if(total_n <= diff_special)
+      if diff_special > 0
+        if total_n <= @critical_percentage
+          if total_n <= diff_special
             result = "決定性的成功/特殊"
           else
             result = "決定性的成功"
           end
         else
-          if(total_n <= diff_special)
+          if total_n <= diff_special
             result = "特殊"
           end
         end
       end
-
     else
-
       result = "失敗"
 
-      if( diff_special > 0)
-        if((total_n >= (101 - @fumble_percentage)) and (diff < 100))
+      if diff_special > 0
+        if (total_n >= (101 - @fumble_percentage)) && (diff < 100)
           result = "致命性失敗"
           fumble = true
         end
       end
-
     end
 
-    if(broken_num > 0)
-      if(total_n >= broken_num)
-        if(fumble)
+    if broken_num > 0
+      if total_n >= broken_num
+        if fumble
           result += "/故障"
         else
           result = "故障"
@@ -189,35 +181,37 @@ INFO_MESSAGE_TEXT
   end
 
   def getRegistResult(command)
-    output = "1"
+    m = /RES(B)?([-\d]+)/i.match(command)
+    unless m
+      return "1"
+    end
 
-    return output unless(/RES(B)?([-\d]+)/i =~ command)
+    value = m[2].to_i
+    target = value * 5 + 50
 
-    value = $2.to_i
-    target =  value * 5 + 50
-
-    if(target < 5)
+    if target < 5
       return "(1d100<=#{target}) ＞ 自動失敗"
     end
 
-    if(target > 95)
+    if target > 95
       return "(1d100<=#{target}) ＞ 自動成功"
     end
 
     # 通常判定
     total_n, = roll(1, 100)
-    result =  getCheckResultText(total_n, target)
+    result = getCheckResultText(total_n, target)
 
     return "(1d100<=#{target}) ＞ #{total_n} ＞ #{result}"
   end
 
   def getCombineRoll(command)
-    output = "1"
+    m = /CBR(B)?\((\d+),(\d+)\)/i.match(command)
+    unless m
+      return "1"
+    end
 
-    return output unless(/CBR(B)?\((\d+),(\d+)\)/i =~ command)
-
-    diff_1 = $2.to_i
-    diff_2 = $3.to_i
+    diff_1 = m[2].to_i
+    diff_2 = m[3].to_i
 
     total, = roll(1, 100)
 
@@ -225,17 +219,16 @@ INFO_MESSAGE_TEXT
     result_2 = getCheckResultText(total, diff_2)
 
     successList = ["決定性成功/特殊", "決定性成功", "特殊", "成功"]
-    failList = ["失敗", "致命性失敗"]
 
     succesCount = 0
-    succesCount += 1 if successList.include?( result_1 )
-    succesCount += 1 if successList.include?( result_2 )
+    succesCount += 1 if successList.include?(result_1)
+    succesCount += 1 if successList.include?(result_2)
     debug("succesCount", succesCount)
 
     rank =
-      if( succesCount >= 2 )
+      if succesCount >= 2
         "成功"
-      elsif( succesCount == 1 )
+      elsif succesCount == 1
         "部分性成功"
       else
         "失敗"

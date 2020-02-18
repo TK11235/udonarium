@@ -18,9 +18,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$checkRoll', '$empty?', '$checkJudgeValue', '$rollTableCommand', '$=~', '$to_i', '$nil?', '$getRollResult', '$+', '$getSuccess', '$getCheckFlagResult', '$==', '$times', '$roll', '$[]=', '$join', '$sort', '$!=', '$reverse', '$[]', '$>=', '$>', '$getDownWill', '$getModifyText', '$getTotalResultValue', '$===', '$-', '$getTotalResultValueWhenSlash', '$ceil', '$/', '$*', '$upcase', '$choiceStrengthStigmaTable', '$choiceWillStigmaTable', '$choiceStrengthBadEndTable', '$choiceWillBadEndTable', '$get_table_by_2d6']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$checkRoll', '$empty?', '$checkJudgeValue', '$rollTableCommand', '$=~', '$to_i', '$last_match', '$nil?', '$getRollResult', '$+', '$getSuccess', '$getCheckFlagResult', '$==', '$times', '$roll', '$[]=', '$join', '$sort', '$!=', '$reverse', '$[]', '$>=', '$>', '$getDownWill', '$getModifyText', '$getTotalResultValue', '$===', '$-', '$getTotalResultValueWhenSlash', '$ceil', '$/', '$*', '$upcase', '$choiceStrengthStigmaTable', '$choiceWillStigmaTable', '$choiceStrengthBadEndTable', '$choiceWillBadEndTable', '$get_table_by_2d6']);
   return (function($base, $super, $parent_nesting) {
     function $DetatokoSaga(){};
     var self = $DetatokoSaga = $klass($base, $super, 'DetatokoSaga', $DetatokoSaga);
@@ -93,11 +93,11 @@
         return ""
       };
       target = 8;
-      skill = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      flag = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](5))['$nil?']())) {
+      skill = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      flag = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(5)['$nil?']())) {
         } else {
-        target = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i()
+        target = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i()
       };
       result = "" + "判定！　スキルレベル：" + (skill) + "　フラグ：" + (flag) + "　目標値：" + (target);
       $b = self.$getRollResult(skill), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (rollText = ($a[1] == null ? nil : $a[1])), $b;
@@ -113,7 +113,7 @@
 
       
       diceCount = $rb_plus(skill, 1);
-      if ($truthy(skill['$=='](0))) {
+      if (skill['$=='](0)) {
         diceCount = 3};
       dice = [];
       $send(diceCount, 'times', [], (TMP_7 = function(i){var self = TMP_7.$$s || this, $a, $b;
@@ -167,10 +167,10 @@ if (i == null) i = nil;
         } else {
         return ""
       };
-      skill = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-      flag = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
-      operator = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5)).$to_i();
+      skill = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+      flag = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
+      operator = Opal.const_get_relative($nesting, 'Regexp').$last_match(4);
+      value = Opal.const_get_relative($nesting, 'Regexp').$last_match(5).$to_i();
       result = "" + "判定！　スキルレベル：" + (skill) + "　フラグ：" + (flag);
       modifyText = self.$getModifyText(operator, value);
       if ($truthy(modifyText['$empty?']())) {
@@ -213,7 +213,7 @@ if (i == null) i = nil;
       var self = this, quotient = nil, result = nil;
 
       
-      if ($truthy(value['$=='](0))) {
+      if (value['$=='](0)) {
         return "0では割れません"};
       quotient = $rb_divide($rb_times(1.0, total), value).$ceil();
       result = "" + (total) + "÷" + (value) + " ＞ 判定値：" + (quotient);
@@ -265,7 +265,7 @@ if (i == null) i = nil;
 
       
       name = "体力バッドエンド表";
-      table = ["【死亡】あなたは死んだ。次のセッションに参加するには、クラス１つを『モンスター』か『暗黒』にクラスチェンジしなくてはいけない。", "【命乞】あなたは恐怖に駆られ、命乞いをしてしまった！次のセッション開始時に、クラス１つが『ザコ』に変更される！", "【忘却】あなたは記憶を失い、ぼんやりと立ち尽くす。次のセッションに参加するには、クラス１つを変更しなくてはならない。", "【悲劇】あなたの攻撃は敵ではなく味方を撃った！全てが終わるまであなたは立ち尽くしていた。任意の味方の【体力】を１Ｄ６点減少させる。", "【暴走】あなたは正気を失い、衝動のまま暴走する！同じシーンにいる全員の【体力】を１Ｄ６点減少させる。", "【転落】あなたは断崖絶壁から転落した。", "【虜囚】あなたは敵に囚われた。", "【逃走】あなたは恐れをなし、仲間を見捨てて逃げ出した。", "【重症】あなたはどうしようもない痛手を負い、倒れた。", "【気絶】あなたは気を失った。そして目覚めれば全てが終わっていた。", "それでもまだ立ち上がる！あなたはバッドエンドを迎えなかった。体力の【烙印】を１つ打ち消してよい。"];
+      table = ["【死亡】あなたは死んだ。次のセッションに参加するには、クラス１つを『怪獸』か『暗黒』にクラスチェンジしなくてはいけない。", "【命乞】あなたは恐怖に駆られ、命乞いをしてしまった！次のセッション開始時に、クラス１つが『ザコ』に変更される！", "【忘却】あなたは記憶を失い、ぼんやりと立ち尽くす。次のセッションに参加するには、クラス１つを変更しなくてはならない。", "【悲劇】あなたの攻撃は敵ではなく味方を撃った！全てが終わるまであなたは立ち尽くしていた。任意の味方の【体力】を１Ｄ６点減少させる。", "【暴走】あなたは正気を失い、衝動のまま暴走する！同じシーンにいる全員の【体力】を１Ｄ６点減少させる。", "【転落】あなたは断崖絶壁から転落した。", "【虜囚】あなたは敵に囚われた。", "【逃走】あなたは恐れをなし、仲間を見捨てて逃げ出した。", "【重症】あなたはどうしようもない痛手を負い、倒れた。", "【気絶】あなたは気を失った。そして目覚めれば全てが終わっていた。", "それでもまだ立ち上がる！あなたはバッドエンドを迎えなかった。体力の【烙印】を１つ打ち消してよい。"];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, TMP_DetatokoSaga_choiceStrengthBadEndTable_19.$$arity = 0);
@@ -274,7 +274,7 @@ if (i == null) i = nil;
 
       
       name = "気力バッドエンド表";
-      table = ["【自害】あなたは自ら死を選んだ。次のセッションに参加するには、クラス１つを『暗黒』にクラスチェンジしなくてはいけない。", "【堕落】あなたは心の中の闇に飲まれた。次のセッション開始時に、クラス１つが『暗黒』か『モンスター』に変更される！", "【隷属】あなたは敵の言うことに逆らえない。次のセッションであなたのスタンスは『従属』になる。", "【裏切】裏切りの衝動。任意の味方の【体力】を１Ｄ６点減少させ、その場から逃げ出す。", "【暴走】あなたは正気を失い、衝動のまま暴走する！同じシーンにいる全員の【体力】を１Ｄ６点減少させる。", "【呪い】心の闇が顕在化したのか。敵の怨嗟か。呪いに蝕まれたあなたは、のたうちまわることしかできない。", "【虜囚】あなたは敵に囚われ、その場から連れ去られる。", "【逃走】あなたは恐れをなし、仲間を見捨てて逃げ出した。", "【放心】あなたはただぼんやりと立ち尽くすしかなかった。我に返った時、全ては終わっていた。", "【気絶】あなたは気を失った。そして目覚めれば全てが終わっていた。", "それでもまだ諦めない！あなたはバッドエンドを迎えなかった。あなたは気力の【烙印】を１つ打ち消してよい。"];
+      table = ["【自害】あなたは自ら死を選んだ。次のセッションに参加するには、クラス１つを『暗黒』にクラスチェンジしなくてはいけない。", "【堕落】あなたは心の中の闇に飲まれた。次のセッション開始時に、クラス１つが『暗黒』か『怪獸』に変更される！", "【隷属】あなたは敵の言うことに逆らえない。次のセッションであなたのスタンスは『従属』になる。", "【裏切】裏切りの衝動。任意の味方の【体力】を１Ｄ６点減少させ、その場から逃げ出す。", "【暴走】あなたは正気を失い、衝動のまま暴走する！同じシーンにいる全員の【体力】を１Ｄ６点減少させる。", "【呪い】心の闇が顕在化したのか。敵の怨嗟か。呪いに蝕まれたあなたは、のたうちまわることしかできない。", "【虜囚】あなたは敵に囚われ、その場から連れ去られる。", "【逃走】あなたは恐れをなし、仲間を見捨てて逃げ出した。", "【放心】あなたはただぼんやりと立ち尽くすしかなかった。我に返った時、全ては終わっていた。", "【気絶】あなたは気を失った。そして目覚めれば全てが終わっていた。", "それでもまだ諦めない！あなたはバッドエンドを迎えなかった。あなたは気力の【烙印】を１つ打ち消してよい。"];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, TMP_DetatokoSaga_choiceWillBadEndTable_20.$$arity = 0), nil) && 'choiceWillBadEndTable';

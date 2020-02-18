@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$>=', '$<=', '$!=', '$==', '$rating', '$getRatingCommandStrings', '$new', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$loop', '$rollDice', '$getAdditionalDiceValue', '$min', '$*', '$[]', '$<<', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$to_s', '$sendMode', '$join', '$getAddText', '$===']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$last_match', '$>=', '$<=', '$!=', '$==', '$rating', '$getRatingCommandStrings', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$to_s', '$loop', '$rollDice', '$getAdditionalDiceValue', '$min', '$*', '$[]', '$<<', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$sendMode', '$join', '$getAddText', '$===']);
   return (function($base, $super, $parent_nesting) {
     function $SwordWorld(){};
     var self = $SwordWorld = $klass($base, $super, 'SwordWorld', $SwordWorld);
@@ -59,7 +59,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_SwordWorld_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "自動的成功、成功、失敗、自動的失敗の自動判定を行います。\n" + "\n" + "・レーティング表　(Kx)\n" + "　\"Kキーナンバー+ボーナス\"の形で記入します。\n" + "　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。\n" + "　また、ボーナスは複数取ることが出来ます。\n" + "　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2\n" + "\n" + "・クリティカル値の設定\n" + "　クリティカル値は\"[クリティカル値]\"で指定します。\n" + "　指定しない場合はクリティカル値10とします。\n" + "　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)\n" + "　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。\n" + "　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9\n"
+      return "" + "自動的成功、成功、失敗、自動的失敗の自動判定を行います。\n" + "\n" + "・レーティング表　(Kx)\n" + "　\"Kキーナンバー+ボーナス\"の形で記入します。\n" + "　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。\n" + "　また、ボーナスは複数取ることが出来ます。\n" + "　レーティング表も骰子ロールと同様に、他の玩家に隠れてロールすることも可能です。\n" + "　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2\n" + "\n" + "・クリティカル値の設定\n" + "　クリティカル値は\"[クリティカル値]\"で指定します。\n" + "　指定しない場合はクリティカル値10とします。\n" + "　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)\n" + "　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。\n" + "　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9\n"
     }, TMP_SwordWorld_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$getHelpMessage', TMP_SwordWorld_getHelpMessage_5 = function $$getHelpMessage() {
@@ -77,18 +77,18 @@
         return string
       };
       self.$debug("parren_killer_add before string", string);
-      string = $send(string, 'gsub', [/\[(\d+)\]/i], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      string = $send(string, 'gsub', [/\[(\d+)\]/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + "c[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/\@(\d+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + "c[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      string = $send(string, 'gsub', [/\@(\d+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + "c[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-      string = $send(string, 'gsub', [/\$([\+\-]?[\d]+)/i], (TMP_8 = function(){var self = TMP_8.$$s || this, $a;
+      return "" + "c[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      string = $send(string, 'gsub', [/\$([\+\-]?[\d]+)/i], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-      return "" + "m[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
-      string = $send(string, 'gsub', [/r([\+\-]?[\d]+)/i], (TMP_9 = function(){var self = TMP_9.$$s || this, $a;
+      return "" + "m[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
+      string = $send(string, 'gsub', [/r([\+\-]?[\d]+)/i], (TMP_9 = function(){var self = TMP_9.$$s || this;
 
-      return "" + "r[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
+      return "" + "r[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
       self.$debug("parren_killer_add after string", string);
       return string;
     }, TMP_SwordWorld_changeText_10.$$arity = 1);
@@ -99,7 +99,7 @@
       return "cmCM"
     }, TMP_SwordWorld_getRatingCommandStrings_11.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_SwordWorld_check_2D6_12 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_2D6', TMP_SwordWorld_check_2D6_12 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -109,7 +109,7 @@
         return " ＞ 自動的失敗"};
       if ($truthy(signOfInequality['$!='](">="))) {
         return ""};
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return ""};
       if ($truthy($rb_ge(totalValue, diff))) {
         return " ＞ 成功"};
@@ -123,20 +123,19 @@
     }, TMP_SwordWorld_rollDiceCommand_13.$$arity = 1);
     
     Opal.defn(self, '$rating', TMP_SwordWorld_rating_15 = function $$rating(string) {
-      var $a, $b, TMP_14, self = this, commands = nil, pattern = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
+      var $a, $b, TMP_14, self = this, commands = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
       if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       
       self.$debug("rating string", string);
       commands = self.$getRatingCommandStrings();
-      pattern = "" + "(^|\\s)[sS]?(((k|K)[\\d\\+\\-]+)([" + (commands) + "]\\[([\\d\\+\\-]+)\\])*([\\d\\+\\-]*)([cmrCMR]\\[([\\d\\+\\-]+)\\]|gf|GF)*)($|\\s)";
-      if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$new(pattern)['$=~'](string))) {
+      if ($truthy(new RegExp("" + "(^|\\s)[sS]?(((k|K)[\\d\\+\\-]+)([" + (commands) + "]\\[([\\d\\+\\-]+)\\])*([\\d\\+\\-]*)([cmrCMR]\\[([\\d\\+\\-]+)\\]|gf|GF)*)($|\\s)")['$=~'](string))) {
         } else {
         
         self.$debug("not matched");
         return "1";
       };
-      string = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
+      string = Opal.const_get_relative($nesting, 'Regexp').$last_match(2);
       $b = self.$getRateUpFromString(string), $a = Opal.to_ary($b), (rateUp = ($a[0] == null ? nil : $a[0])), (string = ($a[1] == null ? nil : $a[1])), $b;
       $b = self.$getCriticalFromString(string), $a = Opal.to_ary($b), (crit = ($a[0] == null ? nil : $a[0])), (string = ($a[1] == null ? nil : $a[1])), $b;
       $b = self.$getDiceChangesFromString(string), $a = Opal.to_ary($b), (firstDiceChanteTo = ($a[0] == null ? nil : $a[0])), (firstDiceChangeModify = ($a[1] == null ? nil : $a[1])), (string = ($a[2] == null ? nil : $a[2])), $b;
@@ -145,7 +144,7 @@
         } else {
         return "1"
       };
-      key = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+      key = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       rate_sw2_0 = self.$getSW2_0_RatingTable();
       keyMax = $rb_minus(rate_sw2_0.$length(), 1);
       self.$debug("keyMax", keyMax);
@@ -168,7 +167,7 @@
         if ($truthy($rb_gt(addValue, 0))) {
           output = $rb_plus(output, "" + "+" + (addValue))};
         if ($truthy($rb_lt(addValue, 0))) {
-          output = $rb_plus(output, "" + (addValue))};};
+          output = $rb_plus(output, addValue.$to_s())};};
       output = $rb_plus(output, " ＞ ");
       diceResultTotals = [];
       diceResults = [];
@@ -200,8 +199,8 @@
         self.$debug("rateValue", rateValue);
         totalValue = $rb_plus(totalValue, rateValue);
         diceOnlyTotal = $rb_plus(diceOnlyTotal, dice);
-        diceResultTotals['$<<']("" + (dice));
-        diceResults['$<<']("" + (diceText));
+        diceResultTotals['$<<'](dice.$to_s());
+        diceResults['$<<'](diceText.$to_s());
         rateResults['$<<']((function() {if ($truthy($rb_gt(dice, 2))) {
           return rateValue
           } else {
@@ -220,7 +219,7 @@
       return output;
     }, TMP_SwordWorld_rating_15.$$arity = 1);
     
-    Opal.defn(self, '$getAdditionalString', TMP_SwordWorld_getAdditionalString_16 = function $$getAdditionalString(string, output) {
+    Opal.defn(self, '$getAdditionalString', TMP_SwordWorld_getAdditionalString_16 = function $$getAdditionalString(_string, output) {
       var self = this, values = nil;
 
       
@@ -228,21 +227,21 @@
       return [output, values];
     }, TMP_SwordWorld_getAdditionalString_16.$$arity = 2);
     
-    Opal.defn(self, '$getAdditionalDiceValue', TMP_SwordWorld_getAdditionalDiceValue_17 = function $$getAdditionalDiceValue(dice, values) {
+    Opal.defn(self, '$getAdditionalDiceValue', TMP_SwordWorld_getAdditionalDiceValue_17 = function $$getAdditionalDiceValue(_dice, _values) {
       var self = this;
 
       return 0
     }, TMP_SwordWorld_getAdditionalDiceValue_17.$$arity = 2);
     
     Opal.defn(self, '$getCriticalFromString', TMP_SwordWorld_getCriticalFromString_18 = function $$getCriticalFromString(string) {
-      var $a, self = this, crit = nil, regexp = nil;
+      var self = this, crit = nil, regexp = nil;
 
       
       crit = 10;
       regexp = /c\[(\d+)\]/i;
       if ($truthy(regexp['$=~'](string))) {
         
-        crit = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+        crit = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
         if ($truthy($rb_lt(crit, 3))) {
           crit = 3};
         string = string.$gsub(regexp, "");};
@@ -250,7 +249,7 @@
     }, TMP_SwordWorld_getCriticalFromString_18.$$arity = 1);
     
     Opal.defn(self, '$getDiceChangesFromString', TMP_SwordWorld_getDiceChangesFromString_19 = function $$getDiceChangesFromString(string) {
-      var $a, self = this, firstDiceChanteTo = nil, firstDiceChangeModify = nil, regexp = nil;
+      var self = this, firstDiceChanteTo = nil, firstDiceChangeModify = nil, regexp = nil;
 
       
       firstDiceChanteTo = 0;
@@ -258,7 +257,7 @@
       regexp = /m\[([\d\+\-]+)\]/i;
       if ($truthy(regexp['$=~'](string))) {
         
-        firstDiceChangeModify = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+        firstDiceChangeModify = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
         if ($truthy(/[\+\-]/['$=~'](firstDiceChangeModify))) {
           } else {
           
@@ -278,16 +277,16 @@
     }, TMP_SwordWorld_getRateUpFromString_20.$$arity = 1);
     
     Opal.defn(self, '$getKeyAndAddValueFromString', TMP_SwordWorld_getKeyAndAddValueFromString_21 = function $$getKeyAndAddValueFromString(string) {
-      var $a, self = this, key = nil, addValue = nil;
+      var self = this, key = nil, addValue = nil;
 
       
       key = nil;
       addValue = 0;
       if ($truthy(/K(\d+)([\d\+\-]*)/i['$=~'](string))) {
         
-        key = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))) {
-          addValue = self.$parren_killer($rb_plus($rb_plus("(", (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))), ")")).$to_i()};
+        key = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
+        if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2))) {
+          addValue = self.$parren_killer($rb_plus($rb_plus("(", Opal.const_get_relative($nesting, 'Regexp').$last_match(2)), ")")).$to_i()};
         } else {
         key = string
       };
@@ -332,7 +331,7 @@ if (rateText == null) rateText = nil;
         rate_10.$push(rate_arr['$[]'](8).$to_i());
         rate_11.$push(rate_arr['$[]'](9).$to_i());
         return rate_12.$push(rate_arr['$[]'](10).$to_i());}, TMP_23.$$s = self, TMP_23.$$arity = 1, TMP_23));
-      if ($truthy(self.rating_table['$=='](1))) {
+      if (self.rating_table['$=='](1)) {
         
         $writer = [31, (($writer = [32, (($writer = [33, 10]), $send(rate_12, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)])]), $send(rate_12, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)])];
         $send(rate_12, '[]=', Opal.to_a($writer));
@@ -341,7 +340,7 @@ if (rateText == null) rateText = nil;
       return newRates;
     }, TMP_SwordWorld_getNewRates_24.$$arity = 1);
     
-    Opal.defn(self, '$rollDice', TMP_SwordWorld_rollDice_25 = function $$rollDice(values) {
+    Opal.defn(self, '$rollDice', TMP_SwordWorld_rollDice_25 = function $$rollDice(_values) {
       var $a, $b, self = this, dice = nil, diceText = nil;
 
       
@@ -349,7 +348,7 @@ if (rateText == null) rateText = nil;
       return [dice, diceText];
     }, TMP_SwordWorld_rollDice_25.$$arity = 1);
     
-    Opal.defn(self, '$getResultText', TMP_SwordWorld_getResultText_26 = function $$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, crit, limitLength) {
+    Opal.defn(self, '$getResultText', TMP_SwordWorld_getResultText_26 = function $$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, _crit, limitLength) {
       var self = this, output = nil, totalText = nil, rateResultsText = nil, addText = nil, roundText = nil;
 
       
@@ -359,14 +358,14 @@ if (rateText == null) rateText = nil;
         
         output = $rb_plus(output, "" + "2D:[" + (diceResults.$join(" ")) + "]=" + (diceResultTotals.$join(",")));
         rateResultsText = rateResults.$join(",");
-        if ($truthy(rateResultsText['$=='](totalText))) {
+        if (rateResultsText['$=='](totalText)) {
           } else {
           output = $rb_plus(output, "" + " ＞ " + (rateResultsText))
         };
       } else if ($truthy($rb_gt(self.$sendMode(), 0))) {
         output = $rb_plus(output, "" + "2D:" + (diceResultTotals.$join(",")))
         } else {
-        output = $rb_plus(output, "" + (totalValue))
+        output = $rb_plus(output, totalValue.$to_s())
       };
       if ($truthy($rb_le(diceOnlyTotal, 2))) {
         return "" + (output) + " ＞ 自動的失敗"};
@@ -386,7 +385,7 @@ if (rateText == null) rateText = nil;
 
       
       addText = "";
-      if ($truthy(addValue['$=='](0))) {
+      if (addValue['$=='](0)) {
         return addText};
       operator = (function() {if ($truthy($rb_gt(addValue, 0))) {
         return "+"
@@ -397,14 +396,14 @@ if (rateText == null) rateText = nil;
       return addText;
     }, TMP_SwordWorld_getAddText_27.$$arity = 1);
     return (Opal.defn(self, '$setRatingTable', TMP_SwordWorld_setRatingTable_28 = function $$setRatingTable(tnick) {
-      var $a, self = this, mode_str = nil, pre_mode = nil, $case = nil;
+      var self = this, mode_str = nil, pre_mode = nil, $case = nil;
 
       
       mode_str = "";
       pre_mode = self.rating_table;
       if ($truthy(/(\d+)/['$=~'](tnick))) {
         
-        self.rating_table = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+        self.rating_table = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
         if ($truthy($rb_gt(self.rating_table, 1))) {
           
           mode_str = "2.0-mode";
@@ -430,7 +429,7 @@ if (rateText == null) rateText = nil;
         self.rating_table = 2;
         mode_str = "2.0-mode";}
       };
-      if ($truthy(self.rating_table['$=='](pre_mode))) {
+      if (self.rating_table['$=='](pre_mode)) {
         return "1"};
       return "" + "RatingTableを" + (mode_str) + "に変更しました";
     }, TMP_SwordWorld_setRatingTable_28.$$arity = 1), nil) && 'setRatingTable';
@@ -462,9 +461,9 @@ Opal.loaded(["diceBot/SwordWorld"]);
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$===', '$=~', '$growth', '$to_i', '$get_fumble_table', '$get_tangle_table', '$gsub', '$getGratestFortuneFromString', '$[]=', '$-', '$+', '$[]', '$roll', '$*', '$<=', '$==', '$>=', '$push', '$debug', '$getOriginalMessage', '$bcdice', '$join', '$map', '$growth_step', '$get_ability_by_dice', '$!=', '$get_table_by_1d6']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$===', '$=~', '$growth', '$to_i', '$last_match', '$get_fumble_table', '$get_tangle_table', '$gsub', '$getGratestFortuneFromString', '$[]=', '$-', '$+', '$[]', '$roll', '$*', '$<=', '$==', '$>=', '$push', '$debug', '$getOriginalMessage', '$bcdice', '$join', '$map', '$growth_step', '$get_ability_by_dice', '$!=', '$get_table_by_1d6']);
   
   self.$require("diceBot/SwordWorld");
   return (function($base, $super, $parent_nesting) {
@@ -501,16 +500,16 @@ Opal.loaded(["diceBot/SwordWorld"]);
     Opal.defn(self, '$getHelpMessage', TMP_SwordWorld2_0_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "自動的成功、成功、失敗、自動的失敗の自動判定を行います。\n" + "\n" + "・レーティング表　(Kx)\n" + "　\"Kキーナンバー+ボーナス\"の形で記入します。\n" + "　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。\n" + "　また、ボーナスは複数取ることが出来ます。\n" + "　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2\n" + "\n" + "・クリティカル値の設定\n" + "　クリティカル値は\"[クリティカル値]\"で指定します。\n" + "　指定しない場合はクリティカル値10とします。\n" + "　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)\n" + "　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。\n" + "　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9\n" + "\n" + "・ダイス目の修正（運命変転やクリティカルレイ用）\n" + "　末尾に「$修正値」でダイス目に修正がかかります。\n" + "　$＋１と修正表記ならダイス目に＋修正、＄９のように固定値ならダイス目をその出目に差し替え。\n" + "　クリティカルした場合でも固定値や修正値の適用は最初の一回だけです。\n" + "　例）K20$+1　　　K10+5$9　　　k10-5@9$+2　　　k10[9]+10$9\n" + "\n" + "・首切り刀用レーティング上昇 r10\n" + "　例）K20r10　K30+24@8R10　K40+24@8$12r10\n" + "\n" + "・グレイテストフォーチュンは末尾に gf\n" + "　例）K20gf　K30+24@8GF　K40+24@8$12r10gf\n" + "\n" + "・超越判定用に2d6ロールに 2D6@10 書式でクリティカル値付与が可能に。\n" + "　例）2D6@10　2D6@10+11>=30\n" + "\n" + "・成長　(Gr)\n" + "　末尾に数字を付加することで、複数回の成長をまとめて行えます。\n" + "　例）Gr3\n" + "\n" + "・防御ファンブル表　(FT)\n" + "　防御ファンブル表を出すことができます。\n" + "\n" + "・絡み効果表　(TT)\n" + "　絡み効果表を出すことができます。\n"
+      return "" + "自動的成功、成功、失敗、自動的失敗の自動判定を行います。\n" + "\n" + "・レーティング表　(Kx)\n" + "　\"Kキーナンバー+ボーナス\"の形で記入します。\n" + "　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。\n" + "　また、ボーナスは複数取ることが出来ます。\n" + "　レーティング表も骰子ロールと同様に、他の玩家に隠れてロールすることも可能です。\n" + "　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2\n" + "\n" + "・クリティカル値の設定\n" + "　クリティカル値は\"[クリティカル値]\"で指定します。\n" + "　指定しない場合はクリティカル値10とします。\n" + "　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)\n" + "　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。\n" + "　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9\n" + "\n" + "・骰子目の修正（運命変転やクリティカルレイ用）\n" + "　末尾に「$修正値」で骰子目に修正がかかります。\n" + "　$＋１と修正表記なら骰子目に＋修正、＄９のように固定値なら骰子目をその出目に差し替え。\n" + "　クリティカルした場合でも固定値や修正値の適用は最初の一回だけです。\n" + "　例）K20$+1　　　K10+5$9　　　k10-5@9$+2　　　k10[9]+10$9\n" + "\n" + "・首切り刀用レーティング上昇 r10\n" + "　例）K20r10　K30+24@8R10　K40+24@8$12r10\n" + "\n" + "・グレイテストフォーチュンは末尾に gf\n" + "　例）K20gf　K30+24@8GF　K40+24@8$12r10gf\n" + "\n" + "・超越判定用に2d6ロールに 2D6@10 書式でクリティカル値付与が可能に。\n" + "　例）2D6@10　2D6@10+11>=30\n" + "\n" + "・成長　(Gr)\n" + "　末尾に数字を付加することで、複数回の成長をまとめて行えます。\n" + "　例）Gr3\n" + "\n" + "・防御ファンブル表　(FT)\n" + "　防御ファンブル表を出すことができます。\n" + "\n" + "・絡み効果表　(TT)\n" + "　絡み効果表を出すことができます。\n"
     }, TMP_SwordWorld2_0_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_SwordWorld2_0_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, self = this, $iter = TMP_SwordWorld2_0_rollDiceCommand_5.$$p, $yield = $iter || nil, $case = nil;
+      var self = this, $iter = TMP_SwordWorld2_0_rollDiceCommand_5.$$p, $yield = $iter || nil, $case = nil;
 
       if ($iter) TMP_SwordWorld2_0_rollDiceCommand_5.$$p = null;
       return (function() {$case = command;
       if (/^Gr(\d+)?/i['$===']($case)) {if ($truthy(command['$=~'](/^Gr(\d+)/i))) {
-        return self.$growth((($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i())
+        return self.$growth(Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i())
         } else {
         return self.$growth()
       }}
@@ -520,14 +519,14 @@ Opal.loaded(["diceBot/SwordWorld"]);
     }, TMP_SwordWorld2_0_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$getRateUpFromString', TMP_SwordWorld2_0_getRateUpFromString_6 = function $$getRateUpFromString(string) {
-      var $a, self = this, rateUp = nil, regexp = nil;
+      var self = this, rateUp = nil, regexp = nil;
 
       
       rateUp = 0;
       regexp = /r\[(\d+)\]/i;
       if ($truthy(regexp['$==='](string))) {
         
-        rateUp = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+        rateUp = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
         string = string.$gsub(regexp, "");};
       return [rateUp, string];
     }, TMP_SwordWorld2_0_getRateUpFromString_6.$$arity = 1);
@@ -588,11 +587,11 @@ Opal.loaded(["diceBot/SwordWorld"]);
       
       if ($truthy($rb_le(critical, 2))) {
         return nil};
-      if ($truthy(loop_count['$=='](0))) {
+      if (loop_count['$=='](0)) {
         
-        if ($truthy(dice_new['$=='](12))) {
+        if (dice_new['$=='](12)) {
           return nil};
-        if ($truthy(dice_new['$=='](2))) {
+        if (dice_new['$=='](2)) {
           return nil};};
       if ($truthy($rb_ge(dice_new, critical))) {
         return dice_arry.$push(2)
@@ -602,13 +601,13 @@ Opal.loaded(["diceBot/SwordWorld"]);
     }, TMP_SwordWorld2_0_check2dCritical_11.$$arity = 4);
     
     Opal.defn(self, '$check_nD6', TMP_SwordWorld2_0_check_nD6_12 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
-      var $a, self = this, $iter = TMP_SwordWorld2_0_check_nD6_12.$$p, $yield = $iter || nil, result = nil, string = nil, superSuccessValue = nil, critical = nil;
+      var self = this, $iter = TMP_SwordWorld2_0_check_nD6_12.$$p, $yield = $iter || nil, result = nil, string = nil, superSuccessValue = nil, critical = nil;
 
       if ($iter) TMP_SwordWorld2_0_check_nD6_12.$$p = null;
       
       self.$debug("check_nD6");
       result = $send(self, Opal.find_super_dispatcher(self, 'check_nD6', TMP_SwordWorld2_0_check_nD6_12, false), [total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max], null);
-      if ($truthy(result['$=='](""))) {
+      if (result['$==']("")) {
         } else {
         return result
       };
@@ -616,7 +615,7 @@ Opal.loaded(["diceBot/SwordWorld"]);
       superSuccessValue = 41;
       if ($truthy(/@(\d+)/['$==='](string))) {
         
-        critical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
+        critical = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
         if ($truthy($rb_ge(dice_n, critical))) {
           if ($truthy($rb_ge(total_n, superSuccessValue))) {
             return " ＞ 超成功"}};};

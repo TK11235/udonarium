@@ -9,9 +9,9 @@
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$checkInfection', '$rollZombie', '$times', '$roll', '$+', '$-', '$ceil', '$/', '$[]', '$first', '$last', '$max', '$min', '$assoc']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$checkInfection', '$rollZombie', '$times', '$roll', '$+', '$-', '$ceil', '$/', '$[]', '$first', '$last', '$max', '$min', '$assoc']);
   return (function($base, $super, $parent_nesting) {
     function $DiceOfTheDead(){};
     var self = $DiceOfTheDead = $klass($base, $super, 'DiceOfTheDead', $DiceOfTheDead);
@@ -39,7 +39,7 @@
     Opal.defn(self, '$gameName', TMP_DiceOfTheDead_gameName_2 = function $$gameName() {
       var self = this;
 
-      return "ダイス・オブ・ザ・デッド"
+      return "骰子・オブ・ザ・デッド"
     }, TMP_DiceOfTheDead_gameName_2.$$arity = 0);
     
     Opal.defn(self, '$gameType', TMP_DiceOfTheDead_gameType_3 = function $$gameType() {
@@ -51,11 +51,11 @@
     Opal.defn(self, '$getHelpMessage', TMP_DiceOfTheDead_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this, info = nil;
 
-      return (info = "" + "・ゾンビ化表　ZMB+x\n" + "（x=オープン中の感染度マスの数。+xは省略可能、省略時は0）\n" + "・感染度表　BIOx\n" + "（xは被弾回数。xは省略可能、省略時は1）\n" + "（上記二つは最初からシークレットダイスで行われます）\n")
+      return (info = "" + "・ゾンビ化表　ZMB+x\n" + "（x=オープン中の感染度マスの数。+xは省略可能、省略時は0）\n" + "・感染度表　BIOx\n" + "（xは被弾回数。xは省略可能、省略時は1）\n" + "（上記二つは最初からシークレット骰子で行われます）\n")
     }, TMP_DiceOfTheDead_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_DiceOfTheDead_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, result = nil, secret_flg = nil, $case = nil, roll_times = nil, value = nil;
+      var $a, self = this, result = nil, secret_flg = nil, $case = nil, roll_times = nil, value = nil;
 
       
       command = command.$upcase();
@@ -63,11 +63,11 @@
       secret_flg = false;
       $case = command;
       if (/^BIO(\d+)?$/i['$===']($case)) {
-      roll_times = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 1).$to_i();
+      roll_times = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
       result = self.$checkInfection(roll_times);
       secret_flg = true;}
       else if (/^ZMB(\+(\d+))?$/i['$===']($case)) {
-      value = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2)).$to_i();
+      value = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       result = self.$rollZombie(value);
       secret_flg = true;};
       return [result, secret_flg];

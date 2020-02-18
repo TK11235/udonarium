@@ -17,11 +17,12 @@ const cgiDiceBot = Opal.CgiDiceBot.$new();
 
 files.forEach(file => {
   const gameType = file.replace(/\.txt$/, '');
-  if (!diceBots.includes(gameType + '.js')) return;
+  const existJs = diceBots.includes(gameType + '.js');
+  if (!existJs && gameType != 'None') return;
 
   process.stdout.write(`\n${gameType} `);
 
-  require(DiceBotDir + gameType);
+  if (existJs) require(DiceBotDir + gameType);
   fs.readFileSync(path.join(DataDir, file)).toString()
     .replace(/\r/g, '')
     .split(/=+\n/g)
@@ -44,7 +45,7 @@ files.forEach(file => {
         resultMsg = result[0].trim();
 
         const surplusRands = getSurplusRands(cgiDiceBot.rands);
-        if (0 < surplusRands.length) resultMsg += 'ダイス残り：' + surplusRands;
+        if (0 < surplusRands.length) resultMsg += '骰子残り：' + surplusRands;
 
       } catch (e) {
         resultMsg = logTextForException(e);

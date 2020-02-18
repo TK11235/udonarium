@@ -3,10 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Udonarium 1.9.3</title>
+  <title>Udonarium 1.10.1 HKTRPG</title>
   <base href="./">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/x-icon" href="icon_RjJ_icon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
@@ -26,13 +28,31 @@
       <div class="sk-title">Now Loading.</div>
     </div>
   </app-root>
-
   <script type="text/yaml" src="./assets/config.yaml"></script>
-  <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.min.js"></script> 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.min.js"></script>
+
+  <script>
+   
+  var isDirty = function () {
+      return false;
+    }
+    var formSubmitting = false;
+    window.onload = function () {
+       
+      window.addEventListener("beforeunload", function (e) {
+        if (formSubmitting || isDirty()) {
+          return undefined;
+        }
+       
+        var confirmationMessage = 'It looks like you have been editing something. ' +
+          'If you leave before saving, your changes will be lost.';
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+      });
+    };
+  </script>
+
 </body>
+<!--app.component.html 左側欄位-->
 
 </html>

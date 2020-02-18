@@ -40,7 +40,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = 'チャットタブ設定';
+    this.modalService.title = this.panelService.title = '聊天分頁設定';
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', 1000, event => {
         if (!this.selectedTab || event.data.identifier !== this.selectedTab.identifier) return;
@@ -62,7 +62,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
   create() {
     let chatTab = new ChatTab();
-    chatTab.name = 'タブ';
+    chatTab.name = '分頁';
     chatTab.initialize();
   }
 
@@ -73,11 +73,66 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
     this.saveDataService.saveGameObject(this.selectedTab, fileName);
   }
 
+  save_log() {
+    if (!this.selectedTab) return;
+
+    let msg_arr = this.selectedTab.children;
+    if (msg_arr.length <= 0) return;
+
+    function twobit(n: number) {
+      return (n <= 9 ? "0" + n : n);
+    }
+
+    let date = new Date();
+    let y = date.getFullYear();
+    let m = twobit(date.getMonth() + 1);
+    let d = twobit(date.getDate());
+    let h = twobit(date.getHours());
+    let min = twobit(date.getMinutes());
+    let sec = twobit(date.getSeconds());
+    let fileName: string = 'chatlog_' + y + m + d + "_" + h + min + sec + "_" + this.selectedTab.name + ".html";
+
+    let html_doc = "";
+    for (let i = 0; i < msg_arr.length; i++) {
+      let msg = msg_arr[i];
+      let color = msg["color"] ? msg["color"] : "#000000";
+      let name = msg["name"].match(/^<BCDice：/) ? "<span style='padding-left:20px;'>&nbsp;</span>" : (msg["name"] + ": ");
+      html_doc += "<font color='" + color + "'><b>" + name + "</b>" + msg.value + "</font><br>\n";
+    }
+    this.downloadHtml(fileName, html_doc);
+  }
+
+  downloadHtml(filename, html) {
+    var evt = new MouseEvent('click', {
+      'view': window,
+      'bubbles': true,
+      'cancelable': true
+    });
+    var aLink = document.createElement('a');
+    aLink.download = filename;
+    aLink.href = "data:text/html;charset=UTF-8," + encodeURIComponent(html);
+    aLink.dispatchEvent(evt);
+  }
+
   delete() {
     if (!this.isEmpty && this.selectedTab) {
       this.selectedTabXml = this.selectedTab.toXml();
       this.selectedTab.destroy();
     }
+  }
+
+  allMessageClear() {
+    this.chatTabs.map(function (nowTab) {
+      let chatTab = new ChatTab();
+      chatTab.name = nowTab.name;
+
+      nowTab.destroy();
+      chatTab.initialize();
+    });
+
+    let chatTab: ChatTab = new ChatTab('MainTab');
+    chatTab.name = '主要分頁';
+    chatTab.initialize();
   }
 
   restore() {

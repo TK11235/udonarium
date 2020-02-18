@@ -12,9 +12,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$==', '$>', '$checkRoll', '$roll', '$collect', '$split', '$count', '$<=', '$+', '$empty?', '$!=', '$*']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$==', '$>', '$checkRoll', '$roll', '$collect', '$split', '$count', '$<=', '$+', '$empty?', '$!=', '$*']);
   return (function($base, $super, $parent_nesting) {
     function $Airgetlamh(){};
     var self = $Airgetlamh = $klass($base, $super, 'Airgetlamh', $Airgetlamh);
@@ -53,26 +53,26 @@
     Opal.defn(self, '$getHelpMessage', TMP_Airgetlamh_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "【Reg2.0『THE ANSWERER』～】\n" + "・調査判定（成功数を表示）：[n]AA[m]\n" + "・命中判定（ダメージ表示）：[n]AA[m]*p[+t][Cx]\n" + "【～Reg1.1『昇華』】\n" + "・調査判定（成功数を表示）：[n]AL[m]\n" + "・命中判定（ダメージ表示）：[n]AL[m]*p\n" + "----------------------------------------\n" + "[]内のコマンドは省略可能。\n" + "\n" + "「n」でダイス数（攻撃回数）を指定。省略時は「2」。\n" + "「m」で目標値を指定。省略時は「6」。\n" + "「p」で威力を指定。「*」は「x」で代用可。\n" + "「+t」でクリティカルトリガーを指定。省略可。\n" + "「Cx」でクリティカル値を指定。省略時は「1」、最大値は「3」、「0」でクリティカル無し。\n" + "\n" + "攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。\n" + "クリティカルヒットの分だけ、自動で振り足し処理を行います。\n" + "（ALコマンドではクリティカル処理を行いません）\n" + "\n" + "【書式例】\n" + "・AL → 2d10で目標値6の調査判定。\n" + "・5AA7*12 → 5d10で目標値7、威力12の命中判定。\n" + "・AA7x28+5 → 2d10で目標値7、威力28、クリティカルトリガー5の命中判定。\n" + "・9aa5*10C2 → 9d10で目標値5、威力10、クリティカル値2の命中判定。\n" + "・15AAx4c0 → 15d10で目標値6、威力4、クリティカル無しの命中判定。\n"
+      return "" + "【Reg2.0『THE ANSWERER』～】\n" + "・調査判定（成功数を表示）：[n]AA[m]\n" + "・命中判定（ダメージ表示）：[n]AA[m]*p[+t][Cx]\n" + "【～Reg1.1『昇華』】\n" + "・調査判定（成功数を表示）：[n]AL[m]\n" + "・命中判定（ダメージ表示）：[n]AL[m]*p\n" + "----------------------------------------\n" + "[]内のコマンドは省略可能。\n" + "\n" + "「n」で骰子数（攻撃回数）を指定。省略時は「2」。\n" + "「m」で目標値を指定。省略時は「6」。\n" + "「p」で威力を指定。「*」は「x」で代用可。\n" + "「+t」でクリティカルトリガーを指定。省略可。\n" + "「Cx」でクリティカル値を指定。省略時は「1」、最大値は「3」、「0」でクリティカル無し。\n" + "\n" + "攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。\n" + "クリティカルヒットの分だけ、自動で振り足し処理を行います。\n" + "（ALコマンドではクリティカル処理を行いません）\n" + "\n" + "【書式例】\n" + "・AL → 2d10で目標値6の調査判定。\n" + "・5AA7*12 → 5d10で目標値7、威力12の命中判定。\n" + "・AA7x28+5 → 2d10で目標値7、威力28、クリティカルトリガー5の命中判定。\n" + "・9aa5*10C2 → 9d10で目標値5、威力10、クリティカル値2の命中判定。\n" + "・15AAx4c0 → 15d10で目標値6、威力4、クリティカル無しの命中判定。\n"
     }, TMP_Airgetlamh_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Airgetlamh_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, diceCount = nil, target = nil, damage = nil, criticalTrigger = nil, criticalNumber = nil;
+      var $a, self = this, diceCount = nil, target = nil, damage = nil, criticalTrigger = nil, criticalNumber = nil;
 
       
       if ($truthy(/(\d+)?A(A|L)(\d+)?((x|\*)(\d+)(\+(\d+))?)?(C(\d+))?$/i['$==='](command))) {
         
-        diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
-        target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 6).$to_i();
-        damage = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i();
-        if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("L"))) {
+        diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
+        target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 6).$to_i();
+        damage = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : 0).$to_i();
+        if (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$==']("L")) {
           
           criticalTrigger = 0;
           criticalNumber = 0;
           } else {
           
-          criticalTrigger = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](8))) ? $a : 0).$to_i();
-          criticalNumber = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](10))) ? $a : 1).$to_i();
+          criticalTrigger = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(8)) ? $a : 0).$to_i();
+          criticalNumber = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(10)) ? $a : 1).$to_i();
         };
         if ($truthy($rb_gt(criticalNumber, 4))) {
           criticalNumber = 3};

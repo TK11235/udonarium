@@ -12,9 +12,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$nil?', '$==', '$checkRoll', '$>', '$roll', '$collect', '$split', '$each', '$<=', '$+', '$empty?', '$!=', '$*']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$to_i', '$last_match', '$nil?', '$==', '$checkRoll', '$>', '$roll', '$collect', '$split', '$each', '$<=', '$+', '$empty?', '$!=', '$*']);
   return (function($base, $super, $parent_nesting) {
     function $Alsetto(){};
     var self = $Alsetto = $klass($base, $super, 'Alsetto', $Alsetto);
@@ -53,28 +53,28 @@
     Opal.defn(self, '$getHelpMessage', TMP_Alsetto_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・成功判定：nAL[m]　　　　・トライアンフ無し：nALC[m]\n" + "・命中判定：nAL[m]*p　　　・トライアンフ無し：nALC[m]*p\n" + "・命中判定（ガンスリンガーの根源詩）：nALG[m]*p\n" + "[]内は省略可能。\n" + "\n" + "ALコマンドはトライアンフの分だけ、自動で振り足し処理を行います。\n" + "「n」でダイス数を指定。\n" + "「m」で目標値を指定。省略時は、デフォルトの「3」が使用されます。\n" + "「p」で攻撃力を指定。「*」は「x」でも可。\n" + "攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。\n" + "\n" + "ALCコマンドはトライアンフ無しで、成功数、ダメージを結果表示します。\n" + "ALGコマンドは「2以下」でトライアンフ処理を行います。\n" + "\n" + "【書式例】\n" + "・5AL → 5d6で目標値3。\n" + "・5ALC → 5d6で目標値3。トライアンフ無し。\n" + "・6AL2 → 6d6で目標値2。\n" + "・4AL*5 → 4d6で目標値3、攻撃力5の命中判定。\n" + "・7AL2x10 → 7d6で目標値2、攻撃力10の命中判定。\n" + "・8ALC4x5 → 8d6で目標値4、攻撃力5、トライアンフ無しの命中判定。\n"
+      return "" + "・成功判定：nAL[m]　　　　・トライアンフ無し：nALC[m]\n" + "・命中判定：nAL[m]*p　　　・トライアンフ無し：nALC[m]*p\n" + "・命中判定（ガンスリンガーの根源詩）：nALG[m]*p\n" + "[]内は省略可能。\n" + "\n" + "ALコマンドはトライアンフの分だけ、自動で振り足し処理を行います。\n" + "「n」で骰子数を指定。\n" + "「m」で目標値を指定。省略時は、デフォルトの「3」が使用されます。\n" + "「p」で攻撃力を指定。「*」は「x」でも可。\n" + "攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。\n" + "\n" + "ALCコマンドはトライアンフ無しで、成功数、ダメージを結果表示します。\n" + "ALGコマンドは「2以下」でトライアンフ処理を行います。\n" + "\n" + "【書式例】\n" + "・5AL → 5d6で目標値3。\n" + "・5ALC → 5d6で目標値3。トライアンフ無し。\n" + "・6AL2 → 6d6で目標値2。\n" + "・4AL*5 → 4d6で目標値3、攻撃力5の命中判定。\n" + "・7AL2x10 → 7d6で目標値2、攻撃力10の命中判定。\n" + "・8ALC4x5 → 8d6で目標値4、攻撃力5、トライアンフ無しの命中判定。\n"
     }, TMP_Alsetto_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Alsetto_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, rapid = nil, isCritical = nil, criticalNumber = nil, target = nil, damage = nil;
+      var $a, self = this, rapid = nil, isCritical = nil, criticalNumber = nil, target = nil, damage = nil;
 
       
       if ($truthy(/(\d+)AL(C|G)?(\d+)?((x|\*)(\d+))?$/i['$==='](command))) {
         
-        rapid = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1)).$to_i();
-        isCritical = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$nil?']();
+        rapid = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
+        isCritical = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$nil?']();
         if ($truthy(isCritical)) {
           criticalNumber = 1
-        } else if ($truthy((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))['$==']("G"))) {
+        } else if (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$==']("G")) {
           
           isCritical = true;
           criticalNumber = 2;
           } else {
           criticalNumber = 0
         };
-        target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : 3).$to_i();
-        damage = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : 0).$to_i();
+        target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 3).$to_i();
+        damage = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : 0).$to_i();
         return self.$checkRoll(rapid, target, damage, isCritical, criticalNumber);};
       return nil;
     }, TMP_Alsetto_rollDiceCommand_5.$$arity = 1);

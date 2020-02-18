@@ -76,6 +76,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     document.body.removeEventListener('mousemove', this.callcack);
     document.body.removeEventListener('touchmove', this.callcack);
     EventSystem.unregister(this);
+    this.tabletopService.removeBatch(this);
   }
 
   private onMouseMove(e: any) {

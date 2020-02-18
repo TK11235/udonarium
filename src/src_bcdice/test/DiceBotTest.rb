@@ -30,7 +30,7 @@ class DiceBotTest
     readTestDataSet
 
     if @testDataSet.empty?
-      $stderr.puts('No matched test data!')
+      warn('No matched test data!')
       return false
     end
 
@@ -65,32 +65,22 @@ class DiceBotTest
 
     targetFiles.each do |filename|
       next if /^_/ === File.basename(filename)
-      
+
       source =
         if RUBY_VERSION < '1.9'
           File.read(filename)
         else
           File.read(filename, :encoding => 'UTF-8')
         end
-      
+
       dataSetSources = source.
-        gsub("\r\n", "\n").
-        tr("\r", "\n").
-        split("============================\n").
-        map(&:chomp)
-      
+                       gsub("\r\n", "\n").
+                       tr("\r", "\n").
+                       split("============================\n").
+                       map(&:chomp)
+
       # ゲームシステムをファイル名から判断する
       gameType = File.basename(filename, '.txt')
-
-      # TKfix
-      begin
-        require(File.expand_path("../diceBot/#{gameType}.rb", File.dirname(__FILE__)))
-        #require_tree File.expand_path("../diceBot", File.dirname(__FILE__))
-      rescue LoadError, StandardError => e
-        debug("DiceBot load ERROR!!!", e.to_s)
-        nil
-      end
-      # TKfix
 
       dataSet =
         if RUBY_VERSION < '1.9'
@@ -102,18 +92,16 @@ class DiceBotTest
             DiceBotTestData.parse(dataSetSource, gameType, i)
           end
         end
-      
-      @testDataSet += 
+
+      @testDataSet +=
         if @dataIndex.nil?
           dataSet
         else
           dataSet.select { |data| data.index == @dataIndex }
         end
-      
     end
   end
-  
-  
+
   private :readTestDataSet
 
   # 各テストを実行する
@@ -129,7 +117,7 @@ class DiceBotTest
           # テスト失敗、次へ
           next
         end
-      rescue => e
+      rescue StandardError => e
         @errorLog << logTextForException(e, testData)
         print('E')
 
@@ -144,7 +132,7 @@ class DiceBotTest
     puts
   end
 
-  # ダイスコマンドを実行する
+  # 骰子コマンドを実行する
   def executeCommand(testData)
     rands = testData.rands
     @bot.setRandomValues(rands)
@@ -156,7 +144,7 @@ class DiceBotTest
     end
 
     unless rands.empty?
-      result += "\nダイス残り："
+      result += "\n骰子残り："
       result += rands.map { |r| r.join('/') }.join(', ')
     end
 
@@ -203,9 +191,9 @@ EOS
   # インデントした結果を返す
   def indent(s)
     target =
-      if s.kind_of?(Array)
+      if s.is_a?(Array)
         s
-      elsif s.kind_of?(String)
+      elsif s.is_a?(String)
         s.lines
       else
         raise TypeError

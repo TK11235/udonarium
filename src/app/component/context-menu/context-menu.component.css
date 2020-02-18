@@ -1,4 +1,4 @@
-.draggable-panel {
+.component {
   box-sizing: border-box;
   overflow: visible;
   position: absolute;
@@ -15,12 +15,15 @@
 
   -moz-user-drag: none;
   -webkit-user-drag: none;
+  z-index: 9900;
 }
 .submenu-panel {
   position: absolute;
-  z-index: 1;
   left: calc(100% - 4px);
   top: -16px;
+}
+.pointer-events-none {
+  pointer-events: none;
 }
 .is-max-limit {
   max-height: 100%;

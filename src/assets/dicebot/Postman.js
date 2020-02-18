@@ -12,9 +12,9 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$<', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$>=', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$<', '$to_s', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$>=', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $Postman(){};
     var self = $Postman = $klass($base, $super, 'Postman', $Postman);
@@ -53,23 +53,23 @@
     Opal.defn(self, '$getHelpMessage', TMP_Postman_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "◆判定：[n]PO[+-a][> or >= or @X]　　[]内省略可。\n" + "\n" + "達成値と判定の成否、クリティカル、ファンブルを結果表示します。\n" + "「n」でダイス数を指定。省略時は2D。\n" + "「+-a」で達成値への修正を指定。「+2+1-4」のような複数回指定可。\n" + "「>X」「>=X」「@X」で難易度を指定可。\n" + "「>X」は達成値>難易度、「>=X」「@X」は達成値>=難易度で判定します。\n" + "\n" + "【書式例】\n" + "3PO+2-1 → 3Dで達成値修正+1の判定。達成値のみ表示。\n" + "PO@5+2 → 2Dで目標値7の判定。判定の成否と達成値を表示。\n" + "4PO-2+1>7+2 → 4Dで達成値修正-1、目標値9（同値は失敗）の判定。\n" + "\n" + "\n" + "◆天候チェック：WEA[n]　　[]内省略可。\n" + "\n" + "天候チェック表を参照します。\n" + "「n」を指定すると、指定した結果を表示します。（【幸運点】使用時用）\n" + "\n" + "\n" + "◆自由行動シチュエーション表：FRE\n"
+      return "" + "◆判定：[n]PO[+-a][> or >= or @X]　　[]内省略可。\n" + "\n" + "達成値と判定の成否、クリティカル、ファンブルを結果表示します。\n" + "「n」で骰子数を指定。省略時は2D。\n" + "「+-a」で達成値への修正を指定。「+2+1-4」のような複数回指定可。\n" + "「>X」「>=X」「@X」で難易度を指定可。\n" + "「>X」は達成値>難易度、「>=X」「@X」は達成値>=難易度で判定します。\n" + "\n" + "【書式例】\n" + "3PO+2-1 → 3Dで達成値修正+1の判定。達成値のみ表示。\n" + "PO@5+2 → 2Dで目標値7の判定。判定の成否と達成値を表示。\n" + "4PO-2+1>7+2 → 4Dで達成値修正-1、目標値9（同値は失敗）の判定。\n" + "\n" + "\n" + "◆天候チェック：WEA[n]　　[]内省略可。\n" + "\n" + "天候チェック表を参照します。\n" + "「n」を指定すると、指定した結果を表示します。（【幸運点】使用時用）\n" + "\n" + "\n" + "◆自由行動シチュエーション表：FRE\n"
     }, TMP_Postman_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Postman_rollDiceCommand_7 = function $$rollDiceCommand(command) {
-      var $a, $b, TMP_5, TMP_6, self = this, text = nil, $case = nil, diceCount = nil, modify = nil, modifyAddString = nil, type = nil, target = nil, targetAddString = nil, modify_list = nil, target_list = nil, roc = nil;
+      var $a, TMP_5, TMP_6, self = this, text = nil, $case = nil, diceCount = nil, modify = nil, modifyAddString = nil, type = nil, target = nil, targetAddString = nil, modify_list = nil, target_list = nil, roc = nil;
 
       
       text = (function() {$case = command.$upcase();
       if (/(\d+)?PO(\d+)?(([+-]\d+)*)?((>|>=|@)(\d+)(([+-]\d+)*)?)?/i['$===']($case)) {
-      diceCount = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 2).$to_i();
+      diceCount = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
       if ($truthy($rb_lt(diceCount, 2))) {
         diceCount = 2};
-      modify = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](2))) ? $a : 0).$to_i();
-      modifyAddString = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](3))) ? $a : "");
-      type = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](6))) ? $a : "");
-      target = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](7))) ? $a : 0).$to_i();
-      targetAddString = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](8))) ? $a : "");
+      modify = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
+      modifyAddString = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_s();
+      type = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : "");
+      target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i();
+      targetAddString = Opal.const_get_relative($nesting, 'Regexp').$last_match(8).$to_s();
       modify_list = modifyAddString.$scan(/[+-]\d+/);
       $send(modify_list, 'each', [], (TMP_5 = function(i){var self = TMP_5.$$s || this;
 if (i == null) i = nil;
@@ -82,10 +82,10 @@ if (j == null) j = nil;
         return (target = $rb_plus(target, j.$to_i()))}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));};
       return self.$checkRoll(diceCount, modify, type, target);}
       else if (/WEA(\d+)?/i['$===']($case)) {
-      roc = ($truthy($a = (($b = $gvars['~']) === nil ? nil : $b['$[]'](1))) ? $a : 0).$to_i();
+      roc = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) ? $a : 0).$to_i();
       return self.$get_weather_table(roc);}
       else if ("FRE"['$===']($case)) {return self.$get_free_situation_table()}
-      else {return nil}})();
+      else { return nil }})();
       return text;
     }, TMP_Postman_rollDiceCommand_7.$$arity = 1);
     
@@ -107,13 +107,13 @@ if (i == null) i = nil;
         modifyText = "";
         if ($truthy($rb_gt(modify, 0))) {
           modifyText = "+"};
-        modifyText = $rb_plus(modifyText, "" + (modify));};
+        modifyText = $rb_plus(modifyText, modify.$to_s());};
       result = $rb_plus(dice2, modify);
       if ($truthy(type['$!='](""))) {
         
         resultText = " 【失敗】";
         operatorText = ">";
-        if ($truthy(type['$=='](">"))) {
+        if (type['$=='](">")) {
           if ($truthy($rb_gt(result, target))) {
             resultText = " 【成功】"}
           } else {
@@ -124,12 +124,12 @@ if (i == null) i = nil;
         };};
       if ($truthy($rb_ge(criticalCount, 2))) {
         resultText = " 【成功】（クリティカル）"
-      } else if ($truthy(dice['$=='](diceCount))) {
+      } else if (dice['$=='](diceCount)) {
         resultText = " 【失敗】（ファンブル）"};
       text = "" + (diceCount) + "D6(" + (diceText) + ")" + (modifyText) + " ＞ " + (dice2) + "(" + (diceText2) + ")" + (modifyText) + " = 達成値：" + (result);
       if ($truthy($rb_gt(target, 0))) {
         text = $rb_plus(text, "" + (operatorText) + (target) + " ")};
-      text = $rb_plus(text, "" + (resultText));
+      text = $rb_plus(text, resultText.$to_s());
       return text;
     }, TMP_Postman_checkRoll_10.$$arity = 4);
     
@@ -139,7 +139,7 @@ if (i == null) i = nil;
       
       name = "天候チェック";
       table = [[2, "大雨と強風。探索判定の難易度に+4。"], [3, "風が強い1日になりそう。探索判定の難易度に+2。"], [4, "晴れ。特になし。"], [5, "夜の間の雨でぬかるむ。探索判定の難易度に+2。"], [6, "それなりの雨足。探索判定の難易度に+2。"], [7, "晴れ。特になし。"], [8, "天気は大荒れ。探索判定の難易度に+4。"], [9, "小雨が降る。探索判定の難易度に+1。"], [10, "それなりの雨足。探索判定の難易度に+2。"], [11, "晴れ。特になし。"], [12, "風が強い1日になりそう。探索判定の難易度に+2。"]];
-      if ($truthy(roc['$=='](0))) {
+      if (roc['$=='](0)) {
         $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b
         } else {
         

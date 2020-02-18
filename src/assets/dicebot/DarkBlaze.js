@@ -18,9 +18,9 @@
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$check_roll', '$==', '$>=', '$to_i', '$parren_killer', '$marshalSignOfInequality', '$get_dice', '$!=', '$+', '$check_suc', '$abs', '$roll', '$shift', '$collect', '$split', '$times', '$[]', '$<', '$-', '$<=', '$===', '$get_horidasibukuro_table', '$debug', '$/']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$gsub', '$last_match', '$check_roll', '$==', '$>=', '$match', '$[]', '$to_i', '$parren_killer', '$marshalSignOfInequality', '$get_dice', '$!=', '$+', '$check_suc', '$abs', '$roll', '$shift', '$collect', '$split', '$times', '$<', '$-', '$<=', '$===', '$get_horidasibukuro_table', '$debug', '$/']);
   return (function($base, $super, $parent_nesting) {
     function $DarkBlaze(){};
     var self = $DarkBlaze = $klass($base, $super, 'DarkBlaze', $DarkBlaze);
@@ -58,7 +58,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_DarkBlaze_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・行為判定　(DBxy#n)\n" + "　行為判定専用のコマンドです。\n" + "　\"DB(能力)(技能)#(修正)\"でロールします。Rコマンド(3R6+n[x,y]>=m mは難易度)に読替をします。\n" + "　クリティカルとファンブルも自動で処理されます。\n" + "　DB@x@y#m と DBx,y#m にも対応しました。\n" + "　例）DB33　　　DB32#-1　　　DB@3@1#1　　　DB3,2　　　DB23#1>=4　　　3R6+1[3,3]>=4\n" + "\n" + "・掘り出し袋表　(BTx)\n" + "　\"BT(ダイス数)\"で掘り出し袋表を自動で振り、結果を表示します。\n" + "　例）BT1　　　BT2　　　BT[1...3]\n"
+      return "" + "・行為判定　(DBxy#n)\n" + "　行為判定専用のコマンドです。\n" + "　\"DB(能力)(技能)#(修正)\"でロールします。Rコマンド(3R6+n[x,y]>=m mは難易度)に読替をします。\n" + "　クリティカルとファンブルも自動で処理されます。\n" + "　DB@x@y#m と DBx,y#m にも対応しました。\n" + "　例）DB33　　　DB32#-1　　　DB@3@1#1　　　DB3,2　　　DB23#1>=4　　　3R6+1[3,3]>=4\n" + "\n" + "・掘り出し袋表　(BTx)\n" + "　\"BT(骰子数)\"で掘り出し袋表を自動で振り、結果を表示します。\n" + "　例）BT1　　　BT2　　　BT[1...3]\n"
     }, TMP_DarkBlaze_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_DarkBlaze_changeText_10 = function $$changeText(string) {
@@ -69,21 +69,21 @@
         } else {
         return string
       };
-      string = $send(string, 'gsub', [/DB(\d),(\d)/], (TMP_5 = function(){var self = TMP_5.$$s || this, $a;
+      string = $send(string, 'gsub', [/DB(\d),(\d)/], (TMP_5 = function(){var self = TMP_5.$$s || this;
 
-      return "" + "DB" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
-      string = $send(string, 'gsub', [/DB\@(\d)\@(\d)/], (TMP_6 = function(){var self = TMP_6.$$s || this, $a;
+      return "" + "DB" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2))}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/DB\@(\d)\@(\d)/], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
-      return "" + "DB" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2)))}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\d][\+\-\d]*))/], (TMP_7 = function(){var self = TMP_7.$$s || this, $a;
+      return "" + "DB" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2))}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
+      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\d][\+\-\d]*))/], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + "3R6+" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](4))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\+\-\d]*))/], (TMP_8 = function(){var self = TMP_8.$$s || this, $a;
+      return "" + "3R6+" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) + "[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      string = $send(string, 'gsub', [/DB(\d)(\d)(#([\+\-\d]*))/], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-      return "" + "3R6" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](4))) + "[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
-      string = $send(string, 'gsub', [/DB(\d)(\d)/], (TMP_9 = function(){var self = TMP_9.$$s || this, $a;
+      return "" + "3R6" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) + "[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
+      string = $send(string, 'gsub', [/DB(\d)(\d)/], (TMP_9 = function(){var self = TMP_9.$$s || this;
 
-      return "" + "3R6[" + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](1))) + "," + ((($a = $gvars['~']) === nil ? nil : $a['$[]'](2))) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
+      return "" + "3R6[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "," + (Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
       return string;
     }, TMP_DarkBlaze_changeText_10.$$arity = 1);
     
@@ -93,15 +93,15 @@
       return self.$check_roll(string, nick_e)
     }, TMP_DarkBlaze_dice_command_xRn_11.$$arity = 2);
     
-    Opal.defn(self, '$check_nD6', TMP_DarkBlaze_check_nD6_12 = function $$check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {
+    Opal.defn(self, '$check_nD6', TMP_DarkBlaze_check_nD6_12 = function $$check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
-      if ($truthy(signOfInequality['$=='](">="))) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };
-      if ($truthy(diff['$==']("?"))) {
+      if (diff['$==']("?")) {
         return ""};
       if ($truthy($rb_ge(total_n, diff))) {
         return " ＞ 成功"};
@@ -109,38 +109,30 @@
     }, TMP_DarkBlaze_check_nD6_12.$$arity = 8);
     
     Opal.defn(self, '$check_roll', TMP_DarkBlaze_check_roll_13 = function $$check_roll(string, nick_e) {
-      var $a, $b, self = this, output = nil, reg2 = nil, reg3 = nil, reg4 = nil, reg5 = nil, reg6 = nil, reg7 = nil, reg8 = nil, reg9 = nil, mod = nil, abl = nil, skl = nil, signOfInequality = nil, diff = nil, total = nil, out_str = nil;
+      var $a, $b, self = this, output = nil, m = nil, mod = nil, abl = nil, skl = nil, signOfInequality = nil, diff = nil, total = nil, out_str = nil;
 
       
       output = "1";
-      if ($truthy(/(^|\s)S?(3[rR]6([\+\-\d]+)?(\[(\d+),(\d+)\])(([>=]+)(\d+))?)(\s|$)/i['$=~'](string))) {
+      if ($truthy((m = /(^|\s)S?(3[rR]6([\+\-\d]+)?(\[(\d+),(\d+)\])(([>=]+)(\d+))?)(\s|$)/i.$match(string)))) {
         } else {
         return "1"
       };
-      reg2 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](2));
-      reg3 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](3));
-      reg4 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](4));
-      reg5 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](5));
-      reg6 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](6));
-      reg7 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](7));
-      reg8 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](8));
-      reg9 = (($a = $gvars['~']) === nil ? nil : $a['$[]'](9));
-      string = reg2;
+      string = m['$[]'](2);
       mod = 0;
       abl = 1;
       skl = 1;
       signOfInequality = "";
       diff = 0;
-      if ($truthy(reg3)) {
-        mod = self.$parren_killer("" + "(0" + (reg3) + ")").$to_i()};
-      if ($truthy(reg4)) {
+      if ($truthy(m['$[]'](3))) {
+        mod = self.$parren_killer("" + "(0" + (m['$[]'](3)) + ")").$to_i()};
+      if ($truthy(m['$[]'](4))) {
         
-        abl = reg5.$to_i();
-        skl = reg6.$to_i();};
-      if ($truthy(reg7)) {
+        abl = m['$[]'](5).$to_i();
+        skl = m['$[]'](6).$to_i();};
+      if ($truthy(m['$[]'](7))) {
         
-        signOfInequality = self.$marshalSignOfInequality(reg8);
-        diff = reg9.$to_i();};
+        signOfInequality = self.$marshalSignOfInequality(m['$[]'](8));
+        diff = m['$[]'](9).$to_i();};
       $b = self.$get_dice(mod, abl, skl), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (out_str = ($a[1] == null ? nil : $a[1])), $b;
       output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (out_str);
       if ($truthy(signOfInequality['$!='](""))) {
@@ -198,7 +190,7 @@ if (i == null) i = nil;
       
       $case = command;
       if (/BT(\d+)?/i['$===']($case)) {
-      dice = (($a = $gvars['~']) === nil ? nil : $a['$[]'](1));
+      dice = Opal.const_get_relative($nesting, 'Regexp').$last_match(1);
       dice = ($truthy($a = dice) ? $a : 1);
       return self.$get_horidasibukuro_table(dice);};
       return nil;
@@ -220,7 +212,7 @@ if (i == null) i = nil;
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), (dmy = ($a[1] == null ? nil : $a[1])), $b;
         magic_stone_result = magic_stone['$[]']($rb_minus($rb_divide(num2, 2).$to_i(), 1));
         output = "" + "《" + (magic_stone_result) + "》を" + (dice) + "個獲得";
-      } else if ($truthy(num1['$=='](7))) {
+      } else if (num1['$=='](7)) {
         output = "" + "《金貨》を" + (num2) + "枚獲得"
         } else {
         

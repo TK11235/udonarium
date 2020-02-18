@@ -16,6 +16,7 @@ import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
 
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
+import { InputHandler } from 'directive/input-handler';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { ModalService } from 'service/modal.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
@@ -30,10 +31,10 @@ import { TabletopService } from 'service/tabletop.service';
   ],
 })
 export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('root', { static: true }) rootElementRef: ElementRef;
-  @ViewChild('gameTable', { static: true }) gameTable: ElementRef;
-  @ViewChild('gameObjects', { static: true }) gameObjects: ElementRef;
-  @ViewChild('gridCanvas', { static: true }) gridCanvas: ElementRef;
+  @ViewChild('root', { static: true }) rootElementRef: ElementRef<HTMLElement>;
+  @ViewChild('gameTable', { static: true }) gameTable: ElementRef<HTMLElement>;
+  @ViewChild('gameObjects', { static: true }) gameObjects: ElementRef<HTMLElement>;
+  @ViewChild('gridCanvas', { static: true }) gridCanvas: ElementRef<HTMLCanvasElement>;
 
   get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
   get currentTable(): GameTable { return this.tabletopService.currentTable; }
@@ -54,8 +55,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private isTransformMode: boolean = false;
 
-  private mouseDownPositionX: number = 0;
-  private mouseDownPositionY: number = 0;
+  private currentPositionX: number = 0;
+  private currentPositionY: number = 0;
 
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
@@ -67,11 +68,22 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private viewRotateY: number = 0;
   private viewRotateZ: number = 10;
 
-  private callbackOnMouseDown = (e) => this.onMouseDown(e);
-  private callbackOnMouseUp = (e) => this.onMouseUp(e);
-  private callbackOnMouseMove = (e) => this.onMouseMove(e);
-
   private buttonCode: number = 0;
+  private input: InputHandler = null;
+
+  private hammer: HammerManager = null;
+  private deltaHammerDeltaX: number = 0;
+  private deltaHammerDeltaY = 1.0;
+  private deltaHammerScale = 1.0;
+  private deltaHammerRotation = 0;
+
+  private prevHammerDeltaX: number = 0;
+  private prevHammerDeltaY: number = 0;
+  private prevHammerScale: number = 0;
+  private prevHammerRotation: number = 0;
+
+  private tappedPanTimer: NodeJS.Timer = null;
+  private tappedPanCenter: HammerPoint = { x: 0, y: 0 };
 
   get characters(): GameCharacter[] { return this.tabletopService.characters; }
   get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
@@ -103,14 +115,21 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isTransformMode = true;
         this.pointerDeviceService.isDragging = false;
         let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-        this.gridCanvas.nativeElement.style.opacity = opacity;
+        this.gridCanvas.nativeElement.style.opacity = opacity + '';
       });
     this.tabletopService.makeDefaultTable();
     this.tabletopService.makeDefaultTabletopObjects();
   }
 
   ngAfterViewInit() {
-    this.elementRef.nativeElement.addEventListener('mousedown', this.callbackOnMouseDown, true);
+    this.ngZone.runOutsideAngular(() => {
+      this.input = new InputHandler(this.elementRef.nativeElement, { capture: true });
+      this.initializeHammer();
+    });
+    this.input.onStart = this.onInputStart.bind(this);
+    this.input.onMove = this.onInputMove.bind(this);
+    this.input.onEnd = this.onInputEnd.bind(this);
+
     this.setGameTableGrid(this.currentTable.width, this.currentTable.height, this.currentTable.gridSize, this.currentTable.gridType, this.currentTable.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
     this.tabletopService.dragAreaElement = this.gameObjects.nativeElement;
@@ -118,21 +137,169 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
-    this.removeMouseEventListeners();
-    this.elementRef.nativeElement.removeEventListener('mousedown', this.callbackOnMouseDown, true);
+    this.input.destroy();
+    this.hammer.destroy();
   }
 
-  onMouseDown(e: any) {
-    this.mouseDownPositionX = this.pointerDeviceService.pointerX;
-    this.mouseDownPositionY = this.pointerDeviceService.pointerY;
+  initializeHammer() {
+    this.hammer = new Hammer.Manager(this.rootElementRef.nativeElement, { inputClass: Hammer.TouchInput });
+
+    let tap = new Hammer.Tap();
+    let pan1p = new Hammer.Pan({ event: 'pan1p', pointers: 1, threshold: 0 });
+    let pan2p = new Hammer.Pan({ event: 'pan2p', pointers: 2, threshold: 0 });
+    let pinch = new Hammer.Pinch();
+    let rotate = new Hammer.Rotate();
+
+    pan1p.recognizeWith(pan2p);
+    pan1p.recognizeWith(rotate);
+    pan1p.recognizeWith(pinch);
+
+    pan2p.recognizeWith(pinch);
+    pan2p.recognizeWith(rotate);
+    pinch.recognizeWith(rotate);
+
+    this.hammer.add([tap, pan1p, pan2p, pinch, rotate]);
+
+    this.hammer.on('hammer.input', this.onHammer.bind(this));
+    this.hammer.on('tap', this.onTap.bind(this));
+    this.hammer.on('pan1pstart', this.onTappedPanStart.bind(this));
+    this.hammer.on('pan1pmove', this.onTappedPanMove.bind(this));
+    this.hammer.on('pan1pend', this.onTappedPanEnd.bind(this));
+    this.hammer.on('pan1pcancel', this.onTappedPanEnd.bind(this));
+    this.hammer.on('pan2pmove', this.onPanMove.bind(this));
+    this.hammer.on('pinchmove', this.onPinchMove.bind(this));
+    this.hammer.on('rotatemove', this.onRotateMove.bind(this));
+
+    // iOS で contextmenu が発火しない問題へのworkaround.
+    let ua = window.navigator.userAgent.toLowerCase();
+    let isiOS = ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document;
+    if (!isiOS) return;
+    this.hammer.add(new Hammer.Press({ time: 251 }));
+    this.hammer.on('press', ev => {
+      let event = new MouseEvent('contextmenu', {
+        bubbles: true,
+        cancelable: true,
+        clientX: ev.center.x,
+        clientY: ev.center.y,
+      });
+      this.ngZone.run(() => ev.srcEvent.target.dispatchEvent(event));
+    });
+  }
+
+  onHammer(ev: HammerInput) {
+    if (ev.isFirst) {
+      this.deltaHammerScale = ev.scale;
+      this.deltaHammerRotation = ev.rotation;
+      this.deltaHammerDeltaX = ev.deltaX;
+      this.deltaHammerDeltaY = ev.deltaY;
+    } else {
+      this.deltaHammerScale = ev.scale - this.prevHammerScale;
+      this.deltaHammerRotation = ev.rotation - this.prevHammerRotation;
+      this.deltaHammerDeltaX = ev.deltaX - this.prevHammerDeltaX;
+      this.deltaHammerDeltaY = ev.deltaY - this.prevHammerDeltaY;
+    }
+    this.prevHammerScale = ev.scale;
+    this.prevHammerRotation = ev.rotation;
+    this.prevHammerDeltaX = ev.deltaX;
+    this.prevHammerDeltaY = ev.deltaY;
+
+    if (this.tappedPanTimer == null || ev.eventType != Hammer.INPUT_START) return;
+    let distance = (this.tappedPanCenter.x - ev.center.x) ** 2 + (this.tappedPanCenter.y - ev.center.y) ** 2;
+    if (50 ** 2 < distance) {
+      clearTimeout(this.tappedPanTimer);
+      this.tappedPanTimer = null;
+    }
+  }
+
+  onTap(ev: HammerInput) {
+    this.cancelInput();
+    this.tappedPanCenter = ev.center;
+    this.tappedPanTimer = setTimeout(() => { this.tappedPanTimer = null; }, 400);
+  }
+
+  onTappedPanStart(ev: HammerInput) {
+    if (this.tappedPanTimer == null) return;
+    clearTimeout(this.tappedPanTimer);
+    this.cancelInput();
+  }
+
+  onTappedPanEnd(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
+    this.tappedPanTimer = null;
+  }
+
+  onTappedPanMove(ev: HammerInput) {
+    if (this.tappedPanTimer == null) {
+      if (!this.isTransformMode || this.input.isGrabbing) return;
+
+      let transformX = 0;
+      let transformY = 0;
+      let transformZ = 0;
+
+      let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
+      transformX = this.deltaHammerDeltaX * scale;
+      transformY = this.deltaHammerDeltaY * scale;
+
+      if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
+        this.ngZone.run(() => { this.contextMenuService.close(); });
+      }
+
+      this.setTransform(transformX, transformY, transformZ, 0, 0, 0);
+
+    } else {
+      clearTimeout(this.tappedPanTimer);
+      this.cancelInput();
+
+      let scale = this.deltaHammerDeltaY;
+      let transformZ = scale * 7.5;
+
+      if (750 < transformZ + this.viewPotisonZ) transformZ += 750 - (transformZ + this.viewPotisonZ);
+
+      this.setTransform(0, 0, transformZ, 0, 0, 0);
+    }
+  }
+
+  onPanMove(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
+    this.tappedPanTimer = null;
+    this.cancelInput();
+    let rotateX = -this.deltaHammerDeltaY / window.innerHeight * 100;
+
+    if (80 < rotateX + this.viewRotateX) rotateX += 80 - (rotateX + this.viewRotateX);
+    if (rotateX + this.viewRotateX < 0) rotateX += 0 - (rotateX + this.viewRotateX);
+
+    this.setTransform(0, 0, 0, rotateX, 0, 0);
+  }
+
+  onPinchMove(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
+    this.tappedPanTimer = null;
+    this.cancelInput();
+    let transformZ = this.deltaHammerScale * 500;
+
+    if (750 < transformZ + this.viewPotisonZ) transformZ += 750 - (transformZ + this.viewPotisonZ);
+
+    this.setTransform(0, 0, transformZ, 0, 0, 0);
+  }
+
+  onRotateMove(ev: HammerInput) {
+    clearTimeout(this.tappedPanTimer);
+    this.tappedPanTimer = null;
+    this.cancelInput();
+    let rotateZ = this.deltaHammerRotation;
+    this.setTransform(0, 0, 0, 0, 0, rotateZ);
+  }
+
+  onInputStart(e: any) {
+    this.currentPositionX = this.input.pointer.x;
+    this.currentPositionY = this.input.pointer.y;
 
     if (e.target.contains(this.gameObjects.nativeElement) || e.button === 1 || e.button === 2) {
       this.isTransformMode = true;
-      e.preventDefault();
     } else {
       this.isTransformMode = false;
       this.pointerDeviceService.isDragging = true;
-      this.gridCanvas.nativeElement.style.opacity = 1.0;
+      this.gridCanvas.nativeElement.style.opacity = 1.0 + '';
     }
 
     this.buttonCode = e.button;
@@ -141,49 +308,52 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       this.removeSelectionRanges();
       this.removeFocus();
     }
-    this.addMouseEventListeners();
   }
 
-  onMouseUp(e: any) {
+  onInputEnd(e: any) {
+    this.cancelInput();
+  }
+
+  onInputMove(e: any) {
+    if (!this.isTransformMode || this.tappedPanTimer != null) return;
+
+    let x = this.input.pointer.x;
+    let y = this.input.pointer.y;
+    let deltaX = x - this.currentPositionX;
+    let deltaY = y - this.currentPositionY;
+
+    let transformX = 0;
+    let transformY = 0;
+    let transformZ = 0;
+
+    let rotateX = 0;
+    let rotateY = 0;
+    let rotateZ = 0;
+
+    if (this.buttonCode === 2) {
+      rotateZ = -deltaX / 5;
+      rotateX = -deltaY / 5;
+    } else {
+      let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
+      transformX = deltaX * scale;
+      transformY = deltaY * scale;
+    }
+
+    if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
+      this.ngZone.run(() => { this.contextMenuService.close(); });
+    }
+
+    this.currentPositionX = x;
+    this.currentPositionY = y;
+
+    this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
+  }
+
+  cancelInput() {
+    this.input.cancel();
     this.pointerDeviceService.isDragging = false;
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-    this.gridCanvas.nativeElement.style.opacity = opacity;
-
-    this.removeMouseEventListeners();
-  }
-
-  onMouseMove(e: any) {
-    let x = this.pointerDeviceService.pointerX;
-    let y = this.pointerDeviceService.pointerY;
-
-    if (this.isTransformMode) {
-      let transformX = 0;
-      let transformY = 0;
-      let transformZ = 0;
-
-      let rotateX = 0;
-      let rotateY = 0;
-      let rotateZ = 0;
-
-      if (this.buttonCode === 2) {
-        rotateZ = (this.mouseDownPositionX - x) / 5;
-        rotateX = (this.mouseDownPositionY - y) / 5;
-      } else {
-        let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
-        transformX = -(this.mouseDownPositionX - x) * scale;
-        transformY = -(this.mouseDownPositionY - y) * scale;
-      }
-
-      if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
-        this.ngZone.run(() => { this.contextMenuService.close(); });
-      }
-
-      this.mouseDownPositionX = x;
-      this.mouseDownPositionY = y;
-
-      this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
-      return;
-    }
+    this.gridCanvas.nativeElement.style.opacity = opacity + '';
   }
 
   @HostListener('wheel', ['$event'])
@@ -250,7 +420,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: any) {
     if (!document.activeElement.contains(this.gameObjects.nativeElement)) return;
-    e.stopPropagation();
     e.preventDefault();
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
@@ -262,7 +431,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     Array.prototype.push.apply(menuActions, this.tabletopService.getContextMenuActionsForCreateObject(objectPosition));
     menuActions.push(ContextMenuSeparator);
     menuActions.push({
-      name: 'テーブル設定', action: () => {
+      name: '桌面設定', action: () => {
         this.modalService.open(GameTableSettingComponent);
       }
     });
@@ -345,7 +514,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
-    this.gridCanvas.nativeElement.style.opacity = opacity;
+    this.gridCanvas.nativeElement.style.opacity = opacity + '';
   }
 
   private removeSelectionRanges() {
@@ -359,20 +528,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-  }
-
-  private addMouseEventListeners() {
-    document.body.addEventListener('mouseup', this.callbackOnMouseUp, false);
-    this.ngZone.runOutsideAngular(() => {
-      document.body.addEventListener('mousemove', this.callbackOnMouseMove, true);
-      document.body.addEventListener('touchmove', this.callbackOnMouseMove, true);
-    });
-  }
-
-  private removeMouseEventListeners() {
-    document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
-    document.body.removeEventListener('mousemove', this.callbackOnMouseMove, true);
-    document.body.removeEventListener('touchmove', this.callbackOnMouseMove, true);
   }
 
   trackByGameObject(index: number, gameObject: GameObject) {
