@@ -29272,7 +29272,7 @@
                     value: [0, "value"]
                 }, null), $r(35, 147456, null, 0, Qp, [Yt, tn, [8, null]], {
                     value: [0, "value"]
-                }, null), (e()(), Zl(36, null, ["", "（あなた）"])), (e()(), Pl(16777216, null, null, 1, null, $f)), $r(38, 278528, null, 0, Au, [Cn, _n, gn], {
+                }, null), (e()(), Zl(36, null, ["", "（自己）"])), (e()(), Pl(16777216, null, null, 1, null, $f)), $r(38, 278528, null, 0, Au, [Cn, _n, gn], {
                     ngForOf: [0, "ngForOf"]
                 }, null), (e()(), Zl(-1, null, [" ＞ "])), (e()(), Il(40, 0, null, null, 11, "select", [
                     ["style", "width: 10em;"]
