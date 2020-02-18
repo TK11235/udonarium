@@ -71,7 +71,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.panelService.title = this.character.name + ' のチャットパレット';
+    this.panelService.title = this.character.name + ' 的對話組合版';
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
 
     if(this.character.chatPalette != null && this.character.chatPalette.dicebot != '') {
@@ -85,7 +85,19 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
         if (event.data.aliasName !== GameCharacter.aliasName) return;
         this.shouldUpdateCharacterList = true;
         if (this.character && !this.allowsChat(this.character)) {
-          if (0 < this.gameCharacters.length) this.onSelectedCharacter(this.gameCharacters[0].identifier);
+          if (0 < this.gameCharacters.length) {
+            this.onSelectedCharacter(this.gameCharacters[0].identifier);
+          } else {
+            this.panelService.close();
+          }
+        }
+      })
+      .on('DELETE_GAME_OBJECT', -1000, event => {
+        if (this.character && this.character.identifier === event.data.identifier) {
+          this.panelService.close();
+        }
+        if (this.chatTabidentifier === event.data.identifier) {
+          this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
         }
       })
       .on('DISCONNECT_PEER', event => {
@@ -102,7 +114,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   }
 
   updatePanelTitle() {
-    this.panelService.title = this.character.name + ' のチャットパレット';
+    this.panelService.title = this.character.name + ' 的對話組合版';
   }
 
   onSelectedCharacter(identifier: string) {
@@ -140,36 +152,36 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
 
   showDicebotHelp() {
     DiceBot.getHelpMessage(this.gameType).then(help => {
-      let gameName: string = 'ダイスボット';
+      let gameName: string = '骰子機械人';
       for (let diceBotInfo of DiceBot.diceBotInfos) {
         if (diceBotInfo.script === this.gameType) {
-          gameName = 'ダイスボット<' + diceBotInfo.game + '＞'
+          gameName = '骰子機械人<' + diceBotInfo.game + '＞'
         }
       }
-      gameName += 'の説明';
+      gameName += '的説明';
 
       let coordinate = this.pointerDeviceService.pointers[0];
       let option: PanelOption = { left: coordinate.x, top: coordinate.y, width: 600, height: 500 };
       let textView = this.panelService.open(TextViewComponent, option);
       textView.title = gameName;
       textView.text =
-        '【ダイスボット】チャットにダイス用の文字を入力するとダイスロールが可能\n'
+        '【骰子機械人】チャットに骰子用的文字を入力すると骰子ロールが可能\n'
         + '入力例）２ｄ６＋１　攻撃！\n'
         + '出力例）2d6+1　攻撃！\n'
         + '　　　　  diceBot: (2d6) → 7\n'
-        + '上記のようにダイス文字の後ろに空白を入れて発言する事も可能。\n'
+        + '上記的ように骰子文字的後ろに空白を入れて発言する事も可能。\n'
         + '以下、使用例\n'
-        + '　3D6+1>=9 ：3d6+1で目標値9以上かの判定\n'
-        + '　1D100<=50 ：D100で50％目標の下方ロールの例\n'
-        + '　3U6[5] ：3d6のダイス目が5以上の場合に振り足しして合計する(上方無限)\n'
-        + '　3B6 ：3d6のダイス目をバラバラのまま出力する（合計しない）\n'
-        + '　10B6>=4 ：10d6を振り4以上のダイス目の個数を数える\n'
-        + '　(8/2)D(4+6)<=(5*3)：個数・ダイス・達成値には四則演算も使用可能\n'
-        + '　C(10-4*3/2+2)：C(計算式）で計算だけの実行も可能\n'
+        + '　3D6+1>=9 ：3d6+1で目標値9以上か的判定\n'
+        + '　1D100<=50 ：D100で50％目標的下方ロール的例\n'
+        + '　3U6[5] ：3d6的骰子目が5以上的場合に振り足しして合計する(上方無限)\n'
+        + '　3B6 ：3d6的骰子目をバラバラ的まま出力する（合計しない）\n'
+        + '　10B6>=4 ：10d6を振り4以上的骰子目的個数を数える\n'
+        + '　(8/2)D(4+6)<=(5*3)：個数・骰子・達成値には四則演算も使用可能\n'
+        + '　C(10-4*3/2+2)：C(計算式）で計算だけ的実行も可能\n'
         + '　choice[a,b,c]：列挙した要素から一つを選択表示。ランダム攻撃対象決定などに\n'
-        + '　S3d6 ： 各コマンドの先頭に「S」を付けると他人結果の見えないシークレットロール\n'
-        + '　3d6/2 ： ダイス出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n'
-        + '　D66 ： D66ダイス。順序はゲームに依存。D66N：そのまま、D66S：昇順。\n'
+        + '　S3d6 ： 各コマンド的先頭に「S」を付けると他人結果的見えないシークレットロール\n'
+        + '　3d6/2 ： 骰子出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n'
+        + '　D66 ： D66骰子。順序はゲームに依存。D66N：そ的まま、D66S：升序。\n'
         + '===================================\n'
         + help;
       console.log('onChangeGameType done');

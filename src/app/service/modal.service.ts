@@ -28,7 +28,7 @@ export class ModalService {
   private modalContext: ModalContext = null;
   private count = 0;
 
-  title: string = '無名のモーダル';
+  title: string = '未命名的視窗';
 
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;

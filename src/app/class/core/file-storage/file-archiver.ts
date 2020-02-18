@@ -117,9 +117,9 @@ export class FileArchiver {
       console.warn(reason);
       return;
     }
-    let zipEntrys = [];
-    zip.forEach((relativePath, zipEntry) => zipEntrys.push(zipEntry));
-    for (let zipEntry of zipEntrys) {
+    let zipEntries = [];
+    zip.forEach((relativePath, zipEntry) => zipEntries.push(zipEntry));
+    for (let zipEntry of zipEntries) {
       try {
         let arraybuffer = await zipEntry.async('arraybuffer');
         console.log(zipEntry.name + ' 解凍...', arraybuffer);
