@@ -27,6 +27,11 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   get isDeleted(): boolean { return this.selectedTab ? ObjectStore.instance.get(this.selectedTab.identifier) == null : false; }
   get isEditable(): boolean { return !this.isEmpty && !this.isDeleted; }
 
+  get receiveInfo(): boolean { return this.selectedTab.receiveInfo; }
+  set receiveInfo(receiveInfo: boolean) {
+    this.chatMessageService.setReceiveInfo(this.selectedTab, receiveInfo);
+  }
+
   constructor(
     private modalService: ModalService,
     private panelService: PanelService,

@@ -109,6 +109,12 @@
   right: 0;
 }
 
+
+.material-icons {
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
 .color-picker-container {
   position: relative;
   overflow: hidden;

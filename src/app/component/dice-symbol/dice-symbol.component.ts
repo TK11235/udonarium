@@ -25,6 +25,7 @@ import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { ChatMessageService } from 'service/chat-message.service';
 
 @Component({
   selector: 'dice-symbol',
@@ -107,7 +108,9 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
-    private pointerDeviceService: PointerDeviceService) { }
+    private pointerDeviceService: PointerDeviceService,
+    private chatMessageService: ChatMessageService
+  ) {}
 
   ngOnInit() {
     EventSystem.register(this)
@@ -215,6 +218,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         name: '公開骰子', action: () => {
           this.owner = '';
           SoundEffect.play(PresetSound.unlock);
+          this.sendLogMessage(`ダイスを公開しました。出目:${this.face}`);
         }
       });
     }
@@ -232,8 +236,14 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
       this.faces.forEach(face => {
         subActions.push({
           name: `${face}`, action: () => {
+            const prev = this.face;
             this.face = face;
             SoundEffect.play(PresetSound.dicePut);
+            let message = `ダイス目を変更しました。`;
+            if (!this.hasOwner) {
+              message += `出目:${prev}→${face}`;
+            }
+            this.sendLogMessage(message);
           }
         });
       });
@@ -272,7 +282,14 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   diceRoll(): string {
     EventSystem.call('ROLL_DICE_SYNBOL', { identifier: this.diceSymbol.identifier });
     SoundEffect.play(PresetSound.diceRoll1);
-    return this.diceSymbol.diceRoll();
+    const prev = this.face;
+    const result = this.diceSymbol.diceRoll();
+    let message = `ダイスを振りました。`;
+    if (!this.hasOwner) {
+      message += `出目:${prev}→${result}`;
+    }
+    this.sendLogMessage(message);
+    return result;
   }
 
   showDetail(gameObject: DiceSymbol) {
@@ -296,5 +313,10 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private adjustMinBounds(value: number, min: number = 0): number {
     return value < min ? min : value;
+  }
+
+  private sendLogMessage(text: string): void {
+    const name = `<${this.name}：${PeerCursor.myCursor.name}>`;
+    this.chatMessageService.sendSystemMessage(name, text, 'DiceSymbol');
   }
 }
