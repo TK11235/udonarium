@@ -15,7 +15,7 @@ end
 
 namespace :test do
   Rake::TestTask.new(:dicebots) do |t|
-    t.description = 'ダイスボット'
+    t.description = '骰子ボット'
 
     t.test_files = [
       'test/setup',

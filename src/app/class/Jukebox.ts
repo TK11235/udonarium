@@ -17,6 +17,12 @@ export class Jukebox extends GameObject {
   private audioPlayer: AudioPlayer = new AudioPlayer();
 
   // GameObject Lifecycle
+  onStoreAdded() {
+    super.onStoreAdded();
+    this.unlockAfterUserInteraction();
+  }
+
+  // GameObject Lifecycle
   onStoreRemoved() {
     super.onStoreRemoved();
     this._stop();
@@ -57,6 +63,17 @@ export class Jukebox extends GameObject {
       .on('UPDATE_AUDIO_RESOURE', -100, event => {
         this._play();
       });
+  }
+
+  private unlockAfterUserInteraction() {
+    let callback = () => {
+      document.body.removeEventListener('touchstart', callback, true);
+      document.body.removeEventListener('mousedown', callback, true);
+      this.audioPlayer.stop();
+      if (this.isPlaying) this._play();
+    }
+    document.body.addEventListener('touchstart', callback, true);
+    document.body.addEventListener('mousedown', callback, true);
   }
 
   private unregisterEvent() {

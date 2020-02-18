@@ -156,7 +156,7 @@ Opal.modules["diceBot/SRS"] = function(Opal) {
     Opal.defn(self, '$getHelpMessage', TMP_Alshard_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定\n" + "　・通常判定　　　　　　2D6+m>=t[c,f]\n" + "　　修正値m,目標値t,クリティカル値c,ファンブル値fで判定ロールを行います。\n" + "　　クリティカル値、ファンブル値は省略可能です。([]ごと省略できます)\n" + "　　自動成功、自動失敗、成功、失敗を自動表示します。\n" + "\n" + "　　例) 2d6+2>=10       修整+2、目標値10で判定\n" + "　　例) 2d6+2>=10[11]   ↑をクリティカル値11で判定\n" + "　　例) 2d6+2>=10[12,4] ↑をクリティカル値12、ファンブル値4で判定\n" + "　　例) AL+2>=10        2d6+2>=10と同じ（ALが2D6のショートカットコマンド）\n" + "\n" + "・D66ダイス(入れ替え無し)あり\n"
+      return "" + "・判定\n" + "　・通常判定　　　　　　2D6+m>=t[c,f]\n" + "　　修正値m,目標値t,クリティカル値c,ファンブル値fで判定ロールを行います。\n" + "　　クリティカル値、ファンブル値は省略可能です。([]ごと省略できます)\n" + "　　自動成功、自動失敗、成功、失敗を自動表示します。\n" + "\n" + "　　例) 2d6+2>=10       修整+2、目標値10で判定\n" + "　　例) 2d6+2>=10[11]   ↑をクリティカル値11で判定\n" + "　　例) 2d6+2>=10[12,4] ↑をクリティカル値12、ファンブル値4で判定\n" + "　　例) AL+2>=10        2d6+2>=10と同じ（ALが2D6のショートカットコマンド）\n" + "\n" + "・D66骰子(入れ替え無し)あり\n"
     }, TMP_Alshard_getHelpMessage_4.$$arity = 0);
     return (Opal.defn(self, '$changeText', TMP_Alshard_changeText_6 = function $$changeText(string) {
       var TMP_5, self = this;

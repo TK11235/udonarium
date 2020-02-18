@@ -20,7 +20,7 @@ export class PanelService {
   static UIPanelComponentClass: { new(...args: any[]): any } = null;
 
   private panelComponentRef: ComponentRef<any>
-  title: string = '無名のパネル';
+  title: string = '未命名視窗';
   left: number = 0;
   top: number = 0;
   width: number = 100;

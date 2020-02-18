@@ -65,7 +65,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Cthulhu7th_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "※私家翻訳のため、用語・ルールの詳細については原本を参照願います。\n" + "\n" + "・判定　CC(x)<=（目標値）\n" + "　x：ボーナス・ペナルティダイス：Bonus/Penalty Dice (2～－2)。省略可。\n" + "　致命的失敗：Fumble／失敗：Failure／通常成功：Regular success／\n" + "　困難な成功：Hard success／極限の成功：Extreme success／\n" + "　決定的成功：Critical success　を自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75\n" + "\n" + "・組み合わせ判定　(CBR(x,y))\n" + "　目標値 x と y で％ロールを行い、成否を判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・連射（Full Auto）判定　FAR(w,x,y,z)\n" + "　w：弾数(1～100）、x：技能値（1～100）、y：故障ナンバー、\n" + "　z：ボーナス・ペナルティダイス(-2～2)。省略可。\n" + "　命中数と貫通数、残弾数のみ算出。ダメージ算出はありません。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)\n"
+      return "" + "※私家翻訳のため、用語・ルールの詳細については原本を参照願います。\n" + "\n" + "・判定　CC(x)<=（目標値）\n" + "　x：ボーナス・ペナルティ骰子：Bonus/Penalty Dice (2～－2)。省略可。\n" + "　致命的失敗：Fumble／失敗：Failure／通常成功：Regular success／\n" + "　困難な成功：Hard success／極限の成功：Extreme success／\n" + "　決定的成功：Critical success　を自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75\n" + "\n" + "・組み合わせ判定　(CBR(x,y))\n" + "　目標値 x と y で％ロールを行い、成否を判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・連射（Full Auto）判定　FAR(w,x,y,z)\n" + "　w：弾数(1～100）、x：技能値（1～100）、y：故障ナンバー、\n" + "　z：ボーナス・ペナルティ骰子(-2～2)。省略可。\n" + "　命中数と貫通数、残弾数のみ算出。ダメージ算出はありません。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)\n"
     }, TMP_Cthulhu7th_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Cthulhu7th_rollDiceCommand_5 = function $$rollDiceCommand(command) {
@@ -93,11 +93,11 @@
         return "エラー。目標値は1以上です。"};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
         } else {
-        return "" + "エラー。ボーナス・ペナルティダイスの値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
+        return "" + "エラー。ボーナス・ペナルティ骰子の値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
       };
       output = "";
       output = $rb_plus(output, "" + "(1D100<=" + (diff) + ")");
-      output = $rb_plus(output, "" + " ボーナス・ペナルティダイス[" + (bonus_dice_count) + "]");
+      output = $rb_plus(output, "" + " ボーナス・ペナルティ骰子[" + (bonus_dice_count) + "]");
       units_digit = self.$rollPercentD10();
       total_list = self.$getTotalLists(bonus_dice_count, units_digit);
       total = self.$getTotal(total_list, bonus_dice_count);
@@ -227,9 +227,9 @@
         broken_number = broken_number.$abs();};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
         } else {
-        return "" + "\nエラー。ボーナス・ペナルティダイスの値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
+        return "" + "\nエラー。ボーナス・ペナルティ骰子の値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
       };
-      output = $rb_plus(output, "" + "ボーナス・ペナルティダイス[" + (bonus_dice_count) + "]");
+      output = $rb_plus(output, "" + "ボーナス・ペナルティ骰子[" + (bonus_dice_count) + "]");
       output = $rb_plus(output, self.$rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count));
       return output;
     }, TMP_Cthulhu7th_getFullAutoResult_13.$$arity = 1);

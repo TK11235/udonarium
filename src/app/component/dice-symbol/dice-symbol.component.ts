@@ -204,7 +204,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.isVisible) {
       actions.push({
-        name: 'ダイスを振る', action: () => {
+        name: '擲骰', action: () => {
           this.diceRoll();
         }
       });
@@ -212,7 +212,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     actions.push(ContextMenuSeparator);
     if (this.isMine || this.hasOwner) {
       actions.push({
-        name: 'ダイスを公開', action: () => {
+        name: '公開骰子', action: () => {
           this.owner = '';
           SoundEffect.play(PresetSound.unlock);
         }
@@ -220,7 +220,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (!this.isMine) {
       actions.push({
-        name: '自分だけ見る', action: () => {
+        name: '只供自己看見', action: () => {
           this.owner = Network.peerId;
           SoundEffect.play(PresetSound.lock);
         }
@@ -237,14 +237,14 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         });
       });
-      actions.push({ name: `ダイス目を設定`, action: null, subActions: subActions });
+      actions.push({ name: `設定骰子結果`, action: null, subActions: subActions });
     }
 
     actions.push(ContextMenuSeparator);
 
-    actions.push({ name: '詳細を表示', action: () => { this.showDetail(this.diceSymbol); } });
+    actions.push({ name: '顯示詳情', action: () => { this.showDetail(this.diceSymbol); } });
     actions.push({
-      name: 'コピーを作る', action: () => {
+      name: '複製', action: () => {
         let cloneObject = this.diceSymbol.clone();
         cloneObject.location.x += this.gridSize;
         cloneObject.location.y += this.gridSize;
@@ -253,7 +253,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     actions.push({
-      name: '削除する', action: () => {
+      name: '刪除', action: () => {
         this.diceSymbol.destroy();
         SoundEffect.play(PresetSound.sweep);
       }
@@ -278,7 +278,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   showDetail(gameObject: DiceSymbol) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = 'ダイスシンボル設定';
+    let title = '骰子內容設定';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);

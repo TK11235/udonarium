@@ -125,6 +125,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
 
     let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
     this.pointer3d = this.calcLocalCoordinate(target, this.input.pointer);
+    this.setPointerEvents(true);
 
     this.pointerOffset3d.x = this.posX - this.pointer3d.x;
     this.pointerOffset3d.y = this.posY - this.pointer3d.y;
@@ -149,10 +150,8 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     }
     if (this.isDisable || !this.input.isGrabbing) return this.cancel();
 
-    let target = (e as TouchEvent).touches
-      ? <HTMLElement>document.elementFromPoint(this.input.pointer.x, this.input.pointer.y)
-      : <HTMLElement>e.target;
-
+    if (!this.input.isDragging) this.setPointerEvents(false);
+    let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
     if (target == null) return;
 
     this.pointer3d = this.calcLocalCoordinate(target, this.input.pointer);
@@ -189,7 +188,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
     if (tableSelecter.gridSnap) this.snapToGrid();
 
-    let needsDispatch = this.input.isGrabbing;
+    let needsDispatch = this.input.isGrabbing && e.isTrusted;
     this.cancel();
 
     if (needsDispatch) {

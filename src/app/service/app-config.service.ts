@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { EventSystem, Network } from '@udonarium/core/system';
 import { Database } from '@udonarium/database/database';
+import { PeerCursor } from '@udonarium/peer-cursor';
 
 import * as yaml from 'js-yaml/dist/js-yaml.min.js';
 
@@ -74,6 +75,20 @@ export class AppConfigService {
     }
     console.log('最終履歴: ', this.peerHistory);
 
+    const nicknameHistory = await db.getNicknameHistory();
+    nicknameHistory.sort((a, b) => {
+      if (a.timestamp < b.timestamp) return 1;
+      if (a.timestamp > b.timestamp) return -1;
+      return 0;
+    });
+    for (let i = 1; i < nicknameHistory.length; i++) {
+      db.deleteNicknameHistory(nicknameHistory[i].peerId);
+    }
+    console.log('名前履歴: ', nicknameHistory);
+    if (nicknameHistory.length > 0) {
+      PeerCursor.myCursor.name = nicknameHistory[0].nickname;
+    }
+
     EventSystem.register(this)
       .on('CONNECT_PEER', -1000, () => {
         console.log('AppConfigService CONNECT_PEER', Network.peerIds);
@@ -84,6 +99,10 @@ export class AppConfigService {
       })
       .on('DISCONNECT_PEER', -1000, () => {
         console.log('AppConfigService DISCONNECT_PEER', Network.peerIds);
+      })
+      .on('CHANGE_NICKNAME', -1000, event => {
+        console.log('AppConfigService CHANGE_NICKNAME', event.data);
+        db.addNicknameHistory(Network.peerId, event.data);
       });
   }
 

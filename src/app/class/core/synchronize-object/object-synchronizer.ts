@@ -95,13 +95,9 @@ export class ObjectSynchronizer {
 
   private addRequestMap(item: CatalogItem, sendFrom: string) {
     let request = this.requestMap.get(item.identifier);
-    if (request) {
-      if (request.version < item.version) {
-        this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom], ttl: 2 });
-      } else if (request.version === item.version) {
-        request.holderIds.push(sendFrom);
-      }
-    } else {
+    if (request && request.version === item.version) {
+      request.holderIds.push(sendFrom);
+    } else if (!request || request.version < item.version) {
       this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom], ttl: 2 });
     }
   }

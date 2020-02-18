@@ -30,7 +30,7 @@ class FullMetalPanic < MetallicGuadian
 　　例) 2d6+2>=10[12,4] ↑をクリティカル値12、ファンブル値4で判定
 　　例) FP+2>=10        2d6+2>=10と同じ（FPが2D6のショートカットコマンド）
 
-・D66ダイス(入れ替え無し)あり
+・D66骰子(入れ替え無し)あり
 INFO_MESSAGE_TEXT
   end
 

@@ -42,9 +42,10 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   // override
   destroy() {
     super.destroy();
-    for (let child of this.children) {
+    for (let child of this._children.concat()) {
       child.destroy();
     }
+    this._children = [];
   }
 
   // GameObject Lifecycle

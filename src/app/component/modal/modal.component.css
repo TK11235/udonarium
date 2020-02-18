@@ -12,6 +12,7 @@
   justify-content: center;
 
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-background {

@@ -45,7 +45,7 @@ files.forEach(file => {
         resultMsg = result[0].trim();
 
         const surplusRands = getSurplusRands(cgiDiceBot.rands);
-        if (0 < surplusRands.length) resultMsg += 'ダイス残り：' + surplusRands;
+        if (0 < surplusRands.length) resultMsg += '骰子残り：' + surplusRands;
 
       } catch (e) {
         resultMsg = logTextForException(e);

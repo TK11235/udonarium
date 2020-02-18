@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ContextMenuAction, ContextMenuService } from 'service/context-menu.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
   selector: 'context-menu',
@@ -22,9 +23,12 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private callbackOnOutsideClick = (e) => this.onOutsideClick(e);
 
+  get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
+
   constructor(
     private elementRef: ElementRef<HTMLElement>,
-    public contextMenuService: ContextMenuService
+    public contextMenuService: ContextMenuService,
+    private pointerDeviceService: PointerDeviceService
   ) { }
 
   ngOnInit() {
@@ -37,16 +41,16 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     if (!this.isSubmenu) {
       this.adjustPositionRoot();
-      document.addEventListener('touchstart', this.callbackOnOutsideClick, false);
-      document.addEventListener('mousedown', this.callbackOnOutsideClick, false);
+      document.addEventListener('touchstart', this.callbackOnOutsideClick, true);
+      document.addEventListener('mousedown', this.callbackOnOutsideClick, true);
     } else {
       this.adjustPositionSub();
     }
   }
 
   ngOnDestroy() {
-    document.removeEventListener('touchstart', this.callbackOnOutsideClick, false);
-    document.removeEventListener('mousedown', this.callbackOnOutsideClick, false);
+    document.removeEventListener('touchstart', this.callbackOnOutsideClick, true);
+    document.removeEventListener('mousedown', this.callbackOnOutsideClick, true);
   }
 
   onOutsideClick(event) {

@@ -63,14 +63,14 @@ MESSAGETEXT
       diceList = dice_str.split(/,/).collect { |i| i.to_i }.sort
       diceFullList.concat(diceList)
 
-      # 1の出目ごとにダブルトリガーで2個ダイス追加
+      # 1の出目ごとにダブルトリガーで2個骰子追加
       rollCount = diceList.select { |i| i == 1 }.size * 2
 
       result += "[#{diceList.join}]"
       result += " ダブルトリガー! " if rollCount > 0
     end
 
-    # ダイスの出目の個数を集計
+    # 骰子の出目の個数を集計
     result += " ＞"
     (2..6).each do |num|
       count = diceFullList.select { |i| i == num }.size
@@ -97,7 +97,7 @@ MESSAGETEXT
       ' 9日：幽閉・投獄された。',
 
       ' 1日：生還！',
-      ' 7日：モンスター蠢く地下迷宮に滑落した。',
+      ' 7日：怪獸蠢く地下迷宮に滑落した。',
       '12日強力なマスカレイドにとらわれ、実験台にされた。',
       ' 8日：放浪中に遭遇した事件を、颯爽と解決していた。',
       ' 5日：飢餓状態に追い込まれた。',
