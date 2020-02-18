@@ -1,3 +1,0 @@
-どどんとふ
- - (https://github.com/torgtaitai/DodontoF) modified BSD licenses
- - (http://www.dodontof.com)
