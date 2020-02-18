@@ -284,9 +284,9 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     SoundEffect.play(PresetSound.diceRoll1);
     const prev = this.face;
     const result = this.diceSymbol.diceRoll();
-    let message = `ダイスを振りました。`;
+    let message = `擲骰`;
     if (!this.hasOwner) {
-      message += `出目:${prev}→${result}`;
+      message += `結果:${prev}→${result}`;
     }
     this.sendLogMessage(message);
     return result;
