@@ -20,7 +20,7 @@ class LostRoyal < DiceBot
 
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
-・D66ダイスあり
+・D66骰子あり
 
 行為判定
 　LR[x,x,x,x,x,x]
@@ -38,7 +38,7 @@ class LostRoyal < DiceBot
 
 希望点の決定
 　HRx
-　　x にはダイスの数（ 1 - 2 ）を指定
+　　x には骰子の数（ 1 - 2 ）を指定
 INFO_MESSAGE_TEXT
   end
 

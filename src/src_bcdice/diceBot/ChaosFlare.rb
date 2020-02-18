@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
 class ChaosFlare < DiceBot
-  # ダイスボット設定後に行う処理
+  # 骰子ボット設定後に行う処理
   # @return [void]
   def postSet
     #if @@bcdice # TKfix @@bcdice が参照できない (Opal 0.11.4)
     #  @@bcdice.cardTrader.set2Decks2Jokers
-    #  # 手札の他のカード置き場
+    #  # 手札の他の卡牌置き場
     #  @@bcdice.cardTrader.card_place = 0
     #  # 場札のタップ処理の必要があるか？
     #  @@bcdice.cardTrader.canTapCard = false
     if bcdice
       bcdice.cardTrader.set2Decks2Jokers
-      # 手札の他のカード置き場
+      # 手札の他の卡牌置き場
       bcdice.cardTrader.card_place = 0
       # 場札のタップ処理の必要があるか？
       bcdice.cardTrader.canTapCard = false

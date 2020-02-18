@@ -1,13 +1,13 @@
 <div *ngIf="!isConnected;else other_content">
-  <button (click)="reload()" [disabled]="isReloading">一覧を更新</button>
-  <button (click)="showRoomSetting()">新しいルームを作成する</button>
+  <button (click)="reload()" [disabled]="isReloading">列表更新</button>
+  <button (click)="showRoomSetting()">新增一個房間</button>
   <hr/>
   <ng-container *ngIf="rooms.length">
     <table style="font-size:12px; border: 0; border-spacing: 0; width: 100%;">
       <tr>
-        <th style="padding: 0 1em;">ルームID</th>
-        <th style="padding: 0 1em; min-width: 50%;">ルーム名</th>
-        <th style="padding: 0 1em;">パスワード</th>
+        <th style="padding: 0 1em;">房間ID</th>
+        <th style="padding: 0 1em; min-width: 50%;">房間名</th>
+        <th style="padding: 0 1em;">密碼</th>
         <th style="padding: 0 1em;">参加者</th>
         <th style="padding: 0 1em;"></th>
       </tr>
@@ -17,7 +17,7 @@
       <div style="display: inline-block;">
         <i *ngIf="0 < room.peers[0].password.length" class="material-icons" style="vertical-align: middle; size:0.6rem;">lock</i>
         <span>{{room.roomName}}</span>/<span>{{room.room}}</span>/<span>({{room.peers.length}})</span>
-        <button [disabled]="room.room === currentRoom" *ngIf="0 < room.room.length" type="submit" (click)="connect(room.peers[0].fullstring)">接続する</button>
+        <button [disabled]="room.room === currentRoom" *ngIf="0 < room.room.length" type="submit" (click)="connect(room.peers[0].fullstring)">連線する</button>
       </div>
     </div>
     -->
@@ -27,11 +27,11 @@
           <td *ngIf="0 < room.peers[0].password.length" style="text-align: center; padding: 0 1em;"><i class="material-icons" style="vertical-align: middle; font-size:0.9rem;">lock</i></td>
           <td *ngIf="room.peers[0].password.length < 1" style="text-align: center; padding: 0 1em;">-</td>
           <td style="text-align: center; padding: 0 1em;">{{room.peers.length}}人</td>
-          <td><button [disabled]="room.peers[0]?.room === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peers)">接続</button></td>
+          <td><button [disabled]="room.peers[0]?.room === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peers)">連線</button></td>
         </tr>
       </ng-container>
     </table>
   </ng-container>
   <span *ngIf="rooms.length < 1" style="font-size: 12px;">{{help}}</span>
 </div>
-<ng-template #other_content><span style="font-size: 12px;">別のルームに接続したい場合は、他の参加者との接続を切ってください。<br>（※ページリロードで切断できます。）</span></ng-template>
+<ng-template #other_content><span style="font-size: 12px;">如果要連接到另一個房間，請斷開與其他與會者的連線。 <br>※*可以通過重新加載頁面來斷開連接。）</span></ng-template>

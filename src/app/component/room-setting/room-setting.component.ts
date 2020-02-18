@@ -16,7 +16,7 @@ export class RoomSettingComponent implements OnInit, OnDestroy {
   peers: PeerContext[] = [];
   isReloading: boolean = false;
 
-  roomName: string = 'ふつうの部屋';
+  roomName: string = '我的房間';
   password: string = '';
   isPrivate: boolean = false;
 
@@ -30,7 +30,7 @@ export class RoomSettingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = 'ルーム作成'
+    this.modalService.title = this.panelService.title = '創建房間'
     EventSystem.register(this);
     this.calcPeerId(this.roomName, this.password);
   }

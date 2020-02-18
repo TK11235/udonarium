@@ -30,7 +30,7 @@
         if (Opal.rescue($err, [Opal.const_get_relative($nesting, 'LoadError'), Opal.const_get_relative($nesting, 'StandardError')])) {e = $err;
           try {
             
-            self.$debug("DiceBotLoader.loadUnknownGame: ダイスボットの読み込みに失敗しました", e.$to_s());
+            self.$debug("DiceBotLoader.loadUnknownGame: 骰子ボットの読み込みに失敗しました", e.$to_s());
             return nil;
           } finally { Opal.pop_exception() }
         } else { throw $err; }
