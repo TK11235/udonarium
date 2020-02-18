@@ -28515,7 +28515,7 @@
             function xf(e) {
                 return ql(0, [(e()(), Il(0, 0, null, null, 2, null, null, null, null, null, null, null)), (e()(), Il(1, 0, null, null, 1, "div", [
                     ["style", "font-size: 12px;"]
-                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※聊天分頁が１つも作成されていません。「聊天分頁を作る」から聊天分頁を作成することができます。"]))], null, null)
+                ], null, null, null, null, null)), (e()(), Zl(-1, null, ["※聊天分頁が１つも作成されていません。「新增聊天分頁」から聊天分頁を作成することができます。"]))], null, null)
             }
 
             function Ef(e) {
@@ -28528,7 +28528,7 @@
                 ], (function (e, t, n) {
                     var r = !0;
                     return "click" === t && (r = !1 !== e.component.create() && r), r
-                }), null, null)), (e()(), Zl(-1, null, ["聊天分頁を作る"])), (e()(), Il(5, 0, null, null, 7, "select", [
+                }), null, null)), (e()(), Zl(-1, null, ["新增聊天分頁"])), (e()(), Il(5, 0, null, null, 7, "select", [
                     ["size", "10"],
                     ["style", "width: 10em;"]
                 ], [
@@ -28753,7 +28753,15 @@
                             imageIdentifier: "",
                             tag: "",
                             name: "教學Zzzzzz > 玩家",
-                            text: "密語並不會儲存到ZIP中。而當你的ID更新之後，你將無法再看見之前傳給您的密語，還請多加注意。\n 使用教學: 對桌面右鍵->新增角色(或其他)，再對它按右鍵->顯示詳情，編輯內容，以後可以收進倉庫中。而在倉庫中，也是按右鍵，把角色移到桌面"
+                            text: "使用教學: 對桌面右鍵->新增角色(或其他)，再對它按右鍵->顯示詳情，編輯內容，以後可以收進倉庫中。而在倉庫中，也是按右鍵，把角色移到桌面"
+                        }, {
+                            from: "System",
+                            to: "???",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz > 玩家",
+                            text: "密語並不會儲存到ZIP中。而當你的ID更新之後，你將無法再看見之前傳給您的密語，還請多加注意。"
                         }, {
                             from: "System",
                             timestamp: 0,
