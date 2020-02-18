@@ -4,7 +4,7 @@ require 'kconv'
 require 'fileutils'
 require 'configBcDice.rb'
 
-# extratables ディレクトリに置かれたテーブル定義ファイルを読み込む。
+# extratables ディレクトリに置かれた桌面定義ファイルを読み込む。
 # 詳細はREADME.txtの「７．オリジナルの表追加」を参照。
 #
 # 定義ファイルの内容を @tableData として保持する。
@@ -16,7 +16,7 @@ require 'configBcDice.rb'
 #          "title" : (表タイトル),
 #          "command" : (コマンド文字),
 #          "gameType" : (ゲーム種別),
-#          "dice" : (ダイス文字),
+#          "dice" : (骰子文字),
 #          "table" : {
 #            (数値) : (テキスト),
 #            (数値) : (テキスト),

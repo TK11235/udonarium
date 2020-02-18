@@ -18,7 +18,7 @@ import { ImageTagList } from '@udonarium/image-tag-list';
 })
 export class SaveDataService {
 
-  saveRoom(fileName: string = 'ルームデータ') {
+  saveRoom(fileName: string = 'UdoZ房間數據') {
     let files: File[] = [];
     let roomXml = this.convertToXml(new Room());
     let chatXml = this.convertToXml(new ChatTabList());

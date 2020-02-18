@@ -1,31 +1,31 @@
-<button (click)="toggleEditMode()">編集切り替え</button>
+<button (click)="toggleEditMode()">編輯切り替え</button>
 <ng-container [ngSwitch]="tabletopObject.aliasName">
   <ng-container *ngSwitchCase="'numberResource'">
   </ng-container>
   <ng-container *ngSwitchCase="'card'">
-    <button (click)="openModal('front')">表面の画像を変更</button>
-    <button (click)="openModal('back')">裏面の画像を変更</button>
+    <button (click)="openModal('front')">變更表面圖片を</button>
+    <button (click)="openModal('back')">變更裏面圖片</button>
   </ng-container>
   <ng-container *ngSwitchCase="'card-stack'">
   </ng-container>
   <ng-container *ngSwitchCase="'terrain'">
-    <button (click)="openModal('floor')">床の画像を変更</button>
-    <button (click)="openModal('wall')">壁の画像を変更</button>
+    <button (click)="openModal('floor')">床的圖片變更</button>
+    <button (click)="openModal('wall')">壁的圖片變更</button>
   </ng-container>
   <ng-container *ngSwitchCase="'dice-symbol'">
-    <button (click)="openModal(tabletopObject['face'])" [disabled]="!tabletopObject['isVisible']">ダイス目の画像を変更</button>
+    <button (click)="openModal(tabletopObject['face'])" [disabled]="!tabletopObject['isVisible']">更換骰子圖片</button>
   </ng-container>
   <ng-container *ngSwitchDefault>
-    <button (click)="openModal('imageIdentifier', true)">画像変更</button>
+    <button (click)="openModal('imageIdentifier', true)">圖片變更</button>
   </ng-container>
 </ng-container>
-<button (click)="clone()">コピーを作る</button>
+<button (click)="clone()">複製</button>
 <button (click)="saveToXML()">保存</button>
 <ng-container *ngIf="tabletopObject.aliasName === 'character'">
   <select *ngIf="tabletopObject" (change)="setLocation($event.target.value)" [ngModel]="tabletopObject.location.name">
-    <option value="table">テーブル</option>
-    <option value="common">共有インベントリ</option>
-    <option value="{{networkService.peerId}}">個人インベントリ</option>
+    <option value="table">桌面</option>
+    <option value="common">共有倉庫</option>
+    <option value="{{networkService.peerId}}">個人倉庫</option>
     <option value="graveyard">墓地</option>
   </select>
 </ng-container>
@@ -52,7 +52,7 @@
 
   <ng-container *ngIf="isEdit">
     <div class="flex-item">
-      <button style="width:100%; color: #555;" (click)="addDataElement()">新しい項目を追加</button>
+      <button style="width:100%; color: #555;" (click)="addDataElement()">新增項目</button>
     </div>
   </ng-container>
 </div>

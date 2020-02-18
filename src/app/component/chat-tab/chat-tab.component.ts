@@ -34,12 +34,37 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   preScrollBottom: number = -1;
 
   sampleMessages: ChatMessageContext[] = [
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'サーバーを使用しないTRPGオンセツールです。参加者同士で接続し、コマや画像ファイルなどを同期します。' },
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: '全てのデータが各参加者のブラウザ内にあるため、ルームの状態を次回に持ち越したい場合は、必ず「保存」を実行してセーブデータ（zip）を生成してください。保存したzipの読み込みはブラウザ画面へのファイルドロップで行えます。' },
-    { from: 'System', to: '???', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル > プレイヤー', text: 'ダイレクトメッセージ（秘密会話）はセーブデータに記録されません。' },
-    { from: 'System', to: '???', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル > プレイヤー', text: 'また、過去のダイレクトメッセージはあなたのIDが更新されると同じルーム内であっても見えなくなります。注意してください。' },
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: '動作推奨環境はデスクトップChromeです。今のところ、スマホからだと上手く操作できません。' },
-    { from: 'System', timestamp: 0, imageIdentifier: '', tag: '', name: 'チュートリアル', text: 'チュートリアルは以上です。このチュートリアルは最初のチャットを入力すると非表示になります。' },
+    {
+                            from: "System",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz",
+                            text: "在這個平台中，主要的資料由使用者之間彼此傳送，HKTRPG只是提供一個平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存》生成ZIP檔案，下次再使用時按《ZIP讀取》上傳檔案，不然房間就會像煙火一樣燒光。"
+                        }, {
+                            from: "System",
+                            to: "???",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz > 玩家",
+                            text: "使用教學: 對桌面右鍵->新增角色(或其他)，再對它按右鍵->顯示詳情，編輯內容，以後可以收進倉庫中。而在倉庫中，也是按右鍵，把角色移到桌面"
+                        }, {
+                            from: "System",
+                            to: "???",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz > 玩家",
+                            text: "密語並不會儲存到ZIP中。而當你的ID更新之後，你將無法再看見之前傳給您的密語，還請多加注意。"
+                        }, {
+                            from: "System",
+                            timestamp: 0,
+                            imageIdentifier: "",
+                            tag: "",
+                            name: "教學Zzzzzz",
+                            text: "推薦使用桌面版Chrome。目前不支援以手機進行操作。\n因為渣技術，只簡單加了一個關上網頁前會彈出提示的功能。"
+                        },
   ];
 
   private oldestTimestamp = 0;

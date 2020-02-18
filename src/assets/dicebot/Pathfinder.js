@@ -35,7 +35,7 @@
     return (Opal.defn(self, '$getHelpMessage', TMP_DungeonsAndDoragons_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "※このダイスボットは部屋のシステム名表示用となります。\n"
+      return "※この骰子ボットは部屋のシステム名表示用となります。\n"
     }, TMP_DungeonsAndDoragons_getHelpMessage_4.$$arity = 0), nil) && 'getHelpMessage';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
@@ -88,7 +88,7 @@ Opal.loaded(["diceBot/DungeonsAndDoragons"]);
     return (Opal.defn(self, '$getHelpMessage', TMP_Pathfinder_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "※このダイスボットは部屋のシステム名表示用となります。\n"
+      return "※この骰子ボットは部屋のシステム名表示用となります。\n"
     }, TMP_Pathfinder_getHelpMessage_4.$$arity = 0), nil) && 'getHelpMessage';
   })($nesting[0], Opal.const_get_relative($nesting, 'DungeonsAndDoragons'), $nesting);
 })(Opal);

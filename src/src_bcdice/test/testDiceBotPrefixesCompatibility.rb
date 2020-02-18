@@ -12,7 +12,7 @@ class TestDiceBotPrefixesCompatibility < Test::Unit::TestCase
   def test_prefixesCompatibility
     kariDiceClass = Class.new(DiceBot) do |_|
       def gameName
-        '仮ダイス'
+        '仮骰子'
       end
 
       def gameType
