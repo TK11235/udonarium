@@ -40,7 +40,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
                             imageIdentifier: "",
                             tag: "",
                             name: "教學Zzzzzz",
-                            text: "在這個平台中，主要的資料由使用者之間彼此傳送，HKTRPG只是提供一個平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存》生成ZIP檔案，下次再使用時按《ZIP讀取》上傳檔案，不然房間就會像煙火一樣燒光。"
+                            text: "在這個平台中，主要的資料由使用者之間彼此傳送，HKTRPG只是提供一個平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存房間》生成ZIP檔案，下次再使用時按《讀取房間》上傳檔案，不然房間就會像煙火一樣燒光。"
                         }, {
                             from: "System",
                             to: "???",

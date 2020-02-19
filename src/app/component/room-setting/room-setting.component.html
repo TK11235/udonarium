@@ -27,7 +27,7 @@
     <button [disabled]="!roomNameValidation.valid || !passwordValidation.valid || !validateLength" (click)="createRoom()">新增房間</button>
   </div>
 </div>
-<div><span style="font-size: 12px;">※當參與者人數變為零時，創建的房室將被解散。 如果您想在保留狀態留待下一次遊戲，請按“ZIP保存”。</span></div>
+<div><span style="font-size: 12px;">※當參與者人數變為零時，創建的房室將被解散。 如果您想在保留狀態留待下一次遊戲，請按“保存房間”。</span></div>
 <ng-template #other_content>
   <span style="font-size: 12px;">與其他參與者連接時無法創建新的房間。 <br>如果要連接到另一個房間，請斷開與其他與會者的連線。 <br>（*可以通過重新加載頁面來斷開連接。）</span>
 </ng-template>

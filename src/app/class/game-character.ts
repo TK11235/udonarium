@@ -17,7 +17,8 @@ export class GameCharacter extends TabletopObject {
     }
     return null;
   }
-
+  //CLONE2
+  set name(value:string) { this.setCommonValue('name', value); }
   static create(name: string, size: number, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
@@ -87,5 +88,25 @@ export class GameCharacter extends TabletopObject {
 //格闘＝１`);
     palette.initialize();
     this.appendChild(palette);
+  }
+  clone2() :this {
+    let cloneObject = super.clone();
+
+    let objectname:string;
+    let reg = new RegExp('(.*)_([0-9]*)');
+    let res = cloneObject.name.match(reg);
+
+    if(res != null && res.length == 3) {
+      let cloneNumber:number = parseInt(res[2]) + 1;
+      objectname = res[1] + "_" + cloneNumber;
+    } else {
+      objectname = cloneObject.name + "_2";
+    }
+
+    cloneObject.name = objectname;
+    cloneObject.update();
+
+    return cloneObject;
+
   }
 }

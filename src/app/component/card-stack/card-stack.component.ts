@@ -265,7 +265,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       { name: '卡牌列表', action: () => { this.showStackList(this.cardStack); } },
       ContextMenuSeparator,
       (this.isShowTotal
-        ? { name: ',不顯示數量', action: () => { this.cardStack.isShowTotal = false; } }
+        ? { name: '不顯示數量', action: () => { this.cardStack.isShowTotal = false; } }
         : { name: '顯示數量', action: () => { this.cardStack.isShowTotal = true; } }
       ),
       { name: '對齊格線', action: () => { if (this.cardStack.topCard) this.cardStack.unifyCardsSize(this.cardStack.topCard.size); } },

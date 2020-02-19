@@ -117,7 +117,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     let position = this.pointerDeviceService.pointers[0];
     this.contextMenuService.open(position, [
       { name: '顯示詳情', action: () => { this.showDetail(this.gameCharacter); } },
-      { name: '顯示聊天視窗', action: () => { this.showChatPalette(this.gameCharacter) } },
+      { name: '顯示對話組合版', action: () => { this.showChatPalette(this.gameCharacter) } },
       ContextMenuSeparator,
       {
         name: '移動到共有倉庫', action: () => {
@@ -147,9 +147,19 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
           SoundEffect.play(PresetSound.piecePut);
         }
       },
+      {
+        name: '複製-有序號', action: () => {
+          let cloneObject = this.gameCharacter.clone2();
+          cloneObject.location.x += this.gridSize;
+          cloneObject.location.y += this.gridSize;
+          cloneObject.update();
+          SoundEffect.play(PresetSound.piecePut);
+        }
+      },
     ], this.name);
   }
 
+  
   onMove() {
     SoundEffect.play(PresetSound.piecePick);
   }

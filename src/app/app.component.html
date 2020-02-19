@@ -40,11 +40,17 @@
           <div>角色倉庫</div>
         </a>
       </li>
+      <li (click)="createGameCharacter()">
+        <a routerLink="/" routerLinkActive="active">
+          <div><i class="material-icons">sd_storage</i></div>
+          <div>角色生成</div>
+        </a>
+      </li>
       <li>
         <a routerLink="/" routerLinkActive="active">
           <label>
             <div><i class="material-icons">open_in_browser</i></div>
-            <div>ZIP讀取</div>
+            <div>讀取房間</div>
             <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple
               accept="application/xml,text/xml,application/zip" />
           </label>
@@ -53,9 +59,10 @@
       <li (click)="save()">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons">sd_storage</i></div>
-          <div>ZIP保存</div>
+          <div>保存房間</div>
         </a>
       </li>
+      
     </ul>
   </nav>
 </ui-panel>

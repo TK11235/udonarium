@@ -492,7 +492,7 @@ export class TabletopService {
 
   private getCreateCardMenu(position: PointerCoordinate): ContextMenuAction {
     return {
-      name: 'カードを作成', action: () => {
+      name: '新增單張卡牌', action: () => {
         this.createCard(position);
         SoundEffect.play(PresetSound.cardPut);
       }
