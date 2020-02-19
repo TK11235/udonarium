@@ -15,6 +15,7 @@ import { Shinobigami } from "./system/shinobigami";
 import { DeadlineHeroes } from "./system/deadline-heroes";
 import { LogHorizon, LhrpgCharacter } from "./system/log-horizon";
 import { Cthulhu7th } from "./system/cthulhu-7th";
+import { Amadeus } from "./system/amadeus";
 
 interface SystemInfo {
   system: string;
@@ -70,6 +71,12 @@ export class CharazipComponent implements OnInit {
   ];
 
   private static appspotInfos: SystemInfo[] = [
+    {
+      system: "amadeus",
+      name: "アマデウス",
+      href: "https://character-sheets.appspot.com/amadeus/",
+      generater: Amadeus.geneateByAppspot
+    },
     {
       system: "insane",
       name: "インセイン",
