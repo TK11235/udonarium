@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
-
+import { GameCharacter } from '@udonarium/game-character';
 import { ChatTab } from '@udonarium/chat-tab';
 import { AudioPlayer } from '@udonarium/core/file-storage/audio-player';
 import { AudioSharingSystem } from '@udonarium/core/file-storage/audio-sharing-system';
@@ -163,7 +163,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           if (1 < Network.peerIds.length) {
             await this.modalService.open(TextViewComponent, { title: '網絡錯誤', text: '網絡連線發生錯誤。 \n如果顯示後連接繼續不穩定，請嘗試重新加載頁面並重新連接。' });
           } else {
-            await this.modalService.open(TextViewComponent, { title: '網絡錯誤', text: '連線情報已損壞。 \ n關閉此頁面，然後嘗試重新連接。' });
+            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: '連線情報已損壞。 \ n關閉此頁面，然後嘗試重新連接。' });
             Network.open();
           }
         });
@@ -227,7 +227,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.panelService.open(component, option);
     }
   }
-
+  createGameCharacter() {
+    GameCharacter.create("遊戲角色",  1, 'null');
+  }
   save() {
     let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
       ? Network.peerContext.roomName

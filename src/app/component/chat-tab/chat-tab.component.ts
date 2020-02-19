@@ -58,13 +58,20 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
                             name: "教學Zzzzzz > 玩家",
                             text: "密語並不會儲存到ZIP中。而當你的ID更新之後，你將無法再看見之前傳給您的密語，還請多加注意。"
                         }, {
-                            from: "System",
-                            timestamp: 0,
-                            imageIdentifier: "",
-                            tag: "",
-                            name: "教學Zzzzzz",
-                            text: "推薦使用桌面版Chrome。目前不支援以手機進行操作。\n因為渣技術，只簡單加了一個關上網頁前會彈出提示的功能。"
-                        },
+                          from: "System",
+                          timestamp: 0,
+                          imageIdentifier: "",
+                          tag: "",
+                          name: "教學Zzzzzz",
+                          text: "推薦使用桌面版Chrome。目前不支援以手機進行操作。\n本網站主網址- https://hktrpg.com/ "
+                      }, {
+                        from: "System",
+                        timestamp: 0,
+                        imageIdentifier: "",
+                        tag: "",
+                        name: "教學Zzzzzz",
+                        text: "源碼：　https://github.com/zeteticl/udonarium　\n 更新日誌：2020/02/19 \n 功能表可以在桌面直接生成角色，右鍵新增單張卡牌，人物複製可以選擇有序號或無序號，可輸出LOG，名字會有隨機數字，增加圖片標籤功能，音樂分成BGM和效果音，在關上網頁前會彈出提示的功能(防止沒有儲存房間)。"
+                    },
   ];
 
   private oldestTimestamp = 0;
