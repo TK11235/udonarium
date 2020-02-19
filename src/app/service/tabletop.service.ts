@@ -274,7 +274,7 @@ export class TabletopService {
       image = ImageStorage.instance.get(url)
       if (!image) {
         image = ImageStorage.instance.add(url);
-        ImageTag.create(image.identifier).tag = 'default ダイス';
+        ImageTag.create(image.identifier).tag = 'default 骰子';
       }
       diceSymbol.imageDataElement.getFirstElementByName(face).value = image.identifier;
     });
@@ -294,7 +294,7 @@ export class TabletopService {
     let back: string = './assets/images/trump/z02.gif';
     if (!ImageStorage.instance.get(back)) {
       const image = ImageStorage.instance.add(back);
-      ImageTag.create(image.identifier).tag = 'default トランプ';
+      ImageTag.create(image.identifier).tag = 'default 卡牌';
     }
 
     let names: string[] = ['c', 'd', 'h', 's'];
@@ -305,7 +305,7 @@ export class TabletopService {
         let url: string = './assets/images/trump/' + trump + '.gif';
         if (!ImageStorage.instance.get(url)) {
           const image = ImageStorage.instance.add(url);
-          ImageTag.create(image.identifier).tag = 'default トランプ';
+          ImageTag.create(image.identifier).tag = 'default 卡牌';
         }
         let card = Card.create('卡牌', url, back);
         cardStack.putOnBottom(card);
@@ -336,7 +336,7 @@ export class TabletopService {
       ImageStorage.instance.add(back_url);
     }
 
-    let card:Card = Card.create('新しいカード',front_url,back_url);
+    let card:Card = Card.create('新增咭片',front_url,back_url);
 
     card.location.x = position.x;
     card.location.y = position.y;
@@ -352,13 +352,13 @@ export class TabletopService {
     let bgFileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
     bgFileContext.url = './assets/images/BG10a_80.jpg';
     testBgFile = ImageStorage.instance.add(bgFileContext);
-    ImageTag.create(testBgFile.identifier).tag = 'default テーブル';
+    ImageTag.create(testBgFile.identifier).tag = 'default 桌面';
     //let testDistanceFile: ImageFile = null;
     //let distanceFileContext = ImageFile.createEmpty('testTableDistanceviewImage_image').toContext();
     //distanceFileContext.url = './assets/images/BG00a1_80.jpg';
     //testDistanceFile = ImageStorage.instance.add(distanceFileContext);
 
-    //ImageTag.create(testBgFile.identifier).tag = 'default テーブル';
+    //ImageTag.create(testBgFile.identifier).tag = 'default 桌面';
     gameTable.name = '最初的桌面';
 
     gameTable.imageIdentifier = testBgFile.identifier;
@@ -379,7 +379,7 @@ export class TabletopService {
     fileContext = ImageFile.createEmpty('testCharacter_1_image').toContext();
     fileContext.url = './assets/images/mon_052.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    ImageTag.create(testFile.identifier).tag = 'default キャラクター';
+    ImageTag.create(testFile.identifier).tag = 'default 角色';
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 9 * 50;
     testCharacter.initialize();
@@ -395,7 +395,7 @@ export class TabletopService {
     fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
     fileContext.url = './assets/images/mon_128.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    ImageTag.create(testFile.identifier).tag = 'default キャラクター';
+    ImageTag.create(testFile.identifier).tag = 'default 角色';
     testCharacter.location.x = 4 * 50;
     testCharacter.location.y = 2 * 50;
     testCharacter.initialize();
@@ -405,7 +405,7 @@ export class TabletopService {
     fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
     fileContext.url = './assets/images/mon_150.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    ImageTag.create(testFile.identifier).tag = 'default キャラクター';
+    ImageTag.create(testFile.identifier).tag = 'default 角色';
     testCharacter.location.x = 6 * 50;
     testCharacter.location.y = 11 * 50;
     testCharacter.initialize();
@@ -415,7 +415,7 @@ export class TabletopService {
     fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
     fileContext.url = './assets/images/mon_211.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    ImageTag.create(testFile.identifier).tag = 'default キャラクター';
+    ImageTag.create(testFile.identifier).tag = 'default 角色';
     testCharacter.location.x = 12 * 50;
     testCharacter.location.y = 12 * 50;
     testCharacter.initialize();
@@ -425,7 +425,7 @@ export class TabletopService {
     fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
     fileContext.url = './assets/images/mon_135.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    ImageTag.create(testFile.identifier).tag = 'default キャラクター';
+    ImageTag.create(testFile.identifier).tag = 'default 角色';
     testCharacter.initialize();
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 13 * 50;
