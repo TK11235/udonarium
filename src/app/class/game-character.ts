@@ -80,9 +80,9 @@ export class GameCharacter extends TabletopObject {
     let gameCharacterXMLDocument: Document = domParser.parseFromString(this.rootDataElement.toXml(), 'application/xml');
 
     let palette: ChatPalette = new ChatPalette('ChatPalette_' + this.identifier);
-    palette.setPalette(`對話組合版入力例：
-2d6+1 骰子ロール
-１ｄ２０＋{敏捷}＋｛格闘｝　{name}の格闘！
+    palette.setPalette(`對話組合版使用例子：
+2d6+1 投擲骰子
+１ｄ２０＋{敏捷}＋｛格闘｝　{name}格鬥！
 //敏捷=10+{敏捷A}
 //敏捷A=10
 //格闘＝１`);
