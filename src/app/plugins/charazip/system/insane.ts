@@ -63,10 +63,11 @@ export class Insane {
     infoElement.appendChild(
       gameCharacter.createDataElement("PL", json.base.player || "")
     );
+    const pcno = Number.parseInt(json.scenario.pcno, 10);
     infoElement.appendChild(
       gameCharacter.createDataElement(
         "HO",
-        json.scenario.pcno ? `PC${json.scenario.pcno}` : ""
+        Number.isNaN(pcno) ? json.scenario.pcno || "" : `PC${pcno}`
       )
     );
     infoElement.appendChild(
@@ -108,10 +109,7 @@ export class Insane {
       const skillName = skillNameList[rowId][nameId];
       const category = ["暴力", "情動", "知覚", "技術", "知識", "怪異"][nameId];
       skillElement.appendChild(
-        gameCharacter.createDataElement(
-          `特技${skillCount}`,
-          `${skillName}(${category})`
-        )
+        gameCharacter.createDataElement(category, skillName)
       );
     }
 
@@ -147,28 +145,19 @@ export class Insane {
       const emotion =
         emotionList[personality.direction - 1][personality.emotion - 1];
       personalityElement.appendChild(
-        gameCharacter.createDataElement(
-          `感情${personalityCount}`,
-          `${personality.name}(${emotion})`
-        )
+        gameCharacter.createDataElement(personality.name, emotion)
       );
     }
     for (; personalityCount < 3; personalityCount++) {
       personalityElement.appendChild(
-        gameCharacter.createDataElement(
-          `感情${personalityCount + 1}`,
-          "人物名(感情)"
-        )
+        gameCharacter.createDataElement("人物名", "感情")
       );
     }
 
     /*
      * アビリティ
      */
-    const abilityElement = gameCharacter.createDataElement(
-      "アビリティ　タイプ／指定特技／効果",
-      ""
-    );
+    const abilityElement = gameCharacter.createDataElement("アビリティ", "");
     gameCharacter.detailDataElement.appendChild(abilityElement);
     for (const ability of json.ability) {
       if (!ability.name) {
@@ -177,7 +166,8 @@ export class Insane {
       abilityElement.appendChild(
         gameCharacter.createNoteElement(
           ability.name,
-          `${ability.type}／${ability.targetSkill}／${ability.effect}`
+          `${ability.type}／${ability.targetSkill ||
+            "なし"}／${ability.effect || ""}`
         )
       );
     }
