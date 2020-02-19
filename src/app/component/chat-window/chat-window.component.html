@@ -35,7 +35,7 @@
         <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（自己）</ng-container></option>
       </select>
       <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
-        <option value="">沒有指定擲骰系統</option>
+        <option value="">基本骰組(沒有指定)</option>
         <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
       </select>
       <button (click)="showDicebotHelp()">?</button>

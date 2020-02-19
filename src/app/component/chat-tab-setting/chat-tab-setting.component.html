@@ -34,8 +34,11 @@
     </ng-container>
   </div>
 </div>
+
+<button class="danger"  (click)="enableEdit = true">清除所有聊天紀錄</button>
 <div>
-    <button class="danger" (click)="allMessageClear()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">危險! 一按即清除所有聊天紀錄</button>
+    <button *ngIf="enableEdit" class="danger" (click)="allMessageClear()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">危險! 一按即清除所有聊天紀錄</button>
+    <button *ngIf="enableEdit" (click)="enableEdit=false">取消</button>
 </div>
 <ng-container *ngIf="isEmpty">
 

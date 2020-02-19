@@ -10,6 +10,7 @@ import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
 import { SaveDataService } from 'service/save-data.service';
 
+
 @Component({
   selector: 'app-chat-tab-setting',
   templateUrl: './chat-tab-setting.component.html',
@@ -18,7 +19,7 @@ import { SaveDataService } from 'service/save-data.service';
 export class ChatTabSettingComponent implements OnInit, OnDestroy {
   selectedTab: ChatTab = null;
   selectedTabXml: string = '';
-
+  enableEdit: boolean = false;
   get tabName(): string { return this.selectedTab.name; }
   set tabName(tabName: string) { if (this.isEditable) this.selectedTab.name = tabName; }
 
