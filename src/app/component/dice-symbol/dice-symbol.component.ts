@@ -212,6 +212,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     }
+    
     actions.push(ContextMenuSeparator);
     if (this.isMine || this.hasOwner) {
       actions.push({
