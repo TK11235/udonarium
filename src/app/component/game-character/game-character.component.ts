@@ -64,6 +64,8 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   get hasGM(): boolean { return this.gameCharacter.hasGM; }
   get GMName(): string { return this.gameCharacter.GMName; }
   get isDisabled(): boolean { return this.gameCharacter.isDisabled; }
+
+
   gridSize: number = 50;
 
   movableOption: MovableOption = {};
@@ -92,6 +94,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {
+        //GM
         if (this.gameCharacter.GM === event.data.peer) this.changeDetector.markForCheck();
       });
     this.movableOption = {
@@ -158,8 +161,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
     actions.push(ContextMenuSeparator);
-
-    actions.push(ContextMenuSeparator);
     actions.push({
       name: '移動到共有倉庫', action: () => {
         this.gameCharacter.setLocation('common');
@@ -168,7 +169,6 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     });
     actions.push({
       name: '移動到個人倉庫', action: () => {
-        this.showChatPalette(this.gameCharacter)
         this.gameCharacter.setLocation(Network.peerId);
         SoundEffect.play(PresetSound.piecePut);
       }
