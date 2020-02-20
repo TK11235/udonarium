@@ -2,14 +2,26 @@ import { ChatPalette } from './chat-palette';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
-
+import { PeerCursor } from './peer-cursor';
+import { Network } from './core/system';
 @SyncObject('character')
 export class GameCharacter extends TabletopObject {
   @SyncVar() rotate: number = 0;
   @SyncVar() roll: number = 0;
+  //GM
+  @SyncVar() GM: string = '';
 
   get name(): string { return this.getCommonValue('name', ''); }
   get size(): number { return this.getCommonValue('size', 1); }
+  
+  //GM
+  get GMName(): string {
+    let object = PeerCursor.find(this.GM);
+    return object ? object.name : '';
+  }
+  get hasGM(): boolean { return PeerCursor.find(this.GM) != null; }
+  get isMine(): boolean { return Network.peerId === this.GM; }
+  get isVisible(): boolean { return !this.hasGM || this.isMine; }
 
   get chatPalette(): ChatPalette {
     for (let child of this.children) {
