@@ -21,7 +21,7 @@ export class GameCharacter extends TabletopObject {
   }
   get hasGM(): boolean { return PeerCursor.find(this.GM) != null; }
   get isMine(): boolean { return Network.peerId === this.GM; }
-  get isVisible(): boolean { return !this.hasGM || this.isMine; }
+  get isDisabled(): boolean { return this.hasGM && !this.isMine; }
 
   get chatPalette(): ChatPalette {
     for (let child of this.children) {

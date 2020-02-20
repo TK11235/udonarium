@@ -57,6 +57,16 @@
   border-radius: 37px;
 }
 
+.is-Yellow-border {
+  border: solid 6px #FFCC80; 
+}
+.is-opacity{
+  opacity:0.7;
+}
+.is-disabled {
+  display: none;
+}
+
 .pedestal-grab-border {
   pointer-events: none;
   width: 100%;
@@ -78,6 +88,7 @@
   border: solid 6px #FFCC80;
   border-radius: 25px;
 }
+
 
 .pedestal-outer {
   backface-visibility: hidden;
