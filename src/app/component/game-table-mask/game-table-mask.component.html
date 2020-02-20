@@ -1,6 +1,6 @@
 <div class="component" [ngClass]="{'is-grab': !isLock}"
   [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"
-  appMovable [movable.option]="movableOption" [movable.disable]="isLock" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
+  appMovable [movable.option]="movableOption" [movable.disable]="isLock" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()"(dblclick)="showDetail(this.gameTableMask)">
   <div *ngIf="imageFile.url.length < 1; then blackMask; else imageMask"></div>
   <ng-template #blackMask>
     <div class="border is-fit-full" [style.background-color]="'rgba(10, 10, 10,' + opacity +')'"></div>

@@ -9,7 +9,7 @@
 
 </div>
 <div>
-  <span>你的ID：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.id}}</span>
+  <span>你的ID： <span *ngIf="networkService.isOpen" style="font-weight: bold;"> {{networkService.peerContext.id}}</span>
   <span *ngIf="!networkService.isOpen" style="font-weight: bold;">???</span>
   </span>
 </div>

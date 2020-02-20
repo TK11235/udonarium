@@ -90,11 +90,11 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       case 'table':
         return '桌面';
       case Network.peerId:
-        return '個人';
+        return '個人倉庫';
       case 'graveyard':
         return '墓場';
       default:
-        return '共有';
+        return '共有倉庫';
     }
   }
 
@@ -192,7 +192,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     gameObject.clone();
   }
 
-  private showDetail(gameObject: GameCharacter) {
+  public showDetail(gameObject: GameCharacter) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = '角色卡';

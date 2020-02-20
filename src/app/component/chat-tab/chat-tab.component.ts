@@ -48,7 +48,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
                             imageIdentifier: "",
                             tag: "",
                             name: "教學Zzzzzz > 玩家",
-                            text: "使用教學: 對桌面右鍵->新增角色(或其他)，再對它按右鍵->顯示詳情，編輯內容，以後可以收進倉庫中。而在倉庫中，也是按右鍵，把角色移到桌面"
+                            text: "使用教學: 對桌面右鍵->新增角色(或其他)，再對它連按兩下左鍵或按右鍵->顯示詳情，編輯內容，以後可以收進倉庫中。而在倉庫中，也是按右鍵，把角色移到桌面"
                         }, {
                             from: "System",
                             to: "???",
@@ -70,7 +70,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
                         imageIdentifier: "",
                         tag: "",
                         name: "教學Zzzzzz",
-                        text: "源碼：　https://github.com/zeteticl/udonarium　\n 更新日誌：2020/02/19 \n 功能表可以在桌面直接生成角色，右鍵新增單張卡牌，人物複製可以選擇有序號或無序號，可輸出LOG，名字會有隨機數字，增加圖片標籤功能，音樂分成BGM和效果音，在關上網頁前會彈出提示的功能(防止沒有儲存房間)。"
+                        text: "源碼：　https://github.com/zeteticl/udonarium　\n 更新日誌：2020/02/19 \n 功能表可以在桌面直接生成角色，右鍵新增單張卡牌，人物複製可以選擇有序號或無序號，可輸出LOG，名字會有隨機數字，增加圖片標籤功能，音樂分成BGM和效果音，在關上網頁前會彈出提示的功能(防止沒有儲存房間)，對(角色，迷霧，地形 和倉庫角色)按兩下左鍵可以顯示詳情。"
                     },
   ];
 

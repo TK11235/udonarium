@@ -162,7 +162,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
     return value < min ? min : value;
   }
 
-  private showDetail(gameObject: GameTableMask) {
+  public showDetail(gameObject: GameTableMask) {
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = '地圖迷霧設定';
     if (gameObject.name.length) title += ' - ' + gameObject.name;

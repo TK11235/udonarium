@@ -177,7 +177,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     return value < min ? min : value;
   }
 
-  private showDetail(gameObject: Terrain) {
+  public showDetail(gameObject: Terrain) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
     let title = '設定地形';

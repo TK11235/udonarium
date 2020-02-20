@@ -1,6 +1,6 @@
 <div class="component is-3d is-pointer-events-none"
   [style.width.px]="width * gridSize" [style.height.px]="depth * gridSize"
-  appMovable [movable.option]="movableOption" [movable.disable]="isLocked" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
+  appMovable [movable.option]="movableOption" [movable.disable]="isLocked" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()"(dblclick)="showDetail(this.terrain)">
   <div class="component-content is-3d is-pointer-events-auto" [ngClass]="{'is-grab': !isLocked}"
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()" [rotable.disable]="isLocked">
     <ng-container *ngIf="hasFloor && 0 < floorImage?.url.length">

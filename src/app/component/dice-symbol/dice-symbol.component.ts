@@ -218,7 +218,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         name: '公開骰子', action: () => {
           this.owner = '';
           SoundEffect.play(PresetSound.unlock);
-          this.sendLogMessage(`ダイスを公開しました。出目:${this.face}`);
+          this.sendLogMessage(`骰子結果公開。達成值:${this.face}`);
         }
       });
     }
