@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
-import { EventSystem } from '@udonarium/core/system';
+import { EventSystem, Network } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
@@ -89,6 +89,16 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     EventSystem.unregister(this);
+  }
+
+  movetocommon() {
+    this.tabletopObject.setLocation('common');
+  }
+  movetoid() {
+    this.tabletopObject.setLocation(Network.peerId);
+  }
+  movetograveyard() {
+    this.tabletopObject.setLocation('graveyard');
   }
 
   private initPanelPosition() {
