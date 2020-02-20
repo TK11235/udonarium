@@ -56,6 +56,9 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   set rotate(rotate: number) { this.gameCharacter.rotate = rotate; }
   get roll(): number { return this.gameCharacter.roll; }
   set roll(roll: number) { this.gameCharacter.roll = roll; }
+  //GM
+  get GM(): string { return this.gameCharacter.GM; }
+  set GM(GM: string) { this.gameCharacter.GM = GM; }
 
   gridSize: number = 50;
 
