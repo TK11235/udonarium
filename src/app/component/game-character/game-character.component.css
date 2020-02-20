@@ -1,3 +1,15 @@
+.is-Yellow-border {
+  border: solid 6px #FFCC80;
+}
+
+.is-opacity {
+  opacity: 0.7;
+}
+
+.is-disabled {
+  display: none;
+}
+
 .is-grab {
   cursor: -moz-grab;
   cursor: -webkit-grab;
@@ -57,15 +69,6 @@
   border-radius: 37px;
 }
 
-.is-Yellow-border {
-  border: solid 6px #FFCC80; 
-}
-.is-opacity{
-  opacity:0.7;
-}
-.is-disabled {
-  display: none;
-}
 
 .pedestal-grab-border {
   pointer-events: none;
