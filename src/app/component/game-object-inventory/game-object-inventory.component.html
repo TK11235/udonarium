@@ -2,14 +2,14 @@
   <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
   <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
-  <ng-container (contextmenu)="onContextMenu($event, gameObject)" *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject" 
+  <div (contextmenu)="onContextMenu($event, gameObject)" *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject" 
     (click)="selectGameObject(gameObject)" [ngClass]="{'box': true}" (dblclick)="showDetail(this.gameObject)">
     
     <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
 
       <li *ngIf="!isDisabled(gameObject)"></li>
     </ng-container>
-</ng-container>
+</div>
   <div *ngIf="selectTab === 'graveyard'" style="padding-top: 6px;">
     <button class="danger" (click)="cleanInventory()" [attr.disabled]="getGameObjects(selectTab).length < 1 ? '' : null">清空墓場</button>
   </div>
