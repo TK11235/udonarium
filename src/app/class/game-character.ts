@@ -13,7 +13,7 @@ export class GameCharacter extends TabletopObject {
 
   get name(): string { return this.getCommonValue('name', ''); }
   get size(): number { return this.getCommonValue('size', 1); }
-  
+
   //GM
   get GMName(): string {
     let object = PeerCursor.find(this.GM);
@@ -30,21 +30,22 @@ export class GameCharacter extends TabletopObject {
     return null;
   }
   //CLONE2
-  set name(value:string) { this.setCommonValue('name', value); }
-  static create(name: string, size: number, imageIdentifier: string): GameCharacter {
+  set name(value: string) { this.setCommonValue('name', value); }
+  static create(name: string, size: number, imageIdentifier: string, GM: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
     gameCharacter.initialize();
-    gameCharacter.createTestGameDataElement(name, size, imageIdentifier);
+    gameCharacter.createTestGameDataElement(name, size, imageIdentifier, GM);
 
     return gameCharacter;
   }
 
-  createTestGameDataElement(name: string, size: number, imageIdentifier: string) {
+  createTestGameDataElement(name: string, size: number, imageIdentifier: string, GM: string) {
     this.createDataElements();
 
     let nameElement: DataElement = DataElement.create('name', name, {}, 'name_' + this.identifier);
     let sizeElement: DataElement = DataElement.create('size', size, {}, 'size_' + this.identifier);
+    let GMElement: DataElement = DataElement.create('GM', GM, {}, 'GM_' + this.identifier);
 
     if (this.imageDataElement.getFirstElementByName('imageIdentifier')) {
       this.imageDataElement.getFirstElementByName('imageIdentifier').value = imageIdentifier;
@@ -57,7 +58,7 @@ export class GameCharacter extends TabletopObject {
 
     this.commonDataElement.appendChild(nameElement);
     this.commonDataElement.appendChild(sizeElement);
-
+    this.commonDataElement.appendChild(GMElement);
     this.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(hpElement);
     resourceElement.appendChild(mpElement);
@@ -101,15 +102,15 @@ export class GameCharacter extends TabletopObject {
     palette.initialize();
     this.appendChild(palette);
   }
-  clone2() :this {
+  clone2(): this {
     let cloneObject = super.clone();
 
-    let objectname:string;
+    let objectname: string;
     let reg = new RegExp('(.*)_([0-9]*)');
     let res = cloneObject.name.match(reg);
 
-    if(res != null && res.length == 3) {
-      let cloneNumber:number = parseInt(res[2]) + 1;
+    if (res != null && res.length == 3) {
+      let cloneNumber: number = parseInt(res[2]) + 1;
       objectname = res[1] + "_" + cloneNumber;
     } else {
       objectname = cloneObject.name + "_2";
