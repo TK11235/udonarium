@@ -1,13 +1,15 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
 
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerCursor } from '@udonarium/peer-cursor';
 import { DataElement } from '@udonarium/data-element';
 import { SortOrder } from '@udonarium/data-summary-setting';
 import { GameCharacter } from '@udonarium/game-character';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TabletopObject } from '@udonarium/tabletop-object';
+
 
 import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
@@ -25,6 +27,8 @@ import { DiceBot } from '@udonarium/dice-bot';
 })
 export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDestroy {
   inventoryTypes: string[] = ['table', 'common', 'graveyard'];
+  //GM
+  @Input() gameCharacter: GameCharacter = null;
 
   selectTab: string = 'table';
   selectedIdentifier: string = '';
@@ -41,6 +45,18 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   get diceBotInfos() { return DiceBot.diceBotInfos }
   get gameType(): string { return this.inventoryService.gameType; }
   set gameType(gameType: string) { this.inventoryService.gameType = gameType; }
+  //GM
+  get GM(): string { return this.gameCharacter.GM; }
+  set GM(GM: string) { this.gameCharacter.GM = GM; }
+  get isMine(): boolean { return this.gameCharacter.isMine; }
+  get hasGM(): boolean { return this.gameCharacter.hasGM; }
+  get GMName(): string { return this.gameCharacter.GMName; }
+  isDisabled(gameObject) {
+
+    console.log("HI", gameObject)
+    return gameObject.GM && !(Network.peerId === gameObject.GM);
+  }
+
 
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '升序' : '降序'; }
 
@@ -58,7 +74,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     this.panelService.title = '倉庫';
     EventSystem.register(this)
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
-        if (ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) {
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor && object.peerId === this.gameCharacter.GM)) {
           this.selectedIdentifier = event.data.identifier;
           this.changeDetector.markForCheck();
         }
@@ -74,6 +91,9 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
         if (!this.inventoryTypes.includes(this.selectTab)) {
           this.selectTab = Network.peerId;
         }
+      }).on('DISCONNECT_PEER', event => {
+        //GM
+        if (this.gameCharacter.GM === event.data.peer) this.changeDetector.markForCheck();
       });
     this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
   }
@@ -230,3 +250,4 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     });
   }
 }
+
