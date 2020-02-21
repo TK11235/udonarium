@@ -3,7 +3,7 @@
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
   <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
   <ng-container (contextmenu)="onContextMenu($event, gameObject)" *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject" 
-    (click)="selectGameObject(gameObject)" [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}" (dblclick)="showDetail(this.gameObject)">
+    (click)="selectGameObject(gameObject)" [ngClass]="{'box': true}" (dblclick)="showDetail(this.gameObject)">
     
     <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
 

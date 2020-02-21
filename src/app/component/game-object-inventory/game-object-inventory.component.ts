@@ -75,7 +75,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor && object.peerId === this.gameCharacter.GM)) {
-         // this.selectedIdentifier = event.data.identifier;
+         this.selectedIdentifier = event.data.identifier;
         //  console.log(event.data.identifier)
           this.changeDetector.markForCheck();
         }
