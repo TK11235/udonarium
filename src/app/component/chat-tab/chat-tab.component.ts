@@ -71,7 +71,14 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
                         tag: "",
                         name: "教學Zzzzzz",
                         text: "源碼：　https://github.com/zeteticl/udonarium　\n 更新日誌：2020/02/19 \n 功能表可以在桌面直接生成角色，右鍵新增單張卡牌，人物複製可以選擇有序號或無序號，可輸出LOG，名字會有隨機數字，增加圖片標籤功能，音樂分成BGM和效果音，在關上網頁前會彈出提示的功能(防止沒有儲存房間)，對(角色，迷霧，地形 和倉庫角色)按兩下左鍵可以顯示詳情。"
-                    },
+                    },{
+                      from: "System",
+                      timestamp: 0,
+                      imageIdentifier: "",
+                      tag: "",
+                      name: "教學Zzzzzz",
+                      text: "更新日誌：2020/02/19 \n 新增GM圖層(其實是只有看見的), 對。"
+                  },
   ];
 
   private oldestTimestamp = 0;
