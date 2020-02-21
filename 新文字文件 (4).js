@@ -65,15 +65,25 @@ get GM(): string { return this.gameCharacter.GM; }
           this.changeDetector.markForCheck();
         }
 
+        {{isDisabled ? '12' : ''}}
 
 src\app\component\game-character\game-character.component.html
 
-[ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine,'is-disabled': isDisabled}"
+[ngClass]="{'is-disabled': isDisabled}"
+
+[ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine}"
+
+
+<ng-container *ngIf="isMine">
+<span [style.font-size.px]="(width+depth)+10" style="color:#FFCC80; 
+background-color:#FFFFFF;  opacity: 1;">只限自己看見</span>    </ng-container>
 
 src\app\class\game-character.ts
 
 import { PeerCursor } from '@udonarium/peer-cursor';
 import {  Network } from '@udonarium/core/system';
+
+import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 
  @SyncVar() GM: string = '';
 
