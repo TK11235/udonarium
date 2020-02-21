@@ -1,7 +1,16 @@
+game-character
+
+game-table-mask
+terrain
+text-note
+
+
 src\app\component\game-character\game-character.component.css
 
 .is-Yellow-border {
   border: solid 6px #FFCC80;
+  color:#FFCC80;
+  background-color:#FFCC80;
 }
 
 .is-opacity {
@@ -58,17 +67,13 @@ get GM(): string { return this.gameCharacter.GM; }
 
 
 src\app\component\game-character\game-character.component.html
-[ngClass]="{'is-disabled': isDisabled}"
-[ngClass]="{'is-opacity': isMine}"
-[ngClass]="{'is-Yellow-border': isMine}"
-
 
 [ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine,'is-disabled': isDisabled}"
 
 src\app\class\game-character.ts
 
 import { PeerCursor } from '@udonarium/peer-cursor';
-import { EventSystem, Network } from '@udonarium/core/system';
+import {  Network } from '@udonarium/core/system';
 
  @SyncVar() GM: string = '';
 
