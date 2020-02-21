@@ -52,8 +52,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   get hasGM(): boolean { return this.gameCharacter.hasGM; }
   get GMName(): string { return this.gameCharacter.GMName; }
   isDisabled(gameObject) {
-
-    console.log("HI", gameObject)
+    console.log("isDis",gameObject.GM && !(Network.peerId === gameObject.GM))
     return gameObject.GM && !(Network.peerId === gameObject.GM);
   }
 
