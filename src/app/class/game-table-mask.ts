@@ -1,10 +1,22 @@
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
-
+import { PeerCursor } from '@udonarium/peer-cursor';
+import { Network } from '@udonarium/core/system';
 @SyncObject('table-mask')
 export class GameTableMask extends TabletopObject {
   @SyncVar() isLock: boolean = false;
+
+  //GM
+  @SyncVar() GM: string = '';
+
+  get GMName(): string {
+    let object = PeerCursor.find(this.GM);
+    return object ? object.name : '';
+  }
+  get hasGM(): boolean { return PeerCursor.find(this.GM) != null; }
+  get isMine(): boolean { return Network.peerId === this.GM; }
+  get isDisabled(): boolean { return this.hasGM && !this.isMine; }
 
   get name(): string { return this.getCommonValue('name', ''); }
   get width(): number { return this.getCommonValue('width', 1); }
