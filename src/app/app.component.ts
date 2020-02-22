@@ -138,12 +138,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     if (window.localStorage.getItem('PeerName')) {
       PeerCursor.myCursor.name = window.localStorage.getItem('PeerName')
-      alert(window.localStorage.getItem('PeerName'))
-      
     }
     else {
       PeerCursor.myCursor.name = '玩家' + ('000' + (Math.floor(Math.random() * 1000))).slice(-3);
-      console.log('else!!!!!!!!!!!!!!!!!!!!')
     }
 
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;

@@ -5,6 +5,14 @@ terrain
 text-note
 
 
+this.GM = PeerCursor.myCursor.name
+gameCharacter.GM === PeerCursor.myCursor.name
+PeerCursor.myCursor.name === this.gameCharacter.GM
+ get isMine(): boolean {
+   return PeerCursor.myCursor.name === this.GM;
+ }
+
+
 src\app\component\game-character\game-character.component.css
 
 .is-Yellow-border {

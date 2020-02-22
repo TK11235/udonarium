@@ -53,7 +53,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   get GMName(): string { return this.gameCharacter.GMName; }
   isDisabled(gameObject) {
 
-    return gameObject.GM && !(Network.peerId === gameObject.GM);
+    return gameObject.GM && !(PeerCursor.myCursor.name === gameObject.GM);
   }
 
 
@@ -74,7 +74,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     EventSystem.register(this)
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
-        if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor && object.peerId === this.gameCharacter.GM)) {
+        if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor && PeerCursor.myCursor.name === this.gameCharacter.GM)) {
          this.selectedIdentifier = event.data.identifier;
         //  console.log(event.data.identifier)
           this.changeDetector.markForCheck();
@@ -93,7 +93,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
         }
       }).on('DISCONNECT_PEER', event => {
         //GM
-        if (this.gameCharacter.GM === event.data.peer) this.changeDetector.markForCheck();
+        if (this.gameCharacter.GM === PeerCursor.myCursor.name) this.changeDetector.markForCheck();
       });
     this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
   }

@@ -28,7 +28,7 @@ export class Terrain extends TabletopObject {
     return object ? object.name : '';
   }
   get hasGM(): boolean { return PeerCursor.find(this.GM) != null; }
-  get isMine(): boolean { return Network.peerId === this.GM; }
+  get isMine(): boolean { return PeerCursor.myCursor.name === this.GM; }
   get isDisabled(): boolean { return this.hasGM && !this.isMine; }
 
   get width(): number { return this.getCommonValue('width', 1); }

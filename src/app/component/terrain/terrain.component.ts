@@ -145,7 +145,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
       (!this.isMine
         ? {
           name: 'GM圖層-只供自己看見', action: () => {
-            this.GM = Network.peerId;
+            this.GM = PeerCursor.myCursor.name;
             SoundEffect.play(PresetSound.lock);
           }
         } : {

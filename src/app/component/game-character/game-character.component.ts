@@ -83,7 +83,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!this.gameCharacter || !object) return;
-        if (this.gameCharacter === object || (object instanceof ObjectNode && this.gameCharacter.contains(object)) || (object instanceof PeerCursor && object.peerId === this.gameCharacter.GM)) {
+        if (this.gameCharacter === object || (object instanceof ObjectNode && this.gameCharacter.contains(object)) || (object instanceof PeerCursor && PeerCursor.myCursor.name === this.gameCharacter.GM)) {
           this.changeDetector.markForCheck();
         }
       })
@@ -95,7 +95,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       })
       .on('DISCONNECT_PEER', event => {
         //GM
-        if (this.gameCharacter.GM === event.data.peer) this.changeDetector.markForCheck();
+        if (this.gameCharacter.GM === PeerCursor.myCursor.name) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.gameCharacter,
@@ -145,7 +145,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     if (!this.isMine) {
       actions.push({
         name: 'GM圖層-只供自己看見', action: () => {
-          this.GM = Network.peerId;
+          this.GM = PeerCursor.myCursor.name;
           SoundEffect.play(PresetSound.lock);
         }
       });
