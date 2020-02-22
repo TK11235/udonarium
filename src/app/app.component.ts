@@ -136,7 +136,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     PeerCursor.createMyCursor();
 
-    PeerCursor.myCursor.name = '玩家' + ('000' + (Math.floor(Math.random() * 1000))).slice(-3);
+    if (window.localStorage.getItem('PeerName')) {
+      PeerCursor.myCursor.name = window.localStorage.getItem('PeerName')
+    }
+    else {
+      PeerCursor.myCursor.name = '玩家' + ('000' + (Math.floor(Math.random() * 1000))).slice(-3);
+    }
 
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
@@ -179,8 +184,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     PanelService.defaultParentViewContainerRef = ModalService.defaultParentViewContainerRef = ContextMenuService.defaultParentViewContainerRef = this.modalLayerViewContainerRef;
     setTimeout(() => {
-      this.panelService.open(PeerMenuComponent, { width: 500, height: 450, left: 100 });
-      this.panelService.open(ChatWindowComponent, { width: 700, height: 400, left: 100, top: 450 });
+      this.panelService.open(PeerMenuComponent, { width: 300, height: 300, left: 100 });
+      this.panelService.open(ChatWindowComponent, { width: 700, height: 300, left: 100, top: 450 });
     }, 0);
   }
 
@@ -194,10 +199,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     switch (componentName) {
       case 'PeerMenuComponent':
         component = PeerMenuComponent;
+        option = { width: 300, height: 300, left: 100, top: 100 };
         break;
       case 'ChatWindowComponent':
         component = ChatWindowComponent;
-        option.width = 700;
+        option = { width: 700, height: 300, left: 100 }
         break;
       case 'GameTableSettingComponent':
         component = GameTableSettingComponent;
@@ -228,7 +234,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
   }
   createGameCharacter() {
-    GameCharacter.create("遊戲角色",  1, 'null');
+    GameCharacter.create("遊戲角色", 1, 'null', '');
   }
   save() {
     let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length

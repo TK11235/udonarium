@@ -1,11 +1,11 @@
 <div *ngIf="myPeer">
-  <button (click)="changeIcon()">變更頭像</button>
+  <!--<button (click)="changeIcon()">變更頭像</button>-->
   <div *ngIf="myPeer.image" class="image cover" [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' "
     (click)="changeIcon()">
     <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
   </div>
 
-  <span>你的名字： <input [(ngModel)]="myPeer.name" placeholder="暱稱" (change)="onChangeNickname()" (blur)="onBlurNickname()" /></span>
+  <span>你的名字： <input [(ngModel)]="myPeer.name" placeholder="暱稱" (change)="onChangeNickname(myPeer.name)" /></span>
 
 </div>
 <div>

@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
+import { PeerCursor } from '@udonarium/peer-cursor';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { GameCharacter } from '@udonarium/game-character';
@@ -19,7 +20,7 @@ import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.compon
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuSeparator, ContextMenuService, ContextMenuAction } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -56,6 +57,14 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
   set rotate(rotate: number) { this.gameCharacter.rotate = rotate; }
   get roll(): number { return this.gameCharacter.roll; }
   set roll(roll: number) { this.gameCharacter.roll = roll; }
+  //GM
+  get GM(): string { return this.gameCharacter.GM; }
+  set GM(GM: string) { this.gameCharacter.GM = GM; }
+  get isMine(): boolean { return this.gameCharacter.isMine; }
+  get hasGM(): boolean { return this.gameCharacter.hasGM; }
+  get GMName(): string { return this.gameCharacter.GMName; }
+  get isDisabled(): boolean { return this.gameCharacter.isDisabled; }
+
 
   gridSize: number = 50;
 
@@ -74,7 +83,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!this.gameCharacter || !object) return;
-        if (this.gameCharacter === object || (object instanceof ObjectNode && this.gameCharacter.contains(object))) {
+        if (this.gameCharacter === object || (object instanceof ObjectNode && this.gameCharacter.contains(object)) || (object instanceof PeerCursor && PeerCursor.myCursor.name === this.gameCharacter.GM)) {
           this.changeDetector.markForCheck();
         }
       })
@@ -83,6 +92,10 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       })
       .on('UPDATE_FILE_RESOURE', -1000, event => {
         this.changeDetector.markForCheck();
+      })
+      .on('DISCONNECT_PEER', event => {
+        //GM
+        if (this.gameCharacter.GM === PeerCursor.myCursor.name) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.gameCharacter,
@@ -115,48 +128,82 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
     let position = this.pointerDeviceService.pointers[0];
-    this.contextMenuService.open(position, [
-      { name: '顯示詳情', action: () => { this.showDetail(this.gameCharacter); } },
-      { name: '顯示對話組合版', action: () => { this.showChatPalette(this.gameCharacter) } },
-      ContextMenuSeparator,
-      {
-        name: '移動到共有倉庫', action: () => {
-          this.gameCharacter.setLocation('common');
-          SoundEffect.play(PresetSound.piecePut);
+    let actions: ContextMenuAction[] = [];
+
+    actions.push({
+      name: '顯示詳情', action: () => {
+        this.showDetail(this.gameCharacter);
+      }
+    });
+    actions.push({
+      name: '顯示對話組合版', action: () => {
+        this.showChatPalette(this.gameCharacter)
+      }
+    });
+
+    actions.push(ContextMenuSeparator);
+    if (!this.isMine) {
+      actions.push({
+        name: 'GM圖層-只供自己看見', action: () => {
+          this.GM = PeerCursor.myCursor.name;
+          this.gameCharacter.setLocation('table')
+          SoundEffect.play(PresetSound.lock);
         }
-      },
-      {
-        name: '移動到個人倉庫', action: () => {
-          this.gameCharacter.setLocation(Network.peerId);
-          SoundEffect.play(PresetSound.piecePut);
+      });
+
+    } else {
+      actions.push({
+        name: '回到普通圖層', action: () => {
+          this.GM = '';
+          this.gameCharacter.setLocation('table')
+          SoundEffect.play(PresetSound.unlock);
         }
-      },
-      {
-        name: '移動到墓場', action: () => {
-          this.gameCharacter.setLocation('graveyard');
-          SoundEffect.play(PresetSound.sweep);
-        }
-      },
-      ContextMenuSeparator,
-      {
-        name: '複製', action: () => {
-          let cloneObject = this.gameCharacter.clone();
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.update();
-          SoundEffect.play(PresetSound.piecePut);
-        }
-      },
-      {
-        name: '複製-有序號', action: () => {
-          let cloneObject = this.gameCharacter.clone2();
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.update();
-          SoundEffect.play(PresetSound.piecePut);
-        }
-      },
-    ], this.name);
+      });
+    }
+
+
+    actions.push(ContextMenuSeparator);
+    actions.push({
+      name: '移動到共有倉庫', action: () => {
+        this.gameCharacter.setLocation('common');
+        SoundEffect.play(PresetSound.piecePut);
+      }
+    });
+    actions.push({
+      name: '移動到個人倉庫', action: () => {
+        this.gameCharacter.setLocation(Network.peerId);
+        SoundEffect.play(PresetSound.piecePut);
+      }
+    });
+
+
+    actions.push({
+      name: '移動到墓場', action: () => {
+        this.gameCharacter.setLocation('graveyard');
+        SoundEffect.play(PresetSound.sweep);
+      }
+    });
+    actions.push(ContextMenuSeparator);
+    actions.push({
+      name: '複製', action: () => {
+        let cloneObject = this.gameCharacter.clone();
+        cloneObject.location.x += this.gridSize;
+        cloneObject.location.y += this.gridSize;
+        cloneObject.update();
+        SoundEffect.play(PresetSound.piecePut);
+      }
+    });
+    actions.push({
+      name: '複製-有序號', action: () => {
+        let cloneObject = this.gameCharacter.clone2();
+        cloneObject.location.x += this.gridSize;
+        cloneObject.location.y += this.gridSize;
+        cloneObject.update();
+        SoundEffect.play(PresetSound.piecePut);
+      }
+    });
+
+    this.contextMenuService.open(position, actions, this.name);
   }
 
 

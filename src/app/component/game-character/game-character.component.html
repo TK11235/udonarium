@@ -1,8 +1,8 @@
-<div class="component is-3d is-grab is-pointer-events-none" [style.width.px]="size * gridSize"
+<div class="component is-3d is-grab is-pointer-events-none " [style.width.px]="size * gridSize" [ngClass]="{'is-disabled': isDisabled}"
   [style.height.px]="size * gridSize" appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()"
   (movable.ondragend)="onMoved()"  (dblclick)="showDetail(this.gameCharacter)">  
-  <div class="component-content is-3d" [@bounceInOut]="'in'">
-    <div class="component-content is-3d is-pointer-events-auto" appRotable [rotable.option]="rotableOption"
+  <div class="component-content is-3d" [@bounceInOut]="'in'" >
+    <div class="component-content is-3d is-pointer-events-auto" appRotable [rotable.option]="rotableOption" 
       (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
       <div class="pedestal-inner"></div>
       <div class="pedestal-outer"></div>
@@ -12,8 +12,8 @@
           <div class="material-icons of-back">autorenew</div>
         </div>
       </div>
-      <div class="upright-transform is-fit-width is-3d">
-        <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
+      <div class="upright-transform is-fit-width is-3d"  [ngClass]="{'is-Yellow-border': isMine}">
+        <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize" [ngClass]="{'is-opacity': isMine}"
           appRotable [(rotable.value)]="roll" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
           <div class="rotate-inner is-3d">
             <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background is-3d"

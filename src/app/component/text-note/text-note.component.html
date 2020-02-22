@@ -1,9 +1,9 @@
 <div class="component is-3d is-pointer-events-none"
-  appMovable [movable.option]="movableOption" [movable.disable]="isSelected" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()" (dblclick)="showDetail(this.textNote)">
+  appMovable [movable.option]="movableOption" [movable.disable]="isSelected" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()" (dblclick)="showDetail(this.textNote)" [ngClass]="{'is-disabled': isDisabled}" >
   <div class="is-3d" appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
-  <div class="component-content is-3d is-pointer-events-auto"
+  <div class="component-content is-3d is-pointer-events-auto"[ngClass]="{'is-Yellow-border': isMine}"
     [style.width.px]="width * gridSize">
-    <div class="upright-transform is-3d is-bg-color is-bg-texture"
+    <div class="upright-transform is-3d is-bg-color is-bg-texture" 
       [style.background-image]="'url(' + imageFile?.url + ')' | safe: 'style'" [style.width.px]="width * gridSize" [style.min-height.px]="height * gridSize">
       <div *ngIf="title.length" class="title is-black-background is-pointer-events-none">{{title}}</div>
       <textarea (input)="calcFitHeight();" #textArea [ngClass]="{'is-pointer-events-none': !isSelected, 'is-pointer-events-auto': isSelected, 'is-outline-text': !isSelected}"
