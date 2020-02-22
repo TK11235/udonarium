@@ -15,6 +15,7 @@ import { EventSystem, Network } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
@@ -93,12 +94,15 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
 
   movetocommon() {
     this.tabletopObject.setLocation('common');
+    SoundEffect.play(PresetSound.lock);
   }
   movetoid() {
     this.tabletopObject.setLocation(Network.peerId);
+    SoundEffect.play(PresetSound.lock);
   }
   movetograveyard() {
     this.tabletopObject.setLocation('graveyard');
+    SoundEffect.play(PresetSound.lock);
   }
 
   private initPanelPosition() {

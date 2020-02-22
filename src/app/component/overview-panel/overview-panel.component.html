@@ -89,8 +89,10 @@
       [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
       <div class="grid-container-root" *ngIf="hasDataElms">
         <!--<ng-container *ngFor="let dataElm of dataElms">-->
-        <div><button type="submit" (click)="movetocommon()">共有</button><button type="submit"
-            (click)="movetoid()">個人</button><button type="submit" (click)="movetograveyard()">墓場</button></div>
+        <div><button type="submit" (click)="movetocommon()">共有</button>
+          <button type="submit" (click)="movetoid()">個人</button>
+          <button type="submit" (click)="movetograveyard()">墓場</button>
+        </div>
 
         <ng-container *ngFor="let dataElm of inventoryDataElms">
           <ng-container *ngIf="dataElm && dataElm.name !== newLineString">
