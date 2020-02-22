@@ -32,7 +32,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
         ]))
       ]),
       transition('* => void', [
-        animate('100ms ease-in', keyframes([
+        animate('80ms ease-in', keyframes([
           style({ opacity: 1, offset: 0 }),
           style({ opacity: 0, offset: 1.0 })
         ]))
