@@ -1,3 +1,18 @@
+.is-Yellow-border {
+  border: solid 5px #FFCC80;
+  color:#FFCC80;
+  background-color:#FFCC80;
+}
+
+.is-opacity {
+  opacity: 0.6;
+}
+
+.is-disabled {
+  display: none;
+}
+
+
 .is-grab {
   cursor: -moz-grab;
   cursor: -webkit-grab;

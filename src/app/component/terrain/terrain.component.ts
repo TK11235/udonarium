@@ -13,6 +13,9 @@ import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.s
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
+import { PeerCursor } from '@udonarium/peer-cursor';
+import {  Network } from '@udonarium/core/system';
+
 
 @Component({
   selector: 'terrain',
@@ -23,6 +26,14 @@ import { TabletopService } from 'service/tabletop.service';
 export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() terrain: Terrain = null;
   @Input() is3D: boolean = false;
+
+  //GM
+  get GM(): string { return this.terrain.GM; }
+  set GM(GM: string) { this.terrain.GM = GM; }
+  get isMine(): boolean { return this.terrain.isMine; }
+  get hasGM(): boolean { return this.terrain.hasGM; }
+  get GMName(): string { return this.terrain.GMName; }
+  get isDisabled(): boolean { return this.terrain.isDisabled; }
 
   get name(): string { return this.terrain.name; }
   get mode(): TerrainViewState { return this.terrain.mode; }
@@ -61,7 +72,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!this.terrain || !object) return;
-        if (this.terrain === object || (object instanceof ObjectNode && this.terrain.contains(object))) {
+        if (this.terrain === object || (object instanceof ObjectNode && this.terrain.contains(object))|| (object instanceof PeerCursor && object.peerId === this.terrain.GM)) {
           this.changeDetector.markForCheck();
         }
       })
@@ -70,6 +81,9 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
       })
       .on('UPDATE_FILE_RESOURE', -1000, event => {
         this.changeDetector.markForCheck();
+      }).on('DISCONNECT_PEER', event => {
+        //GM
+        if (this.terrain.GM === event.data.peer) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.terrain,
@@ -125,6 +139,19 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
           name: '固定', action: () => {
             this.isLocked = true;
             SoundEffect.play(PresetSound.lock);
+          }
+        }),
+      ContextMenuSeparator,
+      (!this.isMine
+        ? {
+          name: 'GM圖層-只供自己看見', action: () => {
+            this.GM = PeerCursor.myCursor.name;
+            SoundEffect.play(PresetSound.lock);
+          }
+        } : {
+          name: '回到普通圖層', action: () => {
+            this.GM = '';
+            SoundEffect.play(PresetSound.unlock);
           }
         }),
       ContextMenuSeparator,

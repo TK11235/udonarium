@@ -240,7 +240,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
             const prev = this.face;
             this.face = face;
             SoundEffect.play(PresetSound.dicePut);
-            let message = `變更骰子結果。`;
+            let message = `已變更骰子結果。`;
             if (!this.hasOwner) {
               message += `達成值:${prev}→${face}`;
             }
