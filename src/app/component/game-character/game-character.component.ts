@@ -146,6 +146,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       actions.push({
         name: 'GM圖層-只供自己看見', action: () => {
           this.GM = PeerCursor.myCursor.name;
+          this.gameCharacter.setLocation('table')
           SoundEffect.play(PresetSound.lock);
         }
       });
@@ -154,7 +155,8 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       actions.push({
         name: '回到普通圖層', action: () => {
           this.GM = '';
-          SoundEffect.play(PresetSound.lock);
+          this.gameCharacter.setLocation('table')
+          SoundEffect.play(PresetSound.unlock);
         }
       });
     }
