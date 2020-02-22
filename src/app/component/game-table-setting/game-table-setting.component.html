@@ -1,7 +1,7 @@
 <div class="flex-container">
   <div class="flex-item no-grow">
     <div>
-      <button (click)="createGameTable()">新增角色</button>
+      <button (click)="createGameTable()">新增桌面</button>
     </div>
     <select style="width: 10em;" size="10" (change)="selectGameTable($event.target.value)" [ngModel]="selectedTable?.identifier">
       <option *ngFor="let gameTable of getGameTables()" value="{{gameTable.identifier}}">{{gameTable.name}}</option>
