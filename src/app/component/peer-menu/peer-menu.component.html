@@ -5,7 +5,7 @@
     <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
   </div>
 
-  <span>你的名字： <input [(ngModel)]="myPeer.name" placeholder="暱稱" (change)="onChangeNickname()" (blur)="onBlurNickname()" /></span>
+  <span>你的名字： <input [(ngModel)]="myPeer.name" placeholder="暱稱" (change)="onChangeNickname(myPeer.name)" /></span>
 
 </div>
 <div>

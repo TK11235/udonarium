@@ -160,13 +160,15 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     return peerCursor ? peerCursor.name : '';
   }
 
-  onChangeNickname(): void {
-    this.isChangedNickname = true;
+  onChangeNickname(name: string) {
+    // this.isChangedNickname = true;
+    const value = name
+    localStorage.setItem('PeerName', value)
   }
 
   onBlurNickname(): void {
     if (this.isChangedNickname) {
-      EventSystem.call('CHANGE_NICKNAME', this.myPeer.name, this.myPeer.peerId);
+      //EventSystem.call('CHANGE_NICKNAME', this.myPeer.name, this.myPeer.peerId);
     }
   }
 }
