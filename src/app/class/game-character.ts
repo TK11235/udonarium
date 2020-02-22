@@ -19,9 +19,16 @@ export class GameCharacter extends TabletopObject {
     let object = PeerCursor.find(this.GM);
     return object ? object.name : '';
   }
-  get hasGM(): boolean { return PeerCursor.find(this.GM) != null; }
+  get hasGM(): boolean {
+    if (this.GM) return true
+    else return false
+  }
   get isMine(): boolean { return PeerCursor.myCursor.name === this.GM; }
-  get isDisabled(): boolean { return this.hasGM && !this.isMine; }
+  get isDisabled(): boolean {
+    console.log('hasGM', this.hasGM)
+    console.log('isMine', this.isMine)
+    return this.hasGM && !this.isMine;
+  }
 
   get chatPalette(): ChatPalette {
     for (let child of this.children) {
