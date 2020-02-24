@@ -1,4 +1,6 @@
 #charazip {
   color: #444444;
   white-space: pre-wrap;
+  height: 100%;
+  overflow-y: auto;
 }
