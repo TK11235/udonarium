@@ -1,0 +1,72 @@
+<div #modalLayer></div>
+<div class="deck-editor">
+  <h1>ユドナリウム用カードデッキエディター</h1>
+  ○製作者・不具合連絡先:
+  <a href="https://twitter.com/trpg_yoshi" target="_blank">
+    よっしー@trpg_yoshi
+  </a>
+  <details>
+    <summary>使い方（ここをクリック）</summary>
+    <ul>
+      <li>zipファイルや画像を画面にドラッグ＆ドロップすることで読み込み可能</li>
+      <li>
+        「空の山札」や「トランプ山札」、または読み込んだ山札を選択して編集
+      </li>
+      <li>
+        保存したzipファイルをユドナリウムにドラッグ＆ドロップ
+      </li>
+    </ul>
+  </details>
+  <hr />
+
+  <div class="flex-container">
+    <div class="flex-item no-grow">
+      <button (click)="createBlankDeck()">空の山札を作成</button>
+      <br />
+      <button (click)="createTrump()">トランプの山札を作成</button>
+      <br />
+      <select
+        style="width: 10em;"
+        size="5"
+        (change)="onChangeSelectStack($event.target.value)"
+        [ngModel]="selectedStack?.identifier"
+      >
+        <option
+          *ngFor="let cardStack of cardStacks"
+          value="{{ cardStack.identifier }}"
+          >{{ cardStack.name }}</option
+        >
+      </select>
+    </div>
+    <div class="flex-item">
+      山札名:
+      <input
+        [(ngModel)]="stackName"
+        placeholder="山札の名前"
+        [attr.disabled]="!isEditable ? '' : null"
+      />
+      <hr />
+      <ng-container *ngIf="isEditable">
+        <button (click)="save()">山札保存</button>
+        <button class="danger" (click)="delete()">
+          山札削除
+        </button>
+        <br />
+        <button (click)="faceUpAll()">すべて表にする</button>
+        <button (click)="faceDownAll()">すべて裏にする</button>
+      </ng-container>
+      <ng-container *ngIf="isDeleted">
+        <button (click)="restore()">元に戻す</button>
+      </ng-container>
+    </div>
+  </div>
+  <hr />
+
+  <app-card-editor
+    *ngFor="let card of selectedStack.cards; trackBy: trackByCard"
+    [card]="card"
+  ></app-card-editor>
+  <ng-container *ngIf="isEditable && selectedStack.isEmpty">
+    <button (click)="addCard()">カード追加</button>
+  </ng-container>
+</div>

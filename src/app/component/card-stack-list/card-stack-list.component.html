@@ -1,18 +1,34 @@
 <div>
   <button (click)="close(true)">シャッフルしてウィンドウを閉じる</button>
-  <hr/>
+  <hr />
   <div *ngFor="let card of cardStack.cards; trackBy: trackByCard" class="box">
     <div class="image-box" [appTooltip]="card">
-      <div class="image contain" [style.background-image]="'url(' + card?.frontImage?.url + ')' | safe: 'style' "></div>
-      <div class="image contain" [style.background-image]="'url(' + card?.backImage?.url + ')' | safe: 'style' "></div>
+      <div
+        class="image contain"
+        [style.background-image]="
+          'url(' + card?.frontImage?.url + ')' | safe: 'style'
+        "
+      ></div>
+      <div
+        class="image contain"
+        [style.background-image]="
+          'url(' + card?.backImage?.url + ')' | safe: 'style'
+        "
+      ></div>
     </div>
     <div style="display: inline-block;">
       <button type="submit" (click)="drawCard(card)">山札から出す</button>
-      <button (click)="showDetail(card)"><i class="material-icons" style="font-size: 1.1em; vertical-align: text-bottom;">settings</i>編集</button>
-      <br>
+      <button (click)="showDetail(card)">
+        <i
+          class="material-icons"
+          style="font-size: 1.1em; vertical-align: text-bottom;"
+          >settings</i
+        >編集
+      </button>
+      <br />
       <button (click)="up(card)">↑</button>
       <button (click)="down(card)">↓</button>
-      <br>
+      <br />
     </div>
   </div>
 </div>

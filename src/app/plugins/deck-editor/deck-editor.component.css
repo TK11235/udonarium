@@ -1,0 +1,48 @@
+.deck-editor {
+  color: #444444;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.flex-container {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+
+  -webkit-flex-flow: row wrap; /* Safari */
+  flex-flow: row wrap;
+
+  -webkit-justify-content: flex-start; /* Safari */
+  justify-content: flex-start;
+
+  -webkit-align-items: stretch; /* Safari */
+  align-items: stretch;
+
+  /*min-width: 250px;*/
+}
+
+.flex-item {
+  margin: 5px 0px;
+  padding: 10px;
+  -webkit-flex: 1 0 auto; /* Safari */
+  flex: 1 0 auto;
+  /*border: 1px solid #999;*/
+  box-sizing: border-box;
+  min-width: 25px;
+
+  color: #444;
+
+  /*
+  border-top: 1px solid #444;
+  border-bottom: 1px solid #444;
+  */
+
+  /*
+  background-color: rgba(70, 70, 70, 0.8);
+  color: #CCC;
+  */
+}
+
+.no-grow {
+  -webkit-flex-grow: 0; /* Safari */
+  flex-grow: 0;
+}

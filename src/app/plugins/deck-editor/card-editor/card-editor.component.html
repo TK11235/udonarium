@@ -1,0 +1,72 @@
+<div class="flex-container">
+  <div class="box" [appTooltip]="card">
+    <div
+      [ngClass]="{ image: true, contain: true, visible: isFront }"
+      [style.background-image]="
+        'url(' + card?.frontImage?.url + ')' | safe: 'style'
+      "
+      (click)="openModal('front')"
+    ></div>
+    <div
+      [ngClass]="{ image: true, contain: true, visible: !isFront }"
+      [style.background-image]="
+        'url(' + card?.backImage?.url + ')' | safe: 'style'
+      "
+      (click)="openModal('back')"
+    ></div>
+  </div>
+  <div style="display: inline-block;">
+    <button (click)="save()">保存</button>
+    <button class="danger" (click)="delete()">削除</button>
+    <br />
+    <button (click)="toggleEditMode()">編集切り替え</button>
+    <br />
+    <button (click)="clone()">コピーを作成</button>
+    <br />
+    <ng-container *ngIf="!isFront">
+      <button (click)="faceUp()">表にする</button>
+    </ng-container>
+    <ng-container *ngIf="isFront">
+      <button (click)="faceDown()">裏にする</button>
+    </ng-container>
+    <br />
+    <button (click)="up()">↑</button>
+    <button (click)="down()">↓</button>
+  </div>
+  <ng-container *ngIf="card.commonDataElement">
+    <div class="flex-item">
+      <div class="table">
+        <div
+          class="table-row"
+          game-data-element
+          [gameDataElement]="card.commonDataElement"
+          [isTagLocked]="true"
+        ></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="card.detailDataElement">
+    <div
+      class="flex-item"
+      *ngFor="let childElement of card.detailDataElement.children"
+    >
+      <div class="table">
+        <div
+          class="table-row"
+          game-data-element
+          [gameDataElement]="childElement"
+          [isEdit]="isEdit"
+        ></div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="isEdit">
+    <div class="flex-item">
+      <button style="width:100%; color: #555;" (click)="addDataElement()">
+        新しい項目を追加
+      </button>
+    </div>
+  </ng-container>
+</div>
+<hr />
