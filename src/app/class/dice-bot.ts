@@ -102,6 +102,7 @@ export class DiceBot extends GameObject {
     { script: 'DungeonsAndDoragons', game: 'ダンジョンズ＆ドラゴンズ' },
     { script: 'DiceOfTheDead', game: 'ダイス・オブ・ザ・デッド' },
     { script: 'DoubleCross', game: 'ダブルクロス2nd,3rd' },
+    { script: 'Paradiso', game: 'チェレステ色のパラディーゾ' },
     { script: 'CrashWorld', game: '墜落世界' },
     { script: 'StrangerOfSwordCity', game: '剣の街の異邦人TRPG' },
     { script: 'DetatokoSaga', game: 'でたとこサーガ' },
