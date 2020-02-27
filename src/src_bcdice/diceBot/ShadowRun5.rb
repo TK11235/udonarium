@@ -35,7 +35,7 @@ INFO_MESSAGE_TEXT
     m = /(\d+B6)@(\d+)/.match(command)
     b_dice = m[1]
     limit = m[2].to_i
-    output_before_limited, secret = bcdice.checkBDice(b_dice)
+    output_before_limited = bcdice.bdice(b_dice)
 
     m = /成功数(\d+)/.match(output_before_limited)
     output_after_limited = output_before_limited
@@ -55,5 +55,26 @@ INFO_MESSAGE_TEXT
     output = output.gsub('6>=5', "[6]Limit[#{limit}]>=5")
     debug(output)
     return output
+  end
+
+  # シャドウラン5版用グリッチ判定
+  def getGrichText(numberSpot1, dice_cnt_total, successCount)
+    debug("getGrichText numberSpot1", numberSpot1)
+    debug("dice_cnt_total", dice_cnt_total)
+    debug("successCount", successCount)
+
+    dice_cnt_total_half = dice_cnt_total.to_f / 2
+    debug("dice_cnt_total_half", dice_cnt_total_half)
+
+    unless numberSpot1 > dice_cnt_total_half
+      return ''
+    end
+
+    # グリッチ！
+    if successCount == 0
+      return ' ＞ クリティカルグリッチ'
+    end
+
+    return ' ＞ グリッチ'
   end
 end
