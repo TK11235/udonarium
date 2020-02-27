@@ -899,6 +899,12 @@ SwordWorld : KeyNo.20c[10]m[+1] ＞ 2D:[5,1]=7 ＞ 5
 rand:5/6,1/6
 ============================
 input:
+K10$+1
+output:
+SwordWorld : KeyNo.10c[10]m[+1] ＞ 2D:[1,1]=2 ＞ ** ＞ 自動的失敗
+rand:1/6,1/6
+============================
+input:
 K10+5$9
 output:
 SwordWorld : KeyNo.10c[10]m[9]+5 ＞ 2D:[6,2]=9 ＞ 5+5 ＞ 10
@@ -979,7 +985,7 @@ rand:1/6,6/6,2/6,2/6
 input:
 k10-5@9$+2
 output:
-SwordWorld : KeyNo.10c[9]m[+2]-5 ＞ 2D:[1,1]=4 ＞ 1-5 ＞ -4
+SwordWorld : KeyNo.10c[9]m[+2]-5 ＞ 2D:[1,1]=2 ＞ ** ＞ 自動的失敗
 rand:1/6,1/6
 ============================
 input:

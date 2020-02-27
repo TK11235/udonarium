@@ -23,12 +23,12 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$last_match', '$>=', '$<=', '$!=', '$==', '$rating', '$getRatingCommandStrings', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$to_s', '$loop', '$rollDice', '$getAdditionalDiceValue', '$min', '$*', '$[]', '$<<', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$sendMode', '$join', '$getAddText', '$===']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$debug', '$gsub', '$last_match', '$>=', '$<=', '$!=', '$==', '$rating', '$getRatingCommandStrings', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$to_s', '$loop', '$rollDice', '$<<', '$getAdditionalDiceValue', '$min', '$*', '$[]', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$sendMode', '$join', '$getAddText', '$===']);
   return (function($base, $super, $parent_nesting) {
     function $SwordWorld(){};
     var self = $SwordWorld = $klass($base, $super, 'SwordWorld', $SwordWorld);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_SwordWorld_initialize_1, TMP_SwordWorld_gameName_2, TMP_SwordWorld_gameType_3, TMP_SwordWorld_getHelpMessage_4, TMP_SwordWorld_getHelpMessage_5, TMP_SwordWorld_changeText_10, TMP_SwordWorld_getRatingCommandStrings_11, TMP_SwordWorld_check_2D6_12, TMP_SwordWorld_rollDiceCommand_13, TMP_SwordWorld_rating_15, TMP_SwordWorld_getAdditionalString_16, TMP_SwordWorld_getAdditionalDiceValue_17, TMP_SwordWorld_getCriticalFromString_18, TMP_SwordWorld_getDiceChangesFromString_19, TMP_SwordWorld_getRateUpFromString_20, TMP_SwordWorld_getKeyAndAddValueFromString_21, TMP_SwordWorld_getSW2_0_RatingTable_22, TMP_SwordWorld_getNewRates_24, TMP_SwordWorld_rollDice_25, TMP_SwordWorld_getResultText_26, TMP_SwordWorld_getAddText_27, TMP_SwordWorld_setRatingTable_28;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_SwordWorld_initialize_1, TMP_SwordWorld_gameName_2, TMP_SwordWorld_gameType_3, TMP_SwordWorld_getHelpMessage_4, TMP_SwordWorld_changeText_9, TMP_SwordWorld_getRatingCommandStrings_10, TMP_SwordWorld_check_2D6_11, TMP_SwordWorld_rollDiceCommand_12, TMP_SwordWorld_rating_14, TMP_SwordWorld_getAdditionalString_15, TMP_SwordWorld_getAdditionalDiceValue_16, TMP_SwordWorld_getCriticalFromString_17, TMP_SwordWorld_getDiceChangesFromString_18, TMP_SwordWorld_getRateUpFromString_19, TMP_SwordWorld_getKeyAndAddValueFromString_20, TMP_SwordWorld_getSW2_0_RatingTable_21, TMP_SwordWorld_getNewRates_23, TMP_SwordWorld_rollDice_24, TMP_SwordWorld_getResultText_25, TMP_SwordWorld_getAddText_26, TMP_SwordWorld_setRatingTable_27;
 
     def.rating_table = nil;
     
@@ -59,17 +59,11 @@
     Opal.defn(self, '$getHelpMessage', TMP_SwordWorld_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "自動的成功、成功、失敗、自動的失敗の自動判定を行います。\n" + "\n" + "・レーティング表　(Kx)\n" + "　\"Kキーナンバー+ボーナス\"の形で記入します。\n" + "　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。\n" + "　また、ボーナスは複数取ることが出来ます。\n" + "　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2\n" + "\n" + "・クリティカル値の設定\n" + "　クリティカル値は\"[クリティカル値]\"で指定します。\n" + "　指定しない場合はクリティカル値10とします。\n" + "　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)\n" + "　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。\n" + "　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9\n"
+      return "・SW　レーティング表　　　　　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)"
     }, TMP_SwordWorld_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$getHelpMessage', TMP_SwordWorld_getHelpMessage_5 = function $$getHelpMessage() {
-      var self = this;
-
-      return "・SW　レーティング表　　　　　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)"
-    }, TMP_SwordWorld_getHelpMessage_5.$$arity = 0);
-    
-    Opal.defn(self, '$changeText', TMP_SwordWorld_changeText_10 = function $$changeText(string) {
-      var TMP_6, TMP_7, TMP_8, TMP_9, self = this;
+    Opal.defn(self, '$changeText', TMP_SwordWorld_changeText_9 = function $$changeText(string) {
+      var TMP_5, TMP_6, TMP_7, TMP_8, self = this;
 
       
       if ($truthy(/(^|\s)[sS]?(K[\d]+)/i['$=~'](string))) {
@@ -77,29 +71,29 @@
         return string
       };
       self.$debug("parren_killer_add before string", string);
-      string = $send(string, 'gsub', [/\[(\d+)\]/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
+      string = $send(string, 'gsub', [/\[(\d+)\]/i], (TMP_5 = function(){var self = TMP_5.$$s || this;
+
+      return "" + "c[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_5.$$s = self, TMP_5.$$arity = 0, TMP_5));
+      string = $send(string, 'gsub', [/\@(\d+)/i], (TMP_6 = function(){var self = TMP_6.$$s || this;
 
       return "" + "c[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_6.$$s = self, TMP_6.$$arity = 0, TMP_6));
-      string = $send(string, 'gsub', [/\@(\d+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
+      string = $send(string, 'gsub', [/\$([\+\-]?[\d]+)/i], (TMP_7 = function(){var self = TMP_7.$$s || this;
 
-      return "" + "c[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
-      string = $send(string, 'gsub', [/\$([\+\-]?[\d]+)/i], (TMP_8 = function(){var self = TMP_8.$$s || this;
+      return "" + "m[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_7.$$s = self, TMP_7.$$arity = 0, TMP_7));
+      string = $send(string, 'gsub', [/r([\+\-]?[\d]+)/i], (TMP_8 = function(){var self = TMP_8.$$s || this;
 
-      return "" + "m[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
-      string = $send(string, 'gsub', [/r([\+\-]?[\d]+)/i], (TMP_9 = function(){var self = TMP_9.$$s || this;
-
-      return "" + "r[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9));
+      return "" + "r[" + (Opal.const_get_relative($nesting, 'Regexp').$last_match(1)) + "]"}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
       self.$debug("parren_killer_add after string", string);
       return string;
-    }, TMP_SwordWorld_changeText_10.$$arity = 1);
+    }, TMP_SwordWorld_changeText_9.$$arity = 1);
     
-    Opal.defn(self, '$getRatingCommandStrings', TMP_SwordWorld_getRatingCommandStrings_11 = function $$getRatingCommandStrings() {
+    Opal.defn(self, '$getRatingCommandStrings', TMP_SwordWorld_getRatingCommandStrings_10 = function $$getRatingCommandStrings() {
       var self = this;
 
       return "cmCM"
-    }, TMP_SwordWorld_getRatingCommandStrings_11.$$arity = 0);
+    }, TMP_SwordWorld_getRatingCommandStrings_10.$$arity = 0);
     
-    Opal.defn(self, '$check_2D6', TMP_SwordWorld_check_2D6_12 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
+    Opal.defn(self, '$check_2D6', TMP_SwordWorld_check_2D6_11 = function $$check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var self = this;
 
       
@@ -114,16 +108,16 @@
       if ($truthy($rb_ge(totalValue, diff))) {
         return " ＞ 成功"};
       return " ＞ 失敗";
-    }, TMP_SwordWorld_check_2D6_12.$$arity = 8);
+    }, TMP_SwordWorld_check_2D6_11.$$arity = 8);
     
-    Opal.defn(self, '$rollDiceCommand', TMP_SwordWorld_rollDiceCommand_13 = function $$rollDiceCommand(command) {
+    Opal.defn(self, '$rollDiceCommand', TMP_SwordWorld_rollDiceCommand_12 = function $$rollDiceCommand(command) {
       var self = this;
 
       return self.$rating(command)
-    }, TMP_SwordWorld_rollDiceCommand_13.$$arity = 1);
+    }, TMP_SwordWorld_rollDiceCommand_12.$$arity = 1);
     
-    Opal.defn(self, '$rating', TMP_SwordWorld_rating_15 = function $$rating(string) {
-      var $a, $b, TMP_14, self = this, commands = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
+    Opal.defn(self, '$rating', TMP_SwordWorld_rating_14 = function $$rating(string) {
+      var $a, $b, TMP_13, self = this, commands = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
       if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       
@@ -176,18 +170,27 @@
       diceOnlyTotal = 0;
       totalValue = 0;
       round = 0;
-      (function(){var $brk = Opal.new_brk(); try {return $send(self, 'loop', [], (TMP_14 = function(){var self = TMP_14.$$s || this, $c, $d, diceText = nil, currentKey = nil, rateValue = nil;
+      (function(){var $brk = Opal.new_brk(); try {return $send(self, 'loop', [], (TMP_13 = function(){var self = TMP_13.$$s || this, $c, $d, dice_raw = nil, diceText = nil, currentKey = nil, rateValue = nil;
 
       
-        $d = self.$rollDice(values), $c = Opal.to_ary($d), (dice = ($c[0] == null ? nil : $c[0])), (diceText = ($c[1] == null ? nil : $c[1])), $d;
+        $d = self.$rollDice(values), $c = Opal.to_ary($d), (dice_raw = ($c[0] == null ? nil : $c[0])), (diceText = ($c[1] == null ? nil : $c[1])), $d;
+        dice = dice_raw;
         if ($truthy(firstDiceChanteTo['$!='](0))) {
           
-          dice = firstDiceChanteTo;
+          dice = (dice_raw = firstDiceChanteTo);
           firstDiceChanteTo = 0;
         } else if ($truthy(firstDiceChangeModify['$!='](0))) {
           
           dice = $rb_plus(dice, firstDiceChangeModify.$to_i());
           firstDiceChangeModify = 0;};
+        if ($truthy($rb_le(dice_raw, 2))) {
+          
+          diceResultTotals['$<<'](dice_raw.$to_s());
+          diceResults['$<<'](diceText.$to_s());
+          rateResults['$<<']("**");
+          round = $rb_plus(round, 1);
+          
+          Opal.brk(nil, $brk);};
         dice = $rb_plus(dice, self.$getAdditionalDiceValue(dice, values));
         if ($truthy($rb_lt(dice, 2))) {
           dice = 2};
@@ -212,28 +215,28 @@
           } else {
           
           Opal.brk(nil, $brk)
-        };}, TMP_14.$$s = self, TMP_14.$$brk = $brk, TMP_14.$$arity = 0, TMP_14))
+        };}, TMP_13.$$s = self, TMP_13.$$brk = $brk, TMP_13.$$arity = 0, TMP_13))
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       limitLength = $rb_minus($gvars.SEND_STR_MAX, output.$length());
       output = $rb_plus(output, self.$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, crit, limitLength));
       return output;
-    }, TMP_SwordWorld_rating_15.$$arity = 1);
+    }, TMP_SwordWorld_rating_14.$$arity = 1);
     
-    Opal.defn(self, '$getAdditionalString', TMP_SwordWorld_getAdditionalString_16 = function $$getAdditionalString(_string, output) {
+    Opal.defn(self, '$getAdditionalString', TMP_SwordWorld_getAdditionalString_15 = function $$getAdditionalString(_string, output) {
       var self = this, values = nil;
 
       
       values = $hash2([], {});
       return [output, values];
-    }, TMP_SwordWorld_getAdditionalString_16.$$arity = 2);
+    }, TMP_SwordWorld_getAdditionalString_15.$$arity = 2);
     
-    Opal.defn(self, '$getAdditionalDiceValue', TMP_SwordWorld_getAdditionalDiceValue_17 = function $$getAdditionalDiceValue(_dice, _values) {
+    Opal.defn(self, '$getAdditionalDiceValue', TMP_SwordWorld_getAdditionalDiceValue_16 = function $$getAdditionalDiceValue(_dice, _values) {
       var self = this;
 
       return 0
-    }, TMP_SwordWorld_getAdditionalDiceValue_17.$$arity = 2);
+    }, TMP_SwordWorld_getAdditionalDiceValue_16.$$arity = 2);
     
-    Opal.defn(self, '$getCriticalFromString', TMP_SwordWorld_getCriticalFromString_18 = function $$getCriticalFromString(string) {
+    Opal.defn(self, '$getCriticalFromString', TMP_SwordWorld_getCriticalFromString_17 = function $$getCriticalFromString(string) {
       var self = this, crit = nil, regexp = nil;
 
       
@@ -246,9 +249,9 @@
           crit = 3};
         string = string.$gsub(regexp, "");};
       return [crit, string];
-    }, TMP_SwordWorld_getCriticalFromString_18.$$arity = 1);
+    }, TMP_SwordWorld_getCriticalFromString_17.$$arity = 1);
     
-    Opal.defn(self, '$getDiceChangesFromString', TMP_SwordWorld_getDiceChangesFromString_19 = function $$getDiceChangesFromString(string) {
+    Opal.defn(self, '$getDiceChangesFromString', TMP_SwordWorld_getDiceChangesFromString_18 = function $$getDiceChangesFromString(string) {
       var self = this, firstDiceChanteTo = nil, firstDiceChangeModify = nil, regexp = nil;
 
       
@@ -266,17 +269,17 @@
         };
         string = string.$gsub(regexp, "");};
       return [firstDiceChanteTo, firstDiceChangeModify, string];
-    }, TMP_SwordWorld_getDiceChangesFromString_19.$$arity = 1);
+    }, TMP_SwordWorld_getDiceChangesFromString_18.$$arity = 1);
     
-    Opal.defn(self, '$getRateUpFromString', TMP_SwordWorld_getRateUpFromString_20 = function $$getRateUpFromString(string) {
+    Opal.defn(self, '$getRateUpFromString', TMP_SwordWorld_getRateUpFromString_19 = function $$getRateUpFromString(string) {
       var self = this, rateUp = nil;
 
       
       rateUp = 0;
       return [rateUp, string];
-    }, TMP_SwordWorld_getRateUpFromString_20.$$arity = 1);
+    }, TMP_SwordWorld_getRateUpFromString_19.$$arity = 1);
     
-    Opal.defn(self, '$getKeyAndAddValueFromString', TMP_SwordWorld_getKeyAndAddValueFromString_21 = function $$getKeyAndAddValueFromString(string) {
+    Opal.defn(self, '$getKeyAndAddValueFromString', TMP_SwordWorld_getKeyAndAddValueFromString_20 = function $$getKeyAndAddValueFromString(string) {
       var self = this, key = nil, addValue = nil;
 
       
@@ -291,18 +294,18 @@
         key = string
       };
       return [key, addValue];
-    }, TMP_SwordWorld_getKeyAndAddValueFromString_21.$$arity = 1);
+    }, TMP_SwordWorld_getKeyAndAddValueFromString_20.$$arity = 1);
     
-    Opal.defn(self, '$getSW2_0_RatingTable', TMP_SwordWorld_getSW2_0_RatingTable_22 = function $$getSW2_0_RatingTable() {
+    Opal.defn(self, '$getSW2_0_RatingTable', TMP_SwordWorld_getSW2_0_RatingTable_21 = function $$getSW2_0_RatingTable() {
       var self = this, rate_sw2_0 = nil;
 
       
       rate_sw2_0 = ["*,0,0,0,1,2,2,3,3,4,4", "*,0,0,0,1,2,3,3,3,4,4", "*,0,0,0,1,2,3,4,4,4,4", "*,0,0,1,1,2,3,4,4,4,5", "*,0,0,1,2,2,3,4,4,5,5", "*,0,1,1,2,2,3,4,5,5,5", "*,0,1,1,2,3,3,4,5,5,5", "*,0,1,1,2,3,4,4,5,5,6", "*,0,1,2,2,3,4,4,5,6,6", "*,0,1,2,3,3,4,4,5,6,7", "*,1,1,2,3,3,4,5,5,6,7", "*,1,2,2,3,3,4,5,6,6,7", "*,1,2,2,3,4,4,5,6,6,7", "*,1,2,3,3,4,4,5,6,7,7", "*,1,2,3,4,4,4,5,6,7,8", "*,1,2,3,4,4,5,5,6,7,8", "*,1,2,3,4,4,5,6,7,7,8", "*,1,2,3,4,5,5,6,7,7,8", "*,1,2,3,4,5,6,6,7,7,8", "*,1,2,3,4,5,6,7,7,8,9", "*,1,2,3,4,5,6,7,8,9,10", "*,1,2,3,4,6,6,7,8,9,10", "*,1,2,3,5,6,6,7,8,9,10", "*,2,2,3,5,6,7,7,8,9,10", "*,2,3,4,5,6,7,7,8,9,10", "*,2,3,4,5,6,7,8,8,9,10", "*,2,3,4,5,6,8,8,9,9,10", "*,2,3,4,6,6,8,8,9,9,10", "*,2,3,4,6,6,8,9,9,10,10", "*,2,3,4,6,7,8,9,9,10,10", "*,2,4,4,6,7,8,9,10,10,10", "*,2,4,5,6,7,8,9,10,10,11", "*,3,4,5,6,7,8,10,10,10,11", "*,3,4,5,6,8,8,10,10,10,11", "*,3,4,5,6,8,9,10,10,11,11", "*,3,4,5,7,8,9,10,10,11,12", "*,3,5,5,7,8,9,10,11,11,12", "*,3,5,6,7,8,9,10,11,12,12", "*,3,5,6,7,8,10,10,11,12,13", "*,4,5,6,7,8,10,11,11,12,13", "*,4,5,6,7,9,10,11,11,12,13", "*,4,6,6,7,9,10,11,12,12,13", "*,4,6,7,7,9,10,11,12,13,13", "*,4,6,7,8,9,10,11,12,13,14", "*,4,6,7,8,10,10,11,12,13,14", "*,4,6,7,9,10,10,11,12,13,14", "*,4,6,7,9,10,10,12,13,13,14", "*,4,6,7,9,10,11,12,13,13,15", "*,4,6,7,9,10,12,12,13,13,15", "*,4,6,7,10,10,12,12,13,14,15", "*,4,6,8,10,10,12,12,13,15,15", "*,5,7,8,10,10,12,12,13,15,15", "*,5,7,8,10,11,12,12,13,15,15", "*,5,7,9,10,11,12,12,14,15,15", "*,5,7,9,10,11,12,13,14,15,16", "*,5,7,10,10,11,12,13,14,16,16", "*,5,8,10,10,11,12,13,15,16,16", "*,5,8,10,11,11,12,13,15,16,17", "*,5,8,10,11,12,12,13,15,16,17", "*,5,9,10,11,12,12,14,15,16,17", "*,5,9,10,11,12,13,14,15,16,18", "*,5,9,10,11,12,13,14,16,17,18", "*,5,9,10,11,13,13,14,16,17,18", "*,5,9,10,11,13,13,15,17,17,18", "*,5,9,10,11,13,14,15,17,17,18", "*,5,9,10,12,13,14,15,17,18,18", "*,5,9,10,12,13,15,15,17,18,19", "*,5,9,10,12,13,15,16,17,19,19", "*,5,9,10,12,14,15,16,17,19,19", "*,5,9,10,12,14,16,16,17,19,19", "*,5,9,10,12,14,16,17,18,19,19", "*,5,9,10,13,14,16,17,18,19,20", "*,5,9,10,13,15,16,17,18,19,20", "*,5,9,10,13,15,16,17,19,20,21", "*,6,9,10,13,15,16,18,19,20,21", "*,6,9,10,13,16,16,18,19,20,21", "*,6,9,10,13,16,17,18,19,20,21", "*,6,9,10,13,16,17,18,20,21,22", "*,6,9,10,13,16,17,19,20,22,23", "*,6,9,10,13,16,18,19,20,22,23", "*,6,9,10,13,16,18,20,21,22,23", "*,6,9,10,13,17,18,20,21,22,23", "*,6,9,10,14,17,18,20,21,22,24", "*,6,9,11,14,17,18,20,21,23,24", "*,6,9,11,14,17,19,20,21,23,24", "*,6,9,11,14,17,19,21,22,23,24", "*,7,10,11,14,17,19,21,22,23,25", "*,7,10,12,14,17,19,21,22,24,25", "*,7,10,12,14,18,19,21,22,24,25", "*,7,10,12,15,18,19,21,22,24,26", "*,7,10,12,15,18,19,21,23,25,26", "*,7,11,13,15,18,19,21,23,25,26", "*,7,11,13,15,18,20,21,23,25,27", "*,8,11,13,15,18,20,22,23,25,27", "*,8,11,13,16,18,20,22,23,25,28", "*,8,11,14,16,18,20,22,23,26,28", "*,8,11,14,16,19,20,22,23,26,28", "*,8,12,14,16,19,20,22,24,26,28", "*,8,12,15,16,19,20,22,24,27,28", "*,8,12,15,17,19,20,22,24,27,29", "*,8,12,15,18,19,20,22,24,27,30"];
       return rate_sw2_0;
-    }, TMP_SwordWorld_getSW2_0_RatingTable_22.$$arity = 0);
+    }, TMP_SwordWorld_getSW2_0_RatingTable_21.$$arity = 0);
     
-    Opal.defn(self, '$getNewRates', TMP_SwordWorld_getNewRates_24 = function $$getNewRates(rate_sw2_0) {
-      var TMP_23, self = this, rate_3 = nil, rate_4 = nil, rate_5 = nil, rate_6 = nil, rate_7 = nil, rate_8 = nil, rate_9 = nil, rate_10 = nil, rate_11 = nil, rate_12 = nil, zeroArray = nil, $writer = nil, newRates = nil;
+    Opal.defn(self, '$getNewRates', TMP_SwordWorld_getNewRates_23 = function $$getNewRates(rate_sw2_0) {
+      var TMP_22, self = this, rate_3 = nil, rate_4 = nil, rate_5 = nil, rate_6 = nil, rate_7 = nil, rate_8 = nil, rate_9 = nil, rate_10 = nil, rate_11 = nil, rate_12 = nil, zeroArray = nil, $writer = nil, newRates = nil;
 
       
       rate_3 = [];
@@ -316,7 +319,7 @@
       rate_11 = [];
       rate_12 = [];
       zeroArray = [];
-      $send(rate_sw2_0, 'each', [], (TMP_23 = function(rateText){var self = TMP_23.$$s || this, rate_arr = nil;
+      $send(rate_sw2_0, 'each', [], (TMP_22 = function(rateText){var self = TMP_22.$$s || this, rate_arr = nil;
 if (rateText == null) rateText = nil;
       
         rate_arr = rateText.$split(/,/);
@@ -330,7 +333,7 @@ if (rateText == null) rateText = nil;
         rate_9.$push(rate_arr['$[]'](7).$to_i());
         rate_10.$push(rate_arr['$[]'](8).$to_i());
         rate_11.$push(rate_arr['$[]'](9).$to_i());
-        return rate_12.$push(rate_arr['$[]'](10).$to_i());}, TMP_23.$$s = self, TMP_23.$$arity = 1, TMP_23));
+        return rate_12.$push(rate_arr['$[]'](10).$to_i());}, TMP_22.$$s = self, TMP_22.$$arity = 1, TMP_22));
       if (self.rating_table['$=='](1)) {
         
         $writer = [31, (($writer = [32, (($writer = [33, 10]), $send(rate_12, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)])]), $send(rate_12, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)])];
@@ -338,17 +341,17 @@ if (rateText == null) rateText = nil;
         $writer[$rb_minus($writer["length"], 1)];};
       newRates = [zeroArray, zeroArray, zeroArray, rate_3, rate_4, rate_5, rate_6, rate_7, rate_8, rate_9, rate_10, rate_11, rate_12];
       return newRates;
-    }, TMP_SwordWorld_getNewRates_24.$$arity = 1);
+    }, TMP_SwordWorld_getNewRates_23.$$arity = 1);
     
-    Opal.defn(self, '$rollDice', TMP_SwordWorld_rollDice_25 = function $$rollDice(_values) {
+    Opal.defn(self, '$rollDice', TMP_SwordWorld_rollDice_24 = function $$rollDice(_values) {
       var $a, $b, self = this, dice = nil, diceText = nil;
 
       
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       return [dice, diceText];
-    }, TMP_SwordWorld_rollDice_25.$$arity = 1);
+    }, TMP_SwordWorld_rollDice_24.$$arity = 1);
     
-    Opal.defn(self, '$getResultText', TMP_SwordWorld_getResultText_26 = function $$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, _crit, limitLength) {
+    Opal.defn(self, '$getResultText', TMP_SwordWorld_getResultText_25 = function $$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, _crit, limitLength) {
       var self = this, output = nil, totalText = nil, rateResultsText = nil, addText = nil, roundText = nil;
 
       
@@ -378,9 +381,9 @@ if (rateText == null) rateText = nil;
       if ($truthy($rb_gt(output.$length(), limitLength))) {
         output = "" + "... ＞ " + (roundText) + (totalText)};
       return output;
-    }, TMP_SwordWorld_getResultText_26.$$arity = 9);
+    }, TMP_SwordWorld_getResultText_25.$$arity = 9);
     
-    Opal.defn(self, '$getAddText', TMP_SwordWorld_getAddText_27 = function $$getAddText(addValue) {
+    Opal.defn(self, '$getAddText', TMP_SwordWorld_getAddText_26 = function $$getAddText(addValue) {
       var self = this, addText = nil, operator = nil;
 
       
@@ -394,8 +397,8 @@ if (rateText == null) rateText = nil;
       }; return nil; })();
       addText = $rb_plus(addText, "" + (operator) + (addValue));
       return addText;
-    }, TMP_SwordWorld_getAddText_27.$$arity = 1);
-    return (Opal.defn(self, '$setRatingTable', TMP_SwordWorld_setRatingTable_28 = function $$setRatingTable(tnick) {
+    }, TMP_SwordWorld_getAddText_26.$$arity = 1);
+    return (Opal.defn(self, '$setRatingTable', TMP_SwordWorld_setRatingTable_27 = function $$setRatingTable(tnick) {
       var self = this, mode_str = nil, pre_mode = nil, $case = nil;
 
       
@@ -432,7 +435,7 @@ if (rateText == null) rateText = nil;
       if (self.rating_table['$=='](pre_mode)) {
         return "1"};
       return "" + "RatingTableを" + (mode_str) + "に変更しました";
-    }, TMP_SwordWorld_setRatingTable_28.$$arity = 1), nil) && 'setRatingTable';
+    }, TMP_SwordWorld_setRatingTable_27.$$arity = 1), nil) && 'setRatingTable';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

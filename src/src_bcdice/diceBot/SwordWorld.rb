@@ -18,26 +18,6 @@ class SwordWorld < DiceBot
   end
 
   def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-自動的成功、成功、失敗、自動的失敗の自動判定を行います。
-
-・レーティング表　(Kx)
-　"Kキーナンバー+ボーナス"の形で記入します。
-　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。
-　また、ボーナスは複数取ることが出来ます。
-　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。
-　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2
-
-・クリティカル値の設定
-　クリティカル値は"[クリティカル値]"で指定します。
-　指定しない場合はクリティカル値10とします。
-　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)
-　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。
-　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9
-INFO_MESSAGE_TEXT
-  end
-
-  def getHelpMessage
     '・SW　レーティング表　　　　　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)'
   end
 
@@ -142,14 +122,25 @@ INFO_MESSAGE_TEXT
     round = 0
 
     loop do
-      dice, diceText = rollDice(values)
+      dice_raw, diceText = rollDice(values)
+      dice = dice_raw
 
       if  firstDiceChanteTo != 0
-        dice = firstDiceChanteTo
+        dice = dice_raw = firstDiceChanteTo
         firstDiceChanteTo = 0
       elsif  firstDiceChangeModify != 0
         dice += firstDiceChangeModify.to_i
         firstDiceChangeModify = 0
+      end
+
+      # 出目がピンゾロの時にはそこで終了
+      if dice_raw <= 2
+        diceResultTotals << dice_raw.to_s
+        diceResults << diceText.to_s
+        rateResults << "**"
+
+        round += 1
+        break
       end
 
       dice += getAdditionalDiceValue(dice, values)
