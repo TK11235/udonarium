@@ -74,7 +74,7 @@ MESSAGETEXT
     rollCount = rapid
 
     while rollCount > 0
-      dice, diceText = roll(rollCount, 6, @sortType)
+      _dice, diceText = roll(rollCount, 6, @sortType)
       diceArray = diceText.split(/,/).collect { |i| i.to_i }
 
       successCount = 0

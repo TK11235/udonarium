@@ -25,7 +25,7 @@ class DetatokoSaga_Korean < DiceBot
   end
 
   def getHelpMessage
-    info = <<INFO_MESSAGE_TEXT
+    return <<INFO_MESSAGE_TEXT
 ・통상판정　xDS or xDSy or xDS>=z or xDSy>=z
 　(x＝스킬레벨, y＝현재 플래그(생략=0), z＝목표치(생략=８))
 　예）3DS　2DS5　0DS　3DS>=10　3DS7>=12
@@ -155,7 +155,8 @@ INFO_MESSAGE_TEXT
   end
 
   def getModifyText(operator, value)
-    return "" if( value == 0) # TKfix
+    return '' if value == 0
+
     operatorText =
       case operator
       when "+"

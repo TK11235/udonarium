@@ -76,7 +76,7 @@ MESSAGETEXT
     target = 1 if target < 1
     target = 10 if target > 10
 
-    dice, diceText = roll(diceCount, 10, @sortType)
+    _dice, diceText = roll(diceCount, 10, @sortType)
     diceArray = diceText.split(/,/).collect { |i| i.to_i }
 
     successCount = diceArray.find_all { |i| (i <= target) }.size

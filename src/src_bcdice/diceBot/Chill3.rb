@@ -10,7 +10,7 @@ class Chill3 < DiceBot
   end
 
   def getHelpMessage
-    info = <<INFO_MESSAGE_TEXT
+    return <<INFO_MESSAGE_TEXT
 ・1D100で判定時に成否、Botchを判定
 　例）1D100<=50
 　　　Chill3 : (1D100<=50) ＞ 55 ＞ Botch

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class DarkSouls < DiceBot
-  setPrefixes(['(\d+)?(A)?DS([\+\-\d+]*)(\@\d+)?'])
+  setPrefixes(['(\d+)?(A)?DS([-+\d]*)(@\d+)?'])
 
   def initialize
     super
@@ -30,7 +30,7 @@ MESSAGETEXT
   end
 
   def rollDiceCommand(command)
-    return nil unless (m = /(\d+)?(A)?DS([\+\-\d+]*)(\@(\d+))?$/i.match(command.upcase))
+    return nil unless (m = /(\d+)?(A)?DS([-+\d]*)(@(\d+))?$/i.match(command.upcase))
 
     diceCount = (m[1] || 2).to_i
     isActive = !m[2].nil?

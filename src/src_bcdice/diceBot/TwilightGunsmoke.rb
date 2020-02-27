@@ -113,9 +113,6 @@ INFO_MESSAGE_TEXT
     when /EDC/i
       type = "エンディングチャート：シネマティック"
       output, total_n = tgs_ending_cinema_table()
-    when /OPR/i
-      type = "オープニングチャート：リアリスティック"
-      output, total_n = tgs_opening_real_table()
     when /RWL/i
       type = "情報収集チャート：荒野"
       output, total_n = tgs_reserch_wasteland_table()

@@ -101,7 +101,7 @@ INFO_MESSAGE_TEXT
 
     total_n = n_max + mod
 
-    output = "#{@nick_t}: (#{string}) ＞ [#{dice_str}]"
+    output = "#{@nick_e}: (#{string}) ＞ [#{dice_str}]"
     if mod < 0
       output += mod.to_s
     elsif mod > 0

@@ -329,11 +329,11 @@ INFO_MESSAGE_TEXT
   def getTorgBonusOutputTextWhenModDefined(value, resultValue, mod)
     debug('getTorgBonusOutputTextWhenModDefined value, mod', value, mod)
     if mod > 0
-      output = "#{resultValue}[#{value}]+#{mod} ＞ #{resultValue + mod}"
+      return "#{resultValue}[#{value}]+#{mod} ＞ #{resultValue + mod}"
     else
       debug('resultValue', resultValue)
       debug('mod', mod)
-      output = "#{resultValue}[#{value}]#{mod} ＞ #{resultValue + mod}"
+      return "#{resultValue}[#{value}]#{mod} ＞ #{resultValue + mod}"
     end
   end
 

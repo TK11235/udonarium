@@ -153,8 +153,8 @@ MESSAGETEXT
     base = getValue(base)
     modify = getValue(modify)
 
-    dice1, dummy = roll(1, 6)
-    dice2, dummy = roll(1, 6)
+    dice1, = roll(1, 6)
+    dice2, = roll(1, 6)
 
     diceTotal = dice1 + dice2
     addTotal = base + modify
@@ -241,8 +241,8 @@ MESSAGETEXT
   end
 
   def getDateBothResult(type, pc1, pc2)
-    dice1, dummy = roll(1, 6)
-    dice2, dummy = roll(1, 6)
+    dice1, = roll(1, 6)
+    dice2, = roll(1, 6)
 
     result = "#{pc1}[#{dice1}],#{pc2}[#{dice2}] ＞ "
 

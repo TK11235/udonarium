@@ -76,7 +76,7 @@ MESSAGETEXT
       rollCount = diceCount
     end
 
-    dice, diceText = roll(rollCount, 10, @sortTye)
+    _dice, diceText = roll(rollCount, 10, @sortType)
     diceText2 = diceText.gsub('10', '0')
     diceArray = diceText2.split(/,/).collect { |i| i.to_i }
     diceArray.map! { |i| i - correction }
@@ -130,7 +130,7 @@ MESSAGETEXT
       rollCount = diceCount
     end
 
-    dice, diceText = roll(rollCount, 10, @sortTye)
+    _dice, diceText = roll(rollCount, 10, @sortType)
     diceText2 = diceText.gsub('10', '0')
     diceArray = (diceText2.split(/,/).collect { |i| i.to_i }).sort
     criticalCount = diceArray.count(0)

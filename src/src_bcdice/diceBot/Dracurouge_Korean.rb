@@ -77,7 +77,7 @@ MESSAGETEXT
   end
 
   def rollDiceList(diceCount)
-    dice, str = roll(diceCount, 6)
+    _dice, str = roll(diceCount, 6)
     diceList = str.split(/,/).collect { |i| i.to_i }.sort
 
     return diceList
@@ -125,7 +125,7 @@ MESSAGETEXT
 
     diceList = rollDiceList(diceCount)
 
-    result = "(#{command}) ＞ #{diceCount}D6 ＞ [ #{diceList.join(', ')} ]"
+    return "(#{command}) ＞ #{diceCount}D6 ＞ [ #{diceList.join(', ')} ]"
   end
 
   def getReactionResult(command)

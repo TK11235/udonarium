@@ -40,10 +40,9 @@ MESSAGETEXT
   def rollDiceCommand(command) # スパゲッティなコードだけど許して！！！ → 絶対に許さない。全力でリファクタリングした。
     debug("rollDiceCommand command", command)
 
-    string = command.upcase
     if /TRNAME/ =~ command
-      firstName, total_n = get_NAME_table
-      secondName, total_o =  get_NAMEtwo_table
+      firstName, = get_NAME_table
+      secondName, = get_NAMEtwo_table
       return "#{firstName} , #{secondName}"
     end
 
@@ -247,7 +246,6 @@ MESSAGETEXT
     ]
 
     dice_now, = roll(1, 100)
-    output = get_table_by_number(dice_now, table)
 
     return get_table_by_number(dice_now, table)
   end
@@ -357,7 +355,6 @@ MESSAGETEXT
     ]
 
     dice_now, = roll(1, 100)
-    output = get_table_by_number(dice_now, table)
 
     return get_table_by_number(dice_now, table)
   end

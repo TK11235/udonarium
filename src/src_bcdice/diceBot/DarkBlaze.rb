@@ -169,15 +169,15 @@ INFO_MESSAGE_TEXT
       "氷結石",
     ]
 
-    num1, dmy = roll(2, 6)
-    num2, dmy = roll(dice, 6)
+    num1, = roll(2, 6)
+    num2, = roll(dice, 6)
 
     debug('dice', dice)
     debug('num1', num1)
     debug('num2', num2)
 
     if num1 <= 4
-      num2, dmy = roll(1, 6)
+      num2, = roll(1, 6)
       magic_stone_result = (magic_stone[(num2 / 2).to_i - 1])
       output = "《#{magic_stone_result}》を#{dice}個獲得"
     elsif num1 == 7

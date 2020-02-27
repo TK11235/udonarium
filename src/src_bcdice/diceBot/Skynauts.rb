@@ -128,7 +128,7 @@ MESSAGETEXT
   end
 
   def getFireResult(command)
-    return nil unless (m = %r{^D([1-4, 6-9]*)(\[.+\])*/(\d+)(@([2,4,6,8]))?$}.match(command))
+    return nil unless (m = %r{^D([12346789]*)(\[.+\])*/(\d+)(@([2468]))?$}.match(command))
 
     debug("====getFireResult====")
 
@@ -235,7 +235,7 @@ MESSAGETEXT
   end
 
   def getBomberResult(command)
-    return nil unless (m = %r{^BOM(\d*)?/D([1-4, 6-9]*)(\[.+\])*/(\d+)(@([2,4,6,8]))?$}i.match(command))
+    return nil unless (m = %r{^BOM(\d*)?/D([12346789]*)(\[.+\])*/(\d+)(@([2468]))?$}i.match(command))
 
     debug("====getBomberResult====", command)
 
@@ -249,7 +249,7 @@ MESSAGETEXT
     return text unless /成功/ === text
 
     # ダメージチェック部分
-    fireCommand = command.slice(%r{D([1-4, 6-9]*)(\[.+\])*/(\d+)(@([2,4,6,8]))?})
+    fireCommand = command.slice(%r{D([12346789]*)(\[.+\])*/(\d+)(@([2468]))?})
 
     text += "\n ＞ #{getFireResult(fireCommand)}"
 
@@ -257,14 +257,14 @@ MESSAGETEXT
   end
 
   def getAvoidResult(command)
-    return nil unless (m = /^AVO(\d*)?(@([2,4,6,8]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.match(command))
+    return nil unless (m = /^AVO(\d*)?(@([2468]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.match(command))
 
     debug("====getAvoidResult====", command)
 
     direction = m[3].to_i
     debug("回避方向", direction)
 
-    judgeCommand = command.slice(/^AVO(\d*)?(@([2,4,6,8]))/) # 判定部分
+    judgeCommand = command.slice(/^AVO(\d*)?(@([2468]))/) # 判定部分
     text = "#{judgeCommand} ＞ 《回避運動》"
     text += getJudgeResult("SN" + Regexp.last_match(1).to_s) # 操舵判定
 

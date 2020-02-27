@@ -10,7 +10,7 @@ class JamesBond < DiceBot
   end
 
   def getHelpMessage
-    info = <<INFO_MESSAGE_TEXT
+    return <<INFO_MESSAGE_TEXT
 ・1D100の目標値判定で、効果レーティングを1～4で自動判定。
 　例）1D100<=50
 　　　JamesBond : (1D100<=50) → 20 → 効果3（良）

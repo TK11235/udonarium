@@ -42,9 +42,8 @@ INFO_MESSAGE_TEXT
 
     stepTotal = 0
     @isFailed = true
-    step2 = 0
 
-    step  = Regexp.last_match(1).to_i # ステップ
+    step = Regexp.last_match(1).to_i # ステップ
     targetNumber = 0 # 目標値
     hasKarmaDice = false # カルマダイスの有無
     karmaDiceCount = 0 # カルマダイスの個数又は修正
@@ -52,7 +51,6 @@ INFO_MESSAGE_TEXT
 
     # 空値があった時の為のばんぺいくんRX
     if step > 40
-      step2 = step
       step = 40
     end
 
@@ -196,7 +194,7 @@ INFO_MESSAGE_TEXT
     debug('rollStep @string', @string)
 
     diceCount.times do |i|
-      dice_now, dummy = roll(1, diceType)
+      dice_now, = roll(1, diceType)
 
       if dice_now != 1
         @isFailed = false
@@ -205,7 +203,7 @@ INFO_MESSAGE_TEXT
       dice_in = dice_now
 
       while dice_now == diceType
-        dice_now, dummy = roll(1, diceType)
+        dice_now, = roll(1, diceType)
 
         dice_in += dice_now
       end

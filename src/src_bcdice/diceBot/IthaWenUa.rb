@@ -23,7 +23,7 @@ MESSAGETEXT
     return '' unless signOfInequality == '<='
 
     diceValue = total_n % 100
-    #dice0 = diceValue / 10 #10の位を代入
+    #dice0 = diceValue / 10 # 10の位を代入
     dice0 = (diceValue / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
     dice1 = diceValue % 10 # 1の位を代入
 

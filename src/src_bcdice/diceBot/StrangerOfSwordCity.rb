@@ -20,7 +20,7 @@ class StrangerOfSwordCity < DiceBot
   end
 
   def getHelpMessage
-    info = <<INFO_MESSAGE_TEXT
+    return <<INFO_MESSAGE_TEXT
 ・判定　xSR or xSRy or xSR+y or xSR-y or xSR+y>=z
 　x=ダイス数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)
 　判定時はクリティカル、ファンブルの自動判定を行います。

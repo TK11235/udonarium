@@ -1,45 +1,25 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'diceBot/SRS'
 
+# 世界樹の迷宮SRSのダイスボット
 class EtrianOdysseySRS < SRS
+  # 固有のコマンドの接頭辞を設定する
   setPrefixes(['2D6.*', 'EO.*', 'SQ.*'])
 
-  def initialize
-    super
+  # 成功判定のエイリアスコマンドを設定する
+  set_aliases_for_srs_roll('EO', 'SQ')
 
-    @sendMode = 2
-    @d66Type = 1
-    @sortType = 1
-  end
-
+  # ゲームシステム名を返す
+  # @return [String]
   def gameName
     '世界樹の迷宮SRS'
   end
 
+  # ゲームシステム識別子を返す
+  # @return [String]
   def gameType
-    "EtrianOdysseySRS"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-・判定
-　・通常判定　　　　　　2D6+m>=t[c,f]
-　　修正値m,目標値t,クリティカル値c,ファンブル値fで判定ロールを行います。
-　　クリティカル値、ファンブル値は省略可能です。([]ごと省略できます)
-　　自動成功、自動失敗、成功、失敗を自動表示します。
-
-　　例) 2d6+2>=10       修整+2、目標値10で判定
-　　例) 2d6+2>=10[11]   ↑をクリティカル値11で判定
-　　例) 2d6+2>=10[12,4] ↑をクリティカル値12、ファンブル値4で判定
-　　例) SQ+2>=10        2d6+2>=10と同じ（SQが2D6のショートカットコマンド）
-
-・D66ダイス(入れ替え無し)あり
-INFO_MESSAGE_TEXT
-  end
-
-  def changeText(string)
-    string = string.gsub(/^(S)?(EO|SQ)/i) { "#{Regexp.last_match(1)}2D6" }
-    return string
+    'EtrianOdysseySRS'
   end
 end

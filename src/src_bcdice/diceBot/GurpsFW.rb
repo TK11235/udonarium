@@ -292,7 +292,7 @@ INFO_MESSAGE_TEXT
         '昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い恐怖症、ないし-30CPぶんの精神的特徴を植え付けられる。知力が1点永遠に低下する。あわせて精神系の技能、呪文、超能力のレベルも低下する。',
       ]
 
-      dice, dummy = roll(3, 6)
+      dice, = roll(3, 6)
       number = dice + modify
       if number > 40
         num = 36
@@ -305,7 +305,7 @@ INFO_MESSAGE_TEXT
       modify = Regexp.last_match(1).to_i
 
       tableName = "反応表"
-      dice, dummy = roll(3, 6)
+      dice, = roll(3, 6)
       number = dice + modify
 
       if number < 1
@@ -372,9 +372,9 @@ INFO_MESSAGE_TEXT
       if !Regexp.last_match(2).nil?
         dice1 = Regexp.last_match(2).to_i
       else
-        dice1, dummy = roll(1, 6)
+        dice1, = roll(1, 6)
       end
-      dice2, dummy = roll(1, 6)
+      dice2, = roll(1, 6)
       area, dif, table = getRandomEvent(dice1, dice2, diff)
       result, dice3 = get_table_by_1d6(table)
       number = "#{dice1}#{dice2}#{dice3}"
@@ -386,7 +386,7 @@ INFO_MESSAGE_TEXT
       if !Regexp.last_match(2).nil?
         dice1 = Regexp.last_match(2).to_i
       else
-        dice1, dummy = roll(1, 6)
+        dice1, = roll(1, 6)
       end
       dice2 = 4
       area, dif, table = getRandomEvent(dice1, dice2, diff)
@@ -453,7 +453,7 @@ INFO_MESSAGE_TEXT
         modify = Regexp.last_match(4).to_i
       end
 
-      dice, dummy = roll(3, 6)
+      dice, = roll(3, 6)
       number = dice - modify
 
       if number <= 3
@@ -643,169 +643,167 @@ PCは全員「好色」「平和愛好/専守防衛」の特徴を得る。「�
     return text
   end
 
+  # ノーマルくじ表1
+  def normal1
+    table = [
+      'イレブンチキン',
+      'イレブンチキン',
+      'イレブンチキン',
+      lambda { return normal2.to_s },
+      lambda { return normal2.to_s },
+      lambda { return normal3.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # ノーマルくじ表2
+  def normal2
+    table = [
+      'バロールたわし',
+      'イグニスジッポ',
+      'ヤコ仮面or梟の文鎮(選択可)',
+      'ナレッジのハンモックorジンジャビースト',
+      lambda { return normal3.to_s },
+      lambda { return normal3.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # ノーマルくじ表3
+  def normal3
+    table = [
+      '特性HPポーション',
+      '特性MPポーション',
+      '黒い甲冑',
+      '天体望遠鏡',
+      '金獅子の剥製',
+      lambda { return normal4.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # ノーマルくじ表4
+  def normal4
+    table = [
+      '特性スタミナポーション',
+      '戦乙女の兜',
+      'フェンリルの首輪',
+      'フェニックスカーペット',
+      '動くアダマンゴーレム',
+      lambda { return normal5.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # ノーマルくじ表5
+  def normal5
+    table = [
+      'キャンディークッション',
+      '屑鉄の金床',
+      '薪割り王の斧',
+      'ロジエの水差し',
+      '箱舟の模型',
+      lambda { return premium5.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # プレミアムくじ表1
+  def premium1
+    table = [
+      'プレミアムチキン',
+      'プレミアムチキン',
+      'プレミアムチキン',
+      lambda { return normal3.to_s },
+      lambda { return premium2.to_s },
+      lambda { return premium2.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # プレミアムくじ表2
+  def premium2
+    table = [
+      '親衛隊バッジ',
+      'ハタモトチャブダイ',
+      '星のコンパス',
+      '白銀の甲冑',
+      lambda { return normal4.to_s },
+      lambda { return premium3.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # プレミアムくじ表3
+  def premium3
+    table = [
+      '特性クイックHPポーション',
+      '特性クイックMPポーション',
+      '特製クイックスタミナポーション',
+      '火龍のフィギュアor氷龍のフィギュア(選択可)',
+      'ヒメショーグンドレス',
+      lambda { return premium4.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # プレミアムくじ表4
+  def premium4
+    table = [
+      'クイックユグドラポーション',
+      '銀河龍のフィギュア/ドラゴン',
+      '銀河龍のフィギュア/魔族',
+      '魔族チェスセット',
+      'イグニスコンロ',
+      lambda { return premium5.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # プレミアムくじ表5
+  def premium5
+    table = [
+      'グレヴディバリウス',
+      '天使の望遠鏡orデスの目覚まし時計(選択可)',
+      '世界樹の蔦',
+      '死神の飾りドレス',
+      'ザバーニヤ等身大フィギュア',
+      lambda { return premium6.to_s },
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
+  # プレミアムくじ表6
+  def premium6
+    table = [
+      'イレブンチキン',
+      'イレブンチキン(2ピース)',
+      'イレブンチキン(3ピース)',
+      'イレブンチキン(6ピース)',
+      'イレブンチキン(12ピース)',
+      'wish star',
+    ]
+    result, = get_table_by_1d6(table)
+    return result
+  end
+
   # GURPS-FW ナンバーワンくじ
   def getLotResult(type)
-    # ノーマルくじ表1
-    def normal1
-      table = [
-        'イレブンチキン',
-        'イレブンチキン',
-        'イレブンチキン',
-        lambda { return normal2.to_s },
-        lambda { return normal2.to_s },
-        lambda { return normal3.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # ノーマルくじ表2
-    def normal2
-      table = [
-        'バロールたわし',
-        'イグニスジッポ',
-        'ヤコ仮面or梟の文鎮(選択可)',
-        'ナレッジのハンモックorジンジャビースト',
-        lambda { return normal3.to_s },
-        lambda { return normal3.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # ノーマルくじ表3
-    def normal3
-      table = [
-        '特性HPポーション',
-        '特性MPポーション',
-        '黒い甲冑',
-        '天体望遠鏡',
-        '金獅子の剥製',
-        lambda { return normal4.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # ノーマルくじ表4
-    def normal4
-      table = [
-        '特性スタミナポーション',
-        '戦乙女の兜',
-        'フェンリルの首輪',
-        'フェニックスカーペット',
-        '動くアダマンゴーレム',
-        lambda { return normal5.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # ノーマルくじ表5
-    def normal5
-      table = [
-        'キャンディークッション',
-        '屑鉄の金床',
-        '薪割り王の斧',
-        'ロジエの水差し',
-        '箱舟の模型',
-        lambda { return premium5.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # プレミアムくじ表1
-    def premium1
-      table = [
-        'プレミアムチキン',
-        'プレミアムチキン',
-        'プレミアムチキン',
-        lambda { return normal3.to_s },
-        lambda { return premium2.to_s },
-        lambda { return premium2.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # プレミアムくじ表2
-    def premium2
-      table = [
-        '親衛隊バッジ',
-        'ハタモトチャブダイ',
-        '星のコンパス',
-        '白銀の甲冑',
-        lambda { return normal4.to_s },
-        lambda { return premium3.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # プレミアムくじ表3
-    def premium3
-      table = [
-        '特性クイックHPポーション',
-        '特性クイックMPポーション',
-        '特製クイックスタミナポーション',
-        '火龍のフィギュアor氷龍のフィギュア(選択可)',
-        'ヒメショーグンドレス',
-        lambda { return premium4.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # プレミアムくじ表4
-    def premium4
-      table = [
-        'クイックユグドラポーション',
-        '銀河龍のフィギュア/ドラゴン',
-        '銀河龍のフィギュア/魔族',
-        '魔族チェスセット',
-        'イグニスコンロ',
-        lambda { return premium5.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # プレミアムくじ表5
-    def premium5
-      table = [
-        'グレヴディバリウス',
-        '天使の望遠鏡orデスの目覚まし時計(選択可)',
-        '世界樹の蔦',
-        '死神の飾りドレス',
-        'ザバーニヤ等身大フィギュア',
-        lambda { return premium6.to_s },
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
-    # プレミアムくじ表6
-    def premium6
-      table = [
-        'イレブンチキン',
-        'イレブンチキン(2ピース)',
-        'イレブンチキン(3ピース)',
-        'イレブンチキン(6ピース)',
-        'イレブンチキン(12ピース)',
-        'wish star',
-      ]
-      result, = get_table_by_1d6(table)
-      return result
-    end
-
     if type == "P"
-      return premium1
+      premium1
     else
-      return normal1
+      normal1
     end
-
-    return ""
   end
 
   # GURPS-FW 夢幻の迷宮財宝テーブル(ver.2013/05/03)

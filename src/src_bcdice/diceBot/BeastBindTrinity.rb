@@ -73,7 +73,7 @@ INFO_MESSAGE_TEXT
   end
 
   def dice_command_xRn(string, nick_e)
-    @nick = nick_e
+    @nick_e = nick_e
     return bbt_check(string)
   end
 
@@ -186,13 +186,11 @@ INFO_MESSAGE_TEXT
 
     dice_now = 0
     dice_str = ""
-    n_max = 0
     total_n = 0
 
     cri_flg   = false
     cri_bonus = 0
     fum_flg   = false
-    rer_num = []
 
     dice_tc = dice_c - dicesubs.size
 
