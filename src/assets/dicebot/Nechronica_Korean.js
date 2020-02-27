@@ -27,7 +27,7 @@
 
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Nechronica_Korean_initialize_1, TMP_Nechronica_Korean_gameName_2, TMP_Nechronica_Korean_gameType_3, TMP_Nechronica_Korean_getHelpMessage_4, TMP_Nechronica_Korean_changeText_9, TMP_Nechronica_Korean_dice_command_xRn_10, TMP_Nechronica_Korean_check_nD10_11, TMP_Nechronica_Korean_nechronica_check_14, TMP_Nechronica_Korean_getHitLocation_15;
 
-    def.nick_t = nil;
+    def.nick_e = nil;
     
     self.$setPrefixes(["(\\d+NC|\\d+NA)"]);
     
@@ -138,7 +138,7 @@
       total_n = 0;
       $b = self.$roll(dice_n, 10, 1), $a = Opal.to_ary($b), (_ = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), (n1 = ($a[2] == null ? nil : $a[2])), (cnt_max = ($a[3] == null ? nil : $a[3])), (n_max = ($a[4] == null ? nil : $a[4])), $b;
       total_n = $rb_plus(n_max, mod);
-      output = "" + (self.nick_t) + ": (" + (string) + ") ＞ [" + (dice_str) + "]";
+      output = "" + (self.nick_e) + ": (" + (string) + ") ＞ [" + (dice_str) + "]";
       if ($truthy($rb_lt(mod, 0))) {
         output = $rb_plus(output, mod.$to_s())
       } else if ($truthy($rb_gt(mod, 0))) {

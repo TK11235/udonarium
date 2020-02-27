@@ -102,7 +102,7 @@
       var self = this;
 
       
-      self.nick = nick_e;
+      self.nick_e = nick_e;
       return self.$bbt_check(string);
     }, TMP_BeastBindTrinity_dice_command_xRn_15.$$arity = 2);
     
@@ -122,7 +122,7 @@
     }, TMP_BeastBindTrinity_check_2D6_16.$$arity = 8);
     
     Opal.defn(self, '$bbt_check', TMP_BeastBindTrinity_bbt_check_22 = function $$bbt_check(string) {
-      var TMP_17, TMP_18, TMP_19, $a, $b, TMP_20, TMP_21, self = this, output = nil, m = nil, humanity = nil, critical = nil, fumble = nil, dicesubs = nil, nofumble = nil, dicepull = nil, pul_flg = nil, dice_c = nil, bonus = nil, signOfInequality = nil, diff = nil, bonusText = nil, str_critical = nil, str_fumble = nil, str_dicesubs = nil, n_cri = nil, n_fum = nil, dice_now = nil, dice_str = nil, n_max = nil, total_n = nil, cri_flg = nil, cri_bonus = nil, fum_flg = nil, rer_num = nil, dice_tc = nil, _ = nil, dice_num = nil, dice_num_old = nil, dold_str = nil, showstring = nil;
+      var TMP_17, TMP_18, TMP_19, $a, $b, TMP_20, TMP_21, self = this, output = nil, m = nil, humanity = nil, critical = nil, fumble = nil, dicesubs = nil, nofumble = nil, dicepull = nil, pul_flg = nil, dice_c = nil, bonus = nil, signOfInequality = nil, diff = nil, bonusText = nil, str_critical = nil, str_fumble = nil, str_dicesubs = nil, n_cri = nil, n_fum = nil, dice_now = nil, dice_str = nil, total_n = nil, cri_flg = nil, cri_bonus = nil, fum_flg = nil, dice_tc = nil, _ = nil, dice_num = nil, dice_num_old = nil, dold_str = nil, showstring = nil;
 
       
       output = "1";
@@ -232,12 +232,10 @@ if (i == null) i = nil;
         self.$debug("" + "▼ダイス出目予約 " + (dicesubs));};
       dice_now = 0;
       dice_str = "";
-      n_max = 0;
       total_n = 0;
       cri_flg = false;
       cri_bonus = 0;
       fum_flg = false;
-      rer_num = [];
       dice_tc = $rb_minus(dice_c, dicesubs.$size());
       if ($truthy($rb_gt(dice_tc, 0))) {
         

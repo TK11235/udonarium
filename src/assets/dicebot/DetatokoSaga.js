@@ -58,9 +58,9 @@
     }, TMP_DetatokoSaga_gameType_3.$$arity = 0);
     
     Opal.defn(self, '$getHelpMessage', TMP_DetatokoSaga_getHelpMessage_4 = function $$getHelpMessage() {
-      var self = this, info = nil;
+      var self = this;
 
-      return (info = "" + "・通常判定　xDS or xDSy or xDS>=z or xDSy>=z\n" + "　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝目標値(省略時８))\n" + "　例）3DS　2DS5　0DS　3DS>=10　3DS7>=12\n" + "・判定値　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝修正値(省略時０))\n" + "　例）3JD　2JD5　3JD7+1　4JD/3\n" + "・体力烙印表　SST (StrengthStigmaTable)\n" + "・気力烙印表　WST (WillStigmaTable)\n" + "・体力バッドエンド表　SBET (StrengthBadEndTable)\n" + "・気力バッドエンド表　WBET (WillBadEndTable)\n")
+      return "" + "・通常判定　xDS or xDSy or xDS>=z or xDSy>=z\n" + "　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝目標値(省略時８))\n" + "　例）3DS　2DS5　0DS　3DS>=10　3DS7>=12\n" + "・判定値　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝修正値(省略時０))\n" + "　例）3JD　2JD5　3JD7+1　4JD/3\n" + "・体力烙印表　SST (StrengthStigmaTable)\n" + "・気力烙印表　WST (WillStigmaTable)\n" + "・体力バッドエンド表　SBET (StrengthBadEndTable)\n" + "・気力バッドエンド表　WBET (WillBadEndTable)\n"
     }, TMP_DetatokoSaga_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_DetatokoSaga_rollDiceCommand_5 = function $$rollDiceCommand(command) {
@@ -189,7 +189,7 @@ if (i == null) i = nil;
       var self = this, operatorText = nil, $case = nil;
 
       
-      if ($truthy(value['$=='](0))) {
+      if (value['$=='](0)) {
         return ""};
       operatorText = (function() {$case = operator;
       if ("+"['$===']($case)) {return "＋"}

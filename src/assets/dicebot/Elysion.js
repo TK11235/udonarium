@@ -143,13 +143,13 @@
     }, TMP_Elysion_checkAnyCommand_8.$$arity = 1);
     
     Opal.defn(self, '$check', TMP_Elysion_check_9 = function $$check(base, modify) {
-      var $a, $b, self = this, dice1 = nil, dummy = nil, dice2 = nil, diceTotal = nil, addTotal = nil, total = nil, result = nil;
+      var $a, $b, self = this, dice1 = nil, dice2 = nil, diceTotal = nil, addTotal = nil, total = nil, result = nil;
 
       
       base = self.$getValue(base);
       modify = self.$getValue(modify);
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), $b;
       diceTotal = $rb_plus(dice1, dice2);
       addTotal = $rb_plus(base, modify);
       total = $rb_plus(diceTotal, addTotal);
@@ -247,11 +247,11 @@
     }, TMP_Elysion_getFambleResultText_17.$$arity = 2);
     
     Opal.defn(self, '$getDateBothResult', TMP_Elysion_getDateBothResult_18 = function $$getDateBothResult(type, pc1, pc2) {
-      var $a, $b, self = this, dice1 = nil, dummy = nil, dice2 = nil, result = nil, number = nil, tmp = nil;
+      var $a, $b, self = this, dice1 = nil, dice2 = nil, result = nil, number = nil, tmp = nil;
 
       
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), $b;
       result = "" + (pc1) + "[" + (dice1) + "]," + (pc2) + "[" + (dice2) + "] ＞ ";
       number = $rb_plus($rb_times(dice1, 10), dice2);
       if ($truthy($rb_gt(dice1, dice2))) {

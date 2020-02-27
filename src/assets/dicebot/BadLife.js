@@ -79,7 +79,7 @@
       var $a, $b, self = this, m = nil, diceCount = nil, critical = nil, fumble = nil, isStormy = nil, modify = nil, target = nil, optionalText = nil;
 
       
-      if ($truthy((m = /(\d+)?(BAD|BL|GL)([\+\-\d+]*)((C|F)([\+\-\d+]*)?)?((C|F)([\+\-\d+]*))?(\@([\+\-\d+]*))?(\!(\D*))?/i.$match(command)))) {
+      if ($truthy((m = /(\d+)?(BAD|BL|GL)([-+\d]*)((C|F)([-+\d]*)?)?((C|F)([-+\d]*))?(\@([-+\d]*))?(\!(\D*))?/i.$match(command)))) {
         } else {
         return nil
       };
@@ -110,12 +110,12 @@
     }, TMP_BadLife_get_critival_fumble_7.$$arity = 4);
     
     Opal.defn(self, '$checkRoll', TMP_BadLife_checkRoll_10 = function $$checkRoll(diceCount, modify, critical, fumble, target, isStormy, optionalText) {
-      var $a, $b, TMP_8, TMP_9, self = this, isAnticipation = nil, isHeavyAttack = nil, dice = nil, diceText = nil, diceMax = nil, diceArray = nil, isCritical = nil, isFumble = nil, total = nil, result = nil, success = nil, skillText = nil;
+      var $a, $b, TMP_8, TMP_9, self = this, isAnticipation = nil, isHeavyAttack = nil, _dice = nil, diceText = nil, diceMax = nil, diceArray = nil, isCritical = nil, isFumble = nil, total = nil, result = nil, success = nil, skillText = nil;
 
       
       isAnticipation = optionalText['$include?']("A");
       isHeavyAttack = optionalText['$include?']("H");
-      $b = self.$roll(diceCount, 20), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(diceCount, 20), $a = Opal.to_ary($b), (_dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceMax = 0;
       diceArray = $send(diceText.$split(/,/), 'collect', [], (TMP_8 = function(i){var self = TMP_8.$$s || this;
 if (i == null) i = nil;

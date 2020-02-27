@@ -27,7 +27,6 @@
 
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_EmbryoMachine_initialize_1, TMP_EmbryoMachine_gameName_2, TMP_EmbryoMachine_gameType_3, TMP_EmbryoMachine_getHelpMessage_4, TMP_EmbryoMachine_changeText_13, TMP_EmbryoMachine_dice_command_xRn_14, TMP_EmbryoMachine_check_nD10_15, TMP_EmbryoMachine_checkRoll_17, TMP_EmbryoMachine_rollDiceCommand_18, TMP_EmbryoMachine_get_hit_location_table_19, TMP_EmbryoMachine_get_shoot_fumble_table_20, TMP_EmbryoMachine_get_melee_fumble_table_21, TMP_EmbryoMachine_get_hit_level_table_22;
 
-    def.nick_e = nil;
     
     self.$setPrefixes(["(EM\\t+|HLT|MFT|SFT)"]);
     
@@ -119,7 +118,7 @@
       };
     }, TMP_EmbryoMachine_check_nD10_15.$$arity = 8);
     
-    Opal.defn(self, '$checkRoll', TMP_EmbryoMachine_checkRoll_17 = function $$checkRoll(string, _nick_e) {
+    Opal.defn(self, '$checkRoll', TMP_EmbryoMachine_checkRoll_17 = function $$checkRoll(string, nick_e) {
       var $a, $b, TMP_16, self = this, output = nil, diff = nil, crit = nil, fumble = nil, mod = nil, total_n = nil, modText = nil, dice_now = nil, dice_str = nil, dice_loc = nil, dice_arr = nil, big_dice = nil;
 
       
@@ -156,9 +155,9 @@ if (i == null) i = nil;
       } else if ($truthy($rb_lt(mod, 0))) {
         output = $rb_plus(output, mod.$to_s())};
       if ($truthy(output['$=~'](/[^\d\[\]]+/))) {
-        output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)
+        output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)
         } else {
-        output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (output)
+        output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output)
       };
       if ($truthy($rb_le(dice_now, fumble))) {
         output = $rb_plus(output, " ＞ ファンブル")

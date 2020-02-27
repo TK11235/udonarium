@@ -50,9 +50,9 @@
     }, TMP_StrangerOfSwordCity_gameType_3.$$arity = 0);
     
     Opal.defn(self, '$getHelpMessage', TMP_StrangerOfSwordCity_getHelpMessage_4 = function $$getHelpMessage() {
-      var self = this, info = nil;
+      var self = this;
 
-      return (info = "" + "・判定　xSR or xSRy or xSR+y or xSR-y or xSR+y>=z\n" + "　x=ダイス数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)\n" + "　判定時はクリティカル、ファンブルの自動判定を行います。\n" + "・通常のnD6ではクリティカル、ファンブルの自動判定は行いません。\n" + "・D66ダイスあり\n")
+      return "" + "・判定　xSR or xSRy or xSR+y or xSR-y or xSR+y>=z\n" + "　x=ダイス数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)\n" + "　判定時はクリティカル、ファンブルの自動判定を行います。\n" + "・通常のnD6ではクリティカル、ファンブルの自動判定は行いません。\n" + "・D66ダイスあり\n"
     }, TMP_StrangerOfSwordCity_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_StrangerOfSwordCity_rollDiceCommand_5 = function $$rollDiceCommand(command) {

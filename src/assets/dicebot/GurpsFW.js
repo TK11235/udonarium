@@ -28,7 +28,7 @@
     function $GurpsFW(){};
     var self = $GurpsFW = $klass($base, $super, 'GurpsFW', $GurpsFW);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_GurpsFW_initialize_1, TMP_GurpsFW_gameName_2, TMP_GurpsFW_gameType_3, TMP_GurpsFW_getHelpMessage_4, TMP_GurpsFW_dice_command_5, TMP_GurpsFW_check_nD6_6, TMP_GurpsFW_getCommandResult_7, TMP_GurpsFW_getLotResult_35, TMP_GurpsFW_getTresureTable_36, TMP_GurpsFW_getTrapTable_37, TMP_GurpsFW_getRandomEvent_38, TMP_GurpsFW_getRandomDiff_39;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_GurpsFW_initialize_1, TMP_GurpsFW_gameName_2, TMP_GurpsFW_gameType_3, TMP_GurpsFW_getHelpMessage_4, TMP_GurpsFW_dice_command_5, TMP_GurpsFW_check_nD6_6, TMP_GurpsFW_getCommandResult_7, TMP_GurpsFW_normal1_11, TMP_GurpsFW_normal2_14, TMP_GurpsFW_normal3_16, TMP_GurpsFW_normal4_18, TMP_GurpsFW_normal5_20, TMP_GurpsFW_premium1_24, TMP_GurpsFW_premium2_27, TMP_GurpsFW_premium3_29, TMP_GurpsFW_premium4_31, TMP_GurpsFW_premium5_33, TMP_GurpsFW_premium6_34, TMP_GurpsFW_getLotResult_35, TMP_GurpsFW_getTresureTable_36, TMP_GurpsFW_getTrapTable_37, TMP_GurpsFW_getRandomEvent_38, TMP_GurpsFW_getRandomDiff_39;
 
     
     self.$setPrefixes(["CRT", "HCRT", "FMB", "MFMB", "HIT", "FEAR((\\+)?\\d*)", "REACT((\\+|\\-)?\\d*)", "TRAP(E|N|H|L)", "TRS((E|N|H|L)\\d+)((\\+|\\-)?\\d*)", "RAND(E|N|H|L)[1-6]?", "RENC(E|N|H|L)[1-6]?", "AREA", "DROP(N)?((\\+)?\\d)?", "HST", "KHST", "RANDOP", "LOT(N|P)"]);
@@ -116,7 +116,7 @@
     }, TMP_GurpsFW_check_nD6_6.$$arity = 8);
     
     Opal.defn(self, '$getCommandResult', TMP_GurpsFW_getCommandResult_7 = function $$getCommandResult(string, nick_e) {
-      var $a, $b, self = this, tableName = nil, result = nil, number = nil, $case = nil, table = nil, modify = nil, dice = nil, dummy = nil, num = nil, diff = nil, dif = nil, depth = nil, dice1 = nil, dice2 = nil, area = nil, dice3 = nil, mode = nil, text = nil, type = nil;
+      var $a, $b, self = this, tableName = nil, result = nil, number = nil, $case = nil, table = nil, modify = nil, dice = nil, num = nil, diff = nil, dif = nil, depth = nil, dice1 = nil, dice2 = nil, area = nil, dice3 = nil, mode = nil, text = nil, type = nil;
 
       
       tableName = "";
@@ -147,7 +147,7 @@
       modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       tableName = "恐怖表";
       table = ["1ターン朦朧状態。2ターン目に自動回復。", "1ターン朦朧状態。2ターン目に自動回復。", "1ターン朦朧状態。以後、毎ターン不利な修正を無視した意志判定を行い、成功すると回復。", "1ターン朦朧状態。以後、毎ターン不利な修正を無視した意志判定を行い、成功すると回復。", "1ターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1ターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "2Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "思考不能。15ターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "新たな癖をひとつ植え付けられる。", "1D点疲労。さらに1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1D点疲労。さらに1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "新たな癖をひとつ獲得。さらに1Dターン朦朧状態。以後、毎ターン通常の意志判定を行い、成功すると回復。", "1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "生命力判定を行い、失敗すると1点の負傷を受ける。さらに1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "1点負傷。2D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "卒倒。4D分間意識不明。1D点疲労。", "パニック。1D分間のあいだ、叫びながら走り回ったり、座り込んで泣きわめいたりする。以後、1分ごとに知力判定(修正なし)を行い、成功すると回復。", "-10CPの妄想を植え付けられる。", "-10CPの軽い恐怖症を植え付けられる。", "肉体的な変化。髪が真白になったり、老化したりする。-15CPぶんの肉体的特徴に等しい。", "その恐怖に関連する軽い恐怖症を持っているならそれが強い恐怖症(CP2倍)になる。そうでなければ、-10CPぶんの精神的特徴を植え付けられる。", "-10CPの妄想を植え付けられる。生命力判定を行い、失敗すると1点の負傷を受ける。さらに1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "-10CPの軽い恐怖症を植え付けられる。生命力判定を行い、失敗すると1点の負傷を受ける。さらに1D分間意識を失う。以後、1分ごとに生命力判定を行い、成功すると回復。", "浅い昏睡状態。30分ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。", "硬直。1D日のあいだ身動きしない。その時点で生命力判定を行い、成功すると動けるようになる。失敗するとさらに1D日硬直。その間、適切な医学的処置を受けていないかぎり、初日に1点、2日目に2点、3日目に3点と生命力を失っていく。動けるようになってからも、硬直していたのと同じ日数だけ、あらゆる判定に-2の修正。", "痙攣。1D分間地面に倒れて痙攣する。2D点疲労。また、生命力判定に失敗すると1D点負傷。これがファンブルなら生命力1点を永遠に失う。", "発作。軽い心臓発作を起こし、地面に倒れる。2D点負傷。", "大パニック。キャラクターは支離滅裂な行動に出る。GMが3Dを振り、目が大きければ大きいほど馬鹿げた行動を行う。その行動が終わったら知力判定を行い、成功すると我に返る。失敗すると新たな馬鹿げた行動をとる。", "強い妄想(-15CP)を植え付けられる。", "強い恐怖症、ないし-15CPぶんの精神的特徴を植え付けられる。", "激しい肉体的変化。髪が真白になったり、老化したりする。-20CPぶんの肉体的特徴に等しい。", "激しい肉体的変化。髪が真白になったり、老化したりする。-30CPぶんの肉体的特徴に等しい。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い妄想(-15CP)を植え付けられる。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い恐怖症、ないし-30CPぶんの精神的特徴を植え付けられる。", "昏睡状態。1時間ごとに生命力判定を行い、成功すると目覚める。目覚めてから6時間はあらゆる判定に-2の修正。さらに強い恐怖症、ないし-30CPぶんの精神的特徴を植え付けられる。知力が1点永遠に低下する。あわせて精神系の技能、呪文、超能力のレベルも低下する。"];
-      $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       number = $rb_plus(dice, modify);
       if ($truthy($rb_gt(number, 40))) {
         num = 36
@@ -158,7 +158,7 @@
       else if (/REACT((\+|\-)?\d*)/['$===']($case)) {
       modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       tableName = "反応表";
-      $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       number = $rb_plus(dice, modify);
       if ($truthy($rb_lt(number, 1))) {
         result = "最悪"
@@ -210,9 +210,9 @@
       if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$nil?']()['$!']())) {
         dice1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()
         } else {
-        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b
+        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b
       };
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$getRandomEvent(dice1, dice2, diff), $a = Opal.to_ary($b), (area = ($a[0] == null ? nil : $a[0])), (dif = ($a[1] == null ? nil : $a[1])), (table = ($a[2] == null ? nil : $a[2])), $b;
       $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (dice3 = ($a[1] == null ? nil : $a[1])), $b;
       number = "" + (dice1) + (dice2) + (dice3);
@@ -223,7 +223,7 @@
       if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2)['$nil?']()['$!']())) {
         dice1 = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i()
         } else {
-        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b
+        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b
       };
       dice2 = 4;
       $b = self.$getRandomEvent(dice1, dice2, diff), $a = Opal.to_ary($b), (area = ($a[0] == null ? nil : $a[0])), (dif = ($a[1] == null ? nil : $a[1])), (table = ($a[2] == null ? nil : $a[2])), $b;
@@ -247,7 +247,7 @@
         } else {
         modify = Opal.const_get_relative($nesting, 'Regexp').$last_match(4).$to_i()
       };
-      $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(3, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       number = $rb_minus(dice, modify);
       if ($truthy($rb_le(number, 3))) {
         result = "レアアイテム1"
@@ -290,167 +290,165 @@
       return text;
     }, TMP_GurpsFW_getCommandResult_7.$$arity = 2);
     
+    Opal.defn(self, '$normal1', TMP_GurpsFW_normal1_11 = function $$normal1() {try {
+
+      var TMP_8, TMP_9, TMP_10, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["イレブンチキン", "イレブンチキン", "イレブンチキン", $send(self, 'lambda', [], (TMP_8 = function(){var self = TMP_8.$$s || this;
+
+      Opal.ret(self.$normal2().$to_s())}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8)), $send(self, 'lambda', [], (TMP_9 = function(){var self = TMP_9.$$s || this;
+
+      Opal.ret(self.$normal2().$to_s())}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9)), $send(self, 'lambda', [], (TMP_10 = function(){var self = TMP_10.$$s || this;
+
+      Opal.ret(self.$normal3().$to_s())}, TMP_10.$$s = self, TMP_10.$$arity = 0, TMP_10))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_normal1_11.$$arity = 0);
+    
+    Opal.defn(self, '$normal2', TMP_GurpsFW_normal2_14 = function $$normal2() {try {
+
+      var TMP_12, TMP_13, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["バロールたわし", "イグニスジッポ", "ヤコ仮面or梟の文鎮(選択可)", "ナレッジのハンモックorジンジャビースト", $send(self, 'lambda', [], (TMP_12 = function(){var self = TMP_12.$$s || this;
+
+      Opal.ret(self.$normal3().$to_s())}, TMP_12.$$s = self, TMP_12.$$arity = 0, TMP_12)), $send(self, 'lambda', [], (TMP_13 = function(){var self = TMP_13.$$s || this;
+
+      Opal.ret(self.$normal3().$to_s())}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_normal2_14.$$arity = 0);
+    
+    Opal.defn(self, '$normal3', TMP_GurpsFW_normal3_16 = function $$normal3() {try {
+
+      var TMP_15, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["特性HPポーション", "特性MPポーション", "黒い甲冑", "天体望遠鏡", "金獅子の剥製", $send(self, 'lambda', [], (TMP_15 = function(){var self = TMP_15.$$s || this;
+
+      Opal.ret(self.$normal4().$to_s())}, TMP_15.$$s = self, TMP_15.$$arity = 0, TMP_15))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_normal3_16.$$arity = 0);
+    
+    Opal.defn(self, '$normal4', TMP_GurpsFW_normal4_18 = function $$normal4() {try {
+
+      var TMP_17, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["特性スタミナポーション", "戦乙女の兜", "フェンリルの首輪", "フェニックスカーペット", "動くアダマンゴーレム", $send(self, 'lambda', [], (TMP_17 = function(){var self = TMP_17.$$s || this;
+
+      Opal.ret(self.$normal5().$to_s())}, TMP_17.$$s = self, TMP_17.$$arity = 0, TMP_17))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_normal4_18.$$arity = 0);
+    
+    Opal.defn(self, '$normal5', TMP_GurpsFW_normal5_20 = function $$normal5() {try {
+
+      var TMP_19, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["キャンディークッション", "屑鉄の金床", "薪割り王の斧", "ロジエの水差し", "箱舟の模型", $send(self, 'lambda', [], (TMP_19 = function(){var self = TMP_19.$$s || this;
+
+      Opal.ret(self.$premium5().$to_s())}, TMP_19.$$s = self, TMP_19.$$arity = 0, TMP_19))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_normal5_20.$$arity = 0);
+    
+    Opal.defn(self, '$premium1', TMP_GurpsFW_premium1_24 = function $$premium1() {try {
+
+      var TMP_21, TMP_22, TMP_23, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["プレミアムチキン", "プレミアムチキン", "プレミアムチキン", $send(self, 'lambda', [], (TMP_21 = function(){var self = TMP_21.$$s || this;
+
+      Opal.ret(self.$normal3().$to_s())}, TMP_21.$$s = self, TMP_21.$$arity = 0, TMP_21)), $send(self, 'lambda', [], (TMP_22 = function(){var self = TMP_22.$$s || this;
+
+      Opal.ret(self.$premium2().$to_s())}, TMP_22.$$s = self, TMP_22.$$arity = 0, TMP_22)), $send(self, 'lambda', [], (TMP_23 = function(){var self = TMP_23.$$s || this;
+
+      Opal.ret(self.$premium2().$to_s())}, TMP_23.$$s = self, TMP_23.$$arity = 0, TMP_23))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_premium1_24.$$arity = 0);
+    
+    Opal.defn(self, '$premium2', TMP_GurpsFW_premium2_27 = function $$premium2() {try {
+
+      var TMP_25, TMP_26, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["親衛隊バッジ", "ハタモトチャブダイ", "星のコンパス", "白銀の甲冑", $send(self, 'lambda', [], (TMP_25 = function(){var self = TMP_25.$$s || this;
+
+      Opal.ret(self.$normal4().$to_s())}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25)), $send(self, 'lambda', [], (TMP_26 = function(){var self = TMP_26.$$s || this;
+
+      Opal.ret(self.$premium3().$to_s())}, TMP_26.$$s = self, TMP_26.$$arity = 0, TMP_26))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_premium2_27.$$arity = 0);
+    
+    Opal.defn(self, '$premium3', TMP_GurpsFW_premium3_29 = function $$premium3() {try {
+
+      var TMP_28, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["特性クイックHPポーション", "特性クイックMPポーション", "特製クイックスタミナポーション", "火龍のフィギュアor氷龍のフィギュア(選択可)", "ヒメショーグンドレス", $send(self, 'lambda', [], (TMP_28 = function(){var self = TMP_28.$$s || this;
+
+      Opal.ret(self.$premium4().$to_s())}, TMP_28.$$s = self, TMP_28.$$arity = 0, TMP_28))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_premium3_29.$$arity = 0);
+    
+    Opal.defn(self, '$premium4', TMP_GurpsFW_premium4_31 = function $$premium4() {try {
+
+      var TMP_30, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["クイックユグドラポーション", "銀河龍のフィギュア/ドラゴン", "銀河龍のフィギュア/魔族", "魔族チェスセット", "イグニスコンロ", $send(self, 'lambda', [], (TMP_30 = function(){var self = TMP_30.$$s || this;
+
+      Opal.ret(self.$premium5().$to_s())}, TMP_30.$$s = self, TMP_30.$$arity = 0, TMP_30))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_premium4_31.$$arity = 0);
+    
+    Opal.defn(self, '$premium5', TMP_GurpsFW_premium5_33 = function $$premium5() {try {
+
+      var TMP_32, $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["グレヴディバリウス", "天使の望遠鏡orデスの目覚まし時計(選択可)", "世界樹の蔦", "死神の飾りドレス", "ザバーニヤ等身大フィギュア", $send(self, 'lambda', [], (TMP_32 = function(){var self = TMP_32.$$s || this;
+
+      Opal.ret(self.$premium6().$to_s())}, TMP_32.$$s = self, TMP_32.$$arity = 0, TMP_32))];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_GurpsFW_premium5_33.$$arity = 0);
+    
+    Opal.defn(self, '$premium6', TMP_GurpsFW_premium6_34 = function $$premium6() {
+      var $a, $b, self = this, table = nil, result = nil;
+
+      
+      table = ["イレブンチキン", "イレブンチキン(2ピース)", "イレブンチキン(3ピース)", "イレブンチキン(6ピース)", "イレブンチキン(12ピース)", "wish star"];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
+      return result;
+    }, TMP_GurpsFW_premium6_34.$$arity = 0);
+    
     Opal.defn(self, '$getLotResult', TMP_GurpsFW_getLotResult_35 = function $$getLotResult(type) {
-      var TMP_normal1_11, TMP_normal2_14, TMP_normal3_16, TMP_normal4_18, TMP_normal5_20, TMP_premium1_24, TMP_premium2_27, TMP_premium3_29, TMP_premium4_31, TMP_premium5_33, TMP_premium6_34, self = this;
+      var self = this;
 
-      
-      
-      Opal.def(self, '$normal1', TMP_normal1_11 = function $$normal1() {try {
-
-        var TMP_8, TMP_9, TMP_10, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["イレブンチキン", "イレブンチキン", "イレブンチキン", $send(self, 'lambda', [], (TMP_8 = function(){var self = TMP_8.$$s || this;
-
-        Opal.ret(self.$normal2().$to_s())}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8)), $send(self, 'lambda', [], (TMP_9 = function(){var self = TMP_9.$$s || this;
-
-        Opal.ret(self.$normal2().$to_s())}, TMP_9.$$s = self, TMP_9.$$arity = 0, TMP_9)), $send(self, 'lambda', [], (TMP_10 = function(){var self = TMP_10.$$s || this;
-
-        Opal.ret(self.$normal3().$to_s())}, TMP_10.$$s = self, TMP_10.$$arity = 0, TMP_10))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_normal1_11.$$arity = 0);
-      
-      Opal.def(self, '$normal2', TMP_normal2_14 = function $$normal2() {try {
-
-        var TMP_12, TMP_13, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["バロールたわし", "イグニスジッポ", "ヤコ仮面or梟の文鎮(選択可)", "ナレッジのハンモックorジンジャビースト", $send(self, 'lambda', [], (TMP_12 = function(){var self = TMP_12.$$s || this;
-
-        Opal.ret(self.$normal3().$to_s())}, TMP_12.$$s = self, TMP_12.$$arity = 0, TMP_12)), $send(self, 'lambda', [], (TMP_13 = function(){var self = TMP_13.$$s || this;
-
-        Opal.ret(self.$normal3().$to_s())}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_normal2_14.$$arity = 0);
-      
-      Opal.def(self, '$normal3', TMP_normal3_16 = function $$normal3() {try {
-
-        var TMP_15, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["特性HPポーション", "特性MPポーション", "黒い甲冑", "天体望遠鏡", "金獅子の剥製", $send(self, 'lambda', [], (TMP_15 = function(){var self = TMP_15.$$s || this;
-
-        Opal.ret(self.$normal4().$to_s())}, TMP_15.$$s = self, TMP_15.$$arity = 0, TMP_15))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_normal3_16.$$arity = 0);
-      
-      Opal.def(self, '$normal4', TMP_normal4_18 = function $$normal4() {try {
-
-        var TMP_17, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["特性スタミナポーション", "戦乙女の兜", "フェンリルの首輪", "フェニックスカーペット", "動くアダマンゴーレム", $send(self, 'lambda', [], (TMP_17 = function(){var self = TMP_17.$$s || this;
-
-        Opal.ret(self.$normal5().$to_s())}, TMP_17.$$s = self, TMP_17.$$arity = 0, TMP_17))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_normal4_18.$$arity = 0);
-      
-      Opal.def(self, '$normal5', TMP_normal5_20 = function $$normal5() {try {
-
-        var TMP_19, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["キャンディークッション", "屑鉄の金床", "薪割り王の斧", "ロジエの水差し", "箱舟の模型", $send(self, 'lambda', [], (TMP_19 = function(){var self = TMP_19.$$s || this;
-
-        Opal.ret(self.$premium5().$to_s())}, TMP_19.$$s = self, TMP_19.$$arity = 0, TMP_19))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_normal5_20.$$arity = 0);
-      
-      Opal.def(self, '$premium1', TMP_premium1_24 = function $$premium1() {try {
-
-        var TMP_21, TMP_22, TMP_23, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["プレミアムチキン", "プレミアムチキン", "プレミアムチキン", $send(self, 'lambda', [], (TMP_21 = function(){var self = TMP_21.$$s || this;
-
-        Opal.ret(self.$normal3().$to_s())}, TMP_21.$$s = self, TMP_21.$$arity = 0, TMP_21)), $send(self, 'lambda', [], (TMP_22 = function(){var self = TMP_22.$$s || this;
-
-        Opal.ret(self.$premium2().$to_s())}, TMP_22.$$s = self, TMP_22.$$arity = 0, TMP_22)), $send(self, 'lambda', [], (TMP_23 = function(){var self = TMP_23.$$s || this;
-
-        Opal.ret(self.$premium2().$to_s())}, TMP_23.$$s = self, TMP_23.$$arity = 0, TMP_23))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_premium1_24.$$arity = 0);
-      
-      Opal.def(self, '$premium2', TMP_premium2_27 = function $$premium2() {try {
-
-        var TMP_25, TMP_26, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["親衛隊バッジ", "ハタモトチャブダイ", "星のコンパス", "白銀の甲冑", $send(self, 'lambda', [], (TMP_25 = function(){var self = TMP_25.$$s || this;
-
-        Opal.ret(self.$normal4().$to_s())}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25)), $send(self, 'lambda', [], (TMP_26 = function(){var self = TMP_26.$$s || this;
-
-        Opal.ret(self.$premium3().$to_s())}, TMP_26.$$s = self, TMP_26.$$arity = 0, TMP_26))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_premium2_27.$$arity = 0);
-      
-      Opal.def(self, '$premium3', TMP_premium3_29 = function $$premium3() {try {
-
-        var TMP_28, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["特性クイックHPポーション", "特性クイックMPポーション", "特製クイックスタミナポーション", "火龍のフィギュアor氷龍のフィギュア(選択可)", "ヒメショーグンドレス", $send(self, 'lambda', [], (TMP_28 = function(){var self = TMP_28.$$s || this;
-
-        Opal.ret(self.$premium4().$to_s())}, TMP_28.$$s = self, TMP_28.$$arity = 0, TMP_28))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_premium3_29.$$arity = 0);
-      
-      Opal.def(self, '$premium4', TMP_premium4_31 = function $$premium4() {try {
-
-        var TMP_30, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["クイックユグドラポーション", "銀河龍のフィギュア/ドラゴン", "銀河龍のフィギュア/魔族", "魔族チェスセット", "イグニスコンロ", $send(self, 'lambda', [], (TMP_30 = function(){var self = TMP_30.$$s || this;
-
-        Opal.ret(self.$premium5().$to_s())}, TMP_30.$$s = self, TMP_30.$$arity = 0, TMP_30))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_premium4_31.$$arity = 0);
-      
-      Opal.def(self, '$premium5', TMP_premium5_33 = function $$premium5() {try {
-
-        var TMP_32, $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["グレヴディバリウス", "天使の望遠鏡orデスの目覚まし時計(選択可)", "世界樹の蔦", "死神の飾りドレス", "ザバーニヤ等身大フィギュア", $send(self, 'lambda', [], (TMP_32 = function(){var self = TMP_32.$$s || this;
-
-        Opal.ret(self.$premium6().$to_s())}, TMP_32.$$s = self, TMP_32.$$arity = 0, TMP_32))];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_premium5_33.$$arity = 0);
-      
-      Opal.def(self, '$premium6', TMP_premium6_34 = function $$premium6() {
-        var $a, $b, self = this, table = nil, result = nil;
-
-        
-        table = ["イレブンチキン", "イレブンチキン(2ピース)", "イレブンチキン(3ピース)", "イレブンチキン(6ピース)", "イレブンチキン(12ピース)", "wish star"];
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), $b;
-        return result;
-      }, TMP_premium6_34.$$arity = 0);
       if (type['$==']("P")) {
         return self.$premium1()
         } else {
         return self.$normal1()
-      };
-      return "";
+      }
     }, TMP_GurpsFW_getLotResult_35.$$arity = 1);
     
     Opal.defn(self, '$getTresureTable', TMP_GurpsFW_getTresureTable_36 = function $$getTresureTable(num) {

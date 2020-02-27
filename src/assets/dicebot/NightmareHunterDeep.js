@@ -18,7 +18,7 @@
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $gvars = Opal.gvars, $truthy = Opal.truthy;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
   Opal.add_stubs(['$debug', '$sub', '$last_match', '$-', '$*', '$to_i', '$+', '$==', '$!=', '$>=', '$<=', '$>']);
   return (function($base, $super, $parent_nesting) {
@@ -76,12 +76,11 @@
       return string;
     }, TMP_NightmareHunterDeep_changeText_7.$$arity = 1);
     
-    Opal.defn(self, '$check_nD6', TMP_NightmareHunterDeep_check_nD6_8 = function $$check_nD6(total_n, _dice_n, _signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
+    Opal.defn(self, '$check_nD6', TMP_NightmareHunterDeep_check_nD6_8 = function $$check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
       var $a, self = this, sucLv = nil, sucNL = nil;
-      if ($gvars.signOfInequality == null) $gvars.signOfInequality = nil;
 
       
-      if ($gvars.signOfInequality['$=='](">=")) {
+      if (signOfInequality['$=='](">=")) {
         } else {
         return ""
       };

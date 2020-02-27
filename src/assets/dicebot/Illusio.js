@@ -18,7 +18,7 @@
 
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Illusio_initialize_1, TMP_Illusio_gameName_2, TMP_Illusio_gameType_3, TMP_Illusio_getHelpMessage_4, TMP_Illusio_rollDiceCommand_5, TMP_Illusio_checkRoll_8;
 
-    def.sortTye = nil;
+    def.sortType = nil;
     
     
     Opal.defn(self, '$initialize', TMP_Illusio_initialize_1 = function $$initialize() {
@@ -69,10 +69,10 @@
       return nil;
     }, TMP_Illusio_rollDiceCommand_5.$$arity = 1);
     return (Opal.defn(self, '$checkRoll', TMP_Illusio_checkRoll_8 = function $$checkRoll(diceCount, blockNo, isParry) {
-      var $a, $b, TMP_6, TMP_7, self = this, dice = nil, diceText = nil, diceArray = nil, resultArray = nil, success = nil, blockText = nil, blockText2 = nil, resultText = nil, result = nil;
+      var $a, $b, TMP_6, TMP_7, self = this, _dice = nil, diceText = nil, diceArray = nil, resultArray = nil, success = nil, blockText = nil, blockText2 = nil, resultText = nil, result = nil;
 
       
-      $b = self.$roll(diceCount, 6, self.sortTye), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(diceCount, 6, self.sortType), $a = Opal.to_ary($b), (_dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceArray = $send(diceText.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));

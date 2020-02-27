@@ -49,9 +49,9 @@
     }, TMP_DiceOfTheDead_gameType_3.$$arity = 0);
     
     Opal.defn(self, '$getHelpMessage', TMP_DiceOfTheDead_getHelpMessage_4 = function $$getHelpMessage() {
-      var self = this, info = nil;
+      var self = this;
 
-      return (info = "" + "・ゾンビ化表　ZMB+x\n" + "（x=オープン中の感染度マスの数。+xは省略可能、省略時は0）\n" + "・感染度表　BIOx\n" + "（xは被弾回数。xは省略可能、省略時は1）\n" + "（上記二つは最初からシークレットダイスで行われます）\n")
+      return "" + "・ゾンビ化表　ZMB+x\n" + "（x=オープン中の感染度マスの数。+xは省略可能、省略時は0）\n" + "・感染度表　BIOx\n" + "（xは被弾回数。xは省略可能、省略時は1）\n" + "（上記二つは最初からシークレットダイスで行われます）\n"
     }, TMP_DiceOfTheDead_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_DiceOfTheDead_rollDiceCommand_5 = function $$rollDiceCommand(command) {
@@ -91,7 +91,7 @@
       return result;
     }, TMP_DiceOfTheDead_checkInfection_7.$$arity = 1);
     return (Opal.defn(self, '$rollZombie', TMP_DiceOfTheDead_rollZombie_8 = function $$rollZombie(value) {
-      var $a, $b, self = this, d1 = nil, d2 = nil, diceTotal = nil, table = nil, minDice = nil, maxDice = nil, index = nil, number = nil, text = nil, result = nil;
+      var $a, $b, self = this, d1 = nil, d2 = nil, diceTotal = nil, table = nil, minDice = nil, maxDice = nil, index = nil, _number = nil, text = nil, result = nil;
 
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (d1 = ($a[0] == null ? nil : $a[0])), $b;
@@ -103,7 +103,7 @@
       index = diceTotal;
       index = [minDice, index].$max();
       index = [index, maxDice].$min();
-      $b = table.$assoc(index), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), $b;
+      $b = table.$assoc(index), $a = Opal.to_ary($b), (_number = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), $b;
       result = "" + "ゾンビ化表　＞　出目：" + (d1) + "＋" + (d2) + "　感染度：" + (value) + "　合計値：" + (diceTotal) + "　＞　" + (text);
       return result;
     }, TMP_DiceOfTheDead_rollZombie_8.$$arity = 1), nil) && 'rollZombie';

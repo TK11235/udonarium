@@ -64,10 +64,10 @@
       return nil;
     }, TMP_OrgaRain_rollDiceCommand_5.$$arity = 1);
     return (Opal.defn(self, '$checkRoll', TMP_OrgaRain_checkRoll_8 = function $$checkRoll(diceCount, countNo) {
-      var $a, $b, TMP_6, TMP_7, self = this, dice = nil, diceText = nil, diceText2 = nil, diceArray = nil, resultArray = nil, success = nil, countText = nil, resultText = nil, result = nil;
+      var $a, $b, TMP_6, TMP_7, self = this, _dice = nil, diceText = nil, diceText2 = nil, diceArray = nil, resultArray = nil, success = nil, countText = nil, resultText = nil, result = nil;
 
       
-      $b = self.$roll(diceCount, 10, self.sortType), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(diceCount, 10, self.sortType), $a = Opal.to_ary($b), (_dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceText2 = diceText.$gsub("10", "0");
       diceArray = $send(diceText2.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;

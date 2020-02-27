@@ -299,17 +299,17 @@ if (item == null) item = nil;
     }, TMP_Torg_get_torg_bonus_text_20.$$arity = 1);
     
     Opal.defn(self, '$getTorgBonusOutputTextWhenModDefined', TMP_Torg_getTorgBonusOutputTextWhenModDefined_21 = function $$getTorgBonusOutputTextWhenModDefined(value, resultValue, mod) {
-      var self = this, output = nil;
+      var self = this;
 
       
       self.$debug("getTorgBonusOutputTextWhenModDefined value, mod", value, mod);
       if ($truthy($rb_gt(mod, 0))) {
-        return (output = "" + (resultValue) + "[" + (value) + "]+" + (mod) + " ＞ " + ($rb_plus(resultValue, mod)))
+        return "" + (resultValue) + "[" + (value) + "]+" + (mod) + " ＞ " + ($rb_plus(resultValue, mod))
         } else {
         
         self.$debug("resultValue", resultValue);
         self.$debug("mod", mod);
-        return (output = "" + (resultValue) + "[" + (value) + "]" + (mod) + " ＞ " + ($rb_plus(resultValue, mod)));
+        return "" + (resultValue) + "[" + (value) + "]" + (mod) + " ＞ " + ($rb_plus(resultValue, mod));
       };
     }, TMP_Torg_getTorgBonusOutputTextWhenModDefined_21.$$arity = 3);
     return (Opal.defn(self, '$get_torg_bonus', TMP_Torg_get_torg_bonus_22 = function $$get_torg_bonus(value) {

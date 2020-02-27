@@ -30,7 +30,7 @@
 
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Raisondetre_initialize_1, TMP_Raisondetre_gameName_2, TMP_Raisondetre_gameType_3, TMP_Raisondetre_getHelpMessage_4, TMP_Raisondetre_rollDiceCommand_5, TMP_Raisondetre_checkRoll_9, TMP_Raisondetre_checkDamage_13;
 
-    def.sortTye = nil;
+    def.sortType = nil;
     
     
     Opal.defn(self, '$initialize', TMP_Raisondetre_initialize_1 = function $$initialize() {
@@ -99,7 +99,7 @@
     }, TMP_Raisondetre_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$checkRoll', TMP_Raisondetre_checkRoll_9 = function $$checkRoll(diceCount, choiceCount, target) {
-      var $a, $b, TMP_6, TMP_7, TMP_8, self = this, correction = nil, rollCount = nil, dice = nil, diceText = nil, diceText2 = nil, diceArray = nil, funbleArray = nil, isFunble = nil, success = nil, criticalCount = nil, critical = nil, choiceArray = nil, choiceText = nil, result = nil;
+      var $a, $b, TMP_6, TMP_7, TMP_8, self = this, correction = nil, rollCount = nil, _dice = nil, diceText = nil, diceText2 = nil, diceArray = nil, funbleArray = nil, isFunble = nil, dice = nil, success = nil, criticalCount = nil, critical = nil, choiceArray = nil, choiceText = nil, result = nil;
 
       
       if ($truthy($rb_le(diceCount, 0))) {
@@ -111,7 +111,7 @@
         correction = 0;
         rollCount = diceCount;
       };
-      $b = self.$roll(rollCount, 10, self.sortTye), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(rollCount, 10, self.sortType), $a = Opal.to_ary($b), (_dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceText2 = diceText.$gsub("10", "0");
       diceArray = $send(diceText2.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
@@ -163,7 +163,7 @@ if (i == null) i = nil;
       return result;
     }, TMP_Raisondetre_checkRoll_9.$$arity = 3);
     return (Opal.defn(self, '$checkDamage', TMP_Raisondetre_checkDamage_13 = function $$checkDamage(diceCount, armor) {
-      var $a, $b, TMP_10, TMP_11, TMP_12, self = this, correction = nil, rollCount = nil, dice = nil, diceText = nil, diceText2 = nil, diceArray = nil, criticalCount = nil, result = nil, resultArray = nil, success = nil, resultText = nil;
+      var $a, $b, TMP_10, TMP_11, TMP_12, self = this, correction = nil, rollCount = nil, _dice = nil, diceText = nil, diceText2 = nil, diceArray = nil, criticalCount = nil, result = nil, resultArray = nil, success = nil, resultText = nil;
 
       
       if ($truthy($rb_le(diceCount, 0))) {
@@ -175,7 +175,7 @@ if (i == null) i = nil;
         correction = 0;
         rollCount = diceCount;
       };
-      $b = self.$roll(rollCount, 10, self.sortTye), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(rollCount, 10, self.sortType), $a = Opal.to_ary($b), (_dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceText2 = diceText.$gsub("10", "0");
       diceArray = $send(diceText2.$split(/,/), 'collect', [], (TMP_10 = function(i){var self = TMP_10.$$s || this;
 if (i == null) i = nil;

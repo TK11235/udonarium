@@ -196,20 +196,20 @@ if (i == null) i = nil;
       return nil;
     }, TMP_DarkBlaze_rollDiceCommand_17.$$arity = 1);
     return (Opal.defn(self, '$get_horidasibukuro_table', TMP_DarkBlaze_get_horidasibukuro_table_18 = function $$get_horidasibukuro_table(dice) {
-      var $a, $b, self = this, output = nil, material_kind = nil, magic_stone = nil, num1 = nil, dmy = nil, num2 = nil, magic_stone_result = nil, type = nil;
+      var $a, $b, self = this, output = nil, material_kind = nil, magic_stone = nil, num1 = nil, num2 = nil, magic_stone_result = nil, type = nil;
 
       
       output = "1";
       material_kind = ["蟲甲", "金属", "金貨", "植物", "獣皮", "竜鱗", "レアモノ", "レアモノ"];
       magic_stone = ["火炎石", "雷撃石", "氷結石"];
-      $b = self.$roll(2, 6), $a = Opal.to_ary($b), (num1 = ($a[0] == null ? nil : $a[0])), (dmy = ($a[1] == null ? nil : $a[1])), $b;
-      $b = self.$roll(dice, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), (dmy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(2, 6), $a = Opal.to_ary($b), (num1 = ($a[0] == null ? nil : $a[0])), $b;
+      $b = self.$roll(dice, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), $b;
       self.$debug("dice", dice);
       self.$debug("num1", num1);
       self.$debug("num2", num2);
       if ($truthy($rb_le(num1, 4))) {
         
-        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), (dmy = ($a[1] == null ? nil : $a[1])), $b;
+        $b = self.$roll(1, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), $b;
         magic_stone_result = magic_stone['$[]']($rb_minus($rb_divide(num2, 2).$to_i(), 1));
         output = "" + "《" + (magic_stone_result) + "》を" + (dice) + "個獲得";
       } else if (num1['$=='](7)) {

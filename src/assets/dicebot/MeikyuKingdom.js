@@ -28,7 +28,7 @@
     function $MeikyuKingdom(){};
     var self = $MeikyuKingdom = $klass($base, $super, 'MeikyuKingdom', $MeikyuKingdom);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_MeikyuKingdom_initialize_1, TMP_MeikyuKingdom_gameName_2, TMP_MeikyuKingdom_gameType_3, TMP_MeikyuKingdom_getHelpMessage_4, TMP_MeikyuKingdom_changeText_7, TMP_MeikyuKingdom_dice_command_xRn_8, TMP_MeikyuKingdom_check_2D6_9, TMP_MeikyuKingdom_get2D6Result_10, TMP_MeikyuKingdom_get2D6ResultOnlySuccess_11, TMP_MeikyuKingdom_getKiryokuResult_14, TMP_MeikyuKingdom_mayokin_check_16, TMP_MeikyuKingdom_rollDiceCommand_18, TMP_MeikyuKingdom_getCount_19, TMP_MeikyuKingdom_mk_life_research_table_20, TMP_MeikyuKingdom_mk_order_research_table_21, TMP_MeikyuKingdom_mk_calture_research_table_22, TMP_MeikyuKingdom_mk_army_research_table_23, TMP_MeikyuKingdom_mk_talent_break_table_24, TMP_MeikyuKingdom_mk_charm_break_table_25, TMP_MeikyuKingdom_mk_search_break_table_26, TMP_MeikyuKingdom_mk_valor_break_table_27, TMP_MeikyuKingdom_mk_festival_break_table_28, TMP_MeikyuKingdom_mk_festival_table_29, TMP_MeikyuKingdom_mk_kingdom_disaster_table_30, TMP_MeikyuKingdom_mk_talent_happening_table_31, TMP_MeikyuKingdom_mk_charm_happening_table_32, TMP_MeikyuKingdom_mk_search_happening_table_33, TMP_MeikyuKingdom_mk_valor_happening_table_34, TMP_MeikyuKingdom_mk_kingdom_change_table_35, TMP_MeikyuKingdom_mk_kingdom_mischange_table_36, TMP_MeikyuKingdom_mk_critical_attack_table_37, TMP_MeikyuKingdom_mk_fatal_wounds_table_38, TMP_MeikyuKingdom_mk_travel_table_39, TMP_MeikyuKingdom_mk_negotiation_table_40, TMP_MeikyuKingdom_mk_combat_fumble_table_41, TMP_MeikyuKingdom_mk_emotion_table_42, TMP_MeikyuKingdom_mk_market_price_table_43, TMP_MeikyuKingdom_mk_treasure1_table_44, TMP_MeikyuKingdom_mk_treasure2_table_45, TMP_MeikyuKingdom_mk_treasure3_table_46, TMP_MeikyuKingdom_mk_treasure4_table_47, TMP_MeikyuKingdom_mk_treasure5_table_48, TMP_MeikyuKingdom_mk_name_table_49, TMP_MeikyuKingdom_mk_nick_a_table_50, TMP_MeikyuKingdom_mk_nick_b_table_51, TMP_MeikyuKingdom_mk_name_a_table_52, TMP_MeikyuKingdom_mk_name_b_table_53, TMP_MeikyuKingdom_mk_name_ex_table_54, TMP_MeikyuKingdom_mk_name_fa_table_55, TMP_MeikyuKingdom_mk_device_factory_table_57, TMP_MeikyuKingdom_mk_item_decide_table_64, TMP_MeikyuKingdom_mk_weapon_item_table_65, TMP_MeikyuKingdom_mk_life_item_table_66, TMP_MeikyuKingdom_mk_rest_item_table_67, TMP_MeikyuKingdom_mk_search_item_table_68, TMP_MeikyuKingdom_mk_rare_weapon_item_table_69, TMP_MeikyuKingdom_mk_rare_item_table_70, TMP_MeikyuKingdom_mk_item_features_table_71, TMP_MeikyuKingdom_mk_item_power_table_72, TMP_MeikyuKingdom_mk_item_jyumon_table_73, TMP_MeikyuKingdom_mk_item_jyuka_table_74, TMP_MeikyuKingdom_mk_item_aptitude_table_77, TMP_MeikyuKingdom_mk_item_attribute_table_78, TMP_MeikyuKingdom_mk_gender_table_79, TMP_MeikyuKingdom_mk_family_business_table_80, TMP_MeikyuKingdom_mk_random_encount1_table_81, TMP_MeikyuKingdom_mk_random_encount2_table_82, TMP_MeikyuKingdom_mk_random_encount3_table_83, TMP_MeikyuKingdom_mk_random_encount4_table_84, TMP_MeikyuKingdom_mk_random_encount5_table_85, TMP_MeikyuKingdom_mk_random_encount6_table_86, TMP_MeikyuKingdom_mk_pn_decide_table_88, TMP_MeikyuKingdom_mk_decoration_table_92, TMP_MeikyuKingdom_mk_placename_table_96, TMP_MeikyuKingdom_mk_basic_decoration_table_97, TMP_MeikyuKingdom_mk_spooky_decoration_table_98, TMP_MeikyuKingdom_mk_katakana_decoration_table_99, TMP_MeikyuKingdom_mk_passage_placename_table_100, TMP_MeikyuKingdom_mk_natural_placename_table_101, TMP_MeikyuKingdom_mk_artifact_placename_table_102, TMP_MeikyuKingdom_mk_ls_decide_table_104, TMP_MeikyuKingdom_mk_landscape_table_111, TMP_MeikyuKingdom_mk_artifact_landscape_table_112, TMP_MeikyuKingdom_mk_cave_landscape_table_113, TMP_MeikyuKingdom_mk_natural_landscape_table_114, TMP_MeikyuKingdom_mk_waterside_landscape_table_115, TMP_MeikyuKingdom_mk_skyrealm_landscape_table_116, TMP_MeikyuKingdom_mk_strange_place_landscape_table_117, TMP_MeikyuKingdom_mk_kingdom_name_1_table_118, TMP_MeikyuKingdom_mk_kingdom_name_2_table_119, TMP_MeikyuKingdom_mk_kingdom_name_3_table_120, TMP_MeikyuKingdom_mk_word_1_table_121, TMP_MeikyuKingdom_mk_word_2_table_122, TMP_MeikyuKingdom_mk_word_3_table_123, TMP_MeikyuKingdom_mk_word_4_table_124, TMP_MeikyuKingdom_getAftersearchBreakTable_125, TMP_MeikyuKingdom_getWholeBreakTable_126, TMP_MeikyuKingdom_getLoversBreakTable_127;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_MeikyuKingdom_initialize_1, TMP_MeikyuKingdom_gameName_2, TMP_MeikyuKingdom_gameType_3, TMP_MeikyuKingdom_getHelpMessage_4, TMP_MeikyuKingdom_changeText_7, TMP_MeikyuKingdom_dice_command_xRn_8, TMP_MeikyuKingdom_check_2D6_9, TMP_MeikyuKingdom_get2D6Result_10, TMP_MeikyuKingdom_get2D6ResultOnlySuccess_11, TMP_MeikyuKingdom_getKiryokuResult_14, TMP_MeikyuKingdom_mayokin_check_16, TMP_MeikyuKingdom_rollDiceCommand_18, TMP_MeikyuKingdom_getCount_19, TMP_MeikyuKingdom_mk_life_research_table_20, TMP_MeikyuKingdom_mk_order_research_table_21, TMP_MeikyuKingdom_mk_calture_research_table_22, TMP_MeikyuKingdom_mk_army_research_table_23, TMP_MeikyuKingdom_mk_talent_break_table_24, TMP_MeikyuKingdom_mk_charm_break_table_25, TMP_MeikyuKingdom_mk_search_break_table_26, TMP_MeikyuKingdom_mk_valor_break_table_27, TMP_MeikyuKingdom_mk_festival_break_table_28, TMP_MeikyuKingdom_mk_festival_table_29, TMP_MeikyuKingdom_mk_kingdom_disaster_table_30, TMP_MeikyuKingdom_mk_talent_happening_table_31, TMP_MeikyuKingdom_mk_charm_happening_table_32, TMP_MeikyuKingdom_mk_search_happening_table_33, TMP_MeikyuKingdom_mk_valor_happening_table_34, TMP_MeikyuKingdom_mk_kingdom_change_table_35, TMP_MeikyuKingdom_mk_kingdom_mischange_table_36, TMP_MeikyuKingdom_mk_critical_attack_table_37, TMP_MeikyuKingdom_mk_fatal_wounds_table_38, TMP_MeikyuKingdom_mk_travel_table_39, TMP_MeikyuKingdom_mk_negotiation_table_40, TMP_MeikyuKingdom_mk_combat_fumble_table_41, TMP_MeikyuKingdom_mk_emotion_table_42, TMP_MeikyuKingdom_mk_market_price_table_43, TMP_MeikyuKingdom_mk_treasure1_table_44, TMP_MeikyuKingdom_mk_treasure2_table_45, TMP_MeikyuKingdom_mk_treasure3_table_46, TMP_MeikyuKingdom_mk_treasure4_table_47, TMP_MeikyuKingdom_mk_treasure5_table_48, TMP_MeikyuKingdom_mk_name_table_49, TMP_MeikyuKingdom_mk_nick_a_table_50, TMP_MeikyuKingdom_mk_nick_b_table_51, TMP_MeikyuKingdom_mk_name_a_table_52, TMP_MeikyuKingdom_mk_name_b_table_53, TMP_MeikyuKingdom_mk_name_ex_table_54, TMP_MeikyuKingdom_mk_name_fa_table_55, TMP_MeikyuKingdom_mk_device_factory_table_56, TMP_MeikyuKingdom_mk_item_decide_table_63, TMP_MeikyuKingdom_mk_weapon_item_table_64, TMP_MeikyuKingdom_mk_life_item_table_65, TMP_MeikyuKingdom_mk_rest_item_table_66, TMP_MeikyuKingdom_mk_search_item_table_67, TMP_MeikyuKingdom_mk_rare_weapon_item_table_68, TMP_MeikyuKingdom_mk_rare_item_table_69, TMP_MeikyuKingdom_mk_item_features_table_70, TMP_MeikyuKingdom_mk_item_power_table_71, TMP_MeikyuKingdom_mk_item_jyumon_table_72, TMP_MeikyuKingdom_mk_item_jyuka_table_73, TMP_MeikyuKingdom_mk_item_aptitude_table_76, TMP_MeikyuKingdom_mk_item_attribute_table_77, TMP_MeikyuKingdom_mk_gender_table_78, TMP_MeikyuKingdom_mk_family_business_table_79, TMP_MeikyuKingdom_mk_random_encount1_table_80, TMP_MeikyuKingdom_mk_random_encount2_table_81, TMP_MeikyuKingdom_mk_random_encount3_table_82, TMP_MeikyuKingdom_mk_random_encount4_table_83, TMP_MeikyuKingdom_mk_random_encount5_table_84, TMP_MeikyuKingdom_mk_random_encount6_table_85, TMP_MeikyuKingdom_mk_pn_decide_table_87, TMP_MeikyuKingdom_mk_decoration_table_91, TMP_MeikyuKingdom_mk_placename_table_95, TMP_MeikyuKingdom_mk_basic_decoration_table_96, TMP_MeikyuKingdom_mk_spooky_decoration_table_97, TMP_MeikyuKingdom_mk_katakana_decoration_table_98, TMP_MeikyuKingdom_mk_passage_placename_table_99, TMP_MeikyuKingdom_mk_natural_placename_table_100, TMP_MeikyuKingdom_mk_artifact_placename_table_101, TMP_MeikyuKingdom_mk_ls_decide_table_103, TMP_MeikyuKingdom_mk_landscape_table_110, TMP_MeikyuKingdom_mk_artifact_landscape_table_111, TMP_MeikyuKingdom_mk_cave_landscape_table_112, TMP_MeikyuKingdom_mk_natural_landscape_table_113, TMP_MeikyuKingdom_mk_waterside_landscape_table_114, TMP_MeikyuKingdom_mk_skyrealm_landscape_table_115, TMP_MeikyuKingdom_mk_strange_place_landscape_table_116, TMP_MeikyuKingdom_mk_kingdom_name_1_table_117, TMP_MeikyuKingdom_mk_kingdom_name_2_table_118, TMP_MeikyuKingdom_mk_kingdom_name_3_table_119, TMP_MeikyuKingdom_mk_word_1_table_120, TMP_MeikyuKingdom_mk_word_2_table_121, TMP_MeikyuKingdom_mk_word_3_table_122, TMP_MeikyuKingdom_mk_word_4_table_123, TMP_MeikyuKingdom_getAftersearchBreakTable_124, TMP_MeikyuKingdom_getWholeBreakTable_125, TMP_MeikyuKingdom_getLoversBreakTable_126;
 
     
     self.$setPrefixes(["\\d+MK", "LRT", "ORT", "CRT", "ART", "FRT", "TBT", "CBT", "SBT", "VBT", "FBT", "ABT", "WBT", "LBT", "THT", "CHT", "SHT", "VHT", "KDT", "KCT", "KMT", "CAT", "FWT", "CFT", "TT", "NT", "ET", "MPT", "T1T", "T2T", "T3T", "T4T", "T5T", "NAME.*", "DFT", "IDT\\d*", "WIT", "LIT", "RIT", "SIT", "RWIT", "RUIT", "IFT", "\\d+RET", "PNT\\d*", "MLT\\d*", "KNT\\d+", "WORD\\d+"]);
@@ -217,7 +217,7 @@ if (i == null) i = nil;
     }, TMP_MeikyuKingdom_mayokin_check_16.$$arity = 2);
     
     Opal.defn(self, '$rollDiceCommand', TMP_MeikyuKingdom_rollDiceCommand_18 = function $$rollDiceCommand(command) {
-      var TMP_17, $a, $b, self = this, output = nil, type = nil, total_n = nil, $case = nil, count = nil, names = nil, dummy = nil;
+      var TMP_17, $a, $b, self = this, output = nil, type = nil, total_n = nil, $case = nil, count = nil, names = nil;
 
       
       output = "";
@@ -262,11 +262,10 @@ if (_i == null) _i = nil;
       count = self.$getCount(Opal.const_get_relative($nesting, 'Regexp').$last_match(1));
       output = self.$mk_ls_decide_table(count);
       total_n = count;}
-      else if (/^DFT(\d*)/i['$===']($case)) {
+      else if (/^DFT/i['$===']($case)) {
       type = "デバイスファクトリー";
-      count = self.$getCount(Opal.const_get_relative($nesting, 'Regexp').$last_match(1));
-      output = self.$mk_device_factory_table(count);
-      total_n = count;}
+      output = self.$mk_device_factory_table();
+      total_n = 1;}
       else if (/^LRT/i['$===']($case)) {
       type = "生活散策";
       $b = self.$mk_life_research_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
@@ -353,35 +352,35 @@ if (_i == null) _i = nil;
       output = self.$mk_search_item_table(total_n);}
       else if (/^IFT/i['$===']($case)) {
       type = "アイテム特性";
-      $b = self.$roll(2, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(2, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_item_features_table(total_n);}
       else if (/^IDT/i['$===']($case)) {
       type = "アイテムカテゴリ決定";
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_item_decide_table(total_n);}
       else if (/^1RET/i['$===']($case)) {
       type = "1Lvランダムエンカウント";
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_random_encount1_table(total_n);}
       else if (/^2RET/i['$===']($case)) {
       type = "2Lvランダムエンカウント";
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_random_encount2_table(total_n);}
       else if (/^3RET/i['$===']($case)) {
       type = "3Lvランダムエンカウント";
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_random_encount3_table(total_n);}
       else if (/^4RET/i['$===']($case)) {
       type = "4Lvランダムエンカウント";
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_random_encount4_table(total_n);}
       else if (/^5RET/i['$===']($case)) {
       type = "5Lvランダムエンカウント";
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_random_encount5_table(total_n);}
       else if (/^6RET/i['$===']($case)) {
       type = "6Lvランダムエンカウント";
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$mk_random_encount6_table(total_n);}
       else if (/^KDT/i['$===']($case)) {
       type = "王国災厄";
@@ -708,89 +707,85 @@ if (_i == null) _i = nil;
       return self.$get_table_by_number(num, table);
     }, TMP_MeikyuKingdom_mk_name_fa_table_55.$$arity = 1);
     
-    Opal.defn(self, '$mk_device_factory_table', TMP_MeikyuKingdom_mk_device_factory_table_57 = function $$mk_device_factory_table(num) {
-      var TMP_56, self = this, output = nil;
+    Opal.defn(self, '$mk_device_factory_table', TMP_MeikyuKingdom_mk_device_factory_table_56 = function $$mk_device_factory_table() {
+      var $a, $b, self = this, output = nil, dice = nil;
 
       
       output = self.$mk_item_decide_table($rb_plus(self.$rand(6), 1));
-      num = 1;
-      $send(num, 'times', [], (TMP_56 = function(_i){var self = TMP_56.$$s || this, $a, $b, dice = nil;
-if (_i == null) _i = nil;
-      
-        $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
-        return (output = $rb_plus($rb_plus(output, " / "), self.$mk_item_features_table(dice)));}, TMP_56.$$s = self, TMP_56.$$arity = 1, TMP_56));
+      $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
+      output = $rb_plus($rb_plus(output, " / "), self.$mk_item_features_table(dice));
       return output;
-    }, TMP_MeikyuKingdom_mk_device_factory_table_57.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_device_factory_table_56.$$arity = 0);
     
-    Opal.defn(self, '$mk_item_decide_table', TMP_MeikyuKingdom_mk_item_decide_table_64 = function $$mk_item_decide_table(num) {
-      var TMP_58, TMP_59, TMP_60, TMP_61, TMP_62, TMP_63, self = this, functionTable = nil;
+    Opal.defn(self, '$mk_item_decide_table', TMP_MeikyuKingdom_mk_item_decide_table_63 = function $$mk_item_decide_table(num) {
+      var TMP_57, TMP_58, TMP_59, TMP_60, TMP_61, TMP_62, self = this, functionTable = nil;
 
       
-      functionTable = [[1, $send(self, 'lambda', [], (TMP_58 = function(){var self = TMP_58.$$s || this;
+      functionTable = [[1, $send(self, 'lambda', [], (TMP_57 = function(){var self = TMP_57.$$s || this;
 
-      return self.$mk_weapon_item_table(self.$d66(2))}, TMP_58.$$s = self, TMP_58.$$arity = 0, TMP_58))], [2, $send(self, 'lambda', [], (TMP_59 = function(){var self = TMP_59.$$s || this;
+      return self.$mk_weapon_item_table(self.$d66(2))}, TMP_57.$$s = self, TMP_57.$$arity = 0, TMP_57))], [2, $send(self, 'lambda', [], (TMP_58 = function(){var self = TMP_58.$$s || this;
 
-      return self.$mk_life_item_table(self.$d66(2))}, TMP_59.$$s = self, TMP_59.$$arity = 0, TMP_59))], [3, $send(self, 'lambda', [], (TMP_60 = function(){var self = TMP_60.$$s || this;
+      return self.$mk_life_item_table(self.$d66(2))}, TMP_58.$$s = self, TMP_58.$$arity = 0, TMP_58))], [3, $send(self, 'lambda', [], (TMP_59 = function(){var self = TMP_59.$$s || this;
 
-      return self.$mk_rest_item_table(self.$d66(2))}, TMP_60.$$s = self, TMP_60.$$arity = 0, TMP_60))], [4, $send(self, 'lambda', [], (TMP_61 = function(){var self = TMP_61.$$s || this;
+      return self.$mk_rest_item_table(self.$d66(2))}, TMP_59.$$s = self, TMP_59.$$arity = 0, TMP_59))], [4, $send(self, 'lambda', [], (TMP_60 = function(){var self = TMP_60.$$s || this;
 
-      return self.$mk_search_item_table(self.$d66(2))}, TMP_61.$$s = self, TMP_61.$$arity = 0, TMP_61))], [5, $send(self, 'lambda', [], (TMP_62 = function(){var self = TMP_62.$$s || this;
+      return self.$mk_search_item_table(self.$d66(2))}, TMP_60.$$s = self, TMP_60.$$arity = 0, TMP_60))], [5, $send(self, 'lambda', [], (TMP_61 = function(){var self = TMP_61.$$s || this;
 
-      return self.$mk_rare_weapon_item_table(self.$d66(1))}, TMP_62.$$s = self, TMP_62.$$arity = 0, TMP_62))], [6, $send(self, 'lambda', [], (TMP_63 = function(){var self = TMP_63.$$s || this;
+      return self.$mk_rare_weapon_item_table(self.$d66(1))}, TMP_61.$$s = self, TMP_61.$$arity = 0, TMP_61))], [6, $send(self, 'lambda', [], (TMP_62 = function(){var self = TMP_62.$$s || this;
 
-      return self.$mk_rare_item_table(self.$d66(1))}, TMP_63.$$s = self, TMP_63.$$arity = 0, TMP_63))]];
+      return self.$mk_rare_item_table(self.$d66(1))}, TMP_62.$$s = self, TMP_62.$$arity = 0, TMP_62))]];
       return self.$get_table_by_number(num, functionTable);
-    }, TMP_MeikyuKingdom_mk_item_decide_table_64.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_item_decide_table_63.$$arity = 1);
     
-    Opal.defn(self, '$mk_weapon_item_table', TMP_MeikyuKingdom_mk_weapon_item_table_65 = function $$mk_weapon_item_table(num) {
+    Opal.defn(self, '$mk_weapon_item_table', TMP_MeikyuKingdom_mk_weapon_item_table_64 = function $$mk_weapon_item_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "だんびら"], [12, "だんびら"], [13, "ダガー"], [14, "戦斧"], [15, "盾"], [16, "鑓"], [22, "籠手（だんびら）"], [23, "手裏剣"], [24, "石弓"], [25, "甲冑"], [26, "戦鎚"], [33, "大弓（だんびら）"], [34, "爆弾"], [35, "鉄砲"], [36, "大剣"], [44, "拳銃（だんびら）"], [45, "ホウキ"], [46, "徹甲弾"], [55, "だんびら"], [56, "大砲"], [66, "だんびら"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_weapon_item_table_65.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_weapon_item_table_64.$$arity = 1);
     
-    Opal.defn(self, '$mk_life_item_table', TMP_MeikyuKingdom_mk_life_item_table_66 = function $$mk_life_item_table(num) {
+    Opal.defn(self, '$mk_life_item_table', TMP_MeikyuKingdom_mk_life_item_table_65 = function $$mk_life_item_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "バックパック"], [12, "バックパック"], [13, "鍋"], [14, "クラッカー"], [15, "がまぐち"], [16, "マント"], [22, "法衣（バックパック）"], [23, "カード"], [24, "エプロン"], [25, "住民台帳"], [26, "携帯電話"], [33, "召喚鍵（バックパック）"], [34, "肖像画"], [35, "衣装"], [36, "山吹色のお菓子"], [44, "バックパック"], [45, "眼鏡"], [46, "クレジットカード"], [55, "バックパック"], [56, "魔道書"], [66, "バックパック"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_life_item_table_66.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_life_item_table_65.$$arity = 1);
     
-    Opal.defn(self, '$mk_rest_item_table', TMP_MeikyuKingdom_mk_rest_item_table_67 = function $$mk_rest_item_table(num) {
+    Opal.defn(self, '$mk_rest_item_table', TMP_MeikyuKingdom_mk_rest_item_table_66 = function $$mk_rest_item_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "お弁当"], [12, "お弁当"], [13, "特効薬"], [14, "保存食"], [15, "担架"], [16, "珈琲"], [22, "軟膏（お弁当）"], [23, "チョコレート"], [24, "お酒"], [25, "フルコース"], [26, "ポーション"], [33, "お弁当"], [34, "救急箱"], [35, "強壮剤"], [36, "迷宮保険"], [44, "お弁当"], [45, "科学調味料"], [46, "惚れ薬"], [55, "お弁当"], [56, "復活薬"], [66, "お弁当"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_rest_item_table_67.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_rest_item_table_66.$$arity = 1);
     
-    Opal.defn(self, '$mk_search_item_table', TMP_MeikyuKingdom_mk_search_item_table_68 = function $$mk_search_item_table(num) {
+    Opal.defn(self, '$mk_search_item_table', TMP_MeikyuKingdom_mk_search_item_table_67 = function $$mk_search_item_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "星の欠片"], [12, "星の欠片"], [13, "旗"], [14, "お守り"], [15, "拷問具"], [16, "パワーリスト"], [22, "工具（星の欠片）"], [23, "テント"], [24, "楽器"], [25, "使い魔"], [26, "乗騎"], [33, "迷宮迷彩（星の欠片）"], [34, "罠百科"], [35, "迷宮防護服"], [36, "地図"], [44, "星の欠片"], [45, "時計"], [46, "もぐら棒"], [55, "星の欠片"], [56, "カボチャの馬車"], [66, "星の欠片"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_search_item_table_68.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_search_item_table_67.$$arity = 1);
     
-    Opal.defn(self, '$mk_rare_weapon_item_table', TMP_MeikyuKingdom_mk_rare_weapon_item_table_69 = function $$mk_rare_weapon_item_table(num) {
+    Opal.defn(self, '$mk_rare_weapon_item_table', TMP_MeikyuKingdom_mk_rare_weapon_item_table_68 = function $$mk_rare_weapon_item_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "虚弾"], [12, "怪物毒"], [13, "小鬼の襟巻"], [14, "喇叭銃"], [15, "蛍矢"], [16, "大盾"], [21, "まわし"], [22, "怪物毒"], [23, "しゃべる剣"], [24, "小麦粉"], [25, "王笏"], [26, "服従の鞭"], [31, "ぬいぐるみ"], [32, "魔杖"], [33, "怪物毒"], [34, "星衣"], [35, "聖印"], [36, "獣の毛皮"], [41, "日傘"], [42, "チェインソード"], [43, "邪眼"], [44, "怪物毒"], [45, "徒手空拳"], [46, "バカには見えない鎧"], [51, "ビキニアーマー"], [52, "輝く者"], [53, "貪る者"], [54, "滅ぼす者"], [55, "機械の体"], [56, "破城槌"], [61, "刈り取る者"], [62, "貫く者"], [63, "黄金の鶴嘴"], [64, "ムラサマ"], [65, "蒸気甲冑"], [66, "王剣"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_rare_weapon_item_table_69.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_rare_weapon_item_table_68.$$arity = 1);
     
-    Opal.defn(self, '$mk_rare_item_table', TMP_MeikyuKingdom_mk_rare_item_table_70 = function $$mk_rare_item_table(num) {
+    Opal.defn(self, '$mk_rare_item_table', TMP_MeikyuKingdom_mk_rare_item_table_69 = function $$mk_rare_item_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "ブルーリボン"], [12, "聖痕"], [13, "剥製"], [14, "愚者の冠"], [15, "名刺"], [16, "種籾"], [21, "香水"], [22, "守りの指輪（名刺）"], [23, "煙玉"], [24, "悪名"], [25, "藁人形"], [26, "パワー餌"], [31, "王妃の鏡"], [32, "蓄音機"], [33, "無限の心臓（名刺）"], [34, "星籠"], [35, "水晶球"], [36, "転ばぬ先の杖"], [41, "悟りの書"], [42, "操りロープ"], [43, "盗賊の七つ道具"], [44, "携帯算術機（名刺）"], [45, "棺桶"], [46, "カメラ"], [51, "不思議なたまご"], [52, "ブーケ"], [53, "露眼鏡"], [54, "災厄王の遺物"], [55, "経験値"], [56, "鞍"], [61, "視肉"], [62, "玉璽"], [63, "衛星帯"], [64, "軍配"], [65, "聖杯"], [66, "愛"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_rare_item_table_70.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_rare_item_table_69.$$arity = 1);
     
-    Opal.defn(self, '$mk_item_features_table', TMP_MeikyuKingdom_mk_item_features_table_71 = function $$mk_item_features_table(num) {
+    Opal.defn(self, '$mk_item_features_table', TMP_MeikyuKingdom_mk_item_features_table_70 = function $$mk_item_features_table(num) {
       var $a, $b, self = this, output = nil, dice = nil;
 
       
@@ -828,53 +823,53 @@ if (_i == null) _i = nil;
         output = $rb_plus($rb_plus("「", self.$mk_item_attribute_table($rb_plus(self.$rand(6), 1))), "」の属性を持つ。")
       };
       return $rb_plus($rb_plus($rb_plus("特性[", num.$to_s()), "]："), output);
-    }, TMP_MeikyuKingdom_mk_item_features_table_71.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_item_features_table_70.$$arity = 1);
     
-    Opal.defn(self, '$mk_item_power_table', TMP_MeikyuKingdom_mk_item_power_table_72 = function $$mk_item_power_table(num) {
+    Opal.defn(self, '$mk_item_power_table', TMP_MeikyuKingdom_mk_item_power_table_71 = function $$mk_item_power_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "〔才覚〕"], [2, "〔魅力〕"], [3, "〔探索〕"], [4, "〔武勇〕"], [5, "〈器〉"], [6, "〈回避値〉"]];
       return $rb_plus("" + "[" + (num) + "]", self.$get_table_by_number(num, table));
-    }, TMP_MeikyuKingdom_mk_item_power_table_72.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_item_power_table_71.$$arity = 1);
     
-    Opal.defn(self, '$mk_item_jyumon_table', TMP_MeikyuKingdom_mk_item_jyumon_table_73 = function $$mk_item_jyumon_table(num) {
+    Opal.defn(self, '$mk_item_jyumon_table', TMP_MeikyuKingdom_mk_item_jyumon_table_72 = function $$mk_item_jyumon_table(num) {
       var self = this, table = nil;
 
       
       table = [[2, "モンスタースキル"], [3, "便利スキル"], [4, "芸能スキル"], [5, "迷宮スキル"], [6, "星術スキル"], [7, "一般スキル"], [8, "召喚スキル"], [9, "科学スキル"], [10, "交渉スキル"], [11, "神官のクラススキル"], [12, "ジョブスキル"]];
       return $rb_plus("" + "[" + (num) + "]", self.$get_table_by_number(num, table));
-    }, TMP_MeikyuKingdom_mk_item_jyumon_table_73.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_item_jyumon_table_72.$$arity = 1);
     
-    Opal.defn(self, '$mk_item_jyuka_table', TMP_MeikyuKingdom_mk_item_jyuka_table_74 = function $$mk_item_jyuka_table(num) {
+    Opal.defn(self, '$mk_item_jyuka_table', TMP_MeikyuKingdom_mk_item_jyuka_table_73 = function $$mk_item_jyuka_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "「呪い」のバッドステータス"], [2, "「肥満」のバッドステータス"], [3, "「愚か」のバッドステータス"], [4, "サイクルの終了時に《HP》が1点減少する"], [5, "条件を満たしても誰とも人間関係を結べない"], [6, "〈器〉が1点減少する"]];
       return $rb_plus("" + "[" + (num) + "]", self.$get_table_by_number(num, table));
-    }, TMP_MeikyuKingdom_mk_item_jyuka_table_74.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_item_jyuka_table_73.$$arity = 1);
     
-    Opal.defn(self, '$mk_item_aptitude_table', TMP_MeikyuKingdom_mk_item_aptitude_table_77 = function $$mk_item_aptitude_table(num) {
-      var TMP_75, TMP_76, self = this, table = nil;
+    Opal.defn(self, '$mk_item_aptitude_table', TMP_MeikyuKingdom_mk_item_aptitude_table_76 = function $$mk_item_aptitude_table(num) {
+      var TMP_74, TMP_75, self = this, table = nil;
 
       
-      table = [[1, "ランダムなクラス1種"], [2, $send(self, 'lambda', [], (TMP_75 = function(){var self = TMP_75.$$s || this;
+      table = [[1, "ランダムなクラス1種"], [2, $send(self, 'lambda', [], (TMP_74 = function(){var self = TMP_74.$$s || this;
 
-      return self.$mk_family_business_table(self.$d66(2))}, TMP_75.$$s = self, TMP_75.$$arity = 0, TMP_75))], [3, $send(self, 'lambda', [], (TMP_76 = function(){var self = TMP_76.$$s || this;
+      return self.$mk_family_business_table(self.$d66(2))}, TMP_74.$$s = self, TMP_74.$$arity = 0, TMP_74))], [3, $send(self, 'lambda', [], (TMP_75 = function(){var self = TMP_75.$$s || this;
 
-      return $rb_plus(self.$mk_gender_table($rb_plus(self.$rand(6), 1)), "性")}, TMP_76.$$s = self, TMP_76.$$arity = 0, TMP_76))], [4, "上級ジョブ"], [5, "モンスタースキルを修得"], [6, "童貞、もしくは処女"]];
+      return $rb_plus(self.$mk_gender_table($rb_plus(self.$rand(6), 1)), "性")}, TMP_75.$$s = self, TMP_75.$$arity = 0, TMP_75))], [4, "上級ジョブ"], [5, "モンスタースキルを修得"], [6, "童貞、もしくは処女"]];
       return $rb_plus("" + "[" + (num) + "]", self.$get_table_by_number(num, table));
-    }, TMP_MeikyuKingdom_mk_item_aptitude_table_77.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_item_aptitude_table_76.$$arity = 1);
     
-    Opal.defn(self, '$mk_item_attribute_table', TMP_MeikyuKingdom_mk_item_attribute_table_78 = function $$mk_item_attribute_table(num) {
+    Opal.defn(self, '$mk_item_attribute_table', TMP_MeikyuKingdom_mk_item_attribute_table_77 = function $$mk_item_attribute_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "自然の力"], [2, "幻夢の力"], [3, "星炎の力"], [4, "暗黒の力"], [5, "聖なるの力"], [6, "災厄の力"]];
       return $rb_plus("" + "[" + (num) + "]", self.$get_table_by_number(num, table));
-    }, TMP_MeikyuKingdom_mk_item_attribute_table_78.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_item_attribute_table_77.$$arity = 1);
     
-    Opal.defn(self, '$mk_gender_table', TMP_MeikyuKingdom_mk_gender_table_79 = function $$mk_gender_table(num) {
+    Opal.defn(self, '$mk_gender_table', TMP_MeikyuKingdom_mk_gender_table_78 = function $$mk_gender_table(num) {
       var self = this, output = nil;
 
       
@@ -885,66 +880,66 @@ if (_i == null) _i = nil;
         output = "女"
       };
       return output;
-    }, TMP_MeikyuKingdom_mk_gender_table_79.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_gender_table_78.$$arity = 1);
     
-    Opal.defn(self, '$mk_family_business_table', TMP_MeikyuKingdom_mk_family_business_table_80 = function $$mk_family_business_table(num) {
+    Opal.defn(self, '$mk_family_business_table', TMP_MeikyuKingdom_mk_family_business_table_79 = function $$mk_family_business_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "星術師"], [12, "魔道師"], [13, "召喚師"], [14, "博士"], [15, "医者"], [16, "貴族"], [22, "宦官"], [23, "武人"], [24, "処刑人"], [25, "衛視"], [26, "商人"], [33, "迷宮職人"], [34, "亭主"], [35, "料理人"], [36, "寿ぎ屋"], [44, "働きもの"], [45, "狩人"], [46, "冒険者"], [55, "怠け者"], [56, "盗賊"], [66, "生まれ表の中から、好きなジョブ1つを選ぶ"]];
       return $rb_plus("" + "[" + (num) + "]", self.$get_table_by_number(num, table));
-    }, TMP_MeikyuKingdom_mk_family_business_table_80.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_family_business_table_79.$$arity = 1);
     
-    Opal.defn(self, '$mk_random_encount1_table', TMP_MeikyuKingdom_mk_random_encount1_table_81 = function $$mk_random_encount1_table(num) {
+    Opal.defn(self, '$mk_random_encount1_table', TMP_MeikyuKingdom_mk_random_encount1_table_80 = function $$mk_random_encount1_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "『守って守って突撃ゴー！』　前衛：ごんぎつね×宮廷の人数、後衛：ノコギリ猪×1"], [2, "『じわじわ削る、カボチャの舞』　前衛：焔虫×宮廷の人数、本陣：カボチャ頭×宮廷の人数の半分"], [3, "『ものすごくジャマな人たち。』　前衛：小人さん×宮廷の人数、取り替え子×宮廷の人数の半分"], [4, "『何かやってくれるかも……』　前衛：兵隊エルフ×宮廷の人数"], [5, "『【かばう】で延命しつつ【鉄の勇気】』　前衛：キンギョ×宮廷の人数、本陣：イカロス×宮廷の人数の半分"], [6, "『英雄で指示してシュシュシュシュ～～～～ト!!』　前衛：小鬼×宮廷の人数、後衛：小鬼×宮廷の人数、本陣：小鬼大砲×1、小鬼英雄×1"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_random_encount1_table_81.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_random_encount1_table_80.$$arity = 1);
     
-    Opal.defn(self, '$mk_random_encount2_table', TMP_MeikyuKingdom_mk_random_encount2_table_82 = function $$mk_random_encount2_table(num) {
+    Opal.defn(self, '$mk_random_encount2_table', TMP_MeikyuKingdom_mk_random_encount2_table_81 = function $$mk_random_encount2_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "『作戦判定に負けてもOK、そして強い』　前衛：ガーゴイル×宮廷の人数"], [2, "『吸い殺せ！　ドレインしまくれ！』　後衛：塚人×宮廷の人数の半分"], [3, "『ゴールデンコンビ結成。指揮と【鉄腕】＋【範囲攻撃】で大暴れ』　前衛：牛頭×宮廷の人数の半分、後衛：山羊頭×宮廷の人数の半分"], [4, "『クピドは野放しにできないが、ハルキュオネは殺せない。このジレンマが……』　前衛：ハルキュオネ×宮廷の人数、後衛：ハルキュオネ×宮廷の人数、本陣：クピド×宮廷の人数の半分"], [5, "『眠りコンボ』　前衛：グレムリン×宮廷の人数、本陣：眠りの精×1"], [6, "『回避を減らしてみみずの範囲攻撃』　前衛：みみず×宮廷の人数、本陣：大喰らい×宮廷の人数の半分"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_random_encount2_table_82.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_random_encount2_table_81.$$arity = 1);
     
-    Opal.defn(self, '$mk_random_encount3_table', TMP_MeikyuKingdom_mk_random_encount3_table_83 = function $$mk_random_encount3_table(num) {
+    Opal.defn(self, '$mk_random_encount3_table', TMP_MeikyuKingdom_mk_random_encount3_table_82 = function $$mk_random_encount3_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "『魅了→木霊ハメ』　後衛：淫魔×1、本陣：レーシィ×宮廷の人数"], [2, "『素早く【多勢に無勢】をしかけ……たい』　前衛：階賊×宮廷の人数、本陣：抜け忍×1"], [3, "『倒しても嬉しくない人柱をどうぞ』　前衛：人柱×宮廷の人数、本陣：恋のぼり×宮廷の人数の半分"], [4, "『位置を調整して【抱擁】してみよう』　後衛：霧妾×宮廷の人数、本陣：お化けシーツ×宮廷の人数"], [5, "『クリティカルヒットしたい（希望）』　後衛：ヴォーパルバニー×宮廷の人数、本陣：二面人×1"], [6, "『なんとか特攻したい（願望）』　前衛：穴人×宮廷の人数、ゴーレム×1"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_random_encount3_table_83.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_random_encount3_table_82.$$arity = 1);
     
-    Opal.defn(self, '$mk_random_encount4_table', TMP_MeikyuKingdom_mk_random_encount4_table_84 = function $$mk_random_encount4_table(num) {
+    Opal.defn(self, '$mk_random_encount4_table', TMP_MeikyuKingdom_mk_random_encount4_table_83 = function $$mk_random_encount4_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "『増やして治す。ド外道タッグが嵐を呼ぶぜ』　前衛：闇双子×1、本陣：坊主子牛×宮廷の人数の半分"], [2, "『カリスマ的存在＋平和の使者→エセNGOみたいな？』　前衛：ワリアヒラ×宮廷の人数、後衛：妖精騎士×1"], [3, "『【星戦】→攻撃、【星界】→【ベアハッグ】』　前衛：洞窟熊×宮廷の人数、本陣：星人×宮廷の人数の半分"], [4, "『さりげなく先攻を取りつつ《民》をバイドバイパー作戦』　前衛：大目玉×宮廷の人数、本陣：笛吹き男×宮廷の人数の半分"], [5, "『アンデッドチーム、がんばれ！』　前衛：墓暴き×宮廷の人数、本陣：吸血鬼×1"], [6, "『まよセレ、このゲームの代名詞（？）。こいつは欠かせない！』　後衛：マヨネーズキング・ピュアセレクト×宮廷の人数、本陣：メイクイーン×1"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_random_encount4_table_84.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_random_encount4_table_83.$$arity = 1);
     
-    Opal.defn(self, '$mk_random_encount5_table', TMP_MeikyuKingdom_mk_random_encount5_table_85 = function $$mk_random_encount5_table(num) {
+    Opal.defn(self, '$mk_random_encount5_table', TMP_MeikyuKingdom_mk_random_encount5_table_84 = function $$mk_random_encount5_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "『「死ぬが良い」最終鬼畜兵器岸降臨』　前衛：暗黒騎士×1"], [2, "『割と痛い。さりげなく魔王が分裂する』　前衛：カミツキ魔王×宮廷の人数の半分、本陣：雷鳥×1"], [3, "『ハマると死ぬ。5人パーティだと3体出てザマーミロ』　前衛：ヴァララカール×宮廷の人数の半分"], [4, "『不意打ちされたらデンジャー。ひそかにワイヴァーンで先手を取る』　前衛：睨み毒蛇×宮廷の人数の半分、後衛：ワイヴァーン×1"], [5, "『ゾンビスペシャル……で、がんばりたい』　前衛：死にぞこない×宮廷の人数の半分、後衛：死にぞこない×宮廷の人数の半分、本陣：屍術師×1"], [6, "『とにかく殴れ！　単純明快パワーチーム』　前衛：鮫人×宮廷の人数、夜這い海星×1"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_random_encount5_table_85.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_random_encount5_table_84.$$arity = 1);
     
-    Opal.defn(self, '$mk_random_encount6_table', TMP_MeikyuKingdom_mk_random_encount6_table_86 = function $$mk_random_encount6_table(num) {
+    Opal.defn(self, '$mk_random_encount6_table', TMP_MeikyuKingdom_mk_random_encount6_table_85 = function $$mk_random_encount6_table(num) {
       var self = this, table = nil;
 
       
       table = [[1, "『死んでください。【外皮】か【甲冑】がないと相当ヤバい』　本陣：死告天使×宮廷の人数"], [2, "『ド迫力。ブレス連発。3体出ちゃったらカーニバル』　本陣：ドラゴン×宮廷の人数の半分"], [3, "『死霊のボス。スキル次第でヤバい。GMの悪意が閃くときだ』　本陣：骨龍×1、推奨スキル【不滅の炎】、【困惑】、【ヤバチョンガー】など"], [4, "『《好意》を消して【魅了】に持ち込む』　後衛：愛染明王×宮廷の人数"], [5, "『真の狙いは【蜘蛛の群れ】』　前衛：アラクネ×宮廷の人数、本陣：蜘蛛の王×1"], [6, "『お約束。まあこいつは出るだろうみたいな』　前衛：魔蟹×1、帳魚×1"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_random_encount6_table_86.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_random_encount6_table_85.$$arity = 1);
     
-    Opal.defn(self, '$mk_pn_decide_table', TMP_MeikyuKingdom_mk_pn_decide_table_88 = function $$mk_pn_decide_table(num) {
-      var $a, $b, TMP_87, self = this, output = nil, d1 = nil, d2 = nil;
+    Opal.defn(self, '$mk_pn_decide_table', TMP_MeikyuKingdom_mk_pn_decide_table_87 = function $$mk_pn_decide_table(num) {
+      var $a, $b, TMP_86, self = this, output = nil, d1 = nil, d2 = nil;
 
       
       output = "";
@@ -954,244 +949,244 @@ if (_i == null) _i = nil;
       self.$debug("d2", d2);
       d1 = $rb_divide(d1, 2.0).$ceil().$to_i();
       d2 = $rb_divide(d2, 2.0).$ceil().$to_i();
-      $send(num, 'times', [], (TMP_87 = function(_i){var self = TMP_87.$$s || this;
+      $send(num, 'times', [], (TMP_86 = function(_i){var self = TMP_86.$$s || this;
 if (_i == null) _i = nil;
-      return (output = $rb_plus(output, $rb_plus($rb_plus($rb_plus("「", self.$mk_decoration_table(d1)), self.$mk_placename_table(d2)), "」")))}, TMP_87.$$s = self, TMP_87.$$arity = 1, TMP_87));
+      return (output = $rb_plus(output, $rb_plus($rb_plus($rb_plus("「", self.$mk_decoration_table(d1)), self.$mk_placename_table(d2)), "」")))}, TMP_86.$$s = self, TMP_86.$$arity = 1, TMP_86));
       return output;
-    }, TMP_MeikyuKingdom_mk_pn_decide_table_88.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_pn_decide_table_87.$$arity = 1);
     
-    Opal.defn(self, '$mk_decoration_table', TMP_MeikyuKingdom_mk_decoration_table_92 = function $$mk_decoration_table(num) {
-      var TMP_89, TMP_90, TMP_91, self = this, table = nil;
+    Opal.defn(self, '$mk_decoration_table', TMP_MeikyuKingdom_mk_decoration_table_91 = function $$mk_decoration_table(num) {
+      var TMP_88, TMP_89, TMP_90, self = this, table = nil;
 
       
       self.$debug("mk_decoration_table num", num);
-      table = [[1, $send(self, 'lambda', [], (TMP_89 = function(){var self = TMP_89.$$s || this;
+      table = [[1, $send(self, 'lambda', [], (TMP_88 = function(){var self = TMP_88.$$s || this;
 
-      return self.$mk_basic_decoration_table(self.$d66(2))}, TMP_89.$$s = self, TMP_89.$$arity = 0, TMP_89))], [2, $send(self, 'lambda', [], (TMP_90 = function(){var self = TMP_90.$$s || this;
+      return self.$mk_basic_decoration_table(self.$d66(2))}, TMP_88.$$s = self, TMP_88.$$arity = 0, TMP_88))], [2, $send(self, 'lambda', [], (TMP_89 = function(){var self = TMP_89.$$s || this;
 
-      return self.$mk_spooky_decoration_table(self.$d66(2))}, TMP_90.$$s = self, TMP_90.$$arity = 0, TMP_90))], [3, $send(self, 'lambda', [], (TMP_91 = function(){var self = TMP_91.$$s || this;
+      return self.$mk_spooky_decoration_table(self.$d66(2))}, TMP_89.$$s = self, TMP_89.$$arity = 0, TMP_89))], [3, $send(self, 'lambda', [], (TMP_90 = function(){var self = TMP_90.$$s || this;
 
-      return self.$mk_katakana_decoration_table(self.$d66(2))}, TMP_91.$$s = self, TMP_91.$$arity = 0, TMP_91))]];
+      return self.$mk_katakana_decoration_table(self.$d66(2))}, TMP_90.$$s = self, TMP_90.$$arity = 0, TMP_90))]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_decoration_table_92.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_decoration_table_91.$$arity = 1);
     
-    Opal.defn(self, '$mk_placename_table', TMP_MeikyuKingdom_mk_placename_table_96 = function $$mk_placename_table(num) {
-      var TMP_93, TMP_94, TMP_95, self = this, table = nil;
+    Opal.defn(self, '$mk_placename_table', TMP_MeikyuKingdom_mk_placename_table_95 = function $$mk_placename_table(num) {
+      var TMP_92, TMP_93, TMP_94, self = this, table = nil;
 
       
-      table = [[1, $send(self, 'lambda', [], (TMP_93 = function(){var self = TMP_93.$$s || this;
+      table = [[1, $send(self, 'lambda', [], (TMP_92 = function(){var self = TMP_92.$$s || this;
 
-      return self.$mk_passage_placename_table(self.$d66(2))}, TMP_93.$$s = self, TMP_93.$$arity = 0, TMP_93))], [2, $send(self, 'lambda', [], (TMP_94 = function(){var self = TMP_94.$$s || this;
+      return self.$mk_passage_placename_table(self.$d66(2))}, TMP_92.$$s = self, TMP_92.$$arity = 0, TMP_92))], [2, $send(self, 'lambda', [], (TMP_93 = function(){var self = TMP_93.$$s || this;
 
-      return self.$mk_natural_placename_table(self.$d66(2))}, TMP_94.$$s = self, TMP_94.$$arity = 0, TMP_94))], [3, $send(self, 'lambda', [], (TMP_95 = function(){var self = TMP_95.$$s || this;
+      return self.$mk_natural_placename_table(self.$d66(2))}, TMP_93.$$s = self, TMP_93.$$arity = 0, TMP_93))], [3, $send(self, 'lambda', [], (TMP_94 = function(){var self = TMP_94.$$s || this;
 
-      return self.$mk_artifact_placename_table(self.$d66(2))}, TMP_95.$$s = self, TMP_95.$$arity = 0, TMP_95))]];
+      return self.$mk_artifact_placename_table(self.$d66(2))}, TMP_94.$$s = self, TMP_94.$$arity = 0, TMP_94))]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_placename_table_96.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_placename_table_95.$$arity = 1);
     
-    Opal.defn(self, '$mk_basic_decoration_table', TMP_MeikyuKingdom_mk_basic_decoration_table_97 = function $$mk_basic_decoration_table(num) {
+    Opal.defn(self, '$mk_basic_decoration_table', TMP_MeikyuKingdom_mk_basic_decoration_table_96 = function $$mk_basic_decoration_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "欲望（よくぼう）"], [12, "漂流（ひょうりゅう）"], [13, "黄金（おうごん）"], [14, "火達磨（ひだるま）"], [15, "災厄（さいやく）"], [16, "三日月（みかづき）"], [22, "絡繰り（からくり）"], [23, "流星（りゅうせい）"], [24, "棘々（とげとげ）"], [25, "鏡（かがみ）"], [26, "銀鱗（ぎんりん）"], [33, "螺旋（らせん）"], [34, "七色（なないろ）"], [35, "殉教（じゅんきょう）"], [36, "水晶（すいしょう）"], [44, "氷結（ひょうけつ）"], [45, "忘却（ぼうきゃく）"], [46, "幸福（こうふく）"], [55, "妖精（ようせい）"], [56, "霧雨（きりさめ）"], [66, "夕暮れ（ゆうぐれ）"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_basic_decoration_table_97.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_basic_decoration_table_96.$$arity = 1);
     
-    Opal.defn(self, '$mk_spooky_decoration_table', TMP_MeikyuKingdom_mk_spooky_decoration_table_98 = function $$mk_spooky_decoration_table(num) {
+    Opal.defn(self, '$mk_spooky_decoration_table', TMP_MeikyuKingdom_mk_spooky_decoration_table_97 = function $$mk_spooky_decoration_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "赤錆（あかさび）"], [12, "串刺し（くしざし）"], [13, "鬼蜘蛛（おにぐも）"], [14, "蠍（さそり）"], [15, "幽霊（ゆうれい）"], [16, "髑髏（どくろ）"], [22, "血溜まり（ちだまり）"], [23, "臓物（ぞうもつ）"], [24, "骸（むくろ）"], [25, "鉤爪（かぎづめ）"], [26, "犬狼（けんろう）"], [33, "奈落（ならく）"], [34, "大蛇（おろち）"], [35, "地獄（じごく）"], [36, "蚯蚓（みみず）"], [44, "退廃（たいはい）"], [45, "土竜（もぐら）"], [46, "絶望（ぜつぼう）"], [55, "夜泣き（よなき）"], [56, "緑林（りょくりん）"], [66, "どん底（どんぞこ）"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_spooky_decoration_table_98.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_spooky_decoration_table_97.$$arity = 1);
     
-    Opal.defn(self, '$mk_katakana_decoration_table', TMP_MeikyuKingdom_mk_katakana_decoration_table_99 = function $$mk_katakana_decoration_table(num) {
+    Opal.defn(self, '$mk_katakana_decoration_table', TMP_MeikyuKingdom_mk_katakana_decoration_table_98 = function $$mk_katakana_decoration_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "マヨネーズ"], [12, "ダイナマイト"], [13, "ドラゴン"], [14, "ボヨヨン"], [15, "モケモケ"], [16, "マヌエル"], [22, "ダイス"], [23, "ロマン"], [24, "ウクレレ"], [25, "エップカプ"], [26, "カンパネルラ"], [33, "マンチキン"], [34, "バロック"], [35, "ミサイル"], [36, "ドッキリ"], [44, "ブラック"], [45, "好きなモンスターの名前"], [46, "好きなトラップの名前"], [55, "好きな単語表で"], [56, "好きな名前決定表で"], [66, "好きな数字の組み合わせ"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_katakana_decoration_table_99.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_katakana_decoration_table_98.$$arity = 1);
     
-    Opal.defn(self, '$mk_passage_placename_table', TMP_MeikyuKingdom_mk_passage_placename_table_100 = function $$mk_passage_placename_table(num) {
+    Opal.defn(self, '$mk_passage_placename_table', TMP_MeikyuKingdom_mk_passage_placename_table_99 = function $$mk_passage_placename_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "門（ゲート）"], [12, "回廊（コリドー）"], [13, "通り（ストリート）"], [14, "小路（アレイ）"], [15, "大路（アベニュー）"], [16, "街道（ロード）"], [22, "鉄道（ライン）"], [23, "迷宮（メイズ）"], [24, "坑道（トンネル）"], [25, "坂（スロープ）"], [26, "峠（パス）"], [33, "運河（カナル）"], [34, "水路（チャネル）"], [35, "河（ストリーム）"], [36, "堀（モート）"], [44, "溝（ダイク）"], [45, "階段（ステア）"], [46, "辻（トレイル）"], [55, "橋（ブリッジ）"], [56, "穴（ホール）"], [66, "柱廊（ストア）"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_passage_placename_table_100.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_passage_placename_table_99.$$arity = 1);
     
-    Opal.defn(self, '$mk_natural_placename_table', TMP_MeikyuKingdom_mk_natural_placename_table_101 = function $$mk_natural_placename_table(num) {
+    Opal.defn(self, '$mk_natural_placename_table', TMP_MeikyuKingdom_mk_natural_placename_table_100 = function $$mk_natural_placename_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "砂漠（デザート）"], [12, "丘陵（ヒル）"], [13, "海（オーシャン）"], [14, "森（フォレスト）"], [15, "沼（ポンド）"], [16, "海岸（コースト）"], [22, "密林（ジャングル）"], [23, "湖（レイク）"], [24, "山脈（マウンテンズ）"], [25, "平原（プレイン）"], [26, "ヶ原（ランド）"], [33, "荒野（ヒース）"], [34, "渓谷（ヴァレー）"], [35, "島（アイランド）"], [36, "連峰（ピークス）"], [44, "火山（ヴォルケイノ）"], [45, "湿原（ウェットランド）"], [46, "星雲（ネビュラ）"], [55, "星（スター）"], [56, "ヶ淵（プール）"], [66, "雪原（スノウズ）"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_natural_placename_table_101.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_natural_placename_table_100.$$arity = 1);
     
-    Opal.defn(self, '$mk_artifact_placename_table', TMP_MeikyuKingdom_mk_artifact_placename_table_102 = function $$mk_artifact_placename_table(num) {
+    Opal.defn(self, '$mk_artifact_placename_table', TMP_MeikyuKingdom_mk_artifact_placename_table_101 = function $$mk_artifact_placename_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "城（キャッスル）"], [12, "壁（ウォール）"], [13, "砦（フォート）"], [14, "地帯（ゾーン）"], [15, "室（ルーム）"], [16, "の間（チャンバー）"], [22, "浴室（バス）"], [23, "畑（ファーム）"], [24, "館（ハウス）"], [25, "座（コンスティレィション）"], [26, "遺跡（ルイン）"], [33, "ヶ浜（ビーチ）"], [34, "塔（タワー）"], [35, "墓場（グレイブ）"], [36, "洞（ケイヴ）"], [44, "堂（バジリカ）"], [45, "野（フィールド）"], [46, "書院（スタディ）"], [55, "駅前（ステイション）"], [56, "房（クラスター）"], [66, "腐海（ケイオスシー）"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_artifact_placename_table_102.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_artifact_placename_table_101.$$arity = 1);
     
-    Opal.defn(self, '$mk_ls_decide_table', TMP_MeikyuKingdom_mk_ls_decide_table_104 = function $$mk_ls_decide_table(num) {
-      var TMP_103, self = this, output = nil;
+    Opal.defn(self, '$mk_ls_decide_table', TMP_MeikyuKingdom_mk_ls_decide_table_103 = function $$mk_ls_decide_table(num) {
+      var TMP_102, self = this, output = nil;
 
       
       output = "";
-      $send(num, 'times', [], (TMP_103 = function(_i){var self = TMP_103.$$s || this;
+      $send(num, 'times', [], (TMP_102 = function(_i){var self = TMP_102.$$s || this;
 if (_i == null) _i = nil;
-      return (output = $rb_plus(output, $rb_plus($rb_plus("「", self.$mk_landscape_table($rb_plus(self.$rand(6), 1))), "」")))}, TMP_103.$$s = self, TMP_103.$$arity = 1, TMP_103));
+      return (output = $rb_plus(output, $rb_plus($rb_plus("「", self.$mk_landscape_table($rb_plus(self.$rand(6), 1))), "」")))}, TMP_102.$$s = self, TMP_102.$$arity = 1, TMP_102));
       return output;
-    }, TMP_MeikyuKingdom_mk_ls_decide_table_104.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_ls_decide_table_103.$$arity = 1);
     
-    Opal.defn(self, '$mk_landscape_table', TMP_MeikyuKingdom_mk_landscape_table_111 = function $$mk_landscape_table(num) {
-      var TMP_105, TMP_106, TMP_107, TMP_108, TMP_109, TMP_110, self = this, dice = nil, table = nil;
+    Opal.defn(self, '$mk_landscape_table', TMP_MeikyuKingdom_mk_landscape_table_110 = function $$mk_landscape_table(num) {
+      var TMP_104, TMP_105, TMP_106, TMP_107, TMP_108, TMP_109, self = this, dice = nil, table = nil;
 
       
       dice = self.$d66(2);
-      table = [[1, $send(self, 'lambda', [], (TMP_105 = function(){var self = TMP_105.$$s || this;
+      table = [[1, $send(self, 'lambda', [], (TMP_104 = function(){var self = TMP_104.$$s || this;
 
-      return self.$mk_artifact_landscape_table(dice)}, TMP_105.$$s = self, TMP_105.$$arity = 0, TMP_105))], [2, $send(self, 'lambda', [], (TMP_106 = function(){var self = TMP_106.$$s || this;
+      return self.$mk_artifact_landscape_table(dice)}, TMP_104.$$s = self, TMP_104.$$arity = 0, TMP_104))], [2, $send(self, 'lambda', [], (TMP_105 = function(){var self = TMP_105.$$s || this;
 
-      return self.$mk_cave_landscape_table(dice)}, TMP_106.$$s = self, TMP_106.$$arity = 0, TMP_106))], [3, $send(self, 'lambda', [], (TMP_107 = function(){var self = TMP_107.$$s || this;
+      return self.$mk_cave_landscape_table(dice)}, TMP_105.$$s = self, TMP_105.$$arity = 0, TMP_105))], [3, $send(self, 'lambda', [], (TMP_106 = function(){var self = TMP_106.$$s || this;
 
-      return self.$mk_natural_landscape_table(dice)}, TMP_107.$$s = self, TMP_107.$$arity = 0, TMP_107))], [4, $send(self, 'lambda', [], (TMP_108 = function(){var self = TMP_108.$$s || this;
+      return self.$mk_natural_landscape_table(dice)}, TMP_106.$$s = self, TMP_106.$$arity = 0, TMP_106))], [4, $send(self, 'lambda', [], (TMP_107 = function(){var self = TMP_107.$$s || this;
 
-      return self.$mk_waterside_landscape_table(dice)}, TMP_108.$$s = self, TMP_108.$$arity = 0, TMP_108))], [5, $send(self, 'lambda', [], (TMP_109 = function(){var self = TMP_109.$$s || this;
+      return self.$mk_waterside_landscape_table(dice)}, TMP_107.$$s = self, TMP_107.$$arity = 0, TMP_107))], [5, $send(self, 'lambda', [], (TMP_108 = function(){var self = TMP_108.$$s || this;
 
-      return self.$mk_skyrealm_landscape_table(dice)}, TMP_109.$$s = self, TMP_109.$$arity = 0, TMP_109))], [6, $send(self, 'lambda', [], (TMP_110 = function(){var self = TMP_110.$$s || this;
+      return self.$mk_skyrealm_landscape_table(dice)}, TMP_108.$$s = self, TMP_108.$$arity = 0, TMP_108))], [6, $send(self, 'lambda', [], (TMP_109 = function(){var self = TMP_109.$$s || this;
 
-      return self.$mk_strange_place_landscape_table(dice)}, TMP_110.$$s = self, TMP_110.$$arity = 0, TMP_110))]];
+      return self.$mk_strange_place_landscape_table(dice)}, TMP_109.$$s = self, TMP_109.$$arity = 0, TMP_109))]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_landscape_table_111.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_landscape_table_110.$$arity = 1);
     
-    Opal.defn(self, '$mk_artifact_landscape_table', TMP_MeikyuKingdom_mk_artifact_landscape_table_112 = function $$mk_artifact_landscape_table(num) {
+    Opal.defn(self, '$mk_artifact_landscape_table', TMP_MeikyuKingdom_mk_artifact_landscape_table_111 = function $$mk_artifact_landscape_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "石組みの部屋"], [12, "巨大な縦穴に刻まれた螺旋階段"], [13, "埃だらけの古い図書館"], [14, "古びた、素朴な祭壇"], [15, "歯車やピストンがやかましい動力室"], [16, "石組みの巨大な階段"], [22, "太い丸太で組まれた部屋"], [23, "作りかけの製品が放置された工房"], [24, "錆びた武器や骨が散らばる古戦場"], [25, "石組みのトイレ"], [26, "高い天井の厨房"], [33, "レンガで組まれた部屋"], [34, "静まりかえった劇場"], [35, "がらくたが散らばっているゴミ捨て場"], [36, "切り出し途中で放棄された巨大な石像"], [44, "壁画やタペストリーが残る大広間"], [45, "メトロ汗国の線路"], [46, "絵画や彫刻が展示してあるギャラリー"], [55, "石棺が並ぶ墓"], [56, "錆びついた扉が残る巨大な門"], [66, "放置された牢獄"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_artifact_landscape_table_112.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_artifact_landscape_table_111.$$arity = 1);
     
-    Opal.defn(self, '$mk_cave_landscape_table', TMP_MeikyuKingdom_mk_cave_landscape_table_113 = function $$mk_cave_landscape_table(num) {
+    Opal.defn(self, '$mk_cave_landscape_table', TMP_MeikyuKingdom_mk_cave_landscape_table_112 = function $$mk_cave_landscape_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "岩肌がむき出しの洞穴"], [12, "コウモリや羽蟲が飛び交う洞穴"], [13, "放置された坑道"], [14, "誰かのキャンプ跡"], [15, "岩だらけで見通しのきかない空洞"], [16, "煙が吹きぬける洞穴"], [22, "どこからか水音が響く鍾乳洞"], [23, "光の衰えた星がまたたく幻想的な空洞"], [24, "流砂が流れる洞穴"], [25, "生物が掘った、つるつるした洞穴"], [26, "冷えきった氷の洞穴"], [33, "巨大な岩の隙間"], [34, "動物や狩を描いた素朴な壁画が続く洞穴"], [35, "巨大な空洞にかけられた自然の橋"], [36, "埋まりかけで天井すれすれの洞穴"], [44, "奈落と断崖絶壁"], [45, "壁がうごめく蟲でおおわれた洞穴"], [46, "無数の化石が埋まっている洞穴"], [55, "熱気を放つ溶岩が流れる空洞"], [56, "水晶でできた洞穴"], [66, "骨が散らばるなにものかの住処"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_cave_landscape_table_113.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_cave_landscape_table_112.$$arity = 1);
     
-    Opal.defn(self, '$mk_natural_landscape_table', TMP_MeikyuKingdom_mk_natural_landscape_table_114 = function $$mk_natural_landscape_table(num) {
+    Opal.defn(self, '$mk_natural_landscape_table', TMP_MeikyuKingdom_mk_natural_landscape_table_113 = function $$mk_natural_landscape_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "苔むした部屋"], [12, "動物の声が響き渡る密林"], [13, "つる草でできた通路"], [14, "空洞いっぱいのお花畑"], [15, "壁から木の根が突き出している部屋"], [16, "空洞に広がる耕作地"], [22, "折り重なって繁茂する森林"], [23, "垂直の空洞にえんえんと伸びる大木の幹"], [24, "空洞中に広がるアザラシの営巣地"], [25, "カビで壁がねとつく部屋"], [26, "サボテンが点在する部屋"], [33, "巨大キノコの群生地"], [34, "真ん中に大木が一本そびえ立っている空洞"], [35, "通路いっぱいに進む野生ウマトカゲの大群"], [36, "落ち葉がうずたかく積もった部屋"], [44, "植え込みで作られた迷宮庭園"], [45, "生い茂る竹林"], [46, "松ぼっくりが転がる部屋"], [55, "丈の長い草が生い茂る部屋"], [56, "枯れた森林"], [66, "大木の空洞内のような通路や部屋"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_natural_landscape_table_114.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_natural_landscape_table_113.$$arity = 1);
     
-    Opal.defn(self, '$mk_waterside_landscape_table', TMP_MeikyuKingdom_mk_waterside_landscape_table_115 = function $$mk_waterside_landscape_table(num) {
+    Opal.defn(self, '$mk_waterside_landscape_table', TMP_MeikyuKingdom_mk_waterside_landscape_table_114 = function $$mk_waterside_landscape_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "轟々と流れる川にかかった橋"], [12, "色とりどりの珊瑚の中"], [13, "腰高まで水に浸かった部屋"], [14, "澄んだ水が流れる噴水と水飲み場"], [15, "沸騰する湖"], [16, "地面が干潟化した部屋"], [22, "水をたたえた貯水池"], [23, "熱い蒸気がたちこめる部屋"], [24, "空洞に広がる沼地"], [25, "樽や鎖が放置されている船の中"], [26, "水槽が並ぶ水族館"], [33, "悪臭を放つ下水道"], [34, "底に遺跡が見える水没した空洞"], [35, "桟橋と船着き場"], [36, "筏やハシケが浮かぶ湖"], [44, "巨大な縦穴と滝"], [45, "かつて建設された上水道の中"], [46, "ペンギンの右往左往する氷結した湖"], [55, "湯気を立てる温泉"], [56, "奇怪な彫刻が施された古井戸"], [66, "壁に貝やフジツボがはりついた部屋"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_waterside_landscape_table_115.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_waterside_landscape_table_114.$$arity = 1);
     
-    Opal.defn(self, '$mk_skyrealm_landscape_table', TMP_MeikyuKingdom_mk_skyrealm_landscape_table_116 = function $$mk_skyrealm_landscape_table(num) {
+    Opal.defn(self, '$mk_skyrealm_landscape_table', TMP_MeikyuKingdom_mk_skyrealm_landscape_table_115 = function $$mk_skyrealm_landscape_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "雨が降る部屋"], [12, "チーズにうがたれた洞穴"], [13, "中空に何層にも重なる空中庭園"], [14, "無限に連なる真っ白な洗濯物"], [15, "天空に向かって伸びる豆の木"], [16, "巨大な縦穴にぶら下がる縄ばしごや鎖"], [22, "強風の吹き荒れる部屋"], [23, "雲の上。なぜか、その上を歩くことができる"], [24, "濃霧に覆われた空洞"], [25, "無重量でふわふわ浮く部屋"], [26, "雪がしんしんと降り積もる部屋"], [33, "時空がねじ曲がった空中回廊"], [34, "怪物よけの風車が音を立てる通路"], [35, "天井に遺跡が見える空洞"], [36, "轟々と音を立てる巨大排気孔"], [44, "時折稲妻の走る部屋"], [45, "鳥の羽毛が舞い落ちる部屋"], [46, "青空が壁面いっぱいに描かれた空洞"], [55, "一面、鏡でできた部屋"], [56, "オーロラがゆらめく空洞"], [66, "重力方向がばらばらの部屋"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_skyrealm_landscape_table_116.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_skyrealm_landscape_table_115.$$arity = 1);
     
-    Opal.defn(self, '$mk_strange_place_landscape_table', TMP_MeikyuKingdom_mk_strange_place_landscape_table_117 = function $$mk_strange_place_landscape_table(num) {
+    Opal.defn(self, '$mk_strange_place_landscape_table', TMP_MeikyuKingdom_mk_strange_place_landscape_table_116 = function $$mk_strange_place_landscape_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "古びた六畳間"], [12, "せせこましいカラオケボックス"], [13, "時の止まった街"], [14, "ボールが一個転がっている体育館"], [15, "毛が生えている部屋"], [16, "なにかの待合室"], [22, "生物の粘液したたる体内"], [23, "ブランコやすべり台のある小公園"], [24, "安っぽいユニットバス"], [25, "上の住人がうるさい部屋"], [26, "人骨で組まれている部屋"], [33, "呼吸している部屋"], [34, "斜めに傾いた部屋"], [35, "ラブホテルの一室"], [36, "ときどきなにかが覗いていく部屋"], [44, "がやがやと話し声が聞こえる部屋"], [45, "触手が生えている部屋"], [46, "机と椅子が置いてある取調室"], [55, "静まりかえった教室"], [56, "天井に巨大な人の顔がある部屋"], [66, "常に揺れている部屋"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_strange_place_landscape_table_117.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_strange_place_landscape_table_116.$$arity = 1);
     
-    Opal.defn(self, '$mk_kingdom_name_1_table', TMP_MeikyuKingdom_mk_kingdom_name_1_table_118 = function $$mk_kingdom_name_1_table(num) {
+    Opal.defn(self, '$mk_kingdom_name_1_table', TMP_MeikyuKingdom_mk_kingdom_name_1_table_117 = function $$mk_kingdom_name_1_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "暗黒"], [12, "王政"], [13, "超"], [14, "共和制"], [15, "古代"], [16, "社会主義"], [22, "自由"], [23, "新（ネオ）"], [24, "神聖（セント、聖）"], [25, "正統"], [26, "絶対主義"], [33, "大"], [34, "天階"], [35, "深階"], [36, "第三"], [44, "中央"], [45, "帝政"], [46, "統一"], [55, "独立"], [56, "東"], [66, "立憲"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_kingdom_name_1_table_118.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_kingdom_name_1_table_117.$$arity = 1);
     
-    Opal.defn(self, '$mk_kingdom_name_2_table', TMP_MeikyuKingdom_mk_kingdom_name_2_table_119 = function $$mk_kingdom_name_2_table(num) {
+    Opal.defn(self, '$mk_kingdom_name_2_table', TMP_MeikyuKingdom_mk_kingdom_name_2_table_118 = function $$mk_kingdom_name_2_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "英雄"], [12, "連合"], [13, "グランドゼロ"], [14, "迷宮（ダンジョン）"], [15, "災厄"], [16, "魔神（デーモン）"], [22, "征服"], [23, "中華"], [24, "ドラゴン（龍）"], [25, "猫"], [26, "バナナ"], [33, "ファンタジー"], [34, "冒険"], [35, "魔法（マジカル）"], [36, "超人"], [44, "無敵"], [45, "路地裏"], [46, "ローマ"], [55, "（好きな単語表で決定）"], [56, "（プレイ会場の地名　例：ネリマ）"], [66, "（国王の名前。後で決定）"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_kingdom_name_2_table_119.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_kingdom_name_2_table_118.$$arity = 1);
     
-    Opal.defn(self, '$mk_kingdom_name_3_table', TMP_MeikyuKingdom_mk_kingdom_name_3_table_120 = function $$mk_kingdom_name_3_table(num) {
+    Opal.defn(self, '$mk_kingdom_name_3_table', TMP_MeikyuKingdom_mk_kingdom_name_3_table_119 = function $$mk_kingdom_name_3_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "王国（キングダム）"], [12, "王朝"], [13, "会社（公社）"], [14, "学園（学校）"], [15, "合衆国"], [16, "共同体"], [22, "共和国"], [23, "星"], [24, "公国"], [25, "市（街、シティ、ポリス）"], [26, "自治国"], [33, "植民地"], [34, "帝国"], [35, "同盟"], [36, "首長国"], [44, "幕府"], [45, "領"], [46, "村"], [55, "横丁（亭）"], [56, "ランド"], [66, "連邦"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_kingdom_name_3_table_120.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_kingdom_name_3_table_119.$$arity = 1);
     
-    Opal.defn(self, '$mk_word_1_table', TMP_MeikyuKingdom_mk_word_1_table_121 = function $$mk_word_1_table(num) {
+    Opal.defn(self, '$mk_word_1_table', TMP_MeikyuKingdom_mk_word_1_table_120 = function $$mk_word_1_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "魔法"], [12, "おめかし"], [13, "狭いところ"], [14, "夜更かし"], [15, "節約"], [16, "会議"], [22, "ヒゲ"], [23, "孤独"], [24, "自慢話"], [25, "自分探し"], [26, "異性"], [33, "ヒラヒラした服"], [34, "平穏な生活"], [35, "自分語り"], [36, "風呂"], [44, "古いもの"], [45, "頭が悪い人"], [46, "暗闇"], [55, "許嫁"], [56, "民"], [66, "バカ"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_word_1_table_121.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_word_1_table_120.$$arity = 1);
     
-    Opal.defn(self, '$mk_word_2_table', TMP_MeikyuKingdom_mk_word_2_table_122 = function $$mk_word_2_table(num) {
+    Opal.defn(self, '$mk_word_2_table', TMP_MeikyuKingdom_mk_word_2_table_121 = function $$mk_word_2_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "科学"], [12, "読書"], [13, "広いところ"], [14, "早起き"], [15, "ムダ"], [16, "仕事"], [22, "ハゲ"], [23, "みんなで集まること"], [24, "ナンパ"], [25, "昔話"], [26, "同性"], [33, "武器の手入れ"], [34, "戦争"], [35, "人の噂"], [36, "散髪"], [44, "新しいもの"], [45, "頭がよい人"], [46, "光"], [55, "親"], [56, "王様"], [66, "ホラ話"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_word_2_table_122.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_word_2_table_121.$$arity = 1);
     
-    Opal.defn(self, '$mk_word_3_table', TMP_MeikyuKingdom_mk_word_3_table_123 = function $$mk_word_3_table(num) {
+    Opal.defn(self, '$mk_word_3_table', TMP_MeikyuKingdom_mk_word_3_table_122 = function $$mk_word_3_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "子供"], [12, "弱い人"], [13, "処刑"], [14, "叙事詩"], [15, "煙草"], [16, "病院"], [22, "目立つこと"], [23, "酒盛り"], [24, "料理"], [25, "武芸"], [26, "田舎"], [33, "自分の国"], [34, "伝統"], [35, "セレモニー"], [36, "告げ口"], [44, "自分の声"], [45, "マヨネーズ"], [46, "おせっかい"], [55, "外国人"], [56, "迷宮"], [66, "ねこみみ"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_word_3_table_123.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_word_3_table_122.$$arity = 1);
     
-    Opal.defn(self, '$mk_word_4_table', TMP_MeikyuKingdom_mk_word_4_table_124 = function $$mk_word_4_table(num) {
+    Opal.defn(self, '$mk_word_4_table', TMP_MeikyuKingdom_mk_word_4_table_123 = function $$mk_word_4_table(num) {
       var self = this, table = nil;
 
       
       table = [[11, "年寄り"], [12, "強い人"], [13, "空想"], [14, "冗談"], [15, "クスリ"], [16, "怪物"], [22, "一騎打ち"], [23, "賭け事"], [24, "歌"], [25, "勉強"], [26, "都会"], [33, "冒険"], [34, "ダイナマイト大帝"], [35, "悪事"], [36, "言い訳"], [44, "隣のキャラのジョブ"], [45, "小鬼"], [46, "謝ること"], [55, "異種族"], [56, "星"], [66, "虫"]];
       return self.$get_table_by_number(num, table);
-    }, TMP_MeikyuKingdom_mk_word_4_table_124.$$arity = 1);
+    }, TMP_MeikyuKingdom_mk_word_4_table_123.$$arity = 1);
     
-    Opal.defn(self, '$getAftersearchBreakTable', TMP_MeikyuKingdom_getAftersearchBreakTable_125 = function $$getAftersearchBreakTable() {
+    Opal.defn(self, '$getAftersearchBreakTable', TMP_MeikyuKingdom_getAftersearchBreakTable_124 = function $$getAftersearchBreakTable() {
       var self = this;
 
       return self.$get_table_by_2d6(["「おつとめ、ご苦労様です」同行する民たちが感謝の言葉をかける。《民の声》が1点回復する。", "「おい、サボるな」と仲間から怒られた。いやいや、こっちは今までマジメにやってましたよ。宮廷の中から好きなキャラクター1人を選ぶ。自分のそのキャラクターに対する《敵意》が1点上昇する。", "大漁大漁！　色々な素材が見つかる。肉、牙、革、木、鉄の素材（キャラクターシートの上の段の素材）を1個ずつ獲得する。", "そこは、もう、使い魔が探索してくれていたようだ。サンキュー相棒！　この捜索の判定に【使い魔】を利用していれば、行動済みにならず、さらにもう1回行動を行うことができる。", "危険なトラップを見つけたが、なんとか無力化できた。任務完了。自分の《気力》が1点回復する。", "何も見つからなかったか、と思っていたら「いつも、ありがとう」と宮廷の仲間から声をかけられた。まぁ、何もない方がいいか。宮廷の中から好きなキャラクター1人を選ぶ。自分のそのキャラクターに対する《好意》が1点上昇する。", "「さすが！　素晴らしいお手並みだ」鮮やかな捜索に、仲間の見る目が変わる。宮廷の中から好きなキャラクター1人を選ぶ。そのキャラクターの自分に対する《好意》が1点上昇する。", "よしよし、これはいいものが見つかった。好きな素材を1d6個獲得する。この捜索の判定に【使い魔】を使用していれば、獲得数が1d6個上昇する。", "大漁大漁！　色々な素材が見つかる。衣料、魔素、機械、火薬、情報の素材（キャラクターシートの上の段の素材）を1個ずつ獲得する。", "うわ！　罠だ。余計なものまで見つけてしまった。宮廷全員は1d6点のダメージを受ける。", "「へぇ、こんなヤツだったのか」仲間の意外な一面を見つける。宮廷の中から好きなキャラクター1人を選ぶ。自分のそのキャラクターに対する《好意》か《敵意》を1点上昇させ、その属性を好きなものに変更できる。"])
-    }, TMP_MeikyuKingdom_getAftersearchBreakTable_125.$$arity = 0);
+    }, TMP_MeikyuKingdom_getAftersearchBreakTable_124.$$arity = 0);
     
-    Opal.defn(self, '$getWholeBreakTable', TMP_MeikyuKingdom_getWholeBreakTable_126 = function $$getWholeBreakTable() {
+    Opal.defn(self, '$getWholeBreakTable', TMP_MeikyuKingdom_getWholeBreakTable_125 = function $$getWholeBreakTable() {
       var self = this;
 
       return self.$get_table_by_2d6(["部屋の中から使えそうな装備をみつくろう。宮廷全員は、それぞれ好きなコモンアイテムのカテゴリを選び、そのランダムにコモンアイテムを1つ獲得する。そのアイテムにレベルがあれば、それは1レベルのものとなる。", "みんなで今後の作戦を練る。宮廷全員は、そのターンの間、あらゆる判定の達成値が1上昇する。", "手分けして物資の調達を行う。各キャラクターは、好きな素材を1d6個獲得できる。このとき、素材が揃っていれば、各キャラクターにつき1個までアイテムを作成することができる。", "体を休めながら他愛もない世間ば暗視に花が咲く。宮廷全員は、それぞれ宮廷の中から好きなキャラクター1人を選び、そのキャラクターに対する《好意》が1点上昇する。", "宮廷メンバーで交代で見張りを行い、疲労した配下たちを休ませる。《民の声》が宮廷の人数と同じ値だけ回復する。", "一行はしっかりと休息を取り、鋭気を養う。宮廷全員の《気力》が1点回復する。", "配下たちと一緒に体を休める。《民の声》が1d6点回復する。", "配下たちに見張りを任せ、体を休める。宮廷全員の《HP》がすべて回復する。", "緊急ミーティング！　国家運営に関してみんなで知恵を出し合う。《予算》を[宮廷の人数*1]MG獲得する。", "負傷した配下たちの治療を行う。宮廷全員の《配下》が1d6人回復する。", "宮廷の前に光り輝くアイテムが降臨する。レア武具アイテムかレア一般アイテムのどちらかを選ぶ。ランダムにそのアイテムを1つ選び、それを獲得する。"])
-    }, TMP_MeikyuKingdom_getWholeBreakTable_126.$$arity = 0);
-    return (Opal.defn(self, '$getLoversBreakTable', TMP_MeikyuKingdom_getLoversBreakTable_127 = function $$getLoversBreakTable() {
+    }, TMP_MeikyuKingdom_getWholeBreakTable_125.$$arity = 0);
+    return (Opal.defn(self, '$getLoversBreakTable', TMP_MeikyuKingdom_getLoversBreakTable_126 = function $$getLoversBreakTable() {
       var self = this, table = nil, value = nil;
 
       
       table = [[11, "「あーもう、最悪！」仲良く休憩するつもりが、ひどい喧嘩になってしまう。この表の使用者のお互いに対する《好意》が0になり、その値の分だけお互いに対する《敵意》が上昇する。"], [12, "「何もかもがお前が悪かったのかッ！！」大きな誤解が生まれる。受け身キャラの攻め気キャラ以外に対する《敵意》がすべて0になり、その値の分だけ攻め気キャラに対する《敵意》が上昇する。"], [13, "「でさぁ、あの人のことなんだけど……」せっかく2人きりなのに、他人の話で盛り上がる。この表の使用者は、宮廷の中からこの表の使用者以外のキャラクター1人を選び、そのキャラクターに対する《好意》が1点上昇する。"], [14, "「へぇ、そんなのあるんだ」互いの好きなものについて語り合う。受け身キャラは、攻め気キャラの「好きなもの」1つを選ぶ。受け身キャラは、自分の「好きなもの」1つをそれに変更し、攻め気キャラへの《好意》が1点上昇する。"], [15, "「なぁ、オレのことどう思う？」思い切った質問！　受け身キャラは、攻め気キャラに対する《好意》か《敵意》を1点上昇させ、その属性を好きなものに変更できる。"], [16, "「だいじょうぶ？　無茶するんだから」少し前の失敗について色々と言われてしまう。ありがたいんだけど、少しムカつく。受け身キャラは、攻め気キャラに対する《好意》と《敵意》が1点ずつ上昇する。"], [22, "「え、もうこんな時間！？」一休みするつもりが、気がつくとかなり時間がたっている。宮廷の未行動キャラクターが全員行動済みになったら、通常の時間の経過に加え、さらに1クォーターが経過する。この表の使用者のお互いに対する《好意》が1点上昇する。また、宮廷のこの表の使用者2人に対する《敵意》が1点上昇する。"], [23, "「ねぇねぇ、これわかる？」何気ない質問だが、これは難しい。変な答えは出来ないぞ。攻め気キャラは、〔才覚〕で難易度9の判定を行う。成功すると、この表の使用者のお互いに対する《好意》が1点上昇する。失敗すると、なんとか危機を切り抜けることができるが、受け身キャラの攻め気キャラに対する《敵意》が1点上昇する。"], [24, "「おいおい、まずは落ち着け」配下同士が喧嘩を始めた。うまく仲裁しないと……。攻め気キャラは、〔魅力〕で難易度9の判定を行う。成功すると、この表の使用者のお互いに対する《好意》が1点上昇する。失敗すると、なんとか危機を切り抜けることができるが、受け身キャラの攻め気キャラに帯する《敵意》が1点上昇する。"], [25, "「オレが解除するからちょっと待ってろ」2人で休憩するつもりが、一緒にトラップにひっかかってしまった。互いの体が密着してしまう。攻め気キャラは、〔探索〕で難易度9の判定を行う。成功すると、この表の使用者のお互いに対する《好意》が1点上昇する。失敗すると、なんとか危機を切り抜けることができるが、受け身キャラの攻め気キャラに対する《敵意》が1点上昇する。"], [26, "「お前は後ろに下がってろ！」休憩中に怪物に襲われる。攻め気キャラは、〔武勇〕で難易度9の判定を行う。成功すると、この表の使用者のお互いに対する《好意》が1点上昇する。失敗すると、なんとか危機を切り抜けることができるが、受け身キャラの攻め気キャラに対する《敵意》が1点上昇する。"], [33, "「なぁ、さっきは悪かったな」誤解が解ける。この表の使用者のお互いに対する《敵意》が0になり、その値のぶんだけお互いに対する《好意》が上昇する。"], [34, "「これを言ったのはあなただけです。誰にも言わないでくださいね」受け身キャラが隠している夢や秘密を攻め気キャラが知ってしまう。受け身キャラの攻め気キャラに対する《好意》が1点上昇する。攻め気キャラの受け身キャラに対する《好意》の属性が「忠誠」に変わる。"], [35, "「これからも、よろしく頼むぜ。相棒」攻め気キャラが快活に微笑む。受け身キャラの攻め気キャラに対する《好意》が1点上昇する。攻め気キャラの受け身キャラに対する《好意》の属性が「友情」に変わる。"], [36, "「わ、わたしは、あなたのことが……」受け身キャラの思わぬ告白！　受け身キャラの攻め気キャラに対する《好意》が1点上昇する。攻め気キャラの受け身キャラに対する《好意》の属性が「愛情」に変わる。"], [44, "「大丈夫？　痛くないか？」互いに傷を治療しあう。この表の使用者は、お互いの自分に対する《好意》の分だけ、自分の《HP》を回復することができる。どちらかが《HP》が1点以上回復したら、この表の使用者のお互いに対する《好意》が1点上昇する。"], [45, "「この冒険が終わったら、伝えたいことが……あるんだ」攻め気キャラの真剣な言葉。え、それって……？　受け身キャラの攻め気キャラに対する《好意》が1点上昇する。エピローグに攻め気キャラが生きていれば、この表の使用者のお互いに対する《好意》が2点上昇する。ただし、以後このゲームの間、攻め気キャラが「致命傷表」を使用することになった場合、余分に1個サイコロを振り、その中からもっとも低い目2つを選んで、その結果を適用する。"], [46, "「蝕ッ！？　……って、どこ触ってるんですかッ！？」あたりが不意に暗くなり、思わず変なところを触ってしまう。攻め気キャラの受け身キャラに対する《好意》が2点上昇し、受け身キャラの攻め気キャラに対する《敵意》が2点上昇する。この表の使用者が持っている【星の欠片】1個を破壊すれば、このイベントをなかったことにできる。"], [55, "「これ、はんぶんこしない？」2人仲良く、アイテムを分け合う。この表の使用者が、使用するとなくなる回復アイテムを持っていれば、それを1個使用出来る。ただし、その効果の大賞は、この表を使用した2人に変更される。この表の使用者のお互いに対する《好意》が1点上昇する。"], [56, "「え？　え？　えぇぇぇぇッ！？」ふとした拍子に唇がふれあう。受け身キャラの攻め気キャラ以外に対する《好意》がすべて0になり、その値のぶんだけ攻め気キャラに対する《好意》が上昇する。"], [66, "「…………」気がつくとお互い、目をそらせなくなってしまう。そのまま顔を寄せ合い……。この表の使用者のお互いに対する《好意》が2点上昇し、その属性を「愛情」にする。"]];
       value = self.$d66(2);
       return [self.$get_table_by_number(value, table), value];
-    }, TMP_MeikyuKingdom_getLoversBreakTable_127.$$arity = 0), nil) && 'getLoversBreakTable';
+    }, TMP_MeikyuKingdom_getLoversBreakTable_126.$$arity = 0), nil) && 'getLoversBreakTable';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 

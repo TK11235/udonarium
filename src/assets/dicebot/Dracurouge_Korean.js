@@ -123,10 +123,10 @@
     }, TMP_Dracurouge_Korean_getConductResult_7.$$arity = 1);
     
     Opal.defn(self, '$rollDiceList', TMP_Dracurouge_Korean_rollDiceList_9 = function $$rollDiceList(diceCount) {
-      var $a, $b, TMP_8, self = this, dice = nil, str = nil, diceList = nil;
+      var $a, $b, TMP_8, self = this, _dice = nil, str = nil, diceList = nil;
 
       
-      $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (str = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(diceCount, 6), $a = Opal.to_ary($b), (_dice = ($a[0] == null ? nil : $a[0])), (str = ($a[1] == null ? nil : $a[1])), $b;
       diceList = $send(str.$split(/,/), 'collect', [], (TMP_8 = function(i){var self = TMP_8.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_8.$$s = self, TMP_8.$$arity = 1, TMP_8)).$sort();
@@ -178,7 +178,7 @@ if (item == null) item = nil;if (index == null) index = nil;
     }, TMP_Dracurouge_Korean_getThirstyAddedResult_15.$$arity = 2);
     
     Opal.defn(self, '$getResistResult', TMP_Dracurouge_Korean_getResistResult_16 = function $$getResistResult(command) {
-      var self = this, diceCount = nil, diceList = nil, result = nil;
+      var self = this, diceCount = nil, diceList = nil;
 
       
       if ($truthy(/^DRR(\d+)$/['$==='](command))) {
@@ -189,7 +189,7 @@ if (item == null) item = nil;if (index == null) index = nil;
       if (diceCount['$=='](0)) {
         diceCount = 4};
       diceList = self.$rollDiceList(diceCount);
-      return (result = "" + "(" + (command) + ") ＞ " + (diceCount) + "D6 ＞ [ " + (diceList.$join(", ")) + " ]");
+      return "" + "(" + (command) + ") ＞ " + (diceCount) + "D6 ＞ [ " + (diceList.$join(", ")) + " ]";
     }, TMP_Dracurouge_Korean_getResistResult_16.$$arity = 1);
     
     Opal.defn(self, '$getReactionResult', TMP_Dracurouge_Korean_getReactionResult_17 = function $$getReactionResult(command) {

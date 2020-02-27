@@ -72,10 +72,10 @@
     }, TMP_LiveraDoll_rollDiceCommand_5.$$arity = 1);
     
     Opal.defn(self, '$checkRoll', TMP_LiveraDoll_checkRoll_8 = function $$checkRoll(diceCount, blockNo) {
-      var $a, $b, TMP_6, TMP_7, self = this, dice = nil, diceText = nil, diceArray = nil, resultArray = nil, success = nil, blockText = nil, resultText = nil, result = nil;
+      var $a, $b, TMP_6, TMP_7, self = this, _dice = nil, diceText = nil, diceArray = nil, resultArray = nil, success = nil, blockText = nil, resultText = nil, result = nil;
 
       
-      $b = self.$roll(diceCount, 6, self.sortType), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(diceCount, 6, self.sortType), $a = Opal.to_ary($b), (_dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceArray = $send(diceText.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));

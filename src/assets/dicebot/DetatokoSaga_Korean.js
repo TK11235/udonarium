@@ -58,9 +58,9 @@
     }, TMP_DetatokoSaga_Korean_gameType_3.$$arity = 0);
     
     Opal.defn(self, '$getHelpMessage', TMP_DetatokoSaga_Korean_getHelpMessage_4 = function $$getHelpMessage() {
-      var self = this, info = nil;
+      var self = this;
 
-      return (info = "" + "・통상판정　xDS or xDSy or xDS>=z or xDSy>=z\n" + "　(x＝스킬레벨, y＝현재 플래그(생략=0), z＝목표치(생략=８))\n" + "　예）3DS　2DS5　0DS　3DS>=10　3DS7>=12\n" + "・판정치　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "　(x＝스킬레벨, y＝현재 플래그(생략=0), z＝수정치(생략=０))\n" + "　예）3JD　2JD5　3JD7+1　4JD/3\n" + "・체력 낙인표　SST (StrengthStigmaTable)\n" + "・기력 낙인표　WST (WillStigmaTable)\n" + "・체력 배드엔딩표　SBET (StrengthBadEndTable)\n" + "・기력 배드엔딩표　WBET (WillBadEndTable)\n")
+      return "" + "・통상판정　xDS or xDSy or xDS>=z or xDSy>=z\n" + "　(x＝스킬레벨, y＝현재 플래그(생략=0), z＝목표치(생략=８))\n" + "　예）3DS　2DS5　0DS　3DS>=10　3DS7>=12\n" + "・판정치　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "　(x＝스킬레벨, y＝현재 플래그(생략=0), z＝수정치(생략=０))\n" + "　예）3JD　2JD5　3JD7+1　4JD/3\n" + "・체력 낙인표　SST (StrengthStigmaTable)\n" + "・기력 낙인표　WST (WillStigmaTable)\n" + "・체력 배드엔딩표　SBET (StrengthBadEndTable)\n" + "・기력 배드엔딩표　WBET (WillBadEndTable)\n"
     }, TMP_DetatokoSaga_Korean_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_DetatokoSaga_Korean_rollDiceCommand_5 = function $$rollDiceCommand(command) {
@@ -189,7 +189,7 @@ if (i == null) i = nil;
       var self = this, operatorText = nil, $case = nil;
 
       
-      if ($truthy(value['$=='](0))) {
+      if (value['$=='](0)) {
         return ""};
       operatorText = (function() {$case = operator;
       if ("+"['$===']($case)) {return "＋"}

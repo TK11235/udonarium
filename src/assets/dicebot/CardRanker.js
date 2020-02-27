@@ -83,14 +83,13 @@
 
       
       command = command.$upcase();
-      $case = command;
+      return (function() {$case = command;
       if (/^RM$/i['$===']($case)) {return self.$getRandumMonster()}
       else if (/^CM(\w)(\d+)$/i['$===']($case)) {
       color = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$upcase();
       index = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       return self.$getMonster(color, index);}
-      else {return self.$getTableCommandResult(command, (($a = $CardRanker.$$cvars['@@tables']) == null ? nil : $a))};
-      return nil;
+      else {return self.$getTableCommandResult(command, (($a = $CardRanker.$$cvars['@@tables']) == null ? nil : $a))}})();
     }, TMP_CardRanker_rollDiceCommand_6.$$arity = 1);
     
     Opal.defn(self, '$getRandumMonster', TMP_CardRanker_getRandumMonster_7 = function $$getRandumMonster() {

@@ -37,7 +37,7 @@
     Opal.defn(self, '$gameName', TMP_ShinMegamiTenseiKakuseihen_gameName_2 = function $$gameName() {
       var self = this;
 
-      return "真・女神転生TRPG　覚醒編"
+      return "真・女神転生TRPG　覚醒篇"
     }, TMP_ShinMegamiTenseiKakuseihen_gameName_2.$$arity = 0);
     
     Opal.defn(self, '$gameType', TMP_ShinMegamiTenseiKakuseihen_gameType_3 = function $$gameType() {
