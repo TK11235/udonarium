@@ -15,7 +15,7 @@ class DungeonsAndDoragons < DiceBot
 
   def getHelpMessage
     return <<MESSAGETEXT
-※このダイスボットは部屋のシステム名表示用となります。
+※この骰子ボットは部屋のシステム名表示用となります。
 MESSAGETEXT
   end
 end

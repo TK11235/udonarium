@@ -9,7 +9,7 @@ class DoubleCross < DiceBot
     @sortType = 2
     @isPrintMaxDice = true # 最大値表示
     @upplerRollThreshold = 10     # 上方無限
-    @unlimitedRollDiceType = 10   # 無限ロールのダイス
+    @unlimitedRollDiceType = 10   # 無限ロールの骰子
     @rerollNumber = 10 # 振り足しする条件
   end
 
@@ -33,7 +33,7 @@ class DoubleCross < DiceBot
 　・感情表(ET)
 　　ポジティブとネガティブの両方を振って、表になっている側に○を付けて表示します。もちろん任意で選ぶ部分は変更して構いません。
 
-・D66ダイスあり
+・D66骰子あり
 INFO_MESSAGE_TEXT
   end
 
@@ -77,12 +77,12 @@ INFO_MESSAGE_TEXT
     end
   end
 
-  # 振り足し時のダイス読み替え処理用（ダブルクロスはクリティカルでダイス10に読み替える)
+  # 振り足し時の骰子読み替え処理用（ダブルクロスはクリティカルで骰子10に読み替える)
   def getJackUpValueOnAddRoll(dice_n, _round)
     return (10 - dice_n)
   end
 
-  # 個数振り足しダイスロール
+  # 個数振り足し骰子ロール
   def check_dice(string)
     debug("dxdice begin string", string)
 

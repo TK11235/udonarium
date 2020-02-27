@@ -83,7 +83,7 @@ class TestCardTrader < Test::Unit::TestCase
 
     @bcdice.setRandomValues([[1, 0]])
     @cardTrader.executeCard("c-draw[1]", "channel")
-    assert_equal("sendMessage\nto:channel\nカードが残っていません\n", @bcdice.getResult())
+    assert_equal("sendMessage\nto:channel\n卡牌が残っていません\n", @bcdice.getResult())
   end
 
   def test_odraw_3
@@ -97,12 +97,12 @@ class TestCardTrader < Test::Unit::TestCase
 
     @bcdice.setRandomValues([[1, 0]])
     @cardTrader.executeCard("c-odraw[1]", "channel")
-    assert_equal("sendMessage\nto:channel\nカードが残っていません\n", @bcdice.getResult())
+    assert_equal("sendMessage\nto:channel\n卡牌が残っていません\n", @bcdice.getResult())
   end
 
   def test_hand
     @cardTrader.executeCard("c-hand", "channel")
-    assert_equal("sendMessageToOnlySender\nto:\nカードを持っていません 場札:[  ] タップした場札:[  ]\n", @bcdice.getResult())
+    assert_equal("sendMessageToOnlySender\nto:\n卡牌を持っていません 場札:[  ] タップした場札:[  ]\n", @bcdice.getResult())
 
     @bcdice.setRandomValues([[1, 53], [1, 52], [51, 51]])
     @cardTrader.executeCard("c-odraw[3]", "channel")
@@ -175,7 +175,7 @@ class TestCardTrader < Test::Unit::TestCase
     assert_equal("sendMessageToOnlySender\nto:\n[ J1 ] 場札:[ S2,S3 ] タップした場札:[  ]\n", @bcdice.getResult())
 
     @cardTrader.executeCard("c-clean", "channel")
-    assert_equal("sendMessage\nto:channel\n場のカードを捨てました\n", @bcdice.getResult())
+    assert_equal("sendMessage\nto:channel\n場の卡牌を捨てました\n", @bcdice.getResult())
 
     @cardTrader.executeCard("c-hand", "channel")
     assert_equal("sendMessageToOnlySender\nto:\n[ J1 ] 場札:[  ] タップした場札:[  ]\n", @bcdice.getResult())
@@ -423,7 +423,7 @@ class TestCardTrader < Test::Unit::TestCase
 
   def test_castSpell
     @cardTrader.executeCard("c-spell[1TEST_NICK,TEST_NICK,card_played,BC39DC11A]", "channel")
-    assert_equal("sendMessage\nto:channel\ntest_nick: カード配置を復活しました\n", @bcdice.getResult())
+    assert_equal("sendMessage\nto:channel\ntest_nick: 卡牌配置を復活しました\n", @bcdice.getResult())
 
     @cardTrader.executeCard("c-hand", "channel")
     assert_equal("sendMessageToOnlySender\nto:\n[ C1,C10,C11,C12,C13,C3,C4,C5,C6,C7,C8,C9,D1,D10,D11,D12,D13,D2,D3,D4,D5,D6,D7,D8,D9,H1,H10,H11,H12,H13,H2,H3,H4,H5,H6,H7,H8,H9,S10,S11,S12,S13,S2,S3,S4,S5,S6,S7,S8,S9 ] 場札:[ S1 ] タップした場札:[  ]\n", @bcdice.getResult())
@@ -463,7 +463,7 @@ class TestCardTrader < Test::Unit::TestCase
 
   def test_castSpellLong
     @cardTrader.executeCard("c-spell[1JOHN,1TEST_NICK,2JOHN,2TEST_NICK,JOHN,TEST_NICK,card_played,HCEG2FBDFHA98]", "channel")
-    assert_equal("sendMessage\nto:channel\ntest_nick: カード配置を復活しました\n", @bcdice.getResult())
+    assert_equal("sendMessage\nto:channel\ntest_nick: 卡牌配置を復活しました\n", @bcdice.getResult())
 
     @cardTrader.executeCard("c-hand", "channel")
     assert_equal("sendMessageToOnlySender\nto:\n[ S4,S5 ] 場札:[ S2 ] タップした場札:[ S3 ]\n", @bcdice.getResult())

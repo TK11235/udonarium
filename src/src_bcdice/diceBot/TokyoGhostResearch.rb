@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class TokyoGhostResearch < DiceBot
-  # ダイスボットで使用するコマンドを配列で列挙する
+  # 骰子ボットで使用するコマンドを配列で列挙する
   setPrefixes([
     'OP', 'TB', 'TK?\(\d+\)'
   ])

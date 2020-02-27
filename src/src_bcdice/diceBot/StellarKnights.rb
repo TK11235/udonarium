@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class StellarKnights < DiceBot
-  # ダイスボットで使用するコマンドを配列で列挙する
+  # 骰子ボットで使用するコマンドを配列で列挙する
   setPrefixes(['TT', 'STA', 'STB', 'STB2', 'STC', 'ALLS'])
 
   def initialize

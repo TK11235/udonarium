@@ -1,7 +1,7 @@
 <div class="flex-container">
   <div class="flex-item no-grow">
     <div>
-      <button (click)="create()">チャットタブを作る</button>
+      <button (click)="create()">新增聊天分頁</button>
     </div>
     <select style="width: 10em;" size="10" (change)="onChangeSelectTab($event.target.value)" [ngModel]="selectedTab?.identifier">
       <option *ngFor="let chatTab of chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
@@ -9,22 +9,39 @@
   </div>
   <div class="flex-item">
     <ng-container *ngIf="!isEmpty && selectedTab">
-      <div>タブ名 :
+      <div>分頁名 :
         <input [(ngModel)]="tabName" placeholder="Name" [attr.disabled]="!isEditable ? '' : null" />
       </div>
       <hr/>
       <div>
         <ng-container *ngIf="!isDeleted">
+
+          <label>
+            骰子操作紀錄
+            <input type="checkbox" [(ngModel)]="receiveInfo" />
+          </label>
+          <br />
+
+          <button (click)="save_log()">輸出聊天紀錄(.html)</button>
+
           <button (click)="save()">保存</button>
-          <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">削除</button>
+          <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
         </ng-container>
         <ng-container *ngIf="isDeleted">
-          <button (click)="restore()">元に戻す</button>
+          <button (click)="restore()">撒回</button>
         </ng-container>
       </div>
     </ng-container>
   </div>
 </div>
+
+<button class="danger"  (click)="enableEdit = true">清除所有聊天紀錄</button>
+<div>
+    <button *ngIf="enableEdit" class="danger" (click)="allMessageClear()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">危險! 一按即清除所有聊天紀錄</button>
+    <button *ngIf="enableEdit" (click)="enableEdit=false">取消</button>
+</div>
 <ng-container *ngIf="isEmpty">
-  <div style="font-size: 12px;">※チャットタブが１つも作成されていません。「チャットタブを作る」からチャットタブを作成することができます。</div>
+
+  <div style="font-size: 12px;">※尚未新增聊天分頁。 您可以使用「新增聊天分頁」。</div>
 </ng-container>
+

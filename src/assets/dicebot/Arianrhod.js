@@ -44,7 +44,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Arianrhod_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・クリティカル、ファンブルの自動判定を行います。(クリティカル時の追加ダメージも表示されます)\n" + "・D66ダイスあり\n"
+      return "" + "・クリティカル、ファンブルの自動判定を行います。(クリティカル時の追加ダメージも表示されます)\n" + "・D66骰子あり\n"
     }, TMP_Arianrhod_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$check_2D6', TMP_Arianrhod_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max) {

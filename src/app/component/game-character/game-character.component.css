@@ -1,3 +1,15 @@
+.is-Yellow-border {
+  border: solid 6px #FFCC80;
+}
+
+.is-opacity {
+  opacity: 0.6;
+}
+
+.is-disabled {
+  display: none;
+}
+
 .is-grab {
   cursor: -moz-grab;
   cursor: -webkit-grab;
@@ -57,6 +69,7 @@
   border-radius: 37px;
 }
 
+
 .pedestal-grab-border {
   pointer-events: none;
   width: 100%;
@@ -78,6 +91,7 @@
   border: solid 6px #FFCC80;
   border-radius: 25px;
 }
+
 
 .pedestal-outer {
   backface-visibility: hidden;

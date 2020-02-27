@@ -1,50 +1,56 @@
 <div id="app-table-layer" style="position: absolute; width: 100%; height: 100%; overflow: hidden;">
   <game-table></game-table>
 </div>
-<ui-panel [top]="0" [left]="0" [width]="100" [height]="470" [title]="'メニュー'">
+<ui-panel [top]="0" [left]="0" [width]="100" [height]="500" [title]="'功能表'">
   <nav>
     <ul>
       <li (click)="open('PeerMenuComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons icon-size">people</i></div>
-          <div>接続</div>
+          <div>連線</div>
         </a>
       </li>
       <li (click)="open('ChatWindowComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons icon-size">speaker_notes</i></div>
-          <div>チャット画面</div>
+          <div>聊天視窗</div>
         </a>
       </li>
       <li (click)="open('GameTableSettingComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons icon-size">layers</i></div>
-          <div>テーブル設定</div>
+          <div>桌面地圖設定</div>
         </a>
       </li>
       <li (click)="open('FileStorageComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons icon-size">photo_library</i></div>
-          <div>画像</div>
+          <div>上傳圖片</div>
         </a>
       </li>
       <li (click)="open('JukeboxComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons">queue_music</i></div>
-          <div>音楽</div>
+          <div>上傳音樂及播放</div>
         </a>
       </li>
       <li (click)="open('GameObjectInventoryComponent')">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons icon-size">folder_shared</i></div>
-          <div>インベントリ</div>
+          <div>角色倉庫</div>
+        </a>
+      </li>
+      <li (click)="createGameCharacter()">
+        <a routerLink="/" routerLinkActive="active">
+          <div><i class="material-icons">accessibility</i></div>
+          <div>角色生成</div>
         </a>
       </li>
       <li>
         <a routerLink="/" routerLinkActive="active">
           <label>
             <div><i class="material-icons">open_in_browser</i></div>
-            <div>ZIP読込</div>
+            <div>讀取房間</div>
             <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple
               accept="application/xml,text/xml,application/zip" />
           </label>
@@ -53,11 +59,13 @@
       <li (click)="save()">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons">sd_storage</i></div>
-          <div>保存</div>
+          <div>保存房間</div>
         </a>
       </li>
+      
     </ul>
   </nav>
 </ui-panel>
 <div #modalLayer></div>
 <network-indicator class="networkIndicator"></network-indicator>
+

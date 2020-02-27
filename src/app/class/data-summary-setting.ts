@@ -9,7 +9,7 @@ export enum SortOrder {
 
 @SyncObject('summary-setting')
 export class DataSummarySetting extends GameObject implements InnerXml {
-  // todo:シングルトン化するのは妥当？
+  // todo:シングルトン化する的は妥当？
   private static _instance: DataSummarySetting;
   static get instance(): DataSummarySetting {
     if (!DataSummarySetting._instance) {
@@ -21,7 +21,10 @@ export class DataSummarySetting extends GameObject implements InnerXml {
 
   @SyncVar() sortTag: string = 'name';
   @SyncVar() sortOrder: SortOrder = SortOrder.ASC;
-  @SyncVar() dataTag: string = 'HP MP 敏捷度 生命力 精神力';
+
+  @SyncVar() dataTag: string = 'HP MP SAN DEX 生命力 ';
+  @SyncVar() gameType: string = "";
+
 
   private _dataTag: string;
   private _dataTags: string[];
@@ -35,7 +38,7 @@ export class DataSummarySetting extends GameObject implements InnerXml {
 
   innerXml(): string { return ''; }
   parseInnerXml(element: Element) {
-    // XMLからの新規作成を許可せず、既存のオブジェクトを更新する
+    // XMLから的新規作成を許可せず、既存的オブジェクトを更新する
     let context = DataSummarySetting.instance.toContext();
     context.syncData = this.toContext().syncData;
     DataSummarySetting.instance.apply(context);

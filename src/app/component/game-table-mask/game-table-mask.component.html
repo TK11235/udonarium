@@ -1,16 +1,16 @@
 <div class="component" [ngClass]="{'is-grab': !isLock}"
   [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"
-  appMovable [movable.option]="movableOption" [movable.disable]="isLock" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
-  <div *ngIf="imageFile.url.length < 1; then blackMask; else imageMask"></div>
+  appMovable [movable.option]="movableOption" [movable.disable]="isLock" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()"(dblclick)="showDetail(this.gameTableMask)"[ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine,'is-disabled': isDisabled}">
+  <div *ngIf="imageFile.url.length < 1; then blackMask; else imageMask"[ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine,'is-disabled': isDisabled}"></div>
   <ng-template #blackMask>
-    <div class="border is-fit-full" [style.background-color]="'rgba(10, 10, 10,' + opacity +')'"></div>
+    <div class="border is-fit-full" [style.background-color]="'rgba(10, 10, 10,' + opacity +')'"[ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine,'is-disabled': isDisabled}"></div>
   </ng-template>
   <ng-template #imageMask>
-    <div class="border is-fit-full">
+    <div class="border is-fit-full"[ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine,'is-disabled': isDisabled}">
       <img class="image is-fit-full" [style.opacity]="opacity" [src]="imageFile.url | safe: 'resourceUrl'">
     </div>
   </ng-template>
-  <div *ngIf="isLock" class="lock-icon is-center">
+  <div *ngIf="isLock" class="lock-icon is-center"[ngClass]="{'is-opacity': isMine,'is-Yellow-border': isMine,'is-disabled': isDisabled}">
     <i class="material-icons">lock</i>
   </div>
 </div>

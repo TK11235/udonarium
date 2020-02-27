@@ -14,7 +14,7 @@ class GeishaGirlwithKatana < DiceBot
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定 (GK#n)
-  役やチョムバを含めて1回分のダイスロールを判定します。
+  役やチョムバを含めて1回分の骰子ロールを判定します。
 　役は　（通常判定）／（戦闘時）　の順で両方出力されます。
   GK のみの場合5%の確率でチョムバます。
   GK#3 の様に #n をつけることによってチョムバの確率をn%にすることができます。

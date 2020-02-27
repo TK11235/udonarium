@@ -55,7 +55,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_WorldOfDarkness_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定コマンド(xSTn+y or xSTSn+y)\n" + "　(ダイス個数)ST(難易度)+(自動成功)\n" + "　(ダイス個数)STS(難易度)+(自動成功)　※出目10で振り足し\n" + "\n" + "　難易度=省略時6\n" + "　自動成功=省略時0\n" + "\n" + "　例）3ST7　5ST+1　4ST5+2\n"
+      return "" + "・判定コマンド(xSTn+y or xSTSn+y)\n" + "　(骰子個数)ST(難易度)+(自動成功)\n" + "　(骰子個数)STS(難易度)+(自動成功)　※出目10で振り足し\n" + "\n" + "　難易度=省略時6\n" + "　自動成功=省略時0\n" + "\n" + "　例）3ST7　5ST+1　4ST5+2\n"
     }, TMP_WorldOfDarkness_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_WorldOfDarkness_rollDiceCommand_5 = function $$rollDiceCommand(command) {
