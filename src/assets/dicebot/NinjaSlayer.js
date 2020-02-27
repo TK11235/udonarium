@@ -12,19 +12,22 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
+  function $rb_lt(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
+  }
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2, $gvars = Opal.gvars;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$freeze', '$attr_reader', '$map', '$to_proc', '$join', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$warn', '$gameType', '$setPrefixes', '$attr_accessor', '$gameName', '$getHelpMessage', '$attr_writer', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$last_match', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$getDiceListFromDiceText', '$collect', '$split', '$to_i', '$each', '$>=', '$kind_of?', '$lambda', '$call', '$select', '$public_methods', '$===', '$send', '$upcase', '$==', '$getTableInfoFromExtraTableText', '$get_table_by_nDx_extratable', '$get_table_by_d66', '$floor', '$%', '$get_table_by_d66_swap', '$raise', '$gsub', '$rollTableMessageDiceText', '$is_a?', '$size', '$inspect']);
+  Opal.add_stubs(['$freeze', '$attr_reader', '$map', '$to_proc', '$join', '$clearPrefixes', '$!', '$empty?', '$prefixs', '$prefixes', '$class', '$warn', '$gameType', '$setPrefixes', '$attr_accessor', '$gameName', '$getHelpMessage', '$attr_writer', '$rand', '$check_suc', '$roll', '$marshalSignOfInequality', '$unlimitedRollDiceType', '$getD66Value', '$rollDiceAddingUp', '$parren_killer', '$debug', '$isGetOriginalMessage', '$getOriginalMessage', '$=~', '$prefixesPattern', '$last_match', '$removeDiceCommandMessage', '$rollDiceCommandCatched', '$nil?', '$!=', '$sub', '$rollDiceCommand', '$to_s', '$backtrace', '$get_table_by_nD6', '$get_table_by_nDx', '$getTableValue', '$[]', '$-', '$/', '$getD66', '$bcdice', '$get_table_by_number', '$+', '$*', '$<', '$==', '$getDiceListFromDiceText', '$collect', '$split', '$to_i', '$each', '$>=', '$kind_of?', '$lambda', '$call', '$select', '$public_methods', '$===', '$send', '$upcase', '$getTableInfoFromExtraTableText', '$get_table_by_nDx_extratable', '$get_table_by_d66', '$floor', '$%', '$get_table_by_d66_swap', '$raise', '$gsub', '$rollTableMessageDiceText', '$is_a?', '$size', '$inspect']);
   return (function($base, $super, $parent_nesting) {
     function $DiceBot(){};
     var self = $DiceBot = $klass($base, $super, 'DiceBot', $DiceBot);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_DiceBot_setPrefixes_1, TMP_DiceBot_clearPrefixes_2, TMP_DiceBot_inherited_3, TMP_DiceBot_initialize_4, TMP_DiceBot_postSet_5, TMP_DiceBot_info_6, TMP_DiceBot_gameName_7, TMP_DiceBot_prefixes_8, TMP_DiceBot_setGameType_9, TMP_DiceBot_setSendMode_10, TMP_DiceBot_bcdice$eq_11, TMP_DiceBot_bcdice_12, TMP_DiceBot_rand_13, TMP_DiceBot_check_suc_14, TMP_DiceBot_roll_15, TMP_DiceBot_marshalSignOfInequality_16, TMP_DiceBot_unlimitedRollDiceType_17, TMP_DiceBot_setSortType_18, TMP_DiceBot_d66_19, TMP_DiceBot_rollDiceAddingUp_20, TMP_DiceBot_getHelpMessage_21, TMP_DiceBot_parren_killer_22, TMP_DiceBot_changeText_23, TMP_DiceBot_dice_command_24, TMP_DiceBot_isGetOriginalMessage_25, TMP_DiceBot_removeDiceCommandMessage_26, TMP_DiceBot_rollDiceCommandCatched_27, TMP_DiceBot_rollDiceCommand_28, TMP_DiceBot_setDiceText_29, TMP_DiceBot_setDiffText_30, TMP_DiceBot_dice_command_xRn_31, TMP_DiceBot_check_2D6_32, TMP_DiceBot_check_nD6_33, TMP_DiceBot_check_nD10_34, TMP_DiceBot_check_1D100_35, TMP_DiceBot_check_1D20_36, TMP_DiceBot_get_table_by_2d6_37, TMP_DiceBot_get_table_by_1d6_38, TMP_DiceBot_get_table_by_nD6_39, TMP_DiceBot_get_table_by_nDx_40, TMP_DiceBot_get_table_by_1d3_41, TMP_DiceBot_getD66_42, TMP_DiceBot_get_table_by_d66_swap_43, TMP_DiceBot_get_table_by_d66_44, TMP_DiceBot_getDiceRolledAdditionalText_45, TMP_DiceBot_getDiceRevision_46, TMP_DiceBot_changeDiceValueByDiceText_47, TMP_DiceBot_setRatingTable_48, TMP_DiceBot_getJackUpValueOnAddRoll_49, TMP_DiceBot_isD9_50, TMP_DiceBot_getGrichText_51, TMP_DiceBot_check2dCritical_52, TMP_DiceBot_is2dCritical_53, TMP_DiceBot_getDiceList_54, TMP_DiceBot_getDiceListFromDiceText_56, TMP_DiceBot_get_table_by_number_58, TMP_DiceBot_getTableValue_60, TMP_DiceBot_analyzeDiceCommandResultMethod_63, TMP_DiceBot_get_table_by_nDx_extratable_64, TMP_DiceBot_getTableCommandResult_65, TMP_DiceBot_getTableInfoFromExtraTableText_67;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_DiceBot_setPrefixes_1, TMP_DiceBot_clearPrefixes_2, TMP_DiceBot_inherited_3, TMP_DiceBot_initialize_4, TMP_DiceBot_postSet_5, TMP_DiceBot_info_6, TMP_DiceBot_gameName_7, TMP_DiceBot_prefixes_8, TMP_DiceBot_setGameType_9, TMP_DiceBot_setSendMode_10, TMP_DiceBot_bcdice$eq_11, TMP_DiceBot_bcdice_12, TMP_DiceBot_rand_13, TMP_DiceBot_check_suc_14, TMP_DiceBot_roll_15, TMP_DiceBot_marshalSignOfInequality_16, TMP_DiceBot_unlimitedRollDiceType_17, TMP_DiceBot_setSortType_18, TMP_DiceBot_d66_19, TMP_DiceBot_rollDiceAddingUp_20, TMP_DiceBot_getHelpMessage_21, TMP_DiceBot_parren_killer_22, TMP_DiceBot_changeText_23, TMP_DiceBot_dice_command_24, TMP_DiceBot_isGetOriginalMessage_25, TMP_DiceBot_removeDiceCommandMessage_26, TMP_DiceBot_rollDiceCommandCatched_27, TMP_DiceBot_rollDiceCommand_28, TMP_DiceBot_setDiceText_29, TMP_DiceBot_setDiffText_30, TMP_DiceBot_dice_command_xRn_31, TMP_DiceBot_check_2D6_32, TMP_DiceBot_check_nD6_33, TMP_DiceBot_check_nD10_34, TMP_DiceBot_check_1D100_35, TMP_DiceBot_check_1D20_36, TMP_DiceBot_get_table_by_2d6_37, TMP_DiceBot_get_table_by_1d6_38, TMP_DiceBot_get_table_by_nD6_39, TMP_DiceBot_get_table_by_nDx_40, TMP_DiceBot_get_table_by_1d3_41, TMP_DiceBot_getD66_42, TMP_DiceBot_get_table_by_d66_swap_43, TMP_DiceBot_get_table_by_d66_44, TMP_DiceBot_getDiceRolledAdditionalText_45, TMP_DiceBot_getDiceRevision_46, TMP_DiceBot_changeDiceValueByDiceText_47, TMP_DiceBot_setRatingTable_48, TMP_DiceBot_isD9_49, TMP_DiceBot_getGrichText_50, TMP_DiceBot_check2dCritical_51, TMP_DiceBot_is2dCritical_52, TMP_DiceBot_should_reroll$q_53, TMP_DiceBot_getDiceList_54, TMP_DiceBot_getDiceListFromDiceText_56, TMP_DiceBot_get_table_by_number_58, TMP_DiceBot_getTableValue_60, TMP_DiceBot_analyzeDiceCommandResultMethod_63, TMP_DiceBot_get_table_by_nDx_extratable_64, TMP_DiceBot_getTableCommandResult_65, TMP_DiceBot_getTableInfoFromExtraTableText_67, TMP_DiceBot_roll_tables_68;
 
-    def.diceText = def.d66Type = nil;
+    def.rerollLimitCount = def.diceText = def.d66Type = nil;
     
     Opal.const_set($nesting[0], 'EMPTY_PREFIXES_PATTERN', /(^|\s)(S)?()(\s|$)/i.$freeze());
     (function(self, $parent_nesting) {
@@ -89,7 +92,7 @@
     }, TMP_DiceBot_initialize_4.$$arity = 0);
     self.$attr_accessor("rerollLimitCount");
     self.$attr_reader("sendMode", "sameDiceRerollCount", "sameDiceRerollType", "d66Type");
-    self.$attr_reader("isPrintMaxDice", "upplerRollThreshold", "unlimitedRollDiceType");
+    self.$attr_reader("isPrintMaxDice", "upplerRollThreshold");
     self.$attr_reader("defaultSuccessTarget", "rerollNumber", "fractionType");
     
     Opal.defn(self, '$postSet', TMP_DiceBot_postSet_5 = function $$postSet() {
@@ -287,7 +290,6 @@
     
     Opal.defn(self, '$rollDiceCommandCatched', TMP_DiceBot_rollDiceCommandCatched_27 = function $$rollDiceCommandCatched(command) {
       var $a, $b, self = this, result = nil, secret_flg = nil, e = nil;
-      if ($gvars["@"] == null) $gvars["@"] = nil;
 
       
       result = nil;
@@ -299,7 +301,7 @@
       } catch ($err) {
         if (Opal.rescue($err, [Opal.const_get_relative($nesting, 'StandardError')])) {e = $err;
           try {
-            self.$debug("executeCommand exception", e.$to_s(), ($truthy($a = $gvars["@"]) ? $a : []).$join("\n"))
+            self.$debug("executeCommand exception", e.$to_s(), e.$backtrace().$join("\n"))
           } finally { Opal.pop_exception() }
         } else { throw $err; }
       };;
@@ -409,9 +411,9 @@
     }, TMP_DiceBot_get_table_by_1d3_41.$$arity = 1);
     
     Opal.defn(self, '$getD66', TMP_DiceBot_getD66_42 = function $$getD66(isSwap) {
-      var self = this, number = nil;
+      var self = this;
 
-      return (number = self.$bcdice().$getD66(isSwap))
+      return self.$bcdice().$getD66(isSwap)
     }, TMP_DiceBot_getD66_42.$$arity = 1);
     
     Opal.defn(self, '$get_table_by_d66_swap', TMP_DiceBot_get_table_by_d66_swap_43 = function $$get_table_by_d66_swap(table) {
@@ -424,11 +426,11 @@
     }, TMP_DiceBot_get_table_by_d66_swap_43.$$arity = 1);
     
     Opal.defn(self, '$get_table_by_d66', TMP_DiceBot_get_table_by_d66_44 = function $$get_table_by_d66(table) {
-      var $a, $b, self = this, dice1 = nil, dummy = nil, dice2 = nil, num = nil, text = nil, indexText = nil;
+      var $a, $b, self = this, dice1 = nil, dice2 = nil, num = nil, text = nil, indexText = nil;
 
       
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
-      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b;
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), $b;
       num = $rb_plus($rb_times($rb_minus(dice1, 1), 6), $rb_minus(dice2, 1));
       text = table['$[]'](num);
       indexText = "" + (dice1) + (dice2);
@@ -461,35 +463,35 @@
       return "1"
     }, TMP_DiceBot_setRatingTable_48.$$arity = 3);
     
-    Opal.defn(self, '$getJackUpValueOnAddRoll', TMP_DiceBot_getJackUpValueOnAddRoll_49 = function $$getJackUpValueOnAddRoll(_dice_n) {
-      var self = this;
-
-      return 0
-    }, TMP_DiceBot_getJackUpValueOnAddRoll_49.$$arity = 1);
-    
-    Opal.defn(self, '$isD9', TMP_DiceBot_isD9_50 = function $$isD9() {
+    Opal.defn(self, '$isD9', TMP_DiceBot_isD9_49 = function $$isD9() {
       var self = this;
 
       return false
-    }, TMP_DiceBot_isD9_50.$$arity = 0);
+    }, TMP_DiceBot_isD9_49.$$arity = 0);
     
-    Opal.defn(self, '$getGrichText', TMP_DiceBot_getGrichText_51 = function $$getGrichText(_numberSpot1, _dice_cnt_total, _suc) {
+    Opal.defn(self, '$getGrichText', TMP_DiceBot_getGrichText_50 = function $$getGrichText(_numberSpot1, _dice_cnt_total, _suc) {
       var self = this;
 
       return ""
-    }, TMP_DiceBot_getGrichText_51.$$arity = 3);
+    }, TMP_DiceBot_getGrichText_50.$$arity = 3);
     
-    Opal.defn(self, '$check2dCritical', TMP_DiceBot_check2dCritical_52 = function $$check2dCritical(critical, dice_new, dice_arry, loop_count) {
+    Opal.defn(self, '$check2dCritical', TMP_DiceBot_check2dCritical_51 = function $$check2dCritical(critical, dice_new, dice_arry, loop_count) {
       var self = this;
 
       return nil
-    }, TMP_DiceBot_check2dCritical_52.$$arity = 4);
+    }, TMP_DiceBot_check2dCritical_51.$$arity = 4);
     
-    Opal.defn(self, '$is2dCritical', TMP_DiceBot_is2dCritical_53 = function $$is2dCritical() {
+    Opal.defn(self, '$is2dCritical', TMP_DiceBot_is2dCritical_52 = function $$is2dCritical() {
       var self = this;
 
       return false
-    }, TMP_DiceBot_is2dCritical_53.$$arity = 0);
+    }, TMP_DiceBot_is2dCritical_52.$$arity = 0);
+    
+    Opal.defn(self, '$should_reroll?', TMP_DiceBot_should_reroll$q_53 = function(loop_count) {
+      var $a, self = this;
+
+      return ($truthy($a = $rb_lt(loop_count, self.rerollLimitCount)) ? $a : self.rerollLimitCount['$=='](0))
+    }, TMP_DiceBot_should_reroll$q_53.$$arity = 1);
     
     Opal.defn(self, '$getDiceList', TMP_DiceBot_getDiceList_54 = function $$getDiceList() {
       var self = this;
@@ -627,7 +629,8 @@ if (method == null) method = nil;
         return "" + (name) + "(" + (number) + "[" + (diceText) + "]) ＞ " + (text)};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);
     }, TMP_DiceBot_getTableCommandResult_65.$$arity = -3);
-    return (Opal.defn(self, '$getTableInfoFromExtraTableText', TMP_DiceBot_getTableInfoFromExtraTableText_67 = function $$getTableInfoFromExtraTableText(text, count) {
+    
+    Opal.defn(self, '$getTableInfoFromExtraTableText', TMP_DiceBot_getTableInfoFromExtraTableText_67 = function $$getTableInfoFromExtraTableText(text, count) {
       var TMP_66, self = this, newTable = nil;
 
       if (count == null) {
@@ -647,7 +650,18 @@ if (item == null) item = nil;
       } else if ($truthy(newTable.$size()['$!='](count))) {
         self.$raise("" + "invalid table size:" + (newTable.$size()) + "\n" + (newTable.$inspect()))};
       return newTable;
-    }, TMP_DiceBot_getTableInfoFromExtraTableText_67.$$arity = -2), nil) && 'getTableInfoFromExtraTableText';
+    }, TMP_DiceBot_getTableInfoFromExtraTableText_67.$$arity = -2);
+    return (Opal.defn(self, '$roll_tables', TMP_DiceBot_roll_tables_68 = function $$roll_tables(command, tables) {
+      var self = this, table = nil;
+
+      
+      table = tables['$[]'](command.$upcase());
+      if ($truthy(table)) {
+        } else {
+        return nil
+      };
+      return table.$roll(self.$bcdice());
+    }, TMP_DiceBot_roll_tables_68.$$arity = 2), nil) && 'roll_tables';
   })($nesting[0], null, $nesting)
 })(Opal);
 
@@ -667,19 +681,22 @@ Opal.loaded(["diceBot/DiceBot"]);
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
+  function $rb_plus(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
+  }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $hash2 = Opal.hash2, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$freeze', '$new', '$match', '$bRollCommand', '$[]', '$integerValueOfDifficulty', '$debug', '$parse', '$===', '$executeEV', '$executeAT', '$private', '$parseEV', '$parseAT', '$to_i', '$num', '$difficulty', '$sub', '$bdice', '$bcdice', '$targetValue', '$raise', '$>', '$map', '$split', '$to_proc', '$length', '$select', '$==', '$>=', '$fetch', '$upcase']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$freeze', '$new', '$match', '$bRollCommand', '$[]', '$integerValueOfDifficulty', '$debug', '$parse', '$===', '$executeEV', '$executeAT', '$executeEL', '$executeSB', '$private', '$parseEV', '$last_match', '$parseAT', '$parseEL', '$to_i', '$num', '$difficulty', '$sub', '$bdice', '$bcdice', '$targetValue', '$raise', '$>', '$map', '$split', '$to_proc', '$length', '$select', '$==', '$>=', '$+', '$get_table_by_1d6', '$fetch', '$upcase']);
   
   self.$require("diceBot/DiceBot");
   return (function($base, $super, $parent_nesting) {
     function $NinjaSlayer(){};
     var self = $NinjaSlayer = $klass($base, $super, 'NinjaSlayer', $NinjaSlayer);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_NinjaSlayer_initialize_1, TMP_NinjaSlayer_gameName_2, TMP_NinjaSlayer_gameType_3, TMP_NinjaSlayer_getHelpMessage_4, TMP_NinjaSlayer_changeText_5, TMP_NinjaSlayer_rollDiceCommand_6, TMP_NinjaSlayer_parse_7, TMP_NinjaSlayer_parseEV_8, TMP_NinjaSlayer_parseAT_9, TMP_NinjaSlayer_executeEV_10, TMP_NinjaSlayer_executeAT_12, TMP_NinjaSlayer_integerValueOfDifficulty_13, TMP_NinjaSlayer_bRollCommand_14;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_NinjaSlayer_initialize_1, TMP_NinjaSlayer_gameName_2, TMP_NinjaSlayer_gameType_3, TMP_NinjaSlayer_getHelpMessage_4, TMP_NinjaSlayer_changeText_5, TMP_NinjaSlayer_rollDiceCommand_6, TMP_NinjaSlayer_parse_7, TMP_NinjaSlayer_parseEV_8, TMP_NinjaSlayer_parseAT_9, TMP_NinjaSlayer_parseEL_10, TMP_NinjaSlayer_executeEV_11, TMP_NinjaSlayer_executeAT_13, TMP_NinjaSlayer_executeEL_16, TMP_NinjaSlayer_executeSB_17, TMP_NinjaSlayer_integerValueOfDifficulty_18, TMP_NinjaSlayer_bRollCommand_19;
 
     
-    self.$setPrefixes(["NJ\\d+.*", "EV\\d+.*", "AT\\d+.*"]);
+    self.$setPrefixes(["NJ\\d+.*", "EV\\d+.*", "AT\\d+.*", "EL\\d+.*", "SB"]);
     
     Opal.defn(self, '$initialize', TMP_NinjaSlayer_initialize_1 = function $$initialize() {
       var self = this, $iter = TMP_NinjaSlayer_initialize_1.$$p, $yield = $iter || nil, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -709,16 +726,18 @@ Opal.loaded(["diceBot/DiceBot"]);
     Opal.defn(self, '$getHelpMessage', TMP_NinjaSlayer_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・通常判定　NJ\n" + "　NJx[y] or NJx@y or NJx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4)\n" + "　例:NJ4@H 難易度HARD、判定ダイス4で判定\n" + "・回避判定　EV\n" + "　EVx[y]/z or EVx@y/z or EVx/z or EVx[y] or EVx@y or EVx\n" + "　x=判定ダイス y=難易度 z=攻撃側の成功数(省略可) 難易度を省略時はNORMAL(4)\n" + "　攻撃側の成功数を指定した場合、カウンターカラテ発生時には表示\n" + "　例:EV5/3 難易度NORMAL(省略時)、判定ダイス5、攻撃側の成功数3で判定\n" + "・近接攻撃　AT\n" + "　ATx[y] or ATx@y or ATx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4) サツバツ！発生時には表示\n" + "　例:AT6[H] 難易度HARD,判定ダイス5で近接攻撃の判定\n" + "\n" + "・難易度\n" + "　KIDS=K,EASY=E,NORMAL=N,HARD=H,ULTRA HARD=UH 数字にも対応\n"
+      return "" + "・通常判定　NJ\n" + "　NJx[y] or NJx@y or NJx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4)\n" + "　例:NJ4@H 難易度HARD、判定ダイス4で判定\n" + "・回避判定　EV\n" + "　EVx[y]/z or EVx@y/z or EVx/z or EVx[y] or EVx@y or EVx\n" + "　x=判定ダイス y=難易度 z=攻撃側の成功数(省略可) 難易度を省略時はNORMAL(4)\n" + "　攻撃側の成功数を指定した場合、カウンターカラテ発生時には表示\n" + "　例:EV5/3 難易度NORMAL(省略時)、判定ダイス5、攻撃側の成功数3で判定\n" + "・近接攻撃　AT\n" + "　ATx[y] or ATx@y or ATx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4) サツバツ！発生時には表示\n" + "　例:AT6[H] 難易度HARD,判定ダイス5で近接攻撃の判定\n" + "・サツバツ判定　SB\n" + "・電子戦　EL\n" + "　ELx[y] or ELx@y or ELx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4)\n" + "　例:EL6[H] 難易度HARD,判定ダイス5で電子戦の判定\n" + "\n" + "・難易度\n" + "　KIDS=K,EASY=E,NORMAL=N,HARD=H,ULTRA HARD=UH 数字にも対応\n"
     }, TMP_NinjaSlayer_getHelpMessage_4.$$arity = 0);
     Opal.const_set($nesting[0], 'DIFFICULTY_VALUE_RE', /UH|[2-6KENH]/i.$freeze());
     Opal.const_set($nesting[0], 'DIFFICULTY_RE', new RegExp("" + "\\[(" + (Opal.const_get_relative($nesting, 'DIFFICULTY_VALUE_RE')) + ")\\]|@(" + (Opal.const_get_relative($nesting, 'DIFFICULTY_VALUE_RE')) + ")", 'i').$freeze());
     Opal.const_set($nesting[0], 'NJ_RE', /^NJ(\d+)(?:\[(UH|[2-6KENH])\]|@(UH|[2-6KENH]))?$/i.$freeze());
     Opal.const_set($nesting[0], 'EV_RE', /^EV(\d+)(?:\[(UH|[2-6KENH])\]|@(UH|[2-6KENH]))?(?:\/(\d+))?$/i.$freeze());
     Opal.const_set($nesting[0], 'AT_RE', /^AT(\d+)(?:\[(UH|[2-6KENH])\]|@(UH|[2-6KENH]))?$/i.$freeze());
+    Opal.const_set($nesting[0], 'EL_RE', /^EL(\d+)(?:\[(UH|[2-6KENH])\]|@(UH|[2-6KENH]))?$/i.$freeze());
     Opal.const_set($nesting[0], 'B_ROLL_RESULT_HEAD_RE', /^[^(]+/.$freeze());
     Opal.const_set($nesting[0], 'EV', Opal.const_get_relative($nesting, 'Struct').$new("num", "difficulty", "targetValue"));
     Opal.const_set($nesting[0], 'AT', Opal.const_get_relative($nesting, 'Struct').$new("num", "difficulty"));
+    Opal.const_set($nesting[0], 'EL', Opal.const_get_relative($nesting, 'Struct').$new("num", "difficulty"));
     Opal.const_set($nesting[0], 'DIFFICULTY_SYMBOL_TO_INTEGER', $hash2(["K", "E", "N", "H", "UH"], {"K": 2, "E": 3, "N": 4, "H": 5, "UH": 6}).$freeze());
     
     Opal.defn(self, '$changeText', TMP_NinjaSlayer_changeText_5 = function $$changeText(str) {
@@ -741,16 +760,20 @@ Opal.loaded(["diceBot/DiceBot"]);
       return (function() {$case = (node = self.$parse(command));
       if (Opal.const_get_relative($nesting, 'EV')['$===']($case)) {return self.$executeEV(node)}
       else if (Opal.const_get_relative($nesting, 'AT')['$===']($case)) {return self.$executeAT(node)}
+      else if (Opal.const_get_relative($nesting, 'EL')['$===']($case)) {return self.$executeEL(node)}
+      else if ("SB"['$===']($case)) {return self.$executeSB()}
       else {return nil}})();
     }, TMP_NinjaSlayer_rollDiceCommand_6.$$arity = 1);
     self.$private();
     
     Opal.defn(self, '$parse', TMP_NinjaSlayer_parse_7 = function $$parse(command) {
-      var self = this, m = nil;
+      var self = this, $case = nil;
 
-      return (function() {
-      if ($truthy((m = Opal.const_get_relative($nesting, 'EV_RE').$match(command)))) {return self.$parseEV(m)}
-      else if ($truthy((m = Opal.const_get_relative($nesting, 'AT_RE').$match(command)))) {return self.$parseAT(m)}
+      return (function() {$case = command;
+      if (Opal.const_get_relative($nesting, 'EV_RE')['$===']($case)) {return self.$parseEV(Opal.const_get_relative($nesting, 'Regexp').$last_match())}
+      else if (Opal.const_get_relative($nesting, 'AT_RE')['$===']($case)) {return self.$parseAT(Opal.const_get_relative($nesting, 'Regexp').$last_match())}
+      else if (Opal.const_get_relative($nesting, 'EL_RE')['$===']($case)) {return self.$parseEL(Opal.const_get_relative($nesting, 'Regexp').$last_match())}
+      else if ("SB"['$===']($case)) {return "SB"}
       else {return nil}})()
     }, TMP_NinjaSlayer_parse_7.$$arity = 1);
     
@@ -773,7 +796,16 @@ Opal.loaded(["diceBot/DiceBot"]);
       return Opal.const_get_relative($nesting, 'AT').$new(num, difficulty);
     }, TMP_NinjaSlayer_parseAT_9.$$arity = 1);
     
-    Opal.defn(self, '$executeEV', TMP_NinjaSlayer_executeEV_10 = function $$executeEV(ev) {
+    Opal.defn(self, '$parseEL', TMP_NinjaSlayer_parseEL_10 = function $$parseEL(m) {
+      var $a, self = this, num = nil, difficulty = nil;
+
+      
+      num = m['$[]'](1).$to_i();
+      difficulty = self.$integerValueOfDifficulty(($truthy($a = m['$[]'](2)) ? $a : m['$[]'](3)));
+      return Opal.const_get_relative($nesting, 'EL').$new(num, difficulty);
+    }, TMP_NinjaSlayer_parseEL_10.$$arity = 1);
+    
+    Opal.defn(self, '$executeEV', TMP_NinjaSlayer_executeEV_11 = function $$executeEV(ev) {
       var self = this, command = nil, rollResult = nil, m = nil, numOfSuccesses = nil;
 
       
@@ -792,27 +824,59 @@ Opal.loaded(["diceBot/DiceBot"]);
       if ($truthy($rb_gt(numOfSuccesses, ev.$targetValue()))) {
         return "" + (rollResult) + " ＞ カウンターカラテ!!"};
       return rollResult;
-    }, TMP_NinjaSlayer_executeEV_10.$$arity = 1);
+    }, TMP_NinjaSlayer_executeEV_11.$$arity = 1);
     
-    Opal.defn(self, '$executeAT', TMP_NinjaSlayer_executeAT_12 = function $$executeAT(at) {
-      var TMP_11, self = this, command = nil, rollResult = nil, m = nil, values = nil, numOfMaxValues = nil;
+    Opal.defn(self, '$executeAT', TMP_NinjaSlayer_executeAT_13 = function $$executeAT(at) {
+      var TMP_12, self = this, command = nil, rollResult = nil, m = nil, values = nil, numOfMaxValues = nil;
 
       
       command = self.$bRollCommand(at.$num(), at.$difficulty());
       rollResult = self.$bcdice().$bdice(command).$sub(Opal.const_get_relative($nesting, 'B_ROLL_RESULT_HEAD_RE'), "");
       m = /＞ (\d+(?:,\d+)*)/.$match(rollResult);
       values = $send(m['$[]'](1).$split(","), 'map', [], "to_i".$to_proc());
-      numOfMaxValues = $send(values, 'select', [], (TMP_11 = function(v){var self = TMP_11.$$s || this;
+      numOfMaxValues = $send(values, 'select', [], (TMP_12 = function(v){var self = TMP_12.$$s || this;
 if (v == null) v = nil;
-      return v['$=='](6)}, TMP_11.$$s = self, TMP_11.$$arity = 1, TMP_11)).$length();
+      return v['$=='](6)}, TMP_12.$$s = self, TMP_12.$$arity = 1, TMP_12)).$length();
       return (function() {if ($truthy($rb_ge(numOfMaxValues, 2))) {
         return "" + (rollResult) + " ＞ サツバツ!!"
         } else {
         return rollResult
       }; return nil; })();
-    }, TMP_NinjaSlayer_executeAT_12.$$arity = 1);
+    }, TMP_NinjaSlayer_executeAT_13.$$arity = 1);
     
-    Opal.defn(self, '$integerValueOfDifficulty', TMP_NinjaSlayer_integerValueOfDifficulty_13 = function $$integerValueOfDifficulty(s) {
+    Opal.defn(self, '$executeEL', TMP_NinjaSlayer_executeEL_16 = function $$executeEL(el) {
+      var TMP_14, TMP_15, self = this, command = nil, rollResult = nil, m = nil, values = nil, numOfMaxValues = nil, sumOfTrueValues = nil;
+
+      
+      command = self.$bRollCommand(el.$num(), el.$difficulty());
+      rollResult = self.$bcdice().$bdice(command).$sub(Opal.const_get_relative($nesting, 'B_ROLL_RESULT_HEAD_RE'), "");
+      m = /＞ (\d+(?:,\d+)*)/.$match(rollResult);
+      values = $send(m['$[]'](1).$split(","), 'map', [], "to_i".$to_proc());
+      numOfMaxValues = $send(values, 'select', [], (TMP_14 = function(v){var self = TMP_14.$$s || this;
+if (v == null) v = nil;
+      return v['$=='](6)}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14)).$length();
+      sumOfTrueValues = $send(values, 'select', [], (TMP_15 = function(v){var self = TMP_15.$$s || this;
+if (v == null) v = nil;
+      return $rb_ge(v, el.$difficulty())}, TMP_15.$$s = self, TMP_15.$$arity = 1, TMP_15)).$length();
+      return (function() {if ($truthy($rb_ge(numOfMaxValues, 1))) {
+        return "" + (rollResult) + " + " + (numOfMaxValues) + " ＞ " + ($rb_plus(sumOfTrueValues, numOfMaxValues))
+        } else {
+        return rollResult
+      }; return nil; })();
+    }, TMP_NinjaSlayer_executeEL_16.$$arity = 1);
+    
+    Opal.defn(self, '$executeSB', TMP_NinjaSlayer_executeSB_17 = function $$executeSB() {
+      var $a, $b, self = this, table_name = nil, table = nil, info = nil, number = nil, text = nil;
+
+      
+      table_name = "サツバツ表";
+      table = ["「死ねーッ！」腹部に強烈な一撃！　敵はくの字に折れ曲がり、ワイヤーアクションめいて吹っ飛んだ！：本来のダメージ＋１ダメージを与える。敵は後方の壁または障害物に向かって、何マスでもまっすぐ弾き飛ばされる（他のキャラのいるマスは通過する）。壁または障害物に接触した時点で、敵はさらに１ダメージを受ける。敵はこの激突ダメージに対して改めて『回避判定』を行っても良い。", "「イヤーッ！」頭部への痛烈なカラテ！　眼球破壊もしくは激しい脳震盪が敵を襲う！：本来のダメージを与える。さらに敵の【ニューロン】と【ワザマエ】がそれぞれ１ずつ減少する（これによる最低値は１）。残虐ボーナスにより【万札】がD３発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD３上昇する。", "「苦しみ抜いて死ぬがいい」急所を情け容赦なく破壊！：本来のダメージ＋１ダメージを与える。耐え難い苦痛により、敵は【精神力】が–２され、【ニューロン】が１減少する（これによる最低値は１）。残虐ボーナスにより【万札】がD３発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD３上昇する。", "「逃げられるものなら逃げてみよ」敵の脚を粉砕！：本来のダメージを与える。さらに敵の【脚力】がD３減少する（最低値は１）。残虐ボーナスにより【万札】がD３発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD３上昇する。", "「これで手も足も出まい！」敵の両腕を切り飛ばした！　鮮血がスプリンクラーめいて噴き出す！：本来のダメージ＋１ダメージを与える。さらに敵の【ワザマエ】と【カラテ】がそれぞれ２減少する（最低値は１）。残虐ボーナスにより【万札】がD３発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD３上昇する。", "「イイイヤアアアアーーーーッ！」ヤリめいたチョップが敵の胸を貫通！　さらに心臓を掴み取り、握りつぶした！　ナムアミダブツ！：敵は残り【体力】に関係なく即死する。残虐ボーナスにより【万札】がD６発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD６上昇する。"];
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (info = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      text = "" + (table_name) + "(" + (number) + ") ＞ " + (info);
+      return text;
+    }, TMP_NinjaSlayer_executeSB_17.$$arity = 0);
+    
+    Opal.defn(self, '$integerValueOfDifficulty', TMP_NinjaSlayer_integerValueOfDifficulty_18 = function $$integerValueOfDifficulty(s) {
       var self = this;
 
       
@@ -823,12 +887,12 @@ if (v == null) v = nil;
       if ($truthy(/^[2-6]$/.$match(s))) {
         return s.$to_i()};
       return Opal.const_get_relative($nesting, 'DIFFICULTY_SYMBOL_TO_INTEGER').$fetch(s.$upcase());
-    }, TMP_NinjaSlayer_integerValueOfDifficulty_13.$$arity = 1);
-    return (Opal.defn(self, '$bRollCommand', TMP_NinjaSlayer_bRollCommand_14 = function $$bRollCommand(num, difficulty) {
+    }, TMP_NinjaSlayer_integerValueOfDifficulty_18.$$arity = 1);
+    return (Opal.defn(self, '$bRollCommand', TMP_NinjaSlayer_bRollCommand_19 = function $$bRollCommand(num, difficulty) {
       var self = this;
 
       return "" + (num) + "B6>=" + (difficulty)
-    }, TMP_NinjaSlayer_bRollCommand_14.$$arity = 2), nil) && 'bRollCommand';
+    }, TMP_NinjaSlayer_bRollCommand_19.$$arity = 2), nil) && 'bRollCommand';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting);
 })(Opal);
 
