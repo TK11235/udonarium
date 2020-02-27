@@ -160,6 +160,7 @@ export class DiceBot extends GameObject {
     { script: 'LogHorizon', game: 'ログ・ホライズン' },
     { script: 'RokumonSekai2', game: '六門世界2nd' },
     { script: 'RoleMaster', game: 'ロールマスター' },
+    { script: 'LostRecord', game: 'ロストレコード' },
     { script: 'LostRoyal', game: 'ロストロイヤル' },
     { script: 'WaresBlade', game: 'ワースブレイド' },
     { script: 'WorldOfDarkness', game: 'ワールドオブダークネス' },
