@@ -85,7 +85,7 @@ export class DiceBot extends GameObject {
     { script: 'Alter_raise', game: '心衝想機TRPGアルトレイズ' },
     { script: 'ShinkuuGakuen', game: '真空学園' },
     { script: 'Cthulhu7th', game: '新クトゥルフ' },
-    { script: 'ShinMegamiTenseiKakuseihen', game: '真・女神転生TRPG　覚醒編' },
+    { script: 'ShinMegamiTenseiKakuseihen', game: '真・女神転生TRPG　覚醒篇' },
     { script: 'SRS', game: 'Standard RPG System' },
     { script: 'ScreamHighSchool', game: 'スクリームハイスクール' },
     { script: 'SterileLife', game: 'ステラーライフTRPG' },
