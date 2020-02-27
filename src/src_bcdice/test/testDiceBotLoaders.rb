@@ -755,6 +755,10 @@ class TestDiceBotLoaders < Test::Unit::TestCase
     assertDiceBotWithoutLoader('SRS')
   end
 
+  def test_ScreamHighSchool
+    assertDiceBotWithoutLoader('ScreamHighSchool')
+  end
+
   def test_SevenFortressMobius
     assertDiceBotWithoutLoader('SevenFortressMobius')
   end

@@ -41,13 +41,6 @@ class CardTrader
     @canTapCard = true
   end
 
-  # カード置き場数を設定する
-  # @param [Integer] place カード置き場数。0なら無し。
-  def card_place=(place)
-    @card_place = place
-    debug("setCardPlace @card_place", @card_place)
-  end
-
   # 1つのデッキ、1つのジョーカーを使う
   # @return [self]
   def set1Deck1Joker
@@ -240,7 +233,7 @@ class CardTrader
 
       debug("Load Finished...\n")
     rescue StandardError => e
-      raise ("カードデータを開けません :『#{cardFileName}』" + e.to_s)
+      raise "カードデータを開けません :『#{cardFileName}』#{e}"
     end
   end
 
@@ -250,7 +243,6 @@ class CardTrader
     debug('executeCard arg', arg)
     return unless /(c-)/ =~ arg
 
-    card_ok = 0
     count = 0
 
     case arg
@@ -475,7 +467,7 @@ class CardTrader
     targetCard = card.upcase; # デッキから抜き出すカードの指定
     destination = @nick_e.upcase
 
-    isDelete = @cardRest.delete_if { |card| card == targetCard }
+    isDelete = @cardRest.delete_if { |c| c == targetCard }
 
     if isDelete
       @deal_cards[destination] ||= []
@@ -587,7 +579,7 @@ class CardTrader
   end
 
   def discardCardCommandText(commandText)
-    count, output_msg, card_ok = discardCards(commandText)
+    count, output_msg, _card_ok = discardCards(commandText)
 
     if count > 0
       sendMessage(@channel, "#{@nick_e}: #{count}枚捨てました")
@@ -610,7 +602,7 @@ class CardTrader
   def playCardByCommandText(arg)
     debug('c-play pattern', arg)
 
-    count, output_msg, card_ok = playCard(arg)
+    count, output_msg, _card_ok = playCard(arg)
     if count > 0
       sendMessage(@channel, "#{@nick_e}: #{count}枚出しました")
       sendMessage(@channel, "[" + getCardsText($card_ok) + "]") unless @cardTitles.empty?
@@ -973,7 +965,7 @@ class CardTrader
 
     return nil if cards.empty?
 
-    cardNumber, dummy = @bcdice.roll(1, cards.length)
+    cardNumber, = @bcdice.roll(1, cards.length)
     cardNumber -= 1
     debug("cardNumber", cardNumber)
 

@@ -232,9 +232,8 @@ class DiceBotLoader
   def loadDiceBot
     @filenames.each do |filename|
       # TKfix dynamic requireは不可
-      #require(
-      #  File.expand_path(filename, File.dirname(__FILE__))
-      #)
+      #require_path = File.expand_path(filename, File.dirname(__FILE__))
+      #require(require_path)
     end
 
     Object.const_get(@diceBotClass).new

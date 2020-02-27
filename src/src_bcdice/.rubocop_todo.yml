@@ -19,19 +19,6 @@ Lint/AssignmentInCondition:
   Exclude:
     - 'irc/ircLib.rb'
 
-# Offense count: 2
-Lint/DuplicateCaseCondition:
-  Exclude:
-    - 'CountHolder.rb'
-    - 'diceBot/TwilightGunsmoke.rb'
-
-# Offense count: 3
-Lint/DuplicateMethods:
-  Exclude:
-    - 'CardTrader.rb'
-    - 'diceBot/DiceBot.rb'
-    - 'diceBot/SwordWorld.rb'
-
 # Offense count: 1
 Lint/EmptyWhen:
   Exclude:
@@ -43,15 +30,6 @@ Lint/HandleExceptions:
   Exclude:
     - 'irc/ircLib.rb'
 
-# Offense count: 6
-Lint/LiteralAsCondition:
-  Exclude:
-    - 'diceBot/BeginningIdol.rb'
-    - 'diceBot/BeginningIdol_Korean.rb'
-    - 'diceBot/LostRoyal.rb'
-    - 'diceBot/ShinkuuGakuen.rb'
-    - 'irc/ircLib.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Bug?
@@ -59,43 +37,11 @@ Lint/LiteralInInterpolation:
   Exclude:
     - 'diceBot/GurpsFW.rb'
 
-# Offense count: 14
-Lint/NestedMethodDefinition:
-  Exclude:
-    - 'diceBot/FilledWith.rb'
-    - 'diceBot/GurpsFW.rb'
-
-# Offense count: 1
-Lint/ParenthesesAsGroupedExpression:
-  Exclude:
-    - 'CardTrader.rb'
-
 # Offense count: 3
 Lint/RescueException:
   Exclude:
     - 'bcdiceGui.rb'
     - 'irc/ircLib.rb'
-
-# Offense count: 1
-# Configuration parameters: IgnoreImplicitReferences.
-Lint/ShadowedArgument:
-  Exclude:
-    - 'diceBot/MeikyuKingdom.rb'
-
-# Offense count: 4
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'CardTrader.rb'
-    - 'diceBot/ColossalHunter.rb'
-    - 'diceBot/Dracurouge.rb'
-    - 'diceBot/StellarKnights.rb'
-
-# Offense count: 4
-Lint/UnreachableCode:
-  Exclude:
-    - 'diceBot/CardRanker.rb'
-    - 'diceBot/FilledWith.rb'
-    - 'diceBot/GurpsFW.rb'
 
 # Offense count: 177
 Lint/UselessAssignment:
@@ -197,6 +143,11 @@ Style/AccessModifierDeclarations:
   Exclude:
     - 'irc/encode.rb'
     - 'test/DiceBotTest.rb'
+
+Style/BlockDelimiters:
+  Exclude:
+    # SRS: 長い文字列リテラルがあるため、複数行のブロックを使わなければ見にくい
+    - diceBot/SRS.rb
 
 # Offense count: 137
 Style/CaseEquality:
@@ -354,7 +305,6 @@ Style/IfInsideElse:
     - 'diceBot/Cthulhu7th_Korean.rb'
     - 'diceBot/Cthulhu_ChineseTraditional.rb'
     - 'diceBot/Cthulhu_Korean.rb'
-    - 'diceBot/DoubleCross.rb'
     - 'diceBot/GurpsFW.rb'
     - 'diceBot/IthaWenUa.rb'
     - 'diceBot/SharedFantasia.rb'

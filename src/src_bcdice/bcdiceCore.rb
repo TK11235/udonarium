@@ -88,7 +88,7 @@ class BCDice
   # 設定コマンドのパターン
   SET_COMMAND_PATTERN = /\Aset\s+(.+)/i.freeze
 
-  VERSION = "2.03.03".freeze
+  VERSION = "2.03.05".freeze
 
   attr_reader :cardTrader
 
@@ -177,8 +177,7 @@ class BCDice
   end
 
   def printErrorMessage(e)
-    #sendMessageToOnlySender("error " + e.to_s + $@.join("\n"))
-    sendMessageToOnlySender("error " + e.to_s + ($@ || []).join("\n") + $!) # TKfix $@ is nil
+    sendMessageToOnlySender("error " + e.to_s + e.backtrace.join("\n"))
   end
 
   def recieveMessageCatched(nick_e, tnick)
@@ -588,9 +587,6 @@ class BCDice
 
     @nick_e = nick_e
 
-    mynick = '' # self.nick
-    secret = false
-
     # プロットやシークレットダイス用に今のチャンネル名を記憶
     setChannelForPlotOrSecretDice
 
@@ -889,7 +885,7 @@ class BCDice
       return value, diceText
     end
 
-    string, secret, count, swapMarker = getD66Infos(dice)
+    string, _secret, _count, swapMarker = getD66Infos(dice)
     unless  string.nil?
       value = getD66ValueByMarker(swapMarker)
       # diceText = (value / 10).to_s + "," + (value % 10).to_s
@@ -956,11 +952,6 @@ class BCDice
       round = 0
 
       loop do
-        if round >= 1
-          # 振り足し時のダイス読み替え処理用（ダブルクロスはクリティカルでダイス10に読み替える)
-          dice_now += @diceBot.getJackUpValueOnAddRoll(dice_n)
-        end
-
         dice_n = rand(dice_max).to_i + 1
         dice_n -= 1 if d9_on
 
@@ -1075,7 +1066,6 @@ class BCDice
 
   ####################         バラバラダイス       ########################
   def bdice(string) # 個数判定型ダイスロール
-    total_n = 0
     suc = 0
     signOfInequality = ""
     diff = 0
@@ -1123,11 +1113,6 @@ class BCDice
     output = "#{@nick_e}: (#{string}) ＞ #{output}"
 
     return output
-  end
-
-  def isReRollAgain(dice_cnt, round)
-    debug("isReRollAgain dice_cnt, round", dice_cnt, round)
-    ((dice_cnt > 0) && ((round < @diceBot.rerollLimitCount) || (@diceBot.rerollLimitCount == 0)))
   end
 
   ####################             D66ダイス        ########################
@@ -1259,15 +1244,14 @@ class BCDice
     nick ||= @nick_e
     nick = nick.upcase
 
-    /[_\d]*(.+)[_\d]*/ =~ nick
-    # nick = Regexp.last_match(1) # Nick端の数字はカウンター変わりに使われることが多いので除去
-    nick = Regexp.last_match(1) if Regexp.last_match # TKfix undefined method `[]' for nil
+    if /[_\d]*(.+)[_\d]*/ =~ nick
+      nick = Regexp.last_match(1) # Nick端の数字はカウンター変わりに使われることが多いので除去
+    end
 
     return nick
   end
 
   def addToSecretDiceResult(diceResult, channel, mode)
-    nick = getNick()
     channel = channel.upcase
 
     # まずはチャンネルごとの管理リストに追加
@@ -1444,7 +1428,7 @@ class BCDice
   def getSuccessText(*check_param)
     debug('getSuccessText begin')
 
-    total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max = *check_param
+    _total_n, _dice_n, _signOfInequality, _diff, dice_cnt, dice_max, = *check_param
 
     debug("dice_max, dice_cnt", dice_max, dice_cnt)
 
@@ -1536,7 +1520,7 @@ class BCDice
       dice_cmd = Regexp.last_match(2)
       str_before = Regexp.last_match(1) if Regexp.last_match(1)
       str_after = Regexp.last_match(3) if Regexp.last_match(3)
-      rolled, dmy = rollDiceAddingUp(dice_cmd)
+      rolled, = rollDiceAddingUp(dice_cmd)
       string = "#{str_before}#{rolled}#{str_after}"
     end
 
@@ -1551,7 +1535,7 @@ class BCDice
     string = @diceBot.changeText(string)
     debug("diceBot.changeText(string) end", string)
 
-    string = string.gsub(/([\d]+[dD])([^\d\w]|$)/) { "#{Regexp.last_match(1)}6#{Regexp.last_match(2)}" }
+    string = string.gsub(/([\d]+[dD])([^\w]|$)/) { "#{Regexp.last_match(1)}6#{Regexp.last_match(2)}" }
 
     debug("parren_killer output", string)
 

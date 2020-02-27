@@ -117,7 +117,7 @@ class IrcClient < Net::IRC::Client
     arg = getArg(event)
     tnick = ""
     if /->/ =~ arg
-      arg, tnick, *dummy = arg.split(/->/)
+      arg, tnick, = arg.split(/->/)
     end
 
     debug("nick_e, arg, tnick", nick_e, arg, tnick)
