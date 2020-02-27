@@ -11,12 +11,12 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$getRandomSkillTableResult', '$getTableDiceCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$[]', '$nil?', '$getD66Table', '$get_table_by_d66_swap', '$map', '$is_a?', '$to_i', '$last_match', '$setPrefixes', '$+', '$keys']);
+  Opal.add_stubs(['$==', '$<=', '$>=', '$upcase', '$===', '$getRandomSkillTableResult', '$get_nickname_table', '$getTableDiceCommandResult', '$get_table_by_1d6', '$get_table_by_2d6', '$roll', '$getD66Table', '$[]', '$get_table_by_d66_swap', '$nil?', '$map', '$is_a?', '$to_i', '$last_match', '$setPrefixes', '$+', '$keys']);
   return (function($base, $super, $parent_nesting) {
     function $YankeeYogSothoth(){};
     var self = $YankeeYogSothoth = $klass($base, $super, 'YankeeYogSothoth', $YankeeYogSothoth);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_YankeeYogSothoth_initialize_1, TMP_YankeeYogSothoth_gameName_2, TMP_YankeeYogSothoth_gameType_3, TMP_YankeeYogSothoth_getHelpMessage_4, TMP_YankeeYogSothoth_check_2D6_5, TMP_YankeeYogSothoth_rollDiceCommand_6, TMP_YankeeYogSothoth_getRandomSkillTableResult_7, TMP_YankeeYogSothoth_getTableDiceCommandResult_8, TMP_YankeeYogSothoth_getD66Table_10, $a;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_YankeeYogSothoth_initialize_1, TMP_YankeeYogSothoth_gameName_2, TMP_YankeeYogSothoth_gameType_3, TMP_YankeeYogSothoth_getHelpMessage_4, TMP_YankeeYogSothoth_check_2D6_5, TMP_YankeeYogSothoth_rollDiceCommand_6, TMP_YankeeYogSothoth_getRandomSkillTableResult_7, TMP_YankeeYogSothoth_get_nickname_table_8, TMP_YankeeYogSothoth_getTableDiceCommandResult_9, TMP_YankeeYogSothoth_getD66Table_11, $a;
 
     
     
@@ -48,7 +48,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_YankeeYogSothoth_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "※うろつき～決闘フェイズ\n" + "FT\tファンブル表\n" + "WT\t変調表\n" + "RTT\tランダム特技決定表\n" + "KKT\t関係表\n" + "DBRT\t他愛のない会話表\n" + "TKT\t戦う理由表\n" + "\n" + "※武勇伝フェイズ\n" + "BUDT\t武勇伝表\n" + "GUDT\tガイヤンキー武勇伝表\n" + "FTNT\t二つ名表\n" + "DAIT\t第一印象表\n" + "TKKT\tツレ関係表\n" + "\n" + "※帰還フェイズ\n" + "GSST\t現実世界生活表\n" + "GYST\tガイヤンキー生活表\n" + "HPST\t病院生活表\n" + "・D66ダイスあり\n"
+      return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "※うろつき～決闘フェイズ\n" + "FT\tファンブル表\n" + "WT\t変調表\n" + "RTT\tランダム特技決定表\n" + "KKT\t関係表\n" + "DBRT\t他愛のない会話表\n" + "TKT\t戦う理由表\n" + "\n" + "※武勇伝フェイズ\n" + "BUDT\t武勇伝表\n" + "GUDT\tガイヤンキー武勇伝表\n" + "FTNT\t二つ名決定表\n" + "DAIT\t第一印象表\n" + "TKKT\tツレ関係表\n" + "\n" + "※帰還フェイズ\n" + "GSST\t現実世界生活表\n" + "GYST\tガイヤンキー生活表\n" + "HPST\t病院生活表\n" + "・D66ダイスあり\n"
     }, TMP_YankeeYogSothoth_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$check_2D6', TMP_YankeeYogSothoth_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
@@ -77,7 +77,8 @@
       
       string = command.$upcase();
       $case = string;
-      if ("RTT"['$===']($case)) {return self.$getRandomSkillTableResult(command)};
+      if ("RTT"['$===']($case)) {return self.$getRandomSkillTableResult(command)}
+      else if ("FTNT"['$===']($case)) {return self.$get_nickname_table(command)};
       return self.$getTableDiceCommandResult(command);
     }, TMP_YankeeYogSothoth_rollDiceCommand_6.$$arity = 1);
     
@@ -94,7 +95,23 @@
       return output;
     }, TMP_YankeeYogSothoth_getRandomSkillTableResult_7.$$arity = 1);
     
-    Opal.defn(self, '$getTableDiceCommandResult', TMP_YankeeYogSothoth_getTableDiceCommandResult_8 = function $$getTableDiceCommandResult(command) {
+    Opal.defn(self, '$get_nickname_table', TMP_YankeeYogSothoth_get_nickname_table_8 = function $$get_nickname_table(_command) {
+      var $a, $b, self = this, result1 = nil, $case = nil, nicknameTableName = nil, nicknameTableFull = nil, nicknameTable = nil, nickName = nil, result2 = nil;
+
+      
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (result1 = ($a[0] == null ? nil : $a[0])), $b;
+      $case = result1;
+      if ((1)['$===']($case) || (2)['$===']($case)) {nicknameTableName = "二つ名表1"}
+      else if ((3)['$===']($case) || (4)['$===']($case)) {nicknameTableName = "二つ名表2"}
+      else if ((5)['$===']($case)) {nicknameTableName = "二つ名表3"}
+      else if ((6)['$===']($case)) {nicknameTableName = "二つ名表4"};
+      nicknameTableFull = $hash2(["二つ名表1", "二つ名表2", "二つ名表3", "二つ名表4"], {"二つ名表1": ["11:愛死天流（あいしてる）", "12:喧嘩上等（けんかじょうとう）", "13:正々堂々（せいせいどうどう）", "14:天下無敵（てんかむてき）", "15:一騎当千（いっきとうせん）", "16:威風堂々（いふうどうどう）", "22:焼肉定食（やきにくていしょく）", "23:完全無欠（かんぜんむけつ）", "24:獅子奮迅（ししふんじん）", "25:臥薪嘗胆（がしんしょうたん）", "26:疾風迅雷（しっぷうじんらい）", "33:夜露死苦（よろしく）", "34:天上天下（てんじょうてんげ）", "35:唯我独尊（ゆいがどくそん）", "36:電光石火（でんこうせっか）", "44:仏恥義理（ぶっちぎり）", "45:百戦百勝（ひゃくせんひゃくしょう）", "46:百戦錬磨（ひゃくせんれんま）", "55:残酷非道（ざんこくひどう）", "56:一意専心（いちいせんしん）", "66:時給千円（じきゅうせんえん）"], "二つ名表2": ["11:みんなの", "12:スルー推奨", "13:暴れん坊", "14:仲間思い", "15:サボり魔", "16:熱血番長の", "22:今日がダメでも明日がある", "23:すぐカッとなる", "24:夢を応援する", "25:地元じゃ有名な", "26:喧嘩慣れている", "33:いつかビックになる", "34:いいやつの", "35:意外とまじめな", "36:イイ感じの", "44:家族想いの", "45:とにかくモテる", "46:学校を代表するワル", "55:邪神ハンター", "56:男前／イイ女", "66:悪そうなやつはだいたい友達"], "二つ名表3": ["11:ファッションヤンキー", "12:誰もが知っている", "13:チャラい", "14:ツヨメ", "15:中学時代はすごかった", "16:イカれたやつ", "22:道徳の授業で泣いた", "23:マジか", "24:イケイケ", "25:鬼語り", "26:とりま", "33:ちょっと眠たい", "34:パネエ", "35:エモい", "36:やべーぞ！", "44:お腹が減っている", "45:むっつりスケベの", "46:いじわるな", "55:全国区に報道された", "56:毎日が楽しい", "66:おやじ狩り狩り"], "二つ名表4": ["11:国産", "12:ブレブレ", "13:ロボ", "14:大銀河", "15:超獣", "16:ミステリー", "22:超電磁", "23:危険な", "24:湯上がり", "25:すごい", "26:エロ", "33:福岡", "34:エリート", "35:どんまい", "36:がり勉", "44:東京", "45:スペース", "46:永遠の", "55:大阪", "56:輝け！", "66:名古屋"]});
+      nicknameTable = self.$getD66Table(nicknameTableFull['$[]'](nicknameTableName));
+      $b = self.$get_table_by_d66_swap(nicknameTable), $a = Opal.to_ary($b), (nickName = ($a[0] == null ? nil : $a[0])), (result2 = ($a[1] == null ? nil : $a[1])), $b;
+      return "" + "二つ名決定表(" + (result1) + "," + (result2) + ") ＞ 「" + (nickName) + "」";
+    }, TMP_YankeeYogSothoth_get_nickname_table_8.$$arity = 1);
+    
+    Opal.defn(self, '$getTableDiceCommandResult', TMP_YankeeYogSothoth_getTableDiceCommandResult_9 = function $$getTableDiceCommandResult(command) {
       var $a, $b, self = this, info = nil, name = nil, type = nil, table = nil, $case = nil, text = nil, number = nil;
 
       
@@ -114,21 +131,21 @@
       if ($truthy(text['$nil?']())) {
         return nil};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);
-    }, TMP_YankeeYogSothoth_getTableDiceCommandResult_8.$$arity = 1);
+    }, TMP_YankeeYogSothoth_getTableDiceCommandResult_9.$$arity = 1);
     
-    Opal.defn(self, '$getD66Table', TMP_YankeeYogSothoth_getD66Table_10 = function $$getD66Table(table) {
-      var TMP_9, self = this;
+    Opal.defn(self, '$getD66Table', TMP_YankeeYogSothoth_getD66Table_11 = function $$getD66Table(table) {
+      var TMP_10, self = this;
 
-      return $send(table, 'map', [], (TMP_9 = function(item){var self = TMP_9.$$s || this, $a;
+      return $send(table, 'map', [], (TMP_10 = function(item){var self = TMP_10.$$s || this, $a;
 if (item == null) item = nil;
       if ($truthy(($truthy($a = item['$is_a?'](Opal.const_get_relative($nesting, 'String'))) ? /^(\d+):(.*)/['$==='](item) : $a))) {
           return [Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i(), Opal.const_get_relative($nesting, 'Regexp').$last_match(2)]
           } else {
           return item
-        }}, TMP_9.$$s = self, TMP_9.$$arity = 1, TMP_9))
-    }, TMP_YankeeYogSothoth_getD66Table_10.$$arity = 1);
+        }}, TMP_10.$$s = self, TMP_10.$$arity = 1, TMP_10))
+    }, TMP_YankeeYogSothoth_getD66Table_11.$$arity = 1);
     (Opal.class_variable_set($YankeeYogSothoth, '@@tables', $hash2(["FT", "WT", "KKT", "DBRT", "TKT", "BUDT", "GUDT", "DAIT", "TKKT", "GSST", "GYST", "HPST"], {"FT": $hash2(["name", "type", "table"], {"name": "ファンブル表", "type": "1D6", "table": ["やっちまった……。テンションが1段階減少する。", "ひょうなことから嫌な状況になる。ランダムに変調（WT）を1つ受ける。", "あまりにもカッコ悪いところが伝わってしまう。自分に対して【友情度】を持つPC全員は、リスペクトにチェックを入れる。", "自分の絶望を観測し、邪神が活性化する。バッドヤンキーの「ケツモチ邪神の加護」が1点上昇する。", "つまらないことで怪我をする。自分の【HP】が1D6点減少する。", "逆境に燃える。テンションが1段階上昇する。"]}), "WT": $hash2(["name", "type", "table"], {"name": "変調表", "type": "1D6", "table": ["毒：サイクル終了時もしくはラウンド終了時に、2D6点のダメージを受ける。", "呪い：熱血蘇生の達成値が2点減少する。NPCが受けた場合、受けるダメージが2点上昇する。", "火傷：テンションの効果によって、【攻撃力】が上昇しない。NPCは【攻撃力】が2点低いものとして扱う（最低０点）。", "骨折：判定に失敗するたびに、5点のダメージを受ける。", "出血：サイクル終了時もしくはラウンド終了時に、2点のダメージを受ける。また、施設やアイテムの効果で【HP】が上昇しない。", "目つぶし：判定の達成値が2点減少する。"]}), "KKT": $hash2(["name", "type", "table"], {"name": "関係表", "type": "1D6", "table": ["「家族／気に食わない」", "「親友／近寄るな」", "「悪友／こざかしい」", "「ライバル／チンピラ」", "「いい奴／悪い奴」", "「利用できる／ヘタレ」"]}), "DBRT": $hash2(["name", "type", "table"], {"name": "他愛のない会話表", "type": "D66", "table": ["11:「政治の話」", "12:「勉強の話」", "13:「友達の話」", "14:「兄弟姉妹の話」", "15:「好きなものの話」", "16:「嫌いなものの話」", "22:「ラーメンの話」", "23:「コンビニの話」", "24:「学校生活の話」", "25:「先輩後輩の話」", "26:「趣味の話」", "33:「肉の話」", "34:「中学時代の話」", "35:「喧嘩の話」", "36:「ファッションの話」", "44:「家の話」", "45:「好みの異性の話」", "46:「テレビ番組の話」", "55:「野菜の話」", "56:「部活の話」", "66:「ダブりの話」"]}), "TKT": $hash2(["name", "type", "table"], {"name": "戦う理由表", "type": "D66", "table": ["11:「なんとなく」", "12:「好みのエルフがいた」", "13:「エルフに世話になった」", "14:「ドワーフの飯がうまかった」", "15:「ドワーフにファッション特徴を作ってもらった」", "16:「妖精たちのいたずらがほほえましかった」", "22:「バッドヤンキーと昔からの因縁があるから」", "23:「バッドヤンキーが気に入らなかった」", "24:「強いやつと戦いたい」", "25:「異世界にワクワクしているから」", "26:「バッドヤンキー集団に迷惑を受けたから」", "33:「夢見るNPCが好みだったから」", "34:「夢見るNPCの夢に共感したから」", "35:「夢見るNPCの夢を応援したいと思ったから」", "36:「夢見るNPCを放っておけないから」", "44:「家に帰りたいから」", "45:「夢見るNPCは友達だから」", "46:「他のPCと気が合ったから」", "55:「マーメイドと仲良くなった」", "56:「退屈を紛らわせられそうだから」", "66:「ただ暴れたかった」"]}), "BUDT": $hash2(["name", "type", "table"], {"name": "武勇伝表", "type": "D66", "table": ["11:バッドヤンキーのチームに自分が所属する学校を破壊されたが、最後まで戦った。／テンションが1段階上昇", "12:バッドヤンキーチームの兵隊が襲い掛かってきたが、撃退した。／【HP】＋３", "13:バッドヤンキーと何度も戦い、ライバルとして認識されていた。／【打たれ強さ】＋１", "14:バッドヤンキー配下の集団をいくつか潰してまわっていた。／【攻撃力】＋１", "15:バッドヤンキーのチームに入りそうになった後輩を説得した。／【HP】＋３", "16:バッドヤンキーに支配されていた店を救った。／【攻撃力】＋１", "22:アメリカで暴れた。／テンションが1段階上昇", "23:学校をサボって、日本全国を旅をしてまわった。／【HP】＋３", "24:好きなアーティストのライブに行き、マナーの悪いファンを黙らせた。／【打たれ強さ】＋１", "25:抗争中の学校に一人で乗り込んで、戦いを終わらせた。／【攻撃力】＋１", "26:へまをした仲間を助けるため、頭を下げた。／【HP】＋３", "33:大規模な運動会で活躍し、最優秀賞を獲得した。／【攻撃力】＋１", "34:家族や仲間に迷惑をかけたチームを潰した。／【打たれ強さ】＋１", "35:暴走族を一人で潰した。／【攻撃力】＋１", "36:本職（ヤクザ）と戦って謝らせた。／【打たれ強さ】＋１", "44:ドッジボール大会に出場し、優勝をして賞品を手に入れた。／「絆創膏」「テンアゲアイテム」「ポーション」「お守り」のうち１つを選んで獲得する", "45:仲間たちと一緒に学校行事を盛り上げた。／【打たれ強さ】＋１", "46:仲間と一緒にディスカウントストアで買い物をし、キャンプをした。／「絆創膏」「テンアゲアイテム」「ポーション」「お守り」のうち１つを選んで獲得する", "55:隣のプレイヤーのPCが所属する高校と大きな抗争をした。／右隣のプレイヤーのPCに対する【友情度】が1点上昇", "56:修学旅行先で喧嘩し、その後友情を深めた。／【攻撃力】＋１", "66:隣のプレイヤーのPCと一緒に、大きな悪の組織を潰した。／右隣のプレイヤーのPCに対する【友情度】が1点上昇"]}), "GUDT": $hash2(["name", "type", "table"], {"name": "ガイヤンキー武勇伝表", "type": "D66", "table": ["11:アザトースが突然接触してきたので、殴って追い返した。／テンションが1段階上昇", "12:シュブ＝ニグラスのサバトに乗り込んで潰した。／【HP】＋３", "13:クトゥルフの落とし子を殴り倒して追い返した。／【打たれ強さ】＋１", "14:ヨグ=ソトースの勧誘を受けたが、断ってやった。／【攻撃力】＋１", "15:深きものどもが住む漁村を訪ね、罠にはめられたが脱出した。／【HP】＋３", "16:一晩飲み明かした相手がナイアーラトテップだった。／【攻撃力】＋１", "22:生きてる恐竜と出会った。／テンションが1段階上昇", "23:ファンタジー世界を冒険者として旅してまわった。／【HP】＋３", "24:町で起こった少女たちの失踪事件を解決した。／【打たれ強さ】＋１", "25:バッドヤンキーに潰された騎士団を鼓舞して、立て直しに協力した。／【攻撃力】＋１", "26:大きな城下町に起こった殺人事件や傷害事件を幾つも解決した。／【HP】＋３", "33:大きな城下町で、テンションが上がっていろいろ買い込んでしまった。／「絆創膏」「テンアゲアイテム」「ポーション」「お守り」のうち１つを選んで獲得する", "34:エルフの森を燃やしつくそうとする拝火暴走族をこらしめた。／【打たれ強さ】＋１", "35:ドワーフの洞窟に現われた巨大ワームを投げ飛ばした。／【攻撃力】＋１", "36:妖精たちの村に迷い込んで、村を荒らそうとするゴブリンをブッ飛ばした。／【打たれ強さ】＋１", "44:巨大な王国が主催している武術大会で優勝し、名誉とアイテムを手に入れた。／「絆創膏」「テンアゲアイテム」「ポーション」「お守り」のうち１つを選んで獲得する", "45:ゴブリンの襲撃から町を守り切った。／【打たれ強さ】＋１", "46:悪いチームにさらわれた姫や王子様を助けたら、惚れられた。／【攻撃力】＋１", "55:次に会うヤンキーのために、この世界の土産話を作ってきた。／右隣のプレイヤーのPCに対する【友情度】が1点上昇", "56:悪い魔法使いの儀式を突き止めて、潰した。／【攻撃力】＋１", "66:次に会うヤンキーのために、うまいものを用意した。／右隣のプレイヤーのPCに対する【友情度】が1点上昇"]}), "DAIT": $hash2(["name", "type", "table"], {"name": "第一印象表", "type": "1D6", "table": ["「ヤベエ」", "「パネエ」", "「スゲエ」", "「びっくり」", "「たばい」", "「アウトオブ眼中」"]}), "TKKT": $hash2(["name", "type", "table"], {"name": "ツレ関係表", "type": "1D6", "table": ["「すごそう」", "「勇者様」", "「つよい」", "「いい人」", "「かっこいい」", "「利用できる」"]}), "GSST": $hash2(["name", "type", "table"], {"name": "現実世界生活表", "type": "D66", "table": ["11:喧嘩に明け暮れた", "12:真面目に授業を受けた", "13:今回の仲間と食事をしに行った", "14:チーム同士の抗争を沈めた", "15:ぼーっとしていた", "16:バイトに専念した", "22:仲間とバーベキューをした", "23:自分の体を鍛えることにした", "24:仲間との毎日をより大切にした", "25:家族とゆっくりすごした", "26:喧嘩の技術を磨いた", "33:本職（ヤクザ）と喧嘩をした", "34:好きなだけ寝た", "35:ツレができた", "36:今回の仲間と旅に出た", "44:異性と遊園地に行くことになった", "45:あの戦いの日々を思い返していた", "46:次の戦いに備えた", "55:運動部の助っ人として、大会に出た", "56:好きなだけ好物を食べた", "66:汚い大人の罠にはめられたが、なんとかした"]}), "GYST": $hash2(["name", "type", "table"], {"name": "ガイヤンキー生活表", "type": "D66", "table": ["11:ツレと生活をした", "12:異世界について学んだ", "13:エルフの美形（平均年齢200歳）に接待を受けた", "14:ドワーフから地元の酒をもらった", "15:妖精の村に迷い込んでしまった", "16:この世界の遺跡を回った", "22:この世界に野球などのスポーツを広めた", "23:広大な森の中で迷ってしまい、数か月ほどサバイバルした", "24:不思議な力が溢れる泉の水を飲み干した", "25:魔法使いの研究に協力したが、さっぱりだった", "26:ハーピィに誘われて空の旅を満喫した", "33:この世界にヤンキー文化を伝えた", "34:バッドヤンキーに荒らされた小さな村を復興した", "35:悪徳領主にさらわれた少女を助けた", "36:わるい商人を殴り飛ばした", "44:エルフの漫画家が誕生するのを見届けた", "45:巨大なドラゴンと殴りあって勝利した", "46:海中に住むマーメイドを脅かす悪人を退治した", "55:邪神を信奉している神殿に殴り込みをして、企みを阻止した", "56:天使っぽいのが悪いことをしていたので蹴り飛ばした", "66:農作業をした"]}), "HPST": $hash2(["name", "type", "table"], {"name": "病院生活表", "type": "1D6", "table": ["11:治療に専念した", "12:見舞いでもらった漫画を読み倒した", "13:ゲームをひたすらやった", "14:悪化した病と闘った", "15:入院している子供と約束をした", "16:看護師と仲良くなった", "22:現代の医術では治療できなかったので、異世界の魔法に賭けた", "23:院内パーティを盛り上げた", "24:飯がまずくて苦労した", "25:飯がうまくて感動をした", "26:やることがなくて暇だった", "33:スーパードクターが現われて、自分の怪我を見事に治してくれた", "34:とにかくテレビを見続けて、知識がついた", "35:勉強をしてみたら、いつも以上にはかどった", "36:たくさんの人たちが見舞いに来て、感動した", "44:入院をしている爺さんから色々教えてもらった", "45:リハビリに思ったより時間がかかった", "46:次に喧嘩するときのイメージトレーニングをした", "55:ヤンキー漫画に感動をした", "56:院内で喧嘩をした", "66:売店で売っているお菓子をコンプリートした"]})})));
-    return self.$setPrefixes($rb_plus(["RTT"], (($a = $YankeeYogSothoth.$$cvars['@@tables']) == null ? nil : $a).$keys()));
+    return self.$setPrefixes($rb_plus(["RTT", "FTNT"], (($a = $YankeeYogSothoth.$$cvars['@@tables']) == null ? nil : $a).$keys()));
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 
