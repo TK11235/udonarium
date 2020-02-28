@@ -8,8 +8,8 @@
       <div class="title">
         <span [ngStyle]="{'color':chatMessage.color}">●</span>
         <span class="msg-name">{{chatMessage.name}}</span>
-        <span class='tip msg-from'>　{{chatMessage.from}}</span>
-        <span class='tip msg-timestamp'>　{{chatMessage.timestamp | date:'y/M/d H:mm'}}</span>
+        <span class='tip msg-from'>{{chatMessage.from}}</span>
+        <span class='tip msg-timestamp'>{{chatMessage.timestamp | date:'y/M/d H:mm'}}</span>
       </div>
       <div class="text msg-text">
         <ng-container *ngIf="!chatMessage.isSecret || chatMessage.isSendFromSelf; then visible; else secret"></ng-container>

@@ -38,21 +38,21 @@ export class GameCharacter extends TabletopObject {
   }
   //CLONE2
   set name(value: string) { this.setCommonValue('name', value); }
-  static create(name: string, size: number, imageIdentifier: string, GM: string): GameCharacter {
+  static create(name: string, size: number, imageIdentifier: string): GameCharacter {
     let gameCharacter: GameCharacter = new GameCharacter();
     gameCharacter.createDataElements();
     gameCharacter.initialize();
-    gameCharacter.createTestGameDataElement(name, size, imageIdentifier, GM);
+    gameCharacter.createTestGameDataElement(name, size, imageIdentifier);
 
     return gameCharacter;
   }
 
-  createTestGameDataElement(name: string, size: number, imageIdentifier: string, GM: string) {
+  createTestGameDataElement(name: string, size: number, imageIdentifier: string) {
     this.createDataElements();
 
     let nameElement: DataElement = DataElement.create('name', name, {}, 'name_' + this.identifier);
     let sizeElement: DataElement = DataElement.create('size', size, {}, 'size_' + this.identifier);
-    let GMElement: DataElement = DataElement.create('GM', GM, {}, 'GM_' + this.identifier);
+    //let GMElement: DataElement = DataElement.create('GM', GM, {}, 'GM_' + this.identifier);
 
     if (this.imageDataElement.getFirstElementByName('imageIdentifier')) {
       this.imageDataElement.getFirstElementByName('imageIdentifier').value = imageIdentifier;
@@ -65,7 +65,7 @@ export class GameCharacter extends TabletopObject {
 
     this.commonDataElement.appendChild(nameElement);
     this.commonDataElement.appendChild(sizeElement);
-    this.commonDataElement.appendChild(GMElement);
+    //this.commonDataElement.appendChild(GMElement);
     this.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(hpElement);
     resourceElement.appendChild(mpElement);
@@ -74,7 +74,7 @@ export class GameCharacter extends TabletopObject {
     let testElement: DataElement = DataElement.create('情報', '', {}, '情報' + this.identifier);
     this.detailDataElement.appendChild(testElement);
     testElement.appendChild(DataElement.create('説明', '在此處輸入說明\n', { 'type': 'note' }, '説明' + this.identifier));
-    testElement.appendChild(DataElement.create('筆記', '任意文字\n１\n２\n３\n４\n５', { 'type': 'note' }, '筆記' + this.identifier));
+    testElement.appendChild(DataElement.create('筆記', '任意文字\n１\n２\n３\n４\nHKTRPG', { 'type': 'note' }, '筆記' + this.identifier));
 
     //TEST
     testElement = DataElement.create('能力', '', {}, '能力' + this.identifier);
@@ -87,15 +87,10 @@ export class GameCharacter extends TabletopObject {
     testElement.appendChild(DataElement.create('精神力', 24, {}, '精神力' + this.identifier));
 
     //TEST
-    testElement = DataElement.create('戦闘特技', '', {}, '戦闘特技' + this.identifier);
+    testElement = DataElement.create('戰鬥特技', '', {}, '戰鬥特技' + this.identifier);
     this.detailDataElement.appendChild(testElement);
     testElement.appendChild(DataElement.create('Lv1', '全力攻撃', {}, 'Lv1' + this.identifier));
-    testElement.appendChild(DataElement.create('Lv3', '武器習熟/ソード', {}, 'Lv3' + this.identifier));
-    testElement.appendChild(DataElement.create('Lv5', '武器習熟/ソードⅡ', {}, 'Lv5' + this.identifier));
-    testElement.appendChild(DataElement.create('Lv7', '頑強', {}, 'Lv7' + this.identifier));
-    testElement.appendChild(DataElement.create('Lv9', '薙ぎ払い', {}, 'Lv9' + this.identifier));
-    testElement.appendChild(DataElement.create('自動', '治癒適正', {}, '自動' + this.identifier));
-
+    testElement.appendChild(DataElement.create('Lv3', '武器習熟/劍', {}, 'Lv3' + this.identifier));
     let domParser: DOMParser = new DOMParser();
     let gameCharacterXMLDocument: Document = domParser.parseFromString(this.rootDataElement.toXml(), 'application/xml');
 

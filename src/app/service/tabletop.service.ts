@@ -217,7 +217,7 @@ export class TabletopService {
   }
 
   createGameCharacter(position: PointerCoordinate): GameCharacter {
-    let character = GameCharacter.create('新角色', 1, '', '');
+    let character = GameCharacter.create('新角色', 1, '');
     character.location.x = position.x - 25;
     character.location.y = position.y - 25;
     character.posZ = position.z;
@@ -383,13 +383,13 @@ export class TabletopService {
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 9 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('怪獸A', 1, testFile.identifier, '');
+    testCharacter.createTestGameDataElement('怪獸A', 1, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_2');
     testCharacter.location.x = 8 * 50;
     testCharacter.location.y = 8 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('怪獸B', 1, testFile.identifier, '');
+    testCharacter.createTestGameDataElement('怪獸B', 1, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_3');
     fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
@@ -399,7 +399,7 @@ export class TabletopService {
     testCharacter.location.x = 4 * 50;
     testCharacter.location.y = 2 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('怪獸C', 3, testFile.identifier, '');
+    testCharacter.createTestGameDataElement('怪獸C', 3, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_4');
     fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
@@ -409,7 +409,7 @@ export class TabletopService {
     testCharacter.location.x = 6 * 50;
     testCharacter.location.y = 11 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('角色A', 1, testFile.identifier, '');
+    testCharacter.createTestGameDataElement('角色A', 1, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_5');
     fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
@@ -419,7 +419,7 @@ export class TabletopService {
     testCharacter.location.x = 12 * 50;
     testCharacter.location.y = 12 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('角色B', 1, testFile.identifier, '');
+    testCharacter.createTestGameDataElement('角色B', 1, testFile.identifier);
 
     testCharacter = new GameCharacter('testCharacter_6');
     fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
@@ -429,7 +429,7 @@ export class TabletopService {
     testCharacter.initialize();
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 13 * 50;
-    testCharacter.createTestGameDataElement('角色C', 1, testFile.identifier, '');
+    testCharacter.createTestGameDataElement('角色C', 1, testFile.identifier);
   }
 
   getContextMenuActionsForCreateObject(position: PointerCoordinate): ContextMenuAction[] {

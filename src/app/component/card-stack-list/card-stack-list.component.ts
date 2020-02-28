@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
@@ -29,7 +31,12 @@ export class CardStackListComponent implements OnInit, OnDestroy {
     this.panelService.title = this.cardStack.name + ' 卡牌列表';
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
-        if (event.data.aliasName === Card.aliasName) this.changeDetector.markForCheck();
+        let object = ObjectStore.instance.get(event.data.identifier);
+        if (!this.cardStack || !object) return;
+        if ((this.cardStack === object)
+          || (object instanceof ObjectNode && this.cardStack.contains(object))) {
+          this.changeDetector.markForCheck();
+        }
         if (event.data.identifier === this.cardStack.identifier && this.cardStack.owner !== this.owner) {
           this.panelService.close();
         }
