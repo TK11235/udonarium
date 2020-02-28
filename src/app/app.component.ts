@@ -234,7 +234,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
   }
   createGameCharacter() {
-    GameCharacter.create("遊戲角色", 1, 'null', '');
+    GameCharacter.create("遊戲角色", 1, 'null');
   }
   save() {
     let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
