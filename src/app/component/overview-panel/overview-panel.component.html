@@ -92,6 +92,7 @@
         <div><button type="submit" (click)="movetocommon()">共有</button>
           <button type="submit" (click)="movetoid()">個人</button>
           <button type="submit" (click)="movetograveyard()">墓場</button>
+          <input type="text" class="PosZ"pInputText (change)="changePosZ($event.target.value)" placeholder="高度" />
         </div>
 
         <ng-container *ngFor="let dataElm of inventoryDataElms">
