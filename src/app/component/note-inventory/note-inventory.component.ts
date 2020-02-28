@@ -20,9 +20,9 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 import { DiceBot } from '@udonarium/dice-bot';
 
 @Component({
-  selector: 'game-object-inventory',
-  templateUrl: './game-object-inventory.component.html',
-  styleUrls: ['./game-object-inventory.component.css'],
+  selector: 'note-inventory',
+  templateUrl: './note-inventory.component.html',
+  styleUrls: ['./note-inventory.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -70,14 +70,15 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   ) { }
 
   ngOnInit() {
-    this.panelService.title = '倉庫';
+    this.panelService.title = '筆記倉庫';
     EventSystem.register(this)
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
-        if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor && PeerCursor.myCursor.name === this.gameCharacter.GM)) {
-         this.selectedIdentifier = event.data.identifier;
-        //  console.log(event.data.identifier)
+        if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor)) {
+          this.selectedIdentifier = event.data.identifier;
+          //  console.log(event.data.identifier)
           this.changeDetector.markForCheck();
+          console.log('this.selectedIdentifier', this.selectedIdentifier)
         }
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {

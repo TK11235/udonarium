@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NoteInventoryComponent } from './game-object-inventory.component';
+import { NoteInventoryComponent } from './note-inventory.component';
 //GameObjectInventoryComponent = NoteInventoryComponent;
 
 describe('GameObjectInventoryComponent', () => {
