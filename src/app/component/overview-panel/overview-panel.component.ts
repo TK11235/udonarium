@@ -104,6 +104,14 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
     this.tabletopObject.setLocation('graveyard');
     SoundEffect.play(PresetSound.lock);
   }
+  changePosZ(Z: number) {
+    if (Z < 0)
+      Z = 0
+    if (Z > 500)
+      Z = 500
+    this.tabletopObject.posZ = Z;
+    SoundEffect.play(PresetSound.lock);
+  }
 
   private initPanelPosition() {
     let panel: HTMLElement = this.draggablePanel.nativeElement;
