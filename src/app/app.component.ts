@@ -24,6 +24,7 @@ import { FileStorageComponent } from 'component/file-storage/file-storage.compon
 import { GameCharacterGeneratorComponent } from 'component/game-character-generator/game-character-generator.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { GameObjectInventoryComponent } from 'component/game-object-inventory/game-object-inventory.component';
+import { NoteInventoryComponent } from 'component/note-inventory/game-object-inventory.component';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
 import { JukeboxComponent } from 'component/jukebox/jukebox.component';
 import { PeerMenuComponent } from 'component/peer-menu/peer-menu.component';
@@ -224,6 +225,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         break;
       case 'GameObjectInventoryComponent':
         component = GameObjectInventoryComponent;
+        case 'NoteInventoryComponent':
+          component = NoteInventoryComponent;
         break;
     }
     if (component) {
