@@ -4,6 +4,8 @@ import { ChatTabList } from '@udonarium/chat-tab-list';
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { ImageTag } from '@udonarium/image-tag';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { XmlUtil } from '@udonarium/core/system/util/xml-util';
@@ -26,8 +28,16 @@ export class SaveDataService {
     files.push(new File([chatXml], 'chat.xml', { type: 'text/plain' }));
     files.push(new File([summarySetting], 'summary.xml', { type: 'text/plain' }));
 
-    files = files.concat(this.searchImageFiles(roomXml));
-    files = files.concat(this.searchImageFiles(chatXml));
+    let roomImageFiles = this.searchImageFiles(roomXml);
+    let chatImageFiles = this.searchImageFiles(chatXml);
+    files = files.concat(roomImageFiles);
+    files = files.concat(chatImageFiles);
+
+    let imageTags = ObjectStore.instance.getObjects<ImageTag>(ImageTag);
+    let roomImageTags = imageTags.filter(imageTag => roomImageFiles.map(file => file.name.replace('.' + MimeType.extension(file.type),'')).includes(imageTag.imageIdentifier));
+    let chatImageTags = imageTags.filter(imageTag => chatImageFiles.map(file => file.name.replace('.' + MimeType.extension(file.type),'')).includes(imageTag.imageIdentifier));
+    roomImageTags.forEach(imageTag => files.push(new File([this.convertToXml(imageTag)], imageTag.imageIdentifier + '@' + imageTag.tag + '.xml' , { type: 'text/plain' })));
+    chatImageTags.forEach(imageTag => files.push(new File([this.convertToXml(imageTag)], imageTag.imageIdentifier + '@' + imageTag.tag + '.xml' , { type: 'text/plain' })));
 
     FileArchiver.instance.save(files, fileName);
   }
@@ -37,7 +47,13 @@ export class SaveDataService {
     let xml: string = this.convertToXml(gameObject);
 
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
-    files = files.concat(this.searchImageFiles(xml));
+
+    let imageFiles = this.searchImageFiles(xml)
+    files = files.concat(imageFiles);
+
+    let imageTags = ObjectStore.instance.getObjects<ImageTag>(ImageTag)
+                      .filter(imageTag => imageFiles.map(file => file.name.replace('.' + MimeType.extension(file.type),'')).includes(imageTag.imageIdentifier));
+    imageTags.forEach(imageTag => files.push(new File([this.convertToXml(imageTag)], imageTag.imageIdentifier + '@' + imageTag.tag + '.xml' , { type: 'text/plain' })));
 
     FileArchiver.instance.save(files, fileName);
   }
