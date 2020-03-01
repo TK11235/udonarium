@@ -84,7 +84,11 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     if(!this.selectedFile) return;
     let imageFile = ImageStorage.instance.get(this.selectedFile.identifier);
     let imageTags = ObjectStore.instance.getObjects<ImageTag>(ImageTag)
-                     .filter(imageTag => imageTag.imageIdentifier == imageFile.identifier);
+                      .filter(imageTag => imageTag.imageIdentifier == imageFile.identifier)
     imageTags.forEach(imageTag => imageTag.destroy());
+    let imageTag: ImageTag = new ImageTag();
+    imageTag.imageIdentifier = this.selectedFile.identifier;
+    imageTag.tag = 'garbage';
+    imageTag.initialize();
   }
 }

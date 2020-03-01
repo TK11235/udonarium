@@ -45,10 +45,9 @@ export class SaveDataService {
   saveGameObject(gameObject: GameObject, fileName: string = 'xml_data') {
     let files: File[] = [];
     let xml: string = this.convertToXml(gameObject);
+    let imageFiles = this.searchImageFiles(xml)
 
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
-
-    let imageFiles = this.searchImageFiles(xml)
     files = files.concat(imageFiles);
 
     let imageTags = ObjectStore.instance.getObjects<ImageTag>(ImageTag)
