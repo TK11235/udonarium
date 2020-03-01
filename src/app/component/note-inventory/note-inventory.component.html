@@ -26,7 +26,7 @@
     </div>
   </form>
 </ng-template>
-
+<!--顯示共筆-->
 <ng-template #gameObjectTags let-gameObject="gameObject">
   <div class="inventory-object" *ngIf="!isDisabled(gameObject)" (contextmenu)="onContextMenu($event, gameObject)">
     <div class="object-name">{{gameObject.name}}

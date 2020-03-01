@@ -225,8 +225,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         break;
       case 'GameObjectInventoryComponent':
         component = GameObjectInventoryComponent;
-        case 'NoteInventoryComponent':
-          component = NoteInventoryComponent;
+        break;
+      case 'NoteInventoryComponent':
+        component = NoteInventoryComponent;
         break;
     }
     if (component) {
