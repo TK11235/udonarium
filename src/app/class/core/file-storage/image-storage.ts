@@ -57,6 +57,7 @@ export class ImageStorage {
   }
 
   private _add(image: ImageFile): ImageFile {
+    EventSystem.call('ADD_IMAGE', image.identifier);
     this.lazySynchronize(100);
     if (this.update(image)) return this.imageHash[image.identifier];
     this.imageHash[image.identifier] = image;

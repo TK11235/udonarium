@@ -10,8 +10,14 @@
       <br>１ファイルにつき2MBまで</div>
   </div>
 </label>
+<div id="input-tag">
+  タグ <input type="text" [(ngModel)]="inputTag" placeholder="allで全て表示" />
+</div>
+<div id="delte-tag">
+  <button (click)="deleteTag()">選択した画像からタグを削除</button>
+</div>
 <div id="file-list">
-  <span *ngFor="let file of fileStorageService.images" class="image">
+  <span *ngFor="let file of images" class="image">
     <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
     <img *ngIf="file.url.length <= 0" src="assets/images/loading.gif" alt="{{file.name}}">
   </span>
