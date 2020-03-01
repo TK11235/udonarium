@@ -13,8 +13,8 @@
 <div id="input-tag">
   タグ <input type="text" [(ngModel)]="inputTag" placeholder="allで全て表示" />
 </div>
-<div id="delte-tag">
-  <button (click)="deleteTag()">選択した画像をgarbageタグへ移動</button>
+<div id="move-to-garbage">
+  <button (click)="moveToGarbage()">選択した画像をgarbageタグへ移動</button>
 </div>
 <div id="file-list">
   <span *ngFor="let file of images" class="image">

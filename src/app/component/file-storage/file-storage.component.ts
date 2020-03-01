@@ -80,7 +80,7 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.call('SELECT_FILE', { fileIdentifier: file.identifier }, Network.peerId);
   }
 
-  deleteTag() {
+  moveToGarbage() {
     if(!this.selectedFile) return;
     let imageFile = ImageStorage.instance.get(this.selectedFile.identifier);
     let imageTags = ObjectStore.instance.getObjects<ImageTag>(ImageTag)
