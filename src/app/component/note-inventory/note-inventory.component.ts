@@ -278,7 +278,7 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     this.changeDetector.markForCheck();
   }
 
-  trackByGameObject(index: number, gameObject: GameObject) {
+  trackByGameObject(index: number, gameObject: TextNote) {
     console.log('trackByGameObject', gameObject)
     return gameObject ? gameObject.identifier : index;
   }
