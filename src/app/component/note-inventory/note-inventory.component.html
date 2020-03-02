@@ -2,7 +2,7 @@
   <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
   <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
-  <div *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject"
+  <div *ngFor="let gameObject of getNotes(); trackBy: trackByGameObject"
     (click)="selectGameObject(gameObject)" (dblclick)="showDetail(this.gameObject)">
 
     <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
@@ -28,58 +28,66 @@
 </ng-template>
 <!--顯示共筆-->
 <ng-template #gameObjectTags let-gameObject="gameObject">
-  <div class="inventory-object" *ngIf="!isDisabled(gameObject)" (contextmenu)="onContextMenu($event, gameObject)">
-    <div class="object-name">{{gameObject.name}}
-      <button style="font-size: 0.8em; padding: 2px 5px;" *ngIf="selectedIdentifier === gameObject.identifier"
+  <div class="inventory-object">
+    <div class="object-name">{{showgameObject(gameObject)}}{{gameObject.text}}{{gameObject.location.name}}
+      <button style="font-size: 0.8em; padding: 2px 5px;"
         (click)="onContextMenu($event, gameObject)">
         <i class="material-icons" style="font-size: 1em;">settings</i>
       </button>
     </div>
-    <div class="object-tags-box">
-      <div class="table-cell image-box">
-        <img *ngIf="gameObject.imageFile.url" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
-      </div>
-      <div class="table-cell">
-        <div *ngIf="gameObject.rootDataElement">
-          <ng-container *ngFor="let dataElm of getInventoryTags(gameObject); trackBy: trackByGameObject">
-            <ng-container *ngTemplateOutlet="dataElmTag; context:{ dataElm: dataElm}"></ng-container>
-          </ng-container>
-        </div>
-      </div>
-    </div>
+  
   </div>
 </ng-template>
-<ng-template #dataElmTag let-dataElm="dataElm">
-  <ng-container *ngIf="dataElm?.name === newLineString"><br></ng-container>
-  <div *ngIf="dataElm && dataElm.name !== newLineString" class="object-tag">
-    <ng-container [ngSwitch]="dataElm.attributes['type']">
-      <ng-container *ngSwitchCase="'numberResource'">
-        <div class="resource-tag">
-          <div style="font-size: 0.8em; display: inline-block; margin-right: 0.5em;">{{dataElm.name}}</div>
-          <input class="input resource-value" type="number" size="1" [(ngModel)]="dataElm.currentValue"
-            placeholder="Value" />
-        </div>
-        <div class="resource-tag">
-          <input type="range"
-            [style]="'font-size: 0.8em; min-width: 1em; width:' + (dataElm.name.length + 4.5) + 'em; --min: 0; --max: ' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
-            min="0" max="{{dataElm.value}}" [ngStyle]="{'background-color':'green'}"
-            [(ngModel)]="dataElm.currentValue" />
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchDefault>
-        <div class="tag-name">{{dataElm.name}}</div>
-        <div style="text-align: center;">
-          <div style="display: inline-block;">
-            <div class="tag-value-box">
-              <div class="hidden-spacer" style="font-weight: bold;">{{dataElm.value}}</div>
-              <input class="input tag-value" size="1" [(ngModel)]="dataElm.value" placeholder="" />
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </ng-container>
-  </div>
-</ng-template>
+<!-- note!!!
+GMName: (...)
+hasGM: (...)
+isMine: (...)
+isDisabled: (...)
+width: (...)
+height: (...)
+fontSize: (...)
+title: (...)
+text: (...)
+rotate: (...)
+zindex: (...)
+password: (...)
+GM: (...)
+isVisibleOnTable: (...)
+rootDataElement: (...)
+imageDataElement: (...)
+commonDataElement: (...)
+detailDataElement: (...)
+imageFile: (...)
+location: (...)
+ Object
+name: "table"
+x: 650
+y: -25
+posZ: (...)
+index: (...)
+parent: (...)
+parentId: (...)
+parentIsAssigned: (...)
+parentIsUnknown: (...)
+parentIsDestroyed: (...)
+children: (...)
+value: (...)
+attributes: (...)
+parentIdentifier: (...)
+majorIndex: (...)
+minorIndex: (...)
+aliasName: (...)
+identifier: (...)
+version: (...)
+context: {aliasName: "text-note", identifier: "9b7c803e-56cc-463b-815f-de4515db6ce2", majorVersion: 25, minorVersion: 0.6052201358567142, syncData: {…}}
+_children: [DataElement]
+needsSort: false
+_imageFile: ImageFile {context: {…}}
+_dataElements: {image: "image_9b7c803e-56cc-463b-815f-de4515db6ce2", common: "common_9b7c803e-56cc-463b-815f-de4515db6ce2", detail: "detail_9b7c803e-56cc-463b-815f-de4515db6ce2", title: "title_9b7c803e-56cc-463b-815f-de4515db6ce2", text: "text_9b7c803e-56cc-463b-815f-de4515db6ce2", …}
+__proto__: TabletopObject
+
+
+-->
 <!--
 
 <div class="component">

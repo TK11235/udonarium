@@ -35,6 +35,10 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
   get GMName(): string { return this.textNote.GMName; }
   get isDisabled(): boolean { return this.textNote.isDisabled; }
 
+  
+  //STORE
+  get location(): string { return this.textNote.location.name; }
+  set location(location: string) { this.textNote.location.name = location; }
 
 
   get title(): string { return this.textNote.title; }
@@ -163,7 +167,7 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       ),
       ContextMenuSeparator,
-
+      { name: '到桌面', action: () => { this.location='table'; } },
 
       { name: '編輯筆記', action: () => { this.showDetail(this.textNote); } },
       {

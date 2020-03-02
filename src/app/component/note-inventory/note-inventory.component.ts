@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Input, NgZone, ViewChild, ElementRef } from '@angular/core';
 
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
+
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -172,6 +173,10 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     return this.getInventory(gameObject.location.name).dataElementMap.get(gameObject.identifier);
   }
 
+  showgameObject(GObject) {
+    console.log('GObject', GObject)
+    return GObject.title || "NOT WORK?"
+  }
   onContextMenu(e: Event, gameObject: TextNote) {
     if (document.activeElement instanceof HTMLInputElement && document.activeElement.getAttribute('type') !== 'range') return;
     e.stopPropagation();
@@ -274,6 +279,7 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   trackByGameObject(index: number, gameObject: GameObject) {
+    console.log('trackByGameObject', gameObject)
     return gameObject ? gameObject.identifier : index;
   }
 
