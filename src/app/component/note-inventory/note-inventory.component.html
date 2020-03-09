@@ -1,7 +1,9 @@
 <div class="component">
   <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
-  <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
+  <!--
+ <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
+-->
   <div *ngFor="let gameObject of getNotes(); trackBy: trackByGameObject" (click)="selectGameObject(gameObject)"
     (dblclick)="showDetail(this.gameObject)">
 
@@ -11,37 +13,46 @@
       </li>
     </ng-container>
   </div>
+  <!--
   <div *ngIf="selectTab === 'graveyard'" style="padding-top: 6px;">
     <button class="danger" (click)="cleanInventory()"
       [attr.disabled]="getGameObjects(selectTab).length < 1 ? '' : null">清空墓場</button>
   </div>
+  -->
+
 </div>
-<ng-template #inventoryTab>
-  <form class="is-sticky-top">
-    <div class="tab">
-      <label *ngFor="let inventoryType of inventoryTypes">
-        <input name="tab" type="radio" value="{{inventoryType}}" ng-control="options" [(ngModel)]="selectTab">
-        <div>{{getTabTitle(inventoryType)}} ({{getInventory(inventoryType).length}})</div>
-      </label>
-    </div>
-  </form>
-</ng-template>
+
+<!--
+  <ng-template #inventoryTab>
+    <form class="is-sticky-top">
+      <div class="tab">
+        <label *ngFor="let inventoryType of inventoryTypes">
+          <input name="tab" type="radio" value="{{inventoryType}}" ng-control="options" [(ngModel)]="selectTab">
+          <div>{{getTabTitle(inventoryType)}} ({{getInventory(inventoryType).length}})</div>
+        </label>
+      </div>
+    </form>
+  </ng-template> 
+  -->
 <!--顯示共筆-->
 <ng-template #gameObjectTags let-gameObject="gameObject">
   <div class="inventory-object">
-    
-      <div class="object-name"><li>{{showgameObject(gameObject)}}
-        <button style="font-size: 0.8em; padding: 2px 5px;" (click)="onContextMenu($event, gameObject)">
-          <i class="material-icons" style="font-size: 1em;">settings</i>
-        </button></li>
-      </div>
-    
- {{gameObject.text}}
-    {{gameObject.location.name}}    
+    <div class="object-name">
+      <li>{{showgameObject(gameObject)}}
+        <span *ngIf="!isittable(gameObject)">
+          <button style="font-size: 0.8em; padding: 2px 5px;" (click)="settotable( gameObject)">移動到桌面
+            <i class="material-icons" style="font-size: 1em;">settings</i>
+          </button>
+        </span>
+        </li>
+    </div>
+    {{gameObject.text}}
+
   </div>
-  <hr class="style-one"/>
+  <hr class="style-one" />
 </ng-template>
 <!-- note!!!
+  this.textNotes
 GMName: (...)
 hasGM: (...)
 isMine: (...)

@@ -11,7 +11,7 @@ import { GameCharacter } from '@udonarium/game-character';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TabletopObject } from '@udonarium/tabletop-object';
 
-
+import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
@@ -60,7 +60,6 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   get hasGM(): boolean { return this.gameCharacter.hasGM; }
   get GMName(): string { return this.gameCharacter.GMName; }
   isDisabled(gameObject) {
-
     return gameObject.GM && !(PeerCursor.myCursor.name === gameObject.GM);
   }
 
@@ -84,27 +83,28 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     EventSystem.register(this)
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
-        if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor)) {
+        if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor) || object instanceof ObjectNode || this.textNote === object) {
           this.selectedIdentifier = event.data.identifier;
           //  console.log(event.data.identifier)
           this.changeDetector.markForCheck();
-          console.log('this.selectedIdentifier', this.selectedIdentifier)
+
         }
+      })
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
+        this.changeDetector.markForCheck();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
-        if (event.isSendFromSelf) this.changeDetector.markForCheck();
+        this.changeDetector.markForCheck();
       })
       .on('UPDATE_INVENTORY', event => {
-        if (event.isSendFromSelf) this.changeDetector.markForCheck();
+        this.changeDetector.markForCheck();
       })
       .on('OPEN_NETWORK', event => {
-        this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
-        if (!this.inventoryTypes.includes(this.selectTab)) {
-          this.selectTab = Network.peerId;
-        }
+        this.selectTab = Network.peerId;
+
       }).on('DISCONNECT_PEER', event => {
         //GM
-        if (this.gameCharacter.GM === PeerCursor.myCursor.name) this.changeDetector.markForCheck();
+        this.changeDetector.markForCheck();
       });
     this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
   }
@@ -165,6 +165,7 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
       textArea.style.height = textArea.scrollHeight + 'px';
     }
   }
+  //MARK
   getGameObjects(inventoryType: string): TabletopObject[] {
     return this.getInventory(inventoryType).tabletopObjects;
   }
@@ -172,10 +173,16 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   getInventoryTags(gameObject: TextNote): DataElement[] {
     return this.getInventory(gameObject.location.name).dataElementMap.get(gameObject.identifier);
   }
-
+  settotable(gameObject) {
+    gameObject.setLocation('table');
+  }
   showgameObject(GObject) {
     console.log('GObject', GObject)
     return GObject.title || "NOT WORK?"
+  }
+  isittable(note) {
+    if (note.location.name == 'table')
+      return true;
   }
   onContextMenu(e: Event, gameObject: TextNote) {
     if (document.activeElement instanceof HTMLInputElement && document.activeElement.getAttribute('type') !== 'range') return;
@@ -195,13 +202,15 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
         if (gameObject.location.name !== 'graveyard') {
           actions.push({ name: '顯示對話組合版', action: () => { this.showChatPalette(gameObject) } });
         }
-     */
-    actions.push(ContextMenuSeparator);
-    let locations = [
-      { name: 'table', alias: '移動到桌面' },
+
+        ,
       { name: 'common', alias: '移動到共有倉庫' },
       { name: Network.peerId, alias: '移動到個人倉庫' },
       { name: 'graveyard', alias: '移動到墓場' }
+     */
+    actions.push(ContextMenuSeparator);
+    let locations = [
+      { name: 'table', alias: '移動到桌面' }
     ];
     for (let location of locations) {
       if (gameObject.location.name === location.name) continue;
@@ -212,23 +221,6 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       });
     }
-
-    if (gameObject.location.name === 'graveyard') {
-      actions.push({
-        name: '刪除', action: () => {
-          this.deleteGameObject(gameObject);
-          SoundEffect.play(PresetSound.sweep);
-        }
-      });
-    }
-    actions.push(ContextMenuSeparator);
-    actions.push({
-      name: '複製', action: () => {
-        this.cloneGameObject(gameObject);
-        SoundEffect.play(PresetSound.piecePut);
-      }
-    });
-
     this.contextMenuService.open(position, actions, gameObject.title);
   }
 
@@ -279,14 +271,14 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   trackByGameObject(index: number, gameObject: TextNote) {
-    console.log('trackByGameObject', gameObject)
+  //  console.log('trackByGameObject', gameObject)
     return gameObject ? gameObject.identifier : index;
   }
 
   onChangeGameType(gameType: string) {
-    console.log('onChangeGameType ready');
+  //  console.log('onChangeGameType ready');
     DiceBot.getHelpMessage(this.gameType).then(help => {
-      console.log('onChangeGameType done\n' + help + this.gameType);
+   //   console.log('onChangeGameType done\n' + help + this.gameType);
     });
   }
 }
