@@ -2,8 +2,8 @@
   <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
   <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
-  <div *ngFor="let gameObject of getNotes(); trackBy: trackByGameObject"
-    (click)="selectGameObject(gameObject)" (dblclick)="showDetail(this.gameObject)">
+  <div *ngFor="let gameObject of getNotes(); trackBy: trackByGameObject" (click)="selectGameObject(gameObject)"
+    (dblclick)="showDetail(this.gameObject)">
 
     <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
 
@@ -29,15 +29,18 @@
 <!--顯示共筆-->
 <ng-template #gameObjectTags let-gameObject="gameObject">
   <div class="inventory-object">
-    <div class="object-name">{{showgameObject(gameObject)}}{{gameObject.text}}{{gameObject.location.name}}
-      <button style="font-size: 0.8em; padding: 2px 5px;"
-        (click)="onContextMenu($event, gameObject)">
-        <i class="material-icons" style="font-size: 1em;">settings</i>
-      </button>
-    </div>
-  
+    
+      <div class="object-name"><li>{{showgameObject(gameObject)}}
+        <button style="font-size: 0.8em; padding: 2px 5px;" (click)="onContextMenu($event, gameObject)">
+          <i class="material-icons" style="font-size: 1em;">settings</i>
+        </button></li>
+      </div>
+    
+ {{gameObject.text}}
+    {{gameObject.location.name}}    
   </div>
 </ng-template>
+<hr class="style-one"/>
 <!-- note!!!
 GMName: (...)
 hasGM: (...)
