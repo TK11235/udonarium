@@ -1,15 +1,14 @@
 <div class="component">
-  <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
-  <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
+
   <!--
  <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
 -->
-  <div *ngFor="let gameObject of getNotes(); trackBy: trackByGameObject" (click)="selectGameObject(gameObject)"
-    (dblclick)="showDetail(this.gameObject)">
+  <div *ngFor="let gameObject of getNotes(); trackBy: trackByGameObject" 
+   >
 
     <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
 
-      <li *ngIf="!isDisabled(gameObject)" (contextmenu)="onContextMenu($event, gameObject)" [ngClass]="{'box': true}">
+      <li *ngIf="!isDisabled(gameObject)"  [ngClass]="{'box': true}">
       </li>
     </ng-container>
   </div>

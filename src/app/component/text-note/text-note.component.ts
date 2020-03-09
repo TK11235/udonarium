@@ -171,7 +171,12 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       ),
       ContextMenuSeparator,
-      { name: '移動到共有倉庫', action: () => { this.location = 'common'; } },
+      {
+        name: '移動到共有倉庫', action: () => {
+
+          this.textNote.setLocation('common')
+        }
+      },
 
       { name: '編輯筆記', action: () => { this.showDetail(this.textNote); } },
       {

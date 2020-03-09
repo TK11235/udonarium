@@ -117,7 +117,7 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   getTabTitle(inventoryType: string) {
-    console.log('this.textNote', this.textNote)
+   // console.log('this.textNote', this.textNote)
     switch (inventoryType) {
       case 'table':
         return '桌面';
@@ -129,13 +129,13 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
         return '共有倉庫';
     }
   }
-  getNotes(type) {
-    console.log('getNotes')
+  getNotes() {
+   // console.log('getNotes')
     return this.textNotes;
   }
   getInventory(inventoryType: string) {
-    console.log('this.inventoryService', this.inventoryService)
-    console.log('this.textNotes', this.textNotes)
+   // console.log('this.inventoryService', this.inventoryService)
+   // console.log('this.textNotes', this.textNotes)
 
     switch (inventoryType) {
       case 'table':
@@ -177,110 +177,32 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     gameObject.setLocation('table');
   }
   showgameObject(GObject) {
-    console.log('GObject', GObject)
+   // console.log('GObject', GObject)
     return GObject.title || "NOT WORK?"
   }
   isittable(note) {
     if (note.location.name == 'table')
       return true;
   }
-  onContextMenu(e: Event, gameObject: TextNote) {
-    if (document.activeElement instanceof HTMLInputElement && document.activeElement.getAttribute('type') !== 'range') return;
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
-
-    this.selectGameObject(gameObject);
-
-    let position = this.pointerDeviceService.pointers[0];
-
-    let actions: ContextMenuAction[] = [];
-
-
-    /**
-        if (gameObject.location.name !== 'graveyard') {
-          actions.push({ name: '顯示對話組合版', action: () => { this.showChatPalette(gameObject) } });
-        }
-
-        ,
-      { name: 'common', alias: '移動到共有倉庫' },
-      { name: Network.peerId, alias: '移動到個人倉庫' },
-      { name: 'graveyard', alias: '移動到墓場' }
-     */
-    actions.push(ContextMenuSeparator);
-    let locations = [
-      { name: 'table', alias: '移動到桌面' }
-    ];
-    for (let location of locations) {
-      if (gameObject.location.name === location.name) continue;
-      actions.push({
-        name: location.alias, action: () => {
-          gameObject.setLocation(location.name);
-          SoundEffect.play(PresetSound.piecePut);
-        }
-      });
-    }
-    this.contextMenuService.open(position, actions, gameObject.title);
-  }
+ 
 
   toggleEdit() {
     this.isEdit = !this.isEdit;
   }
 
-  cleanInventory() {
-    let tabTitle = this.getTabTitle(this.selectTab);
-    let gameObjects = this.getGameObjects(this.selectTab);
-    if (!confirm(`${tabTitle}存在的${gameObjects.length}個檔案要永久刪除？`)) return;
-    for (const gameObject of gameObjects) {
-      this.deleteGameObject(gameObject);
-    }
-    SoundEffect.play(PresetSound.sweep);
-  }
 
-  private cloneGameObject(gameObject: TabletopObject) {
-    gameObject.clone();
-  }
+ 
 
-  public showDetail(gameObject: TextNote) {
-    console.log('showDetail', TextNote)
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-    let coordinate = this.pointerDeviceService.pointers[0];
-    let title = '角色卡';
-    if (gameObject.title) title += ' - ' + gameObject.title;
-    let option: PanelOption = { title: title, left: coordinate.x - 800, top: coordinate.y - 300, width: 800, height: 600 };
-    let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
-    component.tabletopObject = gameObject;
-  }
+  
 
-  private showChatPalette(gameObject: GameCharacter) {
-    let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 630, height: 350 };
-    let component = this.panelService.open<ChatPaletteComponent>(ChatPaletteComponent, option);
-    component.character = gameObject;
-  }
-
-  selectGameObject(gameObject: GameObject) {
-    let aliasName: string = gameObject.aliasName;
-    EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
-  }
-
-  private deleteGameObject(gameObject: GameObject) {
-    gameObject.destroy();
-    this.changeDetector.markForCheck();
-  }
+ 
 
   trackByGameObject(index: number, gameObject: TextNote) {
   //  console.log('trackByGameObject', gameObject)
     return gameObject ? gameObject.identifier : index;
   }
 
-  onChangeGameType(gameType: string) {
-  //  console.log('onChangeGameType ready');
-    DiceBot.getHelpMessage(this.gameType).then(help => {
-   //   console.log('onChangeGameType done\n' + help + this.gameType);
-    });
-  }
+
 }
 
 class TabletopCache<T extends TabletopObject> {

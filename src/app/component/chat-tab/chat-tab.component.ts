@@ -78,6 +78,13 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       tag: "",
       name: "教學Zzzzzz",
       text: "更新日誌：2020/02/22 \n 新增GM圖層(其實是鎖起來，只有自己看得見，根據玩家名稱來儲存，所以轉換名稱就會失效)，儲存玩家名稱。"
+    }, {
+      from: "System",
+      timestamp: 0,
+      imageIdentifier: "",
+      tag: "",
+      name: "教學Zzzzzz",
+      text: "更新日誌：2020/03/10 \n 新增文字倉庫，因為能力問題，按移動到共用倉庫後，需要再點擊筆記一下。"
     },
   ];
 
