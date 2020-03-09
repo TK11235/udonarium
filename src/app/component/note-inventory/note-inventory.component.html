@@ -1,4 +1,109 @@
 <div class="component">
+
+  <!--
+ <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
+-->
+  <div *ngFor="let gameObject of getNotes(); trackBy: trackByGameObject" 
+   >
+
+    <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
+
+      <li *ngIf="!isDisabled(gameObject)"  [ngClass]="{'box': true}">
+      </li>
+    </ng-container>
+  </div>
+  <!--
+  <div *ngIf="selectTab === 'graveyard'" style="padding-top: 6px;">
+    <button class="danger" (click)="cleanInventory()"
+      [attr.disabled]="getGameObjects(selectTab).length < 1 ? '' : null">清空墓場</button>
+  </div>
+  -->
+
+</div>
+
+<!--
+  <ng-template #inventoryTab>
+    <form class="is-sticky-top">
+      <div class="tab">
+        <label *ngFor="let inventoryType of inventoryTypes">
+          <input name="tab" type="radio" value="{{inventoryType}}" ng-control="options" [(ngModel)]="selectTab">
+          <div>{{getTabTitle(inventoryType)}} ({{getInventory(inventoryType).length}})</div>
+        </label>
+      </div>
+    </form>
+  </ng-template> 
+  -->
+<!--顯示共筆-->
+<ng-template #gameObjectTags let-gameObject="gameObject">
+  <div class="inventory-object">
+    <div class="object-name">
+      <li>{{showgameObject(gameObject)}}
+        <span *ngIf="!isittable(gameObject)">
+          <button style="font-size: 0.8em; padding: 2px 5px;" (click)="settotable( gameObject)">移動到桌面
+            <i class="material-icons" style="font-size: 1em;">settings</i>
+          </button>
+        </span>
+        </li>
+    </div>
+    {{gameObject.text}}
+
+  </div>
+  <hr class="style-one" />
+</ng-template>
+<!-- note!!!
+  this.textNotes
+GMName: (...)
+hasGM: (...)
+isMine: (...)
+isDisabled: (...)
+width: (...)
+height: (...)
+fontSize: (...)
+title: (...)
+text: (...)
+rotate: (...)
+zindex: (...)
+password: (...)
+GM: (...)
+isVisibleOnTable: (...)
+rootDataElement: (...)
+imageDataElement: (...)
+commonDataElement: (...)
+detailDataElement: (...)
+imageFile: (...)
+location: (...)
+ Object
+name: "table"
+x: 650
+y: -25
+posZ: (...)
+index: (...)
+parent: (...)
+parentId: (...)
+parentIsAssigned: (...)
+parentIsUnknown: (...)
+parentIsDestroyed: (...)
+children: (...)
+value: (...)
+attributes: (...)
+parentIdentifier: (...)
+majorIndex: (...)
+minorIndex: (...)
+aliasName: (...)
+identifier: (...)
+version: (...)
+context: {aliasName: "text-note", identifier: "9b7c803e-56cc-463b-815f-de4515db6ce2", majorVersion: 25, minorVersion: 0.6052201358567142, syncData: {…}}
+_children: [DataElement]
+needsSort: false
+_imageFile: ImageFile {context: {…}}
+_dataElements: {image: "image_9b7c803e-56cc-463b-815f-de4515db6ce2", common: "common_9b7c803e-56cc-463b-815f-de4515db6ce2", detail: "detail_9b7c803e-56cc-463b-815f-de4515db6ce2", title: "title_9b7c803e-56cc-463b-815f-de4515db6ce2", text: "text_9b7c803e-56cc-463b-815f-de4515db6ce2", …}
+__proto__: TabletopObject
+
+
+-->
+<!--
+
+<div class="component">
   <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
   <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
@@ -26,45 +131,7 @@
     </div>
   </form>
 </ng-template>
-<ng-template #inventoryViewSetting>
-  <ng-container *ngIf="isEdit">
-    <div>
-      <div style="font-size: 12px;">排列次序</div>
-      <input [(ngModel)]="sortTag" placeholder="標籤名稱" />
-      <select [(ngModel)]="sortOrder">
-        <option value="ASC">升序</option>
-        <option value="DESC">降序</option>
-      </select>
-    </div>
-    <div style="font-size: 12px; padding-top: 6px;">顯示項目</div>
-    <input style="width: 100%; box-sizing: border-box;" [(ngModel)]="dataTag"
-      placeholder="用空格將各標籤分隔 斜線隔行 eg.「HP MP / 備註」" />
-    <div style="font-size: 12px; padding-top: 6px;">骰子Bot系統</div>
-    <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType"
-      [ngModelOptions]="{standalone: true}">
-      <option value="">未指定骰子系統</option>
-      <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
-    </select>
-
-    <div style="padding-top: 6px;">
-      <button class="tab-setting small-font" (click)="toggleEdit()"><i
-          class="material-icons small-font">settings</i>完了</button>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="!isEdit">
-    <table style="font-size: 0.8em;">
-      <tr>
-        <th style=" vertical-align:middle;">排列次序:</th>
-        <td style=" vertical-align:middle;">
-          <ng-container *ngIf="0 < sortTag.length">{{sortTag}} ({{sortOrderName}})</ng-container>
-          <ng-container *ngIf="sortTag.length < 1">-</ng-container>
-        </td>
-        <td><button class="tab-setting small-font" (click)="toggleEdit()"><i
-              class="material-icons small-font">settings</i>設定</button></td>
-      </tr>
-    </table>
-  </ng-container>
-</ng-template>
+顯示共筆
 <ng-template #gameObjectTags let-gameObject="gameObject">
   <div class="inventory-object" *ngIf="!isDisabled(gameObject)" (contextmenu)="onContextMenu($event, gameObject)">
     <div class="object-name">{{gameObject.name}}
@@ -105,18 +172,17 @@
         </div>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <div class="tag-name">{{dataElm.name}}</div> 
+        <div class="tag-name">{{dataElm.name}}</div>
         <div style="text-align: center;">
           <div style="display: inline-block;">
             <div class="tag-value-box">
               <div class="hidden-spacer" style="font-weight: bold;">{{dataElm.value}}</div>
               <input class="input tag-value" size="1" [(ngModel)]="dataElm.value" placeholder="" />
-            </div>  
-          </div>  
+            </div>
+          </div>
         </div>
-        
-      </ng-container>  
-      <hr class="style-one"/>
-    </ng-container>  
-  </div> 
-</ng-template>  
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+-->
