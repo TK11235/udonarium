@@ -56,7 +56,6 @@ MESSAGETEXT
 
     # 骰子ロール
     dice, dice_str = roll(diceCount, 6)
-    diceList = dice_str.split(/,/).collect { |i| i.to_i }.sort
 
     total = dice + modify
 

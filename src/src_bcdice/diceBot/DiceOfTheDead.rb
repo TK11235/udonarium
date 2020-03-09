@@ -19,7 +19,7 @@ class DiceOfTheDead < DiceBot
   end
 
   def getHelpMessage
-    info = <<INFO_MESSAGE_TEXT
+    return <<INFO_MESSAGE_TEXT
 ・ゾンビ化表　ZMB+x
 （x=オープン中の感染度マスの数。+xは省略可能、省略時は0）
 ・感染度表　BIOx
@@ -103,7 +103,7 @@ INFO_MESSAGE_TEXT
     index = [minDice, index].max
     index = [index, maxDice].min
 
-    number, text = table.assoc(index)
+    _number, text = table.assoc(index)
     result = "ゾンビ化表　＞　出目：#{d1}＋#{d2}　感染度：#{value}　合計値：#{diceTotal}　＞　#{text}"
 
     return result

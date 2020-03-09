@@ -25,7 +25,7 @@
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_DarkSouls_initialize_1, TMP_DarkSouls_gameName_2, TMP_DarkSouls_gameType_3, TMP_DarkSouls_getHelpMessage_4, TMP_DarkSouls_rollDiceCommand_5, TMP_DarkSouls_checkRoll_8, TMP_DarkSouls_getValue_9, TMP_DarkSouls_getValueText_10;
 
     
-    self.$setPrefixes(["(\\d+)?(A)?DS([\\+\\-\\d+]*)(\\@\\d+)?"]);
+    self.$setPrefixes(["(\\d+)?(A)?DS([-+\\d]*)(@\\d+)?"]);
     
     Opal.defn(self, '$initialize', TMP_DarkSouls_initialize_1 = function $$initialize() {
       var self = this, $iter = TMP_DarkSouls_initialize_1.$$p, $yield = $iter || nil, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -60,7 +60,7 @@
       var $a, self = this, m = nil, diceCount = nil, isActive = nil, modify = nil, target = nil, output = nil;
 
       
-      if ($truthy((m = /(\d+)?(A)?DS([\+\-\d+]*)(\@(\d+))?$/i.$match(command.$upcase())))) {
+      if ($truthy((m = /(\d+)?(A)?DS([-+\d]*)(@(\d+))?$/i.$match(command.$upcase())))) {
         } else {
         return nil
       };

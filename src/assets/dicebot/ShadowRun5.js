@@ -102,16 +102,19 @@ Opal.loaded(["diceBot/ShadowRun4"]);
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
+  function $rb_divide(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
+  }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $range = Opal.range;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$debug', '$match', '$[]', '$to_i', '$checkBDice', '$bcdice', '$>', '$-', '$gsub', '$+', '$slice']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$debug', '$match', '$[]', '$to_i', '$bdice', '$bcdice', '$>', '$-', '$gsub', '$+', '$slice', '$/', '$to_f', '$==']);
   
   self.$require("diceBot/ShadowRun4");
   return (function($base, $super, $parent_nesting) {
     function $ShadowRun5(){};
     var self = $ShadowRun5 = $klass($base, $super, 'ShadowRun5', $ShadowRun5);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_ShadowRun5_initialize_1, TMP_ShadowRun5_gameName_2, TMP_ShadowRun5_gameType_3, TMP_ShadowRun5_getHelpMessage_4, TMP_ShadowRun5_rollDiceCommand_5;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_ShadowRun5_initialize_1, TMP_ShadowRun5_gameName_2, TMP_ShadowRun5_gameType_3, TMP_ShadowRun5_getHelpMessage_4, TMP_ShadowRun5_rollDiceCommand_5, TMP_ShadowRun5_getGrichText_6;
 
     
     self.$setPrefixes(["(\\d+)B6@(\\d+)"]);
@@ -148,15 +151,16 @@ Opal.loaded(["diceBot/ShadowRun4"]);
 
       return "" + "個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。\n" + "バラバラロール(xBn)のみ、リミットをセットできます。リミットの指定は(xBn@l)のように指定します。(省略可)\n" + "BコマンドとRコマンド時に、グリッチの表示を行います。\n"
     }, TMP_ShadowRun5_getHelpMessage_4.$$arity = 0);
-    return (Opal.defn(self, '$rollDiceCommand', TMP_ShadowRun5_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, m = nil, b_dice = nil, limit = nil, output_before_limited = nil, secret = nil, output_after_limited = nil, before_suc_cnt = nil, after_suc_cnt = nil, over_suc_cnt = nil, output = nil;
+    
+    Opal.defn(self, '$rollDiceCommand', TMP_ShadowRun5_rollDiceCommand_5 = function $$rollDiceCommand(command) {
+      var self = this, m = nil, b_dice = nil, limit = nil, output_before_limited = nil, output_after_limited = nil, before_suc_cnt = nil, after_suc_cnt = nil, over_suc_cnt = nil, output = nil;
 
       
       self.$debug("chatch limit prefix");
       m = /(\d+B6)@(\d+)/.$match(command);
       b_dice = m['$[]'](1);
       limit = m['$[]'](2).$to_i();
-      $b = self.$bcdice().$checkBDice(b_dice), $a = Opal.to_ary($b), (output_before_limited = ($a[0] == null ? nil : $a[0])), (secret = ($a[1] == null ? nil : $a[1])), $b;
+      output_before_limited = self.$bcdice().$bdice(b_dice);
       m = /成功数(\d+)/.$match(output_before_limited);
       output_after_limited = output_before_limited;
       before_suc_cnt = m['$[]'](1).$to_i();
@@ -174,7 +178,24 @@ Opal.loaded(["diceBot/ShadowRun4"]);
       output = output.$gsub("6>=5", "" + "[6]Limit[" + (limit) + "]>=5");
       self.$debug(output);
       return output;
-    }, TMP_ShadowRun5_rollDiceCommand_5.$$arity = 1), nil) && 'rollDiceCommand';
+    }, TMP_ShadowRun5_rollDiceCommand_5.$$arity = 1);
+    return (Opal.defn(self, '$getGrichText', TMP_ShadowRun5_getGrichText_6 = function $$getGrichText(numberSpot1, dice_cnt_total, successCount) {
+      var self = this, dice_cnt_total_half = nil;
+
+      
+      self.$debug("getGrichText numberSpot1", numberSpot1);
+      self.$debug("dice_cnt_total", dice_cnt_total);
+      self.$debug("successCount", successCount);
+      dice_cnt_total_half = $rb_divide(dice_cnt_total.$to_f(), 2);
+      self.$debug("dice_cnt_total_half", dice_cnt_total_half);
+      if ($truthy($rb_gt(numberSpot1, dice_cnt_total_half))) {
+        } else {
+        return ""
+      };
+      if (successCount['$=='](0)) {
+        return " ＞ クリティカルグリッチ"};
+      return " ＞ グリッチ";
+    }, TMP_ShadowRun5_getGrichText_6.$$arity = 3), nil) && 'getGrichText';
   })($nesting[0], Opal.const_get_relative($nesting, 'ShadowRun4'), $nesting);
 })(Opal);
 

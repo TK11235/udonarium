@@ -6,7 +6,7 @@ class ShinMegamiTenseiKakuseihen < DiceBot
   end
 
   def gameName
-    '真・女神転生TRPG　覚醒編'
+    '真・女神転生TRPG　覚醒篇'
   end
 
   def gameType

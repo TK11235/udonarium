@@ -81,7 +81,7 @@
       var self = this;
 
       
-      self.nick = nick_e;
+      self.nick_e = nick_e;
       return self.$checkRoll(string);
     }, TMP_MeikyuDays_dice_command_xRn_8.$$arity = 2);
     

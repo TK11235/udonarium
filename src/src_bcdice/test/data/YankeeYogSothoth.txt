@@ -214,3 +214,75 @@ output:
 YankeeYogSothoth : 病院生活表(6) ＞ 16:看護師と仲良くなった
 rand:6/6,
 ============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(1,11) ＞ 「愛死天流（あいしてる）」
+rand:1/6,1/6,1/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(2,16) ＞ 「威風堂々（いふうどうどう）」
+rand:2/6,6/6,1/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(2,66) ＞ 「時給千円（じきゅうせんえん）」
+rand:2/6,6/6,6/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(3,11) ＞ 「みんなの」
+rand:3/6,1/6,1/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(3,16) ＞ 「熱血番長の」
+rand:3/6,1/6,6/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(4,66) ＞ 「悪そうなやつはだいたい友達」
+rand:4/6,6/6,6/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(5,11) ＞ 「ファッションヤンキー」
+rand:5/6,1/6,1/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(5,16) ＞ 「イカれたやつ」
+rand:5/6,6/6,1/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(5,66) ＞ 「おやじ狩り狩り」
+rand:5/6,6/6,6/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(6,11) ＞ 「国産」
+rand:6/6,1/6,1/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(6,16) ＞ 「ミステリー」
+rand:6/6,1/6,6/6
+============================
+input:
+FTNT
+output:
+YankeeYogSothoth : 二つ名決定表(6,66) ＞ 「名古屋」
+rand:6/6,6/6,6/6
+============================

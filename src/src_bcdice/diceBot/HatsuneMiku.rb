@@ -134,8 +134,7 @@ INFO_MESSAGE_TEXT
     return "ファンブル" if  dice_n == 1
     return "スペシャル" if  dice_n >= special_n
 
-    # success = @@bcdice.check_hit(total_n, signOfInequality, diff)
-    success = bcdice.check_hit(total_n, signOfInequality, diff) # TKfix @@bcdice が参照できない (Opal 0.11.4)
+    success = bcdice.check_hit(total_n, signOfInequality, diff)
     return "成功" if success >= 1
 
     return "失敗"

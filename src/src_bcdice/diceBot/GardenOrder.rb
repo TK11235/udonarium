@@ -2,7 +2,7 @@
 
 class GardenOrder < DiceBot
   setPrefixes([
-    'GO\d+(\/\d+)?(@\d+)?',
+    'GO(\-?\d+)(\/\d+)?(@\d+)?',
     'DC(SL|BL|IM|BR|RF|EL).+'
   ])
 
@@ -30,7 +30,7 @@ INFO_MESSAGE_TEXT
 
   def rollDiceCommand(command)
     case command
-    when %r{GO(\d+)(/(\d+))?(@(\d+))?}i
+    when %r{GO(\-?\d+)(/(\d+))?(@(\d+))?}i
       success_rate = Regexp.last_match(1).to_i
       repeat_count = (Regexp.last_match(3) || 1).to_i
       critical_border_text = Regexp.last_match(5)
@@ -63,6 +63,7 @@ INFO_MESSAGE_TEXT
   end
 
   def check_roll(success_rate, critical_border)
+    success_rate = 0 if success_rate < 0
     fumble_border = (success_rate < 100 ? 96 : 99)
 
     dice_value, = roll(1, 100)

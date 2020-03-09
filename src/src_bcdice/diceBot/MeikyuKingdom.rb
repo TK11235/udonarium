@@ -263,13 +263,10 @@ INFO_MESSAGE_TEXT
       count = getCount(Regexp.last_match(1))
       output = mk_ls_decide_table(count)
       total_n = count
-
-    when /^DFT(\d*)/i
+    when /^DFT/i
       type = 'デバイスファクトリー'
-      count = getCount(Regexp.last_match(1))
-      output = mk_device_factory_table(count)
-      total_n = count
-
+      output = mk_device_factory_table()
+      total_n = 1
     when /^LRT/i
       type = '生活散策'
       output, total_n = mk_life_research_table
@@ -362,37 +359,37 @@ INFO_MESSAGE_TEXT
       output = mk_search_item_table(total_n)
     when /^IFT/i
       type = 'アイテム特性'
-      total_n, dummy = roll(2, 6)
+      total_n, = roll(2, 6)
       output = mk_item_features_table(total_n)
     when /^IDT/i
       type = 'アイテムカテゴリ決定'
-      total_n, dummy = roll(1, 6)
+      total_n, = roll(1, 6)
       output = mk_item_decide_table(total_n)
 
       # ランダムエンカウント表
     when /^1RET/i
       type = '1Lvランダムエンカウント'
-      total_n, dummy = roll(1, 6)
+      total_n, = roll(1, 6)
       output = mk_random_encount1_table(total_n)
     when /^2RET/i
       type = '2Lvランダムエンカウント'
-      total_n, dummy = roll(1, 6)
+      total_n, = roll(1, 6)
       output = mk_random_encount2_table(total_n)
     when /^3RET/i
       type = '3Lvランダムエンカウント'
-      total_n, dummy = roll(1, 6)
+      total_n, = roll(1, 6)
       output = mk_random_encount3_table(total_n)
     when /^4RET/i
       type = '4Lvランダムエンカウント'
-      total_n, dummy = roll(1, 6)
+      total_n, = roll(1, 6)
       output = mk_random_encount4_table(total_n)
     when /^5RET/i
       type = '5Lvランダムエンカウント'
-      total_n, dummy = roll(1, 6)
+      total_n, = roll(1, 6)
       output = mk_random_encount5_table(total_n)
     when /^6RET/i
       type = '6Lvランダムエンカウント'
-      total_n, dummy = roll(1, 6)
+      total_n, = roll(1, 6)
       output = mk_random_encount6_table(total_n)
 
       # その他表
@@ -1153,15 +1150,11 @@ INFO_MESSAGE_TEXT
   end
 
   # デバイスファクトリー(1D6)
-  def mk_device_factory_table(num)
+  def mk_device_factory_table()
     output = mk_item_decide_table(rand(6) + 1)
 
-    num = 1
-    num.times do |_i|
-      dice, = roll(2, 6)
-      output = output + ' / ' + mk_item_features_table(dice)
-    end
-
+    dice, = roll(2, 6)
+    output = output + ' / ' + mk_item_features_table(dice)
     return output
   end
 

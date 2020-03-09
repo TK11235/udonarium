@@ -14,12 +14,14 @@ group :development, :test do
     gem 'test-unit', '1.2.3'
   else
     gem 'codecov', :require => false
+    gem 'json', '~> 2.2.0' # For Ruby 1.9
     gem 'rake'
     gem 'test-unit'
   end
 
   if RUBY_VERSION >= '2.3'
     gem 'rubocop', '~> 0.72.0', :require => false
+    gem 'yard'
   end
 end
 

@@ -75,7 +75,7 @@
     }, TMP_EarthDawn_ed_step_6.$$arity = 1);
     
     Opal.defn(self, '$getStepResult', TMP_EarthDawn_getStepResult_7 = function $$getStepResult(str) {
-      var self = this, stepTotal = nil, step2 = nil, step = nil, targetNumber = nil, hasKarmaDice = nil, karmaDiceCount = nil, karmaDiceType = nil, stable = nil, nmod = nil, d20step = nil, d12step = nil, d10step = nil, d8step = nil, d6step = nil, d4step = nil, $case = nil, output = nil, excelentSuccessNumber = nil, superSuccessNumber = nil, goodSuccessNumber = nil, failedNumber = nil;
+      var self = this, stepTotal = nil, step = nil, targetNumber = nil, hasKarmaDice = nil, karmaDiceCount = nil, karmaDiceType = nil, stable = nil, nmod = nil, d20step = nil, d12step = nil, d10step = nil, d8step = nil, d6step = nil, d4step = nil, $case = nil, output = nil, excelentSuccessNumber = nil, superSuccessNumber = nil, goodSuccessNumber = nil, failedNumber = nil;
 
       
       if ($truthy(/(\d+)E(\d+)?(\+)?(\d+)?(d\d+)?/i['$=~'](str))) {
@@ -84,16 +84,13 @@
       };
       stepTotal = 0;
       self.isFailed = true;
-      step2 = 0;
       step = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       targetNumber = 0;
       hasKarmaDice = false;
       karmaDiceCount = 0;
       karmaDiceType = 0;
       if ($truthy($rb_gt(step, 40))) {
-        
-        step2 = step;
-        step = 40;};
+        step = 40};
       if ($truthy(Opal.const_get_relative($nesting, 'Regexp').$last_match(2))) {
         
         targetNumber = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
@@ -201,17 +198,17 @@
       };
       self.string = $rb_plus(self.string, "" + (diceCount) + "d" + (diceType) + "[");
       self.$debug("rollStep @string", self.string);
-      $send(diceCount, 'times', [], (TMP_9 = function(i){var self = TMP_9.$$s || this, $a, $b, $c, dice_now = nil, dummy = nil, dice_in = nil;
+      $send(diceCount, 'times', [], (TMP_9 = function(i){var self = TMP_9.$$s || this, $a, $b, $c, dice_now = nil, dice_in = nil;
         if (self.string == null) self.string = nil;
 if (i == null) i = nil;
       
-        $b = self.$roll(1, diceType), $a = Opal.to_ary($b), (dice_now = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+        $b = self.$roll(1, diceType), $a = Opal.to_ary($b), (dice_now = ($a[0] == null ? nil : $a[0])), $b;
         if ($truthy(dice_now['$!='](1))) {
           self.isFailed = false};
         dice_in = dice_now;
         while (dice_now['$=='](diceType)) {
           
-          $c = self.$roll(1, diceType), $b = Opal.to_ary($c), (dice_now = ($b[0] == null ? nil : $b[0])), (dummy = ($b[1] == null ? nil : $b[1])), $c;
+          $c = self.$roll(1, diceType), $b = Opal.to_ary($c), (dice_now = ($b[0] == null ? nil : $b[0])), $c;
           dice_in = $rb_plus(dice_in, dice_now);
         };
         stepTotal = $rb_plus(stepTotal, dice_in);
@@ -487,17 +484,17 @@ if (i == null) i = nil;
       };
       self.calcText = $rb_plus(self.calcText, "" + (diceCount) + "d" + (diceType) + "[");
       self.$debug("rollStep string", self.calcText);
-      $send(diceCount, 'times', [], (TMP_19 = function(i){var self = TMP_19.$$s || this, $a, $b, $c, dice_now = nil, dummy = nil, dice_in = nil;
+      $send(diceCount, 'times', [], (TMP_19 = function(i){var self = TMP_19.$$s || this, $a, $b, $c, dice_now = nil, dice_in = nil;
         if (self.calcText == null) self.calcText = nil;
 if (i == null) i = nil;
       
-        $b = self.$roll(1, diceType), $a = Opal.to_ary($b), (dice_now = ($a[0] == null ? nil : $a[0])), (dummy = ($a[1] == null ? nil : $a[1])), $b;
+        $b = self.$roll(1, diceType), $a = Opal.to_ary($b), (dice_now = ($a[0] == null ? nil : $a[0])), $b;
         if ($truthy(dice_now['$!='](1))) {
           self.isFailed = false};
         dice_in = dice_now;
         while (dice_now['$=='](diceType)) {
           
-          $c = self.$roll(1, diceType), $b = Opal.to_ary($c), (dice_now = ($b[0] == null ? nil : $b[0])), (dummy = ($b[1] == null ? nil : $b[1])), $c;
+          $c = self.$roll(1, diceType), $b = Opal.to_ary($c), (dice_now = ($b[0] == null ? nil : $b[0])), $c;
           dice_in = $rb_plus(dice_in, dice_now);
         };
         stepTotal = $rb_plus(stepTotal, dice_in);

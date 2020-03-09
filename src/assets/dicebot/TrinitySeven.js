@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$upcase', '$=~', '$get_NAME_table', '$get_NAMEtwo_table', '$+', '$to_i', '$last_match', '$rollHit', '$rollDamage', '$roll', '$getHitRollResult', '$>=', '$<=', '$<', '$getRollDamageCritialText', '$empty?', '$join', '$>', '$to_s', '$==', '$collect', '$split', '$sort!', '$clone', '$times', '$shift', '$push', '$pop', '$nil?', '$*', '$**', '$each', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$=~', '$get_NAME_table', '$get_NAMEtwo_table', '$+', '$to_i', '$last_match', '$rollHit', '$rollDamage', '$roll', '$getHitRollResult', '$>=', '$<=', '$<', '$getRollDamageCritialText', '$empty?', '$join', '$>', '$to_s', '$==', '$collect', '$split', '$sort!', '$clone', '$times', '$shift', '$push', '$pop', '$nil?', '$*', '$**', '$each', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $TrinitySeven(){};
     var self = $TrinitySeven = $klass($base, $super, 'TrinitySeven', $TrinitySeven);
@@ -60,15 +60,14 @@
     }, TMP_TrinitySeven_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_TrinitySeven_rollDiceCommand_5 = function $$rollDiceCommand(command) {
-      var $a, $b, self = this, string = nil, firstName = nil, total_n = nil, secondName = nil, total_o = nil, critical = nil, target = nil, modify = nil, diceCount = nil;
+      var $a, $b, self = this, firstName = nil, secondName = nil, critical = nil, target = nil, modify = nil, diceCount = nil;
 
       
       self.$debug("rollDiceCommand command", command);
-      string = command.$upcase();
       if ($truthy(/TRNAME/['$=~'](command))) {
         
-        $b = self.$get_NAME_table(), $a = Opal.to_ary($b), (firstName = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;
-        $b = self.$get_NAMEtwo_table(), $a = Opal.to_ary($b), (secondName = ($a[0] == null ? nil : $a[0])), (total_o = ($a[1] == null ? nil : $a[1])), $b;
+        $b = self.$get_NAME_table(), $a = Opal.to_ary($b), (firstName = ($a[0] == null ? nil : $a[0])), $b;
+        $b = self.$get_NAMEtwo_table(), $a = Opal.to_ary($b), (secondName = ($a[0] == null ? nil : $a[0])), $b;
         return "" + (firstName) + " , " + (secondName);};
       if ($truthy(/^TR([\+\-\d]*)<=([\d]*)([\+\-\d]*)/['$=~'](command))) {
         
@@ -179,21 +178,19 @@ if (i == null) i = nil;
     }, TMP_TrinitySeven_check_1D100_13.$$arity = 8);
     
     Opal.defn(self, '$get_NAME_table', TMP_TrinitySeven_get_NAME_table_14 = function $$get_NAME_table() {
-      var $a, $b, self = this, table = nil, dice_now = nil, output = nil;
+      var $a, $b, self = this, table = nil, dice_now = nil;
 
       
       table = [[1, "春日"], [2, "浅見"], [3, "風間"], [4, "神無月"], [5, "倉田"], [6, "不動"], [7, "山奈"], [8, "シャルロック"], [9, "霧隠"], [10, "果心"], [11, "今井"], [12, "長瀬"], [13, "明智"], [14, "風祭"], [15, "志貫"], [16, "一文字"], [17, "月夜野"], [18, "桜田門"], [19, "果瀬"], [20, "九十九"], [21, "速水"], [22, "片桐"], [23, "葉月"], [24, "ウィンザー"], [25, "時雨里"], [26, "神城"], [27, "水際"], [28, "一ノ江"], [29, "仁藤"], [30, "北千住"], [31, "西村"], [32, "諏訪"], [33, "藤宮"], [34, "御代"], [35, "橘"], [36, "霧生"], [37, "白石"], [38, "椎名"], [39, "綾小路"], [40, "二条"], [41, "光明寺"], [42, "春秋"], [43, "雪見"], [44, "刀条院"], [45, "ランカスター"], [46, "ハクア"], [47, "エルタニア"], [48, "ハーネス"], [49, "アウグストゥス"], [50, "椎名町"], [51, "鍵守"], [52, "茜ヶ崎"], [53, "鎮宮"], [54, "美柳"], [55, "鎖々塚"], [56, "櫻ノ杜"], [57, "鏡ヶ守"], [58, "輝井"], [59, "南陽"], [60, "雪乃城"], [61, "六角屋"], [62, "鈴々"], [63, "東三条"], [64, "朱雀院"], [65, "青龍院"], [66, "白虎院"], [67, "玄武院"], [68, "麒麟院"], [69, "リーシュタット"], [70, "サンクチュアリ"], [71, "六実"], [72, "須藤"], [73, "ミレニアム"], [74, "七里"], [75, "三枝"], [76, "八殿"], [77, "藤里"], [78, "久宝"], [79, "東"], [80, "赤西"], [81, "神ヶ崎"], [82, "グランシア"], [83, "ダークブーレード"], [84, "天光寺"], [85, "月見里"], [86, "璃宮"], [87, "藤見澤"], [88, "赤聖"], [89, "姫宮"], [90, "華ノ宮"], [91, "天才"], [92, "達人"], [93, "賢者"], [94, "疾風"], [95, "海の"], [96, "最強"], [97, "凶器"], [98, "灼熱"], [99, "人間兵器"], [100, "魔王"]];
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (dice_now = ($a[0] == null ? nil : $a[0])), $b;
-      output = self.$get_table_by_number(dice_now, table);
       return self.$get_table_by_number(dice_now, table);
     }, TMP_TrinitySeven_get_NAME_table_14.$$arity = 0);
     return (Opal.defn(self, '$get_NAMEtwo_table', TMP_TrinitySeven_get_NAMEtwo_table_15 = function $$get_NAMEtwo_table() {
-      var $a, $b, self = this, table = nil, dice_now = nil, output = nil;
+      var $a, $b, self = this, table = nil, dice_now = nil;
 
       
       table = [[1, "アラタ/聖"], [2, "アビィス/リリス"], [3, "ルーグ/レヴィ"], [4, "ラスト/アリン"], [5, "ソラ/ユイ"], [6, "イーリアス/アキオ"], [7, "アカーシャ/ミラ"], [8, "アリエス/リーゼロッテ"], [9, "ムラサメ/シャルム"], [10, "龍貴/竜姫"], [11, "英樹/春菜"], [12, "準一/湊"], [13, "急司郎/光理"], [14, "夕也/愛奈"], [15, "晴彦/アキ"], [16, "疾風/ヤシロ"], [17, "カガリ/灯花"], [18, "次郎/優都"], [19, "春太郎/静理"], [20, "ジン/時雨"], [21, "イオリ/伊織"], [22, "ユウヒ/優姫"], [23, "サツキ/翠名"], [24, "シュライ/サクラ"], [25, "ミナヅキ/姫乃"], [26, "カエデ/優樹菜"], [27, "ハル/フユ"], [28, "オｄール/瑞江"], [29, "ニトゥレスト/キリカ"], [30, "スカー/綾瀬"], [31, "真夏/小夏"], [32, "光一/ののか"], [33, "彩/翠"], [34, "トウカ/柊花"], [35, "命/ミコト"], [36, "司/つかさ"], [37, "ゆとり/なごみ"], [38, "冬彦/観月"], [39, "カレン/華恋"], [40, "清次郎/亜矢"], [41, "サード/夢子"], [42, "ボックス/詩子"], [43, "ヘリオス/カエデ"], [44, "ゲート/京香"], [45, "オンリー/パトリシア"], [46, "ザッハーク/アーリ"], [47, "ラスタバン/ラスティ"], [48, "桜花/燁澄"], [49, "計都/リヴィア"], [50, "カルヴァリオ/香夜"], [51, "悠人/夜々子"], [52, "太子/羽菜"], [53, "夕立/夕凪"], [54, "アルフ/愛美"], [55, "ファロス/灯利"], [56, "スプートニク/詩姫"], [57, "アーネスト/累"], [58, "ナイン/カグヤ"], [59, "クリア/ヒマワリ"], [60, "ウォーカー/オリビア"], [61, "ダーク/クオン"], [62, "ウェイヴ/凛"], [63, "ルーン/マリエ"], [64, "エンギ/セイギ"], [65, "シラヌイ/ミライ"], [66, "ブライン/キズナ"], [67, "クロウ/カナタ"], [68, "スレイヤー/ヒカル"], [69, "レス/ミリアリア"], [70, "ミフユ/サリエル"], [71, "鳴央/音央"], [72, "モンジ/理亜"], [73, "パルデモントゥム/スナオ"], [74, "ミシェル/詩穂"], [75, "フレンズ/サン"], [76, "サトリ/識"], [77, "ロード/唯花"], [78, "クロノス/久宝"], [79, "フィラデルフィア/冬海"], [80, "ティンダロス/美星"], [81, "勇弥/ユーリス"], [82, "エイト/アンジェラ"], [83, "サタン/ルシエル"], [84, "エース/小波"], [85, "セージ/胡蝶"], [86, "忍/千之"], [87, "重吾/キリコ"], [88, "マイケル/ミホシ"], [89, "カズマ/鶴香"], [90, "ヤマト/エリシエル"], [91, "歴史上の人物の名前（信長、ジャンヌなど）"], [92, "スポーツ選手の名前（ベッカム、沙保里など）"], [93, "学者の名前（ソクラテス、エレナなど）"], [94, "アイドルの名前（タクヤ、聖子など）"], [95, "土地、国、町の名前（イングランド、ワシントンなど）"], [96, "モンスターの名前（ドラゴン、ラミアなど）"], [97, "武器防具の名前（ソード、メイルなど）"], [98, "自然現象の名前（カザンハリケーンなど）"], [99, "機械の名前（洗濯機、テレビなど）"], [100, "目についた物の名前（シャーペン、メガネなど）"]];
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (dice_now = ($a[0] == null ? nil : $a[0])), $b;
-      output = self.$get_table_by_number(dice_now, table);
       return self.$get_table_by_number(dice_now, table);
     }, TMP_TrinitySeven_get_NAMEtwo_table_15.$$arity = 0), nil) && 'get_NAMEtwo_table';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)

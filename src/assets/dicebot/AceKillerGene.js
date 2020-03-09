@@ -22,7 +22,7 @@ Opal.modules["diceBot/GardenOrder"] = function(Opal) {
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_GardenOrder_gameName_1, TMP_GardenOrder_gameType_2, TMP_GardenOrder_getHelpMessage_3, TMP_GardenOrder_rollDiceCommand_4, TMP_GardenOrder_get_critical_border_5, TMP_GardenOrder_check_roll_repeat_attack_6, TMP_GardenOrder_check_roll_7, TMP_GardenOrder_get_check_result_8, TMP_GardenOrder_look_up_damage_chart_9, TMP_GardenOrder_get_damage_table_info_by_type_10;
 
     
-    self.$setPrefixes(["GO\\d+(\\/\\d+)?(@\\d+)?", "DC(SL|BL|IM|BR|RF|EL).+"]);
+    self.$setPrefixes(["GO(\\-?\\d+)(\\/\\d+)?(@\\d+)?", "DC(SL|BL|IM|BR|RF|EL).+"]);
     
     Opal.defn(self, '$gameName', TMP_GardenOrder_gameName_1 = function $$gameName() {
       var self = this;
@@ -47,7 +47,7 @@ Opal.modules["diceBot/GardenOrder"] = function(Opal) {
 
       
       $case = command;
-      if (/GO(\d+)(\/(\d+))?(@(\d+))?/i['$===']($case)) {
+      if (/GO(\-?\d+)(\/(\d+))?(@(\d+))?/i['$===']($case)) {
       success_rate = Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_i();
       repeat_count = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : 1).$to_i();
       critical_border_text = Opal.const_get_relative($nesting, 'Regexp').$last_match(5);
@@ -84,6 +84,8 @@ Opal.modules["diceBot/GardenOrder"] = function(Opal) {
       var $a, $b, self = this, fumble_border = nil, dice_value = nil, result = nil, text = nil;
 
       
+      if ($truthy($rb_lt(success_rate, 0))) {
+        success_rate = 0};
       fumble_border = (function() {if ($truthy($rb_lt(success_rate, 100))) {
         return 96
         } else {
@@ -146,7 +148,7 @@ Opal.modules["diceBot/GardenOrder"] = function(Opal) {
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_AceKillerGene_gameName_1, TMP_AceKillerGene_gameType_2, TMP_AceKillerGene_getHelpMessage_3, TMP_AceKillerGene_rollDiceCommand_4;
 
     
-    self.$setPrefixes(["(AK|AKG)\\d+(\\/\\d+)?(@\\d+)?", "DC(SL|BL|IM|BR|RF|EL).+"]);
+    self.$setPrefixes(["(AK|AKG)(\\-?\\d+)(\\/\\d+)?(@\\d+)?", "DC(SL|BL|IM|BR|RF|EL).+"]);
     
     Opal.defn(self, '$gameName', TMP_AceKillerGene_gameName_1 = function $$gameName() {
       var self = this;
@@ -170,7 +172,7 @@ Opal.modules["diceBot/GardenOrder"] = function(Opal) {
 
       
       $case = command;
-      if (/(AK|AKG)(\d+)(\/(\d+))?(@(\d+))?/i['$===']($case)) {
+      if (/(AK|AKG)(\-?\d+)(\/(\d+))?(@(\d+))?/i['$===']($case)) {
       success_rate = Opal.const_get_relative($nesting, 'Regexp').$last_match(2).$to_i();
       repeat_count = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(4)) ? $a : 1).$to_i();
       critical_border_text = Opal.const_get_relative($nesting, 'Regexp').$last_match(6);

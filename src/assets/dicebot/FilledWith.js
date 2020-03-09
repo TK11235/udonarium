@@ -23,12 +23,12 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$checkRoll', '$nil?', '$===', '$last_match', '$==', '$getLotResult', '$getSpecialResult', '$to_i', '$getCookResult', '$getTrapResult', '$getTresureResult', '$getRandomEventResult', '$getRandomEnemyDataResult', '$getRandomOptionResult', '$getValue', '$roll', '$+', '$<=', '$>=', '$-', '$empty?', '$parren_killer', '$first', '$<', '$last', '$>', '$get_table_by_1d6', '$lambda', '$cook', '$name', '$class', '$[]', '$normal', '$premium', '$get_table_by_nD6', '$get_table_by_d66', '$floor', '$/', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$checkRoll', '$nil?', '$===', '$last_match', '$==', '$getLotResult', '$getSpecialResult', '$to_i', '$getCookResult', '$getTrapResult', '$getTresureResult', '$getRandomEventResult', '$getRandomEnemyDataResult', '$getRandomOptionResult', '$getValue', '$roll', '$+', '$<=', '$>=', '$-', '$empty?', '$parren_killer', '$first', '$<', '$last', '$>', '$get_table_by_1d6', '$cook', '$lambda', '$name', '$class', '$[]', '$premium', '$normal', '$get_table_by_nD6', '$get_table_by_d66', '$floor', '$/', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $FilledWith(){};
     var self = $FilledWith = $klass($base, $super, 'FilledWith', $FilledWith);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_FilledWith_initialize_1, TMP_FilledWith_gameName_2, TMP_FilledWith_gameType_3, TMP_FilledWith_getHelpMessage_4, TMP_FilledWith_rollDiceCommand_5, TMP_FilledWith_checkRoll_6, TMP_FilledWith_getValue_7, TMP_FilledWith_getAdjustNumber_8, TMP_FilledWith_getSpecialResult_9, TMP_FilledWith_getCookResult_27, TMP_FilledWith_getLotResult_46, TMP_FilledWith_getTresureResult_47, TMP_FilledWith_getTrapResult_48, TMP_FilledWith_getRandomOptionResult_49, TMP_FilledWith_getRandomEventResult_50, TMP_FilledWith_getRandomEnemyDataResult_51;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_FilledWith_initialize_1, TMP_FilledWith_gameName_2, TMP_FilledWith_gameType_3, TMP_FilledWith_getHelpMessage_4, TMP_FilledWith_rollDiceCommand_5, TMP_FilledWith_checkRoll_6, TMP_FilledWith_getValue_7, TMP_FilledWith_getAdjustNumber_8, TMP_FilledWith_getSpecialResult_9, TMP_FilledWith_getCookResult_10, TMP_FilledWith_cook_27, TMP_FilledWith_getLotResult_28, TMP_FilledWith_normal_37, TMP_FilledWith_premium_46, TMP_FilledWith_getTresureResult_47, TMP_FilledWith_getTrapResult_48, TMP_FilledWith_getRandomOptionResult_49, TMP_FilledWith_getRandomEventResult_50, TMP_FilledWith_getRandomEnemyDataResult_51;
 
     
     self.$setPrefixes(["3FW.*", "[\\+\\-\\d]*-3FW.*", "LOT[NP]", "HST", "COOK[1-8]", "RAND.*", "RENC.*", "RED.*", "TRS.*", "TRAP[ENHL]", "ROP[ENHL]"]);
@@ -199,156 +199,153 @@
       return self.$get_table_by_1d6(table);
     }, TMP_FilledWith_getSpecialResult_9.$$arity = 0);
     
-    Opal.defn(self, '$getCookResult', TMP_FilledWith_getCookResult_27 = function $$getCookResult(lv) {
-      var TMP_cook_26, self = this;
+    Opal.defn(self, '$getCookResult', TMP_FilledWith_getCookResult_10 = function $$getCookResult(lv) {
+      var self = this;
 
-      
-      
-      Opal.def(self, '$cook', TMP_cook_26 = function $$cook(lv, num) {try {
-
-        var TMP_10, TMP_11, TMP_12, TMP_13, TMP_14, TMP_15, TMP_16, TMP_17, TMP_18, TMP_19, TMP_20, TMP_21, TMP_22, TMP_23, TMP_24, TMP_25, $a, $b, self = this, $case = nil, table = nil, result = nil, number = nil;
-
-        
-        $case = lv;
-        if ((1)['$===']($case)) {table = ["おべんとミートボール", "パリパリ小魚", "キャロットタルト", "おにぎり", $send(self, 'lambda', [], (TMP_10 = function(){var self = TMP_10.$$s || this;
-
-        Opal.ret(self.$cook(2, 5))}, TMP_10.$$s = self, TMP_10.$$arity = 0, TMP_10)), $send(self, 'lambda', [], (TMP_11 = function(){var self = TMP_11.$$s || this;
-
-        Opal.ret(self.$cook(2, 6))}, TMP_11.$$s = self, TMP_11.$$arity = 0, TMP_11))]}
-        else if ((2)['$===']($case)) {table = ["カリカリミミズ肉", "竹つきチクワ", "トロピカルジュース", "イナリ寿司", $send(self, 'lambda', [], (TMP_12 = function(){var self = TMP_12.$$s || this;
-
-        Opal.ret(self.$cook(3, 5))}, TMP_12.$$s = self, TMP_12.$$arity = 0, TMP_12)), $send(self, 'lambda', [], (TMP_13 = function(){var self = TMP_13.$$s || this;
-
-        Opal.ret(self.$cook(3, 6))}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13))]}
-        else if ((3)['$===']($case)) {table = ["ホットミートパイ", "魔界魚の目玉", "パンプキンプリン", "スタミナ丼", $send(self, 'lambda', [], (TMP_14 = function(){var self = TMP_14.$$s || this;
-
-        Opal.ret(self.$cook(4, 5))}, TMP_14.$$s = self, TMP_14.$$arity = 0, TMP_14)), $send(self, 'lambda', [], (TMP_15 = function(){var self = TMP_15.$$s || this;
-
-        Opal.ret(self.$cook(4, 6))}, TMP_15.$$s = self, TMP_15.$$arity = 0, TMP_15))]}
-        else if ((4)['$===']($case)) {table = ["ジャンボ串焼き", "シルヴァまっしぐら", "フラウアイスクリーム", "ピクニックランチ", $send(self, 'lambda', [], (TMP_16 = function(){var self = TMP_16.$$s || this;
-
-        Opal.ret(self.$cook(5, 5))}, TMP_16.$$s = self, TMP_16.$$arity = 0, TMP_16)), $send(self, 'lambda', [], (TMP_17 = function(){var self = TMP_17.$$s || this;
-
-        Opal.ret(self.$cook(5, 6))}, TMP_17.$$s = self, TMP_17.$$arity = 0, TMP_17))]}
-        else if ((5)['$===']($case)) {table = ["グラント風香草焼き", "エドマエスシ", "スターフルーツパフェ", "具沢山本格カレー", $send(self, 'lambda', [], (TMP_18 = function(){var self = TMP_18.$$s || this;
-
-        Opal.ret(self.$cook(6, 5))}, TMP_18.$$s = self, TMP_18.$$arity = 0, TMP_18)), $send(self, 'lambda', [], (TMP_19 = function(){var self = TMP_19.$$s || this;
-
-        Opal.ret(self.$cook(6, 6))}, TMP_19.$$s = self, TMP_19.$$arity = 0, TMP_19))]}
-        else if ((6)['$===']($case)) {table = ["ドラゴンステーキ", "刺身盛り合わせ", "エデンのアップルパイ", "フォートレス炒飯", $send(self, 'lambda', [], (TMP_20 = function(){var self = TMP_20.$$s || this;
-
-        Opal.ret(self.$cook(7, 5))}, TMP_20.$$s = self, TMP_20.$$arity = 0, TMP_20)), $send(self, 'lambda', [], (TMP_21 = function(){var self = TMP_21.$$s || this;
-
-        Opal.ret(self.$cook(7, 6))}, TMP_21.$$s = self, TMP_21.$$arity = 0, TMP_21))]}
-        else if ((7)['$===']($case)) {table = ["マツザカスペシャル", "オオトロスシ", "スノーホワイトボンブ", "よもつへぐい", $send(self, 'lambda', [], (TMP_22 = function(){var self = TMP_22.$$s || this;
-
-        Opal.ret(self.$cook(8, 5))}, TMP_22.$$s = self, TMP_22.$$arity = 0, TMP_22)), $send(self, 'lambda', [], (TMP_23 = function(){var self = TMP_23.$$s || this;
-
-        Opal.ret(self.$cook(8, 6))}, TMP_23.$$s = self, TMP_23.$$arity = 0, TMP_23))]}
-        else if ((8)['$===']($case)) {table = ["超特大マンガ肉", "特上うな丼", "魔将樹のかき氷", "ヘブンズランチ", $send(self, 'lambda', [], (TMP_24 = function(){var self = TMP_24.$$s || this;
-
-        Opal.ret(self.$cook(9, 5))}, TMP_24.$$s = self, TMP_24.$$arity = 0, TMP_24)), $send(self, 'lambda', [], (TMP_25 = function(){var self = TMP_25.$$s || this;
-
-        Opal.ret(self.$cook(9, 6))}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25))]}
-        else if ((9)['$===']($case)) {table = ["世界樹のサラダ", "世界樹のサラダ", "世界樹のサラダ", "黄金のラダマン鍋", "黄金のラダマン鍋", "黄金のラダマン鍋"]};
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
-        if (result.$class().$name()['$==']("Array")) {
-          
-          number = result['$[]'](1);
-          result = result['$[]'](0);};
-        number = "" + (num) + (number);
-        return [result, number];
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_cook_26.$$arity = 2);
-      return self.$cook(lv, "");
-    }, TMP_FilledWith_getCookResult_27.$$arity = 1);
+      return self.$cook(lv, "")
+    }, TMP_FilledWith_getCookResult_10.$$arity = 1);
     
-    Opal.defn(self, '$getLotResult', TMP_FilledWith_getLotResult_46 = function $$getLotResult(type) {
-      var TMP_normal_36, TMP_premium_45, self = this;
+    Opal.defn(self, '$cook', TMP_FilledWith_cook_27 = function $$cook(lv, num) {try {
+
+      var TMP_11, TMP_12, TMP_13, TMP_14, TMP_15, TMP_16, TMP_17, TMP_18, TMP_19, TMP_20, TMP_21, TMP_22, TMP_23, TMP_24, TMP_25, TMP_26, $a, $b, self = this, $case = nil, table = nil, result = nil, number = nil;
 
       
-      
-      Opal.def(self, '$normal', TMP_normal_36 = function $$normal(phase, num) {try {
+      $case = lv;
+      if ((1)['$===']($case)) {table = ["おべんとミートボール", "パリパリ小魚", "キャロットタルト", "おにぎり", $send(self, 'lambda', [], (TMP_11 = function(){var self = TMP_11.$$s || this;
 
-        var TMP_28, TMP_29, TMP_30, TMP_31, TMP_32, TMP_33, TMP_34, TMP_35, $a, $b, self = this, $case = nil, table = nil, result = nil, number = nil;
+      Opal.ret(self.$cook(2, 5))}, TMP_11.$$s = self, TMP_11.$$arity = 0, TMP_11)), $send(self, 'lambda', [], (TMP_12 = function(){var self = TMP_12.$$s || this;
 
+      Opal.ret(self.$cook(2, 6))}, TMP_12.$$s = self, TMP_12.$$arity = 0, TMP_12))]}
+      else if ((2)['$===']($case)) {table = ["カリカリミミズ肉", "竹つきチクワ", "トロピカルジュース", "イナリ寿司", $send(self, 'lambda', [], (TMP_13 = function(){var self = TMP_13.$$s || this;
+
+      Opal.ret(self.$cook(3, 5))}, TMP_13.$$s = self, TMP_13.$$arity = 0, TMP_13)), $send(self, 'lambda', [], (TMP_14 = function(){var self = TMP_14.$$s || this;
+
+      Opal.ret(self.$cook(3, 6))}, TMP_14.$$s = self, TMP_14.$$arity = 0, TMP_14))]}
+      else if ((3)['$===']($case)) {table = ["ホットミートパイ", "魔界魚の目玉", "パンプキンプリン", "スタミナ丼", $send(self, 'lambda', [], (TMP_15 = function(){var self = TMP_15.$$s || this;
+
+      Opal.ret(self.$cook(4, 5))}, TMP_15.$$s = self, TMP_15.$$arity = 0, TMP_15)), $send(self, 'lambda', [], (TMP_16 = function(){var self = TMP_16.$$s || this;
+
+      Opal.ret(self.$cook(4, 6))}, TMP_16.$$s = self, TMP_16.$$arity = 0, TMP_16))]}
+      else if ((4)['$===']($case)) {table = ["ジャンボ串焼き", "シルヴァまっしぐら", "フラウアイスクリーム", "ピクニックランチ", $send(self, 'lambda', [], (TMP_17 = function(){var self = TMP_17.$$s || this;
+
+      Opal.ret(self.$cook(5, 5))}, TMP_17.$$s = self, TMP_17.$$arity = 0, TMP_17)), $send(self, 'lambda', [], (TMP_18 = function(){var self = TMP_18.$$s || this;
+
+      Opal.ret(self.$cook(5, 6))}, TMP_18.$$s = self, TMP_18.$$arity = 0, TMP_18))]}
+      else if ((5)['$===']($case)) {table = ["グラント風香草焼き", "エドマエスシ", "スターフルーツパフェ", "具沢山本格カレー", $send(self, 'lambda', [], (TMP_19 = function(){var self = TMP_19.$$s || this;
+
+      Opal.ret(self.$cook(6, 5))}, TMP_19.$$s = self, TMP_19.$$arity = 0, TMP_19)), $send(self, 'lambda', [], (TMP_20 = function(){var self = TMP_20.$$s || this;
+
+      Opal.ret(self.$cook(6, 6))}, TMP_20.$$s = self, TMP_20.$$arity = 0, TMP_20))]}
+      else if ((6)['$===']($case)) {table = ["ドラゴンステーキ", "刺身盛り合わせ", "エデンのアップルパイ", "フォートレス炒飯", $send(self, 'lambda', [], (TMP_21 = function(){var self = TMP_21.$$s || this;
+
+      Opal.ret(self.$cook(7, 5))}, TMP_21.$$s = self, TMP_21.$$arity = 0, TMP_21)), $send(self, 'lambda', [], (TMP_22 = function(){var self = TMP_22.$$s || this;
+
+      Opal.ret(self.$cook(7, 6))}, TMP_22.$$s = self, TMP_22.$$arity = 0, TMP_22))]}
+      else if ((7)['$===']($case)) {table = ["マツザカスペシャル", "オオトロスシ", "スノーホワイトボンブ", "よもつへぐい", $send(self, 'lambda', [], (TMP_23 = function(){var self = TMP_23.$$s || this;
+
+      Opal.ret(self.$cook(8, 5))}, TMP_23.$$s = self, TMP_23.$$arity = 0, TMP_23)), $send(self, 'lambda', [], (TMP_24 = function(){var self = TMP_24.$$s || this;
+
+      Opal.ret(self.$cook(8, 6))}, TMP_24.$$s = self, TMP_24.$$arity = 0, TMP_24))]}
+      else if ((8)['$===']($case)) {table = ["超特大マンガ肉", "特上うな丼", "魔将樹のかき氷", "ヘブンズランチ", $send(self, 'lambda', [], (TMP_25 = function(){var self = TMP_25.$$s || this;
+
+      Opal.ret(self.$cook(9, 5))}, TMP_25.$$s = self, TMP_25.$$arity = 0, TMP_25)), $send(self, 'lambda', [], (TMP_26 = function(){var self = TMP_26.$$s || this;
+
+      Opal.ret(self.$cook(9, 6))}, TMP_26.$$s = self, TMP_26.$$arity = 0, TMP_26))]}
+      else if ((9)['$===']($case)) {table = ["世界樹のサラダ", "世界樹のサラダ", "世界樹のサラダ", "黄金のラダマン鍋", "黄金のラダマン鍋", "黄金のラダマン鍋"]};
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      if (result.$class().$name()['$==']("Array")) {
         
-        $case = phase;
-        if ((1)['$===']($case)) {table = ["イレブンチキン", "イレブンチキン", "イレブンチキン", $send(self, 'lambda', [], (TMP_28 = function(){var self = TMP_28.$$s || this;
+        number = result['$[]'](1);
+        result = result['$[]'](0);};
+      number = "" + (num) + (number);
+      return [result, number];
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_FilledWith_cook_27.$$arity = 2);
+    
+    Opal.defn(self, '$getLotResult', TMP_FilledWith_getLotResult_28 = function $$getLotResult(type) {
+      var self = this;
 
-        Opal.ret(self.$normal(2, 4))}, TMP_28.$$s = self, TMP_28.$$arity = 0, TMP_28)), $send(self, 'lambda', [], (TMP_29 = function(){var self = TMP_29.$$s || this;
-
-        Opal.ret(self.$normal(2, 5))}, TMP_29.$$s = self, TMP_29.$$arity = 0, TMP_29)), $send(self, 'lambda', [], (TMP_30 = function(){var self = TMP_30.$$s || this;
-
-        Opal.ret(self.$normal(3, 6))}, TMP_30.$$s = self, TMP_30.$$arity = 0, TMP_30))]}
-        else if ((2)['$===']($case)) {table = ["バロールたわし", "イグニスジッポ", "ヤコ仮面or梟の文鎮(選択可)", "ナレッジのハンモックorジンジャビースト", $send(self, 'lambda', [], (TMP_31 = function(){var self = TMP_31.$$s || this;
-
-        Opal.ret(self.$normal(3, 5))}, TMP_31.$$s = self, TMP_31.$$arity = 0, TMP_31)), $send(self, 'lambda', [], (TMP_32 = function(){var self = TMP_32.$$s || this;
-
-        Opal.ret(self.$normal(3, 6))}, TMP_32.$$s = self, TMP_32.$$arity = 0, TMP_32))]}
-        else if ((3)['$===']($case)) {table = ["特性HPポーション", "特性MPポーション", "黒い甲冑", "天体望遠鏡", "金獅子の剥製", $send(self, 'lambda', [], (TMP_33 = function(){var self = TMP_33.$$s || this;
-
-        Opal.ret(self.$normal(4, 6))}, TMP_33.$$s = self, TMP_33.$$arity = 0, TMP_33))]}
-        else if ((4)['$===']($case)) {table = ["特性スタミナポーション", "戦乙女の兜", "フェンリルの首輪", "フェニックスカーペット", "動くアダマンゴーレム", $send(self, 'lambda', [], (TMP_34 = function(){var self = TMP_34.$$s || this;
-
-        Opal.ret(self.$normal(5, 6))}, TMP_34.$$s = self, TMP_34.$$arity = 0, TMP_34))]}
-        else if ((5)['$===']($case)) {table = ["キャンディークッション", "屑鉄の金床", "薪割り王の斧", "ロジエの水差し", "箱舟の模型", $send(self, 'lambda', [], (TMP_35 = function(){var self = TMP_35.$$s || this;
-
-        Opal.ret(self.$premium(5, 6))}, TMP_35.$$s = self, TMP_35.$$arity = 0, TMP_35))]};
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
-        if (result.$class().$name()['$==']("Array")) {
-          
-          number = result['$[]'](1);
-          result = result['$[]'](0);};
-        number = "" + (num) + (number);
-        return [result, number];
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_normal_36.$$arity = 2);
-      
-      Opal.def(self, '$premium', TMP_premium_45 = function $$premium(phase, num) {try {
-
-        var TMP_37, TMP_38, TMP_39, TMP_40, TMP_41, TMP_42, TMP_43, TMP_44, $a, $b, self = this, $case = nil, table = nil, result = nil, number = nil;
-
-        
-        $case = phase;
-        if ((1)['$===']($case)) {table = ["プレミアムチキン", "プレミアムチキン", "プレミアムチキン", $send(self, 'lambda', [], (TMP_37 = function(){var self = TMP_37.$$s || this;
-
-        Opal.ret(self.$normal(3, 4))}, TMP_37.$$s = self, TMP_37.$$arity = 0, TMP_37)), $send(self, 'lambda', [], (TMP_38 = function(){var self = TMP_38.$$s || this;
-
-        Opal.ret(self.$premium(2, 5))}, TMP_38.$$s = self, TMP_38.$$arity = 0, TMP_38)), $send(self, 'lambda', [], (TMP_39 = function(){var self = TMP_39.$$s || this;
-
-        Opal.ret(self.$premium(2, 6))}, TMP_39.$$s = self, TMP_39.$$arity = 0, TMP_39))]}
-        else if ((2)['$===']($case)) {table = ["親衛隊バッジ", "ハタモトチャブダイ", "星のコンパス", "白銀の甲冑", $send(self, 'lambda', [], (TMP_40 = function(){var self = TMP_40.$$s || this;
-
-        Opal.ret(self.$normal(4, 5))}, TMP_40.$$s = self, TMP_40.$$arity = 0, TMP_40)), $send(self, 'lambda', [], (TMP_41 = function(){var self = TMP_41.$$s || this;
-
-        Opal.ret(self.$premium(3, 6))}, TMP_41.$$s = self, TMP_41.$$arity = 0, TMP_41))]}
-        else if ((3)['$===']($case)) {table = ["特性クイックHPポーション", "特性クイックMPポーション", "特製クイックスタミナポーション", "火龍のフィギュアor氷龍のフィギュア(選択可)", "ヒメショーグンドレス", $send(self, 'lambda', [], (TMP_42 = function(){var self = TMP_42.$$s || this;
-
-        Opal.ret(self.$premium(4, 6))}, TMP_42.$$s = self, TMP_42.$$arity = 0, TMP_42))]}
-        else if ((4)['$===']($case)) {table = ["クイックユグドラポーション", "銀河龍のフィギュア/ドラゴン", "銀河龍のフィギュア/魔族", "魔族チェスセット", "イグニスコンロ", $send(self, 'lambda', [], (TMP_43 = function(){var self = TMP_43.$$s || this;
-
-        Opal.ret(self.$premium(5, 6))}, TMP_43.$$s = self, TMP_43.$$arity = 0, TMP_43))]}
-        else if ((5)['$===']($case)) {table = ["グレヴディバリウス", "天使の望遠鏡orデスの目覚まし時計(選択可)", "世界樹の蔦", "死神の飾りドレス", "ザバーニヤ等身大フィギュア", $send(self, 'lambda', [], (TMP_44 = function(){var self = TMP_44.$$s || this;
-
-        Opal.ret(self.$premium(6, 6))}, TMP_44.$$s = self, TMP_44.$$arity = 0, TMP_44))]}
-        else if ((6)['$===']($case)) {table = ["イレブンチキン", "イレブンチキン(2ピース)", "イレブンチキン(3ピース)", "イレブンチキン(6ピース)", "イレブンチキン(12ピース)", "wish star"]};
-        $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
-        if (result.$class().$name()['$==']("Array")) {
-          
-          number = result['$[]'](1);
-          result = result['$[]'](0);};
-        number = "" + (num) + (number);
-        return [result, number];
-        } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-      }, TMP_premium_45.$$arity = 2);
       if (type['$==']("P")) {
         return self.$premium(1, "")
         } else {
         return self.$normal(1, "")
-      };
-      return "";
-    }, TMP_FilledWith_getLotResult_46.$$arity = 1);
+      }
+    }, TMP_FilledWith_getLotResult_28.$$arity = 1);
+    
+    Opal.defn(self, '$normal', TMP_FilledWith_normal_37 = function $$normal(phase, num) {try {
+
+      var TMP_29, TMP_30, TMP_31, TMP_32, TMP_33, TMP_34, TMP_35, TMP_36, $a, $b, self = this, $case = nil, table = nil, result = nil, number = nil;
+
+      
+      $case = phase;
+      if ((1)['$===']($case)) {table = ["イレブンチキン", "イレブンチキン", "イレブンチキン", $send(self, 'lambda', [], (TMP_29 = function(){var self = TMP_29.$$s || this;
+
+      Opal.ret(self.$normal(2, 4))}, TMP_29.$$s = self, TMP_29.$$arity = 0, TMP_29)), $send(self, 'lambda', [], (TMP_30 = function(){var self = TMP_30.$$s || this;
+
+      Opal.ret(self.$normal(2, 5))}, TMP_30.$$s = self, TMP_30.$$arity = 0, TMP_30)), $send(self, 'lambda', [], (TMP_31 = function(){var self = TMP_31.$$s || this;
+
+      Opal.ret(self.$normal(3, 6))}, TMP_31.$$s = self, TMP_31.$$arity = 0, TMP_31))]}
+      else if ((2)['$===']($case)) {table = ["バロールたわし", "イグニスジッポ", "ヤコ仮面or梟の文鎮(選択可)", "ナレッジのハンモックorジンジャビースト", $send(self, 'lambda', [], (TMP_32 = function(){var self = TMP_32.$$s || this;
+
+      Opal.ret(self.$normal(3, 5))}, TMP_32.$$s = self, TMP_32.$$arity = 0, TMP_32)), $send(self, 'lambda', [], (TMP_33 = function(){var self = TMP_33.$$s || this;
+
+      Opal.ret(self.$normal(3, 6))}, TMP_33.$$s = self, TMP_33.$$arity = 0, TMP_33))]}
+      else if ((3)['$===']($case)) {table = ["特性HPポーション", "特性MPポーション", "黒い甲冑", "天体望遠鏡", "金獅子の剥製", $send(self, 'lambda', [], (TMP_34 = function(){var self = TMP_34.$$s || this;
+
+      Opal.ret(self.$normal(4, 6))}, TMP_34.$$s = self, TMP_34.$$arity = 0, TMP_34))]}
+      else if ((4)['$===']($case)) {table = ["特性スタミナポーション", "戦乙女の兜", "フェンリルの首輪", "フェニックスカーペット", "動くアダマンゴーレム", $send(self, 'lambda', [], (TMP_35 = function(){var self = TMP_35.$$s || this;
+
+      Opal.ret(self.$normal(5, 6))}, TMP_35.$$s = self, TMP_35.$$arity = 0, TMP_35))]}
+      else if ((5)['$===']($case)) {table = ["キャンディークッション", "屑鉄の金床", "薪割り王の斧", "ロジエの水差し", "箱舟の模型", $send(self, 'lambda', [], (TMP_36 = function(){var self = TMP_36.$$s || this;
+
+      Opal.ret(self.$premium(5, 6))}, TMP_36.$$s = self, TMP_36.$$arity = 0, TMP_36))]};
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      if (result.$class().$name()['$==']("Array")) {
+        
+        number = result['$[]'](1);
+        result = result['$[]'](0);};
+      number = "" + (num) + (number);
+      return [result, number];
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_FilledWith_normal_37.$$arity = 2);
+    
+    Opal.defn(self, '$premium', TMP_FilledWith_premium_46 = function $$premium(phase, num) {try {
+
+      var TMP_38, TMP_39, TMP_40, TMP_41, TMP_42, TMP_43, TMP_44, TMP_45, $a, $b, self = this, $case = nil, table = nil, result = nil, number = nil;
+
+      
+      $case = phase;
+      if ((1)['$===']($case)) {table = ["プレミアムチキン", "プレミアムチキン", "プレミアムチキン", $send(self, 'lambda', [], (TMP_38 = function(){var self = TMP_38.$$s || this;
+
+      Opal.ret(self.$normal(3, 4))}, TMP_38.$$s = self, TMP_38.$$arity = 0, TMP_38)), $send(self, 'lambda', [], (TMP_39 = function(){var self = TMP_39.$$s || this;
+
+      Opal.ret(self.$premium(2, 5))}, TMP_39.$$s = self, TMP_39.$$arity = 0, TMP_39)), $send(self, 'lambda', [], (TMP_40 = function(){var self = TMP_40.$$s || this;
+
+      Opal.ret(self.$premium(2, 6))}, TMP_40.$$s = self, TMP_40.$$arity = 0, TMP_40))]}
+      else if ((2)['$===']($case)) {table = ["親衛隊バッジ", "ハタモトチャブダイ", "星のコンパス", "白銀の甲冑", $send(self, 'lambda', [], (TMP_41 = function(){var self = TMP_41.$$s || this;
+
+      Opal.ret(self.$normal(4, 5))}, TMP_41.$$s = self, TMP_41.$$arity = 0, TMP_41)), $send(self, 'lambda', [], (TMP_42 = function(){var self = TMP_42.$$s || this;
+
+      Opal.ret(self.$premium(3, 6))}, TMP_42.$$s = self, TMP_42.$$arity = 0, TMP_42))]}
+      else if ((3)['$===']($case)) {table = ["特性クイックHPポーション", "特性クイックMPポーション", "特製クイックスタミナポーション", "火龍のフィギュアor氷龍のフィギュア(選択可)", "ヒメショーグンドレス", $send(self, 'lambda', [], (TMP_43 = function(){var self = TMP_43.$$s || this;
+
+      Opal.ret(self.$premium(4, 6))}, TMP_43.$$s = self, TMP_43.$$arity = 0, TMP_43))]}
+      else if ((4)['$===']($case)) {table = ["クイックユグドラポーション", "銀河龍のフィギュア/ドラゴン", "銀河龍のフィギュア/魔族", "魔族チェスセット", "イグニスコンロ", $send(self, 'lambda', [], (TMP_44 = function(){var self = TMP_44.$$s || this;
+
+      Opal.ret(self.$premium(5, 6))}, TMP_44.$$s = self, TMP_44.$$arity = 0, TMP_44))]}
+      else if ((5)['$===']($case)) {table = ["グレヴディバリウス", "天使の望遠鏡orデスの目覚まし時計(選択可)", "世界樹の蔦", "死神の飾りドレス", "ザバーニヤ等身大フィギュア", $send(self, 'lambda', [], (TMP_45 = function(){var self = TMP_45.$$s || this;
+
+      Opal.ret(self.$premium(6, 6))}, TMP_45.$$s = self, TMP_45.$$arity = 0, TMP_45))]}
+      else if ((6)['$===']($case)) {table = ["イレブンチキン", "イレブンチキン(2ピース)", "イレブンチキン(3ピース)", "イレブンチキン(6ピース)", "イレブンチキン(12ピース)", "wish star"]};
+      $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (result = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
+      if (result.$class().$name()['$==']("Array")) {
+        
+        number = result['$[]'](1);
+        result = result['$[]'](0);};
+      number = "" + (num) + (number);
+      return [result, number];
+      } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
+    }, TMP_FilledWith_premium_46.$$arity = 2);
     
     Opal.defn(self, '$getTresureResult', TMP_FilledWith_getTresureResult_47 = function $$getTresureResult(command) {
       var $a, $b, self = this, rank = nil, modify = nil, tableName = nil, $case = nil, table = nil, result = nil, number = nil;

@@ -31,8 +31,8 @@ INFO_MESSAGE_TEXT
     return string
   end
 
-  def check_nD6(total_n, _dice_n, _signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD6)
-    return '' unless $signOfInequality == ">="
+  def check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD6)
+    return '' unless signOfInequality == ">="
 
     if diff != "?"
       if total_n >= diff

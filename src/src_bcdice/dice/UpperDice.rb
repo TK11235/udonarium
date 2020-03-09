@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+require 'utils/ArithmeticEvaluator'
+
 class UpperDice
   def initialize(bcdice, diceBot)
     @bcdice = bcdice
@@ -25,9 +27,8 @@ class UpperDice
     upperTarget1 = m[4]
     upperTarget2 = m[10]
 
-    modify = m[5]
-    debug('modify', modify)
-    modify ||= ''
+    modifier = m[5] || ''
+    debug('modifier', modifier)
 
     debug('p $...', [m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10]])
 
@@ -37,43 +38,25 @@ class UpperDice
     @upper = getAddRollUpperTarget(upperTarget1, upperTarget2)
 
     if @upper <= 1
-      output = "#{@nick_e}: (#{string}\[#{@upper}\]#{modify}) ＞ 無限ロールの条件がまちがっています"
+      output = "#{@nick_e}: (#{string}\[#{@upper}\]#{modifier}) ＞ 無限ロールの条件がまちがっています"
       return output
     end
 
-    dice_a = (string + modify).split("+")
-    debug('dice_a', dice_a)
+    diceCommands = string.split('+')
 
-    diceCommands = []
-    bonusValues = []
+    bonusValue = getBonusValue(modifier)
+    debug('bonusValue', bonusValue)
 
-    dice_a.each do |dice_o|
-      if /[Uu]/ =~ dice_o
-        diceCommands.push(dice_o)
-      else
-        bonusValues.push(dice_o)
-      end
-    end
-
-    bonus = getBonusValue(bonusValues)
-    debug('bonus', bonus)
-
-    diceDiff = diff - bonus
+    diceDiff = diff - bonusValue
 
     totalDiceString, totalSuccessCount, totalDiceCount, maxDiceValue, totalValue = getUpperDiceCommandResult(diceCommands, diceDiff)
 
-    output = totalDiceString
+    output = "#{totalDiceString}#{formatBonus(bonusValue)}"
 
-    if bonus > 0
-      output += "+#{bonus}"
-    elsif bonus < 0
-      output += bonus.to_s
-    end
+    maxValue = maxDiceValue + bonusValue
+    totalValue += bonusValue
 
-    maxValue = maxDiceValue + bonus
-    totalValue += bonus
-
-    string += "[#{@upper}]" + modify
+    string += "[#{@upper}]" + modifier
 
     if @diceBot.isPrintMaxDice && (totalDiceCount > 1)
       output = "#{output} ＞ #{totalValue}"
@@ -118,13 +101,15 @@ class UpperDice
     end
   end
 
-  def getBonusValue(bonusValues)
-    return 0 if bonusValues.empty?
-
-    diceBonusText = bonusValues.join("+")
-    bonus = @bcdice.parren_killer("(" + diceBonusText + ")").to_i
-
-    return bonus
+  # 入力の修正値の部分からボーナスの数値に変換する
+  # @param [String] modifier 入力の修正値部分
+  # @return [Integer] ボーナスの数値
+  def getBonusValue(modifier)
+    if modifier.empty?
+      0
+    else
+      ArithmeticEvaluator.new.eval(modifier, @diceBot.fractionType.to_sym)
+    end
   end
 
   def getUpperDiceCommandResult(diceCommands, diceDiff)
@@ -155,5 +140,18 @@ class UpperDice
     totalDiceString = diceStringList.join(",")
 
     return totalDiceString, totalSuccessCount, totalDiceCount, maxDiceValue, totalValue
+  end
+
+  # 出力用にボーナス値を整形する
+  # @param [Integer] bonusValue ボーナス値
+  # @return [String]
+  def formatBonus(bonusValue)
+    if bonusValue == 0
+      ''
+    elsif bonusValue > 0
+      "+#{bonusValue}"
+    else
+      bonusValue.to_s
+    end
   end
 end

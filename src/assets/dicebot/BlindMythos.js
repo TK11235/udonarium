@@ -114,7 +114,7 @@
     }, TMP_BlindMythos_judgeRoll_6.$$arity = 1);
     
     Opal.defn(self, '$reRoll', TMP_BlindMythos_reRoll_9 = function $$reRoll(command, isStop) {
-      var $a, TMP_7, TMP_8, $b, self = this, rerollCountsText = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, rerollCounts = nil, commandText = nil, message = nil, isReRoll = nil, text = nil, bitList = nil, successList = nil, countOneList = nil, canReRoll = nil;
+      var $a, TMP_7, TMP_8, $b, self = this, rerollCountsText = nil, judgeNumberText = nil, judgeNumber = nil, targetNumber = nil, rerollCounts = nil, commandText = nil, message = nil, isReRoll = nil, text = nil, _bitList = nil, successList = nil, countOneList = nil;
 
       
       self.$debug("ReRoll Begin", command);
@@ -146,7 +146,7 @@ if (diceCount == null) diceCount = nil;
           message = $rb_plus(message, "" + "(" + (commandText) + ")")}};
       message = $rb_plus(message, "\n");
       isReRoll = true;
-      $b = self.$getRollResult(rerollCounts, judgeNumberText, judgeNumber, targetNumber, isReRoll, isStop), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (bitList = ($a[1] == null ? nil : $a[1])), (successList = ($a[2] == null ? nil : $a[2])), (countOneList = ($a[3] == null ? nil : $a[3])), (canReRoll = ($a[4] == null ? nil : $a[4])), $b;
+      $b = self.$getRollResult(rerollCounts, judgeNumberText, judgeNumber, targetNumber, isReRoll, isStop), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (_bitList = ($a[1] == null ? nil : $a[1])), (successList = ($a[2] == null ? nil : $a[2])), (countOneList = ($a[3] == null ? nil : $a[3])), $b;
       message = $rb_plus(message, text);
       return [message, successList, countOneList, targetNumber];
     }, TMP_BlindMythos_reRoll_9.$$arity = 2);

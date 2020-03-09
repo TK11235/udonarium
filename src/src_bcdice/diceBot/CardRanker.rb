@@ -61,8 +61,6 @@ INFO_MESSAGE_TEXT
     else
       return getTableCommandResult(command, @@tables)
     end
-
-    return nil
   end
 
   def getRandumMonster

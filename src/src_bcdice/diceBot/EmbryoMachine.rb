@@ -61,7 +61,7 @@ INFO_MESSAGE_TEXT
     end
   end
 
-  def checkRoll(string, _nick_e)
+  def checkRoll(string, nick_e)
     output = '1'
 
     return output unless /(^|\s)S?(2[rR]10([\+\-\d]+)?([>=]+(\d+))(\[(\d+),(\d+)\]))(\s|$)/i =~ string
@@ -91,9 +91,9 @@ INFO_MESSAGE_TEXT
       output += mod.to_s
     end
     if output =~ /[^\d\[\]]+/
-      output = "#{@nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
+      output = "#{nick_e}: (#{string}) ＞ #{output} ＞ #{total_n}"
     else
-      output = "#{@nick_e}: (#{string}) ＞ #{output}"
+      output = "#{nick_e}: (#{string}) ＞ #{output}"
     end
     # 成功度判定
     if dice_now <= fumble

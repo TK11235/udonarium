@@ -129,9 +129,6 @@
       else if (/EDC/i['$===']($case)) {
       type = "エンディングチャート：シネマティック";
       $b = self.$tgs_ending_cinema_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
-      else if (/OPR/i['$===']($case)) {
-      type = "オープニングチャート：リアリスティック";
-      $b = self.$tgs_opening_real_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/RWL/i['$===']($case)) {
       type = "情報収集チャート：荒野";
       $b = self.$tgs_reserch_wasteland_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}

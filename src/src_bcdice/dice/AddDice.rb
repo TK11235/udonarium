@@ -310,7 +310,7 @@ class AddDice
     n1Count = d66List.count(1)
     nMaxCount = d66List.count(66)
 
-    result = [total, text, n1Count, nMaxCount, 0, 0, 0]
+    return [total, text, n1Count, nMaxCount, 0, 0, 0]
   end
 
   def getOperatorText(rate, output)

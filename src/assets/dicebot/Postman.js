@@ -14,14 +14,14 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$<', '$to_s', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$>=', '$get_table_by_number']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$<', '$scan', '$each', '$+', '$!=', '$checkRoll', '$get_weather_table', '$get_free_situation_table', '$roll', '$collect', '$split', '$[]', '$count', '$==', '$>', '$to_s', '$>=', '$get_table_by_number']);
   return (function($base, $super, $parent_nesting) {
     function $Postman(){};
     var self = $Postman = $klass($base, $super, 'Postman', $Postman);
 
     var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Postman_initialize_1, TMP_Postman_gameName_2, TMP_Postman_gameType_3, TMP_Postman_getHelpMessage_4, TMP_Postman_rollDiceCommand_7, TMP_Postman_checkRoll_10, TMP_Postman_get_weather_table_11, TMP_Postman_get_free_situation_table_12;
 
-    def.sortTye = nil;
+    def.sortType = nil;
     
     self.$setPrefixes(["WEA\\d*", "(\\d+)?PO.*", "FRE"]);
     
@@ -66,10 +66,10 @@
       if ($truthy($rb_lt(diceCount, 2))) {
         diceCount = 2};
       modify = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(2)) ? $a : 0).$to_i();
-      modifyAddString = Opal.const_get_relative($nesting, 'Regexp').$last_match(3).$to_s();
+      modifyAddString = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(3)) ? $a : "");
       type = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(6)) ? $a : "");
       target = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i();
-      targetAddString = Opal.const_get_relative($nesting, 'Regexp').$last_match(8).$to_s();
+      targetAddString = ($truthy($a = Opal.const_get_relative($nesting, 'Regexp').$last_match(8)) ? $a : "");
       modify_list = modifyAddString.$scan(/[+-]\d+/);
       $send(modify_list, 'each', [], (TMP_5 = function(i){var self = TMP_5.$$s || this;
 if (i == null) i = nil;
@@ -93,7 +93,7 @@ if (j == null) j = nil;
       var $a, $b, TMP_8, TMP_9, self = this, dice = nil, diceText = nil, diceArray = nil, dice2 = nil, diceText2 = nil, criticalCount = nil, modifyText = nil, result = nil, resultText = nil, operatorText = nil, text = nil;
 
       
-      $b = self.$roll(diceCount, 6, self.sortTye), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$roll(diceCount, 6, self.sortType), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       diceArray = $send(diceText.$split(/,/), 'collect', [], (TMP_8 = function(i){var self = TMP_8.$$s || this;
 if (i == null) i = nil;
       return i.$to_i()}, TMP_8.$$s = self, TMP_8.$$arity = 1, TMP_8));

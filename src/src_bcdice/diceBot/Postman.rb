@@ -55,13 +55,11 @@ MESSAGETEXT
         diceCount = 2 if diceCount < 2
 
         modify = (Regexp.last_match(2) || 0).to_i
-        # modifyAddString = Regexp.last_match(3)
-        modifyAddString = Regexp.last_match(3).to_s # TKfix
+        modifyAddString = (Regexp.last_match(3) || '')
 
         type = (Regexp.last_match(6) || '')
         target = (Regexp.last_match(7) || 0).to_i
-        # targetAddString = Regexp.last_match(8)
-        targetAddString = Regexp.last_match(8).to_s # TKfix
+        targetAddString = (Regexp.last_match(8) || '')
 
         modify_list = modifyAddString.scan(/[+-]\d+/)
         modify_list.each { |i| modify += i.to_i }
@@ -86,7 +84,7 @@ MESSAGETEXT
   end
 
   def checkRoll(diceCount, modify, type, target)
-    dice, diceText = roll(diceCount, 6, @sortTye)
+    dice, diceText = roll(diceCount, 6, @sortType)
 
     diceArray = diceText.split(/,/).collect { |i| i.to_i }
     dice2 = diceArray[-2] + diceArray[-1]

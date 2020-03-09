@@ -108,7 +108,7 @@ MESSAGETEXT
     end
     message += "\n"
     isReRoll = true
-    text, bitList, successList, countOneList, canReRoll =
+    text, _bitList, successList, countOneList, =
       getRollResult(rerollCounts, judgeNumberText, judgeNumber, targetNumber, isReRoll, isStop)
 
     message += text

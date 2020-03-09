@@ -73,7 +73,7 @@
       return nil;
     }, TMP_Avandner_rollDiceCommand_5.$$arity = 1);
     return (Opal.defn(self, '$checkRoll', TMP_Avandner_checkRoll_9 = function $$checkRoll(diceCount, target, damage, criticalTrigger, criticalNumber) {
-      var $a, $b, $c, TMP_6, TMP_7, TMP_8, self = this, totalSuccessCount = nil, totalCriticalCount = nil, text = nil, rollCount = nil, dice = nil, diceText = nil, diceArray = nil, successCount = nil, criticalCount = nil, result = nil, isDamage = nil, totalDamage = nil;
+      var $a, $b, $c, TMP_6, TMP_7, TMP_8, self = this, totalSuccessCount = nil, totalCriticalCount = nil, text = nil, rollCount = nil, _dice = nil, diceText = nil, diceArray = nil, successCount = nil, criticalCount = nil, result = nil, isDamage = nil, totalDamage = nil;
 
       
       totalSuccessCount = 0;
@@ -82,7 +82,7 @@
       rollCount = diceCount;
       while ($truthy($rb_gt(rollCount, 0))) {
         
-        $c = self.$roll(rollCount, 10, self.sortType), $b = Opal.to_ary($c), (dice = ($b[0] == null ? nil : $b[0])), (diceText = ($b[1] == null ? nil : $b[1])), $c;
+        $c = self.$roll(rollCount, 10, self.sortType), $b = Opal.to_ary($c), (_dice = ($b[0] == null ? nil : $b[0])), (diceText = ($b[1] == null ? nil : $b[1])), $c;
         diceArray = $send(diceText.$split(/,/), 'collect', [], (TMP_6 = function(i){var self = TMP_6.$$s || this;
 if (i == null) i = nil;
         return i.$to_i()}, TMP_6.$$s = self, TMP_6.$$arity = 1, TMP_6));

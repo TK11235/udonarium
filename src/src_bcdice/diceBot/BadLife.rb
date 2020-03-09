@@ -67,7 +67,7 @@ MESSAGETEXT
   end
 
   def judgeDice(command)
-    unless (m = /(\d+)?(BAD|BL|GL)([\+\-\d+]*)((C|F)([\+\-\d+]*)?)?((C|F)([\+\-\d+]*))?(\@([\+\-\d+]*))?(\!(\D*))?/i.match(command))
+    unless (m = /(\d+)?(BAD|BL|GL)([-+\d]*)((C|F)([-+\d]*)?)?((C|F)([-+\d]*))?(\@([-+\d]*))?(\!(\D*))?/i.match(command))
       return nil
     end
 
@@ -108,7 +108,7 @@ MESSAGETEXT
     isAnticipation = optionalText.include?('A')    # 先見の明
     isHeavyAttack = optionalText.include?('H')     # 重撃
 
-    dice, diceText = roll(diceCount, 20)
+    _dice, diceText = roll(diceCount, 20)
     diceMax = 0
     diceArray = diceText.split(/,/).collect { |i| i.to_i }
     diceArray.each do |i| # さくら鯖で.maxを使うと、何故か.minになる……

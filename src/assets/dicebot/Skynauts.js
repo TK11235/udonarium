@@ -159,7 +159,7 @@
       var self = this, m = nil, fireCount = nil, fireRange = nil, ballistics = nil, fireCountMax = nil, firePoint = nil, fireText = nil, text = nil;
 
       
-      if ($truthy((m = /^D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/.$match(command)))) {
+      if ($truthy((m = /^D([12346789]*)(\[.+\])*\/(\d+)(@([2468]))?$/.$match(command)))) {
         } else {
         return nil
       };
@@ -267,7 +267,7 @@ if (x == null) x = nil;if (y == null) y = nil;
       var self = this, m = nil, target = nil, direction = nil, text = nil, fireCommand = nil;
 
       
-      if ($truthy((m = /^BOM(\d*)?\/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?$/i.$match(command)))) {
+      if ($truthy((m = /^BOM(\d*)?\/D([12346789]*)(\[.+\])*\/(\d+)(@([2468]))?$/i.$match(command)))) {
         } else {
         return nil
       };
@@ -281,7 +281,7 @@ if (x == null) x = nil;if (y == null) y = nil;
         } else {
         return text
       };
-      fireCommand = command.$slice(/D([1-4, 6-9]*)(\[.+\])*\/(\d+)(@([2,4,6,8]))?/);
+      fireCommand = command.$slice(/D([12346789]*)(\[.+\])*\/(\d+)(@([2468]))?/);
       text = $rb_plus(text, "" + "\n ＞ " + (self.$getFireResult(fireCommand)));
       return text;
     }, TMP_Skynauts_getBomberResult_18.$$arity = 1);
@@ -290,14 +290,14 @@ if (x == null) x = nil;if (y == null) y = nil;
       var self = this, m = nil, direction = nil, judgeCommand = nil, text = nil, pointCommand = nil, firePoint = nil, fireCount = nil;
 
       
-      if ($truthy((m = /^AVO(\d*)?(@([2,4,6,8]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.$match(command)))) {
+      if ($truthy((m = /^AVO(\d*)?(@([2468]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.$match(command)))) {
         } else {
         return nil
       };
       self.$debug("====getAvoidResult====", command);
       direction = m['$[]'](3).$to_i();
       self.$debug("回避方向", direction);
-      judgeCommand = command.$slice(/^AVO(\d*)?(@([2,4,6,8]))/);
+      judgeCommand = command.$slice(/^AVO(\d*)?(@([2468]))/);
       text = "" + (judgeCommand) + " ＞ 《回避運動》";
       text = $rb_plus(text, self.$getJudgeResult($rb_plus("SN", Opal.const_get_relative($nesting, 'Regexp').$last_match(1).$to_s())));
       if ($truthy(/成功/['$==='](text))) {

@@ -303,9 +303,9 @@ if (rate == null) rate = nil;if (index == null) index = nil;
 
       
       damageInfos = [["L", "(LW)"], ["M", "(MW)"], ["H", "(HW)"], ["O", "(MO)"]];
-      index = $send(damageInfos, 'index', [], (TMP_14 = function(type){var self = TMP_14.$$s || this;
-if (type == null) type = nil;
-      return type.$first()['$=='](damageStage)}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14));
+      index = $send(damageInfos, 'index', [], (TMP_14 = function(i){var self = TMP_14.$$s || this;
+if (i == null) i = nil;
+      return i.$first()['$=='](damageStage)}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14));
       if (index['$=='](-1)) {
         return nil};
       damageIndex = $rb_plus(index, 1);
@@ -472,11 +472,11 @@ if (type == null) type = nil;
       return dice;
     }, TMP_MetalHeadExtream_get_roc_dice_26.$$arity = 2);
     return (Opal.defn(self, '$get_value', TMP_MetalHeadExtream_get_value_28 = function $$get_value(originalValue, calculateText) {
-      var TMP_27, self = this, result = nil, calculateArray = nil;
+      var $a, TMP_27, self = this, result = nil, calculateArray = nil;
 
       
       result = originalValue.$to_f();
-      calculateArray = calculateText.$to_s().$scan(/[\*\/]\d*/);
+      calculateArray = ($truthy($a = calculateText) ? $a : "").$scan(/[\*\/]\d*/);
       $send(calculateArray, 'each', [], (TMP_27 = function(i){var self = TMP_27.$$s || this;
 if (i == null) i = nil;
       

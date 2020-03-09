@@ -70,7 +70,6 @@ class CountHolder
     @modifyText = nil
 
     debug("$point_counter", $point_counter)
-    output = '1'
 
     debug("@command", @command)
 
@@ -97,6 +96,7 @@ class CountHolder
     when /^#(\w+?)\s*([\+\-]\d+)/
       debug(" #(タグ)(変更量)")
       # #HP-1
+      # #DEX-1
       @tagName = Regexp.last_match(1)
       @modifyText = Regexp.last_match(2)
     when /^#(\w+?)\s*(\d+)/
@@ -104,11 +104,6 @@ class CountHolder
       # #DEX12　　　#浸食率0
       @tagName = Regexp.last_match(1)
       @currentValue = Regexp.last_match(2).to_i
-    when /^#(\w+?)\s*([\+\-]\d+)/
-      debug(" #(タグ)(変更量) ")
-      # #DEX-1
-      @tagName = Regexp.last_match(1)
-      @modifyText = Regexp.last_match(2)
     else
       debug("not match command", @command)
       return ''
@@ -420,6 +415,7 @@ class CountHolder
     end
   end
 
+  # unused?
   def sort_point_hash(base_hash)
     keys = base_hash.keys
 

@@ -585,8 +585,7 @@ MESSAGETEXT
                    ['H', '(HW)'],
                    ['O', '(MO)']]
 
-    #index = damageInfos.index { |type, _text| type == damageStage }
-    index = damageInfos.index { |type| type.first == damageStage } # TKfix
+    index = damageInfos.index { |i| i.first == damageStage }
     return nil if index == -1
 
     damageIndex = index + 1
@@ -907,8 +906,7 @@ MESSAGETEXT
   # 端数が使いたいので、parren_killer未使用
   def get_value(originalValue, calculateText)
     result = originalValue.to_f
-    # calculateArray = calculateText.scan(%r{[\*/]\d*}) # 修正値を分割して配列へ
-    calculateArray = calculateText.to_s.scan(%r{[\*/]\d*}) # TKfix undefined method `scan' for nil
+    calculateArray = (calculateText || '').scan(%r{[\*/]\d*}) # 修正値を分割して配列へ
     calculateArray.each do |i| # 配列内ループで補正率を計算
       i =~ %r{([\*/])(\d*)}i
       result *= Regexp.last_match(2).to_i if Regexp.last_match(1) == '*'

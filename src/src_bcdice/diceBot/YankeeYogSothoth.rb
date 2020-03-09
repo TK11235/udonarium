@@ -30,7 +30,7 @@ TKT	戦う理由表
 ※武勇伝フェイズ
 BUDT	武勇伝表
 GUDT	ガイヤンキー武勇伝表
-FTNT	二つ名表
+FTNT	二つ名決定表
 DAIT	第一印象表
 TKKT	ツレ関係表
 
@@ -66,6 +66,8 @@ INFO_MESSAGE_TEXT
     case string
     when 'RTT' # ランダム特技決定表
       return getRandomSkillTableResult(command)
+    when 'FTNT' # 二つ名決定表
+      return get_nickname_table(command)
     end
 
     return getTableDiceCommandResult(command)
@@ -91,6 +93,122 @@ INFO_MESSAGE_TEXT
     output = "#{name}指定特技表(#{total_n},#{total_n2}) ＞ 『#{tableName}』#{skill}"
 
     return output
+  end
+
+  # 二つ名決定表
+  def get_nickname_table(_command)
+    result1, = roll(1, 6)
+
+    case result1
+    when 1, 2
+      nicknameTableName = "二つ名表1"
+    when 3, 4
+      nicknameTableName = "二つ名表2"
+    when 5
+      nicknameTableName = "二つ名表3"
+    when 6
+      nicknameTableName = "二つ名表4"
+    end
+
+    nicknameTableFull = {
+      '二つ名表1' => %w{
+        11:愛死天流（あいしてる）
+        12:喧嘩上等（けんかじょうとう）
+        13:正々堂々（せいせいどうどう）
+        14:天下無敵（てんかむてき）
+        15:一騎当千（いっきとうせん）
+        16:威風堂々（いふうどうどう）
+        22:焼肉定食（やきにくていしょく）
+        23:完全無欠（かんぜんむけつ）
+        24:獅子奮迅（ししふんじん）
+        25:臥薪嘗胆（がしんしょうたん）
+        26:疾風迅雷（しっぷうじんらい）
+        33:夜露死苦（よろしく）
+        34:天上天下（てんじょうてんげ）
+        35:唯我独尊（ゆいがどくそん）
+        36:電光石火（でんこうせっか）
+        44:仏恥義理（ぶっちぎり）
+        45:百戦百勝（ひゃくせんひゃくしょう）
+        46:百戦錬磨（ひゃくせんれんま）
+        55:残酷非道（ざんこくひどう）
+        56:一意専心（いちいせんしん）
+        66:時給千円（じきゅうせんえん）
+      },
+      '二つ名表2' => %w{
+        11:みんなの
+        12:スルー推奨
+        13:暴れん坊
+        14:仲間思い
+        15:サボり魔
+        16:熱血番長の
+        22:今日がダメでも明日がある
+        23:すぐカッとなる
+        24:夢を応援する
+        25:地元じゃ有名な
+        26:喧嘩慣れている
+        33:いつかビックになる
+        34:いいやつの
+        35:意外とまじめな
+        36:イイ感じの
+        44:家族想いの
+        45:とにかくモテる
+        46:学校を代表するワル
+        55:邪神ハンター
+        56:男前／イイ女
+        66:悪そうなやつはだいたい友達
+      },
+      '二つ名表3' => %w{
+        11:ファッションヤンキー
+        12:誰もが知っている
+        13:チャラい
+        14:ツヨメ
+        15:中学時代はすごかった
+        16:イカれたやつ
+        22:道徳の授業で泣いた
+        23:マジか
+        24:イケイケ
+        25:鬼語り
+        26:とりま
+        33:ちょっと眠たい
+        34:パネエ
+        35:エモい
+        36:やべーぞ！
+        44:お腹が減っている
+        45:むっつりスケベの
+        46:いじわるな
+        55:全国区に報道された
+        56:毎日が楽しい
+        66:おやじ狩り狩り
+      },
+      '二つ名表4' => %w{
+        11:国産
+        12:ブレブレ
+        13:ロボ
+        14:大銀河
+        15:超獣
+        16:ミステリー
+        22:超電磁
+        23:危険な
+        24:湯上がり
+        25:すごい
+        26:エロ
+        33:福岡
+        34:エリート
+        35:どんまい
+        36:がり勉
+        44:東京
+        45:スペース
+        46:永遠の
+        55:大阪
+        56:輝け！
+        66:名古屋
+      },
+    }
+
+    nicknameTable = getD66Table(nicknameTableFull[nicknameTableName])
+    nickName, result2 = get_table_by_d66_swap(nicknameTable)
+
+    return "二つ名決定表(#{result1},#{result2}) ＞ 「#{nickName}」"
   end
 
   def getTableDiceCommandResult(command)
@@ -391,5 +509,5 @@ INFO_MESSAGE_TEXT
       },
     }
 
-  setPrefixes(['RTT'] + @@tables.keys)
+  setPrefixes(['RTT', 'FTNT'] + @@tables.keys)
 end

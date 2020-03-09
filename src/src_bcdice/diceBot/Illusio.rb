@@ -50,7 +50,7 @@ MESSAGETEXT
   end
 
   def checkRoll(diceCount, blockNo, isParry)
-    dice, diceText = roll(diceCount, 6, @sortTye)
+    _dice, diceText = roll(diceCount, 6, @sortType)
     diceArray = diceText.split(/,/).collect { |i| i.to_i }
 
     resultArray = []
