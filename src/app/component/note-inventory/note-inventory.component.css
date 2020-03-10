@@ -299,6 +299,11 @@ input[type='range']::-ms-tooltip {
   padding: 0 0.25em;
 }
 
+.object-text {
+  font-size: 0.8em;
+  padding: 0 0.25em;
+  white-space: pre;
+}
 .object-tags-box {
   display: table;
   table-layout: fixed;

@@ -1,25 +1,16 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Input, NgZone, ViewChild, ElementRef } from '@angular/core';
 
-import { GameObject } from '@udonarium/core/synchronize-object/game-object';
-
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { DataElement } from '@udonarium/data-element';
 import { SortOrder } from '@udonarium/data-summary-setting';
 import { GameCharacter } from '@udonarium/game-character';
-import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TabletopObject } from '@udonarium/tabletop-object';
-
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
-import { ChatPaletteComponent } from 'component/chat-palette/chat-palette.component';
-import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
-import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'service/context-menu.service';
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
-import { PanelOption, PanelService } from 'service/panel.service';
-import { PointerDeviceService } from 'service/pointer-device.service';
+import { PanelService } from 'service/panel.service';
 import { DiceBot } from '@udonarium/dice-bot';
-
 import { TextNote } from '@udonarium/text-note';
 
 @Component({
@@ -72,10 +63,7 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
-    private inventoryService: GameObjectInventoryService,
-    private contextMenuService: ContextMenuService,
-    private pointerDeviceService: PointerDeviceService
-
+    private inventoryService: GameObjectInventoryService
   ) { }
 
   ngOnInit() {
@@ -117,7 +105,7 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   getTabTitle(inventoryType: string) {
-   // console.log('this.textNote', this.textNote)
+    // console.log('this.textNote', this.textNote)
     switch (inventoryType) {
       case 'table':
         return '桌面';
@@ -130,12 +118,12 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
   getNotes() {
-   // console.log('getNotes')
+    // console.log('getNotes')
     return this.textNotes;
   }
   getInventory(inventoryType: string) {
-   // console.log('this.inventoryService', this.inventoryService)
-   // console.log('this.textNotes', this.textNotes)
+    // console.log('this.inventoryService', this.inventoryService)
+    // console.log('this.textNotes', this.textNotes)
 
     switch (inventoryType) {
       case 'table':
@@ -177,28 +165,28 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     gameObject.setLocation('table');
   }
   showgameObject(GObject) {
-   // console.log('GObject', GObject)
+    // console.log('GObject', GObject)
     return GObject.title || "NOT WORK?"
   }
   isittable(note) {
     if (note.location.name == 'table')
       return true;
   }
- 
+
 
   toggleEdit() {
     this.isEdit = !this.isEdit;
   }
 
 
- 
 
-  
 
- 
+
+
+
 
   trackByGameObject(index: number, gameObject: TextNote) {
-  //  console.log('trackByGameObject', gameObject)
+    //  console.log('trackByGameObject', gameObject)
     return gameObject ? gameObject.identifier : index;
   }
 
