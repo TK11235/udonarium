@@ -1,6 +1,5 @@
 <div class="component">
   <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
-  <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
 
   <!--
  <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
@@ -38,15 +37,13 @@
     <div class="object-name">
       <li>{{showgameObject(gameObject)}}
         <span *ngIf="!isittable(gameObject)">
-          <button style="font-size: 0.8em; padding: 2px 5px;" (click)="settotable( gameObject)">移動到桌面
-            <i class="material-icons" style="font-size: 1em;">settings</i>
+          <button style="font-size: 0.8em; padding: 2px 5px;" (click)="settotable( gameObject)">移動到桌面<i
+              class="material-icons" style="font-size: 1em;">settings</i>
           </button>
         </span>
       </li>
     </div>
-    <span class="object-text">
-      {{gameObject.text}}
-    </span>
+    <span class="object-text">{{gameObject.text}}</span>
   </div>
   <hr class="style-one" />
 </ng-template>
