@@ -45,6 +45,8 @@ import { ImageTag } from '@udonarium/image-tag';
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
 
+  
+
   @ViewChild('modalLayer', { read: ViewContainerRef, static: true }) modalLayerViewContainerRef: ViewContainerRef;
   private immediateUpdateTimer: NodeJS.Timer = null;
   private lazyUpdateTimer: NodeJS.Timer = null;
