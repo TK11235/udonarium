@@ -85,7 +85,14 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       tag: "",
       name: "教學Zzzzzz",
       text: "更新日誌：2020/03/10 \n 新增文字倉庫，因為Coding能力問題，文字倉庫需要關閉重開才會更新內容。\n Ctrl+S 可以儲存房間。\n增加高度設定，用來裝飾房間"
-    },
+    }, {
+      from: "System",
+      timestamp: 0,
+      imageIdentifier: "",
+      tag: "",
+      name: "教學Zzzzzz",
+      text: "更新日誌：2020/03/12 \n 增加角色卡能力可以顯示在聊天視窗，如果使用指令，可以作為擲骰功能。"
+    }
   ];
 
   private oldestTimestamp = 0;
