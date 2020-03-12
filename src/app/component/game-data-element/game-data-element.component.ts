@@ -7,14 +7,19 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { EventSystem } from '@udonarium/core/system';
+import { EventSystem, Network } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
-
+import { ChatMessageService } from 'service/chat-message.service';
+import { PeerCursor } from '@udonarium/peer-cursor';
+import { ChatTab } from '@udonarium/chat-tab';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { GameCharacter } from '@udonarium/game-character';
 @Component({
   selector: 'game-data-element, [game-data-element]',
   templateUrl: './game-data-element.component.html',
   styleUrls: ['./game-data-element.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() gameDataElement: DataElement = null;
@@ -22,23 +27,42 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   @Input() isTagLocked: boolean = false;
   @Input() isValueLocked: boolean = false;
 
+  private _sendTo: string;
+  get sendTo(): string { return this._sendTo };
   private _name: string = '';
   get name(): string { return this._name; }
+  @Input() character: GameCharacter = null;
   set name(name: string) { this._name = name; this.setUpdateTimer(); }
-
+  get myPeer(): PeerCursor { return PeerCursor.myCursor; }
   private _value: number | string = 0;
   get value(): number | string { return this._value; }
   set value(value: number | string) { this._value = value; this.setUpdateTimer(); }
+  get chatTabs(): ChatTab[] {
+    return ObjectStore.instance.getObjects(ChatTab);
+  }
+  get infoTab(): ChatTab {
+    return this.chatTabs.find(chatTab => chatTab.receiveInfo);
+  }
 
   private _currentValue: number | string = 0;
   get currentValue(): number | string { return this._currentValue; }
   set currentValue(currentValue: number | string) { this._currentValue = currentValue; this.setUpdateTimer(); }
-
+  private _chatTabidentifier: string = '';
+  get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
+  get chatTabidentifier(): string { return this._chatTabidentifier; }
   private updateTimer: NodeJS.Timer = null;
-
+  private _color: string = "#000000";
+  get color(): string { return this._color };
+  set color(color: string) {
+    this._color = color;
+    console.log('this.character', this.character)
+    if (this.character.chatPalette) this.character.chatPalette.color = color;
+  };
   constructor(
+    public chatMessageService: ChatMessageService,
     private changeDetector: ChangeDetectorRef
   ) { }
+
 
   ngOnInit() {
     if (this.gameDataElement) this.setValues(this.gameDataElement);
@@ -63,6 +87,9 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngAfterViewInit() {
 
+  }
+  sendLogMessage(text, value) {
+    this.chatMessageService.sendMessage(this.infoTab, value + " " + text, this.chatMessageService.gameType, this.myPeer.name, this.sendTo, this._color);
   }
 
   addElement() {

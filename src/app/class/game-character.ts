@@ -3,7 +3,6 @@ import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
 import { PeerCursor } from './peer-cursor';
-import { Network } from './core/system';
 @SyncObject('character')
 export class GameCharacter extends TabletopObject {
   @SyncVar() rotate: number = 0;
@@ -25,8 +24,8 @@ export class GameCharacter extends TabletopObject {
   }
   get isMine(): boolean { return PeerCursor.myCursor.name === this.GM; }
   get isDisabled(): boolean {
-    console.log('hasGM', this.hasGM)
-    console.log('isMine', this.isMine)
+    //console.log('hasGM', this.hasGM)
+   // console.log('isMine', this.isMine)
     return this.hasGM && !this.isMine;
   }
 
@@ -79,8 +78,8 @@ export class GameCharacter extends TabletopObject {
     //TEST
     testElement = DataElement.create('能力', '', {}, '能力' + this.identifier);
     this.detailDataElement.appendChild(testElement);
-    testElement.appendChild(DataElement.create('器用度', 24, {}, '器用度' + this.identifier));
-    testElement.appendChild(DataElement.create('敏捷度', 24, {}, '敏捷度' + this.identifier));
+    testElement.appendChild(DataElement.create('器用', '1d100<50', {}, '器用度' + this.identifier));
+    testElement.appendChild(DataElement.create('敏捷', '1d100<80', {}, '敏捷度' + this.identifier));
     testElement.appendChild(DataElement.create('筋力', 24, {}, '筋力' + this.identifier));
     testElement.appendChild(DataElement.create('生命力', 24, {}, '生命力' + this.identifier));
     testElement.appendChild(DataElement.create('知力', 24, {}, '知力' + this.identifier));
