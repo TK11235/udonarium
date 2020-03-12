@@ -88,7 +88,8 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   ngAfterViewInit() {
 
   }
-  sendLogMessage(text, value) {
+  sendLogMessage(text, value, currentValue) {
+    if (currentValue) value = currentValue + "/" + value
     this.chatMessageService.sendMessage(this.infoTab, value + " " + text, this.chatMessageService.gameType, this.myPeer.name, this.sendTo, this._color);
   }
 

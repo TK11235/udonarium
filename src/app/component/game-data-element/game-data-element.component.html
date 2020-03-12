@@ -14,7 +14,7 @@
       </ng-container>
       <ng-container *ngIf="!isTagLocked">
         <div class="hidden-spacer" style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{name}}</div><button
-          (click)="sendLogMessage(name,value)"><i class="material-icons icon-size">send</i></button>
+          (click)="sendLogMessage(name,value, currentValue)"><i class="material-icons icon-size">send</i></button>
         <!--能力名稱-->
         <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 0.9rem;" size="1"
           [(ngModel)]="name" placeholder="Value" />&nbsp;&nbsp;&nbsp;
