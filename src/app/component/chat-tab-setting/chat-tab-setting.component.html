@@ -16,6 +16,7 @@
       <div>
         <ng-container *ngIf="!isDeleted">
           <button (click)="save()">保存</button>
+          <button (click)="moveLast()">最後尾へ</button>
           <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">削除</button>
         </ng-container>
         <ng-container *ngIf="isDeleted">
