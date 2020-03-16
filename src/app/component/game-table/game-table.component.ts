@@ -5,7 +5,7 @@ import { CardStack } from '@udonarium/card-stack';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
-import { EventSystem } from '@udonarium/core/system';
+import { EventSystem, Network } from '@udonarium/core/system';
 import { DiceSymbol } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
 import { FilterType, GameTable, GridType } from '@udonarium/game-table';
@@ -14,7 +14,7 @@ import { PeerCursor } from '@udonarium/peer-cursor';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
-
+import { SaveDataService } from 'service/save-data.service';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
 import { InputHandler } from 'directive/input-handler';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
@@ -98,6 +98,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private ngZone: NgZone,
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef,
+    private saveDataService: SaveDataService,
     private pointerDeviceService: PointerDeviceService,
     private tabletopService: TabletopService,
     private modalService: ModalService,
@@ -355,7 +356,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity + '';
   }
-
+  @HostListener('document:keydown.control.s', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
+      ? Network.peerContext.roomName
+      : 'UdoZ房間的數據';
+    this.saveDataService.saveRoom(roomName);
+    event.preventDefault();
+  }
   @HostListener('wheel', ['$event'])
   onWheel(e: WheelEvent) {
     let transformX = 0;
@@ -431,7 +438,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     Array.prototype.push.apply(menuActions, this.tabletopService.getContextMenuActionsForCreateObject(objectPosition));
     menuActions.push(ContextMenuSeparator);
     menuActions.push({
-      name: 'テーブル設定', action: () => {
+      name: '桌面設定', action: () => {
         this.modalService.open(GameTableSettingComponent);
       }
     });

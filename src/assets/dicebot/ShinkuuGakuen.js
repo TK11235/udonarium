@@ -39,7 +39,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_ShinkuuGakuen_getHelpMessage_3 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定\n" + "RLx：技能ベースｘで技能チェックのダイスロール\n" + "RLx>=y：この書式なら目標値 ｙ で判定結果出力\n" + "　例）RL10　　RL22>=50\n" + "\n" + "・武器攻撃\n" + "（武器記号）（技能ベース値）\n" + "　例）SW10　BX30\n" + "武器を技能ベースでダイスロール。技発動までチェック。\n" + "武器記号は以下の通り\n" + "　SW：剣、LS：大剣、SS：小剣、SP：槍、\n" + "　AX：斧、CL：棍棒、BW：弓、MA：体術、\n" + "　BX：ボクシング、PR：プロレス、ST：幽波紋\n" + "\n" + "・カウンター攻撃\n" + "カウンター技は武器記号の頭に「C」をつけるとロール可能。\n" + "　例）CSW10　CBX76\n"
+      return "" + "・判定\n" + "RLx：技能ベースｘで技能チェックの骰子ロール\n" + "RLx>=y：この書式なら目標値 ｙ で判定結果出力\n" + "　例）RL10　　RL22>=50\n" + "\n" + "・武器攻撃\n" + "（武器記号）（技能ベース値）\n" + "　例）SW10　BX30\n" + "武器を技能ベースで骰子ロール。技発動までチェック。\n" + "武器記号は以下の通り\n" + "　SW：剣、LS：大剣、SS：小剣、SP：槍、\n" + "　AX：斧、CL：棍棒、BW：弓、MA：体術、\n" + "　BX：ボクシング、PR：プロレス、ST：幽波紋\n" + "\n" + "・カウンター攻撃\n" + "カウンター技は武器記号の頭に「C」をつけるとロール可能。\n" + "　例）CSW10　CBX76\n"
     }, TMP_ShinkuuGakuen_getHelpMessage_3.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_ShinkuuGakuen_rollDiceCommand_5 = function $$rollDiceCommand(command) {

@@ -4,6 +4,7 @@ import { FileReaderUtil } from './file-reader-util';
 export enum VolumeType {
   MASTER,
   AUDITION,
+  SOUND_EFFECT
 }
 
 declare global {
@@ -36,10 +37,17 @@ export class AudioPlayer {
     AudioPlayer.auditionGainNode.gain.setTargetAtTime(AudioPlayer._auditionVolume, AudioPlayer.audioContext.currentTime, 0.01);
   }
 
+  private static _sfxVolume: number = 0.5;
+  static get sfxVolume(): number { return AudioPlayer._sfxVolume }
+  static set sfxVolume(sfxVolume: number) {
+    AudioPlayer._sfxVolume = sfxVolume;
+    AudioPlayer.sfxGainNode.gain.setTargetAtTime(AudioPlayer._sfxVolume, AudioPlayer.audioContext.currentTime, 0.01);
+  }
+
   private static _masterGainNode: GainNode
   private static get masterGainNode(): GainNode {
     if (!AudioPlayer._masterGainNode) {
-      let masterGain = AudioPlayer.audioContext.createGain();
+      const masterGain = AudioPlayer.audioContext.createGain();
       masterGain.gain.setValueAtTime(AudioPlayer._volume, AudioPlayer.audioContext.currentTime);
       masterGain.connect(AudioPlayer.audioContext.destination);
       AudioPlayer._masterGainNode = masterGain;
@@ -50,7 +58,7 @@ export class AudioPlayer {
   private static _auditionGainNode: GainNode
   private static get auditionGainNode(): GainNode {
     if (!AudioPlayer._auditionGainNode) {
-      let auditionGain = AudioPlayer.audioContext.createGain();
+      const auditionGain = AudioPlayer.audioContext.createGain();
       auditionGain.gain.setValueAtTime(AudioPlayer._auditionVolume, AudioPlayer.audioContext.currentTime);
       auditionGain.connect(AudioPlayer.audioContext.destination);
       AudioPlayer._auditionGainNode = auditionGain;
@@ -58,8 +66,20 @@ export class AudioPlayer {
     return AudioPlayer._auditionGainNode;
   }
 
+  private static _sfxGainNode: GainNode
+  private static get sfxGainNode(): GainNode {
+    if(!AudioPlayer._sfxGainNode){
+      const sfxGain = AudioPlayer.audioContext.createGain();
+      sfxGain.gain.setValueAtTime(AudioPlayer._sfxVolume, AudioPlayer.audioContext.currentTime);
+      sfxGain.connect(AudioPlayer.audioContext.destination);
+      AudioPlayer._sfxGainNode = sfxGain;
+    }
+    return AudioPlayer._sfxGainNode;
+  }
+
   static get rootNode(): AudioNode { return AudioPlayer.masterGainNode; }
   static get auditionNode(): AudioNode { return AudioPlayer.auditionGainNode; }
+  static get sfxNode(): AudioNode{ return AudioPlayer.sfxGainNode;}
 
   private _audioElm: HTMLAudioElement;
   private get audioElm(): HTMLAudioElement {
@@ -135,6 +155,8 @@ export class AudioPlayer {
     switch (this.volumeType) {
       case VolumeType.AUDITION:
         return AudioPlayer.auditionNode;
+      case VolumeType.SOUND_EFFECT:
+        return AudioPlayer.sfxNode;
       default:
         return AudioPlayer.rootNode;
     }

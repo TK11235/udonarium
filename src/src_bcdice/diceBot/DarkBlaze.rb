@@ -26,7 +26,7 @@ class DarkBlaze < DiceBot
 　例）DB33　　　DB32#-1　　　DB@3@1#1　　　DB3,2　　　DB23#1>=4　　　3R6+1[3,3]>=4
 
 ・掘り出し袋表　(BTx)
-　"BT(ダイス数)"で掘り出し袋表を自動で振り、結果を表示します。
+　"BT(骰子数)"で掘り出し袋表を自動で振り、結果を表示します。
 　例）BT1　　　BT2　　　BT[1...3]
 INFO_MESSAGE_TEXT
   end

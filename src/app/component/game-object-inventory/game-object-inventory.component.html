@@ -1,13 +1,19 @@
 <div class="component">
   <ng-container *ngTemplateOutlet="inventoryTab"></ng-container>
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
-  <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}インベントリは空です</div>
-  <div (contextmenu)="onContextMenu($event, gameObject)" *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject"
-    (click)="selectGameObject(gameObject)" [ngClass]="{'box': true, 'selected': (selectedIdentifier === gameObject.identifier)}">
-    <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}"></ng-container>
+  <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
+  <div *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject"
+    (click)="selectGameObject(gameObject)" (dblclick)="showDetail(this.gameObject)">
+
+    <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
+
+      <li *ngIf="!isDisabled(gameObject)" (contextmenu)="onContextMenu($event, gameObject)" [ngClass]="{'box': true}">
+      </li>
+    </ng-container>
   </div>
   <div *ngIf="selectTab === 'graveyard'" style="padding-top: 6px;">
-    <button class="danger" (click)="cleanInventory()" [attr.disabled]="getGameObjects(selectTab).length < 1 ? '' : null">墓場を空にする</button>
+    <button class="danger" (click)="cleanInventory()"
+      [attr.disabled]="getGameObjects(selectTab).length < 1 ? '' : null">清空墓場</button>
   </div>
 </div>
 <ng-template #inventoryTab>
@@ -23,36 +29,47 @@
 <ng-template #inventoryViewSetting>
   <ng-container *ngIf="isEdit">
     <div>
-      <div style="font-size: 12px;">並び順</div>
-      <input [(ngModel)]="sortTag" placeholder="タグ名" />
+      <div style="font-size: 12px;">排列次序</div>
+      <input [(ngModel)]="sortTag" placeholder="標籤名稱" />
       <select [(ngModel)]="sortOrder">
-        <option value="ASC">昇順</option>
-        <option value="DESC">降順</option>
+        <option value="ASC">升序</option>
+        <option value="DESC">降序</option>
       </select>
     </div>
-    <div style="font-size: 12px; padding-top: 6px;">表示項目</div>
-    <input style="width: 100%; box-sizing: border-box;" [(ngModel)]="dataTag" placeholder="スペース区切りでタグ名 スラッシュで改行 ex.「HP MP / メモ」" />
+    <div style="font-size: 12px; padding-top: 6px;">顯示項目</div>
+    <input style="width: 100%; box-sizing: border-box;" [(ngModel)]="dataTag"
+      placeholder="用空格將各標籤分隔 斜線隔行 eg.「HP MP / 備註」" />
+    <div style="font-size: 12px; padding-top: 6px;">骰子Bot系統</div>
+    <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType"
+      [ngModelOptions]="{standalone: true}">
+      <option value="">未指定骰子系統</option>
+      <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
+    </select>
+
     <div style="padding-top: 6px;">
-      <button class="tab-setting small-font" (click)="toggleEdit()"><i class="material-icons small-font">settings</i>完了</button>
+      <button class="tab-setting small-font" (click)="toggleEdit()"><i
+          class="material-icons small-font">settings</i>完了</button>
     </div>
   </ng-container>
   <ng-container *ngIf="!isEdit">
     <table style="font-size: 0.8em;">
       <tr>
-        <th style=" vertical-align:middle;">並び順:</th>
+        <th style=" vertical-align:middle;">排列次序:</th>
         <td style=" vertical-align:middle;">
           <ng-container *ngIf="0 < sortTag.length">{{sortTag}} ({{sortOrderName}})</ng-container>
           <ng-container *ngIf="sortTag.length < 1">-</ng-container>
         </td>
-        <td><button class="tab-setting small-font" (click)="toggleEdit()"><i class="material-icons small-font">settings</i>設定</button></td>
+        <td><button class="tab-setting small-font" (click)="toggleEdit()"><i
+              class="material-icons small-font">settings</i>設定</button></td>
       </tr>
     </table>
   </ng-container>
 </ng-template>
 <ng-template #gameObjectTags let-gameObject="gameObject">
-  <div class="inventory-object">
+  <div class="inventory-object" *ngIf="!isDisabled(gameObject)" (contextmenu)="onContextMenu($event, gameObject)">
     <div class="object-name">{{gameObject.name}}
-      <button style="font-size: 0.8em; padding: 2px 5px;" *ngIf="selectedIdentifier === gameObject.identifier" (click)="onContextMenu($event, gameObject)">
+      <button style="font-size: 0.8em; padding: 2px 5px;" *ngIf="selectedIdentifier === gameObject.identifier"
+        (click)="onContextMenu($event, gameObject)">
         <i class="material-icons" style="font-size: 1em;">settings</i>
       </button>
     </div>
@@ -77,24 +94,29 @@
       <ng-container *ngSwitchCase="'numberResource'">
         <div class="resource-tag">
           <div style="font-size: 0.8em; display: inline-block; margin-right: 0.5em;">{{dataElm.name}}</div>
-          <input class="input resource-value" type="number" size="1" [(ngModel)]="dataElm.currentValue" placeholder="Value" />
+          <input class="input resource-value" type="number" size="1" [(ngModel)]="dataElm.currentValue"
+            placeholder="Value" />
         </div>
         <div class="resource-tag">
-          <input type="range" [style]="'font-size: 0.8em; min-width: 1em; width:' + (dataElm.name.length + 4.5) + 'em; --min: 0; --max: ' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
-            min="0" max="{{dataElm.value}}" [ngStyle]="{'background-color':'green'}" [(ngModel)]="dataElm.currentValue" />
+          <input type="range"
+            [style]="'font-size: 0.8em; min-width: 1em; width:' + (dataElm.name.length + 4.5) + 'em; --min: 0; --max: ' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
+            min="0" max="{{dataElm.value}}" [ngStyle]="{'background-color':'green'}"
+            [(ngModel)]="dataElm.currentValue" />
         </div>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <div class="tag-name">{{dataElm.name}}</div>
+        <div class="tag-name">{{dataElm.name}}</div> 
         <div style="text-align: center;">
           <div style="display: inline-block;">
             <div class="tag-value-box">
               <div class="hidden-spacer" style="font-weight: bold;">{{dataElm.value}}</div>
               <input class="input tag-value" size="1" [(ngModel)]="dataElm.value" placeholder="" />
-            </div>
-          </div>
+            </div>  
+          </div>  
         </div>
-      </ng-container>
-    </ng-container>
-  </div>
-</ng-template>
+        
+      </ng-container>  
+      <hr class="style-one"/>
+    </ng-container>  
+  </div> 
+</ng-template>  

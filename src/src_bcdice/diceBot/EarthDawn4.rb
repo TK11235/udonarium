@@ -22,12 +22,12 @@ class EarthDawn4 < EarthDawn
 
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
-ステップダイス　(xEnK)
-ステップx、目標値n(省略可能）でステップダイスをロール。
-カルマダイス使用時は末尾にKを追加（省略可能）
+ステップ骰子　(xEnK)
+ステップx、目標値n(省略可能）でステップ骰子をロール。
+カルマ骰子使用時は末尾にKを追加（省略可能）
 例）ステップ10：10E
 　　ステップ10、目標値8：10E8
-　　ステップ10、目標値8、カルマダイス：10E8K
+　　ステップ10、目標値8、カルマ骰子：10E8K
 INFO_MESSAGE_TEXT
   end
 
@@ -106,7 +106,7 @@ INFO_MESSAGE_TEXT
     targetNumber = Regexp.last_match(2).to_i # 目標値
     return nil if targetNumber < 0
 
-    hasKarmaDice = !Regexp.last_match(3).nil? # カルマダイスの有無
+    hasKarmaDice = !Regexp.last_match(3).nil? # カルマ骰子の有無
     diceModify = Regexp.last_match(4).to_i
     nextText = Regexp.last_match(6)
 
