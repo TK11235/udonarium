@@ -142,4 +142,10 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
       this.selectedTabXml = '';
     }
   }
+
+  moveLast() {
+    this.delete();
+    this.restore();
+    this.selectedTab = null;
+  }
 }
