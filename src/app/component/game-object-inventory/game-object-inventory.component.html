@@ -68,10 +68,19 @@
 <ng-template #gameObjectTags let-gameObject="gameObject">
   <div class="inventory-object" *ngIf="!isDisabled(gameObject)" (contextmenu)="onContextMenu($event, gameObject)">
     <div class="object-name">{{gameObject.name}}
-      <button style="font-size: 0.8em; padding: 2px 5px;" *ngIf="selectedIdentifier === gameObject.identifier"
-        (click)="onContextMenu($event, gameObject)">
+      <button style="font-size: 0.8em; padding: 2px 5px;" (click)="onContextMenu($event, gameObject)">
         <i class="material-icons" style="font-size: 1em;">settings</i>
       </button>
+      <button *ngIf="gameObject.location.name != 'table'" type="submit" (click)="movetotable(gameObject)">桌面</button>
+      <button *ngIf="gameObject.location.name != 'common'" type="submit" (click)="movetocommon(gameObject)">共有</button>
+      <button *ngIf="gameObject.location.name == 'common'||gameObject.location.name == 'table'||gameObject.location.name == 'graveyard'" type="submit"
+        (click)="movetoid(gameObject)">個人</button>
+      <button *ngIf="gameObject.location.name != 'graveyard'" type="submit"
+        (click)="movetograveyard(gameObject)">墓場</button>
+      <input type="text" class="PosZ" pInputText (change)="changePosZ($event.target.value,gameObject)"
+        placeholder="高度" />
+      <button type="submit" (click)="PosZplus100(gameObject)">+100</button>
+      <button type="submit" (click)="PosZ0(gameObject)">地面</button>
     </div>
     <div class="object-tags-box">
       <div class="table-cell image-box">
@@ -105,18 +114,18 @@
         </div>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <div class="tag-name">{{dataElm.name}}</div> 
+        <div class="tag-name">{{dataElm.name}}</div>
         <div style="text-align: center;">
           <div style="display: inline-block;">
             <div class="tag-value-box">
               <div class="hidden-spacer" style="font-weight: bold;">{{dataElm.value}}</div>
               <input class="input tag-value" size="1" [(ngModel)]="dataElm.value" placeholder="" />
-            </div>  
-          </div>  
+            </div>
+          </div>
         </div>
-        
-      </ng-container>  
-      <hr class="style-one"/>
-    </ng-container>  
-  </div> 
-</ng-template>  
+
+      </ng-container>
+      <hr class="style-one" />
+    </ng-container>
+  </div>
+</ng-template>

@@ -251,6 +251,14 @@ input[type='range']::-ms-tooltip {
   cursor: pointer;
 }
 
+button[type='submit']{
+  font-size: 5px;
+}
+.PosZ{
+  border-radius: 5px; 
+  font-size: 5px;
+  width:40px;
+}
 .tab-setting:hover {
   background-color: #888;
   color: #eee;

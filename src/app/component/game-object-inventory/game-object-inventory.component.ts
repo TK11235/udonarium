@@ -29,7 +29,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   inventoryTypes: string[] = ['table', 'common', 'graveyard'];
   //GM
   @Input() gameCharacter: GameCharacter = null;
-
+  @Input() tabletopObject: TabletopObject = null;
   selectTab: string = 'table';
   selectedIdentifier: string = '';
 
@@ -75,8 +75,8 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if ((ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) || (object instanceof PeerCursor && PeerCursor.myCursor.name === this.gameCharacter.GM)) {
-         this.selectedIdentifier = event.data.identifier;
-        //  console.log(event.data.identifier)
+          this.selectedIdentifier = event.data.identifier;
+          //  console.log(event.data.identifier)
           this.changeDetector.markForCheck();
         }
       })
@@ -232,6 +232,39 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   selectGameObject(gameObject: GameObject) {
     let aliasName: string = gameObject.aliasName;
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
+  }
+  movetotable(gameObject: GameCharacter) {
+    //console.log(gameObject)
+    gameObject.setLocation('table');
+    SoundEffect.play(PresetSound.lock);
+  }
+  movetocommon(gameObject: GameCharacter) {
+    gameObject.setLocation('common');
+    SoundEffect.play(PresetSound.lock);
+  }
+  movetoid(gameObject: GameCharacter) {
+    gameObject.setLocation(Network.peerId);
+    SoundEffect.play(PresetSound.lock);
+  }
+  movetograveyard(gameObject: GameCharacter) {
+    gameObject.setLocation('graveyard');
+    SoundEffect.play(PresetSound.lock);
+  }
+  changePosZ(Z: number, gameObject: GameCharacter) {
+    if (Z < 0)
+      Z = 0
+    if (Z > 500)
+      Z = 500
+    gameObject.posZ = Z;
+    SoundEffect.play(PresetSound.lock);
+  }
+  PosZplus100(gameObject: GameCharacter) {
+    gameObject.posZ += 100;
+    SoundEffect.play(PresetSound.lock);
+  }
+  PosZ0(gameObject: GameCharacter) {
+    gameObject.posZ = 0;
+    SoundEffect.play(PresetSound.lock);
   }
 
   private deleteGameObject(gameObject: GameObject) {

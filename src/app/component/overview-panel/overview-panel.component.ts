@@ -112,7 +112,14 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
     this.tabletopObject.posZ = Z;
     SoundEffect.play(PresetSound.lock);
   }
-
+  PosZplus100() {
+    this.tabletopObject.posZ += 100;
+    SoundEffect.play(PresetSound.lock);
+  }
+  PosZ0() {
+    this.tabletopObject.posZ = 0;
+    SoundEffect.play(PresetSound.lock);
+  }
   private initPanelPosition() {
     let panel: HTMLElement = this.draggablePanel.nativeElement;
     let outerWidth = panel.offsetWidth;
