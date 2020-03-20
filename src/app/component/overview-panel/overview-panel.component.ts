@@ -113,7 +113,7 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
     SoundEffect.play(PresetSound.lock);
   }
   PosZplus100() {
-    this.tabletopObject.posZ += 100;
+    this.tabletopObject.posZ = Number(this.tabletopObject.posZ) + Number(100);
     SoundEffect.play(PresetSound.lock);
   }
   PosZ0() {

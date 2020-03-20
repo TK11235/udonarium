@@ -3,7 +3,7 @@
   <ng-container *ngTemplateOutlet="inventoryViewSetting"></ng-container>
   <div *ngIf="getGameObjects(selectTab).length < 1">{{getTabTitle(selectTab)}}空空如也</div>
   <div *ngFor="let gameObject of getGameObjects(selectTab); trackBy: trackByGameObject"
-    (click)="selectGameObject(gameObject)" (dblclick)="showDetail(this.gameObject)">
+    (click)="selectGameObject(gameObject)">
 
     <ng-container *ngTemplateOutlet="gameObjectTags; context:{ gameObject: gameObject}">
 
@@ -82,7 +82,7 @@
       <button type="submit" (click)="PosZplus100(gameObject)">+100</button>
       <button type="submit" (click)="PosZ0(gameObject)">地面</button>
     </div>
-    <div class="object-tags-box">
+    <div class="object-tags-box" (dblclick)="showDetail(this.gameObject)">
       <div class="table-cell image-box">
         <img *ngIf="gameObject.imageFile.url" [src]="gameObject.imageFile.url | safe: 'resourceUrl'" />
       </div>

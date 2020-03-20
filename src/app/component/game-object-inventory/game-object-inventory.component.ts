@@ -259,7 +259,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
     SoundEffect.play(PresetSound.lock);
   }
   PosZplus100(gameObject: GameCharacter) {
-    gameObject.posZ += 100;
+    gameObject.posZ = Number(gameObject.posZ) + Number(100);
     SoundEffect.play(PresetSound.lock);
   }
   PosZ0(gameObject: GameCharacter) {
