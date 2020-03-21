@@ -92,6 +92,13 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       tag: "",
       name: "教學Zzzzzz",
       text: "更新日誌：2020/03/12 \n 增加角色卡能力可以顯示在聊天視窗，如果使用指令，可以作為擲骰功能。"
+    }, {
+      from: "System",
+      timestamp: 0,
+      imageIdentifier: "",
+      tag: "",
+      name: "教學Zzzzzz",
+      text: "更新日誌：2020/03/21 \n  筆記倉庫加回位置，人物倉庫直接顯示部份指令。"
     }
   ];
 

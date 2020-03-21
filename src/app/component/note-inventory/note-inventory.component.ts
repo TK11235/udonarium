@@ -170,6 +170,9 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   settotable(gameObject) {
     gameObject.setLocation('table');
   }
+  settocommon(gameObject) {
+    gameObject.setLocation('common');
+  }
   showgameObject(GObject) {
     // console.log('GObject', GObject)
     return GObject.title || "NOT WORK?"

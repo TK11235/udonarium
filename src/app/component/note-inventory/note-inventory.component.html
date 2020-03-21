@@ -36,8 +36,12 @@
   <div class="inventory-object">
     <div class="object-name">
       <li>{{showgameObject(gameObject)}}
-        <span *ngIf="gameObject.location.name ==='table'">(桌面)</span>
-        <span *ngIf="!isittable(gameObject)">
+        <span *ngIf="isittable(gameObject)">(桌面)
+          <button style="font-size: 0.8em; padding: 2px 5px;" (click)="settocommon( gameObject)">移動到共有倉庫<i
+              class="material-icons" style="font-size: 1em;">settings</i>
+          </button>
+        </span>
+        <span *ngIf="!isittable(gameObject)">(共有倉庫)
           <button style="font-size: 0.8em; padding: 2px 5px;" (click)="settotable( gameObject)">移動到桌面<i
               class="material-icons" style="font-size: 1em;">settings</i>
           </button>
