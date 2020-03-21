@@ -94,7 +94,7 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   addElement() {
-    this.gameDataElement.appendChild(DataElement.create('タグ', '', {}));
+    this.gameDataElement.appendChild(DataElement.create('1d100', '', {}));
   }
 
   deleteElement() {

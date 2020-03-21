@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Input, NgZone, ViewChild, ElementRef } from '@angular/core';
-
+import { TableSelecter } from '@udonarium/table-selecter';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -12,7 +12,8 @@ import { GameObjectInventoryService } from 'service/game-object-inventory.servic
 import { PanelService } from 'service/panel.service';
 import { DiceBot } from '@udonarium/dice-bot';
 import { TextNote } from '@udonarium/text-note';
-
+import { TabletopService } from 'service/tabletop.service';
+import { FilterType, GameTable, GridType } from '@udonarium/game-table';
 @Component({
   selector: 'note-inventory',
   templateUrl: './note-inventory.component.html',
@@ -53,8 +54,9 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   isDisabled(gameObject) {
     return gameObject.GM && !(PeerCursor.myCursor.name === gameObject.GM);
   }
+  get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
 
-
+  get currentTable(): GameTable { return this.tabletopService.currentTable; }
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '升序' : '降序'; }
 
   get newLineString(): string { return this.inventoryService.newLineString; }
@@ -63,6 +65,7 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
     private panelService: PanelService,
+    private tabletopService: TabletopService,
     private inventoryService: GameObjectInventoryService
   ) { }
 
@@ -78,22 +81,25 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
 
         }
       })
-      .on('UPDATE_FILE_RESOURE', -1000, event => {
-        this.changeDetector.markForCheck();
-      })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();
       })
-      .on('UPDATE_INVENTORY', event => {
+      .on('UPDATE_FILE_RESOURE', -1000, event => {
         this.changeDetector.markForCheck();
-      })
-      .on('OPEN_NETWORK', event => {
-        this.selectTab = Network.peerId;
-
       }).on('DISCONNECT_PEER', event => {
         //GM
-        this.changeDetector.markForCheck();
-      });
+        if (this.textNote.GM === event.data.peer) this.changeDetector.markForCheck();
+      })
+      .on('UPDATE_GAME_OBJECT', -1000, event => {
+        if (event.data.identifier !== this.currentTable.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
+        console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.currentTable.identifier);
+
+        // this.setGameTableGrid(this.currentTable.width, this.currentTable.height, this.currentTable.gridSize, this.currentTable.gridType, this.currentTable.gridColor);
+      })
+
+    this.tabletopService.makeDefaultTable();
+    this.tabletopService.makeDefaultTabletopObjects();
+
     this.inventoryTypes = ['table', 'common', Network.peerId, 'graveyard'];
   }
 
@@ -163,6 +169,9 @@ export class NoteInventoryComponent implements OnInit, AfterViewInit, OnDestroy 
   }
   settotable(gameObject) {
     gameObject.setLocation('table');
+  }
+  settocommon(gameObject) {
+    gameObject.setLocation('common');
   }
   showgameObject(GObject) {
     // console.log('GObject', GObject)
