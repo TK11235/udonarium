@@ -91,7 +91,7 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
       }).on('DISCONNECT_PEER', event => {
         //GM
         if (this.textNote.GM === event.data.peer) this.changeDetector.markForCheck();
-      });;
+      });
     this.movableOption = {
       tabletopObject: this.textNote,
       transformCssOffset: 'translateZ(0.15px)',
