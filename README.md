@@ -128,4 +128,4 @@ PRのコードが完全ではない場合でも作業中PRとして送ること�
 
 [MIT License](https://github.com/TK11235/udonarium/blob/master/LICENSE)
 
-[1]: https://udonarium.app/
+[1]: https://z01.hktrpg.com/
