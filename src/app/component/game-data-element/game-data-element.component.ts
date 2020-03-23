@@ -35,8 +35,7 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
     return ObjectStore.instance.getObjects(ChatTab);
   }
   get infoTab(): ChatTab {
-
-    return this.chatTabs.find(chatTab => { chatTab.identifier });
+    return this.chatTabs[0];
   }
   private _chatTabidentifier: string = '';
   get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
