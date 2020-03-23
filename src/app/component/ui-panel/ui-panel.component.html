@@ -2,14 +2,14 @@
   [style.left.px]="left" [style.top.px]="top" [style.width.px]="width" [style.height.px]="height"
   [draggable.stack]="'.draggable-panel'" appDraggable appResizable #draggablePanel>
   <div class="title">
-    <div class="title-button" *ngIf="title!=='メニュー'"></div>>
-    <button (click)="toggleFullScreen()"><i class="material-icons" style="font-size: 14px;">fullscreen</i></button>
-    <button (click)="close()"><i class="material-icons" style="font-size: 14px;">close</i></button>
+    <div class="title-button" *ngIf="title!=='メニュー'" ></div>>
+      <button (click)="toggleFullScreen()"><i class="material-icons" style="font-size: 14px;">fullscreen</i></button>
+      <button (click)="close()"><i class="material-icons" style="font-size: 14px;">close</i></button>
+    </div>
+    {{panelService.title}}
   </div>
-  {{panelService.title}}
-</div>
-<div class="scrollable-panel" #scrollablePanel>
-  <ng-content></ng-content>
-  <div #content></div>
-</div>
+  <div class="scrollable-panel" #scrollablePanel>
+    <ng-content></ng-content>
+    <div #content></div>
+  </div>
 </div>
