@@ -7,9 +7,13 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { EventSystem } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
-
+import { EventSystem, Network } from '@udonarium/core/system';
+import { ChatMessageService } from 'service/chat-message.service';
+import { PeerCursor } from '@udonarium/peer-cursor';
+import { ChatTab } from '@udonarium/chat-tab';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { GameCharacter } from '@udonarium/game-character';
 @Component({
   selector: 'game-data-element, [game-data-element]',
   templateUrl: './game-data-element.component.html',
@@ -21,6 +25,26 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   @Input() isEdit: boolean = false;
   @Input() isTagLocked: boolean = false;
   @Input() isValueLocked: boolean = false;
+
+
+  private _sendTo: string;
+  get sendTo(): string { return this._sendTo };
+  @Input() character: GameCharacter = null;
+  get myPeer(): PeerCursor { return PeerCursor.myCursor; }
+  get chatTabs(): ChatTab[] {
+    return ObjectStore.instance.getObjects(ChatTab);
+  }
+  get infoTab(): ChatTab {
+
+    return this.chatTabs.find(chatTab => { chatTab.identifier });
+  }
+  private _chatTabidentifier: string = '';
+  get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
+  get chatTabidentifier(): string { return this._chatTabidentifier; }
+
+  private _color: string = "#000000";
+
+
 
   private _name: string = '';
   get name(): string { return this._name; }
@@ -37,6 +61,7 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   private updateTimer: NodeJS.Timer = null;
 
   constructor(
+    public chatMessageService: ChatMessageService,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -90,7 +115,9 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
       parentElement.insertBefore(nextElement, this.gameDataElement);
     }
   }
-
+  sendLogMessage(text, value) {
+    this.chatMessageService.sendMessage(this.infoTab, value + " " + text, this.chatMessageService.gameType, this.myPeer.name, this.sendTo);
+  }
   setElementType(type: string) {
     this.gameDataElement.setAttribute('type', type);
   }
