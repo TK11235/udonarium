@@ -9,7 +9,7 @@ class Postman < DiceBot
 
   def initialize
     super
-    @sortType = 1 # 骰子のソート有
+    @sortType = 1 # ダイスのソート有
   end
 
   def gameName
@@ -25,7 +25,7 @@ class Postman < DiceBot
 ◆判定：[n]PO[+-a][> or >= or @X]　　[]内省略可。
 
 達成値と判定の成否、クリティカル、ファンブルを結果表示します。
-「n」で骰子数を指定。省略時は2D。
+「n」でダイス数を指定。省略時は2D。
 「+-a」で達成値への修正を指定。「+2+1-4」のような複数回指定可。
 「>X」「>=X」「@X」で難易度を指定可。
 「>X」は達成値>難易度、「>=X」「@X」は達成値>=難易度で判定します。

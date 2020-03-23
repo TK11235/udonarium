@@ -53,7 +53,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Alter_raise_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "◆解放判定：EMA[x]\n" + "\n" + "[x]で達成値を指定してください。省略時は骰子ロールします。\n" + "\n" + "\n" + "【各種表】\n" + "◆性格傾向表：PER[n]　　　　　　 ◆場所表：LOC[ab]\n" + "◆平穏・経験表：QUI[ab]　　　　　◆喜び・経験表：DEL[ab]\n" + "◆心の傷・経験表：TRA[ab]　　　　◆シーン演出表：SCE[n]\n" + "◆スタンス表：STA[n]　　　　　　 ◆感情表：EMO[ab]\n" + "\n" + "[]内のコマンドを省略で骰子ロール、指定でROC結果を表示します。\n" + "[n]は「1D6」、[ab]は「D66」の出目を指定してください。\n" + "\n" + "【書式例】\n" + "PER3：性格傾向表の「3」をROC\n" + "LOC52：場所表の「52」をROC\n" + "QUI：平穏・経験表を骰子ロール\n"
+      return "" + "◆解放判定：EMA[x]\n" + "\n" + "[x]で達成値を指定してください。省略時はダイスロールします。\n" + "\n" + "\n" + "【各種表】\n" + "◆性格傾向表：PER[n]　　　　　　 ◆場所表：LOC[ab]\n" + "◆平穏・経験表：QUI[ab]　　　　　◆喜び・経験表：DEL[ab]\n" + "◆心の傷・経験表：TRA[ab]　　　　◆シーン演出表：SCE[n]\n" + "◆スタンス表：STA[n]　　　　　　 ◆感情表：EMO[ab]\n" + "\n" + "[]内のコマンドを省略でダイスロール、指定でROC結果を表示します。\n" + "[n]は「1D6」、[ab]は「D66」の出目を指定してください。\n" + "\n" + "【書式例】\n" + "PER3：性格傾向表の「3」をROC\n" + "LOC52：場所表の「52」をROC\n" + "QUI：平穏・経験表をダイスロール\n"
     }, TMP_Alter_raise_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Alter_raise_rollDiceCommand_5 = function $$rollDiceCommand(command) {

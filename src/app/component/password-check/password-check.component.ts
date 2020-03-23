@@ -29,7 +29,7 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = '密碼'
+    this.modalService.title = this.panelService.title = 'パスワード'
     EventSystem.register(this);
   }
 
@@ -43,6 +43,6 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.needPassword === this.password) this.modalService.resolve(this.password);
-    this.help = '密碼錯誤';
+    this.help = 'パスワードが違います';
   }
 }

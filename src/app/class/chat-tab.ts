@@ -18,8 +18,6 @@ export class ChatTab extends ObjectNode implements InnerXml {
     return lastIndex < 0 ? 0 : this.chatMessages[lastIndex].timestamp;
   }
 
-  @SyncVar() receiveInfo = false;
-
   // ObjectNode Lifecycle
   onChildAdded(child: ObjectNode) {
     super.onChildAdded(child);

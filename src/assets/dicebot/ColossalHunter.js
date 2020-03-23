@@ -51,7 +51,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_ColossalHunter_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定（CH±x>=y)\n" + "　3D6の判定。クリティカル、ファンブルの自動判定を行います。\n" + "　x：修正値。省略可能。y：目標値。省略可能。\n" + "　例） CH　CH+1　CH+2>=10\n" + "・BIG-6表(B6T)\n" + "・覚醒表(AWT)\n" + "・現状表(CST)\n" + "・ハンターマーク表(HMT)\n" + "・特徴表(SPT)\n" + "・プレシャス表(PRT)\n" + "・専門能力表(EXT)\n" + "・コロッサル行動表(CAT)\n" + "・NPC作成表(CNP)\n" + "・D66骰子あり\n"
+      return "" + "・判定（CH±x>=y)\n" + "　3D6の判定。クリティカル、ファンブルの自動判定を行います。\n" + "　x：修正値。省略可能。y：目標値。省略可能。\n" + "　例） CH　CH+1　CH+2>=10\n" + "・BIG-6表(B6T)\n" + "・覚醒表(AWT)\n" + "・現状表(CST)\n" + "・ハンターマーク表(HMT)\n" + "・特徴表(SPT)\n" + "・プレシャス表(PRT)\n" + "・専門能力表(EXT)\n" + "・コロッサル行動表(CAT)\n" + "・NPC作成表(CNP)\n" + "・D66ダイスあり\n"
     }, TMP_ColossalHunter_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_ColossalHunter_rollDiceCommand_5 = function $$rollDiceCommand(command) {

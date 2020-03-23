@@ -11,7 +11,7 @@ class CgiDiceBot
   def initialize
     @rollResult = ""
     @isSecret = false
-    @rands = nil # テスト以外ではnilで良い。骰子目操作パラメータ
+    @rands = nil # テスト以外ではnilで良い。ダイス目操作パラメータ
     @isTest = false
     @bcdice = nil
 
@@ -79,7 +79,7 @@ class CgiDiceBot
       # result += "##>isSecretDice<##" if( @isSecret )
     end
 
-    # 多言語対応の骰子ボットは「GameType:Language」という書式なので、
+    # 多言語対応のダイスボットは「GameType:Language」という書式なので、
     # ここで言語名を削って表示する。（内部的には必要だが、表示では不要のため）
     gameType = gameType.gsub(/:.+$/, '')
 

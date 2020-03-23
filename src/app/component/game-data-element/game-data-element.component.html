@@ -4,8 +4,8 @@
       <ng-container *ngTemplateOutlet="editButtons"></ng-container>
       <select (change)="setElementType($event.target.value)" [ngModel]="gameDataElement.type">
         <option value="">通常</option>
-        <option value="numberResource">數值</option>
-        <option value="note">筆記</option>
+        <option value="numberResource">リソース</option>
+        <option value="note">ノート</option>
       </select>
     </div>
     <div class="table-cell table-cell_solid">
@@ -13,34 +13,28 @@
         <div style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{name}}</div>
       </ng-container>
       <ng-container *ngIf="!isTagLocked">
-        <div class="hidden-spacer" style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{name}}</div><button
-          (click)="sendLogMessage(name,value, currentValue)"><i class="material-icons icon-size">send</i></button>
-        <!--能力名稱-->
+        <div class="hidden-spacer" style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{name}}</div>
         <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 0.9rem;" size="1"
-          [(ngModel)]="name" placeholder="Value" />&nbsp;&nbsp;&nbsp;
+          [(ngModel)]="name" placeholder="Value" />
       </ng-container>
     </div>
     <div class="table-cell">
       <ng-container [ngSwitch]="gameDataElement.type">
         <ng-container *ngSwitchCase="'numberResource'">
-          <input
-            [style]="'font-size: 1.0em; min-width: 90px; width: 90%; --min: 0; --max: ' + value + '; --val:' + currentValue +';' | safe: 'style'"
+          <input [style]="'font-size: 1.0em; min-width: 90px; width: 90%; --min: 0; --max: ' + value + '; --val:' + currentValue +';' | safe: 'style'"
             [(ngModel)]="currentValue" type="range" min="0" max="{{value}}" />
           <br>
-          <input style="width: 5em; text-align: right;" size="1" type="number" [(ngModel)]="currentValue"
-            placeholder="Value" />
+          <input style="width: 5em; text-align: right;" size="1" type="number" [(ngModel)]="currentValue" placeholder="Value" />
           /
           <input style="width: 5em;" size="1" type="number" [(ngModel)]="value" placeholder="Value" />
         </ng-container>
         <ng-container *ngSwitchCase="'note'">
-          <textarea style="width:100%; height:5em; min-width:50px; resize: none; font-size: 0.8em;" [(ngModel)]="value"
-            placeholder="Note"></textarea>
+          <textarea style="width:100%; height:5em; min-width:50px; resize: none; font-size: 0.8em;" [(ngModel)]="value" placeholder="Note"></textarea>
         </ng-container>
         <ng-container *ngSwitchDefault>
           <!-- size属性がないと小さくならない -->
-          <!-- 能力項目-->
           <div class="hidden-spacer" style="font-size: 1.0em; font-family: Cambria, Georgia;">{{value}}</div>
-          &nbsp;&nbsp;<input style="width:90%; min-width:10px;" size="1" [(ngModel)]="value" placeholder="Value" />
+          <input style="width:100%; min-width:10px;" size="1" [(ngModel)]="value" placeholder="Value" />
         </ng-container>
       </ng-container>
     </div>
@@ -56,8 +50,7 @@
           <div style="padding: 2px; font-family: Cambria, Georgia; font-size: 1.0rem; font-weight: bold;">{{name}}</div>
         </ng-container>
         <ng-container *ngIf="!isTagLocked">
-          <input
-            style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 1.0rem; font-weight: bold;"
+          <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 1.0rem; font-weight: bold;"
             size="1" [(ngModel)]="name" placeholder="Value" />
         </ng-container>
       </div>

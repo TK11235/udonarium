@@ -1,9 +1,6 @@
-<div class="sticky-top">
-  検索: <input [(ngModel)]="searchWord" placeholder="部分匹配搜索 如指定多個標籤 加上空格" />
-</div>
 <div id="file-list">
   <span class="empty" *ngIf="isAllowedEmpty">
-    <button (click)="onSelectedFile(empty)">無圖片</button>
+    <button (click)="onSelectedFile(empty)">画像なし</button>
   </span>
   <span *ngFor="let file of images" class="image">
     <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">

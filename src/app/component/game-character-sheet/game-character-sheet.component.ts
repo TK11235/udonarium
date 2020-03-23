@@ -50,8 +50,8 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   addDataElement() {
     if (this.tabletopObject.detailDataElement) {
-      let title = DataElement.create('標題', '', {});
-      let tag = DataElement.create('Tag', '', {});
+      let title = DataElement.create('見出し', '', {});
+      let tag = DataElement.create('タグ', '', {});
       title.appendChild(tag);
       this.tabletopObject.detailDataElement.appendChild(title);
     }

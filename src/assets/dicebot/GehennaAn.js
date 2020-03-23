@@ -62,7 +62,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_GehennaAn_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "戦闘判定と通常判定に対応。幸運の助け、連撃増加値(戦闘判定)、闘技チット(戦闘判定)を自動表示します。\n" + "・戦闘判定　(nGAt+m)\n" + "　骰子数n、目標値t、修正値mで戦闘判定を行います。\n" + "　幸運の助け、連撃増加値、闘技チットを自動処理します。\n" + "・通常判定　(nGt+m)\n" + "　骰子数n、目標値t、修正値mで通常判定を行います。\n" + "　幸運の助けを自動処理します。(連撃増加値、闘技チットを表示抑制します)\n"
+      return "" + "戦闘判定と通常判定に対応。幸運の助け、連撃増加値(戦闘判定)、闘技チット(戦闘判定)を自動表示します。\n" + "・戦闘判定　(nGAt+m)\n" + "　ダイス数n、目標値t、修正値mで戦闘判定を行います。\n" + "　幸運の助け、連撃増加値、闘技チットを自動処理します。\n" + "・通常判定　(nGt+m)\n" + "　ダイス数n、目標値t、修正値mで通常判定を行います。\n" + "　幸運の助けを自動処理します。(連撃増加値、闘技チットを表示抑制します)\n"
     }, TMP_GehennaAn_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_GehennaAn_changeText_9 = function $$changeText(string) {

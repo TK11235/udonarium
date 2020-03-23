@@ -17,9 +17,9 @@ class CthulhuTech < DiceBot
 
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
-テストの骰子計算を実装。
+テストのダイス計算を実装。
 成功、失敗、クリティカル、ファンブルの自動判定。
-コンバットテスト(防御側有利なので「>=」ではなく「>」で入力)の時はダメージ骰子も表示。
+コンバットテスト(防御側有利なので「>=」ではなく「>」で入力)の時はダメージダイスも表示。
 INFO_MESSAGE_TEXT
   end
 
@@ -74,13 +74,13 @@ INFO_MESSAGE_TEXT
     debug('getDamageDice total_n, diff', total_n, diff)
     damageDiceCount = ((total_n - diff) / 5.0).ceil
     debug('damageDiceCount', damageDiceCount)
-    damageDice = "(#{damageDiceCount}d10)" # ダメージ骰子の表示
+    damageDice = "(#{damageDiceCount}d10)" # ダメージダイスの表示
 
     return damageDice
   end
 
-  # 骰子目文字列から骰子値を変更する場合の処理
-  # クトゥルフ・テックの判定用骰子計算
+  # ダイス目文字列からダイス値を変更する場合の処理
+  # クトゥルフ・テックの判定用ダイス計算
   def changeDiceValueByDiceText(dice_now, dice_str, isCheckSuccess, dice_max)
     debug("changeDiceValueByDiceText dice_now, dice_str, isCheckSuccess, dice_max", dice_now, dice_str, isCheckSuccess, dice_max)
     if isCheckSuccess && (dice_max == 10)
@@ -94,7 +94,7 @@ INFO_MESSAGE_TEXT
   end
 
   ####################           CthulhuTech         ########################
-  # CthulhuTechの判定用骰子計算
+  # CthulhuTechの判定用ダイス計算
   def cthulhutech_check(dice_str)
     dice_aRR = dice_str.split(/,/).collect { |i| i.to_i }
 
@@ -104,12 +104,12 @@ INFO_MESSAGE_TEXT
     dice_aRR.each do |dice_n|
       dice_num[(dice_n - 1)] += 1
 
-      if dice_n > max_num # 1.個別の骰子の最大値
+      if dice_n > max_num # 1.個別のダイスの最大値
         max_num = dice_n
       end
     end
 
-    if dice_aRR.length >= 2 # 骰子が2個以上ロールされている
+    if dice_aRR.length >= 2 # ダイスが2個以上ロールされている
       10.times do |i|
         if dice_num[i] > 1 # 2.同じ出目の合計値
           dice_now = dice_num[i] * (i + 1)
@@ -117,7 +117,7 @@ INFO_MESSAGE_TEXT
         end
       end
 
-      if dice_aRR.length >= 3 # 骰子が3個以上ロールされている
+      if dice_aRR.length >= 3 # ダイスが3個以上ロールされている
         10.times do |i|
           break if  dice_num[i + 2].nil?
 

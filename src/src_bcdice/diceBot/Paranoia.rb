@@ -17,8 +17,8 @@ class Paranoia < DiceBot
 
   def getHelpMessage
     return <<MESSAGETEXT
-※「パラノイア」は完璧なゲームであるため特殊な骰子コマンドを必要としません。
-※この骰子ボットは部屋のシステム名表示用となります。
+※「パラノイア」は完璧なゲームであるため特殊なダイスコマンドを必要としません。
+※このダイスボットは部屋のシステム名表示用となります。
 MESSAGETEXT
   end
 

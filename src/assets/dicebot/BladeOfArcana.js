@@ -59,7 +59,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_BladeOfArcana_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "■行為判定　nA[m][Cx][Fy]\n" + "　n：骰子数　　m：判定値(省略時はクリティカル値と同じ)\n" + "　x：クリティカル値(省略時は1)　　y：ファンブル値(省略時は20)\n" + "　注）[m]、[Cx]、[Fy]は省略可能。\n" + "　　例）3A12C4F15→3個振り12以下で成功。C値4、F値は15。\n" + "　　例）3A12→3個振り12以下で成功。C値1、F値は20。\n" + "\n" + "■各種表　(+：出目2～21に変更　-：出目0～19に変更)\n" + "●リインカーネイション\n" + "　因縁表　CTR[+/-]　　前世邂逅表　DJV[-]\n" + "　悪徳シーン表　AKST[+/-]\n" + "●The 3rd（第三版）\n" + "　因縁表　CT3[+/-]\n" + "　注）[]内は省略可能。\n" + "　　例）CTR→因縁表（R版）を出目1～20でロールする。\n" + "　　例）CTR+→因縁表（R版）を出目2～21でロールする。\n"
+      return "" + "■行為判定　nA[m][Cx][Fy]\n" + "　n：ダイス数　　m：判定値(省略時はクリティカル値と同じ)\n" + "　x：クリティカル値(省略時は1)　　y：ファンブル値(省略時は20)\n" + "　注）[m]、[Cx]、[Fy]は省略可能。\n" + "　　例）3A12C4F15→3個振り12以下で成功。C値4、F値は15。\n" + "　　例）3A12→3個振り12以下で成功。C値1、F値は20。\n" + "\n" + "■各種表　(+：出目2～21に変更　-：出目0～19に変更)\n" + "●リインカーネイション\n" + "　因縁表　CTR[+/-]　　前世邂逅表　DJV[-]\n" + "　悪徳シーン表　AKST[+/-]\n" + "●The 3rd（第三版）\n" + "　因縁表　CT3[+/-]\n" + "　注）[]内は省略可能。\n" + "　　例）CTR→因縁表（R版）を出目1～20でロールする。\n" + "　　例）CTR+→因縁表（R版）を出目2～21でロールする。\n"
     }, TMP_BladeOfArcana_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_BladeOfArcana_rollDiceCommand_5 = function $$rollDiceCommand(command) {

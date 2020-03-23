@@ -1,33 +1,33 @@
 <div *ngIf="!isConnected;else other_content">
-  <div>房間名 : <input class="input" (input)="calcPeerId($event.target.value, password)" [(ngModel)]="roomName" required minlength="1" maxlength="128" #roomNameValidation="ngModel"
-      placeholder="必須有房間名稱" /></div>
-  <div>密碼: <input class="input" (input)="calcPeerId(roomName, $event.target.value)" [(ngModel)]="password" maxlength="12" #passwordValidation="ngModel" placeholder="留空即沒有密碼"
+  <div>ルーム名 : <input class="input" (input)="calcPeerId($event.target.value, password)" [(ngModel)]="roomName" required minlength="1" maxlength="128" #roomNameValidation="ngModel"
+      placeholder="ルームの名前は必須" /></div>
+  <div>パスワード: <input class="input" (input)="calcPeerId(roomName, $event.target.value)" [(ngModel)]="password" maxlength="12" #passwordValidation="ngModel" placeholder="空ならパスワードなし"
     /></div>
   <hr/>
   <div *ngIf="roomNameValidation.errors && (roomNameValidation.dirty || roomNameValidation.touched)">
     <div [hidden]="!roomNameValidation.errors.required">
-      必須有房間名稱。
+      ルームの名前は必須です。
     </div>
     <div [hidden]="!roomNameValidation.errors.minlength">
-      必須有房間名稱。
+      ルームの名前は必須です。
     </div>
     <div [hidden]="!roomNameValidation.errors.maxlength">
-      房間名前長度要在28以內。
+      ルーム名前の長さは128以内にしてください。
     </div>
   </div>
   <div *ngIf="passwordValidation.errors && (passwordValidation.dirty || passwordValidation.touched)">
     <div [hidden]="!passwordValidation.errors.maxlength">
-      密碼長度不得超過12。
+      パスワードの長さは12以内にしてください。
     </div>
   </div>
   <div *ngIf="!validateLength">
-    名稱和密碼的加起來的長度似乎太長。 嘗試讓它短一些。
+    ルームの名前とパスワードの合計が長すぎるようです。どちらかを少し短くしてみてください。
   </div>
   <div>
-    <button [disabled]="!roomNameValidation.valid || !passwordValidation.valid || !validateLength" (click)="createRoom()">新增房間</button>
+    <button [disabled]="!roomNameValidation.valid || !passwordValidation.valid || !validateLength" (click)="createRoom()">新しいルームを作成</button>
   </div>
 </div>
-<div><span style="font-size: 12px;">※當參與者人數變為零時，創建的房室將被解散。 如果您想在保留狀態留待下一次遊戲，請按“保存房間”。</span></div>
+<div><span style="font-size: 12px;">※作成したルームは参加者が0人になった時点で解散します。ルームの状態を次回に持ち越したい場合は必ず「保存」してください。</span></div>
 <ng-template #other_content>
-  <span style="font-size: 12px;">與其他參與者連接時無法創建新的房間。 <br>如果要連接到另一個房間，請斷開與其他與會者的連線。 <br>（*可以通過重新加載頁面來斷開連接。）</span>
+  <span style="font-size: 12px;">他の参加者と接続したままではルーム作成を行えません。<br>別のルームに接続したい場合は、他の参加者との接続を切ってください。<br>（※ページリロードで切断できます。）</span>
 </ng-template>

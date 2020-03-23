@@ -17,8 +17,8 @@ class GoldenSkyStories < DiceBot
 
   def getHelpMessage
     return <<MESSAGETEXT
-※「ゆうやけこやけ」は骰子ロールを使用しないシステムです。
-※この骰子ボットは部屋のシステム名表示用となります。
+※「ゆうやけこやけ」はダイスロールを使用しないシステムです。
+※このダイスボットは部屋のシステム名表示用となります。
 
 ・下駄占い (GETA)
   あーしたてんきになーれ

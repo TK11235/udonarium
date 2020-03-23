@@ -17,7 +17,7 @@ class ShinMegamiTenseiKakuseihen < DiceBot
     return <<INFO_MESSAGE_TEXT
 ・判定
 1D100<=(目標値) でスワップ・通常・逆スワップ判定を判定。
-威力骰子は nU6[6] (nは骰子個数)でロール可能です。
+威力ダイスは nU6[6] (nはダイス個数)でロール可能です。
 INFO_MESSAGE_TEXT
   end
 

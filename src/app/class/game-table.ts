@@ -18,7 +18,7 @@ export enum FilterType {
 
 @SyncObject('game-table')
 export class GameTable extends ObjectNode {
-  @SyncVar() name: string = '桌面';
+  @SyncVar() name: string = 'テーブル';
   @SyncVar() width: number = 20;
   @SyncVar() height: number = 20;
   @SyncVar() gridSize: number = 50;

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# 骰子ボットの読み込みを担当するクラス
+# ダイスボットの読み込みを担当するクラス
 class DiceBotLoader
   # ボットの名前として有効なパターン（クラス名のパターン）
   # @see https://docs.ruby-lang.org/ja/1.8.7/doc/spec=2flexical.html#identifier
@@ -26,7 +26,7 @@ class DiceBotLoader
   # @param [String] gameType ゲームタイプ
   # @return [Boolean]
   #
-  # Object.const_getで該当する骰子ボットのクラスを取得するので、
+  # Object.const_getで該当するダイスボットのクラスを取得するので、
   # クラス名として有効な名前でなければ、無効なゲームタイプと見なす。
   #
   # また、無視するボット名の一覧に含まれるゲームタイプも無効と見なす。
@@ -38,9 +38,9 @@ class DiceBotLoader
       !BOT_NAMES_TO_IGNORE.include?(gameType)
   end
 
-  # 登録されていないタイトルの骰子ボットを読み込む
+  # 登録されていないタイトルのダイスボットを読み込む
   # @param [String] gameType ゲームタイプ
-  # @return [DiceBot] 骰子ボットが存在した場合
+  # @return [DiceBot] ダイスボットが存在した場合
   # @return [nil] 読み込み時にエラーが発生した場合
   def self.loadUnknownGame(gameType)
     debug('DiceBotLoader.loadUnknownGame gameType', gameType)
@@ -54,30 +54,30 @@ class DiceBotLoader
     # end
 
     # # validGameType?によって '.' や '/' といったディレクトリが変わる文字が
-    # # 含まれていないことが保証されているため、必ず骰子ボットディレクトリ
+    # # 含まれていないことが保証されているため、必ずダイスボットディレクトリ
     # # 直下のファイルが参照される
     # fileName = File.expand_path("#{gameType}.rb", File.dirname(__FILE__))
 
     # unless File.exist?(fileName)
     #   # ファイルが存在しない場合、後のrequireで必ずLoadErrorが発生するため、
     #   # 読み込みを中止する
-    #   debug('DiceBotLoader.loadUnknownGame: 骰子ボットファイルが存在しません',
+    #   debug('DiceBotLoader.loadUnknownGame: ダイスボットファイルが存在しません',
     #         gameType)
     #   return nil
     # end
 
     begin
       # require(fileName) # TKfix dynamic requireは不可
-      # TKfix 骰子ボットファイルがこのディレクトリ内に存在すると仮定して読み込む
+      # TKfix ダイスボットファイルがこのディレクトリ内に存在すると仮定して読み込む
       Object.const_get(gameType).new
     rescue LoadError, StandardError => e
-      debug('DiceBotLoader.loadUnknownGame: 骰子ボットの読み込みに失敗しました',
+      debug('DiceBotLoader.loadUnknownGame: ダイスボットの読み込みに失敗しました',
             e.to_s)
       nil
     end
   end
 
-  # 骰子ボットディレクトリに含まれる骰子ボットを収集する
+  # ダイスボットディレクトリに含まれるダイスボットを収集する
   # @return [Array<DiceBot>]
   def self.collectDiceBots
     # TKfix
@@ -103,8 +103,8 @@ class DiceBotLoader
   # 読み込み処理を初期化する
   # @param [String, Array<String>, Regexp] gameTitlePattern ゲームタイトルのパターン
   # @param [Hash] options 追加のオプション
-  # @option options [Array<String>] :filenames 読み込む骰子ボットのファイル名の配列
-  # @option options [String, Symbol] :class 骰子ボットのクラス
+  # @option options [Array<String>] :filenames 読み込むダイスボットのファイル名の配列
+  # @option options [String, Symbol] :class ダイスボットのクラス
   #
   # できるだけ簡潔に記述できるようにするため、引数のルールを以下のように定める。
   #
@@ -128,8 +128,8 @@ class DiceBotLoader
   #   DiceBotLoader.new('Elysion')
   #
   # * マッチするタイトルは 'Elysion'（大文字小文字区別なし）
-  # * 読み込む骰子ボットファイルは diceBot/Elysion.rb（大文字小文字区別あり）
-  # * 骰子ボットのクラス名は Elysion（大文字小文字区別あり）
+  # * 読み込むダイスボットファイルは diceBot/Elysion.rb（大文字小文字区別あり）
+  # * ダイスボットのクラス名は Elysion（大文字小文字区別あり）
   #
   # == gameTitlePatternが文字列の配列の場合
   #
@@ -138,28 +138,28 @@ class DiceBotLoader
   #   DiceBotLoader.new(%w(Cthulhu COC))
   #
   # * マッチするタイトルは 'Cthulhu', 'COC'（大文字小文字区別なし）
-  # * 読み込む骰子ボットファイルは、最初に指定した diceBot/Cthulhu.rb（大文字小文字区別あり）
+  # * 読み込むダイスボットファイルは、最初に指定した diceBot/Cthulhu.rb（大文字小文字区別あり）
   #   * 最初が正式名称、以下が別名というイメージ
-  # * 骰子ボットのクラス名は Cthulhu（大文字小文字区別あり）
+  # * ダイスボットのクラス名は Cthulhu（大文字小文字区別あり）
   #
   # = オプション引数として :filenames のみを渡す場合
   #
   # * gameTitlePatternに文字列、文字列の配列、正規表現を指定することができる。
-  # * 読み込む骰子ボットファイルを指定することができる。
+  # * 読み込むダイスボットファイルを指定することができる。
   #
   # 例：
   #
   #   DiceBotLoader.new(%w(Elric! EL), :filenames => %w(Elric))
   #
   # * マッチするタイトルは 'Elric!', 'EL'（大文字小文字区別なし）
-  # * 読み込む骰子ボットファイルは diceBot/Elric.rb（大文字小文字区別あり）
-  # * 骰子ボットのクラス名は :filenames で最初に指定した Elric（大文字小文字区別あり）
+  # * 読み込むダイスボットファイルは diceBot/Elric.rb（大文字小文字区別あり）
+  # * ダイスボットのクラス名は :filenames で最初に指定した Elric（大文字小文字区別あり）
   #
   # = オプション引数として :filenames と :class を渡す場合
   #
   # * gameTitlePatternに文字列、文字列の配列、正規表現を指定することができる。
-  # * 読み込む骰子ボットファイルを指定することができる。
-  # * 作成する骰子ボットのクラス名を指定することができる。
+  # * 読み込むダイスボットファイルを指定することができる。
+  # * 作成するダイスボットのクラス名を指定することができる。
   #
   # 例：
   #
@@ -168,10 +168,10 @@ class DiceBotLoader
   #                     :class => :ParasiteBlood)
   #
   # * 正規表現 /\A(?:Parasite\s*Blood|PB)\z/i と指定されたタイトルをマッチさせる
-  # * 読み込む骰子ボットファイルは、大文字小文字区別ありで
+  # * 読み込むダイスボットファイルは、大文字小文字区別ありで
   #   * diceBot/DemonParasite.rb
   #   * diceBot/ParasiteBlood.rb
-  # * 骰子ボットのクラス名は ParasiteBlood（大文字小文字区別あり）
+  # * ダイスボットのクラス名は ParasiteBlood（大文字小文字区別あり）
   def initialize(gameTitlePattern, options = {})
     case gameTitlePattern
     when String
@@ -227,7 +227,7 @@ class DiceBotLoader
     end
   end
 
-  # 骰子ボットを読み込む
+  # ダイスボットを読み込む
   # @return [DiceBot]
   def loadDiceBot
     @filenames.each do |filename|

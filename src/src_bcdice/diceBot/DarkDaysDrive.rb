@@ -43,7 +43,7 @@ IA イケメンアクション決定表
  IAH 渋い
  IAI 賢い
  IAJ 超自然
-・D66骰子あり
+・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
 

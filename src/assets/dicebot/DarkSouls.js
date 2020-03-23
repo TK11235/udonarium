@@ -53,7 +53,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_DarkSouls_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・行為判定：[n]DS[a±b][@t]　　[]内のコマンドは省略可\n" + "・能動判定：[n]ADS[a±b][@t]　　FP消費を判定\n" + "　n：骰子数。省略時は「2」\n" + "　a±b：修正値。「1+2-1」のように、複数定可\n" + "　@t：目標値。省略時は達成値を、指定時は判定の正否を表示\n" + "例）DS → 2D6の達成値を表示\n" + "　　1DS → 1D6の達成値を表示\n" + "　　ADS+2-2 → 2D6+2の達成値を表示（能動判定）\n" + "　　DS+2@10 → 2D6+2で目標値10の判定\n"
+      return "" + "・行為判定：[n]DS[a±b][@t]　　[]内のコマンドは省略可\n" + "・能動判定：[n]ADS[a±b][@t]　　FP消費を判定\n" + "　n：ダイス数。省略時は「2」\n" + "　a±b：修正値。「1+2-1」のように、複数定可\n" + "　@t：目標値。省略時は達成値を、指定時は判定の正否を表示\n" + "例）DS → 2D6の達成値を表示\n" + "　　1DS → 1D6の達成値を表示\n" + "　　ADS+2-2 → 2D6+2の達成値を表示（能動判定）\n" + "　　DS+2@10 → 2D6+2で目標値10の判定\n"
     }, TMP_DarkSouls_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_DarkSouls_rollDiceCommand_5 = function $$rollDiceCommand(command) {

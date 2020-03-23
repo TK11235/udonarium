@@ -212,7 +212,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "玩家ズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, TMP_Torg_get_torg_interaction_result_intimidate_test_12.$$arity = 1);
     
@@ -220,7 +220,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "玩家ズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, TMP_Torg_get_torg_interaction_result_taunt_trick_13.$$arity = 1);
     
@@ -228,7 +228,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "疲労"], [10, "萎縮／疲労"], [15, "逆転負け／疲労"], [17, "玩家ズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "疲労"], [10, "萎縮／疲労"], [15, "逆転負け／疲労"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, TMP_Torg_get_torg_interaction_result_maneuver_14.$$arity = 1);
     

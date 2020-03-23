@@ -29,7 +29,7 @@ class ColossalHunter < DiceBot
 ・専門能力表(EXT)
 ・コロッサル行動表(CAT)
 ・NPC作成表(CNP)
-・D66骰子あり
+・D66ダイスあり
 MESSAGETEXT
   end
 
@@ -54,12 +54,12 @@ MESSAGETEXT
     # 目標値の計算
     difficulty = getValue(difficultyText, nil)
 
-    # 骰子ロール
+    # ダイスロール
     dice, dice_str = roll(diceCount, 6)
 
     total = dice + modify
 
-    # 出力用骰子コマンドを生成
+    # 出力用ダイスコマンドを生成
     command =  "#{diceCount}CH#{modifyText}"
     command += ">=#{difficulty}" unless difficulty.nil?
 
@@ -491,7 +491,7 @@ MESSAGETEXT
           子ども用の傘
           千切れたネックレス
           開かない懐中時計
-          一組の骰子
+          一組のダイス
         },
       },
 

@@ -7,7 +7,7 @@ class FutariSousa < DiceBot
     @d66Type = 2
 
     @success_threshold = 4 # 成功の目標値（固定）
-    @special_dice = 6 # スペシャルとなる出目（骰子の種別によらず固定）
+    @special_dice = 6 # スペシャルとなる出目（ダイスの種別によらず固定）
   end
 
   setPrefixes(
@@ -25,8 +25,8 @@ class FutariSousa < DiceBot
   def getHelpMessage
     return <<MESSAGETEXT
 ・判定用コマンド
-探偵用：【DT】…10面骰子を2つ振って判定します。『有利』なら【3DT】、『不利』なら【1DT】を使います。
-助手用：【AS】…6面骰子を2つ振って判定します。『有利』なら【3AS】、『不利』なら【1AS】を使います。
+探偵用：【DT】…10面ダイスを2つ振って判定します。『有利』なら【3DT】、『不利』なら【1DT】を使います。
+助手用：【AS】…6面ダイスを2つ振って判定します。『有利』なら【3AS】、『不利』なら【1AS】を使います。
 ・各種表
 【調査時】
 異常な癖決定表 SHRD

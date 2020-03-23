@@ -33,9 +33,9 @@ export class Database {
       };
       request.onblocked = (event) => {
         console.warn('openDB onblocked');
-        // 他的タブがデータベースを読み込んでいる場合は、処理を進める前に
+        // 他のタブがデータベースを読み込んでいる場合は、処理を進める前に
         // それらを閉じなければなりません。
-        alert('こ的サイトを開いている他的タブをすべて閉じてください!');
+        alert('このサイトを開いている他のタブをすべて閉じてください!');
       };
       request.onupgradeneeded = (event) => {
         console.log('openDB onupgradeneeded');
@@ -55,17 +55,12 @@ export class Database {
     if (this.db.objectStoreNames.contains('PeerHistory')) {
       this.db.deleteObjectStore('PeerHistory');
     }
-
-    if (this.db.objectStoreNames.contains('NicknameHistory')) {
-      this.db.deleteObjectStore('NicknameHistory');
-    }
-    const peerObjectStore = this.db.createObjectStore('PeerHistory', { keyPath: 'peerId' });
-    peerObjectStore.createIndex('timestamp', 'timestamp', { unique: false });
-    // データを追加する前に objectStore の作成を完了させるため、
-
+    let objectStore = this.db.createObjectStore('PeerHistory', { keyPath: 'peerId' });
+    objectStore.createIndex('timestamp', 'timestamp', { unique: false });
+    // データを追加する前に objectStore の作成を完了させるため、 
     // transaction oncomplete を使用します。
- //   objectStore.transaction.oncomplete = (event) => {
-  //    console.log('createStores oncomplete');
+    objectStore.transaction.oncomplete = (event) => {
+      console.log('createStores oncomplete');
       // 新たに作成した objectStore に値を保存します。
       /*
       var customerObjectStore = db.transaction("customers", "readwrite").objectStore("customers");
@@ -73,18 +68,18 @@ export class Database {
         customerObjectStore.add(customerData[i]);
       }
       */
-   // };
+    };
   }
 
   private initializeDB(db: IDBDatabase) {
     console.log('initializeDB');
-    // 別的ページがバージョン変更を求めた場合に、通知されるようにするため的ハンドラを追加するようにしてください。
-    // データベースを閉じなければなりません。データベースを閉じると、別的ページがデータベースをアップグレードできます。
+    // 別のページがバージョン変更を求めた場合に、通知されるようにするためのハンドラを追加するようにしてください。
+    // データベースを閉じなければなりません。データベースを閉じると、別のページがデータベースをアップグレードできます。
     // これを行わなければ、ユーザがタブを閉じるまでデータベースはアップグレードされません。
     db.onversionchange = (event) => {
       console.warn('db.onversionchange.');
       db.close();
-      alert('新しいバージョン的ページが使用可能になりました。再読み込みしてください!');
+      alert('新しいバージョンのページが使用可能になりました。再読み込みしてください!');
     };
     db.onabort = (event) => {
       console.error(event);

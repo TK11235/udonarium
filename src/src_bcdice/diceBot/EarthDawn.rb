@@ -19,8 +19,8 @@ class EarthDawn < DiceBot
 
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
-ステップ骰子　(xEn+k)
-ステップx、目標値n(省略可能）、カルマ骰子k(D2-D20)でステップ骰子をロールします。
+ステップダイス　(xEn+k)
+ステップx、目標値n(省略可能）、カルマダイスk(D2-D20)でステップダイスをロールします。
 振り足しも自動。
 例）9E　10E8　10E+D12
 INFO_MESSAGE_TEXT
@@ -45,9 +45,9 @@ INFO_MESSAGE_TEXT
 
     step = Regexp.last_match(1).to_i # ステップ
     targetNumber = 0 # 目標値
-    hasKarmaDice = false # カルマ骰子の有無
-    karmaDiceCount = 0 # カルマ骰子の個数又は修正
-    karmaDiceType = 0 # カルマ骰子の種類
+    hasKarmaDice = false # カルマダイスの有無
+    karmaDiceCount = 0 # カルマダイスの個数又は修正
+    karmaDiceType = 0 # カルマダイスの種類
 
     # 空値があった時の為のばんぺいくんRX
     if step > 40
@@ -171,15 +171,15 @@ INFO_MESSAGE_TEXT
   end
 
   # 41以上のステップの為の配列です。
-  # 以下のようなルールで骰子を増やしています。より正しいステップ計算法をご存知の方は、
+  # 以下のようなルールでダイスを増やしています。より正しいステップ計算法をご存知の方は、
   # どうぞそちらに合せて調整して下さい。
   # 　基本：　2d20+d10+d8
   # 　これを仮にステップ34xとしています。
-  # 　一般式としては、ステップxxの骰子は、
+  # 　一般式としては、ステップxxのダイスは、
 
-  # 　 ステップ34xの骰子
+  # 　 ステップ34xのダイス
   # + [(xx-45)/11]d20
-  # + ステップ[(xx-34)を11で割った余り+3]の骰子
+  # + ステップ[(xx-34)を11で割った余り+3]のダイス
 
   def rollStep(diceType, diceCount)
     debug('rollStep diceType, diceCount, @string', diceType, diceCount, @string)

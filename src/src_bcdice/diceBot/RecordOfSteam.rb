@@ -21,7 +21,7 @@ RecordOfSteam : (4S3@2) ＞ 2,1,2,4,4,4,2,3,4,5,6,6 ＞ 4回転 ＞ 成功数5
 MESSAGETEXT
   end
 
-  # サンプルの骰子コマンドは「nSt@c」で n=骰子個数, t=目標値, c=クリティカル値。@cのみ省略可
+  # サンプルのダイスコマンドは「nSt@c」で n=ダイス個数, t=目標値, c=クリティカル値。@cのみ省略可
 
   def rollDiceCommand(command)
     unless /(\d+)[sS](\d+)(@(\d+))?/i =~ command

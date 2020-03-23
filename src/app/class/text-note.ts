@@ -2,25 +2,12 @@ import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
 import { moveToTopmost } from './tabletop-object-util';
-import { PeerCursor } from '@udonarium/peer-cursor';
-import {  Network } from '@udonarium/core/system';
 
 @SyncObject('text-note')
 export class TextNote extends TabletopObject {
   @SyncVar() rotate: number = 0;
   @SyncVar() zindex: number = 0;
   @SyncVar() password: string = '';
-  @SyncVar() GM: string = '';
-
-    get GMName(): string {
-    let object = PeerCursor.find(this.GM);
-    return object ? object.name : '';
-  }
-  get hasGM(): boolean {
-    if (this.GM) return true
-    else return false }
-  get isMine(): boolean { return PeerCursor.myCursor.name === this.GM; }
-  get isDisabled(): boolean { return this.hasGM && !this.isMine; }
 
   get width(): number { return this.getCommonValue('width', 1); }
   get height(): number { return this.getCommonValue('height', 1); }

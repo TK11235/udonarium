@@ -132,7 +132,7 @@ class DiceBotTest
     puts
   end
 
-  # 骰子コマンドを実行する
+  # ダイスコマンドを実行する
   def executeCommand(testData)
     rands = testData.rands
     @bot.setRandomValues(rands)
@@ -144,7 +144,7 @@ class DiceBotTest
     end
 
     unless rands.empty?
-      result += "\n骰子残り："
+      result += "\nダイス残り："
       result += rands.map { |r| r.join('/') }.join(', ')
     end
 

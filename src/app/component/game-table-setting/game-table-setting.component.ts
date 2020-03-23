@@ -82,7 +82,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   ) { }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = '桌面設定';
+    this.modalService.title = this.panelService.title = 'テーブル設定';
     this.selectedTable = this.tableSelecter.viewTable;
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', 1000, event => {
@@ -112,7 +112,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
 
   createGameTable() {
     let gameTable = new GameTable();
-    gameTable.name = '空白的桌面';
+    gameTable.name = '白紙のテーブル';
     gameTable.imageIdentifier = 'testTableBackgroundImage_image';
     gameTable.initialize();
     this.selectGameTable(gameTable.identifier);

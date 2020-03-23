@@ -30,7 +30,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_GeishaGirlwithKatana_getHelpMessage_3 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定 (GK#n)\n" + "  役やチョムバを含めて1回分の骰子ロールを判定します。\n" + "　役は　（通常判定）／（戦闘時）　の順で両方出力されます。\n" + "  GK のみの場合5%の確率でチョムバます。\n" + "  GK#3 の様に #n をつけることによってチョムバの確率をn%にすることができます。\n" + "　例）GK　GK#10\n" + "・隠しコマンド (GL)\n" + "  必ずチョムバします。GMが空気を読んでチョムバさせたいときや、\n" + "  GKコマンドを打ち間違えてチョムバするを想定してます。\n" + "　例）GL\n"
+      return "" + "・判定 (GK#n)\n" + "  役やチョムバを含めて1回分のダイスロールを判定します。\n" + "　役は　（通常判定）／（戦闘時）　の順で両方出力されます。\n" + "  GK のみの場合5%の確率でチョムバます。\n" + "  GK#3 の様に #n をつけることによってチョムバの確率をn%にすることができます。\n" + "　例）GK　GK#10\n" + "・隠しコマンド (GL)\n" + "  必ずチョムバします。GMが空気を読んでチョムバさせたいときや、\n" + "  GKコマンドを打ち間違えてチョムバするを想定してます。\n" + "　例）GL\n"
     }, TMP_GeishaGirlwithKatana_getHelpMessage_3.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_GeishaGirlwithKatana_rollDiceCommand_5 = function $$rollDiceCommand(command) {

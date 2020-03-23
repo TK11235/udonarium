@@ -38,7 +38,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Template_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "ヘルプメッセージ\n" + "骰子ボットの使い方をここに記述します。\n"
+      return "" + "ヘルプメッセージ\n" + "ダイスボットの使い方をここに記述します。\n"
     }, TMP_Template_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_Template_changeText_5 = function $$changeText(string) {

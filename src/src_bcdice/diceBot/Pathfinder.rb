@@ -17,7 +17,7 @@ class Pathfinder < DungeonsAndDoragons
 
   def getHelpMessage
     return <<MESSAGETEXT
-※この骰子ボットは部屋のシステム名表示用となります。
+※このダイスボットは部屋のシステム名表示用となります。
 MESSAGETEXT
   end
 end

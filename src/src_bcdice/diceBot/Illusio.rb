@@ -3,7 +3,7 @@
 class Illusio < DiceBot
   def initialize
     super
-    @sortType = 1 # 骰子のソート有
+    @sortType = 1 # ダイスのソート有
   end
 
   setPrefixes([
@@ -23,7 +23,7 @@ class Illusio < DiceBot
 判定：[n]IL(BNo)[P]
 
 []内のコマンドは省略可能。
-「n」で骰子数を指定。省略時は「1」。
+「n」でダイス数を指定。省略時は「1」。
 (BNo)でブロックナンバーを指定。「236」のように記述。順不同可。
 コマンド末に「P」を指定で、(BNo)のパリィ判定。（一応、複数指定可）
 

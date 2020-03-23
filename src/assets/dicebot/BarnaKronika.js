@@ -76,7 +76,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_BarnaKronika_getHelpMessage_5 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・通常判定　nBK\n" + "　骰子数nで判定ロールを行います。\n" + "　セット数が1以上の時はセット数も表示します。\n" + "・攻撃判定　nBA\n" + "　骰子数nで判定ロールを行い、攻撃値と命中部位も表示します。\n" + "・クリティカルコール　nBKCt　nBACt\n" + "　判定コマンドの後ろに「Ct」を付けるとクリティカルコールです。\n" + "　骰子数n,コール数tで判定ロールを行います。\n" + "　骰子数nで判定ロールを行います。\n" + "　セット数が1以上の時はセット数も表示し、攻撃判定の場合は命中部位も表示します。\n"
+      return "" + "・通常判定　nBK\n" + "　ダイス数nで判定ロールを行います。\n" + "　セット数が1以上の時はセット数も表示します。\n" + "・攻撃判定　nBA\n" + "　ダイス数nで判定ロールを行い、攻撃値と命中部位も表示します。\n" + "・クリティカルコール　nBKCt　nBACt\n" + "　判定コマンドの後ろに「Ct」を付けるとクリティカルコールです。\n" + "　ダイス数n,コール数tで判定ロールを行います。\n" + "　ダイス数nで判定ロールを行います。\n" + "　セット数が1以上の時はセット数も表示し、攻撃判定の場合は命中部位も表示します。\n"
     }, TMP_BarnaKronika_getHelpMessage_5.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_BarnaKronika_changeText_10 = function $$changeText(string) {

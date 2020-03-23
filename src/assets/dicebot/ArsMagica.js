@@ -55,7 +55,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_ArsMagica_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・ストレス骰子　(ArSx+y)\n" + "　\"ArS(ボッチ骰子)+(修正)\"です。判定にも使えます。Rコマンド(1R10+y[m])に読替をします。\n" + "　ボッチ骰子と修正は省略可能です。(ボッチ骰子を省略すると1として扱います)\n" + "　botch骰子の0の数が2以上の時は、数えて表示します。\n" + "　（注意！） botchの判断が発生したときには、その骰子を含めてロールした全ての骰子を[]の中に並べて表示します。\n" + "　例) (1R10[5]) ＞ 0[0,1,8,0,8,1] ＞ Botch!\n" + "　　最初の0が判断基準で、その右側5つがボッチ骰子です。1*2,8*2,0*1なので1botchという訳です。\n"
+      return "" + "・ストレスダイス　(ArSx+y)\n" + "　\"ArS(ボッチダイス)+(修正)\"です。判定にも使えます。Rコマンド(1R10+y[m])に読替をします。\n" + "　ボッチダイスと修正は省略可能です。(ボッチダイスを省略すると1として扱います)\n" + "　botchダイスの0の数が2以上の時は、数えて表示します。\n" + "　（注意！） botchの判断が発生したときには、そのダイスを含めてロールした全てのダイスを[]の中に並べて表示します。\n" + "　例) (1R10[5]) ＞ 0[0,1,8,0,8,1] ＞ Botch!\n" + "　　最初の0が判断基準で、その右側5つがボッチダイスです。1*2,8*2,0*1なので1botchという訳です。\n"
     }, TMP_ArsMagica_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_ArsMagica_changeText_9 = function $$changeText(string) {

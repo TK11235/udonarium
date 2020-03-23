@@ -3,16 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Udonarium 烏冬 1.10.3 HKTRPG</title>
+  <title>Udonarium 1.10.3</title>
   <base href="./">
-  <meta name="description" content="Udonarium HKTRPG是可以用自己的方式跑團的工具"/>
-  <meta name="keywords" content="香港TRPG,HKTRPG,COC,DND,REPLAY,TRPG,TRPG百科,平台,團錄,玩,好玩,桌遊,BG,饅饅來"/>
-  <meta name="application-name" content="香港TRPG Udonarium │HKTRPG Udonarium"/>
-  <meta property="og:title" content="Udonarium 烏冬 1.10.3 HKTRPG 跑團平台"/>
-  <meta property="og:url" content="https://udoz.hktrpg.com/"/>
-  <meta property="og:description" content="Udonarium HKTRPG是可以用自己的方式跑團的工具"/>
-  <meta property="og:image" content="https://www.hktrpg.com/wiki/resources/assets/wiki.png"/>
-  <meta property="og:type" content="跑團平台"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,43 +28,9 @@
       <div class="sk-title">Now Loading.</div>
     </div>
   </app-root>
+
   <script type="text/yaml" src="./assets/config.yaml"></script>
   <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.min.js"></script>
-
-  <script>
-    var isDirty = function () {
-      return false;
-    }
-    var formSubmitting = false;
-    window.onload = function () {
-
-      window.addEventListener("beforeunload", function (e) {
-        if (formSubmitting || isDirty()) {
-          return undefined;
-        }
-
-        var confirmationMessage = 'It looks like you have been editing something. ' +
-          'If you leave before saving, your changes will be lost.';
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-      });
-    };
-
-  </script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111430056-9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'UA-111430056-9');
-
-  </script>
-
-
 </body>
-<!--app.component.html 左側欄位-->
 
 </html>

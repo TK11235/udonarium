@@ -19,7 +19,7 @@ class DiceBotLoaderList
   # ゲームタイトル別の読み込み処理の一覧
   # @return [Array<DiceBotLoader>]
   #
-  # 新しい骰子ボットを追加した際は、以下も追加する。
+  # 新しいダイスボットを追加した際は、以下も追加する。
   @loaders = [
     DiceBotLoader.new(%w(Cthulhu COC)),
     DiceBotLoader.new(%w(Hieizan COCH)),

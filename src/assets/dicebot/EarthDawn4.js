@@ -57,7 +57,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_EarthDawn_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "ステップ骰子　(xEn+k)\n" + "ステップx、目標値n(省略可能）、カルマ骰子k(D2-D20)でステップ骰子をロールします。\n" + "振り足しも自動。\n" + "例）9E　10E8　10E+D12\n"
+      return "" + "ステップダイス　(xEn+k)\n" + "ステップx、目標値n(省略可能）、カルマダイスk(D2-D20)でステップダイスをロールします。\n" + "振り足しも自動。\n" + "例）9E　10E8　10E+D12\n"
     }, TMP_EarthDawn_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_EarthDawn_rollDiceCommand_5 = function $$rollDiceCommand(command) {
@@ -294,7 +294,7 @@ Opal.loaded(["diceBot/EarthDawn"]);
     Opal.defn(self, '$getHelpMessage', TMP_EarthDawn4_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "ステップ骰子　(xEnK)\n" + "ステップx、目標値n(省略可能）でステップ骰子をロール。\n" + "カルマ骰子使用時は末尾にKを追加（省略可能）\n" + "例）ステップ10：10E\n" + "　　ステップ10、目標値8：10E8\n" + "　　ステップ10、目標値8、カルマ骰子：10E8K\n"
+      return "" + "ステップダイス　(xEnK)\n" + "ステップx、目標値n(省略可能）でステップダイスをロール。\n" + "カルマダイス使用時は末尾にKを追加（省略可能）\n" + "例）ステップ10：10E\n" + "　　ステップ10、目標値8：10E8\n" + "　　ステップ10、目標値8、カルマダイス：10E8K\n"
     }, TMP_EarthDawn4_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_EarthDawn4_rollDiceCommand_5 = function $$rollDiceCommand(command) {

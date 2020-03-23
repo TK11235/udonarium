@@ -58,7 +58,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_DarkBlaze_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・行為判定　(DBxy#n)\n" + "　行為判定専用のコマンドです。\n" + "　\"DB(能力)(技能)#(修正)\"でロールします。Rコマンド(3R6+n[x,y]>=m mは難易度)に読替をします。\n" + "　クリティカルとファンブルも自動で処理されます。\n" + "　DB@x@y#m と DBx,y#m にも対応しました。\n" + "　例）DB33　　　DB32#-1　　　DB@3@1#1　　　DB3,2　　　DB23#1>=4　　　3R6+1[3,3]>=4\n" + "\n" + "・掘り出し袋表　(BTx)\n" + "　\"BT(骰子数)\"で掘り出し袋表を自動で振り、結果を表示します。\n" + "　例）BT1　　　BT2　　　BT[1...3]\n"
+      return "" + "・行為判定　(DBxy#n)\n" + "　行為判定専用のコマンドです。\n" + "　\"DB(能力)(技能)#(修正)\"でロールします。Rコマンド(3R6+n[x,y]>=m mは難易度)に読替をします。\n" + "　クリティカルとファンブルも自動で処理されます。\n" + "　DB@x@y#m と DBx,y#m にも対応しました。\n" + "　例）DB33　　　DB32#-1　　　DB@3@1#1　　　DB3,2　　　DB23#1>=4　　　3R6+1[3,3]>=4\n" + "\n" + "・掘り出し袋表　(BTx)\n" + "　\"BT(ダイス数)\"で掘り出し袋表を自動で振り、結果を表示します。\n" + "　例）BT1　　　BT2　　　BT[1...3]\n"
     }, TMP_DarkBlaze_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_DarkBlaze_changeText_10 = function $$changeText(string) {

@@ -30,7 +30,7 @@ class DoubleCross < DiceBot
 　・感情表(ET)
 　　ポジティブとネガティブの両方を振って、表になっている側に○を付けて表示します。もちろん任意で選ぶ部分は変更して構いません。
 
-・D66骰子あり
+・D66ダイスあり
 INFO_MESSAGE_TEXT
   end
 

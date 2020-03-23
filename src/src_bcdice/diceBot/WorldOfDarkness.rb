@@ -21,8 +21,8 @@ class WorldOfDarkness < DiceBot
   def getHelpMessage
     return <<INFO_MESSAGE_TEXT
 ・判定コマンド(xSTn+y or xSTSn+y)
-　(骰子個数)ST(難易度)+(自動成功)
-　(骰子個数)STS(難易度)+(自動成功)　※出目10で振り足し
+　(ダイス個数)ST(難易度)+(自動成功)
+　(ダイス個数)STS(難易度)+(自動成功)　※出目10で振り足し
 
 　難易度=省略時6
 　自動成功=省略時0

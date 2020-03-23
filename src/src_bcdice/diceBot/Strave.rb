@@ -8,7 +8,7 @@ class Strave < DiceBot
 
   def initialize
     super
-    @sortType = 1 # 骰子のソート有
+    @sortType = 1 # ダイスのソート有
   end
 
   def gameName
@@ -24,7 +24,7 @@ class Strave < DiceBot
 ・モラトリアムフェイズ用判定：MPm
 ・命中判定：nSTm*p
 
-「n」で骰子数を指定。
+「n」でダイス数を指定。
 「m」で目標値を指定。省略は出来ません。
 「p」で攻撃力を指定。「*」は「x」でも可。
 

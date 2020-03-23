@@ -1,5 +1,5 @@
 <div class="log" *ngIf="0 < chatMessages.length">
-  <button *ngIf="hasMany" (click)="moreMessages()">查看舊信息</button>
+  <button *ngIf="hasMany" (click)="moreMessages()">さらに古いログを見る</button>
   <ng-container *ngFor="let chatMessage of chatMessages; trackBy: trackByChatMessage">
     <chat-message *ngIf="chatMessage.isDisplayable" [chatMessage]="chatMessage" (onInit)="onMessageInit()"></chat-message>
   </ng-container>

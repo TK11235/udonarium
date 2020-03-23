@@ -39,7 +39,7 @@
     Opal.defn(self, '$gameName', TMP_DiceOfTheDead_gameName_2 = function $$gameName() {
       var self = this;
 
-      return "骰子・オブ・ザ・デッド"
+      return "ダイス・オブ・ザ・デッド"
     }, TMP_DiceOfTheDead_gameName_2.$$arity = 0);
     
     Opal.defn(self, '$gameType', TMP_DiceOfTheDead_gameType_3 = function $$gameType() {

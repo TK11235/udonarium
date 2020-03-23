@@ -75,7 +75,7 @@ INFO_MESSAGE_TEXT
     return ''
   end
 
-  # 骰子目による補正処理（現状ナイトメアハンターディープ専用）
+  # ダイス目による補正処理（現状ナイトメアハンターディープ専用）
   def getDiceRevision(n_max, dice_max, total_n)
     addText = ''
     revision = 0

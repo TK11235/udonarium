@@ -7,7 +7,7 @@ class AddDice
     @nick_e = @bcdice.nick_e
   end
 
-  ####################             加算骰子        ########################
+  ####################             加算ダイス        ########################
 
   def rollDice(string)
     debug("AddDice.rollDice() begin string", string)
@@ -72,7 +72,7 @@ class AddDice
     @diceBot.setDiceText(output)
     @diceBot.setDiffText(diffText)
 
-    # 骰子目による補正処理（現状ナイトメアハンターディープ専用）
+    # ダイス目による補正処理（現状ナイトメアハンターディープ専用）
     addText, revision = @diceBot.getDiceRevision(n_max, dice_max, total_n)
     debug('addText, revision', addText, revision)
 
@@ -95,7 +95,7 @@ class AddDice
       output += successText
     end
 
-    # 骰子ロールによるポイント等の取得処理用（T&T悪意、ナイトメアハンター・ディープ宿命、特命転校生エクストラパワーポイントなど）
+    # ダイスロールによるポイント等の取得処理用（T&T悪意、ナイトメアハンター・ディープ宿命、特命転校生エクストラパワーポイントなど）
     output += @diceBot.getDiceRolledAdditionalText(n1, n_max, dice_max)
 
     if (dice_cnt == 0) || (dice_max == 0)
@@ -106,7 +106,7 @@ class AddDice
     return output
   end
 
-  def rollDiceAddingUp(string, isCheckSuccess = false) # 加算骰子ロール(個別処理)
+  def rollDiceAddingUp(string, isCheckSuccess = false) # 加算ダイスロール(個別処理)
     debug("rollDiceAddingUp() begin string", string)
 
     dice_max = 0
@@ -118,7 +118,7 @@ class AddDice
     dice_cnt_total = 0
     double_check = false
 
-    if @diceBot.sameDiceRerollCount != 0 # 振り足しありのゲームで骰子が二個以上
+    if @diceBot.sameDiceRerollCount != 0 # 振り足しありのゲームでダイスが二個以上
       if @diceBot.sameDiceRerollType <= 0 # 判定のみ振り足し
         debug('判定のみ振り足し')
         double_check = true if isCheckSuccess
@@ -231,7 +231,7 @@ class AddDice
       n1_count += dice_dat[2]
       max_number += dice_dat[3]
 
-      # 振り足しありで骰子が二個以上
+      # 振り足しありでダイスが二個以上
       if double_check && (dice_wk >= 2)
         addDiceArrayByAddDiceCount(dice_dat, dice_max, dice_arry, dice_wk)
       end
@@ -240,7 +240,7 @@ class AddDice
       loop_count += 1
     end
 
-    # 骰子目文字列から骰子値を変更する場合の処理（現状クトゥルフ・テック専用）
+    # ダイス目文字列からダイス値を変更する場合の処理（現状クトゥルフ・テック専用）
     dice_now = @diceBot.changeDiceValueByDiceText(dice_now, dice_str, isCheckSuccess, dice_max)
 
     output = ""

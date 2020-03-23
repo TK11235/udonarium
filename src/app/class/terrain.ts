@@ -2,9 +2,6 @@ import { ImageFile } from './core/file-storage/image-file';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { DataElement } from './data-element';
 import { TabletopObject } from './tabletop-object';
-import { PeerCursor } from '@udonarium/peer-cursor';
-import {  Network } from '@udonarium/core/system';
-
 
 export enum TerrainViewState {
   NULL = 0,
@@ -18,20 +15,6 @@ export class Terrain extends TabletopObject {
   @SyncVar() isLocked: boolean = false;
   @SyncVar() mode: TerrainViewState = TerrainViewState.ALL;
   @SyncVar() rotate: number = 0;
-
-  //GM
-
-  @SyncVar() GM: string = '';
-
-  get GMName(): string {
-    let object = PeerCursor.find(this.GM);
-    return object ? object.name : '';
-  }
-  get hasGM(): boolean {
-    if (this.GM) return true
-    else return false }
-  get isMine(): boolean { return PeerCursor.myCursor.name === this.GM; }
-  get isDisabled(): boolean { return this.hasGM && !this.isMine; }
 
   get width(): number { return this.getCommonValue('width', 1); }
   set width(width: number) { this.setCommonValue('width', width); }
