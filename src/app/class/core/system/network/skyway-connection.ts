@@ -184,7 +184,6 @@ export class SkyWayConnection implements Connection {
         this.peerContext = new PeerContext(id);
       }
       this.peerContext.isOpen = true;
-      console.log('My peer Context', this.peerContext);
       if (this.callback.onOpen) this.callback.onOpen(this.peerId);
     });
 
