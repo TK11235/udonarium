@@ -12,6 +12,11 @@
         <div>{{chatTab.name}}<badge *ngIf="chatTab.hasUnread" class="badge" [count]="chatTab.unreadLength"></badge></div>
       </label>
       <button class="tab-setting small-font" (click)="showTabSetting()"><i class="material-icons small-font">settings</i>タブ設定</button>
+      <button class="tab-setting small-font" (click)="onSoundEffectSwitchChanged()">
+        <i *ngIf="!SoundEffectSwitch2()" class="material-icons icon-size">toggle_on</i>
+        <i *ngIf="SoundEffectSwitch2()" class="material-icons icon-size">toggle_off</i>
+        效果音
+      </button>
     </div>
   </form>
 <div class="table" [ngClass]="{'direct-message': isDirect}">

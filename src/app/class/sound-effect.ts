@@ -6,7 +6,7 @@ import { SyncObject } from './core/synchronize-object/decorator';
 import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { EventSystem } from './core/system';
-
+import { ChatWindowComponent } from '../component/chat-window/chat-window.component'
 export class PresetSound {
   static dicePick: string = '';
   static dicePut: string = '';
@@ -66,7 +66,8 @@ export class SoundEffect extends GameObject {
     } else {
       identifier = arg.identifier;
     }
-    SoundEffect._play(identifier);
+    if (ChatWindowComponent.SoundEffectSwitch)
+      SoundEffect._play(identifier);
   }
 
   private static _play(identifier: string) {

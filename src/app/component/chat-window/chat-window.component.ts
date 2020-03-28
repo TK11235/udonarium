@@ -23,6 +23,16 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 })
 export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
+  public static SoundEffectSwitch: boolean = true;
+  public onSoundEffectSwitchChanged() {
+    if (ChatWindowComponent.SoundEffectSwitch)
+      ChatWindowComponent.SoundEffectSwitch = false
+    else ChatWindowComponent.SoundEffectSwitch = true
+  }
+  public SoundEffectSwitch2() {
+    return ChatWindowComponent.SoundEffectSwitch;
+  }
+
 
   sender: string = 'Guest';
   text: string = '';
