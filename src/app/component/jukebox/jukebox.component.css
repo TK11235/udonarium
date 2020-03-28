@@ -21,3 +21,17 @@
 .box {
   border-bottom:1px dotted #888;
 }
+
+.volume-wrapper {
+  display: flex;
+  justify-content: space-between;
+  height: 24px;
+}
+
+.volume-label {
+  min-width: 128px;
+}
+
+.volume-controller {
+  width: 100%;
+}

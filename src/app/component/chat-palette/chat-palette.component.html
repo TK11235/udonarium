@@ -4,7 +4,7 @@
       <div class="chat-tab">
         <label *ngFor="let chatTab of chatMessageService.chatTabs">
           <input name="chat-tab" type="radio" value="{{chatTab.identifier}}" ng-control="options" [(ngModel)]="chatTabidentifier">
-          <div>{{chatTab.name}}<badge *ngIf="chatTab.hasUnread" class="badge" [count]="chatTab.unreadLength"></badge></div>
+          <div>{{chatTab.name}}<i *ngIf="chatTab.receiveInfo" class="material-icons">info</i><badge *ngIf="chatTab.hasUnread" class="badge" [count]="chatTab.unreadLength"></badge></div>
         </label>
       </div>
     </form>
@@ -15,15 +15,18 @@
       </div>
       <div class="table-cell">
         <div>
+          <div class="color-picker-container">
+            <input class="color-picker" type="color" name="favcolor" (change)="onChangeColor($event.target.value)" [(ngModel)]="color">
+          </div>
           <select style="width: 12em;" (change)="onSelectedCharacter($event.target.value)"  [ngModel]="character.identifier">
             <option *ngFor="let gameCharacter of gameCharacters" value="{{gameCharacter.identifier}}">{{gameCharacter.name}}</option>
           </select> ＞
           <select style="width: 10em;" [(ngModel)]="sendTo">
-            <option value="">全員</option>
-            <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（あなた）</ng-container></option>
+            <option value="">所有人</option>
+            <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（自己）</ng-container></option>
           </select>
           <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
-            <option value="">ダイスボット指定なし</option>
+            <option value="">基本骰組(沒有指定)</option>
             <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
           </select>
           <button (click)="showDicebotHelp()">?</button>
@@ -31,13 +34,13 @@
         <div>
           <form>
             <!--<input [(ngModel)]="text" placeholder="message" [ngModelOptions]="{standalone: true}" style="width: 25em;">-->
-            <textarea #textArea [(ngModel)]="text" placeholder="Enterで送信  Shift+Enterで改行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
+            <textarea #textArea [(ngModel)]="text" placeholder="Enter發送訊息  Shift+Enter換行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
             <button type="submit" (click)="sendChat(null)">SEND</button>
           </form>
         </div>
       </div>
     </div>
-    <div *ngIf="isEdit" class="edit-info"><i class="material-icons" style="vertical-align: bottom; size:0.8rem;">info_outline</i> チャットパレット編集中です</div>
+    <div *ngIf="isEdit" class="edit-info"><i class="material-icons" style="vertical-align: bottom; size:0.8rem;">info_outline</i> 聊天視窗編輯中</div>
   </div>
   <div *ngIf="!isEdit" style="flex-grow: 1; height: 0; min-height: 100px;">
     <select class="palette" style="overflow-y: auto;" size="5" (input)="selectPalette($event.target.value)" (click)="clickPalette($event.target.value)" #chatPlette>
@@ -47,12 +50,12 @@
     </select>
   </div>
   <div *ngIf="isEdit" style="flex-grow: 1; height: 0; min-height: 100px;">
-    <textarea class="palette" style="resize: none;" [(ngModel)]="editPalette" placeholder="チャットパレット"></textarea>
+    <textarea class="palette" style="resize: none;" [(ngModel)]="editPalette" placeholder="聊天視窗"></textarea>
   </div>
   <div style="flex-grow: 0;">
     <button type="submit" (click)="toggleEditMode()">
-      <span *ngIf="!isEdit">チャットパレットの編集</span>
-      <span *ngIf="isEdit">チャットパレットを確定</span>
+      <span *ngIf="!isEdit">編輯聊天視窗</span>
+      <span *ngIf="isEdit">確定聊天視窗</span>
     </button>
   </div>
 </div>

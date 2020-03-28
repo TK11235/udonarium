@@ -21,8 +21,8 @@ INFO_MESSAGE_TEXT
     return '' unless signOfInequality == "<="
 
     # ゾロ目ならC-ResultかBotch
-    s10 = dice_n.div(10) # 10'sダイスの出目
-    s1 = dice_n % 10 # 1'sダイスの出目
+    s10 = dice_n.div(10) # 10's骰子の出目
+    s1 = dice_n % 10 # 1's骰子の出目
 
     if s10 == 10
       s10 = 0 # 10'sと1'sの表記をそろえる

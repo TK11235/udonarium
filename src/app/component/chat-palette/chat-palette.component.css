@@ -108,3 +108,28 @@
   top: -4px;
   right: 0;
 }
+
+
+.material-icons {
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+.color-picker-container {
+  position: relative;
+  overflow: hidden;
+  width:16px;
+  height:16px;
+  border-radius: 16px;
+  float:left;
+  margin: 5px;
+}
+
+.color-picker-container > .color-picker {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 32px;
+  height: 32px;
+  border: none;
+}

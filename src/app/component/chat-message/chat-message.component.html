@@ -6,6 +6,7 @@
     </div>
     <div class="body">
       <div class="title">
+        <span [ngStyle]="{'color':chatMessage.color}">●</span>
         <span class="msg-name">{{chatMessage.name}}</span>
         <span class='tip msg-from'>{{chatMessage.from}}</span>
         <span class='tip msg-timestamp'>{{chatMessage.timestamp | date:'y/M/d H:mm'}}</span>
@@ -18,8 +19,8 @@
 </div>
 <ng-template #visible>
   <span>{{chatMessage.text}}</span>
-  <button *ngIf="chatMessage.isSecret" (click)="discloseMessage()">結果を公開</button>
+  <button *ngIf="chatMessage.isSecret" (click)="discloseMessage()">公開結果</button>
 </ng-template>
 <ng-template #secret>
-  <span>（シークレットダイス）</span>
+  <span>（暗骰）</span>
 </ng-template>

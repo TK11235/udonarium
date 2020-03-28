@@ -474,3 +474,12 @@ input[type='range']::-ms-thumb {
 input[type='range']::-ms-tooltip {
   display: none;
 }
+button[type='submit']{
+  font-size: 5px;
+}
+
+.PosZ{
+  border-radius: 5px; 
+  font-size: 5px;
+  width:40px;
+}

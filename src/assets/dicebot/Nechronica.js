@@ -61,7 +61,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Nechronica_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定　(nNC+m)\n" + "　ダイス数n、修正値mで判定ロールを行います。\n" + "　ダイス数が2以上の時のパーツ破損数も表示します。\n" + "・攻撃判定　(nNA+m)\n" + "　ダイス数n、修正値mで攻撃判定ロールを行います。\n" + "　命中部位とダイス数が2以上の時のパーツ破損数も表示します。\n"
+      return "" + "・判定　(nNC+m)\n" + "　骰子数n、修正値mで判定ロールを行います。\n" + "　骰子数が2以上の時のパーツ破損数も表示します。\n" + "・攻撃判定　(nNA+m)\n" + "　骰子数n、修正値mで攻撃判定ロールを行います。\n" + "　命中部位と骰子数が2以上の時のパーツ破損数も表示します。\n"
     }, TMP_Nechronica_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$changeText', TMP_Nechronica_changeText_9 = function $$changeText(string) {

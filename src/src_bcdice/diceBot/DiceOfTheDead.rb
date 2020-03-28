@@ -11,7 +11,7 @@ class DiceOfTheDead < DiceBot
   end
 
   def gameName
-    'ダイス・オブ・ザ・デッド'
+    '骰子・オブ・ザ・デッド'
   end
 
   def gameType
@@ -24,7 +24,7 @@ class DiceOfTheDead < DiceBot
 （x=オープン中の感染度マスの数。+xは省略可能、省略時は0）
 ・感染度表　BIOx
 （xは被弾回数。xは省略可能、省略時は1）
-（上記二つは最初からシークレットダイスで行われます）
+（上記二つは最初からシークレット骰子で行われます）
 INFO_MESSAGE_TEXT
   end
 

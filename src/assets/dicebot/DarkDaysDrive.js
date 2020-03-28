@@ -48,7 +48,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_DarkDaysDrive_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "RTT\tランダム特技決定表\n" + "ABRT アビリティ決定表\n" + "DT ダメージ表\n" + "FT 失敗表\n" + "GJT 大成功表\n" + "ITT 移動トラブル表\n" + "NTT 任務トラブル表\n" + "STT 襲撃トラブル表\n" + "HTT 変身トラブル表\n" + "DET ドライブイベント表\n" + "BET ブレイクイベント表\n" + "CT キャンプ表\n" + "KZT 関係属性表\n" + "IA イケメンアクション決定表\n" + " IAA 遠距離\n" + " IAB 移動\n" + " IAC 近距離\n" + " IAD 善人\n" + " IAE 悪人\n" + " IAF 幼い\n" + " IAG バカ\n" + " IAH 渋い\n" + " IAI 賢い\n" + " IAJ 超自然\n" + "・D66ダイスあり\n"
+      return "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "RTT\tランダム特技決定表\n" + "ABRT アビリティ決定表\n" + "DT ダメージ表\n" + "FT 失敗表\n" + "GJT 大成功表\n" + "ITT 移動トラブル表\n" + "NTT 任務トラブル表\n" + "STT 襲撃トラブル表\n" + "HTT 変身トラブル表\n" + "DET ドライブイベント表\n" + "BET ブレイクイベント表\n" + "CT キャンプ表\n" + "KZT 関係属性表\n" + "IA イケメンアクション決定表\n" + " IAA 遠距離\n" + " IAB 移動\n" + " IAC 近距離\n" + " IAD 善人\n" + " IAE 悪人\n" + " IAF 幼い\n" + " IAG バカ\n" + " IAH 渋い\n" + " IAI 賢い\n" + " IAJ 超自然\n" + "・D66骰子あり\n"
     }, TMP_DarkDaysDrive_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$check_2D6', TMP_DarkDaysDrive_check_2D6_5 = function $$check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) {
