@@ -353,16 +353,19 @@ export class TabletopService {
     bgFileContext.url = './assets/images/BG10a_80.jpg';
     testBgFile = ImageStorage.instance.add(bgFileContext);
     ImageTag.create(testBgFile.identifier).tag = 'default 桌面';
-    //let testDistanceFile: ImageFile = null;
-    //let distanceFileContext = ImageFile.createEmpty('testTableDistanceviewImage_image').toContext();
-    //distanceFileContext.url = './assets/images/BG00a1_80.jpg';
-    //testDistanceFile = ImageStorage.instance.add(distanceFileContext);
 
-    //ImageTag.create(testBgFile.identifier).tag = 'default 桌面';
+
+    let testDistanceFile: ImageFile = null;
+    let distanceFileContext = ImageFile.createEmpty('testTableDistanceviewImage_image').toContext();
+    distanceFileContext.url = './assets/images/clouds-gif.gif';
+    testDistanceFile = ImageStorage.instance.add(distanceFileContext);
+    ImageTag.create(testDistanceFile.identifier).tag = 'default 桌面';
+
+
     gameTable.name = '最初的桌面';
 
     gameTable.imageIdentifier = testBgFile.identifier;
-    //gameTable.backgroundImageIdentifier = testDistanceFile.identifier;
+    gameTable.backgroundImageIdentifier = testDistanceFile.identifier;
     gameTable.width = 20;
     gameTable.height = 15;
     gameTable.initialize();
