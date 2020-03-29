@@ -426,9 +426,10 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: any) {
+    document.addEventListener('contextmenu', event => event.preventDefault());
     if (!document.activeElement.contains(this.gameObjects.nativeElement)) return;
     e.preventDefault();
-    document.addEventListener('contextmenu', event => event.preventDefault());
+
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
