@@ -65,6 +65,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   };
 
   private callbackOnScroll: any = (e) => this.onScroll(e);
+  private addMessageEventTimer: NodeJS.Timer = null;
 
   private asyncMessagesInitializeTimer: NodeJS.Timer;
   private callbackOnScrollToBottom: any = () => this.resetMessages();
@@ -163,7 +164,16 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   onMessageInit() {
-    this.onAddMessage.emit();
+    if (this.addMessageEventTimer != null) return;
+    this.ngZone.runOutsideAngular(() => {
+      this.addMessageEventTimer = setTimeout(() => {
+        this.ngZone.run(() => {
+          clearTimeout(this.addMessageEventTimer);
+          this.addMessageEventTimer = null;
+          this.onAddMessage.emit()
+        });
+      }, 66);
+    });
   }
 
   resetMessages() {
