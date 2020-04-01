@@ -1,6 +1,6 @@
 <div class="container">
   <div class="message" [ngClass]="{'direct-message': (chatMessage.isDirect || chatMessage.isSecret), 'system-message':chatMessage.isSystem, 'dicebot-message': chatMessage.isDicebot}"
-    [@flyInOut]="'in'">
+    [@flyInOut]="animeState">
     <div class="image">
       <img *ngIf="0 < imageFile?.url?.length" [src]="imageFile?.url | safe: 'resourceUrl'" />
     </div>
