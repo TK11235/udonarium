@@ -141,7 +141,9 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   ngOnChanges() {
-    this.resetMessages();
+    Promise.resolve().then(() => new Promise(() => {
+      this.resetMessages();
+    }));
   }
 
   ngAfterViewChecked() {
