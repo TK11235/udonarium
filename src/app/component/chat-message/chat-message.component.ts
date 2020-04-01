@@ -1,5 +1,5 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { ChatMessage } from '@udonarium/chat-message';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
@@ -30,7 +30,6 @@ import { ChatMessageService } from 'service/chat-message.service';
 
 export class ChatMessageComponent implements OnInit, AfterViewInit {
   @Input() chatMessage: ChatMessage;
-  @Output() onInit: EventEmitter<null> = new EventEmitter();
   imageFile: ImageFile = ImageFile.Empty;
   animeState: string = 'inactive';
 
@@ -46,7 +45,6 @@ export class ChatMessageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.onInit.emit();
   }
 
   discloseMessage() {
