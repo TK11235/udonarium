@@ -69,7 +69,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.panelService.title = this.character.name + ' のチャットパレット';
+    Promise.resolve().then(() => this.updatePanelTitle());
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
     this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
     EventSystem.register(this)

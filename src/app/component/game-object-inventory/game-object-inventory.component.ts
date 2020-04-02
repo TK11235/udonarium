@@ -51,7 +51,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   ) { }
 
   ngOnInit() {
-    this.panelService.title = 'インベントリ';
+    Promise.resolve().then(() => this.panelService.title = 'インベントリ');
     EventSystem.register(this)
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         if (ObjectStore.instance.get(event.data.identifier) instanceof TabletopObject) {

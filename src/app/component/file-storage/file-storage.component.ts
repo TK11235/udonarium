@@ -22,7 +22,7 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.panelService.title = 'ファイル一覧';
+    Promise.resolve().then(() => this.panelService.title = 'ファイル一覧');
   }
 
   ngAfterViewInit() {

@@ -82,7 +82,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   ) { }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = 'テーブル設定';
+    Promise.resolve().then(() => this.modalService.title = this.panelService.title = 'テーブル設定');
     this.selectedTable = this.tableSelecter.viewTable;
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', 1000, event => {

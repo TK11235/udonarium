@@ -29,7 +29,7 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = 'パスワード'
+    Promise.resolve().then(() => this.modalService.title = this.panelService.title = 'パスワード');
     EventSystem.register(this);
   }
 

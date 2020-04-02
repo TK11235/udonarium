@@ -33,7 +33,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.changeTitle();
+    Promise.resolve().then(() => this.changeTitle());
     EventSystem.register(this)
       .on('OPEN_NETWORK', event => {
         this.changeTitle();

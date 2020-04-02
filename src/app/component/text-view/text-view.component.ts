@@ -18,7 +18,7 @@ export class TextViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.panelService.title = this.title;
+    Promise.resolve().then(() => this.panelService.title = this.title);
     if (this.modalService.option && this.modalService.option.title != null) {
       this.modalService.title = this.modalService.option.title ? this.modalService.option.title : '';
       this.text = this.modalService.option.text ? this.modalService.option.text : '';

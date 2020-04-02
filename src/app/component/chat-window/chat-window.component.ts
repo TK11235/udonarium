@@ -124,7 +124,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
           this.updateWritingPeerNames();
         });
       });
-    this.updatePanelTitle();
+    Promise.resolve().then(() => this.updatePanelTitle());
   }
 
   ngAfterViewInit() {
