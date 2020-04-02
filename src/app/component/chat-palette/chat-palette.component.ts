@@ -21,7 +21,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 })
 export class ChatPaletteComponent implements OnInit, OnDestroy {
   @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef<HTMLTextAreaElement>;
-  @ViewChild('chatPlette', { static: false }) chatPletteElementRef: ElementRef<HTMLSelectElement>;
+  @ViewChild('chatPlette') chatPletteElementRef: ElementRef<HTMLSelectElement>;
   @Input() character: GameCharacter = null;
 
   get palette(): ChatPalette { return this.character.chatPalette; }

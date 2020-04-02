@@ -13,8 +13,8 @@ import { TabletopService } from 'service/tabletop.service';
 })
 export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('cursor', { static: false }) cursorElementRef: ElementRef;
-  @ViewChild('opacity', { static: false }) opacityElementRef: ElementRef;
+  @ViewChild('cursor') cursorElementRef: ElementRef;
+  @ViewChild('opacity') opacityElementRef: ElementRef;
   @Input() cursor: PeerCursor = PeerCursor.myCursor;
 
   get iconUrl(): string { return this.cursor.image.url; }
