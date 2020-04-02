@@ -185,6 +185,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.preScrollTop = -1;
     this.scrollSpeed = 0;
     this.topElm = this.bottomElm = null;
+    this.adjustIndex();
     console.log(`resetMessages topIndex:${this.topIndex} bottomIndex:${this.bottomIndex} bottomSpace:${this.bottomSpace}`);
     this.changeDetector.markForCheck();
   }
