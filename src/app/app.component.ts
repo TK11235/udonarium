@@ -164,9 +164,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       })
       .on('CONNECT_PEER', event => {
         if (event.isSendFromSelf) this.chatMessageService.calibrateTimeOffset();
+        this.lazyNgZoneUpdate(event.isSendFromSelf);
       })
       .on('DISCONNECT_PEER', event => {
-        //
+        this.lazyNgZoneUpdate(event.isSendFromSelf);
       });
   }
 
