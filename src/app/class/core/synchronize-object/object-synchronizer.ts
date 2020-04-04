@@ -15,6 +15,7 @@ export class ObjectSynchronizer {
   }
 
   private requestMap: Map<ObjectIdentifier, SynchronizeRequest> = new Map();
+  private peerMap: Map<PeerId, SynchronizeTask[]> = new Map();
   private tasks: SynchronizeTask[] = [];
 
   private constructor() { }
@@ -26,6 +27,7 @@ export class ObjectSynchronizer {
       .on('CONNECT_PEER', 2, event => {
         if (!event.isSendFromSelf) return;
         console.log('CONNECT_PEER GameRoomService !!!', event.data.peer);
+        this.addPeerMap(event.data.peer);
         this.sendCatalog(event.data.peer);
       })
       .on<CatalogItem[]>('SYNCHRONIZE_GAME_OBJECT', event => {
@@ -105,19 +107,29 @@ export class ObjectSynchronizer {
     }
   }
 
+  private addPeerMap(targetPeerId: PeerId) {
+    this.peerMap.set(targetPeerId, []);
+  }
+
   private synchronize() {
     while (0 < this.requestMap.size && this.tasks.length < 32) this.runSynchronizeTask();
   }
 
   private runSynchronizeTask() {
-    let requests: SynchronizeRequest[] = this.makeRequestList();
+    let targetPeerId = this.getNextRequestPeerId();
+    let requests: SynchronizeRequest[] = this.makeRequestList(targetPeerId);
 
     if (requests.length < 1) return;
-    let task = SynchronizeTask.create(requests);
+    let task = SynchronizeTask.create(targetPeerId, requests);
     this.tasks.push(task);
+
+    let targetPeerIdTasks = this.peerMap.get(targetPeerId);
+    if (targetPeerIdTasks) targetPeerIdTasks.push(task);
 
     task.onfinish = task => {
       this.tasks.splice(this.tasks.indexOf(task), 1);
+      let targetPeerIdTasks = this.peerMap.get(targetPeerId);
+      if (targetPeerIdTasks) targetPeerIdTasks.splice(targetPeerIdTasks.indexOf(task), 1);
       this.synchronize();
     }
 
@@ -127,8 +139,7 @@ export class ObjectSynchronizer {
     }
   }
 
-  private makeRequestList(maxRequest: number = 32): SynchronizeRequest[] {
-    let entries = this.requestMap.entries();
+  private makeRequestList(targetPeerId: PeerId, maxRequest: number = 32): SynchronizeRequest[] {
     let requests: SynchronizeRequest[] = [];
 
     while (requests.length < maxRequest) {
@@ -144,5 +155,15 @@ export class ObjectSynchronizer {
       this.requestMap.delete(identifier);
     }
     return requests;
+  }
+
+  private getNextRequestPeerId(): PeerId {
+    let min = 9999;
+    let selectPeerId: PeerId = '';
+
+    for (let [peerId, tasks] of this.peerMap) {
+      if (tasks.length < min) selectPeerId = peerId;
+    }
+    return selectPeerId;
   }
 }

@@ -1,4 +1,4 @@
-import { EventSystem, Network } from '../system';
+import { EventSystem } from '../system';
 
 type PeerId = string;
 type ObjectIdentifier = string;
@@ -21,9 +21,9 @@ export class SynchronizeTask {
   private requestMap: Map<ObjectIdentifier, SynchronizeRequest> = new Map();
   private timeoutTimer: NodeJS.Timer;
 
-  private constructor() { }
+  private constructor(readonly peerId: PeerId) { }
 
-  static create(requests: SynchronizeRequest[]): SynchronizeTask {
+  static create(peerId: PeerId, requests: SynchronizeRequest[]): SynchronizeTask {
     if (SynchronizeTask.tasksMap.size < 1) {
       EventSystem.register(SynchronizeTask.key)
         .on('UPDATE_GAME_OBJECT', event => {
@@ -35,7 +35,7 @@ export class SynchronizeTask {
           SynchronizeTask.onUpdate(event.data.identifier);
         });
     }
-    let task = new SynchronizeTask();
+    let task = new SynchronizeTask(peerId);
     task.initialize(requests);
     return task;
   }
@@ -53,7 +53,8 @@ export class SynchronizeTask {
       if (tasks == null) tasks = [];
       tasks.push(this);
       SynchronizeTask.tasksMap.set(request.identifier, tasks);
-      EventSystem.call('REQUEST_GAME_OBJECT', request.identifier, this.randomChoice(request.holderIds));
+      let sendTo = this.peerId != null && request.holderIds.includes(this.peerId) ? this.peerId : null;
+      EventSystem.call('REQUEST_GAME_OBJECT', request.identifier, sendTo);
     }
 
     if (this.requestMap.size < 1) {
@@ -87,16 +88,6 @@ export class SynchronizeTask {
     } else {
       this.resetTimeout();
     }
-  }
-
-  private randomChoice(peers: string[]): string {
-    let peerContexts = Network.peerContexts.filter(peerContext => peerContext.isOpen && -1 < peers.indexOf(peerContext.fullstring));
-    if (peerContexts.length < 1) return null;
-    let min = 0;
-    let max = peerContexts.length;
-    let index = Math.floor(Math.random() * (max - min)) + min;
-    let peerId = peerContexts[index].fullstring;
-    return peerId;
   }
 
   private resetTimeout() {
