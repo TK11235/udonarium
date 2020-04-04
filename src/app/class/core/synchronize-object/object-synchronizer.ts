@@ -142,12 +142,9 @@ export class ObjectSynchronizer {
   private makeRequestList(targetPeerId: PeerId, maxRequest: number = 32): SynchronizeRequest[] {
     let requests: SynchronizeRequest[] = [];
 
-    while (requests.length < maxRequest) {
-      let item = entries.next();
-      if (item.done) break;
-
-      let identifier = item.value[0];
-      let request = item.value[1];
+    for (let [identifier, request] of this.requestMap) {
+      if (maxRequest <= requests.length) break;
+      if (!request.holderIds.includes(targetPeerId)) continue;
 
       let gameObject = ObjectStore.instance.get(request.identifier);
       if (!gameObject || gameObject.version < request.version) requests.push(request);
