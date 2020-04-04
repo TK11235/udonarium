@@ -4,6 +4,9 @@ import { ObjectFactory } from './object-factory';
 import { CatalogItem, ObjectStore } from './object-store';
 import { SynchronizeRequest, SynchronizeTask } from './synchronize-task';
 
+type PeerId = string;
+type ObjectIdentifier = string;
+
 export class ObjectSynchronizer {
   private static _instance: ObjectSynchronizer
   static get instance(): ObjectSynchronizer {
@@ -11,7 +14,7 @@ export class ObjectSynchronizer {
     return ObjectSynchronizer._instance;
   }
 
-  private requestMap: Map<string, SynchronizeRequest> = new Map();
+  private requestMap: Map<ObjectIdentifier, SynchronizeRequest> = new Map();
   private tasks: SynchronizeTask[] = [];
 
   private constructor() { }
@@ -84,7 +87,7 @@ export class ObjectSynchronizer {
     newObject.apply(context);
   }
 
-  private sendCatalog(sendTo: string) {
+  private sendCatalog(sendTo: PeerId) {
     let catalog = ObjectStore.instance.getCatalog();
     let interval = setInterval(() => {
       let count = catalog.length < 2048 ? catalog.length : 2048;
@@ -93,7 +96,7 @@ export class ObjectSynchronizer {
     });
   }
 
-  private addRequestMap(item: CatalogItem, sendFrom: string) {
+  private addRequestMap(item: CatalogItem, sendFrom: PeerId) {
     let request = this.requestMap.get(item.identifier);
     if (request && request.version === item.version) {
       request.holderIds.push(sendFrom);

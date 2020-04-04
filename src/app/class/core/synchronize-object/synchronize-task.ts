@@ -1,5 +1,8 @@
 import { EventSystem, Network } from '../system';
 
+type PeerId = string;
+type ObjectIdentifier = string;
+
 export interface SynchronizeRequest {
   identifier: string;
   version: number;
@@ -9,13 +12,13 @@ export interface SynchronizeRequest {
 
 export class SynchronizeTask {
   private static key: any = {};
-  private static tasksMap: Map<string, SynchronizeTask[]> = new Map();
+  private static tasksMap: Map<ObjectIdentifier, SynchronizeTask[]> = new Map();
 
   onsynchronize: (task: SynchronizeTask, identifier: string) => void;
   onfinish: (task: SynchronizeTask) => void;
   ontimeout: (task: SynchronizeTask, remainedRequests: SynchronizeRequest[]) => void;
 
-  private requestMap: Map<string, SynchronizeRequest> = new Map();
+  private requestMap: Map<ObjectIdentifier, SynchronizeRequest> = new Map();
   private timeoutTimer: NodeJS.Timer;
 
   private constructor() { }
@@ -64,7 +67,7 @@ export class SynchronizeTask {
     this.resetTimeout();
   }
 
-  private static onUpdate(identifier: string) {
+  private static onUpdate(identifier: ObjectIdentifier) {
     if (!SynchronizeTask.tasksMap.has(identifier)) return;
     let tasks = SynchronizeTask.tasksMap.get(identifier);
     for (let task of tasks.concat()) {
@@ -75,7 +78,7 @@ export class SynchronizeTask {
     if (SynchronizeTask.tasksMap.size < 1) EventSystem.unregister(SynchronizeTask.key);
   }
 
-  private onUpdate(identifier: string) {
+  private onUpdate(identifier: ObjectIdentifier) {
     this.requestMap.delete(identifier);
     if (this.onsynchronize) this.onsynchronize(this, identifier);
     if (this.requestMap.size < 1) {
