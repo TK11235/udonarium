@@ -58,14 +58,21 @@ export class SynchronizeTask {
     }
 
     if (this.requestMap.size < 1) {
-      setTimeout(() => {
-        if (this.onfinish) this.onfinish(this);
-        this.cancel();
-      });
+      setTimeout(() => this.finish());
       return;
     }
 
     this.resetTimeout();
+  }
+
+  private finish() {
+    if (this.onfinish) this.onfinish(this);
+    this.cancel();
+  }
+
+  private timeout() {
+    if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()).filter(request => 0 <= request.ttl));
+    this.finish();
   }
 
   private static onUpdate(identifier: ObjectIdentifier) {
@@ -83,8 +90,7 @@ export class SynchronizeTask {
     this.requestMap.delete(identifier);
     if (this.onsynchronize) this.onsynchronize(this, identifier);
     if (this.requestMap.size < 1) {
-      if (this.onfinish) this.onfinish(this);
-      this.cancel();
+      this.finish();
     } else {
       this.resetTimeout();
     }
@@ -92,10 +98,6 @@ export class SynchronizeTask {
 
   private resetTimeout() {
     clearTimeout(this.timeoutTimer);
-    this.timeoutTimer = setTimeout(() => {
-      if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()).filter(request => 0 <= request.ttl));
-      if (this.onfinish) this.onfinish(this);
-      this.cancel();
-    }, 30 * 1000);
+    this.timeoutTimer = setTimeout(() => this.timeout(), 30 * 1000);
   }
 }
