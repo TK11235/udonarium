@@ -42,7 +42,9 @@ export class SynchronizeTask {
 
   private cancel() {
     clearTimeout(this.timeoutTimer);
-    this.onfinish = this.ontimeout = null;
+    this.onsynchronize = this.onfinish = this.ontimeout = null;
+
+    this.requestMap.clear();
   }
 
   private initialize(requests: SynchronizeRequest[]) {
