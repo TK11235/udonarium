@@ -27,7 +27,6 @@ export class ObjectSynchronizer {
       .on('CONNECT_PEER', 2, event => {
         if (!event.isSendFromSelf) return;
         console.log('CONNECT_PEER GameRoomService !!!', event.data.peer);
-        this.addPeerMap(event.data.peer);
         this.sendCatalog(event.data.peer);
       })
       .on<CatalogItem[]>('SYNCHRONIZE_GAME_OBJECT', event => {
@@ -102,13 +101,19 @@ export class ObjectSynchronizer {
     let request = this.requestMap.get(item.identifier);
     if (request && request.version === item.version) {
       request.holderIds.push(sendFrom);
+      this.addPeerMap(sendFrom);
     } else if (!request || request.version < item.version) {
       this.requestMap.set(item.identifier, { identifier: item.identifier, version: item.version, holderIds: [sendFrom], ttl: 2 });
+      this.addPeerMap(sendFrom);
     }
   }
 
   private addPeerMap(targetPeerId: PeerId) {
-    this.peerMap.set(targetPeerId, []);
+    if (!this.peerMap.has(targetPeerId)) this.peerMap.set(targetPeerId, []);
+  }
+
+  private removePeerMap(targetPeerId: PeerId) {
+    this.peerMap.delete(targetPeerId);
   }
 
   private synchronize() {
@@ -119,7 +124,10 @@ export class ObjectSynchronizer {
     let targetPeerId = this.getNextRequestPeerId();
     let requests: SynchronizeRequest[] = this.makeRequestList(targetPeerId);
 
-    if (requests.length < 1) return;
+    if (requests.length < 1) {
+      this.removePeerMap(targetPeerId);
+      return;
+    }
     let task = SynchronizeTask.create(targetPeerId, requests);
     this.tasks.push(task);
 
