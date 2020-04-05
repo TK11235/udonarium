@@ -159,6 +159,10 @@ export class ObjectSynchronizer {
     let selectPeerId: PeerId = null;
     let peerContexts = Network.peerContexts;
 
+    for (let i = peerContexts.length - 1; 0 <= i; i--) {
+      let rand = Math.floor(Math.random() * (i + 1));
+      [peerContexts[i], peerContexts[rand]] = [peerContexts[rand], peerContexts[i]];
+    }
 
     for (let peerContext of peerContexts) {
       let tasks = this.peerMap.get(peerContext.fullstring);
