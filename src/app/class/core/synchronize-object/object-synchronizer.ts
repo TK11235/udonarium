@@ -1,4 +1,4 @@
-import { EventSystem } from '../system';
+import { EventSystem, Network } from '../system';
 import { GameObject, ObjectContext } from './game-object';
 import { ObjectFactory } from './object-factory';
 import { CatalogItem, ObjectStore } from './object-store';
@@ -156,10 +156,16 @@ export class ObjectSynchronizer {
 
   private getNextRequestPeerId(): PeerId {
     let min = 9999;
-    let selectPeerId: PeerId = '';
+    let selectPeerId: PeerId = null;
+    let peerContexts = Network.peerContexts;
 
-    for (let [peerId, tasks] of this.peerMap) {
-      if (tasks.length < min) selectPeerId = peerId;
+
+    for (let peerContext of peerContexts) {
+      let tasks = this.peerMap.get(peerContext.fullstring);
+      if (peerContext.isOpen && tasks && tasks.length < min) {
+        min = tasks.length;
+        selectPeerId = peerContext.fullstring;
+      }
     }
     return selectPeerId;
   }
