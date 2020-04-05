@@ -44,6 +44,10 @@ export class SynchronizeTask {
     clearTimeout(this.timeoutTimer);
     this.onsynchronize = this.onfinish = this.ontimeout = null;
 
+    for (let request of this.requestMap.values()) {
+      this.deleteTasksMapIfNeeded(request.identifier);
+    };
+
     this.requestMap.clear();
   }
 
@@ -82,9 +86,7 @@ export class SynchronizeTask {
     let tasks = SynchronizeTask.tasksMap.get(identifier);
     for (let task of tasks.concat()) {
       task.onUpdate(identifier);
-      if (task.requestMap.size < 1) tasks.splice(tasks.indexOf(task), 1);
     }
-    if (tasks.length < 1) SynchronizeTask.tasksMap.delete(identifier);
     if (SynchronizeTask.tasksMap.size < 1) EventSystem.unregister(SynchronizeTask.key);
   }
 
@@ -96,6 +98,13 @@ export class SynchronizeTask {
     } else {
       this.resetTimeout();
     }
+  }
+
+  private deleteTasksMapIfNeeded(identifier: ObjectIdentifier) {
+    let tasks = SynchronizeTask.tasksMap.get(identifier);
+    let index = tasks.indexOf(this);
+    if (-1 < index) tasks.splice(index, 1);
+    if (tasks.length < 1) SynchronizeTask.tasksMap.delete(identifier);
   }
 
   private resetTimeout() {
