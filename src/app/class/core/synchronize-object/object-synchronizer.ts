@@ -29,6 +29,9 @@ export class ObjectSynchronizer {
         console.log('CONNECT_PEER GameRoomService !!!', event.data.peer);
         this.sendCatalog(event.data.peer);
       })
+      .on('DISCONNECT_PEER', event => {
+        this.removePeerMap(event.data.peer);
+      })
       .on<CatalogItem[]>('SYNCHRONIZE_GAME_OBJECT', event => {
         if (event.isSendFromSelf) return;
         console.log('SYNCHRONIZE_GAME_OBJECT ' + event.sendFrom);

@@ -26,6 +26,9 @@ export class SynchronizeTask {
   static create(peerId: PeerId, requests: SynchronizeRequest[]): SynchronizeTask {
     if (SynchronizeTask.tasksMap.size < 1) {
       EventSystem.register(SynchronizeTask.key)
+        .on('DISCONNECT_PEER', event => {
+          SynchronizeTask.onDisconnect(event.data.peer);
+        })
         .on('UPDATE_GAME_OBJECT', event => {
           if (event.isSendFromSelf) return;
           SynchronizeTask.onUpdate(event.data.identifier);
@@ -79,6 +82,15 @@ export class SynchronizeTask {
   private timeout() {
     if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()).filter(request => 0 <= request.ttl));
     this.finish();
+  }
+
+  private static onDisconnect(peerId: PeerId) {
+    for (let tasks of SynchronizeTask.tasksMap.values()) {
+      for (let task of tasks.concat()) {
+        if (task.peerId === peerId) task.timeout();
+      }
+    }
+    if (SynchronizeTask.tasksMap.size < 1) EventSystem.unregister(SynchronizeTask.key);
   }
 
   private static onUpdate(identifier: ObjectIdentifier) {
