@@ -332,6 +332,15 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let rotateZ = 0;
 
     if (this.buttonCode === 2) {
+      // We get the final X angle ranged between 0 and 360 degrees
+      let finalRotateX = this.viewRotateX - deltaY / 5;
+      finalRotateX = ((finalRotateX % 360) + 360) % 360;
+      // If it's over 180, the game board is upside down
+      if (finalRotateX > 180) {
+        // Thus, we need to turn the over way
+        deltaX = -deltaX;
+      }
+
       rotateZ = -deltaX / 5;
       rotateX = -deltaY / 5;
     } else {
