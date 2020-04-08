@@ -58,7 +58,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
   onChangeSelectTab(identifier: string) {
     this.selectedTab = ObjectStore.instance.get<ChatTab>(identifier);
-    this.selectedTabXml = '';
+    //this.selectedTabXml = '';
   }
 
   create() {
@@ -139,7 +139,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   restore() {
     if (this.selectedTab && this.selectedTabXml) {
       let restoreTable = ObjectSerializer.instance.parseXml(this.selectedTabXml);
-      this.selectedTabXml = '';
+      //this.selectedTabXml = '';
     }
   }
 
