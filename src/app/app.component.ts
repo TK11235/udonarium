@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { ChatTab } from '@udonarium/chat-tab';
+import { ChatTabList } from '@udonarium/chat-tab-list';
 import { AudioPlayer } from '@udonarium/core/file-storage/audio-player';
 import { AudioSharingSystem } from '@udonarium/core/file-storage/audio-sharing-system';
 import { AudioStorage } from '@udonarium/core/file-storage/audio-storage';
@@ -74,6 +75,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.appConfigService.initialize();
     this.pointerDeviceService.initialize();
 
+    ChatTabList.instance.initialize();
     DataSummarySetting.instance.initialize();
 
     let diceBot: DiceBot = new DiceBot('DiceBot');
@@ -88,10 +90,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let chatTab: ChatTab = new ChatTab('MainTab');
     chatTab.name = 'メインタブ';
     chatTab.initialize();
+    ChatTabList.instance.appendChild(chatTab);
 
     chatTab = new ChatTab('SubTab');
     chatTab.name = 'サブタブ';
     chatTab.initialize();
+    ChatTabList.instance.appendChild(chatTab);
 
     let fileContext = ImageFile.createEmpty('none_icon').toContext();
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';

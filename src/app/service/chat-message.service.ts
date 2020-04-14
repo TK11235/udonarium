@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
+import { ChatTabList } from '@udonarium/chat-tab-list';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { Network } from '@udonarium/core/system';
 import { PeerContext } from '@udonarium/core/system/network/peer-context';
@@ -26,7 +27,7 @@ export class ChatMessageService {
   constructor() { }
 
   get chatTabs(): ChatTab[] {
-    return ObjectStore.instance.getObjects(ChatTab);
+    return ChatTabList.instance.children as ChatTab[];
   }
 
   calibrateTimeOffset() {

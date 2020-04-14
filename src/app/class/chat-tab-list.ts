@@ -1,32 +1,30 @@
-import { ChatTab } from './chat-tab';
 import { SyncObject } from './core/synchronize-object/decorator';
-import { GameObject } from './core/synchronize-object/game-object';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { InnerXml } from './core/synchronize-object/object-serializer';
-import { ObjectStore } from './core/synchronize-object/object-store';
 
 @SyncObject('chat-tab-list')
 export class ChatTabList extends ObjectNode implements InnerXml {
-  // GameObject Lifecycle
-  onStoreAdded() {
-    super.onStoreAdded();
-    ObjectStore.instance.remove(this); // ObjectStoreには登録しない
-  }
-
-  innerXml(): string {
-    let xml = '';
-    let gameObjects: GameObject[] = ObjectStore.instance.getObjects(ChatTab);
-    for (let gameObject of gameObjects.concat()) {
-      xml += gameObject.toXml();
+  private static _instance: ChatTabList;
+  static get instance(): ChatTabList {
+    if (!ChatTabList._instance) {
+      ChatTabList._instance = new ChatTabList('ChatTabList');
+      ChatTabList._instance.initialize();
     }
-    return xml;
+    return ChatTabList._instance;
   }
 
   parseInnerXml(element: Element) {
-    let gameObjects: GameObject[] = ObjectStore.instance.getObjects(ChatTab);
-    for (let gameObject of gameObjects.concat()) {
-      gameObject.destroy();
+    // XMLからの新規作成を許可せず、既存のオブジェクトを更新する
+    for (let child of ChatTabList.instance.children) {
+      child.destroy();
     }
-    super.parseInnerXml(element);
+
+    let context = ChatTabList.instance.toContext();
+    context.syncData = this.toContext().syncData;
+    ChatTabList.instance.apply(context);
+    ChatTabList.instance.update();
+
+    super.parseInnerXml.apply(ChatTabList.instance, [element]);
+    this.destroy();
   }
 }
