@@ -20,7 +20,7 @@ export class SaveDataService {
   saveRoom(fileName: string = 'ルームデータ') {
     let files: File[] = [];
     let roomXml = this.convertToXml(new Room());
-    let chatXml = this.convertToXml(new ChatTabList());
+    let chatXml = this.convertToXml(ChatTabList.instance);
     let summarySetting = this.convertToXml(DataSummarySetting.instance);
     files.push(new File([roomXml], 'data.xml', { type: 'text/plain' }));
     files.push(new File([chatXml], 'chat.xml', { type: 'text/plain' }));
