@@ -27,7 +27,7 @@ export class ChatMessageService {
   constructor() { }
 
   get chatTabs(): ChatTab[] {
-    return ChatTabList.instance.children as ChatTab[];
+    return ChatTabList.instance.chatTabs;
   }
 
   calibrateTimeOffset() {

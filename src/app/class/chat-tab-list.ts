@@ -14,6 +14,8 @@ export class ChatTabList extends ObjectNode implements InnerXml {
     return ChatTabList._instance;
   }
 
+  get chatTabs(): ChatTab[] { return this.children as ChatTab[]; }
+
   addChatTab(chatTab: ChatTab)
   addChatTab(tabName: string, identifier?: string)
   addChatTab(...args: any[]) {
