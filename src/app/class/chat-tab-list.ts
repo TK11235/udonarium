@@ -1,3 +1,4 @@
+import { ChatTab } from './chat-tab';
 import { SyncObject } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { InnerXml } from './core/synchronize-object/object-serializer';
@@ -11,6 +12,22 @@ export class ChatTabList extends ObjectNode implements InnerXml {
       ChatTabList._instance.initialize();
     }
     return ChatTabList._instance;
+  }
+
+  addChatTab(chatTab: ChatTab)
+  addChatTab(tabName: string, identifier?: string)
+  addChatTab(...args: any[]) {
+    let chatTab: ChatTab = null;
+    if (args[0] instanceof ChatTab) {
+      chatTab = args[0];
+    } else {
+      let tabName: string = args[0];
+      let identifier: string = args[1];
+      chatTab = new ChatTab(identifier);
+      chatTab.name = tabName;
+      chatTab.initialize();
+    }
+    this.appendChild(chatTab);
   }
 
   parseInnerXml(element: Element) {

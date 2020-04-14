@@ -57,10 +57,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    let chatTab = new ChatTab();
-    chatTab.name = 'タブ';
-    chatTab.initialize();
-    ChatTabList.instance.appendChild(chatTab);
+    ChatTabList.instance.addChatTab('タブ');
   }
 
   save() {

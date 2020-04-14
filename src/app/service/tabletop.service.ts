@@ -109,7 +109,7 @@ export class TabletopService {
           this.placeToTabletop(gameObject);
           SoundEffect.play(PresetSound.piecePut);
         } else if (gameObject instanceof ChatTab) {
-          ChatTabList.instance.appendChild(gameObject);
+          ChatTabList.instance.addChatTab(gameObject);
         }
       });
   }
