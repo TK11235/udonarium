@@ -186,7 +186,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.scrollSpeed = 0;
     this.topElm = this.bottomElm = null;
     this.adjustIndex();
-    console.log(`resetMessages topIndex:${this.topIndex} bottomIndex:${this.bottomIndex} bottomSpace:${this.bottomSpace}`);
     this.changeDetector.markForCheck();
   }
 
@@ -258,7 +257,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.topElm = this.bottomElm = null;
 
     if (hasTopBlank || hasBotomBlank || (!hasTopElm && !hasBotomElm)) {
-      //console.log(`hasTopBlank:${hasTopBlank} hasBotomBlank:${hasBotomBlank} hasTopElm:${hasTopElm} hasBotomElm:${hasBotomElm}`);
       setZeroTimeout(() => this.lazyScrollUpdate());
     }
   }
@@ -347,8 +345,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.bottomElm = chatMessageElements[chatMessageElements.length - 1];
     this.topElmBox = this.topElm.getBoundingClientRect();
     this.bottomElmBox = this.bottomElm.getBoundingClientRect();
-
-    //console.log(`topIndex:${preTopIndex} -> ${this.topIndex} bottomIndex:${preBottomIndex} -> ${this.bottomIndex}`);
 
     setZeroTimeout(() => {
       this.scrollSpeed = this.panelService.scrollablePanel.scrollTop - this.preScrollTop;
