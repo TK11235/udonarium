@@ -131,7 +131,7 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
 
   private isHandleElement(target: HTMLElement): boolean {
     if (this.handleSelector.length < 1) return true;
-    return this.isContainsElement(target, this.unhandleSelector);
+    return this.isContainsElement(target, this.handleSelector);
   }
 
   private isUnhandleElement(target: HTMLElement): boolean {
