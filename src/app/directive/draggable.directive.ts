@@ -78,7 +78,6 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
       this.cancel();
       return;
     }
-    if ((e as TouchEvent).touches == null && e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 
