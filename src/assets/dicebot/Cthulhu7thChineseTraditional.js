@@ -65,7 +65,7 @@
     Opal.defn(self, '$getHelpMessage', TMP_Cthulhu7thChineseTraditional_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
-      return "" + "\n" + "・判定　CC(x)<=（目標値）\n" + "　x：獎勵骰/懲罰骰：Bonus/Penalty Dice (2～－2)。沒有的話可以省略。\n" + "　致命的失敗：Fumble／失敗：Failure／通常成功：Regular success／\n" + "　困難成功：Hard success／極限成功：Extreme success／\n" + "　決定性的成功：Critical success　自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75\n" + "\n" + "・組合判定　(CBR(x,y))\n" + "　進行目標値 x 和 y 的判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・連射（Full Auto）判定　FAR(w,x,y,z)\n" + "　w：彈數(1～100）、x：技能値（1～100）、y：故障率\n" + "　z：獎勵、懲罰骰(-2～2)。可省略。\n" + "　只計算命中數、貫穿數及剩餘彈藥，不計算傷害。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)\n" + "\n" + "・瘋狂表\n" + "・實時型　Short／總結型　Longer\n"
+      return "" + "\n" + "・判定　CC(x)<=（目標値）\n" + "　x：獎勵骰/懲罰骰：Bonus/Penalty Dice (2～－2)。沒有的話可以省略。\n" + "　致命的失敗：Fumble／失敗：Failure／通常成功：Regular success／\n" + "　困難成功：Hard success／極限成功：Extreme success／\n" + "　決定性的成功：Critical success　自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75\n" + "\n" + "・組合判定　(CBR(x,y))\n" + "　進行目標値 x 和 y 的判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・連射（Full Auto）判定　FAR(w,x,y,z)\n" + "　w：彈數(1～100）、x：技能値（1～100）、y：故障率\n" + "　z：獎勵、懲罰骰(-2～2)。可省略。\n" + "　只計算命中數、貫穿數及剩餘彈藥，不計算傷害。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)\n" + "\n" + "・瘋狂表\n" + "・實時型　Realtime／總結型　Summary\n"
     }, TMP_Cthulhu7thChineseTraditional_getHelpMessage_4.$$arity = 0);
     
     Opal.defn(self, '$rollDiceCommand', TMP_Cthulhu7thChineseTraditional_rollDiceCommand_5 = function $$rollDiceCommand(command) {

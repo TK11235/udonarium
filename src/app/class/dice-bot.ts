@@ -291,8 +291,7 @@ export class DiceBot extends GameObject {
     'Cthulhu7thChineseTraditional_Realtime.txt',
     'Cthulhu7thChineseTraditional_Summary.txt',
     'CthulhuChineseTraditional_longer.txt',
-    'Cthulhu_longer.txt',
-    'Cthulhu_short.txt'
+    'CthulhuChineseTraditional_short.txt'
   ];
 
   // GameObject Lifecycle

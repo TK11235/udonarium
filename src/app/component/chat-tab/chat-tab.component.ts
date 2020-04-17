@@ -98,7 +98,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "更新日誌：2020/03/21 \n  筆記倉庫加回位置，人物倉庫直接顯示部份指令。\n 2020/03/28\n 增加效果音的開關鍵"
+      text: "更新日誌：2020/03/21 \n  筆記倉庫加回位置，人物倉庫直接顯示部份指令。\n 2020/03/28\n 增加效果音的開關鍵\n2020/04/17 更新COC骰表"
     }
     , {
       from: "System",
@@ -106,7 +106,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "連結:",
-      text: "https://discord.gg/vx4kcm7 意見留言DISCORD群\n開發支援　https://www.patreon.com/HKTRPG\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科"
+      text: "https://discord.gg/vx4kcm7 意見留言DISCORD群\nhttps://www.patreon.com/HKTRPG 開發支援\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科"
     }
   ];
 
