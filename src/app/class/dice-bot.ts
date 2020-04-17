@@ -25,8 +25,10 @@ export class DiceBot extends GameObject {
   private static queue: PromiseQueue = new PromiseQueue('DiceBotQueue');
 
   public static diceBotInfos: DiceBotInfo[] = [
-    { script: 'Cthulhu_ChineseTraditional', game: 'CoC' },
-    { script: 'Cthulhu7th_ChineseTraditional', game: 'CoC第7版' },
+    { script: 'CthulhuChineseTraditional', game: 'CoC(中文)' },
+    { script: 'Cthulhu7thChineseTraditional', game: 'CoC第7版(中文)' },
+    { script: 'Cthulhu', game: 'CoC(日文)' },
+    { script: 'Cthulhu7th', game: 'CoC第7版(日文)' },
     { script: 'Insane', game: 'Insane' },
     { script: 'Kamigakari', game: '神我狩' },
     { script: 'ShinobiGami', game: '忍神' },
@@ -54,7 +56,6 @@ export class DiceBot extends GameObject {
     { script: 'EarthDawn4', game: '地球黎明4版' },
     { script: 'WitchQuest', game: 'ウィッチクエスト' },
     { script: 'Warhammer', game: 'ウォーハンマー' },
-
     { script: 'Alsetto', game: '詩片的アルセット' },
     { script: 'AceKillerGene', game: 'エースキラージーン' },
     { script: 'EclipsePhase', game: 'エクリプス・フェイズ' },
@@ -69,16 +70,13 @@ export class DiceBot extends GameObject {
     { script: 'GurpsFW', game: 'GURPSFW' },
     { script: 'ChaosFlare', game: 'カオスフレア' },
     { script: 'OneWayHeroics', game: '片道勇者' },
-
     { script: 'Garako', game: 'ガラコと破界的塔' },
     { script: 'KanColle', game: '艦これRPG' },
     { script: 'Gundog', game: 'ガンドッグ' },
     { script: 'GundogZero', game: 'ガンドッグ・ゼロ' },
     { script: 'GundogRevised', game: 'ガンドッグ・リヴァイズド' },
-
     { script: 'StellarKnights', game: '銀剣的ステラナイツ' },
     { script: 'CthulhuTech', game: 'CthulhuTech' },
-
     { script: 'KurayamiCrying', game: 'クラヤミクライン' },
     { script: 'GranCrest', game: 'グランクレスト' },
     { script: 'GeishaGirlwithKatana', game: 'ゲイシャ・ガール・ウィズ・カタナ' },
@@ -89,16 +87,12 @@ export class DiceBot extends GameObject {
     { script: 'Gorilla', game: 'GorillaTRPG' },
     { script: 'ColossalHunter', game: 'コロッサルハンター' },
     { script: 'Postman', game: '壊れた世界的ポストマン' },
-
     { script: 'SharedFantasia', game: 'Shared†Fantasia' },
     { script: 'JamesBond', game: 'ジェームズ・ボンド007' },
     { script: 'LiveraDoll', game: '紫縞的リヴラドール' },
-
-
     { script: 'ShoujoTenrankai', game: '少女展爛会' },
     { script: 'Alter_raise', game: '心衝想機TRPGアルトレイズ' },
     { script: 'ShinkuuGakuen', game: '真空学園' },
-    { script: 'Cthulhu7th', game: '新クトゥルフ' },
     { script: 'ShinMegamiTenseiKakuseihen', game: '真・女神転生TRPG　覚醒篇' },
     { script: 'SRS', game: 'Standard RPG System' },
     { script: 'ScreamHighSchool', game: 'スクリームハイスクール' },
@@ -108,7 +102,6 @@ export class DiceBot extends GameObject {
     { script: 'EtrianOdysseySRS', game: '世界樹的迷宮SRS' },
     { script: 'ZettaiReido', game: '絶対隷奴' },
     { script: 'SevenFortressMobius', game: 'セブン＝フォートレス メビウス' },
-
     { script: 'Villaciel', game: '蒼天的ヴィラシエル' },
     { script: 'DarkSouls', game: 'DarkSoulsTRPG' },
     { script: 'DarkDaysDrive', game: 'ダークデイズドライブ' },
@@ -154,7 +147,6 @@ export class DiceBot extends GameObject {
     { script: 'FilledWith', game: 'フィルトウィズ' },
     { script: 'FutariSousa', game: 'フタリソウサ' },
     { script: 'BlindMythos', game: 'ブラインド・ミトス' },
-
     { script: 'BloodMoon', game: 'ブラッド・ムーン' },
     { script: 'FullMetalPanic', game: 'フルメタル・パニック！' },
     { script: 'BladeOfArcana', game: 'ブレイド・オブ・アルカナ' },
@@ -293,7 +285,14 @@ export class DiceBot extends GameObject {
     'BloodCrusade_DMST.txt',
     'BloodCrusade_MNST.txt',
     'BloodCrusade_SLST.txt',
-    'BloodCrusade_TD1T.txt'
+    'BloodCrusade_TD1T.txt',
+    'Cthulhu7thChineseTraditional_Manias.txt', 
+    'Cthulhu7thChineseTraditional_phobias.txt',
+    'Cthulhu7thChineseTraditional_Realtime.txt',
+    'Cthulhu7thChineseTraditional_Summary.txt',
+    'CthulhuChineseTraditional_longer.txt',
+    'Cthulhu_longer.txt',
+    'Cthulhu_short.txt'
   ];
 
   // GameObject Lifecycle

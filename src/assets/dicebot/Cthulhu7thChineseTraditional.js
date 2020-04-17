@@ -28,47 +28,47 @@
 
   Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$=~', '$to_i', '$last_match', '$<=', '$include?', '$min', '$max', '$+', '$rollPercentD10', '$getTotalLists', '$getTotal', '$getCheckResultText', '$join', '$roll', '$==', '$abs', '$times', '$*', '$push', '$>=', '$/', '$<', '$debug', '$>', '$rollFullAuto', '$each', '$getNextDifficltyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]', '$[]=', '$-', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$!', '$isLastBulletTurn', '$floor', '$ceil', '$getLastHitBulletCount']);
   return (function($base, $super, $parent_nesting) {
-    function $Cthulhu7th_ChineseTraditional(){};
-    var self = $Cthulhu7th_ChineseTraditional = $klass($base, $super, 'Cthulhu7th_ChineseTraditional', $Cthulhu7th_ChineseTraditional);
+    function $Cthulhu7thChineseTraditional(){};
+    var self = $Cthulhu7thChineseTraditional = $klass($base, $super, 'Cthulhu7thChineseTraditional', $Cthulhu7thChineseTraditional);
 
-    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Cthulhu7th_ChineseTraditional_initialize_1, TMP_Cthulhu7th_ChineseTraditional_gameName_2, TMP_Cthulhu7th_ChineseTraditional_gameType_3, TMP_Cthulhu7th_ChineseTraditional_getHelpMessage_4, TMP_Cthulhu7th_ChineseTraditional_rollDiceCommand_5, TMP_Cthulhu7th_ChineseTraditional_getCheckResult_6, TMP_Cthulhu7th_ChineseTraditional_rollPercentD10_7, TMP_Cthulhu7th_ChineseTraditional_getTotalLists_9, TMP_Cthulhu7th_ChineseTraditional_getTotal_10, TMP_Cthulhu7th_ChineseTraditional_getCheckResultText_11, TMP_Cthulhu7th_ChineseTraditional_getCombineRoll_12, TMP_Cthulhu7th_ChineseTraditional_getFullAutoResult_13, TMP_Cthulhu7th_ChineseTraditional_rollFullAuto_15, TMP_Cthulhu7th_ChineseTraditional_getHitResultInfos_16, TMP_Cthulhu7th_ChineseTraditional_getHitResultText_17, TMP_Cthulhu7th_ChineseTraditional_getHitType_18, TMP_Cthulhu7th_ChineseTraditional_getBulletResults_19, TMP_Cthulhu7th_ChineseTraditional_getSuccessListImpaleBulletList_20, TMP_Cthulhu7th_ChineseTraditional_getNextDifficltyMessage_21, TMP_Cthulhu7th_ChineseTraditional_getSetOfBullet_22, TMP_Cthulhu7th_ChineseTraditional_getHitBulletCountBase_23, TMP_Cthulhu7th_ChineseTraditional_isLastBulletTurn_24, TMP_Cthulhu7th_ChineseTraditional_getLastHitBulletCount_25, TMP_Cthulhu7th_ChineseTraditional_getFumbleable_26;
+    var def = self.$$proto, $nesting = [self].concat($parent_nesting), TMP_Cthulhu7thChineseTraditional_initialize_1, TMP_Cthulhu7thChineseTraditional_gameName_2, TMP_Cthulhu7thChineseTraditional_gameType_3, TMP_Cthulhu7thChineseTraditional_getHelpMessage_4, TMP_Cthulhu7thChineseTraditional_rollDiceCommand_5, TMP_Cthulhu7thChineseTraditional_getCheckResult_6, TMP_Cthulhu7thChineseTraditional_rollPercentD10_7, TMP_Cthulhu7thChineseTraditional_getTotalLists_9, TMP_Cthulhu7thChineseTraditional_getTotal_10, TMP_Cthulhu7thChineseTraditional_getCheckResultText_11, TMP_Cthulhu7thChineseTraditional_getCombineRoll_12, TMP_Cthulhu7thChineseTraditional_getFullAutoResult_13, TMP_Cthulhu7thChineseTraditional_rollFullAuto_15, TMP_Cthulhu7thChineseTraditional_getHitResultInfos_16, TMP_Cthulhu7thChineseTraditional_getHitResultText_17, TMP_Cthulhu7thChineseTraditional_getHitType_18, TMP_Cthulhu7thChineseTraditional_getBulletResults_19, TMP_Cthulhu7thChineseTraditional_getSuccessListImpaleBulletList_20, TMP_Cthulhu7thChineseTraditional_getNextDifficltyMessage_21, TMP_Cthulhu7thChineseTraditional_getSetOfBullet_22, TMP_Cthulhu7thChineseTraditional_getHitBulletCountBase_23, TMP_Cthulhu7thChineseTraditional_isLastBulletTurn_24, TMP_Cthulhu7thChineseTraditional_getLastHitBulletCount_25, TMP_Cthulhu7thChineseTraditional_getFumbleable_26;
 
     def.bonus_dice_range = nil;
     
     self.$setPrefixes(["CC\\(\\d+\\)", "CC.*", "CBR\\(\\d+,\\d+\\)", "FAR\\(\\d+\\)", "FAR.*"]);
     
-    Opal.defn(self, '$initialize', TMP_Cthulhu7th_ChineseTraditional_initialize_1 = function $$initialize() {
-      var self = this, $iter = TMP_Cthulhu7th_ChineseTraditional_initialize_1.$$p, $yield = $iter || nil, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
+    Opal.defn(self, '$initialize', TMP_Cthulhu7thChineseTraditional_initialize_1 = function $$initialize() {
+      var self = this, $iter = TMP_Cthulhu7thChineseTraditional_initialize_1.$$p, $yield = $iter || nil, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
 
-      if ($iter) TMP_Cthulhu7th_ChineseTraditional_initialize_1.$$p = null;
+      if ($iter) TMP_Cthulhu7thChineseTraditional_initialize_1.$$p = null;
       // Prepare super implicit arguments
       for($zuper_i = 0, $zuper_ii = arguments.length, $zuper = new Array($zuper_ii); $zuper_i < $zuper_ii; $zuper_i++) {
         $zuper[$zuper_i] = arguments[$zuper_i];
       }
       
-      $send(self, Opal.find_super_dispatcher(self, 'initialize', TMP_Cthulhu7th_ChineseTraditional_initialize_1, false), $zuper, $iter);
+      $send(self, Opal.find_super_dispatcher(self, 'initialize', TMP_Cthulhu7thChineseTraditional_initialize_1, false), $zuper, $iter);
       return (self.bonus_dice_range = $range(-2, 2, false));
-    }, TMP_Cthulhu7th_ChineseTraditional_initialize_1.$$arity = 0);
+    }, TMP_Cthulhu7thChineseTraditional_initialize_1.$$arity = 0);
     
-    Opal.defn(self, '$gameName', TMP_Cthulhu7th_ChineseTraditional_gameName_2 = function $$gameName() {
+    Opal.defn(self, '$gameName', TMP_Cthulhu7thChineseTraditional_gameName_2 = function $$gameName() {
       var self = this;
 
       return "克蘇魯神話第7版"
-    }, TMP_Cthulhu7th_ChineseTraditional_gameName_2.$$arity = 0);
+    }, TMP_Cthulhu7thChineseTraditional_gameName_2.$$arity = 0);
     
-    Opal.defn(self, '$gameType', TMP_Cthulhu7th_ChineseTraditional_gameType_3 = function $$gameType() {
+    Opal.defn(self, '$gameType', TMP_Cthulhu7thChineseTraditional_gameType_3 = function $$gameType() {
       var self = this;
 
-      return "Cthulhu7th:ChineseTraditional"
-    }, TMP_Cthulhu7th_ChineseTraditional_gameType_3.$$arity = 0);
+      return "Cthulhu7thChineseTraditional"
+    }, TMP_Cthulhu7thChineseTraditional_gameType_3.$$arity = 0);
     
-    Opal.defn(self, '$getHelpMessage', TMP_Cthulhu7th_ChineseTraditional_getHelpMessage_4 = function $$getHelpMessage() {
+    Opal.defn(self, '$getHelpMessage', TMP_Cthulhu7thChineseTraditional_getHelpMessage_4 = function $$getHelpMessage() {
       var self = this;
 
       return "" + "\n" + "・判定　CC(x)<=（目標値）\n" + "　x：獎勵骰/懲罰骰：Bonus/Penalty Dice (2～－2)。沒有的話可以省略。\n" + "　致命的失敗：Fumble／失敗：Failure／通常成功：Regular success／\n" + "　困難成功：Hard success／極限成功：Extreme success／\n" + "　決定性的成功：Critical success　自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75\n" + "\n" + "・組合判定　(CBR(x,y))\n" + "　進行目標値 x 和 y 的判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・連射（Full Auto）判定　FAR(w,x,y,z)\n" + "　w：彈數(1～100）、x：技能値（1～100）、y：故障率\n" + "　z：獎勵、懲罰骰(-2～2)。可省略。\n" + "　只計算命中數、貫穿數及剩餘彈藥，不計算傷害。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)\n" + "\n" + "・瘋狂表\n" + "・實時型　Short／總結型　Longer\n"
-    }, TMP_Cthulhu7th_ChineseTraditional_getHelpMessage_4.$$arity = 0);
+    }, TMP_Cthulhu7thChineseTraditional_getHelpMessage_4.$$arity = 0);
     
-    Opal.defn(self, '$rollDiceCommand', TMP_Cthulhu7th_ChineseTraditional_rollDiceCommand_5 = function $$rollDiceCommand(command) {
+    Opal.defn(self, '$rollDiceCommand', TMP_Cthulhu7thChineseTraditional_rollDiceCommand_5 = function $$rollDiceCommand(command) {
       var self = this, $case = nil;
 
       
@@ -77,9 +77,9 @@
       else if (/CBR/i['$===']($case)) {return self.$getCombineRoll(command)}
       else if (/FAR/i['$===']($case)) {return self.$getFullAutoResult(command)};
       return nil;
-    }, TMP_Cthulhu7th_ChineseTraditional_rollDiceCommand_5.$$arity = 1);
+    }, TMP_Cthulhu7thChineseTraditional_rollDiceCommand_5.$$arity = 1);
     
-    Opal.defn(self, '$getCheckResult', TMP_Cthulhu7th_ChineseTraditional_getCheckResult_6 = function $$getCheckResult(command) {
+    Opal.defn(self, '$getCheckResult', TMP_Cthulhu7thChineseTraditional_getCheckResult_6 = function $$getCheckResult(command) {
       var self = this, bonus_dice_count = nil, diff = nil, output = nil, units_digit = nil, total_list = nil, total = nil, result_text = nil;
 
       
@@ -104,9 +104,9 @@
       result_text = self.$getCheckResultText(total, diff);
       output = $rb_plus(output, "" + " ＞ " + (total_list.$join(", ")) + " ＞ " + (total) + " ＞ " + (result_text));
       return output;
-    }, TMP_Cthulhu7th_ChineseTraditional_getCheckResult_6.$$arity = 1);
+    }, TMP_Cthulhu7thChineseTraditional_getCheckResult_6.$$arity = 1);
     
-    Opal.defn(self, '$rollPercentD10', TMP_Cthulhu7th_ChineseTraditional_rollPercentD10_7 = function $$rollPercentD10() {
+    Opal.defn(self, '$rollPercentD10', TMP_Cthulhu7thChineseTraditional_rollPercentD10_7 = function $$rollPercentD10() {
       var $a, $b, self = this, dice = nil;
 
       
@@ -114,9 +114,9 @@
       if (dice['$=='](10)) {
         dice = 0};
       return dice;
-    }, TMP_Cthulhu7th_ChineseTraditional_rollPercentD10_7.$$arity = 0);
+    }, TMP_Cthulhu7thChineseTraditional_rollPercentD10_7.$$arity = 0);
     
-    Opal.defn(self, '$getTotalLists', TMP_Cthulhu7th_ChineseTraditional_getTotalLists_9 = function $$getTotalLists(bonus_dice_count, units_digit) {
+    Opal.defn(self, '$getTotalLists', TMP_Cthulhu7thChineseTraditional_getTotalLists_9 = function $$getTotalLists(bonus_dice_count, units_digit) {
       var TMP_8, self = this, total_list = nil, tens_digit_count = nil;
 
       
@@ -131,18 +131,18 @@
           total = 100};
         return total_list.$push(total);}, TMP_8.$$s = self, TMP_8.$$arity = 0, TMP_8));
       return total_list;
-    }, TMP_Cthulhu7th_ChineseTraditional_getTotalLists_9.$$arity = 2);
+    }, TMP_Cthulhu7thChineseTraditional_getTotalLists_9.$$arity = 2);
     
-    Opal.defn(self, '$getTotal', TMP_Cthulhu7th_ChineseTraditional_getTotal_10 = function $$getTotal(total_list, bonus_dice_count) {
+    Opal.defn(self, '$getTotal', TMP_Cthulhu7thChineseTraditional_getTotal_10 = function $$getTotal(total_list, bonus_dice_count) {
       var self = this;
 
       
       if ($truthy($rb_ge(bonus_dice_count, 0))) {
         return total_list.$min()};
       return total_list.$max();
-    }, TMP_Cthulhu7th_ChineseTraditional_getTotal_10.$$arity = 2);
+    }, TMP_Cthulhu7thChineseTraditional_getTotal_10.$$arity = 2);
     
-    Opal.defn(self, '$getCheckResultText', TMP_Cthulhu7th_ChineseTraditional_getCheckResultText_11 = function $$getCheckResultText(total, diff, fumbleable) {
+    Opal.defn(self, '$getCheckResultText', TMP_Cthulhu7thChineseTraditional_getCheckResultText_11 = function $$getCheckResultText(total, diff, fumbleable) {
       var self = this, fumble_text = nil;
 
       if (fumbleable == null) {
@@ -167,9 +167,9 @@
         } else if ($truthy(fumbleable)) {
           return fumble_text}};
       return "失敗";
-    }, TMP_Cthulhu7th_ChineseTraditional_getCheckResultText_11.$$arity = -3);
+    }, TMP_Cthulhu7thChineseTraditional_getCheckResultText_11.$$arity = -3);
     
-    Opal.defn(self, '$getCombineRoll', TMP_Cthulhu7th_ChineseTraditional_getCombineRoll_12 = function $$getCombineRoll(command) {
+    Opal.defn(self, '$getCombineRoll', TMP_Cthulhu7thChineseTraditional_getCombineRoll_12 = function $$getCombineRoll(command) {
       var $a, $b, self = this, diff_1 = nil, diff_2 = nil, total = nil, result_1 = nil, result_2 = nil, successList = nil, succesCount = nil, rank = nil;
 
       
@@ -197,9 +197,9 @@
         return "失敗"
       }; return nil; })();
       return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") ＞ " + (total) + "[" + (result_1) + "," + (result_2) + "] ＞ " + (rank);
-    }, TMP_Cthulhu7th_ChineseTraditional_getCombineRoll_12.$$arity = 1);
+    }, TMP_Cthulhu7thChineseTraditional_getCombineRoll_12.$$arity = 1);
     
-    Opal.defn(self, '$getFullAutoResult', TMP_Cthulhu7th_ChineseTraditional_getFullAutoResult_13 = function $$getFullAutoResult(command) {
+    Opal.defn(self, '$getFullAutoResult', TMP_Cthulhu7thChineseTraditional_getFullAutoResult_13 = function $$getFullAutoResult(command) {
       var $a, self = this, bullet_count = nil, diff = nil, broken_number = nil, bonus_dice_count = nil, output = nil, bullet_count_limit = nil;
 
       
@@ -232,9 +232,9 @@
       output = $rb_plus(output, "" + "獎勵、懲罰骰値[" + (bonus_dice_count) + "]");
       output = $rb_plus(output, self.$rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count));
       return output;
-    }, TMP_Cthulhu7th_ChineseTraditional_getFullAutoResult_13.$$arity = 1);
+    }, TMP_Cthulhu7thChineseTraditional_getFullAutoResult_13.$$arity = 1);
     
-    Opal.defn(self, '$rollFullAuto', TMP_Cthulhu7th_ChineseTraditional_rollFullAuto_15 = function $$rollFullAuto(bullet_count, diff, broken_number, dice_num) {try {
+    Opal.defn(self, '$rollFullAuto', TMP_Cthulhu7thChineseTraditional_rollFullAuto_15 = function $$rollFullAuto(bullet_count, diff, broken_number, dice_num) {try {
 
       var TMP_14, self = this, output = nil, loopCount = nil, counts = nil;
 
@@ -277,9 +277,9 @@ if (more_difficlty == null) more_difficlty = nil;
         return (dice_num = $rb_plus(dice_num, 1));}, TMP_14.$$s = self, TMP_14.$$arity = 1, TMP_14));
       return self.$getHitResultText(output, counts);
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, TMP_Cthulhu7th_ChineseTraditional_rollFullAuto_15.$$arity = 4);
+    }, TMP_Cthulhu7thChineseTraditional_rollFullAuto_15.$$arity = 4);
     
-    Opal.defn(self, '$getHitResultInfos', TMP_Cthulhu7th_ChineseTraditional_getHitResultInfos_16 = function $$getHitResultInfos(dice_num, diff, more_difficlty) {
+    Opal.defn(self, '$getHitResultInfos', TMP_Cthulhu7thChineseTraditional_getHitResultInfos_16 = function $$getHitResultInfos(dice_num, diff, more_difficlty) {
       var self = this, units_digit = nil, total_list = nil, total = nil, fumbleable = nil, hit_result = nil;
 
       
@@ -289,15 +289,15 @@ if (more_difficlty == null) more_difficlty = nil;
       fumbleable = self.$getFumbleable(more_difficlty);
       hit_result = self.$getCheckResultText(total, diff, fumbleable);
       return [hit_result, total, total_list];
-    }, TMP_Cthulhu7th_ChineseTraditional_getHitResultInfos_16.$$arity = 3);
+    }, TMP_Cthulhu7thChineseTraditional_getHitResultInfos_16.$$arity = 3);
     
-    Opal.defn(self, '$getHitResultText', TMP_Cthulhu7th_ChineseTraditional_getHitResultText_17 = function $$getHitResultText(output, counts) {
+    Opal.defn(self, '$getHitResultText', TMP_Cthulhu7thChineseTraditional_getHitResultText_17 = function $$getHitResultText(output, counts) {
       var self = this;
 
       return "" + (output) + "\n＞ " + (counts['$[]']("hit_bullet")) + "發射擊命中、" + (counts['$[]']("impale_bullet")) + "射擊貫穿、剩餘彈藥" + (counts['$[]']("bullet")) + "發"
-    }, TMP_Cthulhu7th_ChineseTraditional_getHitResultText_17.$$arity = 2);
+    }, TMP_Cthulhu7thChineseTraditional_getHitResultText_17.$$arity = 2);
     
-    Opal.defn(self, '$getHitType', TMP_Cthulhu7th_ChineseTraditional_getHitType_18 = function $$getHitType(more_difficlty, hit_result) {
+    Opal.defn(self, '$getHitType', TMP_Cthulhu7thChineseTraditional_getHitType_18 = function $$getHitType(more_difficlty, hit_result) {
       var $a, $b, self = this, successList = nil, impaleBulletList = nil;
 
       
@@ -307,9 +307,9 @@ if (more_difficlty == null) more_difficlty = nil;
       if ($truthy(impaleBulletList['$include?'](hit_result))) {
         return "impale"};
       return "";
-    }, TMP_Cthulhu7th_ChineseTraditional_getHitType_18.$$arity = 2);
+    }, TMP_Cthulhu7thChineseTraditional_getHitType_18.$$arity = 2);
     
-    Opal.defn(self, '$getBulletResults', TMP_Cthulhu7th_ChineseTraditional_getBulletResults_19 = function $$getBulletResults(bullet_count, hit_type, diff) {
+    Opal.defn(self, '$getBulletResults', TMP_Cthulhu7thChineseTraditional_getBulletResults_19 = function $$getBulletResults(bullet_count, hit_type, diff) {
       var self = this, bullet_set_count = nil, hit_bullet_count_base = nil, impale_bullet_count_base = nil, lost_bullet_count = nil, hit_bullet_count = nil, impale_bullet_count = nil, $case = nil, halfbull = nil;
 
       
@@ -338,9 +338,9 @@ if (more_difficlty == null) more_difficlty = nil;
         lost_bullet_count = bullet_count;
       };
       return [hit_bullet_count, impale_bullet_count, lost_bullet_count];
-    }, TMP_Cthulhu7th_ChineseTraditional_getBulletResults_19.$$arity = 3);
+    }, TMP_Cthulhu7thChineseTraditional_getBulletResults_19.$$arity = 3);
     
-    Opal.defn(self, '$getSuccessListImpaleBulletList', TMP_Cthulhu7th_ChineseTraditional_getSuccessListImpaleBulletList_20 = function $$getSuccessListImpaleBulletList(more_difficlty) {
+    Opal.defn(self, '$getSuccessListImpaleBulletList', TMP_Cthulhu7thChineseTraditional_getSuccessListImpaleBulletList_20 = function $$getSuccessListImpaleBulletList(more_difficlty) {
       var self = this, successList = nil, impaleBulletList = nil, $case = nil;
 
       
@@ -360,9 +360,9 @@ if (more_difficlty == null) more_difficlty = nil;
       successList = ["決定性的成功"];
       impaleBulletList = [];};
       return [successList, impaleBulletList];
-    }, TMP_Cthulhu7th_ChineseTraditional_getSuccessListImpaleBulletList_20.$$arity = 1);
+    }, TMP_Cthulhu7thChineseTraditional_getSuccessListImpaleBulletList_20.$$arity = 1);
     
-    Opal.defn(self, '$getNextDifficltyMessage', TMP_Cthulhu7th_ChineseTraditional_getNextDifficltyMessage_21 = function $$getNextDifficltyMessage(more_difficlty) {
+    Opal.defn(self, '$getNextDifficltyMessage', TMP_Cthulhu7thChineseTraditional_getNextDifficltyMessage_21 = function $$getNextDifficltyMessage(more_difficlty) {
       var self = this, $case = nil;
 
       
@@ -371,9 +371,9 @@ if (more_difficlty == null) more_difficlty = nil;
       else if ((2)['$===']($case)) {return "\n    變更難度為極限的成功"}
       else if ((3)['$===']($case)) {return "\n    變更難度為決定性的成功"};
       return "";
-    }, TMP_Cthulhu7th_ChineseTraditional_getNextDifficltyMessage_21.$$arity = 1);
+    }, TMP_Cthulhu7thChineseTraditional_getNextDifficltyMessage_21.$$arity = 1);
     
-    Opal.defn(self, '$getSetOfBullet', TMP_Cthulhu7th_ChineseTraditional_getSetOfBullet_22 = function $$getSetOfBullet(diff) {
+    Opal.defn(self, '$getSetOfBullet', TMP_Cthulhu7thChineseTraditional_getSetOfBullet_22 = function $$getSetOfBullet(diff) {
       var $a, self = this, bullet_set_count = nil;
 
       
@@ -381,9 +381,9 @@ if (more_difficlty == null) more_difficlty = nil;
       if ($truthy(($truthy($a = $rb_ge(diff, 1)) ? $rb_lt(diff, 10) : $a))) {
         bullet_set_count = 1};
       return bullet_set_count;
-    }, TMP_Cthulhu7th_ChineseTraditional_getSetOfBullet_22.$$arity = 1);
+    }, TMP_Cthulhu7thChineseTraditional_getSetOfBullet_22.$$arity = 1);
     
-    Opal.defn(self, '$getHitBulletCountBase', TMP_Cthulhu7th_ChineseTraditional_getHitBulletCountBase_23 = function $$getHitBulletCountBase(diff, bullet_set_count) {
+    Opal.defn(self, '$getHitBulletCountBase', TMP_Cthulhu7thChineseTraditional_getHitBulletCountBase_23 = function $$getHitBulletCountBase(diff, bullet_set_count) {
       var $a, self = this, hit_bullet_count_base = nil;
 
       
@@ -391,16 +391,16 @@ if (more_difficlty == null) more_difficlty = nil;
       if ($truthy(($truthy($a = $rb_ge(diff, 1)) ? $rb_lt(diff, 10) : $a))) {
         hit_bullet_count_base = 1};
       return hit_bullet_count_base;
-    }, TMP_Cthulhu7th_ChineseTraditional_getHitBulletCountBase_23.$$arity = 2);
+    }, TMP_Cthulhu7thChineseTraditional_getHitBulletCountBase_23.$$arity = 2);
     
-    Opal.defn(self, '$isLastBulletTurn', TMP_Cthulhu7th_ChineseTraditional_isLastBulletTurn_24 = function $$isLastBulletTurn(bullet_count, bullet_set_count) {
+    Opal.defn(self, '$isLastBulletTurn', TMP_Cthulhu7thChineseTraditional_isLastBulletTurn_24 = function $$isLastBulletTurn(bullet_count, bullet_set_count) {
       var self = this;
 
       
       return $rb_lt($rb_minus(bullet_count, bullet_set_count), 0);
-    }, TMP_Cthulhu7th_ChineseTraditional_isLastBulletTurn_24.$$arity = 2);
+    }, TMP_Cthulhu7thChineseTraditional_isLastBulletTurn_24.$$arity = 2);
     
-    Opal.defn(self, '$getLastHitBulletCount', TMP_Cthulhu7th_ChineseTraditional_getLastHitBulletCount_25 = function $$getLastHitBulletCount(bullet_count) {
+    Opal.defn(self, '$getLastHitBulletCount', TMP_Cthulhu7thChineseTraditional_getLastHitBulletCount_25 = function $$getLastHitBulletCount(bullet_count) {
       var self = this, count = nil;
 
       
@@ -408,12 +408,12 @@ if (more_difficlty == null) more_difficlty = nil;
         return 1};
       count = $rb_divide(bullet_count, (2).$to_f()).$floor();
       return count;
-    }, TMP_Cthulhu7th_ChineseTraditional_getLastHitBulletCount_25.$$arity = 1);
-    return (Opal.defn(self, '$getFumbleable', TMP_Cthulhu7th_ChineseTraditional_getFumbleable_26 = function $$getFumbleable(more_difficlty) {
+    }, TMP_Cthulhu7thChineseTraditional_getLastHitBulletCount_25.$$arity = 1);
+    return (Opal.defn(self, '$getFumbleable', TMP_Cthulhu7thChineseTraditional_getFumbleable_26 = function $$getFumbleable(more_difficlty) {
       var self = this;
 
       return $rb_ge(more_difficlty, 1)
-    }, TMP_Cthulhu7th_ChineseTraditional_getFumbleable_26.$$arity = 1), nil) && 'getFumbleable';
+    }, TMP_Cthulhu7thChineseTraditional_getFumbleable_26.$$arity = 1), nil) && 'getFumbleable';
   })($nesting[0], Opal.const_get_relative($nesting, 'DiceBot'), $nesting)
 })(Opal);
 
