@@ -184,42 +184,46 @@ export class LogHorizon {
     domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 
     const palette: ChatPalette = new ChatPalette(
-      'ChatPalette_' + gameCharacter.identifier
+      "ChatPalette_" + gameCharacter.identifier
     );
-    palette.dicebot = 'LogHorizon';
-    const skillToRoll = (json: LhrpgCharacter) => (skillName: string) => {
-      if (skillName === '運動') {
-        return json.abl_motion;
+    palette.dicebot = "LogHorizon";
+    const skillToRoll = (json: LhrpgCharacter) => (skillText: string) => {
+      const splitIndex = skillText.indexOf("+");
+      const skillName =
+        splitIndex < 0 ? skillText : skillText.substring(0, splitIndex);
+      const addText = splitIndex < 0 ? "" : skillText.substring(splitIndex);
+      if (skillName === "運動") {
+        return json.abl_motion + addText;
       }
-      if (skillName === '耐久') {
-        return json.abl_durability;
+      if (skillName === "耐久") {
+        return json.abl_durability + addText;
       }
-      if (skillName === '解除') {
-        return json.abl_dismantle;
+      if (skillName === "解除") {
+        return json.abl_dismantle + addText;
       }
-      if (skillName === '操作') {
-        return json.abl_operate;
+      if (skillName === "操作") {
+        return json.abl_operate + addText;
       }
-      if (skillName === '知覚') {
-        return json.abl_sense;
+      if (skillName === "知覚") {
+        return json.abl_sense + addText;
       }
-      if (skillName === '交渉') {
-        return json.abl_negotiate;
+      if (skillName === "交渉") {
+        return json.abl_negotiate + addText;
       }
-      if (skillName === '知識') {
-        return json.abl_knowledge;
+      if (skillName === "知識") {
+        return json.abl_knowledge + addText;
       }
-      if (skillName === '解析') {
-        return json.abl_analyze;
+      if (skillName === "解析") {
+        return json.abl_analyze + addText;
       }
-      if (skillName === '回避') {
-        return json.abl_avoid;
+      if (skillName === "回避") {
+        return json.abl_avoid + addText;
       }
-      if (skillName === '抵抗') {
-        return json.abl_resist;
+      if (skillName === "抵抗") {
+        return json.abl_resist + addText;
       }
-      if (skillName === '命中') {
-        return json.abl_hit;
+      if (skillName === "命中") {
+        return json.abl_hit + addText;
       }
     };
     // チャパレ内容
@@ -374,13 +378,18 @@ ITRS{CR}+0 換金アイテム財宝表
     return [gameCharacter];
   }
 
-  private static convertToCommand(skill: string): string {
+  private static convertToCommand(
+    skill: string,
+    skillRank: number = 0
+  ): string {
     let val = 0;
     let dice = 0;
-    const s = skill.split('+');
+    const s = skill.split("+");
     for (const elm of s) {
       if (elm.match(/(\d+)D/)) {
-        dice += Number.parseInt(elm.replace('D', ''), 10);
+        dice += Number.parseInt(elm.replace("D", ""), 10);
+      } else if (elm === "SR") {
+        val += skillRank;
       } else {
         val += Number.parseInt(elm, 10);
       }
@@ -409,9 +418,10 @@ ITRS{CR}+0 換金アイテム財宝表
     let judge = '';
     const jMatch = skill.roll.match(/対決\(((.*)\/.*)\)/);
     if (jMatch) {
-      judge = `${LogHorizon.convertToCommand(conv(jMatch[2]))} ${skill.name}${
-        jMatch[1]
-      }\n`;
+      judge = `${LogHorizon.convertToCommand(
+        conv(jMatch[2]),
+        skill.skill_rank
+      )} ${skill.name}${jMatch[1]}\n`;
     }
     // ステータス
     let status = '';
