@@ -208,6 +208,15 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     if (lastIndex < this.bottomIndex) this.bottomIndex = lastIndex;
   }
 
+  private getScrollPosition(): { scrollTop: number, scrollBottom: number } {
+    let scrollTop = this.panelService.scrollablePanel.scrollTop;
+    if (scrollTop < 0) scrollTop = 0;
+    if (this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight < scrollTop)
+      scrollTop = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+    let scrollBottom = scrollTop + this.panelService.scrollablePanel.clientHeight;
+    return { scrollTop, scrollBottom };
+  }
+
   private adjustScrollPosition() {
     if (!this.topElm || !this.bottomElm) return;
 
@@ -241,13 +250,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       let messageBoxTop = messageBox.top - logBox.top;
       let messageBoxBottom = messageBoxTop + messageBox.height;
 
-      let scrollTop = this.panelService.scrollablePanel.scrollTop;
-
-      if (scrollTop < 0) scrollTop = 0;
-      if (this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight < scrollTop)
-        scrollTop = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
-  
-      let scrollBottom = scrollTop + this.panelService.scrollablePanel.clientHeight;
+      let { scrollTop, scrollBottom } = this.getScrollPosition();
 
       hasTopBlank = scrollTop < messageBoxTop;
       hasBotomBlank = messageBoxBottom < scrollBottom && scrollBottom < this.panelService.scrollablePanel.scrollHeight;
@@ -299,13 +302,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     let preTopIndex = this.topIndex;
     let preBottomIndex = this.bottomIndex;
 
-    let scrollTop = this.panelService.scrollablePanel.scrollTop;
-
-    if (scrollTop < 0) scrollTop = 0;
-    if (this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight < scrollTop)
-      scrollTop = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
-
-    let scrollBottom = scrollTop + this.panelService.scrollablePanel.clientHeight;
+    let { scrollTop, scrollBottom } = this.getScrollPosition();
 
     this.scrollSpeed = scrollTop - this.preScrollTop;
     this.preScrollTop = scrollTop;
