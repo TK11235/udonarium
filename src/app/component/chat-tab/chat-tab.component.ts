@@ -242,7 +242,12 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       let messageBoxBottom = messageBoxTop + messageBox.height;
 
       let scrollTop = this.panelService.scrollablePanel.scrollTop;
-      let scrollBottom = this.panelService.scrollablePanel.scrollTop + this.panelService.scrollablePanel.clientHeight;
+
+      if (scrollTop < 0) scrollTop = 0;
+      if (this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight < scrollTop)
+        scrollTop = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+  
+      let scrollBottom = scrollTop + this.panelService.scrollablePanel.clientHeight;
 
       hasTopBlank = scrollTop < messageBoxTop;
       hasBotomBlank = messageBoxBottom < scrollBottom && scrollBottom < this.panelService.scrollablePanel.scrollHeight;
@@ -277,9 +282,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     clearTimeout(this.scrollEventTimer);
     this.scrollEventTimer = null;
 
-    this.scrollSpeed = this.panelService.scrollablePanel.scrollTop - this.preScrollTop;
-    this.preScrollTop = this.panelService.scrollablePanel.scrollTop;
-
     let chatMessageElements = this.messageContainerRef.nativeElement.querySelectorAll<HTMLElement>('chat-message');
     let maxHeight = this.minMessageHeight;
 
@@ -298,7 +300,15 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     let preBottomIndex = this.bottomIndex;
 
     let scrollTop = this.panelService.scrollablePanel.scrollTop;
-    let scrollBottom = this.panelService.scrollablePanel.scrollTop + this.panelService.scrollablePanel.clientHeight;
+
+    if (scrollTop < 0) scrollTop = 0;
+    if (this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight < scrollTop)
+      scrollTop = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+
+    let scrollBottom = scrollTop + this.panelService.scrollablePanel.clientHeight;
+
+    this.scrollSpeed = scrollTop - this.preScrollTop;
+    this.preScrollTop = scrollTop;
 
     let scrollWideTop = scrollTop - 400;
     let scrollWideBottom = scrollBottom + 400;
@@ -307,7 +317,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
     if (scrollWideTop >= messageBoxBottom || messageBoxTop >= scrollWideBottom) {
       let lastIndex = this.chatTab.chatMessages.length - 1;
-      let scrollBottomHeight = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.scrollTop - this.panelService.scrollablePanel.clientHeight;
+      let scrollBottomHeight = this.panelService.scrollablePanel.scrollHeight - scrollTop - this.panelService.scrollablePanel.clientHeight;
 
       this.bottomIndex = lastIndex - Math.floor(scrollBottomHeight / this.minMessageHeight);
       this.topIndex = this.bottomIndex - Math.floor(this.panelService.scrollablePanel.clientHeight / this.minMessageHeight);
