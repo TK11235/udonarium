@@ -196,11 +196,9 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     let lastIndex = 0 < chatMessages.length ? chatMessages.length - 1 : 0;
 
     if (this.topIndex < 0) {
-      this.bottomIndex -= this.topIndex;
       this.topIndex = 0;
     }
     if (lastIndex < this.bottomIndex) {
-      this.topIndex -= this.bottomIndex - lastIndex;
       this.bottomIndex = lastIndex;
     }
 
@@ -235,8 +233,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       diff = Math.floor(prevBox.top - currentBox.top - this.scrollSpeed);
       if ((!hasTopBlank || !hasBotomBlank) && 3 ** 2 < diff ** 2) {
         this.panelService.scrollablePanel.scrollTop -= diff;
-        this.scrollSpeed = 0;
-        this.preScrollTop = this.panelService.scrollablePanel.scrollTop;
       }
 
       let logBox: ClientRect = this.logContainerRef.nativeElement.getBoundingClientRect();
