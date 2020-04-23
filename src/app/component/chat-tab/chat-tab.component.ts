@@ -23,6 +23,9 @@ import { setZeroTimeout } from '@udonarium/core/system/util/zero-timeout';
 
 import { PanelService } from 'service/panel.service';
 
+const ua = window.navigator.userAgent.toLowerCase();
+const isiOS = ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document;
+
 @Component({
   selector: 'chat-tab',
   templateUrl: './chat-tab.component.html',
@@ -325,11 +328,11 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       if (scrollWideTop < messageBoxTop) {
         this.topIndex -= Math.floor((messageBoxTop - scrollWideTop) / maxHeight) + 1;
       } else if (scrollWideTop > messageBoxTop) {
-        this.topIndex += Math.floor((scrollWideTop - messageBoxTop) / maxHeight);
+        if (!isiOS) this.topIndex += Math.floor((scrollWideTop - messageBoxTop) / maxHeight);
       }
 
       if (messageBoxBottom > scrollWideBottom) {
-        this.bottomIndex -= Math.floor((messageBoxBottom - scrollWideBottom) / maxHeight);
+        if (!isiOS) this.bottomIndex -= Math.floor((messageBoxBottom - scrollWideBottom) / maxHeight);
       } else if (messageBoxBottom < scrollWideBottom) {
         this.bottomIndex += Math.floor((scrollWideBottom - messageBoxBottom) / maxHeight) + 1;
       }
