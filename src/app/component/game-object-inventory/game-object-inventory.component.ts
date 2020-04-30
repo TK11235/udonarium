@@ -198,7 +198,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   private showChatPalette(gameObject: GameCharacter) {
     let coordinate = this.pointerDeviceService.pointers[0];
-    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 615, height: 350 };
+    let option: PanelOption = { left: coordinate.x - 250, top: coordinate.y - 175, width: 630, height: 350 };
     let component = this.panelService.open<ChatPaletteComponent>(ChatPaletteComponent, option);
     component.character = gameObject;
   }

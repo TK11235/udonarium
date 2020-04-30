@@ -6,6 +6,7 @@
     </div>
     <div class="body">
       <div class="title">
+        <span [ngStyle]="{'color':chatMessage.color}">●</span>
         <span class="msg-name">{{chatMessage.name}}</span>
         <span class='tip msg-from'>{{chatMessage.from}}</span>
         <span class='tip msg-timestamp'>{{chatMessage.timestamp | date:'y/M/d H:mm'}}</span>
