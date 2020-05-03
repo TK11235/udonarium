@@ -292,15 +292,12 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     let maxHeight = this.minMessageHeight;
 
     for (let i = chatMessageElements.length - 1; 0 <= i; i--) {
-      let height = chatMessageElements[i].getBoundingClientRect().height;
+      let height = chatMessageElements[i].clientHeight;
       if (maxHeight < height) maxHeight = height;
     }
 
-    let logBox: ClientRect = this.logContainerRef.nativeElement.getBoundingClientRect();
-    let messageBox: ClientRect = this.messageContainerRef.nativeElement.getBoundingClientRect();
-
-    let messageBoxTop = Math.floor(messageBox.top - logBox.top);
-    let messageBoxBottom = Math.floor(messageBoxTop + messageBox.height);
+    let messageBoxTop = this.messageContainerRef.nativeElement.offsetTop;
+    let messageBoxBottom = messageBoxTop + this.messageContainerRef.nativeElement.clientHeight;
 
     let preTopIndex = this.topIndex;
     let preBottomIndex = this.bottomIndex;
