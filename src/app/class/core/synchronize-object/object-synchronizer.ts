@@ -124,7 +124,7 @@ export class ObjectSynchronizer {
   }
 
   private runSynchronizeTask() {
-    let targetPeerId = this.getNextRequestPeerId();
+    let targetPeerId = this.getTargetPeerId();
     let requests: SynchronizeRequest[] = this.makeRequestList(targetPeerId);
 
     if (requests.length < 1) {
@@ -165,7 +165,7 @@ export class ObjectSynchronizer {
     return requests;
   }
 
-  private getNextRequestPeerId(): PeerId {
+  private getTargetPeerId(): PeerId {
     let min = 9999;
     let selectPeerId: PeerId = null;
     let peerContexts = Network.peerContexts;

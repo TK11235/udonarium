@@ -48,7 +48,7 @@ export class SynchronizeTask {
     this.onsynchronize = this.onfinish = this.ontimeout = null;
 
     for (let request of this.requestMap.values()) {
-      this.deleteTasksMapIfNeeded(request.identifier);
+      this.deleteTasksMap(request.identifier);
     };
 
     this.requestMap.clear();
@@ -112,7 +112,7 @@ export class SynchronizeTask {
     }
   }
 
-  private deleteTasksMapIfNeeded(identifier: ObjectIdentifier) {
+  private deleteTasksMap(identifier: ObjectIdentifier) {
     let tasks = SynchronizeTask.tasksMap.get(identifier);
     let index = tasks.indexOf(this);
     if (-1 < index) tasks.splice(index, 1);
