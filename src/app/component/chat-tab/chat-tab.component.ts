@@ -40,7 +40,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "在這個平台中，主要的資料由使用者之間彼此傳送，HKTRPG只是提供一個平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存房間》生成ZIP檔案，下次再使用時按《讀取房間》上傳檔案，不然房間就會像煙火一樣燒光。"
+      text: "在這個平台中，主要的資料由使用者之間彼此傳送及處理，HKTRPG只是提供一個中文化的平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存房間》生成ZIP檔案，下次再使用時按《讀取房間》上傳檔案，不然房間就會像煙火一樣燒光。"
     }, {
       from: "System",
       to: "???",
@@ -63,14 +63,14 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "推薦使用桌面版Chrome。目前不支援以手機進行操作。\n本網站主網址- https://hktrpg.com/ "
+      text: "推薦使用桌面版Chrome。目前不支援以手機進行操作。\n"
     }, {
       from: "System",
       timestamp: 0,
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "源碼：　https://github.com/zeteticl/udonarium　\n 更新日誌：2020/02/19 \n 功能表可以在桌面直接生成角色，右鍵新增單張卡牌，人物複製可以選擇有序號或無序號，可輸出LOG，名字會有隨機數字，增加圖片標籤功能，音樂分成BGM和效果音，在關上網頁前會彈出提示的功能(防止沒有儲存房間)，對(角色，迷霧，地形 和倉庫角色)按兩下左鍵可以顯示詳情。"
+      text: "源碼：　https://github.com/zeteticl/udonarium\n 更新日誌：2020/02/19 \n 功能表可以在桌面直接生成角色，右鍵新增單張卡牌，人物複製可以選擇有序號或無序號，可輸出LOG，名字會有隨機數字，增加圖片標籤功能，音樂分成BGM和效果音，在關上網頁前會彈出提示的功能(防止沒有儲存房間)，對(角色，迷霧，地形 和倉庫角色)按兩下左鍵可以顯示詳情。"
     }, {
       from: "System",
       timestamp: 0,
@@ -106,7 +106,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "連結:",
-      text: "https://discord.gg/vx4kcm7 意見留言DISCORD群\nhttps://www.patreon.com/HKTRPG 開發支援\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科"
+      text: "https://udonarium.app/ 原版連結\nhttps://discord.gg/vx4kcm7 意見留言DISCORD群\nhttps://www.patreon.com/HKTRPG HKTPRG開發支援\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科"
     }
   ];
 
