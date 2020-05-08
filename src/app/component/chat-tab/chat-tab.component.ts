@@ -98,7 +98,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "更新日誌：2020/03/21 \n  筆記倉庫加回位置，人物倉庫直接顯示部份指令。\n 2020/03/28\n 增加效果音的開關鍵\n2020/04/17 更新COC骰表"
+      text: "更新日誌：2020/03/21 \n  筆記倉庫加回位置，人物倉庫直接顯示部份指令。\n 2020/03/28\n 增加效果音的開關鍵，debug: 右鍵不會再彈出普通的Menu\n2020/04/17 更新COC骰表"
     }
     , {
       from: "System",
