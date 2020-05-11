@@ -16,6 +16,7 @@ import { DeadlineHeroes } from "./system/deadline-heroes";
 import { LogHorizon, LhrpgCharacter } from "./system/log-horizon";
 import { Cthulhu7th } from "./system/cthulhu-7th";
 import { Amadeus } from "./system/amadeus";
+import { TokyoNovaX } from "./system/tokyo-nova-x";
 
 interface SystemInfo {
   system: string;
@@ -105,7 +106,13 @@ export class CharazipComponent implements OnInit {
       system: "dlh",
       name: "デッドラインヒーローズ",
       href: "https://character-sheets.appspot.com/dlh/",
-      generater: DeadlineHeroes.geneateByAppspot
+      generater: DeadlineHeroes.geneateByAppspot,
+    },
+    {
+      system: "tnx",
+      name: "トーキョーN◎VA THE AXLERATION",
+      href: "https://character-sheets.appspot.com/tnx/",
+      generater: TokyoNovaX.geneateByAppspot,
     },
     {
       system: "mnt",
