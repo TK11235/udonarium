@@ -17,6 +17,7 @@ import { LogHorizon, LhrpgCharacter } from "./system/log-horizon";
 import { Cthulhu7th } from "./system/cthulhu-7th";
 import { Amadeus } from "./system/amadeus";
 import { TokyoNovaX } from "./system/tokyo-nova-x";
+import { TokyoNightmare } from "./system/tokyo-nightmare";
 
 interface SystemInfo {
   system: string;
@@ -107,6 +108,12 @@ export class CharazipComponent implements OnInit {
       name: "デッドラインヒーローズ",
       href: "https://character-sheets.appspot.com/dlh/",
       generater: DeadlineHeroes.geneateByAppspot,
+    },
+    {
+      system: "tnm",
+      name: "トーキョー・ナイトメア",
+      href: "https://character-sheets.appspot.com/tnm/",
+      generater: TokyoNightmare.geneateByAppspot,
     },
     {
       system: "tnx",
