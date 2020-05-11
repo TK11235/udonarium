@@ -1,10 +1,10 @@
-import { SyncObject } from '@udonarium/core/synchronize-object/decorator';
+import { SyncObject } from "@udonarium/core/synchronize-object/decorator";
 
-import { DataElement } from '@udonarium/data-element';
-import { GameCharacter } from '@udonarium/game-character';
-import { StringUtil } from '@udonarium/core/system/util/string-util';
+import { DataElement } from "@udonarium/data-element";
+import { GameCharacter } from "@udonarium/game-character";
+import { StringUtil } from "@udonarium/core/system/util/string-util";
 
-@SyncObject('custom-character')
+@SyncObject("custom-character")
 export class CustomCharacter extends GameCharacter {
   static createCustomCharacter(
     name: string,
@@ -16,19 +16,19 @@ export class CustomCharacter extends GameCharacter {
     gameCharacter.initialize();
 
     gameCharacter.commonDataElement.appendChild(
-      DataElement.create('name', name, {}, `name_${gameCharacter.identifier}`)
+      DataElement.create("name", name, {}, `name_${gameCharacter.identifier}`)
     );
     gameCharacter.commonDataElement.appendChild(
-      DataElement.create('size', size, {}, `size_${gameCharacter.identifier}`)
+      DataElement.create("size", size, {}, `size_${gameCharacter.identifier}`)
     );
     if (
-      gameCharacter.imageDataElement.getFirstElementByName('imageIdentifier')
+      gameCharacter.imageDataElement.getFirstElementByName("imageIdentifier")
     ) {
       gameCharacter.imageDataElement.getFirstElementByName(
-        'imageIdentifier'
+        "imageIdentifier"
       ).value = imageIdentifier;
       gameCharacter.imageDataElement
-        .getFirstElementByName('imageIdentifier')
+        .getFirstElementByName("imageIdentifier")
         .update();
     }
 
@@ -36,12 +36,12 @@ export class CustomCharacter extends GameCharacter {
   }
 
   toXml(): string {
-    return super.toXml().replace(/custom-character/g, 'character');
+    return super.toXml().replace(/custom-character/g, "character");
   }
 
   createDataElement(name: string, value: string | number): DataElement {
     name = StringUtil.toHalfWidth(name);
-    return DataElement.create(name, value, {}, `${name}_${this.identifier}`);
+    return DataElement.create(name, value, {});
   }
 
   createResourceElement(
@@ -50,21 +50,14 @@ export class CustomCharacter extends GameCharacter {
     currentValue: string | number
   ): DataElement {
     name = StringUtil.toHalfWidth(name);
-    return DataElement.create(
-      name,
-      value,
-      { type: 'numberResource', currentValue: currentValue },
-      `${name}_${this.identifier}`
-    );
+    return DataElement.create(name, value, {
+      type: "numberResource",
+      currentValue: currentValue,
+    });
   }
 
   createNoteElement(name: string, value: string | number): DataElement {
     name = StringUtil.toHalfWidth(name);
-    return DataElement.create(
-      name,
-      value,
-      { type: 'note' },
-      `${name}_${this.identifier}`
-    );
+    return DataElement.create(name, value, { type: "note" });
   }
 }
