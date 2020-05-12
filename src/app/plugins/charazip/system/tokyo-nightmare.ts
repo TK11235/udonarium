@@ -266,13 +266,13 @@ export class TokyoNightmare {
     lifeElement.appendChild(
       gameCharacter.createDataElement("生命(制)", json.ability.life.ctl)
     );
-    const mundaneElement = gameCharacter.createDataElement("社会♣", "");
+    const mundaneElement = gameCharacter.createDataElement("外界◆", "");
     abilityElement.appendChild(mundaneElement);
     mundaneElement.appendChild(
-      gameCharacter.createDataElement("社会", json.ability.mundane.abl)
+      gameCharacter.createDataElement("外界", json.ability.mundane.abl)
     );
     mundaneElement.appendChild(
-      gameCharacter.createDataElement("社会(制)", json.ability.mundane.ctl)
+      gameCharacter.createDataElement("外界(制)", json.ability.mundane.ctl)
     );
 
     /*
@@ -303,7 +303,11 @@ export class TokyoNightmare {
     const combatElement = gameCharacter.createDataElement("戦闘データ", "");
     gameCharacter.detailDataElement.appendChild(combatElement);
     combatElement.appendChild(
-      gameCharacter.createResourceElement("CS", 21, json.ability.cs)
+      gameCharacter.createResourceElement(
+        "CS",
+        json.ability.cs,
+        json.ability.cs
+      )
     );
     const protectElement = gameCharacter.createDataElement("防御力", "");
     combatElement.appendChild(protectElement);
@@ -361,7 +365,7 @@ export class TokyoNightmare {
     const palette: ChatPalette = new ChatPalette(
       "ChatPalette_" + gameCharacter.identifier
     );
-    palette.dicebot = "TokyoNova";
+    palette.dicebot = "";
     // チャパレ内容
     let cp = `//-----神業
 《${style1.divineWork}》${style1.effect}
@@ -372,13 +376,13 @@ export class TokyoNightmare {
 C({理性}) 理性♠
 C({感情}) 感情♣
 C({生命}) 生命♥
-C({社会}) 社会◆
+C({外界}) 外界◆
 
 //-----制御値
 C({理性(制)}) 理性(制御値)♠
 C({感情(制)}) 感情(制御値)♣
 C({生命(制)}) 生命(制御値)♥
-C({社会(制)}) 社会(制御値)◆
+C({外界(制)}) 外界(制御値)◆
 `;
     cp += "\n//-----一般技能\n";
     const skills = json.skills1
