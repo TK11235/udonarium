@@ -81,4 +81,24 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
       this.selectedTabXml = '';
     }
   }
+
+  upTabIndex() {
+    if (!this.selectedTab) return;
+    let parentElement = this.selectedTab.parent;
+    let index: number = parentElement.children.indexOf(this.selectedTab);
+    if (0 < index) {
+      let prevElement = parentElement.children[index - 1];
+      parentElement.insertBefore(this.selectedTab, prevElement);
+    }
+  }
+
+  downTabIndex() {
+    if (!this.selectedTab) return;
+    let parentElement = this.selectedTab.parent;
+    let index: number = parentElement.children.indexOf(this.selectedTab);
+    if (index < parentElement.children.length - 1) {
+      let nextElement = parentElement.children[index + 1];
+      parentElement.insertBefore(nextElement, this.selectedTab);
+    }
+  }
 }
