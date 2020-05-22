@@ -76,7 +76,8 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
   restore() {
     if (this.selectedTab && this.selectedTabXml) {
-      let restoreTable = ObjectSerializer.instance.parseXml(this.selectedTabXml);
+      let restoreTable = <ChatTab>ObjectSerializer.instance.parseXml(this.selectedTabXml);
+      ChatTabList.instance.addChatTab(restoreTable);
       this.selectedTabXml = '';
     }
   }
