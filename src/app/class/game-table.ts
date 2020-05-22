@@ -5,6 +5,7 @@ import { GameTableMask } from './game-table-mask';
 import { Terrain } from './terrain';
 
 export enum GridType {
+  NONE = -1,
   SQUARE = 0,
   HEX_VERTICAL = 1,
   HEX_HORIZONTAL = 2,

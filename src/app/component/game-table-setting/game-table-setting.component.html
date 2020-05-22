@@ -42,6 +42,7 @@
       <div>
         グリッド:
         <select [(ngModel)]="tableGridType" name="tableGridType" [attr.disabled]="!isEditable ? '' : null">
+          <option value="-1">なし</option>
           <option value="0">スクエア</option>
           <option value="1">ヘクス（縦揃え）</option>
           <option value="2">ヘクス（横揃え）</option>
