@@ -340,8 +340,8 @@ export class TokyoNovaX {
     const { protecS, protecP, protecI }: Protect = json.armours
       .map((armour) => {
         return {
-          protecS: Number.parseInt(armour.protecI || 0, 10),
-          protecP: Number.parseInt(armour.protecI || 0, 10),
+          protecS: Number.parseInt(armour.protecS || 0, 10),
+          protecP: Number.parseInt(armour.protecP || 0, 10),
           protecI: Number.parseInt(armour.protecI || 0, 10),
         };
       })
