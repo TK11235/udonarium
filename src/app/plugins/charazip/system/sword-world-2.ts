@@ -113,7 +113,7 @@ export class SwordWorld2 {
       "フィジカルマスター",
       "グリモワール",
       "アーティザン",
-      "アリストクラシー"
+      "アリストクラシー",
     ];
     const skillLevelList: number[] = [];
     for (let i = 0; i < skillList.length; i++) {
@@ -190,6 +190,18 @@ export class SwordWorld2 {
 1d>=4
 2d 【平目】
 
+//----現在リソース
+HP: {HP}
+MP: {MP}
+1ゾロ: {1ゾロ}回
+所持金: {所持金}
+名誉点: {名誉点}
+
+//-----ダメージ計算
+C({HP}-()+{防護点}+{ダメージ軽減}) 　【残HP（物理ダメージ）】
+C({HP}-()+{ダメージ軽減})　【残HP（魔法ダメージ）】
+C({MP}-())　【MP消費】
+
 //-----冒険者判定
 2d+{冒険者レベル}+({知力}/6) 【真偽判定】
 2d+{冒険者レベル}+({敏捷度}/6) 【跳躍判定】【水泳判定】
@@ -200,11 +212,6 @@ export class SwordWorld2 {
     let cpBattle = `//-----抵抗力
 2d+{冒険者レベル}+({生命力}/6)+{生命抵抗} 【生命抵抗力判定】
 2d+{冒険者レベル}+({精神力}/6)+{精神抵抗} 【精神抵抗力判定】
-
-//-----ダメージ計算
-C({HP}-()+{防護点}+{ダメージ軽減}) 　【残HP（物理ダメージ）】
-C({HP}-()+{ダメージ軽減})　【残HP（魔法ダメージ）】
-C({MP}-())　【MP消費】
 
 //-----戦闘準備
 `;
@@ -344,11 +351,13 @@ C({レンジャー}+({知力}/6)) 【魔香水】
         cpBattle += `k0+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力0】${armsName}
 k10+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力10】${armsName}
 k20+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力20】${armsName}
-k20+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical -
-          1} 【威力20】${armsName}/C値-1
+k20+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${
+          critical - 1
+        } 【威力20】${armsName}/C値-1
 k30+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力30】${armsName}
-k30+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical -
-          1} 【威力30】${armsName}/C値-1
+k30+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${
+          critical - 1
+        } 【威力30】${armsName}/C値-1
 k40+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力40】${armsName}
 k70+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力70】${armsName}
 k90+{マギテック}+({知力}/6)${damageMod}+{魔法威力}@${critical} 【威力90】${armsName}
@@ -373,34 +382,34 @@ k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical}\${出
         id: 5,
         alias: "真語魔法",
         attack: [0, 10, 20, 30, 40, 50, 60, 70, 100],
-        heel: []
+        heel: [],
       },
       { id: 6, alias: "操霊魔法", attack: [0, 10, 20, 30, 60], heel: [0, 30] },
       {
         id: 7,
         alias: "神聖魔法",
         attack: [10, 20, 30, 40, 50, 70, 90],
-        heel: [10, 30, 50, 70]
+        heel: [10, 30, 50, 70],
       },
       {
         id: 8,
         alias: "妖精魔法",
         attack: [10, 20, 30, 40, 50, 60, 70],
-        heel: []
+        heel: [],
       },
       {
         id: 9,
         alias: "魔導機術",
         attack: [30, 50, 100],
-        heel: [0, 30, 50]
+        heel: [0, 30, 50],
       },
       { id: 17, alias: "召異魔法", attack: [10, 20, 30, 40, 50], heel: [] },
       {
         id: 21,
         alias: "秘奥魔法",
         attack: [10, 20, 30, 40, 50, 60, 80, 100],
-        heel: [20, 100]
-      }
+        heel: [20, 100],
+      },
     ];
     for (const magic of magicList) {
       const mlv = json[`MLv${magic.id}`];
@@ -416,7 +425,7 @@ k${iryoku}+{${hitGinouName}}+({筋力}/6)${damageMod}+{攻撃}@${critical}\${出
 2d+{${skillName}}+({知力}/6)${mod}+{魔法行使} 【${magic.alias}行使判定】\n`;
       cpBattle += magic.attack
         .map(
-          iryoku =>
+          (iryoku) =>
             `k${iryoku}+{${skillName}}+({知力}/6)${mod}+{魔法威力} 【${magic.alias}威力${iryoku}】\n`
         )
         .reduce((txt, elm) => txt + elm, "");
@@ -428,7 +437,7 @@ k40+{${skillName}}+({知力}/6)${mod}+{魔法威力}@11 【ゴッド・フィス
       }
       cpBattle += magic.heel
         .map(
-          iryoku =>
+          (iryoku) =>
             `k${iryoku}+{${skillName}}+({知力}/6)${mod}+{魔法威力}@13 【${magic.alias}回復${iryoku}】\n`
         )
         .reduce((txt, elm) => txt + elm, "");

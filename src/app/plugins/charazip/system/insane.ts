@@ -43,7 +43,7 @@ export class Insane {
       bc: "知覚",
       cd: "技術",
       de: "知識",
-      e: "怪異"
+      e: "怪異",
     };
     statusElement.appendChild(
       gameCharacter.createDataElement(
@@ -91,7 +91,7 @@ export class Insane {
       ["刺す", "怒り", "追跡", "乗物", "歴史", "終末"],
       ["射撃", "恨み", "芸術", "機械", "民俗学", "夢"],
       ["戦争", "哀しみ", "第六感", "罠", "考古学", "地底"],
-      ["埋葬", "愛", "物陰", "兵器", "天文学", "宇宙"]
+      ["埋葬", "愛", "物陰", "兵器", "天文学", "宇宙"],
     ];
     let skillCount = 0;
     for (const skill of json.learned) {
@@ -132,7 +132,7 @@ export class Insane {
      */
     const emotionList = [
       ["共感", "友情", "愛情", "忠誠", "憧憬", "狂信"],
-      ["不信", "怒り", "妬み", "侮蔑", "劣等感", "殺意"]
+      ["不信", "怒り", "妬み", "侮蔑", "劣等感", "殺意"],
     ];
     const personalityElement = gameCharacter.createDataElement("人物欄", "");
     gameCharacter.detailDataElement.appendChild(personalityElement);
@@ -166,8 +166,9 @@ export class Insane {
       abilityElement.appendChild(
         gameCharacter.createNoteElement(
           ability.name,
-          `${ability.type}／${ability.targetSkill ||
-            "なし"}／${ability.effect || ""}`
+          `${ability.type}／${ability.targetSkill || "なし"}／${
+            ability.effect || ""
+          }`
         )
       );
     }
@@ -188,6 +189,13 @@ FT 【感情表】
 ST 【シーン表】
 RTT 【ランダム特技決定表】
 BET 【バッドエンド表】
+
+生命力: {生命力}
+正気度: {正気度}
+鎮痛剤: 残り {鎮痛剤} 個
+武器: 残り {武器} 個
+お守り: 残り {お守り} 個
+恐怖心: {恐怖心}
 
 `;
     cp += json.ability
