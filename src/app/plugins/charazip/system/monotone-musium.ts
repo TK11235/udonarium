@@ -56,6 +56,16 @@ export class MonotoneMusium {
         json.base.exfoliation.value
       )
     );
+    const fortunePoint: number =
+      Number.parseInt(json.fortunepoint || 0, 10) +
+      Number.parseInt(json.addfortunepoint || 0, 10);
+    resourceElement.appendChild(
+      gameCharacter.createResourceElement(
+        "財産ポイント",
+        fortunePoint,
+        fortunePoint
+      )
+    );
     /*
      * ステータス
      */
@@ -180,6 +190,12 @@ export class MonotoneMusium {
         gameCharacter.createDataElement(`逸脱能力${specialCount}`, special.name)
       );
     }
+    while (specialCount < 3) {
+      specialCount++;
+      specialElement.appendChild(
+        gameCharacter.createDataElement(`逸脱能力${specialCount}`, "")
+      );
+    }
     /*
      * 特技
      */
@@ -212,6 +228,7 @@ export class MonotoneMusium {
     let cp = `HP: {HP}
 MP: {MP}
 剥離値: {剥離値}
+財産ポイント: {財産ポイント}
 
 2d6+{肉体} 肉体
 2d6+{知覚} 知覚
