@@ -102,11 +102,19 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     }
     , {
       from: "System",
+      timestamp: 0,
+      imageIdentifier: "",
+      tag: "",
+      name: "教學Zzzzzz",
+      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用"
+    }
+    , {
+      from: "System",
       timestamp: 9999999999999,
       imageIdentifier: "",
       tag: "",
       name: "連結:",
-      text: "https://udonarium.app/ 原版連結\nhttps://discord.gg/vx4kcm7 意見留言DISCORD群\nhttps://www.patreon.com/HKTRPG HKTPRG開發支援\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科"
+      text: "https://udonarium.app/ 原版連結\nhttps://discord.gg/vx4kcm7 意見留言DISCORD群\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科\nhttps://www.patreon.com/HKTRPG HKTPRG開發支援"
     }
   ];
 
