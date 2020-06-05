@@ -35,6 +35,7 @@ export class UIPanelComponent implements OnInit {
   @Input() set width(width: number) { this.panelService.width = width; }
   @Input() set height(height: number) { this.panelService.height = height; }
 
+
   get title(): string { return this.panelService.title; }
   get left() { return this.panelService.left; }
   get top() { return this.panelService.top; }
@@ -47,16 +48,33 @@ export class UIPanelComponent implements OnInit {
   private preHeight: number = 100;
 
   private isFullScreen: boolean = false;
+  private dheight: number = 0;
 
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
 
   constructor(
     public panelService: PanelService,
     private pointerDeviceService: PointerDeviceService
-  ) { }
+  ) {
+
+
+  }
 
   ngOnInit() {
     this.panelService.scrollablePanel = this.scrollablePanel.nativeElement;
+  }
+
+  toggleminimize() {
+    let panel = this.draggablePanel.nativeElement;
+    if (!this.scrollablePanel.nativeElement.hidden) {
+      this.dheight = this.height
+      this.height = 0
+      this.scrollablePanel.nativeElement.hidden = true;
+    }
+    else {
+      this.height = this.dheight;
+      this.scrollablePanel.nativeElement.hidden = false;
+    }
   }
 
   toggleFullScreen() {
