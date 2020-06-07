@@ -241,6 +241,14 @@ MP: {MP}
 2d6+{回避値} 回避値
 2d6+{術操値} 術操値
 2d6+{抵抗値} 抵抗値
+
+ET 感情表
+OT 兆候表
+WDT 世界歪曲表
+
+ET2 感情表2.0
+OT2 兆候表2.0
+WDT2 世界歪曲表2.0
 `;
     cp += json.specials
       .filter((special: any) => special.name)
