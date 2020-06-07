@@ -8,7 +8,7 @@ import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { DiceSymbol, DiceType } from '@udonarium/dice-symbol';
 import { GameCharacter } from '@udonarium/game-character';
-import { GameTable } from '@udonarium/game-table';
+import { GameTable, FilterType } from '@udonarium/game-table';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
@@ -357,7 +357,8 @@ export class TabletopService {
 
     let testDistanceFile: ImageFile = null;
     let distanceFileContext = ImageFile.createEmpty('testTableDistanceviewImage_image').toContext();
-    distanceFileContext.url = './assets/images/clouds-gif.gif';
+    distanceFileContext.url = './assets/images/1008_rotated7.gif';
+
     testDistanceFile = ImageStorage.instance.add(distanceFileContext);
     ImageTag.create(testDistanceFile.identifier).tag = 'default 桌面';
 
@@ -368,8 +369,8 @@ export class TabletopService {
     gameTable.backgroundImageIdentifier = testDistanceFile.identifier;
     gameTable.width = 20;
     gameTable.height = 15;
+    gameTable.backgroundFilterType = FilterType.WHITE;
     gameTable.initialize();
-
     tableSelecter.viewTableIdentifier = gameTable.identifier;
   }
 
