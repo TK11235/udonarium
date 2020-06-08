@@ -5,7 +5,7 @@ import {
   ViewChild,
   NgZone,
   AfterViewInit,
-  OnDestroy
+  OnDestroy,
 } from "@angular/core";
 import { CardStack } from "@udonarium/card-stack";
 import { Card } from "@udonarium/card";
@@ -20,11 +20,12 @@ import { ObjectSerializer } from "@udonarium/core/synchronize-object/object-seri
 import { TabletopService } from "service/tabletop.service";
 import { ContextMenuService } from "service/context-menu.service";
 import { PointerDeviceService } from "service/pointer-device.service";
+import { FileSelecterComponent } from "component/file-selecter/file-selecter.component";
 
 @Component({
   selector: "app-deck-editor",
   templateUrl: "./deck-editor.component.html",
-  styleUrls: ["./deck-editor.component.css"]
+  styleUrls: ["./deck-editor.component.css"],
 })
 export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("modalLayer", { read: ViewContainerRef, static: true })
@@ -64,6 +65,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private saveDataService: SaveDataService,
+    private modalService: ModalService,
     private pointerDeviceService: PointerDeviceService,
     private tabletopService: TabletopService,
     private ngZone: NgZone
@@ -78,7 +80,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.pointerDeviceService.initialize();
     this.tabletopService.makeDefaultTable();
     this.createBlankDeck();
-    EventSystem.register(this).on<File>("FILE_LOADED", event => {
+    EventSystem.register(this).on<File>("FILE_LOADED", (event) => {
       this.lazyNgZoneUpdate(false);
     });
   }
@@ -156,6 +158,21 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   trackByCard(index: number, card: Card) {
     return card.identifier;
+  }
+
+  openModal(name: string = "", isAllowedEmpty: boolean = false): void {
+    this.modalService
+      .open<string>(FileSelecterComponent, { isAllowedEmpty })
+      .then((value) => {
+        if (!confirm("すべての裏面の画像を変更しますがよろしいでしょうか？"))
+          return;
+        if (!this.selectedStack || !this.isEditable || !value) return;
+        for (const card of this.selectedStack.cards) {
+          const element = card.imageDataElement.getFirstElementByName(name);
+          if (!element) continue;
+          element.value = value;
+        }
+      });
   }
 
   /**

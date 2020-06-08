@@ -54,6 +54,8 @@
         <br />
         <button (click)="faceUpAll()">すべて表にする</button>
         <button (click)="faceDownAll()">すべて裏にする</button>
+        <br />
+        <button (click)="openModal('back')">すべての裏面の画像を変更</button>
       </ng-container>
       <ng-container *ngIf="isDeleted">
         <button (click)="restore()">元に戻す</button>
