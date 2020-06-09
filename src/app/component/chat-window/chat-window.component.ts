@@ -16,12 +16,17 @@ import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { GameObjectInventoryService} from 'service/game-object-inventory.service';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 
+import { ModalService } from 'service/modal.service';
 @Component({
   selector: 'chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css']
 })
+
+
+
 export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
   public static SoundEffectSwitch: boolean = true;
@@ -83,6 +88,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
+    private modalService: ModalService,
     private ngZone: NgZone,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
@@ -317,6 +323,12 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         return true;
     }
+  }
+  changeIcon() {
+    this.modalService.open<string>(FileSelecterComponent).then(value => {
+      if (!this.myPeer || !value) return;
+      this.myPeer.imageIdentifier = value;
+    });
   }
 
   trackByChatTab(index: number, chatTab: ChatTab) {

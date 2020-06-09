@@ -40,7 +40,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "在這個平台中，主要的資料由使用者之間彼此傳送及處理，HKTRPG只是提供一個中文化的平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存房間》生成ZIP檔案，下次再使用時按《讀取房間》上傳檔案，不然房間就會像煙火一樣燒光。"
+      text: "烏冬說明: 這是由日本作者TK11235 所開發的開源TRPG跑團平台，使用MIT授權方式。特點是地圖顯示使用2.5D的方式，架構簡單，容易擴充。原版地址在底下。\n在這個平台中，主要的資料由使用者之間彼此傳送及處理，HKTRPG只是提供一個中文化的平台，棋子圖片等等都是儲存在使用者的電腦之中，所以離開前，請大家先按《保存房間》生成ZIP檔案，下次再使用時按《讀取房間》上傳檔案，不然房間就會像煙火一樣燒光。"
     }, {
       from: "System",
       to: "???",
@@ -106,7 +106,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用"
+      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。"
     }
     , {
       from: "System",

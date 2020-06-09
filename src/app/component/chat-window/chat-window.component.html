@@ -28,7 +28,7 @@
           *ngIf="gameCharacter && gameCharacter.imageFile != null && 0 < gameCharacter.imageFile?.url?.length"
           [src]="gameCharacter.imageFile?.url | safe: 'resourceUrl'" />
         <img class="image" *ngIf="!gameCharacter && myPeer && myPeer?.image != null"
-          [src]="myPeer?.image?.url | safe: 'resourceUrl'" />
+          [src]="myPeer?.image?.url | safe: 'resourceUrl'" (click)="changeIcon()" />
       </div>
       <div class="table-cell">
         <div>
