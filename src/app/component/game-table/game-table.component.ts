@@ -396,6 +396,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (e.keyCode === 38) {//↑
       if (e.shiftKey) {
         rotateX = -2;
+      } else if (e.ctrlKey) {
+        transformZ = 150;
       } else {
         transformY = 10;
       }
@@ -410,6 +412,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (e.keyCode === 40) {//↓
       if (e.shiftKey) {
         rotateX = 2;
+      } else if (e.ctrlKey) {
+        transformZ = -150;
       } else {
         transformY = -10;
       }
