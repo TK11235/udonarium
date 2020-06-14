@@ -22,7 +22,7 @@ export class ChatMessageService {
     'https://ntp-b1.nict.go.jp/cgi-bin/json',
   ];
 
-  gameType: string = '';
+  gameType: string = 'DiceBot';
 
   constructor() { }
 
