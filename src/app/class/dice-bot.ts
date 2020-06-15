@@ -111,8 +111,12 @@ export class DiceBot extends GameObject {
     return DiceBot.queue.add(() => {
       let help = '';
       try {
-        const dicebotInfo = BCDice.infoList.find((info: Info) => info.gameType === gameType);
-        help = dicebotInfo.info;
+        const dicebotInfo = BCDice.infoList.find(
+          (info) => info.gameType === gameType
+        );
+        if (dicebotInfo) {
+          help = dicebotInfo.info;
+        }
       } catch (e) {
         console.error(e);
       }
@@ -126,6 +130,13 @@ export class DiceBot extends GameObject {
 
       if ((!gameType && gameType.length < 1) || DiceBot.loadedDiceBots[gameType]) {
         console.log(gameType + ' is loaded');
+        resolve();
+        return;
+      }
+
+      if (!BCDice.infoList.some((info) => info.gameType === gameType)) {
+        console.warn(gameType + ' is unsupported');
+        DiceBot.loadedDiceBots[gameType] = true;
         resolve();
         return;
       }
