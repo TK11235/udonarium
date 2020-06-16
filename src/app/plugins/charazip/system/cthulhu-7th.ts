@@ -79,13 +79,13 @@ export class Cthulhu7th {
       gameCharacter.createDataElement("CON", json.NP2)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement("POW", json.NP3)
+      gameCharacter.createDataElement("DEX", json.NP3)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement("DEX", json.NP4)
+      gameCharacter.createDataElement("APP", json.NP4)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement("APP", json.NP5)
+      gameCharacter.createDataElement("POW", json.NP5)
     );
     abilityElement.appendChild(
       gameCharacter.createDataElement("SIZ", json.NP6)
@@ -119,9 +119,9 @@ export class Cthulhu7th {
       gameCharacter.createDataElement("踏破技能", ""),
       gameCharacter.createDataElement("行動技能", ""),
       gameCharacter.createDataElement("交渉技能", ""),
-      gameCharacter.createDataElement("知識技能", "")
+      gameCharacter.createDataElement("知識技能", ""),
     ];
-    skillElements.forEach(element =>
+    skillElements.forEach((element) =>
       gameCharacter.detailDataElement.appendChild(element)
     );
     for (let i = 0; i < json.SKAN.length; i++) {
@@ -206,7 +206,7 @@ CC({ボーナス・ペナルティ})<={幸運} 〈幸運〉
       "\n//-----踏破技能\n",
       "\n//-----行動技能\n",
       "\n//-----交渉技能\n",
-      "\n//-----知識技能\n"
+      "\n//-----知識技能\n",
     ];
     for (let i = 0; i < json.SKAN.length; i++) {
       let skillName = json.SKAN[i];
