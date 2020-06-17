@@ -1,7 +1,24 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
+require "utils/modifier_formatter"
 
 class SwordWorld < DiceBot
-  setPrefixes(['K\d+.*'])
+  include ModifierFormatter
+
+  # ゲームシステムの識別子
+  ID = 'SwordWorld'
+
+  # ゲームシステム名
+  NAME = 'ソードワールド'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'そおとわあると'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = "・SW　レーティング表　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)\n"
+
+  setPrefixes(['H?K\d+.*'])
 
   def initialize
     rating_table = 0
@@ -9,57 +26,48 @@ class SwordWorld < DiceBot
     @rating_table = rating_table
   end
 
-  def gameName
-    'ソードワールド'
-  end
+  # changeTextで使うレーティング表コマンドの正規表現
+  #
+  # SW 2.5のダイスボットでも必要なため、共通化のために定数として定義する
+  RATING_TABLE_RE_FOR_CHANGE_TEXT = /\AS?H?K\d+/i.freeze
 
-  def gameType
-    "SwordWorld"
-  end
-
-  def getHelpMessage
-    '・SW　レーティング表　　　　　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)'
-  end
-
+  # コマンド実行前にメッセージを置換する
+  # @param [String] string 受信したメッセージ
+  # @return [String]
   def changeText(string)
-    return string unless /(^|\s)[sS]?(K[\d]+)/i =~ string
+    # TODO: Ruby 2.4以降では Regexp#match? を使うこと
+    return string unless RATING_TABLE_RE_FOR_CHANGE_TEXT.match(string)
 
-    debug('parren_killer_add before string', string)
-    string = string.gsub(/\[(\d+)\]/i) { "c[#{Regexp.last_match(1)}]" }
-    string = string.gsub(/\@(\d+)/i) { "c[#{Regexp.last_match(1)}]" }
-    string = string.gsub(/\$([\+\-]?[\d]+)/i) { "m[#{Regexp.last_match(1)}]" }
-    string = string.gsub(/r([\+\-]?[\d]+)/i) { "r[#{Regexp.last_match(1)}]" }
-    debug('parren_killer_add after string', string)
-
-    return string
+    string.
+      gsub(/\[(\d+)\]/) { "c[#{Regexp.last_match(1)}]" }.
+      gsub(/@(\d+)/) { "c[#{Regexp.last_match(1)}]" }.
+      gsub(/\$([-+]?\d+)/) { "m[#{Regexp.last_match(1)}]" }.
+      gsub(/r([-+]?\d+)/i) { "r[#{Regexp.last_match(1)}]" }
   end
 
   def getRatingCommandStrings
     "cmCM"
   end
 
-  def check_2D6(totalValue, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    if dice_n >= 12
-      return " ＞ 自動的成功"
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    if dice_total >= 12
+      " ＞ 自動的成功"
+    elsif dice_total <= 2
+      " ＞ 自動的失敗"
+    elsif cmp_op != :>= || target == "?"
+      ''
+    elsif total >= target
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
     end
-
-    if dice_n <= 2
-      return " ＞ 自動的失敗"
-    end
-
-    return '' if signOfInequality != ">="
-    return '' if diff == "?"
-
-    if totalValue >= diff
-      return " ＞ 成功"
-    end
-
-    return " ＞ 失敗"
   end
 
   def rollDiceCommand(command)
     rating(command)
   end
+
+  private
 
   ####################        SWレーティング表       ########################
   def rating(string) # レーティング表
@@ -67,15 +75,17 @@ class SwordWorld < DiceBot
 
     commands = getRatingCommandStrings
 
-    unless /(^|\s)[sS]?(((k|K)[\d\+\-]+)([#{commands}]\[([\d\+\-]+)\])*([\d\+\-]*)([cmrCMR]\[([\d\+\-]+)\]|gf|GF)*)($|\s)/ =~ string
+    m = /^S?(H?K[\d\+\-]+([#{commands}]\[([\d\+\-]+)\])*([\d\+\-]*)([CMR]\[([\d\+\-]+)\]|GF|H)*)/i.match(string)
+    unless m
       debug("not matched")
       return '1'
     end
 
-    string = Regexp.last_match(2)
+    string = m[1]
+    half = string.include?("H")
 
     rateUp, string = getRateUpFromString(string)
-    crit, string = getCriticalFromString(string)
+    crit, string = getCriticalFromString(string, half)
     firstDiceChanteTo, firstDiceChangeModify, string = getDiceChangesFromString(string)
 
     key, addValue = getKeyAndAddValueFromString(string)
@@ -167,7 +177,7 @@ class SwordWorld < DiceBot
 
     limitLength = $SEND_STR_MAX - output.length
     output += getResultText(totalValue, addValue, diceResults, diceResultTotals,
-                            rateResults, diceOnlyTotal, round, crit, limitLength)
+                            rateResults, diceOnlyTotal, round, limitLength, half)
 
     return output
   end
@@ -181,8 +191,8 @@ class SwordWorld < DiceBot
     0
   end
 
-  def getCriticalFromString(string)
-    crit = 10
+  def getCriticalFromString(string, half)
+    crit = half ? 13 : 10
 
     regexp = /c\[(\d+)\]/i
 
@@ -397,52 +407,60 @@ class SwordWorld < DiceBot
     return dice, diceText
   end
 
-  def getResultText(totalValue, addValue, diceResults, diceResultTotals,
-                    rateResults, diceOnlyTotal, round, _crit, limitLength)
-    output = ""
+  # @param rating_total [Integer]
+  # @param modifier [Integer]
+  # @param diceResults [Array<String>]
+  # @param diceResultTotals [Array<String>]
+  # @param rateResults  [Array<String>]
+  # @param dice_total [Integer]
+  # @param round [Integer]
+  # @param limitLength [Integer]
+  # @param half [Boolean]
+  def getResultText(rating_total, modifier, diceResults, diceResultTotals,
+                    rateResults, dice_total, round, limitLength, half)
+    sequence = []
+    short = ["..."]
 
-    totalText = (totalValue + addValue).to_s
+    sequence.push("2D:[#{diceResults.join(' ')}]=#{diceResultTotals.join(',')}")
 
-    if sendMode > 1 # 表示モード２以上
-      output += "2D:[#{diceResults.join(' ')}]=#{diceResultTotals.join(',')}"
-      rateResultsText = rateResults.join(',')
-      output += " ＞ #{rateResultsText}" unless rateResultsText == totalText
-    elsif sendMode > 0 # 表示モード１以上
-      output += "2D:#{diceResultTotals.join(',')}"
-    else # 表示モード０
-      output += totalValue.to_s
+    if dice_total <= 2
+      sequence.push(rateResults.join(','))
+      sequence.push("自動的失敗")
+      return sequence.join(" ＞ ")
     end
 
-    if diceOnlyTotal <= 2
-      return "#{output} ＞ 自動的失敗"
+    # rate回数が1回で、修正値がない時には途中式と最終結果が一致するので、途中式を省略する
+    if rateResults.size > 1 || modifier != 0
+      text = rateResults.join(',') + format_modifier(modifier)
+      if half
+        text = "(#{text})/2"
+      end
+      sequence.push(text)
+    elsif half
+      sequence.push("#{rateResults.first}/2")
     end
 
-    addText = getAddText(addValue)
-    output += "#{addText} ＞ "
-
-    roundText = ""
     if round > 1
-      roundText += "#{round - 1}回転 ＞ "
+      round_text = "#{round - 1}回転"
+      sequence.push(round_text)
+      short.push(round_text)
     end
 
-    output += "#{roundText}#{totalText}"
-
-    if output.length > limitLength # 回りすぎて文字列オーバーしたときの救済
-      output = "... ＞ #{roundText}#{totalText}"
+    total = rating_total + modifier
+    if half
+      total = (total / 2.0).ceil
     end
 
-    return output
-  end
+    total_text = total.to_s
+    sequence.push(total_text)
+    short.push(total_text)
 
-  def getAddText(addValue)
-    addText = ""
-
-    return addText if addValue == 0
-
-    operator = (addValue > 0 ? "+" : "")
-    addText += "#{operator}#{addValue}"
-
-    return addText
+    ret = sequence.join(" ＞ ")
+    if ret.length > limitLength
+      short.join(" ＞ ")
+    else
+      ret
+    end
   end
 
   def setRatingTable(tnick)

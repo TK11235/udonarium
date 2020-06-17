@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'diceBot/SwordWorld2_0'
 
 class SwordWorld2_5 < SwordWorld2_0
-  setPrefixes(['K\d+.*', 'Gr(\d+)?', 'FT', 'TT'])
+  # ゲームシステムの識別子
+  ID = 'SwordWorld2.5'
 
-  def initialize
-    super
-  end
+  # ゲームシステム名
+  NAME = 'ソードワールド2.5'
 
-  def gameName
-    'ソードワールド2.5'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'そおとわあると2.5'
 
-  def gameType
-    return "SwordWorld2.5"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 自動的成功、成功、失敗、自動的失敗の自動判定を行います。
 
 ・レーティング表　(Kx)
@@ -34,6 +30,11 @@ class SwordWorld2_5 < SwordWorld2_0
 　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)
 　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。
 　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9
+
+・レーティング表の半減 (HKx)
+　レーティング表の先頭または末尾に"H"をつけると、レーティング表を振って最終結果を半減させます。
+　クリティカル値を指定しない場合、クリティカルなしと扱われます。
+　例）HK20　　K20h　　HK10-5@9　　K10-5@9H　　K20gfH
 
 ・ダイス目の修正（運命変転やクリティカルレイ用）
 　末尾に「$修正値」でダイス目に修正がかかります。
@@ -65,27 +66,20 @@ class SwordWorld2_5 < SwordWorld2_0
 ・絡み効果表　(TT)
 　絡み効果表を出すことができます。
 INFO_MESSAGE_TEXT
-  end
 
+  setPrefixes(['H?K\d+.*', 'Gr(\d+)?', 'FT', 'TT'])
+
+  # コマンド実行前にメッセージを置換する
+  # @param [String] string 受信したメッセージ
+  # @return [String]
   def changeText(string)
-    return string unless /(^|\s)[sS]?(K[\d]+)/i =~ string
+    # TODO: Ruby 2.4以降では Regexp#match? を使うこと
+    return string unless RATING_TABLE_RE_FOR_CHANGE_TEXT.match(string)
 
-    string = super(string)
-
-    debug('parren_killer_add before string', string)
-
-    string = string.gsub(/#([\+\-]?[\d]+)/i) do
-      value = Regexp.last_match(1).to_i
-      if value >= 0
-        "a[+#{value}]"
-      else
-        "a[#{value}]"
-      end
+    super(string).gsub(/#([-+]?\d+)/) do
+      modifier = Regexp.last_match(1).to_i
+      "a[#{format_modifier(modifier)}]"
     end
-
-    debug('parren_killer_add after string', string)
-
-    return string
   end
 
   def getRatingCommandStrings
