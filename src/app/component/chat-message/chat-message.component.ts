@@ -13,12 +13,12 @@ import { ChatMessageService } from 'service/chat-message.service';
     trigger('flyInOut', [
       transition('* => active', [
         animate('200ms ease-out', keyframes([
-          style({ transform: 'translateX(100px)', offset: 0 }),
-          style({ transform: 'translateX(0)', offset: 1.0 })
+          style({ transform: 'translateX(100px)', opacity: '0', offset: 0 }),
+          style({ transform: 'translateX(0)', opacity: '1', offset: 1.0 })
         ]))
       ]),
       transition('void => *', [
-        animate('100ms ease-out', keyframes([
+        animate('200ms ease-out', keyframes([
           style({ opacity: '0', offset: 0 }),
           style({ opacity: '1', offset: 1.0 })
         ]))
