@@ -3,14 +3,14 @@
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass;
 
   return (function($base, $super, $parent_nesting) {
-    var self = $klass($base, $super, 'TokyoNova');
+    var self = $klass($base, $super, 'DungeonsAndDragons');
 
     var $nesting = [self].concat($parent_nesting);
 
     
-    Opal.const_set($nesting[0], 'ID', "TokyoNova");
-    Opal.const_set($nesting[0], 'NAME', "\u30C8\u30FC\u30AD\u30E7\u30FC\uFF2E\u25CE\uFF36\uFF21");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u304A\u304D\u3088\u304A\u306E\u306F");
+    Opal.const_set($nesting[0], 'ID', "DungeonsAndDragons");
+    Opal.const_set($nesting[0], 'NAME', "\u30C0\u30F3\u30B8\u30E7\u30F3\u30BA\uFF06\u30C9\u30E9\u30B4\u30F3\u30BA");
+    Opal.const_set($nesting[0], 'SORT_KEY', "\u305F\u3093\u3057\u3088\u3093\u3059\u3042\u3093\u3068\u3068\u3089\u3053\u3093\u3059");
     return Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u203B\u3053\u306E\u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u306F\u90E8\u5C4B\u306E\u30B7\u30B9\u30C6\u30E0\u540D\u8868\u793A\u7528\u3068\u306A\u308A\u307E\u3059\u3002\n");
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);
