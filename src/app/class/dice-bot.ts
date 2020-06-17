@@ -147,6 +147,7 @@ export class DiceBot extends GameObject {
     { script: 'BBN', game: 'BBNTRPG' },
     { script: 'BeginningIdol', game: 'ビギニングアイドル' },
     { script: 'PhantasmAdventure', game: 'ファンタズムアドベンチャー' },
+    { script: 'Fiasco', game: 'フィアスコ' },
     { script: 'FilledWith', game: 'フィルトウィズ' },
     { script: 'FutariSousa', game: 'フタリソウサ' },
     { script: 'BlindMythos', game: 'ブラインド・ミトス' },
