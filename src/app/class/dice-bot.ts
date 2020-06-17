@@ -68,6 +68,7 @@ export class DiceBot extends GameObject {
     { script: 'GeishaGirlwithKatana', game: 'ゲイシャ・ガール・ウィズ・カタナ' },
     { script: 'GehennaAn', game: 'ゲヘナ・アナスタシス' },
     { script: 'Illusio', game: '晃天のイルージオ' },
+    { script: 'KemonoNoMori', game: '獸ノ森' },
     { script: 'CodeLayerd', game: 'コード：レイヤード' },
     { script: 'Avandner', game: '黒絢のアヴァンドナー' },
     { script: 'Gorilla', game: 'ゴリラTRPG' },
