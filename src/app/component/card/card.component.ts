@@ -140,17 +140,29 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onDoubleClick(e) {
+  startDoubleClickTimer(e) {
     if (!this.doubleClickTimer) {
-      this.doubleClickTimer = setTimeout(() => {
-        clearTimeout(this.doubleClickTimer);
-        this.doubleClickTimer = null;
-      }, 300);
+      this.stopDoubleClickTimer();
+      this.doubleClickTimer = setTimeout(() => this.stopDoubleClickTimer(), e.touches ? 500 : 300);
       this.doubleClickPoint = this.input.pointer;
       return;
     }
+
+    if (e.touches) {
+      this.input.onEnd = this.onDoubleClick.bind(this);
+    } else {
+      this.onDoubleClick();
+    }
+  }
+
+  stopDoubleClickTimer() {
     clearTimeout(this.doubleClickTimer);
     this.doubleClickTimer = null;
+    this.input.onEnd = null;
+  }
+
+  onDoubleClick() {
+    this.stopDoubleClickTimer();
     let distance = (this.doubleClickPoint.x - this.input.pointer.x) ** 2 + (this.doubleClickPoint.y - this.input.pointer.y) ** 2;
     if (distance < 10 ** 2) {
       console.log('onDoubleClick !!!!');
@@ -168,8 +180,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onInputStart(e: MouseEvent | TouchEvent) {
-    this.input.cancel();
-    this.onDoubleClick(e);
+    this.startDoubleClickTimer(e);
     this.card.toTopmost();
     if (e instanceof MouseEvent) this.startIconHiddenTimer();
   }
@@ -237,6 +248,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onMove() {
+    this.input.cancel();
     SoundEffect.play(PresetSound.cardPick);
   }
 

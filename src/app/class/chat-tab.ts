@@ -6,7 +6,7 @@ import { EventSystem } from './core/system';
 
 @SyncObject('chat-tab')
 export class ChatTab extends ObjectNode implements InnerXml {
-  @SyncVar() name: string = 'タブ';
+  @SyncVar() name: string = '分頁';
   get chatMessages(): ChatMessage[] { return <ChatMessage[]>this.children; }
 
   private _unreadLength: number = 0;

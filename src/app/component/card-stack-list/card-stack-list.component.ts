@@ -28,7 +28,7 @@ export class CardStackListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.panelService.title = this.cardStack.name + ' 卡牌列表';
+    Promise.resolve().then(() => this.cardStack.name + ' 卡牌列表');
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);

@@ -60,7 +60,7 @@ export class ImageStorage {
     this.lazySynchronize(100);
     if (this.update(image)) return this.imageHash[image.identifier];
     this.imageHash[image.identifier] = image;
-    console.log('addNewFile()', image);
+    console.log('add Image: ' + image.identifier);
     return image;
   }
 

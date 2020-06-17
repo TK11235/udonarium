@@ -48,7 +48,7 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.panelService.title = '檔案列表';
+    Promise.resolve().then(() => this.panelService.title = '檔案列表');
   }
 
   ngAfterViewInit() {

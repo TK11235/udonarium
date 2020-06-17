@@ -30,7 +30,7 @@ export class RoomSettingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = '創建房間'
+    Promise.resolve().then(() => this.modalService.title = this.panelService.title = '創建房間');
     EventSystem.register(this);
     this.calcPeerId(this.roomName, this.password);
   }

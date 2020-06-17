@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ChatTab } from '@udonarium/chat-tab';
+import { ChatTabList } from '@udonarium/chat-tab-list';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
@@ -41,7 +42,8 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.modalService.title = this.panelService.title = '聊天分頁設定';
+
+    Promise.resolve().then(() => this.modalService.title = this.panelService.title = '聊天分頁設定');
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', 1000, event => {
         if (!this.selectedTab || event.data.identifier !== this.selectedTab.identifier) return;
@@ -62,9 +64,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    let chatTab = new ChatTab();
-    chatTab.name = '分頁';
-    chatTab.initialize();
+    ChatTabList.instance.addChatTab('分頁');
   }
 
   save() {
@@ -138,14 +138,29 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
   restore() {
     if (this.selectedTab && this.selectedTabXml) {
-      let restoreTable = ObjectSerializer.instance.parseXml(this.selectedTabXml);
-      //this.selectedTabXml = '';
+      let restoreTable = <ChatTab>ObjectSerializer.instance.parseXml(this.selectedTabXml);
+      ChatTabList.instance.addChatTab(restoreTable);
+      this.selectedTabXml = '';
     }
   }
 
-  moveLast() {
-    this.delete();
-    this.restore();
-    this.selectedTab = null;
+  upTabIndex() {
+    if (!this.selectedTab) return;
+    let parentElement = this.selectedTab.parent;
+    let index: number = parentElement.children.indexOf(this.selectedTab);
+    if (0 < index) {
+      let prevElement = parentElement.children[index - 1];
+      parentElement.insertBefore(this.selectedTab, prevElement);
+    }
+  }
+
+  downTabIndex() {
+    if (!this.selectedTab) return;
+    let parentElement = this.selectedTab.parent;
+    let index: number = parentElement.children.indexOf(this.selectedTab);
+    if (index < parentElement.children.length - 1) {
+      let nextElement = parentElement.children[index + 1];
+      parentElement.insertBefore(nextElement, this.selectedTab);
+    }
   }
 }
