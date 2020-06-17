@@ -36,6 +36,7 @@ export class DiceBot extends GameObject {
     { script: 'Alshard', game: 'アルシャード' },
     { script: 'ArsMagica', game: 'アルスマギカ' },
     { script: 'IthaWenUa', game: 'イサー・ウェン＝アー' },
+    { script: 'YearZeroEngine', game: 'イヤーゼロエンジン' },
     { script: 'Insane', game: 'インセイン' },
     { script: 'WitchQuest', game: 'ウィッチクエスト' },
     { script: 'Warhammer', game: 'ウォーハンマー' },
