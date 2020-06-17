@@ -1,27 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Postman < DiceBot
-  setPrefixes([
-    'WEA\d*',
-    '(\d+)?PO.*',
-    'FRE'
-  ])
+  # ゲームシステムの識別子
+  ID = 'Postman'
 
-  def initialize
-    super
-    @sortType = 1 # ダイスのソート有
-  end
+  # ゲームシステム名
+  NAME = '壊れた世界のポストマン'
 
-  def gameName
-    '壊れた世界のポストマン'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ほすとまん'
 
-  def gameType
-    "Postman"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ◆判定：[n]PO[+-a][> or >= or @X]　　[]内省略可。
 
 達成値と判定の成否、クリティカル、ファンブルを結果表示します。
@@ -44,6 +35,16 @@ PO@5+2 → 2Dで目標値7の判定。判定の成否と達成値を表示。
 
 ◆自由行動シチュエーション表：FRE
 MESSAGETEXT
+
+  setPrefixes([
+    'WEA\d*',
+    '(\d+)?PO.*',
+    'FRE'
+  ])
+
+  def initialize
+    super
+    @sortType = 1 # ダイスのソート有
   end
 
   def rollDiceCommand(command)

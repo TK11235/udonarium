@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Dracurouge < DiceBot
-  def initialize
-    super
-    @d66Type = 1
-  end
+  # ゲームシステムの識別子
+  ID = 'Dracurouge'
 
-  def gameName
-    'ドラクルージュ'
-  end
+  # ゲームシステム名
+  NAME = 'ドラクルージュ'
 
-  def gameType
-    "Dracurouge"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'とらくるうしゆ'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・行い判定（DRx+y）
 　x：振るサイコロの数（省略時４）、y：渇き修正（省略時０）
 　例） DR　DR6　DR+1　DR5+2
@@ -43,6 +40,10 @@ class Dracurouge < DiceBot
 　例）HRT（一括表示）、HRTVW（ヴルコラクの野伏）、HRTF2X（フリッガの検体）
 ・D66ダイスあり
 MESSAGETEXT
+
+  def initialize
+    super
+    @d66Type = 1
   end
 
   def rollDiceCommand(command)
@@ -1276,7 +1277,7 @@ MESSAGETEXT
   end
 
   def getTableDiceCommandResult(command)
-    info = @@tables[command]
+    info = TABLES[command]
     return nil if info.nil?
 
     name = info[:name]
@@ -1766,7 +1767,7 @@ MESSAGETEXT
     return table
   end
 
-  @@tables =
+  TABLES =
     {
       'CS' => {
         :name => "堕落の兆し表",
@@ -1841,7 +1842,7 @@ MESSAGETEXT
           主(Obey)　相手を主と仰ぎ、忠誠を誓う。／仇(Vendetta)　相手を怨み、仇と狙う。
         },
       },
-    }
+    }.freeze
 
-  setPrefixes(['DR.*', 'RT.*', 'HRT.*', 'CT\d+', "ST", "CO", "CA", "EP", "OS", "PN", "RS", "PP"] + @@tables.keys)
+  setPrefixes(['DR.*', 'RT.*', 'HRT.*', 'CT\d+', "ST", "CO", "CA", "EP", "OS", "PN", "RS", "PP"] + TABLES.keys)
 end

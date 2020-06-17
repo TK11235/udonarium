@@ -1,26 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Villaciel < DiceBot
-  setPrefixes(%w(\d+VBS(>=\d+)? \d+VF \d+VM \d+VG PJ[VA]? PQ[VA]? AC MM([IAD]|V[VA]?) F[LRWGBCS] IP[VA]? EP[VA]?\d? MP IS))
+  # ゲームシステムの識別子
+  ID = 'Villaciel'
 
-  def initialize
-    super
+  # ゲームシステム名
+  NAME = '蒼天のヴィラシエル'
 
-    @sortType = 0 # 足し算ダイス、バラバラロール、どちらもソートしない
-    @d66Type = 1 # D66あり。ただし、現行ルールにある6x6の表については別のコマンドを用意
-    @fractionType = 'roundUp' # 端数は切り上げ
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'そうてんのういらしえる'
 
-  def gameName
-    '蒼天のヴィラシエル'
-  end
-
-  def gameType
-    'Villaciel'
-  end
-
-  def getHelpMessage
-    <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・判定　　　　　　　　nVBS[>=d]
 　[]内省略時は達成数の計算のみ。トライアンフあり。
 　n: ダイス数、d: 難易度
@@ -53,10 +45,15 @@ class Villaciel < DiceBot
 ・変異植物表　　　　　MP
 ・改良種表　　　　　　IS
 MESSAGETEXT
-  end
 
-  def changeText(string)
-    string
+  setPrefixes(%w(\d+VBS(>=\d+)? \d+VF \d+VM \d+VG PJ[VA]? PQ[VA]? AC MM([IAD]|V[VA]?) F[LRWGBCS] IP[VA]? EP[VA]?\d? MP IS))
+
+  def initialize
+    super
+
+    @sortType = 0 # 足し算ダイス、バラバラロール、どちらもソートしない
+    @d66Type = 1 # D66あり。ただし、現行ルールにある6x6の表については別のコマンドを用意
+    @fractionType = 'roundUp' # 端数は切り上げ
   end
 
   def rollDiceCommand(command)
@@ -94,8 +91,8 @@ MESSAGETEXT
 
   D6 = 6
   LEAST_SUCCESS_ROLL = 4
-  SUCCESS_STR = ' ＞ 成功'.freeze
-  FAILURE_STR = ' ＞ 失敗'.freeze
+  SUCCESS_STR = ' ＞ 成功'
+  FAILURE_STR = ' ＞ 失敗'
 
   def derive_achievement(num_dices, command)
     # rollメソッドの引数は、順に「ダイス数」「ダイス1個の出目最大値」「結果のソート」「出目振り足しの基準値（0や1にしておけば処理は行われない）」「成功数を数えるときの比較条件」「成功数の基準値」「振り直しをする出目の基準値」

@@ -1,6 +1,58 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class BeginningIdol < DiceBot
+  # ゲームシステムの識別子
+  ID = 'BeginningIdol'
+
+  # ゲームシステム名
+  NAME = 'ビギニングアイドル'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ひきにんくあいとる'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+・パフォーマンス　[r]PDn[+m/-m](r：場に残った出目　n：振る数　m：修正値)
+・ワールドセッティング仕事表　BWT：大手芸能プロ　LWT：弱小芸能プロ
+　TWT：ライブシアター　CWT：アイドル部　LO[n]：地方アイドル(n：チャンス)
+　SU：情熱の夏　WI：ぬくもりの冬　NA：大自然　GA：女学園　BA：アカデミー
+・仕事表　WT　VA：バラエティ　MU：音楽関係　DR：ドラマ関係
+　VI：ビジュアル関係　SP：スポーツ　CHR：クリスマス　PAR：パートナー関係
+　SW：お菓子　AN：動物　MOV：映画　FA：ファンタジー
+・ランダムイベント　RE
+・ハプニング表　HA
+・特技リスト　AT[n](n：分野No.)
+・アイドルスキル修得表　SGT：チャレンジガールズ　RS：ロードトゥプリンス
+・変調　BT[n](n：発生数)
+・アイテム　IT[n](n：獲得数)
+・アクセサリー　ACT：種別決定　ACB：ブランド決定　ACE：効果表
+・衣装　DT：チャレンジガールズ　RC：ロードトゥプリンス　FC:フォーチュンスターズ
+・無茶ぶり表　LUR：地方アイドル　SUR：情熱の夏　WUR：ぬくもりの冬
+　NUR：大自然　GUR：女学園　BUR：アカデミー
+・センタールール　HW：向かい風シーン表　FL：駆け出しシーン表　LN：孤独表
+　マイスキル【MS：名前決定　MSE：効果表】　演出表【ST　FST：ファンタジー】
+・合宿ルール　散策表【SH：ショッピングモール　MO：山　SEA：海　SPA：温泉街】
+　TN：夜語りシチュエーション表　成長表【CG：コモン　GG：ゴールド】
+・サビ表　CHO　SCH：情熱の夏　WCH：ぬくもりの冬　NCH：大自然
+　GCH：女性向け　PCH：力強い
+・キャラ空白表　CBT：チャレンジガールズ　RCB：ロードトゥプリンス
+・趣味空白表　HBT：チャレンジガールズ　RHB：ロードトゥプリンス
+・マスコット暴走表　RU
+・アイドル熱湯風呂　nC：バーストタイム(n：温度)　BU：バースト表
+・攻撃　n[S]A[r][+m/-m](n：振る数　S：失敗しない　r：取り除く出目　m：修正値)
+・かんたんパーソン表　SIP
+・会場表
+　BVT：大手芸能プロ　LVT：弱小芸能プロ　TVT：ライブシアター　CVT：アイドル部
+・場所表
+　BST：大手芸能プロ　LST：弱小芸能プロ　TST：ライブシアター　CST：アイドル部
+・プレッシャー種別決定表
+　BPT：大手芸能プロ　LPT：弱小芸能プロ　TPT：ライブシアター　CPT：アイドル部
+・道具表
+　BIT：大手芸能プロ　LIT：弱小芸能プロ　TIT：ライブシアター　CIT：アイドル部
+[]内は省略可　D66入れ替えあり
+INFO_MESSAGE_TEXT
+
   setPrefixes([
     '[1-7]*PD\d+(?:[\+\-]\d+)?',
     'HW',
@@ -98,73 +150,21 @@ class BeginningIdol < DiceBot
     @d66Type = 2
   end
 
-  def gameName
-    'ビギニングアイドル'
-  end
+  def check_nD6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-  def gameType
-    "BeginningIdol"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-・パフォーマンス　[r]PDn[+m/-m](r：場に残った出目　n：振る数　m：修正値)
-・ワールドセッティング仕事表　BWT：大手芸能プロ　LWT：弱小芸能プロ
-　TWT：ライブシアター　CWT：アイドル部　LO[n]：地方アイドル(n：チャンス)
-　SU：情熱の夏　WI：ぬくもりの冬　NA：大自然　GA：女学園　BA：アカデミー
-・仕事表　WT　VA：バラエティ　MU：音楽関係　DR：ドラマ関係
-　VI：ビジュアル関係　SP：スポーツ　CHR：クリスマス　PAR：パートナー関係
-　SW：お菓子　AN：動物　MOV：映画　FA：ファンタジー
-・ランダムイベント　RE
-・ハプニング表　HA
-・特技リスト　AT[n](n：分野No.)
-・アイドルスキル修得表　SGT：チャレンジガールズ　RS：ロードトゥプリンス
-・変調　BT[n](n：発生数)
-・アイテム　IT[n](n：獲得数)
-・アクセサリー　ACT：種別決定　ACB：ブランド決定　ACE：効果表
-・衣装　DT：チャレンジガールズ　RC：ロードトゥプリンス　FC:フォーチュンスターズ
-・無茶ぶり表　LUR：地方アイドル　SUR：情熱の夏　WUR：ぬくもりの冬
-　NUR：大自然　GUR：女学園　BUR：アカデミー
-・センタールール　HW：向かい風シーン表　FL：駆け出しシーン表　LN：孤独表
-　マイスキル【MS：名前決定　MSE：効果表】　演出表【ST　FST：ファンタジー】
-・合宿ルール　散策表【SH：ショッピングモール　MO：山　SEA：海　SPA：温泉街】
-　TN：夜語りシチュエーション表　成長表【CG：コモン　GG：ゴールド】
-・サビ表　CHO　SCH：情熱の夏　WCH：ぬくもりの冬　NCH：大自然
-　GCH：女性向け　PCH：力強い
-・キャラ空白表　CBT：チャレンジガールズ　RCB：ロードトゥプリンス
-・趣味空白表　HBT：チャレンジガールズ　RHB：ロードトゥプリンス
-・マスコット暴走表　RU
-・アイドル熱湯風呂　nC：バーストタイム(n：温度)　BU：バースト表
-・攻撃　n[S]A[r][+m/-m](n：振る数　S：失敗しない　r：取り除く出目　m：修正値)
-・かんたんパーソン表　SIP
-・会場表
-　BVT：大手芸能プロ　LVT：弱小芸能プロ　TVT：ライブシアター　CVT：アイドル部
-・場所表
-　BST：大手芸能プロ　LST：弱小芸能プロ　TST：ライブシアター　CST：アイドル部
-・プレッシャー種別決定表
-　BPT：大手芸能プロ　LPT：弱小芸能プロ　TPT：ライブシアター　CPT：アイドル部
-・道具表
-　BIT：大手芸能プロ　LIT：弱小芸能プロ　TIT：ライブシアター　CIT：アイドル部
-[]内は省略可　D66入れ替えあり
-INFO_MESSAGE_TEXT
-  end
-
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    check_nD6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-  end
-
-  def check_nD6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == ">="
-    if dice_n <= 2
-      return " ＞ ファンブル(変調がランダムに1つ発生し、PCは【思い出】を1つ獲得する)"
-    elsif dice_n >= 12
-      return " ＞ スペシャル！(PCは【思い出】を1つ獲得する)"
-    elsif total_n >= diff
-      return " ＞ 成功"
+    if dice_total <= 2
+      " ＞ ファンブル(変調がランダムに1つ発生し、PCは【思い出】を1つ獲得する)"
+    elsif dice_total >= 12
+      " ＞ スペシャル！(PCは【思い出】を1つ獲得する)"
+    elsif total >= target
+      " ＞ 成功"
     else
-      return " ＞ 失敗"
+      " ＞ 失敗"
     end
   end
+
+  alias check_2D6 check_nD6
 
   def rollDiceCommand(command)
     case command.upcase

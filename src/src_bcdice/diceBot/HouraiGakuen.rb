@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class HouraiGakuen < DiceBot
-  setPrefixes(['ROL.*', 'MED\(\d+,\d+\)', 'RES\(\d+,\d+\)', 'INY.*', 'HTK.*', 'GOG.*'])
+  # ゲームシステムの識別子
+  ID = 'HouraiGakuen'
 
-  # ゲームの名前
-  def gameName
-    '蓬莱学園の冒険!!'
-  end
+  # ゲームシステム名
+  NAME = '蓬莱学園の冒険!!'
 
-  # チャット欄表示名
-  def gameType
-    "HouraiGakuen"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ほうらいかくえんのほうけん'
 
-  # 判定用前置文字
-  # 説明文
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・基本ロール：ROL(x+n)
   ROLL(自分の能力値 + 簡単値 + 応石 or 蓬莱パワー)と記述します。3D6をロールし、成功したかどうかを表示します。
   例）ROL(4+6)
@@ -33,8 +29,13 @@ class HouraiGakuen < DiceBot
 ・八徳コマンド：HTK
   例）Hourai : 仁義八徳は、【義】(奇数、奇数、偶数)
 INFO_MESSAGE_TEXT
-  end
 
+  setPrefixes(['ROL.*', 'MED\(\d+,\d+\)', 'RES\(\d+,\d+\)', 'INY.*', 'HTK.*', 'GOG.*'])
+
+  # ゲームの名前
+  # チャット欄表示名
+  # 判定用前置文字
+  # 説明文
   # コマンド分岐
   def rollDiceCommand(command)
     case command
@@ -55,10 +56,10 @@ INFO_MESSAGE_TEXT
     return nil
   end
 
-  @@critical = "大成功"
-  @@success = "成功"
-  @@failure = "失敗"
-  @@famble = "大失敗"
+  CRITICAL = "大成功"
+  SUCCESS = "成功"
+  FAILURE = "失敗"
+  FUMBLE = "大失敗"
 
   # 基本ロール
   def getRollResult(command)
@@ -75,26 +76,21 @@ INFO_MESSAGE_TEXT
   end
 
   def getCheckResult(diceText, total, target)
-    diceList = getDiceListFromText(diceText)
+    diceList = diceText.split(',').map(&:to_i).sort
 
     if isFamble(diceList)
-      return @@famble
+      return FUMBLE
     end
 
     if isCritical(diceList)
-      return @@critical
+      return CRITICAL
     end
 
     if total <= target
-      return @@success
+      return SUCCESS
     end
 
-    return @@failure
-  end
-
-  def getDiceListFromText(diceText)
-    diceList = diceText.split(/,/).collect { |i| i.to_i }.sort
-    return diceList
+    return FAILURE
   end
 
   def isFamble(diceList)
@@ -165,10 +161,10 @@ INFO_MESSAGE_TEXT
 
   def getResultRank(result)
     ranks = [
-      @@famble,
-      @@failure,
-      @@success,
-      @@critical,
+      FUMBLE,
+      FAILURE,
+      SUCCESS,
+      CRITICAL,
     ]
 
     return ranks.index(result)

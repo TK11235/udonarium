@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class KanColle < DiceBot
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 3
-    @d66Type = 2
-  end
+  # ゲームシステムの識別子
+  ID = 'KanColle'
 
-  def gameName
-    '艦これRPG'
-  end
+  # ゲームシステム名
+  NAME = '艦これRPG'
 
-  def gameType
-    "KanColle"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'かんこれRPG'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 例) 2D6 ： 単純に2D6した値を出します。
 例) 2D6>=7 ： 行為判定。2D6して目標値7以上出れば成功。
 例) 2D6+2>=7 ： 行為判定。2D6に修正+2をした上で目標値7以上になれば成功。
@@ -41,23 +36,29 @@ class KanColle < DiceBot
 　・特殊開発表　WPMC　(燃料6/弾薬3/鋼材6/ボーキ3)
 　・新・特殊開発表　WPMCN
 　・艦載機関開発表　WPFA　(燃料3/弾薬6/鋼材3/ボーキ6)
-　・砲類開発表　WPCN　(燃料3/弾薬6/鋼材6/ボーキ3)　
+　・砲類開発表　WPCN　(燃料3/弾薬6/鋼材6/ボーキ3)
 　・敵深海棲艦の装備決定 BT2～BT12
 ・D66ダイス(D66S相当=低い方が10の桁になる)
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 3
+    @d66Type = 2
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    return '' unless signOfInequality == ">="
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    if dice_n <= 2
-      return " ＞ ファンブル（判定失敗。アクシデント表を自分のＰＣに適用）"
-    elsif dice_n >= 12
-      return " ＞ スペシャル（判定成功。【行動力】が１Ｄ６点回復）"
-    elsif total_n >= diff
-      return " ＞ 成功"
+    if dice_total <= 2
+      " ＞ ファンブル（判定失敗。アクシデント表を自分のＰＣに適用）"
+    elsif dice_total >= 12
+      " ＞ スペシャル（判定成功。【行動力】が１Ｄ６点回復）"
+    elsif total >= target
+      " ＞ 成功"
     else
-      return " ＞ 失敗"
+      " ＞ 失敗"
     end
   end
 
@@ -173,7 +174,7 @@ INFO_MESSAGE_TEXT
       type = '暴走表'
       output, total_n = get_bousou_table
     else
-      return getTableCommandResult(command, @@tables)
+      return getTableCommandResult(command, TABLES)
     end
 
     return "#{type}(#{total_n}) ＞ #{output}"
@@ -734,7 +735,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-  @@tables =
+  TABLES =
     {
 
       'BT10' => {
@@ -1028,12 +1029,12 @@ TABLE_TEXT_END
 増設バルジ(中型艦)(建造壱p169)
 TABLE_TEXT_END
       },
-    }
+    }.freeze
 
   setPrefixes([
     'ET', 'ACT',
     'EVNT', 'EVKT', 'EVAT', 'EVET', 'EVENT', 'EVST', 'ETHT', 'ETVT', 'ETGT', 'ETBT', 'ETMT', 'ETFT',
     'DVT', 'DVTM', 'WP1T', 'WP2T', 'WP3T', 'WP4T', 'ITT', 'MHT', 'SNT', 'SPSNT',
     'KTM', 'BT', 'KHT', 'KMT', 'KST', 'KSYT', 'KKT', 'KSNT', 'SNZ', 'RNT'
-  ] + @@tables.keys)
+  ] + TABLES.keys)
 end

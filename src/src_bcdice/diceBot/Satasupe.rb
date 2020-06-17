@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Satasupe < DiceBot
-  setPrefixes(['(\d+R|SR\d+|TAGT|\w+IET|\w+IHT|F\w*T|F\w*T|A\w*T|G\w*A\w*T|A\w*T|R\w*FT|NPCT|KusaiMT|EnterT|BudTT|GetgT|GetzT|GetnT|GetkT|GETSST|PayT|TimeUT|\w+IT|ShaokinRET|MinamiRET|ChinatownRET|CivicCenterRET|DowntownRET|WarshipLandRET|LoveLoveRET|AjitoRET|JigokuSpaRET|JailHouseRET).*'])
+  # ゲームシステムの識別子
+  ID = 'Satasupe'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-  end
+  # ゲームシステム名
+  NAME = 'サタスペ'
 
-  def gameName
-    'サタスペ'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'さたすへ'
 
-  def gameType
-    "Satasupe"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定コマンド　(nR>=x[y,z,c] or nR>=x or nR>=[,,c] etc)
 　nが最大ロール回数、xが難易度、yが目標成功度、zがファンブル値、cが必殺値。
 　y と z と c は省略可能です。(省略時、y＝無制限、z＝1、c=13(なし))
@@ -52,6 +45,14 @@ class Satasupe < DiceBot
 　・イベント表(～IT)：治療イベント表(TreatmentIT)、大学イベント表(CollegeIT)
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['(\d+R|SR\d+|TAGT|\w+IET|\w+IHT|F\w*T|F\w*T|A\w*T|G\w*A\w*T|A\w*T|R\w*FT|NPCT|KusaiMT|EnterT|BudTT|GetgT|GetzT|GetnT|GetkT|GETSST|PayT|TimeUT|\w+IT|ShaokinRET|MinamiRET|ChinatownRET|CivicCenterRET|DowntownRET|WarshipLandRET|LoveLoveRET|AjitoRET|JigokuSpaRET|JailHouseRET).*'])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
   end
 
   def rollDiceCommand(command)
@@ -531,10 +532,11 @@ INFO_MESSAGE_TEXT
       age_type -= 1
 
       agen_text = agen[age_type]
-      age_num = agen_text.split(/\+/)
+      age_const, age_dice = agen_text.split("+")
 
-      total, = rollDiceAddingUp(age_num[1])
-      ysold = total + age_num[0].to_i
+      times, sides = age_dice.split("D").map(&:to_i)
+      total, = roll(times, sides)
+      ysold = total + age_const.to_i
 
       lmodValue = lmood[(rand 6)]
       lageValue = lage[(rand 3)]

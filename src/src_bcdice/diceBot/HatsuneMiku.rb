@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class HatsuneMiku < DiceBot
-  def initialize
-    super
-    @sendMode = 2
-    @d66Type = 2
-  end
+  # ゲームシステムの識別子
+  ID = 'HatsuneMiku'
 
-  def gameName
-    '初音ミクTRPG ココロダンジョン'
-  end
+  # ゲームシステム名
+  NAME = '初音ミクTRPG ココロダンジョン'
 
-  def gameType
-    "HatsuneMiku"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'はつねみくTRPGこころたんしよん'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定(Rx±y@z>=t)
 　能力値のダイスごとに成功・失敗の判定を行います。
 　x：能力ランク(S,A～D)。数字指定で直接その個数のダイスが振れます
@@ -39,6 +35,11 @@ class HatsuneMiku < DiceBot
 　性格表A OPA／性格表B OPB／趣味表 OHT／外見表 OLT／一人称表 OIT／呼び名表 OYT
 　リアクション表 ORT／出会い表 OMT
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @sendMode = 2
+    @d66Type = 2
   end
 
   def rollDiceCommand(command)
@@ -141,7 +142,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getTableDiceCommandResult(command)
-    info = @@tables[command]
+    info = TABLES[command]
     return nil if info.nil?
 
     name = info[:name]
@@ -180,7 +181,7 @@ INFO_MESSAGE_TEXT
     return newTable
   end
 
-  @@tables =
+  TABLES =
     {
       'FT' => {
         :name => "ファンブル表",
@@ -765,7 +766,7 @@ INFO_MESSAGE_TEXT
         },
       },
 
-    }
+    }.freeze
 
-  setPrefixes(['R([A-DS]|\d+).*'] + @@tables.keys)
+  setPrefixes(['R([A-DS]|\d+).*'] + TABLES.keys)
 end

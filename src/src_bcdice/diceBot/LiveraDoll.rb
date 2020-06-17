@@ -1,27 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class LiveraDoll < DiceBot
-  setPrefixes([
-    '(C|K|W|R|B|G|E)(L|D|O)\d+',
-    '(\d+)?ATK([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?'
-  ])
+  # ゲームシステムの識別子
+  ID = 'LiveraDoll'
 
-  def initialize
-    super
+  # ゲームシステム名
+  NAME = '紫縞のリヴラドール'
 
-    @sortType = 3
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'りうらとおる'
 
-  def gameName
-    '紫縞のリヴラドール'
-  end
-
-  def gameType
-    "LiveraDoll"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 アタックX：[x]ATK(BNo)
 
 []内のコマンドは省略可能。
@@ -51,6 +42,16 @@ L：リヴラネイル　D：パッシヴドレス　O：オーナーズネイ�
 例：KD2（黒のパッシヴドレスの2番目『第二夜の黒』）
 例：WO3（白のオーナーズネイルの3番目『罪なき純白』）
 MESSAGETEXT
+
+  setPrefixes([
+    '(C|K|W|R|B|G|E)(L|D|O)\d+',
+    '(\d+)?ATK([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?([1-6])?'
+  ])
+
+  def initialize
+    super
+
+    @sortType = 3
   end
 
   def rollDiceCommand(command)

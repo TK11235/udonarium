@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class MagicaLogia < DiceBot
-  setPrefixes(['WT', 'FCT', 'ST', 'FT', 'AT', 'BGT', 'DAT', 'FAT', 'WIT', 'RTT', 'TPT', 'TCT', 'PCT', 'MCT', 'ICT', 'SCT', 'XCT', 'WCT', 'CCT', 'BST', 'PT', 'XEST', 'IWST', 'MCST', 'WDST', 'LWST', 'MIT', 'MOT', 'MAT', 'MUT', 'MFT', 'MLT', 'STB', 'RTS', 'RTB', 'RTF', 'RTP', 'RTD', 'RTN', 'MGCT', 'MBST', 'MAST', 'TCST', 'PWST', 'PAST', 'GBST', 'SLST', 'WLAT', 'WMT', 'FFT', 'OLST', 'TPTB', 'FLT'])
+  # ゲームシステムの識別子
+  ID = 'MagicaLogia'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 3
-    @d66Type = 2
-  end
+  # ゲームシステム名
+  NAME = 'マギカロギア'
 
-  def gameName
-    'マギカロギア'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'まきかろきあ'
 
-  def gameType
-    "MagicaLogia"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 スペシャル／ファンブル／成功／失敗を判定
 ・各種表
@@ -49,26 +42,32 @@ class MagicaLogia < DiceBot
 その後表 FLT
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['WT', 'FCT', 'ST', 'FT', 'AT', 'BGT', 'DAT', 'FAT', 'WIT', 'RTT', 'TPT', 'TCT', 'PCT', 'MCT', 'ICT', 'SCT', 'XCT', 'WCT', 'CCT', 'BST', 'PT', 'XEST', 'IWST', 'MCST', 'WDST', 'LWST', 'MIT', 'MOT', 'MAT', 'MUT', 'MFT', 'MLT', 'STB', 'RTS', 'RTB', 'RTF', 'RTP', 'RTD', 'RTN', 'MGCT', 'MBST', 'MAST', 'TCST', 'PWST', 'PAST', 'GBST', 'SLST', 'WLAT', 'WMT', 'FFT', 'OLST', 'TPTB', 'FLT'])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 3
+    @d66Type = 2
   end
 
   # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-
-    return '' unless signOfInequality == ">="
+  def check_2D6(total, dice_total, dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
     output =
-      if dice_n <= 2
+      if dice_total <= 2
         " ＞ ファンブル"
-      elsif dice_n >= 12
+      elsif dice_total >= 12
         " ＞ スペシャル(魔力1D6点か変調1つ回復)"
-      elsif total_n >= diff
+      elsif total >= target
         " ＞ 成功"
       else
         " ＞ 失敗"
       end
 
-    output += getGainMagicElementText()
+    output += gainMagicElement(dice_list[0], dice_list[1])
 
     return output
   end
@@ -325,19 +324,6 @@ INFO_MESSAGE_TEXT
   end
 
   # 魔素獲得チェック
-  def getGainMagicElementText()
-    diceList = getDiceList
-    debug("getGainMagicElementText diceList", diceList)
-
-    return '' if diceList.empty?
-
-    dice1 = diceList[0]
-    dice2 = diceList[1]
-
-    # マギカロギア用魔素取得判定
-    return  gainMagicElement(dice1, dice2)
-  end
-
   def gainMagicElement(dice1, dice2)
     return "" unless dice1 == dice2
 
@@ -1143,16 +1129,13 @@ INFO_MESSAGE_TEXT
   end
 
   def magicalogia_fallen_after_table
-    outtext = ""
-    outnum = ''
     num, = roll(1, 6)
     if num <= 3
       outtext, outnum = magicalogia_fallen_after_table_low
-      outtext = outtext.to_s
     else
       outtext, outnum = magicalogia_fallen_after_table_high
-      outtext = outtext.to_s
     end
+    outtext = outtext.to_s
     outnum = "#{num},#{outnum}"
     return outtext, outnum
   end

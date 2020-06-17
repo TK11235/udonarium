@@ -1,26 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Cthulhu_Korean < DiceBot
-  setPrefixes(['CC(B)?\(\d+\)', 'CC(B)?.*', 'RES(B)?.*', 'CBR(B)?\(\d+,\d+\)'])
+  # ゲームシステムの識別子
+  ID = 'Cthulhu:Korean'
 
-  def initialize
-    # $isDebug = true
-    super
-    @special_percentage  = 20
-    @critical_percentage = 1
-    @fumble_percentage   = 1
-  end
+  # ゲームシステム名
+  NAME = '크툴루'
 
-  def gameName
-    '크툴루'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = '国際化:Korean:크툴루의부름7'
 
-  def gameType
-    "Cthulhu:Korean"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 c=크리티컬치 ／ f=펌블치 ／ s=스페셜
 
 1d100<=n    c・f・s 모두 오프（단순하게 수치만을 뽑아낼 때 사용）
@@ -50,8 +42,16 @@ x=고장 넘버. 주사위 눈x이상이 나온 후에, 펌블이 동시에 발�
 
 ・CCB(x) c=5、f=96
 위와 동일
-
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['CC(B)?\(\d+\)', 'CC(B)?.*', 'RES(B)?.*', 'CBR(B)?\(\d+,\d+\)'])
+
+  def initialize
+    # $isDebug = true
+    super
+    @special_percentage  = 20
+    @critical_percentage = 1
+    @fumble_percentage   = 1
   end
 
   def rollDiceCommand(command)

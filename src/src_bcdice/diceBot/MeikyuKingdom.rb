@@ -1,41 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class MeikyuKingdom < DiceBot
-  setPrefixes([
-    '\d+MK',
-    'LRT', 'ORT', 'CRT', 'ART', 'FRT',
-    'TBT', 'CBT', 'SBT', 'VBT', 'FBT', 'ABT', 'WBT', 'LBT',
-    'THT', 'CHT', 'SHT', 'VHT',
-    'KDT', 'KCT', 'KMT',
-    'CAT', 'FWT', 'CFT',
-    'TT', 'NT', 'ET', 'MPT',
-    'T1T', 'T2T', 'T3T', 'T4T', 'T5T',
-    'NAME.*',
-    'DFT', 'IDT\d*',
-    'WIT', 'LIT', 'RIT', 'SIT', 'RWIT', 'RUIT',
-    'IFT',
-    '\d+RET',
-    'PNT\d*', 'MLT\d*',
-    'KNT\d+', 'WORD\d+'
-  ])
+  # ゲームシステムの識別子
+  ID = 'MeikyuKingdom'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-  end
+  # ゲームシステム名
+  NAME = '迷宮キングダム'
 
-  def gameName
-    '迷宮キングダム'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'めいきゆうきんくたむ'
 
-  def gameType
-    "MeikyuKingdom"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定　(nMK+m)
 　n個のD6を振って大きい物二つだけみて達成値を算出します。修正mも可能です。
 　絶対成功と絶対失敗も自動判定します。
@@ -62,6 +39,30 @@ class MeikyuKingdom < DiceBot
 　・単語表１／２／３／４　WORD1／WORD2／WORD3／WORD4
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  setPrefixes([
+    '\d+MK',
+    'LRT', 'ORT', 'CRT', 'ART', 'FRT',
+    'TBT', 'CBT', 'SBT', 'VBT', 'FBT', 'ABT', 'WBT', 'LBT',
+    'THT', 'CHT', 'SHT', 'VHT',
+    'KDT', 'KCT', 'KMT',
+    'CAT', 'FWT', 'CFT',
+    'TT', 'NT', 'ET', 'MPT',
+    'T1T', 'T2T', 'T3T', 'T4T', 'T5T',
+    'NAME.*',
+    'DFT', 'IDT\d*',
+    'WIT', 'LIT', 'RIT', 'SIT', 'RWIT', 'RUIT',
+    'IFT',
+    '\d+RET',
+    'PNT\d*', 'MLT\d*',
+    'KNT\d+', 'WORD\d+'
+  ])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
   end
 
   def changeText(string)
@@ -79,56 +80,48 @@ INFO_MESSAGE_TEXT
     return mayokin_check(string, nick_e)
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    result = get2D6Result(total_n, dice_n, signOfInequality, diff)
-    result += getKiryokuResult(total_n, dice_n, signOfInequality, diff)
+  def check_nD6(total, dice_total, dice_list, cmp_op, target)
+    result = get2D6Result(total, dice_total, cmp_op, target)
+    result += getKiryokuResult(total, dice_list, target)
 
     return result
   end
 
+  alias check_2D6 check_nD6
+
   def get2D6Result(total_n, dice_n, signOfInequality, diff)
-    return '' unless signOfInequality == ">="
+    return '' unless signOfInequality == :>=
 
     if dice_n <= 2
-      return " ＞ 絶対失敗"
+      " ＞ 絶対失敗"
     elsif dice_n >= 12
-      return " ＞ 絶対成功"
+      " ＞ 絶対成功"
+    else
+      get2D6ResultOnlySuccess(total_n, diff)
     end
-
-    return get2D6ResultOnlySuccess(total_n, diff)
   end
 
   def get2D6ResultOnlySuccess(total_n, diff)
     if total_n >= diff
-      return " ＞ 成功"
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
     end
-
-    return " ＞ 失敗"
   end
 
-  def getKiryokuResult(total_n, _dice_n, _signOfInequality, diff)
-    output_msg = ""
+  def getKiryokuResult(total_n, dice_list, diff)
+    num_6 = dice_list.count(6)
 
-    diceList = getDiceList
-    debug("getKiryokuResult diceList", diceList)
-
-    dice6List = diceList.find_all { |i| i == 6 }
-    debug("dice6List", dice6List)
-
-    if dice6List.empty?
-      return output_msg
+    if num_6 == 0
+      return ""
+    elsif num_6 >= 2
+      return " ＆ 《気力》#{num_6}点獲得"
     end
 
-    if dice6List.length >= 2
-      return " ＆ 《気力》#{dice6List.length}点獲得"
-    end
+    none6_list = dice_list.reject { |i| i == 6 }.sort
 
-    diceNone6List = diceList.find_all { |i| i != 6 }
-    diceNone6List.sort!
-    debug("diceNone6List", diceNone6List)
-
-    maxDice1 = diceNone6List.pop.to_i
-    maxDice2 = diceNone6List.pop.to_i
+    maxDice1 = none6_list.pop.to_i
+    maxDice2 = none6_list.pop.to_i
     debug("maxDice1", maxDice1)
     debug("maxDice2", maxDice2)
 
@@ -141,7 +134,7 @@ INFO_MESSAGE_TEXT
     debug("diff", diff)
     none6DiceReuslt = get2D6ResultOnlySuccess(none6Total_n, diff)
 
-    return " (もしくは) #{none6Total_n}#{none6DiceReuslt} ＆ 《気力》#{dice6List.length}点獲得"
+    return " (もしくは) #{none6Total_n}#{none6DiceReuslt} ＆ 《気力》1点獲得"
   end
 
   ####################         迷宮キングダム        ########################
@@ -150,45 +143,35 @@ INFO_MESSAGE_TEXT
 
     output = "1"
 
-    return output unless /(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i =~ string
+    # return output unless /(^|\s)S?((\d+)[rR]6([\+\-\d]*)(([>=]+)(\d+))?)(\s|$)/i =~ string
 
-    string = Regexp.last_match(2)
-    diceCount = Regexp.last_match(3).to_i
-    modifyText = Regexp.last_match(4)
-    signOfInequality = Regexp.last_match(6)
-    signOfInequality ||= ""
-
-    diff = Regexp.last_match(7).to_i
-    diff ||= 0
-
-    debug("string", string)
-    debug("diceCount", diceCount)
-    debug("modifyText", modifyText)
-
-    bonus = 0
-    if modifyText
-      bonus = parren_killer("(0#{modifyText})").to_i
+    m = /^S?((\d+)R6([\+\-\d]*)(([>=]+)(\d+))?)/i.match(string)
+    unless m
+      return "1"
     end
-    debug("bonus", bonus)
+
+    string = m[1]
+    diceCount = m[2].to_i
+    modifyText = m[3]
+    signOfInequality = m[5] || ""
+    diff = m[6].to_i
+
+    bonus = modifyText ? ArithmeticEvaluator.new.eval(modifyText) : 0
 
     dice_now = 0
     dice_str = ""
     total_n = 0
 
     _, dice_str, = roll(diceCount, 6, (sortType & 1))
-    dice_num = dice_str.split(/,/).collect { |i| i.to_i }
-    debug("diceCount, dice_num", diceCount, dice_num)
+    dice_list = dice_str.split(',').map(&:to_i)
 
-    dice1 = 0
-    dice2 = 0
-    dice1 = dice_num[diceCount - 2] if  diceCount >= 2
-    dice2 = dice_num[diceCount - 1] if  diceCount >= 1
+    dice1 = diceCount >= 2 ? dice_list[diceCount - 2] : 0
+    dice2 = diceCount >= 1 ? dice_list[diceCount - 1] : 0
     dice_now = dice1 + dice2
     debug("dice1, dice2, dice_now", dice1, dice2, dice_now)
 
     total_n = dice_now + bonus
     dice_str = "[#{dice_str}]"
-    setDiceText(dice_str)
 
     output = "#{dice_now}#{dice_str}"
     if bonus > 0
@@ -208,7 +191,8 @@ INFO_MESSAGE_TEXT
     end
 
     if signOfInequality != "" # 成功度判定処理
-      output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
+      cmp_op = Normalize.comparison_operator(signOfInequality)
+      output += check_result(total_n, dice_now, dice_list, 6, cmp_op, diff)
     end
 
     return output
@@ -460,6 +444,8 @@ INFO_MESSAGE_TEXT
     when /^LBT/i
       type = 'カップル休憩'
       output, total_n = getLoversBreakTable()
+    else
+      return nil
     end
 
     if output != '1'

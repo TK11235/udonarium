@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class BlindMythos < DiceBot
-  def initialize
-    super
-  end
+  # ゲームシステムの識別子
+  ID = 'BlindMythos'
 
-  def gameName
-    'ブラインド・ミトス'
-  end
+  # ゲームシステム名
+  NAME = 'ブラインド・ミトス'
 
-  def gameType
-    "BlindMythos"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ふらいんとみとす'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・判定：BMx@y>=z、BMSx@y>=z
   　x:スキルレベル
 　　y:目標難易度（省略可。デフォルト4）
@@ -37,7 +35,6 @@ class BlindMythos < DiceBot
  xyz:守護星ナンバーを指定
  例）RP123　RP258
 MESSAGETEXT
-  end
 
   def rollDiceCommand(command)
     debug("rollDiceCommand Begin")
@@ -55,7 +52,7 @@ MESSAGETEXT
     text = getDurtyTableCommandReuslt(command)
     return text unless text.nil?
 
-    text = getTableCommandResult(command, @@tables)
+    text = getTableCommandResult(command, TABLES)
     return text
   end
 
@@ -342,7 +339,7 @@ __TABLE_END__
     return "汚染チャート(#{dice1},#{dice2}) ＞ #{table[index]}"
   end
 
-  @@tables =
+  TABLES =
     {
       'LE' => {
         :name => "失う感情表",
@@ -465,7 +462,7 @@ __TABLE_END__
         },
       },
 
-    }
+    }.freeze
 
-  setPrefixes(['BM.*', 'ReRoll\d+.*', 'RP\d+', 'DT'] + @@tables.keys)
+  setPrefixes(['BM.*', 'ReRoll\d+.*', 'RP\d+', 'DT'] + TABLES.keys)
 end

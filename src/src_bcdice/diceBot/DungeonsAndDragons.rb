@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # frozen_string_literal: true
 
-class TokyoNova < DiceBot
+class DungeonsAndDragons < DiceBot
   # ゲームシステムの識別子
-  ID = 'TokyoNova'
+  ID = 'DungeonsAndDragons'
 
   # ゲームシステム名
-  NAME = 'トーキョーＮ◎ＶＡ'
+  NAME = 'ダンジョンズ＆ドラゴンズ'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'とおきよおのは'
+  SORT_KEY = 'たんしよんすあんととらこんす'
 
   # ダイスボットの使い方
   HELP_MESSAGE = "※このダイスボットは部屋のシステム名表示用となります。\n"

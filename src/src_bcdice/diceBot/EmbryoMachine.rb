@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class EmbryoMachine < DiceBot
-  setPrefixes(['(EM\t+|HLT|MFT|SFT)'])
+  # ゲームシステムの識別子
+  ID = 'EmbryoMachine'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-  end
+  # ゲームシステム名
+  NAME = 'エムブリオマシン'
 
-  def gameName
-    'エムブリオマシン'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'えむふりおましん'
 
-  def gameType
-    "EmbryoMachine"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定ロール(EMt+m@c#f)
 　目標値t、修正値m、クリティカル値c(省略時は20)、ファンブル値f(省略時は2)で攻撃判定を行います。
 　命中した場合は命中レベルと命中部位も自動出力します。
@@ -28,6 +22,13 @@ class EmbryoMachine < DiceBot
 　・白兵攻撃ファンブル表　MFT
 　・射撃攻撃ファンブル表　SFT
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['(EM\t+|HLT|MFT|SFT)'])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
   end
 
   def changeText(string)
@@ -46,18 +47,17 @@ INFO_MESSAGE_TEXT
   end
 
   # ゲーム別成功度判定(nD10)
-  def check_nD10(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    debug("EmbryoMachine check_nD10 begin")
-    return '' unless signOfInequality == ">="
+  def check_nD10(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    if dice_n <= 2
-      return " ＞ ファンブル"
-    elsif dice_n >= 20
-      return " ＞ クリティカル"
-    elsif total_n >= diff
-      return " ＞ 成功"
+    if dice_total <= 2
+      " ＞ ファンブル"
+    elsif dice_total >= 20
+      " ＞ クリティカル"
+    elsif total >= target
+      " ＞ 成功"
     else
-      return " ＞ 失敗"
+      " ＞ 失敗"
     end
   end
 

@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Elysion < DiceBot
-  def initialize
-    super
-    @d66Type = 2
-  end
+  # ゲームシステムの識別子
+  ID = 'Elysion'
 
-  def gameName
-    'エリュシオン'
-  end
+  # ゲームシステム名
+  NAME = 'エリュシオン'
 
-  def gameType
-    "Elysion"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'えりゆしおん'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  #
+  #  教室 R:classRoom／購買 S:Shop／部室 B:Box／生徒会室 C:Council／学生寮 D:Dormitory／図書館 I:lIbrary／屋上 F:rooF／
+  # 　研究室 L:Labo／プール P:Pool／中庭 N:iNner／商店街 A:Avenue／廃墟 V:deVastation／ゲート G:Gate
+  #  温泉 H:Hotsprings／修学旅行 T:School trip／お祭り室 E:festival／潜入調査 U:Infiltration study／
+  HELP_MESSAGE = <<MESSAGETEXT
 ・判定（ELn+m）
 　能力値 n 、既存の達成値 m（アシストの場合）
 例）EL3　：能力値３で判定。
@@ -44,13 +45,10 @@ class Elysion < DiceBot
 　1コマンドでデート判定を行い、デート表の結果を表示します。
 ・D66ダイスあり
 MESSAGETEXT
-  end
 
-  #  教室 R:classRoom／購買 S:Shop／部室 B:Box／生徒会室 C:Council／学生寮 D:Dormitory／図書館 I:lIbrary／屋上 F:rooF／
-  # 　研究室 L:Labo／プール P:Pool／中庭 N:iNner／商店街 A:Avenue／廃墟 V:deVastation／ゲート G:Gate
-  #  温泉 H:Hotsprings／修学旅行 T:School trip／お祭り室 E:festival／潜入調査 U:Infiltration study／
-  def changeText(string)
-    string
+  def initialize
+    super
+    @d66Type = 2
   end
 
   def isGetOriginalMessage
@@ -85,7 +83,7 @@ MESSAGETEXT
 
     else
       result = checkAnyCommand(command)
-      return getTableCommandResult(command, @@tables) if result.empty?
+      return getTableCommandResult(command, TABLES) if result.empty?
     end
 
     return '' if result.empty?
@@ -197,17 +195,17 @@ MESSAGETEXT
 
   def getSuccessResult(success)
     result = " ＞ 成功度#{success}"
-    result += " ＞ 大成功 《アウル》2点獲得" if success >= @@successMax
+    result += " ＞ 大成功 《アウル》2点獲得" if success >= SUCCESS_MAX
 
     return result
   end
 
-  @@successMax = 5
+  SUCCESS_MAX = 5
 
   def getSuccessRank(total)
     success = ((total - 9) / 5.0).ceil
     success = 0 if success < 0
-    success = @@successMax if success > @@successMax
+    success = SUCCESS_MAX if success > SUCCESS_MAX
     return success
   end
 
@@ -222,7 +220,7 @@ MESSAGETEXT
   end
 
   def getCriticalResult
-    getSuccessResult(@@successMax)
+    getSuccessResult(SUCCESS_MAX)
   end
 
   def getFambleResultText(number, total)
@@ -889,7 +887,7 @@ MESSAGETEXT
     return "#{name}(#{index}) #{text}"
   end
 
-  @@tables =
+  TABLES =
     {
 
       'EBT' => {
@@ -1217,7 +1215,7 @@ TABLE_TEXT_END
 66:ブルー
 TABLE_TEXT_END
       },
-    }
+    }.freeze
 
   setPrefixes([
     'EL.*',
@@ -1226,5 +1224,5 @@ TABLE_TEXT_END
     'BFT', 'FWT', 'FT',
     'SRT', 'ORT', 'DRT', 'URT',
     'NJ\d+', 'BS\d+'
-  ] + @@tables.keys)
+  ] + TABLES.keys)
 end

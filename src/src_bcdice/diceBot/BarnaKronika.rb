@@ -1,6 +1,30 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class BarnaKronika < DiceBot
+  # ゲームシステムの識別子
+  ID = 'BarnaKronika'
+
+  # ゲームシステム名
+  NAME = 'バルナ・クロニカ'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'はるなくろにか'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+・通常判定　nBK
+　ダイス数nで判定ロールを行います。
+　セット数が1以上の時はセット数も表示します。
+・攻撃判定　nBA
+　ダイス数nで判定ロールを行い、攻撃値と命中部位も表示します。
+・クリティカルコール　nBKCt　nBACt
+　判定コマンドの後ろに「Ct」を付けるとクリティカルコールです。
+　ダイス数n,コール数tで判定ロールを行います。
+　ダイス数nで判定ロールを行います。
+　セット数が1以上の時はセット数も表示し、攻撃判定の場合は命中部位も表示します。
+INFO_MESSAGE_TEXT
+
   setPrefixes(['\d+BK', '\d+BA', '\d+BKC\d+', '\d+BAC\d+'])
 
   def initialize
@@ -19,29 +43,6 @@ class BarnaKronika < DiceBot
       # 場札のタップ処理の必要があるか？
       bcdice.cardTrader.canTapCard = false
     end
-  end
-
-  def gameName
-    'バルナ・クロニカ'
-  end
-
-  def gameType
-    "BarnaKronika"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-・通常判定　nBK
-　ダイス数nで判定ロールを行います。
-　セット数が1以上の時はセット数も表示します。
-・攻撃判定　nBA
-　ダイス数nで判定ロールを行い、攻撃値と命中部位も表示します。
-・クリティカルコール　nBKCt　nBACt
-　判定コマンドの後ろに「Ct」を付けるとクリティカルコールです。
-　ダイス数n,コール数tで判定ロールを行います。
-　ダイス数nで判定ロールを行います。
-　セット数が1以上の時はセット数も表示し、攻撃判定の場合は命中部位も表示します。
-INFO_MESSAGE_TEXT
   end
 
   def changeText(string)

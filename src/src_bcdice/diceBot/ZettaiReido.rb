@@ -1,32 +1,25 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class ZettaiReido < DiceBot
-  setPrefixes(['\d+\-2DR.*'])
+  # ゲームシステムの識別子
+  ID = 'ZettaiReido'
 
-  def initialize
-    super
-  end
+  # ゲームシステム名
+  NAME = '絶対隷奴'
 
-  def gameName
-    '絶対隷奴'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'せつたいれいと'
 
-  def gameType
-    "ZettaiReido"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 m-2DR+n>=x
 m(基本能力),n(修正値),x(目標値)
 DPの取得の有無も表示されます。
 INFO_MESSAGE_TEXT
-  end
 
-  def changeText(string)
-    string
-  end
+  setPrefixes(['\d+\-2DR.*'])
 
   def rollDiceCommand(command)
     return nil unless /^(\d+)-2DR([\+\-\d]*)(>=(\d+))?$/i === command

@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class TrinitySeven < DiceBot
-  setPrefixes(['(\d+)DM\d+(\+|\-)?\d*', '(\d+)DM(\+|\-)?\d*', 'TR(\d+)<=(\d+)(\+|\-)?\d*', 'TR<=(\d+)(\+|\-)?\d*', 'TR(\+|\-)?(\d+)<=(\d+)(\+|\-)?\d*', 'TRNAME'])
+  # ゲームシステムの識別子
+  ID = 'TrinitySeven'
 
-  def initialize
-    super
-  end
+  # ゲームシステム名
+  NAME = 'トリニティセブンRPG'
 
-  def gameName
-    'トリニティセブンRPG'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'とりにていせふんRPG'
 
-  def gameType
-    "TrinitySeven"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 クリティカルが変動した命中及び、7の出目がある場合のダメージ計算が行なえます。
 なお、通常の判定としても利用できます。
 
@@ -35,7 +31,8 @@ class TrinitySeven < DiceBot
 名字と名前を出します。PCや突然現れたNPCの名付けにどうぞ。
 
 MESSAGETEXT
-  end
+
+  setPrefixes(['(\d+)DM\d+(\+|\-)?\d*', '(\d+)DM(\+|\-)?\d*', 'TR(\d+)<=(\d+)(\+|\-)?\d*', 'TR<=(\d+)(\+|\-)?\d*', 'TR(\+|\-)?(\d+)<=(\d+)(\+|\-)?\d*', 'TRNAME'])
 
   def rollDiceCommand(command) # スパゲッティなコードだけど許して！！！ → 絶対に許さない。全力でリファクタリングした。
     debug("rollDiceCommand command", command)
@@ -135,9 +132,12 @@ MESSAGETEXT
     return total, diceList
   end
 
-  def check_1D100(_total_n, dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return " ＞ ファンブル" if dice_n >= 96
-    return " ＞ クリティカル" if dice_n <= 7
+  def check_1D100(_total, dice_total, _cmp_op, _target)
+    if dice_total >= 96
+      " ＞ ファンブル"
+    elsif dice_total <= 7
+      " ＞ クリティカル"
+    end
   end
 
   # 名前表

@@ -1,28 +1,29 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class PhantasmAdventure < DiceBot
+  # ゲームシステムの識別子
+  ID = 'PhantasmAdventure'
+
+  # ゲームシステム名
+  NAME = 'ファンタズムアドベンチャー'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ふあんたすむあとへんちやあ'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+成功、失敗、決定的成功、決定的失敗の表示とクリティカル・ファンブル値計算の実装。
+INFO_MESSAGE_TEXT
+
   def initialize
     super
     @sendMode = 2
   end
 
-  def gameName
-    'ファンタズムアドベンチャー'
-  end
-
-  def gameType
-    "PhantasmAdventure"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-成功、失敗、決定的成功、決定的失敗の表示とクリティカル・ファンブル値計算の実装。
-INFO_MESSAGE_TEXT
-  end
-
   # ゲーム別成功度判定(1d20)
-  def check_1D20(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == "<="
+  def check_1D20(total, _dice_total, cmp_op, diff)
+    return '' unless cmp_op == :<=
 
     # 技能値の修正を計算する
     skill_mod = 0
@@ -37,7 +38,7 @@ INFO_MESSAGE_TEXT
     critical = 1 + skill_mod
     dice_now, = roll(1, 20)
 
-    if (total_n >= fumble) || (total_n >= 20)
+    if (total >= fumble) || (total >= 20)
       fum_num = dice_now - skill_mod
       fum_num = 20 if fum_num > 20
       fum_num = 1 if fum_num < 1
@@ -54,7 +55,7 @@ INFO_MESSAGE_TEXT
       end
       return " ＞ 致命的失敗(#{fum_str})"
 
-    elsif (total_n <= critical) || (total_n <= 1)
+    elsif (total <= critical) || (total <= 1)
       crit_num = dice_now + skill_mod
       crit_num = 20 if crit_num > 20
       crit_num = 1 if crit_num < 1
@@ -69,7 +70,7 @@ INFO_MESSAGE_TEXT
 
       return " ＞ 決定的成功(#{crit_num})"
 
-    elsif total_n <= diff
+    elsif total <= diff
       return " ＞ 成功"
     else
       return " ＞ 失敗"

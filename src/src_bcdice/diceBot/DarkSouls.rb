@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class DarkSouls < DiceBot
-  setPrefixes(['(\d+)?(A)?DS([-+\d]*)(@\d+)?'])
+  # ゲームシステムの識別子
+  ID = 'DarkSouls'
 
-  def initialize
-    super
-  end
+  # ゲームシステム名
+  NAME = 'ダークソウルTRPG'
 
-  def gameName
-    'ダークソウルTRPG'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'たあくそうるTRPG'
 
-  def gameType
-    "DarkSouls"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・行為判定：[n]DS[a±b][@t]　　[]内のコマンドは省略可
 ・能動判定：[n]ADS[a±b][@t]　　FP消費を判定
 　n：ダイス数。省略時は「2」
@@ -27,7 +23,8 @@ class DarkSouls < DiceBot
 　　ADS+2-2 → 2D6+2の達成値を表示（能動判定）
 　　DS+2@10 → 2D6+2で目標値10の判定
 MESSAGETEXT
-  end
+
+  setPrefixes(['(\d+)?(A)?DS([-+\d]*)(@\d+)?'])
 
   def rollDiceCommand(command)
     return nil unless (m = /(\d+)?(A)?DS([-+\d]*)(@(\d+))?$/i.match(command.upcase))

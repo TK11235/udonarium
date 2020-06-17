@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class LostRoyal < DiceBot
-  setPrefixes(['LR\[[0-5],[0-5],[0-5],[0-5],[0-5],[0-5]\]', 'FC', 'WPC', 'EC', 'HR[1-2]'])
+  # ゲームシステムの識別子
+  ID = 'LostRoyal'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 1
-  end
+  # ゲームシステム名
+  NAME = 'ロストロイヤル'
 
-  def gameName
-    'ロストロイヤル'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ろすとろいやる'
 
-  def gameType
-    "LostRoyal"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・D66ダイスあり
 
 行為判定
@@ -40,6 +33,14 @@ class LostRoyal < DiceBot
 　HRx
 　　x にはダイスの数（ 1 - 2 ）を指定
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['LR\[[0-5],[0-5],[0-5],[0-5],[0-5],[0-5]\]', 'FC', 'WPC', 'EC', 'HR[1-2]'])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 1
   end
 
   def rollDiceCommand(command)
@@ -75,14 +76,14 @@ INFO_MESSAGE_TEXT
     text = "3D6 => [#{keys.join(',')}] => (#{scores.join('+')}) => #{total_score}"
 
     unless chained_sequence.nil? || chained_sequence.empty?
-      bonus = is_fumble?(keys, chained_sequence) ? 3 : chained_sequence.size
+      bonus = fumble?(keys, chained_sequence) ? 3 : chained_sequence.size
       text += " | #{chained_sequence.size} chain! (#{chained_sequence.join(',')}) => #{total_score + bonus}"
 
       if chained_sequence.size >= 3
         text += " [スペシャル]"
       end
 
-      if is_fumble?(keys, chained_sequence)
+      if fumble?(keys, chained_sequence)
         text += " [ファンブル]"
       end
     end
@@ -93,13 +94,10 @@ INFO_MESSAGE_TEXT
   def find_sequence(keys)
     keys = keys.sort
 
-    sequence = (1...6).map do |start_key|
+    sequences = (1...6).map do |start_key|
       find_sequence_from_start_key(keys, start_key)
-    end.find_all do |x|
-      x.size > 1
-    end.max do |a, b|
-      a.size <=> b.size
     end
+    sequence = sequences.select { |x| x.size > 1 }.max { |a, b| a.size <=> b.size }
 
     sequence
   end
@@ -125,7 +123,7 @@ INFO_MESSAGE_TEXT
     return chained_keys
   end
 
-  def is_fumble?(keys, chained_sequence)
+  def fumble?(keys, chained_sequence)
     chained_sequence.each do |k|
       if keys.count(k) >= 2
         return true
@@ -235,6 +233,6 @@ INFO_MESSAGE_TEXT
   end
 
   def is_1or2(n)
-    n == 1 || n == 2
+    [1, 2].include?(n)
   end
 end

@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class MeikyuDays < DiceBot
-  setPrefixes(['\d+MD', 'DRT', 'DNT', 'DBT', 'DHT', 'KST', 'CAT', 'CFT', 'FWT', 'T1T', 'T2T', 'T3T', 'T4T', 'MPT', 'APT', 'DCT', 'MCT', 'PCT', 'LCT'])
+  # ゲームシステムの識別子
+  ID = 'MeikyuDays'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-  end
+  # ゲームシステム名
+  NAME = '迷宮デイズ'
 
-  def gameName
-    '迷宮デイズ'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'めいきゆうていす'
 
-  def gameType
-    "MeikyuDays"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定　(nMD+m)
 　n個のD6を振って大きい物二つだけみて達成値を算出します。修正mも可能です。
 　絶対成功と絶対失敗も自動判定します。
@@ -36,6 +29,14 @@ class MeikyuDays < DiceBot
 　・因縁表　DCT／怪物因縁表　MCT／PC因縁表　PCT／ラブ因縁表　LCT
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['\d+MD', 'DRT', 'DNT', 'DBT', 'DHT', 'KST', 'CAT', 'CFT', 'FWT', 'T1T', 'T2T', 'T3T', 'T4T', 'MPT', 'APT', 'DCT', 'MCT', 'PCT', 'LCT'])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
   end
 
   def changeText(string)
@@ -49,17 +50,17 @@ INFO_MESSAGE_TEXT
     return checkRoll(string)
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    return '' unless signOfInequality == ">="
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    if dice_n <= 2
-      return " ＞ 絶対失敗"
-    elsif dice_n >= 12
-      return " ＞ 絶対成功"
-    elsif total_n >= diff
-      return " ＞ 成功"
+    if dice_total <= 2
+      " ＞ 絶対失敗"
+    elsif dice_total >= 12
+      " ＞ 絶対成功"
+    elsif total >= target
+      " ＞ 成功"
     else
-      return " ＞ 失敗"
+      " ＞ 失敗"
     end
   end
 
@@ -88,7 +89,7 @@ INFO_MESSAGE_TEXT
     total_n = 0
 
     _, dice_str, = roll(dice_c, 6, (sortType & 1))
-    dice_num = dice_str.split(/,/).collect { |i| i.to_i }
+    dice_num = dice_str.split(',').map(&:to_i)
 
     dice_now = dice_num[dice_c - 2] + dice_num[dice_c - 1]
     total_n = dice_now + bonus
@@ -114,7 +115,8 @@ INFO_MESSAGE_TEXT
     end
 
     if signOfInequality != "" # 成功度判定処理
-      output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
+      cmp_op = Normalize.comparison_operator(signOfInequality)
+      output += check_2D6(total_n, dice_now, dice_num, cmp_op, diff)
     end
 
     return output

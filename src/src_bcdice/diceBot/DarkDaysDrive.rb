@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class DarkDaysDrive < DiceBot
-  def initialize
-    super
-    @d66Type = 2
-  end
+  # ゲームシステムの識別子
+  ID = 'DarkDaysDrive'
 
-  def gameName
-    'ダークデイズドライブ'
-  end
+  # ゲームシステム名
+  NAME = 'ダークデイズドライブ'
 
-  def gameType
-    "DarkDaysDrive"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'たあくていすとらいふ'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 スペシャル／ファンブル／成功／失敗を判定
 ・各種表
@@ -45,24 +42,25 @@ IA イケメンアクション決定表
  IAJ 超自然
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @d66Type = 2
   end
 
   # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == ">="
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    output =
-      if dice_n <= 2
-        " ＞ ファンブル(判定失敗。失敗表(FT)を追加で１回振る)"
-      elsif dice_n >= 12
-        " ＞ スペシャル(判定成功。大成功表(GJT)を１回使用可能)"
-      elsif total_n >= diff
-        " ＞ 成功"
-      else
-        " ＞ 失敗"
-      end
-
-    return output
+    if dice_total <= 2
+      " ＞ ファンブル(判定失敗。失敗表(FT)を追加で１回振る)"
+    elsif dice_total >= 12
+      " ＞ スペシャル(判定成功。大成功表(GJT)を１回使用可能)"
+    elsif total >= target
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
+    end
   end
 
   def rollDiceCommand(command)
@@ -99,7 +97,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getTableDiceCommandResult(command)
-    info = @@tables[command]
+    info = TABLES[command]
     return nil if info.nil?
 
     name = info[:name]
@@ -138,7 +136,7 @@ INFO_MESSAGE_TEXT
     end
   end
 
-  @@tables =
+  TABLES =
     {
       'ABRT' => {
         :name => "アビリティ決定表",
@@ -499,7 +497,7 @@ INFO_MESSAGE_TEXT
         },
       }
 
-    }
+    }.freeze
 
-  setPrefixes(['RTT'] + @@tables.keys)
+  setPrefixes(['RTT'] + TABLES.keys)
 end

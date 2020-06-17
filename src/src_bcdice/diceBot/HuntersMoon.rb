@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class HuntersMoon < DiceBot
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-    @fractionType = "roundUp"; # 端数切り上げに設定
-  end
+  # ゲームシステムの識別子
+  ID = 'HuntersMoon'
 
-  def gameName
-    'ハンターズムーン'
-  end
+  # ゲームシステム名
+  NAME = 'ハンターズムーン'
 
-  def gameType
-    "HuntersMoon"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'はんたあすむうん'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 　判定時にクリティカルとファンブルを自動判定します。
 ・各種表
@@ -46,20 +40,27 @@ class HuntersMoon < DiceBot
 　・トラッキング遭遇表1/2/3 (TK1ET/TK2ET/TK3ET)
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
+    @fractionType = "roundUp"; # 端数切り上げに設定
   end
 
   # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == ">="
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    if dice_n <= 2
-      return " ＞ ファンブル(モノビースト追加行動+1)"
-    elsif dice_n >= 12
-      return " ＞ スペシャル(変調1つ回復orダメージ+1D6)"
-    elsif total_n >= diff
-      return " ＞ 成功"
+    if dice_total <= 2
+      " ＞ ファンブル(モノビースト追加行動+1)"
+    elsif dice_total >= 12
+      " ＞ スペシャル(変調1つ回復orダメージ+1D6)"
+    elsif total >= target
+      " ＞ 成功"
     else
-      return " ＞ 失敗"
+      " ＞ 失敗"
     end
   end
 
@@ -123,7 +124,7 @@ INFO_MESSAGE_TEXT
       output, total_n = hm_encount_table
 
     else
-      return getTableCommandResult(command, @@tables)
+      return getTableCommandResult(command, TABLES)
     end
 
     return output if output == '1'
@@ -456,7 +457,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_2d6(table)
   end
 
-  @@tables =
+  TABLES =
     {
 
       'DS1ET' => {
@@ -640,7 +641,7 @@ TABLE_TEXT_END
 状況　モノビーストの出現ポイントにあたりをつけ、あなたは狩りの前に休息をとる。あの獣を自分の手で殺すため、今は力をたくわえよう。\n指定特技　《休む/環境３》\n成功  英気を養った。【モラル】が２点増加する。\n失敗 じっとしているうちに不安になってきた。感情属性が反転する。
 TABLE_TEXT_END
       },
-    }
+    }.freeze
 
-  setPrefixes(['(ET|CLT|SLT|HLT|FLT|DLT|MAT|SAT|SA2T|TST|THT|TAT|TBT|TLT|TET)\d*'] + @@tables.keys)
+  setPrefixes(['(ET|CLT|SLT|HLT|FLT|DLT|MAT|SAT|SA2T|TST|THT|TAT|TBT|TLT|TET)\d*'] + TABLES.keys)
 end

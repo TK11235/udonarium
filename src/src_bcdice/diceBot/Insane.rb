@@ -1,28 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Insane < DiceBot
-  setPrefixes([
-    'ST', 'HJST', 'MTST', 'DVST', 'DT', 'BT', 'PT', 'FT', 'JT', 'BET', 'RTT', 'TVT', 'TET', 'TPT', 'TST', 'TKT', 'TMT',
-    'CHT', 'VHT', 'IHT', 'RHT', 'MHT', 'LHT', 'ECT', 'EMT', 'EAT', 'OPT', 'OHT', 'OWT', 'CNT1', 'CNT2', 'CNT3', 'RET'
-  ])
+  # ゲームシステムの識別子
+  ID = 'Insane'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 3
-    @d66Type = 2
-  end
+  # ゲームシステム名
+  NAME = 'インセイン'
 
-  def gameName
-    'インセイン'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'いんせいん'
 
-  def gameType
-    "Insane"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 スペシャル／ファンブル／成功／失敗を判定
 ・各種表
@@ -52,34 +42,32 @@ class Insane < DiceBot
 社名決定表1　CNT1/社名決定表2　CNT2/社名決定表3　CNT3
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
-  end
 
-  def changeText(string)
-    string
-  end
+  setPrefixes([
+    'ST', 'HJST', 'MTST', 'DVST', 'DT', 'BT', 'PT', 'FT', 'JT', 'BET', 'RTT', 'TVT', 'TET', 'TPT', 'TST', 'TKT', 'TMT',
+    'CHT', 'VHT', 'IHT', 'RHT', 'MHT', 'LHT', 'ECT', 'EMT', 'EAT', 'OPT', 'OHT', 'OWT', 'CNT1', 'CNT2', 'CNT3', 'RET'
+  ])
 
-  def dice_command_xRn(_string, _nick_e)
-    ''
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 3
+    @d66Type = 2
   end
 
   # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    return '' unless signOfInequality == ">="
-
-    output =
-      if dice_n <= 2
-        " ＞ ファンブル(判定失敗。山札から【狂気】を1枚獲得)"
-      elsif dice_n >= 12
-        " ＞ スペシャル(判定成功。【生命力】1点か【正気度】1点回復)"
-      elsif total_n >= diff
-        " ＞ 成功"
-      else
-        " ＞ 失敗"
-      end
-
-    return output
+    if dice_total <= 2
+      " ＞ ファンブル(判定失敗。山札から【狂気】を1枚獲得)"
+    elsif dice_total >= 12
+      " ＞ スペシャル(判定成功。【生命力】1点か【正気度】1点回復)"
+    elsif total >= target
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
+    end
   end
 
   def rollDiceCommand(command)

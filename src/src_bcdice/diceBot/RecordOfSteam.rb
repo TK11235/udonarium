@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class RecordOfSteam < DiceBot
-  setPrefixes(['\d+S\d+.*'])
+  # ゲームシステムの識別子
+  ID = 'RecordOfSteam'
 
-  def gameType
-    "RecordOfSteam"
-  end
+  # ゲームシステム名
+  NAME = 'Record of Steam'
 
-  def gameName
-    "Record of Steam"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'れこおとおふすちいむ'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 2S2@1
 RecordOfSteam : (2S2@1) ＞ 1,2,3,4 ＞ 1回転 ＞ 成功数2
 
 4S3@2
 RecordOfSteam : (4S3@2) ＞ 2,1,2,4,4,4,2,3,4,5,6,6 ＞ 4回転 ＞ 成功数5
 MESSAGETEXT
-  end
+
+  setPrefixes(['\d+S\d+.*'])
 
   # サンプルのダイスコマンドは「nSt@c」で n=ダイス個数, t=目標値, c=クリティカル値。@cのみ省略可
 

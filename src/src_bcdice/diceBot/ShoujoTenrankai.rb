@@ -1,35 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class ShoujoTenrankai < DiceBot
-  setPrefixes(["SPRING", "SUMMER", "AUTUMN", "WINTER", "MORNING", "NOON", "AFTERNOON", "TWILIGHT", "NIGHT", "MIDNIGHT", "NORBLE", "MARCHEN", "COLONIAL", "SHELF", "LITTLE", "ELDER", "ATERIEL", "OPEN", "HAUNTED", "SIMPLE", "LARGE", "CORRIDOR", "STAIRS", "COSY", "TERRACE", "GARRET", "KITCHEN", "BATH", "REST", "CELLER", "LUMBER", "GARDEN", "WASTED", "RUIN", "SHORE"])
+  # ゲームシステムの識別子
+  ID = 'ShoujoTenrankai'
 
-  def initialize
-    super
+  # ゲームシステム名
+  NAME = '少女展爛会'
 
-    # @sendMode = @@DEFAULT_SEND_MODE #(0=結果のみ,1=0+式,2=1+ダイス個別)
-    # @sortType = 0;      #ソート設定(1 = ?, 2 = ??, 3 = 1&2　各値の意味が不明です…）
-    # @sameDiceRerollCount = 0;     #ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=ダイスのうち2個以上同じ目)
-    # @sameDiceRerollType = 0;   #ゾロ目で振り足しのロール種別(0=判定のみ, 1=ダメージのみ, 2=両方)
-    # @d66Type = 0;        #d66の差し替え
-    # @isPrintMaxDice = false;      #最大値表示
-    # @upplerRollThreshold = 0;      #上方無限
-    # @unlimitedRollDiceType = 0;    #無限ロールのダイス
-    # @rerollNumber = 0;      #振り足しする条件
-    # @defaultSuccessTarget = "";      #目標値が空欄の時の目標値
-    # @rerollLimitCount = 0;    #振り足し回数上限
-    # @fractionType = "omit";     #端数の処理 ("omit"=切り捨て, "roundUp"=切り上げ, "roundOff"=四捨五入)
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'しようしよてんらんかい'
 
-  def gameName
-    '少女展爛会'
-  end
-
-  def gameType
-    "ShoujoTenrankai"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 出来事表：
 ・季節
 　SPRING  春／SUMMER  夏／AUTUMN  秋／WINTER  冬
@@ -48,10 +31,11 @@ class ShoujoTenrankai < DiceBot
 　CELLER  地下倉庫／LUMBER  物置／GARDEN  庭園／WASTED  廃園／
 　RUIN  廃屋／SHORE  水のほとり
 MESSAGETEXT
-  end
+
+  setPrefixes(["SPRING", "SUMMER", "AUTUMN", "WINTER", "MORNING", "NOON", "AFTERNOON", "TWILIGHT", "NIGHT", "MIDNIGHT", "NORBLE", "MARCHEN", "COLONIAL", "SHELF", "LITTLE", "ELDER", "ATERIEL", "OPEN", "HAUNTED", "SIMPLE", "LARGE", "CORRIDOR", "STAIRS", "COSY", "TERRACE", "GARRET", "KITCHEN", "BATH", "REST", "CELLER", "LUMBER", "GARDEN", "WASTED", "RUIN", "SHORE"])
 
   def rollDiceCommand(command)
-    info = @@eventTables[command.upcase]
+    info = EVENT_TABLES[command.upcase]
 
     return nil if info.nil?
 
@@ -89,7 +73,7 @@ MESSAGETEXT
     return text, number1, number2
   end
 
-  @@eventTables =
+  EVENT_TABLES =
     {
       "SPRING" => {
         :name => "春",
@@ -686,5 +670,5 @@ MESSAGETEXT
           【偶・6】水の中で、魚の影が翻りました。
         },
       },
-    }
+    }.freeze
 end

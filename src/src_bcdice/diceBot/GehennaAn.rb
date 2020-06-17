@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class GehennaAn < DiceBot
-  setPrefixes(['(\d+G\d+|\d+GA\d+)'])
+  # ゲームシステムの識別子
+  ID = 'GehennaAn'
 
-  def initialize
-    super
-    @sendMode = 3
-    @sortType = 3
-  end
+  # ゲームシステム名
+  NAME = 'ゲヘナ・アナスタシス'
 
-  def gameName
-    'ゲヘナ・アナスタシス'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'けへなあなすたしす'
 
-  def gameType
-    "GehennaAn"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 戦闘判定と通常判定に対応。幸運の助け、連撃増加値(戦闘判定)、闘技チット(戦闘判定)を自動表示します。
 ・戦闘判定　(nGAt+m)
 　ダイス数n、目標値t、修正値mで戦闘判定を行います。
@@ -27,6 +21,13 @@ class GehennaAn < DiceBot
 　ダイス数n、目標値t、修正値mで通常判定を行います。
 　幸運の助けを自動処理します。(連撃増加値、闘技チットを表示抑制します)
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['(\d+G\d+|\d+GA\d+)'])
+
+  def initialize
+    super
+    @sendMode = 3
+    @sortType = 3
   end
 
   def changeText(string)

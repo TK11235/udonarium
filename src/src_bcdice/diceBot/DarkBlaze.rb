@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class DarkBlaze < DiceBot
-  setPrefixes(['DB.*', 'BT.*'])
+  # ゲームシステムの識別子
+  ID = 'DarkBlaze'
 
-  def initialize
-    super
-    @sendMode = 2
-  end
+  # ゲームシステム名
+  NAME = 'ダークブレイズ'
 
-  def gameName
-    'ダークブレイズ'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'たあくふれいす'
 
-  def gameType
-    "DarkBlaze"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・行為判定　(DBxy#n)
 　行為判定専用のコマンドです。
 　"DB(能力)(技能)#(修正)"でロールします。Rコマンド(3R6+n[x,y]>=m mは難易度)に読替をします。
@@ -29,6 +24,12 @@ class DarkBlaze < DiceBot
 　"BT(ダイス数)"で掘り出し袋表を自動で振り、結果を表示します。
 　例）BT1　　　BT2　　　BT[1...3]
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['DB.*', 'BT.*'])
+
+  def initialize
+    super
+    @sendMode = 2
   end
 
   def changeText(string)
@@ -48,16 +49,14 @@ INFO_MESSAGE_TEXT
   end
 
   # ゲーム別成功度判定(nD6)
-  def check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == ">="
-
-    return '' if diff == "?"
-
-    if total_n >= diff
-      return " ＞ 成功"
+  def check_nD6(total, _dice_total, _dice_list, cmp_op, target)
+    if cmp_op != :>= || target == "?"
+      ''
+    elsif total >= target
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
     end
-
-    return " ＞ 失敗"
   end
 
   def check_roll(string, nick_e)
@@ -84,11 +83,13 @@ INFO_MESSAGE_TEXT
       diff = m[9].to_i
     end
 
-    total, out_str = get_dice(mod, abl, skl)
+    total, out_str, dice_list = get_dice(mod, abl, skl)
     output = "#{nick_e}: (#{string}) ＞ #{out_str}"
 
     if signOfInequality != "" # 成功度判定処理
-      output += check_suc(total, 0, signOfInequality, diff, 3, 6, 0, 0)
+      dice_total = dice_list.inject(&:+)
+      cmp_op = Normalize.comparison_operator(signOfInequality)
+      output += check_result(total, dice_total, dice_list, 6, cmp_op, diff)
     end
 
     return output
@@ -134,7 +135,7 @@ INFO_MESSAGE_TEXT
 
     output = "#{total}[#{dice_str}]#{resultText}"
 
-    return total, output
+    return total, output, dice_arr
   end
 
   def rollDiceCommand(command)

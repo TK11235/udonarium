@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class TherapieSein < DiceBot
-  setPrefixes(['(TS|OP)(\d+)?([\+\-]\d)*(\@\d+)?'])
+  # ゲームシステムの識別子
+  ID = 'TherapieSein'
 
-  def initialize
-    super
-  end
+  # ゲームシステム名
+  NAME = '青春疾患セラフィザイン'
 
-  def gameName
-    '青春疾患セラフィザイン'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'せいしゆんしつかんせらふいさいん'
 
-  def gameType
-    "TherapieSein"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・一般判定：TS[n][±m][@t]　　[]内のコマンドは省略可能。クリティカル無。
 ・戦闘判定：OP[n][±m][@t]　　[]内のコマンドは省略可能。クリティカル有。
 
@@ -32,7 +28,8 @@ class TherapieSein < DiceBot
 ・OP4+3+1 → ダイス合計+4+3+1（計+8）を達成値＆クリティカル表示。
 ・OP3@12 → ダイス合計+3の達成値＆クリティカル、判定の成否を表示。
 MESSAGETEXT
-  end
+
+  setPrefixes(['(TS|OP)(\d+)?([\+\-]\d)*(\@\d+)?'])
 
   def rollDiceCommand(command)
     output =

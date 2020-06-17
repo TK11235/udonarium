@@ -1,30 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class TwilightGunsmoke < DiceBot
-  setPrefixes([
-    '2D6.*', 'CT', 'OPR', 'OPC', 'EDR', 'EDC', 'RWL', 'RWB', 'RST',
-    'RUP', 'DCP', 'DBD', 'DCR', 'DNJ', 'DRB', 'DBS', 'DTR', 'DMK', 'DHL',
-    'DML', 'DZB', 'DMT', 'DHR', 'DKS', 'DFD'
-  ])
+  # ゲームシステムの識別子
+  ID = 'TwilightGunsmoke'
 
-  def initialize
-    super
+  # ゲームシステム名
+  NAME = 'トワイライト・ガンスモーク'
 
-    @sendMode = 2
-    @d66Type = 1
-    @sortType = 1
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'とわいらいとかんすもおく'
 
-  def gameName
-    'トワイライト・ガンスモーク'
-  end
-
-  def gameType
-    "TwilightGunsmoke"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 　・通常判定　　　　　　2D6+m>=t[c,f]
 　　修正値m,目標値t,クリティカル値c,ファンブル値fで判定ロールを行います。
@@ -45,6 +33,19 @@ class TwilightGunsmoke < DiceBot
 　　BM／飛竜科　DHR｜BM／巨爪科　DKS｜フィーンド　DFD
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  setPrefixes([
+    '2D6.*', 'CT', 'OPR', 'OPC', 'EDR', 'EDC', 'RWL', 'RWB', 'RST',
+    'RUP', 'DCP', 'DBD', 'DCR', 'DNJ', 'DRB', 'DBS', 'DTR', 'DMK', 'DHL',
+    'DML', 'DZB', 'DMT', 'DHR', 'DKS', 'DFD'
+  ])
+
+  def initialize
+    super
+
+    @sendMode = 2
+    @d66Type = 1
+    @sortType = 1
   end
 
   def rollDiceCommand(command)

@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'diceBot/GardenOrder'
 
 class ScreamHighSchool < GardenOrder
-  setPrefixes([
-    '(SH|SHS)(\-?\d+)(\/\d+)?(@\d+)?',
-    '(EM|TR|FE)(\-?\d+)(@\d+)?',
-    'DC(SL|BL|IM|BR|RF|EL).+'
-  ])
+  # ゲームシステムの識別子
+  ID = 'ScreamHighSchool'
 
-  def gameName
-    'スクリームハイスクール'
-  end
+  # ゲームシステム名
+  NAME = 'スクリームハイスクール'
 
-  def gameType
-    "ScreamHighSchool"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'すくりいむはいすくうる'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・基本判定
 　SHx/y@z　x：成功率、y：連続攻撃回数（省略可）、z：クリティカル値（省略可）
 　（連続攻撃では1回の判定のみが実施されます）
@@ -38,7 +34,12 @@ class ScreamHighSchool < GardenOrder
 　y：ダメージ
 　例）DCSL7　DCEL22
 INFO_MESSAGE_TEXT
-  end
+
+  setPrefixes([
+    '(SH|SHS)(\-?\d+)(\/\d+)?(@\d+)?',
+    '(EM|TR|FE)(\-?\d+)(@\d+)?',
+    'DC(SL|BL|IM|BR|RF|EL).+'
+  ])
 
   def rollDiceCommand(command)
     case command

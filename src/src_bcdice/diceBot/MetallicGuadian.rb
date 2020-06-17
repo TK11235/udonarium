@@ -13,13 +13,14 @@ class MetallicGuadian < SRS
 
   # ゲームシステム名を返す
   # @return [String]
-  def gameName
-    'メタリックガーディアン'
-  end
+  # ゲームシステム名
+  NAME = 'メタリックガーディアン'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'めたりつくかあていあん'
 
   # ゲームシステム識別子を返す
   # @return [String]
-  def gameType
-    "MetallicGuadian"
-  end
+  # ゲームシステムの識別子
+  ID = 'MetallicGuadian'
 end

@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Amadeus < DiceBot
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-  end
+  # ゲームシステムの識別子
+  ID = 'Amadeus'
 
-  def gameName
-    'アマデウス'
-  end
+  # ゲームシステム名
+  NAME = 'アマデウス'
 
-  def gameType
-    "Amadeus"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'あまてうす'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定(Rx±y@z>=t)
 　能力値のダイスごとに成功・失敗の判定を行います。
 　x：能力ランク(S,A～D)　y：修正値（省略可）
@@ -40,13 +35,19 @@ class Amadeus < DiceBot
 ・挑戦テーマ表（～CT）
 　武勇 PRCT／技術 TCCT／頭脳 INCT／霊力 PSCT／愛 LVCT／日常 DACT
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
   end
 
   def rollDiceCommand(command)
     text = amadeusDice(command)
     return text unless text.nil?
 
-    info = @@tables[command.upcase]
+    info = TABLES[command.upcase]
     return nil if info.nil?
 
     name = info[:name]
@@ -84,7 +85,7 @@ INFO_MESSAGE_TEXT
       specialNum = 6
     end
 
-    diceCount = @@checkDiceCount[skillRank]
+    diceCount = CHECK_DICE_COUNT[skillRank]
     modify = parren_killer("(" + modifyText + ")").to_i
     target = parren_killer("(" + targetText + ")").to_i
 
@@ -104,7 +105,7 @@ INFO_MESSAGE_TEXT
       achieve = dice + modify
       result = check_success(achieve, dice, signOfInequality, target, specialNum)
       if is_loop
-        message += "#{achieve}_#{result}[#{dice}#{@@checkInga[dice]}]"
+        message += "#{achieve}_#{result}[#{dice}#{INGA_TABLE[dice]}]"
       else
         message += "#{achieve}_#{result}[#{dice}]"
       end
@@ -123,10 +124,10 @@ INFO_MESSAGE_TEXT
     return "失敗"
   end
 
-  @@checkDiceCount = {"S" => 4, "A" => 3, "B" => 2, "C" => 1, "D" => 2}
-  @@checkInga = [ nil, "黒", "赤", "青", "緑", "白", "任意" ]
+  CHECK_DICE_COUNT = {"S" => 4, "A" => 3, "B" => 2, "C" => 1, "D" => 2}.freeze
+  INGA_TABLE = [ nil, "黒", "赤", "青", "緑", "白", "任意" ].freeze
 
-  @@tables =
+  TABLES =
     {
       "ECT" => {
         :name => "境遇表",
@@ -607,7 +608,7 @@ INFO_MESSAGE_TEXT
         ],
       },
 
-    }
+    }.freeze
 
-  setPrefixes(['R[A-DS].*'] + @@tables.keys)
+  setPrefixes(['R[A-DS].*'] + TABLES.keys)
 end

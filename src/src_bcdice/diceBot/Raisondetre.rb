@@ -1,26 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Raisondetre < DiceBot
-  def initialize
-    super
-    @sortType = 1 # ダイスのソート有
-  end
+  # ゲームシステムの識別子
+  ID = 'Raisondetre'
 
-  setPrefixes([
-    '(-)?(\d+)?RD(\d+)?(@(\d+))?',
-    '(-)?(\d+)?DD([1-9])?([\+\-]\d+)?'
-  ])
+  # ゲームシステム名
+  NAME = '叛逆レゾンデートル'
 
-  def gameName
-    '叛逆レゾンデートル'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'はんきやくれそんてとおる'
 
-  def gameType
-    "Raisondetre"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 判定：[判定値]RD[技能][@目標値]
 ダメージロール：[ダイス数]DD[装甲]
 
@@ -39,7 +31,16 @@ class Raisondetre < DiceBot
 ・-3RD → 1Dでダイスペナルティ-4の判定。
 ・4DD2 → 4Dで装甲2のダメージロール。
 MESSAGETEXT
+
+  def initialize
+    super
+    @sortType = 1 # ダイスのソート有
   end
+
+  setPrefixes([
+    '(-)?(\d+)?RD(\d+)?(@(\d+))?',
+    '(-)?(\d+)?DD([1-9])?([\+\-]\d+)?'
+  ])
 
   def rollDiceCommand(command)
     if /(-)?(\d+)?RD(\d+)?(@(\d+))?$/i === command

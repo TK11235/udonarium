@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require "diceBot/Cthulhu7th"
 
 class PulpCthulhu < Cthulhu7th
-  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR.*', 'BMR', 'BMS', 'FCE', 'PH', 'MA', 'IT'])
+  # ゲームシステムの識別子
+  ID = 'PulpCthulhu'
 
-  def gameName
-    'パルプ・クトゥルフ'
-  end
+  # ゲームシステム名
+  NAME = 'パルプ・クトゥルフ'
 
-  def gameType
-    "PulpCthulhu"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'はるふくとうるふ'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ※私家翻訳のため、用語・ルールの詳細については原本を参照願います。
 ※コマンドは入力内容の前方一致で検出しています。
 ・判定　CC(x)<=（目標値）
@@ -45,7 +45,8 @@ class PulpCthulhu < Cthulhu7th
 　【魔術関連】
 　・プッシュ時のキャスティング・ロールの失敗（Failed Casting Effects）表　FCE
 INFO_MESSAGE_TEXT
-  end
+
+  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR.*', 'BMR', 'BMS', 'FCE', 'PH', 'MA', 'IT'])
 
   def rollDiceCommand(command)
     case command

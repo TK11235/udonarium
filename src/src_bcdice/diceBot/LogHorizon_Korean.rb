@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class LogHorizon_Korean < DiceBot
-  setPrefixes(['\d+LH.*', 'PC.*', 'EC.*', 'GC.*', 'CC.*', 'CTR.*', 'MTR.*', 'ITR.*', 'HTR.*', 'GTR.*', 'PTAG', 'KOYU', 'MGR.', 'HLOC', 'PCNM', 'IAT.*', 'TIAS', 'ABDC', 'MII.*', 'ESCT.*', 'CSCT.*', 'ESTL.*'])
+  # ゲームシステムの識別子
+  ID = 'LogHorizon:Korean'
 
-  def initialize
-    super
-    @d66Type = 1
-  end
+  # ゲームシステム名
+  NAME = '로그 호라이즌'
 
-  def gameName
-    '로그 호라이즌'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = '国際化:Korean:로그 호라이즌'
 
-  def gameType
-    "LogHorizon:Korean"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・판정(xLH±y>=z)
 　xD6의 판정.크리티컬, 펌블의 자동 판정을 실시합니다.
 　x：x로 굴릴 주사위의 수를 입력합니다.
@@ -60,6 +55,12 @@ class LogHorizon_Korean < DiceBot
 ・역자의 말 : 「실록・칠면체공방 좌담회(여름의 장)」은 한국에서 발매하지 않습니다. 참고해주세요.
 ・이니티움님, 광황님, CoC방 여러분 감사합니다. by호흡도의식하면귀찮아
 MESSAGETEXT
+
+  setPrefixes(['\d+LH.*', 'PC.*', 'EC.*', 'GC.*', 'CC.*', 'CTR.*', 'MTR.*', 'ITR.*', 'HTR.*', 'GTR.*', 'PTAG', 'KOYU', 'MGR.', 'HLOC', 'PCNM', 'IAT.*', 'TIAS', 'ABDC', 'MII.*', 'ESCT.*', 'CSCT.*', 'ESTL.*'])
+
+  def initialize
+    super
+    @d66Type = 1
   end
 
   def rollDiceCommand(command)

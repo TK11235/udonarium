@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class CrashWorld < DiceBot
-  setPrefixes(['CW\d+'])
+  # ゲームシステムの識別子
+  ID = 'CrashWorld'
 
-  def gameType
-    "CrashWorld"
-  end
+  # ゲームシステム名
+  NAME = '墜落世界'
 
-  def gameName
-    '墜落世界'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ついらくせかい'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定 CWn
 初期目標値n (必須)
 例・CW8
 INFO_MESSAGE_TEXT
-  end
+
+  setPrefixes(['CW\d+'])
 
   def rollDiceCommand(command)
     result = nil

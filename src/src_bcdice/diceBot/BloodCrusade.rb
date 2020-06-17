@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class BloodCrusade < DiceBot
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-    @fractionType = "roundUp" # 端数切り上げに設定
-  end
+  # ゲームシステムの識別子
+  ID = 'BloodCrusade'
 
-  def gameName
-    'ブラッド・クルセイド'
-  end
+  # ゲームシステム名
+  NAME = 'ブラッド・クルセイド'
 
-  def gameType
-    "BloodCrusade"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ふらつとくるせいと'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・各種表
 　・関係属性表         RT
 　・シーン表           ST
@@ -40,19 +34,26 @@ class BloodCrusade < DiceBot
 　・時間経過表（10代～60代、半吸血鬼）TD1T～TD6T、TDHT
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
+    @fractionType = "roundUp" # 端数切り上げに設定
   end
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    return '' unless signOfInequality == ">="
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    if dice_n <= 2
-      return " ＞ ファンブル(【モラル】-3。追跡フェイズなら吸血シーンを追加。戦闘フェイズなら吸血鬼は追加行動を一回得る)"
-    elsif dice_n >= 12
-      return " ＞ スペシャル(【モラル】+3。追跡フェイズならあなたに関係を持つPCの【モラル】+2。攻撃判定ならダメージ+1D6）"
-    elsif total_n >= diff
-      return " ＞ 成功"
+    if dice_total <= 2
+      " ＞ ファンブル(【モラル】-3。追跡フェイズなら吸血シーンを追加。戦闘フェイズなら吸血鬼は追加行動を一回得る)"
+    elsif dice_total >= 12
+      " ＞ スペシャル(【モラル】+3。追跡フェイズならあなたに関係を持つPCの【モラル】+2。攻撃判定ならダメージ+1D6）"
+    elsif total >= target
+      " ＞ 成功"
     else
-      return " ＞ 失敗"
+      " ＞ 失敗"
     end
   end
 
@@ -103,7 +104,7 @@ INFO_MESSAGE_TEXT
       type = '重度狂気表'
       output, total_n = getSevereInsanityTable
     else
-      return getTableCommandResult(command, @@tables)
+      return getTableCommandResult(command, TABLES)
     end
 
     return output if output == '1'
@@ -362,7 +363,7 @@ INFO_MESSAGE_TEXT
     return get_table_by_1d6(table)
   end
 
-  @@tables =
+  TABLES =
     {
 
       'BDST' => {
@@ -545,7 +546,7 @@ TABLE_TEXT_END
 新しい友達が出来る。\n任意の年齢の協力者を、狩人のプレイヤーが作成する。\nレベルは１とすること。\nこの協力者はセッションに登場し、獲得すれば使用できる。
 TABLE_TEXT_END
       },
-    }
+    }.freeze
 
-  setPrefixes(['RT', 'ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT'] + @@tables.keys)
+  setPrefixes(['RT', 'ST', 'IST', 'BRT', 'CHT', 'SHT', 'DHT', 'LHT', 'EHT', 'AST', 'MIT', 'SIT'] + TABLES.keys)
 end

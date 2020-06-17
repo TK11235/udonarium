@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class DemonParasite < DiceBot
-  setPrefixes(['[NAMUC]?URGE\d+'])
+  # ゲームシステムの識別子
+  ID = 'DemonParasite'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 1
-  end
+  # ゲームシステム名
+  NAME = 'デモンパラサイト'
 
-  def gameName
-    'デモンパラサイト'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'てもんはらさいと'
 
-  def gameType
-    "DemonParasite"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・衝動表　(URGEx)
 　"URGE衝動レベル"の形で指定します。
 　衝動表に従って自動でダイスロールを行い、結果を表示します。
@@ -33,33 +26,32 @@ class DemonParasite < DiceBot
 例）URGE1　　　urge5　　　Surge2
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['[NAMUC]?URGE\d+'])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 1
   end
 
   # ゲーム別成功度判定(nD6)
-  def check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, n1, n_max)
-    if n1 >= 2 # １の目が２個以上ならファンブル
+  def check_nD6(total, _dice_total, dice_list, cmp_op, target)
+    if dice_list.count(1) >= 2 # １の目が２個以上ならファンブル
       return " ＞ 致命的失敗"
-    end
-
-    if n_max >= 2 # ６の目が２個以上あったらクリティカル
+    elsif dice_list.count(6) >= 2 # ６の目が２個以上あったらクリティカル
       return " ＞ 効果的成功"
+    elsif target == "?"
+      return ''
     end
 
-    return '' if diff == "?"
-
-    case signOfInequality
-    when ">="
-      if total_n >= diff
-        return " ＞ 成功"
+    if [:>=, :>].include?(cmp_op)
+      if total.send(cmp_op, target)
+        " ＞ 成功"
+      else
+        " ＞ 失敗"
       end
-
-      return " ＞ 失敗"
-    when ">"
-      if total_n > diff
-        return " ＞ 成功"
-      end
-
-      return " ＞ 失敗"
     end
   end
 

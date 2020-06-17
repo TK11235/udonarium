@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class KillDeathBusiness < DiceBot
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-  end
+  # ゲームシステムの識別子
+  ID = 'KillDeathBusiness'
 
-  def gameName
-    'キルデスビジネス'
-  end
+  # ゲームシステム名
+  NAME = 'キルデスビジネス'
 
-  def gameType
-    "KillDeathBusiness"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'きるてすひしねす'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 　JDx or JDx+y or JDx-y or JDx,z or JDx+y,z JDx-y,z
 　（x＝難易度、y＝補正、z＝ファンブル率(リスク)）
@@ -44,26 +39,27 @@ class KillDeathBusiness < DiceBot
 　ヘルドラゴン　PCT4/ヘルフライ　PCT5/ヘルゴート　PCT6/ヘルベア　PCT7
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
   end
 
   # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
-    debug("total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max", total_n, dice_n, signOfInequality, diff, dice_cnt, dice_max, n1, n_max)
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    return '' unless signOfInequality == ">="
-
-    output =
-      if dice_n <= 2
-        " ＞ ファンブル(判定失敗。【視聴率】が20％減少)"
-      elsif dice_n >= 12
-        " ＞ スペシャル(判定成功。【視聴率】が10％増加)"
-      elsif total_n >= diff
-        " ＞ 成功"
-      else
-        " ＞ 失敗"
-      end
-
-    return output
+    if dice_total <= 2
+      " ＞ ファンブル(判定失敗。【視聴率】が20％減少)"
+    elsif dice_total >= 12
+      " ＞ スペシャル(判定成功。【視聴率】が10％増加)"
+    elsif total >= target
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
+    end
   end
 
   def rollDiceCommand(command)
@@ -71,7 +67,7 @@ INFO_MESSAGE_TEXT
 
     # 判定チェックは先に処理
     case command
-    when @@judogeDiceReg
+    when JUDGE_DICE_REG
       result = judgeDice(command)
       text = "判定#{result}"
       return text
@@ -81,10 +77,10 @@ INFO_MESSAGE_TEXT
     return rollTableCommand(command)
   end
 
-  @@judogeDiceReg = /(^|\s)JD(\d+)([\+\-]\d+)?(,(\d+))?($|\s)/i
+  JUDGE_DICE_REG = /(^|\s)JD(\d+)([\+\-]\d+)?(,(\d+))?($|\s)/i.freeze
 
   def judgeDice(command)
-    unless @@judogeDiceReg === command
+    unless JUDGE_DICE_REG === command
       return '1'
     end
 
@@ -134,7 +130,7 @@ INFO_MESSAGE_TEXT
   end
 
   def rollTableCommand(command)
-    result = getTableCommandResult(command, @@tables)
+    result = getTableCommandResult(command, TABLES)
     return result unless result.nil?
 
     tableName = ""
@@ -1297,7 +1293,7 @@ INFO_MESSAGE_TEXT
     return tableName, result, number
   end
 
-  @@tables =
+  TABLES =
     {
 
       'ANSPT' => {
@@ -1377,7 +1373,7 @@ TABLE_TEXT_END
 『服よこせ』\nキャラクターから一人を選び、相手が「衣装」で修得している特技を指定特技として判定を行う。判定に成功すると、その衣装は本当はあなたが着たかったものだと判明する。ヘルスタイリストへの抗議がひどい罵倒とともに却下されるシーンが脳裏にフラッシュバックする。相手への関係を、属性「服よこせ」で獲得する。【深度】は１になる。\nクリア条件:相手への関係の【深度】を2以上にし、かつ相手からあなたへの関係の【深度】を1以上にする。根負けした相手はちょっとヘルドレスを貸してくれて、あなたは満足する。ちなみに、本当に似合っているかどうかは関係ない。\n報酬:【視聴率】１０％増加、あなたと相手の両方に300【ソウル】
 TABLE_TEXT_END
       },
-    }
+    }.freeze
 
   setPrefixes([
     'HST',
@@ -1420,5 +1416,5 @@ TABLE_TEXT_END
     'PCT6',
     'PCT7',
     'JD.*'
-  ] + @@tables.keys)
+  ] + TABLES.keys)
 end

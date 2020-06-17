@@ -1,60 +1,50 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class NjslyrBattle < DiceBot
-  def gameName
-    'NJSLYRBATTLE'
-  end
+  # ゲームシステムの識別子
+  ID = 'NJSLYRBATTLE'
 
-  def gameType
-    "NJSLYRBATTLE"
-  end
+  # ゲームシステム名
+  NAME = 'NJSLYRBATTLE'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'にんしやすれいやあはとる'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・カラテロール
 2d6<=(カラテ点)
 例）2d6<=5
 (2D6<=5) ＞ 2[1,1] ＞ 2 ＞ 成功 重点 3 溜まる
 INFO_MESSAGE_TEXT
-  end
 
   # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' if signOfInequality != "<="
+  def check_2D6(total, _dice_total, dice_list, cmp_op, target)
+    return '' if cmp_op != :<=
 
-    success = checkSuccess(total_n, diff)
-    juuten = getJuuten
-
-    return success + juuten
+    return success_text(total, target) + juuten(dice_list)
   end
 
-  def checkSuccess(total_n, diff)
-    if total_n <= diff
-      return " ＞ 成功"
+  def success_text(total, target)
+    if total <= target
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
     end
-
-    return " ＞ 失敗"
   end
 
-  def getJuuten
-    diceList = getDiceList
-    return '' if diceList.length != 2
+  def juuten(dice_list)
+    juuten = dice_list.count(1) + dice_list.count(6)
 
-    juuten = 0
-
-    diceList.each do |i|
-      juuten += 1 if  i == 1
-      juuten += 1 if  i == 6
-    end
-
-    if diceList[0] == diceList[1]
+    if dice_list[0] == dice_list[1]
       juuten += 1
     end
 
     if juuten > 0
-      return " 重点 #{juuten} 溜まる"
+      " 重点 #{juuten} 溜まる"
+    else
+      ""
     end
-
-    return ''
   end
 end

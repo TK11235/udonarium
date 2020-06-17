@@ -1,26 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
-class MonotoneMusium_Korean < DiceBot
-  setPrefixes(['2D6.*', 'ET', 'ET2', 'OT', 'DT', 'DT2', 'WDT'])
+class MonotoneMuseum_Korean < DiceBot
+  # ゲームシステムの識別子
+  ID = 'MonotoneMuseum:Korean'
 
-  def initialize
-    super
+  # ゲームシステム名
+  NAME = '모노톤 뮤지엄'
 
-    @sendMode = 2
-    @d66Type = 1
-    @sortType = 1
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = '国際化:Korean:모노톤 뮤지엄'
 
-  def gameName
-    '모노톤 뮤지엄'
-  end
-
-  def gameType
-    "MonotoneMusium:Korean"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・판정
 　・통상판정　　　　　　2D6+m>=t[c,f]
 　　수정치m,목표치t,크리티컬치c,펌블치f로 판정 굴림을 행합니다.
@@ -33,6 +25,15 @@ class MonotoneMusium_Korean < DiceBot
 　・세계왜곡표　　WDT
 ・D66다이스 있음
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['2D6.*', 'ET', 'ET2', 'OT', 'DT', 'DT2', 'WDT'])
+
+  def initialize
+    super
+
+    @sendMode = 2
+    @d66Type = 1
+    @sortType = 1
   end
 
   def rollDiceCommand(command)

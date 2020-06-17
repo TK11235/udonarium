@@ -1,29 +1,30 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class EarthDawn < DiceBot
+  # ゲームシステムの識別子
+  ID = 'EarthDawn'
+
+  # ゲームシステム名
+  NAME = 'アースドーン'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ああすとおん'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+ステップダイス　(xEn+k)
+ステップx、目標値n(省略可能）、カルマダイスk(D2-D20)でステップダイスをロールします。
+振り足しも自動。
+例）9E　10E8　10E+D12
+INFO_MESSAGE_TEXT
+
   setPrefixes(['\d+e.*'])
 
   def initialize
     super
     @sendMode = 2
     @sortType = 1
-  end
-
-  def gameName
-    'アースドーン'
-  end
-
-  def gameType
-    "EarthDawn"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-ステップダイス　(xEn+k)
-ステップx、目標値n(省略可能）、カルマダイスk(D2-D20)でステップダイスをロールします。
-振り足しも自動。
-例）9E　10E8　10E+D12
-INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)

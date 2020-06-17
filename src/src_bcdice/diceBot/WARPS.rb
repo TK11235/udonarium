@@ -1,40 +1,30 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class WARPS < DiceBot
-  def gameName
-    'ワープス'
-  end
+  # ゲームシステムの識別子
+  ID = 'WARPS'
 
-  def gameType
-    "WARPS"
-  end
+  # ゲームシステム名
+  NAME = 'ワープス'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-失敗、成功度の自動判定を行います。
-INFO_MESSAGE_TEXT
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'わあふす'
 
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    debug('WARPS check_2D6 betgin')
-    debug('diff', diff)
-    debug('total_n', total_n)
+  # ダイスボットの使い方
+  HELP_MESSAGE = "失敗、成功度の自動判定を行います。\n"
 
-    if dice_n <= 2
-      return " ＞ クリティカル"
-    elsif dice_n >= 12
-      return " ＞ ファンブル"
-    elsif signOfInequality == "<="
-      if diff != "?"
-        if total_n <= diff
-          success = diff - total_n
-          return " ＞ #{success}成功"
-        else
-          return " ＞ 失敗"
-        end
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    if dice_total <= 2
+      " ＞ クリティカル"
+    elsif dice_total >= 12
+      " ＞ ファンブル"
+    elsif cmp_op == :<= && target != "?"
+      if total <= target
+        " ＞ #{target - total}成功"
+      else
+        " ＞ 失敗"
       end
     end
-
-    return output
   end
 end

@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'diceBot/Gundog'
 
 class GundogZero < Gundog
-  setPrefixes(['(.DPT|.FT)\d*'])
+  # ゲームシステムの識別子
+  ID = 'GundogZero'
 
-  def gameName
-    'ガンドッグ・ゼロ'
-  end
+  # ゲームシステム名
+  NAME = 'ガンドッグ・ゼロ'
 
-  def gameType
-    "GundogZero"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'かんとつくせろ'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。
 nD9ロールも対応。
 ・ダメージペナルティ表　　(〜DPTx) (x:修正)
@@ -24,7 +24,8 @@ nD9ロールも対応。
 　射撃(SFT)、格闘(MFT)、投擲(TFT)の各表を引くことが出来ます。
 　修正を後ろに書くことも出来ます。
 INFO_MESSAGE_TEXT
-  end
+
+  setPrefixes(['(.DPT|.FT)\d*'])
 
   def rollDiceCommand(command)
     string = command.upcase

@@ -1,26 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
-class MonotoneMusium < DiceBot
-  setPrefixes(['2D6.*', 'ET', 'ET2', 'OT', 'DT', 'DT2', 'WDT', 'WDT2', 'OT2', 'DTO', 'DTS'])
+class MonotoneMuseum < DiceBot
+  # ゲームシステムの識別子
+  ID = 'MonotoneMuseum'
 
-  def initialize
-    super
+  # ゲームシステム名
+  NAME = 'モノトーン・ミュージアム'
 
-    @sendMode = 2
-    @d66Type = 1
-    @sortType = 1
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ものとおんみゆうしあむ'
 
-  def gameName
-    'モノトーン・ミュージアム'
-  end
-
-  def gameType
-    "MonotoneMusium"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定
 　・通常判定　　　　　　2D6+m>=t[c,f]
 　　修正値m,目標値t,クリティカル値c,ファンブル値fで判定ロールを行います。
@@ -33,6 +25,15 @@ class MonotoneMusium < DiceBot
 　・世界歪曲表　　WDT／世界歪曲表2.0　WDT2
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['2D6.*', 'ET', 'ET2', 'OT', 'DT', 'DT2', 'WDT', 'WDT2', 'OT2', 'DTO', 'DTS'])
+
+  def initialize
+    super
+
+    @sendMode = 2
+    @d66Type = 1
+    @sortType = 1
   end
 
   def rollDiceCommand(command)

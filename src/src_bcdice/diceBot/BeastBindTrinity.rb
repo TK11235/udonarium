@@ -1,36 +1,30 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
+# ビーストバインド トリニティのダイスボット
+#
+# = 前ver(1.43.07)からの変更・修正
+# * nBBで判定を行う際、「ダイスを１個しか振らない場合」の達成値計算が正しくなかった誤りを修正。
+# * @x(クリティカル値指定)、を加減式で入力できるように仕様変更。クリティカル値は、加減式での入力なら%w(人間性からのクリティカル値計算)と併用可能に。
+# * #y(ファンブル値指定)を加減式で入力できるように仕様変更。また、「ファンブルしても達成値が0にならない」モード#Ayを追加。
+# * &v(出目v未満のダイスを出目vとして扱う)のモードを追加。2018年12月現在、ゲーマーズ・フィールド誌先行収録データでのみ使用するモードです。
+# * 「暴露表」および「正体判明チャート」をダイスボットに組み込み。
+# * どどんとふ以外のボーンズ＆カーズを用いたオンラインセッション用ツールにあわせ、ヘルプメッセージ部分からイニシアティブ表についての言及を削除。
 class BeastBindTrinity < DiceBot
-  setPrefixes(['\d+BB', 'EMO', 'EXPO_.', 'FACE_.'])
+  # ゲームシステムの識別子
+  ID = 'BeastBindTrinity'
 
-  # ●前ver(1.43.07)からの変更・修正
-  # ・nBBで判定を行う際、「ダイスを１個しか振らない場合」の達成値計算が正しくなかった誤りを修正。
-  # ・@x(クリティカル値指定)、を加減式で入力できるように仕様変更。クリティカル値は、加減式での入力なら%w(人間性からのクリティカル値計算)と併用可能に。
-  # ・#y(ファンブル値指定)を加減式で入力できるように仕様変更。また、「ファンブルしても達成値が0にならない」モード#Ayを追加。
-  # ・&v(出目v未満のダイスを出目vとして扱う)のモードを追加。2018年12月現在、ゲーマーズ・フィールド誌先行収録データでのみ使用するモードです。
-  # ・「暴露表」および「正体判明チャート」をダイスボットに組み込み。
-  # ・どどんとふ以外のボーンズ＆カーズを用いたオンラインセッション用ツールにあわせ、ヘルプメッセージ部分からイニシアティブ表についての言及を削除。
+  # ゲームシステム名
+  NAME = 'ビーストバインド トリニティ'
 
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 0
-    @d66Type = 2
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ひいすとはいんととりにてい'
 
-  def gameName
-    'ビーストバインド トリニティ'
-  end
-
-  def gameType
-    "BeastBindTrinity"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定　(nBB+m%w@x#y$z&v)
 　n個のD6を振り、出目の大きい2個から達成値を算出。修正mも可能。
-　
+
 　%w、@x、#y、$z、&vはすべて省略可能。
 ＞%w：現在の人間性が w であるとして、クリティカル値(C値)を計算。
 ・省略した場合、C値=12として達成値を算出する。
@@ -57,6 +51,14 @@ class BeastBindTrinity < DiceBot
 ・アイドル専用魔獣化暴露表：EXPO_J
 ・正体判明チャートA～C：FACE_A、FACE_B、FACE_C
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['\d+BB', 'EMO', 'EXPO_.', 'FACE_.'])
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 0
+    @d66Type = 2
   end
 
   def changeText(string)
@@ -75,16 +77,6 @@ INFO_MESSAGE_TEXT
   def dice_command_xRn(string, nick_e)
     @nick_e = nick_e
     return bbt_check(string)
-  end
-
-  def check_2D6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    return '' unless signOfInequality == ">="
-
-    if total_n >= diff
-      return " ＞ 成功"
-    else
-      return " ＞ 失敗"
-    end
   end
 
   ####################           ビーストバインド トリニティ         ########################
@@ -280,7 +272,9 @@ INFO_MESSAGE_TEXT
     end
 
     if signOfInequality != "" # 成功度判定処理
-      output += check_suc(total_n, dice_now, signOfInequality, diff, 2, 6, 0, 0)
+      cmp_op = Normalize.comparison_operator(signOfInequality)
+      dice_list = dice_num
+      output += check_result(total_n, dice_now, dice_list, 6, cmp_op, diff)
     end
 
     return output

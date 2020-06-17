@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
-require 'diceBot/DungeonsAndDoragons'
+require 'diceBot/DungeonsAndDragons'
 
-class Pathfinder < DungeonsAndDoragons
-  def initialize
-    super
-  end
+class Pathfinder < DungeonsAndDragons
+  # ゲームシステムの識別子
+  ID = 'Pathfinder'
 
-  def gameName
-    'Pathfinder'
-  end
+  # ゲームシステム名
+  NAME = 'Pathfinder'
 
-  def gameType
-    "Pathfinder"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'はすふあいんたあ'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
-※このダイスボットは部屋のシステム名表示用となります。
-MESSAGETEXT
-  end
+  # ダイスボットの使い方
+  HELP_MESSAGE = "※このダイスボットは部屋のシステム名表示用となります。\n"
 end

@@ -1,47 +1,41 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class JamesBond < DiceBot
-  def gameName
-    'ジェームズ・ボンド007'
-  end
+  # ゲームシステムの識別子
+  ID = 'JamesBond'
 
-  def gameType
-    "JamesBond"
-  end
+  # ゲームシステム名
+  NAME = 'ジェームズ・ボンド007'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'しええむすほんと007'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・1D100の目標値判定で、効果レーティングを1～4で自動判定。
 　例）1D100<=50
 　　　JamesBond : (1D100<=50) → 20 → 効果3（良）
 INFO_MESSAGE_TEXT
-  end
 
-  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(1d100)
-    return '' unless signOfInequality == "<="
+  def check_1D100(total, _dice_total, cmp_op, target) # ゲーム別成功度判定(1d100)
+    return '' unless cmp_op == :<=
 
-    if total_n >= 100 # 100は常に失敗
-      return " ＞ 失敗"
+    base = ((target + 9) / 10).floor
+
+    if total >= 100
+      # 100は常に失敗
+      " ＞ 失敗"
+    elsif total <= base
+      " ＞ 効果1（完璧）"
+    elsif total <= base * 2
+      " ＞ 効果2（かなり良い）"
+    elsif total <= base * 5
+      " ＞ 効果3（良）"
+    elsif total <= target
+      " ＞ 効果4（まあまあ）"
+    else
+      " ＞ 失敗"
     end
-
-    base = ((diff + 9) / 10).floor
-
-    if total_n <= base
-      return " ＞ 効果1（完璧）"
-    end
-
-    if total_n <= base * 2
-      return " ＞ 効果2（かなり良い）"
-    end
-
-    if total_n <= base * 5
-      return " ＞ 効果3（良）"
-    end
-
-    if total_n <= diff
-      return " ＞ 効果4（まあまあ）"
-    end
-
-    return " ＞ 失敗"
   end
 end
