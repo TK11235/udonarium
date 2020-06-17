@@ -142,6 +142,7 @@ export class DiceBot extends GameObject {
     { script: 'HuntersMoon', game: 'ハンターズムーン' },
     { script: 'Peekaboo', game: 'ピーカーブー' },
     { script: 'BeastBindTrinity', game: 'ビーストバインド トリニティ' },
+    { script: 'BBN', game: 'BBNTRPG' },
     { script: 'BeginningIdol', game: 'ビギニングアイドル' },
     { script: 'PhantasmAdventure', game: 'ファンタズムアドベンチャー' },
     { script: 'FilledWith', game: 'フィルトウィズ' },
