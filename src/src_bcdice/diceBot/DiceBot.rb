@@ -1,59 +1,72 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class DiceBot
   # 空の接頭辞（反応するコマンド）
   EMPTY_PREFIXES_PATTERN = /(^|\s)(S)?()(\s|$)/i.freeze
 
-  # 接頭辞（反応するコマンド）の配列を返す
-  # @return [Array<String>]
+  # ゲームシステムの識別子
+  ID = 'DiceBot'
+
+  # ゲームシステム名
+  NAME = 'DiceBot'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = '*たいすほつと'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = ''
+
   class << self
+    # 接頭辞（反応するコマンド）の配列を返す
+    # @return [Array<String>]
     attr_reader :prefixes
-  end
 
-  # 接頭辞（反応するコマンド）の正規表現を返す
-  # @return [Regexp]
-  class << self
+    # 接頭辞（反応するコマンド）の正規表現を返す
+    # @return [Regexp]
     attr_reader :prefixesPattern
-  end
 
-  # 接頭辞（反応するコマンド）を設定する
-  # @param [Array<String>] prefixes 接頭辞のパターンの配列
-  # @return [self]
-  def self.setPrefixes(prefixes)
-    @prefixes = prefixes.
-                # 最適化が効くように内容の文字列を変更不可にする
-                map(&:freeze).
-                # 配列全体を変更不可にする
-                freeze
-    @prefixesPattern = /(^|\s)(S)?(#{prefixes.join('|')})(\s|$)/i.freeze
+    # 接頭辞（反応するコマンド）を設定する
+    # @param [Array<String>] prefixes 接頭辞のパターンの配列
+    # @return [self]
+    def setPrefixes(prefixes)
+      @prefixes = prefixes.
+                  # 最適化が効くように内容の文字列を変更不可にする
+                  map(&:freeze).
+                  # 配列全体を変更不可にする
+                  freeze
+      @prefixesPattern = /(^|\s)(S)?(#{prefixes.join('|')})(\s|$)/i.freeze
 
-    self
-  end
+      self
+    end
 
-  # 接頭辞（反応するコマンド）をクリアする
-  # @return [self]
-  def self.clearPrefixes
-    @prefixes = [].freeze
-    @prefixesPattern = EMPTY_PREFIXES_PATTERN
+    # 接頭辞（反応するコマンド）をクリアする
+    # @return [self]
+    def clearPrefixes
+      @prefixes = [].freeze
+      @prefixesPattern = EMPTY_PREFIXES_PATTERN
 
-    self
-  end
+      self
+    end
 
-  # 継承された際にダイスボットの接頭辞リストをクリアする
-  # @param [DiceBot] subclass DiceBotを継承したクラス
-  # @return [void]
-  def self.inherited(subclass)
-    subclass.clearPrefixes
+    private
+
+    # 継承された際にダイスボットの接頭辞リストをクリアする
+    # @param [DiceBot] subclass DiceBotを継承したクラス
+    # @return [void]
+    def inherited(subclass)
+      subclass.clearPrefixes
+    end
   end
 
   clearPrefixes
 
   @@bcdice = nil
 
-  @@DEFAULT_SEND_MODE = 2 # デフォルトの送信形式(0=結果のみ,1=0+式,2=1+ダイス個別)
+  DEFAULT_SEND_MODE = 2 # デフォルトの送信形式(0=結果のみ,1=0+式,2=1+ダイス個別)
 
   def initialize
-    @sendMode = @@DEFAULT_SEND_MODE # (0=結果のみ,1=0+式,2=1+ダイス個別)
+    @sendMode = DEFAULT_SEND_MODE # (0=結果のみ,1=0+式,2=1+ダイス個別)
     @sortType = 0 # ソート設定(1 = 足し算ダイスでソート有, 2 = バラバラロール（Bコマンド）でソート有, 3 = １と２両方ソート有）
     @sameDiceRerollCount = 0 # ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=ダイスのうち2個以上同じ目)
     @sameDiceRerollType = 0 # ゾロ目で振り足しのロール種別(0=判定のみ, 1=ダメージのみ, 2=両方)
@@ -66,12 +79,10 @@ class DiceBot
     @rerollLimitCount = 10000 # 振り足し回数上限
     @fractionType = "omit" # 端数の処理 ("omit"=切り捨て, "roundUp"=切り上げ, "roundOff"=四捨五入)
 
-    @gameType = 'DiceBot'
-
     if !prefixs.empty? && self.class.prefixes.empty?
       # 従来の方法（#prefixs）で接頭辞を設定していた場合でも
       # クラス側に接頭辞が設定されるようにする
-      warn("#{gameType}: #prefixs is deprecated. Please use .setPrefixes.")
+      warn("#{id}: #prefixs is deprecated. Please use .setPrefixes.")
       self.class.setPrefixes(prefixs)
     end
   end
@@ -90,17 +101,64 @@ class DiceBot
     # 何もしない
   end
 
+  # ダイスボットについての情報を返す
+  # @return [Hash]
   def info
     {
-      'name' => gameName,
-      'gameType' => gameType,
+      'gameType' => id,
+      'name' => name,
+      'sortKey' => sort_key,
       'prefixs' => self.class.prefixes,
-      'info' => getHelpMessage,
+      'info' => help_message,
     }
   end
 
+  # ゲームシステムの識別子を返す
+  # @return [String]
+  def id
+    self.class::ID
+  end
+
+  # ゲームシステムの識別子を返す
+  # @return [String]
+  # @deprecated 代わりに {#id} を使ってください
+  def gameType
+    warn("#{id}: #gameType is deprecated. Please use #id.")
+    return id
+  end
+
+  # ゲームシステム名を返す
+  # @return [String]
+  def name
+    self.class::NAME
+  end
+
+  # ゲームシステム名を返す
+  # @return [String]
+  # @deprecated 代わりに {#name} を使ってください
   def gameName
-    gameType
+    warn("#{id}: #gameName is deprecated. Please use #name.")
+    return name
+  end
+
+  # ゲームシステム名の読みがなを返す
+  # @return [String]
+  def sort_key
+    self.class::SORT_KEY
+  end
+
+  # ダイスボットの使い方を返す
+  # @return [String]
+  def help_message
+    self.class::HELP_MESSAGE
+  end
+
+  # ダイスボットの使い方を返す
+  # @return [String]
+  # @deprecated 代わりに {#help_message} を使ってください
+  def getHelpMessage
+    warn("#{id}: #getHelpMessage is deprecated. Please use #help_message.")
+    return help_message
   end
 
   # 接頭辞（反応するコマンド）の配列を返す
@@ -111,12 +169,6 @@ class DiceBot
 
   # @deprecated 代わりに {#prefixes} を使ってください
   alias prefixs prefixes
-
-  attr_reader :gameType
-
-  def setGameType(type)
-    @gameType = type
-  end
 
   def setSendMode(m)
     @sendMode = m
@@ -134,10 +186,6 @@ class DiceBot
 
   def rand(max)
     @@bcdice.rand(max)
-  end
-
-  def check_suc(*params)
-    @@bcdice.check_suc(*params)
   end
 
   def roll(*args)
@@ -160,14 +208,6 @@ class DiceBot
 
   def d66(*args)
     @@bcdice.getD66Value(*args)
-  end
-
-  def rollDiceAddingUp(*arg)
-    @@bcdice.rollDiceAddingUp(*arg)
-  end
-
-  def getHelpMessage
-    ''
   end
 
   def parren_killer(string)
@@ -240,38 +280,83 @@ class DiceBot
     nil
   end
 
-  def setDiceText(diceText)
-    debug("setDiceText diceText", diceText)
-    @diceText = diceText
-  end
-
-  def setDiffText(diffText)
-    @diffText = diffText
-  end
-
   def dice_command_xRn(_string, _nick_e)
     ''
   end
 
-  def check_2D6(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(2D6)
-    ''
+  # @param total [Integer] コマンド合計値
+  # @param dice_total [Integer] ダイス目の合計値
+  # @param dice_list [Array<Integer>] ダイスの一覧
+  # @param sides [Integer] 振ったダイスの面数
+  # @param cmp_op [Symbol] 比較演算子
+  # @param target [Integer, String] 目標値の整数か'?'
+  # @return [String]
+  def check_result(total, dice_total, dice_list, sides, cmp_op, target)
+    ret =
+      case [dice_list.size, sides]
+      when [1, 100]
+        check_1D100(total, dice_total, cmp_op, target)
+      when [1, 20]
+        check_1D20(total, dice_total, cmp_op, target)
+      when [2, 6]
+        check_2D6(total, dice_total, dice_list, cmp_op, target)
+      end
+
+    return ret unless ret.nil? || ret.empty?
+
+    ret =
+      case sides
+      when 10
+        check_nD10(total, dice_total, dice_list, cmp_op, target)
+      when 6
+        check_nD6(total, dice_total, dice_list, cmp_op, target)
+      end
+
+    return ret unless ret.nil? || ret.empty?
+
+    check_nDx(total, cmp_op, target)
   end
 
-  def check_nD6(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD6)
-    ''
+  # 成功か失敗かを文字列で返す
+  #
+  # @param (see #check_result)
+  # @return [String]
+  def check_nDx(total, cmp_op, target)
+    return " ＞ 失敗" if target.is_a?(String)
+
+    # Due to Ruby 1.8
+    success = cmp_op == :"!=" ? total != target : total.send(cmp_op, target)
+    if success
+      " ＞ 成功"
+    else
+      " ＞ 失敗"
+    end
   end
 
-  def check_nD10(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD10)
-    ''
-  end
+  # @abstruct
+  # @param (see #check_result)
+  # @return [nil]
+  def check_1D100(total, dice_total, cmp_op, target); end
 
-  def check_1D100(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max)    # ゲーム別成功度判定(1d100)
-    ''
-  end
+  # @abstruct
+  # @param (see #check_result)
+  # @return [nil]
+  def check_1D20(total, dice_total, cmp_op, target); end
 
-  def check_1D20(_total_n, _dice_n, _signOfInequality, _diff, _dice_cnt, _dice_max, _n1, _n_max)     # ゲーム別成功度判定(1d20)
-    ''
-  end
+  # @abstruct
+  # @param (see #check_result)
+  # @return [nil]
+  def check_nD10(total, dice_total, dice_list, cmp_op, target); end
+
+  # @abstruct
+  # @param (see #check_result)
+  # @return [nil]
+  def check_2D6(total, dice_total, dice_list, cmp_op, target); end
+
+  # @abstruct
+  # @param (see #check_result)
+  # @return [nil]
+  def check_nD6(total, dice_total, dice_list, cmp_op, target); end
 
   def get_table_by_2d6(table)
     get_table_by_nD6(table, 2)
@@ -349,16 +434,6 @@ class DiceBot
     return '', 0
   end
 
-  # ダイス目文字列からダイス値を変更する場合の処理（現状クトゥルフ・テック専用）
-  def changeDiceValueByDiceText(dice_now, _dice_str, _isCheckSuccess, _dice_max)
-    dice_now
-  end
-
-  # SW専用
-  def setRatingTable(_nick_e, _tnick, _channel_to_list)
-    '1'
-  end
-
   # ガンドッグのnD9専用
   def isD9
     false
@@ -369,7 +444,13 @@ class DiceBot
     ''
   end
 
+  # クリティカルしたか判定して、追加のダイスロールの個数を決める
   # SW2.0 の超成功用
+  #
+  # @param critical [Integer, nil] クリティカル値
+  # @param dice_new [Integer] ダイスの出目
+  # @param dice_arry [Array<Integer>] ダイスロールのキュー。クリティカルの効果等で追加のダイスが発生した時に、追加で降るダイスの数をこの配列にpushする
+  # @param loop_count [Integer] 現在の振り足しの回数。0スタート
   def check2dCritical(critical, dice_new, dice_arry, loop_count); end
 
   def is2dCritical
@@ -381,29 +462,6 @@ class DiceBot
   # @return [Boolean]
   def should_reroll?(loop_count)
     loop_count < @rerollLimitCount || @rerollLimitCount == 0
-  end
-
-  def getDiceList
-    getDiceListFromDiceText(@diceText)
-  end
-
-  def getDiceListFromDiceText(diceText)
-    debug("getDiceList diceText", diceText)
-
-    diceList = []
-
-    if /\[([\d,]+)\]/ =~ diceText
-      diceText = Regexp.last_match(1)
-    end
-
-    return diceList unless /([\d,]+)/ =~ diceText
-
-    diceString = Regexp.last_match(1)
-    diceList = diceString.split(/,/).collect { |i| i.to_i }
-
-    debug("diceList", diceList)
-
-    return diceList
   end
 
   # ** 汎用表サブルーチン
@@ -534,6 +592,6 @@ class DiceBot
       return nil
     end
 
-    return table.roll(bcdice)
+    return table.roll(bcdice).to_s
   end
 end

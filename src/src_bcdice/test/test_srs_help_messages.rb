@@ -43,7 +43,7 @@ class TestSRSHelpMessages < Test::Unit::TestCase
 ・D66ダイスあり（入れ替えなし)
 HELP_MESSAGE
 
-    assert_equal(expected, dice_bot.getHelpMessage)
+    assert_equal(expected, dice_bot.help_message)
   end
 
   # 世界樹の迷宮SRSの説明文をテストする
@@ -84,6 +84,6 @@ HELP_MESSAGE
 ・D66ダイスあり（入れ替えなし)
 HELP_MESSAGE
 
-    assert_equal(expected, dice_bot.getHelpMessage)
+    assert_equal(expected, dice_bot.help_message)
   end
 end
