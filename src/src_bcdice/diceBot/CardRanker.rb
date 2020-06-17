@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class CardRanker < DiceBot
-  def initialize
-    super
-    @sendMode = 2
-    @sortType = 1
-    @d66Type = 2
-  end
+  # ゲームシステムの識別子
+  ID = 'CardRanker'
 
-  def gameName
-    'カードランカー'
-  end
+  # ゲームシステム名
+  NAME = 'カードランカー'
 
-  def gameType
-    "CardRanker"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'かあとらんかあ'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ランダムでモンスターカードを選ぶ (RM)
 特定のモンスターカードを選ぶ (CMxy　x：色、y：番号）
 　白：W、青：U、緑：V、金：G、赤：R、黒：B
@@ -25,23 +20,29 @@ class CardRanker < DiceBot
 場所表 (ST)
 街中場所表 (CST)
 郊外場所表 (OST)
-学園場所表 (SST)
+学園場所表 (GST)
 運命表 (DT)
 大会運命表 (TDT)
 学園運命表 (GDT)
 崩壊運命表 (CDT)
 INFO_MESSAGE_TEXT
+
+  def initialize
+    super
+    @sendMode = 2
+    @sortType = 1
+    @d66Type = 2
   end
 
   # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == ">="
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-    if dice_n <= 2
+    if dice_total <= 2
       return " ＞ ファンブル"
-    elsif dice_n >= 12
+    elsif dice_total >= 12
       return " ＞ スペシャル ＞ " + getRandumMonster()
-    elsif total_n >= diff
+    elsif total >= target
       return " ＞ 成功"
     else
       return " ＞ 失敗"
@@ -59,7 +60,7 @@ INFO_MESSAGE_TEXT
       index = Regexp.last_match(2).to_i
       return getMonster(color, index)
     else
-      return getTableCommandResult(command, @@tables)
+      return getTableCommandResult(command, TABLES)
     end
   end
 
@@ -117,7 +118,7 @@ INFO_MESSAGE_TEXT
     return output
   end
 
-  @@tables =
+  TABLES =
     {
 
       'BFT' => {
@@ -198,7 +199,7 @@ TABLE_TEXT_END
 TABLE_TEXT_END
       },
 
-      'SST' => {
+      'GST' => {
         :name => "学園場所表",
         :type => '1D6',
         :table => <<'TABLE_TEXT_END'
@@ -249,7 +250,7 @@ TABLE_TEXT_END
 暗闇/「タイプ：支援」のモンスターカードを使用できない。
 TABLE_TEXT_END
       },
-    }
+    }.freeze
 
-  setPrefixes(['RM', 'CM.*'] + @@tables.keys)
+  setPrefixes(['RM', 'CM.*'] + TABLES.keys)
 end
