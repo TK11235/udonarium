@@ -155,6 +155,7 @@ export class DiceBot extends GameObject {
     { script: 'MagicaLogia', game: 'マギカロギア' },
     { script: 'MeikyuDays', game: '迷宮デイズ' },
     { script: 'MeikyuKingdom', game: '迷宮キングダム' },
+    { script: 'MeikyuKingdomBasic', game: '迷宮キングダム 基本ルールブック' },
     { script: 'MetallicGuadian', game: 'メタリックガーディアン' },
     { script: 'MetalHead', game: 'メタルヘッド' },
     { script: 'MetalHeadExtream', game: 'メタルヘッドエクストリーム' },
