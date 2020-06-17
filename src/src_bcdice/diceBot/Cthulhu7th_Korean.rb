@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Cthulhu7th_Korean < DiceBot
-  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR\(\d+\)', 'FAR.*'])
+  # ゲームシステムの識別子
+  ID = 'Cthulhu7th:Korean'
 
-  def initialize
-    # $isDebug = true
-    super
+  # ゲームシステム名
+  NAME = '크툴루의 부름 7판'
 
-    @bonus_dice_range = (-2..2)
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = '国際化:Korean:크툴루'
 
-  def gameName
-    '크툴루의 부름 7판'
-  end
-
-  def gameType
-    "Cthulhu7th:Korean"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・판정　CC(x)<=（목표치）
 　x：보너스, 패널티 주사위：Bonus/Penalty Dice (2~-2). 생략 가능.
 　대실패：Fumble／실패：Failure／보통 성공：Regular success／
@@ -37,6 +30,14 @@ class Cthulhu7th_Korean < DiceBot
 　명중수와 관통수, 잔탄수만을 계산. 데미지는 계산하지 않습니다.
 예）FAR(25,70,98)　FAR(50,80,98,-1)
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR\(\d+\)', 'FAR.*'])
+
+  def initialize
+    # $isDebug = true
+    super
+
+    @bonus_dice_range = (-2..2)
   end
 
   def rollDiceCommand(command)

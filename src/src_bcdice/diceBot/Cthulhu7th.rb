@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Cthulhu7th < DiceBot
-  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR.*', 'BMR', 'BMS', 'FCL', 'FCM', 'PH', 'MA'])
+  # ゲームシステムの識別子
+  ID = 'Cthulhu7th'
 
-  def initialize
-    # $isDebug = true
-    super
+  # ゲームシステム名
+  NAME = '新クトゥルフ'
 
-    @bonus_dice_range = (-2..2)
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'しんくとうるふ'
 
-  def gameName
-    '新クトゥルフ'
-  end
-
-  def gameType
-    "Cthulhu7th"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ※コマンドは入力内容の前方一致で検出しています。
 ・判定　CC(x)<=（目標値）
 　x：ボーナス・ペナルティダイス (2～－2)。省略可。
@@ -49,6 +42,14 @@ class Cthulhu7th < DiceBot
 　・プッシュ時のキャスティング・ロール（Casting Roll）の失敗表
 　　強力でない呪文の場合　FCL／強力な呪文の場合　FCM
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['CC\(\d+\)', 'CC.*', 'CBR\(\d+,\d+\)', 'FAR.*', 'BMR', 'BMS', 'FCL', 'FCM', 'PH', 'MA'])
+
+  def initialize
+    # $isDebug = true
+    super
+
+    @bonus_dice_range = (-2..2)
   end
 
   def rollDiceCommand(command)
@@ -143,8 +144,8 @@ INFO_MESSAGE_TEXT
 
     tens_digit_count = 1 + bonus_dice_count.abs
     tens_digit_count.times do
-      bonus = rollPercentD10
-      total = (bonus * 10) + units_digit
+      bonus = bcdice.roll_tens_d10()
+      total = bonus + units_digit
       total = 100 if total == 0
 
       total_list.push(total)
@@ -333,7 +334,7 @@ INFO_MESSAGE_TEXT
   end
 
   def getHitResultText(output, counts)
-    return "#{output}\n＞ #{counts[:hit_bullet]}発が命中、#{counts[:impale_bullet]}発が貫通、残弾#{counts[:bullet]}発"
+    return "#{output}\n＞ #{counts[:hit_bullet]}発が通常命中、#{counts[:impale_bullet]}発が貫通、残弾#{counts[:bullet]}発"
   end
 
   def getHitType(more_difficulty, hit_result)
@@ -361,8 +362,8 @@ INFO_MESSAGE_TEXT
         hit_bullet_count = hit_bullet_count_base # 通常命中した弾数の計算
 
       when :impale
-        hit_bullet_count = impale_bullet_count_base.floor
-        impale_bullet_count = impale_bullet_count_base.ceil # 貫通した弾数の計算
+        impale_bullet_count = impale_bullet_count_base.floor # 貫通した弾数の計算
+        hit_bullet_count = impale_bullet_count_base.ceil
       end
 
       lost_bullet_count = bullet_set_count
@@ -374,10 +375,8 @@ INFO_MESSAGE_TEXT
         hit_bullet_count = getLastHitBulletCount(bullet_count)
 
       when :impale
-        halfbull = bullet_count / 2.to_f
-
-        hit_bullet_count = halfbull.floor
-        impale_bullet_count = halfbull.ceil
+        impale_bullet_count = getLastHitBulletCount(bullet_count)
+        hit_bullet_count = bullet_count - impale_bullet_count
       end
 
       lost_bullet_count = bullet_count
@@ -425,8 +424,8 @@ INFO_MESSAGE_TEXT
     #bullet_set_count = diff / 10
     bullet_set_count = (diff / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
-    if (diff >= 1) && (diff < 10)
-      bullet_set_count = 1 # 技能値が9以下での最低値保障処理
+    if (diff >= 1) && (diff < 30)
+      bullet_set_count = 3 # 技能値が29以下での最低値保障処理
     end
 
     return bullet_set_count
@@ -436,8 +435,8 @@ INFO_MESSAGE_TEXT
     #hit_bullet_count_base = (bullet_set_count / 2)
     hit_bullet_count_base = (bullet_set_count / 2).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
-    if (diff >= 1) && (diff < 10)
-      hit_bullet_count_base = 1 # 技能値9以下での最低値保障
+    if (diff >= 1) && (diff < 30)
+      hit_bullet_count_base = 1 # 技能値29以下での最低値保障
     end
 
     return hit_bullet_count_base
@@ -666,7 +665,7 @@ INFO_MESSAGE_TEXT
     '寒冷マニア：冷たさ、または冷たいもの、あるいはその両方への異常な欲望。',
     '舞踏マニア：踊ることへの愛好もしくは制御不可能な熱狂。',
     '睡眠マニア：寝ることへの過度の願望。',
-    '基地マニア：墓地への執着。',
+    '墓地マニア：墓地への執着。',
     '色彩マニア：特定の色への執着。',
     'ピエロマニア：ピエロへの執着。',
     '遭遇マニア：恐ろしい状況を経験したいという強迫的衝動。',
