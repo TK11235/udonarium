@@ -136,6 +136,7 @@ export class DiceBot extends GameObject {
     { script: 'BattleTech', game: 'バトルテック' },
     { script: 'ParasiteBlood', game: 'パラサイトブラッド' },
     { script: 'Paranoia', game: 'パラノイア' },
+    { script: 'ParanoiaRebooted', game: 'パラノイア リブーテッド' },
     { script: 'BarnaKronika', game: 'バルナ・クロニカ' },
     { script: 'PulpCthulhu', game: 'パルプ・クトゥルフ' },
     { script: 'Raisondetre', game: '叛逆レゾンデートル' },
