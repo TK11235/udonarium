@@ -31,6 +31,10 @@
 }
 
 .room-name {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   min-width: 50%;
 }
 
