@@ -15,6 +15,7 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
   help: string = '';
 
   private needPassword: string = '';
+  title: string = '';
 
   get peerId(): string { return Network.peerId; }
   get isConnected(): boolean {
@@ -26,10 +27,11 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
     private modalService: ModalService
   ) {
     this.needPassword = modalService.option.password ? modalService.option.password : '';
+    this.title = modalService.option.title ? modalService.option.title : '';
   }
 
   ngOnInit() {
-    Promise.resolve().then(() => this.modalService.title = this.panelService.title = 'パスワード');
+    Promise.resolve().then(() => this.modalService.title = this.panelService.title = `パスワード ＜${this.title}＞`);
     EventSystem.register(this);
   }
 
