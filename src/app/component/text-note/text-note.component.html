@@ -6,7 +6,7 @@
     <div class="upright-transform is-3d is-bg-color is-bg-texture"
       [style.background-image]="'url(' + imageFile?.url + ')' | safe: 'style'" [style.width.px]="width * gridSize" [style.min-height.px]="height * gridSize">
       <div *ngIf="title.length" class="title is-black-background is-pointer-events-none">{{title}}</div>
-      <textarea (input)="calcFitHeight();" #textArea [ngClass]="{'is-pointer-events-none': !isSelected, 'is-pointer-events-auto': isSelected, 'is-outline-text': !isSelected}"
+      <textarea (input)="calcFitHeight();" #textArea class="textarea" [ngClass]="{'is-pointer-events-none': !isSelected, 'is-pointer-events-auto': isSelected, 'is-outline-text': !isSelected}"
         [style.font-size.px]="fontSize + 9" [(ngModel)]="text" spellcheck="false"></textarea>
     </div>
     <div class="rotate-grab of-left-top">

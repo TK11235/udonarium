@@ -82,7 +82,7 @@
   background-color: rgba(30, 30, 30, 0.8);
 }
 
-textarea {
+.textarea {
   width: 100%;
   height: 100%;
   resize: none;
@@ -107,7 +107,7 @@ textarea {
   backface-visibility: hidden;
 }
 
-textarea:focus {
+.textarea:focus {
   background: rgba(255, 255, 255, 0.75);
 }
 
