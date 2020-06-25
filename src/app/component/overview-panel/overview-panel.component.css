@@ -246,8 +246,6 @@
 
 .note {
   margin-left: 0.5em;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
   font-size: 1em;
   line-height: 1.8;
 }
@@ -267,6 +265,10 @@
   box-sizing: border-box;
   resize: none;
   overflow: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .textarea:hover {
@@ -307,6 +309,9 @@
   min-height: 24px;
   overflow: hidden;
   white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .input {

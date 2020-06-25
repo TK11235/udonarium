@@ -99,7 +99,10 @@ textarea {
   font-size: 1.0rem;
   padding: 2px;
   margin: 0;
-  word-break: break-all;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 
   backface-visibility: hidden;
 }
