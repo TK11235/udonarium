@@ -29,7 +29,7 @@ export class SaveDataService {
     files = files.concat(this.searchImageFiles(roomXml));
     files = files.concat(this.searchImageFiles(chatXml));
 
-    FileArchiver.instance.save(files, fileName);
+    FileArchiver.instance.save(files, this.appendTimestamp(fileName));
   }
 
   saveGameObject(gameObject: GameObject, fileName: string = 'xml_data') {
@@ -39,7 +39,7 @@ export class SaveDataService {
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
     files = files.concat(this.searchImageFiles(xml));
 
-    FileArchiver.instance.save(files, fileName);
+    FileArchiver.instance.save(files, this.appendTimestamp(fileName));
   }
 
   private convertToXml(gameObject: GameObject): string {
@@ -76,5 +76,16 @@ export class SaveDataService {
       }
     }
     return files;
+  }
+
+  private appendTimestamp(fileName: string): string {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ('00' + (date.getMonth() + 1)).slice(-2);
+    let day = ('00' + date.getDate()).slice(-2);
+    let hours = ('00' + date.getHours()).slice(-2);
+    let minutes = ('00' + date.getMinutes()).slice(-2);
+
+    return fileName + `_${year}-${month}-${day}_${hours}${minutes}`;
   }
 }
