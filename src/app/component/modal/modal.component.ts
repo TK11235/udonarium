@@ -47,5 +47,3 @@ export class ModalComponent {
     this.modalService.reject();
   }
 }
-
-ModalService.ModalComponentClass = ModalComponent;
