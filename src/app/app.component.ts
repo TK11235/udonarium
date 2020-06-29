@@ -260,5 +260,5 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 }
 
 PanelService.UIPanelComponentClass = UIPanelComponent;
-ContextMenuService.UIPanelComponentClass = ContextMenuComponent;
+ContextMenuService.ContextMenuComponentClass = ContextMenuComponent;
 ModalService.ModalComponentClass = ModalComponent;
