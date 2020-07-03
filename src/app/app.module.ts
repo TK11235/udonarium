@@ -118,30 +118,7 @@ import { AppComponent } from './app.component';
     PointerDeviceService,
     TabletopService,
   ],
-  entryComponents: [
-    ModalComponent,
-    UIPanelComponent,
-    PasswordCheckComponent,
-    PeerMenuComponent,
-    GameObjectInventoryComponent,
-    NoteInventoryComponent,
-    ChatPaletteComponent,
-    CardStackListComponent,
-    ChatTabSettingComponent,
-    ChatWindowComponent,
-    ContextMenuComponent,
-    GameTableSettingComponent,
-    FileSelecterComponent,
-    FileStorageComponent,
-    GameCharacterSheetComponent,
-    GameCharacterGeneratorComponent,
-    JukeboxComponent,
-    LobbyComponent,
-    RoomSettingComponent,
-    TextViewComponent,
-    TextNoteComponent,
-    OverviewPanelComponent,
-  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

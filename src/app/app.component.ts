@@ -21,6 +21,9 @@ import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
 import { ChatWindowComponent } from 'component/chat-window/chat-window.component';
+import { ContextMenuComponent } from 'component/context-menu/context-menu.component';
+import { ModalComponent } from 'component/modal/modal.component';
+import { UIPanelComponent } from 'component/ui-panel/ui-panel.component';
 import { FileStorageComponent } from 'component/file-storage/file-storage.component';
 import { GameCharacterGeneratorComponent } from 'component/game-character-generator/game-character-generator.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
@@ -274,3 +277,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
   }
 }
+PanelService.UIPanelComponentClass = UIPanelComponent;
+ContextMenuService.UIPanelComponentClass = ContextMenuComponent;
+ModalService.ModalComponentClass = ModalComponent;

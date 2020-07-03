@@ -121,4 +121,3 @@ export class UIPanelComponent implements OnInit {
   }
 }
 
-PanelService.UIPanelComponentClass = UIPanelComponent;

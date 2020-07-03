@@ -48,4 +48,4 @@ export class ModalComponent {
   }
 }
 
-ModalService.ModalComponentClass = ModalComponent;
+
