@@ -106,7 +106,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。\n2020/06/17 更新直到今天的官方修正，版本號沒有改變。"
+      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。\n2020/06/17 更新直到今天的官方修正，版本號沒有改變。\n2020/07/05 刪除一鍵刪除分頁"
     }
     , {
       from: "System",
@@ -160,7 +160,10 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   get topSpace(): number { return this.minScrollHeight - this.bottomSpace; }
-  get bottomSpace(): number { return (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight; }
+  get bottomSpace(): number {
+    console.log('this.chatTab', this.chatTab)
+    return (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight;
+  }
 
   private scrollEventTimer: NodeJS.Timer = null;
   private addMessageEventTimer: NodeJS.Timer = null;
