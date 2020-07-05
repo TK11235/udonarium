@@ -30,8 +30,8 @@
           <!--
           <button (click)="moveLast()">移動到最後</button>
           -->
-          
-          <button  *ngIf="!receiveInfo" class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
+
+          <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
 
         </ng-container>
         <ng-container *ngIf="isDeleted">
