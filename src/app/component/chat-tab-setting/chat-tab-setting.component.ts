@@ -60,7 +60,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
   onChangeSelectTab(identifier: string) {
     this.selectedTab = ObjectStore.instance.get<ChatTab>(identifier);
-    //this.selectedTabXml = '';
+    this.selectedTabXml = '';
   }
 
   create() {

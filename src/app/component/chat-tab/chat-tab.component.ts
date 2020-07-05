@@ -160,7 +160,10 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   get topSpace(): number { return this.minScrollHeight - this.bottomSpace; }
-  get bottomSpace(): number { return (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight; }
+  get bottomSpace(): number {
+
+    return this.chatTab ? (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight : (this.sampleMessages.length - this.bottomIndex - 1);
+  }
 
   private scrollEventTimer: NodeJS.Timer = null;
   private addMessageEventTimer: NodeJS.Timer = null;
@@ -255,7 +258,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   resetMessages() {
-    let lastIndex = this.chatTab.chatMessages.length - 1;
+    let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
     this.topIndex = lastIndex - Math.floor(this.panelService.scrollablePanel.clientHeight / this.minMessageHeight);
     this.bottomIndex = lastIndex;
     this.needUpdate = true;
@@ -345,6 +348,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   private markForReadIfNeeded() {
+    if (!this.chatTab) return;
     if (!this.chatTab.hasUnread) return;
 
     let scrollPosition = this.getScrollPosition();
@@ -390,7 +394,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.markForReadIfNeeded();
 
     if (scrollWideTop >= messageBoxBottom || messageBoxTop >= scrollWideBottom) {
-      let lastIndex = this.chatTab.chatMessages.length - 1;
+      let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
       let scrollBottomHeight = scrollPosition.scrollHeight - scrollPosition.top - scrollPosition.clientHeight;
 
       this.bottomIndex = lastIndex - Math.floor(scrollBottomHeight / this.minMessageHeight);

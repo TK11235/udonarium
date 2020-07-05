@@ -30,8 +30,8 @@
           <!--
           <button (click)="moveLast()">移動到最後</button>
           -->
-          
-          <button  *ngIf="!receiveInfo" class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
+
+          <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
 
         </ng-container>
         <ng-container *ngIf="isDeleted">
@@ -41,7 +41,7 @@
     </ng-container>
   </div>
 </div>
-
+<button class="danger" (click)="enableEdit = true">清除所有聊天紀錄</button>
 <div>
   <button *ngIf="enableEdit" class="danger" (click)="allMessageClear()"
     [attr.disabled]="chatTabs.length <= 1 ? '' : null">危險! 一按即清除所有聊天紀錄</button>
