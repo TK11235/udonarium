@@ -106,7 +106,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。\n2020/06/17 更新直到今天的官方修正，版本號沒有改變。\n2020/07/05 刪除一鍵刪除分頁"
+      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。\n2020/06/17 更新直到今天的官方修正，版本號沒有改變。"
     }
     , {
       from: "System",
@@ -161,8 +161,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   get topSpace(): number { return this.minScrollHeight - this.bottomSpace; }
   get bottomSpace(): number {
-    console.log('this.chatTab', this.chatTab)
-    return (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight;
+
+    return this.chatTab ? (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight : (this.sampleMessages.length - this.bottomIndex - 1);
   }
 
   private scrollEventTimer: NodeJS.Timer = null;
@@ -258,7 +258,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   resetMessages() {
-    let lastIndex = this.chatTab.chatMessages.length - 1;
+    let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
     this.topIndex = lastIndex - Math.floor(this.panelService.scrollablePanel.clientHeight / this.minMessageHeight);
     this.bottomIndex = lastIndex;
     this.needUpdate = true;
@@ -348,6 +348,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   private markForReadIfNeeded() {
+    if (!this.chatTab) return;
     if (!this.chatTab.hasUnread) return;
 
     let scrollPosition = this.getScrollPosition();
@@ -393,7 +394,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.markForReadIfNeeded();
 
     if (scrollWideTop >= messageBoxBottom || messageBoxTop >= scrollWideBottom) {
-      let lastIndex = this.chatTab.chatMessages.length - 1;
+      let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
       let scrollBottomHeight = scrollPosition.scrollHeight - scrollPosition.top - scrollPosition.clientHeight;
 
       this.bottomIndex = lastIndex - Math.floor(scrollBottomHeight / this.minMessageHeight);
