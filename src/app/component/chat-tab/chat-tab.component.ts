@@ -84,7 +84,11 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   get topSpace(): number { return this.minScrollHeight - this.bottomSpace; }
-  get bottomSpace(): number { return (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight; }
+  get bottomSpace(): number {
+    return 0 < this.chatMessages.length
+      ? (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight
+      : 0;
+  }
 
   private scrollEventShortTimer: NodeJS.Timer = null;
   private scrollEventLongTimer: NodeJS.Timer = null;
