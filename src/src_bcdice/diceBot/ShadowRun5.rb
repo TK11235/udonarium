@@ -1,8 +1,25 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'diceBot/ShadowRun4'
 
 class ShadowRun5 < ShadowRun4
+  # ゲームシステムの識別子
+  ID = 'ShadowRun5'
+
+  # ゲームシステム名
+  NAME = 'シャドウラン第5版'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'しやとうらん5'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。
+バラバラロール(xBn)のみ、リミットをセットできます。リミットの指定は(xBn@l)のように指定します。(省略可)
+BコマンドとRコマンド時に、グリッチの表示を行います。
+INFO_MESSAGE_TEXT
+
   setPrefixes(['(\d+)B6@(\d+)'])
 
   def initialize
@@ -10,22 +27,6 @@ class ShadowRun5 < ShadowRun4
     @sortType = 3
     @rerollNumber = 6 # 振り足しする出目
     @defaultSuccessTarget = ">=5" # 目標値が空欄の時の目標値
-  end
-
-  def gameName
-    'シャドウラン第５版'
-  end
-
-  def gameType
-    "ShadowRun5"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。
-バラバラロール(xBn)のみ、リミットをセットできます。リミットの指定は(xBn@l)のように指定します。(省略可)
-BコマンドとRコマンド時に、グリッチの表示を行います。
-INFO_MESSAGE_TEXT
   end
 
   # シャドウラン5版　リミット時のテスト

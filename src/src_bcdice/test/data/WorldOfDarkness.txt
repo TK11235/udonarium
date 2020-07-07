@@ -41,6 +41,12 @@ WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=0 ＞ 7 ＞ 成功�
 rand:7/10
 ============================
 input:
+10ST11
+output:
+WorldOfDarkness : DicePool=10, Difficulty=11, AutomaticSuccess=0 ＞ 2,2,3,4,5,6,7,8,9,10 ＞ 成功数1
+rand:10/10,9/10,8/10,7/10,6/10,5/10,4/10,3/10,2/10,2/10
+============================
+input:
 1ST7+1
 output:
 WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=1 ＞ 6 ＞ 成功数1
@@ -67,7 +73,13 @@ rand:1/10,5/10,6/10,7/10,10/10
 input:
 5ST
 output:
-WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,1,5,6,10 ＞ 大失敗
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,2,5,5,5 ＞ 大失敗
+rand:1/10,5/10,5/10,2/10,5/10
+============================
+input:
+5ST
+output:
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,1,5,6,10 ＞ 失敗
 rand:1/10,5/10,6/10,1/10,10/10
 ============================
 input:
@@ -137,6 +149,12 @@ WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=0 ＞ 7 ＞ 成功�
 rand:7/10
 ============================
 input:
+10STS11
+output:
+WorldOfDarkness : DicePool=10, Difficulty=11, AutomaticSuccess=0 ＞ 2,2,3,4,5,6,7,8,9,10 ＞ 2 ＞ 成功数1
+rand:10/10,9/10,8/10,7/10,6/10,5/10,4/10,3/10,2/10,2/10,2/10
+============================
+input:
 1STS7+1
 output:
 WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=1 ＞ 6 ＞ 成功数1
@@ -163,7 +181,13 @@ rand:1/10,5/10,6/10,7/10,10/10,10/10,6/10
 input:
 5STS
 output:
-WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,1,5,6,10 ＞ 10 ＞ 1 ＞ 大失敗
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,5,6,7,10 ＞ 10 ＞ 1 ＞ 成功数3
+rand:1/10,5/10,6/10,7/10,10/10,10/10,1/10
+============================
+input:
+5STS
+output:
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,1,5,6,10 ＞ 10 ＞ 1 ＞ 成功数1
 rand:1/10,5/10,6/10,1/10,10/10,10/10,1/10
 ============================
 input:
@@ -181,7 +205,7 @@ rand:1/10,5/10,6/10,10/10,10/10,5/10,4/10
 input:
 5STS7+1
 output:
-WorldOfDarkness : DicePool=5, Difficulty=7, AutomaticSuccess=1 ＞ 1,5,6,10,10 ＞ 7,10 ＞ 1 ＞ 成功数3
+WorldOfDarkness : DicePool=5, Difficulty=7, AutomaticSuccess=1 ＞ 1,5,6,10,10 ＞ 7,10 ＞ 1 ＞ 成功数4
 rand:1/10,5/10,6/10,10/10,10/10,10/10,7/10,1/10
 ============================
 input:
@@ -191,25 +215,115 @@ WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=1 ＞ 2,5,6,7,9 ＞
 rand:2/10,5/10,6/10,7/10,9/10
 ============================
 input:
-1D10+5
+1STA テキスト
 output:
-WorldOfDarkness : (1D10+5) ＞ 2[2]+5 ＞ 7
-rand:2/10
+WorldOfDarkness : DicePool=1, Difficulty=6, AutomaticSuccess=0 ＞ 1 ＞ 大失敗
+rand:1/10
 ============================
 input:
-1D10-5 あああ
+1STA
 output:
-WorldOfDarkness : (1D10-5) ＞ 4[4]-5 ＞ -1
-rand:4/10
+WorldOfDarkness : DicePool=1, Difficulty=6, AutomaticSuccess=0 ＞ 5 ＞ 失敗
+rand:5/10
 ============================
 input:
-10D10
+1STA
 output:
-WorldOfDarkness : (10D10) ＞ 55[1,2,3,4,5,6,7,8,9,10] ＞ 55
-rand:1/10,2/10,3/10,4/10,5/10,6/10,7/10,8/10,9/10,10/10
+WorldOfDarkness : DicePool=1, Difficulty=6, AutomaticSuccess=0 ＞ 6 ＞ 成功数1
+rand:6/10
 ============================
 input:
-10B10
+1STA
 output:
-WorldOfDarkness : (10B10) ＞ 10,9,8,7,6,5,4,3,2,1
-rand:10/10,9/10,8/10,7/10,6/10,5/10,4/10,3/10,2/10,1/10
+WorldOfDarkness : DicePool=1, Difficulty=6, AutomaticSuccess=0 ＞ 10 ＞ 成功数2
+rand:10/10
+============================
+input:
+1STA1
+output:
+WorldOfDarkness : DicePool=1, Difficulty=6, AutomaticSuccess=0 ＞ 6 ＞ 成功数1
+rand:6/10
+============================
+input:
+1STA7
+output:
+WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=0 ＞ 6 ＞ 失敗
+rand:6/10
+============================
+input:
+1STA7
+output:
+WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=0 ＞ 7 ＞ 成功数1
+rand:7/10
+============================
+input:
+10STA11
+output:
+WorldOfDarkness : DicePool=10, Difficulty=11, AutomaticSuccess=0 ＞ 2,2,3,4,5,6,7,8,9,10 ＞ 成功数2
+rand:10/10,9/10,8/10,7/10,6/10,5/10,4/10,3/10,2/10,2/10
+============================
+input:
+1STA7+1
+output:
+WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=1 ＞ 6 ＞ 成功数1
+rand:6/10
+============================
+input:
+1STA7+1
+output:
+WorldOfDarkness : DicePool=1, Difficulty=7, AutomaticSuccess=1 ＞ 7 ＞ 成功数2
+rand:7/10
+============================
+input:
+1STA+1
+output:
+WorldOfDarkness : DicePool=1, Difficulty=6, AutomaticSuccess=1 ＞ 6 ＞ 成功数2
+rand:6/10
+============================
+input:
+5STA
+output:
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,5,6,7,10 ＞ 成功数3
+rand:1/10,5/10,6/10,7/10,10/10
+============================
+input:
+5STA
+output:
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,1,5,6,10 ＞ 成功数1
+rand:1/10,5/10,6/10,1/10,10/10
+============================
+input:
+5STA
+output:
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 2,3,4,5,5 ＞ 失敗
+rand:3/10,2/10,5/10,4/10,5/10
+============================
+input:
+5STA7
+output:
+WorldOfDarkness : DicePool=5, Difficulty=7, AutomaticSuccess=0 ＞ 1,5,6,10,10 ＞ 成功数3
+rand:1/10,5/10,6/10,10/10,10/10
+============================
+input:
+5STA7+1
+output:
+WorldOfDarkness : DicePool=5, Difficulty=7, AutomaticSuccess=1 ＞ 1,5,6,10,10 ＞ 成功数4
+rand:1/10,5/10,6/10,10/10,10/10
+============================
+input:
+5STA+1
+output:
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=1 ＞ 2,5,6,7,9 ＞ 成功数4
+rand:2/10,5/10,6/10,7/10,9/10
+============================
+input:
+5STA
+output:
+WorldOfDarkness : DicePool=5, Difficulty=6, AutomaticSuccess=0 ＞ 1,1,5,6,10 ＞ 成功数1
+rand:1/10,5/10,6/10,10/10,1/10
+============================
+input:
+5STA7
+output:
+WorldOfDarkness : DicePool=5, Difficulty=7, AutomaticSuccess=0 ＞ 1,1,5,6,10 ＞ 失敗
+rand:1/10,5/10,6/10,10/10,1/10

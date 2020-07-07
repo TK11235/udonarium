@@ -1,26 +1,20 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
+require 'utils/ArithmeticEvaluator'
 
 class Cthulhu < DiceBot
-  setPrefixes(['CC(B)?\(\d+\)', 'CC(B)?.*', 'RES(B)?.*', 'CBR(B)?\(\d+,\d+\)'])
+  # ゲームシステムの識別子
+  ID = 'Cthulhu'
 
-  def initialize
-    # $isDebug = true
-    super
-    @special_percentage  = 20
-    @critical_percentage = 1
-    @fumble_percentage   = 1
-  end
+  # ゲームシステム名
+  NAME = 'クトゥルフ'
 
-  def gameName
-    'クトゥルフ'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'くとうるふ'
 
-  def gameType
-    "Cthulhu"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 c=クリティカル値 ／ f=ファンブル値 ／ s=スペシャル
 
 1d100<=n    c・f・sすべてオフ（単純な数値比較判定のみ行います）
@@ -52,6 +46,15 @@ x=故障ナンバー。出目x以上が出た上で、ファンブルが同時�
 同上
 
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['CC(B)?\(\d+\)', 'CC(B)?.*', 'RES(B)?.*', 'CBR(B)?\(\d+,\d+\)'])
+
+  def initialize
+    # $isDebug = true
+    super
+    @special_percentage  = 20
+    @critical_percentage = 1
+    @fumble_percentage   = 1
   end
 
   def rollDiceCommand(command)
@@ -95,12 +98,9 @@ INFO_MESSAGE_TEXT
     broken_num = 0
     diff = 0
 
-    if (m = /CC(B)?(\d+)<=(\d+)/i.match(command))
-      # /\(\d+\)/の()はpattern-killerにカイシャクされる
-      broken_num = m[2].to_i
-      diff = m[3].to_i
-    elsif (m = /CC(B)?<=(\d+)/i.match(command))
-      diff = m[2].to_i
+    if (m = %r{CCB?(\d+)?<=([+-/*\d]+)}i.match(command))
+      broken_num = m[1].to_i
+      diff = ArithmeticEvaluator.new.eval(m[2])
     end
 
     output = ""

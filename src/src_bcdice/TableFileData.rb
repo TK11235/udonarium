@@ -28,7 +28,7 @@ require 'configBcDice.rb'
 # というデータフォーマットとなる。
 
 class TableFileData
-  @@virtualTableData = Hash.new
+  @@virtualTableData = Hash.new #TKfix
 
   def initialize(isLoadCommonTable = true)
     @dirs = []
@@ -71,8 +71,6 @@ class TableFileData
     fileNames = Dir.glob("#{dir}/#{prefix}*.txt")
 
     fileNames.each do |fileName|
-      fileName = fileName.untaint
-
       info = readGameCommandInfo(fileName, prefix)
       gameType = info["gameType"]
       gameType ||= ""
@@ -139,7 +137,7 @@ class TableFileData
     table = []
     #lines = File.read(fileName).toutf8.lines.map(&:chomp) #TK
 
-    # TKFix File.readの代替処理実装↓
+    # TKfix File.readの代替処理実装↓
     lines = []
     if (/(.+)\.txt$/ =~ fileName)
       data = @tableData[$1]
@@ -147,7 +145,7 @@ class TableFileData
         lines = data["lines"].split("\n")
       end
     end
-    # TKFix File.readの代替処理実装↑
+    # TKfix File.readの代替処理実装↑
 
     defineLine = lines.shift
     dice, title = getDiceAndTitle(defineLine)
@@ -168,7 +166,7 @@ class TableFileData
   end
 
   def self.getLineKeyValue(line)
-    #line = line.toutf8.chomp #TK
+    #line = line.toutf8.chomp #TKfix
 
     unless /^[\s　]*([^:：]+)[\s　]*[:：][\s　]*(.+)/ === line
       return '', ''
@@ -309,7 +307,6 @@ class TableFileCreator
     end
 
     fileName = "#{@dir}/#{@prefix}#{prefix2}#{command}.txt"
-    fileName.untaint
 
     return fileName
   end
@@ -319,7 +316,6 @@ class TableFileCreator
     @command ||= ''
     #TKfix !
     @command = @command.gsub(/\./, '_')
-    @command.untaint
   end
 
   def checkCommand(command)

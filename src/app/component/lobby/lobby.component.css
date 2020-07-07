@@ -14,3 +14,30 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.room-list {
+  font-size: 12px;
+  border: 0;
+  border-spacing: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.room-list > tr > * {
+  padding: 1px 0.5em;
+  text-align: center;
+}
+
+.room-name {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  min-width: 50%;
+}
+
+.is-small-font {
+  font-size: 10px;
+}

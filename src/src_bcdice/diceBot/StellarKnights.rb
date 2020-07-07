@@ -1,32 +1,39 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require "utils/table"
 require "utils/d66_grid_table"
 
 class StellarKnights < DiceBot
-  def initialize
-    super
+  # ゲームシステムの識別子
+  ID = 'StellarKnights'
 
-    @d66Type = 1
-  end
+  # ゲームシステム名
+  NAME = '銀剣のステラナイツ'
 
-  def gameName
-    '銀剣のステラナイツ'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'きんけんのすてらないつ'
 
-  def gameType
-    "StellarKnights"
-  end
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
+・判定　nSK[d][,k>l,...]
+[]内は省略可能。
+n: ダイス数、d: アタック判定における対象の防御力、k, l: ダイスの出目がkならばlに変更（アマランサスのスキル「始まりの部屋」用）
+d省略時はダイスを振った結果のみ表示。（nSKはnB6と同じ）
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+4SK: ダイスを4個振って、その結果を表示
+5SK3: 【アタック判定：5ダイス】、対象の防御力を3として成功数を表示
+3SK,1>6: ダイスを3個振り、出目が1のダイスを全て6に変更し、その結果を表示
+6SK4,1>6,2>6: 【アタック判定：6ダイス】、出目が1と2のダイスを全て6に変更、対象の防御力を4として成功数を表示
+
 ・基本
 TT：お題表
-STA ：シチュエーション表A：時間 (Situation Table A)
-STB ：シチュエーション表B：場所 (ST B)
-STB2：シチュエーション表B その2：学園編 (ST B 2)
-STC ：シチュエーション表C：話題 (ST C)
-ALLS ：シチュエーション表全てを一括で（学園編除く）
+STA    ：シチュエーション表A：時間 (Situation Table A)
+STB    ：シチュエーション表B：場所 (ST B)
+STB2[n]：シチュエーション表B その2：学園編 (ST B 2)
+　n: 1(アーセルトレイ), 2(イデアグロリア), 3(シトラ), 4(フィロソフィア), 5(聖アージェティア), 6(SoA)
+STC    ：シチュエーション表C：話題 (ST C)
+ALLS   ：シチュエーション表全てを一括で（学園編除く）
 GAT：所属組織決定 (Gakuen Table)
 HOT：希望表 (Hope Table)
 DET：絶望表 (Despair Table)
@@ -54,230 +61,90 @@ YSTB：あなたの物語表：ブリンガー (YST Bringer)
 YSTF：あなたの物語表：フォージ (YST Forge)
 STAL：シチュエーション表：オルトリヴート (ST Alt-Levoot)
 MESSAGETEXT
+
+  def initialize
+    super
+
+    @sortType = 2 # バラバラロール（Bコマンド）でソート有
+    @d66Type = 1
   end
 
   def rollDiceCommand(command)
     command = command.upcase
 
     if (table = TABLES[command])
-      return table.roll(bcdice)
+      table.roll(bcdice)
+    elsif (m = /(\d+)SK(\d)?((,\d>\d)+)?/.match(command))
+      resolute_action(m[1].to_i, m[2] && m[2].to_i, m[3], command)
+    elsif command == 'STB2'
+      roll_all_situation_b2_tables
+    elsif command == 'ALLS'
+      roll_all_situation_tables
     elsif command == "PET"
-      return roll_personality_table()
+      roll_personality_table
     elsif (m = /FT(\d+)?/.match(command))
       num = (m[1] || 5).to_i
-      return roll_fragment_table(num)
+      roll_fragment_table(num)
+    end
+  end
+
+  private
+
+  # @param [Integer] num_dices
+  # @param [Integer | nil] defence
+  # @param [String] dice_change_text
+  # @param [String] command
+  # @return [String]
+  def resolute_action(num_dices, defence, dice_change_text, command)
+    _, dice_text, = roll(num_dices, 6, @sortType)
+    output = "(#{command}) ＞ #{dice_text}"
+
+    dices = dice_text.split(',').map(&:to_i)
+
+    # FAQによると、ダイスの置き換えは宣言された順番に適用されていく
+    dice_change_rules = parse_dice_change_rules(dice_change_text)
+    dice_change_rules.each do |rule|
+      dices.map! { |val| val == rule[:from] ? rule[:to] : val }
     end
 
-    return analyzeDiceCommandResultMethod(command)
-  end
-
-  def getThemeTableDiceCommandResult(command)
-    return unless command == "TT"
-
-    tableName = "お題表"
-    table = %w{
-      未来 占い 遠雷 恋心 歯磨き 鏡
-      過去 キス ささやき声 黒い感情 だっこ 青空
-      童話 決意 風の音 愛情 寝顔 鎖
-      ふたりの秘密 アクシデント！ 小鳥の鳴き声 笑顔 食事 宝石
-      思い出 うとうと 鼓動 嫉妬 ベッド 泥
-      恋の話 デート ため息 内緒話 お風呂 小さな傷
-    }
-
-    text, index = get_table_by_d66(table)
-
-    result = "#{tableName}(#{index}) ＞ #{text}"
-    return result
-  end
-
-  def getSituationTableDiceCommandResult(command)
-    return unless command == "STA"
-
-    tableName = "シチュエーション表A：時間"
-    table = %w{
-      朝、誰もいない
-      騒がしい昼間の
-      寂しい夕暮れの横たわる
-      星の瞬く夜、
-      静謐の夜更けに包まれた
-      夜明け前の
-    }
-    text, index = get_table_by_1d6(table)
-
-    result = "#{tableName}(#{index}) ＞ #{text}"
-    return result
-  end
-
-  def getPlageTableDiceCommandResult(command)
-    return unless command == "STB"
-
-    tableName = "シチュエーション表B：場所"
-
-    table_1_2 = [
-      "教室 　小道具：窓、机、筆記用具、チョークと黒板、窓の外から聞こえる部活動の声",
-      "カフェテラス　小道具：珈琲、紅茶、お砂糖とミルク、こちらに手を振っている学友",
-      "学園の中庭　小道具：花壇、鳥籠めいたエクステリア、微かに聴こえる鳥の囁き",
-      "音楽室　小道具：楽器、楽譜、足踏みオルガン、壁に掛けられた音楽家の肖像画",
-      "図書館　小道具：高い天井、天井に迫る程の本棚、無数に収められた本",
-      "渡り廊下　小道具：空に届きそうな高さ、遠くに別の学園が見える、隣を飛び過ぎて行く鳥",
-    ]
-
-    table_3_4 = [
-      "花の咲き誇る温室　小道具：むせ返るような花の香り、咲き誇る花々、ガラス越しの陽光",
-      "アンティークショップ　小道具：アクセサリーから置物まで、見慣れない古い機械は地球時代のもの？",
-      "ショッピングモール　小道具：西欧の街並みを思わせるショッピングモール、衣類に食事、お茶屋さんも",
-      "モノレール　小道具：車窓から覗くアーセルトレイの街並み、乗客はあなたたちだけ",
-      "遊歩道　小道具：等間隔に並ぶ街路樹、レンガ造りの街並み、微かに小鳥のさえずり",
-      "おしゃれなレストラン　小道具：おいしいごはん、おしゃれな雰囲気、ゆったりと流れる時間",
-    ]
-    table_5_6 = [
-      "何処ともしれない暗がり　小道具：薄暗がりの中、微かに見えるのは互いの表情くらい",
-      "寂れた喫茶店　小道具：姿を見せないマスター、その孫娘が持ってくる珈琲、静かなひととき",
-      "階段の下、秘密のお茶会　小道具：知る人ぞ知る階段下スペースのお茶会、今日はあなたたちだけ",
-      "学生寮の廊下　小道具：滅多に人とすれ違わない学生寮の廊下、窓の外には中庭が見える",
-      "ふたりの部屋　小道具：パートナーと共に暮らすあなたの部屋、内装や小物はお気に召すまま",
-      "願いの決闘場　小道具：決闘の場、ステラナイトたちの花章が咲き誇る場所",
-    ]
-
-    table = [table_1_2, table_1_2,
-             table_3_4, table_3_4,
-             table_5_6, table_5_6,].flatten
-
-    text, index = get_table_by_d66(table)
-
-    result = "#{tableName}(#{index}) ＞ #{text}"
-    return result
-  end
-
-  def getSchoolTableDiceCommandResult(command)
-    return unless command == "STB2"
-
-    tables =
-      [
-        {:tableName => "アーセルトレイ公立大学",
-         :table => %w{
-           地下のだだっぴろい学食
-           パンの種類が豊富な購買の前
-           本当は進入禁止の屋上
-           キャンプ部が手入れしている中庭
-           共用の広いグラウンド
-           使い古された教室
-         }},
-
-        {:tableName => "イデアグロリア芸術総合大学",
-         :table => %w{
-           （美術ｏｒ音楽）準備室
-           美しく整備された中庭
-           音楽室
-           格調高いカフェテラス
-           誰もいない大型劇場
-           完璧な調和を感じる温室
-         }},
-
-        {:tableName => "シトラ女学院",
-         :table => %w{
-           中庭の神殿めいた温室
-           質素だが美しい会食室
-           天井まで届く本棚の並ぶ図書館
-           誰もいない学習室
-           寮生たちの秘密のお茶会室
-           寮の廊下
-         }},
-
-        {:tableName => "フィロソフィア大学",
-         :table => %w{
-           遠く聞こえる爆発音
-           学生のアンケート調査を受ける
-           空から降ってくるドローン
-           膨大な蔵書を備えた閉架書庫
-           鳴らすと留年するという小さな鐘の前
-           木漏れ日のあたたかな森
-         }},
-
-        {:tableName => "聖アージェティア学園",
-         :table => %w{
-           おしゃれなカフェテラス
-           小さなプラネタリウム
-           ローマの神殿めいた屋内プール
-           誰もいない講堂
-           謎のおしゃれな空き部屋
-           花々の咲き乱れる温室
-         }},
-
-        {:tableName => "スポーン・オブ・アーセルトレイ",
-         :table => %w{
-           人気のない教室
-           歴代の寄せ書きの刻まれた校門前
-           珍しく人気のない学食
-           鍵の外れっぱなしの屋上
-           校舎裏
-           外周環状道路へ繋がる橋
-         }},
-      ]
-
-    result = ''
-
-    tables.each_with_index do |table, i|
-      tableName = table[:tableName]
-      table = table[:table]
-
-      text, index = get_table_by_1d6(table)
-
-      result += "\n" unless i == 0
-      result += "#{tableName}(#{index}) ＞ #{text}"
+    unless dice_change_rules.empty?
+      dices.sort!
+      output += " ＞ [#{dices.join(',')}]"
     end
 
-    return result
-  end
-
-  def getTpicTableDiceCommandResult(command)
-    return unless command == "STC"
-
-    tableName = "シチュエーション表C：話題"
-
-    table_1_3 = [
-      "未来の話：決闘を勝ち抜いたら、あるいは負けてしまったら……未来のふたりはどうなるのだろう。",
-      "衣服の話：冴えない服を着たりしていないか？　あるいはハイセンス過ぎたりしないだろうか。よぉし、私が選んであげよう!!",
-      "ステラバトルの話：世界の未来は私たちにかかっている。頭では分かっていても、まだ感情が追いつかないな……。",
-      "おいしいごはんの話：おいしいごはんは正義。１００年前も６４０５年前も異世界だろうと、きっと変わらない真理なのだ。おかわり！",
-      "家族の話：生徒たちは寮生活が多い。離れて暮らす家族は、どんな人たちなのか。いつかご挨拶に行きたいと言い出したりしても良いだろう。",
-      "次の週末の話：週末、何をしますか？　願いをかけた決闘の合間、日常のひとときも、きっと大切な時間に違いない。",
-    ]
-
-    table_4_6 = [
-      "好きな人の話：……好きな人、いるんですか？　これはきっと真剣な話。他の何よりも重要な話だ。",
-      "子供の頃の話：ちいさな頃、パートナーはどんな子供だったのだろうか。どんな遊びをしたのだろうか。",
-      "好きなタイプの話：パートナーはどんな人が好みなのでしょうか……。気になります、えぇ。",
-      "思い出話：ふたりの思い出、あるいは出会う前の思い出の話。",
-      "願いの話：叶えたい願いがあるからこそ、ふたりは出会った。この戦いに勝利したら、どんな形で願いを叶えるのだろうか。",
-      "ねぇ、あの子誰？：この前見かけたパートナーと一緒にいた子。あの子誰？だーれー!?　むー!!"
-    ]
-
-    table = [table_1_3, table_1_3, table_1_3,
-             table_4_6, table_4_6, table_4_6, ].flatten
-
-    text, index = get_table_by_d66(table)
-
-    result = "#{tableName}(#{index}) ＞ #{text}"
-    return result
-  end
-
-  def getAllSituationTableDiceCommandResult(command)
-    return unless command == "ALLS"
-
-    commands = ['STA', 'STB', 'STC']
-
-    result = ""
-
-    commands.each_with_index do |cmd, i|
-      result += "\n" unless i == 0
-      result += analyzeDiceCommandResultMethod(cmd)
+    unless defence.nil?
+      success = dices.count { |val| val >= defence }
+      output += " ＞ 成功数: #{success}"
     end
 
-    return result
+    output
   end
 
-  def roll_personality_table()
+  def parse_dice_change_rules(text)
+    return [] if text.nil?
+
+    # 正規表現の都合で先頭に ',' が残っているので取っておく
+    text = text[1..-1]
+    rules = text.split(',').map do |rule|
+      v = rule.split('>').map(&:to_i)
+      {
+        :from => v[0],
+        :to => v[1],
+      }
+    end
+
+    rules
+  end
+
+  def roll_all_situation_b2_tables
+    (1..6).map { |num| TABLES["STB2#{num}"].roll(bcdice) }.join("\n")
+  end
+
+  def roll_all_situation_tables
+    %w(STA STB STC).map { |command| TABLES[command].roll(bcdice) }.join("\n")
+  end
+
+  def roll_personality_table
     value1, index1 = get_table_by_d66(PERSONALITY_TABLE)
     value2, index2 = get_table_by_d66(PERSONALITY_TABLE)
     return "性格表(#{index1},#{index2}) ＞ #{value1}にして#{value2}"
@@ -294,6 +161,141 @@ MESSAGETEXT
 
     return "フラグメント表(#{indexes.join(',')}) ＞ #{values.join(',')}"
   end
+
+  THEME_TABLE = [
+    %w(未来 占い 遠雷 恋心 歯磨き 鏡).freeze,
+    %w(過去 キス ささやき声 黒い感情 だっこ 青空).freeze,
+    %w(童話 決意 風の音 愛情 寝顔 鎖).freeze,
+    %w(ふたりの秘密 アクシデント！ 小鳥の鳴き声 笑顔 食事 宝石).freeze,
+    %w(思い出 うとうと 鼓動 嫉妬 ベッド 泥).freeze,
+    %w(恋の話 デート ため息 内緒話 お風呂 小さな傷).freeze,
+  ].freeze
+
+  SITUATION_TABLE_A = %w{
+    朝、誰もいない
+    騒がしい昼間の
+    寂しい夕暮れの横たわる
+    星の瞬く夜、
+    静謐の夜更けに包まれた
+    夜明け前の
+  }.freeze
+
+  SITUATION_TABLE_B_1_2 = [
+    "教室 　小道具：窓、机、筆記用具、チョークと黒板、窓の外から聞こえる部活動の声",
+    "カフェテラス　小道具：珈琲、紅茶、お砂糖とミルク、こちらに手を振っている学友",
+    "学園の中庭　小道具：花壇、鳥籠めいたエクステリア、微かに聴こえる鳥の囁き",
+    "音楽室　小道具：楽器、楽譜、足踏みオルガン、壁に掛けられた音楽家の肖像画",
+    "図書館　小道具：高い天井、天井に迫る程の本棚、無数に収められた本",
+    "渡り廊下　小道具：空に届きそうな高さ、遠くに別の学園が見える、隣を飛び過ぎて行く鳥",
+  ].freeze
+
+  SITUATION_TABLE_B_3_4 = [
+    "花の咲き誇る温室　小道具：むせ返るような花の香り、咲き誇る花々、ガラス越しの陽光",
+    "アンティークショップ　小道具：アクセサリーから置物まで、見慣れない古い機械は地球時代のもの？",
+    "ショッピングモール　小道具：西欧の街並みを思わせるショッピングモール、衣類に食事、お茶屋さんも",
+    "モノレール　小道具：車窓から覗くアーセルトレイの街並み、乗客はあなたたちだけ",
+    "遊歩道　小道具：等間隔に並ぶ街路樹、レンガ造りの街並み、微かに小鳥のさえずり",
+    "おしゃれなレストラン　小道具：おいしいごはん、おしゃれな雰囲気、ゆったりと流れる時間",
+  ].freeze
+
+  SITUATION_TABLE_B_5_6 = [
+    "何処ともしれない暗がり　小道具：薄暗がりの中、微かに見えるのは互いの表情くらい",
+    "寂れた喫茶店　小道具：姿を見せないマスター、その孫娘が持ってくる珈琲、静かなひととき",
+    "階段の下、秘密のお茶会　小道具：知る人ぞ知る階段下スペースのお茶会、今日はあなたたちだけ",
+    "学生寮の廊下　小道具：滅多に人とすれ違わない学生寮の廊下、窓の外には中庭が見える",
+    "ふたりの部屋　小道具：パートナーと共に暮らすあなたの部屋、内装や小物はお気に召すまま",
+    "願いの決闘場　小道具：決闘の場、ステラナイトたちの花章が咲き誇る場所",
+  ].freeze
+
+  SITUATION_TABLE_B = [
+    SITUATION_TABLE_B_1_2,
+    SITUATION_TABLE_B_1_2,
+    SITUATION_TABLE_B_3_4,
+    SITUATION_TABLE_B_3_4,
+    SITUATION_TABLE_B_5_6,
+    SITUATION_TABLE_B_5_6,
+  ].freeze
+
+  SITUATION_TABLE_B2_1 = %w(
+    地下のだだっぴろい学食
+    パンの種類が豊富な購買の前
+    本当は進入禁止の屋上
+    キャンプ部が手入れしている中庭
+    共用の広いグラウンド
+    使い古された教室
+  ).freeze
+
+  SITUATION_TABLE_B2_2 = %w(
+    （美術ｏｒ音楽）準備室
+    美しく整備された中庭
+    音楽室
+    格調高いカフェテラス
+    誰もいない大型劇場
+    完璧な調和を感じる温室
+  ).freeze
+
+  SITUATION_TABLE_B2_3 = %w(
+    中庭の神殿めいた温室
+    質素だが美しい会食室
+    天井まで届く本棚の並ぶ図書館
+    誰もいない学習室
+    寮生たちの秘密のお茶会室
+    寮の廊下
+  ).freeze
+
+  SITUATION_TABLE_B2_4 = %w(
+    遠く聞こえる爆発音
+    学生のアンケート調査を受ける
+    空から降ってくるドローン
+    膨大な蔵書を備えた閉架書庫
+    鳴らすと留年するという小さな鐘の前
+    木漏れ日のあたたかな森
+  ).freeze
+
+  SITUATION_TABLE_B2_5 = %w(
+    おしゃれなカフェテラス
+    小さなプラネタリウム
+    ローマの神殿めいた屋内プール
+    誰もいない講堂
+    謎のおしゃれな空き部屋
+    花々の咲き乱れる温室
+  ).freeze
+
+  SITUATION_TABLE_B2_6 = %w(
+    人気のない教室
+    歴代の寄せ書きの刻まれた校門前
+    珍しく人気のない学食
+    鍵の外れっぱなしの屋上
+    校舎裏
+    外周環状道路へ繋がる橋
+  ).freeze
+
+  SITUATION_TABLE_C_1_2_3 = [
+    "未来の話：決闘を勝ち抜いたら、あるいは負けてしまったら……未来のふたりはどうなるのだろう。",
+    "衣服の話：冴えない服を着たりしていないか？　あるいはハイセンス過ぎたりしないだろうか。よぉし、私が選んであげよう!!",
+    "ステラバトルの話：世界の未来は私たちにかかっている。頭では分かっていても、まだ感情が追いつかないな……。",
+    "おいしいごはんの話：おいしいごはんは正義。１００年前も６４０５年前も異世界だろうと、きっと変わらない真理なのだ。おかわり！",
+    "家族の話：生徒たちは寮生活が多い。離れて暮らす家族は、どんな人たちなのか。いつかご挨拶に行きたいと言い出したりしても良いだろう。",
+    "次の週末の話：週末、何をしますか？　願いをかけた決闘の合間、日常のひとときも、きっと大切な時間に違いない。",
+  ].freeze
+
+  SITUATION_TABLE_C_4_5_6 = [
+    "好きな人の話：……好きな人、いるんですか？　これはきっと真剣な話。他の何よりも重要な話だ。",
+    "子供の頃の話：ちいさな頃、パートナーはどんな子供だったのだろうか。どんな遊びをしたのだろうか。",
+    "好きなタイプの話：パートナーはどんな人が好みなのでしょうか……。気になります、えぇ。",
+    "思い出話：ふたりの思い出、あるいは出会う前の思い出の話。",
+    "願いの話：叶えたい願いがあるからこそ、ふたりは出会った。この戦いに勝利したら、どんな形で願いを叶えるのだろうか。",
+    "ねぇ、あの子誰？：この前見かけたパートナーと一緒にいた子。あの子誰？だーれー!?　むー!!"
+  ].freeze
+
+  SITUATION_TABLE_C = [
+    SITUATION_TABLE_C_1_2_3,
+    SITUATION_TABLE_C_1_2_3,
+    SITUATION_TABLE_C_1_2_3,
+    SITUATION_TABLE_C_4_5_6,
+    SITUATION_TABLE_C_4_5_6,
+    SITUATION_TABLE_C_4_5_6,
+  ].freeze
 
   GAKUEN_TABLE = [
     "アーセルトレイ公立大学",
@@ -791,6 +793,53 @@ MESSAGETEXT
   ].freeze
 
   TABLES = {
+    "TT" => D66GridTable.new(
+      "お題表",
+      THEME_TABLE
+    ),
+    "STA" => Table.new(
+      "シチュエーション表A：時間",
+      "1D6",
+      SITUATION_TABLE_A
+    ),
+    "STB" => D66GridTable.new(
+      "シチュエーション表B：場所",
+      SITUATION_TABLE_B
+    ),
+    "STB21" => Table.new(
+      "シチュエーション表Bその2：学園編　アーセルトレイ公立大学",
+      "1D6",
+      SITUATION_TABLE_B2_1
+    ),
+    "STB22" => Table.new(
+      "シチュエーション表Bその2：学園編　イデアグロリア芸術総合大学",
+      "1D6",
+      SITUATION_TABLE_B2_2
+    ),
+    "STB23" => Table.new(
+      "シチュエーション表Bその2：学園編　シトラ女学院",
+      "1D6",
+      SITUATION_TABLE_B2_3
+    ),
+    "STB24" => Table.new(
+      "シチュエーション表Bその2：学園編　フィロソフィア大学",
+      "1D6",
+      SITUATION_TABLE_B2_4
+    ),
+    "STB25" => Table.new(
+      "シチュエーション表Bその2：学園編　聖アージェティア学園",
+      "1D6",
+      SITUATION_TABLE_B2_5
+    ),
+    "STB26" => Table.new(
+      "シチュエーション表Bその2：学園編　スポーン・オブ・アーセルトレイ",
+      "1D6",
+      SITUATION_TABLE_B2_6
+    ),
+    "STC" => D66GridTable.new(
+      "シチュエーション表C：話題",
+      SITUATION_TABLE_C
+    ),
     "GAT" => Table.new(
       "所属組織決定",
       "1D6",
@@ -862,5 +911,5 @@ MESSAGETEXT
     ),
   }.freeze
 
-  setPrefixes(['TT', 'STA', 'STB', 'STB2', 'STC', 'ALLS', 'PET', 'FT\d*'] + TABLES.keys)
+  setPrefixes(['\d+SK\d?(,\d>\d)*', 'STB2', 'ALLS', 'PET', 'FT\d*'] + TABLES.keys)
 end

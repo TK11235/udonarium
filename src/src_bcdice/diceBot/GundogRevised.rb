@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'diceBot/Gundog'
 
 class GundogRevised < DiceBot
-  setPrefixes(['(.DPT|.FT)(\+|\-)?\d*'])
+  # ゲームシステムの識別子
+  ID = 'GundogRevised'
 
-  def gameName
-    'ガンドッグ・リヴァイズド'
-  end
+  # ゲームシステム名
+  NAME = 'ガンドッグ・リヴァイズド'
 
-  def gameType
-    "GundogRevised"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'かんとつくりうあいすと'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。
 nD9ロールも対応。
 ・ダメージペナルティ表　　(～DPTx) (x:修正)
@@ -24,35 +24,32 @@ nD9ロールも対応。
 　射撃(SFT)、格闘(MFT)、投擲(TFT)の各表を引くことが出来ます。
 　修正を後ろに書くことも出来ます。
 INFO_MESSAGE_TEXT
-  end
+
+  setPrefixes(['(.DPT|.FT)(\+|\-)?\d*'])
 
   # ---- 以降、Gundog.rbよりほぼコピペ（絶対成功→ベアリーに用語変更対応の為、継承だと不都合）
   # ゲーム別成功度判定(1d100)
-  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == "<="
+  def check_1D100(total, _dice_total, cmp_op, target)
+    return '' unless cmp_op == :<=
 
-    if total_n >= 100
-      return " ＞ ファンブル"
-    end
-
-    if total_n <= 1
-      return " ＞ ベアリー(達成値1+SL)"
-    end
-
-    if total_n <= diff
-      dig10 = (total_n / 10).to_i
-      dig1 = total_n - dig10 * 10
+    if total >= 100
+      " ＞ ファンブル"
+    elsif total <= 1
+      " ＞ ベアリー(達成値1+SL)"
+    elsif total <= target
+      dig10 = (total / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+      dig1 = total - dig10 * 10
       dig10 = 0 if dig10 >= 10
       dig1 = 0 if dig1 >= 10 # 条件的にはあり得ない(笑
 
       if dig1 <= 0
-        return " ＞ クリティカル(達成値20+SL)"
+        " ＞ クリティカル(達成値20+SL)"
+      else
+        " ＞ 成功(達成値#{(dig10 + dig1)}+SL)"
       end
-
-      return " ＞ 成功(達成値#{(dig10 + dig1)}+SL)"
+    else
+      " ＞ 失敗"
     end
-
-    return " ＞ 失敗"
   end
 
   def isD9

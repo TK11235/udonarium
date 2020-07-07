@@ -1,44 +1,46 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class InfiniteFantasia < DiceBot
-  def gameName
-    '無限のファンタジア'
-  end
+  # ゲームシステムの識別子
+  ID = 'InfiniteFantasia'
 
-  def gameType
-    "InfiniteFantasia"
-  end
+  # ゲームシステム名
+  NAME = '無限のファンタジア'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-失敗、成功レベルの自動判定を行います。
-INFO_MESSAGE_TEXT
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'むけんのふあんたしあ'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = "失敗、成功レベルの自動判定を行います。\n"
 
   # ゲーム別成功度判定(1d20)
-  def check_1D20(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == "<="
-
-    return " ＞ 失敗" unless total_n <= diff
-
-    critical = ""
-
-    if total_n <= 1
-      critical = "/クリティカル"
+  def check_1D20(total, _dice_total, cmp_op, target)
+    if cmp_op != :<=
+      return ''
+    elsif total > target
+      return " ＞ 失敗"
     end
 
-    if total_n <= (diff / 32)
-      return " ＞ 32レベル成功(32Lv+)#{critical}"
-    elsif total_n <= (diff / 16)
-      return " ＞ 16レベル成功(16LV+)#{critical}"
-    elsif total_n <= (diff / 8)
-      return " ＞ 8レベル成功#{critical}"
-    elsif total_n <= (diff / 4)
-      return " ＞ 4レベル成功#{critical}"
-    elsif total_n <= (diff / 2)
-      return " ＞ 2レベル成功#{critical}"
+    output =
+      if total <= (target / 32)
+        " ＞ 32レベル成功(32Lv+)"
+      elsif total <= (target / 16)
+        " ＞ 16レベル成功(16LV+)"
+      elsif total <= (target / 8)
+        " ＞ 8レベル成功"
+      elsif total <= (target / 4)
+        " ＞ 4レベル成功"
+      elsif total <= (target / 2)
+        " ＞ 2レベル成功"
+      else
+        " ＞ 1レベル成功"
+      end
+
+    if total <= 1
+      output += "/クリティカル"
     end
 
-    return " ＞ 1レベル成功#{critical}"
+    output
   end
 end

@@ -1,6 +1,28 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class StratoShout < DiceBot
+  # ゲームシステムの識別子
+  ID = 'StratoShout'
+
+  # ゲームシステム名
+  NAME = 'ストラトシャウト'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'すとらとしやうと'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+
+VOT, GUT, BAT, KEYT, DRT: (ボーカル、ギター、ベース、キーボード、ドラム)トラブル表
+EMO: 感情表
+AT[1-6]: 特技表(空: ランダム 1: 主義 2: 身体 3: モチーフ 4: エモーション 5: 行動 6: 逆境)
+SCENE, MACHI, GAKKO, BAND: (汎用、街角、学校、バンド)シーン表 接近シーンで使用
+TENKAI: シーン展開表 奔走シーン 練習シーンで使用
+
+[]内は省略可　D66入れ替えあり
+INFO_MESSAGE_TEXT
+
   setPrefixes([
     'VOT',
     'GUT',
@@ -23,35 +45,14 @@ class StratoShout < DiceBot
     @d66Type = 2
   end
 
-  def gameName
-    'ストラトシャウト'
-  end
+  def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' unless cmp_op == :>=
 
-  def gameType
-    "StratoShout"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-
-VOT, GUT, BAT, KEYT, DRT: (ボーカル、ギター、ベース、キーボード、ドラム)トラブル表
-EMO: 感情表
-AT[1-6]: 特技表(空: ランダム 1: 主義 2: 身体 3: モチーフ 4: エモーション 5: 行動 6: 逆境)
-SCENE, MACHI, GAKKO, BAND: (汎用、街角、学校、バンド)シーン表 接近シーンで使用
-TENKAI: シーン展開表 奔走シーン 練習シーンで使用
-
-[]内は省略可　D66入れ替えあり
-INFO_MESSAGE_TEXT
-  end
-
-  def check_2D6(total_n, dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == ">="
-
-    if dice_n <= 2
+    if dice_total <= 2
       " ＞ ファンブル！ (ドラマフェイズ: 【ディスコード】+2 / ライブフェイズ: 【コンディション】-2)"
-    elsif dice_n >= 12
+    elsif dice_total >= 12
       " ＞ スペシャル！ (【コンディション】+2)"
-    elsif total_n >= diff
+    elsif total >= target
       " ＞ 成功"
     else
       " ＞ 失敗"

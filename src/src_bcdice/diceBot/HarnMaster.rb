@@ -1,34 +1,31 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class HarnMaster < DiceBot
-  setPrefixes(['SHK\d+.*', 'SLH', 'SLHU', 'SLHD'])
+  # ゲームシステムの識別子
+  ID = 'HarnMaster'
 
-  def initialize
-    super
-  end
+  # ゲームシステム名
+  NAME = 'ハーンマスター'
 
-  def gameName
-    'ハーンマスター'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'はあんますたあ'
 
-  def gameType
-    "HarnMaster"
-  end
-
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・判定
 　1D100<=XX の判定時に致命的失敗・決定的成功を判定
 ・ショック判定（SHKx）
 　例）SHK13,3
 ・人型用　中段命中部位表 (SLH)／上段命中部位 (SLHU)／上段命中部位 (SLHD)
 MESSAGETEXT
-  end
 
-  def check_1D100(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == "<="
+  setPrefixes(['SHK\d+.*', 'SLH', 'SLHU', 'SLHD'])
 
-    result = getCheckResult(total_n, diff)
+  def check_1D100(total, _dice_total, cmp_op, target)
+    return '' unless cmp_op == :<=
+
+    result = getCheckResult(total, target)
     return "＞ #{result}"
   end
 

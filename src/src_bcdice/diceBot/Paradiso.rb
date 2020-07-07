@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Paradiso < DiceBot
-  setPrefixes(['(\d+)*D20<=.*', '(\d+)*CP.*', 'RMT', 'TOT', 'EXT', 'SUT', 'DC(\d+).*'])
+  # ゲームシステムの識別子
+  ID = 'Paradiso'
 
-  def gameName
-    'チェレステ色のパラディーゾ'
-  end
+  # ゲームシステム名
+  NAME = 'チェレステ色のパラディーゾ'
 
-  def gameType
-    "Paradiso"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ちえれすていろのはらていいそ'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ◆判定　(nCPt[f]@c)、(nD20<=t[f]@c)　n:ダイス数（省略時:1）　t:目標値（省略時:14）　f:絶不調の追加ファンブル値　c:人機一体の追加クリティカル値
 　例）CP12　CP(13+1)　3CP12[18,19]@7
 ◆各種表
@@ -23,7 +23,8 @@ class Paradiso < DiceBot
 ◆ダメージチェック　(DCa[20,30])　a:【攻撃力】、[20]:20mm機銃追加、[30]:30mmガンポッド追加
 　例）DC4:【攻撃力】4でダメージチェック　DC5[20]:【攻撃力】5でダメージチェック、うち1つは20mm機銃　DC5[20,30]:【攻撃力】5でダメージチェック、うち1つは20mm機銃、うち1つは30mmガンポッド
 MESSAGETEXT
-  end
+
+  setPrefixes(['(\d+)*D20<=.*', '(\d+)*CP.*', 'RMT', 'TOT', 'EXT', 'SUT', 'DC(\d+).*'])
 
   def rollDiceCommand(command) # ダイスロールコマンド
     # 通常判定部分をgetJudgeResultコマンドに切り分け

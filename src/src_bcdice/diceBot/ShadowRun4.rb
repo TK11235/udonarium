@@ -1,34 +1,27 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class ShadowRun4 < DiceBot
+  # ゲームシステムの識別子
+  ID = 'ShadowRun4'
+
+  # ゲームシステム名
+  NAME = 'シャドウラン第4版'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'しやとうらん4'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。
+BコマンドとRコマンド時に、グリッチの表示を行います。
+INFO_MESSAGE_TEXT
+
   def initialize
     super
     @sortType = 3
     @rerollNumber = 6 # 振り足しする出目
     @defaultSuccessTarget = ">=5" # 目標値が空欄の時の目標値
-  end
-
-  def gameName
-    'シャドウラン第４版'
-  end
-
-  def gameType
-    "ShadowRun4"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。
-BコマンドとRコマンド時に、グリッチの表示を行います。
-INFO_MESSAGE_TEXT
-  end
-
-  def changeText(string)
-    if string =~ /(\d+)S6/i
-      string = string.gsub(/(\d+)S6/i) { "#{Regexp.last_match(1)}B6" }
-    end
-
-    return string
   end
 
   # シャドウラン4版用グリッチ判定

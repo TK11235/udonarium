@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Torg < DiceBot
-  setPrefixes(['(TG.*|RT.*|Result.*|IT.*|Initimidate.*|TT.*|Taunt.*|Trick.*|CT.*|MT.*|Maneuver.*|ODT.*|ords.*|odamage.*|DT.*|damage.*|BT.*|bonus.*|total.*)'])
+  # ゲームシステムの識別子
+  ID = 'TORG'
 
-  def initialize
-    super
-    @sendMode = 2
-  end
+  # ゲームシステム名
+  NAME = 'トーグ'
 
-  def gameName
-    'トーグ'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'とおく'
 
-  def gameType
-    "TORG"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定　(TGm)
 　TORG専用の判定コマンドです。
 　"TG(技能基本値)"でロールします。Rコマンドに読替されます。
@@ -31,6 +26,12 @@ class Torg < DiceBot
 　・ポシビリティー能力者ダメージ「DTx or DAMAGEx」
 　・ボーナス表「BTx+y or BONUSx+y or TOTALx+y」 xは数値, yは技能基本値
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['(TG.*|RT.*|Result.*|IT.*|Initimidate.*|TT.*|Taunt.*|Trick.*|CT.*|MT.*|Maneuver.*|ODT.*|ords.*|odamage.*|DT.*|damage.*|BT.*|bonus.*|total.*)'])
+
+  def initialize
+    super
+    @sendMode = 2
   end
 
   def changeText(string)

@@ -1,6 +1,30 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class DetatokoSaga < DiceBot
+  # ゲームシステムの識別子
+  ID = 'DetatokoSaga'
+
+  # ゲームシステム名
+  NAME = 'でたとこサーガ'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'てたとこさあか'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
+・通常判定　xDS or xDSy or xDS>=z or xDSy>=z
+　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝目標値(省略時８))
+　例）3DS　2DS5　0DS　3DS>=10　3DS7>=12
+・判定値　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z
+　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝修正値(省略時０))
+　例）3JD　2JD5　3JD7+1　4JD/3
+・体力烙印表　SST (StrengthStigmaTable)
+・気力烙印表　WST (WillStigmaTable)
+・体力バッドエンド表　SBET (StrengthBadEndTable)
+・気力バッドエンド表　WBET (WillBadEndTable)
+INFO_MESSAGE_TEXT
+
   setPrefixes([
     '\d+DS.*', '\d+JD.*',
     'SST', 'StrengthStigmaTable',
@@ -14,29 +38,6 @@ class DetatokoSaga < DiceBot
     @sendMode = 2
     @sortType = 1
     @d66Type = 2
-  end
-
-  def gameName
-    'でたとこサーガ'
-  end
-
-  def gameType
-    "DetatokoSaga"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-・通常判定　xDS or xDSy or xDS>=z or xDSy>=z
-　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝目標値(省略時８))
-　例）3DS　2DS5　0DS　3DS>=10　3DS7>=12
-・判定値　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z
-　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝修正値(省略時０))
-　例）3JD　2JD5　3JD7+1　4JD/3
-・体力烙印表　SST (StrengthStigmaTable)
-・気力烙印表　WST (WillStigmaTable)
-・体力バッドエンド表　SBET (StrengthBadEndTable)
-・気力バッドエンド表　WBET (WillBadEndTable)
-INFO_MESSAGE_TEXT
   end
 
   def rollDiceCommand(command)

@@ -1,6 +1,19 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class TokumeiTenkousei < DiceBot
+  # ゲームシステムの識別子
+  ID = 'TokumeiTenkousei'
+
+  # ゲームシステム名
+  NAME = '特命転攻生'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'とくめいてんこうせい'
+
+  # ダイスボットの使い方
+  HELP_MESSAGE = "「1の出目でEPP獲得」、判定時の「成功」「失敗」「ゾロ目で自動振り足し」を判定。\n"
+
   def initialize
     super
     @sendMode = 2
@@ -9,26 +22,12 @@ class TokumeiTenkousei < DiceBot
     @sameDiceRerollType = 2 # ゾロ目で振り足しのロール種別(0=判定のみ, 1=ダメージのみ, 2=両方)
   end
 
-  def gameName
-    '特命転攻生'
-  end
+  def check_nD6(total, _dice_total, _dice_list, cmp_op, target)
+    if cmp_op != :>= && target == "?"
+      return ''
+    end
 
-  def gameType
-    "TokumeiTenkousei"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
-「1の出目でEPP獲得」、判定時の「成功」「失敗」「ゾロ目で自動振り足し」を判定。
-INFO_MESSAGE_TEXT
-  end
-
-  def check_nD6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max) # ゲーム別成功度判定(nD6)
-    return '' unless signOfInequality == ">="
-
-    return '' if diff == "?"
-
-    if total_n >= diff
+    if total >= target
       return " ＞ 成功"
     else
       return " ＞ 失敗"

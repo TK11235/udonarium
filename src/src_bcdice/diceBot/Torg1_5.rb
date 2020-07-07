@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'diceBot/Torg'
 
 class Torg1_5 < Torg
+  # ゲームシステムの識別子
+  ID = 'TORG1.5'
+
+  # ゲームシステム名
+  NAME = 'トーグ1.5版'
+
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'とおく1.5'
+
   setPrefixes(Torg.prefixes)
-
-  def gameName
-    'トーグ1.5版'
-  end
-
-  def gameType
-    "TORG1.5"
-  end
 
   # 一般結果表 成功度
   def get_torg_success_level(value)

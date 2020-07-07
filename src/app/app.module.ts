@@ -118,7 +118,6 @@ import { AppComponent } from './app.component';
     PointerDeviceService,
     TabletopService,
   ],
-
   bootstrap: [AppComponent]
 })
 export class AppModule { }

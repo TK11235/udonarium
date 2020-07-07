@@ -63,7 +63,10 @@
   padding: 1px;
   margin: 5px;
 
-  word-break: break-all;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   vertical-align: bottom;
 }
 

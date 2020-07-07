@@ -28,7 +28,7 @@ export interface ContextMenuAction {
 export class ContextMenuService {
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
-  static UIPanelComponentClass: { new(...args: any[]): any } = null;
+  static ContextMenuComponentClass: { new(...args: any[]): any } = null;
 
   private panelComponentRef: ComponentRef<any>
 
@@ -53,7 +53,7 @@ export class ContextMenuService {
     let panelComponentRef: ComponentRef<any>;
 
     const injector = parentViewContainerRef.injector;
-    const panelComponentFactory = this.componentFactoryResolver.resolveComponentFactory(ContextMenuService.UIPanelComponentClass);
+    const panelComponentFactory = this.componentFactoryResolver.resolveComponentFactory(ContextMenuService.ContextMenuComponentClass);
 
     panelComponentRef = parentViewContainerRef.createComponent(panelComponentFactory, parentViewContainerRef.length, injector);
 

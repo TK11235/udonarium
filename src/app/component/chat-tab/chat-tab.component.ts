@@ -114,7 +114,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "連結:",
-      text: "https://udonarium.app/ 原版連結\nhttps://discord.gg/vx4kcm7 意見留言DISCORD群\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科\nhttps://www.patreon.com/HKTRPG HKTPRG開發支援\n\n\n\n\n"
+      text: "https://udonarium.app/ 原版連結\nhttps://discord.gg/vx4kcm7 意見留言DISCORD群\nhttps://www.facebook.com/groups/HKTRPG 香港TRPG研究社\nhttps://www.hktrpg.com/ TRPG百科\nhttps://www.patreon.com/HKTRPG HKTPRG開發支援"
     }
   ];
 
@@ -161,11 +161,13 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   get topSpace(): number { return this.minScrollHeight - this.bottomSpace; }
   get bottomSpace(): number {
-
-    return this.chatTab ? (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight : (this.sampleMessages.length - this.bottomIndex - 1);
+    return 0 < this.chatMessages.length
+      ? (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight
+      : (this.sampleMessages.length - this.bottomIndex - 1);
   }
 
-  private scrollEventTimer: NodeJS.Timer = null;
+  private scrollEventShortTimer: NodeJS.Timer = null;
+  private scrollEventLongTimer: NodeJS.Timer = null;
   private addMessageEventTimer: NodeJS.Timer = null;
 
   private callbackOnScroll: any = () => this.onScroll();
@@ -362,13 +364,18 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   private onScroll() {
-    if (this.scrollEventTimer != null) return;
-    this.scrollEventTimer = setTimeout(() => this.lazyScrollUpdate(), 100);
+    clearTimeout(this.scrollEventShortTimer);
+    this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
+    if (this.scrollEventLongTimer == null) {
+      this.scrollEventLongTimer = setTimeout(() => this.lazyScrollUpdate(false), 66);
+    }
   }
 
-  private lazyScrollUpdate() {
-    clearTimeout(this.scrollEventTimer);
-    this.scrollEventTimer = null;
+  private lazyScrollUpdate(isNormalUpdate: boolean = true) {
+    clearTimeout(this.scrollEventShortTimer);
+    this.scrollEventShortTimer = null;
+    clearTimeout(this.scrollEventLongTimer);
+    this.scrollEventLongTimer = null;
 
     let chatMessageElements = this.messageContainerRef.nativeElement.querySelectorAll<HTMLElement>('chat-message');
     let maxHeight = this.minMessageHeight;
@@ -388,8 +395,20 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.scrollSpeed = scrollPosition.top - this.preScrollTop;
     this.preScrollTop = scrollPosition.top;
 
-    let scrollWideTop = scrollPosition.top - 400;
-    let scrollWideBottom = scrollPosition.bottom + 400;
+    let hasTopBlank = scrollPosition.top < messageBoxTop;
+    let hasBotomBlank = messageBoxBottom < scrollPosition.bottom && scrollPosition.bottom < scrollPosition.scrollHeight;
+
+    if (!isNormalUpdate) {
+      clearTimeout(this.scrollEventShortTimer);
+      this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
+    }
+
+    if (!isNormalUpdate && !hasTopBlank && !hasBotomBlank) {
+      return;
+    }
+
+    let scrollWideTop = scrollPosition.top - (!isNormalUpdate && hasTopBlank ? 100 : 1200);
+    let scrollWideBottom = scrollPosition.bottom + (!isNormalUpdate && hasBotomBlank ? 100 : 1200);
 
     this.markForReadIfNeeded();
 

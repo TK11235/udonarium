@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class ShinkuuGakuen < DiceBot
-  setPrefixes([
-    'CRL.*', 'CSW.*', 'CLS.*', 'CSS.*', 'CSP.*', 'CAX.*', 'CCL.*', 'CMA.*', 'CBX.*', 'CPR.*', 'CST.*',
-    'RL.*', 'SW.*', 'LS.*', 'SS.*', 'SP.*', 'AX.*', 'CL.*', 'BW.*', 'MA.*', 'BX.*', 'PR.*', 'ST.*'
-  ])
+  # ゲームシステムの識別子
+  ID = 'ShinkuuGakuen'
 
-  def gameName
-    '真空学園'
-  end
+  # ゲームシステム名
+  NAME = '真空学園'
 
-  def gameType
-    "ShinkuuGakuen"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'しんくうかくえん'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・判定
 RLx：技能ベースｘで技能チェックのダイスロール
 RLx>=y：この書式なら目標値 ｙ で判定結果出力
@@ -34,7 +31,11 @@ RLx>=y：この書式なら目標値 ｙ で判定結果出力
 カウンター技は武器記号の頭に「C」をつけるとロール可能。
 　例）CSW10　CBX76
 MESSAGETEXT
-  end
+
+  setPrefixes([
+    'CRL.*', 'CSW.*', 'CLS.*', 'CSS.*', 'CSP.*', 'CAX.*', 'CCL.*', 'CMA.*', 'CBX.*', 'CPR.*', 'CST.*',
+    'RL.*', 'SW.*', 'LS.*', 'SS.*', 'SP.*', 'AX.*', 'CL.*', 'BW.*', 'MA.*', 'BX.*', 'PR.*', 'ST.*'
+  ])
 
   def rollDiceCommand(command)
     prefixesRegText = prefixes.collect { |i| i.sub(/\.\*/, '') }.join('|')

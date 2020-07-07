@@ -127,7 +127,7 @@ class BCDiceDialog < Wx::Dialog
     serverSetNameList = []
 
     sectionNames.each do |name|
-      if /#{@@serverSertPrefix}(.+)/ === name
+      if /#{SERVER_SERT_PREFIX}(.+)/ === name
         serverSetNameList << Regexp.last_match(1)
       end
     end
@@ -159,10 +159,10 @@ class BCDiceDialog < Wx::Dialog
     input.set_value(value)
   end
 
-  @@serverSertPrefix = "ServerSet_"
+  SERVER_SERT_PREFIX = "ServerSet_".freeze
 
   def getServerSetSectionName(serverSet)
-    return "#{@@serverSertPrefix}#{serverSet}"
+    return "#{SERVER_SERT_PREFIX}#{serverSet}"
   end
 
   def loadChoiseValueFromIniFile(section, key, choise)
@@ -296,7 +296,7 @@ class BCDiceDialog < Wx::Dialog
     @ircBot.setGameByTitle(@gameType.get_string_selection)
   end
 
-  @@characterCodeInfo = {
+  CHARACTER_CODE_INFO = {
     'ISO-2022-JP' => Kconv::JIS,
     'EUC-JP' => Kconv::EUC,
     'Shift_JIS' => Kconv::SJIS,
@@ -304,19 +304,19 @@ class BCDiceDialog < Wx::Dialog
     'ASCII' => Kconv::ASCII,
     'UTF-8' => Kconv::UTF8,
     'UTF-16' => Kconv::UTF16,
-  }
+  }.freeze
 
   def initCharacterCode
     @characterCode = Wx::Choice.new(self, -1)
     addCtrl(@characterCode, "IRC文字コード")
 
-    list = @@characterCodeInfo.keys.sort
+    list = CHARACTER_CODE_INFO.keys.sort
 
     list.each_with_index do |type, index|
       @characterCode.insert(type, index)
     end
 
-    found = @@characterCodeInfo.find { |_key, value| value == $ircCode }
+    found = CHARACTER_CODE_INFO.find { |_key, value| value == $ircCode }
     unless  found.nil?
       codeText = found.first
       setChoiseText(@characterCode, codeText)
@@ -331,7 +331,7 @@ class BCDiceDialog < Wx::Dialog
 
   def getSelectedCharacterCode
     codeName = @characterCode.get_string_selection
-    return @@characterCodeInfo[codeName]
+    return CHARACTER_CODE_INFO[codeName]
   end
 
   def addTestTextBoxs

@@ -1,29 +1,32 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
+require "utils/normalize"
 
 class NightWizard < DiceBot
-  setPrefixes(['\d+NW'])
+  # ゲームシステムの識別子
+  ID = 'NightWizard'
 
-  def initialize
-    super
-    @sendMode = 2
-  end
+  # ゲームシステム名
+  NAME = 'ナイトウィザード2版'
 
-  def gameName
-    'ナイトウィザード2版'
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ないとういさあと2'
 
-  def gameType
-    "NightWizard"
-  end
-
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・判定用コマンド　(nNW+m@x#y)
 　"(基本値)NW(常時および常時に準じる特技等及び状態異常（省略可）)@(クリティカル値)#(ファンブル値)（常時以外の特技等及び味方の支援効果等の影響（省略可））"でロールします。
 　Rコマンド(2R6m[n,m]c[x]f[y]>=t tは目標値)に読替されます。
 　クリティカル値、ファンブル値が無い場合は1や13などのあり得ない数値を入れてください。
 　例）12NW-5@7#2　　1NW　　50nw+5@7,10#2,5　50nw-5+10@7,10#2,5+15+25
 INFO_MESSAGE_TEXT
+
+  setPrefixes(['\d+NW'])
+
+  def initialize
+    super
+    @sendMode = 2
   end
 
   def changeText(string)
@@ -40,17 +43,6 @@ INFO_MESSAGE_TEXT
 
   def dice_command_xRn(string, nick_e)
     return checkRoll(string, nick_e)
-  end
-
-  # ゲーム別成功度判定(2D6)
-  def check_2D6(total_n, _dice_n, signOfInequality, diff, _dice_cnt, _dice_max, _n1, _n_max)
-    return '' unless signOfInequality == ">="
-
-    if total_n >= diff
-      return " ＞ 成功"
-    end
-
-    return " ＞ 失敗"
   end
 
   def checkRoll(string, nick_e)
@@ -75,7 +67,7 @@ INFO_MESSAGE_TEXT
 
     crit = "0"
     fumble = "0"
-    signOfInequality = ""
+    cmp_op = nil
     diff = 0
 
     if criticalText
@@ -88,7 +80,7 @@ INFO_MESSAGE_TEXT
     if judgeText
       diff = judgeValue
       debug('judgeOperator', judgeOperator)
-      signOfInequality = marshalSignOfInequality(judgeOperator)
+      cmp_op = Normalize.comparison_operator(judgeOperator)
     end
 
     base, modify = base_and_modify.split(/,/)
@@ -99,8 +91,8 @@ INFO_MESSAGE_TEXT
     total, out_str = nw_dice(base, modify, crit, fumble)
 
     output = "#{nick_e}: (#{string}) ＞ #{out_str}"
-    if signOfInequality != "" # 成功度判定処理
-      output += check_suc(total, 0, signOfInequality, diff, 3, 6, 0, 0)
+    if cmp_op
+      output += check_nDx(total, cmp_op, diff)
     end
 
     return output

@@ -205,14 +205,20 @@ rand:6/6,6/6
 input:
 HPST
 output:
-YankeeYogSothoth : 病院生活表(1) ＞ 11:治療に専念した
-rand:1/6
+YankeeYogSothoth : 病院生活表(11) ＞ 治療に専念した
+rand:1/6,1/6
 ============================
 input:
 HPST
 output:
-YankeeYogSothoth : 病院生活表(6) ＞ 16:看護師と仲良くなった
-rand:6/6,
+YankeeYogSothoth : 病院生活表(16) ＞ 看護師と仲良くなった
+rand:6/6,1/6,
+============================
+input:
+HPST
+output:
+YankeeYogSothoth : 病院生活表(66) ＞ 売店で売っているお菓子をコンプリートした
+rand:6/6,6/6,
 ============================
 input:
 FTNT

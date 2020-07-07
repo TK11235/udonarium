@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Oukahoushin3rd < DiceBot
-  def initialize
-    super
-  end
+  # ゲームシステムの識別子
+  ID = 'Oukahoushin3rd'
 
-  def gameName
-    '央華封神RPG第三版'
-  end
+  # ゲームシステム名
+  NAME = '央華封神RPG第三版'
 
-  def gameType
-    "Oukahoushin3rd"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'おうかほうしん3'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・各種表
 　・能力値判定裏成功表（NHT）
 　・武器攻撃裏成功表（BKT）
@@ -24,13 +22,12 @@ class Oukahoushin3rd < DiceBot
 　・精神値ダメージ悪影響表（SDT）
 　・狂気表（KKT）
 INFO_MESSAGE_TEXT
-  end
 
   def rollDiceCommand(command)
-    return getTableCommandResult(command, @@tables)
+    return getTableCommandResult(command, TABLES)
   end
 
-  @@tables =
+  TABLES =
     {
 
       'BKT' => {
@@ -153,7 +150,7 @@ TABLE_TEXT_END
 1ポイント清徳値が低下。機敏または知覚（攻撃を防御した者が選択する）が1ポイント上昇。
 TABLE_TEXT_END
       },
-    }
+    }.freeze
 
-  setPrefixes([ ] + @@tables.keys)
+  setPrefixes([ ] + TABLES.keys)
 end

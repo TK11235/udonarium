@@ -1,30 +1,27 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class Nuekagami < DiceBot
-  def initialize
-    super
-  end
+  # ゲームシステムの識別子
+  ID = 'Nuekagami'
 
-  def gameName
-    '鵺鏡'
-  end
+  # ゲームシステム名
+  NAME = '鵺鏡'
 
-  def gameType
-    "Nuekagami"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'ぬえかかみ'
 
-  def getHelpMessage
-    return <<MESSAGETEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<MESSAGETEXT
 ・喪失表（xL）
 　BL：血脈、LL：生様、SL：魂魄、FL：因縁
 ・LR：喪失取戻表
 ・門通過描写表（xG）
 　HG：地獄門、RG：羅生門、VG：朱雀門、OG：応天門
 MESSAGETEXT
-  end
 
   def rollDiceCommand(command)
-    info = @@tables[command.upcase]
+    info = TABLES[command.upcase]
     return nil if info.nil?
 
     name = info[:name]
@@ -42,7 +39,7 @@ MESSAGETEXT
     return "#{name}(#{number}) ＞ #{text}"
   end
 
-  @@tables =
+  TABLES =
     {
       "LR" => {
         :name => "喪失取戻表",
@@ -287,7 +284,7 @@ MESSAGETEXT
         },
       },
 
-    }
+    }.freeze
 
-  setPrefixes(@@tables.keys)
+  setPrefixes(TABLES.keys)
 end

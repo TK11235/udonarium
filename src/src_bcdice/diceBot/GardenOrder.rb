@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 class GardenOrder < DiceBot
-  setPrefixes([
-    'GO(\-?\d+)(\/\d+)?(@\d+)?',
-    'DC(SL|BL|IM|BR|RF|EL).+'
-  ])
+  # ゲームシステムのの識別子
+  ID = 'GardenOrder'
 
-  def gameName
-    'ガーデンオーダー'
-  end
+  # ゲームシステム名
+  NAME = 'ガーデンオーダー'
 
-  def gameType
-    "GardenOrder"
-  end
+  # ゲームシステム名の読みがな
+  SORT_KEY = 'かあてんおおたあ'
 
-  def getHelpMessage
-    return <<INFO_MESSAGE_TEXT
+  # ダイスボットの使い方
+  HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・基本判定
 　GOx/y@z　x：成功率、y：連続攻撃回数（省略可）、z：クリティカル値（省略可）
 　（連続攻撃では1回の判定のみが実施されます）
@@ -26,7 +23,11 @@ class GardenOrder < DiceBot
 　y：ダメージ
 　例）DCSL7　DCEL22
 INFO_MESSAGE_TEXT
-  end
+
+  setPrefixes([
+    'GO(\-?\d+)(\/\d+)?(@\d+)?',
+    'DC(SL|BL|IM|BR|RF|EL).+'
+  ])
 
   def rollDiceCommand(command)
     case command
@@ -91,14 +92,13 @@ INFO_MESSAGE_TEXT
   end
 
   def get_damage_table_info_by_type(type)
-    data = @@damage_table[type]
+    data = DAMAGE_TABLE[type]
     return nil if data.nil?
 
     return data[:name], data[:table]
   end
 
-  @@damage_table = {
-
+  DAMAGE_TABLE = {
     "SL" => {
       :name => "切断",
       :table => [
@@ -446,5 +446,5 @@ INFO_MESSAGE_TEXT
           :damage => "致命傷２／スタン"}],
       ]
     }
-  }
+  }.freeze
 end

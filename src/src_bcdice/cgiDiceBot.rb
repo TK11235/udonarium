@@ -138,13 +138,11 @@ class CgiDiceBot
     return @bcdice
   end
 
-  # Unused method
-  def getGameCommandInfos(_dir, _prefix)
-    # TKfix extratables互換性
+  def getGameCommandInfos(dir, prefix)
     require 'TableFileData'
-    
+
     tableFileData = TableFileData.new
-    tableFileData.setDir(_dir, _prefix)
+    tableFileData.setDir(dir, prefix)
     infos = tableFileData.getGameCommandInfos
     return infos
   end
@@ -160,6 +158,14 @@ class CgiDiceBot
 
   def sendMessageToChannels(message)
     @rollResult += message
+  end
+
+  def rand_results
+    @bcdice.rand_results
+  end
+
+  def detailed_rand_results
+    @bcdice.detailed_rand_results
   end
 end
 
