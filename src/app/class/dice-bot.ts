@@ -25,8 +25,6 @@ export class DiceBot extends GameObject {
   private static queue: PromiseQueue = new PromiseQueue('DiceBotQueue');
 
   public static diceBotInfos: DiceBotInfo[] = [
-    { script: 'CthulhuChineseTraditional', game: 'CoC(中文)' },
-    { script: 'Cthulhu7thChineseTraditional', game: 'CoC第7版(中文)' },
     { script: 'Cthulhu', game: 'CoC(日文)' },
     { script: 'Cthulhu7th', game: 'CoC第7版(日文)' },
     { script: 'Insane', game: 'Insane' },
