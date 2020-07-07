@@ -23,9 +23,9 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "Airgetlamh");
-    Opal.const_set($nesting[0], 'NAME', "\u6731\u306E\u5B64\u5854\u306E\u30A8\u30A2\u30B2\u30C8\u30E9\u30E0");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3042\u3051\u306E\u3053\u3068\u3046\u306E\u3048\u3042\u3051\u3068\u3089\u3080");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u3010Reg2.0\u300ETHE ANSWERER\u300F\uFF5E\u3011\n" + "\u30FB\u8ABF\u67FB\u5224\u5B9A\uFF08\u6210\u529F\u6570\u3092\u8868\u793A\uFF09\uFF1A[n]AA[m]\n" + "\u30FB\u547D\u4E2D\u5224\u5B9A\uFF08\u30C0\u30E1\u30FC\u30B8\u8868\u793A\uFF09\uFF1A[n]AA[m]*p[+t][Cx]\n" + "\u3010\uFF5EReg1.1\u300E\u6607\u83EF\u300F\u3011\n" + "\u30FB\u8ABF\u67FB\u5224\u5B9A\uFF08\u6210\u529F\u6570\u3092\u8868\u793A\uFF09\uFF1A[n]AL[m]\n" + "\u30FB\u547D\u4E2D\u5224\u5B9A\uFF08\u30C0\u30E1\u30FC\u30B8\u8868\u793A\uFF09\uFF1A[n]AL[m]*p\n" + "----------------------------------------\n" + "[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\n" + "\u300Cn\u300D\u3067\u30C0\u30A4\u30B9\u6570\uFF08\u653B\u6483\u56DE\u6570\uFF09\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C2\u300D\u3002\n" + "\u300Cm\u300D\u3067\u76EE\u6A19\u5024\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C6\u300D\u3002\n" + "\u300Cp\u300D\u3067\u5A01\u529B\u3092\u6307\u5B9A\u3002\u300C*\u300D\u306F\u300Cx\u300D\u3067\u4EE3\u7528\u53EF\u3002\n" + "\u300C+t\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C8\u30EA\u30AC\u30FC\u3092\u6307\u5B9A\u3002\u7701\u7565\u53EF\u3002\n" + "\u300CCx\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C1\u300D\u3001\u6700\u5927\u5024\u306F\u300C3\u300D\u3001\u300C0\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7121\u3057\u3002\n" + "\n" + "\u653B\u6483\u529B\u6307\u5B9A\u3067\u547D\u4E2D\u5224\u5B9A\u3068\u306A\u308A\u3001\u6210\u529F\u6570\u3067\u306F\u306A\u304F\u3001\u30C0\u30E1\u30FC\u30B8\u3092\u7D50\u679C\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30D2\u30C3\u30C8\u306E\u5206\u3060\u3051\u3001\u81EA\u52D5\u3067\u632F\u308A\u8DB3\u3057\u51E6\u7406\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\uFF08AL\u30B3\u30DE\u30F3\u30C9\u3067\u306F\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u51E6\u7406\u3092\u884C\u3044\u307E\u305B\u3093\uFF09\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "\u30FBAL \u2192 2d10\u3067\u76EE\u6A19\u50246\u306E\u8ABF\u67FB\u5224\u5B9A\u3002\n" + "\u30FB5AA7*12 \u2192 5d10\u3067\u76EE\u6A19\u50247\u3001\u5A01\u529B12\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n" + "\u30FBAA7x28+5 \u2192 2d10\u3067\u76EE\u6A19\u50247\u3001\u5A01\u529B28\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C8\u30EA\u30AC\u30FC5\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n" + "\u30FB9aa5*10C2 \u2192 9d10\u3067\u76EE\u6A19\u50245\u3001\u5A01\u529B10\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u50242\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n" + "\u30FB15AAx4c0 \u2192 15d10\u3067\u76EE\u6A19\u50246\u3001\u5A01\u529B4\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7121\u3057\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "朱の孤塔のエアゲトラム");
+    Opal.const_set($nesting[0], 'SORT_KEY', "あけのことうのえあけとらむ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "【Reg2.0『THE ANSWERER』～】\n" + "・調査判定（成功数を表示）：[n]AA[m]\n" + "・命中判定（ダメージ表示）：[n]AA[m]*p[+t][Cx]\n" + "【～Reg1.1『昇華』】\n" + "・調査判定（成功数を表示）：[n]AL[m]\n" + "・命中判定（ダメージ表示）：[n]AL[m]*p\n" + "----------------------------------------\n" + "[]内のコマンドは省略可能。\n" + "\n" + "「n」でダイス数（攻撃回数）を指定。省略時は「2」。\n" + "「m」で目標値を指定。省略時は「6」。\n" + "「p」で威力を指定。「*」は「x」で代用可。\n" + "「+t」でクリティカルトリガーを指定。省略可。\n" + "「Cx」でクリティカル値を指定。省略時は「1」、最大値は「3」、「0」でクリティカル無し。\n" + "\n" + "攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。\n" + "クリティカルヒットの分だけ、自動で振り足し処理を行います。\n" + "（ALコマンドではクリティカル処理を行いません）\n" + "\n" + "【書式例】\n" + "・AL → 2d10で目標値6の調査判定。\n" + "・5AA7*12 → 5d10で目標値7、威力12の命中判定。\n" + "・AA7x28+5 → 2d10で目標値7、威力28、クリティカルトリガー5の命中判定。\n" + "・9aa5*10C2 → 9d10で目標値5、威力10、クリティカル値2の命中判定。\n" + "・15AAx4c0 → 15d10で目標値6、威力4、クリティカル無しの命中判定。\n");
     self.$setPrefixes([["(\\d+)?A(A|L)(\\d+)?((x|\\*)(\\d+)(\\+(\\d+))?)?(C(\\d+))?"]]);
     
     Opal.def(self, '$initialize', $Airgetlamh_initialize$1 = function $$initialize() {
@@ -113,15 +113,15 @@
       if ($truthy(isDamage)) {
         
         totalDamage = $rb_plus($rb_times(totalSuccessCount, damage), $rb_times(totalCriticalCount, criticalTrigger));
-        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") \uFF1E " + (text) + " \uFF1E Hits\uFF1A" + (totalSuccessCount) + "*" + (damage));
+        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") ＞ " + (text) + " ＞ Hits：" + (totalSuccessCount) + "*" + (damage));
         if ($truthy($rb_gt(criticalTrigger, 0))) {
-          result = $rb_plus(result, "" + " + Trigger\uFF1A" + (totalCriticalCount) + "*" + (criticalTrigger))};
-        result = $rb_plus(result, "" + " \uFF1E " + (totalDamage) + "\u30C0\u30E1\u30FC\u30B8");
+          result = $rb_plus(result, "" + " + Trigger：" + (totalCriticalCount) + "*" + (criticalTrigger))};
+        result = $rb_plus(result, "" + " ＞ " + (totalDamage) + "ダメージ");
       } else {
-        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") \uFF1E " + (text) + " \uFF1E \u6210\u529F\u6570\uFF1A" + (totalSuccessCount))
+        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") ＞ " + (text) + " ＞ 成功数：" + (totalSuccessCount))
       };
       if ($truthy($rb_gt(totalCriticalCount, 0))) {
-        result = $rb_plus(result, "" + " / " + (totalCriticalCount) + "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB")};
+        result = $rb_plus(result, "" + " / " + (totalCriticalCount) + "クリティカル")};
       return result;
     }, $Airgetlamh_checkRoll$3.$$arity = 5), nil) && 'checkRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

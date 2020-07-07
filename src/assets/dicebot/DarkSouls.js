@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "DarkSouls");
-    Opal.const_set($nesting[0], 'NAME', "\u30C0\u30FC\u30AF\u30BD\u30A6\u30EBTRPG");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305F\u3042\u304F\u305D\u3046\u308BTRPG");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u884C\u70BA\u5224\u5B9A\uFF1A[n]DS[a\u00B1b][@t]\u3000\u3000[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\n" + "\u30FB\u80FD\u52D5\u5224\u5B9A\uFF1A[n]ADS[a\u00B1b][@t]\u3000\u3000FP\u6D88\u8CBB\u3092\u5224\u5B9A\n" + "\u3000n\uFF1A\u30C0\u30A4\u30B9\u6570\u3002\u7701\u7565\u6642\u306F\u300C2\u300D\n" + "\u3000a\u00B1b\uFF1A\u4FEE\u6B63\u5024\u3002\u300C1+2-1\u300D\u306E\u3088\u3046\u306B\u3001\u8907\u6570\u5B9A\u53EF\n" + "\u3000@t\uFF1A\u76EE\u6A19\u5024\u3002\u7701\u7565\u6642\u306F\u9054\u6210\u5024\u3092\u3001\u6307\u5B9A\u6642\u306F\u5224\u5B9A\u306E\u6B63\u5426\u3092\u8868\u793A\n" + "\u4F8B\uFF09DS \u2192 2D6\u306E\u9054\u6210\u5024\u3092\u8868\u793A\n" + "\u3000\u30001DS \u2192 1D6\u306E\u9054\u6210\u5024\u3092\u8868\u793A\n" + "\u3000\u3000ADS+2-2 \u2192 2D6+2\u306E\u9054\u6210\u5024\u3092\u8868\u793A\uFF08\u80FD\u52D5\u5224\u5B9A\uFF09\n" + "\u3000\u3000DS+2@10 \u2192 2D6+2\u3067\u76EE\u6A19\u502410\u306E\u5224\u5B9A\n");
+    Opal.const_set($nesting[0], 'NAME', "ダークソウルTRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "たあくそうるTRPG");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定：[n]DS[a±b][@t]　　[]内のコマンドは省略可\n" + "・能動判定：[n]ADS[a±b][@t]　　FP消費を判定\n" + "　n：ダイス数。省略時は「2」\n" + "　a±b：修正値。「1+2-1」のように、複数定可\n" + "　@t：目標値。省略時は達成値を、指定時は判定の正否を表示\n" + "例）DS → 2D6の達成値を表示\n" + "　　1DS → 1D6の達成値を表示\n" + "　　ADS+2-2 → 2D6+2の達成値を表示（能動判定）\n" + "　　DS+2@10 → 2D6+2で目標値10の判定\n");
     self.$setPrefixes(["(\\d+)?(A)?DS([-+\\d]*)(@\\d+)?"]);
     
     Opal.def(self, '$rollDiceCommand', $DarkSouls_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -78,16 +78,16 @@
           return i['$=='](1);}, $$4.$$s = self, $$4.$$arity = 1, $$4));
         if ($truthy($rb_gt(focusDamage, 0))) {
           
-          focusText = $rb_times("\u25A0", focusDamage);
-          focusText = "" + "\uFF08FP" + (focusText) + "\u6D88\u8CBB\uFF09";};};
+          focusText = $rb_times("■", focusDamage);
+          focusText = "" + "（FP" + (focusText) + "消費）";};};
       result = "" + "(" + (diceCount) + "D6" + (modifyText) + (targetText) + ")";
-      result = $rb_plus(result, "" + " \uFF1E " + (dice) + "(" + (diceText) + ")" + (modifyText));
-      result = $rb_plus(result, "" + " \uFF1E " + (successValue) + (targetText));
+      result = $rb_plus(result, "" + " ＞ " + (dice) + "(" + (diceText) + ")" + (modifyText));
+      result = $rb_plus(result, "" + " ＞ " + (successValue) + (targetText));
       if ($truthy($rb_gt(target, 0))) {
         if ($truthy($rb_ge(successValue, target))) {
-          result = $rb_plus(result, " \uFF1E \u3010\u6210\u529F\u3011")
+          result = $rb_plus(result, " ＞ 【成功】")
         } else {
-          result = $rb_plus(result, " \uFF1E \u3010\u5931\u6557\u3011")
+          result = $rb_plus(result, " ＞ 【失敗】")
         }};
       result = $rb_plus(result, focusText.$to_s());
       return result;

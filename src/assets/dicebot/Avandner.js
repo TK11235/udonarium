@@ -23,9 +23,9 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "Avandner");
-    Opal.const_set($nesting[0], 'NAME', "\u9ED2\u7D62\u306E\u30A2\u30F4\u30A1\u30F3\u30C9\u30CA\u30FC");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3053\u3064\u3051\u3093\u306E\u3042\u3046\u3042\u3093\u3068\u306A\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u8ABF\u67FB\u5224\u5B9A\uFF1AnAVm[Cx]\n" + "\u30FB\u547D\u4E2D\u5224\u5B9A\uFF1AnAVm*p[+t][Cx]\n" + "[]\u5185\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\n" + "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30D2\u30C3\u30C8\u306E\u5206\u3060\u3051\u3001\u81EA\u52D5\u3067\u632F\u308A\u8DB3\u3057\u51E6\u7406\u3092\u884C\u3044\u307E\u3059\u30020\n" + "\u300Cn\u300D\u3067\u30C0\u30A4\u30B9\u6570\u3092\u6307\u5B9A\u3002\n" + "\u300Cm\u300D\u3067\u76EE\u6A19\u5024\u3092\u6307\u5B9A\u3002\u7701\u7565\u306F\u51FA\u6765\u307E\u305B\u3093\u3002\n" + "\u300CCx\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C1\u300D\u3001\u6700\u5927\u5024\u306F\u300C2\u300D\u3001\u300C0\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7121\u3057\u3002\n" + "\u300Cp\u300D\u3067\u653B\u6483\u529B\u3092\u6307\u5B9A\u3002\u300C*\u300D\u306F\u300Cx\u300D\u3067\u3082\u53EF\u3002\n" + "\u300C+t\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C8\u30EA\u30AC\u30FC\u3092\u6307\u5B9A\u3002\u7701\u7565\u53EF\u80FD\u3067\u3059\u3002\n" + "\u653B\u6483\u529B\u6307\u5B9A\u3067\u547D\u4E2D\u5224\u5B9A\u3068\u306A\u308A\u3001\u6210\u529F\u6570\u3067\u306F\u306A\u304F\u3001\u30C0\u30E1\u30FC\u30B8\u3092\u7D50\u679C\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "\u30FB5AV3 \u2192 5d10\u3067\u76EE\u6A19\u50243\u3002\n" + "\u30FB6AV2C0 \u2192 6d10\u3067\u76EE\u6A19\u50242\u3002\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7121\u3057\u3002\n" + "\u30FB4AV3*5 \u2192 4d10\u3067\u76EE\u6A19\u50243\u3001\u653B\u6483\u529B5\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n" + "\u30FB7AV2x10 \u2192 7d10\u3067\u76EE\u6A19\u50242\u3001\u653B\u6483\u529B10\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n" + "\u30FB8av4*7+10 \u2192 8d10\u3067\u76EE\u6A19\u50244\u3001\u653B\u6483\u529B7\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C8\u30EA\u30AC\u30FC10\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "黒絢のアヴァンドナー");
+    Opal.const_set($nesting[0], 'SORT_KEY', "こつけんのあうあんとなあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・調査判定：nAVm[Cx]\n" + "・命中判定：nAVm*p[+t][Cx]\n" + "[]内は省略可能。\n" + "\n" + "クリティカルヒットの分だけ、自動で振り足し処理を行います。0\n" + "「n」でダイス数を指定。\n" + "「m」で目標値を指定。省略は出来ません。\n" + "「Cx」でクリティカル値を指定。省略時は「1」、最大値は「2」、「0」でクリティカル無し。\n" + "「p」で攻撃力を指定。「*」は「x」でも可。\n" + "「+t」でクリティカルトリガーを指定。省略可能です。\n" + "攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。\n" + "\n" + "【書式例】\n" + "・5AV3 → 5d10で目標値3。\n" + "・6AV2C0 → 6d10で目標値2。クリティカル無し。\n" + "・4AV3*5 → 4d10で目標値3、攻撃力5の命中判定。\n" + "・7AV2x10 → 7d10で目標値2、攻撃力10の命中判定。\n" + "・8av4*7+10 → 8d10で目標値4、攻撃力7、クリティカルトリガー10の命中判定。\n");
     self.$setPrefixes(["\\d+AV\\d+((x|\\*)\\d+(\\+\\d+)?)?(c\\d+)?"]);
     
     Opal.def(self, '$initialize', $Avandner_initialize$1 = function $$initialize() {
@@ -106,15 +106,15 @@
       if ($truthy(isDamage)) {
         
         totalDamage = $rb_plus($rb_times(totalSuccessCount, damage), $rb_times(totalCriticalCount, criticalTrigger));
-        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") \uFF1E " + (text) + " \uFF1E Hits\uFF1A" + (totalSuccessCount) + "*" + (damage));
+        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") ＞ " + (text) + " ＞ Hits：" + (totalSuccessCount) + "*" + (damage));
         if ($truthy($rb_gt(criticalTrigger, 0))) {
-          result = $rb_plus(result, "" + " + Trigger\uFF1A" + (totalCriticalCount) + "*" + (criticalTrigger))};
-        result = $rb_plus(result, "" + " \uFF1E " + (totalDamage) + "\u30C0\u30E1\u30FC\u30B8");
+          result = $rb_plus(result, "" + " + Trigger：" + (totalCriticalCount) + "*" + (criticalTrigger))};
+        result = $rb_plus(result, "" + " ＞ " + (totalDamage) + "ダメージ");
       } else {
-        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") \uFF1E " + (text) + " \uFF1E \u6210\u529F\u6570\uFF1A" + (totalSuccessCount))
+        result = $rb_plus(result, "" + "(" + (diceCount) + "D10<=" + (target) + ") ＞ " + (text) + " ＞ 成功数：" + (totalSuccessCount))
       };
       if ($truthy($rb_gt(totalCriticalCount, 0))) {
-        result = $rb_plus(result, "" + " / " + (totalCriticalCount) + "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB")};
+        result = $rb_plus(result, "" + " / " + (totalCriticalCount) + "クリティカル")};
       return result;
     }, $Avandner_checkRoll$3.$$arity = 5), nil) && 'checkRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

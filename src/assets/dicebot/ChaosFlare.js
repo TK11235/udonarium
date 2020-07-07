@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Chaos Flare");
-    Opal.const_set($nesting[0], 'NAME', "\u30AB\u30AA\u30B9\u30D5\u30EC\u30A2");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u304B\u304A\u3059\u3075\u308C\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5931\u6557\u3001\u6210\u529F\u306E\u5224\u5B9A\u3002\u5DEE\u5206\u5024\u306E\u8A08\u7B97\u3082\u884C\u3044\u307E\u3059\u3002\n" + "\u30D5\u30A1\u30F3\u30D6\u30EB\u6642\u306F\u9054\u6210\u5024\u3092-20\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "カオスフレア");
+    Opal.const_set($nesting[0], 'SORT_KEY', "かおすふれあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "失敗、成功の判定。差分値の計算も行います。\n" + "ファンブル時は達成値を-20します。\n");
     
     Opal.def(self, '$postSet', $ChaosFlare_postSet$1 = function $$postSet() {
       var self = this, $writer = nil;
@@ -55,18 +55,18 @@
       if ($truthy($rb_le(dice_total, 2))) {
         
         total = $rb_minus(total, 20);
-        output = " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB(-20)";};
+        output = " ＞ ファンブル(-20)";};
       if (cmp_op['$=='](">=")) {
       } else {
         return output
       };
       if ($truthy($rb_ge(total, target))) {
         
-        output = $rb_plus(output, " \uFF1E \u6210\u529F");
+        output = $rb_plus(output, " ＞ 成功");
         if ($truthy($rb_gt(total, target))) {
-          output = $rb_plus(output, "" + " \uFF1E \u5DEE\u5206\u5024" + ($rb_minus(total, target)))};
+          output = $rb_plus(output, "" + " ＞ 差分値" + ($rb_minus(total, target)))};
       } else {
-        output = $rb_plus(output, "" + " \uFF1E \u5931\u6557 \uFF1E \u5DEE\u5206\u5024" + ($rb_minus(total, target)))
+        output = $rb_plus(output, "" + " ＞ 失敗 ＞ 差分値" + ($rb_minus(total, target)))
       };
       return output;
     }, $ChaosFlare_check_2D6$2.$$arity = 5), nil) && 'check_2D6';

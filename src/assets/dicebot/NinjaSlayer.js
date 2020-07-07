@@ -31,7 +31,7 @@
     Opal.const_set($nesting[0], 'EMPTY_PREFIXES_PATTERN', /(^|\s)(S)?()(\s|$)/i.$freeze());
     Opal.const_set($nesting[0], 'ID', "DiceBot");
     Opal.const_set($nesting[0], 'NAME', "DiceBot");
-    Opal.const_set($nesting[0], 'SORT_KEY', "*\u305F\u3044\u3059\u307B\u3064\u3068");
+    Opal.const_set($nesting[0], 'SORT_KEY', "*たいすほつと");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "");
     (function(self, $parent_nesting) {
       var $nesting = [self].concat($parent_nesting), $setPrefixes$1, $clearPrefixes$2, $inherited$3;
@@ -289,7 +289,7 @@
     Opal.def(self, '$removeDiceCommandMessage', $DiceBot_removeDiceCommandMessage$28 = function $$removeDiceCommandMessage(command) {
       var self = this;
 
-      return command.$sub(/[\s\u3000].+/, "")
+      return command.$sub(/[\s　].+/, "")
     }, $DiceBot_removeDiceCommandMessage$28.$$arity = 1);
     
     Opal.def(self, '$rollDiceCommandCatched', $DiceBot_rollDiceCommandCatched$29 = function $$rollDiceCommandCatched(command) {
@@ -354,16 +354,16 @@
 
       
       if ($truthy(target['$is_a?']($$($nesting, 'String')))) {
-        return " \uFF1E \u5931\u6557"};
+        return " ＞ 失敗"};
       success = (function() {if (cmp_op['$==']("!=")) {
         return total['$!='](target)
       } else {
         return total.$send(cmp_op, target)
       }; return nil; })();
       if ($truthy(success)) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $DiceBot_check_nDx$33.$$arity = 3);
     
@@ -635,8 +635,8 @@
       if ($truthy(text['$nil?']())) {
         return nil};
       if ($truthy(($truthy($a = isPrintDiceText) ? diceText['$nil?']()['$!']() : $a))) {
-        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) \uFF1E " + (text)};
-      return "" + (name) + "(" + (number) + ") \uFF1E " + (text);
+        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) ＞ " + (text)};
+      return "" + (name) + "(" + (number) + ") ＞ " + (text);
     }, $DiceBot_getTableCommandResult$62.$$arity = -3);
     
     Opal.def(self, '$getTableInfoFromExtraTableText', $DiceBot_getTableInfoFromExtraTableText$63 = function $$getTableInfoFromExtraTableText(text, count) {
@@ -716,7 +716,7 @@ Opal.modules["utils/table"] = function(Opal) {
       
       $b = bcdice.$roll(self.times, self.sides), $a = Opal.to_ary($b), (value = ($a[0] == null ? nil : $a[0])), $b;
       index = $rb_minus(value, self.times);
-      return "" + (self.name) + "(" + (value) + ") \uFF1E " + (self.items['$[]'](index));
+      return "" + (self.name) + "(" + (value) + ") ＞ " + (self.items['$[]'](index));
     }, $Table_roll$2.$$arity = 1), nil) && 'roll';
   })($nesting[0], null, $nesting)
 };
@@ -745,9 +745,9 @@ Opal.modules["utils/table"] = function(Opal) {
 
     
     Opal.const_set($nesting[0], 'ID', "NinjaSlayer");
-    Opal.const_set($nesting[0], 'NAME', "\u30CB\u30F3\u30B8\u30E3\u30B9\u30EC\u30A4\u30E4\u30FCTRPG");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306B\u3093\u3057\u3084\u3059\u308C\u3044\u3084\u3042RPG");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u901A\u5E38\u5224\u5B9A\u3000NJ\n" + "\u3000NJx[y] or NJx@y or NJx\n" + "\u3000x=\u5224\u5B9A\u30C0\u30A4\u30B9 y=\u96E3\u6613\u5EA6 \u7701\u7565\u6642\u306FNORMAL(4)\n" + "\u3000\u4F8B:NJ4@H \u96E3\u6613\u5EA6HARD\u3001\u5224\u5B9A\u30C0\u30A4\u30B94\u3067\u5224\u5B9A\n" + "\u30FB\u56DE\u907F\u5224\u5B9A\u3000EV\n" + "\u3000EVx[y]/z or EVx@y/z or EVx/z or EVx[y] or EVx@y or EVx\n" + "\u3000x=\u5224\u5B9A\u30C0\u30A4\u30B9 y=\u96E3\u6613\u5EA6 z=\u653B\u6483\u5074\u306E\u6210\u529F\u6570(\u7701\u7565\u53EF) \u96E3\u6613\u5EA6\u3092\u7701\u7565\u6642\u306FNORMAL(4)\n" + "\u3000\u653B\u6483\u5074\u306E\u6210\u529F\u6570\u3092\u6307\u5B9A\u3057\u305F\u5834\u5408\u3001\u30AB\u30A6\u30F3\u30BF\u30FC\u30AB\u30E9\u30C6\u767A\u751F\u6642\u306B\u306F\u8868\u793A\n" + "\u3000\u4F8B:EV5/3 \u96E3\u6613\u5EA6NORMAL(\u7701\u7565\u6642)\u3001\u5224\u5B9A\u30C0\u30A4\u30B95\u3001\u653B\u6483\u5074\u306E\u6210\u529F\u65703\u3067\u5224\u5B9A\n" + "\u30FB\u8FD1\u63A5\u653B\u6483\u3000AT\n" + "\u3000ATx[y] or ATx@y or ATx\n" + "\u3000x=\u5224\u5B9A\u30C0\u30A4\u30B9 y=\u96E3\u6613\u5EA6 \u7701\u7565\u6642\u306FNORMAL(4) \u30B5\u30C4\u30D0\u30C4\uFF01\u767A\u751F\u6642\u306B\u306F\u8868\u793A\n" + "\u3000\u4F8B:AT6[H] \u96E3\u6613\u5EA6HARD,\u5224\u5B9A\u30C0\u30A4\u30B95\u3067\u8FD1\u63A5\u653B\u6483\u306E\u5224\u5B9A\n" + "\u30FB\u30B5\u30C4\u30D0\u30C4\u5224\u5B9A\u3000SB\n" + "\u30FB\u96FB\u5B50\u6226\u3000EL\n" + "\u3000ELx[y] or ELx@y or ELx\n" + "\u3000x=\u5224\u5B9A\u30C0\u30A4\u30B9 y=\u96E3\u6613\u5EA6 \u7701\u7565\u6642\u306FNORMAL(4)\n" + "\u3000\u4F8B:EL6[H] \u96E3\u6613\u5EA6HARD,\u5224\u5B9A\u30C0\u30A4\u30B95\u3067\u96FB\u5B50\u6226\u306E\u5224\u5B9A\n" + "\n" + "\u30FB\u96E3\u6613\u5EA6\n" + "\u3000KIDS=K,EASY=E,NORMAL=N,HARD=H,ULTRA HARD=UH \u6570\u5B57\u306B\u3082\u5BFE\u5FDC\n");
+    Opal.const_set($nesting[0], 'NAME', "ニンジャスレイヤーTRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "にんしやすれいやあRPG");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・通常判定　NJ\n" + "　NJx[y] or NJx@y or NJx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4)\n" + "　例:NJ4@H 難易度HARD、判定ダイス4で判定\n" + "・回避判定　EV\n" + "　EVx[y]/z or EVx@y/z or EVx/z or EVx[y] or EVx@y or EVx\n" + "　x=判定ダイス y=難易度 z=攻撃側の成功数(省略可) 難易度を省略時はNORMAL(4)\n" + "　攻撃側の成功数を指定した場合、カウンターカラテ発生時には表示\n" + "　例:EV5/3 難易度NORMAL(省略時)、判定ダイス5、攻撃側の成功数3で判定\n" + "・近接攻撃　AT\n" + "　ATx[y] or ATx@y or ATx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4) サツバツ！発生時には表示\n" + "　例:AT6[H] 難易度HARD,判定ダイス5で近接攻撃の判定\n" + "・サツバツ判定　SB\n" + "・電子戦　EL\n" + "　ELx[y] or ELx@y or ELx\n" + "　x=判定ダイス y=難易度 省略時はNORMAL(4)\n" + "　例:EL6[H] 難易度HARD,判定ダイス5で電子戦の判定\n" + "\n" + "・難易度\n" + "　KIDS=K,EASY=E,NORMAL=N,HARD=H,ULTRA HARD=UH 数字にも対応\n");
     self.$setPrefixes(["NJ\\d+.*", "EV\\d+.*", "AT\\d+.*", "EL\\d+.*", "SB"]);
     
     Opal.def(self, '$initialize', $NinjaSlayer_initialize$1 = function $$initialize() {
@@ -850,14 +850,14 @@ Opal.modules["utils/table"] = function(Opal) {
       } else {
         return rollResult
       };
-      m = /\u6210\u529F\u6570(\d+)/.$match(rollResult);
+      m = /成功数(\d+)/.$match(rollResult);
       if ($truthy(m)) {
       } else {
-        self.$raise("\u6210\u529F\u6570\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093")
+        self.$raise("成功数が見つかりません")
       };
       numOfSuccesses = m['$[]'](1).$to_i();
       if ($truthy($rb_gt(numOfSuccesses, ev.$targetValue()))) {
-        return "" + (rollResult) + " \uFF1E \u30AB\u30A6\u30F3\u30BF\u30FC\u30AB\u30E9\u30C6!!"};
+        return "" + (rollResult) + " ＞ カウンターカラテ!!"};
       return rollResult;
     }, $NinjaSlayer_executeEV$8.$$arity = 1);
     
@@ -867,7 +867,7 @@ Opal.modules["utils/table"] = function(Opal) {
       
       command = self.$bRollCommand(at.$num(), at.$difficulty());
       rollResult = self.$bcdice().$bdice(command).$sub($$($nesting, 'B_ROLL_RESULT_HEAD_RE'), "");
-      m = /\uFF1E (\d+(?:,\d+)*)/.$match(rollResult);
+      m = /＞ (\d+(?:,\d+)*)/.$match(rollResult);
       values = $send(m['$[]'](1).$split(","), 'map', [], "to_i".$to_proc());
       numOfMaxValues = $send(values, 'select', [], ($$10 = function(v){var self = $$10.$$s || this;
 
@@ -878,7 +878,7 @@ Opal.modules["utils/table"] = function(Opal) {
         };
         return v['$=='](6);}, $$10.$$s = self, $$10.$$arity = 1, $$10)).$length();
       return (function() {if ($truthy($rb_ge(numOfMaxValues, 2))) {
-        return "" + (rollResult) + " \uFF1E \u30B5\u30C4\u30D0\u30C4!!"
+        return "" + (rollResult) + " ＞ サツバツ!!"
       } else {
         return rollResult
       }; return nil; })();
@@ -890,7 +890,7 @@ Opal.modules["utils/table"] = function(Opal) {
       
       command = self.$bRollCommand(el.$num(), el.$difficulty());
       rollResult = self.$bcdice().$bdice(command).$sub($$($nesting, 'B_ROLL_RESULT_HEAD_RE'), "");
-      m = /\uFF1E (\d+(?:,\d+)*)/.$match(rollResult);
+      m = /＞ (\d+(?:,\d+)*)/.$match(rollResult);
       values = $send(m['$[]'](1).$split(","), 'map', [], "to_i".$to_proc());
       numOfMaxValues = $send(values, 'select', [], ($$12 = function(v){var self = $$12.$$s || this;
 
@@ -909,7 +909,7 @@ Opal.modules["utils/table"] = function(Opal) {
         };
         return $rb_ge(v, el.$difficulty());}, $$13.$$s = self, $$13.$$arity = 1, $$13)).$length();
       return (function() {if ($truthy($rb_ge(numOfMaxValues, 1))) {
-        return "" + (rollResult) + " + " + (numOfMaxValues) + " \uFF1E " + ($rb_plus(sumOfTrueValues, numOfMaxValues))
+        return "" + (rollResult) + " + " + (numOfMaxValues) + " ＞ " + ($rb_plus(sumOfTrueValues, numOfMaxValues))
       } else {
         return rollResult
       }; return nil; })();
@@ -933,8 +933,8 @@ Opal.modules["utils/table"] = function(Opal) {
 
       return "" + (num) + "B6>=" + (difficulty)
     }, $NinjaSlayer_bRollCommand$15.$$arity = 2);
-    Opal.const_set($nesting[0], 'SATSUBATSU_TABLE', ["\u300C\u6B7B\u306D\u30FC\u30C3\uFF01\u300D\u8179\u90E8\u306B\u5F37\u70C8\u306A\u4E00\u6483\uFF01\u3000\u6575\u306F\u304F\u306E\u5B57\u306B\u6298\u308C\u66F2\u304C\u308A\u3001\u30EF\u30A4\u30E4\u30FC\u30A2\u30AF\u30B7\u30E7\u30F3\u3081\u3044\u3066\u5439\u3063\u98DB\u3093\u3060\uFF01\uFF1A\u672C\u6765\u306E\u30C0\u30E1\u30FC\u30B8+1\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002\u6575\u306F\u5F8C\u65B9\u306E\u58C1\u307E\u305F\u306F\u969C\u5BB3\u7269\u306B\u5411\u304B\u3063\u3066\u3001\u4F55\u30DE\u30B9\u3067\u3082\u307E\u3063\u3059\u3050\u5F3E\u304D\u98DB\u3070\u3055\u308C\u308B\uFF08\u4ED6\u306E\u30AD\u30E3\u30E9\u306E\u3044\u308B\u30DE\u30B9\u306F\u901A\u904E\u3059\u308B\uFF09\u3002\u58C1\u307E\u305F\u306F\u969C\u5BB3\u7269\u306B\u63A5\u89E6\u3057\u305F\u6642\u70B9\u3067\u3001\u6575\u306F\u3055\u3089\u306B1\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u6575\u306F\u3053\u306E\u6FC0\u7A81\u30C0\u30E1\u30FC\u30B8\u306B\u5BFE\u3057\u3066\u6539\u3081\u3066\u300E\u56DE\u907F\u5224\u5B9A\u300F\u3092\u884C\u3063\u3066\u3082\u826F\u3044\u3002", "\u300C\u30A4\u30E4\u30FC\u30C3\uFF01\u300D\u982D\u90E8\u3078\u306E\u75DB\u70C8\u306A\u30AB\u30E9\u30C6\uFF01\u3000\u773C\u7403\u7834\u58CA\u3082\u3057\u304F\u306F\u6FC0\u3057\u3044\u8133\u9707\u76EA\u304C\u6575\u3092\u8972\u3046\uFF01\uFF1A\u672C\u6765\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002\u3055\u3089\u306B\u6575\u306E\u3010\u30CB\u30E5\u30FC\u30ED\u30F3\u3011\u3068\u3010\u30EF\u30B6\u30DE\u30A8\u3011\u304C\u305D\u308C\u305E\u308C1\u305A\u3064\u6E1B\u5C11\u3059\u308B\uFF08\u3053\u308C\u306B\u3088\u308B\u6700\u4F4E\u5024\u306F1\uFF09\u3002\u6B8B\u8650\u30DC\u30FC\u30CA\u30B9\u306B\u3088\u308A\u3010\u4E07\u672D\u3011\u304CD3\u767A\u751F\u3002\u3053\u306E\u653B\u6483\u3092\u3010\u30AB\u30EB\u30DE\uFF1A\u5584\u3011\u306E\u30AD\u30E3\u30E9\u306B\u5BFE\u3057\u3066\u884C\u3063\u3066\u3057\u307E\u3063\u305F\u5834\u5408\u3001\u3010DKK\u3011\u304CD3\u4E0A\u6607\u3059\u308B\u3002", "\u300C\u82E6\u3057\u307F\u629C\u3044\u3066\u6B7B\u306C\u304C\u3044\u3044\u300D\u6025\u6240\u3092\u60C5\u3051\u5BB9\u8D66\u306A\u304F\u7834\u58CA\uFF01\uFF1A\u672C\u6765\u306E\u30C0\u30E1\u30FC\u30B8+1\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002\u8010\u3048\u96E3\u3044\u82E6\u75DB\u306B\u3088\u308A\u3001\u6575\u306F\u3010\u7CBE\u795E\u529B\u3011\u304C-2\u3055\u308C\u3001\u3010\u30CB\u30E5\u30FC\u30ED\u30F3\u3011\u304C1\u6E1B\u5C11\u3059\u308B\uFF08\u3053\u308C\u306B\u3088\u308B\u6700\u4F4E\u5024\u306F1\uFF09\u3002\u6B8B\u8650\u30DC\u30FC\u30CA\u30B9\u306B\u3088\u308A\u3010\u4E07\u672D\u3011\u304CD3\u767A\u751F\u3002\u3053\u306E\u653B\u6483\u3092\u3010\u30AB\u30EB\u30DE\uFF1A\u5584\u3011\u306E\u30AD\u30E3\u30E9\u306B\u5BFE\u3057\u3066\u884C\u3063\u3066\u3057\u307E\u3063\u305F\u5834\u5408\u3001\u3010DKK\u3011\u304CD3\u4E0A\u6607\u3059\u308B\u3002", "\u300C\u9003\u3052\u3089\u308C\u308B\u3082\u306E\u306A\u3089\u9003\u3052\u3066\u307F\u3088\u300D\u6575\u306E\u811A\u3092\u7C89\u7815\uFF01\uFF1A\u672C\u6765\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002\u3055\u3089\u306B\u6575\u306E\u3010\u811A\u529B\u3011\u304CD3\u6E1B\u5C11\u3059\u308B\uFF08\u6700\u4F4E\u5024\u306F1\uFF09\u3002\u6B8B\u8650\u30DC\u30FC\u30CA\u30B9\u306B\u3088\u308A\u3010\u4E07\u672D\u3011\u304CD3\u767A\u751F\u3002\u3053\u306E\u653B\u6483\u3092\u3010\u30AB\u30EB\u30DE\uFF1A\u5584\u3011\u306E\u30AD\u30E3\u30E9\u306B\u5BFE\u3057\u3066\u884C\u3063\u3066\u3057\u307E\u3063\u305F\u5834\u5408\u3001\u3010DKK\u3011\u304CD3\u4E0A\u6607\u3059\u308B\u3002", "\u300C\u3053\u308C\u3067\u624B\u3082\u8DB3\u3082\u51FA\u307E\u3044\uFF01\u300D\u6575\u306E\u4E21\u8155\u3092\u5207\u308A\u98DB\u3070\u3057\u305F\uFF01\u3000\u9BAE\u8840\u304C\u30B9\u30D7\u30EA\u30F3\u30AF\u30E9\u30FC\u3081\u3044\u3066\u5674\u304D\u51FA\u3059\uFF01\uFF1A\u672C\u6765\u306E\u30C0\u30E1\u30FC\u30B8+1\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002\u3055\u3089\u306B\u6575\u306E\u3010\u30EF\u30B6\u30DE\u30A8\u3011\u3068\u3010\u30AB\u30E9\u30C6\u3011\u304C\u305D\u308C\u305E\u308C2\u6E1B\u5C11\u3059\u308B\uFF08\u6700\u4F4E\u5024\u306F1\uFF09\u3002\u6B8B\u8650\u30DC\u30FC\u30CA\u30B9\u306B\u3088\u308A\u3010\u4E07\u672D\u3011\u304CD3\u767A\u751F\u3002\u3053\u306E\u653B\u6483\u3092\u3010\u30AB\u30EB\u30DE\uFF1A\u5584\u3011\u306E\u30AD\u30E3\u30E9\u306B\u5BFE\u3057\u3066\u884C\u3063\u3066\u3057\u307E\u3063\u305F\u5834\u5408\u3001\u3010DKK\u3011\u304CD3\u4E0A\u6607\u3059\u308B\u3002", "\u300C\u30A4\u30A4\u30A4\u30E4\u30A2\u30A2\u30A2\u30A2\u30FC\u30FC\u30FC\u30FC\u30C3\uFF01\u300D\u30E4\u30EA\u3081\u3044\u305F\u30C1\u30E7\u30C3\u30D7\u304C\u6575\u306E\u80F8\u3092\u8CAB\u901A\uFF01\u3000\u3055\u3089\u306B\u5FC3\u81D3\u3092\u63B4\u307F\u53D6\u308A\u3001\u63E1\u308A\u3064\u3076\u3057\u305F\uFF01\u3000\u30CA\u30E0\u30A2\u30DF\u30C0\u30D6\u30C4\uFF01\uFF1A\u6575\u306F\u6B8B\u308A\u3010\u4F53\u529B\u3011\u306B\u95A2\u4FC2\u306A\u304F\u5373\u6B7B\u3059\u308B\u3002\u6B8B\u8650\u30DC\u30FC\u30CA\u30B9\u306B\u3088\u308A\u3010\u4E07\u672D\u3011\u304CD6\u767A\u751F\u3002\u3053\u306E\u653B\u6483\u3092\u3010\u30AB\u30EB\u30DE\uFF1A\u5584\u3011\u306E\u30AD\u30E3\u30E9\u306B\u5BFE\u3057\u3066\u884C\u3063\u3066\u3057\u307E\u3063\u305F\u5834\u5408\u3001\u3010DKK\u3011\u304CD6\u4E0A\u6607\u3059\u308B\u3002"].$freeze());
-    Opal.const_set($nesting[0], 'TABLES', $hash2(["SB"], {"SB": $$($nesting, 'Table').$new("\u30B5\u30C4\u30D0\u30C4\u8868", "1D6", $$($nesting, 'SATSUBATSU_TABLE'))}).$freeze());
+    Opal.const_set($nesting[0], 'SATSUBATSU_TABLE', ["「死ねーッ！」腹部に強烈な一撃！　敵はくの字に折れ曲がり、ワイヤーアクションめいて吹っ飛んだ！：本来のダメージ+1ダメージを与える。敵は後方の壁または障害物に向かって、何マスでもまっすぐ弾き飛ばされる（他のキャラのいるマスは通過する）。壁または障害物に接触した時点で、敵はさらに1ダメージを受ける。敵はこの激突ダメージに対して改めて『回避判定』を行っても良い。", "「イヤーッ！」頭部への痛烈なカラテ！　眼球破壊もしくは激しい脳震盪が敵を襲う！：本来のダメージを与える。さらに敵の【ニューロン】と【ワザマエ】がそれぞれ1ずつ減少する（これによる最低値は1）。残虐ボーナスにより【万札】がD3発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD3上昇する。", "「苦しみ抜いて死ぬがいい」急所を情け容赦なく破壊！：本来のダメージ+1ダメージを与える。耐え難い苦痛により、敵は【精神力】が-2され、【ニューロン】が1減少する（これによる最低値は1）。残虐ボーナスにより【万札】がD3発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD3上昇する。", "「逃げられるものなら逃げてみよ」敵の脚を粉砕！：本来のダメージを与える。さらに敵の【脚力】がD3減少する（最低値は1）。残虐ボーナスにより【万札】がD3発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD3上昇する。", "「これで手も足も出まい！」敵の両腕を切り飛ばした！　鮮血がスプリンクラーめいて噴き出す！：本来のダメージ+1ダメージを与える。さらに敵の【ワザマエ】と【カラテ】がそれぞれ2減少する（最低値は1）。残虐ボーナスにより【万札】がD3発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD3上昇する。", "「イイイヤアアアアーーーーッ！」ヤリめいたチョップが敵の胸を貫通！　さらに心臓を掴み取り、握りつぶした！　ナムアミダブツ！：敵は残り【体力】に関係なく即死する。残虐ボーナスにより【万札】がD6発生。この攻撃を【カルマ：善】のキャラに対して行ってしまった場合、【DKK】がD6上昇する。"].$freeze());
+    Opal.const_set($nesting[0], 'TABLES', $hash2(["SB"], {"SB": $$($nesting, 'Table').$new("サツバツ表", "1D6", $$($nesting, 'SATSUBATSU_TABLE'))}).$freeze());
     return self.$setPrefixes($rb_plus(["NJ\\d+.*", "EV\\d+.*", "AT\\d+.*", "EL\\d+.*"], $$($nesting, 'TABLES').$keys()));
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting);
 })(Opal);

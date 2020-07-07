@@ -34,9 +34,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "MetalHeadExtream");
-    Opal.const_set($nesting[0], 'NAME', "\u30E1\u30BF\u30EB\u30D8\u30C3\u30C9\u30A8\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3081\u305F\u308B\u3078\u3064\u3068\u3048\u304F\u3059\u3068\u308A\u3044\u3080");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u25C6\u5224\u5B9A\uFF1AARn or SRn[*/a][@b][Ac][Ld][!M]\u3000\u3000[]\u5185\u7701\u7565\u53EF\u3002\n" + "\u300Cn\u300D\u3067\u5224\u5B9A\u5024\u3001\u300C*/a\u300D\u3067\u30ED\u30FC\u30EB\u4FEE\u6B63\u3092\u6307\u5B9A\u3002\u8907\u6570\u56DE\u6307\u5B9A\u53EF\u3002\n" + "\u300C@b\u300D\u3067\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u5024\u3001\u7701\u7565\u6642\u306F\u300C96\u300D\u3002\n" + "\u300CAc\u300D\u3067\u9AD8\u5EA6\u306A\u30ED\u30FC\u30EB\u3002\u300C2\u30014\u30018\u300D\u306E\u307F\u6307\u5B9A\u53EF\u80FD\u3002\n" + "\u300CLd\u300D\u3067\u30E9\u30C3\u30AF\u30DD\u30A4\u30F3\u30C8\u3001\u300C!M\u300D\u3067\u30D1\u30F3\u30C9\u30E9\u300A\u30DF\u30E5\u30FC\u30BA\u300B\u3002\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "AR84/2@99!M \u2192 \u5224\u5B9A\u502484\u306EAR1/2\u3002\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u502499\u3001\u30D1\u30F3\u30C9\u30E9\u300A\u30DF\u30E5\u30FC\u30BA\u300B\u3002\n" + "SR40*2A2L1@99 \u2192 \u5224\u5B9A\u502480\u306ESR\u3001\u9AD8\u5EA6\u306A\u30ED\u30FC\u30EB2\u500D\u3001\u30E9\u30C3\u30AF1\u70B9\u3002\n" + "\n" + "\u25C6\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A(\u547D\u4E2D\u90E8\u4F4D)HIT[n]\u3000\u3000\u4EE5\u964D\u3001ROC\u6642\u306F[n]\u3092\u6307\u5B9A\u3002\n" + "HU\uFF1A\u4EBA\u9593\u3000\u3000BK\uFF1A\u30D0\u30A4\u30AF\u3000\u3000WA\uFF1A\u30EF\u30B4\u30F3\u3000\u3000SC\uFF1A\u30B7\u30A7\u30EB\u30AD\u30E3\u30EA\u30A2\u3000\u3000BG\uFF1A\u30D0\u30AE\u30FC\n" + "IN\uFF1A\u30A4\u30F3\u30BB\u30AF\u30BF\u30FC\u3000\u3000PT\uFF1A\u30DD\u30B1\u30C3\u30C8\u30BF\u30F3\u30AF\u3000\u3000HT\uFF1A\u30DB\u30D0\u30FC\u30BF\u30F3\u30AF\u3000\u3000TA\uFF1A\u6226\u8ECA\n" + "AC\uFF1A\u88C5\u7532\u8ECA\u3000\u3000HE\uFF1A\u30D8\u30EA\u3000\u3000TR\uFF1A\u30C8\u30EC\u30FC\u30E9\u30FC\u3000\u3000VT\uFF1AVTOL\u3000\u3000BO\uFF1A\u30DC\u30FC\u30C8\n" + "CS\uFF1A\u901A\u5E38\u3001\u683C\u95D8\u578B\u30B3\u30F3\u30D0\u30C3\u30C8\u30B7\u30A7\u30EB\u3000\u3000TH\uFF1A\u53EF\u5909\u3001\u91CD\u30B3\u30F3\u30D0\u30C3\u30C8\u30B7\u30A7\u30EB\n" + "AM\uFF1A\u30AA\u30FC\u30C8\u30E2\u30D3\u30EB\u3000\u3000GD\uFF1A\u30AC\u30F3\u30C9\u30C3\u30AF\u3000\u3000HC\uFF1A\u30DB\u30D0\u30FC\u30AF\u30E9\u30D5\u30C8\n" + "BI\uFF1A\u81EA\u8EE2\u8ECA\u3000\u3000BT\uFF1A\u30D0\u30C8\u30EB\u30C8\u30EC\u30FC\u30E9\u30FC\u3000\u3000AI\uFF1A\u30A8\u30A2\u30AF\u30E9\u30D5\u30C8\n" + "\u25C6\u6226\u95D8\u7D50\u679C\u8868\uFF1ASUV(A\uFF5EZ)n\u3000\u3000\u3010\u66F8\u5F0F\u4F8B\u3011SUVM100\n" + "\u25C6\u640D\u50B7\u52B9\u679C\u8868\uFF1A(\u547D\u4E2D\u90E8\u4F4D)DMG(\u640D\u50B7\u7A2E\u5225)\u3000\u3000\u3010\u66F8\u5F0F\u4F8B\u3011TDMGH\n" + "H\uFF1A\u982D\u90E8\u3000\u3000T\uFF1A\u80F4\u90E8\u3000\u3000A\uFF1A\u8155\u90E8\u3000\u3000L\uFF1A\u811A\u90E8\u3000\u3000M\uFF1A\u5FC3\u7406\u3000\u3000E\uFF1A\u96FB\u5B50\n" + "B\uFF1A\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u3000\u3000P\uFF1A\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8\u3000\u3000D\uFF1A\u30C9\u30E9\u30A4\u30D6\n" + "(\u640D\u50B7\u7A2E\u5225)\u3000L\uFF1ALW\u3000\u3000M\uFF1AMW\u3000\u3000H\uFF1AHW\u3000\u3000O\uFF1AMO\n" + "\u25C6\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u8868\uFF1ACRT[n]\n" + "\u25C6\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u8868\uFF1A(\u7A2E\u5225)AC[n]\n" + "G\uFF1A\u683C\u95D8\u3000\u3000S\uFF1A\u5C04\u6483\u3001\u6295\u64F2\u3000\u3000M\uFF1A\u5FC3\u7406\u3000\u3000E\uFF1A\u96FB\u5B50\n" + "\u25C6\u30E1\u30AB\u30CB\u30C3\u30AF\u4E8B\u6545\u8868\uFF1A(\u5834\u6240)MA[n][+m]\u3000\u3000\u300C+m\u300D\u3067\u4FEE\u6B63\u3092\u6307\u5B9A\u3002\n" + "A\uFF1A\u7A7A\u4E2D\u3000\u3000S\uFF1A\u6C34\u4E0A\u3001\u6C34\u4E2D\u3000\u3000L\uFF1A\u5730\u4E0A\n" + "\n" + "\u3010\u30DE\u30B9\u30B3\u30F3\u30D0\u30C3\u30C8\u3011\n" + "\u30B9\u30C8\u30E9\u30C6\u30B8\u30FC\u30A4\u30D9\u30F3\u30C8\u30C1\u30E3\u30FC\u30C8\uFF1ASEC\n" + "NPC\u653B\u6483\u51E6\u7406\u30C1\u30E3\u30FC\u30C8\uFF1ANAC\u3000\u3000\u6557\u8005\u904B\u547D\u30C1\u30E3\u30FC\u30C8\uFF1ALDC\n" + "\n" + "\u3010\u5404\u7A2E\u8868\u3011\n" + "\u8352\u91CE\u30E9\u30F3\u30C0\u30E0\u30A8\u30F3\u30AB\u30A6\u30F3\u30C8\u8868\uFF1AWENC[n]\n");
+    Opal.const_set($nesting[0], 'NAME', "メタルヘッドエクストリーム");
+    Opal.const_set($nesting[0], 'SORT_KEY', "めたるへつとえくすとりいむ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "◆判定：ARn or SRn[*/a][@b][Ac][Ld][!M]　　[]内省略可。\n" + "「n」で判定値、「*/a」でロール修正を指定。複数回指定可。\n" + "「@b」でアクシデント値、省略時は「96」。\n" + "「Ac」で高度なロール。「2、4、8」のみ指定可能。\n" + "「Ld」でラックポイント、「!M」でパンドラ《ミューズ》。\n" + "\n" + "【書式例】\n" + "AR84/2@99!M → 判定値84のAR1/2。アクシデント値99、パンドラ《ミューズ》。\n" + "SR40*2A2L1@99 → 判定値80のSR、高度なロール2倍、ラック1点。\n" + "\n" + "◆命中部位表：(命中部位)HIT[n]　　以降、ROC時は[n]を指定。\n" + "HU：人間　　BK：バイク　　WA：ワゴン　　SC：シェルキャリア　　BG：バギー\n" + "IN：インセクター　　PT：ポケットタンク　　HT：ホバータンク　　TA：戦車\n" + "AC：装甲車　　HE：ヘリ　　TR：トレーラー　　VT：VTOL　　BO：ボート\n" + "CS：通常、格闘型コンバットシェル　　TH：可変、重コンバットシェル\n" + "AM：オートモビル　　GD：ガンドック　　HC：ホバークラフト\n" + "BI：自転車　　BT：バトルトレーラー　　AI：エアクラフト\n" + "◆戦闘結果表：SUV(A～Z)n　　【書式例】SUVM100\n" + "◆損傷効果表：(命中部位)DMG(損傷種別)　　【書式例】TDMGH\n" + "H：頭部　　T：胴部　　A：腕部　　L：脚部　　M：心理　　E：電子\n" + "B：メカニック本体　　P：パワープラント　　D：ドライブ\n" + "(損傷種別)　L：LW　　M：MW　　H：HW　　O：MO\n" + "◆クリティカル表：CRT[n]\n" + "◆アクシデント表：(種別)AC[n]\n" + "G：格闘　　S：射撃、投擲　　M：心理　　E：電子\n" + "◆メカニック事故表：(場所)MA[n][+m]　　「+m」で修正を指定。\n" + "A：空中　　S：水上、水中　　L：地上\n" + "\n" + "【マスコンバット】\n" + "ストラテジーイベントチャート：SEC\n" + "NPC攻撃処理チャート：NAC　　敗者運命チャート：LDC\n" + "\n" + "【各種表】\n" + "荒野ランダムエンカウント表：WENC[n]\n");
     self.$setPrefixes(["[AS]R\\d+.*", "(HU|BK|WA|SC|BG|IN|PT|HT|TA|AC|HE|TR|VT|BO|CS|TH|AM|GD|HC|BI|BT|AI)HIT\\d*", "SUV[A-Z]\\d+", "[HTALMEBPD]DMG[LMHO]", "CRT\\d*", "[GSME]AC\\d*", "[ASL]MA\\d*(\\+\\d+)?", "SEC", "NAC", "LDC", "[W]ENC\\d*"]);
     
     Opal.def(self, '$rollDiceCommand', $MetalHeadExtream_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -110,7 +110,7 @@
       rollTarget = $rb_times($rb_divide($rb_times(target, modify), advancedRoll), (2)['$**'](luckPoint)).$to_i();
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$getRollResultTextAndSuccesValue(dice, advancedRoll, rollTarget, accidentValue, isMuse), $a = Opal.to_ary($b), (resultText = ($a[0] == null ? nil : $a[0])), (successValue = ($a[1] == null ? nil : $a[1])), $b;
-      resultText = $rb_plus(resultText, "" + " \u9054\u6210\u5024\uFF1A" + (successValue));
+      resultText = $rb_plus(resultText, "" + " 達成値：" + (successValue));
       complementText = "" + "ACC:" + (accidentValue);
       if ($truthy($rb_gt(advancedRoll, 1))) {
         complementText = $rb_plus(complementText, "" + ", ADV:*" + (advancedRoll))};
@@ -122,9 +122,9 @@
         modifyText = "" + "1/" + ($rb_divide(1, modify).$to_i())
       };
       formulaText = self.$getFormulaText(target, modify, advancedRoll, luckPoint);
-      result = "" + (rollText) + "R" + (modifyText) + "(" + (complementText) + ")\uFF1A1D100<=" + (rollTarget) + (formulaText) + " \uFF1E [" + (dice) + "] " + (resultText);
+      result = "" + (rollText) + "R" + (modifyText) + "(" + (complementText) + ")：1D100<=" + (rollTarget) + (formulaText) + " ＞ [" + (dice) + "] " + (resultText);
       if ($truthy(isMuse)) {
-        result = $rb_plus(result, " \u300A\u30DF\u30E5\u30FC\u30BA\u300B")};
+        result = $rb_plus(result, " 《ミューズ》")};
       return result;
     }, $MetalHeadExtream_checkRoll$3.$$arity = 7);
     
@@ -148,11 +148,11 @@
       successValue = 0;
       if ($truthy($rb_ge(dice, accidentValue))) {
         
-        resultText = "\u5931\u6557\uFF08\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\uFF09";
+        resultText = "失敗（アクシデント）";
         return [resultText, successValue];};
       if ($truthy($rb_gt(dice, rollTarget))) {
         
-        resultText = "\u5931\u6557";
+        resultText = "失敗";
         return [resultText, successValue];};
       dig1 = $rb_minus(dice, $rb_times($rb_divide(dice, 10).$to_i(), 10));
       if ($truthy(isMuse)) {
@@ -160,9 +160,9 @@
       } else {
         isCritical = dig1['$=='](1)
       };
-      resultText = "\u6210\u529F";
+      resultText = "成功";
       if ($truthy(isCritical)) {
-        resultText = $rb_plus(resultText, "\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09")};
+        resultText = $rb_plus(resultText, "（クリティカル）")};
       successValue = $rb_times(dice, advancedRoll);
       return [resultText, successValue];
     }, $MetalHeadExtream_getRollResultTextAndSuccesValue$5.$$arity = 5);
@@ -191,71 +191,71 @@
       
       $case = hitPart;
       if ("HU"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u4EBA\u9593";
-      table = [[1, "\u80F4\u90E8\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u982D\u90E8"], [3, "\u5DE6\u8155\u90E8"], [4, "\u53F3\u8155\u90E8"], [5, "\u80F4\u90E8"], [6, "\u80F4\u90E8"], [7, "\u80F4\u90E8"], [8, "\u80F4\u90E8"], [9, "\u811A\u90E8"], [10, "\u811A\u90E8"]];}
+      name = "命中部位表：人間";
+      table = [[1, "胴部（クリティカル）"], [2, "頭部"], [3, "左腕部"], [4, "右腕部"], [5, "胴部"], [6, "胴部"], [7, "胴部"], [8, "胴部"], [9, "脚部"], [10, "脚部"]];}
       else if ("BK"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30D0\u30A4\u30AF";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [6, "\u30C9\u30E9\u30A4\u30D6"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u4E57\u54E1"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：バイク";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "パワープラント"], [6, "ドライブ"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "乗員"], [10, "乗員"]];}
       else if ("WA"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30EF\u30B4\u30F3";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u672C\u4F53"], [7, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：ワゴン";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "本体"], [7, "パワープラント"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("SC"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30B7\u30A7\u30EB\u30AD\u30E3\u30EA\u30A2";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u672C\u4F53"], [7, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：シェルキャリア";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "本体"], [7, "パワープラント"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("BG"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30D0\u30AE\u30FC";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：バギー";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("IN"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30A4\u30F3\u30BB\u30AF\u30BF\u30FC";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u30C9\u30E9\u30A4\u30D6"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：インセクター";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "ドライブ"], [9, "ドライブ"], [10, "乗員"]];}
       else if ("PT"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30DD\u30B1\u30C3\u30C8\u30BF\u30F3\u30AF";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u30C9\u30E9\u30A4\u30D6"], [10, "\u5175\u88C5\u30FB\u8CA8\u7269"]];}
+      name = "命中部位表：ポケットタンク";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "パワープラント"], [8, "ドライブ"], [9, "ドライブ"], [10, "兵装・貨物"]];}
       else if ("HT"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30DB\u30D0\u30FC\u30BF\u30F3\u30AF";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u672C\u4F53"], [7, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u5175\u88C5\u30FB\u8CA8\u7269"]];}
+      name = "命中部位表：ホバータンク";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "本体"], [7, "パワープラント"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "兵装・貨物"]];}
       else if ("TA"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u6226\u8ECA";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u5175\u88C5\u30FB\u8CA8\u7269"]];}
+      name = "命中部位表：戦車";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "兵装・貨物"]];}
       else if ("AC"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u88C5\u7532\u8ECA";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u5175\u88C5\u30FB\u8CA8\u7269"]];}
+      name = "命中部位表：装甲車";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "兵装・貨物"]];}
       else if ("HE"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30D8\u30EA";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [6, "\u30C9\u30E9\u30A4\u30D6"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：ヘリ";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "パワープラント"], [6, "ドライブ"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("TR"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30C8\u30EC\u30FC\u30E9\u30FC";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [6, "\u30C9\u30E9\u30A4\u30D6"], [7, "\u5175\u88C5\u30FB\u30AB\u30FC\u30B4"], [8, "\u5175\u88C5\u30FB\u30AB\u30FC\u30B4"], [9, "\u5175\u88C5\u30FB\u30AB\u30FC\u30B4"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：トレーラー";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "パワープラント"], [6, "ドライブ"], [7, "兵装・カーゴ"], [8, "兵装・カーゴ"], [9, "兵装・カーゴ"], [10, "乗員"]];}
       else if ("VT"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1AVTOL";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：VTOL";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("BO"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30DC\u30FC\u30C8";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u672C\u4F53"], [7, "\u672C\u4F53"], [8, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [9, "\u30C9\u30E9\u30A4\u30D6"], [10, "\u5175\u88C5\u30FB\u8CA8\u7269"]];}
+      name = "命中部位表：ボート";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "本体"], [7, "本体"], [8, "パワープラント"], [9, "ドライブ"], [10, "兵装・貨物"]];}
       else if ("CS"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u901A\u5E38\u30FB\u683C\u95D8\u578B\u30B3\u30F3\u30D0\u30C3\u30C8\u30B7\u30A7\u30EB";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u672C\u4F53"], [7, "\u30B6\u30C3\u30AF"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u5175\u88C5\u30FB\u8CA8\u7269"]];}
+      name = "命中部位表：通常・格闘型コンバットシェル";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "本体"], [7, "ザック"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "兵装・貨物"]];}
       else if ("TH"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u53EF\u5909\u30FB\u91CD\u30B3\u30F3\u30D0\u30C3\u30C8\u30B7\u30A7\u30EB";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u672C\u4F53"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u5175\u88C5\u30FB\u8CA8\u7269"]];}
+      name = "命中部位表：可変・重コンバットシェル";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "本体"], [7, "ドライブ"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "兵装・貨物"]];}
       else if ("AM"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30AA\u30FC\u30C8\u30E2\u30D3\u30EB";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：オートモビル";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("GD"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30AC\u30F3\u30C9\u30C3\u30AF";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u30C9\u30E9\u30A4\u30D6"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：ガンドック";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "ドライブ"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("HC"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30DB\u30D0\u30FC\u30AF\u30E9\u30D5\u30C8";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u4E57\u54E1"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：ホバークラフト";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "パワープラント"], [6, "パワープラント"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "乗員"], [10, "乗員"]];}
       else if ("BI"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u81EA\u8EE2\u8ECA";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：自転車";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("BT"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30D0\u30C8\u30EB\u30C8\u30EC\u30FC\u30E9\u30FC";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：バトルトレーラー";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "兵装・貨物"], [10, "乗員"]];}
       else if ("AI"['$===']($case)) {
-      name = "\u547D\u4E2D\u90E8\u4F4D\u8868\uFF1A\u30A8\u30A2\u30AF\u30E9\u30D5\u30C8";
-      table = [[1, "\u672C\u4F53\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"], [2, "\u672C\u4F53"], [3, "\u672C\u4F53"], [4, "\u672C\u4F53"], [5, "\u672C\u4F53"], [6, "\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8"], [7, "\u30C9\u30E9\u30A4\u30D6"], [8, "\u5175\u88C5\u30FB\u8CA8\u7269"], [9, "\u5175\u88C5\u30FB\u8CA8\u7269"], [10, "\u4E57\u54E1"]];}
+      name = "命中部位表：エアクラフト";
+      table = [[1, "本体（クリティカル）"], [2, "本体"], [3, "本体"], [4, "本体"], [5, "本体"], [6, "パワープラント"], [7, "ドライブ"], [8, "兵装・貨物"], [9, "兵装・貨物"], [10, "乗員"]];}
       else {return nil};
       return self.$get_MetalHeadExtream_1d10_table_result(name, table, roc);
     }, $MetalHeadExtream_get_hit_table$7.$$arity = 2);
@@ -264,11 +264,11 @@
       var $$9, self = this, name = nil, table = nil, armorIndex = nil, damageInfo = nil, woundRanks = nil, woundText = nil;
 
       
-      name = "\u6226\u95D8\u7D50\u679C\u8868";
+      name = "戦闘結果表";
       table = [[0, 1, 6, 16, 26, 36], [0, 1, 6, 26, 36, 46], [0, 1, 16, 26, 46, 56], [1, 6, 26, 36, 56, 76], [1, 16, 36, 46, 66, 76], [1, 26, 36, 56, 76, 86], [1, 36, 56, 66, 76, 96], [1, 56, 76, 86, 96, 106], [1, 66, 86, 96, 106, 116], [1, 66, 86, 96, 116, 136], [1, 76, 96, 106, 126, 156], [1, 76, 96, 116, 146, 166], [1, 86, 106, 126, 166, 176], [1, 106, 126, 136, 176, 196], [1, 106, 126, 146, 186, 206], [1, 116, 136, 156, 196, 206], [1, 126, 146, 166, 206, 226], [1, 126, 146, 176, 226, 246], [1, 136, 156, 186, 246, 266], [1, 156, 176, 206, 246, 286], [1, 156, 176, 206, 266, 306], [1, 166, 186, 206, 286, 346], [1, 176, 196, 246, 326, 366], [1, 196, 226, 266, 346, 386], [1, 206, 226, 286, 366, 406], [1, 226, 246, 306, 386, 406]];
       armorIndex = $range("A", "Z", false).$to_a().$index(armorGrade);
       damageInfo = table['$[]'](armorIndex);
-      woundRanks = ["\u7121\u50B7", "LW(\u8EFD\u50B7)", "MW(\u4E2D\u50B7)", "HW(\u91CD\u50B7)", "MO(\u81F4\u547D\u50B7)", "KL(\u6B7B\u4EA1)"];
+      woundRanks = ["無傷", "LW(軽傷)", "MW(中傷)", "HW(重傷)", "MO(致命傷)", "KL(死亡)"];
       woundText = "";
       (function(){var $brk = Opal.new_brk(); try {return $send(damageInfo, 'each_with_index', [], ($$9 = function(rate, index){var self = $$9.$$s || this;
 
@@ -286,7 +286,7 @@
           Opal.brk(nil, $brk)};
         return (woundText = woundRanks['$[]'](index));}, $$9.$$s = self, $$9.$$brk = $brk, $$9.$$arity = 2, $$9))
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
-      return "" + (name) + "(" + (armorGrade) + ")\uFF1A" + (damage) + " \uFF1E " + (woundText);
+      return "" + (name) + "(" + (armorGrade) + ")：" + (damage) + " ＞ " + (woundText);
     }, $MetalHeadExtream_get_SUV_table$8.$$arity = 2);
     
     Opal.def(self, '$get_damageEffect_table', $MetalHeadExtream_get_damageEffect_table$10 = function $$get_damageEffect_table(hitPart, damageStage) {
@@ -308,43 +308,43 @@
       damageText = damageInfos['$[]'](index)['$[]'](1);
       $case = hitPart;
       if ("H"['$===']($case)) {
-      name = "\u5BFE\u4EBA\u640D\u50B7\u52B9\u679C\u8868\uFF1A\u982D\u90E8";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u3010PER\u3011\u306EAR\u3001\u3010PER\u3011\u304C\u30D9\u30FC\u30B9\u30A2\u30D3\u30EA\u30C6\u30A3\u306E\u30B9\u30AD\u30EB\u306ESR\u306BSR1/2\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u3010PER\u3011\u306EAR\u3001\u3010PER\u3011\u304C\u30D9\u30FC\u30B9\u30A2\u30D3\u30EA\u30C6\u30A3\u306E\u30B9\u30AD\u30EB\u306ESR\u306BSR1/4\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\uFF3B\u6B7B\u4EA1\uFF3D\u3002\u982D\u90E8\u304C\u30B5\u30A4\u30D0\u30FC\u306E\u5834\u5408\u306F\uFF3B\u6226\u95D8\u4E0D\u80FD\uFF3D\u3002"]];}
+      name = "対人損傷効果表：頭部";
+      table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正+10。【PER】のAR、【PER】がベースアビリティのスキルのSRにSR1/2のロール修正。"], [3, "ダメージ修正+20。【PER】のAR、【PER】がベースアビリティのスキルのSRにSR1/4のロール修正。"], [4, "ダメージ修正+30。［死亡］。頭部がサイバーの場合は［戦闘不能］。"]];}
       else if ("T"['$===']($case)) {
-      name = "\u5BFE\u4EBA\u640D\u50B7\u52B9\u679C\u8868\uFF1A\u80F4\u90E8";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u3010DEX\u3011\u306EAR\u3001\u3010DEX\u3011\u304C\u30D9\u30FC\u30B9\u30A2\u30D3\u30EA\u30C6\u30A3\u306E\u30B9\u30AD\u30EB\u306ESR\u306BSR1/2\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u3010DEX\u3011\u306EAR\u3001\u3010DEX\u3011\u304C\u30D9\u30FC\u30B9\u30A2\u30D3\u30EA\u30C6\u30A3\u306E\u30B9\u30AD\u30EB\u306ESR\u306BSR1/4\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\uFF3B\u6226\u95D8\u4E0D\u80FD\uFF3D\u3002"]];}
+      name = "対人損傷効果表：胴部";
+      table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正+10。【DEX】のAR、【DEX】がベースアビリティのスキルのSRにSR1/2のロール修正。"], [3, "ダメージ修正+20。【DEX】のAR、【DEX】がベースアビリティのスキルのSRにSR1/4のロール修正。"], [4, "ダメージ修正+30。［戦闘不能］。"]];}
       else if ("A"['$===']($case)) {
-      name = "\u5BFE\u4EBA\u640D\u50B7\u52B9\u679C\u8868\uFF1A\u8155\u90E8";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u640D\u50B7\u3057\u305F\u8155\u3092\u4F7F\u7528\u3059\u308B\u3001\u307E\u305F\u4E21\u8155\u3092\u4F7F\u7528\u3059\u308B\u884C\u52D5\u306BSR1/2\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u640D\u50B7\u3057\u305F\u8155\u3092\u4F7F\u7528\u3059\u308B\u3001\u307E\u305F\u4E21\u8155\u3092\u4F7F\u7528\u3059\u308B\u884C\u52D5\u306BSR1/4\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\u640D\u50B7\u3057\u305F\u8155\u3092\u4F7F\u7528\u3059\u308B\u3001\u307E\u305F\u4E21\u8155\u3092\u4F7F\u7528\u3059\u308B\u884C\u52D5\u4E0D\u53EF\u3002"]];}
+      name = "対人損傷効果表：腕部";
+      table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正+10。損傷した腕を使用する、また両腕を使用する行動にSR1/2のロール修正。"], [3, "ダメージ修正+20。損傷した腕を使用する、また両腕を使用する行動にSR1/4のロール修正。"], [4, "ダメージ修正+30。損傷した腕を使用する、また両腕を使用する行動不可。"]];}
       else if ("L"['$===']($case)) {
-      name = "\u5BFE\u4EBA\u640D\u50B7\u52B9\u679C\u8868\uFF1A\u811A\u90E8";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u3010REF\u3011\u306EAR\u3001\u3010REF\u3011\u304C\u30D9\u30FC\u30B9\u30A2\u30D3\u30EA\u30C6\u30A3\u306E\u30B9\u30AD\u30EB\u306ESR\u306BSR1/2\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u3010REF\u3011\u306EAR\u3001\u3010REF\u3011\u304C\u30D9\u30FC\u30B9\u30A2\u30D3\u30EA\u30C6\u30A3\u306E\u30B9\u30AD\u30EB\u306ESR\u306BSR1/4\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3002\u3010MV\u3011\u304C1/2\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\uFF3B\u6226\u95D8\u4E0D\u80FD\uFF3D\u3002"]];}
+      name = "対人損傷効果表：脚部";
+      table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正+10。【REF】のAR、【REF】がベースアビリティのスキルのSRにSR1/2のロール修正。"], [3, "ダメージ修正+20。【REF】のAR、【REF】がベースアビリティのスキルのSRにSR1/4のロール修正。【MV】が1/2。"], [4, "ダメージ修正+30。［戦闘不能］。"]];}
       else if ("M"['$===']($case)) {
-      name = "\u5FC3\u7406\u640D\u50B7\u52B9\u679C\u8868";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u7126\u308A\u3002\u52B9\u679C\u306F\u7279\u306B\u306A\u3057\u3002\u30B7\u30FC\u30F3\u7D42\u4E86\u3067\u81EA\u7136\u56DE\u5FA9\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u6DF7\u4E71\u30021\u30B7\u30FC\u30F3\u3001\u3059\u3079\u3066\u306E\u30ED\u30FC\u30EB\u304CSR1/2\u3068\u306A\u308B\u3002\u30B7\u30FC\u30F3\u7D42\u4E86\u3067\u81EA\u7136\u56DE\u5FA9\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\u6050\u6016\u30021\u30B7\u30FC\u30F3\u3001\u3059\u3079\u3066\u306E\u30ED\u30FC\u30EB\u304CSR1/4\u3068\u306A\u308B\u3002\u30B7\u30FC\u30F3\u7D42\u4E86\u3067\u81EA\u7136\u56DE\u5FA9\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+50\u3002\u55AA\u5931\u3002\uFF3B\u6226\u95D8\u4E0D\u80FD\uFF3D\u3002\u30B7\u30FC\u30F3\u7D42\u4E86\u3067\u81EA\u7136\u56DE\u5FA9\u3002"]];}
+      name = "心理損傷効果表";
+      table = [[1, "ダメージ修正+10。焦り。効果は特になし。シーン終了で自然回復。"], [2, "ダメージ修正+20。混乱。1シーン、すべてのロールがSR1/2となる。シーン終了で自然回復。"], [3, "ダメージ修正+30。恐怖。1シーン、すべてのロールがSR1/4となる。シーン終了で自然回復。"], [4, "ダメージ修正+50。喪失。［戦闘不能］。シーン終了で自然回復。"]];}
       else if ("E"['$===']($case)) {
-      name = "\u96FB\u5B50\u640D\u50B7\u52B9\u679C\u8868";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u51E6\u7406\u843D\u3061\u3002\u52B9\u679C\u306F\u7279\u306B\u306A\u3057\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u30CE\u30A4\u30BA\u30021\u30B7\u30FC\u30F3\u3001\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306A\u3089\u3059\u3079\u3066\u306E\u30ED\u30FC\u30EB\u304C\u3001\u30A2\u30A4\u30C6\u30E0\u306A\u3089\u305D\u308C\u3092\u4F7F\u7528\u3057\u305F\u30ED\u30FC\u30EB\u304C1/2\u3068\u306A\u308B\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\u6050\u6016\u30021\u30B7\u30FC\u30F3\u3001\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306A\u3089\u3059\u3079\u3066\u306E\u30ED\u30FC\u30EB\u304C\u3001\u30A2\u30A4\u30C6\u30E0\u306A\u3089\u305D\u308C\u3092\u4F7F\u7528\u3057\u305F\u30ED\u30FC\u30EB\u304C1/4\u3068\u306A\u308B\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+50\u3002\u30AF\u30E9\u30C3\u30B7\u30E5\u3002\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306A\u3089\uFF3B\u6226\u95D8\u4E0D\u80FD\uFF3D\u3002\u30A2\u30A4\u30C6\u30E0\u306A\u30891\u30B7\u30CA\u30EA\u30AA\u4E2D\u3001\u4F7F\u7528\u4E0D\u53EF\u3002"]];}
+      name = "電子損傷効果表";
+      table = [[1, "ダメージ修正+10。処理落ち。効果は特になし。"], [2, "ダメージ修正+20。ノイズ。1シーン、キャラクターならすべてのロールが、アイテムならそれを使用したロールが1/2となる。"], [3, "ダメージ修正+30。恐怖。1シーン、キャラクターならすべてのロールが、アイテムならそれを使用したロールが1/4となる。"], [4, "ダメージ修正+50。クラッシュ。キャラクターなら［戦闘不能］。アイテムなら1シナリオ中、使用不可。"]];}
       else if ("B"['$===']($case)) {
-      name = "\u30E1\u30AB\u30CB\u30C3\u30AF\u640D\u50B7\u52B9\u679C\u8868\uFF1A\u672C\u4F53";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63\u30B7\u30D5\u30C81\u3002\u4FEE\u7406\u8CBB\u304C\u30D5\u30EC\u30FC\u30E0\u4FA1\u683C\u306E1/4\u304B\u304B\u308B\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63\u30B7\u30D5\u30C82\u3002\u4FEE\u7406\u8CBB\u304C\u30D5\u30EC\u30FC\u30E0\u4FA1\u683C\u306E1/2\u304B\u304B\u308B\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63\u30B7\u30D5\u30C83\u3002\u79FB\u52D5\u4E0D\u80FD\u3002\u4FEE\u7406\u8CBB\u304C\u30D5\u30EC\u30FC\u30E0\u4FA1\u683C\u3068\u540C\u3058\u3060\u3051\u304B\u304B\u308B\u3002\u8D70\u884C\u4E2D\u306A\u3089\u4E8B\u6545\u8868\u3092\u632F\u308B\u3053\u3068\u3002"]];}
+      name = "メカニック損傷効果表：本体";
+      table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正シフト1。修理費がフレーム価格の1/4かかる。"], [3, "ダメージ修正シフト2。修理費がフレーム価格の1/2かかる。"], [4, "ダメージ修正シフト3。移動不能。修理費がフレーム価格と同じだけかかる。走行中なら事故表を振ること。"]];}
       else if ("P"['$===']($case)) {
-      name = "\u30E1\u30AB\u30CB\u30C3\u30AF\u640D\u50B7\u52B9\u679C\u8868\uFF1A\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u306E\u3010MV\u3011\u304C1/2\u306B\u306A\u308B\u3002\u4FEE\u7406\u8CBB\u304C\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8\u4FA1\u683C\u306E1/4\u304B\u304B\u308B\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u306E\u3010MV\u3011\u304C1/4\u306B\u306A\u308B\u3002\u4FEE\u7406\u8CBB\u304C\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8\u4FA1\u683C\u306E1/2\u304B\u304B\u308B\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\u79FB\u52D5\u4E0D\u80FD\u3002\u4FEE\u7406\u8CBB\u304C\u30D1\u30EF\u30FC\u30D7\u30E9\u30F3\u30C8\u4FA1\u683C\u3068\u540C\u3058\u3060\u3051\u304B\u304B\u308B\u3002\u8D70\u884C\u4E2D\u306A\u3089\u4E8B\u6545\u8868\u3092\u632F\u308B\u3053\u3068\u3002"]];}
+      name = "メカニック損傷効果表：パワープラント";
+      table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正+10。メカニックの【MV】が1/2になる。修理費がパワープラント価格の1/4かかる。"], [3, "ダメージ修正+20。メカニックの【MV】が1/4になる。修理費がパワープラント価格の1/2かかる。"], [4, "ダメージ修正+30。移動不能。修理費がパワープラント価格と同じだけかかる。走行中なら事故表を振ること。"]];}
       else if ("D"['$===']($case)) {
-      name = "\u30E1\u30AB\u30CB\u30C3\u30AF\u640D\u50B7\u52B9\u679C\u8868\uFF1A\u30C9\u30E9\u30A4\u30D6";
-      table = [[1, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002"], [2, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+10\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u306E\u3010REF\u3011\u304C1/2\u306B\u306A\u308B\u3002\uFF3B\u30E1\u30AB\u30CB\u30C3\u30AF\uFF3D\u30B9\u30AD\u30EB\u306BSR1/2\u306E\u4FEE\u6B63\u3002\u4FEE\u7406\u8CBB\u304C\u30C9\u30E9\u30A4\u30D6\u4FA1\u683C\u306E1/4\u304B\u304B\u308B\u3002"], [3, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+20\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u306E\u3010REF\u3011\u304C1/2\u306B\u306A\u308B\u3002\uFF3B\u30E1\u30AB\u30CB\u30C3\u30AF\uFF3D\u30B9\u30AD\u30EB\u306BSR1/4\u306E\u4FEE\u6B63\u3002\u4FEE\u7406\u8CBB\u304C\u30C9\u30E9\u30A4\u30D6\u4FA1\u683C\u306E1/2\u304B\u304B\u308B\u3002"], [4, "\u30C0\u30E1\u30FC\u30B8\u4FEE\u6B63+30\u3002\u79FB\u52D5\u4E0D\u80FD\u3002\u4FEE\u7406\u8CBB\u304C\u30C9\u30E9\u30A4\u30D6\u4FA1\u683C\u3068\u540C\u3058\u3060\u3051\u304B\u304B\u308B\u3002\u8D70\u884C\u4E2D\u306A\u3089\u4E8B\u6545\u8868\u3092\u632F\u308B\u3053\u3068\u3002"]];}
+      name = "メカニック損傷効果表：ドライブ";
+      table = [[1, "ダメージ修正+10。"], [2, "ダメージ修正+10。メカニックの【REF】が1/2になる。［メカニック］スキルにSR1/2の修正。修理費がドライブ価格の1/4かかる。"], [3, "ダメージ修正+20。メカニックの【REF】が1/2になる。［メカニック］スキルにSR1/4の修正。修理費がドライブ価格の1/2かかる。"], [4, "ダメージ修正+30。移動不能。修理費がドライブ価格と同じだけかかる。走行中なら事故表を振ること。"]];}
       else {return nil};
       text = self.$get_table_by_number(damageIndex, table);
-      return "" + (name) + (damageText) + " \uFF1E " + (text);
+      return "" + (name) + (damageText) + " ＞ " + (text);
     }, $MetalHeadExtream_get_damageEffect_table$10.$$arity = 2);
     
     Opal.def(self, '$get_critical_table', $MetalHeadExtream_get_critical_table$12 = function $$get_critical_table(roc) {
       var self = this, name = nil, table = nil;
 
       
-      name = "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u8868";
-      table = [[1, "\u7279\u306B\u8FFD\u52A0\u88AB\u5BB3\u306F\u767A\u751F\u3057\u306A\u3044\u3002"], [2, "\u5BFE\u8C61\u306F\u30D0\u30E9\u30F3\u30B9\u3092\u5D29\u3059\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u5BFE\u8C61\u306F\u547D\u4E2D\u30ED\u30FC\u30EB\u306BSR1/2\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3092\u53D7\u3051\u308B\u3002"], [3, "\u5BFE\u8C61\u306B\u9699\u3092\u4F5C\u308B\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u5BFE\u8C61\u306F\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u306BSR1/2\u306E\u30ED\u30FC\u30EB\u4FEE\u6B63\u3092\u53D7\u3051\u308B\u3002"], [4, "\u6FC0\u3057\u3044\u4E00\u6483\u3002\u6700\u7D42\u706B\u529B\u306B+20\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u3092\u7B97\u51FA\u3059\u308B\u3053\u3068\u3002"], [5, "\u591A\u5927\u306A\u30C0\u30E1\u30FC\u30B8\u3002\u6700\u7D42\u706B\u529B\u306B+20\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u3092\u7B97\u51FA\u3059\u308B\u3053\u3068\u3002"], [6, "\u5F31\u70B9\u306B\u76F4\u6483\u3002\u5BFE\u8C61\u306E\u88C5\u7532\u5024\u3092\u7121\u8996\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u3092\u7B97\u51FA\u3059\u308B\u3053\u3068\u3002"], [7, "\u52B9\u679C\u7684\u306A\u4E00\u6483\u3002\u5BFE\u8C61\u306E\u53D7\u3051\u308B\u640D\u50B7\u6BB5\u968E\u3092\u30B7\u30D5\u30C81\u3059\u308B\u3002"], [8, "\u81F4\u547D\u7684\u306A\u4E00\u6483\u3002\u5BFE\u8C61\u306E\u53D7\u3051\u308B\u640D\u50B7\u6BB5\u968E\u3092\u30B7\u30D5\u30C82\u3059\u308B\u3002"], [9, "\u4E2D\u67A2\u306B\u76F4\u6483\u3002\u5BFE\u8C61\u306E\u3010SUV\u3011\u30923\u30E9\u30F3\u30AF\u4F4E\u3044\u3082\u306E\u3068\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u3092\u7B97\u51FA\u3059\u308B\u3002"], [10, "\u4E2D\u67A2\u3092\u7834\u58CA\u3002\u5BFE\u8C61\u306E\u88C5\u7532\u5024\u3092\u7121\u8996\u3057\u3001\u3010SUV\u3011\u30923\u30E9\u30F3\u30AF\u4F4E\u3044\u3082\u306E\u3068\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u3092\u7B97\u51FA\u3059\u308B\u3002"]];
+      name = "クリティカル表";
+      table = [[1, "特に追加被害は発生しない。"], [2, "対象はバランスを崩す。クリンナッププロセスまで、対象は命中ロールにSR1/2のロール修正を受ける。"], [3, "対象に隙を作る。クリンナッププロセスまで、対象はリアクションにSR1/2のロール修正を受ける。"], [4, "激しい一撃。最終火力に+20してダメージを算出すること。"], [5, "多大なダメージ。最終火力に+20してダメージを算出すること。"], [6, "弱点に直撃。対象の装甲値を無視してダメージを算出すること。"], [7, "効果的な一撃。対象の受ける損傷段階をシフト1する。"], [8, "致命的な一撃。対象の受ける損傷段階をシフト2する。"], [9, "中枢に直撃。対象の【SUV】を3ランク低いものとしてダメージを算出する。"], [10, "中枢を破壊。対象の装甲値を無視し、【SUV】を3ランク低いものとしてダメージを算出する。"]];
       return self.$get_MetalHeadExtream_1d10_table_result(name, table, roc);
     }, $MetalHeadExtream_get_critical_table$12.$$arity = 1);
     
@@ -354,17 +354,17 @@
       
       $case = damageType;
       if ("G"['$===']($case)) {
-      name = "\u683C\u95D8\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u8868";
-      table = [[1, "\u4F53\u52E2\u3092\u5D29\u3059\u3002\u305D\u306E\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [2, "\u4F53\u52E2\u3092\u5D29\u3059\u3002\u305D\u306E\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [3, "\u4F53\u52E2\u3092\u5D29\u3059\u3002\u305D\u306E\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [4, "\u8EE2\u5012\u3002\u683C\u95D8\u56DE\u907F\u3068\u6A5F\u52D5\u56DE\u907F\u306BSR1/4\u3001\u3010MV\u3011\u304C\u534A\u5206\u306B\u3002"], [5, "\u8EE2\u5012\u3002\u683C\u95D8\u56DE\u907F\u3068\u6A5F\u52D5\u56DE\u907F\u306BSR1/4\u3001\u3010MV\u3011\u304C\u534A\u5206\u306B\u3002"], [6, "\u8EE2\u5012\u3002\u683C\u95D8\u56DE\u907F\u3068\u6A5F\u52D5\u56DE\u907F\u306BSR1/4\u3001\u3010MV\u3011\u304C\u534A\u5206\u306B\u3002"], [7, "\u6B66\u5668\u304C\u8DB3\u4E0B\uFF080m\u96E2\u308C\u305F\u3068\u3053\u308D\uFF09\u306B\u843D\u3061\u308B\u3002\u7D20\u624B\u306E\u3068\u304D\u306F\u4F55\u3082\u306A\u3057\u3002"], [8, "\u6B66\u5668\u304C\u8DB3\u4E0B\uFF080m\u96E2\u308C\u305F\u3068\u3053\u308D\uFF09\u306B\u843D\u3061\u308B\u3002\u7D20\u624B\u306E\u3068\u304D\u306F\u4F55\u3082\u306A\u3057\u3002"], [9, "\u6B66\u5668\u304C5m\u96E2\u308C\u305F\u3068\u3053\u308D\u306B\u843D\u3061\u308B\u3002\u7D20\u624B\u306E\u3068\u304D\u306F\u95A2\u4FC2\u306A\u3044\u3002"], [10, "\u4F7F\u7528\u6B66\u5668\u304C\u58CA\u308C\u30011\u30B7\u30FC\u30F3\u4F7F\u7528\u4E0D\u53EF\u3002"]];}
+      name = "格闘アクシデント表";
+      table = [[1, "体勢を崩す。その攻撃は失敗する。"], [2, "体勢を崩す。その攻撃は失敗する。"], [3, "体勢を崩す。その攻撃は失敗する。"], [4, "転倒。格闘回避と機動回避にSR1/4、【MV】が半分に。"], [5, "転倒。格闘回避と機動回避にSR1/4、【MV】が半分に。"], [6, "転倒。格闘回避と機動回避にSR1/4、【MV】が半分に。"], [7, "武器が足下（0m離れたところ）に落ちる。素手のときは何もなし。"], [8, "武器が足下（0m離れたところ）に落ちる。素手のときは何もなし。"], [9, "武器が5m離れたところに落ちる。素手のときは関係ない。"], [10, "使用武器が壊れ、1シーン使用不可。"]];}
       else if ("S"['$===']($case)) {
-      name = "\u5C04\u6483\uFF0F\u6295\u64F2\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u8868";
-      table = [[1, "\u3055\u3055\u3044\u306A\u30DF\u30B9\u3002\u305D\u306E\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [2, "\u3055\u3055\u3044\u306A\u30DF\u30B9\u3002\u305D\u306E\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [3, "\u3055\u3055\u3044\u306A\u30DF\u30B9\u3002\u305D\u306E\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [4, "\u5C04\u6483\u6B66\u5668\u306F\u30B8\u30E3\u30E0\u3002\u6295\u64F2\u6B66\u5668\u306A\u3089\u3070\u6B66\u5668\u304C\u53D6\u308A\u51FA\u305B\u306A\u3044\u306A\u3069\u3001\u30DE\u30A4\u30CA\u30FC\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u6D88\u8CBB\u3057\u306A\u3051\u308C\u3070\u305D\u306E\u6B66\u5668\u3092\u4F7F\u7528\u3067\u304D\u306A\u3044\u3002"], [5, "\u5C04\u6483\u6B66\u5668\u306F\u30B8\u30E3\u30E0\u3002\u6295\u64F2\u6B66\u5668\u306A\u3089\u3070\u6B66\u5668\u304C\u53D6\u308A\u51FA\u305B\u306A\u3044\u306A\u3069\u3001\u30DE\u30A4\u30CA\u30FC\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u6D88\u8CBB\u3057\u306A\u3051\u308C\u3070\u305D\u306E\u6B66\u5668\u3092\u4F7F\u7528\u3067\u304D\u306A\u3044\u3002"], [6, "\u5C04\u6483\u6B66\u5668\u306F\u30B8\u30E3\u30E0\u3002\u6295\u64F2\u6B66\u5668\u306A\u3089\u3070\u6B66\u5668\u304C\u53D6\u308A\u51FA\u305B\u306A\u3044\u306A\u3069\u3001\u30DE\u30A4\u30CA\u30FC\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u6D88\u8CBB\u3057\u306A\u3051\u308C\u3070\u305D\u306E\u6B66\u5668\u3092\u4F7F\u7528\u3067\u304D\u306A\u3044\u3002"], [7, "\u6545\u969C\u3002\u30E1\u30B8\u30E3\u30FC\u30A2\u30AF\u30B7\u30E7\u30F3\u3067\u3010DEX\u3011\u306ESR1\u306E\u30ED\u30FC\u30EB\u306B\u6210\u529F\u3057\u306A\u3051\u308C\u3070\u3001\u305D\u306E\u6B66\u5668\u3092\u4F7F\u7528\u3067\u304D\u306A\u3044\u3002"], [8, "\u6545\u969C\u3002\u30E1\u30B8\u30E3\u30FC\u30A2\u30AF\u30B7\u30E7\u30F3\u3067\u3010DEX\u3011\u306ESR1\u306E\u30ED\u30FC\u30EB\u306B\u6210\u529F\u3057\u306A\u3051\u308C\u3070\u3001\u305D\u306E\u6B66\u5668\u3092\u4F7F\u7528\u3067\u304D\u306A\u3044\u3002"], [9, "\u7834\u58CA\u3002\u4EE5\u5F8C\u3001\u305D\u306E\u6B66\u5668\u306F\u4F7F\u7528\u3067\u304D\u306A\u3044\u3002"], [10, "\u6B66\u5668\u306E\u66B4\u767A\u3002\u56FA\u5B9A\u706B\u529B100\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u3001\u88C5\u7532\u5024\u7121\u8996\u3067\u6B66\u5668\u3092\u6301\u3063\u3066\u3044\u305F\u8155\uFF08\u4E21\u624B\u306A\u3089\u4E21\u624B\uFF09\u3001\u307E\u305F\u306F\u5175\u88C5\u30FB\u8CA8\u7269\u306B\u53D7\u3051\u308B\u3002"]];}
+      name = "射撃／投擲アクシデント表";
+      table = [[1, "ささいなミス。その攻撃は失敗する。"], [2, "ささいなミス。その攻撃は失敗する。"], [3, "ささいなミス。その攻撃は失敗する。"], [4, "射撃武器はジャム。投擲武器ならば武器が取り出せないなど、マイナーアクションを消費しなければその武器を使用できない。"], [5, "射撃武器はジャム。投擲武器ならば武器が取り出せないなど、マイナーアクションを消費しなければその武器を使用できない。"], [6, "射撃武器はジャム。投擲武器ならば武器が取り出せないなど、マイナーアクションを消費しなければその武器を使用できない。"], [7, "故障。メジャーアクションで【DEX】のSR1のロールに成功しなければ、その武器を使用できない。"], [8, "故障。メジャーアクションで【DEX】のSR1のロールに成功しなければ、その武器を使用できない。"], [9, "破壊。以後、その武器は使用できない。"], [10, "武器の暴発。固定火力100のダメージを、装甲値無視で武器を持っていた腕（両手なら両手）、または兵装・貨物に受ける。"]];}
       else if ("M"['$===']($case)) {
-      name = "\u5FC3\u7406\u653B\u6483\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u8868";
-      table = [[1, "\u96C6\u4E2D\u5931\u6557\u3002\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [2, "\u96C6\u4E2D\u5931\u6557\u3002\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [3, "\u96C6\u4E2D\u5931\u6557\u3002\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [4, "\u601D\u8003\u30CE\u30A4\u30BA\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u307E\u3067\u3059\u3079\u3066\u306E\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u306BSR1/2\u3002"], [5, "\u601D\u8003\u30CE\u30A4\u30BA\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u307E\u3067\u3059\u3079\u3066\u306E\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u306BSR1/2\u3002"], [6, "\u601D\u8003\u30CE\u30A4\u30BA\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u307E\u3067\u3059\u3079\u3066\u306E\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u306BSR1/2\u3002"], [7, "EX\u306E\u66B4\u8D70\u3002\u982D\u90E8\u306B\u88C5\u7532\u5024\u7121\u8996\u3001\u56FA\u5B9A\u706B\u529B60\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002"], [8, "EX\u306E\u66B4\u8D70\u3002\u982D\u90E8\u306B\u88C5\u7532\u5024\u7121\u8996\u3001\u56FA\u5B9A\u706B\u529B60\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002"], [9, "\u611F\u60C5\u66B4\u8D70\u3002\u653B\u6483\u306B\u4F7F\u7528\u3057\u305F\u30DE\u30CB\u30E5\u30FC\u30D0\u304C1\u30B7\u30FC\u30F3\u4F7F\u7528\u4E0D\u53EF\u3002"], [10, "\u30C8\u30E9\u30A6\u30DE\u306E\u518D\u73FE\u3002\u88C5\u7532\u5024\u7121\u8996\u3001\u56FA\u5B9A\u706B\u529B100\u306E\u5FC3\u7406\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002"]];}
+      name = "心理攻撃アクシデント表";
+      table = [[1, "集中失敗。攻撃は失敗する。"], [2, "集中失敗。攻撃は失敗する。"], [3, "集中失敗。攻撃は失敗する。"], [4, "思考ノイズ。クリンナップまですべてのリアクションにSR1/2。"], [5, "思考ノイズ。クリンナップまですべてのリアクションにSR1/2。"], [6, "思考ノイズ。クリンナップまですべてのリアクションにSR1/2。"], [7, "EXの暴走。頭部に装甲値無視、固定火力60のダメージを受ける。"], [8, "EXの暴走。頭部に装甲値無視、固定火力60のダメージを受ける。"], [9, "感情暴走。攻撃に使用したマニューバが1シーン使用不可。"], [10, "トラウマの再現。装甲値無視、固定火力100の心理ダメージを受ける。"]];}
       else if ("E"['$===']($case)) {
-      name = "\u96FB\u5B50\u653B\u6483\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u8868";
-      table = [[1, "\u30B7\u30E7\u30C3\u30AF\u3002\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [2, "\u30B7\u30E7\u30C3\u30AF\u3002\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [3, "\u30B7\u30E7\u30C3\u30AF\u3002\u653B\u6483\u306F\u5931\u6557\u3059\u308B\u3002"], [4, "\u30CE\u30A4\u30BA\u767A\u751F\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u307E\u3067\u96FB\u5B50\u653B\u6483\u306E\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u306BSR1/2\u3002"], [5, "\u30CE\u30A4\u30BA\u767A\u751F\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u307E\u3067\u96FB\u5B50\u653B\u6483\u306E\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u306BSR1/2\u3002"], [6, "\u30CE\u30A4\u30BA\u767A\u751F\u3002\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u307E\u3067\u96FB\u5B50\u653B\u6483\u306E\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u306BSR1/2\u3002"], [7, "\u30BD\u30D5\u30C8\u30A6\u30A7\u30A2\u969C\u5BB3\u3002\u653B\u6483\u306B\u4F7F\u7528\u3057\u305F\u30BD\u30D5\u30C8\u304C1\u30B7\u30FC\u30F3\u4F7F\u7528\u4E0D\u53EF\u3002"], [8, "\u30BD\u30D5\u30C8\u30A6\u30A7\u30A2\u969C\u5BB3\u3002\u653B\u6483\u306B\u4F7F\u7528\u3057\u305F\u30BD\u30D5\u30C8\u304C1\u30B7\u30FC\u30F3\u4F7F\u7528\u4E0D\u53EF\u3002"], [9, "\u30CF\u30FC\u30C9\u30A6\u30A7\u30A2\u969C\u5BB3\u3002\u88C5\u7532\u5024\u7121\u8996\u3001\u56FA\u5B9A\u706B\u529B80\u306E\u96FB\u5B50\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002"], [10, "\u4FE1\u53F7\u9006\u6D41\u3002\u88C5\u7532\u5024\u7121\u8996\u3001\u56FA\u5B9A\u706B\u529B100\u306E\u5FC3\u7406\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002"]];}
+      name = "電子攻撃アクシデント表";
+      table = [[1, "ショック。攻撃は失敗する。"], [2, "ショック。攻撃は失敗する。"], [3, "ショック。攻撃は失敗する。"], [4, "ノイズ発生。クリンナップまで電子攻撃のリアクションにSR1/2。"], [5, "ノイズ発生。クリンナップまで電子攻撃のリアクションにSR1/2。"], [6, "ノイズ発生。クリンナップまで電子攻撃のリアクションにSR1/2。"], [7, "ソフトウェア障害。攻撃に使用したソフトが1シーン使用不可。"], [8, "ソフトウェア障害。攻撃に使用したソフトが1シーン使用不可。"], [9, "ハードウェア障害。装甲値無視、固定火力80の電子ダメージを受ける。"], [10, "信号逆流。装甲値無視、固定火力100の心理ダメージを受ける。"]];}
       else {return nil};
       return self.$get_MetalHeadExtream_1d10_table_result(name, table, roc);
     }, $MetalHeadExtream_get_accident_table$13.$$arity = 2);
@@ -375,14 +375,14 @@
       
       $case = locationType;
       if ("A"['$===']($case)) {
-      name = "\u7A7A\u4E2D\u30E1\u30AB\u30CB\u30C3\u30AF\u4E8B\u6545\u8868";
-      table = [[3, "\u5175\u88C5\uFF0F\u8CA8\u7269\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u304C\u88C5\u5099\u3057\u3066\u3044\u308B\u4E00\u756AENC\u306E\u5927\u304D\u3044\u6B66\u5668\u3072\u3068\u3064\u304C\u6226\u95D8\u7D42\u4E86\u6642\u307E\u3067\u4F7F\u7528\u4E0D\u80FD\u306B\u306A\u308B\u3002\u6B66\u5668\u304C\u306A\u3044\u5834\u5408\u306F\u30E1\u30AB\u30CB\u30C3\u30AF\u30AA\u30D7\u30B7\u30E7\u30F3\u304C\u4F7F\u7528\u4E0D\u80FD\u306B\u306A\u308A\u3001\u305D\u308C\u3082\u306A\u3044\u5834\u5408\u306F\u4E00\u756AENC\u306E\u91CD\u3044\u8CA8\u7269\uFF08\u4E57\u5BA2\u3092\u306E\u305E\u304F\uFF09\u304C\u5931\u308F\u308C\u308B\u3002"], [6, "\u64CD\u4F5C\u4E0D\u80FD\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306BMW\u30C0\u30E1\u30FC\u30B8\u3002\u64CD\u7E26\u8005\u306F\u9069\u5207\u306A\uFF3B\u30E1\u30AB\u30CB\u30C3\u30AF\uFF3D\u30B9\u30AD\u30EB\u3067SR1/4\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3044\u3001\u6210\u529F\u3057\u305F\u3089\u4F53\u52E2\u3092\u7ACB\u3066\u76F4\u305B\u308B\u3002\u5931\u6557\u3057\u305F\u5834\u5408\u3001\u6B21\u306E\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u56DE\u907F\u3092\u3075\u304F\u3081\u305F\u4E00\u5207\u306E\u884C\u52D5\u3092\u53D6\u308B\u3053\u3068\u304C\u3067\u304D\u306A\u3044\u3002"], [8, "\u4E0D\u6642\u7740\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306BHW\u30C0\u30E1\u30FC\u30B8\u3002\u6B21\u306E\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u56DE\u5FA9\u3092\u3075\u304F\u3081\u305F\u4E00\u5207\u306E\u884C\u52D5\u3092\u53D6\u308B\u3053\u3068\u304C\u3067\u304D\u306A\u3044\u3002"], [9, "\u589C\u843D\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306BMO\u30C0\u30E1\u30FC\u30B8\u3002\u3059\u3079\u3066\u306E\u4E57\u54E1\u306F\u3001\u589C\u843D\u306E\u30B7\u30E7\u30C3\u30AF\u306B\u3088\u3063\u3066\u30E9\u30F3\u30C0\u30E0\u306A\u90E8\u4F4D\u306B\u3008\u7269\u3009155\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u3053\u306E\u30C0\u30E1\u30FC\u30B8\u306F\u6A5F\u52D5\u56DE\u907F\u53EF\u80FD\u3067\u3042\u308B\u3002"], [10, "\u7206\u767A\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u304C\u7206\u767A\u3057\u3001\u5B8C\u5168\u306B\u7834\u58CA\u3055\u308C\u308B\u3002\u3059\u3079\u3066\u306E\u4E57\u54E1\u306F\u3001\u7206\u767A\u3068\u843D\u4E0B\u306B\u3088\u3063\u3066\u80F4\u4F53\u306B\u3008\u71B1\u3009205\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u3053\u306E\u30C0\u30E1\u30FC\u30B8\u306F\u6A5F\u52D5\u56DE\u907F\u53EF\u80FD\u3060\u304C\u3001SR\u306B1/4\u306E\u4FEE\u6B63\u304C\u3042\u308B\u3002"]];}
+      name = "空中メカニック事故表";
+      table = [[3, "兵装／貨物。メカニックが装備している一番ENCの大きい武器ひとつが戦闘終了時まで使用不能になる。武器がない場合はメカニックオプションが使用不能になり、それもない場合は一番ENCの重い貨物（乗客をのぞく）が失われる。"], [6, "操作不能。メカニック本体にMWダメージ。操縦者は適切な［メカニック］スキルでSR1/4のロールを行い、成功したら体勢を立て直せる。失敗した場合、次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [8, "不時着。メカニック本体にHWダメージ。次のクリンナッププロセスまで、回復をふくめた一切の行動を取ることができない。"], [9, "墜落。メカニック本体にMOダメージ。すべての乗員は、墜落のショックによってランダムな部位に〈物〉155の固定ダメージを受ける。このダメージは機動回避可能である。"], [10, "爆発。メカニックが爆発し、完全に破壊される。すべての乗員は、爆発と落下によって胴体に〈熱〉205の固定ダメージを受ける。このダメージは機動回避可能だが、SRに1/4の修正がある。"]];}
       else if ("S"['$===']($case)) {
-      name = "\u6C34\u4E0A\uFF0F\u6C34\u4E2D\u30E1\u30AB\u30CB\u30C3\u30AF\u4E8B\u6545\u8868";
-      table = [[3, "\u6A2A\u63FA\u308C\u3002\u6B21\u306E\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u3053\u306E\u30E1\u30AB\u30CB\u30C3\u30AF\u306B\u4E57\u3063\u3066\u3044\u308B\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306E\u884C\u3046\u3059\u3079\u3066\u306E\uFF3B\u30E1\u30AB\u30CB\u30C3\u30AF\uFF3D\u30ED\u30FC\u30EB\u306B1/2\u306E\u4FEE\u6B63\u304C\u4E0E\u3048\u3089\u308C\u308B\u3002"], [6, "\u5175\u88C5\uFF0F\u8CA8\u7269\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u304C\u88C5\u5099\u3057\u3066\u3044\u308B\u4E00\u756AENC\u306E\u5927\u304D\u3044\u6B66\u5668\u3072\u3068\u3064\u304C\u6226\u95D8\u7D42\u4E86\u6642\u307E\u3067\u4F7F\u7528\u4E0D\u80FD\u306B\u306A\u308B\u3002\u6B66\u5668\u304C\u306A\u3044\u5834\u5408\u306F\u30E1\u30AB\u30CB\u30C3\u30AF\u30AA\u30D7\u30B7\u30E7\u30F3\u304C\u4F7F\u7528\u4E0D\u80FD\u306B\u306A\u308A\u3001\u305D\u308C\u3082\u306A\u3044\u5834\u5408\u306F\u4E00\u756AENC\u306E\u91CD\u3044\u8CA8\u7269\uFF08\u4E57\u5BA2\u3092\u306E\u305E\u304F\uFF09\u304C\u5931\u308F\u308C\u308B\u3002"], [8, "\u6A2A\u8EE2\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306BMW\u30C0\u30E1\u30FC\u30B8\u3002\u64CD\u7E26\u8005\u306F\u9069\u5207\u306A\uFF3B\u30E1\u30AB\u30CB\u30C3\u30AF\uFF3D\u30B9\u30AD\u30EB\u3067SR1/4\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3044\u3001\u6210\u529F\u3057\u305F\u3089\u4F53\u52E2\u3092\u7ACB\u3066\u76F4\u305B\u308B\u3002\u5931\u6557\u3057\u305F\u5834\u5408\u3001\u6B21\u306E\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u56DE\u907F\u3092\u3075\u304F\u3081\u305F\u4E00\u5207\u306E\u884C\u52D5\u3092\u53D6\u308B\u3053\u3068\u304C\u3067\u304D\u306A\u3044\u3002"], [9, "\u6FC0\u7A81\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306B\u3008\u7269\u3009255\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3002"], [10, "\u7206\u767A\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u304C\u7206\u767A\u3057\u3001\u5B8C\u5168\u306B\u7834\u58CA\u3055\u308C\u308B\u3002\u3059\u3079\u3066\u306E\u4E57\u54E1\u306F\u3001\u7206\u767A\u306B\u3088\u3063\u3066\u80F4\u4F53\u306B\u3008\u71B1\u3009155\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u3053\u306E\u30C0\u30E1\u30FC\u30B8\u306F\u6A5F\u52D5\u56DE\u907F\u53EF\u80FD\u3060\u304C\u3001SR\u306B1/4\u306E\u4FEE\u6B63\u304C\u3042\u308B\u3002"]];}
+      name = "水上／水中メカニック事故表";
+      table = [[3, "横揺れ。次のクリンナッププロセスまで、このメカニックに乗っているキャラクターの行うすべての［メカニック］ロールに1/2の修正が与えられる。"], [6, "兵装／貨物。メカニックが装備している一番ENCの大きい武器ひとつが戦闘終了時まで使用不能になる。武器がない場合はメカニックオプションが使用不能になり、それもない場合は一番ENCの重い貨物（乗客をのぞく）が失われる。"], [8, "横転。メカニック本体にMWダメージ。操縦者は適切な［メカニック］スキルでSR1/4のロールを行い、成功したら体勢を立て直せる。失敗した場合、次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [9, "激突。メカニック本体に〈物〉255の固定ダメージ。"], [10, "爆発。メカニックが爆発し、完全に破壊される。すべての乗員は、爆発によって胴体に〈熱〉155の固定ダメージを受ける。このダメージは機動回避可能だが、SRに1/4の修正がある。"]];}
       else if ("L"['$===']($case)) {
-      name = "\u5730\u4E0A\u30E1\u30AB\u30CB\u30C3\u30AF\u4E8B\u6545\u8868";
-      table = [[3, "\u63A5\u89E6\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306BLW\u30C0\u30E1\u30FC\u30B8\u3002"], [6, "\u5175\u88C5\uFF0F\u8CA8\u7269\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u304C\u88C5\u5099\u3057\u3066\u3044\u308B\u4E00\u756AENC\u306E\u5927\u304D\u3044\u6B66\u5668\u3072\u3068\u3064\u304C\u6226\u95D8\u7D42\u4E86\u6642\u307E\u3067\u4F7F\u7528\u4E0D\u80FD\u306B\u306A\u308B\u3002\u6B66\u5668\u304C\u306A\u3044\u5834\u5408\u306F\u30E1\u30AB\u30CB\u30C3\u30AF\u30AA\u30D7\u30B7\u30E7\u30F3\u304C\u4F7F\u7528\u4E0D\u80FD\u306B\u306A\u308A\u3001\u305D\u308C\u3082\u306A\u3044\u5834\u5408\u306F\u4E00\u756AENC\u306E\u91CD\u3044\u8CA8\u7269\uFF08\u4E57\u5BA2\u3092\u306E\u305E\u304F\uFF09\u304C\u5931\u308F\u308C\u308B\u3002"], [8, "\u30B9\u30D4\u30F3\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306BMW\u30C0\u30E1\u30FC\u30B8\u3002\u64CD\u7E26\u8005\u306F\u9069\u5207\u306A\uFF3B\u30E1\u30AB\u30CB\u30C3\u30AF\uFF3D\u30B9\u30AD\u30EB\u3067SR1/4\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3044\u3001\u6210\u529F\u3057\u305F\u3089\u4F53\u52E2\u3092\u7ACB\u3066\u76F4\u305B\u308B\u3002\u5931\u6557\u3057\u305F\u5834\u5408\u3001\u6B21\u306E\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u56DE\u907F\u3092\u3075\u304F\u3081\u305F\u4E00\u5207\u306E\u884C\u52D5\u3092\u53D6\u308B\u3053\u3068\u304C\u3067\u304D\u306A\u3044\u3002"], [9, "\u6FC0\u7A81\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u672C\u4F53\u306B\u3008\u7269\u3009255\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3002\u6B21\u306E\u30AF\u30EA\u30F3\u30CA\u30C3\u30D7\u30D7\u30ED\u30BB\u30B9\u307E\u3067\u3001\u56DE\u907F\u3092\u3075\u304F\u3081\u305F\u4E00\u5207\u306E\u884C\u52D5\u3092\u53D6\u308B\u3053\u3068\u304C\u3067\u304D\u306A\u3044\u3002"], [10, "\u7206\u767A\u3002\u30E1\u30AB\u30CB\u30C3\u30AF\u304C\u7206\u767A\u3057\u3001\u5B8C\u5168\u306B\u7834\u58CA\u3055\u308C\u308B\u3002\u3059\u3079\u3066\u306E\u4E57\u54E1\u306F\u3001\u7206\u767A\u306B\u3088\u3063\u3066\u80F4\u4F53\u306B\u3008\u71B1\u3009155\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u3053\u306E\u30C0\u30E1\u30FC\u30B8\u306F\u6A5F\u52D5\u56DE\u907F\u53EF\u80FD\u3060\u304C\u3001SR\u306B1/4\u306E\u4FEE\u6B63\u304C\u3042\u308B\u3002"]];}
+      name = "地上メカニック事故表";
+      table = [[3, "接触。メカニック本体にLWダメージ。"], [6, "兵装／貨物。メカニックが装備している一番ENCの大きい武器ひとつが戦闘終了時まで使用不能になる。武器がない場合はメカニックオプションが使用不能になり、それもない場合は一番ENCの重い貨物（乗客をのぞく）が失われる。"], [8, "スピン。メカニック本体にMWダメージ。操縦者は適切な［メカニック］スキルでSR1/4のロールを行い、成功したら体勢を立て直せる。失敗した場合、次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [9, "激突。メカニック本体に〈物〉255の固定ダメージ。次のクリンナッププロセスまで、回避をふくめた一切の行動を取ることができない。"], [10, "爆発。メカニックが爆発し、完全に破壊される。すべての乗員は、爆発によって胴体に〈熱〉155の固定ダメージを受ける。このダメージは機動回避可能だが、SRに1/4の修正がある。"]];}
       else {return nil};
       dice = self.$get_roc_dice(roc, 10);
       diceText = dice.$to_s();
@@ -392,7 +392,7 @@
       if ($truthy($rb_gt(correction, 0))) {
         diceText = "" + (dice) + "[" + (diceText) + "+" + (correction) + "]"};
       tableText = self.$get_table_by_number(dice, table);
-      text = "" + (name) + "(" + (diceText) + ") \uFF1E " + (tableText);
+      text = "" + (name) + "(" + (diceText) + ") ＞ " + (tableText);
       return text;
     }, $MetalHeadExtream_get_mechanicAccident_table$14.$$arity = 3);
     
@@ -400,8 +400,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u30B9\u30C8\u30E9\u30C6\u30B8\u30FC\u30A4\u30D9\u30F3\u30C8\u30C1\u30E3\u30FC\u30C8";
-      table = [[50, "\u7279\u306B\u4F55\u4E8B\u3082\u306A\u304B\u3063\u305F\u3002"], [53, "\u30B9\u30B3\u30FC\u30EB\u3002\u7A2E\u5225\uFF1A\u30EC\u30FC\u30B6\u30FC\u3092\u88C5\u5099\u3057\u3066\u3044\u308B\u90E8\u968A\u306E\u6226\u529B\u306F\u3053\u306E\u30BF\u30FC\u30F3\u534A\u6E1B\u3059\u308B\u3002\u3053\u306E\u52B9\u679C\u306F\u91CD\u8907\u3057\u306A\u3044\u3002"], [55, "\u305F\u3060\u3088\u3046\u4E0D\u5B89\u3002\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306FWIL\u306EAR1\u3092\u884C\u3044\u3001\u5931\u6557\u3059\u308B\u3068\u58EB\u6C17\u306E10%\u3092\u5931\u3046\u3002"], [57, "\u72D9\u6483\uFF01\u3000\u53F8\u4EE4\u5B98\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u80F4\u4F53\u306B\u3008\u7269\u3009155\u70B9\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u6A5F\u52D5\u56DE\u907F\u306F\u53EF\u80FD\u3002"], [60, "\u6575\u306E\u731B\u70C8\u306A\u53CD\u6483\uFF01\u3000\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306FREF\u306EAR1\u3092\u884C\u3044\u3001\u5931\u6557\u3059\u308B\u3068\u3053\u306E\u30BF\u30FC\u30F3\u3001\u79FB\u52D5\u529B\u304C\u30DE\u30A4\u30CA\u30B91\u3002"], [63, "\u6575\u5F3E\u5E55\u306E\u9699\u3092\u898B\u3044\u3060\u3059\u3002\u3053\u306E\u30BF\u30FC\u30F3\u3001\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306F\u7A81\u7834\u5224\u5B9A\u304CSR2\u306B\u3002"], [65, "\u7A81\u7834\u306E\u30C1\u30E3\u30F3\u30B9\u3002\u3053\u306E\u30BF\u30FC\u30F3\u3001\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306F\u79FB\u52D5\u529B\u304C1\u70B9\u4E0A\u6607\u3059\u308B\u3002"], [67, "\u58EB\u6C17\u9AD8\u63DA\u3002\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306E\u58EB\u6C17\u304C\u305D\u308C\u305E\u308C\u73FE\u5728\u5024\u306E10%\u3060\u3051\u56DE\u5FA9\u3059\u308B\u3002"], [70, "\u6575\u9663\u5D29\u58CA\u3002\u6575\u30E6\u30CB\u30C3\u30C8\u306E\u4E2D\u3067\u58EB\u6C17\u304C\u3082\u3063\u3068\u3082\u4F4E\u3044\u30E6\u30CB\u30C3\u30C8\u304C\u6226\u5834\u304B\u3089\u64A4\u9000\u3059\u308B\u3002\u8907\u6570\u3044\u305F\u5834\u5408\u3001\u3059\u3079\u3066\u64A4\u9000\u3002PC\u3001\u30B2\u30B9\u30C8\u306B\u306F\u52B9\u679C\u306A\u3057\u3002"], [73, "\u5927\u58F0\u63F4\u3002\u6226\u95D8\u304C\u3069\u3053\u304B\u306E\u30CF\u30C3\u30AB\u30FC\u306B\u3088\u3063\u3066\u885B\u661F\u4E2D\u7D99\u3055\u308C\u3001\u559D\u91C7\u3092\u6D74\u3073\u308B\u3002"], [75, "\u96E8\uFF0F\u96EA\u3002\u7A2E\u5225\uFF1B\u30EC\u30FC\u30B6\u30FC\u3092\u90E8\u968A\u306E\u6226\u529B\u306F\u3053\u306E\u30BF\u30FC\u30F3\u534A\u6E1B\u3059\u308B\u3002\u3053\u306E\u52B9\u679C\u306F\u91CD\u8907\u3057\u306A\u3044\u3002"], [77, "\u78C1\u6C17\u5D50\u3002\u3053\u306E\u30BF\u30FC\u30F3\u3001\u7A2E\u5225\uFF1A\u30DF\u30B5\u30A4\u30EB\u306F\u6226\u529B\u306B\u6570\u3048\u305A\u3001\u7A81\u6483\u306B\u4F7F\u7528\u3059\u308B\u3053\u3068\u3082\u3067\u304D\u306A\u3044\u3002"], [80, "\u81A0\u7740\u3057\u305F\u6226\u6CC1\u3002\u3053\u306E\u30BF\u30FC\u30F3\u3001\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306F\u7A81\u7834\u5224\u5B9A\u304CSR1/2\u306B\u3002"], [83, "\u30E1\u30BF\u30EB\u30DB\u30C3\u30D1\u30FC\uFF01\u3000\u91D1\u5C5E\u30A4\u30CA\u30B4\u306E\u8972\u6765\u3067\u8996\u754C\u3092\u3075\u3055\u304C\u308C\u3001\u3053\u306E\u30E9\u30A6\u30F3\u30C9\u306F\u5168\u3066\u306EMC\u5C04\u7A0B\u304C0\u3068\u306A\u308B\u3002"], [85, "\u5927\u7ADC\u5DFB\uFF01\u3000\u98DB\u884C\u3057\u3066\u3044\u308B\u30E6\u30CB\u30C3\u30C8\u306E\u79FB\u52D5\u529B\u306F0\u3068\u306A\u308A\u3001\u98DB\u884C\u30E6\u30CB\u30C3\u30C8\u306F\u3053\u306E\u30BF\u30FC\u30F3\u81EA\u5206\u304B\u3089\u7A81\u6483\u3092\u884C\u3048\u306A\u3044\u3002"], [87, "\u901A\u4FE1\u306E\u6DF7\u4E71\u3002\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306FINT\u306EAR1\u3092\u884C\u3044\u3001\u5931\u6557\u3059\u308B\u3068\u3053\u306E\u30BF\u30FC\u30F3\u3001\u79FB\u52D5\u529B\u304C\u30DE\u30A4\u30CA\u30B91\u3002"], [90, "\u5E78\u904B\u304C\u5FAE\u7B11\u3080\u3002\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306E\u30E9\u30C3\u30AF\u30DD\u30A4\u30F3\u30C8\u304C1\u70B9\u305A\u3064\u56DE\u5FA9\u3002NPC\u306B\u306F\u7121\u52B9\u3002"], [93, "\u81F4\u547D\u7684\u306A\u72D9\u6483\uFF01\u3000\u53F8\u4EE4\u5B98\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u80F4\u4F53\u306B\u3008\u7269\u3009205\u70B9\u306E\u56FA\u5B9A\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u6A5F\u52D5\u56DE\u907F\u306F\u53EF\u80FD\u3002"], [95, "\u6575\u306E\u7F60\u306B\u843D\u3061\u305F\u3002\u3053\u306E\u30BF\u30FC\u30F3\u3001\u6575\u8ECD\u30E6\u30CB\u30C3\u30C8\u306F\u79FB\u52D5\u529B\u304C1\u70B9\u4E0A\u6607\u3059\u308B\u3002"], [97, "\u52DD\u5229\u306E\u4E88\u611F\u3002\u5473\u65B9\u30E6\u30CB\u30C3\u30C8\u306E\u58EB\u6C17\u304C\u305D\u308C\u305E\u308C\u306E\u73FE\u5728\u5024\u306E20%\u3060\u3051\u56DE\u5FA9\u3059\u308B\u3002"], [99, "\u5929\u5909\u5730\u7570\u304C\u8972\u3044\u304B\u304B\u308B\uFF01\u3000\u3053\u306E\u30BF\u30FC\u30F3\u3001\u3059\u3079\u3066\u306E\u30E6\u30CB\u30C3\u30C8\u306F\u79FB\u52D5\u3067\u304D\u306A\u3044\u3002"], [100, "\u5927\u6DF7\u4E71\u3002\u5F8C2\u56DE\u632F\u308B\u3002"]];
+      name = "ストラテジーイベントチャート";
+      table = [[50, "特に何事もなかった。"], [53, "スコール。種別：レーザーを装備している部隊の戦力はこのターン半減する。この効果は重複しない。"], [55, "ただよう不安。味方ユニットはWILのAR1を行い、失敗すると士気の10%を失う。"], [57, "狙撃！　司令官キャラクターは胴体に〈物〉155点の固定ダメージを受ける。機動回避は可能。"], [60, "敵の猛烈な反撃！　味方ユニットはREFのAR1を行い、失敗するとこのターン、移動力がマイナス1。"], [63, "敵弾幕の隙を見いだす。このターン、味方ユニットは突破判定がSR2に。"], [65, "突破のチャンス。このターン、味方ユニットは移動力が1点上昇する。"], [67, "士気高揚。味方ユニットの士気がそれぞれ現在値の10%だけ回復する。"], [70, "敵陣崩壊。敵ユニットの中で士気がもっとも低いユニットが戦場から撤退する。複数いた場合、すべて撤退。PC、ゲストには効果なし。"], [73, "大声援。戦闘がどこかのハッカーによって衛星中継され、喝采を浴びる。"], [75, "雨／雪。種別；レーザーを部隊の戦力はこのターン半減する。この効果は重複しない。"], [77, "磁気嵐。このターン、種別：ミサイルは戦力に数えず、突撃に使用することもできない。"], [80, "膠着した戦況。このターン、味方ユニットは突破判定がSR1/2に。"], [83, "メタルホッパー！　金属イナゴの襲来で視界をふさがれ、このラウンドは全てのMC射程が0となる。"], [85, "大竜巻！　飛行しているユニットの移動力は0となり、飛行ユニットはこのターン自分から突撃を行えない。"], [87, "通信の混乱。味方ユニットはINTのAR1を行い、失敗するとこのターン、移動力がマイナス1。"], [90, "幸運が微笑む。味方ユニットのラックポイントが1点ずつ回復。NPCには無効。"], [93, "致命的な狙撃！　司令官キャラクターは胴体に〈物〉205点の固定ダメージを受ける。機動回避は可能。"], [95, "敵の罠に落ちた。このターン、敵軍ユニットは移動力が1点上昇する。"], [97, "勝利の予感。味方ユニットの士気がそれぞれの現在値の20%だけ回復する。"], [99, "天変地異が襲いかかる！　このターン、すべてのユニットは移動できない。"], [100, "大混乱。後2回振る。"]];
       return self.$get_MetalHeadExtream_1d100_table_result(name, table, 0);
     }, $MetalHeadExtream_get_strategyEvent_chart$15.$$arity = 0);
     
@@ -409,8 +409,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "NPC\u653B\u6483\u51E6\u7406\u30C1\u30E3\u30FC\u30C8";
-      table = [[5, "\u6226\u529B\u306E\u4F4E\u3044\u5074\u3060\u3051\u304C\u4E00\u65B9\u7684\u306B\u9664\u53BB\u3055\u308C\u308B\u3002"], [8, "\u53CC\u65B9\u3001\u4E00\u756A\u6226\u529B\u306E\u5C11\u306A\u3044\u30E6\u30CB\u30C3\u30C8\u3072\u3068\u3064\u3092\u9664\u53BB\u3059\u308B\u3002"], [10, "\u6226\u529B\u306E\u9AD8\u3044\u5074\u304C\u6700\u5927\u6226\u529B\u306E\u30E6\u30CB\u30C3\u30C8\u3072\u3068\u3064\u3092\u9664\u53BB\u3059\u308B\u3002"]];
+      name = "NPC攻撃処理チャート";
+      table = [[5, "戦力の低い側だけが一方的に除去される。"], [8, "双方、一番戦力の少ないユニットひとつを除去する。"], [10, "戦力の高い側が最大戦力のユニットひとつを除去する。"]];
       return self.$get_MetalHeadExtream_1d10_table_result(name, table, 0);
     }, $MetalHeadExtream_get_NPCAttack_chart$16.$$arity = 0);
     
@@ -418,8 +418,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u6557\u8005\u904B\u547D\u30C1\u30E3\u30FC\u30C8";
-      table = [[1, "\u5947\u8DE1\u7684\u306B\u7121\u50B7\u3067\u751F\u304D\u5EF6\u3073\u305F\u3002\u3044\u305A\u308C\u5FA9\u8B90\u306E\u6A5F\u4F1A\u3082\u3042\u308B\u3060\u308D\u3046\u3002"], [2, "\u30E9\u30F3\u30C0\u30E0\u306A\u90E8\u4F4D\u306BLW\u3092\u8CA0\u3046\u3002"], [3, "\u6226\u529B\u6C7A\u5B9A\u306B\u4F7F\u3063\u3066\u3044\u305F\u6B66\u5668\u304C\u7834\u58CA\u3055\u308C\u308B\u3002"], [4, "\u30E9\u30F3\u30C0\u30E0\u306A\u90E8\u4F4D\u306BMW\u3092\u8CA0\u3046\u3002"], [5, "\u5916\u898B\u306B\u5F71\u97FF\u3059\u308B\u3088\u3046\u306A\u50B7\u3092\u8CA0\u3046\u3002\u6CBB\u7642\u3059\u308B\u306A\u3089$3000\u3002"], [6, "\u30E9\u30F3\u30C0\u30E0\u306A\u90E8\u4F4D\u306BHW\u3092\u8CA0\u3046\u3002"], [7, "\u7740\u7528\u3057\u3066\u3044\u308B\u9632\u5177\u3059\u3079\u3066\u304C\u7834\u58CA\u3055\u308C\u308B\u3002\u8863\u670D\u306F\u58CA\u308C\u306A\u3044\u3002"], [8, "\u30E9\u30F3\u30C0\u30E0\u306A\u90E8\u4F4D\u306BMO\u3092\u8CA0\u3046\u3002"], [9, "\u30E9\u30F3\u30C0\u30E0\u306B\u6C7A\u5B9A\u3057\u305F\u80FD\u529B\u5024\u3072\u3068\u3064\u3092\u3001\u6C38\u4E45\u306B1\u70B9\u5931\u3046\u3002"], [10, "\u6B8B\u5FF5\u306A\u304C\u3089\u3001\u541B\u306F\u6B7B\u3093\u3067\u3057\u307E\u3063\u305F\u3002"]];
+      name = "敗者運命チャート";
+      table = [[1, "奇跡的に無傷で生き延びた。いずれ復讐の機会もあるだろう。"], [2, "ランダムな部位にLWを負う。"], [3, "戦力決定に使っていた武器が破壊される。"], [4, "ランダムな部位にMWを負う。"], [5, "外見に影響するような傷を負う。治療するなら$3000。"], [6, "ランダムな部位にHWを負う。"], [7, "着用している防具すべてが破壊される。衣服は壊れない。"], [8, "ランダムな部位にMOを負う。"], [9, "ランダムに決定した能力値ひとつを、永久に1点失う。"], [10, "残念ながら、君は死んでしまった。"]];
       return self.$get_MetalHeadExtream_1d10_table_result(name, table, 0);
     }, $MetalHeadExtream_get_loserDestiny_chart$17.$$arity = 0);
     
@@ -429,8 +429,8 @@
       
       $case = locationType;
       if ("W"['$===']($case)) {
-      name = "\u8352\u91CE\u30E9\u30F3\u30C0\u30E0\u30A8\u30F3\u30AB\u30A6\u30F3\u30C8\u8868";
-      table = [[80, "\u7279\u306B\u906D\u9047\u306F\u767A\u751F\u3057\u306A\u304B\u3063\u305F"], [85, "1d10\u540D\u306E\u30D0\u30F3\u30C7\u30C3\u30C9"], [87, "\u30F4\u30A7\u30FC\u30C0\u30FB\u30D0\u30A6\u30F3\u30B5\u30FC1\u540D\u306B\u7387\u3044\u3089\u308C\u305F1d10+2\uFF08\u6700\u4F4E1\uFF09\u306E\u30F4\u30A7\u30FC\u30C0\u30FB\u30BD\u30EB\u30B8\u30E3\u30FC"], [89, "1d10+2\u4F53\u306E\u30A6\u30A7\u30FC\u30D6\u30B3\u30E8\u30FC\u30C6"], [91, "1d10\u00F72\u4F53\uFF08\u6700\u4F4E1\uFF09\u306E\u30EC\u30FC\u30B6\u30FC\u30A2\u30F3\u30C8"], [93, "1d10-5\u4F53\uFF08\u6700\u4F4E1\uFF09\u306E\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30DB\u30FC\u30AF"], [96, "1d10\u4F53\u306E\u30E1\u30BF\u30EB\u30DB\u30C3\u30D1\u30FC"], [98, "1\u4F53\u306E\u30D6\u30E9\u30B9\u30D3\u30FC\u30B9\u30C8"], [100, "1d10\u00F73\u4F53\uFF08\u6700\u4F4E1\uFF09\u306E\u30B5\u30F3\u30C9\u30EF\u30FC\u30E0"]];}
+      name = "荒野ランダムエンカウント表";
+      table = [[80, "特に遭遇は発生しなかった"], [85, "1d10名のバンデッド"], [87, "ヴェーダ・バウンサー1名に率いられた1d10+2（最低1）のヴェーダ・ソルジャー"], [89, "1d10+2体のウェーブコヨーテ"], [91, "1d10÷2体（最低1）のレーザーアント"], [93, "1d10-5体（最低1）のライトニングホーク"], [96, "1d10体のメタルホッパー"], [98, "1体のブラスビースト"], [100, "1d10÷3体（最低1）のサンドワーム"]];}
       else {return nil};
       return self.$get_MetalHeadExtream_1d100_table_result(name, table, roc);
     }, $MetalHeadExtream_get_randomEncounter_table$18.$$arity = 2);
@@ -453,7 +453,7 @@
       
       dice = self.$get_roc_dice(roc, diceMax);
       text = self.$get_table_by_number(dice, table);
-      return "" + (name) + "(" + (dice) + ") \uFF1E " + (text);
+      return "" + (name) + "(" + (dice) + ") ＞ " + (text);
     }, $MetalHeadExtream_get_MetalHeadExtream_1dX_table_result$21.$$arity = 4);
     
     Opal.def(self, '$get_roc_dice', $MetalHeadExtream_get_roc_dice$22 = function $$get_roc_dice(roc, diceMax) {

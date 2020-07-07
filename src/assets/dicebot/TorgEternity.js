@@ -29,8 +29,8 @@
     
     Opal.const_set($nesting[0], 'ID', "TorgEternity");
     Opal.const_set($nesting[0], 'NAME', "TORG Eternity");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u304A\u304F\u3048\u305F\u3042\u306B\u3066\u3044");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\n" + "\u3000\u30FBTG\n" + "\u3000\u3000\"TG[m]\"\u30671d20\u3092\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002[]\u5185\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\u3000\u3000m\u306F\u6280\u80FD\u57FA\u672C\u5024\u3092\u5165\u308C\u3066\u4E0B\u3055\u3044\u3002R\u30B3\u30DE\u30F3\u30C9\u306B\u8AAD\u66FF\u3055\u308C\u307E\u3059\u3002\n" + "\u3000\u3000\u632F\u308A\u8DB3\u3057\u3092\u81EA\u52D5\u3067\u884C\u3044\u300120\u306E\u51FA\u76EE\u304C\u51FA\u305F\u3068\u304D\u306B\u306F\u6280\u80FD\u7121\u3057\u5024\u3082\u4E26\u8A18\u3057\u307E\u3059\u3002\n" + "\u3000\u3000(TORG\u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u3068\u540C\u3058\u6319\u52D5\u3092\u3059\u308B\u30B3\u30DE\u30F3\u30C9\u3067\u3059\u3002\u30ED\u30FC\u30EB\u30DC\u30FC\u30CA\u30B9\u306E\u8AAD\u307F\u66FF\u3048\u306E\u307F\u3001Eternity\u7248\u3068\u306A\u308A\u307E\u3059)\n" + "\u3000\u30FBTE\n" + "\u3000\u3000\"TE\"\u30671d20\u3092\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002\n" + "\u3000\u3000\u632F\u308A\u8DB3\u3057\u3092\u81EA\u52D5\u3067\u884C\u3044\u300120\u306E\u51FA\u76EE\u304C\u51FA\u305F\u3068\u304D\u306B\u306F\u6280\u80FD\u7121\u3057\u5024\u3082\u4E26\u8A18\u3057\u307E\u3059\u3002\n" + "\u3000\u3000\u51FA\u76EE1\u306E\u6642\u306B\u306F\u300CMishap!\u3000\u81EA\u52D5\u5931\u6557\uFF01\u300D\u3068\u51FA\u529B\u3055\u308C\u307E\u3059\u3002\n" + "\u3000\u30FBUP\n" + "\u3000\u3000\"UP\"\u3067\u9AD8\u63DA\u72B6\u614B\u306E\u30ED\u30FC\u30EB(\u901A\u5E38\u306E1d20\u306B\u52A0\u3048\u30011d20\u3092\u8FFD\u52A0\u3067\u632F\u308A\u8DB3\u3057)\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u3000\u5404\u30ED\u30FC\u30EB\u3067\u306E\u632F\u308A\u8DB3\u3057\u3092\u81EA\u52D5\u3067\u884C\u3044\u300120\u306E\u51FA\u76EE\u304C\u51FA\u305F\u3068\u304D\u306B\u306F\u6280\u80FD\u7121\u3057\u5024\u3082\u4E26\u8A18\u3057\u307E\u3059\u3002\n" + "\u3000\u3000\u4E00\u6295\u76EE\u3067\u51FA\u76EE1\u306E\u6642\u306B\u306F\u300CMishap!\u3000\u81EA\u52D5\u5931\u6557\uFF01\u300D\u3068\u51FA\u529B\u3055\u308C\u3001\u4E8C\u6295\u76EE\u306F\u884C\u308F\u308C\u307E\u305B\u3093\u3002\n" + "\u3000\u30FBPOS\n" + "\u3000\u3000\"POSm\"\u3067\u3001\u30DD\u30B7\u30D3\u30EA\u30C6\u30A3\u4F7F\u7528\u306B\u3088\u308B1d20\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u3000m\u306F\u30DD\u30B7\u30D3\u30EA\u30C6\u30A3\u3092\u4F7F\u7528\u3059\u308B\u524D\u306E\u30ED\u30FC\u30EB\u7D50\u679C\u3092\u5165\u308C\u3066\u4E0B\u3055\u3044\u3002\n" + "\u3000\u3000\u51FA\u76EE\u304C10\u672A\u6E80\u306E\u5834\u5408\u306F\u300110\u3078\u306E\u8AAD\u307F\u66FF\u3048\u304C\u884C\u308F\u308C\u307E\u3059\u3002\n" + "\u3000\u3000\u307E\u305F\u3001\u632F\u308A\u8DB3\u3057\u3092\u81EA\u52D5\u3067\u884C\u3044\u300120\u306E\u51FA\u76EE\u304C\u51FA\u305F\u3068\u304D\u306B\u306F\u6280\u80FD\u7121\u3057\u5024\u3082\u4E26\u8A18\u3057\u307E\u3059\u3002\n" + "\u30FB\u30DC\u30FC\u30CA\u30B9\u30C0\u30E1\u30FC\u30B8\u30ED\u30FC\u30EB\n" + "\u3000\"xBD[+y]\"\u3067\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002[]\u5185\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\u3000x\u306F\u30C0\u30E1\u30FC\u30B8\u30C0\u30A4\u30B9\u6570\u3002y\u306F\u30C0\u30E1\u30FC\u30B8\u57FA\u672C\u5024 or \u5F0F\u3092\u5165\u308C\u3066\u4E0B\u3055\u3044\u3002\n" + "\u3000x\u306F1\u4EE5\u4E0A\u304C\u5FC5\u8981\u3067\u3059\u30020\u3060\u3068\u30A8\u30E9\u30FC\u304C\u51FA\u529B\u3055\u308C\u307E\u3059\u3002\u30DE\u30A4\u30CA\u30B9\u5024\u306F\u30B3\u30DE\u30F3\u30C9\u3068\u3057\u3066\u8A8D\u8B58\u3055\u308C\u307E\u305B\u3093\u3002\n" + "\u3000\u632F\u308A\u8DB3\u3057\u51E6\u7406\u306F\u81EA\u52D5\u3067\u884C\u308F\u308C\u307E\u3059\u3002(\u632F\u308A\u8DB3\u3057\u767A\u751F\u6642\u306E\u76EE\u306F\u3001\u300C5\u221E\u300D\u3068\u51FA\u529B\u3055\u308C\u307E\u3059)\n" + "\u30FB\u5404\u7A2E\u8868\n" + "\u3000\"(\u8868\u30B3\u30DE\u30F3\u30C9)(\u6570\u5024)\"\u3067\u632F\u308A\u307E\u3059\u3002\n" + "\u3000\u30FB\u6210\u529F\u30EC\u30D9\u30EB\u8868\u300CRTx or RESULTx\u300D\n" + "\u3000\u30FB\u30C0\u30E1\u30FC\u30B8\u7D50\u679C\u8868\u300CDTx or DAMAGEx\u300D\n" + "\u3000\u30FB\u30ED\u30FC\u30EB\u30DC\u30FC\u30CA\u30B9\u8868\u300CBTx+y or BONUSx+y or TOTALx+y\u300D x\u306F\u6570\u5024, y\u306F\u6280\u80FD\u57FA\u672C\u5024\n");
+    Opal.const_set($nesting[0], 'SORT_KEY', "とおくえたあにてい");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "　・TG\n" + "　　\"TG[m]\"で1d20をロールします。[]内は省略可能。\n" + "　　mは技能基本値を入れて下さい。Rコマンドに読替されます。\n" + "　　振り足しを自動で行い、20の出目が出たときには技能無し値も並記します。\n" + "　　(TORGダイスボットと同じ挙動をするコマンドです。ロールボーナスの読み替えのみ、Eternity版となります)\n" + "　・TE\n" + "　　\"TE\"で1d20をロールします。\n" + "　　振り足しを自動で行い、20の出目が出たときには技能無し値も並記します。\n" + "　　出目1の時には「Mishap!　自動失敗！」と出力されます。\n" + "　・UP\n" + "　　\"UP\"で高揚状態のロール(通常の1d20に加え、1d20を追加で振り足し)を行います。\n" + "　　各ロールでの振り足しを自動で行い、20の出目が出たときには技能無し値も並記します。\n" + "　　一投目で出目1の時には「Mishap!　自動失敗！」と出力され、二投目は行われません。\n" + "　・POS\n" + "　　\"POSm\"で、ポシビリティ使用による1d20のロールを行います。\n" + "　　mはポシビリティを使用する前のロール結果を入れて下さい。\n" + "　　出目が10未満の場合は、10への読み替えが行われます。\n" + "　　また、振り足しを自動で行い、20の出目が出たときには技能無し値も並記します。\n" + "・ボーナスダメージロール\n" + "　\"xBD[+y]\"でロールします。[]内は省略可能。\n" + "　xはダメージダイス数。yはダメージ基本値 or 式を入れて下さい。\n" + "　xは1以上が必要です。0だとエラーが出力されます。マイナス値はコマンドとして認識されません。\n" + "　振り足し処理は自動で行われます。(振り足し発生時の目は、「5∞」と出力されます)\n" + "・各種表\n" + "　\"(表コマンド)(数値)\"で振ります。\n" + "　・成功レベル表「RTx or RESULTx」\n" + "　・ダメージ結果表「DTx or DAMAGEx」\n" + "　・ロールボーナス表「BTx+y or BONUSx+y or TOTALx+y」 xは数値, yは技能基本値\n");
     self.$setPrefixes(["(TE.*|UP.*|POS.*|\\d+BD.*|TG.*|RT.*|Result.*|DT.*|damage.*|BT.*|bonus.*|total.*)"]);
     
     Opal.def(self, '$initialize', $TorgEternity_initialize$1 = function $$initialize() {
@@ -96,10 +96,10 @@
       } else {
         output = "" + (sk_bonus) + "[" + (dice_str) + "]"
       };
-      output = $rb_plus(output, $rb_plus(" \uFF1E ", $rb_plus(sk_bonus, mod).$to_s()));
+      output = $rb_plus(output, $rb_plus(" ＞ ", $rb_plus(sk_bonus, mod).$to_s()));
       if ($truthy(skilled['$!='](unskilled))) {
-        output = $rb_plus(output, $rb_plus($rb_plus("(\u6280\u80FD\u7121", $rb_plus(self.$get_torg_eternity_bonus(unskilled), mod).$to_s()), ")"))};
-      output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output);
+        output = $rb_plus(output, $rb_plus($rb_plus("(技能無", $rb_plus(self.$get_torg_eternity_bonus(unskilled), mod).$to_s()), ")"))};
+      output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output);
       return output;
     }, $TorgEternity_torg_check$6.$$arity = 2);
     
@@ -119,16 +119,16 @@
       self.$debug("Yes!");
       $b = self.$torg_eternity_dice(false, true), $a = Opal.to_ary($b), (skilled = ($a[0] == null ? nil : $a[0])), (unskilled = ($a[1] == null ? nil : $a[1])), (dice_str = ($a[2] == null ? nil : $a[2])), (mishap = ($a[3] == null ? nil : $a[3])), $b;
       if (mishap['$=='](1)) {
-        output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u901A\u5E38\uFF09 \uFF1E 1d20[" + (dice_str) + "] \uFF1E Mishap!\u3000\u7D76\u5BFE\u5931\u6557\uFF01"
+        output = "" + "d20ロール（通常） ＞ 1d20[" + (dice_str) + "] ＞ Mishap!　絶対失敗！"
       } else {
         
         value_skilled = self.$format("%+d", self.$get_torg_eternity_bonus(skilled));
         if ($truthy(skilled['$!='](unskilled))) {
           
           value_unskilled = self.$format("%+d", self.$get_torg_eternity_bonus(unskilled));
-          output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u901A\u5E38\uFF09 \uFF1E 1d20[" + (dice_str) + "] \uFF1E " + (value_skilled) + "[" + (skilled) + "]\uFF08\u6280\u80FD\u6709\uFF09 / " + (value_unskilled) + "[" + (unskilled) + "]\uFF08\u6280\u80FD\u7121\uFF09";
+          output = "" + "d20ロール（通常） ＞ 1d20[" + (dice_str) + "] ＞ " + (value_skilled) + "[" + (skilled) + "]（技能有） / " + (value_unskilled) + "[" + (unskilled) + "]（技能無）";
         } else {
-          output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u901A\u5E38\uFF09 \uFF1E 1d20[" + (dice_str) + "] \uFF1E " + (value_skilled) + "[" + (skilled) + "]"
+          output = "" + "d20ロール（通常） ＞ 1d20[" + (dice_str) + "] ＞ " + (value_skilled) + "[" + (skilled) + "]"
         };
       };
       self.$debug(output, secret);
@@ -151,7 +151,7 @@
       self.$debug("Yes!");
       $b = self.$torg_eternity_dice(false, true), $a = Opal.to_ary($b), (skilled1 = ($a[0] == null ? nil : $a[0])), (unskilled1 = ($a[1] == null ? nil : $a[1])), (dice_str1 = ($a[2] == null ? nil : $a[2])), (mishap = ($a[3] == null ? nil : $a[3])), $b;
       if (mishap['$=='](1)) {
-        output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u9AD8\u63DA\uFF09 \uFF1E 1d20[" + (dice_str1) + "] \uFF1E Mishap!\u3000\u7D76\u5BFE\u5931\u6557\uFF01"
+        output = "" + "d20ロール（高揚） ＞ 1d20[" + (dice_str1) + "] ＞ Mishap!　絶対失敗！"
       } else {
         
         $b = self.$torg_eternity_dice(false, false), $a = Opal.to_ary($b), (skilled2 = ($a[0] == null ? nil : $a[0])), (unskilled2 = ($a[1] == null ? nil : $a[1])), (dice_str2 = ($a[2] == null ? nil : $a[2])), $b;
@@ -161,9 +161,9 @@
         if ($truthy(subtotal_skilled['$!='](subtotal_unskilled))) {
           
           value_unskilled = self.$format("%+d", self.$get_torg_eternity_bonus(subtotal_unskilled));
-          output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u9AD8\u63DA\uFF09 \uFF1E 1d20[" + (dice_str1) + "] + 1d20[" + (dice_str2) + "] \uFF1E " + (value_skilled) + "[" + (subtotal_skilled) + "]\uFF08\u6280\u80FD\u6709\uFF09 / " + (value_unskilled) + "[" + (subtotal_unskilled) + "]\uFF08\u6280\u80FD\u7121\uFF09";
+          output = "" + "d20ロール（高揚） ＞ 1d20[" + (dice_str1) + "] + 1d20[" + (dice_str2) + "] ＞ " + (value_skilled) + "[" + (subtotal_skilled) + "]（技能有） / " + (value_unskilled) + "[" + (subtotal_unskilled) + "]（技能無）";
         } else {
-          output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u9AD8\u63DA\uFF09 \uFF1E 1d20[" + (dice_str1) + "] + 1d20[" + (dice_str2) + "] \uFF1E " + (value_skilled) + "[" + (subtotal_skilled) + "]"
+          output = "" + "d20ロール（高揚） ＞ 1d20[" + (dice_str1) + "] + 1d20[" + (dice_str2) + "] ＞ " + (value_skilled) + "[" + (subtotal_skilled) + "]"
         };
       };
       self.$debug(output, secret);
@@ -192,9 +192,9 @@
       if ($truthy(subtotal_skilled['$!='](subtotal_unskilled))) {
         
         value_unskilled = self.$format("%+d", self.$get_torg_eternity_bonus(subtotal_unskilled));
-        output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u30DD\u30B7\u30D3\u30EA\u30C6\u30A3\uFF09 \uFF1E " + (output_modifier) + "+1d20[" + (dice_str) + "] \uFF1E " + (value_skilled) + "[" + (subtotal_skilled) + "]\uFF08\u6280\u80FD\u6709\uFF09 / " + (value_unskilled) + "[" + (subtotal_unskilled) + "]\uFF08\u6280\u80FD\u7121\uFF09";
+        output = "" + "d20ロール（ポシビリティ） ＞ " + (output_modifier) + "+1d20[" + (dice_str) + "] ＞ " + (value_skilled) + "[" + (subtotal_skilled) + "]（技能有） / " + (value_unskilled) + "[" + (subtotal_unskilled) + "]（技能無）";
       } else {
-        output = "" + "d20\u30ED\u30FC\u30EB\uFF08\u30DD\u30B7\u30D3\u30EA\u30C6\u30A3\uFF09 \uFF1E " + (output_modifier) + "+1d20[" + (dice_str) + "] \uFF1E " + (value_skilled) + "[" + (subtotal_skilled) + "]"
+        output = "" + "d20ロール（ポシビリティ） ＞ " + (output_modifier) + "+1d20[" + (dice_str) + "] ＞ " + (value_skilled) + "[" + (subtotal_skilled) + "]"
       };
       self.$debug(output, secret);
       return [output, secret];
@@ -216,12 +216,12 @@
       number_bonus_die = $$($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$get_torg_eternity_modifier($$($nesting, 'Regexp').$last_match(3)), $a = Opal.to_ary($b), (value_modifier = ($a[0] == null ? nil : $a[0])), (output_modifier = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_le(number_bonus_die, 0))) {
-        output = "\u30A8\u30E9\u30FC\u3067\u3059\u3002xBD (x\u22671) \u3068\u3057\u3066\u4E0B\u3055\u3044"
+        output = "エラーです。xBD (x≧1) として下さい"
       } else {
         
         $b = self.$get_torg_eternity_damage_bonus_dice(number_bonus_die), $a = Opal.to_ary($b), (value_roll = ($a[0] == null ? nil : $a[0])), (output_roll = ($a[1] == null ? nil : $a[1])), $b;
         output_value = $rb_plus(value_roll, value_modifier);
-        output = "" + "\u30DC\u30FC\u30CA\u30B9\u30C0\u30E1\u30FC\u30B8\u30ED\u30FC\u30EB(" + (number_bonus_die) + "BD" + (output_modifier) + ") \uFF1E " + (value_roll) + "[" + (output_roll) + "]" + (output_modifier) + " \uFF1E " + (output_value) + "\u30C0\u30E1\u30FC\u30B8";
+        output = "" + "ボーナスダメージロール(" + (number_bonus_die) + "BD" + (output_modifier) + ") ＞ " + (value_roll) + "[" + (output_roll) + "]" + (output_modifier) + " ＞ " + (output_value) + "ダメージ";
       };
       return output;
     }, $TorgEternity_getBonusDamageDiceCommandResult$10.$$arity = 1);
@@ -246,7 +246,7 @@
       } else {
         output = self.$get_torg_eternity_success_level(value)
       };
-      output = "" + "\u6210\u529F\u30EC\u30D9\u30EB\u8868[" + (value) + "] \uFF1E " + (output);
+      output = "" + "成功レベル表[" + (value) + "] ＞ " + (output);
       self.$debug(output);
       return output;
     }, $TorgEternity_getSuccessLevelDiceCommandResult$11.$$arity = 1);
@@ -267,7 +267,7 @@
       value = self.$parren_killer("" + "(0" + ($$($nesting, 'Regexp').$last_match(2)) + ")").$to_i();
       self.$debug(value);
       output = self.$get_torg_eternity_damage_result(value);
-      output = "" + "\u30C0\u30E1\u30FC\u30B8\u7D50\u679C\u8868[" + (value) + "] \uFF1E " + (output);
+      output = "" + "ダメージ結果表[" + (value) + "] ＞ " + (output);
       self.$debug(output);
       return output;
     }, $TorgEternity_getDamageResultDiceCommandResult$12.$$arity = 1);
@@ -290,14 +290,14 @@
       self.$debug(output_bonus);
       $b = self.$get_torg_eternity_modifier($$($nesting, 'Regexp').$last_match(3)), $a = Opal.to_ary($b), (value_modifier = ($a[0] == null ? nil : $a[0])), (output_modifier = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_le(value_roll, 1))) {
-        output = "" + "\u30ED\u30FC\u30EB\u30DC\u30FC\u30CA\u30B9\u8868[" + (value_roll) + "] \uFF1E Mishap!!"
+        output = "" + "ロールボーナス表[" + (value_roll) + "] ＞ Mishap!!"
       } else if ($truthy(output_modifier['$empty?']())) {
-        output = "" + "\u30ED\u30FC\u30EB\u30DC\u30FC\u30CA\u30B9\u8868[" + (value_roll) + "] \uFF1E " + (output_bonus)
+        output = "" + "ロールボーナス表[" + (value_roll) + "] ＞ " + (output_bonus)
       } else {
         
         value_result = $rb_plus(output_bonus.$to_i(), value_modifier);
         self.$debug(value_result);
-        output = "" + "\u30ED\u30FC\u30EB\u30DC\u30FC\u30CA\u30B9\u8868[" + (value_roll) + "]" + (output_modifier) + " \uFF1E " + (output_bonus) + "[" + (value_roll) + "]" + (output_modifier) + " \uFF1E " + (value_result);
+        output = "" + "ロールボーナス表[" + (value_roll) + "]" + (output_modifier) + " ＞ " + (output_bonus) + "[" + (value_roll) + "]" + (output_modifier) + " ＞ " + (value_result);
       };
       self.$debug(output);
       return output;
@@ -365,7 +365,7 @@
           
           if ($truthy($rb_lt(dice_n, 10))) {
             
-            dice_str_now = "" + (dice_n) + "\u219210";
+            dice_str_now = "" + (dice_n) + "→10";
             dice_n = 10;
             isSkilledCritical = false;
           } else {
@@ -413,7 +413,7 @@
           if (dice_value['$=='](6)) {
             
             dice_value = 5;
-            dice_text = "5\u221E";
+            dice_text = "5∞";
             number = $rb_plus(number, 1);};
           value_roll = $rb_plus(value_roll, dice_value);
           output_roll = "" + (output_roll) + (dice_text);
@@ -441,7 +441,7 @@
       var self = this, damage_table = nil;
 
       
-      damage_table = [[-50, "\u30CE\u30FC\u30C0\u30E1\u30FC\u30B8"], [-5, "1\u30B7\u30E7\u30C3\u30AF"], [0, "2\u30B7\u30E7\u30C3\u30AF"], [5, "1\u30EC\u30D9\u30EB\u8CA0\u50B7 + 2\u30B7\u30E7\u30C3\u30AF"], [10, "2\u30EC\u30D9\u30EB\u8CA0\u50B7 + 4\u30B7\u30E7\u30C3\u30AF"], [15, "3\u30EC\u30D9\u30EB\u8CA0\u50B7 + 6\u30B7\u30E7\u30C3\u30AF"], [20, "4\u30EC\u30D9\u30EB\u8CA0\u50B7 + 8\u30B7\u30E7\u30C3\u30AF"], [25, "5\u30EC\u30D9\u30EB\u8CA0\u50B7 + 10\u30B7\u30E7\u30C3\u30AF"], [30, "6\u30EC\u30D9\u30EB\u8CA0\u50B7 + 12\u30B7\u30E7\u30C3\u30AF"], [35, "7\u30EC\u30D9\u30EB\u8CA0\u50B7 + 14\u30B7\u30E7\u30C3\u30AF"], [40, "8\u30EC\u30D9\u30EB\u8CA0\u50B7 + 16\u30B7\u30E7\u30C3\u30AF"], [45, "9\u30EC\u30D9\u30EB\u8CA0\u50B7 + 18\u30B7\u30E7\u30C3\u30AF"], [50, "10\u30EC\u30D9\u30EB\u8CA0\u50B7 + 20\u30B7\u30E7\u30C3\u30AF"]];
+      damage_table = [[-50, "ノーダメージ"], [-5, "1ショック"], [0, "2ショック"], [5, "1レベル負傷 + 2ショック"], [10, "2レベル負傷 + 4ショック"], [15, "3レベル負傷 + 6ショック"], [20, "4レベル負傷 + 8ショック"], [25, "5レベル負傷 + 10ショック"], [30, "6レベル負傷 + 12ショック"], [35, "7レベル負傷 + 14ショック"], [40, "8レベル負傷 + 16ショック"], [45, "9レベル負傷 + 18ショック"], [50, "10レベル負傷 + 20ショック"]];
       return self.$get_torg_eternity_table_result(value, damage_table);
     }, $TorgEternity_get_torg_eternity_damage_result$20.$$arity = 1);
     return (Opal.def(self, '$get_torg_eternity_bonus', $TorgEternity_get_torg_eternity_bonus$21 = function $$get_torg_eternity_bonus(value) {

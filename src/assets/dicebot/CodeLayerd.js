@@ -56,9 +56,9 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
     
     self.$include($$($nesting, 'ModifierFormatter'));
     Opal.const_set($nesting[0], 'ID', "CodeLayerd");
-    Opal.const_set($nesting[0], 'NAME', "\u30B3\u30FC\u30C9\uFF1A\u30EC\u30A4\u30E4\u30FC\u30C9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3053\u304A\u3068\u308C\u3044\u3084\u3042\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u884C\u70BA\u5224\u5B9A\uFF08nCL@m[c]+x \u307E\u305F\u306F nCL+x@m[c]\uFF09 \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30FB\u30D5\u30A1\u30F3\u30D6\u30EB\u5224\u5B9A\u3042\u308A\n" + "  (\u30C0\u30A4\u30B9\u6570)CL+(\u4FEE\u6B63\u5024)@(\u5224\u5B9A\u5024)[(\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024)]+(\u4FEE\u6B63\u50242)\n" + "\n" + "  @m,[c],+x\u306F\u7701\u7565\u53EF\u80FD\u3002(@6[1]\u3068\u3057\u3066\u51E6\u7406)\n" + "  n\u500B\u306ED10\u3067m\u3092\u5224\u5B9A\u5024\u3001c\u3092\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3068\u3057\u305F\u884C\u70BA\u5224\u5B9A\u3092\u884C\u3046\u3002\n" + "  \u4F8B\uFF09\n" + "  7CL>=5 \uFF1A\u30B5\u30A4\u30B3\u30ED7\u500B\u3067\u5224\u5B9A\u50246\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3044\u3001\u76EE\u6A19\u50245\u306B\u5BFE\u3057\u3066\u5224\u5B9A\n" + "  4CL@7  \uFF1A\u30B5\u30A4\u30B3\u30ED4\u500B\u3067\u5224\u5B9A\u50247\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3044\u9054\u6210\u5024\u3092\u51FA\u3059\n" + "  4CL+2@7 \u307E\u305F\u306F 4CL@7+2  \uFF1A\u30B5\u30A4\u30B3\u30ED4\u500B\u3067\u5224\u5B9A\u50247\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3044\u9054\u6210\u5024\u3092\u51FA\u3057\u3001\u4FEE\u6B63\u50242\u3092\u8DB3\u3059\u3002\n" + "  4CL[2] \uFF1A\u30B5\u30A4\u30B3\u30ED4\u500B\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u50242\u306E\u30ED\u30FC\u30EB\u3092\u884C\u3046\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "コード：レイヤード");
+    Opal.const_set($nesting[0], 'SORT_KEY', "こおとれいやあと");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定（nCL@m[c]+x または nCL+x@m[c]） クリティカル・ファンブル判定あり\n" + "  (ダイス数)CL+(修正値)@(判定値)[(クリティカル値)]+(修正値2)\n" + "\n" + "  @m,[c],+xは省略可能。(@6[1]として処理)\n" + "  n個のD10でmを判定値、cをクリティカル値とした行為判定を行う。\n" + "  例）\n" + "  7CL>=5 ：サイコロ7個で判定値6のロールを行い、目標値5に対して判定\n" + "  4CL@7  ：サイコロ4個で判定値7のロールを行い達成値を出す\n" + "  4CL+2@7 または 4CL@7+2  ：サイコロ4個で判定値7のロールを行い達成値を出し、修正値2を足す。\n" + "  4CL[2] ：サイコロ4個でクリティカル値2のロールを行う。\n");
     self.$setPrefixes(["\\d*CL([+-]\\d+)?[@\\d]*.*"]);
     
     Opal.def(self, '$isGetOriginalMessage', $CodeLayerd_isGetOriginalMessage$1 = function $$isGetOriginalMessage() {
@@ -85,7 +85,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       result = self.$checkRoll(base, target, criticalTarget, diff, $rb_plus(modifier1, modifier2));};
       if ($truthy(result['$empty?']())) {
         return nil};
-      return "" + (command) + " \uFF1E " + (result);
+      return "" + (command) + " ＞ " + (result);
     }, $CodeLayerd_rollDiceCommand$2.$$arity = 1);
     
     Opal.def(self, '$checkRoll', $CodeLayerd_checkRoll$3 = function $$checkRoll(base, target, criticalTarget, diff, modifier) {
@@ -110,7 +110,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
           i = nil;
         };
         return i.$to_i();}, $$4.$$s = self, $$4.$$arity = 1, $$4)).$sort();
-      result = $rb_plus(result, "" + " \uFF1E [" + (diceList.$join(",")) + "]" + (self.$format_modifier(modifier)) + " \uFF1E ");
+      result = $rb_plus(result, "" + " ＞ [" + (diceList.$join(",")) + "]" + (self.$format_modifier(modifier)) + " ＞ ");
       result = $rb_plus(result, self.$getRollResultString(diceList, target, criticalTarget, diff, modifier));
       return result;
     }, $CodeLayerd_checkRoll$3.$$arity = 5);
@@ -122,19 +122,19 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       $b = self.$getSuccessInfo(diceList, target, criticalTarget), $a = Opal.to_ary($b), (successCount = ($a[0] == null ? nil : $a[0])), (criticalCount = ($a[1] == null ? nil : $a[1])), $b;
       successTotal = $rb_plus($rb_plus(successCount, criticalCount), modifier);
       result = "";
-      result = $rb_plus(result, "" + "\u5224\u5B9A\u5024[" + (target) + "] ");
+      result = $rb_plus(result, "" + "判定値[" + (target) + "] ");
       if (criticalTarget['$=='](1)) {
       } else {
-        result = $rb_plus(result, "" + "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024[" + (criticalTarget) + "] ")
+        result = $rb_plus(result, "" + "クリティカル値[" + (criticalTarget) + "] ")
       };
-      result = $rb_plus(result, "" + "\u9054\u6210\u5024[" + (successCount) + "]");
+      result = $rb_plus(result, "" + "達成値[" + (successCount) + "]");
       if ($truthy($rb_gt(criticalCount, 0))) {
-        result = $rb_plus(result, "" + "+\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB[" + (criticalCount) + "]")};
+        result = $rb_plus(result, "" + "+クリティカル[" + (criticalCount) + "]")};
       result = $rb_plus(result, self.$format_modifier(modifier));
       if ($truthy(($truthy($a = $rb_gt(criticalCount, 0)) ? $a : modifier['$!='](0)))) {
         result = $rb_plus(result, "" + "=[" + (successTotal) + "]")};
       successText = self.$getSuccessResultText(successTotal, diff);
-      result = $rb_plus(result, "" + " \uFF1E " + (successText));
+      result = $rb_plus(result, "" + " ＞ " + (successText));
       return result;
     }, $CodeLayerd_getRollResultString$5.$$arity = 5);
     
@@ -143,12 +143,12 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
 
       
       if ($truthy($rb_le(successTotal, 0))) {
-        return "\u30D5\u30A1\u30F3\u30D6\u30EB\uFF01"};
+        return "ファンブル！"};
       if (diff['$=='](0)) {
         return successTotal.$to_s()};
       if ($truthy($rb_ge(successTotal, diff))) {
-        return "\u6210\u529F"};
-      return "\u5931\u6557";
+        return "成功"};
+      return "失敗";
     }, $CodeLayerd_getSuccessResultText$6.$$arity = 2);
     
     Opal.def(self, '$getSuccessInfo', $CodeLayerd_getSuccessInfo$7 = function $$getSuccessInfo(diceList, target, criticalTarget) {

@@ -20,9 +20,9 @@
     self.$$prototype.special_dice = self.$$prototype.success_threshold = nil;
     
     Opal.const_set($nesting[0], 'ID', "FutariSousa:Korean");
-    Opal.const_set($nesting[0], 'NAME', "\uB458\uC774\uC11C \uC218\uC0AC(\uD6C4\uD0C0\uB9AC\uC18C\uC6B0\uC0AC)");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u56FD\u969B\u5316:Korean:\uB458\uC774\uC11C \uC218\uC0AC");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\uD310\uC815\uC6A9 \uCEE4\uB9E8\uB4DC\n" + "\uD0D0\uC815\uC6A9\uFF1A\u3010DT\u3011\u202610\uBA74\uCCB4 \uC8FC\uC0AC\uC704\uB97C 2\uAC1C \uAD74\uB824 \uD310\uC815\uD569\uB2C8\uB2E4.\u300E\uC720\uB9AC\u300F\uB77C\uBA74\u30103DT\u3011, \u300E\uBD88\uB9AC\u300F\uB77C\uBA74\u30101DT\u3011\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.\n" + "\uC870\uC218\uC6A9\uFF1A\u3010AS\u3011\u20266\uBA74\uCCB4 \uC8FC\uC0AC\uC704\uB97C 2\uAC1C \uAD74\uB824 \uD310\uC815\uD569\uB2C8\uB2E4. \u300E\uC720\uB9AC\u300F\uB77C\uBA74\u30103AS\u3011, \u300E\uBD88\uB9AC\u300F\uB77C\uBA74\u30101AS\u3011\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.\n" + "\u30FB\uAC01\uC885\uD45C\n" + "\u3010\uC870\uC0AC\u3011\n" + "\uC774\uC0C1\uD55C \uBC84\uB987 \uACB0\uC815\uD45C SHRD\n" + "\u3000\uC9C0\uAEC4\uC774\uB2E4\uD45C  \u3000SHFM\uFF0F\uAC15\uC555\uC801\uC778 \uC218\uC0AC\uD45C \u3000SHBT\uFF0F\uC2DC\uCE58\uBBF8 \uB5BC\uAE30\uD45C\u3000\u3000\u3000SHPI\n" + "\u3000\uC0AC\uAC74\uC5D0 \uBAB0\uB450\uD45C SHEG\uFF0F\uD30C\uD2B8\uB108\uC640\u2026\u2026\uD45C\u3000\u3000SHWP\uFF0F\uBB34\uC5B8\uAC00 \uD558\uACE0 \uC788\uB2E4\uD45C SHDS\n" + "\u3000\uAE30\uC0C1\uCC9C\uC678\uD45C\u3000\u3000SHFT\uFF0F\uAC11\uC791\uC2A4\uB7F0 \uBC88\uB729\uC784\uD45C SHIN\uFF0F\uD76C\uB178\uC560\uB77D\uD45C \u3000\u3000\u3000\u3000SHEM\n" + "\uC774\uBCA4\uD2B8\uD45C\n" + "\u3000\uD604\uC7A5\uC5D0\uC11C\u3000 EVS\uFF0F\uC5B4\uC9F8\uC11C?\u3000EVW\uFF0F\uD611\uB825\uC790\uC640 \uD568\uAED8 EVN\n" + "\u3000\uC0C1\uB300\uCABD\uC5D0\uC11C EVC\uFF0FVS\uC6A9\uC758\uC790 EVV\n" + "\uC870\uC0AC\uC758 \uC7A5\uC560\uD45C OBT\u3000\u3000\uBCC0\uC870\uD45C ACT\u3000\u3000\uBAA9\uACA9\uC790\uD45C EWT\u3000\u3000\uBBF8\uAD81\uC9C4\uC785\uD45C WMT\n" + "\u3010\uC124\uC815\u3011\n" + "\uBC30\uACBD\uD45C\n" + "\u3000\uD0D0\uC815\u3000\uC6B4\uBA85\uC758 \uD608\uD1B5 \u3000BGDD\uFF0F\uCC9C\uC0C1\uC758 \uC7AC\uB2A5 \u3000BGDG\uFF0F\uB9C8\uB2C8\uC544 \u3000\u3000 BGDM\n" + "\u3000\uC870\uC218\u3000\uC815\uC758\uB85C\uC6B4 \uC0AC\uB78C BGAJ\uFF0F\uC815\uB82C\uC801\uC778 \uC0AC\uB78C BGAP\uFF0F\uB9D0\uB824\uB4E0 \uC0AC\uB78C BGAI\n" + "\uC2E0\uC7A5\uD45C HT\u3000\u3000\uC544\uC9C0\uD2B8\uD45C BT\u3000\u3000\uAD00\uACC4\uD45C GRT\u3000\u3000\uCD94\uC5B5\uC758 \uBB3C\uAC74 \uACB0\uC815\uD45C MIT\n" + "\uC9C1\uC5C5\uD45CA\u30FBB\u3000\u3000JBT66\u30FBJBT10\u3000\u3000\uD328\uC158 \uD2B9\uC9D5\uD45CA\u30FBB\u3000\u3000\u3000\u3000FST66\u30FBFST10\n" + "\uAC10\uC815\uD45CA\u30FBB\u3000\u3000FLT66\u30FBFLT10\u3000\u3000\uC88B\uC544\uD558\uB294 \uAC83\uFF0F\uC2EB\uC5B4\uD558\uB294 \uAC83\uD45CA\u30FBB\u3000LDT66\u30FBLDT10\n" + "\uD638\uCE6D\uD45CA\u30FBB\u3000NCT66\u30FBNCT10\n");
+    Opal.const_set($nesting[0], 'NAME', "둘이서 수사(후타리소우사)");
+    Opal.const_set($nesting[0], 'SORT_KEY', "国際化:Korean:둘이서 수사");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・판정용 커맨드\n" + "탐정용：【DT】…10면체 주사위를 2개 굴려 판정합니다.『유리』라면【3DT】, 『불리』라면【1DT】를 사용합니다.\n" + "조수용：【AS】…6면체 주사위를 2개 굴려 판정합니다. 『유리』라면【3AS】, 『불리』라면【1AS】를 사용합니다.\n" + "・각종표\n" + "【조사】\n" + "이상한 버릇 결정표 SHRD\n" + "　지껄이다표  　SHFM／강압적인 수사표 　SHBT／시치미 떼기표　　　SHPI\n" + "　사건에 몰두표 SHEG／파트너와……표　　SHWP／무언가 하고 있다표 SHDS\n" + "　기상천외표　　SHFT／갑작스런 번뜩임표 SHIN／희노애락표 　　　　SHEM\n" + "이벤트표\n" + "　현장에서　 EVS／어째서?　EVW／협력자와 함께 EVN\n" + "　상대쪽에서 EVC／VS용의자 EVV\n" + "조사의 장애표 OBT　　변조표 ACT　　목격자표 EWT　　미궁진입표 WMT\n" + "【설정】\n" + "배경표\n" + "　탐정　운명의 혈통 　BGDD／천상의 재능 　BGDG／마니아 　　 BGDM\n" + "　조수　정의로운 사람 BGAJ／정렬적인 사람 BGAP／말려든 사람 BGAI\n" + "신장표 HT　　아지트표 BT　　관계표 GRT　　추억의 물건 결정표 MIT\n" + "직업표A・B　　JBT66・JBT10　　패션 특징표A・B　　　　FST66・FST10\n" + "감정표A・B　　FLT66・FLT10　　좋아하는 것／싫어하는 것표A・B　LDT66・LDT10\n" + "호칭표A・B　NCT66・NCT10\n");
     
     Opal.def(self, '$initialize', $FutariSousa_Korean_initialize$1 = function $$initialize() {
       var $iter = $FutariSousa_Korean_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -58,123 +58,123 @@
       count = ($truthy($a = $$($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
       $b = self.$get_as(count), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHRD"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987 \uACB0\uC815\uD45C";
+      type = "이상한 버릇 결정표";
       $b = self.$get_strange_habit_random(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHFM"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uC9C0\uAEC4\uC774\uB2E4\uD45C";
+      type = "이상한 버릇・지껄이다표";
       $b = self.$get_strange_habit_from_mouth(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHBT"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uAC15\uC555\uC801\uC778 \uC218\uC0AC\uD45C";
+      type = "이상한 버릇・강압적인 수사표";
       $b = self.$get_strange_habit_bull_through(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHPI"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uC2DC\uCE58\uBBF8 \uB5BC\uAE30\uD45C";
+      type = "이상한 버릇・시치미 떼기표";
       $b = self.$get_strange_habit_play_innocent(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHEG"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uC0AC\uAC74\uC5D0 \uBAB0\uB450\uD45C";
+      type = "이상한 버릇・사건에 몰두표";
       $b = self.$get_strange_habit_engrossed(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHWP"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uD30C\uD2B8\uB108\uC640\u2026\u2026\uD45C";
+      type = "이상한 버릇・파트너와……표";
       $b = self.$get_strange_habit_with_partner(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHDS"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uBB34\uC5B8\uAC00 \uD558\uACE0 \uC788\uB2E4\uD45C";
+      type = "이상한 버릇・무언가 하고 있다표";
       $b = self.$get_strange_habit_do_something(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHFT"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uAE30\uC0C1\uCC9C\uC678\uD45C";
+      type = "이상한 버릇・기상천외표";
       $b = self.$get_strange_habit_fantastic(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHIN"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uAC11\uC791\uC2A4\uB7F0 \uBC88\uB729\uC784\uD45C";
+      type = "이상한 버릇・갑작스런 번뜩임표";
       $b = self.$get_strange_habit_inspiration(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHEM"['$===']($case)) {
-      type = "\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uD76C\uB178\uC560\uB77D\uD45C";
+      type = "이상한 버릇・희노애락표";
       $b = self.$get_strange_habit_emotion(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVS"['$===']($case)) {
-      type = "\uD604\uC7A5\uC5D0\uC11C\uFF0F\uC774\uBCA4\uD2B8\uD45C";
+      type = "현장에서／이벤트표";
       $b = self.$get_event_scene(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVW"['$===']($case)) {
-      type = "\uC5B4\uC9F8\uC11C?\uFF0F\uC774\uBCA4\uD2B8\uD45C";
+      type = "어째서?／이벤트표";
       $b = self.$get_event_why(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVN"['$===']($case)) {
-      type = "\uD611\uB825\uC790\uC640 \uD568\uAED8\uFF0F\uC774\uBCA4\uD2B8\uD45C";
+      type = "협력자와 함께／이벤트표";
       $b = self.$get_event_npc(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVC"['$===']($case)) {
-      type = "\uC0C1\uB300\uCABD\uC5D0\uC11C\uFF0F\uC774\uBCA4\uD2B8\uD45C";
+      type = "상대쪽에서／이벤트표";
       $b = self.$get_event_coming(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVV"['$===']($case)) {
-      type = "VS\uC6A9\uC758\uC790\uFF0F\uC774\uBCA4\uD2B8\uD45C";
+      type = "VS용의자／이벤트표";
       $b = self.$get_event_vs(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("OBT"['$===']($case)) {
-      type = "\uC870\uC0AC\uC758 \uC7A5\uC560\uD45C";
+      type = "조사의 장애표";
       $b = self.$get_obstruction_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("ACT"['$===']($case)) {
-      type = "\uBCC0\uC870\uD45C";
+      type = "변조표";
       $b = self.$get_abnormal_condition(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EWT"['$===']($case)) {
-      type = "\uBAA9\uACA9\uC790\uD45C";
+      type = "목격자표";
       $b = self.$get_eyewitness_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("WMT"['$===']($case)) {
-      type = "\uBBF8\uAD81\uC9C4\uC785\uD45C";
+      type = "미궁진입표";
       $b = self.$get_wrapped_in_mystery_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGDD"['$===']($case)) {
-      type = "\uD0D0\uC815\u30FB\uC6B4\uBA85\uC758 \uD608\uD1B5 \uBC30\uACBD\uD45C";
+      type = "탐정・운명의 혈통 배경표";
       $b = self.$get_background_detective_destiny(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGDG"['$===']($case)) {
-      type = "\uD0D0\uC815\u30FB\uCC9C\uC131\uC758 \uC7AC\uB2A5 \uBC30\uACBD\uD45C";
+      type = "탐정・천성의 재능 배경표";
       $b = self.$get_background_detective_genius(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGDM"['$===']($case)) {
-      type = "\uD0D0\uC815\u30FB\uB9C8\uB2C8\uC544 \uBC30\uACBD\uD45C";
+      type = "탐정・마니아 배경표";
       $b = self.$get_background_detective_mania(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGAJ"['$===']($case)) {
-      type = "\uC870\uC218\u30FB\uC815\uC758\uB85C\uC6B4 \uC0AC\uB78C \uBC30\uACBD\uD45C";
+      type = "조수・정의로운 사람 배경표";
       $b = self.$get_background_assistant_justice(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGAP"['$===']($case)) {
-      type = "\uC870\uC218\u30FB\uC815\uB82C\uC801\uC778 \uC0AC\uB78C \uBC30\uACBD\uD45C";
+      type = "조수・정렬적인 사람 배경표";
       $b = self.$get_background_assistant_passion(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGAI"['$===']($case)) {
-      type = "\uC870\uC218\u30FB\uB9D0\uB824\uB4E0 \uC0AC\uB78C \uBC30\uACBD\uD45C";
+      type = "조수・말려든 사람 배경표";
       $b = self.$get_background_assistant_involved(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("HT"['$===']($case)) {
-      type = "\uC2E0\uC7A5\uD45C";
+      type = "신장표";
       $b = self.$get_height_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BT"['$===']($case)) {
-      type = "\uC544\uC9C0\uD2B8\uD45C";
+      type = "아지트표";
       $b = self.$get_base_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("GRT"['$===']($case)) {
-      type = "\uAD00\uACC4\uD45C";
+      type = "관계표";
       $b = self.$get_guest_relation_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("MIT"['$===']($case)) {
-      type = "\uCD94\uC5B5\uC758 \uBB3C\uAC74 \uACB0\uC815\uD45C";
+      type = "추억의 물건 결정표";
       $b = self.$get_memorial_item_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("JBT66"['$===']($case)) {
-      type = "\uC9C1\uC5C5\uD45CA";
+      type = "직업표A";
       $b = self.$get_job_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("JBT10"['$===']($case)) {
-      type = "\uC9C1\uC5C5\uD45CB";
+      type = "직업표B";
       $b = self.$get_job_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FST66"['$===']($case)) {
-      type = "\uD328\uC158 \uD2B9\uC9D5\uD45CA";
+      type = "패션 특징표A";
       $b = self.$get_fashion_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FST10"['$===']($case)) {
-      type = "\uD328\uC158 \uD2B9\uC9D5\uD45CB";
+      type = "패션 특징표B";
       $b = self.$get_fashion_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FLT66"['$===']($case)) {
-      type = "\uAC10\uC815\uD45CA";
+      type = "감정표A";
       $b = self.$get_feeling_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FLT10"['$===']($case)) {
-      type = "\uAC10\uC815\uD45CB";
+      type = "감정표B";
       $b = self.$get_feeling_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("LDT66"['$===']($case)) {
-      type = "\uC88B\uC544\uD558\uB294 \uAC83\uFF0F\uC2EB\uC5B4\uD558\uB294 \uAC83\uD45CA";
+      type = "좋아하는 것／싫어하는 것표A";
       $b = self.$get_like_dislike_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("LDT10"['$===']($case)) {
-      type = "\uC88B\uC544\uD558\uB294 \uAC83\uFF0F\uC2EB\uC5B4\uD558\uB294 \uAC83\uD45CB";
+      type = "좋아하는 것／싫어하는 것표B";
       $b = self.$get_like_dislike_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("NCT66"['$===']($case)) {
-      type = "\uD638\uCE6D\uD45CA";
+      type = "호칭표A";
       $b = self.$get_name_to_call_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("NCT10"['$===']($case)) {
-      type = "\uD638\uCE6D\uD45CB";
+      type = "호칭표B";
       $b = self.$get_name_to_call_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;};
-      return "" + (type) + "(" + (diceText) + ") \uFF1E " + (output);
+      return "" + (type) + "(" + (diceText) + ") ＞ " + (output);
     }, $FutariSousa_Korean_rollDiceCommand$2.$$arity = 1);
     
     Opal.def(self, '$get_dt', $FutariSousa_Korean_get_dt$3 = function $$get_dt(count) {
@@ -198,12 +198,12 @@
       
       max = diceList.$max();
       if ($truthy($rb_le(max, 1))) {
-        return "\uD38C\uBE14\uFF08\uBCC0\uC870\uB97C \uBC1B\uACE0, \uC870\uC218\uC758 \uB9C8\uC74C\uACE0\uC0DD\uC774 1\uC810 \uC0C1\uC2B9\uFF09"};
+        return "펌블（변조를 받고, 조수의 마음고생이 1점 상승）"};
       if ($truthy(diceList['$include?'](self.special_dice))) {
-        return "\uC2A4\uD398\uC15C\uFF08\uC870\uC218\uC758 \uC5EC\uC720\uB97C 1\uC810 \uD68D\uB4DD\uFF09"};
+        return "스페셜（조수의 여유를 1점 획득）"};
       if ($truthy($rb_ge(max, self.success_threshold))) {
-        return "\uC131\uACF5"};
-      return "\uC2E4\uD328";
+        return "성공"};
+      return "실패";
     }, $FutariSousa_Korean_get_dt_result$5.$$arity = 1);
     
     Opal.def(self, '$get_as', $FutariSousa_Korean_get_as$6 = function $$get_as(count) {
@@ -227,12 +227,12 @@
       
       max = diceList.$max();
       if ($truthy($rb_le(max, 1))) {
-        return "\uD38C\uBE14\uFF08\uBCC0\uC870\uB97C \uBC1B\uACE0, \uC870\uC218\uC758 \uB9C8\uC74C\uACE0\uC0DD\uC774 1\uC810 \uC0C1\uC2B9\uFF09"};
+        return "펌블（변조를 받고, 조수의 마음고생이 1점 상승）"};
       if ($truthy(diceList['$include?'](self.special_dice))) {
-        return "\uC2A4\uD398\uC15C\uFF08\uC5EC\uC720 2\uC810\uACFC, \uD0D0\uC815\uC758 \uC870\uC218\uB97C \uD5A5\uD55C \uAC10\uC815\uC744 \uD68D\uB4DD\uFF09"};
+        return "스페셜（여유 2점과, 탐정의 조수를 향한 감정을 획득）"};
       if ($truthy($rb_ge(max, self.success_threshold))) {
-        return "\uC131\uACF5\uFF08\uC5EC\uC720 1\uC810\uACFC, \uD0D0\uC815\uC758 \uC870\uC218\uB97C \uD5A5\uD55C \uAC10\uC815\uC744 \uD68D\uB4DD\uFF09"};
-      return "\uC2E4\uD328";
+        return "성공（여유 1점과, 탐정의 조수를 향한 감정을 획득）"};
+      return "실패";
     }, $FutariSousa_Korean_get_as_result$8.$$arity = 1);
     
     Opal.def(self, '$getTableResult', $FutariSousa_Korean_getTableResult$9 = function $$getTableResult(table, dice) {
@@ -261,15 +261,15 @@
         return command};
       text = self.$rollDiceCommand(command);
       if ($truthy(text['$nil?']())) {
-        return "" + " \uFF1E " + (command) + " is NOT found."};
-      return "" + " \uFF1E \n " + (command) + " \uFF1E " + (text);
+        return "" + " ＞ " + (command) + " is NOT found."};
+      return "" + " ＞ \n " + (command) + " ＞ " + (text);
     }, $FutariSousa_Korean_getAddRoll$12.$$arity = 1);
     
     Opal.def(self, '$get_strange_habit_random', $FutariSousa_Korean_get_strange_habit_random$13 = function $$get_strange_habit_random() {
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uC9C0\uAEC4\uC774\uB2E4\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [2, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uAC15\uC555\uC801\uC778 \uC218\uC0AC\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [3, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uC2DC\uCE58\uBBF8 \uB5BC\uAE30\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [4, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uC0AC\uAC74\uC5D0 \uBAB0\uB450\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [5, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uD30C\uD2B8\uB108\uC640\u2026\u2026\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [6, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uBB34\uC5B8\uAC00 \uD558\uACE0 \uC788\uB2E4\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [7, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uAE30\uC0C1\uCC9C\uC678\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [8, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uAC11\uC791\uC2A4\uB7F0 \uBC88\uB729\uC784\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [9, "\u300C\uC774\uC0C1\uD55C \uBC84\uB987\u30FB\uD76C\uB178\uC560\uB77D\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."], [10, "\uC6D0\uD558\uB294\u300C\uC774\uC0C1\uD55C \uBC84\uB987\uD45C\u300D\uB97C \uC0AC\uC6A9\uD55C\uB2E4."]];
+      table = [[1, "「이상한 버릇・지껄이다표」를 사용한다."], [2, "「이상한 버릇・강압적인 수사표」를 사용한다."], [3, "「이상한 버릇・시치미 떼기표」를 사용한다."], [4, "「이상한 버릇・사건에 몰두표」를 사용한다."], [5, "「이상한 버릇・파트너와……표」를 사용한다."], [6, "「이상한 버릇・무언가 하고 있다표」를 사용한다."], [7, "「이상한 버릇・기상천외표」를 사용한다."], [8, "「이상한 버릇・갑작스런 번뜩임표」를 사용한다."], [9, "「이상한 버릇・희노애락표」를 사용한다."], [10, "원하는「이상한 버릇표」를 사용한다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -279,7 +279,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uB9F9\uB82C\uD558\uAC8C \uAC10\uC0AC\uC778\uC0AC\uB97C \uD55C\uB2E4."], [2, "\uBE48\uC815\uAC70\uB9AC\uB294 \uD22C\uB85C \uB9D0\uD574\uBC84\uB9B0\uB2E4."], [3, "\uC0C1\uB300\uC758 \uB9D0\uC744 \uAE0D\uC815\uD55C \uB4A4 \uBD80\uC815\uD55C\uB2E4."], [4, "\uD788\uC8FD\uD788\uC8FD \uC6C3\uC73C\uBA70 \uC0AC\uACFC\uD55C\uB2E4."], [5, "\uC0C1\uB300\uC758 \uB9D0\uC744 \uB4E3\uC9C0 \uC54A\uACE0 \uC790\uC2E0\uB9CC \uB9D0\uD55C\uB2E4."], [6, "\u300C\uC774\uB807\uAC8C\uB294 \uC0DD\uAC01\uD560 \uC218 \uC5C6\uC744\uAE4C\uC694?\u300D"], [7, "\u300C\uC544\uB2C8\uBA74, \uBB54\uAC00 \uC228\uAE30\uACE0 \uC788\uB294 \uAC70\uB77C\uB3C4 \uC788\uB098\uC694?\u300D"], [8, "\u300C\uBB18\uD558\uB124\uC694.\u300D"], [9, "\u300C\uB300\uCDA9 \uC54C\uACA0\uC5B4\uC694.\u300D"], [10, "\u300C\uC7A0\uC790\uCF54 \uC788\uC5B4.\u300D"]];
+      table = [[1, "맹렬하게 감사인사를 한다."], [2, "빈정거리는 투로 말해버린다."], [3, "상대의 말을 긍정한 뒤 부정한다."], [4, "히죽히죽 웃으며 사과한다."], [5, "상대의 말을 듣지 않고 자신만 말한다."], [6, "「이렇게는 생각할 수 없을까요?」"], [7, "「아니면, 뭔가 숨기고 있는 거라도 있나요?」"], [8, "「묘하네요.」"], [9, "「대충 알겠어요.」"], [10, "「잠자코 있어.」"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -289,7 +289,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uB9C8\uC74C\uB300\uB85C \uC218\uC0AC\uB300\uC0C1\uC758 \uAC00\uBC29\uC774\uB098 \uC11C\uB78D\uC744 \uC5F0\uB2E4."], [2, "\uACBD\uCC30\uC758 \uC218\uC0AC\uC5D0 \uB07C\uC5B4\uB4E0\uB2E4."], [3, "\uC218\uC0AC\uB97C \uC704\uD574 \uD574\uD0B9\uC774\uB098 \uBD88\uBC95\uCE68\uC785\uC744 \uD55C\uB2E4."], [4, "\uD5C8\uAC00 \uBC1B\uC9C0 \uC54A\uC740 \uACF3\uC5D0 \uB4E4\uC5B4\uAC04\uB2E4."], [5, "\uACBD\uCC30\uC758 \uC218\uC0AC\uB97C \uC5FF\uBCF4\uAC70\uB098 \uC5FF\uB4E3\uB294\uB2E4."], [6, "\uC99D\uAC70\uD488\uC744 \uD5C8\uAC00 \uC5C6\uC774 \uD574\uCCB4\uD55C\uB2E4."], [7, "\uC218\uC0AC\uB300\uC0C1\uC744 \uC18D\uC5EC \uC815\uBCF4\uB97C \uCE90\uB0B8\uB2E4."], [8, "\uB9C8\uC74C\uB300\uB85C \uAD00\uACC4\uC790\uC758 \uC18C\uC9C0\uD488\uC744 \uB9CC\uC9C4\uB2E4."], [9, "\uC99D\uAC70\uD488\uC744 \uB9C8\uC74C\uB300\uB85C \uB4E4\uACE0 \uB2E4\uB2CC\uB2E4."], [10, "\uB9C8\uC74C\uB300\uB85C \uAC10\uC2DD\uC744 \uC2DC\uC791\uD55C\uB2E4."]];
+      table = [[1, "마음대로 수사대상의 가방이나 서랍을 연다."], [2, "경찰의 수사에 끼어든다."], [3, "수사를 위해 해킹이나 불법침입을 한다."], [4, "허가 받지 않은 곳에 들어간다."], [5, "경찰의 수사를 엿보거나 엿듣는다."], [6, "증거품을 허가 없이 해체한다."], [7, "수사대상을 속여 정보를 캐낸다."], [8, "마음대로 관계자의 소지품을 만진다."], [9, "증거품을 마음대로 들고 다닌다."], [10, "마음대로 감식을 시작한다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -299,7 +299,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uC790\uC2E0\uC758 \uC2E0\uBD84\uC744 \uC18D\uC774\uACE0 \uAD00\uACC4\uC790\uC5D0\uAC8C \uC774\uC57C\uAE30\uB97C \uB4E3\uB294\uB2E4"], [2, "\uC815\uBCF4\uB97C \uC228\uAE30\uBA70 \uC774\uC57C\uAE30\uB97C \uB4E3\uB294\uB2E4"], [3, "\uD30C\uD2B8\uB108\uC640 \uC5F0\uAE30\uB97C \uD558\uBA70 \uC815\uBCF4\uB97C \uCE90\uB0B4\uB824 \uD55C\uB2E4"], [4, "\uD589\uC778\uC778 \uCC99\uD558\uBA70 \uAD00\uACC4\uC790\uC758 \uC774\uC57C\uAE30\uB97C \uC5FF\uB4E3\uB294\uB2E4."], [5, "\uC6B0\uC5F0\uC744 \uAC00\uC7A5\uD574 \uC99D\uAC70\uD488\uC744 \uC190\uC5D0 \uB123\uC5B4\uBC84\uB9B0\uB2E4."], [6, "\uBD80\uC790\uC5F0\uC2A4\uB7FD\uAC8C \uC2DC\uCE58\uBBF8\uB97C \uB5C0\uB2E4."], [7, "\uAD00\uACC4\uC790\uB97C \uD654\uB098\uAC8C \uD558\uB294 \uC5F0\uAE30\uB97C \uD558\uC5EC \uC815\uBCF4\uB97C \uB04C\uC5B4\uB0B8\uB2E4."], [8, "\uC644\uACE1\uD558\uAC8C \uAD00\uACC4\uC790\uB97C \uC704\uD611\uD55C\uB2E4"], [9, "\uBB3C\uAC74\uC744 \uC783\uC5B4\uBC84\uB838\uB2E4\uACE0 \uB9D0\uD558\uBA70 \uD604\uC7A5\uC774\uB098 \uC99D\uAC70\uD488\uC744 \uB4A4\uC9C4\uB2E4."], [10, "\uAD00\uACC4\uC790\uC5D0\uAC8C \uC720\uB3C4 \uC2E0\uBB38\uC744 \uD55C\uB2E4."]];
+      table = [[1, "자신의 신분을 속이고 관계자에게 이야기를 듣는다"], [2, "정보를 숨기며 이야기를 듣는다"], [3, "파트너와 연기를 하며 정보를 캐내려 한다"], [4, "행인인 척하며 관계자의 이야기를 엿듣는다."], [5, "우연을 가장해 증거품을 손에 넣어버린다."], [6, "부자연스럽게 시치미를 뗀다."], [7, "관계자를 화나게 하는 연기를 하여 정보를 끌어낸다."], [8, "완곡하게 관계자를 위협한다"], [9, "물건을 잃어버렸다고 말하며 현장이나 증거품을 뒤진다."], [10, "관계자에게 유도 신문을 한다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -309,7 +309,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uD30C\uD2B8\uB108\uC758 \uBAB8\uC744 \uC0AC\uC6A9\uD574 \uC0AC\uAC74\uC744 \uC7AC\uD604\uD558\uB824\uACE0 \uD55C\uB2E4"], [2, "\uC218\uC218\uAED8\uB07C\uB97C \uD478\uB294 \uAC83\uC774 \uC990\uAC70\uC6CC\uC11C \uC6C3\uC5B4 \uBC84\uB9B0\uB2E4"], [3, "\uBA39\uC9C0\uB3C4 \uC790\uC9C0\uB3C4 \uC54A\uACE0 \uC218\uC0AC\uB97C \uD558\uB2E4 \uAC11\uC790\uAE30 \uC4F0\uB7EC\uC9C4\uB2E4"], [4, "\uC0DD\uAC01\uC744 \uD558\uB290\uB77C \uB204\uAD6C\uC758 \uBAA9\uC18C\uB9AC\uB3C4 \uB4E4\uB9AC\uC9C0 \uC54A\uB294\uB2E4."], [5, "\uC0AC\uAC74\uC758 \uAD00\uACC4\uB3C4\uB97C \uAC00\uAE4C\uC6B4 \uBCBD\uC774\uB098 \uBC14\uB2E5\uC5D0 \uADF8\uB9AC\uAE30 \uC2DC\uC791\uD55C\uB2E4"], [6, "\uC0AC\uAC74\uC5D0 \uAD00\uACC4\uB418\uB294 \uB9D0\uC744 \uACC4\uC18D\uD574\uC11C \uB9D0\uD574\uB098\uAC04\uB2E4."], [7, "\uC0AC\uAC74 \uD574\uACB0 \uC774\uC678\uC758 \uAC83\uC740 \uC804\uD600 \uC0DD\uAC01\uD558\uACE0 \uC788\uC9C0 \uC54A\uB2E4."], [8, "\uC0AC\uAC74\uC758 \uD750\uB984\uC744 \uC911\uC5BC\uC911\uC5BC \uB9D0\uD558\uAE30 \uC2DC\uC791\uD55C\uB2E4."], [9, "\uC0AC\uAC74 \uD604\uC7A5\uC744 \uD30C\uACE0\uB4E4\uC5B4 \uC870\uC0AC\uB97C \uD55C\uB2E4."], [10, "\uC2DD\uC0AC\uC911\uC774\uB77C\uB3C4, \uC0C1\uAD00 \uC5C6\uC774 \uC0AC\uAC74 \uC774\uC57C\uAE30\uB97C \uD55C\uB2E4."]];
+      table = [[1, "파트너의 몸을 사용해 사건을 재현하려고 한다"], [2, "수수께끼를 푸는 것이 즐거워서 웃어 버린다"], [3, "먹지도 자지도 않고 수사를 하다 갑자기 쓰러진다"], [4, "생각을 하느라 누구의 목소리도 들리지 않는다."], [5, "사건의 관계도를 가까운 벽이나 바닥에 그리기 시작한다"], [6, "사건에 관계되는 말을 계속해서 말해나간다."], [7, "사건 해결 이외의 것은 전혀 생각하고 있지 않다."], [8, "사건의 흐름을 중얼중얼 말하기 시작한다."], [9, "사건 현장을 파고들어 조사를 한다."], [10, "식사중이라도, 상관 없이 사건 이야기를 한다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -319,7 +319,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uD30C\uD2B8\uB108\uC758 \uC2E0\uB8B0\uC5D0 \uC751\uC11D\uBD80\uB9B0\uB2E4."], [2, "\uD30C\uD2B8\uB108\uB97C \uB450\uACE0 \uBA3C\uC800 \uAC00\uBC84\uB9B0\uB2E4."], [3, "\uD30C\uD2B8\uB108\uC5D0\uAC8C \uC0AC\uAC74\uC5D0 \uB300\uD574 \uC5B4\uB5BB\uAC8C \uC0DD\uAC01\uD558\uB294\uC9C0 \uC9C8\uBB38\uD55C\uB2E4."], [4, "\uD30C\uD2B8\uB108\uC5D0\uAC8C \uC790\uB791\uD55C\uB2E4."], [5, "\uD30C\uD2B8\uB108\uC5D0\uAC8C \uC0AC\uAC74\uC5D0 \uAD00\uD55C \uD034\uC988\uB97C \uB0B8\uB2E4."], [6, "\uD30C\uD2B8\uB108\uC640 \uC0AC\uC18C\uD55C \uC77C\uB85C \uC2F8\uC6C0\uC744 \uD55C\uB2E4."], [7, "\uD30C\uD2B8\uB108\uC5D0\uAC8C \uC120\uC0DD\uB2D8 \uD589\uC138\uB97C \uD55C\uB2E4."], [8, "\uD30C\uD2B8\uB108\uAC00 \uB530\uB77C\uC624\uB294 \uC804\uC81C\uB85C \uBA4B\uB300\uB85C \uC6C0\uC9C1\uC778\uB2E4."], [9, "\uD30C\uD2B8\uB108\uC5D0 \uB300\uD574\uC11C \uCE5C\uC808\uD558\uACE0 \uC815\uC911\uD558\uAC8C \uC0AC\uAC74\uC744 \uC124\uBA85\uD55C\uB2E4."], [10, "\uD30C\uD2B8\uB108\uC758 \uADD3\uAC00\uC5D0 \uAC11\uC790\uAE30 \uB9D0\uD558\uAE30 \uC2DC\uC791\uD55C\uB2E4."]];
+      table = [[1, "파트너의 신뢰에 응석부린다."], [2, "파트너를 두고 먼저 가버린다."], [3, "파트너에게 사건에 대해 어떻게 생각하는지 질문한다."], [4, "파트너에게 자랑한다."], [5, "파트너에게 사건에 관한 퀴즈를 낸다."], [6, "파트너와 사소한 일로 싸움을 한다."], [7, "파트너에게 선생님 행세를 한다."], [8, "파트너가 따라오는 전제로 멋대로 움직인다."], [9, "파트너에 대해서 친절하고 정중하게 사건을 설명한다."], [10, "파트너의 귓가에 갑자기 말하기 시작한다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -329,7 +329,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uB9CE\uC740 \uC591\uC758 \uCC45\uC744 \uC77D\uACE0 \uC788\uB2E4."], [2, "\uC88B\uC544\uD558\uB294 \uC74C\uC545\uC744 \uD070 \uC18C\uB9AC\uB85C \uD2C0\uACE0 \uC788\uB2E4."], [3, "\uC5B4\uB5A4 \uC218\uC2DD\uC744 \uD480\uACE0 \uC788\uB2E4."], [4, "\uB9CE\uC740 \uC591\uC758 \uC88B\uC544\uD558\uB294 \uC74C\uC2DD\uC744 \uACC4\uC18D \uBA39\uACE0 \uC788\uB2E4."], [5, "\uACC4\uC18D \uCEF4\uD4E8\uD130\uB098 \uC2A4\uB9C8\uD2B8\uD3F0 \uB4F1\uC758 \uD654\uBA74\uACFC \uB9C8\uC8FC\uBCF4\uBA70 \uC870\uC0AC\uD558\uACE0 \uC788\uB2E4."], [6, "\uC791\uC740 \uC218\uC218\uAED8\uB07C\uB97C \uD480\uACE0 \uC788\uB2E4."], [7, "\uCCB4\uC2A4\uB098 \uC7A5\uAE30 \uB4F1\uC744 \uB450\uACE0 \uC788\uB2E4."], [8, "\uCC3B\uC9D1 \uC790\uB9AC\uC5D0 \uC549\uC544 \uBB34\uC5B8\uAC00\uB97C \uAE30\uB2E4\uB9AC\uACE0 \uC788\uB2E4."], [9, "\uACC4\uC18D \uC7A0\uB4E4\uC5B4 \uC788\uB2E4\uAC00 \uAC11\uC790\uAE30 \uC77C\uC5B4\uB09C\uB2E4."], [10, "\uC7A0\uC2DC \uC544\uBB34 \uAC83\uB3C4 \uD558\uC9C0 \uC54A\uB294\uB2E4."]];
+      table = [[1, "많은 양의 책을 읽고 있다."], [2, "좋아하는 음악을 큰 소리로 틀고 있다."], [3, "어떤 수식을 풀고 있다."], [4, "많은 양의 좋아하는 음식을 계속 먹고 있다."], [5, "계속 컴퓨터나 스마트폰 등의 화면과 마주보며 조사하고 있다."], [6, "작은 수수께끼를 풀고 있다."], [7, "체스나 장기 등을 두고 있다."], [8, "찻집 자리에 앉아 무언가를 기다리고 있다."], [9, "계속 잠들어 있다가 갑자기 일어난다."], [10, "잠시 아무 것도 하지 않는다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -339,7 +339,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uADF8\uB9CC\uB450\uB77C\uB294 \uB9D0\uC744 \uB4E3\uACE0 \uC788\uB294 \uC77C\uC744 \uD55C\uB2E4."], [2, "\uC7A0\uC2DC \uC0AC\uB77C\uC84C\uB2E4\uAC00 \uB3CC\uC544\uC628\uB2E4."], [3, "\uC608\uC0C1\uCE58 \uBABB\uD55C \uACF3(\uB545 \uC18D\uC774\uB098 \uACF5\uC911 \uB4F1)\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."], [4, "\uBB54\uAC00 \uC0DD\uAC01\uB098\uC11C \uAC11\uC790\uAE30 \uB2EC\uB9AC\uAE30 \uC2DC\uC791\uD55C\uB2E4."], [5, "\uD55C\uC2EC\uD55C \uC790\uC2E0\uC744 \uBE44\uB09C\uD55C\uB2E4."], [6, "\uBAA8\uB974\uB294 \uC0AC\uC774\uC5D0 \uC0AC\uAC74\uC758 \uC218\uC218\uAED8\uB07C\uB97C \uD558\uB098 \uD480\uACE0 \uC788\uC5C8\uB2E4."], [7, "\uC0AC\uAC74\uC5D0 \uB300\uD574 \uC54C\uC544\uCC28\uB9B0 \uBAA8\uC591\uC774\uC9C0\uB9CC \uB204\uAD6C\uC5D0\uAC8C\uB3C4 \uAC00\uB974\uCCD0 \uC8FC\uC9C0 \uC54A\uB294\uB2E4."], [8, "\uB450\uACE0 \uAC00\uB294 \uD3B8\uC9C0\uB098 \uBA54\uC77C\uB85C \uBCF4\uACE0\uB97C \uD558\uBA74 \uBAA8\uC2B5\uC774 \uBCF4\uC774\uC9C0 \uC54A\uB294\uB2E4."], [9, "\uC2DC\uACC4\uB97C \uBCF4\uACE0 \uAC11\uC790\uAE30 \uC6C0\uC9C1\uC778\uB2E4."], [10, "\uC0AC\uAC74\uACFC\uB294 \uAD00\uACC4 \uC5C6\uC744 \uAC83 \uAC19\uC740 \uC2E0\uBB38\uC758 \uAE30\uC0AC\uB97C \uC77D\uACE0 \uC788\uB2E4."]];
+      table = [[1, "그만두라는 말을 듣고 있는 일을 한다."], [2, "잠시 사라졌다가 돌아온다."], [3, "예상치 못한 곳(땅 속이나 공중 등)에서 등장한다."], [4, "뭔가 생각나서 갑자기 달리기 시작한다."], [5, "한심한 자신을 비난한다."], [6, "모르는 사이에 사건의 수수께끼를 하나 풀고 있었다."], [7, "사건에 대해 알아차린 모양이지만 누구에게도 가르쳐 주지 않는다."], [8, "두고 가는 편지나 메일로 보고를 하면 모습이 보이지 않는다."], [9, "시계를 보고 갑자기 움직인다."], [10, "사건과는 관계 없을 것 같은 신문의 기사를 읽고 있다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -349,7 +349,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uC2DD\uC0AC\uB97C \uD558\uACE0 \uC788\uC73C\uBA74 \uAC11\uC790\uAE30 \uC218\uC218\uAED8\uB07C\uAC00 \uD480\uB9B0\uB2E4."], [2, "\uC870\uC218\uC640\uC758 \uC544\uBB34\uB807\uC9C0\uB3C4 \uC54A\uC740 \uB300\uD654\uC5D0\uC11C \uAC11\uC790\uAE30 \uC218\uC218\uAED8\uB07C\uAC00 \uD480\uB9B0\uB2E4."], [3, "\uB4E4\uB824\uC628 \uB300\uD654\uB85C\uBD80\uD130 \uAC11\uC790\uAE30 \uC218\uC218\uAED8\uB07C\uAC00 \uD480\uB9B0\uB2E4."], [4, "\uBAA9\uC695\uC744 \uD558\uACE0 \uC788\uC73C\uBA74 \uAC11\uC790\uAE30 \uC218\uC218\uAED8\uB07C\uAC00 \uD480\uB9B0\uB2E4."], [5, "\uAFC8 \uC18D\uC5D0\uC11C \uAC11\uC790\uAE30 \uC218\uC218\uAED8\uB07C\uAC00 \uD480\uB9B0\uB2E4."], [6, "\uBC14\uB78C\uC774 \uBD88\uC5B4 \uB0A0\uC544\uC628 \uBB3C\uAC74\uC73C\uB85C \uC218\uC218\uAED8\uB07C\uAC00 \uD480\uB9B0\uB2E4."], [7, "\uCC45\uC744 \uC77D\uB2E4\uAC00 \uC0AC\uAC74\uC758 \uD78C\uD2B8\uAC00 \uBC1C\uACAC\uB41C\uB2E4."], [8, "\uD604\uC7A5\uC744 \uB2E4\uC2DC \uBC29\uBB38\uD558\uB2C8 \uBC88\uB729\uC778\uB2E4."], [9, "\uC790\uB8CC\uB97C \uD655\uC778\uD558\uB294 \uC911\uC5D0 \uBC88\uB729\uC778\uB2E4."], [10, "\uAD00\uACC4\uC790\uC640 \uB300\uD654\uB97C \uB098\uB204\uB294 \uC911\uC5D0 \uBC88\uB729\uC774\uB2E4."]];
+      table = [[1, "식사를 하고 있으면 갑자기 수수께끼가 풀린다."], [2, "조수와의 아무렇지도 않은 대화에서 갑자기 수수께끼가 풀린다."], [3, "들려온 대화로부터 갑자기 수수께끼가 풀린다."], [4, "목욕을 하고 있으면 갑자기 수수께끼가 풀린다."], [5, "꿈 속에서 갑자기 수수께끼가 풀린다."], [6, "바람이 불어 날아온 물건으로 수수께끼가 풀린다."], [7, "책을 읽다가 사건의 힌트가 발견된다."], [8, "현장을 다시 방문하니 번뜩인다."], [9, "자료를 확인하는 중에 번뜩인다."], [10, "관계자와 대화를 나누는 중에 번뜩이다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -359,7 +359,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uAC11\uC790\uAE30 \uC6B4\uB2E4."], [2, "\uAC11\uC790\uAE30 \uD654\uB0B8\uB2E4."], [3, "\uAC11\uC790\uAE30 \uC6C3\uAE30 \uC2DC\uC791\uD55C\uB2E4."], [4, "\uAC11\uC790\uAE30 \uD558\uC774\uD150\uC158\uC774 \uB41C\uB2E4."], [5, "\uAC11\uC790\uAE30 \uAE30\uBED0\uD55C\uB2E4."], [6, "\uAC11\uC790\uAE30 \uC18C\uB9AC\uCE5C\uB2E4."], [7, "\uAC11\uC790\uAE30 \uD788\uC8FD\uAC70\uB9AC\uAE30 \uC2DC\uC791\uD55C\uB2E4."], [8, "\uAC11\uC790\uAE30 \uC774 \uC0AC\uAC74\uC758 \uC2AC\uD514\uC744 \uB9D0\uD55C\uB2E4."], [9, "\uB2F4\uB2F4\uD558\uAC8C \uC77C\uC744 \uC9C4\uD589\uD55C\uB2E4."], [10, "\uB85C\uBD07\uCC98\uB7FC \uC815\uD574\uC9C4 \uAC83\uB9CC \uD55C\uB2E4."]];
+      table = [[1, "갑자기 운다."], [2, "갑자기 화낸다."], [3, "갑자기 웃기 시작한다."], [4, "갑자기 하이텐션이 된다."], [5, "갑자기 기뻐한다."], [6, "갑자기 소리친다."], [7, "갑자기 히죽거리기 시작한다."], [8, "갑자기 이 사건의 슬픔을 말한다."], [9, "담담하게 일을 진행한다."], [10, "로봇처럼 정해진 것만 한다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -369,7 +369,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uC2E0\uACBD\uC4F0\uC774\uB294 \uAC83\uFF08P.165\uFF09\n\u3000\uC0AC\uAC74\uC774 \uC77C\uC5B4\uB09C \uD604\uC7A5\uC740 \uC544\uC9C1 \uB0A8\uC544 \uC788\uB2E4.\n\u3000\uC5EC\uAE30\uC11C \uC77C\uC5B4\uB09C '\uBB34\uC5B8\uAC00'\uB294 \uC548\uAC1C \uC800\uD3B8\uC5D0 \uC228\uACA8\uC838 \uC788\uC5C8\uB2E4.\n\u3000\uADF8 \uC548\uAC1C\uC5D0 \uC190\uC744 \uBED7\uB294 \uC790\uB4E4\uC774 \uC788\uB2E4.", "\uAC70\uBD81\uD574\uD558\uB2E4\uFF08P.166\uFF09\n\u3000\uD55C \uD615\uC0AC\uAC00 \uD604\uC7A5\uC744 \uC5F4\uC2EC\uD788 \uB458\uB7EC\uBCF4\uACE0 \uC788\uB2E4.\n\u3000\uC774 \uC0AC\uAC74\uC758 \uB2F4\uB2F9\uC744 \uB9E1\uC740 \uC624\uC0AC\uCE74\uBCA0 \uB9C8\uC0AC\uC694\uC2DC(\u5211\u90E8\u6B63\u7FA9)\uB77C\uB294 \uB0A8\uC790\uB2E4.\n\u3000\uADF8\uB294 PC\uB4E4\uC758 \uC5BC\uAD74\uC744 \uBCF4\uC790\uB9C8\uC790 \uC5BC\uAD74\uC744 \uCC21\uADF8\uB9B0\uB2E4. \uD658\uC601\uBC1B\uC9C0 \uBABB\uD558\uACE0 \uC788\uB2E4.", "\uD0D0\uBB38\uFF08P.167\uFF09\n\u3000PC\uB4E4\uC740 \uD604\uC7A5 \uBD80\uADFC\uC744 \uC9C0\uB098\uB2E4\uB2C8\uAC70\uB098 \uC0AC\uAC74\uC744 \uBAA9\uACA9\uD55C \uC778\uBB3C\uC774 \uC5C6\uB294\uC9C0 \uCC3E\uC544\uB2E4\uB154\uB2E4.\n\u3000\uADF8\uB7EC\uB098 \uC5B4\uB514\uC11C \uBB34\uC5C7\uC744 \uBB3C\uC5B4\uB3C4 \uADF8\uB7F4 \uB4EF\uD55C \uB2E8\uC11C\uB294 \uC5C6\uB2E4.\n\u3000\uC2AC\uC2AC \uB2E4\uB9AC\uC5D0 \uD53C\uB85C\uAC00 \uC313\uC774\uAE30 \uC2DC\uC791\uD588\uB2E4.", "\uC644\uACE0\uD55C \uAD00\uACC4\uC790\uFF08P.168\uFF09\n\u3000\uC0AC\uAC74 \uD604\uC7A5\uC5D0 \uC5B4\uB5A4 \uC778\uBB3C\uC774 \uB098\uD0C0\uB0AC\uB2E4.\n\u3000PC\uB4E4\uC740, \uC2E0\uBB18\uD55C \uC5BC\uAD74\uB85C \uD604\uC7A5\uC744 \uBC14\uB77C\uBCF4\uB358 \uADF8 \uC778\uBB3C\uC774 \uAD81\uAE08\uD574 \uB9D0\uC744 \uAC74\uB2E4.\n\u3000\uADF8 \uC778\uBB3C\uC740 \uC790\uC2E0\uC744 \uD53C\uD574\uC790\uC758 \uAD00\uACC4\uC790\uB77C\uACE0 \uC790\uCE6D\uD588\uB2E4\u2026\u2026.", "\uD604\uC7A5\uC744 \uCCA0\uC800\uD788 \uC870\uC0AC!\uFF08P.169\uFF09\n\u3000\uC0AC\uAC74 \uD604\uC7A5\uC5D0 \uB0A8\uACA8\uC9C4 \uC99D\uAC70\uB294 \uAC70\uC758 \uCC3E\uC544\uB0C8\uB2E4.\n\u3000\u2026\u2026\uACFC\uC5F0 \uC815\uB9D0 \uADF8\uB7F4\uAE4C?\n\u3000\uBAA8\uB4E0 \uAC01\uB3C4\uC5D0\uC11C \uC870\uC0AC\uC640 \uAC80\uC99D\uC744 \uD558\uC5EC \uD604\uC7A5\uC5D0 \uB0A8\uACA8\uC9C4 \uAC83\uC740 \uC5C6\uB294\uC9C0 \uCC3E\uC544\uBCF4\uAC8C \uB410\uB2E4.", "\uB3C4\uB9DD\uCE5C \uC778\uBB3C\uFF08P.170\uFF09\n\u3000\uB9E4\uC6B0 \uBE60\uB974\uAC8C \uB204\uAD70\uAC00\uAC00 \uD604\uC7A5\uC5D0\uC11C \uB3C4\uB9DD\uCE58\uACE0 \uC788\uB2E4.\n\u3000\uADF8 \uC778\uBB3C\uC758 \uB2EC\uB9AC\uB294 \uBC95\uC774\uB098 \uCD08\uC870\uD574\uD558\uB294 \uBAA8\uC2B5\uC740 \uD3C9\uBC94\uD558\uC9C0 \uC54A\uC558\uB2E4.\n\u3000\uC774\uAC74, \uBB34\uC5B8\uAC00\uB97C \uC54C\uACE0 \uC788\uB2E4. \uD639\uC740 \uBB34\uC5B8\uAC00\uB97C \uAC00\uC9C0\uACE0 \uB5A0\uB0AC\uC744 \uAC00\uB2A5\uC131\uC774 \uC788\uB2E4.\n\u3000PC\uB4E4\uC740 \uCAD3\uAE30 \uC2DC\uC791\uD588\uB2E4."];
+      table = ["신경쓰이는 것（P.165）\n　사건이 일어난 현장은 아직 남아 있다.\n　여기서 일어난 '무언가'는 안개 저편에 숨겨져 있었다.\n　그 안개에 손을 뻗는 자들이 있다.", "거북해하다（P.166）\n　한 형사가 현장을 열심히 둘러보고 있다.\n　이 사건의 담당을 맡은 오사카베 마사요시(刑部正義)라는 남자다.\n　그는 PC들의 얼굴을 보자마자 얼굴을 찡그린다. 환영받지 못하고 있다.", "탐문（P.167）\n　PC들은 현장 부근을 지나다니거나 사건을 목격한 인물이 없는지 찾아다녔다.\n　그러나 어디서 무엇을 물어도 그럴 듯한 단서는 없다.\n　슬슬 다리에 피로가 쌓이기 시작했다.", "완고한 관계자（P.168）\n　사건 현장에 어떤 인물이 나타났다.\n　PC들은, 신묘한 얼굴로 현장을 바라보던 그 인물이 궁금해 말을 건다.\n　그 인물은 자신을 피해자의 관계자라고 자칭했다…….", "현장을 철저히 조사!（P.169）\n　사건 현장에 남겨진 증거는 거의 찾아냈다.\n　……과연 정말 그럴까?\n　모든 각도에서 조사와 검증을 하여 현장에 남겨진 것은 없는지 찾아보게 됐다.", "도망친 인물（P.170）\n　매우 빠르게 누군가가 현장에서 도망치고 있다.\n　그 인물의 달리는 법이나 초조해하는 모습은 평범하지 않았다.\n　이건, 무언가를 알고 있다. 혹은 무언가를 가지고 떠났을 가능성이 있다.\n　PC들은 쫓기 시작했다."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_event_scene$23.$$arity = 0);
     
@@ -377,7 +377,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uC774\uB3D9 \uB8E8\uD2B8\uFF08P.171\uFF09\n\u3000\uC774 \uAE38\uC744 \uC9C0\uB098\uAC14\uC744 \uB54C, \uADF8 \uC0AC\uB78C\uC740 \uBB34\uC2A8 \uC0DD\uAC01\uC744 \uD588\uC744\uAE4C?\n\u3000\uC774 \uAE38\uC744 \uC9C0\uB098\uAC14\uC744 \uB54C, \uADF8 \uC0AC\uB78C\uC740 \uBB34\uC5C7\uC744 \uD574\uC57C \uD588\uC744\uAE4C?\n\u3000\uC0AC\uAC74\uAD00\uACC4\uC790\uB4E4\uC758 \uD589\uC801\uC5D0\uB294 \uC0AC\uAC74\uC5D0 \uC774\uC5B4\uC9C0\uB294 \uBB34\uC5B8\uAC00\uAC00 \uB0A8\uC544 \uC788\uB2E4.\n\u3000\uADF8\uB807\uAC8C \uBBFF\uC73C\uBA70, \uAE38\uC744 \uAC77\uB294\uB2E4.", "\uC790\uC2E0\uC774\uB77C\uBA74\u2026\u2026\uFF08P.172\uFF09\n\u3000\uD0D0\uC815\uACFC \uC870\uC218\uAC00 \uC0AC\uAC74\uC5D0 \uB300\uD574 \uC774\uC57C\uAE30\uB97C \uB098\uB204\uACE0 \uC788\uC5C8\uB2E4.\n\u3000\uC774\uC57C\uAE30\uC758 \uC8FC\uC81C\uB294,\u300C \uC774 \uC0C1\uD669\uC5D0\uC11C \uC790\uC2E0\uC774 \uBC94\uC778\uC774\uB77C\uBA74 \uC5B4\uB5BB\uAC8C \uD560 \uAC83\uC778\uAC00.\u300D\u3002\n\u3000\uADF8 \uAC00\uC815\uC740 \uD78C\uD2B8\uB97C \uC904 \uC218\uB3C4 \uC788\uB2E4.", "\uC218\uC218\uAED8\uB07C\uC758 \uBA54\uC2DC\uC9C0\uFF08P.173\uFF09\n\u3000\uADF8\uAC83\uC740, \uC218\uC218\uAED8\uB07C\uC758 \uB9D0\uC774\uC5C8\uB2E4.\n\u3000\uB2E8\uC21C\uD55C \uBB38\uC790\uC5F4\uC77C \uC218\uB3C4 \uC788\uACE0 \uB73B \uBAA8\uB97C \uB9D0\uC77C \uC218\uB3C4 \uC788\uB2E4.\n\u3000\uC0AC\uAC74\uACFC \uAD00\uB828\uB41C \uC7A5\uC18C\uC5D0 \uC788\uC5C8\uB2E4\uACE0 \uD574\uC11C, \uC0AC\uAC74\uC5D0 \uAD00\uB828\uB418\uC5B4 \uC788\uB2E4\uACE0\uB294 \uD560 \uC218 \uC5C6\uB2E4.\n\u3000\uD558\uC9C0\uB9CC, \uC774\uAC83\uC740 \uC0AC\uAC74\uC5D0 \uC5F0\uB8E8\uB418\uC5B4 \uC788\uB2E4. \uADF8\uB807\uAC8C \uC9C1\uAC10\uC774 \uACE0\uD558\uACE0 \uC788\uB2E4.", "\uC0AC\uAC74 \uBCF5\uC2B5\uFF08P.174\uFF09\n\u3000\uD654\uC774\uD2B8\uBCF4\uB4DC, \uCE60\uD310, \uB178\uD2B8.\n\u3000\uBB50\uB4E0\uC9C0 \uAC04\uC5D0 \uC4F8 \uAC83\uC774 \uD544\uC694\uD558\uB2E4.\n\u3000\uC9C0\uAE08\uBD80\uD130 \uC0AC\uAC74\uC5D0 \uB300\uD574 \uC815\uB9AC\uD558\uB294 \uAC70\uB2C8\uAE4C.", "\uC218\uC0C1\uD55C \uC778\uBB3C\uC740?\uFF08P.175\uFF09\n\u3000PC\uB4E4\uC740 \uD55C \uC778\uBB3C\uC744 \uCAD3\uACE0 \uC788\uB2E4.\n\u3000\uADF8 \uC778\uBB3C\uC740 \uC0AC\uAC74\uC5D0 \uC774\uC5B4\uC9C0\uB294 \uBB34\uC5B8\uAC00\uB97C \uAC00\uC9C0\uACE0 \uC788\uB2E4. \uADF8\uB7F0 \uD655\uC2E0\uC774 \uB4E4\uC5C8\uB2E4.\n\u3000\uC790, \uADF8\uB294 \uC5B4\uB5A4 \uC0AC\uB78C\uC77C\uAE4C?", "\uD53C\uD574\uC790\uC758 \uC2DC\uC810\uFF08P.176\uFF09\n\u3000\uD53C\uD574\uC790\uC758 \uBAB8\uC5D0 \uBB34\uC2A8 \uC77C\uC774 \uC77C\uC5B4\uB0AC\uB294\uAC00.\n\u3000\uD53C\uD574\uC790\uB294 \uBB34\uC5C7\uC744 \uBCF4\uC558\uB294\uAC00.\n\u3000\uADF8 \uD78C\uD2B8\uB294 \uD53C\uD574\uC790 \uC790\uC2E0\uC774 \uC54C \uAC83\uC774\uB2E4."];
+      table = ["이동 루트（P.171）\n　이 길을 지나갔을 때, 그 사람은 무슨 생각을 했을까?\n　이 길을 지나갔을 때, 그 사람은 무엇을 해야 했을까?\n　사건관계자들의 행적에는 사건에 이어지는 무언가가 남아 있다.\n　그렇게 믿으며, 길을 걷는다.", "자신이라면……（P.172）\n　탐정과 조수가 사건에 대해 이야기를 나누고 있었다.\n　이야기의 주제는,「 이 상황에서 자신이 범인이라면 어떻게 할 것인가.」。\n　그 가정은 힌트를 줄 수도 있다.", "수수께끼의 메시지（P.173）\n　그것은, 수수께끼의 말이었다.\n　단순한 문자열일 수도 있고 뜻 모를 말일 수도 있다.\n　사건과 관련된 장소에 있었다고 해서, 사건에 관련되어 있다고는 할 수 없다.\n　하지만, 이것은 사건에 연루되어 있다. 그렇게 직감이 고하고 있다.", "사건 복습（P.174）\n　화이트보드, 칠판, 노트.\n　뭐든지 간에 쓸 것이 필요하다.\n　지금부터 사건에 대해 정리하는 거니까.", "수상한 인물은?（P.175）\n　PC들은 한 인물을 쫓고 있다.\n　그 인물은 사건에 이어지는 무언가를 가지고 있다. 그런 확신이 들었다.\n　자, 그는 어떤 사람일까?", "피해자의 시점（P.176）\n　피해자의 몸에 무슨 일이 일어났는가.\n　피해자는 무엇을 보았는가.\n　그 힌트는 피해자 자신이 알 것이다."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_event_why$24.$$arity = 0);
     
@@ -385,7 +385,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uC0AC\uAC74\uC758 \uC601\uC0C1\uFF08P.177\uFF09\n\u3000PC\uB4E4\uC740 \uB208\uC744 \uAC00\uB298\uAC8C \uB728\uACE0 \uC601\uC0C1\uC744 \uBC14\uB77C\uBCF4\uACE0 \uC788\uB2E4.\n\u3000\uADF8\uAC83\uC740 \uACF5\uAD50\uB86D\uAC8C\uB3C4 \uD604\uC7A5\uC5D0\uC11C \uCC0D\uD78C \uAC83\uC774\uC5C8\uB2E4.\n\u3000\uACFC\uC5F0 \uC9C4\uC2E4\uC740 \uC774 \uC601\uC0C1 \uC18D\uC5D0 \uB2F4\uACA8\uC788\uB294 \uAC83\uC77C\uAE4C?", "\uD2B9\uC774\uD55C \uBAA9\uACA9\uC790\uFF08P.178\uFF09\n\u3000PC\uB4E4\uC740 \uC218\uC0AC \uACB0\uACFC, \uC0AC\uAC74\uC5D0 \uAD00\uD55C \uBB34\uC5B8\uAC00\uB97C \uBD24\uB2E4\uB294 \uBAA9\uACA9\uC790\uB97C \uBC1C\uACAC\uD55C\uB2E4.\n\u3000\uADF8\uB7EC\uB098 \uADF8 \uC0AC\uB78C\uC740 \uBAA9\uACA9\uC99D\uC5B8\uC744 \uAEBC\uB838\uB2E4. \uC65C \uADF8\uB7F4\uAE4C?", "\uC804\uBB38\uAC00\uFF08P.179\uFF09\n\u3000\uC870\uC0AC \uC911, \uC544\uBB34\uB798\uB3C4 \uC804\uBB38\uC801\uC778 \uC9C0\uC2DD\uC774 \uD544\uC694\uD55C \uACF3\uC774 \uB098\uC628\uB2E4.\n\u3000\uC9C0\uAE08\uC774 \uADF8 \uB54C\uC774\uACE0 PC\uB4E4\uC740 \uC5B4\uB5BB\uAC8C \uD560\uC9C0 \uACE0\uBBFC\uD558\uACE0 \uC788\uC5C8\uB2E4.", "\uC815\uBCF4\uC0C1\uFF08P.180\uFF09\n\u3000\uBA54\uC77C \uC18C\uD504\uD2B8\uC6E8\uC5B4\uC5D0 \uC5F0\uB77D\uC774 \uC654\uB2E4.\n\u3000\uC5F0\uB77D\uD574\uC628 \uACF3\uC740 \uC774 \uC77C\uB300\uC5D0\uC11C \uC720\uBA85\uD55C \uC815\uBCF4\uC0C1\uC774\uC5C8\uB2E4.\n\u3000\uADF8 \uC815\uBCF4\uC0C1\uC5D0\uAC8C \uAC78\uB9AC\uBA74 \uC5BB\uC744 \uC218 \uC5C6\uB294 \uC815\uBCF4\uB294 \uC5C6\uB2E4\uACE0 \uD55C\uB2E4.\n\u3000\uC790, \uC5B4\uB5BB\uAC8C \uD560\uAE4C?", "\uAD00\uACC4\uC790\uC640 \uD568\uAED8\uFF08P.181\uFF09\n\u3000\uC0AC\uAC74\uAD00\uACC4\uC790 \uC911 \uD55C\uBA85\uC774 \uAC11\uC790\uAE30 \uD611\uB825\uC744 \uC81C\uC548\uD588\uB2E4.\n\u3000\uC544\uBB34\uB798\uB3C4 \uADF8 \uC0AC\uB78C\uB3C4 \uC774 \uC0AC\uAC74\uC5D0 \uB300\uD574\uC11C\uB294 \uC0DD\uAC01\uD558\uB294 \uAD6C\uC11D\uC774 \uC788\uB294 \uAC83 \uAC19\uB2E4.", "\uC544\uB9C8\uCD94\uC5B4 \uCD94\uB9AC\uFF08P.182\uFF09\n\u3000\uC0AC\uAC74\uAD00\uACC4\uC790 \uC55E\uC5D0\uC11C, \uAC8C\uC2A4\uD2B8 NPC\uAC00 \uCD94\uB9AC\uB97C \uC120\uBCF4\uC774\uACE0 \uC788\uB2E4.\n\u3000\uD558\uC9C0\uB9CC \uADF8 \uCD94\uB9AC\uB294 \uAD6C\uBA4D\uD22C\uC131\uC774\uACE0\u2026\u2026."];
+      table = ["사건의 영상（P.177）\n　PC들은 눈을 가늘게 뜨고 영상을 바라보고 있다.\n　그것은 공교롭게도 현장에서 찍힌 것이었다.\n　과연 진실은 이 영상 속에 담겨있는 것일까?", "특이한 목격자（P.178）\n　PC들은 수사 결과, 사건에 관한 무언가를 봤다는 목격자를 발견한다.\n　그러나 그 사람은 목격증언을 꺼렸다. 왜 그럴까?", "전문가（P.179）\n　조사 중, 아무래도 전문적인 지식이 필요한 곳이 나온다.\n　지금이 그 때이고 PC들은 어떻게 할지 고민하고 있었다.", "정보상（P.180）\n　메일 소프트웨어에 연락이 왔다.\n　연락해온 곳은 이 일대에서 유명한 정보상이었다.\n　그 정보상에게 걸리면 얻을 수 없는 정보는 없다고 한다.\n　자, 어떻게 할까?", "관계자와 함께（P.181）\n　사건관계자 중 한명이 갑자기 협력을 제안했다.\n　아무래도 그 사람도 이 사건에 대해서는 생각하는 구석이 있는 것 같다.", "아마추어 추리（P.182）\n　사건관계자 앞에서, 게스트 NPC가 추리를 선보이고 있다.\n　하지만 그 추리는 구멍투성이고……."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_event_npc$25.$$arity = 0);
     
@@ -393,7 +393,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uC218\uC0C1\uD55C \uC804\uD654\uFF08P.183\uFF09\n\u3000\uAC11\uC790\uAE30 \uC804\uD654\uAC00 \uC6B8\uB838\uB2E4.\n\u3000\uADF8 \uC804\uD654\uB294 \uC870\uC0AC\uB97C \uC9C4\uC804\uC2DC\uD0A4\uAC8C \uB420\uAE4C\u2026\u2026\u3002\n\u3000\uB3D9\uC2DC\uC5D0, \uC0C8\uB85C\uC6B4 \uC218\uC218\uAED8\uB07C\uB97C \uB0A8\uACBC\uB2E4.", "\uC9C0\uAE08\uC740 \uC5EC\uAC00\uB97C\uFF08P.184\uFF09\n\u3000\uD589\uC6B4\uC740 \uB204\uC6CC\uC11C \uAE30\uB2E4\uB824\uB77C.\n\u3000\uC950\uAD6C\uBA4D\uC5D0\uB3C4 \uBCD5 \uB4E4 \uB0A0\uC774 \uC788\uB2E4.\n\u3000\uB77C\uB294 \uAC78\uB85C, \uC77C\uB2E8\uC740 \uC544\uC9C0\uD2B8\uC5D0 \uC788\uB2E4.\n\u3000\uACFC\uC5F0 \uC0C1\uD669\uC774 \uB098\uC544\uC9C8\uAE4C?", "\uAE38\uC5D0\uC11C \uB531\uFF08P.185\uFF09\n\u3000\uAC1C\uB3C4 \uC3D8\uB2E4\uB2C8\uBA74 \uBABD\uB465\uC774\uC5D0 \uB9DE\uB294\uB2E4.\n\u3000\uC774 \uB9D0\uC5D0\uB294 \uD589\uC6B4\uC744 \uB9CC\uB09C\uB2E4\uB294 \uC758\uBBF8\uB3C4, \uBD09\uBCC0\uC744 \uB2F9\uD55C\uB2E4\uB294 \uC758\uBBF8\uB3C4 \uC788\uB2E4.\n\u3000\uADF8\uB7FC, \uD0D0\uC815\uACFC \uC870\uC218\uAC00 \uAC78\uC73C\uBA74 \uBB34\uC5C7\uC5D0 \uD574\uB2F9\uD560\uAE4C?", "\uBC88\uB729\uC774\uB294 \uC21C\uAC04\uFF08P.186\uFF09\n\u3000\uC6B0\uC5F0\uD55C \uACC4\uAE30\uB85C \uD0D0\uC815\uC740 \uBC88\uB729\uC774\uB294 \uC218\uAC00 \uC788\uB2E4.\n\u3000\uC774\uBC88\uC5D4 \uB300\uCCB4 \uBB34\uC5C7\uC774 \uACC4\uAE30\uC600\uC744\uAE4C?", "\uC9C0\uC778\uC73C\uB85C\uBD80\uD130\uFF08P.187\uFF09\n\u3000\uC0AC\uAC74 \uC218\uC0AC\uC758 \uB2E8\uC11C\uB97C \uAC00\uC838\uC628 \uAC83\uC740, \uC9C0\uC778\uC774\uC5C8\uB2E4.\n\u3000\uC5ED\uC2DC \uCE5C\uAD6C\uBC16\uC5D0 \uC5C6\uB2E4.\n\u3000\uB77C\uACE0 \uB9D0\uD558\uACE0 \uC2F6\uC740 \uCC38\uC778\uB370\u2026\u2026.", "PC\uB4E4\uC758 \uC704\uAE30\uFF08P.188\uFF09\n\u3000\uC218\uC0AC\uB294 \uAC11\uC790\uAE30 \uBA48\uCDC4\uB2E4.\n\u3000\uADF8 \uC6D0\uC778\uC740 \uC54C\uACE0 \uC788\uB2E4.\n\u3000\uC6D0\uC778\uC744 \uC81C\uAC70\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC0AC\uAC74 \uC870\uC0AC\uB294 \uD560 \uC218 \uC5C6\uB2E4."];
+      table = ["수상한 전화（P.183）\n　갑자기 전화가 울렸다.\n　그 전화는 조사를 진전시키게 될까……。\n　동시에, 새로운 수수께끼를 남겼다.", "지금은 여가를（P.184）\n　행운은 누워서 기다려라.\n　쥐구멍에도 볕 들 날이 있다.\n　라는 걸로, 일단은 아지트에 있다.\n　과연 상황이 나아질까?", "길에서 딱（P.185）\n　개도 쏘다니면 몽둥이에 맞는다.\n　이 말에는 행운을 만난다는 의미도, 봉변을 당한다는 의미도 있다.\n　그럼, 탐정과 조수가 걸으면 무엇에 해당할까?", "번뜩이는 순간（P.186）\n　우연한 계기로 탐정은 번뜩이는 수가 있다.\n　이번엔 대체 무엇이 계기였을까?", "지인으로부터（P.187）\n　사건 수사의 단서를 가져온 것은, 지인이었다.\n　역시 친구밖에 없다.\n　라고 말하고 싶은 참인데…….", "PC들의 위기（P.188）\n　수사는 갑자기 멈췄다.\n　그 원인은 알고 있다.\n　원인을 제거하지 않으면 사건 조사는 할 수 없다."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_event_coming$26.$$arity = 0);
     
@@ -401,7 +401,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uC6A9\uC758\uC790\uC758 \uAC70\uC9D3\uB9D0\uFF08P.189\uFF09\n\u3000\uC0AC\uB78C\uC740 \uBB54\uAC00 \uB5B3\uB5B3\uD558\uC9C0 \uBABB\uD55C \uC77C\uC774 \uC788\uC744 \uB54C \uAC70\uC9D3\uB9D0\uC744 \uD55C\uB2E4.\n\u3000\uC774 \uC6A9\uC758\uC790\uB294 \uAC70\uC9D3\uB9D0\uC744 \uD558\uACE0 \uC788\uB2E4.\n\u3000\uADF8\uB807\uB2E4\uBA74, \uBB34\uC5C7\uC744 \uC228\uAE30\uACE0 \uC788\uC744\uAE4C?", "\uD754\uB4E4\uB9BC\uFF08P.190\uFF09\n\u3000\uADF8 \uC6A9\uC758\uC790\uB294 \uBB54\uAC00\uB97C \uC228\uAE30\uACE0 \uC788\uC5C8\uB2E4.\n\u3000\uB208\uC5D0 \uB744\uB294 \uAC70\uC9D3\uB9D0\uC744 \uD558\uACE0 \uC788\uB294 \uAC83\uC740 \uC544\uB2C8\uB2E4.\n \uADF8\uB807\uC9C0\uB9CC \uBB34\uC5B8\uAC00 \uC228\uAE30\uACE0 \uC788\uB2E4. \uD0D0\uC815\uC5D0\uAC90, \uADF8\uB807\uAC8C \uBCF4\uC600\uB2E4.", "\uC678\uBAA8\uB85C\uBD80\uD130\uC758 \uCD94\uB9AC\uFF08P.191\uFF09\n\u3000\uC870\uAE08\uB9CC \uC774\uC57C\uAE30\uB97C \uD588\uB2E4.\n\u3000\uC870\uAE08\uB9CC \uADF8 \uBAA8\uC2B5\uC744 \uBCF4\uC558\uB2E4.\n\u3000\uC870\uAE08\uB9CC, \uADF8 \uC0AC\uB78C\uC744 \uC54C\uC558\uB2E4\u3002\n\u3000\uADF8\uAC83\uB9CC\uC73C\uB85C \uD0D0\uC815\uC774\uB77C\uB294 \uC0DD\uBB3C\uC740 \uC5F4\uC744 \uC548\uB2E4. \uC6D0\uB798 \uADF8\uB7F0 \uAC83\uC774\uB2E4.", "\uC9C1\uC811 \uBB3B\uB2E4\uFF08P.192\uFF09\n\u3000\uC5EC\uAE30\uC11C \uD0D0\uC815\uACFC \uC870\uC218\uB294 \uB300\uB2F4\uD55C \uC218\uB97C \uC37C\uB2E4.\n\u3000\uC6A9\uC758\uC790\uB97C \uC0C1\uB300\uB85C \uC0AC\uAC74\uC758 \uAD6C\uCCB4\uC801\uC778 \uBD80\uBD84\uAE4C\uC9C0 \uD30C\uACE0\uB4DC\uB294 \uC9C8\uBB38\uC744 \uD55C \uAC83\uC774\uB2E4.\n\u3000\uADF8\uAC83\uC5D0 \uB300\uD574 \uC6A9\uC758\uC790\uB294\u2026\u2026.", "\uC704\uD611 \uBC1B\uB2E4\uFF08P.193\uFF09\n\u3000\uC544\uBB34\uB798\uB3C4 \uC6B0\uB9AC\uB294 \uC704\uD611\uC744 \uBC1B\uB294 \uAC83 \uAC19\uB2E4.", "\uC220\uB798\uAC00 \uC5C6\uB294 \uC0AC\uC774\uC5D0\uFF08P.194\uFF09\n\u3000\uADF8 \uC6A9\uC758\uC790\uB97C \uCC3E\uC544\uAC14\uC744 \uB54C \uC6B0\uC5F0\uD788 \uC790\uB9AC\uB97C \uBE44\uC6B0\uACE0 \uC788\uC5C8\uB2E4.\n\u3000\uC774\uAC74 \uAE30\uD68C\uB2E4.\n\u3000\uADF8\uB807\uAC8C \uC0DD\uAC01\uD558\uB294 \uAC83\uC774 \uBC14\uB85C \uD0D0\uC815\uC758 \uC2AC\uD508 \uCC9C\uC131\uC774\uB2E4."];
+      table = ["용의자의 거짓말（P.189）\n　사람은 뭔가 떳떳하지 못한 일이 있을 때 거짓말을 한다.\n　이 용의자는 거짓말을 하고 있다.\n　그렇다면, 무엇을 숨기고 있을까?", "흔들림（P.190）\n　그 용의자는 뭔가를 숨기고 있었다.\n　눈에 띄는 거짓말을 하고 있는 것은 아니다.\n 그렇지만 무언가 숨기고 있다. 탐정에겐, 그렇게 보였다.", "외모로부터의 추리（P.191）\n　조금만 이야기를 했다.\n　조금만 그 모습을 보았다.\n　조금만, 그 사람을 알았다。\n　그것만으로 탐정이라는 생물은 열을 안다. 원래 그런 것이다.", "직접 묻다（P.192）\n　여기서 탐정과 조수는 대담한 수를 썼다.\n　용의자를 상대로 사건의 구체적인 부분까지 파고드는 질문을 한 것이다.\n　그것에 대해 용의자는…….", "위협 받다（P.193）\n　아무래도 우리는 위협을 받는 것 같다.", "술래가 없는 사이에（P.194）\n　그 용의자를 찾아갔을 때 우연히 자리를 비우고 있었다.\n　이건 기회다.\n　그렇게 생각하는 것이 바로 탐정의 슬픈 천성이다."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_event_vs$27.$$arity = 0);
     
@@ -409,7 +409,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uD0D0\uC815\uACFC \uC870\uC218\uAC00 \uACBD\uCC30\uC5D0\uAC8C \uB9C8\uD06C\uB2F9\uD55C\uB2E4."], [12, "\uD0D0\uC815\uC758 \uBCC0\uB355"], [13, "\uD0D0\uC815\uC758 \uC758\uC695"], [14, "\uD0D0\uC815\uC758 \uAE30\uD589\uC744 \uACAC\uB51C \uC218 \uC5C6\uAC8C \uB418\uB2E4."], [15, "\uD0D0\uC815\uC774 \uAE30\uC774\uD55C \uC758\uC2EC\uC744 \uBC1B\uB2E4."], [16, "\uD0D0\uC815\uC774 \uD53C\uACE4\uD558\uB2E4."], [22, "\uD0D0\uC815\uACFC \uC870\uC218\uAC00 \uC218\uC0C1\uD55C \uC778\uBB3C\uB85C \uC624\uC778\uBC1B\uB294\uB2E4."], [23, "\uC870\uC218\uAC00 \uD30C\uD2B8\uB108\uC5D0\uAC8C \uC2E0\uB8B0\uBC1B\uC9C0 \uBABB\uD55C\uB2E4\uACE0 \uC0DD\uAC01\uD55C\uB2E4."], [24, "\uC870\uC218\uAC00 \uD0D0\uC815\uC5D0\uAC8C \uB530\uB77C\uAC08 \uC218 \uC5C6\uB2E4."], [25, "\uC870\uC218\uC758 \uC218\uACE0\uAC00 \uC5B4\uB290 \uB54C\uBCF4\uB2E4 \uD06C\uB2E4."], [26, "\uC870\uC218\uC758 \uC218\uC0AC\uB9CC\uC774 \uC798 \uC548 \uB41C\uB2E4."], [33, "\uC218\uC0AC\uB97C \uC704\uD55C \uC790\uAE08\uC774 \uC5C6\uB2E4."], [34, "\uC138\uC0C1\uC758 \uB208\uC774 \uB9E4\uC12D\uB2E4."], [35, "\uACBD\uCC30\uB85C\uBD80\uD130 \uC5ED\uACB9\uB2E4\uACE0 \uC5EC\uACA8\uC9C4\uB2E4."], [36, "\uAD00\uACC4\uC790\uAC00 \uD611\uB825\uD574\uC8FC\uC9C0 \uC54A\uB294\uB2E4."], [44, "\uC218\uC0AC\uD574\uC11C\uB294 \uC548 \uB41C\uB2E4\uACE0 \uC555\uB825\uC774 \uB4E4\uC5B4\uC628\uB2E4."], [45, "\uBC94\uC778\uC5D0 \uC758\uD55C \uBC29\uD574"], [46, "\uBC94\uC778\uC5D0 \uC758\uD55C \uC774\uBA74\uACF5\uC791"], [55, "\uD654\uBD84\uC774\uB098 \uCCA0\uACE8 \uB4F1 \uBD80\uC790\uC5F0\uC2A4\uB7FD\uAC8C \uC704\uD5D8\uD55C \uBB3C\uAC74\uC774 \uB0A0\uC544\uC628\uB2E4."], [56, "\uB204\uAD70\uAC00\uAC00 \uD0D0\uC815\uACFC \uC870\uC218\uC5D0\uAC8C \uB364\uBCBC\uB4E0\uB2E4."], [66, "\uC6B0\uC5F0\uC774 \uACB9\uCCD0\uC11C \uC798 \uC548 \uB41C\uB2E4."]];
+      table = [[11, "탐정과 조수가 경찰에게 마크당한다."], [12, "탐정의 변덕"], [13, "탐정의 의욕"], [14, "탐정의 기행을 견딜 수 없게 되다."], [15, "탐정이 기이한 의심을 받다."], [16, "탐정이 피곤하다."], [22, "탐정과 조수가 수상한 인물로 오인받는다."], [23, "조수가 파트너에게 신뢰받지 못한다고 생각한다."], [24, "조수가 탐정에게 따라갈 수 없다."], [25, "조수의 수고가 어느 때보다 크다."], [26, "조수의 수사만이 잘 안 된다."], [33, "수사를 위한 자금이 없다."], [34, "세상의 눈이 매섭다."], [35, "경찰로부터 역겹다고 여겨진다."], [36, "관계자가 협력해주지 않는다."], [44, "수사해서는 안 된다고 압력이 들어온다."], [45, "범인에 의한 방해"], [46, "범인에 의한 이면공작"], [55, "화분이나 철골 등 부자연스럽게 위험한 물건이 날아온다."], [56, "누군가가 탐정과 조수에게 덤벼든다."], [66, "우연이 겹쳐서 잘 안 된다."]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_obstruction_table$28.$$arity = 0);
     
@@ -417,7 +417,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uC5C7\uAC08\uB9BC", "\uD0D0\uC815\uC758 \uD3ED\uC8FC", "\uB2E4\uD23C", "\uBBF8\uC544", "\uB098\uC05C \uC18C\uBB38", "\uC8FC\uBAA9\uC758 \uB300\uC0C1"];
+      table = ["엇갈림", "탐정의 폭주", "다툼", "미아", "나쁜 소문", "주목의 대상"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_abnormal_condition$29.$$arity = 0);
     
@@ -425,7 +425,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uB180\uC774 \uC0C1\uB300\uB97C \uC6D0\uD558\uB294 \uC80A\uC740\uC774. \uD310\uC815\uAE30\uB2A5\uFF1A\u226A\uC720\uD589\u226B", "\uAE30\uC5B5\uB825\uC774 \uB098\uC05C \uC0AC\uB78C. \uD310\uC815\uAE30\uB2A5\uFF1A\uC5C6\uC74C", "\uBC14\uC05C \uC0AC\uB78C. \uD310\uC815\uAE30\uB2A5\uFF1A\u226A\uBE44\uC988\uB2C8\uC2A4\u226B", "\uBC94\uC778\uC758 \uC9C0\uC778. \uD310\uC815\uAE30\uB2A5\uFF1A\u226A\uC124\uB4DD\u226B", "\uD0D0\uC815(\uACBD\uCC30)\uC744 \uC2EB\uC5B4\uD558\uB294 \uC0AC\uB78C. \uD310\uC815\uAE30\uB2A5\uFF1A\u226A\uAC70\uC9D3\uB9D0\u226B", "\uBC18\uC0AC\uD68C\uC8FC\uC758\uC790. \uD310\uC815\uAE30\uB2A5\uFF1A\u226A\uB3CC\uD30C\u226B"];
+      table = ["놀이 상대를 원하는 젊은이. 판정기능：≪유행≫", "기억력이 나쁜 사람. 판정기능：없음", "바쁜 사람. 판정기능：≪비즈니스≫", "범인의 지인. 판정기능：≪설득≫", "탐정(경찰)을 싫어하는 사람. 판정기능：≪거짓말≫", "반사회주의자. 판정기능：≪돌파≫"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_eyewitness_table$30.$$arity = 0);
     
@@ -433,7 +433,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uC9C4\uBC94\uC774 \uC544\uB2CC \uC778\uAC04\uC774 \uBC94\uC778\uC774 \uB418\uC5B4, \uC2E4\uD615\uC744 \uBC1B\uACE0 \uB9D0\uC558\uB2E4. \uADF8 \uC99D\uAC70\uB294 \uC5C6\uC9C0\uB9CC \uADF8\uB807\uAC8C \uC9C1\uAC10\uD560 \uC218 \uC788\uB2E4."], [2, "\uD574\uACB0\uB418\uC9C0 \uC54A\uC740 \uCC44 \uC2DC\uAC04\uC774 \uD750\uB974\uACE0, \uC774\uC73D\uACE0 \uC0AC\uAC74\uC740 \uC78A\uD600\uC84C\uB2E4. \uD0D0\uC815\uACFC \uC870\uC218, \uADF8\uB9AC\uACE0 \uC0AC\uAC74\uAD00\uACC4\uC790\uB4E4\uB9CC \uAE30\uC5B5\uD55C\uB2E4."], [3, "\uD53C\uD574\uC790 \uC720\uC871\uACFC \uAD00\uACC4\uC790\uB4E4\uC740 \uC2AC\uD514\uC5D0 \uC7A0\uACA8 \uC788\uB2E4. \uD0D0\uC815\uACFC \uC870\uC218\uB294 \uADF8\uC800 \uC7A0\uC790\uCF54 \uBCF4\uACE0\uB9CC \uC788\uC744 \uBFD0\uC774\uB2E4. \uADF8\uB54C, \uBC94\uC778\uC744 \uC7A1\uC558\uB2E4\uBA74\u2026\u2026."], [4, "\uACBD\uCC30\uC5D0 \uC758\uD574 \uBC94\uC778\uC774 \uAC80\uAC70\uB418\uC5C8\uB2E4\uACE0 \uD558\uC9C0\uB9CC, \uADF8 \uC0AC\uB78C\uC774 \uC815\uB9D0\uB85C \uBC94\uC778\uC778\uC9C0 \uC5B4\uB5A4\uC9C0\uB294 \uC54C \uC218 \uC5C6\uB2E4. \uD0D0\uC815\uB3C4, \uBB50\uB77C\uACE0 \uB9D0\uD560 \uC218 \uC5C6\uB294 \uAC83 \uAC19\uB2E4."], [5, "\uC99D\uAC70\uAC00 \uC5C6\uC5B4\uC838 \uBC84\uB838\uB2E4. \uADF8\uAC83\uB9CC \uC788\uB2E4\uBA74, \uC0AC\uAC74\uC758 \uC870\uC0AC\uB97C \uC7AC\uAC1C\uD560 \uC218 \uC788\uC744 \uD150\uB370\u2026\u2026. \uBC94\uC778\uC758 \uC18C\uD589\uC778\uC9C0\uC870\uCC28 \uC54C \uC218 \uC5C6\uB2E4."], [6, "\uAD00\uACC4\uC790\uAC00 \uC5C6\uC5B4\uC838 \uBC84\uB838\uB2E4. \uADF8 \uD6C4 \uC18C\uC2DD\uB3C4 \uBB18\uC5F0\uD558\uB2E4. \uB3C4\uB300\uCCB4 \uBB34\uC2A8 \uC0DD\uAC01\uC744 \uD558\uBA70 \uC0AC\uB77C\uC9C4 \uAC83\uC77C\uAE4C? \uC5B4\uCA0C\uB4E0, \uC870\uC0AC\uB294 \uD560 \uC218 \uC5C6\uAC8C \uB418\uC5C8\uB2E4."], [7, "\uAD00\uACC4\uC790\uC5D0\uAC8C \uBBF8\uC6C0 \uBC1B\uC544, \uC811\uADFC \uC870\uCC28 \uD560 \uC218 \uC5C6\uAC8C \uB418\uC5C8\uB2E4. \uD0D0\uC815\uACFC \uC870\uC218\uB294 \uBAA8\uB450 \uCD9C\uC785\uAE08\uC9C0\uAC00 \uB418\uC5B4 \uBC84\uB9B0 \uAC83 \uAC19\uB2E4. \uC774\uB798\uC11C\uB294 \uC870\uC0AC\uB97C \uD560 \uC218 \uC5C6\uB2E4."], [8, "\uC870\uC218\uB294 \uB54C\uB54C\uB85C \uD53C\uD574\uC790\uC758 \uAD00\uACC4\uC790\uC640 \uB9CC\uB098\uACE0 \uC788\uB2E4. \uADF8\uB4E4\uC758 \uB9D0\uC744 \uB4E3\uACE0 \uADF8\uB4E4\uC758 \uAC10\uC815\uC744 \uBC1B\uC544\uB4E4\uC774\uB294 \uAC83 \uAC19\uB2E4."], [9, "\uD0D0\uC815\uACFC \uC870\uC218\uB294 \uAE30\uD68C\uB97C \uBC1C\uACAC\uD558\uACE0 \uC0AC\uAC74\uC744 \uC7AC\uC870\uC0AC\uD558\uACE0 \uC788\uB2E4. \uADF8\uB7EC\uB098 \uD655\uC2E4\uD55C \uC99D\uAC70\uB294 \uCC3E\uC9C0 \uBABB\uD55C \uCC44 \uC2DC\uAC04\uC774 \uD758\uB7EC\uAC04\uB2E4."], [10, "\uD0D0\uC815\uC740 \uC9C1\uAC10\uC73C\uB85C \uC9C4\uBC94\uC744 \uBC1D\uD600\uB0C8\uB2E4. \uD558\uC9C0\uB9CC \uC9C4\uBC94\uC744 \uC7A1\uAE30 \uC704\uD55C \uC99D\uAC70\uAC00 \uC5C6\uB2E4. \uBC94\uC778\uC744 \uACE0\uBC1C\uD558\uC9C0 \uBABB\uD574 \uC774\uB97C \uAC08\uC558\uB2E4."]];
+      table = [[1, "진범이 아닌 인간이 범인이 되어, 실형을 받고 말았다. 그 증거는 없지만 그렇게 직감할 수 있다."], [2, "해결되지 않은 채 시간이 흐르고, 이윽고 사건은 잊혀졌다. 탐정과 조수, 그리고 사건관계자들만 기억한다."], [3, "피해자 유족과 관계자들은 슬픔에 잠겨 있다. 탐정과 조수는 그저 잠자코 보고만 있을 뿐이다. 그때, 범인을 잡았다면……."], [4, "경찰에 의해 범인이 검거되었다고 하지만, 그 사람이 정말로 범인인지 어떤지는 알 수 없다. 탐정도, 뭐라고 말할 수 없는 것 같다."], [5, "증거가 없어져 버렸다. 그것만 있다면, 사건의 조사를 재개할 수 있을 텐데……. 범인의 소행인지조차 알 수 없다."], [6, "관계자가 없어져 버렸다. 그 후 소식도 묘연하다. 도대체 무슨 생각을 하며 사라진 것일까? 어쨌든, 조사는 할 수 없게 되었다."], [7, "관계자에게 미움 받아, 접근 조차 할 수 없게 되었다. 탐정과 조수는 모두 출입금지가 되어 버린 것 같다. 이래서는 조사를 할 수 없다."], [8, "조수는 때때로 피해자의 관계자와 만나고 있다. 그들의 말을 듣고 그들의 감정을 받아들이는 것 같다."], [9, "탐정과 조수는 기회를 발견하고 사건을 재조사하고 있다. 그러나 확실한 증거는 찾지 못한 채 시간이 흘러간다."], [10, "탐정은 직감으로 진범을 밝혀냈다. 하지만 진범을 잡기 위한 증거가 없다. 범인을 고발하지 못해 이를 갈았다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -443,7 +443,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300E\uBA85\uD0D0\uC815\uC778 \uC870\uC0C1(\uC2E4\uC7AC)\u300F\uC790\uC2E0\uC758 \uC870\uC0C1\uC5D0 \uC800\uBA85\uD55C \uD0D0\uC815\uC774 \uC788\uB2E4. \uADF8 \uC774\uB984\uC744 \uB300\uBA74 \uB204\uAD6C\uB098 \uC54C \uB9CC\uD55C \uB300\uC778\uBB3C\uC774\uB2E4. \uC790\uC2E0\uC740 \uADF8 \uD53C\uB97C \uC9C4\uD558\uAC8C \uC787\uACE0 \uC788\uB294 \uAC83 \uAC19\uACE0, \uD0D0\uC815\uC73C\uB85C\uC11C\uC758 \uC7AC\uB2A5\uC744 \uB9C8\uC74C\uAECF \uBC1C\uD718\uD558\uACE0 \uC788\uB2E4."], [2, "\u300E\uBA85\uD0D0\uC815\uC778 \uC870\uC0C1(\uD5C8\uAD6C)\u300F\uC790\uC2E0\uC758 \uC870\uC0C1\uC740 \uC800\uBA85\uD55C \uD0D0\uC815\uC774\uB2E4. \uADF8\uB7EC\uB098 \uADF8 \uD65C\uC57D\uC740 \uD53D\uC158\uC73C\uB85C \uC54C\uB824\uC838 \uC788\uB2E4. \uADF8 \uC778\uBB3C\uC740 \uC2E4\uC874\uD558\uC9C0 \uC54A\uB294\uB2E4\uACE0 \uB9D0\uD558\uC9C0\uC9C0\uB9CC\u2026 \uADF8\uAC83\uC740 \uC0AC\uC2E4\uC774 \uC544\uB2C8\uB2E4. \uC790\uC2E0\uC774 \uADF8 \uD53C\uB97C \uC787\uACE0 \uC788\uC73C\uB2C8\uAE4C."], [3, "\u300E\uBD80\uBAA8\uAC00 \uC138\uACC4\uC801\uC778 \uD0D0\uC815\u300F\uC790\uC2E0\uC758 \uBD80\uBAA8\uB294 \uC138\uACC4\uC801\uC73C\uB85C \uC54C\uB824\uC9C4 \uBA85\uD0D0\uC815\uC774\uB2E4. \uC231\uD55C \uB09C\uC0AC\uAC74\uB3C4 \uD574\uACB0\uD588\uB2E4. \uC790\uC2E0\uC5D0\uAC8C\uB3C4 \uADF8 \uD53C\uAC00 \uD750\uB974\uACE0 \uC788\uC5B4 \uC0AC\uAC74\uC5D0 \uB300\uD55C \uB0A0\uCE74\uB85C\uC6B4 \uD1B5\uCC30\uB825\uC744 \uC774\uC5B4\uBC1B\uAC8C \uB418\uC5C8\uB2E4."], [4, "\u300E\uB9C8\uC744\uC758 \uBA85\uD0D0\uC815\u300F\uC790\uC2E0\uC758 \uBD80\uBAA8\uB294, \uB9C8\uC744\uC5D0\uC11C\uB294 \uC798 \uC54C\uB824\uC9C4 \uBA85\uD0D0\uC815\uC774\uB2E4. \uB9C8\uC744 \uC0AC\uB78C\uB4E4\uC5D0\uAC8C \uC0AC\uB791\uBC1B\uACE0 \uC758\uC9C0\uAC00 \uB418\uB294 \uC874\uC7AC\uC600\uB2E4. \uC790\uC2E0\uB3C4 \uADF8 \uD53C\uB97C \uC787\uACE0 \uC788\uB294\uC9C0 \uD0D0\uC815\uC73C\uB85C\uC11C \uD65C\uB3D9\uD560 \uD798\uC774 \uC788\uB2E4."], [5, "\u300E\uCD94\uB9AC\uC791\uAC00\u300F\uC790\uC2E0\uC744 \uD0A4\uC6B4 \uC778\uBB3C\uC740 \uC800\uBA85\uD55C \uCD94\uB9AC\uC791\uAC00\uC600\uB2E4. \uADF8 \uC0AC\uACE0\uB2A5\uB825\uC740 \uC790\uC2E0\uC5D0\uAC8C\uB3C4 \uACC4\uC2B9\uB418\uC5C8\uACE0, \uD2B8\uB9AD\uC744 \uD30C\uD5E4\uCE58\uB294 \uD798\uC740 \uD0D0\uC815 \uC218\uC900\uC5D0 \uC788\uB2E4\uACE0 \uD574\uB3C4 \uC88B\uC744 \uAC83\uC774\uB2E4."], [6, "\u300E\uC591\uBD80\uBAA8\u300F\uC790\uC2E0\uC744 \uD0A4\uC6CC \uC900 \uC778\uBB3C\uC740, \uC0AC\uAC74\uC744 \uD574\uACB0\uB85C \uC774\uB048 \uC801\uC774 \uC788\uB294 \uC778\uBB3C\uC774\uB2E4. \uADF8 \uC0AC\uB78C\uC758 \uAC00\uB974\uCE68\uC744 \uBC1B\uACE0 \uC790\uC2E0\uC740 \uD0D0\uC815\uC758 \uC7AC\uB2A5\uC744 \uAF43\uD53C\uC6E0\uB2E4."], [7, "\u300E\uD0C0\uB77D\uD55C \uBA85\uD0D0\uC815\u300F\uC77C\uCC0D\uC774, \uC790\uC2E0\uC758 \uBD80\uBAA8\uB294 \uBAA8\uB4E0 \uC0AC\uAC74\uC744 \uD574\uACB0\uD558\uC5EC, \uBA85\uD0D0\uC815\uC73C\uB85C \uC720\uBA85\uD588\uB2E4. \uADF8\uB7EC\uB098 \uC9C0\uAE08\uC740 \uB6F0\uC5B4\uB09C \uC0AC\uACE0\uB2A5\uB825\uC744 \uC545\uC6A9\uD574 \uC0AC\uB78C\uB4E4\uC744 \uC7A5\uAE30\uB9D0\uB9C8\uB0E5 \uB2E4\uB8EC\uB2E4. \uB2A5\uB825\uC744 \uC774\uC5B4\uBC1B\uC740 \uC790\uC2E0\uB3C4 \uC5B8\uC820\uAC00\uB294 \uADF8\uB807\uAC8C \uB420\uAE4C?"], [8, "\u300E\uB300\uC545\uC778\uC758 \uD53C\u300F\uC138\uC0C1\uC744 \uB5A0\uB4E4\uC369\uD558\uAC8C \uD588\uB358 \uB300\uC545\uB2F9\uACFC \uB300\uAD34\uB3C4. \uADF8 \uD53C\uAC00 \uC790\uC2E0\uC5D0\uAC8C\uB3C4 \uD750\uB974\uACE0 \uC788\uB2E4. \uADF8\uB7EC\uBBC0\uB85C \uC545\uC778\uC758 \uC0AC\uACE0\uB97C \uCD94\uC801\uD560 \uC218 \uC788\uC73C\uBA70 \uACB0\uACFC\uC801\uC73C\uB85C \uBA85\uD0D0\uC815\uCC98\uB7FC \uD589\uB3D9\uD55C\uB2E4."], [9, "\u300E\uC228\uACA8\uC9C4 \uD54F\uC904\u300F\uBB34\uC2A8 \uC774\uC720\uC5D0\uC11C\uC778\uC9C0, \uC790\uC2E0\uC758 \uBFCC\uB9AC\uB294 \uB9D0\uC18C\uB418\uC5B4 \uC788\uB2E4. \uB0B4\uAC00 \uB204\uAD6C\uC778\uC9C0\uC870\uCC28 \uBAA8\uB978\uB2E4. \uB2E8\uC9C0, \uC790\uC2E0\uC5D0\uAC8C\uB294 \uC0AC\uAC74\uC744 \uD574\uACB0\uD560 \uC218 \uC788\uB294 \uD798\uC774 \uC788\uACE0, \uADF8\uAC83\uC774 \uBFCC\uB9AC\uC640 \uAD00\uACC4\uAC00 \uC788\uB2E4\uACE0 \uC9C1\uAC10\uD560 \uC218 \uC788\uB2E4."], [10, "\u300E\uD074\uB860\u300F\uC790\uC2E0\uC740 \uC720\uBA85\uD55C \uBA85\uD0D0\uC815\uC758 DNA\uC5D0\uC11C \uD0DC\uC5B4\uB09C \uC874\uC7AC\uB2E4. \uADF8\uB798\uC11C\uC778\uC9C0 \uBA85\uD0D0\uC815\uC758 \uD798\uC740 \uD0C0\uACE0\uB09C \uAC83\uC774\uC5C8\uB2E4."]];
+      table = [[1, "『명탐정인 조상(실재)』자신의 조상에 저명한 탐정이 있다. 그 이름을 대면 누구나 알 만한 대인물이다. 자신은 그 피를 진하게 잇고 있는 것 같고, 탐정으로서의 재능을 마음껏 발휘하고 있다."], [2, "『명탐정인 조상(허구)』자신의 조상은 저명한 탐정이다. 그러나 그 활약은 픽션으로 알려져 있다. 그 인물은 실존하지 않는다고 말하지지만… 그것은 사실이 아니다. 자신이 그 피를 잇고 있으니까."], [3, "『부모가 세계적인 탐정』자신의 부모는 세계적으로 알려진 명탐정이다. 숱한 난사건도 해결했다. 자신에게도 그 피가 흐르고 있어 사건에 대한 날카로운 통찰력을 이어받게 되었다."], [4, "『마을의 명탐정』자신의 부모는, 마을에서는 잘 알려진 명탐정이다. 마을 사람들에게 사랑받고 의지가 되는 존재였다. 자신도 그 피를 잇고 있는지 탐정으로서 활동할 힘이 있다."], [5, "『추리작가』자신을 키운 인물은 저명한 추리작가였다. 그 사고능력은 자신에게도 계승되었고, 트릭을 파헤치는 힘은 탐정 수준에 있다고 해도 좋을 것이다."], [6, "『양부모』자신을 키워 준 인물은, 사건을 해결로 이끈 적이 있는 인물이다. 그 사람의 가르침을 받고 자신은 탐정의 재능을 꽃피웠다."], [7, "『타락한 명탐정』일찍이, 자신의 부모는 모든 사건을 해결하여, 명탐정으로 유명했다. 그러나 지금은 뛰어난 사고능력을 악용해 사람들을 장기말마냥 다룬다. 능력을 이어받은 자신도 언젠가는 그렇게 될까?"], [8, "『대악인의 피』세상을 떠들썩하게 했던 대악당과 대괴도. 그 피가 자신에게도 흐르고 있다. 그러므로 악인의 사고를 추적할 수 있으며 결과적으로 명탐정처럼 행동한다."], [9, "『숨겨진 핏줄』무슨 이유에서인지, 자신의 뿌리는 말소되어 있다. 내가 누구인지조차 모른다. 단지, 자신에게는 사건을 해결할 수 있는 힘이 있고, 그것이 뿌리와 관계가 있다고 직감할 수 있다."], [10, "『클론』자신은 유명한 명탐정의 DNA에서 태어난 존재다. 그래서인지 명탐정의 힘은 타고난 것이었다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -453,7 +453,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300E\uCD08\uC5D8\uB9AC\uD2B8\u300F\uC790\uC2E0\uC740 \uC5D8\uB9AC\uD2B8\uB85C \uD65C\uC57D\uD558\uAE30 \uC704\uD574 \uBAA8\uB4E0 \uBD84\uC57C\uC758 \uD6C8\uB828\uC744 \uBC1B\uC558\uB2E4. \uADF8\uB9AC\uACE0 \uC6D0\uD558\uB294 \uB300\uB85C \uC6B0\uC218\uD55C \uC0AC\uB78C\uC774 \uB418\uC5C8\uB2E4."], [2, "\u300E\uC21C\uAC04\uAE30\uC5B5\uB2A5\uB825\u300F\uBCF8 \uAC83\uC740 \uBAA8\uB450 \uBA38\uB9BF\uC18D\uC5D0 \uC785\uB825\uB41C\uB2E4. \uADF8\uB9AC\uACE0, \uC808\uB300\uB85C \uC78A\uC9C0 \uC54A\uB294\uB2E4. \uC790\uC2E0\uC740 \uADF8\uB7F0 \uB2A5\uB825\uC744 \uAC16\uCD94\uACE0 \uC788\uB2E4."], [3, "\u300E\uC9C0\uC2DD\uC758 \uC0D8\u300F\uBA38\uB9AC \uC18D\uC5D0 \uC788\uB294 \uC11C\uB78D \uC18D\uC5D0\uB294 \uC628\uAC16 \uC9C0\uC2DD\uC774 \uB2F4\uACA8 \uC788\uB2E4. \uC989, \uBAA8\uB974\uB294 \uAC8C \uC5C6\uB2E4\uB294 \uC598\uAE30\uB2E4."], [4, "\u300E\uC2A4\uD30C\uB974\uD0C0 \uAD50\uC721\u300F\uC5C4\uACA9\uD55C \uAD50\uC721\uC744 \uBC1B\uC558\uACE0, \uADF8 \uACB0\uACFC \uC9C0\uC2DD\uC744 \uC5BB\uC744 \uC218 \uC788\uC5C8\uB2E4. \uADF8 \uB300\uC2E0, \uC870\uAE08 \uBCC4\uB09C \uC0AC\uACE0\uBC29\uC2DD\uC774 \uB418\uC5B4 \uBC84\uB838\uC9C0\uB9CC\u2026\u2026. \uBCC4 \uAC83 \uC544\uB2D0 \uAC83\uC774\uB2E4."], [5, "\u300E\uC774\uBBF8 \uBA85\uD0D0\uC815\u300F\uC774\uBBF8 \uC218\uB9CE\uC740 \uC0AC\uAC74\uC744 \uD574\uACB0\uD558\uACE0 \uC788\uB294 \uCC9C\uC7AC\uC774\uB2E4. \uC231\uD55C \uB09C\uC0AC\uAC74\uB3C4 \uC790\uC2E0\uC758 \uC218\uC644\uC73C\uB85C \uD574\uACB0\uD574 \uC654\uB2E4. \uADF8 \uC606\uC5D0\uB294 \uD30C\uD2B8\uB108\uC758 \uBAA8\uC2B5\uB3C4 \uC788\uC5C8\uB2E4."], [6, "\u300E\uB3D9\uACBD\uD558\uB294 \uB4F1\u300F\uC790\uC2E0\uC5D0\uAC8C\uB294 \uB3D9\uACBD\uD558\uACE0 \uC788\uB294 \uC0C1\uB300\uAC00 \uC788\uC5C8\uB2E4. \uADF8 \uC874\uC7AC\uB97C \uB530\uB77C\uC7A1\uAE30 \uC704\uD574 \uB178\uB825\uD588\uACE0 \uC9C0\uAE08\uC758 \uB2A5\uB825\uC744 \uC5BB\uC5C8\uB2E4. \uADF8 \uC778\uBB3C\uC740, \uC9C0\uAE08\uC740\u2026\u2026."], [7, "\u300E\uB77C\uC774\uBC8C\u300F\uC790\uC2E0\uACFC \uACA8\uB8E8\uB358 \uB77C\uC774\uBC8C\uC774 \uC788\uB2E4. \uB2A5\uB825\uC73C\uB85C\uB294 \uAC70\uC758 \uD638\uAC01\uC774\uC5C8\uB2E4. \uACBD\uC7C1 \uC18D\uC5D0\uC11C, \uC790\uC2E0\uC758 \uB2A5\uB825\uC740 \uC5F0\uB9C8\uB418\uC5B4 \uAC04 \uAC83\uC774\uB2E4."], [8, "\u300E\uACFC\uAC70\uC758 \uBA85\uD0D0\uC815\u300F\uC774\uC804\uC5D0\uB294, \uBAA8\uB4E0 \uC0AC\uAC74\uC744 \uD574\uACB0\uB85C \uC774\uB048 \uCC9C\uC7AC\uC600\uB2E4. \uADF8\uB7EC\uB098 \uC9C0\uAE08\uC740 \uC0AC\uAC74 \uD574\uACB0\uC5D0 \uC18C\uADF9\uC801\uC774\uB2E4. \uC0AC\uAC74\uC744 \uBA40\uB9AC\uD558\uACE0 \uC2F6\uC740 \uBB34\uC5B8\uAC00\uAC00 \uC788\uC5C8\uB358 \uAC83\uC774\uB2E4."], [9, "\u300E\uACE0\uB9BD\uB41C \uBA85\uD0D0\uC815\u300F\uC790\uC2E0\uC740 \uCC9C\uC7AC\uC801\uC778 \uB2A5\uB825\uC744 \uAC00\uC9C0\uACE0 \uC218\uB9CE\uC740 \uC0AC\uAC74\uC744 \uD574\uACB0\uD55C \uBA85\uD0D0\uC815\uC774\uB2E4. \uADF8 \uB54C\uBB38\uC5D0 \uC18C\uC678\uB418\uACE0, \uB450\uB824\uC6B4 \uC874\uC7AC\uB85C \uC5EC\uACA8\uC838, \uC138\uAC04\uC774\uB098 \uC870\uC9C1 \uC18D\uC5D0\uC11C \uACE0\uB9BD\uB418\uC5C8\uB2E4."], [10, "\u300E\uC778\uACF5 \uBA85\uD0D0\uC815\u300F\uC790\uC2E0\uC740 \uB204\uAD70\uAC00\uC5D0\uAC8C \uC5F0\uAE08\uB418\uC5B4 \uD0D0\uC815 \uC9C0\uC2DD\uC744 \uC8FC\uC785\uB2F9\uD55C \u300C\uC778\uACF5 \uBA85\uD0D0\uC815\u300D\uC774\uB2E4. \uBA85\uD0D0\uC815\uC774 \uB418\uB3C4\uB85D \uAE38\uB7EC\uC9C4 \uC790\uC2E0\uC740 \uADF8 \uB2A5\uB825\uC744 \uAE30\uB300\uD55C \uB300\uB85C \uBC1C\uD718\uD560 \uC218 \uC788\uB2E4."]];
+      table = [[1, "『초엘리트』자신은 엘리트로 활약하기 위해 모든 분야의 훈련을 받았다. 그리고 원하는 대로 우수한 사람이 되었다."], [2, "『순간기억능력』본 것은 모두 머릿속에 입력된다. 그리고, 절대로 잊지 않는다. 자신은 그런 능력을 갖추고 있다."], [3, "『지식의 샘』머리 속에 있는 서랍 속에는 온갖 지식이 담겨 있다. 즉, 모르는 게 없다는 얘기다."], [4, "『스파르타 교육』엄격한 교육을 받았고, 그 결과 지식을 얻을 수 있었다. 그 대신, 조금 별난 사고방식이 되어 버렸지만……. 별 것 아닐 것이다."], [5, "『이미 명탐정』이미 수많은 사건을 해결하고 있는 천재이다. 숱한 난사건도 자신의 수완으로 해결해 왔다. 그 옆에는 파트너의 모습도 있었다."], [6, "『동경하는 등』자신에게는 동경하고 있는 상대가 있었다. 그 존재를 따라잡기 위해 노력했고 지금의 능력을 얻었다. 그 인물은, 지금은……."], [7, "『라이벌』자신과 겨루던 라이벌이 있다. 능력으로는 거의 호각이었다. 경쟁 속에서, 자신의 능력은 연마되어 간 것이다."], [8, "『과거의 명탐정』이전에는, 모든 사건을 해결로 이끈 천재였다. 그러나 지금은 사건 해결에 소극적이다. 사건을 멀리하고 싶은 무언가가 있었던 것이다."], [9, "『고립된 명탐정』자신은 천재적인 능력을 가지고 수많은 사건을 해결한 명탐정이다. 그 때문에 소외되고, 두려운 존재로 여겨져, 세간이나 조직 속에서 고립되었다."], [10, "『인공 명탐정』자신은 누군가에게 연금되어 탐정 지식을 주입당한 「인공 명탐정」이다. 명탐정이 되도록 길러진 자신은 그 능력을 기대한 대로 발휘할 수 있다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -463,7 +463,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300E\uC11C\uC2A4\uD39C\uC2A4 \uB9C8\uB2C8\uC544\u300F\uC790\uC2E0\uC740 \uC11C\uC2A4\uD39C\uC2A4\uBB3C\uC758 \uD53D\uC158\uC774\uB098, \uC2E4\uC874\uD558\uB294 \uC0AC\uAC74\uC5D0 \uB300\uD574\uC11C \uB9E4\uC6B0 \uD070 \uAD00\uC2EC\uC744 \uAC00\uC9C0\uACE0 \uC788\uB2E4. \uC313\uC544\uC628 \uD2B8\uB9AD\uC758 \uC9C0\uC2DD\uC744 \uD65C\uC6A9\uD560 \uC218 \uC788\uB294 \uAE30\uD68C\uB97C \uB178\uB9AC\uACE0 \uC788\uB2E4."], [2, "\u300E\uC2DC\uCCB4 \uB9C8\uB2C8\uC544\u300F\uC790\uAE30\uB294 \uC2DC\uCCB4\uC5D0 \uB300\uD574 \uD070 \uAD00\uC2EC\uC744 \uAC16\uACE0 \uC788\uB2E4. \uC2DC\uCCB4\uC758 \uC0C1\uD0DC\uB098 \uC0C1\uC138\uC815\uBCF4\uB97C \uC544\uB294 \uAC83\uC73C\uB85C\uC368, \uAC15\uD55C \uD765\uBD84\uC744 \uB290\uB07C\uB294 \uC131\uC9C8\uC778 \uAC83\uC774\uB2E4. \uB09C\uCC98\uD55C \uC77C\uC774\uB2E4."], [3, "\u300E\uACFC\uD559 \uB9C8\uB2C8\uC544\u300F\uACFC\uD559\uC5D0 \uC758\uD574 \uD574\uBA85\uB418\uC9C0 \uBABB\uD560 \uAC83\uC740 \uC5C6\uB2E4. \uB098\uB294 \uADF8\uB807\uAC8C \uC0DD\uAC01\uD558\uACE0 \uC788\uC73C\uBA70 \uC774\uB97C \uC704\uD574 \uB2A5\uB825\uC744 \uB2E6\uC544 \uC654\uB2E4. \uC0AC\uB78C\uC774 \uC77C\uC73C\uD0A4\uB294 \uC0AC\uAC74\uC774\uB77C\uB3C4, \uACFC\uD559\uC740 \uBAA8\uB4E0 \uAC83\uC744 \uB0B4\uB2E4\uBCFC \uC218 \uC788\uC744 \uAC83\uC774\uB2E4."], [4, "\u300E\uC774\uB978\uBC14 \uC624\uD0C0\uCFE0\u300F\uAC8C\uC784\uC774\uB098 \uB9CC\uD654 \uB4F1\uC5D0\uC11C \uC5BB\uC740 \uC9C0\uC2DD\uC774\uB780 \uC758\uC678\uB85C \uBC14\uBCF4 \uCDE8\uAE09\uD560 \uC218 \uC5C6\uB2E4. \uC790\uC2E0\uC740 \uAC8C\uC784\uC744 \uD1B5\uD574 \uB2E4\uC591\uD55C \uC9C0\uC2DD\uC744 \uC313\uC544\uC654\uC73C\uBA70 \uC774\uB97C \uC751\uC6A9\uD568\uC73C\uB85C\uC368 \uBAA8\uB4E0 \uC0AC\uAC74\uC744 \uD574\uACB0\uD55C\uB2E4."], [5, "\u300E\uC778\uAC04 \uB9C8\uB2C8\uC544\u300F\uC790\uC2E0\uC740 \uC778\uAC04\uC744 \uC88B\uC544\uD55C\uB2E4. \uADF8\uB798\uC11C \uAD00\uCC30\uB3C4 \uD558\uACE0 \uC788\uB2E4. \uD589\uB3D9\uC5D0 \uB2F9\uC0AC\uC790\uB3C4 \uBAA8\uB974\uB294 \uC774\uC720\uAC00 \uC788\uB2E4\uB294 \uAC83\uB3C4 \uC54C\uACE0 \uC788\uB2E4. \uC0AC\uAC74\uB3C4, \uC65C \uADF8\uB7F0 \uC77C\uC744 \uC800\uC9C8\uB800\uB294\uC9C0\uC5D0 \uAD00\uC2EC\uC774 \uC788\uB2E4."], [6, "\u300E\uC11C\uC801 \uB9C8\uB2C8\uC544\u300F\uCC45\uC5D0\uB294 \uBAA8\uB4E0 \uAC83\uC774 \uC801\uD600 \uC788\uB2E4. \uC801\uC5B4\uB3C4 \uC790\uC2E0\uC740 \uADF8\uB807\uAC8C \uC0DD\uAC01\uD558\uACE0 \uC788\uACE0, \uADF8 \uC99D\uAC70\uB85C \uCC45\uC758 \uC9C0\uC2DD\uC744 \uC751\uC6A9\uD568\uC73C\uB85C\uC368 \uC5B4\uB824\uC6B4 \uC0AC\uAC74\uB3C4 \uD574\uACB0\uD560 \uC218 \uC788\uB2E4. \uC885\uC774 \uC18D\uC758 \uBA85\uD0D0\uC815\uCC98\uB7FC."], [7, "\u300E\uC624\uCEEC\uD2B8 \uB9C8\uB2C8\uC544\u300F\uC624\uCEEC\uD2B8\uB098 \uCD08\uC0C1\uD604\uC0C1\uC744 \uBBFF\uB294\uB2E4. \uADF8\uB798\uC11C \uAC00\uC9DC\uB97C \uC54C\uC544\uBCF4\uB294 \uBC95\uB3C4 \uC54C\uBA70, \uC6A9\uC11C\uD560 \uC218 \uC5C6\uB2E4\uACE0 \uB290\uB07C\uACE0 \uC788\uB2E4. \uADF8\uAC83\uC774, \uC5B4\uCC0C\uB41C \uC601\uBB38\uC778\uC9C0 \uB09C\uC0AC\uAC74 \uD574\uACB0\uB85C\uB3C4 \uC5F0\uACB0\uB41C\uB2E4. \uC2E0\uAE30\uD558\uB2E4."], [8, "\u300E\uD0D0\uC815 \uB9C8\uB2C8\uC544\u300F\uB3D9\uC11C\uACE0\uAE08, \uB2E4\uC591\uD55C \uD0D0\uC815\uC774 \uC788\uB2E4. \uADF8\uC5D0 \uB300\uD574 \uC870\uC0AC\uD574 \uAC00\uB294 \uB3D9\uC548, \uC790\uC2E0 \uB610\uD55C \uD0D0\uC815\uC73C\uB85C\uC11C\uC758 \uB2A5\uB825\uC774 \uAC16\uCD94\uC5B4\uC84C\uB2E4."], [9, "\u300E\uD3ED\uC8FC\uD558\uB294 \uC9C0\uC2DD\uC695\u300F\uC790\uC2E0\uC740 \uD55C \uAC00\uC9C0 \uC77C\uC5D0 \uB9C8\uB2C8\uC544\uC774\uC9C0\uB9CC, \uADF8\uB85C\uBD80\uD130 \uD30C\uC0DD\uB41C \uAC83\uC758 \uC9C0\uC2DD\uB3C4 \uC798 \uC54C\uACE0 \uC788\uB2E4. \uC790\uC2E0\uC758 \uC9C0\uC2DD\uC695\uC740, \uAC70\uAE30\uC11C\uBD80\uD130 \uB610\uB2E4\uC2DC \uD30C\uC0DD\uB41C \uAC83\uAE4C\uC9C0 \uC774\uB978\uB2E4."], [10, "\u300E\uC815\uC758\uC758 \uB9C8\uB2C8\uC544\u300F\uC790\uC2E0\uC774 \uC2E0\uBD09\uD558\uACE0 \uC788\uB294 \uBB34\uC5B8\uAC00(\uC11C\uC801, \uACFC\uD559 \uB4F1)\uAC00 \uC0AC\uAC74\uC5D0 \uC5F0\uB8E8\uB418\uBA74 \uC88C\uBD88\uC548\uC11D\uC774\uB2E4. \uB9C8\uB2C8\uC544\uB85C\uC11C \uADF8 \uC218\uC218\uAED8\uB07C\uB97C \uD480\uC5B4\uC57C \uD55C\uB2E4."]];
+      table = [[1, "『서스펜스 마니아』자신은 서스펜스물의 픽션이나, 실존하는 사건에 대해서 매우 큰 관심을 가지고 있다. 쌓아온 트릭의 지식을 활용할 수 있는 기회를 노리고 있다."], [2, "『시체 마니아』자기는 시체에 대해 큰 관심을 갖고 있다. 시체의 상태나 상세정보를 아는 것으로써, 강한 흥분을 느끼는 성질인 것이다. 난처한 일이다."], [3, "『과학 마니아』과학에 의해 해명되지 못할 것은 없다. 나는 그렇게 생각하고 있으며 이를 위해 능력을 닦아 왔다. 사람이 일으키는 사건이라도, 과학은 모든 것을 내다볼 수 있을 것이다."], [4, "『이른바 오타쿠』게임이나 만화 등에서 얻은 지식이란 의외로 바보 취급할 수 없다. 자신은 게임을 통해 다양한 지식을 쌓아왔으며 이를 응용함으로써 모든 사건을 해결한다."], [5, "『인간 마니아』자신은 인간을 좋아한다. 그래서 관찰도 하고 있다. 행동에 당사자도 모르는 이유가 있다는 것도 알고 있다. 사건도, 왜 그런 일을 저질렀는지에 관심이 있다."], [6, "『서적 마니아』책에는 모든 것이 적혀 있다. 적어도 자신은 그렇게 생각하고 있고, 그 증거로 책의 지식을 응용함으로써 어려운 사건도 해결할 수 있다. 종이 속의 명탐정처럼."], [7, "『오컬트 마니아』오컬트나 초상현상을 믿는다. 그래서 가짜를 알아보는 법도 알며, 용서할 수 없다고 느끼고 있다. 그것이, 어찌된 영문인지 난사건 해결로도 연결된다. 신기하다."], [8, "『탐정 마니아』동서고금, 다양한 탐정이 있다. 그에 대해 조사해 가는 동안, 자신 또한 탐정으로서의 능력이 갖추어졌다."], [9, "『폭주하는 지식욕』자신은 한 가지 일에 마니아이지만, 그로부터 파생된 것의 지식도 잘 알고 있다. 자신의 지식욕은, 거기서부터 또다시 파생된 것까지 이른다."], [10, "『정의의 마니아』자신이 신봉하고 있는 무언가(서적, 과학 등)가 사건에 연루되면 좌불안석이다. 마니아로서 그 수수께끼를 풀어야 한다."]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -473,7 +473,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u300E\uCC29\uD55C \uC0AC\uB78C\u300F\uC790\uC2E0\uC740 \uB2E4\uB978 \uC0AC\uB78C\uC73C\uB85C\uBD80\uD130 \uACE7\uC798 \uC88B\uC740 \uC0AC\uB78C\uC774\uB77C\uB294 \uB9D0\uC744 \uB4E3\uB294\uB2E4. \uADF8\uB807\uAE30 \uB54C\uBB38\uC5D0 \uB2E4\uB978 \uC0AC\uB78C\uC758 \uBD80\uD0C1\uC744 \uBC1B\uACE0 \uC0AC\uAC74\uC5D0 \uC5BD\uD788\uB294 \uC77C\uC774 \uC7A6\uC558\uB2E4. \uADF8\uB798\uB2C8 \uB0A8\uC758 \uACE0\uBBFC\uC744 \uD574\uACB0\uD560 \uC218 \uC788\uB294 \uB2A5\uB825\uC774 \uC788\uB294 \uD30C\uD2B8\uB108\uC640 \uD568\uAED8 \uC788\uB2E4.", "\u300E\uC6A9\uC11C\uD560 \uC218 \uC5C6\uB2E4\u300F\uC790\uC2E0\uC740 \uC0AC\uAC74\uC758 \uD53C\uD574\uC790\uC5D0 \uC774\uC785\uD558\uB294 \uD0C0\uC785\uC774\uB2E4. \uD53C\uD574\uC790\uC758 \uC2EC\uC815\uC744 \uC0DD\uAC01\uD558\uBA74 \uCC38\uB2F4\uD558\uBA74\uC11C\uB3C4 \uBC94\uC778\uC744 \uC6A9\uC11C\uD560 \uC218 \uC5C6\uB2E4\uB294 \uC0DD\uAC01\uC774 \uB4E0\uB2E4. \uADF8\uB798\uC11C \uBC94\uC778\uC744 \uCAD3\uAE30 \uC704\uD574 \uD30C\uD2B8\uB108\uAC00 \uD544\uC694\uD558\uB2E4.", "\u300E\uB0A9\uB4DD\uD558\uACE0 \uC2F6\uB2E4\u300F\uC790\uC2E0\uC774 \uC0AC\uAC74\uC5D0 \uB300\uD574 \uAE4A\uC774 \uAD00\uC5EC\uD558\uB294 \uAC83\uC740, \uC790\uC2E0\uC774 \uB0A9\uB4DD\uD558\uAE38 \uC6D0\uD558\uAE30 \uB54C\uBB38\uC774\uB2E4. \uC0AC\uAC74\uC744 \uD1B5\uD574 \uC5B4\uB5A4 \uD574\uB2F5\uC744 \uCC3E\uAE30 \uC704\uD574 \uC815\uC758\uB97C \uD589\uD558\uACE0 \uC788\uB2E4. \uD30C\uD2B8\uB108\uB294 \uC774\uB97C \uC704\uD574 \uD544\uC694\uD55C \uC0AC\uB78C\uC774\uB2E4.", "\u300E\uC774\uC6A9\uD558\uACE0 \uC788\uB2E4\u300F\uC5B4\uB5A4 \uC218\uB2E8\uC744 \uC368\uC11C\uB77C\uB3C4 \uC0AC\uAC74\uC744 \uD574\uACB0\uD558\uB294 \uAC83\uC774 \uC633\uB2E4\uACE0 \uC790\uC2E0\uC740 \uC0DD\uAC01\uD558\uACE0 \uC788\uB2E4. \uADF8\uAC83\uC744 \uC704\uD55C \uB3C4\uAD6C\uB85C\uC11C \uD30C\uD2B8\uB108\uB97C \uC4F0\uACE0 \uC788\uC744 \uBFD0\uC774\uB2E4.", "\u300E\uBBFF\uC744 \uC218 \uC788\uB294 \uD611\uB825\uC790\u300F\uD30C\uD2B8\uB108\uB97C \uC758\uC9C0\uD560 \uC218 \uC788\uB294 \uD611\uB825\uC790\uB77C\uACE0 \uB290\uB07C\uACE0 \uC788\uB2E4. \uD30C\uD2B8\uB108\uB294 \uC790\uC2E0\uC774 \uACE4\uB780\uD560 \uB54C, \uBC29\uD669\uD560 \uB54C, \uB300\uB2F5\uC744 \uD574\uC8FC\uB294 \uC0AC\uB78C\uC774\uB77C\uACE0 \uC0DD\uAC01\uD55C\uB2E4. \uC0C1\uB300\uAC00 \uC5B4\uB5BB\uAC8C \uC0DD\uAC01\uD558\uB4E0 \uADF8\uAC83\uC740 \uBCC0\uD558\uC9C0 \uC54A\uB294\uB2E4.", "\u300E\uC815\uC758\uC758 \uB3D9\uC9C0\u300F\uD30C\uD2B8\uB108\uB3C4 \uD568\uAED8 \uC815\uC758\uB97C \uC704\uD574 \uC0AC\uAC74 \uD574\uACB0\uC744 \uD574\uC8FC\uACE0 \uC788\uB2E4. \uC790\uC2E0\uC740 \uADF8\uB807\uAC8C \uB290\uB07C\uACE0 \uC788\uB2E4. \uADF8\uB807\uAC8C \uBBFF\uACE0 \uC788\uC744 \uBFD0\uC77C\uC9C0\uB3C4 \uBAA8\uB974\uC9C0\uB9CC, \uADF8 \uBBFF\uC74C\uC740 \uBA48\uCD9C \uC218 \uC5C6\uB2E4. \uC5B4\uCA4C\uBA74 \uC790\uC2E0\uC774 \uD30C\uD2B8\uB108\uB97C \uD718\uB450\uB974\uACE0 \uC788\uB294\uC9C0\uB3C4 \uBAA8\uB974\uACA0\uB2E4."];
+      table = ["『착한 사람』자신은 다른 사람으로부터 곧잘 좋은 사람이라는 말을 듣는다. 그렇기 때문에 다른 사람의 부탁을 받고 사건에 얽히는 일이 잦았다. 그래니 남의 고민을 해결할 수 있는 능력이 있는 파트너와 함께 있다.", "『용서할 수 없다』자신은 사건의 피해자에 이입하는 타입이다. 피해자의 심정을 생각하면 참담하면서도 범인을 용서할 수 없다는 생각이 든다. 그래서 범인을 쫓기 위해 파트너가 필요하다.", "『납득하고 싶다』자신이 사건에 대해 깊이 관여하는 것은, 자신이 납득하길 원하기 때문이다. 사건을 통해 어떤 해답을 찾기 위해 정의를 행하고 있다. 파트너는 이를 위해 필요한 사람이다.", "『이용하고 있다』어떤 수단을 써서라도 사건을 해결하는 것이 옳다고 자신은 생각하고 있다. 그것을 위한 도구로서 파트너를 쓰고 있을 뿐이다.", "『믿을 수 있는 협력자』파트너를 의지할 수 있는 협력자라고 느끼고 있다. 파트너는 자신이 곤란할 때, 방황할 때, 대답을 해주는 사람이라고 생각한다. 상대가 어떻게 생각하든 그것은 변하지 않는다.", "『정의의 동지』파트너도 함께 정의를 위해 사건 해결을 해주고 있다. 자신은 그렇게 느끼고 있다. 그렇게 믿고 있을 뿐일지도 모르지만, 그 믿음은 멈출 수 없다. 어쩌면 자신이 파트너를 휘두르고 있는지도 모르겠다."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_background_assistant_justice$35.$$arity = 0);
     
@@ -481,7 +481,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u300E\uB2A5\uB825\uC5D0 \uBC18\uD588\uB2E4\u300F\uC790\uC2E0\uC740 \uD30C\uD2B8\uB108\uC758 \uC0AC\uAC74\uC5D0 \uAD00\uD55C \uB2A5\uB825\uC5D0 \uBC18\uD588\uB2E4. \uADF8 \uC608\uB9AC\uD55C \uD1B5\uCC30\uB825\uACFC \uCD94\uB9AC\uB825, \uC9C0\uC2DD\uC758 \uAE4A\uC774. \uBAA8\uB4E0 \uAC83\uC774 \uC790\uC2E0\uC744 \uB9E4\uB8CC\uC2DC\uD0A4\uACE0 \uC788\uB2E4.", "\u300E\uC778\uD488\uC5D0 \uBC18\uD588\uB2E4\u300F\uC790\uC2E0\uC774 \uD30C\uD2B8\uB108\uC640 \uC190\uC744 \uC7A1\uACE0 \uC788\uB294 \uAC83\uC740 \uC778\uACA9\uC801\uC778 \uBA74\uC774 \uD06C\uB2E4. \uC5B8\uB73B \uBCF4\uAE30 \uD798\uB4E0 \uB300\uBAA9\uB3C4 \uC788\uC9C0\uB9CC \uAC10\uCDB0\uC9C4 \uBCF8\uC9C8\uC5D0 \uC790\uC2E0\uC740 \uD479 \uBE60\uC838 \uC788\uB2E4.", "\u300E\uCCAB\uB208\uC5D0 \uBC18\uD588\uB2E4\u300F\uCC98\uC74C \uB9CC\uB0AC\uC744 \uB54C\uBD80\uD130 \uD30C\uD2B8\uB108\uAC00 \uB9C8\uC74C\uC5D0 \uAC78\uB838\uB2E4. \uADF8 \uB2A5\uB825\uB3C4 \uADF8\uB807\uC9C0\uB9CC \uC9C1\uAC10\uC801\uC778 \uAC83\uC744 \uB290\uAF08\uB358 \uAC83\uC774\uB2E4. \uADF8\uB798\uC11C \uAC19\uC774 \uC788\uB294\uB2E4.", "\u300E\uB9C8\uC74C\uC774 \uB9DE\uC558\uB2E4\u300F\uC790\uC2E0\uACFC \uD30C\uD2B8\uB108\uB294 \uB9C8\uC74C\uC774 \uC798 \uB9DE\uB294\uB2E4. \uB450 \uC0AC\uB78C\uC774\uBA74 \uD765\uC744 \uB3CB\uC6B8 \uC218 \uC788\uACE0, \uB450 \uC0AC\uB78C\uC774\uBA74 \uBB50\uB4E0\uC9C0 \uD560 \uC218 \uC788\uB2E4. \uADF8\uB807\uAC8C \uC0DD\uAC01\uD55C\uB2E4\u2026\u2026\uC790\uC2E0\uC774 \uADF8\uB807\uAC8C \uC0DD\uAC01\uD558\uB294 \uAC83\uC77C \uBFD0\uC77C\uC9C0\uB3C4 \uBAA8\uB974\uC9C0\uB9CC.", "\u300E\uB300\uB9BD\u300F\uC790\uC2E0\uACFC \uD30C\uD2B8\uB108\uB294 \uB300\uB9BD\uD558\uACE0 \uC788\uB2E4. \uADF8\uB798\uB3C4 \uD568\uAED8 \uC788\uB294 \uAC83\uC740 \uD30C\uD2B8\uB108\uB97C \uC774\uD574\uD558\uAE30 \uC704\uD574\uC11C\uB2E4\u2026\u2026 \uC5B8\uC820\uAC00, \uD30C\uD2B8\uB108\uB97C \uC4F0\uB7EC\uB728\uB9B4 \uC218\uB2E8\uC744 \uCC3E\uAE30 \uC704\uD574\uC11C.", "\u300E\uB0B4\uBC84\uB824\uB458 \uC218 \uC5C6\uB2E4\u300F\uD30C\uD2B8\uB108\uB97C \uB0B4\uBC84\uB824\uB450\uBA74 \uBB34\uC2A8 \uC9D3\uC744 \uD560\uC9C0 \uBAA8\uB978\uB2E4. \uADF8\uB7EC\uB2C8\uAE4C \uC790\uC2E0\uC774 \uC9C0\uCF1C\uBCF4\uACE0 \uC788\uC5B4\uC57C \uB3FC. \uADF8\uB807\uAC8C \uB290\uAF08\uB2E4."];
+      table = ["『능력에 반했다』자신은 파트너의 사건에 관한 능력에 반했다. 그 예리한 통찰력과 추리력, 지식의 깊이. 모든 것이 자신을 매료시키고 있다.", "『인품에 반했다』자신이 파트너와 손을 잡고 있는 것은 인격적인 면이 크다. 언뜻 보기 힘든 대목도 있지만 감춰진 본질에 자신은 푹 빠져 있다.", "『첫눈에 반했다』처음 만났을 때부터 파트너가 마음에 걸렸다. 그 능력도 그렇지만 직감적인 것을 느꼈던 것이다. 그래서 같이 있는다.", "『마음이 맞았다』자신과 파트너는 마음이 잘 맞는다. 두 사람이면 흥을 돋울 수 있고, 두 사람이면 뭐든지 할 수 있다. 그렇게 생각한다……자신이 그렇게 생각하는 것일 뿐일지도 모르지만.", "『대립』자신과 파트너는 대립하고 있다. 그래도 함께 있는 것은 파트너를 이해하기 위해서다…… 언젠가, 파트너를 쓰러뜨릴 수단을 찾기 위해서.", "『내버려둘 수 없다』파트너를 내버려두면 무슨 짓을 할지 모른다. 그러니까 자신이 지켜보고 있어야 돼. 그렇게 느꼈다."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_background_assistant_passion$36.$$arity = 0);
     
@@ -489,7 +489,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u300E\uC77C\uBC29\uC801\uC73C\uB85C \uB9C8\uC74C\uC5D0 \uB4E4\uC5C8\uB2E4\u300F\uD30C\uD2B8\uB108\uAC00 \uC77C\uBC29\uC801\uC73C\uB85C \uC88B\uC544\uD55C\uB2E4. \uC5B4\uCA4C\uB2E4 \uADF8\uB7AC\uB294\uC9C0\uB294 \uBAA8\uB974\uACA0\uC9C0\uB9CC \uADF8\uB7F0 \uAC83 \uAC19\uB2E4. \uD568\uAED8 \uC788\uB294 \uAC83\uC740 \uC790\uC2E0\uC758 \uC758\uC9C0\uAC00 \uC544\uB2C8\uC9C0\uB9CC\u2026\u2026.", "\u300E\uB9AC\uC561\uC158 \uC694\uC6D0\u300F\uD30C\uD2B8\uB108\uC5D0 \uC758\uD558\uBA74, \uC790\uC2E0\uC5D0\uAC8C \uB9AC\uC561\uC158\uC744 \uAE30\uB300\uD558\uACE0 \uC788\uB294 \uAC83 \uAC19\uB2E4. \uC0AC\uAC74\uC744 \uD574\uACB0\uD588\uC744 \uB54C\uB098, \uC5B4\uB5A4 \uB180\uB77C\uC6C0\uC774 \uC788\uC5C8\uC744 \uB54C\uC5D0 \uBCF4\uC774\uB294 \uBC18\uC751\uC774 \uC990\uAC81\uB2E4\uB358\uAC00.", "\u300E\uACFC\uAC70\uC758 \uBE5A\u300F\uACFC\uAC70, \uD30C\uD2B8\uB108\uC5D0\uAC8C \uBE44\uBC00\uC774\uB098 \uC57D\uC810\uC744 \uC7A1\uD614\uB2E4. \uADF8 \uC774\uD6C4, \uD30C\uD2B8\uB108\uAC00 \uBD80\uB824\uBA39\uACE0 \uC788\uB2E4. \uC544\uC9C1 \uB3C4\uB9DD\uCE58\uC9C0 \uBABB\uD588\uB2E4.", "\u300E\uD544\uC694\uD55C \uC778\uC7AC\u300F\uD30C\uD2B8\uB108\uC5D0\uAC8C \uC790\uC2E0\uC774 \uD544\uC694\uD558\uB2E4\uACE0 \uBD80\uD0C1\uBC1B\uC558\uB2E4. \uADF8\uB798\uC11C, \uD568\uAED8 \uC0AC\uAC74\uC744 \uD574\uACB0\uD558\uACE0 \uC788\uB2E4. \uC65C \uC790\uC2E0\uC774 \uD544\uC694\uD55C\uC9C0\uB294 \uC544\uC9C1 \uBAA8\uB978\uB2E4.", "\u300E\uCE5C\uD55C \uC0AC\uB78C\u300F\uD30C\uD2B8\uB108\uC5D0\uAC8C \uC790\uC2E0\uC740 \uCE5C\uADFC\uD55C \uC778\uBB3C\uC774\uB2E4. \uC18C\uAFC9\uCE5C\uAD6C\uC640 \uCE5C\uAD6C, \uCE5C\uCC99 \uB4F1. \uADF8\uB798\uC11C \uC61B\uB0A0\uBD80\uD130 \uD718\uB458\uB9AC\uACE0 \uC788\uACE0 \uC55E\uC73C\uB85C\uB3C4 \uACC4\uC18D \uD718\uB458\uB9B4 \uAC83\uC774\uB2E4.", "\u300E\uC6B0\uC5F0\uC758 \uC5F0\uC18D\u300F\uD30C\uD2B8\uB108\uAC00 \uC0AC\uAC74\uC5D0 \uC9C1\uBA74\uD560 \uB54C\uB9C8\uB2E4 \uB9C8\uCE68 \uADF8 \uC790\uB9AC\uC5D0 \uC788\uB2E4. \uADF8\uB7EC\uB2E4 \uBCF4\uB2C8 \uC5B4\uB290\uC0C8 \uCE5C\uD574\uC838 \uC788\uC5C8\uB2E4. \uC9C0\uAE08\uC740 \uD568\uAED8 \uC788\uB294 \uC77C\uB3C4 \uB9CE\uB2E4."];
+      table = ["『일방적으로 마음에 들었다』파트너가 일방적으로 좋아한다. 어쩌다 그랬는지는 모르겠지만 그런 것 같다. 함께 있는 것은 자신의 의지가 아니지만…….", "『리액션 요원』파트너에 의하면, 자신에게 리액션을 기대하고 있는 것 같다. 사건을 해결했을 때나, 어떤 놀라움이 있었을 때에 보이는 반응이 즐겁다던가.", "『과거의 빚』과거, 파트너에게 비밀이나 약점을 잡혔다. 그 이후, 파트너가 부려먹고 있다. 아직 도망치지 못했다.", "『필요한 인재』파트너에게 자신이 필요하다고 부탁받았다. 그래서, 함께 사건을 해결하고 있다. 왜 자신이 필요한지는 아직 모른다.", "『친한 사람』파트너에게 자신은 친근한 인물이다. 소꿉친구와 친구, 친척 등. 그래서 옛날부터 휘둘리고 있고 앞으로도 계속 휘둘릴 것이다.", "『우연의 연속』파트너가 사건에 직면할 때마다 마침 그 자리에 있다. 그러다 보니 어느새 친해져 있었다. 지금은 함께 있는 일도 많다."];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_background_assistant_involved$37.$$arity = 0);
     
@@ -497,7 +497,7 @@
       var self = this, table = nil;
 
       
-      table = ["\uB9E4\uC6B0 \uD06C\uB2E4", "\uD070 \uD3B8", "\uD3C9\uADE0\uC801", "\uC791\uC740 \uD3B8", "\uB9E4\uC6B0 \uC791\uB2E4", "\uD30C\uD2B8\uB108\uBCF4\uB2E4 \uC870\uAE08 \uD06C\uB2E4\uFF0F\uC870\uAE08 \uC791\uB2E4"];
+      table = ["매우 크다", "큰 편", "평균적", "작은 편", "매우 작다", "파트너보다 조금 크다／조금 작다"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_Korean_get_height_table$38.$$arity = 0);
     
@@ -505,7 +505,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "PC\uAC00 \uC77C\uD558\uACE0 \uC788\uB294 \uC9C1\uC7A5"], [2, "\uC870\uC6A9\uD55C \uBD84\uC704\uAE30\uC758 \uCC3B\uC9D1"], [3, "\uB5A0\uB4E4\uC369\uD55C \uBD84\uC704\uAE30\uC758 \uC220\uC9D1"], [4, "\uD0D0\uC815\uD65C\uB3D9\uC744 \uC704\uD574 \uBE4C\uB9B0 \uC0AC\uBB34\uC18C"], [5, "PC \uC911 \uD55C\uCABD\uC758 \uC9D1"], [6, "\uB2E8\uACE8 \uC74C\uC2DD\uC810"], [7, "\uC774\uB3D9\uC5D0 \uC4F0\uC774\uB294 \uCC28 \uC548"], [8, "\uC9C0\uC778\uC5D0\uAC8C \uC591\uB3C4\uBC1B\uC740 \uCC3D\uACE0"], [9, "\uC5B8\uC81C\uB098 \uD30C\uD2B8\uB108\uC640 \uB9CC\uB098\uB294 \uAD50\uCC28\uC810"], [10, "\uB458\uB9CC \uC54C\uACE0 \uC788\uB294 \uBE44\uBC00\uC7A5\uC18C"]];
+      table = [[1, "PC가 일하고 있는 직장"], [2, "조용한 분위기의 찻집"], [3, "떠들썩한 분위기의 술집"], [4, "탐정활동을 위해 빌린 사무소"], [5, "PC 중 한쪽의 집"], [6, "단골 음식점"], [7, "이동에 쓰이는 차 안"], [8, "지인에게 양도받은 창고"], [9, "언제나 파트너와 만나는 교차점"], [10, "둘만 알고 있는 비밀장소"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -515,7 +515,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uC61B\uB0A0 \uCE5C\uAD6C"], [12, "\uCE5C\uAD6C(\u53CB\u4EBA)"], [13, "\uCE5C\uAD6C(\u89AA\u53CB)"], [14, "\uC548\uBA74\uC774 \uC788\uB2E4"], [15, "\uC804\uC6B0"], [16, "\uC545\uC5F0"], [22, "\uACFC\uAC70\uC5D0 \uBB34\uC5B8\uAC00 \uC788\uC5C8\uB2E4"], [23, "\uC0AC\uCD0C"], [24, "\uCE5C\uAD6C\uC758 \uCE5C\uAD6C"], [25, "\uBA3C \uCE5C\uCC99"], [26, "\uC774\uC6C3"], [33, "\uBBFC\uD3D0\uB97C \uB07C\uCCE4\uB2E4"], [34, "\uC2A4\uC2B9"], [35, "\uC778\uD130\uB137\uC73C\uB85C \uC54C\uAC8C \uB418\uC5C8\uB2E4"], [36, "\uC6B0\uC5F0\uD788 \uC54C\uAC8C \uB418\uC5C8\uB2E4"], [44, "\uC804\uC5D0 \uB531 \uD55C \uBC88 \uB9CC\uB0AC\uB2E4"], [45, "\uD30C\uD2B8\uB108\uC758 \uC77C\uB85C \uC0C1\uB2F4 \uBC1B\uC558\uB2E4"], [46, "\uD30C\uD2B8\uB108\uC5D0 \uB300\uD574 \uC9C8\uBB38 \uBC1B\uC558\uB2E4"], [55, "\uC18C\uAFC9\uCE5C\uAD6C"], [56, "\uD30C\uD2B8\uB108\uB97C \uCAD3\uACE0 \uC788\uB2E4"], [66, "\uC77C\uBC29\uC801\uC73C\uB85C \uC54C\uB824\uC838 \uC788\uB2E4"]];
+      table = [[11, "옛날 친구"], [12, "친구(友人)"], [13, "친구(親友)"], [14, "안면이 있다"], [15, "전우"], [16, "악연"], [22, "과거에 무언가 있었다"], [23, "사촌"], [24, "친구의 친구"], [25, "먼 친척"], [26, "이웃"], [33, "민폐를 끼쳤다"], [34, "스승"], [35, "인터넷으로 알게 되었다"], [36, "우연히 알게 되었다"], [44, "전에 딱 한 번 만났다"], [45, "파트너의 일로 상담 받았다"], [46, "파트너에 대해 질문 받았다"], [55, "소꿉친구"], [56, "파트너를 쫓고 있다"], [66, "일방적으로 알려져 있다"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_guest_relation_table$40.$$arity = 0);
     
@@ -523,7 +523,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uC544\uC9C0\uD2B8\uC5D0 \uACC4\uC18D \uB193\uC5EC \uC788\uB294 \uBC30\uB2EC\uD53C\uC790\uC0C1\uC790"], [12, "\uAC19\uC774 \uD574\uACB0\uD55C \uC0AC\uAC74\uC758 \uD30C\uC77C"], [13, "\uB450 \uC0AC\uB78C\uC774 \uB9CC\uB09C \uACC4\uAE30\uAC00 \uB41C \uCC45"], [14, "\uB458\uC774\uC11C \uB180\uC558\uB358 \uCCB4\uC2A4\uD310\uC774\uB098 \uC7A5\uAE30\uD310"], [15, "\uB450 \uC0AC\uB78C\uC758 \uCD94\uC5B5\uC774 \uC313\uC778 \uAC8C\uC784\uAE30"], [16, "\uB450 \uC0AC\uB78C\uC774 \uCC0D\uD78C \uC0AC\uC9C4"], [22, "\uB450 \uC0AC\uB78C\uC758 \uC218\uC0AC\uB178\uD2B8"], [23, "\uAC19\uC774 \uC0AC\uC6A9\uD55C \uCCAD\uC18C\uB3C4\uAD6C"], [24, "\uD53C\uD574\uC790\uB85C\uBD80\uD130 \uBC1B\uC740 \uC778\uD615"], [25, "\uB458\uC774\uC11C \uAC19\uC774 \uC549\uC740 \uC18C\uD30C"], [26, "\uC5B8\uC81C\uB098 \uC549\uC544\uC788\uB294 \uC758\uC790"], [33, "\uC790\uC8FC \uC0AC\uC6A9\uD558\uB294 \uC804\uD654\uAE30"], [34, "\uB458\uC758 \uC2DC\uAC04\uC744 \uC0C8\uAE34 \uC2DC\uACC4"], [35, "\uC5B8\uC81C\uB098 \uB193\uC5EC\uC788\uB294 \uCC45\uC0C1"], [36, "\uC0AC\uAC74 \uD574\uC124\uC744 \uD55C \uD654\uC774\uD2B8\uBCF4\uB4DC\uB098 \uCE60\uD310"], [44, "\uC5B4\uC9F8\uC120\uC9C0 \uC788\uB294 \uC778\uCCB4\uBAA8\uD615"], [45, "\uC88B\uC544\uD558\uB294 \uCEF5"], [46, "\uC0AC\uAC74\uD574\uACB0\uC5D0 \uC4F4 \uC18C\uB3C4\uAD6C"], [55, "\uAC19\uC774 \uB9C8\uC2DC\uAE30\uB85C \uC57D\uC18D\uD55C \uC220\uC774\uB098 \uC8FC\uC2A4"], [56, "\uC88B\uC544\uD558\uB294 \uC694\uB9AC"], [66, "\uB458\uB9CC\uC758 \uBE44\uBC00\uAD50\uD658\uC77C\uAE30"]];
+      table = [[11, "아지트에 계속 놓여 있는 배달피자상자"], [12, "같이 해결한 사건의 파일"], [13, "두 사람이 만난 계기가 된 책"], [14, "둘이서 놀았던 체스판이나 장기판"], [15, "두 사람의 추억이 쌓인 게임기"], [16, "두 사람이 찍힌 사진"], [22, "두 사람의 수사노트"], [23, "같이 사용한 청소도구"], [24, "피해자로부터 받은 인형"], [25, "둘이서 같이 앉은 소파"], [26, "언제나 앉아있는 의자"], [33, "자주 사용하는 전화기"], [34, "둘의 시간을 새긴 시계"], [35, "언제나 놓여있는 책상"], [36, "사건 해설을 한 화이트보드나 칠판"], [44, "어째선지 있는 인체모형"], [45, "좋아하는 컵"], [46, "사건해결에 쓴 소도구"], [55, "같이 마시기로 약속한 술이나 주스"], [56, "좋아하는 요리"], [66, "둘만의 비밀교환일기"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_memorial_item_table$41.$$arity = 0);
     
@@ -531,7 +531,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uD30C\uD2B8\uB108\uC640 \uAC19\uC74C"], [12, "\uD504\uB9AC\uD130"], [13, "\uD559\uC0DD(\uC6B0\uC218)"], [14, "\uD559\uC0DD(\uBCF4\uD1B5)"], [15, "\uD559\uC0DD(\uBD88\uC131\uC2E4)"], [16, "\uAD50\uC0AC,\uAC15\uC0AC"], [22, "\uD30C\uD2B8\uB108\uC640 \uAC19\uC74C"], [23, "\uD68C\uC0AC\uC6D0"], [24, "\uC8FC\uBD80"], [25, "\uC790\uC601\uC5C5\uC790"], [26, "\uB51C\uB808\uD0D5\uD2B8"], [33, "\uD30C\uD2B8\uB108\uC640 \uAC19\uC74C"], [34, "\uD615\uC0AC(\uC2E0\uC785)"], [35, "\uD615\uC0AC(\uC5D8\uB9AC\uD2B8)"], [36, "\uACF5\uBB34\uC6D0"], [44, "\uD30C\uD2B8\uB108\uC640 \uAC19\uC74C"], [45, "\uD0D0\uC815\uC870\uC218"], [46, "\uD0D0\uC815"], [55, "\uD30C\uD2B8\uB108\uC640 \uAC19\uC74C"], [56, "\uBB34\uC9C1"], [66, "\uD30C\uD2B8\uB108\uC640 \uAC19\uC74C"]];
+      table = [[11, "파트너와 같음"], [12, "프리터"], [13, "학생(우수)"], [14, "학생(보통)"], [15, "학생(불성실)"], [16, "교사,강사"], [22, "파트너와 같음"], [23, "회사원"], [24, "주부"], [25, "자영업자"], [26, "딜레탕트"], [33, "파트너와 같음"], [34, "형사(신입)"], [35, "형사(엘리트)"], [36, "공무원"], [44, "파트너와 같음"], [45, "탐정조수"], [46, "탐정"], [55, "파트너와 같음"], [56, "무직"], [66, "파트너와 같음"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_job_table_66$42.$$arity = 0);
     
@@ -539,7 +539,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uB51C\uB808\uD0D5\uD2B8"], [2, "\uD615\uC0AC"], [3, "\uD0D0\uC815(\uC720\uBA85)"], [4, "\uD0D0\uC815(\uC778\uAE30\uC5C6\uC74C)"], [5, "\uD0D0\uC815\uC870\uC218"], [6, "\uC5F0\uAD6C\uC790"], [7, "\uC790\uC601\uC5C5\uC790"], [8, "\uD68C\uC0AC\uC6D0"], [9, "\uC791\uAC00"], [10, "\uD559\uC0DD"]];
+      table = [[1, "딜레탕트"], [2, "형사"], [3, "탐정(유명)"], [4, "탐정(인기없음)"], [5, "탐정조수"], [6, "연구자"], [7, "자영업자"], [8, "회사원"], [9, "작가"], [10, "학생"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -549,7 +549,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uACE0\uAE09\uC9C0\uD5A5"], [12, "\uC815\uC7A5"], [13, "\uCE90\uC8FC\uC5BC \uC6E8\uC5B4(\uD3C9\uC0C1\uBCF5)"], [14, "\uD3EC\uBA40 \uC6E8\uC5B4(\uC815\uC7A5)"], [15, "\uC2A4\uD3EC\uCE20\uC6E8\uC5B4"], [16, "\uD569\uB9AC\uC801\uC784"], [22, "\uC120\uAE00\uB77C\uC2A4"], [23, "\uC640\uC774\uC154\uCE20"], [24, "\uD2F0\uC154\uCE20"], [25, "\uBAA9\uAC78\uC774"], [26, "\uBAA8\uC790"], [33, "\uBC00\uB9AC\uD130\uB9AC"], [34, "\uD53C\uC5B4\uC2A4"], [35, "\uCD94\uB9AC\uB2DD"], [36, "\uBD99\uC784\uBA38\uB9AC"], [44, "\uC77C\uBCF8\uC804\uD1B5\uC637"], [45, "\uBC18\uC9C0"], [46, "\uCD08\uCEE4"], [55, "\uC0CC\uB4E4"], [56, "\uC810\uD37C"], [66, "\uD328\uC158\uC5D0 \uAD6C\uC560\uBC1B\uC9C0 \uC54A\uB294\uB2E4"]];
+      table = [[11, "고급지향"], [12, "정장"], [13, "캐주얼 웨어(평상복)"], [14, "포멀 웨어(정장)"], [15, "스포츠웨어"], [16, "합리적임"], [22, "선글라스"], [23, "와이셔츠"], [24, "티셔츠"], [25, "목걸이"], [26, "모자"], [33, "밀리터리"], [34, "피어스"], [35, "추리닝"], [36, "붙임머리"], [44, "일본전통옷"], [45, "반지"], [46, "초커"], [55, "샌들"], [56, "점퍼"], [66, "패션에 구애받지 않는다"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_fashion_table_66$44.$$arity = 0);
     
@@ -557,7 +557,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uC815\uC7A5"], [2, "\uC778\uBC84\uB124\uC2A4"], [3, "\uBC31\uC758"], [4, "\uAE00\uB85C\uBE0C"], [5, "\uD30C\uC774\uD504"], [6, "\uC870\uB07C"], [7, "\uC77C\uBCF8\uC804\uD1B5\uC637"], [8, "\uCEEC\uB7EC\uD480\uD55C \uC0C9 \uC0AC\uC6A9"], [9, "\uD30C\uD2B8\uB108\uC640 \uAC19\uC74C"], [10, "\uD328\uC158\uC5D0 \uAD6C\uC560\uBC1B\uC9C0 \uC54A\uB294\uB2E4"]];
+      table = [[1, "정장"], [2, "인버네스"], [3, "백의"], [4, "글로브"], [5, "파이프"], [6, "조끼"], [7, "일본전통옷"], [8, "컬러풀한 색 사용"], [9, "파트너와 같음"], [10, "패션에 구애받지 않는다"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -567,7 +567,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uC2DC\uCCB4"], [12, "\uAC1C"], [13, "\uACE0\uC591\uC774"], [14, "\uC11C\uC2A4\uD39C\uC2A4"], [15, "\uC774\uC57C\uAE30"], [16, "\uC544\uC774\uB3CC"], [22, "\uBC94\uC8C4"], [23, "\uC624\uCEEC\uD2B8"], [24, "\uAC74\uAC15"], [25, "\uC815\uD06C\uD478\uB4DC"], [26, "\uACE0\uAE09\uC2DD\uC0AC"], [33, "\uD328\uC158"], [34, "\uAD8C\uB825"], [35, "\uBA85\uC608"], [36, "\uC6B0\uC815"], [44, "\uAC04\uC2DD"], [45, "\uACE0\uD5A5"], [46, "\uAC00\uC871"], [55, "\uACBD\uCC30"], [56, "\uC74C\uC545"], [66, "\uCD1D"]];
+      table = [[11, "시체"], [12, "개"], [13, "고양이"], [14, "서스펜스"], [15, "이야기"], [16, "아이돌"], [22, "범죄"], [23, "오컬트"], [24, "건강"], [25, "정크푸드"], [26, "고급식사"], [33, "패션"], [34, "권력"], [35, "명예"], [36, "우정"], [44, "간식"], [45, "고향"], [46, "가족"], [55, "경찰"], [56, "음악"], [66, "총"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_like_dislike_table_66$46.$$arity = 0);
     
@@ -575,7 +575,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uBC94\uC8C4"], [2, "\uC218\uC218\uAED8\uB07C"], [3, "\uD0D0\uC815"], [4, "\uD30C\uD2B8\uB108"], [5, "\uD30C\uD2B8\uB108\uAC00 \uC88B\uC544\uD558\uB294 \uAC83"], [6, "\uD30C\uD2B8\uB108\uAC00 \uC2EB\uC5B4\uD558\uB294 \uAC83"], [7, "\uB531\uD788 \uC5C6\uC74C"], [8, "\uCCB4\uC2A4\uB098 \uC7A5\uAE30 \uB4F1\uC758 \uBCF4\uB4DC\uAC8C\uC784"], [9, "\uC778\uAC04"], [10, "\uBAA8\uB974\uB294 \uAC83"]];
+      table = [[1, "범죄"], [2, "수수께끼"], [3, "탐정"], [4, "파트너"], [5, "파트너가 좋아하는 것"], [6, "파트너가 싫어하는 것"], [7, "딱히 없음"], [8, "체스나 장기 등의 보드게임"], [9, "인간"], [10, "모르는 것"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -585,7 +585,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uC5BC\uAD74"], [12, "\uBD84\uC704\uAE30"], [13, "\uC678\uAD00"], [14, "\uC218\uC0AC\uBC29\uBC95"], [15, "\uD589\uB3D9\uAC70\uC9C0"], [16, "\uB0C4\uC0C8"], [22, "\uC874\uC7AC \uADF8 \uC790\uCCB4"], [23, "\uB9D0\uD22C"], [24, "\uCDE8\uBBF8(\uCDE8\uD5A5)"], [25, "\uC660\uC9C0 \uBAA8\uB974\uAC8C"], [26, "\uD0C0\uC778\uC744 \uD5A5\uD55C \uD0DC\uB3C4"], [33, "\uAE08\uC804\uAC10\uAC01"], [34, "\uC0DD\uD65C\uC2B5\uAD00"], [35, "\uAE30\uB2A5"], [36, "\uBCF5\uC7A5"], [44, "\uB9D0\uD560 \uD0C0\uC774\uBC0D"], [45, "\uC724\uB9AC\uAD00"], [46, "\uC790\uC2E0\uC744 \uD5A5\uD55C \uD0DC\uB3C4"], [55, "\uAC70\uB9AC\uAC10"], [56, "\uC790\uC2E0\uACFC\uC758 \uAD00\uACC4"], [66, "\uC0DD\uD65C\uC2B5\uAD00"]];
+      table = [[11, "얼굴"], [12, "분위기"], [13, "외관"], [14, "수사방법"], [15, "행동거지"], [16, "냄새"], [22, "존재 그 자체"], [23, "말투"], [24, "취미(취향)"], [25, "왠지 모르게"], [26, "타인을 향한 태도"], [33, "금전감각"], [34, "생활습관"], [35, "기능"], [36, "복장"], [44, "말할 타이밍"], [45, "윤리관"], [46, "자신을 향한 태도"], [55, "거리감"], [56, "자신과의 관계"], [66, "생활습관"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_feeling_table_66$48.$$arity = 0);
     
@@ -593,7 +593,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uC778\uAC04\uC131"], [2, "\uCDE8\uBBF8(\uCDE8\uD5A5)"], [3, "\uAE30\uB2A5"], [4, "\uC660\uC9C0 \uBAA8\uB974\uAC8C"], [5, "\uAC10\uAC01"], [6, "\uBD84\uC704\uAE30"], [7, "\uC790\uC2E0\uC774 \uBAA8\uB974\uB294 \uC810"], [8, "\uC790\uC2E0\uC774 \uC798 \uC54C\uACE0 \uC788\uB294 \uC810"], [9, "\uC790\uC2E0\uC744 \uD5A5\uD55C \uD0DC\uB3C4"], [10, "\uC790\uC2E0\uACFC\uC758 \uAD00\uACC4"]];
+      table = [[1, "인간성"], [2, "취미(취향)"], [3, "기능"], [4, "왠지 모르게"], [5, "감각"], [6, "분위기"], [7, "자신이 모르는 점"], [8, "자신이 잘 알고 있는 점"], [9, "자신을 향한 태도"], [10, "자신과의 관계"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -603,14 +603,14 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\uB2EC\uB9C1, \uD5C8\uB2C8"], [12, "\uC774\uB984"], [13, "~\uAD70(\u304F\u3093)"], [14, "~\uC528(\u3055\u3093)"], [15, "~\uCA29(\u3061\u3083\u3093)"], [16, "~\uB2D8(\u69D8), ~\uACF5(\u6BBF)"], [22, "~\uC120\uBC30, ~\uD6C4\uBC30"], [23, "\uD30C\uD2B8\uB108(\u76F8\u68D2)"], [24, "\uB2F9\uC2E0(\u3042\u3093\u305F)"], [25, "\uB2F9\uC2E0(\u3042\u306A\u305F)"], [26, "\uC120\uC0DD(\uB2D8)"], [33, "\uBB3C\uAC74\uC73C\uB85C \uBE44\uC720\uD55C\uB2E4."], [34, "\uB124\uB188/\uC790\uB124(\u8CB4\u69D8)\u3001\uADC0\uD558(\u8CB4\u6BBF)"], [35, "\uB108(\u3066\u3081\u3048\u3001\u304A\u307E\u3048)"], [36, "\uBCC4\uBA85"], [44, "\uC720(\u30E6\u30FC)"], [45, "\uC790\uB124(\u304A\u524D\u3055\u3093)"], [46, "\uD0D0\uC815\uAD70, \uD0D0\uC815\uC528"], [55, "\uCE5C\uAD6C"], [56, "\uD30C\uD2B8\uB108\uC640 \uAC19\uB2E4."], [66, "\uB9E4\uBC88 \uD638\uCE6D\uC774 \uBC14\uB010\uB2E4."]];
+      table = [[11, "달링, 허니"], [12, "이름"], [13, "~군(くん)"], [14, "~씨(さん)"], [15, "~쨩(ちゃん)"], [16, "~님(様), ~공(殿)"], [22, "~선배, ~후배"], [23, "파트너(相棒)"], [24, "당신(あんた)"], [25, "당신(あなた)"], [26, "선생(님)"], [33, "물건으로 비유한다."], [34, "네놈/자네(貴様)、귀하(貴殿)"], [35, "너(てめえ、おまえ)"], [36, "별명"], [44, "유(ユー)"], [45, "자네(お前さん)"], [46, "탐정군, 탐정씨"], [55, "친구"], [56, "파트너와 같다."], [66, "매번 호칭이 바뀐다."]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_Korean_get_name_to_call_table_66$50.$$arity = 0);
     return (Opal.def(self, '$get_name_to_call_table_10', $FutariSousa_Korean_get_name_to_call_table_10$51 = function $$get_name_to_call_table_10() {
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\uC774\uB984"], [2, "~\uAD70(\u304F\u3093)"], [3, "~\uC528(\u3055\u3093)"], [4, "~\uCA29(\u3061\u3083\u3093)"], [5, "~\uB2D8(\u69D8), ~\uACF5(\u6BBF)"], [6, "\uD30C\uD2B8\uB108(\u76F8\u68D2)"], [7, "\uB2F9\uC2E0(\u3042\u3093\u305F\u3001\u3042\u306A\u305F)"], [8, "\uB108(\u30AD\u30DF)"], [9, "\uC0AC\uB791\uD558\uB294~"], [10, "\uBCC4\uBA85"]];
+      table = [[1, "이름"], [2, "~군(くん)"], [3, "~씨(さん)"], [4, "~쨩(ちゃん)"], [5, "~님(様), ~공(殿)"], [6, "파트너(相棒)"], [7, "당신(あんた、あなた)"], [8, "너(キミ)"], [9, "사랑하는~"], [10, "별명"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];

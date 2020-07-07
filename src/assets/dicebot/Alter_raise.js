@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Alter_raise");
-    Opal.const_set($nesting[0], 'NAME', "\u5FC3\u885D\u60F3\u6A5FTRPG\u30A2\u30EB\u30C8\u30EC\u30A4\u30BA");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3042\u308B\u3068\u308C\u3044\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u25C6\u89E3\u653E\u5224\u5B9A\uFF1AEMA[x]\n" + "\n" + "[x]\u3067\u9054\u6210\u5024\u3092\u6307\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002\u7701\u7565\u6642\u306F\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002\n" + "\n" + "\n" + "\u3010\u5404\u7A2E\u8868\u3011\n" + "\u25C6\u6027\u683C\u50BE\u5411\u8868\uFF1APER[n]\u3000\u3000\u3000\u3000\u3000\u3000 \u25C6\u5834\u6240\u8868\uFF1ALOC[ab]\n" + "\u25C6\u5E73\u7A4F\u30FB\u7D4C\u9A13\u8868\uFF1AQUI[ab]\u3000\u3000\u3000\u3000\u3000\u25C6\u559C\u3073\u30FB\u7D4C\u9A13\u8868\uFF1ADEL[ab]\n" + "\u25C6\u5FC3\u306E\u50B7\u30FB\u7D4C\u9A13\u8868\uFF1ATRA[ab]\u3000\u3000\u3000\u3000\u25C6\u30B7\u30FC\u30F3\u6F14\u51FA\u8868\uFF1ASCE[n]\n" + "\u25C6\u30B9\u30BF\u30F3\u30B9\u8868\uFF1ASTA[n]\u3000\u3000\u3000\u3000\u3000\u3000 \u25C6\u611F\u60C5\u8868\uFF1AEMO[ab]\n" + "\n" + "[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u3092\u7701\u7565\u3067\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\u3001\u6307\u5B9A\u3067ROC\u7D50\u679C\u3092\u8868\u793A\u3057\u307E\u3059\u3002\n" + "[n]\u306F\u300C1D6\u300D\u3001[ab]\u306F\u300CD66\u300D\u306E\u51FA\u76EE\u3092\u6307\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "PER3\uFF1A\u6027\u683C\u50BE\u5411\u8868\u306E\u300C3\u300D\u3092ROC\n" + "LOC52\uFF1A\u5834\u6240\u8868\u306E\u300C52\u300D\u3092ROC\n" + "QUI\uFF1A\u5E73\u7A4F\u30FB\u7D4C\u9A13\u8868\u3092\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\n");
+    Opal.const_set($nesting[0], 'NAME', "心衝想機TRPGアルトレイズ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "あるとれいす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "◆解放判定：EMA[x]\n" + "\n" + "[x]で達成値を指定してください。省略時はダイスロールします。\n" + "\n" + "\n" + "【各種表】\n" + "◆性格傾向表：PER[n]　　　　　　 ◆場所表：LOC[ab]\n" + "◆平穏・経験表：QUI[ab]　　　　　◆喜び・経験表：DEL[ab]\n" + "◆心の傷・経験表：TRA[ab]　　　　◆シーン演出表：SCE[n]\n" + "◆スタンス表：STA[n]　　　　　　 ◆感情表：EMO[ab]\n" + "\n" + "[]内のコマンドを省略でダイスロール、指定でROC結果を表示します。\n" + "[n]は「1D6」、[ab]は「D66」の出目を指定してください。\n" + "\n" + "【書式例】\n" + "PER3：性格傾向表の「3」をROC\n" + "LOC52：場所表の「52」をROC\n" + "QUI：平穏・経験表をダイスロール\n");
     self.$setPrefixes(["EMA(\\d+)?", "PER(\\d+)?", "LOC(\\d+)?", "QUI(\\d+)?", "DEL(\\d+)?", "TRA(\\d+)?", "SCE(\\d+)?", "STA(\\d+)?", "EMO(\\d+)?"]);
     
     Opal.def(self, '$rollDiceCommand', $Alter_raise_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -70,8 +70,8 @@
       var $a, $b, self = this, name = nil, table = nil, dice = nil, diceText = nil, tableText = nil;
 
       
-      name = "\u89E3\u653E\u5224\u5B9A\u8868";
-      table = [[2, "\u6FC0\u95D8\u3002\u4ECA\u56DE\u306E\u7AEF\u672B\u306F\u60F3\u5B9A\u3092\u306F\u308B\u304B\u306B\u4E0A\u56DE\u308B\u8105\u5A01\u3060\u3063\u305F\u3002\u5E7E\u672C\u3082\u306E\u592A\u5200\u7B4B\u3068\u6C38\u9060\u306E\u3088\u3046\u306A\u6642\u9593\u306E\u679C\u3066\u306B\u3001\u541B\u305F\u3061\u306F\u52DD\u5229\u3057\u305F\u3002\u6DF1\u624B\u3092\u8CA0\u3063\u305F\u304C\u3001\u30AE\u30EA\u30AE\u30EA\u81F4\u547D\u50B7\u3067\u306F\u306A\u3044\u3002"], [4, "\u8F9B\u52DD\u3002\u4ECA\u56DE\u306E\u7AEF\u672B\u306F\u60F3\u5B9A\u4EE5\u4E0A\u306E\u5927\u7269\u3060\u3063\u305F\u3002\u5203\u3068\u7259\u306E\u305B\u3081\u304E\u5408\u3044\u306E\u679C\u3066\u3001\u541B\u305F\u3061\u306F\u8F9B\u304F\u3082\u52DD\u5229\u3057\u305F\u3002"], [6, "\u52DD\u5229\u3002\u4ECA\u56DE\u306E\u7AEF\u672B\u306F\u3001\u304A\u304A\u3080\u306D\u60F3\u5B9A\u3055\u308C\u308B\u7A0B\u5EA6\u306E\u500B\u4F53\u3067\u3042\u3063\u305F\u3002\u591A\u5C11\u306E\u50B7\u306F\u8CA0\u3063\u305F\u304C\u3001\u541B\u305F\u3061\u306F\u554F\u984C\u306A\u304F\u52DD\u5229\u3067\u304D\u305F\u3002"], [8, "\u5FEB\u52DD\u3002\u4ECA\u56DE\u306E\u7AEF\u672B\u306B\u306F\u3001\u5371\u3046\u3052\u3082\u7121\u304F\u52DD\u5229\u3067\u304D\u305F\u3002\u541B\u3068\u30DA\u30A2\u306E\u30B3\u30F3\u30D3\u30CD\u30FC\u30B7\u30E7\u30F3\u306E\u8CDC\u7269\u3060\u308D\u3046\u3002\u304B\u3059\u308A\u50B7\u3092\u8CA0\u3063\u305F\u304C\u3001\u52F2\u7AE0\u306E\u3088\u3046\u306A\u3082\u306E\u3060\u3002"], [10, "\u5727\u52DD\u3002\u4ECA\u56DE\u306E\u7AEF\u672B\u306F\u3001\u541B\u305F\u3061\u306E\u6575\u3067\u306F\u306A\u304B\u3063\u305F\u3002\u541B\u3068\u30DA\u30A2\u306E\u5263\u6483\u306F\u77AC\u304F\u9593\u306B\u7AEF\u672B\u3092\u5BF8\u65AD\u3057\u3001\u7C92\u5B50\u306E\u5149\u306B\u9084\u5143\u3057\u305F\u3002"], [12, "\u5239\u90A3\u3002\u7AEF\u672B\u3092\u305D\u306E\u5207\u3063\u5148\u306B\u6349\u3048\u305F\u5239\u90A3\u3001\u541B\u305F\u3061\u306E\u524D\u3067\u7C92\u5B50\u306E\u5149\u304C\u821E\u3046\u3002\u305D\u308C\u4EE5\u4E0A\u4F55\u3082\u8D77\u3053\u308B\u3053\u3068\u306F\u306A\u304F\u3001\u4E16\u754C\u306F\u8272\u3092\u53D6\u308A\u623B\u3057\u305F\u3002"]];
+      name = "解放判定表";
+      table = [[2, "激闘。今回の端末は想定をはるかに上回る脅威だった。幾本もの太刀筋と永遠のような時間の果てに、君たちは勝利した。深手を負ったが、ギリギリ致命傷ではない。"], [4, "辛勝。今回の端末は想定以上の大物だった。刃と牙のせめぎ合いの果て、君たちは辛くも勝利した。"], [6, "勝利。今回の端末は、おおむね想定される程度の個体であった。多少の傷は負ったが、君たちは問題なく勝利できた。"], [8, "快勝。今回の端末には、危うげも無く勝利できた。君とペアのコンビネーションの賜物だろう。かすり傷を負ったが、勲章のようなものだ。"], [10, "圧勝。今回の端末は、君たちの敵ではなかった。君とペアの剣撃は瞬く間に端末を寸断し、粒子の光に還元した。"], [12, "刹那。端末をその切っ先に捉えた刹那、君たちの前で粒子の光が舞う。それ以上何も起こることはなく、世界は色を取り戻した。"]];
       if ($truthy($rb_gt(roc, 1))) {
         
         dice = roc;
@@ -85,16 +85,16 @@
       };
       tableText = self.$get_table_by_number(dice, table);
       if ($truthy($rb_ge(dice, 7))) {
-        tableText = $rb_plus(tableText, "\n\u3010\u9054\u6210\u50247\u4EE5\u4E0A\u3011GM\uFF1A\u653B\u6483\u30EB\u30FC\u30C1\u30F31\u3064\u3092\u958B\u793A\uFF08\u756A\u53F7\u306F\u30DA\u30A2PL\u304C\u6307\u5B9A\uFF09\u3000PL\uFF1A\u6226\u95D8\u958B\u59CB\u6642\u306E\u30A2\u30AF\u30BB\u30EB\u30EC\u30D9\u30EB+1")};
-      return "" + (name) + " \uFF1E " + (dice) + (diceText) + "\uFF1A" + (tableText);
+        tableText = $rb_plus(tableText, "\n【達成値7以上】GM：攻撃ルーチン1つを開示（番号はペアPLが指定）　PL：戦闘開始時のアクセルレベル+1")};
+      return "" + (name) + " ＞ " + (dice) + (diceText) + "：" + (tableText);
     }, $Alter_raise_get_emancipation_table$2.$$arity = 1);
     
     Opal.def(self, '$get_personality_table', $Alter_raise_get_personality_table$3 = function $$get_personality_table(roc) {
       var self = this, name = nil, table = nil;
 
       
-      name = "\u6027\u683C\u50BE\u5411\u8868";
-      table = [[1, "\u6311\u6226"], [2, "\u8ABF\u548C"], [3, "\u611F\u6027"], [4, "\u4FE1\u5FF5"], [5, "\u8AD6\u7406"], [6, "\u601D\u616E"]];
+      name = "性格傾向表";
+      table = [[1, "挑戦"], [2, "調和"], [3, "感性"], [4, "信念"], [5, "論理"], [6, "思慮"]];
       return self.$get_Alter_raise_1d6_table_result(name, table, roc);
     }, $Alter_raise_get_personality_table$3.$$arity = 1);
     
@@ -102,8 +102,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u5834\u6240\u8868";
-      table = [[13, "\u6559\u5BA4"], [16, "\u90E8\u5BA4"], [23, "\u5546\u5E97\u8857"], [26, "\u7530\u820E"], [33, "\u90FD\u4F1A"], [36, "\u99C5"], [43, "\u30D0\u30A4\u30C8"], [46, "\u30B9\u30C6\u30FC\u30B8"], [53, "\u56F3\u66F8\u9928"], [56, "\u75C5\u9662"], [63, "\u81EA\u7136"], [66, "\u5BB6"]];
+      name = "場所表";
+      table = [[13, "教室"], [16, "部室"], [23, "商店街"], [26, "田舎"], [33, "都会"], [36, "駅"], [43, "バイト"], [46, "ステージ"], [53, "図書館"], [56, "病院"], [63, "自然"], [66, "家"]];
       return self.$get_Alter_raise_d66_table_result(name, table, roc);
     }, $Alter_raise_get_location_table$4.$$arity = 1);
     
@@ -111,8 +111,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u5E73\u7A4F\u30FB\u7D4C\u9A13\u8868";
-      table = [[13, "\u53CB\u9054"], [16, "\u5E7C\u99B4\u67D3\u307F"], [23, "\u4E21\u89AA"], [26, "\u5144\u5F1F"], [33, "\u89AA\u621A"], [36, "\u7406\u89E3\u8005"], [43, "\u53CB\u4EBA"], [46, "\u4EF2\u9593"], [53, "\u8DA3\u5473"], [56, "\u7DF4\u7FD2"], [63, "\u4E00\u4EBA"], [66, "\u304A\u6C17\u306B\u5165\u308A"]];
+      name = "平穏・経験表";
+      table = [[13, "友達"], [16, "幼馴染み"], [23, "両親"], [26, "兄弟"], [33, "親戚"], [36, "理解者"], [43, "友人"], [46, "仲間"], [53, "趣味"], [56, "練習"], [63, "一人"], [66, "お気に入り"]];
       return self.$get_Alter_raise_d66_table_result(name, table, roc);
     }, $Alter_raise_get_quiet_table$5.$$arity = 1);
     
@@ -120,8 +120,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u559C\u3073\u30FB\u7D4C\u9A13\u8868";
-      table = [[13, "\u52DD\u5229"], [16, "\u512A\u52DD"], [23, "\u51FA\u4F1A\u3044"], [26, "\u7406\u89E3"], [33, "\u5E78\u904B"], [36, "\u30D7\u30EC\u30BC\u30F3\u30C8"], [43, "\u6210\u5C31"], [46, "\u6210\u9577"], [53, "\u5275\u9020"], [56, "\u597D\u8EE2"], [63, "\u8A3C\u660E"], [66, "\u751F\u9084"]];
+      name = "喜び・経験表";
+      table = [[13, "勝利"], [16, "優勝"], [23, "出会い"], [26, "理解"], [33, "幸運"], [36, "プレゼント"], [43, "成就"], [46, "成長"], [53, "創造"], [56, "好転"], [63, "証明"], [66, "生還"]];
       return self.$get_Alter_raise_d66_table_result(name, table, roc);
     }, $Alter_raise_get_delight_table$6.$$arity = 1);
     
@@ -129,8 +129,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u5FC3\u306E\u50B7\u30FB\u7D4C\u9A13\u8868";
-      table = [[13, "\u6557\u5317"], [16, "\u4EF2\u9055\u3044"], [23, "\u5931\u604B"], [26, "\u7121\u7406\u89E3"], [33, "\u7121\u529B"], [36, "\u5B64\u72EC"], [43, "\u5225\u96E2"], [46, "\u6B7B\u5225"], [53, "\u640D\u58CA"], [56, "\u55AA\u5931"], [63, "\u75C5"], [66, "\u4E8B\u6545"]];
+      name = "心の傷・経験表";
+      table = [[13, "敗北"], [16, "仲違い"], [23, "失恋"], [26, "無理解"], [33, "無力"], [36, "孤独"], [43, "別離"], [46, "死別"], [53, "損壊"], [56, "喪失"], [63, "病"], [66, "事故"]];
       return self.$get_Alter_raise_d66_table_result(name, table, roc);
     }, $Alter_raise_get_trauma_table$7.$$arity = 1);
     
@@ -138,8 +138,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u30B7\u30FC\u30F3\u6F14\u51FA\u8868";
-      table = [[1, "\u76F8\u8AC7\u3002\u541B\u306F\u76F8\u624B\u306B\u76F8\u8AC7\u3057\u305F\u3044\u3053\u3068\u304C\u3042\u3063\u305F\u3002"], [2, "\u904A\u3073\u3002\u541B\u306F\u76F8\u624B\u3068\u904A\u3073\u305F\u304B\u3063\u305F\u3002"], [3, "\u6848\u5185\u3002\u541B\u306F\u81EA\u8EAB\u306E\u30A2\u30EA\u30A6\u30B9\u30FB\u30D1\u30FC\u30BD\u30CA\u30EB\u3092\u6848\u5185\u3057\u305F\u304B\u3063\u305F\u3002"], [4, "\u52DD\u8CA0\u3002\u541B\u306F\u76F8\u624B\u3068\u4F55\u3089\u304B\u306E\u52DD\u8CA0\u3092\u3057\u305F\u304B\u3063\u305F\u3002"], [5, "\u304A\u9858\u3044\u3002\u541B\u306F\u76F8\u624B\u306B\u304A\u9858\u3044\u3057\u305F\u3044\u3053\u3068\u304C\u3042\u3063\u305F\u3002"], [6, "\u6249\u3092\u958B\u304F\u524D\u306B\u3002\u30A2\u30AF\u30BB\u30EB\u30C0\u30A4\u30D6\u30FB\u30B2\u30FC\u30C8\u3092\u304F\u3050\u308B\u524D\u306B\u3001\u541B\u306F\u76F8\u624B\u306B\u8A71\u3057\u305F\u3044\u3053\u3068\u304C\u3042\u3063\u305F\u3002\uFF08\uFF0A\u30C0\u30A4\u30D6\u3057\u305F\u5F8C\u306E\u30B7\u30FC\u30F3\u3082\u6F14\u51FA\u3059\u308B\u3053\u3068\uFF09"]];
+      name = "シーン演出表";
+      table = [[1, "相談。君は相手に相談したいことがあった。"], [2, "遊び。君は相手と遊びたかった。"], [3, "案内。君は自身のアリウス・パーソナルを案内したかった。"], [4, "勝負。君は相手と何らかの勝負をしたかった。"], [5, "お願い。君は相手にお願いしたいことがあった。"], [6, "扉を開く前に。アクセルダイブ・ゲートをくぐる前に、君は相手に話したいことがあった。（＊ダイブした後のシーンも演出すること）"]];
       return self.$get_Alter_raise_1d6_table_result(name, table, roc);
     }, $Alter_raise_get_scene_production_table$8.$$arity = 1);
     
@@ -147,8 +147,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u30B9\u30BF\u30F3\u30B9\u8868";
-      table = [[1, "\u53CB\u4EBA"], [2, "\u604B\u611B"], [3, "\u5E2B\u4E8B"], [4, "\u30E9\u30A4\u30D0\u30EB"], [5, "\u5BB6\u65CF"], [6, "\u5B88\u8B77"]];
+      name = "スタンス表";
+      table = [[1, "友人"], [2, "恋愛"], [3, "師事"], [4, "ライバル"], [5, "家族"], [6, "守護"]];
       return self.$get_Alter_raise_1d6_table_result(name, table, roc);
     }, $Alter_raise_get_stance_table$9.$$arity = 1);
     
@@ -156,8 +156,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u611F\u60C5\u8868";
-      table = [[13, "\u52C7\u6C17"], [16, "\u6012\u308A"], [23, "\u60B2\u3057\u307F"], [26, "\u559C\u3073"], [33, "\u9A5A\u304D"], [36, "\u6050\u308C"], [43, "\u5B89\u3089\u304E"], [46, "\u8AA0\u610F"], [53, "\u5E87\u8B77"], [56, "\u8B1D\u610F"], [63, "\u4FE1\u983C"], [66, "\u597D\u610F"]];
+      name = "感情表";
+      table = [[13, "勇気"], [16, "怒り"], [23, "悲しみ"], [26, "喜び"], [33, "驚き"], [36, "恐れ"], [43, "安らぎ"], [46, "誠意"], [53, "庇護"], [56, "謝意"], [63, "信頼"], [66, "好意"]];
       return self.$get_Alter_raise_d66_table_result(name, table, roc);
     }, $Alter_raise_get_emotion_table$10.$$arity = 1);
     
@@ -174,7 +174,7 @@
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b
       };
       tableText = self.$get_table_by_number(dice, table);
-      return "" + (name) + " \uFF1E " + (dice) + "\uFF1A" + (tableText);
+      return "" + (name) + " ＞ " + (dice) + "：" + (tableText);
     }, $Alter_raise_get_Alter_raise_1d6_table_result$11.$$arity = 3);
     return (Opal.def(self, '$get_Alter_raise_d66_table_result', $Alter_raise_get_Alter_raise_d66_table_result$12 = function $$get_Alter_raise_d66_table_result(name, table, roc) {
       var $a, $b, self = this, diceText = nil, dice1 = nil, dice2 = nil, dice = nil, tableText = nil;
@@ -205,7 +205,7 @@
       dice = $rb_plus($rb_times(dice1, 10), dice2);
       diceText = "" + (dice1) + "," + (dice2);
       tableText = self.$get_table_by_number(dice, table);
-      return "" + (name) + " \uFF1E " + (diceText) + "\uFF1A" + (tableText);
+      return "" + (name) + " ＞ " + (diceText) + "：" + (tableText);
     }, $Alter_raise_get_Alter_raise_d66_table_result$12.$$arity = 3), nil) && 'get_Alter_raise_d66_table_result';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

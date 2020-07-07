@@ -19,21 +19,21 @@
 
     
     Opal.const_set($nesting[0], 'ID', "WARPS");
-    Opal.const_set($nesting[0], 'NAME', "\u30EF\u30FC\u30D7\u30B9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308F\u3042\u3075\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u5931\u6557\u3001\u6210\u529F\u5EA6\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ワープス");
+    Opal.const_set($nesting[0], 'SORT_KEY', "わあふす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "失敗、成功度の自動判定を行います。\n");
     return (Opal.def(self, '$check_2D6', $WARPS_check_2D6$1 = function $$check_2D6(total, dice_total, _dice_list, cmp_op, target) {
       var $a, self = this;
 
       if ($truthy($rb_le(dice_total, 2))) {
-        return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+        return " ＞ クリティカル"
       } else if ($truthy($rb_ge(dice_total, 12))) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else if ($truthy((($a = cmp_op['$==']("<=")) ? target['$!=']("?") : cmp_op['$==']("<=")))) {
         if ($truthy($rb_le(total, target))) {
-          return "" + " \uFF1E " + ($rb_minus(target, total)) + "\u6210\u529F"
+          return "" + " ＞ " + ($rb_minus(target, total)) + "成功"
         } else {
-          return " \uFF1E \u5931\u6557"
+          return " ＞ 失敗"
         }
       } else {
         return nil

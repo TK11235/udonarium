@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "HouraiGakuen");
-    Opal.const_set($nesting[0], 'NAME', "\u84EC\u83B1\u5B66\u5712\u306E\u5192\u967A!!");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u307B\u3046\u3089\u3044\u304B\u304F\u3048\u3093\u306E\u307B\u3046\u3051\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u57FA\u672C\u30ED\u30FC\u30EB\uFF1AROL(x+n)\n" + "  ROLL(\u81EA\u5206\u306E\u80FD\u529B\u5024 + \u7C21\u5358\u5024 + \u5FDC\u77F3 or \u84EC\u83B1\u30D1\u30EF\u30FC)\u3068\u8A18\u8FF0\u3057\u307E\u3059\u30023D6\u3092\u30ED\u30FC\u30EB\u3057\u3001\u6210\u529F\u3057\u305F\u304B\u3069\u3046\u304B\u3092\u8868\u793A\u3057\u307E\u3059\u3002\n" + "  \u4F8B\uFF09ROL(4+6)\n" + "\u30FB\u5BFE\u4EBA\u5224\u5B9A\uFF1AMED(x,y)\n" + "  \u81EA\u5206\u306E\u80FD\u529B\u5024 x \u3068 \u76F8\u624B\u306E\u80FD\u529B\u5024 y \u3067\u30ED\u30FC\u30EB\u3092\u884C\u3044\u3001\u6210\u529F\u3057\u305F\u304B\u3069\u3046\u304B\u3092\u8868\u793A\u3057\u307E\u3059\u3002\n" + "  \u4F8B\uFF09MED(5,2)\n" + "\u30FB\u5BFE\u6297\u5224\u5B9A\uFF1ARES(x,y)\n" + "  \u81EA\u5206\u306E\u80FD\u529B\u5024 x \u3068 \u76F8\u624B\u306E\u80FD\u529B\u5024 y \u3067\u76F8\u4E92\u306B\u30ED\u30FC\u30EB\u3057\u3001\u3069\u3061\u3089\u304C\u6210\u529F\u3057\u305F\u304B\u3092\u8868\u793A\u3057\u307E\u3059\u3002\u4E21\u8005\u3068\u3082\u6210\u529F or \u5931\u6557\u306E\u5834\u5408\u306F\u5F15\u304D\u5206\u3051\u3068\u306A\u308A\u307E\u3059\u3002\n" + "  \u4F8B\uFF09RES(6,4)\n" + "\u30FB\u9670\u967D\u30B3\u30DE\u30F3\u30C9 INY\n" + "  \u4F8B\uFF09Hourai : \u967D\uFF08\u5947\u6570\u306E\u65B9\u304C\u591A\u3044\uFF09\n" + "\u30FB\u4E94\u884C\u30B3\u30DE\u30F3\u30C9\uFF1AGOG\n" + "  \u4F8B\uFF09Hourai : \u4E94\u884C\u8868(3) \u2192 \u4E94\u884C\u3010\u571F\u3011\n" + "\u30FB\u516B\u5FB3\u30B3\u30DE\u30F3\u30C9\uFF1AHTK\n" + "  \u4F8B\uFF09Hourai : \u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u7FA9\u3011(\u5947\u6570\u3001\u5947\u6570\u3001\u5076\u6570)\n");
+    Opal.const_set($nesting[0], 'NAME', "蓬莱学園の冒険!!");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ほうらいかくえんのほうけん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・基本ロール：ROL(x+n)\n" + "  ROLL(自分の能力値 + 簡単値 + 応石 or 蓬莱パワー)と記述します。3D6をロールし、成功したかどうかを表示します。\n" + "  例）ROL(4+6)\n" + "・対人判定：MED(x,y)\n" + "  自分の能力値 x と 相手の能力値 y でロールを行い、成功したかどうかを表示します。\n" + "  例）MED(5,2)\n" + "・対抗判定：RES(x,y)\n" + "  自分の能力値 x と 相手の能力値 y で相互にロールし、どちらが成功したかを表示します。両者とも成功 or 失敗の場合は引き分けとなります。\n" + "  例）RES(6,4)\n" + "・陰陽コマンド INY\n" + "  例）Hourai : 陽（奇数の方が多い）\n" + "・五行コマンド：GOG\n" + "  例）Hourai : 五行表(3) → 五行【土】\n" + "・八徳コマンド：HTK\n" + "  例）Hourai : 仁義八徳は、【義】(奇数、奇数、偶数)\n");
     self.$setPrefixes(["ROL.*", "MED\\(\\d+,\\d+\\)", "RES\\(\\d+,\\d+\\)", "INY.*", "HTK.*", "GOG.*"]);
     
     Opal.def(self, '$rollDiceCommand', $HouraiGakuen_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -43,10 +43,10 @@
       else if (/^GOG$/i['$===']($case)) {return self.$getGogyouResult(command)};
       return nil;
     }, $HouraiGakuen_rollDiceCommand$1.$$arity = 1);
-    Opal.const_set($nesting[0], 'CRITICAL', "\u5927\u6210\u529F");
-    Opal.const_set($nesting[0], 'SUCCESS', "\u6210\u529F");
-    Opal.const_set($nesting[0], 'FAILURE', "\u5931\u6557");
-    Opal.const_set($nesting[0], 'FUMBLE', "\u5927\u5931\u6557");
+    Opal.const_set($nesting[0], 'CRITICAL', "大成功");
+    Opal.const_set($nesting[0], 'SUCCESS', "成功");
+    Opal.const_set($nesting[0], 'FAILURE', "失敗");
+    Opal.const_set($nesting[0], 'FUMBLE', "大失敗");
     
     Opal.def(self, '$getRollResult', $HouraiGakuen_getRollResult$2 = function $$getRollResult(command) {
       var $a, $b, self = this, target = nil, total = nil, diceText = nil, result = nil;
@@ -59,7 +59,7 @@
       target = $$($nesting, 'Regexp').$last_match(1).$to_i();
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       result = self.$getCheckResult(diceText, total, target);
-      return "" + "(3d6<=" + (target) + ") \uFF1E \u51FA\u76EE" + (diceText) + "\uFF1D\u5408\u8A08" + (total) + " \uFF1E " + (result);
+      return "" + "(3d6<=" + (target) + ") ＞ 出目" + (diceText) + "＝合計" + (total) + " ＞ " + (result);
     }, $HouraiGakuen_getRollResult$2.$$arity = 1);
     
     Opal.def(self, '$getCheckResult', $HouraiGakuen_getCheckResult$3 = function $$getCheckResult(diceText, total, target) {
@@ -101,7 +101,7 @@
       target = self.$getTargetFromValue(yourValue, enemyValue);
       $b = self.$roll(3, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       result = self.$getCheckResult(diceText, total, target);
-      return "" + "(\u3042\u306A\u305F\u306E\u5024" + (yourValue) + "\u3001\u76F8\u624B\u306E\u5024" + (enemyValue) + "\u30013d6<=" + (target) + ") \uFF1E \u51FA\u76EE" + (diceText) + "\uFF1D\u5408\u8A08" + (total) + " \uFF1E " + (result);
+      return "" + "(あなたの値" + (yourValue) + "、相手の値" + (enemyValue) + "、3d6<=" + (target) + ") ＞ 出目" + (diceText) + "＝合計" + (total) + " ＞ " + (result);
     }, $HouraiGakuen_getMedResult$6.$$arity = 1);
     
     Opal.def(self, '$getTargetFromValue', $HouraiGakuen_getTargetFromValue$7 = function $$getTargetFromValue(yourValue, enemyValue) {
@@ -127,7 +127,7 @@
       yourResult = self.$getCheckResult(yourDiceText, yourTotal, yourTarget);
       enemyResult = self.$getCheckResult(enemyDiceText, enemyTotal, enemyTarget);
       result = self.$getResistCheckResult(yourResult, enemyResult);
-      return "" + "\u3042\u306A\u305F\u306E\u5024" + (yourValue) + "\u3001\u76F8\u624B\u306E\u5024" + (enemyValue) + "\n" + "(\u3042\u306A\u305F\u306E\u30ED\u30FC\u30EB 3d6<=" + (yourTarget) + ") \uFF1E " + (yourDiceText) + "=" + (yourTotal) + " \uFF1E " + (yourResult) + "\n" + "(\u76F8\u624B\u306E\u30ED\u30FC\u30EB 3d6<=" + (enemyTarget) + ") \uFF1E " + (enemyDiceText) + "=" + (enemyTotal) + " \uFF1E " + (enemyResult) + "\n" + "\uFF1E" + (result);
+      return "" + "あなたの値" + (yourValue) + "、相手の値" + (enemyValue) + "\n" + "(あなたのロール 3d6<=" + (yourTarget) + ") ＞ " + (yourDiceText) + "=" + (yourTotal) + " ＞ " + (yourResult) + "\n" + "(相手のロール 3d6<=" + (enemyTarget) + ") ＞ " + (enemyDiceText) + "=" + (enemyTotal) + " ＞ " + (enemyResult) + "\n" + "＞" + (result);
     }, $HouraiGakuen_getResResult$8.$$arity = 1);
     
     Opal.def(self, '$getResistCheckResult', $HouraiGakuen_getResistCheckResult$9 = function $$getResistCheckResult(yourResult, enemyResult) {
@@ -137,10 +137,10 @@
       yourRank = self.$getResultRank(yourResult);
       enemyRank = self.$getResultRank(enemyResult);
       if ($truthy($rb_gt(yourRank, enemyRank))) {
-        return "\u3042\u306A\u305F\u304C\u52DD\u5229"};
+        return "あなたが勝利"};
       if ($truthy($rb_lt(yourRank, enemyRank))) {
-        return "\u76F8\u624B\u304C\u52DD\u5229"};
-      return "\u5F15\u304D\u5206\u3051";
+        return "相手が勝利"};
+      return "引き分け";
     }, $HouraiGakuen_getResistCheckResult$9.$$arity = 2);
     
     Opal.def(self, '$getResultRank', $HouraiGakuen_getResultRank$10 = function $$getResultRank(result) {
@@ -167,9 +167,9 @@
           return (oddCount = $rb_plus(oddCount, 1))
         };}, $$12.$$s = self, $$12.$$arity = 0, $$12));
       if ($truthy($rb_lt(evenCount, oddCount))) {
-        return "\u967D\uFF08\u5947\u6570\u306E\u65B9\u304C\u591A\u3044\uFF09"
+        return "陽（奇数の方が多い）"
       } else {
-        return "\u9670\uFF08\u5076\u6570\u306E\u65B9\u304C\u591A\u3044\uFF09"
+        return "陰（偶数の方が多い）"
       };
     }, $HouraiGakuen_getInnyouResult$11.$$arity = 1);
     
@@ -181,17 +181,17 @@
       $send((3), 'times', [], ($$14 = function(){var self = $$14.$$s || this;
 
       return oddEvenList['$<<'](self.$getOddEven())}, $$14.$$s = self, $$14.$$arity = 0, $$14));
-      oddEvenText = oddEvenList.$join("\u3001");
+      oddEvenText = oddEvenList.$join("、");
       return (function() {$case = oddEvenText;
-      if ("\u5947\u6570\u3001\u5947\u6570\u3001\u5947\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u4EC1\u3011(" + (oddEvenText) + ")"}
-      else if ("\u5947\u6570\u3001\u5947\u6570\u3001\u5076\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u7FA9\u3011(" + (oddEvenText) + ")"}
-      else if ("\u5947\u6570\u3001\u5076\u6570\u3001\u5947\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u793C\u3011(" + (oddEvenText) + ")"}
-      else if ("\u5947\u6570\u3001\u5076\u6570\u3001\u5076\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u667A\u3011(" + (oddEvenText) + ")"}
-      else if ("\u5076\u6570\u3001\u5947\u6570\u3001\u5947\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u5FE0\u3011(" + (oddEvenText) + ")"}
-      else if ("\u5076\u6570\u3001\u5947\u6570\u3001\u5076\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u4FE1\u3011(" + (oddEvenText) + ")"}
-      else if ("\u5076\u6570\u3001\u5076\u6570\u3001\u5947\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u5B5D\u3011(" + (oddEvenText) + ")"}
-      else if ("\u5076\u6570\u3001\u5076\u6570\u3001\u5076\u6570"['$===']($case)) {return "" + "\u4EC1\u7FA9\u516B\u5FB3\u306F\u3001\u3010\u608C\u3011(" + (oddEvenText) + ")"}
-      else {return "\u7570\u5E38\u7D42\u4E86"}})();
+      if ("奇数、奇数、奇数"['$===']($case)) {return "" + "仁義八徳は、【仁】(" + (oddEvenText) + ")"}
+      else if ("奇数、奇数、偶数"['$===']($case)) {return "" + "仁義八徳は、【義】(" + (oddEvenText) + ")"}
+      else if ("奇数、偶数、奇数"['$===']($case)) {return "" + "仁義八徳は、【礼】(" + (oddEvenText) + ")"}
+      else if ("奇数、偶数、偶数"['$===']($case)) {return "" + "仁義八徳は、【智】(" + (oddEvenText) + ")"}
+      else if ("偶数、奇数、奇数"['$===']($case)) {return "" + "仁義八徳は、【忠】(" + (oddEvenText) + ")"}
+      else if ("偶数、奇数、偶数"['$===']($case)) {return "" + "仁義八徳は、【信】(" + (oddEvenText) + ")"}
+      else if ("偶数、偶数、奇数"['$===']($case)) {return "" + "仁義八徳は、【孝】(" + (oddEvenText) + ")"}
+      else if ("偶数、偶数、偶数"['$===']($case)) {return "" + "仁義八徳は、【悌】(" + (oddEvenText) + ")"}
+      else {return "異常終了"}})();
     }, $HouraiGakuen_getHattokuResult$13.$$arity = 1);
     
     Opal.def(self, '$getOddEven', $HouraiGakuen_getOddEven$15 = function $$getOddEven() {
@@ -200,25 +200,25 @@
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       if ($truthy(dice['$even?']())) {
-        return "\u5076\u6570"};
-      return "\u5947\u6570";
+        return "偶数"};
+      return "奇数";
     }, $HouraiGakuen_getOddEven$15.$$arity = 0);
     
     Opal.def(self, '$getGogyouResult', $HouraiGakuen_getGogyouResult$16 = function $$getGogyouResult(_command) {
       var $a, $b, self = this, type = nil, table = nil, text = nil, number = nil, output = nil;
 
       
-      type = "\u4E94\u884C\u8868";
+      type = "五行表";
       table = self.$getGogyouTable();
       $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (number = ($a[1] == null ? nil : $a[1])), $b;
-      output = "" + (type) + "(" + (number) + ") \uFF1E " + (text);
+      output = "" + (type) + "(" + (number) + ") ＞ " + (text);
       return output;
     }, $HouraiGakuen_getGogyouResult$16.$$arity = 1);
     return (Opal.def(self, '$getGogyouTable', $HouraiGakuen_getGogyouTable$17 = function $$getGogyouTable() {
       var self = this, table = nil;
 
       
-      table = ["\u4E94\u884C\u3010\u6728\u3011", "\u4E94\u884C\u3010\u706B\u3011", "\u4E94\u884C\u3010\u571F\u3011", "\u4E94\u884C\u3010\u91D1\u3011", "\u4E94\u884C\u3010\u6C34\u3011", "\u4E94\u884C\u306F\u3010\u4EFB\u610F\u9078\u629E\u3011"];
+      table = ["五行【木】", "五行【火】", "五行【土】", "五行【金】", "五行【水】", "五行は【任意選択】"];
       return table;
     }, $HouraiGakuen_getGogyouTable$17.$$arity = 0), nil) && 'getGogyouTable';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

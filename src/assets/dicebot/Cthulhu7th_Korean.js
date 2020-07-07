@@ -35,9 +35,9 @@
     self.$$prototype.bonus_dice_range = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu7th:Korean");
-    Opal.const_set($nesting[0], 'NAME', "\uD06C\uD234\uB8E8\uC758 \uBD80\uB984 7\uD310");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u56FD\u969B\u5316:Korean:\uD06C\uD234\uB8E8");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\uD310\uC815\u3000CC(x)<=\uFF08\uBAA9\uD45C\uCE58\uFF09\n" + "\u3000x\uFF1A\uBCF4\uB108\uC2A4, \uD328\uB110\uD2F0 \uC8FC\uC0AC\uC704\uFF1ABonus/Penalty Dice (2~-2). \uC0DD\uB7B5 \uAC00\uB2A5.\n" + "\u3000\uB300\uC2E4\uD328\uFF1AFumble\uFF0F\uC2E4\uD328\uFF1AFailure\uFF0F\uBCF4\uD1B5 \uC131\uACF5\uFF1ARegular success\uFF0F\n" + "\u3000\uC5B4\uB824\uC6B4 \uC131\uACF5\uFF1AHard success\uFF0F\uB300\uB2E8\uD55C \uC131\uACF5\uFF1AExtreme success\uFF0F\n" + "\u3000\uB300\uC131\uACF5\uFF1ACritical success\u3000\uC744 \uC790\uB3D9\uD310\uC815.\n" + "\uC608\uFF09CC<=30\u3000CC(2)<=50\u3000CC(-1)<=75\n" + "\n" + "\u30FB\uC870\uD569 \uD310\uC815\u3000(CBR(x,y))\n" + "\u3000\uBAA9\uD45C\uCE58 x \uC640 y \uB85C \uB3D9\uC2DC\uC5D0 \uFF05\uD310\uC815\uC744 \uD55C\uB2E4.\n" + "\u3000\uC608\uFF09CBR(50,20)\n" + "\n" + "\u30FB\uC5F0\uC0AC(Full Auto)\uD310\uC815\u3000FAR(w,x,y,z)\n" + "\u3000w\uFF1A\uD0C4\uC218(1~100), x\uFF1A\uAE30\uB2A5 \uC218\uCE58(1~100), y\uFF1A\uACE0\uC7A5 \uB118\uBC84\n" + "\u3000z\uFF1A\uBCF4\uB108\uC2A4, \uD328\uB110\uD2F0 \uC8FC\uC0AC\uC704(-2~2). \uC0DD\uB7B5 \uAC00\uB2A5.\n" + "\u3000\uBA85\uC911\uC218\uC640 \uAD00\uD1B5\uC218, \uC794\uD0C4\uC218\uB9CC\uC744 \uACC4\uC0B0. \uB370\uBBF8\uC9C0\uB294 \uACC4\uC0B0\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.\n" + "\uC608\uFF09FAR(25,70,98)\u3000FAR(50,80,98,-1)\n");
+    Opal.const_set($nesting[0], 'NAME', "크툴루의 부름 7판");
+    Opal.const_set($nesting[0], 'SORT_KEY', "国際化:Korean:크툴루");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・판정　CC(x)<=（목표치）\n" + "　x：보너스, 패널티 주사위：Bonus/Penalty Dice (2~-2). 생략 가능.\n" + "　대실패：Fumble／실패：Failure／보통 성공：Regular success／\n" + "　어려운 성공：Hard success／대단한 성공：Extreme success／\n" + "　대성공：Critical success　을 자동판정.\n" + "예）CC<=30　CC(2)<=50　CC(-1)<=75\n" + "\n" + "・조합 판정　(CBR(x,y))\n" + "　목표치 x 와 y 로 동시에 ％판정을 한다.\n" + "　예）CBR(50,20)\n" + "\n" + "・연사(Full Auto)판정　FAR(w,x,y,z)\n" + "　w：탄수(1~100), x：기능 수치(1~100), y：고장 넘버\n" + "　z：보너스, 패널티 주사위(-2~2). 생략 가능.\n" + "　명중수와 관통수, 잔탄수만을 계산. 데미지는 계산하지 않습니다.\n" + "예）FAR(25,70,98)　FAR(50,80,98,-1)\n");
     self.$setPrefixes(["CC\\(\\d+\\)", "CC.*", "CBR\\(\\d+,\\d+\\)", "FAR\\(\\d+\\)", "FAR.*"]);
     
     Opal.def(self, '$initialize', $Cthulhu7th_Korean_initialize$1 = function $$initialize() {
@@ -75,19 +75,19 @@
       bonus_dice_count = $$($nesting, 'Regexp').$last_match(1).$to_i();
       diff = $$($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_le(diff, 0))) {
-        return "\uC5D0\uB7EC. \uBAA9\uD45C\uCE58\uB294 1 \uC774\uC0C1\uC785\uB2C8\uB2E4."};
+        return "에러. 목표치는 1 이상입니다."};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
       } else {
-        return "" + "\uC5D0\uB7EC. \uBCF4\uB108\uC2A4, \uD328\uB110\uD2F0 \uC8FC\uC0AC\uC704\uC758 \uC218\uCE58\uB294 " + (self.bonus_dice_range.$min()) + "~" + (self.bonus_dice_range.$max()) + "\uC785\uB2C8\uB2E4."
+        return "" + "에러. 보너스, 패널티 주사위의 수치는 " + (self.bonus_dice_range.$min()) + "~" + (self.bonus_dice_range.$max()) + "입니다."
       };
       output = "";
       output = $rb_plus(output, "" + "(1D100<=" + (diff) + ")");
-      output = $rb_plus(output, "" + " \uBCF4\uB108\uC2A4, \uD328\uB110\uD2F0 \uC8FC\uC0AC\uC704[" + (bonus_dice_count) + "]");
+      output = $rb_plus(output, "" + " 보너스, 패널티 주사위[" + (bonus_dice_count) + "]");
       units_digit = self.$rollPercentD10();
       total_list = self.$getTotalLists(bonus_dice_count, units_digit);
       total = self.$getTotal(total_list, bonus_dice_count);
       result_text = self.$getCheckResultText(total, diff);
-      output = $rb_plus(output, "" + " \uFF1E " + (total_list.$join(", ")) + " \uFF1E " + (total) + " \uFF1E " + (result_text));
+      output = $rb_plus(output, "" + " ＞ " + (total_list.$join(", ")) + " ＞ " + (total) + " ＞ " + (result_text));
       return output;
     }, $Cthulhu7th_Korean_getCheckResult$3.$$arity = 1);
     
@@ -138,13 +138,13 @@
       if ($truthy($rb_le(total, diff))) {
         
         if (total['$=='](1)) {
-          return "\uB300\uC131\uACF5"};
+          return "대성공"};
         if ($truthy($rb_le(total, $rb_divide(diff, 5)))) {
-          return "\uB300\uB2E8\uD55C \uC131\uACF5"};
+          return "대단한 성공"};
         if ($truthy($rb_le(total, $rb_divide(diff, 2)))) {
-          return "\uC5B4\uB824\uC6B4 \uC131\uACF5"};
-        return "\uBCF4\uD1B5 \uC131\uACF5";};
-      fumble_text = "\uB300\uC2E4\uD328";
+          return "어려운 성공"};
+        return "보통 성공";};
+      fumble_text = "대실패";
       if (total['$=='](100)) {
         return fumble_text};
       if ($truthy($rb_ge(total, 96))) {
@@ -152,7 +152,7 @@
           return fumble_text
         } else if ($truthy(fumbleable)) {
           return fumble_text}};
-      return "\uC2E4\uD328";
+      return "실패";
     }, $Cthulhu7th_Korean_getCheckResultText$8.$$arity = -3);
     
     Opal.def(self, '$getCombineRoll', $Cthulhu7th_Korean_getCombineRoll$9 = function $$getCombineRoll(command) {
@@ -168,7 +168,7 @@
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
-      successList = ["\uB300\uC131\uACF5", "\uB300\uB2E8\uD55C \uC131\uACF5", "\uC5B4\uB824\uC6B4 \uC131\uACF5", "\uBCF4\uD1B5\uC131\uACF5"];
+      successList = ["대성공", "대단한 성공", "어려운 성공", "보통성공"];
       succesCount = 0;
       if ($truthy(successList['$include?'](result_1))) {
         succesCount = $rb_plus(succesCount, 1)};
@@ -176,13 +176,13 @@
         succesCount = $rb_plus(succesCount, 1)};
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
-        return "\uC131\uACF5"
+        return "성공"
       } else if (succesCount['$=='](1)) {
-        return "\uBD80\uBD84\uC801 \uC131\uACF5"
+        return "부분적 성공"
       } else {
-        return "\uC2E4\uD328"
+        return "실패"
       }; return nil; })();
-      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") \uFF1E " + (total) + "[" + (result_1) + "," + (result_2) + "] \uFF1E " + (rank);
+      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") ＞ " + (total) + "[" + (result_1) + "," + (result_2) + "] ＞ " + (rank);
     }, $Cthulhu7th_Korean_getCombineRoll$9.$$arity = 1);
     
     Opal.def(self, '$getFullAutoResult', $Cthulhu7th_Korean_getFullAutoResult$10 = function $$getFullAutoResult(command) {
@@ -201,21 +201,21 @@
       bullet_count_limit = 100;
       if ($truthy($rb_gt(bullet_count, bullet_count_limit))) {
         
-        output = $rb_plus(output, "" + "\n\uD0C4\uC57D\uC774 \uB108\uBB34 \uB9CE\uC2B5\uB2C8\uB2E4. \uC7A5\uC804\uB41C \uD0C4\uC57D\uC744 " + (bullet_count_limit) + "\uAC1C\uB85C \uBCC0\uACBD\uD569\uB2C8\uB2E4.\n");
+        output = $rb_plus(output, "" + "\n탄약이 너무 많습니다. 장전된 탄약을 " + (bullet_count_limit) + "개로 변경합니다.\n");
         bullet_count = bullet_count_limit;};
       if ($truthy($rb_le(bullet_count, 0))) {
-        return "\uD0C4\uC57D\uC740 1 \uC774\uC0C1\uC785\uB2C8\uB2E4."};
+        return "탄약은 1 이상입니다."};
       if ($truthy($rb_le(diff, 0))) {
-        return "\uBAA9\uD45C\uCE58\uB294 1 \uC774\uC0C1\uC785\uB2C8\uB2E4."};
+        return "목표치는 1 이상입니다."};
       if ($truthy($rb_lt(broken_number, 0))) {
         
-        output = $rb_plus(output, "\n\uACE0\uC7A5 \uB118\uBC84\uB294 1 \uC774\uC0C1\uC785\uB2C8\uB2E4. \uB9C8\uC774\uB108\uC2A4 \uAE30\uD638\uB97C \uC81C\uAC70\uD569\uB2C8\uB2E4.\n");
+        output = $rb_plus(output, "\n고장 넘버는 1 이상입니다. 마이너스 기호를 제거합니다.\n");
         broken_number = broken_number.$abs();};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
       } else {
-        return "" + "\n\uC5D0\uB7EC. \uBCF4\uB108\uC2A4, \uD328\uB110\uD2F0 \uC8FC\uC0AC\uC704\uC758 \uC218\uCE58\uB294 " + (self.bonus_dice_range.$min()) + "~" + (self.bonus_dice_range.$max()) + "\uC785\uB2C8\uB2E4."
+        return "" + "\n에러. 보너스, 패널티 주사위의 수치는 " + (self.bonus_dice_range.$min()) + "~" + (self.bonus_dice_range.$max()) + "입니다."
       };
-      output = $rb_plus(output, "" + "\uBCF4\uB108\uC2A4, \uD328\uB110\uD2F0 \uC8FC\uC0AC\uC704 [" + (bonus_dice_count) + "]");
+      output = $rb_plus(output, "" + "보너스, 패널티 주사위 [" + (bonus_dice_count) + "]");
       output = $rb_plus(output, self.$rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count));
       return output;
     }, $Cthulhu7th_Korean_getFullAutoResult$10.$$arity = 1);
@@ -241,10 +241,10 @@
           
           loopCount = $rb_plus(loopCount, 1);
           $c = self.$getHitResultInfos(dice_num, diff, more_difficlty), $b = Opal.to_ary($c), (hit_result = ($b[0] == null ? nil : $b[0])), (total = ($b[1] == null ? nil : $b[1])), (total_list = ($b[2] == null ? nil : $b[2])), $c;
-          output = $rb_plus(output, "" + "\n" + (loopCount) + "\uBC88\uC9F8: \uFF1E " + (total_list.$join(", ")) + " \uFF1E " + (hit_result));
+          output = $rb_plus(output, "" + "\n" + (loopCount) + "번째: ＞ " + (total_list.$join(", ")) + " ＞ " + (hit_result));
           if ($truthy($rb_ge(total, broken_number))) {
             
-            output = $rb_plus(output, " \uCD1D\uC54C \uAC78\uB9BC");
+            output = $rb_plus(output, " 총알 걸림");
             Opal.ret(self.$getHitResultText(output, counts));};
           hit_type = self.$getHitType(more_difficlty, hit_result);
           $c = self.$getBulletResults(counts['$[]']("bullet"), hit_type, diff), $b = Opal.to_ary($c), (hit_bullet = ($b[0] == null ? nil : $b[0])), (impale_bullet = ($b[1] == null ? nil : $b[1])), (lost_bullet = ($b[2] == null ? nil : $b[2])), $c;
@@ -284,7 +284,7 @@
     Opal.def(self, '$getHitResultText', $Cthulhu7th_Korean_getHitResultText$14 = function $$getHitResultText(output, counts) {
       var self = this;
 
-      return "" + (output) + "\n\uFF1E " + (counts['$[]']("hit_bullet")) + "\uBC1C\uC774 \uBA85\uC911, " + (counts['$[]']("impale_bullet")) + "\uBC1C\uC774 \uAD00\uD1B5, \uC794\uD0C4 " + (counts['$[]']("bullet")) + "\uBC1C"
+      return "" + (output) + "\n＞ " + (counts['$[]']("hit_bullet")) + "발이 명중, " + (counts['$[]']("impale_bullet")) + "발이 관통, 잔탄 " + (counts['$[]']("bullet")) + "발"
     }, $Cthulhu7th_Korean_getHitResultText$14.$$arity = 2);
     
     Opal.def(self, '$getHitType', $Cthulhu7th_Korean_getHitType$15 = function $$getHitType(more_difficlty, hit_result) {
@@ -338,16 +338,16 @@
       impaleBulletList = [];
       $case = more_difficlty;
       if ((0)['$===']($case)) {
-      successList = ["\uC5B4\uB824\uC6B4 \uC131\uACF5", "\uBCF4\uD1B5 \uC131\uACF5"];
-      impaleBulletList = ["\uB300\uC131\uACF5", "\uB300\uB2E8\uD55C \uC131\uACF5"];}
+      successList = ["어려운 성공", "보통 성공"];
+      impaleBulletList = ["대성공", "대단한 성공"];}
       else if ((1)['$===']($case)) {
-      successList = ["\uC5B4\uB824\uC6B4 \uC131\uACF5"];
-      impaleBulletList = ["\uB300\uC131\uACF5", "\uB300\uB2E8\uD55C \uC131\uACF5"];}
+      successList = ["어려운 성공"];
+      impaleBulletList = ["대성공", "대단한 성공"];}
       else if ((2)['$===']($case)) {
       successList = [];
-      impaleBulletList = ["\uB300\uC131\uACF5", "\uB300\uB2E8\uD55C \uC131\uACF5"];}
+      impaleBulletList = ["대성공", "대단한 성공"];}
       else if ((3)['$===']($case)) {
-      successList = ["\uB300\uC131\uACF5"];
+      successList = ["대성공"];
       impaleBulletList = [];};
       return [successList, impaleBulletList];
     }, $Cthulhu7th_Korean_getSuccessListImpaleBulletList$17.$$arity = 1);
@@ -357,9 +357,9 @@
 
       
       $case = more_difficlty;
-      if ((1)['$===']($case)) {return "\n    \uB09C\uC774\uB3C4\uAC00 \uC5B4\uB824\uC6B4 \uC131\uACF5\uC73C\uB85C \uBCC0\uACBD"}
-      else if ((2)['$===']($case)) {return "\n    \uB09C\uC774\uB3C4\uAC00 \uB300\uB2E8\uD55C \uC131\uACF5\uC73C\uB85C \uBCC0\uACBD"}
-      else if ((3)['$===']($case)) {return "\n    \uB09C\uC774\uB3C4\uAC00 \uB300\uC131\uACF5\uC73C\uB85C \uBCC0\uACBD"};
+      if ((1)['$===']($case)) {return "\n    난이도가 어려운 성공으로 변경"}
+      else if ((2)['$===']($case)) {return "\n    난이도가 대단한 성공으로 변경"}
+      else if ((3)['$===']($case)) {return "\n    난이도가 대성공으로 변경"};
       return "";
     }, $Cthulhu7th_Korean_getNextDifficltyMessage$18.$$arity = 1);
     

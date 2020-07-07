@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "BadLife");
-    Opal.const_set($nesting[0], 'NAME', "\u72AF\u7F6A\u6D3B\u5287RPG\u30D0\u30C3\u30C9\u30E9\u30A4\u30D5");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306F\u3064\u3068\u3089\u3044\u3075");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\uFF1AnBADm[\u00B1a][Cb\u00B1c][Fd\u00B1e][@X\u00B1f][!OP]\u3000\u3000[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\u3002\n" + "\u30FBBAD\u30B3\u30DE\u30F3\u30C9\u306F\u300CBL\u300D\u30B3\u30DE\u30F3\u30C9\u3067\u4EE3\u7528\u53EF\u3002\n" + "\u30FB\u535A\u5F92\u306F\u300CGL\u300D\u30B3\u30DE\u30F3\u30C9\u3067\u3008\u6CE2\u4E71\u4E07\u4E08\u3009\u306E\u52B9\u679C\u3092\u9069\u7528\u3002\n" + "\n" + "\u300Cn\u300D\u3067\u632F\u308B\u30C0\u30A4\u30B9\u6570\u3001\u300Cm\u300D\u3067\u7279\u6027\u5024\u3001\u300C\u00B1a\u300D\u3067\u9054\u6210\u5024\u3078\u306E\u4FEE\u6B63\u5024\u3001\n" + "\u300CCb\u00B1c\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3078\u306E\u4FEE\u6B63\u3001\u300CFd\u00B1e\u300D\u3067\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u3078\u306E\u4FEE\u6B63\u3001\n" + "\u300C@X\u300D\u3067\u76EE\u6A19\u96E3\u6613\u5EA6\u3092\u6307\u5B9A\u3002\n" + "\u300C\u00B1a\u300D\u300CCb\u00B1c\u300D\u300CFd\u00B1e\u300D[@X\u00B1f]\u90E8\u5206\u306F\u300C4+1-3\u300D\u306A\u3069\u306E\u8907\u6570\u56DE\u6307\u5B9A\u53EF\u3002\n" + "\u300C!OP\u300D\u90E8\u5206\u3067\u3001\u4E00\u90E8\u306E\u30B9\u30AD\u30EB\u3084\u30AC\u30B8\u30A7\u30C3\u30C8\u306E\u8FFD\u52A0\u52B9\u679C\u3092\u6307\u5B9A\u53EF\u3002\n" + "\u4F7F\u7528\u53EF\u80FD\u306A\u30B3\u30DE\u30F3\u30C9\u306F\u4EE5\u4E0B\u306E\u901A\u308A\u3002\u9806\u4E0D\u540C\u3001\u8907\u6570\u540C\u6642\u4F7F\u7528\u3082\u53EF\u3002\n" + "A\uFF1A\u3008\u5148\u898B\u306E\u660E\u3009\u3000\u3000H\uFF1A\uFF3B\u91CD\u6483\uFF3D\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "BAD \u2192 1\u30C0\u30A4\u30B9\u3067\u9054\u6210\u5024\u3092\u8868\u793A\u3002\n" + "3BAD10+2-1 \u2192 3\u30C0\u30A4\u30B9\u3067\u4FEE\u6B63+11\u306E\u9054\u6210\u5024\u3092\u8868\u793A\u3002\n" + "BL8@15 \u2192 1\u30C0\u30A4\u30B9\u3067\u4FEE\u6B63+8\u3001\u96E3\u6613\u5EA615\u306E\u5224\u5B9A\u3002\n" + "2BL8C-1F1@15 \u2192 2\u30C0\u30A4\u30B9\u3067\u4FEE\u6B63+8\u3001C\u5024-1\u3001F\u5024+1\u3001\u96E3\u6613\u5EA615\u306E\u5224\u5B9A\u3002\n" + "GL6@20 \u2192 1\u30C0\u30A4\u30B9\u3067\u4FEE\u6B63+6\u3001\u96E3\u6613\u5EA620\u306E\u5224\u5B9A\u3002\u3008\u6CE2\u4E71\u4E07\u4E08\u3009\u306E\u52B9\u679C\u3002\n" + "GL6@20!HA \u2192 \u4E0A\u8A18\u306B\u52A0\u3048\u3066\u3008\u5148\u898B\u306E\u660E\u3009\uFF3B\u91CD\u6483\uFF3D\u306E\u52B9\u679C\u3002\n" + "\n" + "\u30FB\u30B3\u30FC\u30C9\u30CD\u30FC\u30E0\u8868\n" + "\u602A\u76D7\uFF1ATRN\u3000\u3000\u3000\u95C7\u533B\u8005\uFF1ADRN\u3000\u3000\u535A\u5F92\uFF1AGRN\n" + "\u6BBA\u30B7\u5C4B\uFF1AKRN\u3000\u3000\u696D\u5E2B\uFF1ASRN\u3000\u3000\u3000\u904A\u30D3\u4EBA\uFF1ABRN\n" + "\n" + "\u30FB\u30B9\u30AD\u30EB\u8868\uFF1ASKL\n");
+    Opal.const_set($nesting[0], 'NAME', "犯罪活劇RPGバッドライフ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "はつとらいふ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定：nBADm[±a][Cb±c][Fd±e][@X±f][!OP]　　[]内のコマンドは省略可。\n" + "・BADコマンドは「BL」コマンドで代用可。\n" + "・博徒は「GL」コマンドで〈波乱万丈〉の効果を適用。\n" + "\n" + "「n」で振るダイス数、「m」で特性値、「±a」で達成値への修正値、\n" + "「Cb±c」でクリティカル値への修正、「Fd±e」でファンブル値への修正、\n" + "「@X」で目標難易度を指定。\n" + "「±a」「Cb±c」「Fd±e」[@X±f]部分は「4+1-3」などの複数回指定可。\n" + "「!OP」部分で、一部のスキルやガジェットの追加効果を指定可。\n" + "使用可能なコマンドは以下の通り。順不同、複数同時使用も可。\n" + "A：〈先見の明〉　　H：［重撃］\n" + "\n" + "【書式例】\n" + "BAD → 1ダイスで達成値を表示。\n" + "3BAD10+2-1 → 3ダイスで修正+11の達成値を表示。\n" + "BL8@15 → 1ダイスで修正+8、難易度15の判定。\n" + "2BL8C-1F1@15 → 2ダイスで修正+8、C値-1、F値+1、難易度15の判定。\n" + "GL6@20 → 1ダイスで修正+6、難易度20の判定。〈波乱万丈〉の効果。\n" + "GL6@20!HA → 上記に加えて〈先見の明〉［重撃］の効果。\n" + "\n" + "・コードネーム表\n" + "怪盗：TRN　　　闇医者：DRN　　博徒：GRN\n" + "殺シ屋：KRN　　業師：SRN　　　遊ビ人：BRN\n" + "\n" + "・スキル表：SKL\n");
     self.$setPrefixes(["\\d?(BAD|BL|GL).*", "[TDGKSB]RN", "SKL"]);
     
     Opal.def(self, '$rollDiceCommand', $BadLife_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -122,7 +122,7 @@
         total = $rb_plus(total, 5)};
       if ($truthy(isFumble)) {
         total = 0};
-      result = "" + (diceCount) + "D20(C:" + (critical) + ",F:" + (fumble) + ") \uFF1E ";
+      result = "" + (diceCount) + "D20(C:" + (critical) + ",F:" + (fumble) + ") ＞ ";
       result = $rb_plus(result, "" + (diceMax) + "[" + (diceText) + "]");
       if ($truthy($rb_gt(modify, 0))) {
         result = $rb_plus(result, "+")};
@@ -130,35 +130,35 @@
         result = $rb_plus(result, modify.$to_s())};
       if ($truthy(($truthy($a = isAnticipation) ? $rb_le(diceMax, 7) : $a))) {
         result = $rb_plus(result, "+5")};
-      result = $rb_plus(result, "" + " \uFF1E \u9054\u6210\u5024\uFF1A" + (total));
+      result = $rb_plus(result, "" + " ＞ 達成値：" + (total));
       if ($truthy($rb_gt(target, 0))) {
         
         success = $rb_minus(total, target);
-        result = $rb_plus(result, "" + ">=" + (target) + " \u6210\u529F\u5EA6\uFF1A" + (success) + " \uFF1E ");
+        result = $rb_plus(result, "" + ">=" + (target) + " 成功度：" + (success) + " ＞ ");
         if ($truthy(isCritical)) {
-          result = $rb_plus(result, "\u6210\u529F\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09")
+          result = $rb_plus(result, "成功（クリティカル）")
         } else if ($truthy($rb_ge(total, target))) {
-          result = $rb_plus(result, "\u6210\u529F")
+          result = $rb_plus(result, "成功")
         } else {
           
-          result = $rb_plus(result, "\u5931\u6557");
+          result = $rb_plus(result, "失敗");
           if ($truthy(isFumble)) {
-            result = $rb_plus(result, "\uFF08\u30D5\u30A1\u30F3\u30D6\u30EB\uFF09")};
+            result = $rb_plus(result, "（ファンブル）")};
         };
       } else {
         
         if ($truthy(isCritical)) {
-          result = $rb_plus(result, " \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB")};
+          result = $rb_plus(result, " クリティカル")};
         if ($truthy(isFumble)) {
-          result = $rb_plus(result, " \u30D5\u30A1\u30F3\u30D6\u30EB")};
+          result = $rb_plus(result, " ファンブル")};
       };
       skillText = "";
       if ($truthy(isStormy)) {
-        skillText = $rb_plus(skillText, "\u3008\u6CE2\u4E71\u4E07\u4E08\u3009")};
+        skillText = $rb_plus(skillText, "〈波乱万丈〉")};
       if ($truthy(isAnticipation)) {
-        skillText = $rb_plus(skillText, "\u3008\u5148\u898B\u306E\u660E\u3009")};
+        skillText = $rb_plus(skillText, "〈先見の明〉")};
       if ($truthy(isHeavyAttack)) {
-        skillText = $rb_plus(skillText, "\uFF3B\u91CD\u6483\uFF3D")};
+        skillText = $rb_plus(skillText, "［重撃］")};
       if ($truthy(skillText['$!='](""))) {
         result = $rb_plus(result, "" + " " + (skillText))};
       return result;
@@ -170,23 +170,23 @@
       
       $case = initials;
       if ("T"['$===']($case)) {
-      name = "\u602A\u76D7\u30B3\u30FC\u30C9\u30CD\u30FC\u30E0\u8868";
-      table = [[1, "\u30D5\u30A9\u30C3\u30AF\u30B9"], [2, "\u30D5\u30A9\u30C3\u30AF\u30B9"], [3, "\u30E9\u30C3\u30C8"], [4, "\u30E9\u30C3\u30C8"], [5, "\u30AD\u30E3\u30C3\u30C8"], [6, "\u30AD\u30E3\u30C3\u30C8"], [7, "\u30BF\u30A4\u30AC\u30FC"], [8, "\u30BF\u30A4\u30AC\u30FC"], [9, "\u30B7\u30E3\u30FC\u30AF"], [10, "\u30B7\u30E3\u30FC\u30AF"], [11, "\u30B3\u30F3\u30C9\u30EB"], [12, "\u30B3\u30F3\u30C9\u30EB"], [13, "\u30B9\u30D1\u30A4\u30C0\u30FC"], [14, "\u30B9\u30D1\u30A4\u30C0\u30FC"], [15, "\u30A6\u30EB\u30D5"], [16, "\u30A6\u30EB\u30D5"], [17, "\u30B3\u30E8\u30FC\u30C6"], [18, "\u30B3\u30E8\u30FC\u30C6"], [19, "\u30B8\u30E3\u30AC\u30FC"], [20, "\u30B8\u30E3\u30AC\u30FC"]];}
+      name = "怪盗コードネーム表";
+      table = [[1, "フォックス"], [2, "フォックス"], [3, "ラット"], [4, "ラット"], [5, "キャット"], [6, "キャット"], [7, "タイガー"], [8, "タイガー"], [9, "シャーク"], [10, "シャーク"], [11, "コンドル"], [12, "コンドル"], [13, "スパイダー"], [14, "スパイダー"], [15, "ウルフ"], [16, "ウルフ"], [17, "コヨーテ"], [18, "コヨーテ"], [19, "ジャガー"], [20, "ジャガー"]];}
       else if ("D"['$===']($case)) {
-      name = "\u95C7\u533B\u8005\u30B3\u30FC\u30C9\u30CD\u30FC\u30E0\u8868";
-      table = [[1, "\u30AD\u30E3\u30F3\u30B5\u30FC"], [2, "\u30AD\u30E3\u30F3\u30B5\u30FC"], [3, "\u30D8\u30C3\u30C9\u30A8\u30A4\u30AF"], [4, "\u30D8\u30C3\u30C9\u30A8\u30A4\u30AF"], [5, "\u30D6\u30E9\u30C3\u30C9"], [6, "\u30D6\u30E9\u30C3\u30C9"], [7, "\u30A6\u30FC\u30F3\u30BA"], [8, "\u30A6\u30FC\u30F3\u30BA"], [9, "\u30DD\u30A4\u30BA\u30F3"], [10, "\u30DD\u30A4\u30BA\u30F3"], [11, "\u30DA\u30A4\u30F3"], [12, "\u30DA\u30A4\u30F3"], [13, "\u30B9\u30EA\u30FC\u30D7"], [14, "\u30B9\u30EA\u30FC\u30D7"], [15, "\u30AD\u30E5\u30A2"], [16, "\u30AD\u30E5\u30A2"], [17, "\u30C7\u30B9"], [18, "\u30C7\u30B9"], [19, "\u30EA\u30FC\u30F3\u30AB\u30FC\u30CD\u30A4\u30B7\u30E7\u30F3"], [20, "\u30EA\u30FC\u30F3\u30AB\u30FC\u30CD\u30A4\u30B7\u30E7\u30F3"]];}
+      name = "闇医者コードネーム表";
+      table = [[1, "キャンサー"], [2, "キャンサー"], [3, "ヘッドエイク"], [4, "ヘッドエイク"], [5, "ブラッド"], [6, "ブラッド"], [7, "ウーンズ"], [8, "ウーンズ"], [9, "ポイズン"], [10, "ポイズン"], [11, "ペイン"], [12, "ペイン"], [13, "スリープ"], [14, "スリープ"], [15, "キュア"], [16, "キュア"], [17, "デス"], [18, "デス"], [19, "リーンカーネイション"], [20, "リーンカーネイション"]];}
       else if ("G"['$===']($case)) {
-      name = "\u535A\u5F92\u30B3\u30FC\u30C9\u30CD\u30FC\u30E0\u8868";
-      table = [[1, "\u30EA\u30C8\u30EB\u30C0\u30A4\u30B9"], [2, "\u30EA\u30C8\u30EB\u30C0\u30A4\u30B9"], [3, "\u30D7\u30E9\u30C1\u30CA\u30E0"], [4, "\u30D7\u30E9\u30C1\u30CA\u30E0"], [5, "\u30D7\u30EC\u30B8\u30C7\u30F3\u30C8"], [6, "\u30D7\u30EC\u30B8\u30C7\u30F3\u30C8"], [7, "\u30C9\u30EA\u30FC\u30E0"], [8, "\u30C9\u30EA\u30FC\u30E0"], [9, "\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8"], [10, "\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8"], [11, "\u30B0\u30EA\u30FC\u30C9"], [12, "\u30B0\u30EA\u30FC\u30C9"], [13, "\u30D5\u30A9\u30FC\u30C1\u30E5\u30F3"], [14, "\u30D5\u30A9\u30FC\u30C1\u30E5\u30F3"], [15, "\u30DF\u30E9\u30AF\u30EB"], [16, "\u30DF\u30E9\u30AF\u30EB"], [17, "\u30DB\u30FC\u30D7"], [18, "\u30DB\u30FC\u30D7"], [19, "\u30D3\u30C3\u30B0\u30D2\u30C3\u30C8"], [20, "\u30D3\u30C3\u30B0\u30D2\u30C3\u30C8"]];}
+      name = "博徒コードネーム表";
+      table = [[1, "リトルダイス"], [2, "リトルダイス"], [3, "プラチナム"], [4, "プラチナム"], [5, "プレジデント"], [6, "プレジデント"], [7, "ドリーム"], [8, "ドリーム"], [9, "アクシデント"], [10, "アクシデント"], [11, "グリード"], [12, "グリード"], [13, "フォーチュン"], [14, "フォーチュン"], [15, "ミラクル"], [16, "ミラクル"], [17, "ホープ"], [18, "ホープ"], [19, "ビッグヒット"], [20, "ビッグヒット"]];}
       else if ("K"['$===']($case)) {
-      name = "\u6BBA\u30B7\u5C4B\u30B3\u30FC\u30C9\u30CD\u30FC\u30E0\u8868";
-      table = [[1, "\u30CF\u30F3\u30DE\u30FC"], [2, "\u30CF\u30F3\u30DE\u30FC"], [3, "\u30A2\u30ED\u30FC"], [4, "\u30A2\u30ED\u30FC"], [5, "\u30DC\u30DE\u30FC"], [6, "\u30DC\u30DE\u30FC"], [7, "\u30AD\u30E3\u30CE\u30F3"], [8, "\u30AD\u30E3\u30CE\u30F3"], [9, "\u30D6\u30EC\u30FC\u30C9"], [10, "\u30D6\u30EC\u30FC\u30C9"], [11, "\u30B9\u30C6\u30A3\u30F3\u30B0"], [12, "\u30B9\u30C6\u30A3\u30F3\u30B0"], [13, "\u30AC\u30ED\u30C3\u30C8"], [14, "\u30AC\u30ED\u30C3\u30C8"], [15, "\u30D1\u30A4\u30EB\u30D0\u30F3\u30AB\u30FC"], [16, "\u30D1\u30A4\u30EB\u30D0\u30F3\u30AB\u30FC"], [17, "\u30EC\u30A4\u30B6\u30FC"], [18, "\u30EC\u30A4\u30B6\u30FC"], [19, "\u30AB\u30BF\u30CA"], [20, "\u30AB\u30BF\u30CA"]];}
+      name = "殺シ屋コードネーム表";
+      table = [[1, "ハンマー"], [2, "ハンマー"], [3, "アロー"], [4, "アロー"], [5, "ボマー"], [6, "ボマー"], [7, "キャノン"], [8, "キャノン"], [9, "ブレード"], [10, "ブレード"], [11, "スティング"], [12, "スティング"], [13, "ガロット"], [14, "ガロット"], [15, "パイルバンカー"], [16, "パイルバンカー"], [17, "レイザー"], [18, "レイザー"], [19, "カタナ"], [20, "カタナ"]];}
       else if ("S"['$===']($case)) {
-      name = "\u696D\u5E2B\u30B3\u30FC\u30C9\u30CD\u30FC\u30E0\u8868";
-      table = [[1, "\u30ED\u30FC\u30BA"], [2, "\u30ED\u30FC\u30BA"], [3, "\u30B5\u30AF\u30E9"], [4, "\u30B5\u30AF\u30E9"], [5, "\u30E9\u30A4\u30E9\u30C3\u30AF"], [6, "\u30E9\u30A4\u30E9\u30C3\u30AF"], [7, "\u30C0\u30F3\u30C7\u30E9\u30A4\u30AA\u30F3"], [8, "\u30C0\u30F3\u30C7\u30E9\u30A4\u30AA\u30F3"], [9, "\u30D5\u30EA\u30FC\u30B8\u30A2"], [10, "\u30D5\u30EA\u30FC\u30B8\u30A2"], [11, "\u30AB\u30AF\u30BF\u30B9"], [12, "\u30AB\u30AF\u30BF\u30B9"], [13, "\u30ED\u30FC\u30BF\u30B9"], [14, "\u30ED\u30FC\u30BF\u30B9"], [15, "\u30EA\u30EA\u30A3"], [16, "\u30EA\u30EA\u30A3"], [17, "\u30E9\u30D5\u30EC\u30B7\u30A2"], [18, "\u30E9\u30D5\u30EC\u30B7\u30A2"], [19, "\u30D2\u30E4\u30B7\u30F3\u30B9"], [20, "\u30D2\u30E4\u30B7\u30F3\u30B9"]];}
+      name = "業師コードネーム表";
+      table = [[1, "ローズ"], [2, "ローズ"], [3, "サクラ"], [4, "サクラ"], [5, "ライラック"], [6, "ライラック"], [7, "ダンデライオン"], [8, "ダンデライオン"], [9, "フリージア"], [10, "フリージア"], [11, "カクタス"], [12, "カクタス"], [13, "ロータス"], [14, "ロータス"], [15, "リリィ"], [16, "リリィ"], [17, "ラフレシア"], [18, "ラフレシア"], [19, "ヒヤシンス"], [20, "ヒヤシンス"]];}
       else if ("B"['$===']($case)) {
-      name = "\u904A\u30D3\u4EBA\u30B3\u30FC\u30C9\u30CD\u30FC\u30E0\u8868";
-      table = [[1, "\u30E2\u30CE\u30DD\u30EA\u30FC"], [2, "\u30E2\u30CE\u30DD\u30EA\u30FC"], [3, "\u30D6\u30EA\u30C3\u30B8"], [4, "\u30D6\u30EA\u30C3\u30B8"], [5, "\u30C1\u30A7\u30C3\u30AB\u30FC"], [6, "\u30C1\u30A7\u30C3\u30AB\u30FC"], [7, "\u30A2\u30AF\u30EF\u30A4\u30A2"], [8, "\u30A2\u30AF\u30EF\u30A4\u30A2"], [9, "\u30B8\u30E3\u30F3\u30B1\u30F3"], [10, "\u30B8\u30E3\u30F3\u30B1\u30F3"], [11, "\u30C8\u30E9\u30F3\u30D7"], [12, "\u30C8\u30E9\u30F3\u30D7"], [13, "\u30B1\u30A4\u30C9\u30ED"], [14, "\u30B1\u30A4\u30C9\u30ED"], [15, "\u30D1\u30F3\u30C7\u30DF\u30C3\u30AF"], [16, "\u30D1\u30F3\u30C7\u30DF\u30C3\u30AF"], [17, "\u30B9\u30B4\u30ED\u30AF"], [18, "\u30B9\u30B4\u30ED\u30AF"], [19, "\u30AD\u30E3\u30D9\u30C4\u30AB\u30F3\u30C6\u30A4"], [20, "\u30AD\u30E3\u30D9\u30C4\u30AB\u30F3\u30C6\u30A4"]];}
+      name = "遊ビ人コードネーム表";
+      table = [[1, "モノポリー"], [2, "モノポリー"], [3, "ブリッジ"], [4, "ブリッジ"], [5, "チェッカー"], [6, "チェッカー"], [7, "アクワイア"], [8, "アクワイア"], [9, "ジャンケン"], [10, "ジャンケン"], [11, "トランプ"], [12, "トランプ"], [13, "ケイドロ"], [14, "ケイドロ"], [15, "パンデミック"], [16, "パンデミック"], [17, "スゴロク"], [18, "スゴロク"], [19, "キャベツカンテイ"], [20, "キャベツカンテイ"]];}
       else {return nil};
       return self.$get_badlife_1d20_table_result(name, table);
     }, $BadLife_get_name_table$7.$$arity = 1);
@@ -195,8 +195,8 @@
       var $a, $b, self = this, name = nil, table = nil, dice = nil, result = nil;
 
       
-      name = "\u30B9\u30AD\u30EB\u8868";
-      table = [[1, "\u4E00\u6483\u96E2\u8131"], [2, "\u4E00\u6483\u96E2\u8131"], [3, "\u30C1\u30A7\u30A4\u30B5\u30FC"], [4, "\u30C1\u30A7\u30A4\u30B5\u30FC"], [5, "\u5F71\u306E\u5916\u5957"], [6, "\u5F71\u306E\u5916\u5957"], [7, "\u4E8C\u6BB5\u30B8\u30E3\u30F3\u30D7"], [8, "\u4E8C\u6BB5\u30B8\u30E3\u30F3\u30D7"], [9, "\u97CB\u99C4\u5929"], [10, "\u97CB\u99C4\u5929"], [11, "\u624B\u7DF4"], [12, "\u624B\u7DF4"], [13, "\u30CF\u30CB\u30FC\u30C6\u30A4\u30B9\u30C8"], [14, "\u30CF\u30CB\u30FC\u30C6\u30A4\u30B9\u30C8"], [15, "\u5148\u898B\u306E\u660E"], [16, "\u5148\u898B\u306E\u660E"], [17, "\u30D9\u30C6\u30E9\u30F3"], [18, "\u30D9\u30C6\u30E9\u30F3"], [19, "\u5FDC\u6025\u624B\u5F53"], [20, "\u5FDC\u6025\u624B\u5F53"], [21, "\u30BB\u30E9\u30D4\u30FC"], [22, "\u30BB\u30E9\u30D4\u30FC"], [23, "\u7DCA\u6025\u6CBB\u7642"], [24, "\u7DCA\u6025\u6CBB\u7642"], [25, "\u30B4\u30FC\u30EB\u30C9\u30C7\u30A3\u30AC\u30FC"], [26, "\u30B4\u30FC\u30EB\u30C9\u30C7\u30A3\u30AC\u30FC"], [27, "\u30C7\u30A4\u30EA\u30FC\u30DF\u30C3\u30B7\u30E7\u30F3"], [28, "\u30C7\u30A4\u30EA\u30FC\u30DF\u30C3\u30B7\u30E7\u30F3"], [29, "\u898B\u5207\u308A"], [30, "\u898B\u5207\u308A"], [31, "\u9DF9\u306E\u76EE"], [32, "\u9DF9\u306E\u76EE"], [33, "\u3057\u3073\u308C\u7F60"], [34, "\u3057\u3073\u308C\u7F60"], [35, "\u5927\u9006\u8EE2"], [36, "\u5927\u9006\u8EE2"], [37, "\u6B66\u5668\u7FD2\u719F\uFF1A\u25CB\u25CB"], [38, "\u6B66\u5668\u7FD2\u719F\uFF1A\u25CB\u25CB"], [39, "\u767E\u767A\u767E\u4E2D"], [40, "\u767E\u767A\u767E\u4E2D"], [41, "\u5C48\u5F37\u306A\u8089\u4F53"], [42, "\u5C48\u5F37\u306A\u8089\u4F53"], [43, "\u4E8C\u5200\u6D41"], [44, "\u4E8C\u5200\u6D41"], [45, "\u30AF\u30A4\u30C3\u30AF\u30EA\u30AB\u30D0\u30EA\u30FC"], [46, "\u30AF\u30A4\u30C3\u30AF\u30EA\u30AB\u30D0\u30EA\u30FC"], [47, "\u4F53\u9A13\u4E3B\u7FA9"], [48, "\u4F53\u9A13\u4E3B\u7FA9"], [49, "\u7834\u91DC\u6C88\u8239"], [50, "\u7834\u91DC\u6C88\u8239"], [51, "\u60F3\u5B9A\u306E\u7BC4\u56F2\u5185"], [52, "\u60F3\u5B9A\u306E\u7BC4\u56F2\u5185"], [53, "\u30BB\u30AB\u30F3\u30C9\u30C1\u30E3\u30F3\u30B9"], [54, "\u30BB\u30AB\u30F3\u30C9\u30C1\u30E3\u30F3\u30B9"], [55, "\u512A\u79C0\u306A\u5B50\u5206"], [56, "\u512A\u79C0\u306A\u5B50\u5206"], [57, "\u6642\u9593\u7BA1\u7406\u8853"], [58, "\u6642\u9593\u7BA1\u7406\u8853"], [59, "\u9023\u6483\u8853"], [60, "\u9023\u6483\u8853"], [61, "\u7F75\u8A48\u96D1\u8A00"], [62, "\u7F75\u8A48\u96D1\u8A00"], [63, "\u30B1\u30BB\u30E9\u30BB\u30E9"], [64, "\u30B1\u30BB\u30E9\u30BB\u30E9"], [65, "\u30C0\u30F3\u30B9\uFF06\u30DF\u30E5\u30FC\u30B8\u30C3\u30AF"], [66, "\u30C0\u30F3\u30B9\uFF06\u30DF\u30E5\u30FC\u30B8\u30C3\u30AF"], [67, "\u30D5\u30A7\u30A4\u30F3\u30C8"], [68, "\u30D5\u30A7\u30A4\u30F3\u30C8"], [69, "\u30D8\u30A4\u30C8\u30B3\u30F3\u30C8\u30ED\u30FC\u30EB"], [70, "\u30D8\u30A4\u30C8\u30B3\u30F3\u30C8\u30ED\u30FC\u30EB"], [71, "\u60DC\u5225"], [72, "\u60DC\u5225"], [73, "\u6226\u95D8\u30DE\u30B7\u30FC\u30F3"], [74, "\u6226\u95D8\u30DE\u30B7\u30FC\u30F3"], [75, "\u6226\u95D8\u30DE\u30B7\u30FC\u30F3"], [76, "\u540D\u533B"], [77, "\u540D\u533B"], [78, "\u540D\u533B"], [79, "\u5FCD\u8005"], [80, "\u5FCD\u8005"], [81, "\u5FCD\u8005"], [82, "\u89B3\u5BDF\u773C"], [83, "\u89B3\u5BDF\u773C"], [84, "\u89B3\u5BDF\u773C"], [85, "\u30AF\u30EC\u30D0\u30FC"], [86, "\u30AF\u30EC\u30D0\u30FC"], [87, "\u30AF\u30EC\u30D0\u30FC"], [88, "\u30D5\u30A7\u30A4\u30B9\u30DE\u30F3"], [89, "\u30D5\u30A7\u30A4\u30B9\u30DE\u30F3"], [90, "\u30D5\u30A7\u30A4\u30B9\u30DE\u30F3"], [91, "\u30B9\u30DD\u30FC\u30C4\u30DE\u30F3"], [92, "\u30B9\u30DD\u30FC\u30C4\u30DE\u30F3"], [93, "\u30B9\u30DD\u30FC\u30C4\u30DE\u30F3"], [94, "\u4E0D\u5C48"], [95, "\u4E0D\u5C48"], [96, "\u4E0D\u5C48"], [97, "\u614E\u91CD"], [98, "\u614E\u91CD"], [99, "\u614E\u91CD"], [100, "\u3053\u306E\u8868\u30922\u56DE\u632F\u308B"]];
+      name = "スキル表";
+      table = [[1, "一撃離脱"], [2, "一撃離脱"], [3, "チェイサー"], [4, "チェイサー"], [5, "影の外套"], [6, "影の外套"], [7, "二段ジャンプ"], [8, "二段ジャンプ"], [9, "韋駄天"], [10, "韋駄天"], [11, "手練"], [12, "手練"], [13, "ハニーテイスト"], [14, "ハニーテイスト"], [15, "先見の明"], [16, "先見の明"], [17, "ベテラン"], [18, "ベテラン"], [19, "応急手当"], [20, "応急手当"], [21, "セラピー"], [22, "セラピー"], [23, "緊急治療"], [24, "緊急治療"], [25, "ゴールドディガー"], [26, "ゴールドディガー"], [27, "デイリーミッション"], [28, "デイリーミッション"], [29, "見切り"], [30, "見切り"], [31, "鷹の目"], [32, "鷹の目"], [33, "しびれ罠"], [34, "しびれ罠"], [35, "大逆転"], [36, "大逆転"], [37, "武器習熟：○○"], [38, "武器習熟：○○"], [39, "百発百中"], [40, "百発百中"], [41, "屈強な肉体"], [42, "屈強な肉体"], [43, "二刀流"], [44, "二刀流"], [45, "クイックリカバリー"], [46, "クイックリカバリー"], [47, "体験主義"], [48, "体験主義"], [49, "破釜沈船"], [50, "破釜沈船"], [51, "想定の範囲内"], [52, "想定の範囲内"], [53, "セカンドチャンス"], [54, "セカンドチャンス"], [55, "優秀な子分"], [56, "優秀な子分"], [57, "時間管理術"], [58, "時間管理術"], [59, "連撃術"], [60, "連撃術"], [61, "罵詈雑言"], [62, "罵詈雑言"], [63, "ケセラセラ"], [64, "ケセラセラ"], [65, "ダンス＆ミュージック"], [66, "ダンス＆ミュージック"], [67, "フェイント"], [68, "フェイント"], [69, "ヘイトコントロール"], [70, "ヘイトコントロール"], [71, "惜別"], [72, "惜別"], [73, "戦闘マシーン"], [74, "戦闘マシーン"], [75, "戦闘マシーン"], [76, "名医"], [77, "名医"], [78, "名医"], [79, "忍者"], [80, "忍者"], [81, "忍者"], [82, "観察眼"], [83, "観察眼"], [84, "観察眼"], [85, "クレバー"], [86, "クレバー"], [87, "クレバー"], [88, "フェイスマン"], [89, "フェイスマン"], [90, "フェイスマン"], [91, "スポーツマン"], [92, "スポーツマン"], [93, "スポーツマン"], [94, "不屈"], [95, "不屈"], [96, "不屈"], [97, "慎重"], [98, "慎重"], [99, "慎重"], [100, "この表を2回振る"]];
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       result = self.$get_table_by_number(dice, table);
       return self.$get_badlife_table_result(name, dice, result);
@@ -214,7 +214,7 @@
     Opal.def(self, '$get_badlife_table_result', $BadLife_get_badlife_table_result$10 = function $$get_badlife_table_result(name, dice, output) {
       var self = this;
 
-      return "" + (name) + "(" + (dice) + ") \uFF1E " + (output)
+      return "" + (name) + "(" + (dice) + ") ＞ " + (output)
     }, $BadLife_get_badlife_table_result$10.$$arity = 3);
     return (Opal.def(self, '$get_value', $BadLife_get_value$11 = function $$get_value(text) {
       var $a, self = this;

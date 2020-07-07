@@ -16,9 +16,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "IthaWenUa");
-    Opal.const_set($nesting[0], 'NAME', "\u30A4\u30B5\u30FC\u30FB\u30A6\u30A7\u30F3\uFF1D\u30A2\u30FC");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3044\u3055\u3042\u3046\u3048\u3093\u3042\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "1D100<=m \u65B9\u5F0F\u306E\u5224\u5B9A\u3067\u6210\u5426\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB(01)\u30FB\u30D5\u30A1\u30F3\u30D6\u30EB(00)\u3092\u81EA\u52D5\u5224\u5B9A\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "イサー・ウェン＝アー");
+    Opal.const_set($nesting[0], 'SORT_KEY', "いさあうえんああ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "1D100<=m 方式の判定で成否、クリティカル(01)・ファンブル(00)を自動判定します。\n");
     return (Opal.def(self, '$check_1D100', $IthaWenUa_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
       var $a, self = this, diceValue = nil, dice0 = nil, dice1 = nil;
 
@@ -31,13 +31,13 @@
       dice0 = $rb_divide(diceValue, 10).$floor();
       dice1 = diceValue['$%'](10);
       if ($truthy(($truthy($a = dice0['$=='](0)) ? dice1['$=='](1) : $a))) {
-        return " \uFF1E 01 \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+        return " ＞ 01 ＞ クリティカル"
       } else if ($truthy(($truthy($a = dice0['$=='](0)) ? dice1['$=='](0) : $a))) {
-        return " \uFF1E 00 \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ 00 ＞ ファンブル"
       } else if ($truthy($rb_le(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $IthaWenUa_check_1D100$1.$$arity = 4), nil) && 'check_1D100';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

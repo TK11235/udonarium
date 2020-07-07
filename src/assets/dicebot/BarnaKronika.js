@@ -26,9 +26,9 @@
     self.$$prototype.isBattleMode = self.$$prototype.nick_e = nil;
     
     Opal.const_set($nesting[0], 'ID', "BarnaKronika");
-    Opal.const_set($nesting[0], 'NAME', "\u30D0\u30EB\u30CA\u30FB\u30AF\u30ED\u30CB\u30AB");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306F\u308B\u306A\u304F\u308D\u306B\u304B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u901A\u5E38\u5224\u5B9A\u3000nBK\n" + "\u3000\u30C0\u30A4\u30B9\u6570n\u3067\u5224\u5B9A\u30ED\u30FC\u30EB\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u30BB\u30C3\u30C8\u6570\u304C1\u4EE5\u4E0A\u306E\u6642\u306F\u30BB\u30C3\u30C8\u6570\u3082\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u30FB\u653B\u6483\u5224\u5B9A\u3000nBA\n" + "\u3000\u30C0\u30A4\u30B9\u6570n\u3067\u5224\u5B9A\u30ED\u30FC\u30EB\u3092\u884C\u3044\u3001\u653B\u6483\u5024\u3068\u547D\u4E2D\u90E8\u4F4D\u3082\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u30FB\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30B3\u30FC\u30EB\u3000nBKCt\u3000nBACt\n" + "\u3000\u5224\u5B9A\u30B3\u30DE\u30F3\u30C9\u306E\u5F8C\u308D\u306B\u300CCt\u300D\u3092\u4ED8\u3051\u308B\u3068\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30B3\u30FC\u30EB\u3067\u3059\u3002\n" + "\u3000\u30C0\u30A4\u30B9\u6570n,\u30B3\u30FC\u30EB\u6570t\u3067\u5224\u5B9A\u30ED\u30FC\u30EB\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u30C0\u30A4\u30B9\u6570n\u3067\u5224\u5B9A\u30ED\u30FC\u30EB\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u30BB\u30C3\u30C8\u6570\u304C1\u4EE5\u4E0A\u306E\u6642\u306F\u30BB\u30C3\u30C8\u6570\u3082\u8868\u793A\u3057\u3001\u653B\u6483\u5224\u5B9A\u306E\u5834\u5408\u306F\u547D\u4E2D\u90E8\u4F4D\u3082\u8868\u793A\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "バルナ・クロニカ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "はるなくろにか");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・通常判定　nBK\n" + "　ダイス数nで判定ロールを行います。\n" + "　セット数が1以上の時はセット数も表示します。\n" + "・攻撃判定　nBA\n" + "　ダイス数nで判定ロールを行い、攻撃値と命中部位も表示します。\n" + "・クリティカルコール　nBKCt　nBACt\n" + "　判定コマンドの後ろに「Ct」を付けるとクリティカルコールです。\n" + "　ダイス数n,コール数tで判定ロールを行います。\n" + "　ダイス数nで判定ロールを行います。\n" + "　セット数が1以上の時はセット数も表示し、攻撃判定の場合は命中部位も表示します。\n");
     self.$setPrefixes(["\\d+BK", "\\d+BA", "\\d+BKC\\d+", "\\d+BAC\\d+"]);
     
     Opal.def(self, '$initialize', $BarnaKronika_initialize$1 = function $$initialize() {
@@ -121,20 +121,20 @@
         self.isBattleMode = battleModeText['$=='](1);};
       self.$debug("@isBattleMode", self.isBattleMode);
       $b = self.$roll_barna_kronika(dice_n, criticalCallDice), $a = Opal.to_ary($b), (dice_str = ($a[0] == null ? nil : $a[0])), (suc = ($a[1] == null ? nil : $a[1])), (set = ($a[2] == null ? nil : $a[2])), (at_str = ($a[3] == null ? nil : $a[3])), $b;
-      output = "" + (self.nick_e) + ": (" + (string) + ") \uFF1E [" + (dice_str) + "] \uFF1E ";
+      output = "" + (self.nick_e) + ": (" + (string) + ") ＞ [" + (dice_str) + "] ＞ ";
       if ($truthy(self.isBattleMode)) {
         output = $rb_plus(output, at_str)
       } else {
         
         self.$debug("suc", suc);
         if ($truthy($rb_gt(suc, 1))) {
-          output = $rb_plus(output, "" + "\u6210\u529F\u6570" + (suc))
+          output = $rb_plus(output, "" + "成功数" + (suc))
         } else {
-          output = $rb_plus(output, "\u5931\u6557")
+          output = $rb_plus(output, "失敗")
         };
         self.$debug("set", set);
         if ($truthy($rb_gt(set, 0))) {
-          output = $rb_plus(output, "" + ",\u30BB\u30C3\u30C8" + (set))};
+          output = $rb_plus(output, "" + ",セット" + (set))};
       };
       return output;
     }, $BarnaKronika_check_barna_kronika$9.$$arity = 1);
@@ -207,7 +207,7 @@
           set = 0
         };};
       if ($truthy(($truthy($a = self.isBattleMode) ? $rb_lt(suc, 2) : $a))) {
-        at_str = "\u5931\u6557"};
+        at_str = "失敗"};
       output = output.$sub(/,$/, "");
       at_str = at_str.$sub(/,$/, "");
       return [output, suc, set, at_str];
@@ -245,7 +245,7 @@
       
       hitLocation = self.$getAttackHitLocation($rb_plus(index, 1));
       attackValue = $rb_times(diceCount, 2);
-      result = $rb_plus(hitLocation, "" + ":\u653B\u6483\u5024" + (attackValue) + ",");
+      result = $rb_plus(hitLocation, "" + ":攻撃値" + (attackValue) + ",");
       return result;
     }, $BarnaKronika_getAttackStringWhenCriticalCall$17.$$arity = 2);
     
@@ -255,14 +255,14 @@
       
       hitLocation = self.$getAttackHitLocation($rb_plus(index, 1));
       attackValue = diceCount;
-      result = $rb_plus(hitLocation, "" + ":\u653B\u6483\u5024" + (attackValue) + ",");
+      result = $rb_plus(hitLocation, "" + ":攻撃値" + (attackValue) + ",");
       return result;
     }, $BarnaKronika_getAttackStringWhenNomal$18.$$arity = 2);
     return (Opal.def(self, '$getAttackHitLocation', $BarnaKronika_getAttackHitLocation$19 = function $$getAttackHitLocation(num) {
       var self = this, table = nil;
 
       
-      table = [[1, "\u982D\u90E8"], [2, "\u53F3\u8155"], [3, "\u5DE6\u8155"], [4, "\u53F3\u811A"], [5, "\u5DE6\u811A"], [6, "\u80F4\u4F53"]];
+      table = [[1, "頭部"], [2, "右腕"], [3, "左腕"], [4, "右脚"], [5, "左脚"], [6, "胴体"]];
       return self.$get_table_by_number(num, table);
     }, $BarnaKronika_getAttackHitLocation$19.$$arity = 1), nil) && 'getAttackHitLocation';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

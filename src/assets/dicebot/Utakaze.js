@@ -32,9 +32,9 @@
     self.$$prototype.arrayDragonDiceName = nil;
     
     Opal.const_set($nesting[0], 'ID', "Utakaze");
-    Opal.const_set($nesting[0], 'NAME', "\u30A6\u30BF\u30AB\u30BC");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3046\u305F\u304B\u305B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u884C\u70BA\u5224\u5B9A\u30ED\u30FC\u30EB\uFF08nUK\uFF09\n" + "  n\u500B\u306E\u30B5\u30A4\u30B3\u30ED\u3067\u884C\u70BA\u5224\u5B9A\u30ED\u30FC\u30EB\u3002\u30BE\u30ED\u76EE\u306E\u6700\u5927\u500B\u6570\u3092\u6210\u529F\u30EC\u30D9\u30EB\u3068\u3057\u3066\u8868\u793A\u3002n\u3092\u7701\u7565\u3059\u308B\u30682UK\u6271\u3044\u3002\n" + "  \u4F8B\uFF093UK \uFF1A\u30B5\u30A4\u30B3\u30ED3\u500B\u3067\u884C\u70BA\u5224\u5B9A\n" + "  \u4F8B\uFF09UK  \uFF1A\u30B5\u30A4\u30B3\u30ED2\u500B\u3067\u884C\u70BA\u5224\u5B9A\n" + "  \u4E0D\u7B49\u53F7\u7528\u3044\u305F\u6210\u5426\u5224\u5B9A\u306F\u73FE\u6642\u70B9\u3067\u306F\u5B9F\u88C5\u3057\u3066\u307E\u305B\u3093\u3002\n" + "\u30FB\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30B3\u30FC\u30EB\u4ED8\u304D\u884C\u70BA\u5224\u5B9A\u30ED\u30FC\u30EB\uFF08nUK@c or nUKc\uFF09\n" + "\u3000c\u306B\u300C\u9F8D\u306E\u30C0\u30A4\u30B9\u76EE\u300D\u3092\u6307\u5B9A\u3057\u305F\u884C\u70BA\u5224\u5B9A\u30ED\u30FC\u30EB\u3002\n" + "  \u30BE\u30ED\u76EE\u3067\u306F\u306A\u304F\u3001c\u3068\u540C\u3058\u5024\u306E\u51FA\u76EE\u6570x2\u304C\u6210\u529F\u30EC\u30D9\u30EB\u3068\u306A\u308A\u307E\u3059\u3002\n" + "  \u4F8B\uFF093UK@5 \uFF1A\u9F8D\u306E\u30C0\u30A4\u30B9\u300C\u6708\u300D\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30B3\u30FC\u30EB\u5BA3\u8A00\u3057\u305F\u30B5\u30A4\u30B3\u30ED3\u500B\u306E\u884C\u70BA\u5224\u5B9A\n");
+    Opal.const_set($nesting[0], 'NAME', "ウタカゼ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "うたかせ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定ロール（nUK）\n" + "  n個のサイコロで行為判定ロール。ゾロ目の最大個数を成功レベルとして表示。nを省略すると2UK扱い。\n" + "  例）3UK ：サイコロ3個で行為判定\n" + "  例）UK  ：サイコロ2個で行為判定\n" + "  不等号用いた成否判定は現時点では実装してません。\n" + "・クリティカルコール付き行為判定ロール（nUK@c or nUKc）\n" + "　cに「龍のダイス目」を指定した行為判定ロール。\n" + "  ゾロ目ではなく、cと同じ値の出目数x2が成功レベルとなります。\n" + "  例）3UK@5 ：龍のダイス「月」でクリティカルコール宣言したサイコロ3個の行為判定\n");
     self.$setPrefixes(["\\d*UK[@\\d]*.*"]);
     
     Opal.def(self, '$initialize', $Utakaze_initialize$1 = function $$initialize() {
@@ -47,7 +47,7 @@
       }
       
       $send(self, Opal.find_super_dispatcher(self, 'initialize', $Utakaze_initialize$1, false), $zuper, $iter);
-      return (self.arrayDragonDiceName = ["", "\u98A8", "\u96E8", "\u96F2", "\u5F71", "\u6708", "\u6B4C"]);
+      return (self.arrayDragonDiceName = ["", "風", "雨", "雲", "影", "月", "歌"]);
     }, $Utakaze_initialize$1.$$arity = 0);
     
     Opal.def(self, '$isGetOriginalMessage', $Utakaze_isGetOriginalMessage$2 = function $$isGetOriginalMessage() {
@@ -70,7 +70,7 @@
       result = self.$checkRoll(base, crit, diff);};
       if ($truthy(result['$empty?']())) {
         return nil};
-      return "" + (command) + " \uFF1E " + (result);
+      return "" + (command) + " ＞ " + (result);
     }, $Utakaze_rollDiceCommand$3.$$arity = 1);
     
     Opal.def(self, '$checkRoll', $Utakaze_checkRoll$4 = function $$checkRoll(base, crit, diff) {
@@ -98,7 +98,7 @@
           i = nil;
         };
         return i.$to_i();}, $$5.$$s = self, $$5.$$arity = 1, $$5)).$sort();
-      result = $rb_plus(result, "" + " \uFF1E [" + (diceList.$join(",")) + "] \uFF1E ");
+      result = $rb_plus(result, "" + " ＞ [" + (diceList.$join(",")) + "] ＞ ");
       result = $rb_plus(result, self.$getRollResultString(diceList, crit, diff));
       return result;
     }, $Utakaze_checkRoll$4.$$arity = -3);
@@ -110,20 +110,20 @@
       $b = self.$getSuccessInfo(diceList, crit, diff), $a = Opal.to_ary($b), (success = ($a[0] == null ? nil : $a[0])), (maxnum = ($a[1] == null ? nil : $a[1])), (setCount = ($a[2] == null ? nil : $a[2])), $b;
       result = "";
       if ($truthy(self.$isDragonDice(crit))) {
-        result = $rb_plus(result, "" + "\u9F8D\u306E\u30C0\u30A4\u30B9\u300C" + (self.arrayDragonDiceName['$[]'](crit)) + "\u300D(" + (crit) + ")\u3092\u4F7F\u7528 \uFF1E ")};
+        result = $rb_plus(result, "" + "龍のダイス「" + (self.arrayDragonDiceName['$[]'](crit)) + "」(" + (crit) + ")を使用 ＞ ")};
       if ($truthy(success)) {
         
-        result = $rb_plus(result, "" + "\u6210\u529F\u30EC\u30D9\u30EB:" + (maxnum) + " (" + (setCount) + "\u30BB\u30C3\u30C8)");
+        result = $rb_plus(result, "" + "成功レベル:" + (maxnum) + " (" + (setCount) + "セット)");
         if ($truthy(diff['$!='](0))) {
           
           diffSuccess = $rb_ge(maxnum, diff);
           if ($truthy(diffSuccess)) {
-            result = $rb_plus(result, " \uFF1E \u6210\u529F")
+            result = $rb_plus(result, " ＞ 成功")
           } else {
-            result = $rb_plus(result, " \uFF1E \u5931\u6557")
+            result = $rb_plus(result, " ＞ 失敗")
           };};
       } else {
-        result = $rb_plus(result, "\u5931\u6557")
+        result = $rb_plus(result, "失敗")
       };
       return result;
     }, $Utakaze_getRollResultString$6.$$arity = 3);

@@ -29,7 +29,7 @@
         if (Opal.rescue($err, [$$($nesting, 'LoadError'), $$($nesting, 'StandardError')])) {e = $err;
           try {
             
-            self.$debug("DiceBotLoader.loadUnknownGame: \u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u306E\u8AAD\u307F\u8FBC\u307F\u306B\u5931\u6557\u3057\u307E\u3057\u305F", e.$to_s());
+            self.$debug("DiceBotLoader.loadUnknownGame: ダイスボットの読み込みに失敗しました", e.$to_s());
             return nil;
           } finally { Opal.pop_exception() }
         } else { throw $err; }

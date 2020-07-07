@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "TORG");
-    Opal.const_set($nesting[0], 'NAME', "\u30C8\u30FC\u30B0");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u304A\u304F");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u3000(TGm)\n" + "\u3000TORG\u5C02\u7528\u306E\u5224\u5B9A\u30B3\u30DE\u30F3\u30C9\u3067\u3059\u3002\n" + "\u3000\"TG(\u6280\u80FD\u57FA\u672C\u5024)\"\u3067\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002R\u30B3\u30DE\u30F3\u30C9\u306B\u8AAD\u66FF\u3055\u308C\u307E\u3059\u3002\n" + "\u3000\u632F\u308A\u8DB3\u3057\u3092\u81EA\u52D5\u3067\u884C\u3044\u300120\u306E\u51FA\u76EE\u304C\u51FA\u305F\u3068\u304D\u306B\u306F\u6280\u80FD\u7121\u3057\u5024\u3082\u4E26\u8A18\u3057\u307E\u3059\u3002\n" + "\u30FB\u5404\u7A2E\u8868\u3000\"(\u8868\u30B3\u30DE\u30F3\u30C9)(\u6570\u5024)\"\u3067\u632F\u308A\u307E\u3059\u3002\n" + "\u3000\u30FB\u4E00\u822C\u7D50\u679C\u8868 \u6210\u529F\u5EA6\u51FA\u529B\u300CRTx or RESULTx\u300D\n" + "\u3000\u30FB\u5A01\u5727/\u5A01\u5687 \u5BFE\u4EBA\u884C\u70BA\u7D50\u679C\u8868\u300CITx or INTIMIDATEx or TESTx\u300D\n" + "\u3000\u30FB\u6311\u767A/\u30C8\u30EA\u30C3\u30AF \u5BFE\u4EBA\u884C\u70BA\u7D50\u679C\u8868\u300CTTx or TAUNTx or TRICKx or CTx\u300D\n" + "\u3000\u30FB\u9593\u5408\u3044 \u5BFE\u4EBA\u884C\u70BA\u7D50\u679C\u8868\u300CMTx or MANEUVERx\u300D\n" + "\u3000\u30FB\u30AA\u30FC\u30BA\uFF08\u4E00\u822C\u4EBA\uFF09\u30C0\u30E1\u30FC\u30B8\u3000\u300CODTx or ORDSx or ODAMAGEx\u300D\n" + "\u3000\u30FB\u30DD\u30B7\u30D3\u30EA\u30C6\u30A3\u30FC\u80FD\u529B\u8005\u30C0\u30E1\u30FC\u30B8\u300CDTx or DAMAGEx\u300D\n" + "\u3000\u30FB\u30DC\u30FC\u30CA\u30B9\u8868\u300CBTx+y or BONUSx+y or TOTALx+y\u300D x\u306F\u6570\u5024, y\u306F\u6280\u80FD\u57FA\u672C\u5024\n");
+    Opal.const_set($nesting[0], 'NAME', "トーグ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "とおく");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定　(TGm)\n" + "　TORG専用の判定コマンドです。\n" + "　\"TG(技能基本値)\"でロールします。Rコマンドに読替されます。\n" + "　振り足しを自動で行い、20の出目が出たときには技能無し値も並記します。\n" + "・各種表　\"(表コマンド)(数値)\"で振ります。\n" + "　・一般結果表 成功度出力「RTx or RESULTx」\n" + "　・威圧/威嚇 対人行為結果表「ITx or INTIMIDATEx or TESTx」\n" + "　・挑発/トリック 対人行為結果表「TTx or TAUNTx or TRICKx or CTx」\n" + "　・間合い 対人行為結果表「MTx or MANEUVERx」\n" + "　・オーズ（一般人）ダメージ　「ODTx or ORDSx or ODAMAGEx」\n" + "　・ポシビリティー能力者ダメージ「DTx or DAMAGEx」\n" + "　・ボーナス表「BTx+y or BONUSx+y or TOTALx+y」 xは数値, yは技能基本値\n");
     self.$setPrefixes(["(TG.*|RT.*|Result.*|IT.*|Initimidate.*|TT.*|Taunt.*|Trick.*|CT.*|MT.*|Maneuver.*|ODT.*|ords.*|odamage.*|DT.*|damage.*|BT.*|bonus.*|total.*)"]);
     
     Opal.def(self, '$initialize', $Torg_initialize$1 = function $$initialize() {
@@ -97,10 +97,10 @@
       } else {
         output = "" + (sk_bonus) + "[" + (dice_str) + "]"
       };
-      output = $rb_plus(output, $rb_plus(" \uFF1E ", $rb_plus(sk_bonus, mod).$to_s()));
+      output = $rb_plus(output, $rb_plus(" ＞ ", $rb_plus(sk_bonus, mod).$to_s()));
       if ($truthy(skilled['$!='](unskilled))) {
-        output = $rb_plus(output, $rb_plus($rb_plus("(\u6280\u80FD\u7121", $rb_plus(self.$get_torg_bonus(unskilled), mod).$to_s()), ")"))};
-      output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output);
+        output = $rb_plus(output, $rb_plus($rb_plus("(技能無", $rb_plus(self.$get_torg_bonus(unskilled), mod).$to_s()), ")"))};
+      output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output);
       return output;
     }, $Torg_torg_check$5.$$arity = 2);
     
@@ -153,35 +153,35 @@
       if ("RT"['$===']($case)) {
       value = self.$parren_killer("" + "(0" + (num) + ")").$to_i();
       output = self.$get_torg_success_level(value);
-      ttype = "\u4E00\u822C\u7D50\u679C";}
+      ttype = "一般結果";}
       else if ("IT"['$===']($case)) {
       value = self.$parren_killer("" + "(0" + (num) + ")").$to_i();
       output = self.$get_torg_interaction_result_intimidate_test(value);
-      ttype = "\u5A01\u5727/\u5A01\u5687";}
+      ttype = "威圧/威嚇";}
       else if ("TT"['$===']($case)) {
       value = self.$parren_killer("" + "(0" + (num) + ")").$to_i();
       output = self.$get_torg_interaction_result_taunt_trick(value);
-      ttype = "\u6311\u767A/\u30C8\u30EA\u30C3\u30AF";}
+      ttype = "挑発/トリック";}
       else if ("MT"['$===']($case)) {
       value = self.$parren_killer("" + "(0" + (num) + ")").$to_i();
       output = self.$get_torg_interaction_result_maneuver(value);
-      ttype = "\u9593\u5408\u3044";}
+      ttype = "間合い";}
       else if ("DT"['$===']($case)) {
       value = self.$parren_killer("" + "(0" + (num) + ")").$to_i();
       if ($truthy(string['$=~'](/ODT/i))) {
         
         output = self.$get_torg_damage_ords(value);
-        ttype = "\u30AA\u30FC\u30BA\u30C0\u30E1\u30FC\u30B8";
+        ttype = "オーズダメージ";
       } else {
         
         output = self.$get_torg_damage_posibility(value);
-        ttype = "\u30DD\u30B7\u30D3\u30EA\u30C6\u30A3\u80FD\u529B\u8005\u30C0\u30E1\u30FC\u30B8";
+        ttype = "ポシビリティ能力者ダメージ";
       };}
       else if ("BT"['$===']($case)) {
       $b = self.$get_torg_bonus_text(num), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (value = ($a[1] == null ? nil : $a[1])), $b;
-      ttype = "\u30DC\u30FC\u30CA\u30B9";};
+      ttype = "ボーナス";};
       if ($truthy(ttype['$!='](""))) {
-        output = "" + (ttype) + "\u8868[" + (value) + "] \uFF1E " + (output)};
+        output = "" + (ttype) + "表[" + (value) + "] ＞ " + (output)};
       return output;
     }, $Torg_rollDiceCommand$7.$$arity = 1);
     
@@ -189,7 +189,7 @@
       var self = this, success_table = nil;
 
       
-      success_table = [[0, "\u304E\u308A\u304E\u308A"], [1, "\u3075\u3064\u3046"], [3, "\u307E\u3042\u3088\u3044"], [7, "\u304B\u306A\u308A\u3088\u3044"], [12, "\u3059\u3054\u3044"]];
+      success_table = [[0, "ぎりぎり"], [1, "ふつう"], [3, "まあよい"], [7, "かなりよい"], [12, "すごい"]];
       return self.$get_torg_table_result(value, success_table);
     }, $Torg_get_torg_success_level$8.$$arity = 1);
     
@@ -197,7 +197,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "\u6280\u80FD\u306A\u3057"], [5, "\u840E\u7E2E"], [10, "\u9006\u8EE2\u8CA0\u3051"], [15, "\u30E2\u30E9\u30EB\u5D29\u58CA"], [17, "\u30D7\u30EC\u30A4\u30E4\u30FC\u30BA\u30B3\u30FC\u30EB"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg_get_torg_interaction_result_intimidate_test$9.$$arity = 1);
     
@@ -205,7 +205,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "\u6280\u80FD\u306A\u3057"], [5, "\u840E\u7E2E"], [10, "\u9006\u8EE2\u8CA0\u3051"], [15, "\u9AD8\u63DA\uFF0F\u9006\u8EE2\u8CA0\u3051"], [17, "\u30D7\u30EC\u30A4\u30E4\u30FC\u30BA\u30B3\u30FC\u30EB"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg_get_torg_interaction_result_taunt_trick$10.$$arity = 1);
     
@@ -213,7 +213,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "\u6280\u80FD\u306A\u3057"], [5, "\u75B2\u52B4"], [10, "\u840E\u7E2E\uFF0F\u75B2\u52B4"], [15, "\u9006\u8EE2\u8CA0\u3051\uFF0F\u75B2\u52B4"], [17, "\u30D7\u30EC\u30A4\u30E4\u30FC\u30BA\u30B3\u30FC\u30EB"]];
+      interaction_results_table = [[0, "技能なし"], [5, "疲労"], [10, "萎縮／疲労"], [15, "逆転負け／疲労"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg_get_torg_interaction_result_maneuver$11.$$arity = 1);
     
@@ -242,16 +242,16 @@
       var self = this, damage_table_ords = nil;
 
       
-      damage_table_ords = [[0, "1"], [1, "O1"], [2, "K1"], [3, "O2"], [4, "O3"], [5, "K3"], [6, "\u8EE2\u5012 K\uFF0FO4"], [7, "\u8EE2\u5012 K\uFF0FO5"], [8, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO7"], [9, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO9"], [10, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO10"], [11, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO11"], [12, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  KO12"], [13, "3\u30EC\u30D9\u30EB\u8CA0\u50B7  KO13"], [14, "3\u30EC\u30D9\u30EB\u8CA0\u50B7  KO14"], [15, "4\u30EC\u30D9\u30EB\u8CA0\u50B7  KO15"]];
-      return self.$get_torg_damage(value, 4, "\u30EC\u30D9\u30EB\u8CA0\u50B7  KO15", damage_table_ords);
+      damage_table_ords = [[0, "1"], [1, "O1"], [2, "K1"], [3, "O2"], [4, "O3"], [5, "K3"], [6, "転倒 K／O4"], [7, "転倒 K／O5"], [8, "1レベル負傷  K／O7"], [9, "1レベル負傷  K／O9"], [10, "1レベル負傷  K／O10"], [11, "2レベル負傷  K／O11"], [12, "2レベル負傷  KO12"], [13, "3レベル負傷  KO13"], [14, "3レベル負傷  KO14"], [15, "4レベル負傷  KO15"]];
+      return self.$get_torg_damage(value, 4, "レベル負傷  KO15", damage_table_ords);
     }, $Torg_get_torg_damage_ords$14.$$arity = 1);
     
     Opal.def(self, '$get_torg_damage_posibility', $Torg_get_torg_damage_posibility$15 = function $$get_torg_damage_posibility(value) {
       var self = this, damage_table_posibility = nil;
 
       
-      damage_table_posibility = [[0, "1"], [1, "1"], [2, "O1"], [3, "K2"], [4, "2"], [5, "O2"], [6, "\u8EE2\u5012 O2"], [7, "\u8EE2\u5012 K2"], [8, "\u8EE2\u5012 K2"], [9, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K3"], [10, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K4"], [11, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  O4"], [12, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K5"], [13, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  O4"], [14, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  KO5"], [15, "3\u30EC\u30D9\u30EB\u8CA0\u50B7  KO5"]];
-      return self.$get_torg_damage(value, 3, "\u30EC\u30D9\u30EB\u8CA0\u50B7  KO5", damage_table_posibility);
+      damage_table_posibility = [[0, "1"], [1, "1"], [2, "O1"], [3, "K2"], [4, "2"], [5, "O2"], [6, "転倒 O2"], [7, "転倒 K2"], [8, "転倒 K2"], [9, "1レベル負傷  K3"], [10, "1レベル負傷  K4"], [11, "1レベル負傷  O4"], [12, "1レベル負傷  K5"], [13, "2レベル負傷  O4"], [14, "2レベル負傷  KO5"], [15, "3レベル負傷  KO5"]];
+      return self.$get_torg_damage(value, 3, "レベル負傷  KO5", damage_table_posibility);
     }, $Torg_get_torg_damage_posibility$15.$$arity = 1);
     
     Opal.def(self, '$get_torg_damage', $Torg_get_torg_damage$16 = function $$get_torg_damage(value, maxDamage, maxDamageString, damage_table) {
@@ -293,12 +293,12 @@
       
       self.$debug("getTorgBonusOutputTextWhenModDefined value, mod", value, mod);
       if ($truthy($rb_gt(mod, 0))) {
-        return "" + (resultValue) + "[" + (value) + "]+" + (mod) + " \uFF1E " + ($rb_plus(resultValue, mod))
+        return "" + (resultValue) + "[" + (value) + "]+" + (mod) + " ＞ " + ($rb_plus(resultValue, mod))
       } else {
         
         self.$debug("resultValue", resultValue);
         self.$debug("mod", mod);
-        return "" + (resultValue) + "[" + (value) + "]" + (mod) + " \uFF1E " + ($rb_plus(resultValue, mod));
+        return "" + (resultValue) + "[" + (value) + "]" + (mod) + " ＞ " + ($rb_plus(resultValue, mod));
       };
     }, $Torg_getTorgBonusOutputTextWhenModDefined$18.$$arity = 3);
     return (Opal.def(self, '$get_torg_bonus', $Torg_get_torg_bonus$19 = function $$get_torg_bonus(value) {
@@ -348,15 +348,15 @@ Opal.loaded(["diceBot/Torg.js"]);
 
     
     Opal.const_set($nesting[0], 'ID', "TORG1.5");
-    Opal.const_set($nesting[0], 'NAME', "\u30C8\u30FC\u30B01.5\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u304A\u304F1.5");
+    Opal.const_set($nesting[0], 'NAME', "トーグ1.5版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "とおく1.5");
     self.$setPrefixes($$($nesting, 'Torg').$prefixes());
     
     Opal.def(self, '$get_torg_success_level', $Torg1_5_get_torg_success_level$1 = function $$get_torg_success_level(value) {
       var self = this, success_table = nil;
 
       
-      success_table = [[0, "\u304E\u308A\u304E\u308A"], [1, "\u3075\u3064\u3046"], [3, "\u307E\u3042\u3088\u3044"], [7, "\u304B\u306A\u308A\u3088\u3044"], [12, "\u3059\u3054\u3044"]];
+      success_table = [[0, "ぎりぎり"], [1, "ふつう"], [3, "まあよい"], [7, "かなりよい"], [12, "すごい"]];
       return self.$get_torg_table_result(value, success_table);
     }, $Torg1_5_get_torg_success_level$1.$$arity = 1);
     
@@ -364,7 +364,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "\u840E\u7E2E"], [5, "\u6280\u80FD\u306A\u3057"], [10, "\u9006\u8EE2\u8CA0\u3051"], [15, "\u30E2\u30E9\u30EB\u5D29\u58CA"], [17, "\u30D7\u30EC\u30A4\u30E4\u30FC\u30BA\u30B3\u30FC\u30EB"]];
+      interaction_results_table = [[0, "萎縮"], [5, "技能なし"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg1_5_get_torg_interaction_result_intimidate_test$2.$$arity = 1);
     
@@ -372,7 +372,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "\u840E\u7E2E"], [5, "\u6280\u80FD\u306A\u3057"], [10, "\u9006\u8EE2\u8CA0\u3051"], [15, "\u9AD8\u63DA\uFF0F\u9006\u8EE2\u8CA0\u3051"], [17, "\u30D7\u30EC\u30A4\u30E4\u30FC\u30BA\u30B3\u30FC\u30EB"]];
+      interaction_results_table = [[0, "萎縮"], [5, "技能なし"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg1_5_get_torg_interaction_result_taunt_trick$3.$$arity = 1);
     
@@ -380,7 +380,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "\u75B2\u52B4"], [5, "\u840E\u7E2E"], [10, "\u6280\u80FD\u306A\u3057"], [15, "\u9006\u8EE2\u8CA0\u3051\uFF0F\u75B2\u52B4"], [17, "\u30D7\u30EC\u30A4\u30E4\u30FC\u30BA\u30B3\u30FC\u30EB"]];
+      interaction_results_table = [[0, "疲労"], [5, "萎縮"], [10, "技能なし"], [15, "逆転負け／疲労"], [17, "プレイヤーズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg1_5_get_torg_interaction_result_maneuver$4.$$arity = 1);
     
@@ -388,7 +388,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, damage_table_ords = nil;
 
       
-      damage_table_ords = [[0, "1"], [1, "O1"], [2, "K1"], [3, "O2"], [4, "K2"], [5, "\u8EE2\u5012 O3"], [6, "\u8EE2\u5012 K3"], [7, "\u8EE2\u5012 K\uFF0FO4"], [8, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  KO4"], [9, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO5"], [10, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  KO5"], [11, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO6"], [12, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  KO6"], [13, "3\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO7"], [14, "3\u30EC\u30D9\u30EB\u8CA0\u50B7  KO7"], [15, "4\u30EC\u30D9\u30EB\u8CA0\u50B7  KO8"]];
+      damage_table_ords = [[0, "1"], [1, "O1"], [2, "K1"], [3, "O2"], [4, "K2"], [5, "転倒 O3"], [6, "転倒 K3"], [7, "転倒 K／O4"], [8, "1レベル負傷  KO4"], [9, "1レベル負傷  K／O5"], [10, "1レベル負傷  KO5"], [11, "2レベル負傷  K／O6"], [12, "2レベル負傷  KO6"], [13, "3レベル負傷  K／O7"], [14, "3レベル負傷  KO7"], [15, "4レベル負傷  KO8"]];
       return self.$get_torg_damage(value, 4, 8, damage_table_ords);
     }, $Torg1_5_get_torg_damage_ords$5.$$arity = 1);
     
@@ -396,7 +396,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, damage_table_posibility = nil;
 
       
-      damage_table_posibility = [[0, "1"], [1, "1"], [2, "O1"], [3, "K1"], [4, "2"], [5, "O2"], [6, "\u8EE2\u5012 K2"], [7, "\u8EE2\u5012 O3"], [8, "\u8EE2\u5012 K3"], [9, "\u8EE2\u5012 K\uFF0FO3"], [10, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO4"], [11, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO4"], [12, "1\u30EC\u30D9\u30EB\u8CA0\u50B7  KO4"], [13, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  K\uFF0FO5"], [14, "2\u30EC\u30D9\u30EB\u8CA0\u50B7  KO5"], [15, "3\u30EC\u30D9\u30EB\u8CA0\u50B7  KO5"]];
+      damage_table_posibility = [[0, "1"], [1, "1"], [2, "O1"], [3, "K1"], [4, "2"], [5, "O2"], [6, "転倒 K2"], [7, "転倒 O3"], [8, "転倒 K3"], [9, "転倒 K／O3"], [10, "1レベル負傷  K／O4"], [11, "1レベル負傷  K／O4"], [12, "1レベル負傷  KO4"], [13, "2レベル負傷  K／O5"], [14, "2レベル負傷  KO5"], [15, "3レベル負傷  KO5"]];
       return self.$get_torg_damage(value, 3, 5, damage_table_posibility);
     }, $Torg1_5_get_torg_damage_posibility$6.$$arity = 1);
     return (Opal.def(self, '$get_torg_damage', $Torg1_5_get_torg_damage$7 = function $$get_torg_damage(value, max_damage, max_shock, damage_table) {
@@ -411,7 +411,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       over_kill_value = $rb_divide($rb_minus(value, table_max_value), 2).$to_i();
       over_kill_damage = $rb_plus(max_damage, $rb_times(over_kill_value, 1));
       over_kill_shock = $rb_plus(max_shock, $rb_times(over_kill_value, 1));
-      return "" + (over_kill_damage) + "\u30EC\u30D9\u30EB\u8CA0\u50B7  KO" + (over_kill_shock);
+      return "" + (over_kill_damage) + "レベル負傷  KO" + (over_kill_shock);
     }, $Torg1_5_get_torg_damage$7.$$arity = 4), nil) && 'get_torg_damage';
   })($nesting[0], $$($nesting, 'Torg'), $nesting);
 })(Opal);

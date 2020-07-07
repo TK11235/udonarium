@@ -13,9 +13,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Paranoia");
-    Opal.const_set($nesting[0], 'NAME', "\u30D1\u30E9\u30CE\u30A4\u30A2");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306F\u3089\u306E\u3044\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u203B\u300C\u30D1\u30E9\u30CE\u30A4\u30A2\u300D\u306F\u5B8C\u74A7\u306A\u30B2\u30FC\u30E0\u3067\u3042\u308B\u305F\u3081\u7279\u6B8A\u306A\u30C0\u30A4\u30B9\u30B3\u30DE\u30F3\u30C9\u3092\u5FC5\u8981\u3068\u3057\u307E\u305B\u3093\u3002\n" + "\u203B\u3053\u306E\u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u306F\u90E8\u5C4B\u306E\u30B7\u30B9\u30C6\u30E0\u540D\u8868\u793A\u7528\u3068\u306A\u308A\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "パラノイア");
+    Opal.const_set($nesting[0], 'SORT_KEY', "はらのいあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "※「パラノイア」は完璧なゲームであるため特殊なダイスコマンドを必要としません。\n" + "※このダイスボットは部屋のシステム名表示用となります。\n");
     self.$setPrefixes(["geta"]);
     
     Opal.def(self, '$isGetOriginalMessage', $Paranoia_isGetOriginalMessage$1 = function $$isGetOriginalMessage() {
@@ -34,7 +34,7 @@
       if (/geta/i['$===']($case)) {result = self.$getaRoll()};
       if ($truthy(result['$empty?']())) {
         return nil};
-      return "" + (command) + " \uFF1E " + (result);
+      return "" + (command) + " ＞ " + (result);
     }, $Paranoia_rollDiceCommand$2.$$arity = 1);
     return (Opal.def(self, '$getaRoll', $Paranoia_getaRoll$3 = function $$getaRoll() {
       var $a, $b, $$4, self = this, result = nil, _ = nil, diceText = nil, diceList = nil, getaString = nil, $case = nil;
@@ -50,11 +50,11 @@
           i = nil;
         };
         return i.$to_i();}, $$4.$$s = self, $$4.$$arity = 1, $$4));
-      result = $rb_plus(result, "\u5E78\u798F\u3067\u3059\u304B\uFF1F \uFF1E ");
+      result = $rb_plus(result, "幸福ですか？ ＞ ");
       getaString = "";
       $case = diceList['$[]'](0);
-      if ((1)['$===']($case)) {getaString = "\u5E78\u798F\u3067\u3059"}
-      else if ((2)['$===']($case)) {getaString = "\u5E78\u798F\u3067\u306F\u3042\u308A\u307E\u305B\u3093"};
+      if ((1)['$===']($case)) {getaString = "幸福です"}
+      else if ((2)['$===']($case)) {getaString = "幸福ではありません"};
       result = $rb_plus(result, getaString);
       return result;
     }, $Paranoia_getaRoll$3.$$arity = 0), nil) && 'getaRoll';

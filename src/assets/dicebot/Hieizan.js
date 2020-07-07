@@ -19,30 +19,30 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Hieizan");
-    Opal.const_set($nesting[0], 'NAME', "\u6BD4\u53E1\u5C71\u708E\u4E0A");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3072\u3048\u3044\u3055\u3093\u3048\u3093\u3057\u3088\u3046");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u5927\u6210\u529F\u3001\u81EA\u52D5\u6210\u529F\u3001\u5931\u6557\u3001\u81EA\u52D5\u5931\u6557\u3001\u5927\u5931\u6557\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "比叡山炎上");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ひえいさんえんしよう");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "大成功、自動成功、失敗、自動失敗、大失敗の自動判定を行います。\n");
     return (Opal.def(self, '$check_1D100', $Hieizan_check_1D100$1 = function $$check_1D100(total, _dice_total, _cmp_op, target) {
       var self = this;
 
       if ($truthy($rb_le(total, 1))) {
         if ($truthy($rb_le(total, $rb_divide(target, 5)))) {
-          return " \uFF1E \u5927\u6210\u529F"
+          return " ＞ 大成功"
         } else {
-          return " \uFF1E \u81EA\u52D5\u6210\u529F"
+          return " ＞ 自動成功"
         }
       } else if ($truthy($rb_ge(total, 100))) {
-        return " \uFF1E \u5927\u5931\u6557"
+        return " ＞ 大失敗"
       } else if ($truthy($rb_ge(total, 96))) {
-        return " \uFF1E \u81EA\u52D5\u5931\u6557"
+        return " ＞ 自動失敗"
       } else if ($truthy($rb_le(total, target))) {
         if ($truthy($rb_le(total, $rb_divide(target, 5)))) {
-          return " \uFF1E \u5927\u6210\u529F"
+          return " ＞ 大成功"
         } else {
-          return " \uFF1E \u6210\u529F"
+          return " ＞ 成功"
         }
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       }
     }, $Hieizan_check_1D100$1.$$arity = 4), nil) && 'check_1D100';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

@@ -17,9 +17,9 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "OrgaRain");
-    Opal.const_set($nesting[0], 'NAME', "\u5728\u308A\u3066\u904D\u304F\u30AA\u30EB\u30AC\u30EC\u30A4\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u304A\u308B\u304B\u308C\u3044\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5224\u5B9A\uFF1A[n]OR(count)\n" + "\n" + "[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\u300Cn\u300D\u3067\u30C0\u30A4\u30B9\u6570\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C1\u300D\u3002\n" + "(count)\u3067\u547D\u6570\u3092\u6307\u5B9A\u3002\u300C3111\u300D\u306E\u3088\u3046\u306B\u8A18\u8FF0\u3002\u6700\u59276\u3064\u3002\u9806\u4E0D\u540C\u53EF\u3002\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "\u30FB5OR6042 \u2192 5d\u3067\u547D\u6570\u300C0,2,4,6\u300D\u306E\u5224\u5B9A\n" + "\u30FB6OR33333 \u2192 6d\u3067\u547D\u6570\u300C3,3,3,3,3\u300D\u306E\u5224\u5B9A\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "在りて遍くオルガレイン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "おるかれいん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "判定：[n]OR(count)\n" + "\n" + "[]内のコマンドは省略可能。\n" + "「n」でダイス数を指定。省略時は「1」。\n" + "(count)で命数を指定。「3111」のように記述。最大6つ。順不同可。\n" + "\n" + "【書式例】\n" + "・5OR6042 → 5dで命数「0,2,4,6」の判定\n" + "・6OR33333 → 6dで命数「3,3,3,3,3」の判定。\n");
     
     Opal.def(self, '$initialize', $OrgaRain_initialize$1 = function $$initialize() {
       var $iter = $OrgaRain_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -77,11 +77,11 @@
           resultArray.$push("" + (i) + "(x" + (multiple) + ")");
           return (success = $rb_plus(success, multiple));
         } else {
-          return resultArray.$push("\u00D7")
+          return resultArray.$push("×")
         };}, $$5.$$s = self, $$5.$$arity = 1, $$5));
       countText = countNo.$join(",");
       resultText = resultArray.$join(",");
-      result = "" + (diceCount) + "D10(\u547D\u6570\uFF1A" + (countText) + ") \uFF1E " + (diceText) + " \uFF1E " + (resultText) + " \uFF1E \u6210\u529F\u6570\uFF1A" + (success);
+      result = "" + (diceCount) + "D10(命数：" + (countText) + ") ＞ " + (diceText) + " ＞ " + (resultText) + " ＞ 成功数：" + (success);
       return result;
     }, $OrgaRain_checkRoll$3.$$arity = 2), nil) && 'checkRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

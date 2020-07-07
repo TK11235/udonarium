@@ -16,9 +16,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "SharedFantasia");
-    Opal.const_set($nesting[0], 'NAME', "Shared\u2020Fantasia");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3057\u3048\u3042\u3042\u3068\u3075\u3042\u3093\u305F\u3057\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "2D6\u306E\u6210\u529F\u5224\u5B9A\u306B \u81EA\u52D5\u6210\u529F\u3001\u81EA\u52D5\u5931\u6557\u3001\u81F4\u547D\u7684\u5931\u6557\u3001\u5287\u7684\u6210\u529F \u306E\u5224\u5B9A\u304C\u3042\u308A\u307E\u3059\u3002\n" + "\n" + "SF/ST = 2D6\u306E\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\n" + "\n" + "\u4F8B) SF+4>=9 : 2D6\u3057\u30664\u3092\u8DB3\u3057\u305F\u5024\u304C9\u4EE5\u4E0A\u306A\u3089\u6210\u529F\n");
+    Opal.const_set($nesting[0], 'NAME', "Shared†Fantasia");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しえああとふあんたしあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "2D6の成功判定に 自動成功、自動失敗、致命的失敗、劇的成功 の判定があります。\n" + "\n" + "SF/ST = 2D6のショートカット\n" + "\n" + "例) SF+4>=9 : 2D6して4を足した値が9以上なら成功\n");
     self.$setPrefixes(["SF.*", "ST.*"]);
     
     Opal.def(self, '$changeText', $SharedFantasia_changeText$1 = function $$changeText(string) {
@@ -52,18 +52,18 @@
       if ($truthy([">=", ">"]['$include?'](cmp_op))) {
         if ($truthy($rb_gt($rb_plus(total, totalValueBonus), target))) {
           if ($truthy(critical)) {
-            return " \uFF1E \u81EA\u52D5\u6210\u529F(\u5287\u7684\u6210\u529F)"
+            return " ＞ 自動成功(劇的成功)"
           } else if ($truthy(fumble)) {
-            return " \uFF1E \u81EA\u52D5\u5931\u6557"
+            return " ＞ 自動失敗"
           } else {
-            return " \uFF1E \u6210\u529F"
+            return " ＞ 成功"
           }
         } else if ($truthy(critical)) {
-          return " \uFF1E \u81EA\u52D5\u6210\u529F"
+          return " ＞ 自動成功"
         } else if ($truthy(fumble)) {
-          return " \uFF1E \u81EA\u52D5\u5931\u6557(\u81F4\u547D\u7684\u5931\u6557)"
+          return " ＞ 自動失敗(致命的失敗)"
         } else {
-          return " \uFF1E \u5931\u6557"
+          return " ＞ 失敗"
         }
       } else {
         return nil

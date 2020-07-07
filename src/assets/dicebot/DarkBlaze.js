@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "DarkBlaze");
-    Opal.const_set($nesting[0], 'NAME', "\u30C0\u30FC\u30AF\u30D6\u30EC\u30A4\u30BA");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305F\u3042\u304F\u3075\u308C\u3044\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u884C\u70BA\u5224\u5B9A\u3000(DBxy#n)\n" + "\u3000\u884C\u70BA\u5224\u5B9A\u5C02\u7528\u306E\u30B3\u30DE\u30F3\u30C9\u3067\u3059\u3002\n" + "\u3000\"DB(\u80FD\u529B)(\u6280\u80FD)#(\u4FEE\u6B63)\"\u3067\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002R\u30B3\u30DE\u30F3\u30C9(3R6+n[x,y]>=m m\u306F\u96E3\u6613\u5EA6)\u306B\u8AAD\u66FF\u3092\u3057\u307E\u3059\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3068\u30D5\u30A1\u30F3\u30D6\u30EB\u3082\u81EA\u52D5\u3067\u51E6\u7406\u3055\u308C\u307E\u3059\u3002\n" + "\u3000DB@x@y#m \u3068 DBx,y#m \u306B\u3082\u5BFE\u5FDC\u3057\u307E\u3057\u305F\u3002\n" + "\u3000\u4F8B\uFF09DB33\u3000\u3000\u3000DB32#-1\u3000\u3000\u3000DB@3@1#1\u3000\u3000\u3000DB3,2\u3000\u3000\u3000DB23#1>=4\u3000\u3000\u30003R6+1[3,3]>=4\n" + "\n" + "\u30FB\u6398\u308A\u51FA\u3057\u888B\u8868\u3000(BTx)\n" + "\u3000\"BT(\u30C0\u30A4\u30B9\u6570)\"\u3067\u6398\u308A\u51FA\u3057\u888B\u8868\u3092\u81EA\u52D5\u3067\u632F\u308A\u3001\u7D50\u679C\u3092\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09BT1\u3000\u3000\u3000BT2\u3000\u3000\u3000BT[1...3]\n");
+    Opal.const_set($nesting[0], 'NAME', "ダークブレイズ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "たあくふれいす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定　(DBxy#n)\n" + "　行為判定専用のコマンドです。\n" + "　\"DB(能力)(技能)#(修正)\"でロールします。Rコマンド(3R6+n[x,y]>=m mは難易度)に読替をします。\n" + "　クリティカルとファンブルも自動で処理されます。\n" + "　DB@x@y#m と DBx,y#m にも対応しました。\n" + "　例）DB33　　　DB32#-1　　　DB@3@1#1　　　DB3,2　　　DB23#1>=4　　　3R6+1[3,3]>=4\n" + "\n" + "・掘り出し袋表　(BTx)\n" + "　\"BT(ダイス数)\"で掘り出し袋表を自動で振り、結果を表示します。\n" + "　例）BT1　　　BT2　　　BT[1...3]\n");
     self.$setPrefixes(["DB.*", "BT.*"]);
     
     Opal.def(self, '$initialize', $DarkBlaze_initialize$1 = function $$initialize() {
@@ -84,9 +84,9 @@
       if ($truthy(($truthy($a = cmp_op['$!='](">=")) ? $a : target['$==']("?")))) {
         return ""
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       }
     }, $DarkBlaze_check_nD6$9.$$arity = 5);
     
@@ -116,7 +116,7 @@
         signOfInequality = self.$marshalSignOfInequality(m['$[]'](8));
         diff = m['$[]'](9).$to_i();};
       $b = self.$get_dice(mod, abl, skl), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (out_str = ($a[1] == null ? nil : $a[1])), (dice_list = ($a[2] == null ? nil : $a[2])), $b;
-      output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (out_str);
+      output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (out_str);
       if ($truthy(signOfInequality['$!='](""))) {
         
         dice_total = $send(dice_list, 'inject', [], "+".$to_proc());
@@ -168,11 +168,11 @@
       resultText = "";
       if ($truthy($rb_ge(crit, 3))) {
         
-        resultText = " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB";
+        resultText = " ＞ クリティカル";
         total = $rb_plus(6, skl);};
       if ($truthy($rb_ge(fumble, 3))) {
         
-        resultText = " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB";
+        resultText = " ＞ ファンブル";
         total = 0;};
       output = "" + (total) + "[" + (dice_str) + "]" + (resultText);
       return [total, output, dice_arr];
@@ -194,8 +194,8 @@
 
       
       output = "1";
-      material_kind = ["\u87F2\u7532", "\u91D1\u5C5E", "\u91D1\u8CA8", "\u690D\u7269", "\u7363\u76AE", "\u7ADC\u9C57", "\u30EC\u30A2\u30E2\u30CE", "\u30EC\u30A2\u30E2\u30CE"];
-      magic_stone = ["\u706B\u708E\u77F3", "\u96F7\u6483\u77F3", "\u6C37\u7D50\u77F3"];
+      material_kind = ["蟲甲", "金属", "金貨", "植物", "獣皮", "竜鱗", "レアモノ", "レアモノ"];
+      magic_stone = ["火炎石", "雷撃石", "氷結石"];
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (num1 = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$roll(dice, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), $b;
       self.$debug("dice", dice);
@@ -205,34 +205,34 @@
         
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (num2 = ($a[0] == null ? nil : $a[0])), $b;
         magic_stone_result = magic_stone['$[]']($rb_minus($rb_divide(num2, 2).$to_i(), 1));
-        output = "" + "\u300A" + (magic_stone_result) + "\u300B\u3092" + (dice) + "\u500B\u7372\u5F97";
+        output = "" + "《" + (magic_stone_result) + "》を" + (dice) + "個獲得";
       } else if (num1['$=='](7)) {
-        output = "" + "\u300A\u91D1\u8CA8\u300B\u3092" + (num2) + "\u679A\u7372\u5F97"
+        output = "" + "《金貨》を" + (num2) + "枚獲得"
       } else {
         
         type = material_kind['$[]']($rb_minus(num1, 5));
         if ($truthy($rb_le(num2, 3))) {
-          output = "" + "\u300A" + (type) + " I\u300B\u30921\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " I》を1個獲得"
         } else if ($truthy($rb_le(num2, 5))) {
-          output = "" + "\u300A" + (type) + " I\u300B\u30922\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " I》を2個獲得"
         } else if ($truthy($rb_le(num2, 7))) {
-          output = "" + "\u300A" + (type) + " I\u300B\u30923\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " I》を3個獲得"
         } else if ($truthy($rb_le(num2, 9))) {
-          output = "" + "\u300A" + (type) + " II\u300B\u30921\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " II》を1個獲得"
         } else if ($truthy($rb_le(num2, 11))) {
-          output = "" + "\u300A" + (type) + " I\u300B\u30922\u500B\u300A" + (type) + " II\u300B\u30921\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " I》を2個《" + (type) + " II》を1個獲得"
         } else if ($truthy($rb_le(num2, 13))) {
-          output = "" + "\u300A" + (type) + " I\u300B\u30922\u500B\u300A" + (type) + " II\u300B\u30922\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " I》を2個《" + (type) + " II》を2個獲得"
         } else if ($truthy($rb_le(num2, 15))) {
-          output = "" + "\u300A" + (type) + " III\u300B\u30921\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " III》を1個獲得"
         } else if ($truthy($rb_le(num2, 17))) {
-          output = "" + "\u300A" + (type) + " II\u300B\u30922\u500B\u300A" + (type) + " III\u300B\u30921\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " II》を2個《" + (type) + " III》を1個獲得"
         } else {
-          output = "" + "\u300A" + (type) + " II\u300B\u30922\u500B\u300A" + (type) + " III\u300B\u30922\u500B\u7372\u5F97"
+          output = "" + "《" + (type) + " II》を2個《" + (type) + " III》を2個獲得"
         };
       };
       if ($truthy(output['$!=']("1"))) {
-        output = "" + "\u6398\u308A\u51FA\u3057\u888B\u8868[" + (num1) + "," + (num2) + "] \uFF1E " + (output)};
+        output = "" + "掘り出し袋表[" + (num1) + "," + (num2) + "] ＞ " + (output)};
       return output;
     }, $DarkBlaze_get_horidasibukuro_table$15.$$arity = 1), nil) && 'get_horidasibukuro_table';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

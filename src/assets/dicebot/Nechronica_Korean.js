@@ -29,9 +29,9 @@
     self.$$prototype.nick_e = nil;
     
     Opal.const_set($nesting[0], 'ID', "Nechronica:Korean");
-    Opal.const_set($nesting[0], 'NAME', "\uB124\uD06C\uB85C\uB2C8\uCE74");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u56FD\u969B\u5316:Korean:\uB124\uD06C\uB85C\uB2C8\uCE74");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\uD310\uC815\u3000(nNC+m)\n" + "\u3000\uC8FC\uC0AC\uC704 \uC218n\u3001\uC218\uC815\uCE58m\uC73C\uB85C \uD310\uC815\uAD74\uB9BC\uC744 \uD589\uD569\uB2C8\uB2E4.\n" + "\u3000\uC8FC\uC0AC\uC704 \uC218\uAC00 2\uAC1C \uC774\uC0C1\uC77C \uB54C\uC5D0 \uD30C\uCE20\uD30C\uC190 \uC218\uB3C4 \uD45C\uC2DC\uD569\uB2C8\uB2E4.\n" + "\u30FB\uACF5\uACA9\uD310\uC815\u3000(nNA+m)\n" + "\u3000\uC8FC\uC0AC\uC704 \uC218n\u3001\uC218\uC815\uCE58m\uC73C\uB85C \uACF5\uACA9\uD310\uC815\uAD74\uB9BC\uC744 \uD589\uD569\uB2C8\uB2E4.\n" + "\u3000\uBA85\uC911\uBD80\uC704\uC640 \uC8FC\uC0AC\uC704 \uC218\uAC00 2\uAC1C \uC774\uC0C1\uC77C \uB54C\uC5D0 \uD30C\uCE20\uD30C\uC190 \uC218\uB3C4 \uD45C\uC2DC\uD569\uB2C8\uB2E4.\n");
+    Opal.const_set($nesting[0], 'NAME', "네크로니카");
+    Opal.const_set($nesting[0], 'SORT_KEY', "国際化:Korean:네크로니카");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・판정　(nNC+m)\n" + "　주사위 수n、수정치m으로 판정굴림을 행합니다.\n" + "　주사위 수가 2개 이상일 때에 파츠파손 수도 표시합니다.\n" + "・공격판정　(nNA+m)\n" + "　주사위 수n、수정치m으로 공격판정굴림을 행합니다.\n" + "　명중부위와 주사위 수가 2개 이상일 때에 파츠파손 수도 표시합니다.\n");
     self.$setPrefixes(["(\\d+NC|\\d+NA)"]);
     
     Opal.def(self, '$initialize', $Nechronica_Korean_initialize$1 = function $$initialize() {
@@ -85,9 +85,9 @@
         return ""
       };
       if ($truthy($rb_ge(total, 11))) {
-        return " \uFF1E \uB300\uC131\uACF5"
+        return " ＞ 대성공"
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \uC131\uACF5"
+        return " ＞ 성공"
       } else if ($send(dice_list, 'count', [], ($$9 = function(i){var self = $$9.$$s || this;
 
       
@@ -96,11 +96,11 @@
           i = nil;
         };
         return $rb_le(i, 1);}, $$9.$$s = self, $$9.$$arity = 1, $$9))['$=='](0)) {
-        return " \uFF1E \uC2E4\uD328"
+        return " ＞ 실패"
       } else if ($truthy($rb_gt(dice_list.$size(), 1))) {
-        return " \uFF1E \uB300\uC2E4\uD328 \uFF1E \uC0AC\uC6A9\uD30C\uCE20 \uC804\uBD80 \uC190\uC2E4"
+        return " ＞ 대실패 ＞ 사용파츠 전부 손실"
       } else {
-        return " \uFF1E \uB300\uC2E4\uD328"
+        return " ＞ 대실패"
       };
     }, $Nechronica_Korean_check_nD10$8.$$arity = 5);
     
@@ -130,7 +130,7 @@
       total_n = 0;
       $b = self.$roll(dice_n, 10, 1), $a = Opal.to_ary($b), (_ = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), (n1 = ($a[2] == null ? nil : $a[2])), (cnt_max = ($a[3] == null ? nil : $a[3])), (n_max = ($a[4] == null ? nil : $a[4])), $b;
       total_n = $rb_plus(n_max, mod);
-      output = "" + (self.nick_e) + ": (" + (string) + ") \uFF1E [" + (dice_str) + "]";
+      output = "" + (self.nick_e) + ": (" + (string) + ") ＞ [" + (dice_str) + "]";
       if ($truthy($rb_lt(mod, 0))) {
         output = $rb_plus(output, mod.$to_s())
       } else if ($truthy($rb_gt(mod, 0))) {
@@ -157,7 +157,7 @@
           return nil
         };}, $$11.$$s = self, $$11.$$arity = 1, $$11));
       dice_str = dice.$join(",");
-      output = $rb_plus(output, "" + "  \uFF1E " + (total_n) + "[" + (dice_str) + "]");
+      output = $rb_plus(output, "" + "  ＞ " + (total_n) + "[" + (dice_str) + "]");
       dice_total = $send(dice, 'inject', [], "+".$to_proc());
       output = $rb_plus(output, self.$check_nD10(total_n, dice_total, dice, ">=", diff));
       self.$debug("dice_n, n1, total_n diff", dice_n, n1, total_n, diff);
@@ -165,7 +165,7 @@
         
         hit_loc = self.$getHitLocation(total_n);
         if ($truthy(hit_loc['$!=']("1"))) {
-          output = $rb_plus(output, "" + " \uFF1E " + (hit_loc))};};
+          output = $rb_plus(output, "" + " ＞ " + (hit_loc))};};
       return output;
     }, $Nechronica_Korean_nechronica_check$10.$$arity = 1);
     return (Opal.def(self, '$getHitLocation', $Nechronica_Korean_getHitLocation$12 = function $$getHitLocation(dice) {
@@ -177,13 +177,13 @@
       if ($truthy($rb_le(dice, 5))) {
         return output};
       output = "";
-      table = ["\uBC29\uC5B4\uCE21 \uC784\uC758", "\uB2E4\uB9AC\uFF08\uC5C6\uC73C\uBA74 \uACF5\uACA9\uCE21 \uC784\uC758\uFF09", "\uBAB8\uD1B5\uFF08\uC5C6\uC73C\uBA74 \uACF5\uACA9\uCE21 \uC784\uC758\uFF09", "\uD314\uFF08\uC5C6\uC73C\uBA74 \uACF5\uACA9\uCE21 \uC784\uC758\uFF09", "\uBA38\uB9AC\uFF08\uC5C6\uC73C\uBA74 \uACF5\uACA9\uCE21 \uC784\uC758\uFF09", "\uACF5\uACA9\uCE21 \uC784\uC758"];
+      table = ["방어측 임의", "다리（없으면 공격측 임의）", "몸통（없으면 공격측 임의）", "팔（없으면 공격측 임의）", "머리（없으면 공격측 임의）", "공격측 임의"];
       index = $rb_minus(dice, 6);
       addDamage = "";
       if ($truthy($rb_gt(dice, 10))) {
         
         index = 5;
-        addDamage = "" + "(\uCD94\uAC00 \uB370\uBBF8\uC9C0" + ($rb_minus(dice, 10)) + ")";};
+        addDamage = "" + "(추가 데미지" + ($rb_minus(dice, 10)) + ")";};
       output = $rb_plus(table['$[]'](index), addDamage);
       return output;
     }, $Nechronica_Korean_getHitLocation$12.$$arity = 1), nil) && 'getHitLocation';

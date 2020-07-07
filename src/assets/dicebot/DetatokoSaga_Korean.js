@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "DetatokoSaga:Korean");
-    Opal.const_set($nesting[0], 'NAME', "\uB370\uD0C0\uD1A0\uCF54 \uC0AC\uAC00");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u56FD\u969B\u5316:Korean:\uB370\uD0C0\uD1A0\uCF54 \uC0AC\uAC00");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\uD1B5\uC0C1\uD310\uC815\u3000xDS or xDSy or xDS>=z or xDSy>=z\n" + "\u3000(x\uFF1D\uC2A4\uD0AC\uB808\uBCA8, y\uFF1D\uD604\uC7AC \uD50C\uB798\uADF8(\uC0DD\uB7B5=0), z\uFF1D\uBAA9\uD45C\uCE58(\uC0DD\uB7B5=\uFF18))\n" + "\u3000\uC608\uFF093DS\u30002DS5\u30000DS\u30003DS>=10\u30003DS7>=12\n" + "\u30FB\uD310\uC815\uCE58\u3000xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "\u3000(x\uFF1D\uC2A4\uD0AC\uB808\uBCA8, y\uFF1D\uD604\uC7AC \uD50C\uB798\uADF8(\uC0DD\uB7B5=0), z\uFF1D\uC218\uC815\uCE58(\uC0DD\uB7B5=\uFF10))\n" + "\u3000\uC608\uFF093JD\u30002JD5\u30003JD7+1\u30004JD/3\n" + "\u30FB\uCCB4\uB825 \uB099\uC778\uD45C\u3000SST (StrengthStigmaTable)\n" + "\u30FB\uAE30\uB825 \uB099\uC778\uD45C\u3000WST (WillStigmaTable)\n" + "\u30FB\uCCB4\uB825 \uBC30\uB4DC\uC5D4\uB529\uD45C\u3000SBET (StrengthBadEndTable)\n" + "\u30FB\uAE30\uB825 \uBC30\uB4DC\uC5D4\uB529\uD45C\u3000WBET (WillBadEndTable)\n");
+    Opal.const_set($nesting[0], 'NAME', "데타토코 사가");
+    Opal.const_set($nesting[0], 'SORT_KEY', "国際化:Korean:데타토코 사가");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・통상판정　xDS or xDSy or xDS>=z or xDSy>=z\n" + "　(x＝스킬레벨, y＝현재 플래그(생략=0), z＝목표치(생략=８))\n" + "　예）3DS　2DS5　0DS　3DS>=10　3DS7>=12\n" + "・판정치　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "　(x＝스킬레벨, y＝현재 플래그(생략=0), z＝수정치(생략=０))\n" + "　예）3JD　2JD5　3JD7+1　4JD/3\n" + "・체력 낙인표　SST (StrengthStigmaTable)\n" + "・기력 낙인표　WST (WillStigmaTable)\n" + "・체력 배드엔딩표　SBET (StrengthBadEndTable)\n" + "・기력 배드엔딩표　WBET (WillBadEndTable)\n");
     self.$setPrefixes(["\\d+DS.*", "\\d+JD.*", "SST", "StrengthStigmaTable", "WST", "WillStigmaTable", "SBET", "StrengthBadEndTable", "WBET", "WillBadEndTable"]);
     
     Opal.def(self, '$initialize', $DetatokoSaga_Korean_initialize$1 = function $$initialize() {
@@ -64,7 +64,7 @@
       } else {
         return result
       };
-      self.$debug("\uAC01\uC885\uD45C\uB85C\uC11C \uCC98\uB9AC");
+      self.$debug("각종표로서 처리");
       return self.$rollTableCommand(command);
     }, $DetatokoSaga_Korean_rollDiceCommand$2.$$arity = 1);
     
@@ -84,11 +84,11 @@
       } else {
         target = $$($nesting, 'Regexp').$last_match(5).$to_i()
       };
-      result = "" + "\uD310\uC815\uFF01\u3000\uC2A4\uD0AC\uB808\uBCA8\uFF1A" + (skill) + "\u3000\uD50C\uB798\uADF8\uFF1A" + (flag) + "\u3000\uBAA9\uD45C\uCE58\uFF1A" + (target);
+      result = "" + "판정！　스킬레벨：" + (skill) + "　플래그：" + (flag) + "　목표치：" + (target);
       $b = self.$getRollResult(skill), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (rollText = ($a[1] == null ? nil : $a[1])), $b;
-      result = $rb_plus(result, "" + " \uFF1E " + (total) + "[" + (rollText) + "] \uFF1E \uD310\uC815\uCE58\uFF1A" + (total));
+      result = $rb_plus(result, "" + " ＞ " + (total) + "[" + (rollText) + "] ＞ 판정치：" + (total));
       success = self.$getSuccess(total, target);
-      result = $rb_plus(result, "" + " \uFF1E " + (success));
+      result = $rb_plus(result, "" + " ＞ " + (success));
       result = $rb_plus(result, self.$getCheckFlagResult(total, flag));
       return result;
     }, $DetatokoSaga_Korean_checkRoll$3.$$arity = 1);
@@ -122,8 +122,8 @@
 
       
       if ($truthy($rb_ge(check, target))) {
-        return "\uBAA9\uD45C\uCE58 \uC774\uC0C1\uFF01\u3010\uC131\uACF5\u3011"};
-      return "\uBAA9\uD45C\uCE58 \uBBF8\uB2EC\u2026 \u3010\uC2E4\uD328\u3011";
+        return "목표치 이상！【성공】"};
+      return "목표치 미달… 【실패】";
     }, $DetatokoSaga_Korean_getSuccess$6.$$arity = 2);
     
     Opal.def(self, '$getCheckFlagResult', $DetatokoSaga_Korean_getCheckFlagResult$7 = function $$getCheckFlagResult(total, flag) {
@@ -133,8 +133,8 @@
       if ($truthy($rb_gt(total, flag))) {
         return ""};
       willText = self.$getDownWill(flag);
-      result = "" + ", \uD50C\uB798\uADF8 \uC774\uD558\uFF01 \u3010\uAE30\uB825" + (willText) + "\uC810 \uAC10\uC18C\u3011";
-      result = $rb_plus(result, " \u3010\uD310\uC815\uCE58 \uBCC0\uACBD \uBD88\uAC00\u3011");
+      result = "" + ", 플래그 이하！ 【기력" + (willText) + "점 감소】";
+      result = $rb_plus(result, " 【판정치 변경 불가】");
       return result;
     }, $DetatokoSaga_Korean_getCheckFlagResult$7.$$arity = 2);
     
@@ -161,16 +161,16 @@
       flag = $$($nesting, 'Regexp').$last_match(2).$to_i();
       operator = $$($nesting, 'Regexp').$last_match(4);
       value = $$($nesting, 'Regexp').$last_match(5).$to_i();
-      result = "" + "\uD310\uC815\uFF01\u3000\uC2A4\uD0AC\uB808\uBCA8\uFF1A" + (skill) + "\u3000\uD50C\uB798\uADF8\uFF1A" + (flag);
+      result = "" + "판정！　스킬레벨：" + (skill) + "　플래그：" + (flag);
       modifyText = self.$getModifyText(operator, value);
       if ($truthy(modifyText['$empty?']())) {
       } else {
-        result = $rb_plus(result, "" + "\u3000\uC218\uC815\uCE58\uFF1A" + (modifyText))
+        result = $rb_plus(result, "" + "　수정치：" + (modifyText))
       };
       $b = self.$getRollResult(skill), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (rollText = ($a[1] == null ? nil : $a[1])), $b;
-      result = $rb_plus(result, "" + " \uFF1E " + (total) + "[" + (rollText) + "]" + (modifyText));
+      result = $rb_plus(result, "" + " ＞ " + (total) + "[" + (rollText) + "]" + (modifyText));
       totalResult = self.$getTotalResultValue(total, value, operator);
-      result = $rb_plus(result, "" + " \uFF1E " + (totalResult));
+      result = $rb_plus(result, "" + " ＞ " + (totalResult));
       result = $rb_plus(result, self.$getCheckFlagResult(total, flag));
       return result;
     }, $DetatokoSaga_Korean_checkJudgeValue$9.$$arity = 1);
@@ -182,9 +182,9 @@
       if (value['$=='](0)) {
         return ""};
       operatorText = (function() {$case = operator;
-      if ("+"['$===']($case)) {return "\uFF0B"}
-      else if ("-"['$===']($case)) {return "\uFF0D"}
-      else if ("/"['$===']($case)) {return "\u00F7"}
+      if ("+"['$===']($case)) {return "＋"}
+      else if ("-"['$===']($case)) {return "－"}
+      else if ("/"['$===']($case)) {return "÷"}
       else {return ""}})();
       return "" + (operatorText) + (value);
     }, $DetatokoSaga_Korean_getModifyText$10.$$arity = 2);
@@ -193,10 +193,10 @@
       var self = this, $case = nil;
 
       return (function() {$case = operator;
-      if ("+"['$===']($case)) {return "" + (total) + "+" + (value) + " \uFF1E \uD310\uC815\uCE58\uFF1A" + ($rb_plus(total, value))}
-      else if ("-"['$===']($case)) {return "" + (total) + "-" + (value) + " \uFF1E \uD310\uC815\uCE58\uFF1A" + ($rb_minus(total, value))}
+      if ("+"['$===']($case)) {return "" + (total) + "+" + (value) + " ＞ 판정치：" + ($rb_plus(total, value))}
+      else if ("-"['$===']($case)) {return "" + (total) + "-" + (value) + " ＞ 판정치：" + ($rb_minus(total, value))}
       else if ("/"['$===']($case)) {return self.$getTotalResultValueWhenSlash(total, value)}
-      else {return "" + "\uD310\uC815\uCE58\uFF1A" + (total)}})()
+      else {return "" + "판정치：" + (total)}})()
     }, $DetatokoSaga_Korean_getTotalResultValue$11.$$arity = 3);
     
     Opal.def(self, '$getTotalResultValueWhenSlash', $DetatokoSaga_Korean_getTotalResultValueWhenSlash$12 = function $$getTotalResultValueWhenSlash(total, value) {
@@ -204,9 +204,9 @@
 
       
       if (value['$=='](0)) {
-        return "0\uC73C\uB85C\uB294 \uB098\uB204\uC5B4\uC9C0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4"};
+        return "0으로는 나누어지지 않습니다"};
       quotient = $rb_divide($rb_times(1.0, total), value).$ceil();
-      result = "" + (total) + "\u00F7" + (value) + " \uFF1E \uD310\uC815\uCE58\uFF1A" + (quotient);
+      result = "" + (total) + "÷" + (value) + " ＞ 판정치：" + (quotient);
       return result;
     }, $DetatokoSaga_Korean_getTotalResultValueWhenSlash$12.$$arity = 2);
     
@@ -226,7 +226,7 @@
       else if ("SBET"['$===']($case) || "StrengthBadEndTable".$upcase()['$===']($case)) {$b = self.$choiceStrengthBadEndTable(), $a = Opal.to_ary($b), (name = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), (total = ($a[2] == null ? nil : $a[2])), $b}
       else if ("WBET"['$===']($case) || "WillBadEndTable".$upcase()['$===']($case)) {$b = self.$choiceWillBadEndTable(), $a = Opal.to_ary($b), (name = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), (total = ($a[2] == null ? nil : $a[2])), $b}
       else {return nil};
-      result = "" + (name) + "(" + (total) + ") \uFF1E " + (text);
+      result = "" + (name) + "(" + (total) + ") ＞ " + (text);
       return result;
     }, $DetatokoSaga_Korean_rollTableCommand$13.$$arity = 1);
     
@@ -234,8 +234,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\uCCB4\uB825 \uB099\uC778\uD45C";
-      table = ["\uB2F9\uC2E0\uC740 \u3010\uB099\uC778\u3011\uC744 2\uAC1C \uBC1B\uB294\uB2E4. \uC774 \uD45C\uB97C \uB2E4\uC2DC 2\uBC88 \uAD74\uB824 \uBC1B\uC744 \u3010\uB099\uC778\u3011\uC744 \uC815\uD55C\uB2E4(\uADF8 \uACBD\uC6B0, \uB2E4\uC2DC \uC774 \uB208\uC774 \uB098\uC640\uB3C4 \u3010\uB099\uC778\u3011\uC740 \uB298\uC5B4\uB098\uC9C0 \uC54A\uB294\uB2E4).", "\u3010\uC0C1\uCC98\u3011 \uC2EC\uD55C \uC0C1\uCC98\uB97C \uC785\uC5C8\uB2E4. \uC5B4\uB5BB\uAC8C\uB4E0 \uC2F8\uC6B8 \uC218\uB294 \uC788\uC9C0\uB9CC\u2026\u2026.", "\u3010\uCD9C\uD608\u3011 \uD53C\uAC00 \uD758\uB7EC\uB118\uCCD0, \uB208\uC774 \uD750\uB9BF\uD558\uB2E4\u2026\u2026.", "\u3010\uC1E0\uC57D\u3011 \uBAB8\uC774 \uC57D\uD574\uC838, \uADF8 \uB9C8\uC74C\uB9C8\uC800\uB3C4 \uC2DC\uB4E4\uC5B4\uBC84\uB9B4 \uAC70 \uAC19\uB2E4.", "\u3010\uACE0\uD1B5\u3011 \uC544\uD514\uACFC \uAD34\uB85C\uC6C0, \uD55C\uC2EC\uD568. \uB208\uC5D0\uC11C \uB208\uBB3C\uC774 \uC0C8\uC5B4 \uB098\uC628\uB2E4.", "\u3010\uCDA9\uACA9\u3011 \uB0A0\uB824\uC838\uC11C, \uBCBD\uC774\uB098 \uB098\uBB34\uC5D0 \uBD80\uB52A\uD78C\uB2E4. \uBE68\uB9AC \uC77C\uC5B4\uC11C\uC9C0 \uC54A\uC73C\uBA74.", "\u3010\uD53C\uB85C\u3011 \uB2F9\uC2E0\uC758 \uC5BC\uAD74\uC5D0 \uD53C\uB85C\uC758 \uC0C9\uC774 \uAC15\uD574\uC9C4\uB2E4\u2026\u2026\uC774 \uC2F8\uC6C0\uC774 \uD798\uACA8\uC6CC\uC84C\uB2E4.", "\u3010\uB178\uD638\u3011 \uC131\uAC00\uC2E0 \uACF5\uACA9\uC5D0 \uBD84\uB178\uC758 \uD568\uC131\uC744 \uC9C0\uB978\uB2E4. \uBD84\uB178\uAC00 \uC2F8\uC6C0\uC744 \uC5B4\uB835\uAC8C \uD560\uAE4C?", "\u3010\uBD80\uC0C1\u3011 \uC0C1\uCC98\uB97C \uC785\uC5C8\uB2E4\u2026\u2026.", "\u3010\uACBD\uC0C1\u3011 \uB2F9\uC2E0\uC758 \uD53C\uBD80\uC5D0 \uC0C1\uCC98\uAC00 \uB0A8\uC558\uB2E4. \uC774\uAC83\uB9CC\uC774\uB77C\uBA74 \uC544\uBB34\uB807\uC9C0\uB3C4 \uC54A\uB2E4.", "\uAE30\uC801\uC801\uC73C\uB85C \uB2F9\uC2E0\uC740 \u3010\uB099\uC778\u3011\uC744 \uBC1B\uC9C0 \uC54A\uC558\uB2E4."];
+      name = "체력 낙인표";
+      table = ["당신은 【낙인】을 2개 받는다. 이 표를 다시 2번 굴려 받을 【낙인】을 정한다(그 경우, 다시 이 눈이 나와도 【낙인】은 늘어나지 않는다).", "【상처】 심한 상처를 입었다. 어떻게든 싸울 수는 있지만…….", "【출혈】 피가 흘러넘쳐, 눈이 흐릿하다…….", "【쇠약】 몸이 약해져, 그 마음마저도 시들어버릴 거 같다.", "【고통】 아픔과 괴로움, 한심함. 눈에서 눈물이 새어 나온다.", "【충격】 날려져서, 벽이나 나무에 부딪힌다. 빨리 일어서지 않으면.", "【피로】 당신의 얼굴에 피로의 색이 강해진다……이 싸움이 힘겨워졌다.", "【노호】 성가신 공격에 분노의 함성을 지른다. 분노가 싸움을 어렵게 할까?", "【부상】 상처를 입었다…….", "【경상】 당신의 피부에 상처가 남았다. 이것만이라면 아무렇지도 않다.", "기적적으로 당신은 【낙인】을 받지 않았다."];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_Korean_choiceStrengthStigmaTable$14.$$arity = 0);
@@ -244,8 +244,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\uAE30\uB825 \uB099\uC778\uD45C";
-      table = ["\uB2F9\uC2E0\uC740 \u3010\uB099\uC778\u3011\uC744 2\uAC1C \uBC1B\uB294\uB2E4. \uC774 \uD45C\uB97C \uB2E4\uC2DC 2\uBC88 \uAD74\uB824 \uBC1B\uC744 \u3010\uB099\uC778\u3011\uC744 \uC815\uD55C\uB2E4(\uADF8 \uACBD\uC6B0, \uB2E4\uC2DC \uC774 \uB208\uC774 \uB098\uC640\uB3C4 \u3010\uB099\uC778\u3011\uC740 \uB298\uC5B4\uB098\uC9C0 \uC54A\uB294\uB2E4).", "\u3010\uC808\uB9DD\u3011 \uC5B4\uB5BB\uAC8C \uD558\uC9C0 \uBABB\uD558\uB294 \uC0C1\uD669. \uD76C\uB9DD\uC740 \uC0AC\uB77C\uC9C0\uACE0\u2026\u2026\uBB34\uB98E\uC744 \uAFC7\uC744 \uC218\uBC16\uC5D0 \uC5C6\uB2E4.", "\u3010\uD1B5\uACE1\u3011 \uB108\uBB34\uB3C4 \uBD80\uC870\uB9AC\uD568\uC5D0, \uC5B4\uB9B0\uC544\uC774\uCC98\uB7FC \uC6B8\uC74C\uC744 \uD130\uD2B8\uB9B4 \uC218\uBC16\uC5D0 \uC5C6\uB2E4.", "\u3010\uD6C4\uD68C\u3011 \uC774\uB7F4 \uC0DD\uAC01\uC740 \uC544\uB2C8\uC5C8\uB294\uB370. \uD558\uC9C0\uB9CC \uD604\uC2E4\uC740 \uBE44\uC815\uD588\uB2E4.", "\u3010\uACF5\uD3EC\u3011 \uACF5\uD3EC\uC5D0 \uC0AC\uB85C\uC7A1\uD614\uB2E4! \uC801\uC774, \uC790\uC2E0\uC758 \uC190\uC774, \uBB34\uC11C\uC6CC\uC11C \uCC38\uC744 \uC218 \uC5C6\uB2E4!", "\u3010\uAC08\uB4F1\u3011 \uC815\uB9D0\uB85C \uC774\uAC78\uB85C \uAD1C\uCC2E\uC740 \uAC78\uAE4C? \uBA87 \uBC88\uC774\uACE0 \uC790\uC2E0\uC5D0\uAC8C \uC758\uBB38\uC774 \uC77C\uC5B4\uB09C\uB2E4\u2026\u2026.", "\u3010\uC99D\uC624\u3011 \uBD84\uB178\uC640 \uC99D\uC624\uC5D0 \uC0AC\uB85C\uC7A1\uD78C \uB2F9\uC2E0\uC740, \uBCF8\uB798\uC758 \uD798\uC744 \uBC1C\uD718\uD560 \uC218 \uC788\uC744\uAE4C?", "\u3010\uB9DD\uC5F0\u3011 \uC774\uAC83\uC740 \uD604\uC2E4\uC778\uAC00? \uBABD\uB871\uD55C \uC815\uC2E0\uC73C\uB85C \uB2F9\uC2E0\uC740 \uC0DD\uAC01\uD55C\uB2E4.", "\u3010\uC8FC\uC800\u3011 \uB9DD\uC124\uC784\uC744 \uAC00\uC84C\uB2E4. \uADF8\uAC83\uC740 \uC2F8\uC6B8 \uC758\uC9C0\uB97C \uB454\uD558\uAC8C \uD560 \uAC83\uC778\uAC00?", "\u3010\uC545\uBABD\u3011 \uC774\uC81C\uBD80\uD130 \uB54C\uB54C\uB85C, \uB2F9\uC2E0\uC740 \uC774 \uC21C\uAC04\uC744 \uC545\uBABD\uC73C\uB85C \uBCFC \uAC83\uC774\uB2E4.", "\uAE30\uC801\uC801\uC73C\uB85C \uB2F9\uC2E0\uC740 \u3010\uB099\uC778\u3011\uC744 \uBC1B\uC9C0 \uC54A\uC558\uB2E4."];
+      name = "기력 낙인표";
+      table = ["당신은 【낙인】을 2개 받는다. 이 표를 다시 2번 굴려 받을 【낙인】을 정한다(그 경우, 다시 이 눈이 나와도 【낙인】은 늘어나지 않는다).", "【절망】 어떻게 하지 못하는 상황. 희망은 사라지고……무릎을 꿇을 수밖에 없다.", "【통곡】 너무도 부조리함에, 어린아이처럼 울음을 터트릴 수밖에 없다.", "【후회】 이럴 생각은 아니었는데. 하지만 현실은 비정했다.", "【공포】 공포에 사로잡혔다! 적이, 자신의 손이, 무서워서 참을 수 없다!", "【갈등】 정말로 이걸로 괜찮은 걸까? 몇 번이고 자신에게 의문이 일어난다…….", "【증오】 분노와 증오에 사로잡힌 당신은, 본래의 힘을 발휘할 수 있을까?", "【망연】 이것은 현실인가? 몽롱한 정신으로 당신은 생각한다.", "【주저】 망설임을 가졌다. 그것은 싸울 의지를 둔하게 할 것인가?", "【악몽】 이제부터 때때로, 당신은 이 순간을 악몽으로 볼 것이다.", "기적적으로 당신은 【낙인】을 받지 않았다."];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_Korean_choiceWillStigmaTable$15.$$arity = 0);
@@ -254,8 +254,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\uCCB4\uB825 \uBC30\uB4DC\uC5D4\uB529\uD45C";
-      table = ["\u3010\uC0AC\uB9DD\u3011 \uB2F9\uC2E0\uC740 \uC8FD\uC5C8\uB2E4. \uB2E4\uC74C \uC138\uC158\uC5D0 \uCC38\uAC00\uD558\uAE30 \uC704\uD574\uC11C\uB294, \uD074\uB798\uC2A4 1\uAC1C\uB97C \u300E\uBAAC\uC2A4\uD130\u300F\uB098 \u300E\uC554\uD751\u300F\uC73C\uB85C \uD074\uB798\uC2A4 \uCCB4\uC778\uC9C0\uD574\uC57C\uB9CC \uD55C\uB2E4.", "\u3010\uBAA9\uC228 \uAD6C\uAC78\u3011 \uB2F9\uC2E0\uC740 \uACF5\uD3EC\uB97C \uB290\uAEF4, \uBAA9\uC228\uC744 \uAD6C\uAC78\uD588\uB2E4! \uB2E4\uC74C \uC138\uC158 \uAC1C\uC2DC \uC2DC\uC5D0, \uD074\uB798\uC2A4 1\uAC1C\uAC00 \u300E\uC790\uCF54\u300F\uB85C \uBCC0\uACBD\uB41C\uB2E4!", "\u3010\uB9DD\uAC01\u3011 \uB2F9\uC2E0\uC740 \uAE30\uC5B5\uC744 \uC783\uACE0, \uC6B0\uB450\uCEE4\uB2C8 \uC130\uB2E4. \uB2E4\uC74C \uC138\uC158\uC5D0 \uCC38\uAC00\uD558\uAE30 \uC704\uD574\uC11C\uB294, \uD074\uB798\uC2A4 1\uAC1C\uB97C \uBCC0\uACBD\uD574\uC57C\uB9CC \uD55C\uB2E4.", "\u3010\uBE44\uADF9\u3011 \uB2F9\uC2E0\uC758 \uACF5\uACA9\uC740 \uC801\uC774 \uC544\uB2C8\uB77C \uC544\uAD70\uC744 \uB9DE\uCDC4\uB2E4! \uBAA8\uB4E0 \uAC83\uC774 \uB05D\uB0A0 \uB54C\uAE4C\uC9C0 \uB2F9\uC2E0\uC740 \uC6B0\uB450\uCEE4\uB2C8 \uC11C \uC788\uAC8C \uB41C\uB2E4. \uC784\uC758\uC758 \uC544\uAD70\uC758 \u3010\uCCB4\uB825\u3011\uC744 1D6\uC810 \uAC10\uC18C\uC2DC\uD0A8\uB2E4.", "\u3010\uD3ED\uC8FC\u3011 \uB2F9\uC2E0\uC740 \uC774\uC131\uC744 \uC783\uACE0, \uCDA9\uB3D9\uC5D0 \uB530\uB77C \uD3ED\uC8FC\uD55C\uB2E4! \uAC19\uC740 \uC52C\uC5D0 \uC788\uB294 \uC804\uC6D0\uC758 \u3010\uCCB4\uB825\u3011\uC744 1D6\uC810 \uAC10\uC18C\uC2DC\uD0A8\uB2E4.", "\u3010\uC804\uB77D\u3011 \uB2F9\uC2E0\uC740 \uB2E8\uC560\uC808\uBCBD\uC5D0\uC11C \uB5A8\uC5B4\uC9C4\uB2E4.", "\u3010\uD3EC\uB85C\u3011 \uB2F9\uC2E0\uC740 \uC801\uC5D0\uAC8C \uC0AC\uB85C\uC7A1\uD614\uB2E4.", "\u3010\uB3C4\uC8FC\u3011 \uB2F9\uC2E0\uC740 \uAC81\uC5D0 \uC9C8\uB824, \uB3D9\uB8CC\uB97C \uBC84\uB9AC\uACE0 \uB3C4\uB9DD\uCCE4\uB2E4.", "\u3010\uC911\uC0C1\u3011 \uB2F9\uC2E0\uC740 \uC5B4\uCC0C\uD560 \uC218 \uC5C6\uB294 \uC0C1\uCC98\uB97C \uC785\uACE0, \uC4F0\uB7EC\uC84C\uB2E4.", "\u3010\uAE30\uC808\u3011 \uB2F9\uC2E0\uC740 \uC758\uC2DD\uC744 \uC783\uC5C8\uB2E4. \uADF8\uB9AC\uACE0 \uC815\uC2E0\uC774 \uB4E4\uBA74 \uBAA8\uB4E0 \uAC83\uC774 \uB05D\uB098\uC788\uC5C8\uB2E4.", "\uADF8\uB798\uB3C4 \uC544\uC9C1 \uC77C\uC5B4\uC120\uB2E4! \uB2F9\uC2E0\uC740 \uBC30\uB4DC\uC5D4\uB4DC\uB97C \uB9DE\uC774\uD558\uC9C0 \uC54A\uC558\uB2E4. \uCCB4\uB825\uC758 \u3010\uB099\uC778\u3011\uC744 1\uAC1C \uC9C0\uC6CC\uB3C4 \uC88B\uB2E4."];
+      name = "체력 배드엔딩표";
+      table = ["【사망】 당신은 죽었다. 다음 세션에 참가하기 위해서는, 클래스 1개를 『몬스터』나 『암흑』으로 클래스 체인지해야만 한다.", "【목숨 구걸】 당신은 공포를 느껴, 목숨을 구걸했다! 다음 세션 개시 시에, 클래스 1개가 『자코』로 변경된다!", "【망각】 당신은 기억을 잃고, 우두커니 섰다. 다음 세션에 참가하기 위해서는, 클래스 1개를 변경해야만 한다.", "【비극】 당신의 공격은 적이 아니라 아군을 맞췄다! 모든 것이 끝날 때까지 당신은 우두커니 서 있게 된다. 임의의 아군의 【체력】을 1D6점 감소시킨다.", "【폭주】 당신은 이성을 잃고, 충동에 따라 폭주한다! 같은 씬에 있는 전원의 【체력】을 1D6점 감소시킨다.", "【전락】 당신은 단애절벽에서 떨어진다.", "【포로】 당신은 적에게 사로잡혔다.", "【도주】 당신은 겁에 질려, 동료를 버리고 도망쳤다.", "【중상】 당신은 어찌할 수 없는 상처를 입고, 쓰러졌다.", "【기절】 당신은 의식을 잃었다. 그리고 정신이 들면 모든 것이 끝나있었다.", "그래도 아직 일어선다! 당신은 배드엔드를 맞이하지 않았다. 체력의 【낙인】을 1개 지워도 좋다."];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_Korean_choiceStrengthBadEndTable$16.$$arity = 0);
@@ -263,8 +263,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\uAE30\uB825 \uBC30\uB4DC\uC5D4\uB529\uD45C";
-      table = ["\u3010\uC790\uD574\u3011 \uB2F9\uC2E0\uC740 \uC2A4\uC2A4\uB85C \uC8FD\uC74C\uC744 \uACE8\uB790\uB2E4. \uB2E4\uC74C \uC138\uC158\uC5D0 \uCC38\uAC00\uD558\uAE30 \uC704\uD574\uC11C\uB294 \uD074\uB798\uC2A4 1\uAC1C\uB97C \u300E\uC554\uD751\u300F\uC73C\uB85C \uD074\uB798\uC2A4 \uCCB4\uC778\uC9C0\uD574\uC57C\uB9CC \uD55C\uB2E4.", "\u3010\uD0C0\uB77D\u3011 \uB2F9\uC2E0\uC740 \uB9C8\uC74C\uC18D\uC758 \uC5B4\uB460\uC5D0 \uBA39\uD614\uB2E4. \uB2E4\uC74C \uC138\uC158 \uAC1C\uC2DC \uC2DC\uC5D0, \uD074\uB798\uC2A4 1\uAC1C\uAC00 \u300E\uC554\uD751\u300F\uC774\uB098 \u300E\uBAAC\uC2A4\uD130\u300F\uB85C \uBCC0\uACBD\uB41C\uB2E4!", "\u3010\uC608\uC18D\u3011 \uB2F9\uC2E0\uC740 \uC801\uC758 \uB9D0\uC5D0 \uAC70\uC2A4\uB97C \uC218 \uC5C6\uB2E4. \uB2E4\uC74C \uC138\uC158\uC5D0 \uB2F9\uC2E0\uC758 \uC2A4\uD0E0\uC2A4\uB294 \u300E\uC885\uC18D\u300F\uC774 \uB41C\uB2E4.", "\u3010\uBC30\uBC18\u3011 \uBC30\uBC18\uC758 \uCDA9\uB3D9. \uC784\uC758\uC758 \uC544\uAD70\uC758 \u3010\uCCB4\uB825\u3011\uC744 1D6\uC810 \uAC10\uC18C\uC2DC\uD0A4\uACE0, \uADF8 \uC790\uB9AC\uC5D0\uC11C \uB3C4\uB9DD\uCE5C\uB2E4.", "\u3010\uD3ED\uC8FC\u3011 \uB2F9\uC2E0\uC740 \uC774\uC131\uC744 \uC783\uACE0, \uCDA9\uB3D9\uC5D0 \uB530\uB77C \uD3ED\uC8FC\uD55C\uB2E4! \uAC19\uC740 \uC52C\uC5D0 \uC788\uB294 \uC804\uC6D0\uC758 \u3010\uCCB4\uB825\u3011\uC744 1D6\uC810 \uAC10\uC18C\uC2DC\uD0A8\uB2E4.", "\u3010\uC800\uC8FC\u3011 \uB9C8\uC74C\uC758 \uC5B4\uB460\uC774 \uD604\uC7AC\uD654\uD55C \uAC83\uC778\uAC00. \uC801\uC758 \uC6D0\uD55C\uC778\uAC00. \uC800\uC8FC\uC5D0 \uC0BC\uCF1C\uC9C4 \uB2F9\uC2E0\uC740, \uADF8\uC800 \uACE0\uD1B5\uC5D0 \uBAB8\uBD80\uB9BC\uCE60 \uC218\uBC16\uC5D0 \uC5C6\uB2E4.", "\u3010\uD3EC\uB85C\u3011 \uB2F9\uC2E0\uC740 \uC801\uC5D0\uAC8C \uC0AC\uB85C\uC7A1\uD600, \uADF8 \uC790\uB9AC\uC5D0\uC11C \uB04C\uB824\uAC14\uB2E4.", "\u3010\uB3C4\uC8FC\u3011 \uB2F9\uC2E0\uC740 \uAC81\uC5D0 \uC9C8\uB824, \uB3D9\uB8CC\uB97C \uBC84\uB9AC\uACE0 \uB3C4\uB9DD\uCCE4\uB2E4.", "\u3010\uBC29\uC2EC\u3011 \uB2F9\uC2E0\uC740 \uADF8\uC800 \uBA4D\uD558\uB2C8 \uC11C \uC788\uC744 \uC218\uBC16\uC5D0 \uC5C6\uB2E4. \uC815\uC2E0\uC744 \uCC28\uB838\uC744 \uB54C, \uBAA8\uB4E0 \uAC83\uC740 \uB05D\uB098\uC788\uC5C8\uB2E4.", "\u3010\uAE30\uC808\u3011 \uB2F9\uC2E0\uC740 \uC758\uC2DD\uC744 \uC783\uC5C8\uB2E4. \uADF8\uB9AC\uACE0 \uC815\uC2E0\uC774 \uB4E4\uBA74 \uBAA8\uB4E0 \uAC83\uC774 \uB05D\uB098\uC788\uC5C8\uB2E4.", "\uADF8\uB798\uB3C4 \uC544\uC9C1 \uD3EC\uAE30\uD558\uC9C0 \uC54A\uC544! \uB2F9\uC2E0\uC740 \uBC30\uB4DC\uC5D4\uB4DC\uB97C \uB9DE\uC774\uD558\uC9C0 \uC54A\uC558\uB2E4. \uAE30\uB825\uC758 \u3010\uB099\uC778\u3011\uC744 1\uAC1C \uC9C0\uC6CC\uB3C4 \uC88B\uB2E4."];
+      name = "기력 배드엔딩표";
+      table = ["【자해】 당신은 스스로 죽음을 골랐다. 다음 세션에 참가하기 위해서는 클래스 1개를 『암흑』으로 클래스 체인지해야만 한다.", "【타락】 당신은 마음속의 어둠에 먹혔다. 다음 세션 개시 시에, 클래스 1개가 『암흑』이나 『몬스터』로 변경된다!", "【예속】 당신은 적의 말에 거스를 수 없다. 다음 세션에 당신의 스탠스는 『종속』이 된다.", "【배반】 배반의 충동. 임의의 아군의 【체력】을 1D6점 감소시키고, 그 자리에서 도망친다.", "【폭주】 당신은 이성을 잃고, 충동에 따라 폭주한다! 같은 씬에 있는 전원의 【체력】을 1D6점 감소시킨다.", "【저주】 마음의 어둠이 현재화한 것인가. 적의 원한인가. 저주에 삼켜진 당신은, 그저 고통에 몸부림칠 수밖에 없다.", "【포로】 당신은 적에게 사로잡혀, 그 자리에서 끌려갔다.", "【도주】 당신은 겁에 질려, 동료를 버리고 도망쳤다.", "【방심】 당신은 그저 멍하니 서 있을 수밖에 없다. 정신을 차렸을 때, 모든 것은 끝나있었다.", "【기절】 당신은 의식을 잃었다. 그리고 정신이 들면 모든 것이 끝나있었다.", "그래도 아직 포기하지 않아! 당신은 배드엔드를 맞이하지 않았다. 기력의 【낙인】을 1개 지워도 좋다."];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_Korean_choiceWillBadEndTable$17.$$arity = 0), nil) && 'choiceWillBadEndTable';

@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "DetatokoSaga");
-    Opal.const_set($nesting[0], 'NAME', "\u3067\u305F\u3068\u3053\u30B5\u30FC\u30AC");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3066\u305F\u3068\u3053\u3055\u3042\u304B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u901A\u5E38\u5224\u5B9A\u3000xDS or xDSy or xDS>=z or xDSy>=z\n" + "\u3000(x\uFF1D\u30B9\u30AD\u30EB\u30EC\u30D9\u30EB\u3001y\uFF1D\u73FE\u5728\u30D5\u30E9\u30B0\u5024(\u7701\u7565\u66420)\u3001z\uFF1D\u76EE\u6A19\u5024(\u7701\u7565\u6642\uFF18))\n" + "\u3000\u4F8B\uFF093DS\u30002DS5\u30000DS\u30003DS>=10\u30003DS7>=12\n" + "\u30FB\u5224\u5B9A\u5024\u3000xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "\u3000(x\uFF1D\u30B9\u30AD\u30EB\u30EC\u30D9\u30EB\u3001y\uFF1D\u73FE\u5728\u30D5\u30E9\u30B0\u5024(\u7701\u7565\u66420)\u3001z\uFF1D\u4FEE\u6B63\u5024(\u7701\u7565\u6642\uFF10))\n" + "\u3000\u4F8B\uFF093JD\u30002JD5\u30003JD7+1\u30004JD/3\n" + "\u30FB\u4F53\u529B\u70D9\u5370\u8868\u3000SST (StrengthStigmaTable)\n" + "\u30FB\u6C17\u529B\u70D9\u5370\u8868\u3000WST (WillStigmaTable)\n" + "\u30FB\u4F53\u529B\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\u8868\u3000SBET (StrengthBadEndTable)\n" + "\u30FB\u6C17\u529B\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\u8868\u3000WBET (WillBadEndTable)\n");
+    Opal.const_set($nesting[0], 'NAME', "でたとこサーガ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "てたとこさあか");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・通常判定　xDS or xDSy or xDS>=z or xDSy>=z\n" + "　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝目標値(省略時８))\n" + "　例）3DS　2DS5　0DS　3DS>=10　3DS7>=12\n" + "・判定値　xJD or xJDy or xJDy+z or xJDy-z or xJDy/z\n" + "　(x＝スキルレベル、y＝現在フラグ値(省略時0)、z＝修正値(省略時０))\n" + "　例）3JD　2JD5　3JD7+1　4JD/3\n" + "・体力烙印表　SST (StrengthStigmaTable)\n" + "・気力烙印表　WST (WillStigmaTable)\n" + "・体力バッドエンド表　SBET (StrengthBadEndTable)\n" + "・気力バッドエンド表　WBET (WillBadEndTable)\n");
     self.$setPrefixes(["\\d+DS.*", "\\d+JD.*", "SST", "StrengthStigmaTable", "WST", "WillStigmaTable", "SBET", "StrengthBadEndTable", "WBET", "WillBadEndTable"]);
     
     Opal.def(self, '$initialize', $DetatokoSaga_initialize$1 = function $$initialize() {
@@ -64,7 +64,7 @@
       } else {
         return result
       };
-      self.$debug("\u5404\u7A2E\u8868\u3068\u3057\u3066\u51E6\u7406");
+      self.$debug("各種表として処理");
       return self.$rollTableCommand(command);
     }, $DetatokoSaga_rollDiceCommand$2.$$arity = 1);
     
@@ -84,11 +84,11 @@
       } else {
         target = $$($nesting, 'Regexp').$last_match(5).$to_i()
       };
-      result = "" + "\u5224\u5B9A\uFF01\u3000\u30B9\u30AD\u30EB\u30EC\u30D9\u30EB\uFF1A" + (skill) + "\u3000\u30D5\u30E9\u30B0\uFF1A" + (flag) + "\u3000\u76EE\u6A19\u5024\uFF1A" + (target);
+      result = "" + "判定！　スキルレベル：" + (skill) + "　フラグ：" + (flag) + "　目標値：" + (target);
       $b = self.$getRollResult(skill), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (rollText = ($a[1] == null ? nil : $a[1])), $b;
-      result = $rb_plus(result, "" + " \uFF1E " + (total) + "[" + (rollText) + "] \uFF1E \u5224\u5B9A\u5024\uFF1A" + (total));
+      result = $rb_plus(result, "" + " ＞ " + (total) + "[" + (rollText) + "] ＞ 判定値：" + (total));
       success = self.$getSuccess(total, target);
-      result = $rb_plus(result, "" + " \uFF1E " + (success));
+      result = $rb_plus(result, "" + " ＞ " + (success));
       result = $rb_plus(result, self.$getCheckFlagResult(total, flag));
       return result;
     }, $DetatokoSaga_checkRoll$3.$$arity = 1);
@@ -122,8 +122,8 @@
 
       
       if ($truthy($rb_ge(check, target))) {
-        return "\u76EE\u6A19\u5024\u4EE5\u4E0A\uFF01\u3010\u6210\u529F\u3011"};
-      return "\u76EE\u6A19\u5024\u672A\u6E80\u2026\u3010\u5931\u6557\u3011";
+        return "目標値以上！【成功】"};
+      return "目標値未満…【失敗】";
     }, $DetatokoSaga_getSuccess$6.$$arity = 2);
     
     Opal.def(self, '$getCheckFlagResult', $DetatokoSaga_getCheckFlagResult$7 = function $$getCheckFlagResult(total, flag) {
@@ -133,8 +133,8 @@
       if ($truthy($rb_gt(total, flag))) {
         return ""};
       willText = self.$getDownWill(flag);
-      result = "" + "\u3001\u30D5\u30E9\u30B0\u4EE5\u4E0B\uFF01\u3010\u6C17\u529B" + (willText) + "\u70B9\u6E1B\u5C11\u3011";
-      result = $rb_plus(result, "\u3010\u5224\u5B9A\u5024\u5909\u66F4\u4E0D\u53EF\u3011");
+      result = "" + "、フラグ以下！【気力" + (willText) + "点減少】";
+      result = $rb_plus(result, "【判定値変更不可】");
       return result;
     }, $DetatokoSaga_getCheckFlagResult$7.$$arity = 2);
     
@@ -161,16 +161,16 @@
       flag = $$($nesting, 'Regexp').$last_match(2).$to_i();
       operator = $$($nesting, 'Regexp').$last_match(4);
       value = $$($nesting, 'Regexp').$last_match(5).$to_i();
-      result = "" + "\u5224\u5B9A\uFF01\u3000\u30B9\u30AD\u30EB\u30EC\u30D9\u30EB\uFF1A" + (skill) + "\u3000\u30D5\u30E9\u30B0\uFF1A" + (flag);
+      result = "" + "判定！　スキルレベル：" + (skill) + "　フラグ：" + (flag);
       modifyText = self.$getModifyText(operator, value);
       if ($truthy(modifyText['$empty?']())) {
       } else {
-        result = $rb_plus(result, "" + "\u3000\u4FEE\u6B63\u5024\uFF1A" + (modifyText))
+        result = $rb_plus(result, "" + "　修正値：" + (modifyText))
       };
       $b = self.$getRollResult(skill), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (rollText = ($a[1] == null ? nil : $a[1])), $b;
-      result = $rb_plus(result, "" + " \uFF1E " + (total) + "[" + (rollText) + "]" + (modifyText));
+      result = $rb_plus(result, "" + " ＞ " + (total) + "[" + (rollText) + "]" + (modifyText));
       totalResult = self.$getTotalResultValue(total, value, operator);
-      result = $rb_plus(result, "" + " \uFF1E " + (totalResult));
+      result = $rb_plus(result, "" + " ＞ " + (totalResult));
       result = $rb_plus(result, self.$getCheckFlagResult(total, flag));
       return result;
     }, $DetatokoSaga_checkJudgeValue$9.$$arity = 1);
@@ -182,9 +182,9 @@
       if (value['$=='](0)) {
         return ""};
       operatorText = (function() {$case = operator;
-      if ("+"['$===']($case)) {return "\uFF0B"}
-      else if ("-"['$===']($case)) {return "\uFF0D"}
-      else if ("/"['$===']($case)) {return "\u00F7"}
+      if ("+"['$===']($case)) {return "＋"}
+      else if ("-"['$===']($case)) {return "－"}
+      else if ("/"['$===']($case)) {return "÷"}
       else {return ""}})();
       return "" + (operatorText) + (value);
     }, $DetatokoSaga_getModifyText$10.$$arity = 2);
@@ -193,10 +193,10 @@
       var self = this, $case = nil;
 
       return (function() {$case = operator;
-      if ("+"['$===']($case)) {return "" + (total) + "+" + (value) + " \uFF1E \u5224\u5B9A\u5024\uFF1A" + ($rb_plus(total, value))}
-      else if ("-"['$===']($case)) {return "" + (total) + "-" + (value) + " \uFF1E \u5224\u5B9A\u5024\uFF1A" + ($rb_minus(total, value))}
+      if ("+"['$===']($case)) {return "" + (total) + "+" + (value) + " ＞ 判定値：" + ($rb_plus(total, value))}
+      else if ("-"['$===']($case)) {return "" + (total) + "-" + (value) + " ＞ 判定値：" + ($rb_minus(total, value))}
       else if ("/"['$===']($case)) {return self.$getTotalResultValueWhenSlash(total, value)}
-      else {return "" + "\u5224\u5B9A\u5024\uFF1A" + (total)}})()
+      else {return "" + "判定値：" + (total)}})()
     }, $DetatokoSaga_getTotalResultValue$11.$$arity = 3);
     
     Opal.def(self, '$getTotalResultValueWhenSlash', $DetatokoSaga_getTotalResultValueWhenSlash$12 = function $$getTotalResultValueWhenSlash(total, value) {
@@ -204,9 +204,9 @@
 
       
       if (value['$=='](0)) {
-        return "0\u3067\u306F\u5272\u308C\u307E\u305B\u3093"};
+        return "0では割れません"};
       quotient = $rb_divide($rb_times(1.0, total), value).$ceil();
-      result = "" + (total) + "\u00F7" + (value) + " \uFF1E \u5224\u5B9A\u5024\uFF1A" + (quotient);
+      result = "" + (total) + "÷" + (value) + " ＞ 判定値：" + (quotient);
       return result;
     }, $DetatokoSaga_getTotalResultValueWhenSlash$12.$$arity = 2);
     
@@ -226,7 +226,7 @@
       else if ("SBET"['$===']($case) || "StrengthBadEndTable".$upcase()['$===']($case)) {$b = self.$choiceStrengthBadEndTable(), $a = Opal.to_ary($b), (name = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), (total = ($a[2] == null ? nil : $a[2])), $b}
       else if ("WBET"['$===']($case) || "WillBadEndTable".$upcase()['$===']($case)) {$b = self.$choiceWillBadEndTable(), $a = Opal.to_ary($b), (name = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), (total = ($a[2] == null ? nil : $a[2])), $b}
       else {return nil};
-      result = "" + (name) + "(" + (total) + ") \uFF1E " + (text);
+      result = "" + (name) + "(" + (total) + ") ＞ " + (text);
       return result;
     }, $DetatokoSaga_rollTableCommand$13.$$arity = 1);
     
@@ -234,8 +234,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\u4F53\u529B\u70D9\u5370\u8868";
-      table = ["\u3042\u306A\u305F\u306F\u3010\u70D9\u5370\u3011\u3092\uFF12\u3064\u53D7\u3051\u308B\u3002\u3053\u306E\u8868\u3092\u3055\u3089\u306B\uFF12\u56DE\u632F\u3063\u3066\u53D7\u3051\u308B\u3010\u70D9\u5370\u3011\u3092\u6C7A\u3081\u308B\uFF08\u305D\u306E\u7D50\u679C\u3001\u518D\u3073\u3053\u306E\u51FA\u76EE\u304C\u51FA\u3066\u3082\u3010\u70D9\u5370\u3011\u306F\u5897\u3048\u306A\u3044\uFF09\u3002", "\u3010\u75DB\u624B\u3011\u624B\u8CA0\u3044\u50B7\u3092\u8CA0\u3063\u305F\u3002\u4F55\u3068\u304B\u6226\u3048\u3066\u3044\u308B\u304C\u2026\u2026\u3002", "\u3010\u6D41\u8840\u3011\u8840\u304C\u3042\u3075\u308C\u51FA\u3057\u3001\u76EE\u304C\u304B\u3059\u3080\u2026\u2026\u3002", "\u3010\u8870\u5F31\u3011\u4F53\u304C\u5F31\u308A\u3001\u305D\u306E\u5FC3\u3055\u3048\u3082\u840E\u3048\u3066\u3057\u307E\u3044\u305D\u3046\u3060\u2026\u2026\u3002", "\u3010\u82E6\u60B6\u3011\u75DB\u307F\u3068\u82E6\u3057\u307F\u3001\u60C5\u3051\u306A\u3055\u3002\u76EE\u306B\u6D99\u304C\u306B\u3058\u3080\u3002", "\u3010\u885D\u6483\u3011\u5439\u304D\u98DB\u3070\u3055\u308C\u3001\u58C1\u3084\u6A39\u6728\u306B\u3081\u308A\u3053\u3080\u3002\u65E9\u304F\u8D77\u304D\u4E0A\u304C\u3089\u306D\u3070\u3002", "\u3010\u75B2\u52B4\u3011\u3042\u306A\u305F\u306E\u9854\u306B\u75B2\u52B4\u306E\u8272\u304C\u5F37\u307E\u308B\u2026\u2026\u3053\u306E\u6226\u3044\u304C\u3064\u3089\u304F\u306A\u3063\u3066\u304D\u305F\u3002", "\u3010\u6012\u53F7\u3011\u3046\u3063\u3068\u3046\u3057\u3044\u653B\u6483\u306B\u6012\u308A\u306E\u53EB\u3073\u3092\u653E\u3064\u3002\u6012\u308A\u304C\u6226\u3044\u3092\u8FF7\u308F\u305B\u308B\u304B\uFF1F", "\u3010\u8CA0\u50B7\u3011\u624B\u50B7\u3092\u8CA0\u308F\u3055\u308C\u305F\u2026\u2026\u3002", "\u3010\u8EFD\u75C7\u3011\u3042\u306A\u305F\u306E\u808C\u306B\u50B7\u304C\u6B8B\u3063\u305F\u3002\u3053\u308C\u3060\u3051\u306A\u3089\u4F55\u3068\u3044\u3046\u3053\u3068\u3082\u306A\u3044\u3002", "\u5947\u8DE1\u7684\u306B\u3042\u306A\u305F\u306F\u3010\u70D9\u5370\u3011\u3092\u53D7\u3051\u306A\u304B\u3063\u305F\u3002"];
+      name = "体力烙印表";
+      table = ["あなたは【烙印】を２つ受ける。この表をさらに２回振って受ける【烙印】を決める（その結果、再びこの出目が出ても【烙印】は増えない）。", "【痛手】手負い傷を負った。何とか戦えているが……。", "【流血】血があふれ出し、目がかすむ……。", "【衰弱】体が弱り、その心さえも萎えてしまいそうだ……。", "【苦悶】痛みと苦しみ、情けなさ。目に涙がにじむ。", "【衝撃】吹き飛ばされ、壁や樹木にめりこむ。早く起き上がらねば。", "【疲労】あなたの顔に疲労の色が強まる……この戦いがつらくなってきた。", "【怒号】うっとうしい攻撃に怒りの叫びを放つ。怒りが戦いを迷わせるか？", "【負傷】手傷を負わされた……。", "【軽症】あなたの肌に傷が残った。これだけなら何ということもない。", "奇跡的にあなたは【烙印】を受けなかった。"];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_choiceStrengthStigmaTable$14.$$arity = 0);
@@ -244,8 +244,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\u6C17\u529B\u70D9\u5370\u8868";
-      table = ["\u3042\u306A\u305F\u306F\u3010\u70D9\u5370\u3011\u3092\uFF12\u3064\u53D7\u3051\u308B\u3002\u3053\u306E\u8868\u3092\u3055\u3089\u306B\uFF12\u56DE\u632F\u3063\u3066\u53D7\u3051\u308B\u3010\u70D9\u5370\u3011\u3092\u6C7A\u3081\u308B\uFF08\u305D\u306E\u7D50\u679C\u3001\u518D\u3073\u3053\u306E\u51FA\u76EE\u304C\u51FA\u3066\u3082\u3010\u70D9\u5370\u3011\u306F\u5897\u3048\u306A\u3044\uFF09\u3002", "\u3010\u7D76\u671B\u3011\u3069\u3046\u3057\u3088\u3046\u3082\u306A\u3044\u72B6\u6CC1\u3002\u5E0C\u671B\u306F\u5931\u308F\u308C\u2026\u2026\u819D\u3092\u4ED8\u304F\u3053\u3068\u3057\u304B\u3067\u304D\u306A\u3044\u3002", "\u3010\u53F7\u6CE3\u3011\u3042\u307E\u308A\u306E\u7406\u4E0D\u5C3D\u306B\u3001\u5B50\u4F9B\u306E\u3088\u3046\u306B\u6CE3\u304D\u53EB\u3076\u3053\u3068\u3057\u304B\u3067\u304D\u306A\u3044\u3002", "\u3010\u5F8C\u6094\u3011\u3053\u3093\u306A\u306F\u305A\u3058\u3083\u306A\u304B\u3063\u305F\u306E\u306B\u3002\u3057\u304B\u3057\u73FE\u5B9F\u306F\u975E\u60C5\u3060\u3063\u305F\u3002", "\u3010\u6050\u6016\u3011\u6050\u6016\u306B\u56DA\u308F\u308C\u3066\u3057\u307E\u3063\u305F\uFF01\u6575\u304C\u3001\u5DF1\u306E\u624B\u304C\u3001\u6050\u308D\u3057\u304F\u3066\u306A\u3089\u306A\u3044\uFF01", "\u3010\u845B\u85E4\u3011\u672C\u5F53\u306B\u3053\u308C\u3067\u3044\u3044\u306E\u304B\uFF1F\u4F55\u5EA6\u3082\u81EA\u8EAB\u3078\u306E\u554F\u3044\u304B\u3051\u304C\u8D77\u3053\u308B\u2026\u2026\u3002", "\u3010\u618E\u60AA\u3011\u6012\u308A\u3068\u618E\u3057\u307F\u306B\u56DA\u308F\u308C\u305F\u3042\u306A\u305F\u306F\u3001\u672C\u6765\u306E\u529B\u3092\u767A\u63EE\u3067\u304D\u308B\u3060\u308D\u3046\u304B\uFF1F", "\u3010\u5446\u7136\u3011\u3053\u308C\u306F\u73FE\u5B9F\u306A\u306E\u304B\uFF1F\u307C\u3093\u3084\u308A\u3068\u3057\u306A\u304C\u3089\u3042\u306A\u305F\u306F\u8003\u3048\u308B\u3002", "\u3010\u8FF7\u3044\u3011\u8FF7\u3044\u3092\u62B1\u3044\u3066\u3057\u307E\u3063\u305F\u3002\u305D\u308C\u306F\u6226\u3046\u610F\u5FD7\u3092\u920D\u3089\u305B\u308B\u3060\u308D\u3046\u304B\uFF1F", "\u3010\u60AA\u5922\u3011\u3053\u308C\u304B\u3089\u6642\u6298\u3001\u3042\u306A\u305F\u306F\u3053\u306E\u6642\u3092\u60AA\u5922\u306B\u898B\u308B\u3053\u3068\u3060\u308D\u3046\u3002", "\u5947\u8DE1\u7684\u306B\u3042\u306A\u305F\u306F\u3010\u70D9\u5370\u3011\u3092\u53D7\u3051\u306A\u304B\u3063\u305F\u3002"];
+      name = "気力烙印表";
+      table = ["あなたは【烙印】を２つ受ける。この表をさらに２回振って受ける【烙印】を決める（その結果、再びこの出目が出ても【烙印】は増えない）。", "【絶望】どうしようもない状況。希望は失われ……膝を付くことしかできない。", "【号泣】あまりの理不尽に、子供のように泣き叫ぶことしかできない。", "【後悔】こんなはずじゃなかったのに。しかし現実は非情だった。", "【恐怖】恐怖に囚われてしまった！敵が、己の手が、恐ろしくてならない！", "【葛藤】本当にこれでいいのか？何度も自身への問いかけが起こる……。", "【憎悪】怒りと憎しみに囚われたあなたは、本来の力を発揮できるだろうか？", "【呆然】これは現実なのか？ぼんやりとしながらあなたは考える。", "【迷い】迷いを抱いてしまった。それは戦う意志を鈍らせるだろうか？", "【悪夢】これから時折、あなたはこの時を悪夢に見ることだろう。", "奇跡的にあなたは【烙印】を受けなかった。"];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_choiceWillStigmaTable$15.$$arity = 0);
@@ -254,8 +254,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\u4F53\u529B\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\u8868";
-      table = ["\u3010\u6B7B\u4EA1\u3011\u3042\u306A\u305F\u306F\u6B7B\u3093\u3060\u3002\u6B21\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u306B\u53C2\u52A0\u3059\u308B\u306B\u306F\u3001\u30AF\u30E9\u30B9\uFF11\u3064\u3092\u300E\u30E2\u30F3\u30B9\u30BF\u30FC\u300F\u304B\u300E\u6697\u9ED2\u300F\u306B\u30AF\u30E9\u30B9\u30C1\u30A7\u30F3\u30B8\u3057\u306A\u304F\u3066\u306F\u3044\u3051\u306A\u3044\u3002", "\u3010\u547D\u4E5E\u3011\u3042\u306A\u305F\u306F\u6050\u6016\u306B\u99C6\u3089\u308C\u3001\u547D\u4E5E\u3044\u3092\u3057\u3066\u3057\u307E\u3063\u305F\uFF01\u6B21\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u958B\u59CB\u6642\u306B\u3001\u30AF\u30E9\u30B9\uFF11\u3064\u304C\u300E\u30B6\u30B3\u300F\u306B\u5909\u66F4\u3055\u308C\u308B\uFF01", "\u3010\u5FD8\u5374\u3011\u3042\u306A\u305F\u306F\u8A18\u61B6\u3092\u5931\u3044\u3001\u307C\u3093\u3084\u308A\u3068\u7ACB\u3061\u5C3D\u304F\u3059\u3002\u6B21\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u306B\u53C2\u52A0\u3059\u308B\u306B\u306F\u3001\u30AF\u30E9\u30B9\uFF11\u3064\u3092\u5909\u66F4\u3057\u306A\u304F\u3066\u306F\u306A\u3089\u306A\u3044\u3002", "\u3010\u60B2\u5287\u3011\u3042\u306A\u305F\u306E\u653B\u6483\u306F\u6575\u3067\u306F\u306A\u304F\u5473\u65B9\u3092\u6483\u3063\u305F\uFF01\u5168\u3066\u304C\u7D42\u308F\u308B\u307E\u3067\u3042\u306A\u305F\u306F\u7ACB\u3061\u5C3D\u304F\u3057\u3066\u3044\u305F\u3002\u4EFB\u610F\u306E\u5473\u65B9\u306E\u3010\u4F53\u529B\u3011\u3092\uFF11\uFF24\uFF16\u70B9\u6E1B\u5C11\u3055\u305B\u308B\u3002", "\u3010\u66B4\u8D70\u3011\u3042\u306A\u305F\u306F\u6B63\u6C17\u3092\u5931\u3044\u3001\u885D\u52D5\u306E\u307E\u307E\u66B4\u8D70\u3059\u308B\uFF01\u540C\u3058\u30B7\u30FC\u30F3\u306B\u3044\u308B\u5168\u54E1\u306E\u3010\u4F53\u529B\u3011\u3092\uFF11\uFF24\uFF16\u70B9\u6E1B\u5C11\u3055\u305B\u308B\u3002", "\u3010\u8EE2\u843D\u3011\u3042\u306A\u305F\u306F\u65AD\u5D16\u7D76\u58C1\u304B\u3089\u8EE2\u843D\u3057\u305F\u3002", "\u3010\u865C\u56DA\u3011\u3042\u306A\u305F\u306F\u6575\u306B\u56DA\u308F\u308C\u305F\u3002", "\u3010\u9003\u8D70\u3011\u3042\u306A\u305F\u306F\u6050\u308C\u3092\u306A\u3057\u3001\u4EF2\u9593\u3092\u898B\u6368\u3066\u3066\u9003\u3052\u51FA\u3057\u305F\u3002", "\u3010\u91CD\u75C7\u3011\u3042\u306A\u305F\u306F\u3069\u3046\u3057\u3088\u3046\u3082\u306A\u3044\u75DB\u624B\u3092\u8CA0\u3044\u3001\u5012\u308C\u305F\u3002", "\u3010\u6C17\u7D76\u3011\u3042\u306A\u305F\u306F\u6C17\u3092\u5931\u3063\u305F\u3002\u305D\u3057\u3066\u76EE\u899A\u3081\u308C\u3070\u5168\u3066\u304C\u7D42\u308F\u3063\u3066\u3044\u305F\u3002", "\u305D\u308C\u3067\u3082\u307E\u3060\u7ACB\u3061\u4E0A\u304C\u308B\uFF01\u3042\u306A\u305F\u306F\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\u3092\u8FCE\u3048\u306A\u304B\u3063\u305F\u3002\u4F53\u529B\u306E\u3010\u70D9\u5370\u3011\u3092\uFF11\u3064\u6253\u3061\u6D88\u3057\u3066\u3088\u3044\u3002"];
+      name = "体力バッドエンド表";
+      table = ["【死亡】あなたは死んだ。次のセッションに参加するには、クラス１つを『モンスター』か『暗黒』にクラスチェンジしなくてはいけない。", "【命乞】あなたは恐怖に駆られ、命乞いをしてしまった！次のセッション開始時に、クラス１つが『ザコ』に変更される！", "【忘却】あなたは記憶を失い、ぼんやりと立ち尽くす。次のセッションに参加するには、クラス１つを変更しなくてはならない。", "【悲劇】あなたの攻撃は敵ではなく味方を撃った！全てが終わるまであなたは立ち尽くしていた。任意の味方の【体力】を１Ｄ６点減少させる。", "【暴走】あなたは正気を失い、衝動のまま暴走する！同じシーンにいる全員の【体力】を１Ｄ６点減少させる。", "【転落】あなたは断崖絶壁から転落した。", "【虜囚】あなたは敵に囚われた。", "【逃走】あなたは恐れをなし、仲間を見捨てて逃げ出した。", "【重症】あなたはどうしようもない痛手を負い、倒れた。", "【気絶】あなたは気を失った。そして目覚めれば全てが終わっていた。", "それでもまだ立ち上がる！あなたはバッドエンドを迎えなかった。体力の【烙印】を１つ打ち消してよい。"];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_choiceStrengthBadEndTable$16.$$arity = 0);
@@ -263,8 +263,8 @@
       var $a, $b, self = this, name = nil, table = nil, text = nil, total = nil;
 
       
-      name = "\u6C17\u529B\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\u8868";
-      table = ["\u3010\u81EA\u5BB3\u3011\u3042\u306A\u305F\u306F\u81EA\u3089\u6B7B\u3092\u9078\u3093\u3060\u3002\u6B21\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u306B\u53C2\u52A0\u3059\u308B\u306B\u306F\u3001\u30AF\u30E9\u30B9\uFF11\u3064\u3092\u300E\u6697\u9ED2\u300F\u306B\u30AF\u30E9\u30B9\u30C1\u30A7\u30F3\u30B8\u3057\u306A\u304F\u3066\u306F\u3044\u3051\u306A\u3044\u3002", "\u3010\u5815\u843D\u3011\u3042\u306A\u305F\u306F\u5FC3\u306E\u4E2D\u306E\u95C7\u306B\u98F2\u307E\u308C\u305F\u3002\u6B21\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u958B\u59CB\u6642\u306B\u3001\u30AF\u30E9\u30B9\uFF11\u3064\u304C\u300E\u6697\u9ED2\u300F\u304B\u300E\u30E2\u30F3\u30B9\u30BF\u30FC\u300F\u306B\u5909\u66F4\u3055\u308C\u308B\uFF01", "\u3010\u96B7\u5C5E\u3011\u3042\u306A\u305F\u306F\u6575\u306E\u8A00\u3046\u3053\u3068\u306B\u9006\u3089\u3048\u306A\u3044\u3002\u6B21\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u3067\u3042\u306A\u305F\u306E\u30B9\u30BF\u30F3\u30B9\u306F\u300E\u5F93\u5C5E\u300F\u306B\u306A\u308B\u3002", "\u3010\u88CF\u5207\u3011\u88CF\u5207\u308A\u306E\u885D\u52D5\u3002\u4EFB\u610F\u306E\u5473\u65B9\u306E\u3010\u4F53\u529B\u3011\u3092\uFF11\uFF24\uFF16\u70B9\u6E1B\u5C11\u3055\u305B\u3001\u305D\u306E\u5834\u304B\u3089\u9003\u3052\u51FA\u3059\u3002", "\u3010\u66B4\u8D70\u3011\u3042\u306A\u305F\u306F\u6B63\u6C17\u3092\u5931\u3044\u3001\u885D\u52D5\u306E\u307E\u307E\u66B4\u8D70\u3059\u308B\uFF01\u540C\u3058\u30B7\u30FC\u30F3\u306B\u3044\u308B\u5168\u54E1\u306E\u3010\u4F53\u529B\u3011\u3092\uFF11\uFF24\uFF16\u70B9\u6E1B\u5C11\u3055\u305B\u308B\u3002", "\u3010\u546A\u3044\u3011\u5FC3\u306E\u95C7\u304C\u9855\u5728\u5316\u3057\u305F\u306E\u304B\u3002\u6575\u306E\u6028\u55DF\u304B\u3002\u546A\u3044\u306B\u8755\u307E\u308C\u305F\u3042\u306A\u305F\u306F\u3001\u306E\u305F\u3046\u3061\u307E\u308F\u308B\u3053\u3068\u3057\u304B\u3067\u304D\u306A\u3044\u3002", "\u3010\u865C\u56DA\u3011\u3042\u306A\u305F\u306F\u6575\u306B\u56DA\u308F\u308C\u3001\u305D\u306E\u5834\u304B\u3089\u9023\u308C\u53BB\u3089\u308C\u308B\u3002", "\u3010\u9003\u8D70\u3011\u3042\u306A\u305F\u306F\u6050\u308C\u3092\u306A\u3057\u3001\u4EF2\u9593\u3092\u898B\u6368\u3066\u3066\u9003\u3052\u51FA\u3057\u305F\u3002", "\u3010\u653E\u5FC3\u3011\u3042\u306A\u305F\u306F\u305F\u3060\u307C\u3093\u3084\u308A\u3068\u7ACB\u3061\u5C3D\u304F\u3059\u3057\u304B\u306A\u304B\u3063\u305F\u3002\u6211\u306B\u8FD4\u3063\u305F\u6642\u3001\u5168\u3066\u306F\u7D42\u308F\u3063\u3066\u3044\u305F\u3002", "\u3010\u6C17\u7D76\u3011\u3042\u306A\u305F\u306F\u6C17\u3092\u5931\u3063\u305F\u3002\u305D\u3057\u3066\u76EE\u899A\u3081\u308C\u3070\u5168\u3066\u304C\u7D42\u308F\u3063\u3066\u3044\u305F\u3002", "\u305D\u308C\u3067\u3082\u307E\u3060\u8AE6\u3081\u306A\u3044\uFF01\u3042\u306A\u305F\u306F\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\u3092\u8FCE\u3048\u306A\u304B\u3063\u305F\u3002\u3042\u306A\u305F\u306F\u6C17\u529B\u306E\u3010\u70D9\u5370\u3011\u3092\uFF11\u3064\u6253\u3061\u6D88\u3057\u3066\u3088\u3044\u3002"];
+      name = "気力バッドエンド表";
+      table = ["【自害】あなたは自ら死を選んだ。次のセッションに参加するには、クラス１つを『暗黒』にクラスチェンジしなくてはいけない。", "【堕落】あなたは心の中の闇に飲まれた。次のセッション開始時に、クラス１つが『暗黒』か『モンスター』に変更される！", "【隷属】あなたは敵の言うことに逆らえない。次のセッションであなたのスタンスは『従属』になる。", "【裏切】裏切りの衝動。任意の味方の【体力】を１Ｄ６点減少させ、その場から逃げ出す。", "【暴走】あなたは正気を失い、衝動のまま暴走する！同じシーンにいる全員の【体力】を１Ｄ６点減少させる。", "【呪い】心の闇が顕在化したのか。敵の怨嗟か。呪いに蝕まれたあなたは、のたうちまわることしかできない。", "【虜囚】あなたは敵に囚われ、その場から連れ去られる。", "【逃走】あなたは恐れをなし、仲間を見捨てて逃げ出した。", "【放心】あなたはただぼんやりと立ち尽くすしかなかった。我に返った時、全ては終わっていた。", "【気絶】あなたは気を失った。そして目覚めれば全てが終わっていた。", "それでもまだ諦めない！あなたはバッドエンドを迎えなかった。あなたは気力の【烙印】を１つ打ち消してよい。"];
       $b = self.$get_table_by_2d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
       return [name, text, total];
     }, $DetatokoSaga_choiceWillBadEndTable$17.$$arity = 0), nil) && 'choiceWillBadEndTable';

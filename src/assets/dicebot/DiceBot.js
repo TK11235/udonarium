@@ -31,7 +31,7 @@
     Opal.const_set($nesting[0], 'EMPTY_PREFIXES_PATTERN', /(^|\s)(S)?()(\s|$)/i.$freeze());
     Opal.const_set($nesting[0], 'ID', "DiceBot");
     Opal.const_set($nesting[0], 'NAME', "DiceBot");
-    Opal.const_set($nesting[0], 'SORT_KEY', "*\u305F\u3044\u3059\u307B\u3064\u3068");
+    Opal.const_set($nesting[0], 'SORT_KEY', "*たいすほつと");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "");
     (function(self, $parent_nesting) {
       var $nesting = [self].concat($parent_nesting), $setPrefixes$1, $clearPrefixes$2, $inherited$3;
@@ -289,7 +289,7 @@
     Opal.def(self, '$removeDiceCommandMessage', $DiceBot_removeDiceCommandMessage$28 = function $$removeDiceCommandMessage(command) {
       var self = this;
 
-      return command.$sub(/[\s\u3000].+/, "")
+      return command.$sub(/[\s　].+/, "")
     }, $DiceBot_removeDiceCommandMessage$28.$$arity = 1);
     
     Opal.def(self, '$rollDiceCommandCatched', $DiceBot_rollDiceCommandCatched$29 = function $$rollDiceCommandCatched(command) {
@@ -354,16 +354,16 @@
 
       
       if ($truthy(target['$is_a?']($$($nesting, 'String')))) {
-        return " \uFF1E \u5931\u6557"};
+        return " ＞ 失敗"};
       success = (function() {if (cmp_op['$==']("!=")) {
         return total['$!='](target)
       } else {
         return total.$send(cmp_op, target)
       }; return nil; })();
       if ($truthy(success)) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $DiceBot_check_nDx$33.$$arity = 3);
     
@@ -635,8 +635,8 @@
       if ($truthy(text['$nil?']())) {
         return nil};
       if ($truthy(($truthy($a = isPrintDiceText) ? diceText['$nil?']()['$!']() : $a))) {
-        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) \uFF1E " + (text)};
-      return "" + (name) + "(" + (number) + ") \uFF1E " + (text);
+        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) ＞ " + (text)};
+      return "" + (name) + "(" + (number) + ") ＞ " + (text);
     }, $DiceBot_getTableCommandResult$62.$$arity = -3);
     
     Opal.def(self, '$getTableInfoFromExtraTableText', $DiceBot_getTableInfoFromExtraTableText$63 = function $$getTableInfoFromExtraTableText(text, count) {

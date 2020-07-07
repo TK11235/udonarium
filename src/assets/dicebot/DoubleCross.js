@@ -31,7 +31,7 @@
     Opal.const_set($nesting[0], 'EMPTY_PREFIXES_PATTERN', /(^|\s)(S)?()(\s|$)/i.$freeze());
     Opal.const_set($nesting[0], 'ID', "DiceBot");
     Opal.const_set($nesting[0], 'NAME', "DiceBot");
-    Opal.const_set($nesting[0], 'SORT_KEY', "*\u305F\u3044\u3059\u307B\u3064\u3068");
+    Opal.const_set($nesting[0], 'SORT_KEY', "*たいすほつと");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "");
     (function(self, $parent_nesting) {
       var $nesting = [self].concat($parent_nesting), $setPrefixes$1, $clearPrefixes$2, $inherited$3;
@@ -289,7 +289,7 @@
     Opal.def(self, '$removeDiceCommandMessage', $DiceBot_removeDiceCommandMessage$28 = function $$removeDiceCommandMessage(command) {
       var self = this;
 
-      return command.$sub(/[\s\u3000].+/, "")
+      return command.$sub(/[\s　].+/, "")
     }, $DiceBot_removeDiceCommandMessage$28.$$arity = 1);
     
     Opal.def(self, '$rollDiceCommandCatched', $DiceBot_rollDiceCommandCatched$29 = function $$rollDiceCommandCatched(command) {
@@ -354,16 +354,16 @@
 
       
       if ($truthy(target['$is_a?']($$($nesting, 'String')))) {
-        return " \uFF1E \u5931\u6557"};
+        return " ＞ 失敗"};
       success = (function() {if (cmp_op['$==']("!=")) {
         return total['$!='](target)
       } else {
         return total.$send(cmp_op, target)
       }; return nil; })();
       if ($truthy(success)) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $DiceBot_check_nDx$33.$$arity = 3);
     
@@ -635,8 +635,8 @@
       if ($truthy(text['$nil?']())) {
         return nil};
       if ($truthy(($truthy($a = isPrintDiceText) ? diceText['$nil?']()['$!']() : $a))) {
-        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) \uFF1E " + (text)};
-      return "" + (name) + "(" + (number) + ") \uFF1E " + (text);
+        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) ＞ " + (text)};
+      return "" + (name) + "(" + (number) + ") ＞ " + (text);
     }, $DiceBot_getTableCommandResult$62.$$arity = -3);
     
     Opal.def(self, '$getTableInfoFromExtraTableText', $DiceBot_getTableInfoFromExtraTableText$63 = function $$getTableInfoFromExtraTableText(text, count) {
@@ -924,7 +924,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
       if (result == null) {
         result = nil;
       };
-      return "" + (table.$name()) + "(" + (result.$sum()) + ") \uFF1E " + (result.$content());}, $RangeTable$2.$$s = self, $RangeTable$2.$$arity = 2, $RangeTable$2)));
+      return "" + (table.$name()) + "(" + (result.$sum()) + ") ＞ " + (result.$content());}, $RangeTable$2.$$s = self, $RangeTable$2.$$arity = 2, $RangeTable$2)));
     self.$attr_reader("name");
     self.$attr_reader("num_of_dice");
     self.$attr_reader("num_of_sides");
@@ -1125,9 +1125,9 @@ Opal.modules["utils/range_table"] = function(Opal) {
 
     
     Opal.const_set($nesting[0], 'ID', "DoubleCross");
-    Opal.const_set($nesting[0], 'NAME', "\u30C0\u30D6\u30EB\u30AF\u30ED\u30B92nd,3rd");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305F\u3075\u308B\u304F\u308D\u30592");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u30B3\u30DE\u30F3\u30C9\uFF08xDX+y@c or xDXc+y\uFF09\n" + "\u3000\"(\u500B\u6570)DX(\u4FEE\u6B63)@(\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024)\" \u3082\u3057\u304F\u306F \"(\u500B\u6570)DX(\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024)(\u4FEE\u6B63)\" \u3067\u6307\u5B9A\u3057\u307E\u3059\u3002\n" + "\u3000\u4FEE\u6B63\u5024\u3082\u4ED8\u3051\u3089\u308C\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF0910dx\u3000\u300010dx+5@8\uFF08OD tool\u5F0F)\u3000\u30005DX7+7-3\uFF08\u75BE\u98A8\u6012\u6FE4\u5F0F\uFF09\n" + "\n" + "\u30FB\u5404\u7A2E\u8868\n" + "\u3000\u30FB\u611F\u60C5\u8868\uFF08ET\uFF09\n" + "\u3000\u3000\u30DD\u30B8\u30C6\u30A3\u30D6\u3068\u30CD\u30AC\u30C6\u30A3\u30D6\u306E\u4E21\u65B9\u3092\u632F\u3063\u3066\u3001\u8868\u306B\u306A\u3063\u3066\u3044\u308B\u5074\u306B\u25CB\u3092\u4ED8\u3051\u3066\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u3000\u3000\u3082\u3061\u308D\u3093\u4EFB\u610F\u3067\u9078\u3076\u90E8\u5206\u306F\u5909\u66F4\u3057\u3066\u69CB\u3044\u307E\u305B\u3093\u3002\n" + "\n" + "\u30FBD66\u30C0\u30A4\u30B9\u3042\u308A\n");
+    Opal.const_set($nesting[0], 'NAME', "ダブルクロス2nd,3rd");
+    Opal.const_set($nesting[0], 'SORT_KEY', "たふるくろす2");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定コマンド（xDX+y@c or xDXc+y）\n" + "　\"(個数)DX(修正)@(クリティカル値)\" もしくは \"(個数)DX(クリティカル値)(修正)\" で指定します。\n" + "　修正値も付けられます。\n" + "　例）10dx　　10dx+5@8（OD tool式)　　5DX7+7-3（疾風怒濤式）\n" + "\n" + "・各種表\n" + "　・感情表（ET）\n" + "　　ポジティブとネガティブの両方を振って、表になっている側に○を付けて表示します。\n" + "　　もちろん任意で選ぶ部分は変更して構いません。\n" + "\n" + "・D66ダイスあり\n");
     self.$setPrefixes(["\\d+DX.*", "ET"]);
     (function($base, $super, $parent_nesting) {
       var self = $klass($base, $super, 'DX');
@@ -1155,9 +1155,9 @@ Opal.modules["utils/range_table"] = function(Opal) {
 
         
         if ($truthy($rb_lt(self.critical_value, 2))) {
-          return "" + "(" + (self.expression) + ") \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u304C\u4F4E\u3059\u304E\u307E\u3059\u30022\u4EE5\u4E0A\u3092\u6307\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002"};
+          return "" + "(" + (self.expression) + ") ＞ クリティカル値が低すぎます。2以上を指定してください。"};
         if ($truthy($rb_lt(self.num, 1))) {
-          return "" + "(" + (self.expression) + ") \uFF1E \u81EA\u52D5\u5931\u6557"};
+          return "" + "(" + (self.expression) + ") ＞ 自動失敗"};
         value_groups = [];
         num_of_dice = self.num;
         loop_count = 0;
@@ -1218,22 +1218,22 @@ Opal.modules["utils/range_table"] = function(Opal) {
 
         
         parts = ["" + "(" + (self.expression) + ")", "" + (value_groups.$join("+")) + (self.modifier_str), self.$achieved_value_with_if_fumble(achieved_value, fumble), self.$compare_result(achieved_value, fumble)];
-        return parts.$compact().$join(" \uFF1E ");
+        return parts.$compact().$join(" ＞ ");
       }, $DX_result_str_long$7.$$arity = 3);
       
       Opal.def(self, '$result_str_short', $DX_result_str_short$8 = function $$result_str_short(loop_count, achieved_value, fumble) {
         var self = this, parts = nil;
 
         
-        parts = ["" + "(" + (self.expression) + ")", "...", "" + "\u56DE\u8EE2\u6570" + (loop_count), self.$achieved_value_with_if_fumble(achieved_value, fumble), self.$compare_result(achieved_value, fumble)];
-        return parts.$compact().$join(" \uFF1E ");
+        parts = ["" + "(" + (self.expression) + ")", "...", "" + "回転数" + (loop_count), self.$achieved_value_with_if_fumble(achieved_value, fumble), self.$compare_result(achieved_value, fumble)];
+        return parts.$compact().$join(" ＞ ");
       }, $DX_result_str_short$8.$$arity = 3);
       
       Opal.def(self, '$achieved_value_with_if_fumble', $DX_achieved_value_with_if_fumble$9 = function $$achieved_value_with_if_fumble(achieved_value, fumble) {
         var self = this;
 
         if ($truthy(fumble)) {
-          return "" + (achieved_value) + " (\u30D5\u30A1\u30F3\u30D6\u30EB)"
+          return "" + (achieved_value) + " (ファンブル)"
         } else {
           return achieved_value.$to_s()
         }
@@ -1247,11 +1247,11 @@ Opal.modules["utils/range_table"] = function(Opal) {
           return nil
         };
         if ($truthy(fumble)) {
-          return "\u5931\u6557"};
+          return "失敗"};
         return (function() {if ($truthy($rb_ge(achieved_value, self.target_value))) {
-          return "\u6210\u529F"
+          return "成功"
         } else {
-          return "\u5931\u6557"
+          return "失敗"
         }; return nil; })();
       }, $DX_compare_result$10.$$arity = 2), nil) && 'compare_result';
     })($nesting[0], null, $nesting);
@@ -1325,11 +1325,11 @@ Opal.modules["utils/range_table"] = function(Opal) {
         return ""
       };
       if (dice_list.$count(1)['$=='](dice_list.$size())) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $DoubleCross_check_nD10$18.$$arity = 5);
     
@@ -1403,14 +1403,14 @@ Opal.modules["utils/range_table"] = function(Opal) {
       neg_result = $$($nesting, 'NEGATIVE_EMOTION_TABLE').$roll(self.$bcdice());
       positive = self.$roll(1, 2)['$[]'](0)['$=='](1);
       pos_neg_text = (function() {if ($truthy(positive)) {
-        return ["" + "\u25CB" + (pos_result.$content()), neg_result.$content()]
+        return ["" + "○" + (pos_result.$content()), neg_result.$content()]
       } else {
-        return [pos_result.$content(), "" + "\u25CB" + (neg_result.$content())]
+        return [pos_result.$content(), "" + "○" + (neg_result.$content())]
       }; return nil; })();
-      output_parts = ["" + "\u611F\u60C5\u8868(" + (pos_result.$sum()) + "-" + (neg_result.$sum()) + ")", pos_neg_text.$join(" - ")];
-      return output_parts.$join(" \uFF1E ");
+      output_parts = ["" + "感情表(" + (pos_result.$sum()) + "-" + (neg_result.$sum()) + ")", pos_neg_text.$join(" - ")];
+      return output_parts.$join(" ＞ ");
     }, $DoubleCross_roll_emotion_table$23.$$arity = 0);
-    Opal.const_set($nesting[0], 'POSITIVE_EMOTION_TABLE', $$($nesting, 'RangeTable').$new("\u611F\u60C5\u8868\uFF08\u30DD\u30B8\u30C6\u30A3\u30D6\uFF09", "1D100", [[$range(1, 5, false), "\u597D\u5947\u5FC3(\u3053\u3046\u304D\u3057\u3093)"], [$range(6, 10, false), "\u61A7\u61AC(\u3069\u3046\u3051\u3044)"], [$range(11, 15, false), "\u5C0A\u656C(\u305D\u3093\u3051\u3044)"], [$range(16, 20, false), "\u9023\u5E2F\u611F(\u308C\u3093\u305F\u3044\u304B\u3093)"], [$range(21, 25, false), "\u6148\u611B(\u3058\u3042\u3044)"], [$range(26, 30, false), "\u611F\u670D(\u304B\u3093\u3077\u304F)"], [$range(31, 35, false), "\u7D14\u611B(\u3058\u3085\u3093\u3042\u3044)"], [$range(36, 40, false), "\u53CB\u60C5(\u3086\u3046\u3058\u3087\u3046)"], [$range(41, 45, false), "\u6155\u60C5(\u307C\u3058\u3087\u3046)"], [$range(46, 50, false), "\u540C\u60C5(\u3069\u3046\u3058\u3087\u3046)"], [$range(51, 55, false), "\u907A\u5FD7(\u3044\u3057)"], [$range(56, 60, false), "\u5E87\u8B77(\u3072\u3054)"], [$range(61, 65, false), "\u5E78\u798F\u611F(\u3053\u3046\u3075\u304F\u304B\u3093)"], [$range(66, 70, false), "\u4FE1\u983C(\u3057\u3093\u3089\u3044)"], [$range(71, 75, false), "\u57F7\u7740(\u3057\u3085\u3046\u3061\u3083\u304F)"], [$range(76, 80, false), "\u89AA\u8FD1\u611F(\u3057\u3093\u304D\u3093\u304B\u3093)"], [$range(81, 85, false), "\u8AA0\u610F(\u305B\u3044\u3044)"], [$range(86, 90, false), "\u597D\u610F(\u3053\u3046\u3044)"], [$range(91, 95, false), "\u6709\u70BA(\u3086\u3046\u3044)"], [$range(96, 100, false), "\u5C3D\u529B(\u3058\u3093\u308A\u3087\u304F)"]]).$freeze());
-    return Opal.const_set($nesting[0], 'NEGATIVE_EMOTION_TABLE', $$($nesting, 'RangeTable').$new("\u611F\u60C5\u8868\uFF08\u30CD\u30AC\u30C6\u30A3\u30D6\uFF09", "1D100", [[$range(1, 5, false), "\u98DF\u50B7(\u3057\u3087\u304F\u3057\u3087\u3046)"], [$range(6, 10, false), "\u8105\u5A01(\u304D\u3087\u3046\u3044)"], [$range(11, 15, false), "\u5AC9\u59AC(\u3057\u3063\u3068)"], [$range(16, 20, false), "\u6094\u609F(\u304B\u3044\u3054)"], [$range(21, 25, false), "\u6050\u6016(\u304D\u3087\u3046\u3075)"], [$range(26, 30, false), "\u4E0D\u5B89(\u3075\u3042\u3093)"], [$range(31, 35, false), "\u52A3\u7B49\u611F(\u308C\u3063\u3068\u3046\u304B\u3093)"], [$range(36, 40, false), "\u758E\u5916\u611F(\u305D\u304C\u3044\u304B\u3093)"], [$range(41, 45, false), "\u6065\u8FB1(\u3061\u3058\u3087\u304F)"], [$range(46, 50, false), "\u6190\u61AB(\u308C\u3093\u3073\u3093)"], [$range(51, 55, false), "\u504F\u611B(\u3078\u3093\u3042\u3044)"], [$range(56, 60, false), "\u618E\u60AA(\u305E\u3046\u304A)"], [$range(61, 65, false), "\u9694\u610F(\u304B\u304F\u3044)"], [$range(66, 70, false), "\u5ACC\u60AA(\u3051\u3093\u304A)"], [$range(71, 75, false), "\u731C\u7591\u5FC3(\u3055\u3044\u304E\u3057\u3093)"], [$range(76, 80, false), "\u53AD\u6C17(\u3044\u3084\u3051)"], [$range(81, 85, false), "\u4E0D\u4FE1\u611F(\u3075\u3057\u3093\u304B\u3093)"], [$range(86, 90, false), "\u4E0D\u5FEB\u611F(\u3075\u304B\u3044\u304B\u3093)"], [$range(91, 95, false), "\u61A4\u61E3(\u3075\u3093\u307E\u3093)"], [$range(96, 100, false), "\u6575\u613E\u5FC3(\u3066\u304D\u304C\u3044\u3057\u3093)"]]).$freeze());
+    Opal.const_set($nesting[0], 'POSITIVE_EMOTION_TABLE', $$($nesting, 'RangeTable').$new("感情表（ポジティブ）", "1D100", [[$range(1, 5, false), "好奇心(こうきしん)"], [$range(6, 10, false), "憧憬(どうけい)"], [$range(11, 15, false), "尊敬(そんけい)"], [$range(16, 20, false), "連帯感(れんたいかん)"], [$range(21, 25, false), "慈愛(じあい)"], [$range(26, 30, false), "感服(かんぷく)"], [$range(31, 35, false), "純愛(じゅんあい)"], [$range(36, 40, false), "友情(ゆうじょう)"], [$range(41, 45, false), "慕情(ぼじょう)"], [$range(46, 50, false), "同情(どうじょう)"], [$range(51, 55, false), "遺志(いし)"], [$range(56, 60, false), "庇護(ひご)"], [$range(61, 65, false), "幸福感(こうふくかん)"], [$range(66, 70, false), "信頼(しんらい)"], [$range(71, 75, false), "執着(しゅうちゃく)"], [$range(76, 80, false), "親近感(しんきんかん)"], [$range(81, 85, false), "誠意(せいい)"], [$range(86, 90, false), "好意(こうい)"], [$range(91, 95, false), "有為(ゆうい)"], [$range(96, 100, false), "尽力(じんりょく)"]]).$freeze());
+    return Opal.const_set($nesting[0], 'NEGATIVE_EMOTION_TABLE', $$($nesting, 'RangeTable').$new("感情表（ネガティブ）", "1D100", [[$range(1, 5, false), "食傷(しょくしょう)"], [$range(6, 10, false), "脅威(きょうい)"], [$range(11, 15, false), "嫉妬(しっと)"], [$range(16, 20, false), "悔悟(かいご)"], [$range(21, 25, false), "恐怖(きょうふ)"], [$range(26, 30, false), "不安(ふあん)"], [$range(31, 35, false), "劣等感(れっとうかん)"], [$range(36, 40, false), "疎外感(そがいかん)"], [$range(41, 45, false), "恥辱(ちじょく)"], [$range(46, 50, false), "憐憫(れんびん)"], [$range(51, 55, false), "偏愛(へんあい)"], [$range(56, 60, false), "憎悪(ぞうお)"], [$range(61, 65, false), "隔意(かくい)"], [$range(66, 70, false), "嫌悪(けんお)"], [$range(71, 75, false), "猜疑心(さいぎしん)"], [$range(76, 80, false), "厭気(いやけ)"], [$range(81, 85, false), "不信感(ふしんかん)"], [$range(86, 90, false), "不快感(ふかいかん)"], [$range(91, 95, false), "憤懣(ふんまん)"], [$range(96, 100, false), "敵愾心(てきがいしん)"]]).$freeze());
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting);
 })(Opal);

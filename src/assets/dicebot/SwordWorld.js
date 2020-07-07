@@ -66,9 +66,9 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
     
     self.$include($$($nesting, 'ModifierFormatter'));
     Opal.const_set($nesting[0], 'ID', "SwordWorld");
-    Opal.const_set($nesting[0], 'NAME', "\u30BD\u30FC\u30C9\u30EF\u30FC\u30EB\u30C9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305D\u304A\u3068\u308F\u3042\u308B\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u30FBSW\u3000\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3000(Kx[c]+m$f) (x:\u30AD\u30FC, c:\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024, m:\u30DC\u30FC\u30CA\u30B9, f:\u51FA\u76EE\u4FEE\u6B63)\n");
+    Opal.const_set($nesting[0], 'NAME', "ソードワールド");
+    Opal.const_set($nesting[0], 'SORT_KEY', "そおとわあると");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "・SW　レーティング表　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)\n");
     self.$setPrefixes(["H?K\\d+.*"]);
     
     Opal.def(self, '$initialize', $SwordWorld_initialize$1 = function $$initialize() {
@@ -111,15 +111,15 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       var $a, self = this;
 
       if ($truthy($rb_ge(dice_total, 12))) {
-        return " \uFF1E \u81EA\u52D5\u7684\u6210\u529F"
+        return " ＞ 自動的成功"
       } else if ($truthy($rb_le(dice_total, 2))) {
-        return " \uFF1E \u81EA\u52D5\u7684\u5931\u6557"
+        return " ＞ 自動的失敗"
       } else if ($truthy(($truthy($a = cmp_op['$!='](">=")) ? $a : target['$==']("?")))) {
         return ""
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       }
     }, $SwordWorld_check_2D6$8.$$arity = 5);
     
@@ -159,7 +159,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       keyMax = $rb_minus(rate_sw2_0.$length(), 1);
       self.$debug("keyMax", keyMax);
       if ($truthy($rb_gt(key, keyMax))) {
-        return "" + "\u30AD\u30FC\u30CA\u30F3\u30D0\u30FC\u306F" + (keyMax) + "\u307E\u3067\u3067\u3059"};
+        return "" + "キーナンバーは" + (keyMax) + "までです"};
       newRates = self.$getNewRates(rate_sw2_0);
       output = "" + "KeyNo." + (key);
       if ($truthy($rb_lt(crit, 13))) {
@@ -178,7 +178,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
           output = $rb_plus(output, "" + "+" + (addValue))};
         if ($truthy($rb_lt(addValue, 0))) {
           output = $rb_plus(output, addValue.$to_s())};};
-      output = $rb_plus(output, " \uFF1E ");
+      output = $rb_plus(output, " ＞ ");
       diceResultTotals = [];
       diceResults = [];
       rateResults = [];
@@ -385,8 +385,8 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       if ($truthy($rb_le(dice_total, 2))) {
         
         sequence.$push(rateResults.$join(","));
-        sequence.$push("\u81EA\u52D5\u7684\u5931\u6557");
-        return sequence.$join(" \uFF1E ");};
+        sequence.$push("自動的失敗");
+        return sequence.$join(" ＞ ");};
       if ($truthy(($truthy($a = $rb_gt(rateResults.$size(), 1)) ? $a : modifier['$!='](0)))) {
         
         text = $rb_plus(rateResults.$join(","), self.$format_modifier(modifier));
@@ -397,7 +397,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
         sequence.$push("" + (rateResults.$first()) + "/2")};
       if ($truthy($rb_gt(round, 1))) {
         
-        round_text = "" + ($rb_minus(round, 1)) + "\u56DE\u8EE2";
+        round_text = "" + ($rb_minus(round, 1)) + "回転";
         sequence.$push(round_text);
         short$.$push(round_text);};
       total = $rb_plus(rating_total, modifier);
@@ -406,9 +406,9 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       total_text = total.$to_s();
       sequence.$push(total_text);
       short$.$push(total_text);
-      ret = sequence.$join(" \uFF1E ");
+      ret = sequence.$join(" ＞ ");
       if ($truthy($rb_gt(ret.$length(), limitLength))) {
-        return short$.$join(" \uFF1E ")
+        return short$.$join(" ＞ ")
       } else {
         return ret
       };
@@ -449,7 +449,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       };
       if (self.rating_table['$=='](pre_mode)) {
         return "1"};
-      return "" + "RatingTable\u3092" + (mode_str) + "\u306B\u5909\u66F4\u3057\u307E\u3057\u305F";
+      return "" + "RatingTableを" + (mode_str) + "に変更しました";
     }, $SwordWorld_setRatingTable$23.$$arity = 1), nil) && 'setRatingTable';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting);
 })(Opal);

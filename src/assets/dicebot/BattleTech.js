@@ -34,7 +34,7 @@ Opal.modules["utils/table"] = function(Opal) {
       
       $b = bcdice.$roll(self.times, self.sides), $a = Opal.to_ary($b), (value = ($a[0] == null ? nil : $a[0])), $b;
       index = $rb_minus(value, self.times);
-      return "" + (self.name) + "(" + (value) + ") \uFF1E " + (self.items['$[]'](index));
+      return "" + (self.name) + "(" + (value) + ") ＞ " + (self.items['$[]'](index));
     }, $Table_roll$2.$$arity = 1), nil) && 'roll';
   })($nesting[0], null, $nesting)
 };
@@ -76,7 +76,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
       if (result == null) {
         result = nil;
       };
-      return "" + (table.$name()) + "(" + (result.$sum()) + ") \uFF1E " + (result.$content());}, $RangeTable$2.$$s = self, $RangeTable$2.$$arity = 2, $RangeTable$2)));
+      return "" + (table.$name()) + "(" + (result.$sum()) + ") ＞ " + (result.$content());}, $RangeTable$2.$$s = self, $RangeTable$2.$$arity = 2, $RangeTable$2)));
     self.$attr_reader("name");
     self.$attr_reader("num_of_dice");
     self.$attr_reader("num_of_sides");
@@ -281,9 +281,9 @@ Opal.modules["utils/range_table"] = function(Opal) {
 
     
     Opal.const_set($nesting[0], 'ID', "BattleTech");
-    Opal.const_set($nesting[0], 'NAME', "\u30D0\u30C8\u30EB\u30C6\u30C3\u30AF");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306F\u3068\u308B\u3066\u3064\u304F");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u65B9\u6CD5\n" + "\u3000(\u56DE\u6570)BT(\u30C0\u30E1\u30FC\u30B8)(\u90E8\u4F4D)+(\u57FA\u672C\u5024)>=(\u76EE\u6A19\u5024)\n" + "\u3000\u56DE\u6570\u306F\u7701\u7565\u6642 1\u56FA\u5B9A\u3002\n" + "\u3000\u90E8\u4F4D\u306FC\uFF08\u6B63\u9762\uFF09R\uFF08\u53F3\uFF09\u3001L\uFF08\u5DE6\uFF09\u3002\u7701\u7565\u6642\u306FC\uFF08\u6B63\u9762\uFF09\u56FA\u5B9A\n" + "\u3000U\uFF08\u4E0A\u534A\u8EAB\uFF09\u3001L\uFF08\u4E0B\u534A\u8EAB\uFF09\u3092\u7D44\u307F\u5408\u308F\u305B CU/RU/LU/CL/RL/LL\u3082\u6307\u5B9A\u53EF\u80FD\n" + "\u3000\u4F8B\uFF09BT3+2>=4\n" + "\u3000\u3000\u6B63\u9762\u304B\u3089\u30C0\u30E1\u30FC\u30B83\u306E\u653B\u6483\u3092\u6280\u80FD\u30D9\u30FC\u30B92\u76EE\u6A19\u50244\u30671\u56DE\u5224\u5B9A\n" + "\u3000\u4F8B\uFF092BT3RL+5>=8\n" + "\u3000\u3000\u53F3\u4E0B\u534A\u8EAB\u306B\u30C0\u30E1\u30FC\u30B83\u306E\u653B\u6483\u3092\u6280\u80FD\u30D9\u30FC\u30B95\u76EE\u6A19\u50248\u30672\u56DE\u5224\u5B9A\n" + "\u3000\u30DF\u30B5\u30A4\u30EB\u306B\u3088\u308B\u30C0\u30E1\u30FC\u30B8\u306F BT(\u30C0\u30E1\u30FC\u30B8)\u306E\u5909\u308F\u308A\u306B SRM2/4/6, LRM5/10/15/20\u3092\u6307\u5B9A\n" + "\u3000\u4F8B\uFF093SRM6LU+5>=8\n" + "\u3000\u3000\u5DE6\u4E0A\u534A\u8EAB\u306BSRM6\u9023\u3092\u6280\u80FD\u30D9\u30FC\u30B95\u76EE\u6A19\u50248\u30673\u56DE\u5224\u5B9A\n" + "\u30FBCT\uFF1A\u81F4\u547D\u7684\u547D\u4E2D\u8868\n" + "\u30FBDW\uFF1A\u8EE2\u5012\u5F8C\u306E\u5411\u304D\u8868\n" + "\u30FBCDx\uFF1A\u30E1\u30C3\u30AF\u6226\u58EB\u610F\u8B58\u7DAD\u6301\u8868\u3002\u30C0\u30E1\u30FC\u30B8\u5024x\u3067\u5224\u5B9A\u3000\u4F8B\uFF09CD3\n");
+    Opal.const_set($nesting[0], 'NAME', "バトルテック");
+    Opal.const_set($nesting[0], 'SORT_KEY', "はとるてつく");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定方法\n" + "　(回数)BT(ダメージ)(部位)+(基本値)>=(目標値)\n" + "　回数は省略時 1固定。\n" + "　部位はC（正面）R（右）、L（左）。省略時はC（正面）固定\n" + "　U（上半身）、L（下半身）を組み合わせ CU/RU/LU/CL/RL/LLも指定可能\n" + "　例）BT3+2>=4\n" + "　　正面からダメージ3の攻撃を技能ベース2目標値4で1回判定\n" + "　例）2BT3RL+5>=8\n" + "　　右下半身にダメージ3の攻撃を技能ベース5目標値8で2回判定\n" + "　ミサイルによるダメージは BT(ダメージ)の変わりに SRM2/4/6, LRM5/10/15/20を指定\n" + "　例）3SRM6LU+5>=8\n" + "　　左上半身にSRM6連を技能ベース5目標値8で3回判定\n" + "・CT：致命的命中表\n" + "・DW：転倒後の向き表\n" + "・CDx：メック戦士意識維持表。ダメージ値xで判定　例）CD3\n");
     self.$setPrefixes(["\\d*SRM\\d+.+", "\\d*LRM\\d+.+", "\\d*BT.+", "CT", "DW", "CD\\d+"]);
     Opal.const_set($nesting[0], 'NO_CRITICAL_HIT_LIMIT', 7);
     
@@ -383,9 +383,9 @@ Opal.modules["utils/range_table"] = function(Opal) {
       totalResultText = resultTexts.$join("\n");
       if ($truthy($rb_ge(totalResultText.$length(), $gvars.SEND_STR_MAX))) {
         totalResultText = "..."};
-      totalResultText = $rb_plus(totalResultText, "" + "\n \uFF1E " + (hitCount) + "\u56DE\u547D\u4E2D");
+      totalResultText = $rb_plus(totalResultText, "" + "\n ＞ " + (hitCount) + "回命中");
       if ($truthy($rb_gt(hitCount, 0))) {
-        totalResultText = $rb_plus(totalResultText, $rb_plus(" \u547D\u4E2D\u7B87\u6240\uFF1A", self.$getTotalDamage(damages)))};
+        totalResultText = $rb_plus(totalResultText, $rb_plus(" 命中箇所：", self.$getTotalDamage(damages)))};
       return totalResultText;
     }, $BattleTech_getHitResult$6.$$arity = 3);
     
@@ -413,11 +413,11 @@ Opal.modules["utils/range_table"] = function(Opal) {
       } else {
         return ""
       }; return nil; })();
-      result = "" + (total) + "[" + (dice1) + "," + (dice2) + (baseString) + "]>=" + (target) + " \uFF1E ";
+      result = "" + (total) + "[" + (dice1) + "," + (dice2) + (baseString) + "]>=" + (target) + " ＞ ";
       if ($truthy(isHit)) {
-        result = $rb_plus(result, "\u547D\u4E2D \uFF1E ")
+        result = $rb_plus(result, "命中 ＞ ")
       } else {
-        result = $rb_plus(result, "\u5916\u308C")
+        result = $rb_plus(result, "外れ")
       };
       return [isHit, result];
     }, $BattleTech_getHitText$9.$$arity = 2);
@@ -432,7 +432,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
       if ($truthy(isLrm)) {
         
         damagePartCount = $rb_divide($rb_times(1.0, damage), $$($nesting, 'LRM_LIMIT')).$ceil();
-        resultText = $rb_plus(resultText, "" + "[" + (dice) + "] " + (damage) + "\u70B9");};
+        resultText = $rb_plus(resultText, "" + "[" + (dice) + "] " + (damage) + "点");};
       $send(damagePartCount, 'times', [], ($$11 = function(damageIndex){var self = $$11.$$s || this, $c, $d, currentDamage = nil, damageText = nil, text = nil, part = nil, criticalText = nil, $writer = nil;
 
       
@@ -479,7 +479,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
       var $$14, self = this, parts = nil, allDamage = nil, damageTexts = nil, result = nil;
 
       
-      parts = ["\u982D", "\u80F4\u4E2D\u592E", "\u53F3\u80F4", "\u5DE6\u80F4", "\u53F3\u811A", "\u5DE6\u811A", "\u53F3\u8155", "\u5DE6\u8155"];
+      parts = ["頭", "胴中央", "右胴", "左胴", "右脚", "左脚", "右腕", "左腕"];
       allDamage = 0;
       damageTexts = [];
       $send(parts, 'each', [], ($$14 = function(part){var self = $$14.$$s || this, $$15, damageInfo = nil, damage = nil, damageCount = nil, criticals = nil, text = nil;
@@ -508,7 +508,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
         damageCount = damageInfo['$[]']("partDamages").$size();
         criticals = damageInfo['$[]']("criticals");
         text = "";
-        text = $rb_plus(text, "" + (part) + "(" + (damageCount) + "\u56DE) " + (damage) + "\u70B9");
+        text = $rb_plus(text, "" + (part) + "(" + (damageCount) + "回) " + (damage) + "点");
         if ($truthy(criticals['$empty?']())) {
         } else {
           text = $rb_plus(text, "" + " " + (criticals.$join(" ")))
@@ -518,8 +518,8 @@ Opal.modules["utils/range_table"] = function(Opal) {
       } else {
         self.$raise("" + "damages rest!! " + (damages.$inspect()))
       };
-      result = damageTexts.$join(" \uFF0F ");
-      result = $rb_plus(result, "" + " \uFF1E \u5408\u8A08\u30C0\u30E1\u30FC\u30B8 " + (allDamage) + "\u70B9");
+      result = damageTexts.$join(" ／ ");
+      result = $rb_plus(result, "" + " ＞ 合計ダメージ " + (allDamage) + "点");
       return result;
     }, $BattleTech_getTotalDamage$13.$$arity = 1);
     
@@ -530,11 +530,11 @@ Opal.modules["utils/range_table"] = function(Opal) {
       hit_part_roll_result = hit_part_table.$roll(self.$bcdice());
       hit_part = hit_part_roll_result.$content();
       critical_hit_may_occur_str = (function() {if ($truthy(hit_part.$critical_hit_may_occur())) {
-        return "\uFF08\u81F4\u547D\u7684\u547D\u4E2D\uFF09"
+        return "（致命的命中）"
       } else {
         return ""
       }; return nil; })();
-      result_parts = [["" + "[" + (hit_part_roll_result.$sum()) + "]", "" + (hit_part.$name()) + (critical_hit_may_occur_str), "" + (damage_text) + "\u70B9"].$join(" ")];
+      result_parts = [["" + "[" + (hit_part_roll_result.$sum()) + "]", "" + (hit_part.$name()) + (critical_hit_may_occur_str), "" + (damage_text) + "点"].$join(" ")];
       critical_hit_occurred = false;
       criticalText = "";
       if ($truthy(hit_part.$critical_hit_may_occur())) {
@@ -544,7 +544,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
         if ($truthy(critical_hit_occurred)) {
           criticalText = ct_roll_result.$content()};
         result_parts.$push("" + "[" + (ct_roll_result.$sum()) + "] " + (ct_roll_result.$content()));};
-      return [result_parts.$join(" \uFF1E "), hit_part.$name(), criticalText];
+      return [result_parts.$join(" ＞ "), hit_part.$name(), criticalText];
     }, $BattleTech_getHitResultOne$16.$$arity = 2);
     
     Opal.def(self, '$getCheckDieResult', $BattleTech_getCheckDieResult$17 = function $$getCheckDieResult(damage) {
@@ -552,21 +552,21 @@ Opal.modules["utils/range_table"] = function(Opal) {
 
       
       if ($truthy($rb_ge(damage, 6))) {
-        return "\u6B7B\u4EA1"};
+        return "死亡"};
       table = [[1, 3], [2, 5], [3, 7], [4, 10], [5, 11]];
       target = self.$get_table_by_number(damage, table, nil);
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), $b;
       total = $rb_plus(dice1, dice2);
       result = (function() {if ($truthy($rb_ge(total, target))) {
-        return "\u6210\u529F"
+        return "成功"
       } else {
-        return "\u5931\u6557"
+        return "失敗"
       }; return nil; })();
-      text = "" + (total) + "[" + (dice1) + "," + (dice2) + "]>=" + (target) + " \uFF1E " + (result);
+      text = "" + (total) + "[" + (dice1) + "," + (dice2) + "]>=" + (target) + " ＞ " + (result);
       return text;
     }, $BattleTech_getCheckDieResult$17.$$arity = 1);
-    Opal.const_set($nesting[0], 'TABLES', $hash2(["CT", "DW"], {"CT": $$($nesting, 'RangeTable').$new("\u81F4\u547D\u7684\u547D\u4E2D\u8868", "2D6", [[Opal.Range.$new(2, $$($nesting, 'NO_CRITICAL_HIT_LIMIT'), false), "\u81F4\u547D\u7684\u547D\u4E2D\u306F\u306A\u304B\u3063\u305F"], [$range(8, 9, false), "1\u7B87\u6240\u306E\u81F4\u547D\u7684\u547D\u4E2D"], [$range(10, 11, false), "2\u7B87\u6240\u306E\u81F4\u547D\u7684\u547D\u4E2D"], [12, "\u305D\u306E\u90E8\u4F4D\u304C\u5439\u304D\u98DB\u3076\uFF08\u8155\u3001\u811A\u3001\u982D\uFF09\u307E\u305F\u306F3\u7B87\u6240\u306E\u81F4\u547D\u7684\u547D\u4E2D\uFF08\u80F4\uFF09"]]), "DW": $$($nesting, 'Table').$new("\u8EE2\u5012\u5F8C\u306E\u5411\u304D\u8868", "1D6", ["\u540C\u3058\uFF08\u524D\u9762\u304B\u3089\u8EE2\u5012\uFF09 \u6B63\u9762\uFF0F\u80CC\u9762", "1\u30D8\u30AF\u30B9\u30B5\u30A4\u30C9\u53F3\uFF08\u5074\u9762\u304B\u3089\u8EE2\u5012\uFF09 \u53F3\u5074\u9762", "2\u30D8\u30AF\u30B9\u30B5\u30A4\u30C9\u53F3\uFF08\u5074\u9762\u304B\u3089\u8EE2\u5012\uFF09 \u53F3\u5074\u9762", "180\u5EA6\u9006\uFF08\u80CC\u9762\u304B\u3089\u8EE2\u5012\uFF09 \u6B63\u9762\uFF0F\u80CC\u9762", "2\u30D8\u30AF\u30B9\u30B5\u30A4\u30C9\u5DE6\uFF08\u5074\u9762\u304B\u3089\u8EE2\u5012\uFF09 \u5DE6\u5074\u9762", "1\u30D8\u30AF\u30B9\u30B5\u30A4\u30C9\u5DE6\uFF08\u5074\u9762\u304B\u3089\u8EE2\u5012\uFF09 \u5DE6\u5074\u9762"])}).$freeze());
+    Opal.const_set($nesting[0], 'TABLES', $hash2(["CT", "DW"], {"CT": $$($nesting, 'RangeTable').$new("致命的命中表", "2D6", [[Opal.Range.$new(2, $$($nesting, 'NO_CRITICAL_HIT_LIMIT'), false), "致命的命中はなかった"], [$range(8, 9, false), "1箇所の致命的命中"], [$range(10, 11, false), "2箇所の致命的命中"], [12, "その部位が吹き飛ぶ（腕、脚、頭）または3箇所の致命的命中（胴）"]]), "DW": $$($nesting, 'Table').$new("転倒後の向き表", "1D6", ["同じ（前面から転倒） 正面／背面", "1ヘクスサイド右（側面から転倒） 右側面", "2ヘクスサイド右（側面から転倒） 右側面", "180度逆（背面から転倒） 正面／背面", "2ヘクスサイド左（側面から転倒） 左側面", "1ヘクスサイド左（側面から転倒） 左側面"])}).$freeze());
     Opal.const_set($nesting[0], 'HitPart', $$($nesting, 'Struct').$new("name", "critical_hit_may_occur"));
     (function($base, $super, $parent_nesting) {
       var self = $klass($base, $super, 'HitPart');
@@ -574,16 +574,16 @@ Opal.modules["utils/range_table"] = function(Opal) {
       var $nesting = [self].concat($parent_nesting);
 
       
-      Opal.const_set($nesting[0], 'LEFT_TORSO', "\u5DE6\u80F4");
-      Opal.const_set($nesting[0], 'CENTER_TORSO', "\u80F4\u4E2D\u592E");
-      Opal.const_set($nesting[0], 'RIGHT_TORSO', "\u53F3\u80F4");
-      Opal.const_set($nesting[0], 'LEFT_ARM', "\u5DE6\u8155");
-      Opal.const_set($nesting[0], 'RIGHT_ARM', "\u53F3\u8155");
-      Opal.const_set($nesting[0], 'LEFT_LEG', "\u5DE6\u811A");
-      Opal.const_set($nesting[0], 'RIGHT_LEG', "\u53F3\u811A");
-      Opal.const_set($nesting[0], 'HEAD', "\u982D");
-      return Opal.const_set($nesting[0], 'TABLES', $hash2(["L", "C", "R", "LU", "CU", "RU", "LL", "CL", "RL"], {"L": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u5DE6\uFF09", "2D6", [[2, self.$new($$($nesting, 'LEFT_TORSO'), true)], [3, self.$new($$($nesting, 'LEFT_LEG'), false)], [$range(4, 5, false), self.$new($$($nesting, 'LEFT_ARM'), false)], [6, self.$new($$($nesting, 'LEFT_LEG'), false)], [7, self.$new($$($nesting, 'LEFT_TORSO'), false)], [8, self.$new($$($nesting, 'CENTER_TORSO'), false)], [9, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [10, self.$new($$($nesting, 'RIGHT_ARM'), false)], [11, self.$new($$($nesting, 'RIGHT_LEG'), false)], [12, self.$new($$($nesting, 'HEAD'), false)]]), "C": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u6B63\u9762\uFF09", "2D6", [[2, self.$new($$($nesting, 'CENTER_TORSO'), true)], [$range(3, 4, false), self.$new($$($nesting, 'RIGHT_ARM'), false)], [5, self.$new($$($nesting, 'RIGHT_LEG'), false)], [6, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [7, self.$new($$($nesting, 'CENTER_TORSO'), false)], [8, self.$new($$($nesting, 'LEFT_TORSO'), false)], [9, self.$new($$($nesting, 'LEFT_LEG'), false)], [$range(10, 11, false), self.$new($$($nesting, 'LEFT_ARM'), false)], [12, self.$new($$($nesting, 'HEAD'), false)]]), "R": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u53F3\uFF09", "2D6", [[2, self.$new($$($nesting, 'RIGHT_TORSO'), true)], [3, self.$new($$($nesting, 'RIGHT_LEG'), false)], [$range(4, 5, false), self.$new($$($nesting, 'RIGHT_ARM'), false)], [6, self.$new($$($nesting, 'RIGHT_LEG'), false)], [7, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [8, self.$new($$($nesting, 'CENTER_TORSO'), false)], [9, self.$new($$($nesting, 'LEFT_TORSO'), false)], [10, self.$new($$($nesting, 'LEFT_ARM'), false)], [11, self.$new($$($nesting, 'LEFT_LEG'), false)], [12, self.$new($$($nesting, 'HEAD'), false)]]), "LU": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u5DE6\u4E0A\u534A\u8EAB\uFF09", "1D6", [[$range(1, 2, false), self.$new($$($nesting, 'LEFT_TORSO'), false)], [3, self.$new($$($nesting, 'CENTER_TORSO'), false)], [$range(4, 5, false), self.$new($$($nesting, 'LEFT_ARM'), false)], [6, self.$new($$($nesting, 'HEAD'), false)]]), "CU": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u6B63\u9762\u4E0A\u534A\u8EAB\uFF09", "1D6", [[1, self.$new($$($nesting, 'LEFT_ARM'), false)], [2, self.$new($$($nesting, 'LEFT_TORSO'), false)], [3, self.$new($$($nesting, 'CENTER_TORSO'), false)], [4, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [5, self.$new($$($nesting, 'RIGHT_ARM'), false)], [6, self.$new($$($nesting, 'HEAD'), false)]]), "RU": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u53F3\u4E0A\u534A\u8EAB\uFF09", "1D6", [[$range(1, 2, false), self.$new($$($nesting, 'RIGHT_TORSO'), false)], [3, self.$new($$($nesting, 'CENTER_TORSO'), false)], [$range(4, 5, false), self.$new($$($nesting, 'RIGHT_ARM'), false)], [6, self.$new($$($nesting, 'HEAD'), false)]]), "LL": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u5DE6\u4E0B\u534A\u8EAB\uFF09", "1D6", [[$range(1, 6, false), self.$new($$($nesting, 'LEFT_LEG'), false)]]), "CL": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u53F3\u4E0B\u534A\u8EAB\uFF09", "1D6", [[$range(1, 3, false), self.$new($$($nesting, 'RIGHT_LEG'), false)], [$range(4, 6, false), self.$new($$($nesting, 'LEFT_LEG'), false)]]), "RL": $$($nesting, 'RangeTable').$new("\u547D\u4E2D\u90E8\u4F4D\u8868\uFF08\u53F3\u4E0B\u534A\u8EAB\uFF09", "1D6", [[$range(1, 6, false), self.$new($$($nesting, 'RIGHT_LEG'), false)]])}).$freeze());
+      Opal.const_set($nesting[0], 'LEFT_TORSO', "左胴");
+      Opal.const_set($nesting[0], 'CENTER_TORSO', "胴中央");
+      Opal.const_set($nesting[0], 'RIGHT_TORSO', "右胴");
+      Opal.const_set($nesting[0], 'LEFT_ARM', "左腕");
+      Opal.const_set($nesting[0], 'RIGHT_ARM', "右腕");
+      Opal.const_set($nesting[0], 'LEFT_LEG', "左脚");
+      Opal.const_set($nesting[0], 'RIGHT_LEG', "右脚");
+      Opal.const_set($nesting[0], 'HEAD', "頭");
+      return Opal.const_set($nesting[0], 'TABLES', $hash2(["L", "C", "R", "LU", "CU", "RU", "LL", "CL", "RL"], {"L": $$($nesting, 'RangeTable').$new("命中部位表（左）", "2D6", [[2, self.$new($$($nesting, 'LEFT_TORSO'), true)], [3, self.$new($$($nesting, 'LEFT_LEG'), false)], [$range(4, 5, false), self.$new($$($nesting, 'LEFT_ARM'), false)], [6, self.$new($$($nesting, 'LEFT_LEG'), false)], [7, self.$new($$($nesting, 'LEFT_TORSO'), false)], [8, self.$new($$($nesting, 'CENTER_TORSO'), false)], [9, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [10, self.$new($$($nesting, 'RIGHT_ARM'), false)], [11, self.$new($$($nesting, 'RIGHT_LEG'), false)], [12, self.$new($$($nesting, 'HEAD'), false)]]), "C": $$($nesting, 'RangeTable').$new("命中部位表（正面）", "2D6", [[2, self.$new($$($nesting, 'CENTER_TORSO'), true)], [$range(3, 4, false), self.$new($$($nesting, 'RIGHT_ARM'), false)], [5, self.$new($$($nesting, 'RIGHT_LEG'), false)], [6, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [7, self.$new($$($nesting, 'CENTER_TORSO'), false)], [8, self.$new($$($nesting, 'LEFT_TORSO'), false)], [9, self.$new($$($nesting, 'LEFT_LEG'), false)], [$range(10, 11, false), self.$new($$($nesting, 'LEFT_ARM'), false)], [12, self.$new($$($nesting, 'HEAD'), false)]]), "R": $$($nesting, 'RangeTable').$new("命中部位表（右）", "2D6", [[2, self.$new($$($nesting, 'RIGHT_TORSO'), true)], [3, self.$new($$($nesting, 'RIGHT_LEG'), false)], [$range(4, 5, false), self.$new($$($nesting, 'RIGHT_ARM'), false)], [6, self.$new($$($nesting, 'RIGHT_LEG'), false)], [7, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [8, self.$new($$($nesting, 'CENTER_TORSO'), false)], [9, self.$new($$($nesting, 'LEFT_TORSO'), false)], [10, self.$new($$($nesting, 'LEFT_ARM'), false)], [11, self.$new($$($nesting, 'LEFT_LEG'), false)], [12, self.$new($$($nesting, 'HEAD'), false)]]), "LU": $$($nesting, 'RangeTable').$new("命中部位表（左上半身）", "1D6", [[$range(1, 2, false), self.$new($$($nesting, 'LEFT_TORSO'), false)], [3, self.$new($$($nesting, 'CENTER_TORSO'), false)], [$range(4, 5, false), self.$new($$($nesting, 'LEFT_ARM'), false)], [6, self.$new($$($nesting, 'HEAD'), false)]]), "CU": $$($nesting, 'RangeTable').$new("命中部位表（正面上半身）", "1D6", [[1, self.$new($$($nesting, 'LEFT_ARM'), false)], [2, self.$new($$($nesting, 'LEFT_TORSO'), false)], [3, self.$new($$($nesting, 'CENTER_TORSO'), false)], [4, self.$new($$($nesting, 'RIGHT_TORSO'), false)], [5, self.$new($$($nesting, 'RIGHT_ARM'), false)], [6, self.$new($$($nesting, 'HEAD'), false)]]), "RU": $$($nesting, 'RangeTable').$new("命中部位表（右上半身）", "1D6", [[$range(1, 2, false), self.$new($$($nesting, 'RIGHT_TORSO'), false)], [3, self.$new($$($nesting, 'CENTER_TORSO'), false)], [$range(4, 5, false), self.$new($$($nesting, 'RIGHT_ARM'), false)], [6, self.$new($$($nesting, 'HEAD'), false)]]), "LL": $$($nesting, 'RangeTable').$new("命中部位表（左下半身）", "1D6", [[$range(1, 6, false), self.$new($$($nesting, 'LEFT_LEG'), false)]]), "CL": $$($nesting, 'RangeTable').$new("命中部位表（右下半身）", "1D6", [[$range(1, 3, false), self.$new($$($nesting, 'RIGHT_LEG'), false)], [$range(4, 6, false), self.$new($$($nesting, 'LEFT_LEG'), false)]]), "RL": $$($nesting, 'RangeTable').$new("命中部位表（右下半身）", "1D6", [[$range(1, 6, false), self.$new($$($nesting, 'RIGHT_LEG'), false)]])}).$freeze());
     })($nesting[0], null, $nesting);
-    return Opal.const_set($nesting[0], 'XRM_DAMAGE_TABLES', $hash2(["SRM2", "SRM4", "SRM6", "LRM5", "LRM10", "LRM15", "LRM20"], {"SRM2": $$($nesting, 'RangeTable').$new("SRM2\u30C0\u30E1\u30FC\u30B8\u8868", "2D6", [[$range(2, 7, false), 1], [$range(8, 12, false), 2]]), "SRM4": $$($nesting, 'RangeTable').$new("SRM4\u30C0\u30E1\u30FC\u30B8\u8868", "2D6", [[2, 1], [$range(3, 6, false), 2], [$range(7, 10, false), 3], [$range(11, 12, false), 4]]), "SRM6": $$($nesting, 'RangeTable').$new("SRM6\u30C0\u30E1\u30FC\u30B8\u8868", "2D6", [[$range(2, 3, false), 2], [$range(4, 5, false), 3], [$range(6, 8, false), 4], [$range(9, 10, false), 5], [$range(11, 12, false), 6]]), "LRM5": $$($nesting, 'RangeTable').$new("LRM5\u30C0\u30E1\u30FC\u30B8\u8868", "2D6", [[2, 1], [$range(3, 4, false), 2], [$range(5, 8, false), 3], [$range(9, 10, false), 4], [$range(11, 12, false), 5]]), "LRM10": $$($nesting, 'RangeTable').$new("LRM10\u30C0\u30E1\u30FC\u30B8\u8868", "2D6", [[$range(2, 3, false), 3], [4, 4], [$range(5, 8, false), 6], [$range(9, 10, false), 8], [$range(11, 12, false), 10]]), "LRM15": $$($nesting, 'RangeTable').$new("LRM15\u30C0\u30E1\u30FC\u30B8\u8868", "2D6", [[$range(2, 3, false), 5], [4, 6], [$range(5, 8, false), 9], [$range(9, 10, false), 12], [$range(11, 12, false), 15]]), "LRM20": $$($nesting, 'RangeTable').$new("LRM20\u30C0\u30E1\u30FC\u30B8\u8868", "2D6", [[$range(2, 3, false), 6], [4, 9], [$range(5, 8, false), 12], [$range(9, 10, false), 16], [$range(11, 12, false), 20]])}).$freeze());
+    return Opal.const_set($nesting[0], 'XRM_DAMAGE_TABLES', $hash2(["SRM2", "SRM4", "SRM6", "LRM5", "LRM10", "LRM15", "LRM20"], {"SRM2": $$($nesting, 'RangeTable').$new("SRM2ダメージ表", "2D6", [[$range(2, 7, false), 1], [$range(8, 12, false), 2]]), "SRM4": $$($nesting, 'RangeTable').$new("SRM4ダメージ表", "2D6", [[2, 1], [$range(3, 6, false), 2], [$range(7, 10, false), 3], [$range(11, 12, false), 4]]), "SRM6": $$($nesting, 'RangeTable').$new("SRM6ダメージ表", "2D6", [[$range(2, 3, false), 2], [$range(4, 5, false), 3], [$range(6, 8, false), 4], [$range(9, 10, false), 5], [$range(11, 12, false), 6]]), "LRM5": $$($nesting, 'RangeTable').$new("LRM5ダメージ表", "2D6", [[2, 1], [$range(3, 4, false), 2], [$range(5, 8, false), 3], [$range(9, 10, false), 4], [$range(11, 12, false), 5]]), "LRM10": $$($nesting, 'RangeTable').$new("LRM10ダメージ表", "2D6", [[$range(2, 3, false), 3], [4, 4], [$range(5, 8, false), 6], [$range(9, 10, false), 8], [$range(11, 12, false), 10]]), "LRM15": $$($nesting, 'RangeTable').$new("LRM15ダメージ表", "2D6", [[$range(2, 3, false), 5], [4, 6], [$range(5, 8, false), 9], [$range(9, 10, false), 12], [$range(11, 12, false), 15]]), "LRM20": $$($nesting, 'RangeTable').$new("LRM20ダメージ表", "2D6", [[$range(2, 3, false), 6], [4, 9], [$range(5, 8, false), 12], [$range(9, 10, false), 16], [$range(11, 12, false), 20]])}).$freeze());
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting);
 })(Opal);

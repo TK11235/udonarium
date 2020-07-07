@@ -13,9 +13,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "YearZeroEngine");
-    Opal.const_set($nesting[0], 'NAME', "\u30A4\u30E4\u30FC\u30BC\u30ED\u30A8\u30F3\u30B8\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3044\u3084\u3042\u305B\u308D\u3048\u3093\u3057\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u30B3\u30DE\u30F3\u30C9(YZEx+x+x)\n" + "  YZE(\u80FD\u529B\u30C0\u30A4\u30B9\u6570)+(\u6280\u80FD\u30C0\u30A4\u30B9\u6570)+(\u4FEE\u6B63\u30C0\u30A4\u30B9\u6570)  # YearZeroEngine(TALES FROM THE LOOP\u7B49)\u306E\u5224\u5B9A(6\u3092\u6570\u3048\u308B)\n" + "  \u203B \u6280\u80FD\u3068\u4FEE\u6B63\u30C0\u30A4\u30B9\u6570\u306F\u7701\u7565\u53EF\u80FD\n");
+    Opal.const_set($nesting[0], 'NAME', "イヤーゼロエンジン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "いやあせろえんしん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定コマンド(YZEx+x+x)\n" + "  YZE(能力ダイス数)+(技能ダイス数)+(修正ダイス数)  # YearZeroEngine(TALES FROM THE LOOP等)の判定(6を数える)\n" + "  ※ 技能と修正ダイス数は省略可能\n");
     Opal.const_set($nesting[0], 'ABILITY_INDEX', 2);
     Opal.const_set($nesting[0], 'SKILL_INDEX', 4);
     Opal.const_set($nesting[0], 'MODIFIED_INDEX', 6);
@@ -47,7 +47,7 @@
         $b = self.$makeDiceRoll(matchText, successDice), $a = Opal.to_ary($b), (modifiedDiceText = ($a[0] == null ? nil : $a[0])), (successDice = ($a[1] == null ? nil : $a[1])), $b;
         diceCountText = $rb_plus(diceCountText, "" + "+(" + (matchText) + "D6)");
         diceText = $rb_plus(diceText, "" + "+" + (modifiedDiceText));};
-      return "" + (diceCountText) + " \uFF1E " + (diceText) + " \u6210\u529F\u6570:" + (successDice);
+      return "" + (diceCountText) + " ＞ " + (diceText) + " 成功数:" + (successDice);
     }, $YearZeroEngine_rollDiceCommand$1.$$arity = 1);
     return (Opal.def(self, '$makeDiceRoll', $YearZeroEngine_makeDiceRoll$2 = function $$makeDiceRoll(matchText, successDice) {
       var $a, $b, $$3, self = this, dice = nil, _ = nil, diceText = nil;

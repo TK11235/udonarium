@@ -57,9 +57,9 @@ Opal.modules["utils/normalize"] = function(Opal) {
     self.$$prototype.criticalValues = self.$$prototype.fumbleValues = nil;
     
     Opal.const_set($nesting[0], 'ID', "NightWizard");
-    Opal.const_set($nesting[0], 'NAME', "\u30CA\u30A4\u30C8\u30A6\u30A3\u30B6\u30FC\u30C92\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306A\u3044\u3068\u3046\u3044\u3055\u3042\u30682");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u7528\u30B3\u30DE\u30F3\u30C9\u3000(nNW+m@x#y)\n" + "\u3000\"(\u57FA\u672C\u5024)NW(\u5E38\u6642\u304A\u3088\u3073\u5E38\u6642\u306B\u6E96\u3058\u308B\u7279\u6280\u7B49\u53CA\u3073\u72B6\u614B\u7570\u5E38\uFF08\u7701\u7565\u53EF\uFF09)@(\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024)#(\u30D5\u30A1\u30F3\u30D6\u30EB\u5024)\uFF08\u5E38\u6642\u4EE5\u5916\u306E\u7279\u6280\u7B49\u53CA\u3073\u5473\u65B9\u306E\u652F\u63F4\u52B9\u679C\u7B49\u306E\u5F71\u97FF\uFF08\u7701\u7565\u53EF\uFF09\uFF09\"\u3067\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002\n" + "\u3000R\u30B3\u30DE\u30F3\u30C9(2R6m[n,m]c[x]f[y]>=t t\u306F\u76EE\u6A19\u5024)\u306B\u8AAD\u66FF\u3055\u308C\u307E\u3059\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u304C\u7121\u3044\u5834\u5408\u306F1\u308413\u306A\u3069\u306E\u3042\u308A\u5F97\u306A\u3044\u6570\u5024\u3092\u5165\u308C\u3066\u304F\u3060\u3055\u3044\u3002\n" + "\u3000\u4F8B\uFF0912NW-5@7#2\u3000\u30001NW\u3000\u300050nw+5@7,10#2,5\u300050nw-5+10@7,10#2,5+15+25\n");
+    Opal.const_set($nesting[0], 'NAME', "ナイトウィザード2版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ないとういさあと2");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定用コマンド　(nNW+m@x#y)\n" + "　\"(基本値)NW(常時および常時に準じる特技等及び状態異常（省略可）)@(クリティカル値)#(ファンブル値)（常時以外の特技等及び味方の支援効果等の影響（省略可））\"でロールします。\n" + "　Rコマンド(2R6m[n,m]c[x]f[y]>=t tは目標値)に読替されます。\n" + "　クリティカル値、ファンブル値が無い場合は1や13などのあり得ない数値を入れてください。\n" + "　例）12NW-5@7#2　　1NW　　50nw+5@7,10#2,5　50nw-5+10@7,10#2,5+15+25\n");
     self.$setPrefixes(["\\d+NW"]);
     
     Opal.def(self, '$initialize', $NightWizard_initialize$1 = function $$initialize() {
@@ -145,7 +145,7 @@ Opal.modules["utils/normalize"] = function(Opal) {
       modify = self.$parren_killer("" + "(0" + (modify) + ")").$to_i();
       self.$debug("base_and_modify, base, modify", base_and_modify, base, modify);
       $b = self.$nw_dice(base, modify, crit, fumble), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (out_str = ($a[1] == null ? nil : $a[1])), $b;
-      output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (out_str);
+      output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (out_str);
       if ($truthy(cmp_op)) {
         output = $rb_plus(output, self.$check_nDx(total, cmp_op, diff))};
       return output;
@@ -177,7 +177,7 @@ Opal.modules["utils/normalize"] = function(Opal) {
       if ($truthy(self.fumbleValues['$include?'](dice_n))) {
         
         $b = self.$getFumbleTextAndTotal(base, modify, dice_str), $a = Opal.to_ary($b), (fumble_text = ($a[0] == null ? nil : $a[0])), (total = ($a[1] == null ? nil : $a[1])), $b;
-        output = "" + (fumble_text) + " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB \uFF1E " + (total);
+        output = "" + (fumble_text) + " ＞ ファンブル ＞ " + (total);
       } else {
         
         total = $rb_plus(base, modify);
@@ -230,13 +230,13 @@ Opal.modules["utils/normalize"] = function(Opal) {
         
         total = $rb_plus(total, 10);
         output = $rb_plus(output, "" + "+10[" + (dice_str) + "]");
-        criticalText = "\uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB ";
+        criticalText = "＞ クリティカル ";
         $c = self.$roll(2, 6, 0), $b = Opal.to_ary($c), (dice_n = ($b[0] == null ? nil : $b[0])), (dice_str = ($b[1] == null ? nil : $b[1])), $c;
         criticalValue = self.$getCriticalValue(dice_n);
         self.$debug("criticalValue", criticalValue);
       };
       total = $rb_plus(total, dice_n);
-      output = $rb_plus(output, "" + "+" + (dice_n) + "[" + (dice_str) + "] " + (criticalText) + "\uFF1E " + (total));
+      output = $rb_plus(output, "" + "+" + (dice_n) + "[" + (dice_str) + "] " + (criticalText) + "＞ " + (total));
       return [total, output];
     }, $NightWizard_checkCritical$14.$$arity = 3);
     return (Opal.def(self, '$getCriticalValue', $NightWizard_getCriticalValue$15 = function $$getCriticalValue(dice_n) {
@@ -263,8 +263,8 @@ Opal.loaded(["diceBot/NightWizard.js"]);
     var $nesting = [self].concat($parent_nesting), $NightWizard3rd_getFumbleTextAndTotal$1;
 
     
-    Opal.const_set($nesting[0], 'NAME', "\u30CA\u30A4\u30C8\u30A6\u30A3\u30B6\u30FC\u30C93\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306A\u3044\u3068\u3046\u3044\u3055\u3042\u30683");
+    Opal.const_set($nesting[0], 'NAME', "ナイトウィザード3版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ないとういさあと3");
     Opal.const_set($nesting[0], 'ID', "NightWizard3rd");
     return (Opal.def(self, '$getFumbleTextAndTotal', $NightWizard3rd_getFumbleTextAndTotal$1 = function $$getFumbleTextAndTotal(base, modify, dice_str) {
       var self = this, total = nil, text = nil;

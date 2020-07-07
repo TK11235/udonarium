@@ -22,9 +22,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "InfiniteFantasia");
-    Opal.const_set($nesting[0], 'NAME', "\u7121\u9650\u306E\u30D5\u30A1\u30F3\u30BF\u30B8\u30A2");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3080\u3051\u3093\u306E\u3075\u3042\u3093\u305F\u3057\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u5931\u6557\u3001\u6210\u529F\u30EC\u30D9\u30EB\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "無限のファンタジア");
+    Opal.const_set($nesting[0], 'SORT_KEY', "むけんのふあんたしあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "失敗、成功レベルの自動判定を行います。\n");
     return (Opal.def(self, '$check_1D20', $InfiniteFantasia_check_1D20$1 = function $$check_1D20(total, _dice_total, cmp_op, target) {
       var self = this, output = nil;
 
@@ -32,22 +32,22 @@
       if ($truthy(cmp_op['$!=']("<="))) {
         return ""
       } else if ($truthy($rb_gt(total, target))) {
-        return " \uFF1E \u5931\u6557"};
+        return " ＞ 失敗"};
       output = (function() {if ($truthy($rb_le(total, $rb_divide(target, 32)))) {
-        return " \uFF1E 32\u30EC\u30D9\u30EB\u6210\u529F(32Lv+)"
+        return " ＞ 32レベル成功(32Lv+)"
       } else if ($truthy($rb_le(total, $rb_divide(target, 16)))) {
-        return " \uFF1E 16\u30EC\u30D9\u30EB\u6210\u529F(16LV+)"
+        return " ＞ 16レベル成功(16LV+)"
       } else if ($truthy($rb_le(total, $rb_divide(target, 8)))) {
-        return " \uFF1E 8\u30EC\u30D9\u30EB\u6210\u529F"
+        return " ＞ 8レベル成功"
       } else if ($truthy($rb_le(total, $rb_divide(target, 4)))) {
-        return " \uFF1E 4\u30EC\u30D9\u30EB\u6210\u529F"
+        return " ＞ 4レベル成功"
       } else if ($truthy($rb_le(total, $rb_divide(target, 2)))) {
-        return " \uFF1E 2\u30EC\u30D9\u30EB\u6210\u529F"
+        return " ＞ 2レベル成功"
       } else {
-        return " \uFF1E 1\u30EC\u30D9\u30EB\u6210\u529F"
+        return " ＞ 1レベル成功"
       }; return nil; })();
       if ($truthy($rb_le(total, 1))) {
-        output = $rb_plus(output, "/\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB")};
+        output = $rb_plus(output, "/クリティカル")};
       return output;
     }, $InfiniteFantasia_check_1D20$1.$$arity = 4), nil) && 'check_1D20';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

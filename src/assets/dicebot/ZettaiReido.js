@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "ZettaiReido");
-    Opal.const_set($nesting[0], 'NAME', "\u7D76\u5BFE\u96B7\u5974");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305B\u3064\u305F\u3044\u308C\u3044\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\n" + "m-2DR+n>=x\n" + "m(\u57FA\u672C\u80FD\u529B),n(\u4FEE\u6B63\u5024),x(\u76EE\u6A19\u5024)\n" + "DP\u306E\u53D6\u5F97\u306E\u6709\u7121\u3082\u8868\u793A\u3055\u308C\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "絶対隷奴");
+    Opal.const_set($nesting[0], 'SORT_KEY', "せつたいれいと");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "m-2DR+n>=x\n" + "m(基本能力),n(修正値),x(目標値)\n" + "DPの取得の有無も表示されます。\n");
     self.$setPrefixes(["\\d+\\-2DR.*"]);
     
     Opal.def(self, '$rollDiceCommand', $ZettaiReido_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -53,9 +53,9 @@
       $b = self.$getDiffInfo(diffValue), $a = Opal.to_ary($b), (diff = ($a[0] == null ? nil : $a[0])), (diffText = ($a[1] == null ? nil : $a[1])), $b;
       output = "";
       output = $rb_plus(output, "" + "(" + (baseAvility) + "-2DR" + (modText) + (diffText) + ")");
-      output = $rb_plus(output, "" + " \uFF1E " + (baseAvility) + "-" + (diceTotal) + "[" + (diceText) + "]" + (modText));
+      output = $rb_plus(output, "" + " ＞ " + (baseAvility) + "-" + (diceTotal) + "[" + (diceText) + "]" + (modText));
       total = $rb_plus($rb_minus(baseAvility, diceTotal), mod);
-      output = $rb_plus(output, "" + " \uFF1E " + (total));
+      output = $rb_plus(output, "" + " ＞ " + (total));
       successText = self.$getSuccessText(diceTotal, total, diff);
       output = $rb_plus(output, successText);
       darkPointText = self.$getDarkPointResult(total, diff, darkPoint);
@@ -132,7 +132,7 @@
       
       text = "";
       if ($truthy($rb_gt(darkPoint, 0))) {
-        text = "" + " \uFF1E " + (darkPoint) + "DP"};
+        text = "" + " ＞ " + (darkPoint) + "DP"};
       return text;
     }, $ZettaiReido_getDarkPointResult$8.$$arity = 3);
     return (Opal.def(self, '$getSuccessText', $ZettaiReido_getSuccessText$9 = function $$getSuccessText(diceTotal, total, diff) {
@@ -140,15 +140,15 @@
 
       
       if (diceTotal['$=='](0)) {
-        return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"};
+        return " ＞ クリティカル"};
       if (diceTotal['$=='](10)) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"};
+        return " ＞ ファンブル"};
       if ($truthy(diff['$nil?']())) {
         diff = 0};
       successLevel = $rb_minus(total, diff);
       if ($truthy($rb_ge(successLevel, 0))) {
-        return "" + " \uFF1E " + (successLevel) + " \u6210\u529F"};
-      return " \uFF1E \u5931\u6557";
+        return "" + " ＞ " + (successLevel) + " 成功"};
+      return " ＞ 失敗";
     }, $ZettaiReido_getSuccessText$9.$$arity = 3), nil) && 'getSuccessText';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

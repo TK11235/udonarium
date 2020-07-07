@@ -9,9 +9,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "RoleMaster");
-    Opal.const_set($nesting[0], 'NAME', "\u30ED\u30FC\u30EB\u30DE\u30B9\u30BF\u30FC");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308D\u304A\u308B\u307E\u3059\u305F\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u4E0A\u65B9\u7121\u9650\u30ED\u30FC\u30EB(xUn)\u306E\u5883\u754C\u5024\u309296\u306B\u30BB\u30C3\u30C8\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ロールマスター");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ろおるますたあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "上方無限ロール(xUn)の境界値を96にセットします。\n");
     return (Opal.def(self, '$initialize', $RoleMaster_initialize$1 = function $$initialize() {
       var $iter = $RoleMaster_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
 

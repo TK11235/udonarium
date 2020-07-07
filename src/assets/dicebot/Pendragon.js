@@ -19,9 +19,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Pendragon");
-    Opal.const_set($nesting[0], 'NAME', "\u30DA\u30F3\u30C9\u30E9\u30B4\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3078\u3093\u3068\u3089\u3053\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u6210\u529F\u3001\u5931\u6557\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ペンドラゴン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "へんとらこん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "クリティカル、成功、失敗、ファンブルの自動判定を行います。\n");
     return (Opal.def(self, '$check_1D20', $Pendragon_check_1D20$1 = function $$check_1D20(total, _dice_total, cmp_op, target) {
       var $a, self = this;
 
@@ -32,14 +32,14 @@
       };
       if ($truthy($rb_le(total, target))) {
         if ($truthy(($truthy($a = $rb_ge(total, $rb_minus(40, target))) ? $a : total['$=='](target)))) {
-          return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+          return " ＞ クリティカル"
         } else {
-          return " \uFF1E \u6210\u529F"
+          return " ＞ 成功"
         }
       } else if (total['$=='](20)) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $Pendragon_check_1D20$1.$$arity = 4), nil) && 'check_1D20';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

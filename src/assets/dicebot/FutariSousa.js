@@ -20,9 +20,9 @@
     self.$$prototype.special_dice = self.$$prototype.success_threshold = nil;
     
     Opal.const_set($nesting[0], 'ID', "FutariSousa");
-    Opal.const_set($nesting[0], 'NAME', "\u30D5\u30BF\u30EA\u30BD\u30A6\u30B5");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3075\u305F\u308A\u305D\u3046\u3055");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u7528\u30B3\u30DE\u30F3\u30C9\n" + "\u63A2\u5075\u7528\uFF1A\u3010DT\u3011\u202610\u9762\u30C0\u30A4\u30B9\u30922\u3064\u632F\u3063\u3066\u5224\u5B9A\u3057\u307E\u3059\u3002\u300E\u6709\u5229\u300F\u306A\u3089\u30103DT\u3011\u3001\u300E\u4E0D\u5229\u300F\u306A\u3089\u30101DT\u3011\u3092\u4F7F\u3044\u307E\u3059\u3002\n" + "\u52A9\u624B\u7528\uFF1A\u3010AS\u3011\u20266\u9762\u30C0\u30A4\u30B9\u30922\u3064\u632F\u3063\u3066\u5224\u5B9A\u3057\u307E\u3059\u3002\u300E\u6709\u5229\u300F\u306A\u3089\u30103AS\u3011\u3001\u300E\u4E0D\u5229\u300F\u306A\u3089\u30101AS\u3011\u3092\u4F7F\u3044\u307E\u3059\u3002\n" + "\u30FB\u5404\u7A2E\u8868\n" + "\u3010\u8ABF\u67FB\u6642\u3011\n" + "\u7570\u5E38\u306A\u7656\u6C7A\u5B9A\u8868 SHRD\n" + "\u3000\u53E3\u304B\u3089\u51FA\u308B\u8868 SHFM\uFF0F\u5F37\u5F15\u306A\u635C\u67FB\u8868\u3000\u3000\u3000 SHBT\uFF0F\u3059\u3063\u3068\u307C\u3051\u8868\u3000 SHPI\n" + "\u3000\u4E8B\u4EF6\u306B\u5922\u4E2D\u8868 SHEG\uFF0F\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u2026\u2026\u8868 SHWP\uFF0F\u4F55\u304B\u3057\u3066\u3044\u308B\u8868 SHDS\n" + "\u3000\u5947\u60F3\u5929\u5916\u8868\u3000 SHFT\uFF0F\u6025\u306A\u3072\u3089\u3081\u304D\u8868\u3000\u3000 SHIN\uFF0F\u559C\u6012\u54C0\u697D\u8868\u3000\u3000 SHEM\n" + "\u30A4\u30D9\u30F3\u30C8\u8868\n" + "\u3000\u73FE\u5834\u306B\u3066\u3000 EVS\uFF0F\u306A\u305C\uFF1F\u3000 EVW\uFF0F\u5354\u529B\u8005\u3068\u5171\u306B EVN\n" + "\u3000\u5411\u3053\u3046\u304B\u3089 EVC\uFF0FVS\u5BB9\u7591\u8005 EVV\n" + "\u8ABF\u67FB\u306E\u969C\u5BB3\u8868 OBT\u3000\u3000\u5909\u8ABF\u8868 ACT\u3000\u3000\u76EE\u6483\u8005\u8868 EWT\u3000\u3000\u8FF7\u5BAE\u5165\u308A\u8868 WMT\n" + "\u3010\u8A2D\u5B9A\u6642\u3011\n" + "\u80CC\u666F\u8868\n" + "\u3000\u63A2\u5075\u3000\u904B\u547D\u306E\u8840\u7D71 BGDD\uFF0F\u5929\u6027\u306E\u624D\u80FD BGDG\uFF0F\u30DE\u30CB\u30A2\u3000\u3000\u3000\u3000 BGDM\n" + "\u3000\u52A9\u624B\u3000\u6B63\u7FA9\u306E\u4EBA\u3000 BGAJ\uFF0F\u60C5\u71B1\u306E\u4EBA\u3000 BGAP\uFF0F\u5DFB\u304D\u8FBC\u307E\u308C\u306E\u4EBA BGAI\n" + "\u8EAB\u9577\u8868 HT\u3000\u3000\u305F\u307E\u308A\u5834\u8868 BT\u3000\u3000\u95A2\u4FC2\u8868 GRT\u3000\u3000\u601D\u3044\u51FA\u306E\u54C1\u6C7A\u5B9A\u8868 MIT\n" + "\u8077\u696D\u8868A\u30FBB\u3000\u3000JBT66\u30FBJBT10\u3000\u3000\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u7279\u5FB4\u8868A\u30FBB\u3000\u3000\u3000\u3000FST66\u30FBFST10\n" + "\u611F\u60C5\u8868A\uFF0FB\u3000\u3000FLT66\u30FBFLT10\u3000\u3000\u597D\u304D\u306A\u3082\u306E\uFF0F\u5ACC\u3044\u306A\u3082\u306E\u8868A\u30FBB\u3000LDT66\u30FBLDT10\n" + "\u547C\u3073\u540D\u8868A\u30FBB\u3000NCT66\u30FBNCT10\n");
+    Opal.const_set($nesting[0], 'NAME', "フタリソウサ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ふたりそうさ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定用コマンド\n" + "探偵用：【DT】…10面ダイスを2つ振って判定します。『有利』なら【3DT】、『不利』なら【1DT】を使います。\n" + "助手用：【AS】…6面ダイスを2つ振って判定します。『有利』なら【3AS】、『不利』なら【1AS】を使います。\n" + "・各種表\n" + "【調査時】\n" + "異常な癖決定表 SHRD\n" + "　口から出る表 SHFM／強引な捜査表　　　 SHBT／すっとぼけ表　 SHPI\n" + "　事件に夢中表 SHEG／パートナーと……表 SHWP／何かしている表 SHDS\n" + "　奇想天外表　 SHFT／急なひらめき表　　 SHIN／喜怒哀楽表　　 SHEM\n" + "イベント表\n" + "　現場にて　 EVS／なぜ？　 EVW／協力者と共に EVN\n" + "　向こうから EVC／VS容疑者 EVV\n" + "調査の障害表 OBT　　変調表 ACT　　目撃者表 EWT　　迷宮入り表 WMT\n" + "【設定時】\n" + "背景表\n" + "　探偵　運命の血統 BGDD／天性の才能 BGDG／マニア　　　　 BGDM\n" + "　助手　正義の人　 BGAJ／情熱の人　 BGAP／巻き込まれの人 BGAI\n" + "身長表 HT　　たまり場表 BT　　関係表 GRT　　思い出の品決定表 MIT\n" + "職業表A・B　　JBT66・JBT10　　ファッション特徴表A・B　　　　FST66・FST10\n" + "感情表A／B　　FLT66・FLT10　　好きなもの／嫌いなもの表A・B　LDT66・LDT10\n" + "呼び名表A・B　NCT66・NCT10\n");
     
     Opal.def(self, '$initialize', $FutariSousa_initialize$1 = function $$initialize() {
       var $iter = $FutariSousa_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -58,123 +58,123 @@
       count = ($truthy($a = $$($nesting, 'Regexp').$last_match(1)) ? $a : 2).$to_i();
       $b = self.$get_as(count), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHRD"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u6C7A\u5B9A\u8868";
+      type = "異常な癖決定表";
       $b = self.$get_strange_habit_random(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHFM"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u53E3\u304B\u3089\u51FA\u308B\u8868";
+      type = "異常な癖・口から出る表";
       $b = self.$get_strange_habit_from_mouth(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHBT"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u5F37\u5F15\u306A\u635C\u67FB\u8868";
+      type = "異常な癖・強引な捜査表";
       $b = self.$get_strange_habit_bull_through(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHPI"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u3059\u3063\u3068\u307C\u3051\u8868";
+      type = "異常な癖・すっとぼけ表";
       $b = self.$get_strange_habit_play_innocent(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHEG"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u4E8B\u4EF6\u306B\u5922\u4E2D\u8868";
+      type = "異常な癖・事件に夢中表";
       $b = self.$get_strange_habit_engrossed(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHWP"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u2026\u2026\u8868";
+      type = "異常な癖・パートナーと……表";
       $b = self.$get_strange_habit_with_partner(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHDS"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u4F55\u304B\u3057\u3066\u3044\u308B\u8868";
+      type = "異常な癖・何かしている表";
       $b = self.$get_strange_habit_do_something(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHFT"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u5947\u60F3\u5929\u5916\u8868";
+      type = "異常な癖・奇想天外表";
       $b = self.$get_strange_habit_fantastic(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHIN"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u6025\u306A\u3072\u3089\u3081\u304D\u8868";
+      type = "異常な癖・急なひらめき表";
       $b = self.$get_strange_habit_inspiration(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("SHEM"['$===']($case)) {
-      type = "\u7570\u5E38\u306A\u7656\u30FB\u559C\u6012\u54C0\u697D\u8868";
+      type = "異常な癖・喜怒哀楽表";
       $b = self.$get_strange_habit_emotion(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVS"['$===']($case)) {
-      type = "\u73FE\u5834\u306B\u3066\uFF0F\u30A4\u30D9\u30F3\u30C8\u8868";
+      type = "現場にて／イベント表";
       $b = self.$get_event_scene(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVW"['$===']($case)) {
-      type = "\u306A\u305C\uFF1F\uFF0F\u30A4\u30D9\u30F3\u30C8\u8868";
+      type = "なぜ？／イベント表";
       $b = self.$get_event_why(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVN"['$===']($case)) {
-      type = "\u5354\u529B\u8005\u3068\u5171\u306B\uFF0F\u30A4\u30D9\u30F3\u30C8\u8868";
+      type = "協力者と共に／イベント表";
       $b = self.$get_event_npc(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVC"['$===']($case)) {
-      type = "\u5411\u3053\u3046\u304B\u3089\uFF0F\u30A4\u30D9\u30F3\u30C8\u8868";
+      type = "向こうから／イベント表";
       $b = self.$get_event_coming(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EVV"['$===']($case)) {
-      type = "VS\u5BB9\u7591\u8005\uFF0F\u30A4\u30D9\u30F3\u30C8\u8868";
+      type = "VS容疑者／イベント表";
       $b = self.$get_event_vs(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("OBT"['$===']($case)) {
-      type = "\u8ABF\u67FB\u306E\u969C\u5BB3\u8868";
+      type = "調査の障害表";
       $b = self.$get_obstruction_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("ACT"['$===']($case)) {
-      type = "\u5909\u8ABF\u8868";
+      type = "変調表";
       $b = self.$get_abnormal_condition(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("EWT"['$===']($case)) {
-      type = "\u76EE\u6483\u8005\u8868";
+      type = "目撃者表";
       $b = self.$get_eyewitness_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("WMT"['$===']($case)) {
-      type = "\u8FF7\u5BAE\u5165\u308A\u8868";
+      type = "迷宮入り表";
       $b = self.$get_wrapped_in_mystery_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGDD"['$===']($case)) {
-      type = "\u63A2\u5075\u30FB\u904B\u547D\u306E\u8840\u7D71 \u80CC\u666F\u8868";
+      type = "探偵・運命の血統 背景表";
       $b = self.$get_background_detective_destiny(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGDG"['$===']($case)) {
-      type = "\u63A2\u5075\u30FB\u5929\u6027\u306E\u624D\u80FD \u80CC\u666F\u8868";
+      type = "探偵・天性の才能 背景表";
       $b = self.$get_background_detective_genius(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGDM"['$===']($case)) {
-      type = "\u63A2\u5075\u30FB\u30DE\u30CB\u30A2 \u80CC\u666F\u8868";
+      type = "探偵・マニア 背景表";
       $b = self.$get_background_detective_mania(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGAJ"['$===']($case)) {
-      type = "\u52A9\u624B\u30FB\u6B63\u7FA9\u306E\u4EBA \u80CC\u666F\u8868";
+      type = "助手・正義の人 背景表";
       $b = self.$get_background_assistant_justice(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGAP"['$===']($case)) {
-      type = "\u52A9\u624B\u30FB\u60C5\u71B1\u306E\u4EBA \u80CC\u666F\u8868";
+      type = "助手・情熱の人 背景表";
       $b = self.$get_background_assistant_passion(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BGAI"['$===']($case)) {
-      type = "\u52A9\u624B\u30FB\u5DFB\u304D\u8FBC\u307E\u308C\u306E\u4EBA \u80CC\u666F\u8868";
+      type = "助手・巻き込まれの人 背景表";
       $b = self.$get_background_assistant_involved(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("HT"['$===']($case)) {
-      type = "\u8EAB\u9577\u8868";
+      type = "身長表";
       $b = self.$get_height_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("BT"['$===']($case)) {
-      type = "\u305F\u307E\u308A\u5834\u8868";
+      type = "たまり場表";
       $b = self.$get_base_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("GRT"['$===']($case)) {
-      type = "\u95A2\u4FC2\u8868";
+      type = "関係表";
       $b = self.$get_guest_relation_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("MIT"['$===']($case)) {
-      type = "\u601D\u3044\u51FA\u306E\u54C1\u6C7A\u5B9A\u8868";
+      type = "思い出の品決定表";
       $b = self.$get_memorial_item_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("JBT66"['$===']($case)) {
-      type = "\u8077\u696D\u8868A";
+      type = "職業表A";
       $b = self.$get_job_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("JBT10"['$===']($case)) {
-      type = "\u8077\u696D\u8868B";
+      type = "職業表B";
       $b = self.$get_job_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FST66"['$===']($case)) {
-      type = "\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u7279\u5FB4\u8868A";
+      type = "ファッション特徴表A";
       $b = self.$get_fashion_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FST10"['$===']($case)) {
-      type = "\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u7279\u5FB4\u8868B";
+      type = "ファッション特徴表B";
       $b = self.$get_fashion_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FLT66"['$===']($case)) {
-      type = "\u611F\u60C5\u8868A";
+      type = "感情表A";
       $b = self.$get_feeling_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("FLT10"['$===']($case)) {
-      type = "\u611F\u60C5\u8868B";
+      type = "感情表B";
       $b = self.$get_feeling_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("LDT66"['$===']($case)) {
-      type = "\u597D\u304D\u306A\u3082\u306E\uFF0F\u5ACC\u3044\u306A\u3082\u306E\u8868A";
+      type = "好きなもの／嫌いなもの表A";
       $b = self.$get_like_dislike_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("LDT10"['$===']($case)) {
-      type = "\u597D\u304D\u306A\u3082\u306E\uFF0F\u5ACC\u3044\u306A\u3082\u306E\u8868B";
+      type = "好きなもの／嫌いなもの表B";
       $b = self.$get_like_dislike_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("NCT66"['$===']($case)) {
-      type = "\u547C\u3073\u540D\u8868A";
+      type = "呼び名表A";
       $b = self.$get_name_to_call_table_66(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("NCT10"['$===']($case)) {
-      type = "\u547C\u3073\u540D\u8868B";
+      type = "呼び名表B";
       $b = self.$get_name_to_call_table_10(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;};
-      return "" + (type) + "(" + (diceText) + ") \uFF1E " + (output);
+      return "" + (type) + "(" + (diceText) + ") ＞ " + (output);
     }, $FutariSousa_rollDiceCommand$2.$$arity = 1);
     
     Opal.def(self, '$get_dt', $FutariSousa_get_dt$3 = function $$get_dt(count) {
@@ -198,12 +198,12 @@
       
       max = diceList.$max();
       if ($truthy($rb_le(max, 1))) {
-        return "\u30D5\u30A1\u30F3\u30D6\u30EB\uFF08\u5909\u8ABF\u3092\u53D7\u3051\u3001\u52A9\u624B\u306E\u5FC3\u52B4\u304C1\u70B9\u4E0A\u6607\uFF09"};
+        return "ファンブル（変調を受け、助手の心労が1点上昇）"};
       if ($truthy(diceList['$include?'](self.special_dice))) {
-        return "\u30B9\u30DA\u30B7\u30E3\u30EB\uFF08\u52A9\u624B\u306E\u4F59\u88D5\u30921\u70B9\u7372\u5F97\uFF09"};
+        return "スペシャル（助手の余裕を1点獲得）"};
       if ($truthy($rb_ge(max, self.success_threshold))) {
-        return "\u6210\u529F"};
-      return "\u5931\u6557";
+        return "成功"};
+      return "失敗";
     }, $FutariSousa_get_dt_result$5.$$arity = 1);
     
     Opal.def(self, '$get_as', $FutariSousa_get_as$6 = function $$get_as(count) {
@@ -227,12 +227,12 @@
       
       max = diceList.$max();
       if ($truthy($rb_le(max, 1))) {
-        return "\u30D5\u30A1\u30F3\u30D6\u30EB\uFF08\u5909\u8ABF\u3092\u53D7\u3051\u3001\u5FC3\u52B4\u304C1\u70B9\u4E0A\u6607\uFF09"};
+        return "ファンブル（変調を受け、心労が1点上昇）"};
       if ($truthy(diceList['$include?'](self.special_dice))) {
-        return "\u30B9\u30DA\u30B7\u30E3\u30EB\uFF08\u4F59\u88D52\u70B9\u3068\u3001\u63A2\u5075\u304B\u3089\u52A9\u624B\u3078\u306E\u611F\u60C5\u3092\u7372\u5F97\uFF09"};
+        return "スペシャル（余裕2点と、探偵から助手への感情を獲得）"};
       if ($truthy($rb_ge(max, self.success_threshold))) {
-        return "\u6210\u529F\uFF08\u4F59\u88D51\u70B9\u3068\u3001\u63A2\u5075\u304B\u3089\u52A9\u624B\u3078\u306E\u611F\u60C5\u3092\u7372\u5F97\uFF09"};
-      return "\u5931\u6557";
+        return "成功（余裕1点と、探偵から助手への感情を獲得）"};
+      return "失敗";
     }, $FutariSousa_get_as_result$8.$$arity = 1);
     
     Opal.def(self, '$getTableResult', $FutariSousa_getTableResult$9 = function $$getTableResult(table, dice) {
@@ -261,15 +261,15 @@
         return command};
       text = self.$rollDiceCommand(command);
       if ($truthy(text['$nil?']())) {
-        return "" + " \uFF1E " + (command) + " is NOT found."};
-      return "" + " \uFF1E \n " + (command) + " \uFF1E " + (text);
+        return "" + " ＞ " + (command) + " is NOT found."};
+      return "" + " ＞ \n " + (command) + " ＞ " + (text);
     }, $FutariSousa_getAddRoll$12.$$arity = 1);
     
     Opal.def(self, '$get_strange_habit_random', $FutariSousa_get_strange_habit_random$13 = function $$get_strange_habit_random() {
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u53E3\u304B\u3089\u51FA\u308B\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [2, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u5F37\u5F15\u306A\u635C\u67FB\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [3, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u3059\u3063\u3068\u307C\u3051\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [4, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u4E8B\u4EF6\u306B\u5922\u4E2D\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [5, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u2026\u2026\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [6, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u4F55\u304B\u3057\u3066\u3044\u308B\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [7, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u6025\u306A\u3072\u3089\u3081\u304D\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [8, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u559C\u6012\u54C0\u697D\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [9, "\u300C\u7570\u5E38\u306A\u7656\u30FB\u5947\u60F3\u5929\u5916\u8868\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"], [10, "\u597D\u304D\u306A\u300C\u7570\u5E38\u306A\u7656\u300D\u306E\u8868\u3092\u4F7F\u7528\u3059\u308B\u3002"]];
+      table = [[1, "「異常な癖・口から出る表」の表を使用する。"], [2, "「異常な癖・強引な捜査表」の表を使用する。"], [3, "「異常な癖・すっとぼけ表」の表を使用する。"], [4, "「異常な癖・事件に夢中表」の表を使用する。"], [5, "「異常な癖・パートナーと……表」の表を使用する。"], [6, "「異常な癖・何かしている表」の表を使用する。"], [7, "「異常な癖・急なひらめき表」の表を使用する。"], [8, "「異常な癖・喜怒哀楽表」の表を使用する。"], [9, "「異常な癖・奇想天外表」の表を使用する。"], [10, "好きな「異常な癖」の表を使用する。"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -279,7 +279,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u731B\u70C8\u306B\u611F\u8B1D\u306E\u8A00\u8449\u3092\u8FF0\u3079\u308B"], [2, "\u76AE\u8089\u3070\u304B\u308A\u8A00\u3063\u3066\u3057\u307E\u3046"], [3, "\u76F8\u624B\u306E\u8A00\u8449\u3092\u80AF\u5B9A\u3057\u3066\u304B\u3089\u5426\u5B9A\u3059\u308B"], [4, "\u30CB\u30E4\u30CB\u30E4\u7B11\u3044\u306A\u304C\u3089\u8B1D\u308B"], [5, "\u76F8\u624B\u306E\u8A00\u8449\u3092\u805E\u304B\u305A\u306B\u81EA\u5206\u3060\u3051\u558B\u308B"], [6, "\u300C\u3053\u3046\u306F\u8003\u3048\u3089\u308C\u306A\u3044\u3067\u3057\u3087\u3046\u304B\u300D"], [7, "\u300C\u305D\u308C\u3068\u3082\u3001\u4F55\u304B\u96A0\u3057\u3066\u3044\u308B\u3053\u3068\u3067\u3082\uFF1F\u300D"], [8, "\u300C\u5999\u3067\u3059\u306D\u300D"], [9, "\u300C\u3060\u3044\u305F\u3044\u308F\u304B\u308A\u307E\u3057\u305F\u300D"], [10, "\u300C\u9ED9\u3063\u3066\u3044\u308D\u300D"]];
+      table = [[1, "猛烈に感謝の言葉を述べる"], [2, "皮肉ばかり言ってしまう"], [3, "相手の言葉を肯定してから否定する"], [4, "ニヤニヤ笑いながら謝る"], [5, "相手の言葉を聞かずに自分だけ喋る"], [6, "「こうは考えられないでしょうか」"], [7, "「それとも、何か隠していることでも？」"], [8, "「妙ですね」"], [9, "「だいたいわかりました」"], [10, "「黙っていろ」"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -289,7 +289,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u52DD\u624B\u306B\u635C\u67FB\u5BFE\u8C61\u306E\u9784\u3084\u5F15\u304D\u51FA\u3057\u3092\u958B\u3051\u308B"], [2, "\u8B66\u5BDF\u306E\u635C\u67FB\u306B\u5272\u308A\u8FBC\u3080"], [3, "\u635C\u67FB\u306E\u305F\u3081\u306B\u30CF\u30C3\u30AD\u30F3\u30B0\u3084\u4E0D\u6CD5\u4FB5\u5165\u3092\u884C\u3046"], [4, "\u8A31\u53EF\u3055\u308C\u3066\u3044\u306A\u3044\u3068\u3053\u308D\u306B\u7ACB\u3061\u5165\u308B"], [5, "\u8B66\u5BDF\u306E\u635C\u67FB\u3092\u76D7\u307F\u898B\u3084\u76D7\u307F\u805E\u304D\u3059\u308B"], [6, "\u8A3C\u62E0\u54C1\u3092\u8A31\u53EF\u306A\u304F\u89E3\u4F53\u3059\u308B"], [7, "\u635C\u67FB\u5BFE\u8C61\u3092\u9A19\u3057\u3066\u60C5\u5831\u3092\u805E\u304D\u51FA\u3059"], [8, "\u52DD\u624B\u306B\u95A2\u4FC2\u8005\u306E\u6301\u3061\u7269\u3092\u89E6\u308B"], [9, "\u8A3C\u62E0\u54C1\u3092\u52DD\u624B\u306B\u6301\u3061\u6B69\u3044\u3066\u3044\u308B"], [10, "\u52DD\u624B\u306B\u9451\u8B58\u3092\u59CB\u3081\u308B"]];
+      table = [[1, "勝手に捜査対象の鞄や引き出しを開ける"], [2, "警察の捜査に割り込む"], [3, "捜査のためにハッキングや不法侵入を行う"], [4, "許可されていないところに立ち入る"], [5, "警察の捜査を盗み見や盗み聞きする"], [6, "証拠品を許可なく解体する"], [7, "捜査対象を騙して情報を聞き出す"], [8, "勝手に関係者の持ち物を触る"], [9, "証拠品を勝手に持ち歩いている"], [10, "勝手に鑑識を始める"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -299,7 +299,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u81EA\u5206\u306E\u8EAB\u5206\u3092\u507D\u3063\u3066\u95A2\u4FC2\u8005\u306B\u8A71\u3092\u805E\u304F"], [2, "\u60C5\u5831\u3092\u96A0\u3057\u306A\u304C\u3089\u8A71\u3092\u805E\u304F"], [3, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u6F14\u6280\u3092\u3057\u3066\u60C5\u5831\u3092\u805E\u304D\u51FA\u305D\u3046\u3068\u3059\u308B"], [4, "\u901A\u884C\u4EBA\u306E\u3075\u308A\u3092\u3057\u3066\u3001\u95A2\u4FC2\u8005\u306E\u8A71\u3092\u76D7\u307F\u805E\u304D"], [5, "\u5076\u7136\u3092\u88C5\u3063\u3066\u8A3C\u62E0\u54C1\u3092\u624B\u306B\u5165\u308C\u3066\u3057\u307E\u3046"], [6, "\u308F\u3056\u3068\u3089\u3057\u304F\u3059\u3063\u3068\u307C\u3051\u308B"], [7, "\u95A2\u4FC2\u8005\u3092\u6012\u3089\u305B\u308B\u6F14\u6280\u3092\u3057\u3066\u3001\u60C5\u5831\u3092\u5F15\u304D\u51FA\u3059"], [8, "\u3084\u3093\u308F\u308A\u3068\u95A2\u4FC2\u8005\u3092\u8105\u3059"], [9, "\u843D\u3057\u7269\u3092\u3057\u305F\u3068\u4E3B\u5F35\u3057\u3066\u73FE\u5834\u3084\u8A3C\u62E0\u54C1\u3092\u6F01\u308B"], [10, "\u95A2\u4FC2\u8005\u306B\u8A98\u5C0E\u5C0B\u554F\u3092\u4ED5\u639B\u3051\u308B"]];
+      table = [[1, "自分の身分を偽って関係者に話を聞く"], [2, "情報を隠しながら話を聞く"], [3, "パートナーと演技をして情報を聞き出そうとする"], [4, "通行人のふりをして、関係者の話を盗み聞き"], [5, "偶然を装って証拠品を手に入れてしまう"], [6, "わざとらしくすっとぼける"], [7, "関係者を怒らせる演技をして、情報を引き出す"], [8, "やんわりと関係者を脅す"], [9, "落し物をしたと主張して現場や証拠品を漁る"], [10, "関係者に誘導尋問を仕掛ける"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -309,7 +309,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u4F53\u3092\u4F7F\u3063\u3066\u4E8B\u4EF6\u3092\u518D\u73FE\u3057\u3088\u3046\u3068\u3059\u308B"], [2, "\u8B0E\u3092\u89E3\u304F\u3053\u3068\u304C\u697D\u3057\u304F\u3066\u7B11\u3063\u3066\u3057\u307E\u3046"], [3, "\u5BDD\u98DF\u3092\u5FD8\u308C\u3066\u635C\u67FB\u3092\u3057\u3066\u3044\u305F\u306E\u3067\u6025\u306B\u5012\u308C\u308B"], [4, "\u8003\u3048\u4E8B\u3092\u3057\u3066\u3044\u3066\u3001\u8AB0\u306E\u58F0\u3082\u805E\u3053\u3048\u306A\u3044"], [5, "\u4E8B\u4EF6\u306E\u76F8\u95A2\u56F3\u3092\u624B\u8FD1\u306A\u58C1\u3084\u5E8A\u306B\u63CF\u304D\u59CB\u3081\u308B"], [6, "\u4E8B\u4EF6\u306B\u95A2\u4FC2\u3059\u308B\u8A00\u8449\u3092\u6B21\u3005\u306B\u767A\u3057\u3066\u6B62\u307E\u3089\u306A\u3044"], [7, "\u4E8B\u4EF6\u89E3\u6C7A\u4EE5\u5916\u306E\u3053\u3068\u3092\u307E\u3063\u305F\u304F\u8003\u3048\u3066\u3044\u306A\u3044"], [8, "\u4E8B\u4EF6\u306E\u6D41\u308C\u3092\u3076\u3064\u3076\u3064\u3068\u558B\u308A\u59CB\u3081\u308B"], [9, "\u4E8B\u4EF6\u73FE\u5834\u306B\u8E0F\u307F\u8FBC\u3093\u3067\u8ABF\u3079\u7269\u3092\u3059\u308B"], [10, "\u98DF\u4E8B\u4E2D\u3067\u3082\u3001\u304B\u307E\u308F\u305A\u306B\u4E8B\u4EF6\u306E\u8A71\u3092\u3059\u308B"]];
+      table = [[1, "パートナーの体を使って事件を再現しようとする"], [2, "謎を解くことが楽しくて笑ってしまう"], [3, "寝食を忘れて捜査をしていたので急に倒れる"], [4, "考え事をしていて、誰の声も聞こえない"], [5, "事件の相関図を手近な壁や床に描き始める"], [6, "事件に関係する言葉を次々に発して止まらない"], [7, "事件解決以外のことをまったく考えていない"], [8, "事件の流れをぶつぶつと喋り始める"], [9, "事件現場に踏み込んで調べ物をする"], [10, "食事中でも、かまわずに事件の話をする"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -319,7 +319,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u4FE1\u983C\u306B\u7518\u3048\u308B"], [2, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u7F6E\u3044\u3066\u5148\u306B\u884C\u3063\u3066\u3057\u307E\u3046"], [3, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u4E8B\u4EF6\u306B\u3064\u3044\u3066\u3069\u3046\u601D\u3063\u3066\u3044\u308B\u304B\u8CEA\u554F\u3059\u308B"], [4, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u81EA\u6162\u3059\u308B"], [5, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u4E8B\u4EF6\u306B\u95A2\u3059\u308B\u30AF\u30A4\u30BA\u3092\u51FA\u984C\u3059\u308B"], [6, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u4E9B\u7D30\u306A\u3053\u3068\u3067\u55A7\u5629\u3092\u3059\u308B"], [7, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u6559\u5E2B\u306E\u3088\u3046\u306B\u3075\u308B\u307E\u3046"], [8, "\u30D1\u30FC\u30C8\u30CA\u30FC\u304C\u3064\u3044\u3066\u304F\u308B\u524D\u63D0\u3067\u52DD\u624B\u306B\u52D5\u304F"], [9, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u5BFE\u3057\u3066\u61C7\u5207\u4E01\u5BE7\u306B\u4E8B\u4EF6\u3092\u8AAC\u660E\u3059\u308B"], [10, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u8033\u5143\u3067\u3044\u304D\u306A\u308A\u558B\u308A\u59CB\u3081\u308B"]];
+      table = [[1, "パートナーの信頼に甘える"], [2, "パートナーを置いて先に行ってしまう"], [3, "パートナーに事件についてどう思っているか質問する"], [4, "パートナーに自慢する"], [5, "パートナーに事件に関するクイズを出題する"], [6, "パートナーと些細なことで喧嘩をする"], [7, "パートナーに教師のようにふるまう"], [8, "パートナーがついてくる前提で勝手に動く"], [9, "パートナーに対して懇切丁寧に事件を説明する"], [10, "パートナーの耳元でいきなり喋り始める"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -329,7 +329,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u5927\u91CF\u306E\u672C\u3092\u8AAD\u3093\u3067\u3044\u308B"], [2, "\u597D\u304D\u306A\u97F3\u697D\u3092\u5927\u97F3\u91CF\u3067\u6D41\u3057\u3066\u3044\u308B"], [3, "\u4F55\u304B\u306E\u6570\u5F0F\u3092\u89E3\u3044\u3066\u3044\u308B"], [4, "\u5927\u91CF\u306E\u597D\u7269\u3092\u305A\u3063\u3068\u98DF\u3079\u3066\u3044\u308B"], [5, "\u305A\u3063\u3068\u30D1\u30BD\u30B3\u30F3\u3084\u30B9\u30DE\u30FC\u30C8\u30D5\u30A9\u30F3\u306A\u3069\u306E\u753B\u9762\u3068\u5411\u304B\u3044\u5408\u3063\u3066\u8ABF\u3079\u3066\u3044\u308B"], [6, "\u5C0F\u3055\u306A\u8B0E\u3092\u89E3\u3044\u3066\u3044\u308B"], [7, "\u30C1\u30A7\u30B9\u3084\u5C06\u68CB\u306A\u3069\u3092\u6307\u3057\u3066\u3044\u308B"], [8, "\u55AB\u8336\u5E97\u306E\u5E2D\u306B\u5EA7\u3063\u3066\u4F55\u304B\u3092\u5F85\u3063\u3066\u3044\u308B"], [9, "\u305A\u3063\u3068\u7720\u3063\u3066\u3044\u305F\u304C\u6025\u306B\u8D77\u304D\u308B"], [10, "\u3057\u3070\u3089\u304F\u4F55\u3082\u3057\u3066\u3044\u306A\u3044"]];
+      table = [[1, "大量の本を読んでいる"], [2, "好きな音楽を大音量で流している"], [3, "何かの数式を解いている"], [4, "大量の好物をずっと食べている"], [5, "ずっとパソコンやスマートフォンなどの画面と向かい合って調べている"], [6, "小さな謎を解いている"], [7, "チェスや将棋などを指している"], [8, "喫茶店の席に座って何かを待っている"], [9, "ずっと眠っていたが急に起きる"], [10, "しばらく何もしていない"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -339,7 +339,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u3084\u3081\u308D\u3068\u8A00\u308F\u308C\u3066\u3044\u308B\u3053\u3068\u3092\u3059\u308B"], [2, "\u3057\u3070\u3089\u304F\u59FF\u3092\u6D88\u3057\u3066\u3044\u305F\u304C\u623B\u3063\u3066\u6765\u305F"], [3, "\u4E88\u60F3\u3082\u3064\u304B\u306A\u3044\u3068\u3053\u308D\uFF08\u5730\u4E2D\u3084\u7A7A\u4E2D\u306A\u3069\uFF09\u304B\u3089\u767B\u5834\u3059\u308B"], [4, "\u4F55\u304B\u3092\u601D\u3044\u3064\u3044\u3066\u7A81\u7136\u8D70\u308A\u51FA\u3059"], [5, "\u3075\u304C\u3044\u306A\u3044\u81EA\u5206\u3092\u8CAC\u3081\u308B"], [6, "\u77E5\u3089\u306A\u3044\u3046\u3061\u306B\u4E8B\u4EF6\u306E\u8B0E\u3092\u4E00\u3064\u89E3\u3044\u3066\u3044\u305F"], [7, "\u4E8B\u4EF6\u306B\u3064\u3044\u3066\u5206\u304B\u3063\u305F\u69D8\u5B50\u3060\u304C\u8AB0\u306B\u3082\u6559\u3048\u306A\u3044"], [8, "\u7F6E\u304D\u624B\u7D19\u3084\u30E1\u30FC\u30EB\u3067\u5831\u544A\u3092\u3059\u308B\u3082\u59FF\u304C\u898B\u3048\u306A\u3044"], [9, "\u6642\u8A08\u3092\u898B\u3066\u3001\u6025\u306B\u52D5\u304D\u51FA\u3057\u305F"], [10, "\u4E8B\u4EF6\u3068\u306F\u95A2\u4FC2\u306A\u3055\u305D\u3046\u306A\u65B0\u805E\u306E\u8A18\u4E8B\u3092\u8AAD\u3093\u3067\u3044\u308B"]];
+      table = [[1, "やめろと言われていることをする"], [2, "しばらく姿を消していたが戻って来た"], [3, "予想もつかないところ（地中や空中など）から登場する"], [4, "何かを思いついて突然走り出す"], [5, "ふがいない自分を責める"], [6, "知らないうちに事件の謎を一つ解いていた"], [7, "事件について分かった様子だが誰にも教えない"], [8, "置き手紙やメールで報告をするも姿が見えない"], [9, "時計を見て、急に動き出した"], [10, "事件とは関係なさそうな新聞の記事を読んでいる"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -349,7 +349,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u98DF\u4E8B\u3092\u3068\u3063\u3066\u3044\u305F\u3089\u6025\u306B\u8B0E\u304C\u89E3\u3051\u308B"], [2, "\u52A9\u624B\u3068\u306E\u4F55\u6C17\u306A\u3044\u4F1A\u8A71\u304B\u3089\u6025\u306B\u8B0E\u304C\u89E3\u3051\u308B"], [3, "\u805E\u3053\u3048\u3066\u304D\u305F\u4F1A\u8A71\u304B\u3089\u6025\u306B\u8B0E\u304C\u89E3\u3051\u308B"], [4, "\u98A8\u5442\u306B\u5165\u3063\u3066\u3044\u305F\u3089\u6025\u306B\u8B0E\u304C\u89E3\u3051\u308B"], [5, "\u5922\u306E\u4E2D\u3067\u6025\u306B\u8B0E\u304C\u89E3\u3051\u308B"], [6, "\u98A8\u304C\u5439\u3044\u3066\u98DB\u3093\u3067\u304D\u305F\u7269\u3067\u8B0E\u304C\u89E3\u3051\u308B"], [7, "\u672C\u3092\u8AAD\u3093\u3067\u3044\u305F\u3089\u4E8B\u4EF6\u306E\u30D2\u30F3\u30C8\u304C\u898B\u3064\u304B\u308B"], [8, "\u73FE\u5834\u3092\u518D\u3073\u8A2A\u308C\u3066\u3072\u3089\u3081\u304F"], [9, "\u8CC7\u6599\u3092\u78BA\u8A8D\u3057\u3066\u3044\u308B\u6700\u4E2D\u306B\u3072\u3089\u3081\u304F"], [10, "\u95A2\u4FC2\u8005\u3068\u4F1A\u8A71\u3092\u3057\u3066\u3044\u308B\u6700\u4E2D\u306B\u3072\u3089\u3081\u304F"]];
+      table = [[1, "食事をとっていたら急に謎が解ける"], [2, "助手との何気ない会話から急に謎が解ける"], [3, "聞こえてきた会話から急に謎が解ける"], [4, "風呂に入っていたら急に謎が解ける"], [5, "夢の中で急に謎が解ける"], [6, "風が吹いて飛んできた物で謎が解ける"], [7, "本を読んでいたら事件のヒントが見つかる"], [8, "現場を再び訪れてひらめく"], [9, "資料を確認している最中にひらめく"], [10, "関係者と会話をしている最中にひらめく"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -359,7 +359,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u6025\u306B\u6CE3\u304F"], [2, "\u6025\u306B\u6012\u308B"], [3, "\u6025\u306B\u7B11\u3044\u3060\u3059"], [4, "\u6025\u306B\u30CF\u30A4\u30C6\u30F3\u30B7\u30E7\u30F3\u306B\u306A\u308B"], [5, "\u6025\u306B\u559C\u3076"], [6, "\u6025\u306B\u53EB\u3076"], [7, "\u6025\u306B\u30CB\u30E4\u30CB\u30E4\u3057\u59CB\u3081\u308B"], [8, "\u6025\u306B\u3053\u306E\u4E8B\u4EF6\u306E\u60B2\u3057\u3055\u3092\u8A9E\u308B"], [9, "\u6DE1\u3005\u3068\u7269\u4E8B\u3092\u9032\u3081\u308B"], [10, "\u30ED\u30DC\u30C3\u30C8\u306E\u3088\u3046\u306B\u6C7A\u3081\u3089\u308C\u305F\u3053\u3068\u3060\u3051\u3092\u3084\u308B"]];
+      table = [[1, "急に泣く"], [2, "急に怒る"], [3, "急に笑いだす"], [4, "急にハイテンションになる"], [5, "急に喜ぶ"], [6, "急に叫ぶ"], [7, "急にニヤニヤし始める"], [8, "急にこの事件の悲しさを語る"], [9, "淡々と物事を進める"], [10, "ロボットのように決められたことだけをやる"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -369,7 +369,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u6C17\u306B\u306A\u308B\u3082\u306E\uFF08P.165\uFF09\n\u3000\u4E8B\u4EF6\u306E\u8D77\u304D\u305F\u73FE\u5834\u306F\u3001\u307E\u3060\u6B8B\u3055\u308C\u3066\u3044\u308B\u3002\n\u3000\u3053\u3053\u3067\u8D77\u304D\u305F\u201C\u4F55\u304B\u201D\u306F\u3001\u9727\u306E\u5411\u3053\u3046\u306B\u96A0\u3055\u308C\u3066\u3044\u305F\u3002\n\u3000\u305D\u306E\u9727\u306B\u624B\u3092\u7A81\u3063\u8FBC\u3080\u8005\u305F\u3061\u304C\u3044\u308B\u3002", "\u7159\u305F\u304C\u3089\u308C\u308B\uFF08P.166\uFF09\n\u3000\u5211\u4E8B\u304C\u4E00\u4EBA\u3001\u73FE\u5834\u3092\u71B1\u5FC3\u306B\u898B\u3066\u56DE\u3063\u3066\u3044\u308B\u3002\n\u3000\u3053\u306E\u4E8B\u4EF6\u306E\u62C5\u5F53\u3092\u4EFB\u3055\u308C\u305F\u5211\u90E8\u6B63\u7FA9\u3068\u3044\u3046\u7537\u3060\u3002\n\u3000\u5F7C\u306F\u3001PC\u305F\u3061\u306E\u9854\u3092\u898B\u308B\u306A\u308A\u3001\u9854\u3092\u3057\u304B\u3081\u305F\u3002\u6B53\u8FCE\u3055\u308C\u3066\u3044\u306A\u3044\u3002", "\u805E\u304D\u8FBC\u307F\uFF08P.167\uFF09\n\u3000PC\u305F\u3061\u306F\u3001\u73FE\u5834\u4ED8\u8FD1\u3092\u901A\u308A\u304C\u304B\u3063\u305F\u308A\u3001\u4E8B\u4EF6\u3092\u76EE\u6483\u3057\u305F\u308A\u3057\u305F\u4EBA\u7269\u304C\u3044\u306A\u3044\u304B\u63A2\u3057\u56DE\u3063\u3066\u3044\u305F\u3002\n\u3000\u3057\u304B\u3057\u3001\u3069\u3053\u3067\u4F55\u3092\u805E\u3044\u3066\u3082\u3001\u305D\u308C\u3089\u3057\u3044\u624B\u304C\u304B\u308A\u306F\u306A\u3044\u3002\n\u3000\u305D\u308D\u305D\u308D\u3001\u8DB3\u306B\u75B2\u52B4\u304C\u84C4\u7A4D\u3057\u3066\u304D\u305F\u3002", "\u9811\u306A\u306A\u95A2\u4FC2\u8005\uFF08P.168\uFF09\n\u3000\u4E8B\u4EF6\u73FE\u5834\u306B\u3001\u3068\u3042\u308B\u4EBA\u7269\u304C\u73FE\u308C\u305F\u3002\n\u3000\u63A2\u5075\u305F\u3061\u306F\u3001\u795E\u5999\u306A\u9854\u3067\u73FE\u5834\u3092\u898B\u3064\u3081\u3066\u3044\u305F\u305D\u306E\u4EBA\u7269\u304C\u6C17\u306B\u306A\u3063\u3066\u3001\u58F0\u3092\u304B\u3051\u308B\u3002\n\u3000\u305D\u306E\u4EBA\u7269\u306F\u3001\u81EA\u3089\u3092\u88AB\u5BB3\u8005\u306E\u95A2\u4FC2\u8005\u3068\u540D\u4E57\u3063\u305F\u2026\u2026\u3002", "\u73FE\u5834\u5FB9\u5E95\u8ABF\u67FB\uFF01\uFF08P.169\uFF09\n\u3000\u4E8B\u4EF6\u73FE\u5834\u306B\u6B8B\u3055\u308C\u305F\u8A3C\u62E0\u306F\u3001\u3042\u3089\u304B\u305F\u898B\u3064\u3051\u305F\u3002\n\u3000\u2026\u2026\u306F\u305F\u3057\u3066\u3001\u672C\u5F53\u306B\u305D\u3046\u3060\u308D\u3046\u304B\uFF1F\n\u3000\u3042\u3089\u3086\u308B\u89D2\u5EA6\u304B\u3089\u8ABF\u67FB\u3068\u691C\u8A3C\u3092\u3057\u3001\u73FE\u5834\u306B\u6B8B\u3055\u308C\u305F\u3082\u306E\u306F\u306A\u3044\u304B\u3001\u8ABF\u3079\u308B\u3053\u3068\u306B\u306A\u3063\u305F\u3002", "\u9003\u3052\u305F\u4EBA\u7269\uFF08P.170\uFF09\n\u3000\u8131\u514E\u306E\u3054\u3068\u304F\u3001\u8AB0\u304B\u304C\u73FE\u5834\u304B\u3089\u9003\u3052\u3066\u3044\u308B\u3002\n\u3000\u305D\u306E\u4EBA\u7269\u306E\u8D70\u308A\u65B9\u3001\u7126\u308A\u65B9\u306F\u666E\u901A\u3067\u306F\u306A\u304B\u3063\u305F\u3002\n\u3000\u3053\u308C\u306F\u3001\u4F55\u304B\u3092\u77E5\u3063\u3066\u3044\u308B\u3002\u3042\u308B\u3044\u306F\u3001\u4F55\u304B\u3092\u6301\u3061\u53BB\u3063\u305F\u53EF\u80FD\u6027\u304C\u3042\u308B\u3002\n\u3000PC\u305F\u3061\u306F\u3001\u8FFD\u3044\u304B\u3051\u59CB\u3081\u305F\u3002"];
+      table = ["気になるもの（P.165）\n　事件の起きた現場は、まだ残されている。\n　ここで起きた“何か”は、霧の向こうに隠されていた。\n　その霧に手を突っ込む者たちがいる。", "煙たがられる（P.166）\n　刑事が一人、現場を熱心に見て回っている。\n　この事件の担当を任された刑部正義という男だ。\n　彼は、PCたちの顔を見るなり、顔をしかめた。歓迎されていない。", "聞き込み（P.167）\n　PCたちは、現場付近を通りがかったり、事件を目撃したりした人物がいないか探し回っていた。\n　しかし、どこで何を聞いても、それらしい手がかりはない。\n　そろそろ、足に疲労が蓄積してきた。", "頑なな関係者（P.168）\n　事件現場に、とある人物が現れた。\n　探偵たちは、神妙な顔で現場を見つめていたその人物が気になって、声をかける。\n　その人物は、自らを被害者の関係者と名乗った……。", "現場徹底調査！（P.169）\n　事件現場に残された証拠は、あらかた見つけた。\n　……はたして、本当にそうだろうか？\n　あらゆる角度から調査と検証をし、現場に残されたものはないか、調べることになった。", "逃げた人物（P.170）\n　脱兎のごとく、誰かが現場から逃げている。\n　その人物の走り方、焦り方は普通ではなかった。\n　これは、何かを知っている。あるいは、何かを持ち去った可能性がある。\n　PCたちは、追いかけ始めた。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_event_scene$23.$$arity = 0);
     
@@ -377,7 +377,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u79FB\u52D5\u30EB\u30FC\u30C8\uFF08P.171\uFF09\n\u3000\u3053\u306E\u9053\u3092\u901A\u3063\u305F\u3068\u304D\u3001\u3042\u306E\u4EBA\u306F\u4F55\u3092\u601D\u3063\u305F\u3060\u308D\u3046\u304B\uFF1F\n\u3000\u3053\u306E\u9053\u3092\u901A\u3063\u305F\u6642\u3001\u3042\u306E\u4EBA\u306F\u4F55\u3092\u3057\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u304B\u3063\u305F\u306E\u304B\uFF1F\n\u3000\u4E8B\u4EF6\u95A2\u4FC2\u8005\u306E\u8DB3\u53D6\u308A\u306B\u306F\u3001\u4E8B\u4EF6\u306B\u7E4B\u304C\u308B\u4F55\u304B\u304C\u6B8B\u3055\u308C\u3066\u3044\u308B\u3002\n\u3000\u305D\u3046\u4FE1\u3058\u3066\u3001\u9053\u3092\u6B69\u304F\u3002", "\u81EA\u5206\u306A\u3089\u2026\u2026\uFF08P.172\uFF09\n\u3000\u63A2\u5075\u3068\u52A9\u624B\u304C\u4E8B\u4EF6\u306B\u3064\u3044\u3066\u8A9E\u308A\u5408\u3063\u3066\u3044\u305F\u3002\n\u3000\u8A71\u306E\u304A\u984C\u306F\u3001\u300C\u3053\u306E\u72B6\u6CC1\u3067\u3001\u81EA\u5206\u304C\u72AF\u4EBA\u306A\u3089\u3069\u3046\u3059\u308B\u304B\u300D\u3002\n\u3000\u305D\u306E\u4EEE\u5B9A\u306F\u3001\u30D2\u30F3\u30C8\u3092\u4E0E\u3048\u3066\u304F\u308C\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3002", "\u8B0E\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\uFF08P.173\uFF09\n\u3000\u305D\u308C\u306F\u3001\u8B0E\u306E\u8A00\u8449\u3060\u3063\u305F\u3002\n\u3000\u305F\u3060\u306E\u6587\u5B57\u5217\u304B\u3082\u3057\u308C\u306A\u3044\u3057\u3001\u610F\u5473\u4E0D\u660E\u306A\u8A00\u8449\u304B\u3082\u3057\u308C\u306A\u3044\u3002\n\u3000\u4E8B\u4EF6\u306B\u95A2\u308F\u308B\u5834\u6240\u306B\u3042\u3063\u305F\u304B\u3089\u3068\u3044\u3063\u3066\u3001\u4E8B\u4EF6\u306B\u95A2\u308F\u3063\u3066\u3044\u308B\u3068\u306F\u9650\u3089\u306A\u3044\u3002\n\u3000\u3060\u3051\u3069\u3001\u3053\u308C\u306F\u4E8B\u4EF6\u306B\u95A2\u308F\u3063\u3066\u3044\u308B\u3002\u305D\u3046\u76F4\u611F\u304C\u544A\u3052\u3066\u3044\u308B\u3002", "\u4E8B\u4EF6\u306E\u304A\u3055\u3089\u3044\uFF08P.174\uFF09\n\u3000\u30DB\u30EF\u30A4\u30C8\u30DC\u30FC\u30C9\u3001\u9ED2\u677F\u3001\u30CE\u30FC\u30C8\u3002\n\u3000\u306A\u3093\u3067\u3082\u3044\u3044\u304B\u3089\u3001\u66F8\u304F\u3082\u306E\u304C\u5FC5\u8981\u3060\u3002\n\u3000\u4ECA\u304B\u3089\u3001\u4E8B\u4EF6\u306B\u3064\u3044\u3066\u307E\u3068\u3081\u308B\u306E\u3060\u304B\u3089\u3002", "\u602A\u3057\u3044\u4EBA\u7269\u306F\uFF1F\uFF08P.175\uFF09\n\u3000\u63A2\u5075\u305F\u3061\u306F\u3001\u4E00\u4EBA\u306E\u4EBA\u7269\u3092\u8FFD\u3063\u3066\u3044\u308B\u3002\n\u3000\u305D\u306E\u4EBA\u7269\u306F\u3001\u4E8B\u4EF6\u306B\u7E4B\u304C\u308B\u4F55\u304B\u3092\u6301\u3063\u3066\u3044\u308B\u3002\u305D\u3046\u3044\u3046\u78BA\u4FE1\u304C\u3042\u3063\u305F\u3002\n\u3000\u3055\u3066\u3001\u5B9F\u969B\u306E\u3068\u3053\u308D\u3001\u5F7C\u306F\u4F55\u8005\u306A\u306E\u3060\u308D\u3046\u304B\uFF1F", "\u88AB\u5BB3\u8005\u306E\u8996\u70B9\uFF08P.176\uFF09\n\u3000\u88AB\u5BB3\u8005\u306E\u8EAB\u306B\u4F55\u304C\u8D77\u3053\u3063\u305F\u306E\u304B\u3002\n\u3000\u88AB\u5BB3\u8005\u306F\u4F55\u3092\u898B\u305F\u306E\u304B\u3002\n\u3000\u305D\u306E\u30D2\u30F3\u30C8\u306F\u3001\u88AB\u5BB3\u8005\u81EA\u8EAB\u304C\u77E5\u3063\u3066\u3044\u308B\u306F\u305A\u3060\u3002"];
+      table = ["移動ルート（P.171）\n　この道を通ったとき、あの人は何を思っただろうか？\n　この道を通った時、あの人は何をしなければならなかったのか？\n　事件関係者の足取りには、事件に繋がる何かが残されている。\n　そう信じて、道を歩く。", "自分なら……（P.172）\n　探偵と助手が事件について語り合っていた。\n　話のお題は、「この状況で、自分が犯人ならどうするか」。\n　その仮定は、ヒントを与えてくれるかもしれない。", "謎のメッセージ（P.173）\n　それは、謎の言葉だった。\n　ただの文字列かもしれないし、意味不明な言葉かもしれない。\n　事件に関わる場所にあったからといって、事件に関わっているとは限らない。\n　だけど、これは事件に関わっている。そう直感が告げている。", "事件のおさらい（P.174）\n　ホワイトボード、黒板、ノート。\n　なんでもいいから、書くものが必要だ。\n　今から、事件についてまとめるのだから。", "怪しい人物は？（P.175）\n　探偵たちは、一人の人物を追っている。\n　その人物は、事件に繋がる何かを持っている。そういう確信があった。\n　さて、実際のところ、彼は何者なのだろうか？", "被害者の視点（P.176）\n　被害者の身に何が起こったのか。\n　被害者は何を見たのか。\n　そのヒントは、被害者自身が知っているはずだ。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_event_why$24.$$arity = 0);
     
@@ -385,7 +385,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u4E8B\u4EF6\u306E\u6620\u50CF\uFF08P.177\uFF09\n\u3000PC\u305F\u3061\u306F\u76EE\u3092\u7D30\u3081\u3066\u3001\u6620\u50CF\u3092\u773A\u3081\u3066\u3044\u308B\u3002\n\u3000\u305D\u308C\u306F\u3001\u5076\u7136\u306B\u3082\u73FE\u5834\u3067\u64AE\u3089\u308C\u305F\u3082\u306E\u3060\u3063\u305F\u3002\n\u3000\u679C\u305F\u3057\u3066\u3001\u771F\u5B9F\u306F\u3053\u306E\u6620\u50CF\u306E\u4E2D\u306B\u3001\u6620\u3063\u3066\u3044\u308B\u306E\u3060\u308D\u3046\u304B\uFF1F", "\u5909\u308F\u3063\u305F\u76EE\u6483\u8005\uFF08P.178\uFF09\n\u3000\u63A2\u5075\u305F\u3061\u306F\u635C\u67FB\u306E\u7D50\u679C\u3001\u4E8B\u4EF6\u306B\u95A2\u3059\u308B\u4F55\u304B\u3092\u898B\u305F\u3068\u3044\u3046\u76EE\u6483\u8005\u3092\u898B\u3064\u3051\u308B\u3002\n\u3000\u3057\u304B\u3057\u3001\u305D\u306E\u4EBA\u7269\u306F\u76EE\u6483\u8A3C\u8A00\u3092\u6E0B\u3063\u305F\u3002\u3069\u3046\u3057\u3066\u3060\u308D\u3046\u304B\uFF1F", "\u5C02\u9580\u5BB6\uFF08P.179\uFF09\n\u3000\u8ABF\u67FB\u4E2D\u3001\u3069\u3046\u3057\u3066\u3082\u5C02\u9580\u7684\u306A\u77E5\u8B58\u304C\u5FC5\u8981\u306A\u5834\u9762\u304C\u51FA\u3066\u304F\u308B\u3002\n\u3000\u4ECA\u304C\u305D\u306E\u6642\u3067\u3042\u308A\u3001\u63A2\u5075\u305F\u3061\u306F\u3069\u3046\u3057\u3088\u3046\u304B\u3068\u60A9\u3093\u3067\u3044\u305F\u3002", "\u60C5\u5831\u5C4B\uFF08P.180\uFF09\n\u3000\u30E1\u30FC\u30EB\u30BD\u30D5\u30C8\u306B\u9023\u7D61\u304C\u5165\u3063\u305F\u3002\n\u3000\u9023\u7D61\u3092\u5165\u308C\u3066\u304D\u305F\u306E\u306F\u3001\u754C\u9688\u3067\u306F\u6709\u540D\u306A\u60C5\u5831\u5C4B\u3060\u3063\u305F\u3002\n\u3000\u305D\u306E\u60C5\u5831\u5C4B\u306B\u304B\u304B\u308C\u3070\u3001\u624B\u306B\u5165\u3089\u306A\u3044\u60C5\u5831\u306F\u306A\u3044\u3068\u3044\u3046\u3002\n\u3000\u3055\u3066\u3001\u3069\u3046\u3057\u3088\u3046\u304B\u3002", "\u95A2\u4FC2\u8005\u3068\u4E00\u7DD2\u306B\uFF08P.181\uFF09\n\u3000\u4E8B\u4EF6\u95A2\u4FC2\u8005\u306E\u4E00\u4EBA\u304C\u3001\u7A81\u7136\u5354\u529B\u3092\u6301\u3061\u304B\u3051\u3066\u304D\u305F\u3002\n\u3000\u3069\u3046\u3084\u3089\u3001\u305D\u306E\u4EBA\u3082\u3053\u306E\u4E8B\u4EF6\u306B\u306F\u601D\u3046\u3068\u3053\u308D\u304C\u3042\u308B\u3089\u3057\u3044\u3002", "\u7D20\u4EBA\u63A8\u7406\uFF08P.182\uFF09\n\u3000\u4E8B\u4EF6\u95A2\u4FC2\u8005\u306E\u524D\u3067\u3001\u30B2\u30B9\u30C8NPC\u304C\u63A8\u7406\u3092\u62AB\u9732\u3057\u3066\u3044\u308B\u3002\n\u3000\u3060\u3051\u3069\u3001\u305D\u306E\u63A8\u7406\u306F\u7A74\u3060\u3089\u3051\u3067\u2026\u2026\u3002"];
+      table = ["事件の映像（P.177）\n　PCたちは目を細めて、映像を眺めている。\n　それは、偶然にも現場で撮られたものだった。\n　果たして、真実はこの映像の中に、映っているのだろうか？", "変わった目撃者（P.178）\n　探偵たちは捜査の結果、事件に関する何かを見たという目撃者を見つける。\n　しかし、その人物は目撃証言を渋った。どうしてだろうか？", "専門家（P.179）\n　調査中、どうしても専門的な知識が必要な場面が出てくる。\n　今がその時であり、探偵たちはどうしようかと悩んでいた。", "情報屋（P.180）\n　メールソフトに連絡が入った。\n　連絡を入れてきたのは、界隈では有名な情報屋だった。\n　その情報屋にかかれば、手に入らない情報はないという。\n　さて、どうしようか。", "関係者と一緒に（P.181）\n　事件関係者の一人が、突然協力を持ちかけてきた。\n　どうやら、その人もこの事件には思うところがあるらしい。", "素人推理（P.182）\n　事件関係者の前で、ゲストNPCが推理を披露している。\n　だけど、その推理は穴だらけで……。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_event_npc$25.$$arity = 0);
     
@@ -393,7 +393,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u4E0D\u5BE9\u306A\u96FB\u8A71\uFF08P.183\uFF09\n\u3000\u7A81\u7136\u3001\u96FB\u8A71\u304C\u9CF4\u308A\u97FF\u3044\u305F\u3002\n\u3000\u305D\u306E\u96FB\u8A71\u306F\u8ABF\u67FB\u3092\u9032\u5C55\u3055\u305B\u308B\u3053\u3068\u306B\u306A\u308B\u304C\u2026\u2026\u3002\n\u3000\u540C\u6642\u306B\u3001\u65B0\u305F\u306A\u8B0E\u3092\u6B8B\u3057\u305F\u3002", "\u4ECA\u306F\u4F59\u6687\u3092\uFF08P.184\uFF09\n\u3000\u679C\u5831\u306F\u5BDD\u3066\u5F85\u3066\u3002\n\u3000\u5F85\u3066\u3070\u6D77\u8DEF\u306E\u65E5\u548C\u3042\u308A\u3002\n\u3000\u3068\u3044\u3046\u3053\u3068\u3067\u3001\u3072\u3068\u307E\u305A\u305F\u307E\u308A\u5834\u306B\u3044\u308B\u3002\n\u3000\u679C\u305F\u3057\u3066\u3001\u4E8B\u614B\u306F\u597D\u8EE2\u3059\u308B\u306E\u3060\u308D\u3046\u304B\uFF1F", "\u9053\u7AEF\u3067\u3070\u3063\u305F\u308A\uFF08P.185\uFF09\n\u3000\u72AC\u3082\u6B69\u3051\u3070\u68D2\u306B\u5F53\u305F\u308B\u3002\n\u3000\u3053\u306E\u8A00\u8449\u306B\u306F\u3001\u5E78\u904B\u306B\u3076\u3064\u304B\u308B\u3068\u3044\u3046\u610F\u5473\u3082\u3001\u707D\u96E3\u306B\u5F53\u305F\u308B\u3068\u3044\u3046\u610F\u5473\u3082\u8FBC\u3081\u3089\u308C\u3066\u3044\u308B\u3002\n\u3000\u3067\u306F\u3001\u63A2\u5075\u3068\u52A9\u624B\u304C\u6B69\u3044\u305F\u3089\u3001\u4F55\u306B\u5F53\u305F\u308B\u306E\u3060\u308D\u3046\u304B\uFF1F", "\u3072\u3089\u3081\u304D\u306E\u77AC\u9593\uFF08P.186\uFF09\n\u3000\u3075\u3068\u3057\u305F\u304D\u3063\u304B\u3051\u3067\u3001\u63A2\u5075\u306F\u3072\u3089\u3081\u304F\u3053\u3068\u304C\u3042\u308B\u3002\n\u3000\u4ECA\u56DE\u306F\u3001\u4E00\u4F53\u4F55\u304C\u304D\u3063\u304B\u3051\u3060\u3063\u305F\u306E\u3060\u308D\u3046\u304B\uFF1F", "\u77E5\u308A\u5408\u3044\u304B\u3089\uFF08P.187\uFF09\n\u3000\u4E8B\u4EF6\u635C\u67FB\u306E\u624B\u304C\u304B\u308A\u3092\u6301\u3063\u3066\u304D\u305F\u306E\u306F\u3001\u77E5\u308A\u5408\u3044\u3060\u3063\u305F\u3002\n\u3000\u6301\u3064\u3079\u304D\u3082\u306E\u306F\u53CB\u3002\n\u3000\u3068\u8A00\u3044\u305F\u3044\u3068\u3053\u308D\u3060\u304C\u2026\u2026\u3002", "\u63A2\u5075\u305F\u3061\u306E\u30D4\u30F3\u30C1\uFF08P.188\uFF09\n\u3000\u635C\u67FB\u306F\u7A81\u7136\u30B9\u30C8\u30C3\u30D7\u3057\u305F\u3002\n\u3000\u305D\u306E\u539F\u56E0\u306F\u308F\u304B\u3063\u3066\u3044\u308B\u3002\n\u3000\u539F\u56E0\u3092\u53D6\u308A\u9664\u304B\u306A\u3051\u308C\u3070\u3001\u4E8B\u4EF6\u306E\u8ABF\u67FB\u3069\u3053\u308D\u3067\u306F\u306A\u3044\u3002"];
+      table = ["不審な電話（P.183）\n　突然、電話が鳴り響いた。\n　その電話は調査を進展させることになるが……。\n　同時に、新たな謎を残した。", "今は余暇を（P.184）\n　果報は寝て待て。\n　待てば海路の日和あり。\n　ということで、ひとまずたまり場にいる。\n　果たして、事態は好転するのだろうか？", "道端でばったり（P.185）\n　犬も歩けば棒に当たる。\n　この言葉には、幸運にぶつかるという意味も、災難に当たるという意味も込められている。\n　では、探偵と助手が歩いたら、何に当たるのだろうか？", "ひらめきの瞬間（P.186）\n　ふとしたきっかけで、探偵はひらめくことがある。\n　今回は、一体何がきっかけだったのだろうか？", "知り合いから（P.187）\n　事件捜査の手がかりを持ってきたのは、知り合いだった。\n　持つべきものは友。\n　と言いたいところだが……。", "探偵たちのピンチ（P.188）\n　捜査は突然ストップした。\n　その原因はわかっている。\n　原因を取り除かなければ、事件の調査どころではない。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_event_coming$26.$$arity = 0);
     
@@ -401,7 +401,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u5BB9\u7591\u8005\u306E\u5618\uFF08P.189\uFF09\n\u3000\u4EBA\u306F\u3001\u4F55\u304B\u5F8C\u308D\u3081\u305F\u3044\u3053\u3068\u304C\u3042\u3063\u305F\u3068\u304D\u3001\u5618\u3092\u3064\u304F\u3002\n\u3000\u3053\u306E\u5BB9\u7591\u8005\u306F\u5618\u3092\u3064\u3044\u3066\u3044\u308B\u3002\n\u3000\u306A\u3089\u3001\u4F55\u3092\u96A0\u3057\u3066\u3044\u308B\u306E\u3060\u308D\u3046\u304B\uFF1F", "\u3086\u3055\u3076\u308A\uFF08P.190\uFF09\n\u3000\u305D\u306E\u5BB9\u7591\u8005\u306F\u3001\u4F55\u304B\u3092\u96A0\u3057\u3066\u3044\u305F\u3002\n\u3000\u76EE\u7ACB\u3063\u305F\u5618\u3092\u3064\u3044\u3066\u3044\u308B\u308F\u3051\u3067\u306F\u306A\u3044\u3002\n\u3000\u3060\u3051\u308C\u3069\u3082\u3001\u4F55\u304B\u3092\u96A0\u3057\u3066\u3044\u308B\u3002\u63A2\u5075\u306B\u306F\u3001\u305D\u3046\u898B\u3048\u305F\u3002", "\u5916\u898B\u304B\u3089\u306E\u63A8\u7406\uFF08P.191\uFF09\n\u3000\u5C11\u3057\u3060\u3051\u3001\u8A71\u3092\u3057\u305F\u3002\n\u3000\u5C11\u3057\u3060\u3051\u3001\u305D\u306E\u59FF\u3092\u898B\u305F\u3002\n\u3000\u5C11\u3057\u3060\u3051\u3001\u305D\u306E\u4EBA\u3092\u77E5\u3063\u305F\u3002\n\u3000\u305D\u308C\u3060\u3051\u3067\u3001\u63A2\u5075\u3068\u3044\u3046\u751F\u304D\u7269\u306F\u5341\u3092\u77E5\u3063\u3066\u3057\u307E\u3046\u3002\u305D\u3046\u3044\u3046\u3082\u306E\u306A\u306E\u3060\u3002", "\u76F4\u63A5\u5C0B\u306D\u308B\uFF08P.192\uFF09\n\u3000\u3053\u3053\u306B\u304D\u3066\u3001\u63A2\u5075\u3068\u52A9\u624B\u306F\u5927\u80C6\u306A\u624B\u306B\u51FA\u305F\u3002\n\u3000\u5BB9\u7591\u8005\u306B\u5BFE\u3057\u3066\u3001\u4E8B\u4EF6\u306E\u5177\u4F53\u7684\u306A\u3068\u3053\u308D\u307E\u3067\u7A81\u3063\u8FBC\u3093\u3060\u8CEA\u554F\u3092\u3057\u305F\u306E\u3060\u3002\n\u3000\u305D\u308C\u306B\u5BFE\u3057\u3066\u3001\u5BB9\u7591\u8005\u306F\u2026\u2026\u3002", "\u8105\u3055\u308C\u308B\uFF08P.193\uFF09\n\u3000\u3069\u3046\u3084\u3089\u3001\u81EA\u5206\u305F\u3061\u306F\u8105\u3055\u308C\u3066\u3044\u308B\u3088\u3046\u3060\u3002", "\u9B3C\u306E\u5C45\u306C\u9593\u306B\uFF08P.194\uFF09\n\u3000\u305D\u306E\u5BB9\u7591\u8005\u306E\u5143\u3092\u8A2A\u306D\u305F\u3068\u304D\u3001\u5076\u7136\u306B\u3082\u5E2D\u3092\u306F\u305A\u3057\u3066\u3044\u305F\u3002\n\u3000\u3053\u308C\u306F\u30C1\u30E3\u30F3\u30B9\u3002\n\u3000\u305D\u3046\u601D\u3063\u3066\u3057\u307E\u3046\u306E\u304C\u3001\u63A2\u5075\u306E\u60B2\u3057\u3044\u6027\u3060\u3002"];
+      table = ["容疑者の嘘（P.189）\n　人は、何か後ろめたいことがあったとき、嘘をつく。\n　この容疑者は嘘をついている。\n　なら、何を隠しているのだろうか？", "ゆさぶり（P.190）\n　その容疑者は、何かを隠していた。\n　目立った嘘をついているわけではない。\n　だけれども、何かを隠している。探偵には、そう見えた。", "外見からの推理（P.191）\n　少しだけ、話をした。\n　少しだけ、その姿を見た。\n　少しだけ、その人を知った。\n　それだけで、探偵という生き物は十を知ってしまう。そういうものなのだ。", "直接尋ねる（P.192）\n　ここにきて、探偵と助手は大胆な手に出た。\n　容疑者に対して、事件の具体的なところまで突っ込んだ質問をしたのだ。\n　それに対して、容疑者は……。", "脅される（P.193）\n　どうやら、自分たちは脅されているようだ。", "鬼の居ぬ間に（P.194）\n　その容疑者の元を訪ねたとき、偶然にも席をはずしていた。\n　これはチャンス。\n　そう思ってしまうのが、探偵の悲しい性だ。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_event_vs$27.$$arity = 0);
     
@@ -409,7 +409,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u63A2\u5075\u3068\u52A9\u624B\u304C\u8B66\u5BDF\u306B\u30DE\u30FC\u30AF\u3055\u308C\u308B"], [12, "\u63A2\u5075\u306E\u6C17\u307E\u3050\u308C"], [13, "\u63A2\u5075\u306E\u3084\u308B\u6C17"], [14, "\u63A2\u5075\u306E\u5947\u884C\u306B\u8010\u3048\u3089\u308C\u306A\u304F\u306A\u308B"], [15, "\u63A2\u5075\u304C\u5947\u7570\u306E\u773C\u306B\u6652\u3055\u308C\u308B"], [16, "\u63A2\u5075\u304C\u75B2\u308C\u308B"], [22, "\u63A2\u5075\u3068\u52A9\u624B\u304C\u4E0D\u5BE9\u8005\u306B\u9593\u9055\u308F\u308C\u308B"], [23, "\u52A9\u624B\u304C\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u4FE1\u983C\u3055\u308C\u3066\u3044\u306A\u3044\u3068\u601D\u3046"], [24, "\u63A2\u5075\u306B\u52A9\u624B\u304C\u3064\u3044\u3066\u3044\u3051\u306A\u3044"], [25, "\u52A9\u624B\u306E\u82E6\u52B4\u304C\u3044\u3064\u3082\u4EE5\u4E0A\u306B\u5927\u304D\u3044"], [26, "\u52A9\u624B\u306E\u635C\u67FB\u3060\u3051\u304C\u3046\u307E\u304F\u3044\u304B\u306A\u3044"], [33, "\u635C\u67FB\u306E\u305F\u3081\u306E\u8CC7\u91D1\u304C\u306A\u3044"], [34, "\u4E16\u9593\u306E\u773C\u304C\u53B3\u3057\u3044"], [35, "\u8B66\u5BDF\u304B\u3089\u758E\u307E\u3057\u304F\u601D\u308F\u308C\u308B"], [36, "\u95A2\u4FC2\u8005\u306B\u5354\u529B\u3057\u3066\u3082\u3089\u3048\u306A\u3044"], [44, "\u635C\u67FB\u3057\u3066\u306F\u3044\u3051\u306A\u3044\u3068\u5727\u529B\u304C\u304B\u304B\u308B"], [45, "\u72AF\u4EBA\u306B\u3088\u308B\u59A8\u5BB3"], [46, "\u72AF\u4EBA\u306B\u3088\u308B\u88CF\u5DE5\u4F5C"], [55, "\u690D\u6728\u9262\u3084\u9244\u9AA8\u306A\u3069\u3001\u4E0D\u81EA\u7136\u306B\u5371\u967A\u306A\u7269\u304C\u98DB\u3093\u3067\u304F\u308B"], [56, "\u4F55\u8005\u304B\u304C\u63A2\u5075\u3068\u52A9\u624B\u306B\u8972\u3044\u639B\u304B\u308B"], [66, "\u5076\u7136\u304C\u7A4D\u307F\u91CD\u306A\u3063\u3066\u3046\u307E\u304F\u3044\u304B\u306A\u3044"]];
+      table = [[11, "探偵と助手が警察にマークされる"], [12, "探偵の気まぐれ"], [13, "探偵のやる気"], [14, "探偵の奇行に耐えられなくなる"], [15, "探偵が奇異の眼に晒される"], [16, "探偵が疲れる"], [22, "探偵と助手が不審者に間違われる"], [23, "助手がパートナーに信頼されていないと思う"], [24, "探偵に助手がついていけない"], [25, "助手の苦労がいつも以上に大きい"], [26, "助手の捜査だけがうまくいかない"], [33, "捜査のための資金がない"], [34, "世間の眼が厳しい"], [35, "警察から疎ましく思われる"], [36, "関係者に協力してもらえない"], [44, "捜査してはいけないと圧力がかかる"], [45, "犯人による妨害"], [46, "犯人による裏工作"], [55, "植木鉢や鉄骨など、不自然に危険な物が飛んでくる"], [56, "何者かが探偵と助手に襲い掛かる"], [66, "偶然が積み重なってうまくいかない"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_obstruction_table$28.$$arity = 0);
     
@@ -417,7 +417,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u3059\u308C\u9055\u3044", "\u63A2\u5075\u306E\u66B4\u8D70", "\u55A7\u5629", "\u8FF7\u5B50", "\u60AA\u3044\u5642", "\u6CE8\u76EE\u306E\u7684"];
+      table = ["すれ違い", "探偵の暴走", "喧嘩", "迷子", "悪い噂", "注目の的"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_abnormal_condition$29.$$arity = 0);
     
@@ -425,7 +425,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u904A\u3073\u76F8\u624B\u304C\u6B32\u3057\u3044\u82E5\u8005\u3002\u5224\u5B9A\u6280\u80FD\uFF1A\u226A\u6D41\u884C\u226B", "\u7269\u899A\u3048\u304C\u60AA\u3044\u4EBA\u3002\u5224\u5B9A\u6280\u80FD\uFF1A\u306A\u3057", "\u5FD9\u3057\u3044\u4EBA\u3002\u5224\u5B9A\u6280\u80FD\uFF1A\u226A\u30D3\u30B8\u30CD\u30B9\u226B", "\u72AF\u4EBA\u306E\u77E5\u308A\u5408\u3044\u3002\u5224\u5B9A\u6280\u80FD\uFF1A\u226A\u8AAC\u5F97\u226B", "\u63A2\u5075\uFF08\u8B66\u5BDF\uFF09\u5ACC\u3044\u3002\u5224\u5B9A\u6280\u80FD\uFF1A\u226A\u5618\u226B", "\u53CD\u793E\u4F1A\u4E3B\u7FA9\u8005\u3002\u5224\u5B9A\u6280\u80FD\uFF1A\u226A\u7A81\u7834\u226B"];
+      table = ["遊び相手が欲しい若者。判定技能：≪流行≫", "物覚えが悪い人。判定技能：なし", "忙しい人。判定技能：≪ビジネス≫", "犯人の知り合い。判定技能：≪説得≫", "探偵（警察）嫌い。判定技能：≪嘘≫", "反社会主義者。判定技能：≪突破≫"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_eyewitness_table$30.$$arity = 0);
     
@@ -433,7 +433,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u771F\u72AF\u4EBA\u3068\u306F\u5225\u306E\u4EBA\u9593\u304C\u72AF\u4EBA\u306B\u3055\u308C\u3066\u3057\u307E\u3044\u3001\u5B9F\u5211\u3092\u98DF\u3089\u3063\u3066\u3057\u307E\u3063\u305F\u3002\u305D\u306E\u8A3C\u62E0\u306F\u306A\u3044\u304C\u3001\u305D\u3046\u76F4\u611F\u3067\u304D\u308B\u3002"], [2, "\u89E3\u6C7A\u3055\u308C\u306A\u3044\u307E\u307E\u6642\u304C\u904E\u304E\u3001\u3084\u304C\u3066\u4E8B\u4EF6\u306E\u3053\u3068\u306F\u5FD8\u308C\u3089\u308C\u305F\u3002\u63A2\u5075\u3068\u52A9\u624B\u3001\u305D\u308C\u304B\u3089\u4E8B\u4EF6\u95A2\u4FC2\u8005\u3060\u3051\u304C\u899A\u3048\u3066\u3044\u308B\u3002"], [3, "\u88AB\u5BB3\u8005\u907A\u65CF\u3084\u95A2\u4FC2\u8005\u306F\u60B2\u3057\u307F\u306B\u66AE\u308C\u3066\u3044\u308B\u3002\u63A2\u5075\u3068\u52A9\u624B\u306F\u3001\u305D\u308C\u3092\u9ED9\u3063\u3066\u307F\u3066\u3044\u308B\u3053\u3068\u3057\u304B\u3067\u304D\u306A\u3044\u3002\u3042\u306E\u3068\u304D\u3001\u72AF\u4EBA\u3092\u6355\u307E\u3048\u3066\u3044\u308C\u3070\u2026\u2026\u3002"], [4, "\u8B66\u5BDF\u306B\u3088\u3063\u3066\u3001\u72AF\u4EBA\u304C\u691C\u6319\u3055\u308C\u305F\u3002\u3060\u3051\u3069\u3001\u305D\u306E\u4EBA\u304C\u672C\u5F53\u306B\u72AF\u4EBA\u304B\u3069\u3046\u304B\u306F\u308F\u304B\u3089\u306A\u3044\u3002\u63A2\u5075\u3082\u3001\u4F55\u3068\u3082\u8A00\u3048\u306A\u3044\u3088\u3046\u3060\u3002"], [5, "\u8A3C\u62E0\u304C\u306A\u304F\u306A\u3063\u3066\u3057\u307E\u3063\u3066\u3044\u308B\u3002\u3042\u308C\u3055\u3048\u3042\u308C\u3070\u3001\u4E8B\u4EF6\u306E\u8ABF\u67FB\u3092\u518D\u958B\u3067\u304D\u308B\u306E\u306B\u2026\u2026\u3002\u72AF\u4EBA\u306E\u4ED5\u696D\u304B\u3069\u3046\u304B\u3059\u3089\u3001\u308F\u304B\u3089\u306A\u3044\u3002"], [6, "\u95A2\u4FC2\u8005\u304C\u3044\u306A\u304F\u306A\u3063\u3066\u3057\u307E\u305F\u3002\u305D\u306E\u5F8C\u3001\u6D88\u606F\u3082\u4E0D\u660E\u3060\u3002\u3044\u3063\u305F\u3044\u4F55\u3092\u601D\u3063\u3066\u6D88\u3048\u305F\u306E\u3060\u308D\u3046\u304B\uFF1F\u3000\u3068\u3082\u304B\u304F\u3001\u8ABF\u67FB\u306F\u3067\u304D\u306A\u304F\u306A\u3063\u305F\u3002"], [7, "\u95A2\u4FC2\u8005\u304B\u3089\u5ACC\u308F\u308C\u3066\u3057\u307E\u3044\u3001\u8FD1\u5BC4\u308B\u3053\u3068\u3059\u3089\u3067\u304D\u306A\u304F\u306A\u3063\u305F\u3002\u63A2\u5075\u3068\u52A9\u624B\u306F\u63C3\u3063\u3066\u51FA\u7981\u306B\u306A\u3063\u3066\u3057\u307E\u3063\u305F\u3088\u3046\u3060\u3002\u3053\u308C\u3067\u306F\u3001\u8ABF\u67FB\u304C\u3067\u304D\u306A\u3044\u3002"], [8, "\u52A9\u624B\u306F\u3068\u304D\u3069\u304D\u3001\u88AB\u5BB3\u8005\u306E\u95A2\u4FC2\u8005\u3068\u4F1A\u3063\u3066\u3044\u308B\u3002\u5F7C\u3089\u306E\u8A71\u3092\u805E\u3044\u3066\u3001\u5F7C\u3089\u306E\u611F\u60C5\u3092\u53D7\u3051\u6B62\u3081\u3066\u3044\u308B\u3088\u3046\u3060\u3002"], [9, "\u63A2\u5075\u3068\u52A9\u624B\u306F\u6A5F\u4F1A\u3092\u898B\u3064\u3051\u3066\u306F\u3001\u4E8B\u4EF6\u3092\u518D\u8ABF\u67FB\u3057\u3066\u3044\u308B\u3002\u3057\u304B\u3057\u3001\u78BA\u304B\u306A\u8A3C\u62E0\u306F\u898B\u3064\u304B\u3089\u306A\u3044\u307E\u307E\u6642\u304C\u904E\u304E\u3066\u3044\u304F\u3002"], [10, "\u63A2\u5075\u306F\u76F4\u611F\u306B\u3088\u3063\u3066\u3001\u771F\u72AF\u4EBA\u3092\u7A81\u304D\u6B62\u3081\u305F\u3002\u3060\u304C\u3001\u771F\u72AF\u4EBA\u3092\u6355\u307E\u3048\u308B\u305F\u3081\u306E\u8A3C\u62E0\u304C\u306A\u3044\u3002\u72AF\u4EBA\u3092\u544A\u767A\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u305A\u3001\u6B6F\u565B\u307F\u3092\u3057\u305F\u3002"]];
+      table = [[1, "真犯人とは別の人間が犯人にされてしまい、実刑を食らってしまった。その証拠はないが、そう直感できる。"], [2, "解決されないまま時が過ぎ、やがて事件のことは忘れられた。探偵と助手、それから事件関係者だけが覚えている。"], [3, "被害者遺族や関係者は悲しみに暮れている。探偵と助手は、それを黙ってみていることしかできない。あのとき、犯人を捕まえていれば……。"], [4, "警察によって、犯人が検挙された。だけど、その人が本当に犯人かどうかはわからない。探偵も、何とも言えないようだ。"], [5, "証拠がなくなってしまっている。あれさえあれば、事件の調査を再開できるのに……。犯人の仕業かどうかすら、わからない。"], [6, "関係者がいなくなってしまた。その後、消息も不明だ。いったい何を思って消えたのだろうか？　ともかく、調査はできなくなった。"], [7, "関係者から嫌われてしまい、近寄ることすらできなくなった。探偵と助手は揃って出禁になってしまったようだ。これでは、調査ができない。"], [8, "助手はときどき、被害者の関係者と会っている。彼らの話を聞いて、彼らの感情を受け止めているようだ。"], [9, "探偵と助手は機会を見つけては、事件を再調査している。しかし、確かな証拠は見つからないまま時が過ぎていく。"], [10, "探偵は直感によって、真犯人を突き止めた。だが、真犯人を捕まえるための証拠がない。犯人を告発することができず、歯噛みをした。"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -443,7 +443,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300E\u540D\u63A2\u5075\u306E\u5148\u7956\uFF08\u771F\uFF09\u300F\u81EA\u5206\u306E\u5148\u7956\u306B\u8457\u540D\u306A\u63A2\u5075\u304C\u3044\u308B\u3002\u305D\u306E\u540D\u3092\u51FA\u305B\u3070\u3001\u8AB0\u3082\u304C\u77E5\u308B\u3088\u3046\u306A\u5927\u4EBA\u7269\u3060\u3002\u81EA\u5206\u306F\u305D\u306E\u8840\u3092\u6FC3\u304F\u5F15\u3044\u3066\u3044\u308B\u3088\u3046\u3067\u3001\u63A2\u5075\u3068\u3057\u3066\u306E\u624D\u80FD\u3092\u5B58\u5206\u306B\u767A\u63EE\u3057\u3066\u3044\u308B\u3002"], [2, "\u300E\u540D\u63A2\u5075\u306E\u5148\u7956\uFF08\u60F3\uFF09\u300F\u81EA\u5206\u306E\u5148\u7956\u306F\u8457\u540D\u306A\u63A2\u5075\u3060\u3002\u3057\u304B\u3057\u3001\u305D\u306E\u6D3B\u8E8D\u306F\u300C\u30D5\u30A3\u30AF\u30B7\u30E7\u30F3\u300D\u3068\u3057\u3066\u8A9E\u3089\u308C\u3066\u3044\u308B\u3002\u305D\u306E\u4EBA\u7269\u306F\u5B9F\u5728\u3057\u306A\u3044\u3068\u8A00\u308F\u308C\u3066\u3044\u308B\u304C\u2026\u2026\u305D\u308C\u306F\u771F\u5B9F\u3067\u306F\u306A\u3044\u3002\u81EA\u5206\u304C\u305D\u306E\u8840\u3092\u5F15\u3044\u3066\u3044\u308B\u306E\u3060\u304B\u3089\u3002"], [3, "\u300E\u89AA\u304C\u4E16\u754C\u7684\u63A2\u5075\u300F\u81EA\u5206\u306E\u89AA\u306F\u3001\u4E16\u754C\u7684\u306B\u540D\u306E\u77E5\u308C\u305F\u540D\u63A2\u5075\u3060\u3002\u6570\u3005\u306E\u96E3\u4E8B\u4EF6\u3082\u89E3\u6C7A\u3057\u3066\u3044\u308B\u3002\u81EA\u5206\u306B\u3082\u305D\u306E\u8840\u304C\u6D41\u308C\u3066\u3044\u3066\u3001\u4E8B\u4EF6\u306B\u5BFE\u3059\u308B\u92ED\u3044\u6D1E\u5BDF\u529B\u3092\u53D7\u3051\u7D99\u3050\u3053\u3068\u306B\u306A\u3063\u305F\u3002"], [4, "\u300E\u8857\u306E\u540D\u63A2\u5075\u300F\u81EA\u5206\u306E\u89AA\u306F\u3001\u8857\u3067\u306F\u3088\u304F\u540D\u306E\u77E5\u308C\u305F\u540D\u63A2\u5075\u3060\u3002\u8857\u306E\u4EBA\u3005\u304B\u3089\u611B\u3055\u308C\u3001\u983C\u308A\u306B\u3055\u308C\u3066\u3044\u305F\u3002\u81EA\u5206\u3082\u305D\u306E\u8840\u3092\u5F15\u3044\u3066\u3044\u308B\u306E\u304B\u3001\u63A2\u5075\u3068\u3057\u3066\u6D3B\u52D5\u3059\u308B\u529B\u304C\u5099\u308F\u3063\u3066\u3044\u308B\u3002"], [5, "\u300E\u63A8\u7406\u4F5C\u5BB6\u300F\u81EA\u5206\u3092\u80B2\u3066\u305F\u4EBA\u7269\u306F\u3001\u8457\u540D\u306A\u63A8\u7406\u4F5C\u5BB6\u3067\u3042\u3063\u305F\u3002\u305D\u306E\u601D\u8003\u80FD\u529B\u306F\u81EA\u5206\u306B\u3082\u7D99\u304C\u308C\u3066\u304A\u308A\u3001\u30C8\u30EA\u30C3\u30AF\u3092\u66B4\u304F\u529B\u306F\u63A2\u5075\u4E26\u307F\u306B\u3042\u308B\u3068\u8A00\u3063\u3066\u3044\u3044\u3060\u308D\u3046\u3002"], [6, "\u300E\u80B2\u3066\u306E\u89AA\u300F\u81EA\u5206\u3092\u80B2\u3066\u3066\u304F\u308C\u305F\u4EBA\u7269\u306F\u3001\u4E8B\u4EF6\u3092\u89E3\u6C7A\u306B\u5C0E\u3044\u305F\u3053\u3068\u306E\u3042\u308B\u4EBA\u7269\u3067\u3042\u308B\u3002\u305D\u306E\u4EBA\u7269\u306E\u6559\u3048\u3092\u53D7\u3051\u3066\u3001\u81EA\u5206\u306F\u63A2\u5075\u306E\u624D\u3092\u958B\u82B1\u3055\u305B\u305F\u3002"], [7, "\u300E\u5815\u3061\u305F\u540D\u63A2\u5075\u300F\u304B\u3064\u3066\u3001\u81EA\u5206\u306E\u89AA\u306F\u3042\u3089\u3086\u308B\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3057\u3001\u540D\u63A2\u5075\u3068\u3057\u3066\u6709\u540D\u3060\u3063\u305F\u3002\u3057\u304B\u3057\u3001\u4ECA\u3067\u306F\u512A\u308C\u305F\u601D\u8003\u80FD\u529B\u3092\u60AA\u7528\u3057\u3001\u4EBA\u3005\u3092\u99D2\u306E\u3088\u3046\u306B\u6271\u3063\u3066\u3044\u308B\u3002\u80FD\u529B\u3092\u5F15\u304D\u7D99\u3044\u3060\u81EA\u5206\u3082\u3044\u3064\u304B\u306F\u305D\u3046\u306A\u308B\u306E\u3060\u308D\u3046\u304B\uFF1F"], [8, "\u300E\u5927\u60AA\u4EBA\u306E\u8840\u300F\u4E16\u9593\u3092\u9A12\u304C\u305B\u305F\u5927\u60AA\u515A\u3084\u5927\u602A\u76D7\u3002\u305D\u306E\u8840\u304C\u81EA\u5206\u306B\u3082\u6D41\u308C\u3066\u3044\u308B\u3002\u6545\u306B\u60AA\u4EBA\u306E\u601D\u8003\u3092\u30C8\u30EC\u30FC\u30B9\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u3001\u7D50\u679C\u3068\u3057\u3066\u540D\u63A2\u5075\u306E\u3088\u3046\u306B\u3075\u308B\u307E\u3048\u308B\u3002"], [9, "\u300E\u96A0\u3055\u308C\u305F\u8840\u7B4B\u300F\u3069\u3046\u3044\u3046\u8A33\u304B\u3001\u81EA\u5206\u306E\u30EB\u30FC\u30C4\u306F\u62B9\u6D88\u3055\u308C\u3066\u3044\u308B\u3002\u81EA\u5206\u304C\u4F55\u8005\u306A\u306E\u304B\u3059\u3089\u3001\u308F\u304B\u3089\u306A\u3044\u3002\u305F\u3060\u3001\u81EA\u5206\u306B\u306F\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3067\u304D\u308B\u529B\u304C\u3042\u3063\u3066\u3001\u305D\u308C\u304C\u30EB\u30FC\u30C4\u306B\u95A2\u4FC2\u3057\u3066\u3044\u308B\u3068\u76F4\u611F\u3067\u304D\u308B\u3002"], [10, "\u300E\u30AF\u30ED\u30FC\u30F3\u300F\u81EA\u5206\u306F\u6709\u540D\u306A\u540D\u63A2\u5075\u306EDNA\u304B\u3089\u751F\u307E\u308C\u305F\u5B58\u5728\u3060\u3002\u305D\u306E\u305F\u3081\u304B\u3001\u540D\u63A2\u5075\u306E\u529B\u306F\u751F\u307E\u308C\u306A\u304C\u3089\u306B\u5099\u308F\u3063\u3066\u3044\u305F\u3002"]];
+      table = [[1, "『名探偵の先祖（真）』自分の先祖に著名な探偵がいる。その名を出せば、誰もが知るような大人物だ。自分はその血を濃く引いているようで、探偵としての才能を存分に発揮している。"], [2, "『名探偵の先祖（想）』自分の先祖は著名な探偵だ。しかし、その活躍は「フィクション」として語られている。その人物は実在しないと言われているが……それは真実ではない。自分がその血を引いているのだから。"], [3, "『親が世界的探偵』自分の親は、世界的に名の知れた名探偵だ。数々の難事件も解決している。自分にもその血が流れていて、事件に対する鋭い洞察力を受け継ぐことになった。"], [4, "『街の名探偵』自分の親は、街ではよく名の知れた名探偵だ。街の人々から愛され、頼りにされていた。自分もその血を引いているのか、探偵として活動する力が備わっている。"], [5, "『推理作家』自分を育てた人物は、著名な推理作家であった。その思考能力は自分にも継がれており、トリックを暴く力は探偵並みにあると言っていいだろう。"], [6, "『育ての親』自分を育ててくれた人物は、事件を解決に導いたことのある人物である。その人物の教えを受けて、自分は探偵の才を開花させた。"], [7, "『堕ちた名探偵』かつて、自分の親はあらゆる事件を解決し、名探偵として有名だった。しかし、今では優れた思考能力を悪用し、人々を駒のように扱っている。能力を引き継いだ自分もいつかはそうなるのだろうか？"], [8, "『大悪人の血』世間を騒がせた大悪党や大怪盗。その血が自分にも流れている。故に悪人の思考をトレースすることができ、結果として名探偵のようにふるまえる。"], [9, "『隠された血筋』どういう訳か、自分のルーツは抹消されている。自分が何者なのかすら、わからない。ただ、自分には事件を解決できる力があって、それがルーツに関係していると直感できる。"], [10, "『クローン』自分は有名な名探偵のDNAから生まれた存在だ。そのためか、名探偵の力は生まれながらに備わっていた。"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -453,7 +453,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300E\u8D85\u30A8\u30EA\u30FC\u30C8\u300F\u81EA\u5206\u306F\u30A8\u30EA\u30FC\u30C8\u3068\u3057\u3066\u6D3B\u8E8D\u3059\u3079\u304F\u3001\u3042\u3089\u3086\u308B\u5206\u91CE\u306E\u8A13\u7DF4\u3092\u884C\u3063\u305F\u3002\u305D\u3057\u3066\u3001\u671B\u307E\u308C\u308B\u307E\u307E\u306B\u512A\u79C0\u306A\u4EBA\u9593\u3068\u306A\u3063\u305F\u3002"], [2, "\u300E\u77AC\u9593\u8A18\u61B6\u80FD\u529B\u300F\u898B\u305F\u3082\u306E\u306F\u3059\u3079\u3066\u982D\u306E\u4E2D\u306B\u30A4\u30F3\u30D7\u30C3\u30C8\u3055\u308C\u308B\u3002\u305D\u3057\u3066\u3001\u6C7A\u3057\u3066\u5FD8\u308C\u306A\u3044\u3002\u81EA\u5206\u306F\u305D\u3046\u3044\u3046\u80FD\u529B\u3092\u5099\u3048\u3066\u3044\u308B\u3002"], [3, "\u300E\u77E5\u8B58\u306E\u6CC9\u300F\u982D\u306E\u4E2D\u306B\u3042\u308B\u5F15\u304D\u51FA\u3057\u306E\u4E2D\u306B\u306F\u3001\u3042\u3089\u3086\u308B\u77E5\u8B58\u304C\u53CE\u3081\u3089\u308C\u3066\u3044\u308B\u3002\u3064\u307E\u308A\u3001\u77E5\u3089\u306A\u3044\u3053\u3068\u306F\u306A\u3044\u3068\u3044\u3046\u3053\u3068\u3060\u3002"], [4, "\u300E\u30B9\u30D1\u30EB\u30BF\u6559\u80B2\u300F\u53B3\u3057\u3044\u6559\u80B2\u3092\u53D7\u3051\u3001\u305D\u306E\u7D50\u679C\u77E5\u8B58\u3092\u5F97\u308B\u3053\u3068\u304C\u3067\u304D\u305F\u3002\u305D\u306E\u4EE3\u308F\u308A\u3001\u5C11\u3057\u5909\u308F\u3063\u305F\u601D\u8003\u65B9\u6CD5\u306B\u306A\u3063\u3066\u3057\u307E\u3063\u305F\u304C\u2026\u2026\u3002\u5927\u3057\u305F\u3053\u3068\u3067\u306F\u306A\u3044\u3060\u308D\u3046\u3002"], [5, "\u300E\u65E2\u306B\u540D\u63A2\u5075\u300F\u65E2\u306B\u5E7E\u591A\u306E\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3057\u3066\u3044\u308B\u5929\u624D\u3067\u3042\u308B\u3002\u6570\u3005\u306E\u96E3\u4E8B\u4EF6\u3082\u3001\u81EA\u5206\u306E\u624B\u8155\u3067\u89E3\u6C7A\u3057\u3066\u304D\u305F\u3002\u305D\u306E\u508D\u3089\u306B\u306F\u3001\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u59FF\u3082\u3042\u3063\u305F\u3002"], [6, "\u300E\u61A7\u308C\u306E\u80CC\u4E2D\u300F\u81EA\u5206\u306B\u306F\u61A7\u308C\u3066\u3044\u308B\u76F8\u624B\u304C\u3044\u305F\u3002\u305D\u306E\u5B58\u5728\u306B\u8FFD\u3044\u3064\u304F\u305F\u3081\u306B\u3001\u52AA\u529B\u3092\u3057\u3001\u4ECA\u306E\u80FD\u529B\u3092\u624B\u306B\u5165\u308C\u305F\u3002\u305D\u306E\u4EBA\u7269\u306F\u3001\u4ECA\u306F\u2026\u2026\u3002"], [7, "\u300E\u30E9\u30A4\u30D0\u30EB\u300F\u81EA\u5206\u3068\u7AF6\u3044\u5408\u3063\u3066\u3044\u305F\u30E9\u30A4\u30D0\u30EB\u304C\u3044\u308B\u3002\u80FD\u529B\u3068\u3057\u3066\u306F\u3001\u307B\u307C\u4E92\u89D2\u3060\u3063\u305F\u3002\u7AF6\u3044\u5408\u3044\u306E\u4E2D\u3067\u3001\u81EA\u5206\u306E\u80FD\u529B\u306F\u78E8\u304B\u308C\u3066\u3044\u3063\u305F\u306E\u3067\u3042\u308B\u3002"], [8, "\u300E\u304B\u3064\u3066\u306E\u540D\u63A2\u5075\u300F\u304B\u3064\u3066\u306F\u3001\u3042\u3089\u3086\u308B\u4E8B\u4EF6\u3092\u89E3\u6C7A\u306B\u5C0E\u3044\u305F\u5929\u624D\u3067\u3042\u3063\u305F\u3002\u3057\u304B\u3057\u3001\u4ECA\u306F\u4E8B\u4EF6\u89E3\u6C7A\u306B\u6D88\u6975\u7684\u3067\u3042\u308B\u3002\u4E8B\u4EF6\u3092\u9060\u3056\u3051\u305F\u3044\u3068\u601D\u3046\u4F55\u304B\u304C\u3042\u3063\u305F\u306E\u3060\u3002"], [9, "\u300E\u5B64\u7ACB\u3057\u305F\u540D\u63A2\u5075\u300F\u81EA\u5206\u306F\u5929\u624D\u7684\u306A\u80FD\u529B\u3092\u6301\u3063\u3066\u6570\u591A\u306E\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3057\u305F\u540D\u63A2\u5075\u3067\u3042\u308B\u3002\u305D\u308C\u6545\u306B\u758E\u307E\u308C\u3001\u6050\u308C\u3089\u308C\u3001\u4E16\u9593\u3084\u7D44\u7E54\u306E\u4E2D\u3067\u5B64\u7ACB\u3092\u3057\u3066\u3057\u307E\u3063\u3066\u3044\u308B\u3002"], [10, "\u300E\u4EBA\u5DE5\u540D\u63A2\u5075\u300F\u81EA\u5206\u306F\u4F55\u8005\u304B\u306B\u3088\u3063\u3066\u8EDF\u7981\u3055\u308C\u3066\u63A2\u5075\u77E5\u8B58\u3092\u8A70\u3081\u8FBC\u307E\u308C\u305F\u3001\u300C\u4EBA\u53E3\u540D\u63A2\u5075\u300D\u3060\u3002\u540D\u63A2\u5075\u306B\u306A\u308B\u3079\u304F\u3057\u3066\u80B2\u3066\u3089\u308C\u305F\u81EA\u5206\u306F\u3001\u305D\u306E\u80FD\u529B\u3092\u671F\u5F85\u901A\u308A\u306B\u767A\u63EE\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B\u3002"]];
+      table = [[1, "『超エリート』自分はエリートとして活躍すべく、あらゆる分野の訓練を行った。そして、望まれるままに優秀な人間となった。"], [2, "『瞬間記憶能力』見たものはすべて頭の中にインプットされる。そして、決して忘れない。自分はそういう能力を備えている。"], [3, "『知識の泉』頭の中にある引き出しの中には、あらゆる知識が収められている。つまり、知らないことはないということだ。"], [4, "『スパルタ教育』厳しい教育を受け、その結果知識を得ることができた。その代わり、少し変わった思考方法になってしまったが……。大したことではないだろう。"], [5, "『既に名探偵』既に幾多の事件を解決している天才である。数々の難事件も、自分の手腕で解決してきた。その傍らには、パートナーの姿もあった。"], [6, "『憧れの背中』自分には憧れている相手がいた。その存在に追いつくために、努力をし、今の能力を手に入れた。その人物は、今は……。"], [7, "『ライバル』自分と競い合っていたライバルがいる。能力としては、ほぼ互角だった。競い合いの中で、自分の能力は磨かれていったのである。"], [8, "『かつての名探偵』かつては、あらゆる事件を解決に導いた天才であった。しかし、今は事件解決に消極的である。事件を遠ざけたいと思う何かがあったのだ。"], [9, "『孤立した名探偵』自分は天才的な能力を持って数多の事件を解決した名探偵である。それ故に疎まれ、恐れられ、世間や組織の中で孤立をしてしまっている。"], [10, "『人工名探偵』自分は何者かによって軟禁されて探偵知識を詰め込まれた、「人口名探偵」だ。名探偵になるべくして育てられた自分は、その能力を期待通りに発揮することができる。"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -463,7 +463,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u300E\u30B5\u30B9\u30DA\u30F3\u30B9\u30DE\u30CB\u30A2\u300F\u81EA\u5206\u306F\u30B5\u30B9\u30DA\u30F3\u30B9\u3082\u306E\u306E\u30D5\u30A3\u30AF\u30B7\u30E7\u30F3\u3084\u3001\u5B9F\u5728\u3059\u308B\u4E8B\u4EF6\u306B\u5BFE\u3057\u3066\u975E\u5E38\u306B\u5F37\u3044\u95A2\u5FC3\u3092\u5BC4\u305B\u3066\u3044\u308B\u3002\u305F\u3081\u8FBC\u3093\u3060\u30C8\u30EA\u30C3\u30AF\u306E\u77E5\u8B58\u3092\u6D3B\u304B\u3059\u3053\u3068\u304C\u3067\u304D\u308B\u6A5F\u4F1A\u3092\u7ABA\u3063\u3066\u3044\u308B\u3002"], [2, "\u300E\u6B7B\u4F53\u30DE\u30CB\u30A2\u300F\u81EA\u5206\u306F\u6B7B\u4F53\u306B\u5BFE\u3057\u3066\u5F37\u3044\u95A2\u5FC3\u3092\u5BC4\u305B\u3066\u3044\u308B\u3002\u6B7B\u4F53\u306E\u72B6\u614B\u3084\u8A73\u7D30\u3092\u77E5\u308B\u3053\u3068\u306B\u3088\u3063\u3066\u3001\u5F37\u3044\u8208\u596E\u3092\u899A\u3048\u308B\u3068\u3044\u3046\u6027\u8CEA\u306A\u306E\u3060\u3002\u56F0\u3063\u305F\u3082\u306E\u3060\u3002"], [3, "\u300E\u79D1\u5B66\u30DE\u30CB\u30A2\u300F\u79D1\u5B66\u306B\u3088\u3063\u3066\u89E3\u660E\u3067\u304D\u306A\u3044\u3053\u3068\u306F\u306A\u3044\u3002\u81EA\u5206\u306F\u305D\u3046\u8003\u3048\u3066\u3044\u308B\u3057\u3001\u305D\u306E\u305F\u3081\u306B\u80FD\u529B\u3092\u78E8\u3044\u3066\u304D\u305F\u3002\u4EBA\u306E\u8D77\u3053\u3059\u4E8B\u4EF6\u3067\u3042\u308C\u3001\u79D1\u5B66\u306F\u3059\u3079\u3066\u3092\u898B\u901A\u3059\u3053\u3068\u304C\u3067\u304D\u308B\u3060\u308D\u3046\u3002"], [4, "\u300E\u3044\u308F\u3086\u308B\u30AA\u30BF\u30AF\u300F\u30B2\u30FC\u30E0\u3084\u6F2B\u753B\u306A\u3069\u3067\u5F97\u305F\u77E5\u8B58\u3068\u3044\u3046\u306E\u306F\u3001\u6848\u5916\u30D0\u30AB\u306B\u306A\u3089\u306A\u3044\u3082\u306E\u3060\u3002\u81EA\u5206\u306F\u30B2\u30FC\u30E0\u3092\u901A\u3058\u3066\u69D8\u3005\u306A\u77E5\u8B58\u3092\u305F\u3081\u8FBC\u3093\u3067\u304A\u308A\u3001\u305D\u308C\u3092\u5FDC\u7528\u3059\u308B\u3053\u3068\u3067\u3042\u3089\u3086\u308B\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3059\u308B\u3002"], [5, "\u300E\u4EBA\u9593\u30DE\u30CB\u30A2\u300F\u81EA\u5206\u306F\u4EBA\u9593\u304C\u597D\u304D\u3060\u3002\u305D\u308C\u6545\u306B\u3001\u89B3\u5BDF\u3082\u3057\u3066\u3044\u308B\u3002\u884C\u52D5\u306B\u5F53\u4EBA\u3082\u308F\u304B\u3089\u306A\u3044\u7406\u7531\u304C\u3042\u308B\u3053\u3068\u3082\u77E5\u3063\u3066\u3044\u308B\u3002\u4E8B\u4EF6\u3082\u3001\u3069\u3046\u3057\u3066\u305D\u3093\u306A\u3053\u3068\u3092\u8D77\u3053\u3057\u305F\u306E\u304B\u306B\u8208\u5473\u304C\u3042\u308B\u3002"], [6, "\u300E\u66F8\u7269\u30DE\u30CB\u30A2\u300F\u66F8\u7269\u306B\u306F\u3001\u3042\u3089\u3086\u308B\u3053\u3068\u304C\u66F8\u304B\u308C\u3066\u3044\u308B\u3002\u5C11\u306A\u304F\u3068\u3082\u81EA\u5206\u306F\u305D\u3046\u8003\u3048\u3066\u3044\u308B\u3057\u3001\u305D\u306E\u8A3C\u62E0\u306B\u672C\u306E\u77E5\u8B58\u3092\u5FDC\u7528\u3059\u308B\u3053\u3068\u3067\u3001\u96E3\u4E8B\u4EF6\u3082\u89E3\u6C7A\u3067\u304D\u308B\u3002\u7D19\u4E0A\u306E\u540D\u63A2\u5075\u306E\u3088\u3046\u306B\u3002"], [7, "\u300E\u30AA\u30AB\u30EB\u30C8\u30DE\u30CB\u30A2\u300F\u30AA\u30AB\u30EB\u30C8\u3084\u8D85\u5E38\u73FE\u8C61\u3092\u4FE1\u3058\u3066\u3044\u308B\u3002\u305D\u308C\u6545\u306B\u3001\u30A4\u30F3\u30C1\u30AD\u3092\u898B\u7834\u308B\u8853\u3082\u77E5\u3063\u3066\u3044\u308B\u3057\u3001\u8A31\u305B\u306A\u3044\u3068\u611F\u3058\u3066\u3044\u308B\u3002\u305D\u308C\u304C\u3001\u3069\u3046\u3044\u3046\u308F\u3051\u304B\u96E3\u4E8B\u4EF6\u306E\u89E3\u6C7A\u306B\u3082\u7E4B\u304C\u308B\u3002\u4E0D\u601D\u8B70\u3060\u3002"], [8, "\u300E\u63A2\u5075\u30DE\u30CB\u30A2\u300F\u53E4\u4ECA\u6771\u897F\u3001\u69D8\u3005\u306A\u63A2\u5075\u304C\u3044\u308B\u3002\u305D\u308C\u306B\u3064\u3044\u3066\u8ABF\u3079\u3066\u3044\u304F\u3046\u3061\u306B\u3001\u81EA\u5206\u3082\u307E\u305F\u63A2\u5075\u3068\u3057\u3066\u306E\u80FD\u529B\u304C\u5099\u308F\u3063\u305F\u3002"], [9, "\u300E\u66B4\u8D70\u3059\u308B\u77E5\u8B58\u6B32\u300F\u81EA\u5206\u306F\u4E00\u3064\u306E\u3053\u3068\u306E\u30DE\u30CB\u30A2\u3067\u3042\u308B\u304C\u3001\u305D\u308C\u304B\u3089\u6D3E\u751F\u3057\u305F\u7269\u306E\u77E5\u8B58\u3082\u3088\u304F\u77E5\u3063\u3066\u3044\u308B\u3002\u81EA\u5206\u306E\u77E5\u8B58\u6B32\u306F\u3001\u305D\u308C\u304B\u3089\u3055\u3089\u306B\u6D3E\u751F\u3057\u305F\u3082\u306E\u307E\u3067\u53CA\u3076\u3002"], [10, "\u300E\u6B63\u7FA9\u306E\u30DE\u30CB\u30A2\u300F\u81EA\u5206\u304C\u4FE1\u5949\u3057\u3066\u3044\u308B\u4F55\u304B\uFF08\u66F8\u7269\u3084\u79D1\u5B66\u306A\u3069\uFF09\u304C\u3001\u4E8B\u4EF6\u306B\u95A2\u308F\u3063\u3066\u3044\u308B\u3068\u306A\u308B\u3068\u3001\u5C45\u3066\u3082\u7ACB\u3063\u3066\u3082\u5C45\u3089\u308C\u306A\u3044\u3002\u30DE\u30CB\u30A2\u3068\u3057\u3066\u3001\u305D\u306E\u8B0E\u3092\u89E3\u660E\u3057\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\u3002"]];
+      table = [[1, "『サスペンスマニア』自分はサスペンスもののフィクションや、実在する事件に対して非常に強い関心を寄せている。ため込んだトリックの知識を活かすことができる機会を窺っている。"], [2, "『死体マニア』自分は死体に対して強い関心を寄せている。死体の状態や詳細を知ることによって、強い興奮を覚えるという性質なのだ。困ったものだ。"], [3, "『科学マニア』科学によって解明できないことはない。自分はそう考えているし、そのために能力を磨いてきた。人の起こす事件であれ、科学はすべてを見通すことができるだろう。"], [4, "『いわゆるオタク』ゲームや漫画などで得た知識というのは、案外バカにならないものだ。自分はゲームを通じて様々な知識をため込んでおり、それを応用することであらゆる事件を解決する。"], [5, "『人間マニア』自分は人間が好きだ。それ故に、観察もしている。行動に当人もわからない理由があることも知っている。事件も、どうしてそんなことを起こしたのかに興味がある。"], [6, "『書物マニア』書物には、あらゆることが書かれている。少なくとも自分はそう考えているし、その証拠に本の知識を応用することで、難事件も解決できる。紙上の名探偵のように。"], [7, "『オカルトマニア』オカルトや超常現象を信じている。それ故に、インチキを見破る術も知っているし、許せないと感じている。それが、どういうわけか難事件の解決にも繋がる。不思議だ。"], [8, "『探偵マニア』古今東西、様々な探偵がいる。それについて調べていくうちに、自分もまた探偵としての能力が備わった。"], [9, "『暴走する知識欲』自分は一つのことのマニアであるが、それから派生した物の知識もよく知っている。自分の知識欲は、それからさらに派生したものまで及ぶ。"], [10, "『正義のマニア』自分が信奉している何か（書物や科学など）が、事件に関わっているとなると、居ても立っても居られない。マニアとして、その謎を解明しなければならない。"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -473,7 +473,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u300E\u304A\u4EBA\u3088\u3057\u300F\u81EA\u5206\u306F\u4ED6\u8005\u304B\u3089\u3088\u304F\u304A\u4EBA\u3088\u3057\u3068\u8A00\u308F\u308C\u3066\u3044\u308B\u3002\u305D\u306E\u305F\u3081\u3001\u4EBA\u306B\u983C\u307E\u308C\u3066\u4E8B\u4EF6\u306B\u7D61\u3080\u3053\u3068\u304C\u3088\u304F\u3042\u3063\u305F\u3002\u3060\u304B\u3089\u3001\u4EBA\u306E\u60A9\u307F\u3092\u89E3\u6C7A\u3067\u304D\u308B\u80FD\u529B\u304C\u3042\u308B\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u4E00\u7DD2\u306B\u3044\u308B\u3002", "\u300E\u8A31\u305B\u306A\u3044\u300F\u81EA\u5206\u306F\u4E8B\u4EF6\u306E\u88AB\u5BB3\u8005\u306B\u5BFE\u3057\u3066\u5165\u308C\u8FBC\u3080\u30BF\u30A4\u30D7\u3060\u3002\u88AB\u5BB3\u8005\u306E\u6C17\u6301\u3061\u3092\u8003\u3048\u308B\u3068\u3001\u3084\u308A\u304D\u308C\u306A\u3044\u601D\u3044\u3068\u5171\u306B\u3001\u72AF\u4EBA\u3092\u8A31\u305B\u306A\u3044\u3068\u3044\u3046\u6C17\u6301\u3061\u304C\u6E67\u3044\u3066\u304F\u308B\u3002\u3060\u304B\u3089\u3001\u72AF\u4EBA\u3092\u8FFD\u3046\u305F\u3081\u306B\u30D1\u30FC\u30C8\u30CA\u30FC\u304C\u5FC5\u8981\u3060\u3002", "\u300E\u7D0D\u5F97\u3057\u305F\u3044\u300F\u81EA\u5206\u304C\u4E8B\u4EF6\u306B\u5BFE\u3057\u3066\u9996\u3092\u7A81\u3063\u8FBC\u3080\u306E\u306F\u3001\u81EA\u5206\u306E\u4E2D\u306B\u7D0D\u5F97\u304C\u6B32\u3057\u3044\u304B\u3089\u3060\u3002\u4E8B\u4EF6\u3092\u901A\u3058\u3066\u4F55\u3089\u304B\u306E\u89E3\u7B54\u3092\u898B\u3064\u3051\u308B\u305F\u3081\u306B\u3001\u6B63\u7FA9\u3092\u884C\u3063\u3066\u3044\u308B\u3002\u30D1\u30FC\u30C8\u30CA\u30FC\u306F\u3001\u305D\u306E\u305F\u3081\u306B\u5FC5\u8981\u306A\u4EBA\u9593\u3060\u3002", "\u300E\u5229\u7528\u3057\u3066\u3044\u308B\u300F\u3069\u3093\u306A\u624B\u6BB5\u3092\u4F7F\u3063\u3066\u3067\u3082\u3001\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3059\u308B\u306E\u304C\u6B63\u3057\u3044\u3068\u81EA\u5206\u306F\u8003\u3048\u3066\u3044\u308B\u3002\u305D\u306E\u305F\u3081\u306E\u9053\u5177\u3068\u3057\u3066\u3001\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u4F7F\u3063\u3066\u3044\u308B\u3060\u3051\u3060\u3002", "\u300E\u983C\u308C\u308B\u5354\u529B\u8005\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u3053\u3068\u3092\u983C\u308C\u308B\u5354\u529B\u8005\u3067\u3042\u308B\u3068\u611F\u3058\u3066\u3044\u308B\u3002\u30D1\u30FC\u30C8\u30CA\u30FC\u306F\u81EA\u5206\u304C\u56F0\u3063\u305F\u3068\u304D\u3001\u8FF7\u3063\u305F\u3068\u304D\u306B\u3001\u7B54\u3048\u3092\u793A\u3057\u3066\u304F\u308C\u308B\u4EBA\u9593\u3060\u3068\u601D\u3063\u3066\u3044\u308B\u3002\u76F8\u624B\u304C\u3069\u3046\u601D\u3063\u3066\u3044\u3088\u3046\u304C\u3001\u305D\u308C\u306F\u5909\u308F\u3089\u306A\u3044\u3002", "\u300E\u6B63\u7FA9\u306E\u540C\u5FD7\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u3082\u3001\u4E00\u7DD2\u306B\u6B63\u7FA9\u306E\u305F\u3081\u306B\u4E8B\u4EF6\u89E3\u6C7A\u3092\u3057\u3066\u304F\u308C\u3066\u3044\u308B\u3002\u81EA\u5206\u306F\u305D\u3046\u611F\u3058\u3066\u3044\u308B\u3002\u601D\u3044\u8FBC\u3093\u3067\u3044\u308B\u3060\u3051\u304B\u3082\u3057\u308C\u306A\u3044\u304C\u3001\u305D\u306E\u601D\u3044\u8FBC\u307F\u306F\u6B62\u3081\u3089\u308C\u306A\u3044\u3002\u3072\u3087\u3063\u3068\u3057\u305F\u3089\u81EA\u5206\u306E\u65B9\u304C\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u632F\u308A\u56DE\u3057\u3066\u3044\u308B\u306E\u304B\u3082\u3002"];
+      table = ["『お人よし』自分は他者からよくお人よしと言われている。そのため、人に頼まれて事件に絡むことがよくあった。だから、人の悩みを解決できる能力があるパートナーと一緒にいる。", "『許せない』自分は事件の被害者に対して入れ込むタイプだ。被害者の気持ちを考えると、やりきれない思いと共に、犯人を許せないという気持ちが湧いてくる。だから、犯人を追うためにパートナーが必要だ。", "『納得したい』自分が事件に対して首を突っ込むのは、自分の中に納得が欲しいからだ。事件を通じて何らかの解答を見つけるために、正義を行っている。パートナーは、そのために必要な人間だ。", "『利用している』どんな手段を使ってでも、事件を解決するのが正しいと自分は考えている。そのための道具として、パートナーを使っているだけだ。", "『頼れる協力者』パートナーのことを頼れる協力者であると感じている。パートナーは自分が困ったとき、迷ったときに、答えを示してくれる人間だと思っている。相手がどう思っていようが、それは変わらない。", "『正義の同志』パートナーも、一緒に正義のために事件解決をしてくれている。自分はそう感じている。思い込んでいるだけかもしれないが、その思い込みは止められない。ひょっとしたら自分の方がパートナーを振り回しているのかも。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_background_assistant_justice$35.$$arity = 0);
     
@@ -481,7 +481,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u300E\u80FD\u529B\u306B\u307B\u308C\u8FBC\u3093\u3060\u300F\u81EA\u5206\u306F\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u4E8B\u4EF6\u306B\u95A2\u3059\u308B\u80FD\u529B\u306B\u307B\u308C\u8FBC\u3093\u3060\u3002\u305D\u306E\u92ED\u3044\u6D1E\u5BDF\u529B\u3084\u3001\u63A8\u7406\u529B\u3001\u77E5\u8B58\u306E\u6DF1\u3055\u3002\u3059\u3079\u3066\u304C\u81EA\u5206\u3092\u9B45\u4E86\u3057\u3066\u3044\u308B\u3002", "\u300E\u4EBA\u67C4\u306B\u307B\u308C\u8FBC\u3093\u3060\u300F\u81EA\u5206\u304C\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u7D44\u3093\u3067\u3044\u308B\u306E\u306F\u3001\u4EBA\u683C\u306E\u9762\u304C\u5927\u304D\u3044\u3002\u4E00\u898B\u308F\u304B\u308A\u3065\u3089\u3044\u3068\u3053\u308D\u3082\u3042\u308B\u304C\u3001\u96A0\u3055\u308C\u305F\u672C\u8CEA\u306B\u81EA\u5206\u306F\u307B\u308C\u8FBC\u3093\u3067\u3044\u308B\u3002", "\u300E\u4E00\u76EE\u60DA\u308C\u300F\u306F\u3058\u3081\u3066\u4F1A\u3063\u305F\u3068\u304D\u304B\u3089\u3001\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u3053\u3068\u304C\u6C17\u306B\u306A\u3063\u3066\u3044\u305F\u3002\u305D\u306E\u80FD\u529B\u3082\u3055\u308B\u3053\u3068\u306A\u304C\u3089\u3001\u76F4\u611F\u3081\u3044\u305F\u3082\u306E\u3092\u611F\u3058\u305F\u306E\u3060\u3002\u3060\u304B\u3089\u4E00\u7DD2\u306B\u3044\u308B\u3002", "\u300E\u30A6\u30DE\u304C\u5408\u3063\u305F\u300F\u81EA\u5206\u3068\u30D1\u30FC\u30C8\u30CA\u30FC\u306F\u8A71\u304C\u5408\u3046\u3002\u4E8C\u4EBA\u306A\u3089\u76DB\u308A\u4E0A\u304C\u308C\u308B\u3057\u3001\u4E8C\u4EBA\u306A\u3089\u306A\u3093\u3067\u3082\u3067\u304D\u308B\u3002\u305D\u3046\u601D\u3063\u3066\u3044\u308B\u3002\u2026\u2026\u81EA\u5206\u304C\u305D\u3046\u601D\u3063\u3066\u3044\u308B\u3060\u3051\u304B\u3082\u3057\u308C\u306A\u3044\u304C\u3002", "\u300E\u5BFE\u7ACB\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u81EA\u5206\u306F\u5BFE\u7ACB\u3057\u3066\u3044\u308B\u3002\u305D\u308C\u3067\u3082\u4E00\u7DD2\u306B\u3044\u308B\u306E\u306F\u3001\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u3053\u3068\u3092\u7406\u89E3\u3059\u308B\u305F\u3081\u3060\u3002\u2026\u2026\u3044\u3064\u304B\u3001\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u5012\u3059\u624B\u6BB5\u3092\u898B\u3064\u3051\u308B\u305F\u3081\u306B\u3002", "\u300E\u653E\u3063\u3066\u304A\u3051\u306A\u3044\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u3053\u3068\u3092\u653E\u3063\u3066\u304A\u304F\u3068\u4F55\u3092\u3057\u3067\u304B\u3059\u304B\u308F\u304B\u3089\u306A\u3044\u3002\u3060\u304B\u3089\u3001\u81EA\u5206\u304C\u898B\u5F35\u3063\u3066\u3044\u306A\u3044\u3068\u3044\u3051\u306A\u3044\u3002\u305D\u3046\u611F\u3058\u305F\u3002"];
+      table = ["『能力にほれ込んだ』自分はパートナーの事件に関する能力にほれ込んだ。その鋭い洞察力や、推理力、知識の深さ。すべてが自分を魅了している。", "『人柄にほれ込んだ』自分がパートナーと組んでいるのは、人格の面が大きい。一見わかりづらいところもあるが、隠された本質に自分はほれ込んでいる。", "『一目惚れ』はじめて会ったときから、パートナーのことが気になっていた。その能力もさることながら、直感めいたものを感じたのだ。だから一緒にいる。", "『ウマが合った』自分とパートナーは話が合う。二人なら盛り上がれるし、二人ならなんでもできる。そう思っている。……自分がそう思っているだけかもしれないが。", "『対立』パートナーと自分は対立している。それでも一緒にいるのは、パートナーのことを理解するためだ。……いつか、パートナーを倒す手段を見つけるために。", "『放っておけない』パートナーのことを放っておくと何をしでかすかわからない。だから、自分が見張っていないといけない。そう感じた。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_background_assistant_passion$36.$$arity = 0);
     
@@ -489,7 +489,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u300E\u4E00\u65B9\u7684\u306B\u6C17\u306B\u5165\u3089\u308C\u305F\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u304B\u3089\u3001\u4E00\u65B9\u7684\u306B\u6C17\u306B\u5165\u3089\u308C\u3066\u3044\u308B\u3002\u3069\u3046\u3057\u3066\u305D\u3046\u306A\u3063\u305F\u306E\u304B\u306F\u308F\u304B\u3089\u306A\u3044\u304C\u3001\u305D\u3046\u3044\u3046\u3082\u306E\u3089\u3057\u3044\u3002\u4E00\u7DD2\u306B\u3044\u308B\u306E\u306F\u3001\u4E0D\u672C\u610F\u306A\u306E\u3060\u3051\u3069\u2026\u2026\u3002", "\u300E\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u8981\u54E1\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u3088\u308B\u3068\u3001\u81EA\u5206\u306F\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u671F\u5F85\u3055\u308C\u3066\u3044\u308B\u3089\u3057\u3044\u3002\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3057\u305F\u3068\u304D\u3084\u3001\u4F55\u3089\u304B\u306E\u9A5A\u304D\u304C\u3042\u3063\u305F\u3068\u304D\u306B\u898B\u305B\u308B\u53CD\u5FDC\u304C\u697D\u3057\u3044\u306E\u3060\u3068\u304B\u3002", "\u300E\u904E\u53BB\u306E\u30C4\u30B1\u300F\u904E\u53BB\u306B\u3001\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u79D8\u5BC6\u3084\u5F31\u5473\u3092\u63E1\u3089\u308C\u305F\u3002\u305D\u308C\u4EE5\u6765\u3001\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u624B\u4F1D\u3044\u3092\u3055\u305B\u3089\u308C\u3066\u3044\u308B\u3002\u307E\u3060\u3001\u9003\u3052\u3089\u308C\u3066\u3044\u306A\u3044\u3002", "\u300E\u5FC5\u8981\u306A\u4EBA\u6750\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u3001\u81EA\u5206\u304C\u5FC5\u8981\u3060\u3068\u983C\u307E\u308C\u305F\u3002\u3060\u304B\u3089\u3001\u4E00\u7DD2\u306B\u4E8B\u4EF6\u3092\u89E3\u6C7A\u3057\u3066\u3044\u308B\u3002\u3069\u3046\u3057\u3066\u81EA\u5206\u304C\u5FC5\u8981\u306A\u306E\u304B\u306F\u3001\u307E\u3060\u308F\u304B\u3089\u306A\u3044\u3002", "\u300E\u89AA\u3057\u3044\u4EBA\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u3068\u3063\u3066\u81EA\u5206\u306F\u3001\u89AA\u3057\u3044\u4EBA\u7269\u3060\u3002\u5E7C\u99B4\u67D3\u3084\u53CB\u4EBA\u3001\u89AA\u621A\u306A\u3069\u3002\u305D\u308C\u6545\u306B\u3001\u6614\u304B\u3089\u632F\u308A\u56DE\u3055\u308C\u3066\u3044\u308B\u3057\u3001\u3053\u308C\u304B\u3089\u3082\u632F\u308A\u56DE\u3055\u308C\u308B\u3060\u308D\u3046\u3002", "\u300E\u5076\u7136\u306E\u7A4D\u307F\u91CD\u306D\u300F\u30D1\u30FC\u30C8\u30CA\u30FC\u304C\u4E8B\u4EF6\u306B\u76F4\u9762\u3059\u308B\u305F\u3073\u306B\u5C45\u5408\u308F\u305B\u308B\u3002\u305D\u308C\u304C\u7E70\u308A\u8FD4\u3055\u308C\u308B\u3046\u3061\u306B\u3001\u3044\u3064\u306E\u9593\u306B\u304B\u89AA\u3057\u304F\u306A\u3063\u3066\u3044\u305F\u3002\u4ECA\u3067\u306F\u3001\u4E00\u7DD2\u306B\u3044\u308B\u3053\u3068\u3082\u591A\u3044\u3002"];
+      table = ["『一方的に気に入られた』パートナーから、一方的に気に入られている。どうしてそうなったのかはわからないが、そういうものらしい。一緒にいるのは、不本意なのだけど……。", "『リアクション要員』パートナーによると、自分はリアクションを期待されているらしい。事件を解決したときや、何らかの驚きがあったときに見せる反応が楽しいのだとか。", "『過去のツケ』過去に、パートナーに秘密や弱味を握られた。それ以来、パートナーの手伝いをさせられている。まだ、逃げられていない。", "『必要な人材』パートナーに、自分が必要だと頼まれた。だから、一緒に事件を解決している。どうして自分が必要なのかは、まだわからない。", "『親しい人』パートナーにとって自分は、親しい人物だ。幼馴染や友人、親戚など。それ故に、昔から振り回されているし、これからも振り回されるだろう。", "『偶然の積み重ね』パートナーが事件に直面するたびに居合わせる。それが繰り返されるうちに、いつの間にか親しくなっていた。今では、一緒にいることも多い。"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_background_assistant_involved$37.$$arity = 0);
     
@@ -497,7 +497,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u975E\u5E38\u306B\u9AD8\u3044", "\u9AD8\u3081", "\u5E73\u5747\u7684", "\u4F4E\u3081", "\u975E\u5E38\u306B\u4F4E\u3044", "\u30D1\u30FC\u30C8\u30CA\u30FC\u3088\u308A\u5C11\u3057\u9AD8\u3044\uFF0F\u5C11\u3057\u4F4E\u3044"];
+      table = ["非常に高い", "高め", "平均的", "低め", "非常に低い", "パートナーより少し高い／少し低い"];
       return self.$get_table_by_1d6(table);
     }, $FutariSousa_get_height_table$38.$$arity = 0);
     
@@ -505,7 +505,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "PC\u304C\u50CD\u3044\u3066\u3044\u308B\u8077\u5834"], [2, "\u9759\u304B\u306A\u96F0\u56F2\u6C17\u306E\u55AB\u8336\u5E97"], [3, "\u9A12\u304C\u3057\u3044\u96F0\u56F2\u6C17\u306E\u5C45\u9152\u5C4B"], [4, "\u63A2\u5075\u6D3B\u52D5\u306E\u305F\u3081\u306B\u501F\u308A\u305F\u4E8B\u52D9\u6240"], [5, "PC\u306E\u3046\u3061\u3001\u3069\u3061\u3089\u304B\u306E\u5BB6"], [6, "\u884C\u304D\u3064\u3051\u306E\u6599\u7406\u5C4B"], [7, "\u79FB\u52D5\u306B\u4F7F\u3046\u8ECA\u306E\u4E2D"], [8, "\u77E5\u308A\u5408\u3044\u304B\u3089\u8B72\u308A\u53D7\u3051\u305F\u5009\u5EAB"], [9, "\u3044\u3064\u3082\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u4F1A\u3046\u4EA4\u5DEE\u70B9"], [10, "\u4E8C\u4EBA\u3060\u3051\u304C\u77E5\u3063\u3066\u3044\u308B\u79D8\u5BC6\u306E\u5834\u6240"]];
+      table = [[1, "PCが働いている職場"], [2, "静かな雰囲気の喫茶店"], [3, "騒がしい雰囲気の居酒屋"], [4, "探偵活動のために借りた事務所"], [5, "PCのうち、どちらかの家"], [6, "行きつけの料理屋"], [7, "移動に使う車の中"], [8, "知り合いから譲り受けた倉庫"], [9, "いつもパートナーと会う交差点"], [10, "二人だけが知っている秘密の場所"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -515,7 +515,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u6614\u306E\u30D0\u30C7\u30A3"], [12, "\u53CB\u4EBA"], [13, "\u89AA\u53CB"], [14, "\u9854\u898B\u77E5\u308A"], [15, "\u6226\u53CB"], [16, "\u8150\u308C\u7E01"], [22, "\u904E\u53BB\u306B\u4F55\u304B\u3042\u3063\u305F"], [23, "\u3044\u3068\u3053"], [24, "\u53CB\u9054\u306E\u53CB\u9054"], [25, "\u9060\u3044\u89AA\u621A"], [26, "\u8FD1\u6240\u306E\u4EBA"], [33, "\u8FF7\u60D1\u3092\u304B\u3051\u305F"], [34, "\u5E2B\u5320"], [35, "\u30CD\u30C3\u30C8\u3067\u77E5\u308A\u5408\u3063\u305F"], [36, "\u5076\u7136\u77E5\u308A\u5408\u3063\u305F"], [44, "\u524D\u306B\u4E00\u5EA6\u3060\u3051\u4F1A\u3063\u305F"], [45, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u3053\u3068\u3067\u76F8\u8AC7\u3055\u308C\u305F"], [46, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306B\u3064\u3044\u3066\u8CEA\u554F\u3055\u308C\u305F"], [55, "\u5E7C\u99B4\u67D3"], [56, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u8FFD\u3063\u3066\u3044\u308B"], [66, "\u4E00\u65B9\u7684\u306B\u77E5\u3089\u308C\u3066\u3044\u308B"]];
+      table = [[11, "昔のバディ"], [12, "友人"], [13, "親友"], [14, "顔見知り"], [15, "戦友"], [16, "腐れ縁"], [22, "過去に何かあった"], [23, "いとこ"], [24, "友達の友達"], [25, "遠い親戚"], [26, "近所の人"], [33, "迷惑をかけた"], [34, "師匠"], [35, "ネットで知り合った"], [36, "偶然知り合った"], [44, "前に一度だけ会った"], [45, "パートナーのことで相談された"], [46, "パートナーについて質問された"], [55, "幼馴染"], [56, "パートナーを追っている"], [66, "一方的に知られている"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_guest_relation_table$40.$$arity = 0);
     
@@ -523,7 +523,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u305F\u307E\u308A\u5834\u306B\u305A\u3063\u3068\u7F6E\u3044\u3066\u3042\u308B\u5B85\u914D\u30D4\u30B6\u306E\u7BB1"], [12, "\u4E00\u7DD2\u306B\u89E3\u6C7A\u3057\u305F\u4E8B\u4EF6\u306E\u30D5\u30A1\u30A4\u30EB"], [13, "\u4E8C\u4EBA\u304C\u51FA\u4F1A\u3046\u304D\u3063\u304B\u3051\u306B\u306A\u3063\u305F\u672C"], [14, "\u4E8C\u4EBA\u3067\u904A\u3093\u3060\u30C1\u30A7\u30B9\u30DC\u30FC\u30C9\u3084\u5C06\u68CB\u76E4"], [15, "\u4E8C\u4EBA\u306E\u601D\u3044\u51FA\u304C\u8A70\u307E\u3063\u305F\u30B2\u30FC\u30E0\u6A5F"], [16, "\u81EA\u5206\u305F\u3061\u3092\u5199\u3057\u305F\u5199\u771F"], [22, "\u4E8C\u4EBA\u306E\u635C\u67FB\u30CE\u30FC\u30C8"], [23, "\u4E00\u7DD2\u306B\u4F7F\u3063\u305F\u6383\u9664\u9053\u5177"], [24, "\u88AB\u5BB3\u8005\u304B\u3089\u8D08\u3089\u308C\u305F\u306C\u3044\u3050\u308B\u307F"], [25, "\u4E8C\u4EBA\u3067\u4E00\u7DD2\u306B\u5EA7\u3063\u305F\u30BD\u30D5\u30A1\u30FC"], [26, "\u3044\u3064\u3082\u5EA7\u3063\u3066\u3044\u308B\u6905\u5B50"], [33, "\u3088\u304F\u4F7F\u3046\u96FB\u8A71\u6A5F"], [34, "\u4E8C\u4EBA\u306E\u6642\u3092\u523B\u3093\u3060\u6642\u8A08"], [35, "\u3044\u3064\u3082\u7F6E\u3044\u3066\u3042\u308B\u673A"], [36, "\u4E8B\u4EF6\u306E\u89E3\u8AAC\u3092\u3057\u305F\u30DB\u30EF\u30A4\u30C8\u30DC\u30FC\u30C9\u3084\u9ED2\u677F"], [44, "\u306A\u305C\u304B\u3042\u308B\u4EBA\u4F53\u6A21\u578B"], [45, "\u304A\u6C17\u306B\u5165\u308A\u306E\u30B3\u30C3\u30D7"], [46, "\u4E8B\u4EF6\u89E3\u6C7A\u306B\u4F7F\u3063\u305F\u5C0F\u9053\u5177"], [55, "\u4E00\u7DD2\u306B\u98F2\u3080\u7D04\u675F\u3092\u3057\u305F\u304A\u9152\u3084\u30B8\u30E5\u30FC\u30B9"], [56, "\u304A\u6C17\u306B\u5165\u308A\u306E\u6599\u7406"], [66, "\u4E8C\u4EBA\u3060\u3051\u306E\u79D8\u5BC6\u306E\u4EA4\u63DB\u65E5\u8A18"]];
+      table = [[11, "たまり場にずっと置いてある宅配ピザの箱"], [12, "一緒に解決した事件のファイル"], [13, "二人が出会うきっかけになった本"], [14, "二人で遊んだチェスボードや将棋盤"], [15, "二人の思い出が詰まったゲーム機"], [16, "自分たちを写した写真"], [22, "二人の捜査ノート"], [23, "一緒に使った掃除道具"], [24, "被害者から贈られたぬいぐるみ"], [25, "二人で一緒に座ったソファー"], [26, "いつも座っている椅子"], [33, "よく使う電話機"], [34, "二人の時を刻んだ時計"], [35, "いつも置いてある机"], [36, "事件の解説をしたホワイトボードや黒板"], [44, "なぜかある人体模型"], [45, "お気に入りのコップ"], [46, "事件解決に使った小道具"], [55, "一緒に飲む約束をしたお酒やジュース"], [56, "お気に入りの料理"], [66, "二人だけの秘密の交換日記"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_memorial_item_table$41.$$arity = 0);
     
@@ -531,7 +531,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"], [12, "\u30D5\u30EA\u30FC\u30BF\u30FC"], [13, "\u5B66\u751F\uFF08\u512A\u79C0\uFF09"], [14, "\u5B66\u751F\uFF08\u666E\u901A\uFF09"], [15, "\u5B66\u751F\uFF08\u4E0D\u771F\u9762\u76EE\uFF09"], [16, "\u6559\u5E2B\u30FB\u8B1B\u5E2B"], [22, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"], [23, "\u4F1A\u793E\u54E1"], [24, "\u4E3B\u592B\u30FB\u4E3B\u5A66"], [25, "\u81EA\u55B6\u696D\u8005"], [26, "\u30C7\u30A3\u30EC\u30C3\u30BF\u30F3\u30C8"], [33, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"], [34, "\u5211\u4E8B\uFF08\u65B0\u4EBA\uFF09"], [35, "\u5211\u4E8B\uFF08\u30A8\u30EA\u30FC\u30C8\uFF09"], [36, "\u516C\u52D9\u54E1"], [44, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"], [45, "\u63A2\u5075\u52A9\u624B"], [46, "\u63A2\u5075"], [55, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"], [56, "\u7121\u8077"], [66, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"]];
+      table = [[11, "パートナーと同じ"], [12, "フリーター"], [13, "学生（優秀）"], [14, "学生（普通）"], [15, "学生（不真面目）"], [16, "教師・講師"], [22, "パートナーと同じ"], [23, "会社員"], [24, "主夫・主婦"], [25, "自営業者"], [26, "ディレッタント"], [33, "パートナーと同じ"], [34, "刑事（新人）"], [35, "刑事（エリート）"], [36, "公務員"], [44, "パートナーと同じ"], [45, "探偵助手"], [46, "探偵"], [55, "パートナーと同じ"], [56, "無職"], [66, "パートナーと同じ"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_job_table_66$42.$$arity = 0);
     
@@ -539,7 +539,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u30C7\u30A3\u30EC\u30C3\u30BF\u30F3\u30C8"], [2, "\u5211\u4E8B"], [3, "\u63A2\u5075\uFF08\u6709\u540D\uFF09"], [4, "\u63A2\u5075\uFF08\u4E0D\u4EBA\u6C17\uFF09"], [5, "\u63A2\u5075\u52A9\u624B"], [6, "\u7814\u7A76\u8005"], [7, "\u81EA\u55B6\u696D\u8005"], [8, "\u4F1A\u793E\u54E1"], [9, "\u4F5C\u5BB6"], [10, "\u5B66\u751F"]];
+      table = [[1, "ディレッタント"], [2, "刑事"], [3, "探偵（有名）"], [4, "探偵（不人気）"], [5, "探偵助手"], [6, "研究者"], [7, "自営業者"], [8, "会社員"], [9, "作家"], [10, "学生"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -549,7 +549,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u9AD8\u7D1A\u5FD7\u5411"], [12, "\u30B9\u30FC\u30C4"], [13, "\u30AB\u30B8\u30E5\u30A2\u30EB\u30A6\u30A7\u30A2"], [14, "\u30D5\u30A9\u30FC\u30DE\u30EB\u30A6\u30A7\u30A2"], [15, "\u30B9\u30DD\u30FC\u30C4\u30A6\u30A7\u30A2"], [16, "\u30EA\u30FC\u30BA\u30CA\u30D6\u30EB"], [22, "\u30B5\u30F3\u30B0\u30E9\u30B9"], [23, "Y\u30B7\u30E3\u30C4"], [24, "T\u30B7\u30E3\u30C4"], [25, "\u30CD\u30C3\u30AF\u30EC\u30B9"], [26, "\u5E3D\u5B50"], [33, "\u30DF\u30EA\u30BF\u30EA\u30FC\u98A8"], [34, "\u30D4\u30A2\u30B9"], [35, "\u30B8\u30E3\u30FC\u30B8"], [36, "\u30A8\u30AF\u30B9\u30C6"], [44, "\u548C\u670D"], [45, "\u6307\u8F2A"], [46, "\u30C1\u30E7\u30FC\u30AB\u30FC"], [55, "\u30B5\u30F3\u30C0\u30EB"], [56, "\u30B8\u30E3\u30F3\u30D1\u30FC"], [66, "\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u306B\u3053\u3060\u308F\u308A\u304C\u306A\u3044"]];
+      table = [[11, "高級志向"], [12, "スーツ"], [13, "カジュアルウェア"], [14, "フォーマルウェア"], [15, "スポーツウェア"], [16, "リーズナブル"], [22, "サングラス"], [23, "Yシャツ"], [24, "Tシャツ"], [25, "ネックレス"], [26, "帽子"], [33, "ミリタリー風"], [34, "ピアス"], [35, "ジャージ"], [36, "エクステ"], [44, "和服"], [45, "指輪"], [46, "チョーカー"], [55, "サンダル"], [56, "ジャンパー"], [66, "ファッションにこだわりがない"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_fashion_table_66$44.$$arity = 0);
     
@@ -557,7 +557,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u30B9\u30FC\u30C4"], [2, "\u30A4\u30F3\u30D0\u30CD\u30B9\u30B3\u30FC\u30C8"], [3, "\u767D\u8863"], [4, "\u30B0\u30ED\u30FC\u30D6"], [5, "\u30D1\u30A4\u30D7"], [6, "\u30C1\u30E7\u30C3\u30AD"], [7, "\u548C\u670D"], [8, "\u30AB\u30E9\u30D5\u30EB\u306A\u8272\u4F7F\u3044"], [9, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"], [10, "\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u306B\u3053\u3060\u308F\u308A\u304C\u306A\u3044"]];
+      table = [[1, "スーツ"], [2, "インバネスコート"], [3, "白衣"], [4, "グローブ"], [5, "パイプ"], [6, "チョッキ"], [7, "和服"], [8, "カラフルな色使い"], [9, "パートナーと同じ"], [10, "ファッションにこだわりがない"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -567,7 +567,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u6B7B\u4F53"], [12, "\u72AC"], [13, "\u732B"], [14, "\u30B5\u30B9\u30DA\u30F3\u30B9"], [15, "\u7269\u8A9E"], [16, "\u30A2\u30A4\u30C9\u30EB"], [22, "\u72AF\u7F6A"], [23, "\u30AA\u30AB\u30EB\u30C8"], [24, "\u5065\u5EB7"], [25, "\u30B8\u30E3\u30F3\u30AF\u30D5\u30FC\u30C9"], [26, "\u9AD8\u7D1A\u306A\u98DF\u4E8B"], [33, "\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3"], [34, "\u6A29\u529B"], [35, "\u540D\u8A89"], [36, "\u53CB\u60C5"], [44, "\u304A\u3084\u3064"], [45, "\u5730\u5143"], [46, "\u5BB6\u65CF"], [55, "\u8B66\u5BDF"], [56, "\u97F3\u697D"], [66, "\u9283"]];
+      table = [[11, "死体"], [12, "犬"], [13, "猫"], [14, "サスペンス"], [15, "物語"], [16, "アイドル"], [22, "犯罪"], [23, "オカルト"], [24, "健康"], [25, "ジャンクフード"], [26, "高級な食事"], [33, "ファッション"], [34, "権力"], [35, "名誉"], [36, "友情"], [44, "おやつ"], [45, "地元"], [46, "家族"], [55, "警察"], [56, "音楽"], [66, "銃"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_like_dislike_table_66$46.$$arity = 0);
     
@@ -575,7 +575,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u72AF\u7F6A"], [2, "\u8B0E"], [3, "\u63A2\u5075"], [4, "\u30D1\u30FC\u30C8\u30CA\u30FC"], [5, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u597D\u304D\u306A\u3082\u306E"], [6, "\u30D1\u30FC\u30C8\u30CA\u30FC\u306E\u5ACC\u3044\u306A\u3082\u306E"], [7, "\u7279\u306B\u306A\u3057"], [8, "\u30C1\u30A7\u30B9\u3084\u5C06\u68CB\u306A\u3069\u30DC\u30FC\u30C9\u30B2\u30FC\u30E0"], [9, "\u4EBA\u9593"], [10, "\u77E5\u3089\u306A\u3044\u3053\u3068"]];
+      table = [[1, "犯罪"], [2, "謎"], [3, "探偵"], [4, "パートナー"], [5, "パートナーの好きなもの"], [6, "パートナーの嫌いなもの"], [7, "特になし"], [8, "チェスや将棋などボードゲーム"], [9, "人間"], [10, "知らないこと"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -585,7 +585,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u9854"], [12, "\u96F0\u56F2\u6C17"], [13, "\u5916\u898B"], [14, "\u635C\u67FB\u65B9\u6CD5"], [15, "\u7ACB\u3061\u632F\u308B\u821E\u3044"], [16, "\u5302\u3044"], [22, "\u5B58\u5728\u305D\u306E\u3082\u306E"], [23, "\u8A00\u8449\u9063\u3044"], [24, "\u8DA3\u5473"], [25, "\u306A\u3093\u3068\u306A\u304F"], [26, "\u4ED6\u4EBA\u3078\u306E\u614B\u5EA6"], [33, "\u91D1\u92AD\u611F\u899A"], [34, "\u751F\u6D3B\u7FD2\u6163"], [35, "\u6280\u80FD"], [36, "\u670D\u88C5"], [44, "\u558B\u308B\u30BF\u30A4\u30DF\u30F3\u30B0"], [45, "\u502B\u7406\u89B3"], [46, "\u81EA\u5206\u3078\u306E\u614B\u5EA6"], [55, "\u8DDD\u96E2\u611F"], [56, "\u81EA\u5206\u3068\u306E\u95A2\u4FC2"], [66, "\u751F\u6D3B\u7FD2\u6163"]];
+      table = [[11, "顔"], [12, "雰囲気"], [13, "外見"], [14, "捜査方法"], [15, "立ち振る舞い"], [16, "匂い"], [22, "存在そのもの"], [23, "言葉遣い"], [24, "趣味"], [25, "なんとなく"], [26, "他人への態度"], [33, "金銭感覚"], [34, "生活習慣"], [35, "技能"], [36, "服装"], [44, "喋るタイミング"], [45, "倫理観"], [46, "自分への態度"], [55, "距離感"], [56, "自分との関係"], [66, "生活習慣"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_feeling_table_66$48.$$arity = 0);
     
@@ -593,7 +593,7 @@
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u4EBA\u9593\u6027"], [2, "\u8DA3\u5473"], [3, "\u6280\u80FD"], [4, "\u306A\u3093\u3068\u306A\u304F"], [5, "\u611F\u899A"], [6, "\u96F0\u56F2\u6C17"], [7, "\u81EA\u5206\u304C\u77E5\u3089\u306A\u3044\u3068\u3053\u308D"], [8, "\u81EA\u5206\u304C\u3088\u304F\u77E5\u3063\u3066\u3044\u308B\u3068\u3053\u308D"], [9, "\u81EA\u5206\u3078\u306E\u614B\u5EA6"], [10, "\u81EA\u5206\u3068\u306E\u95A2\u4FC2"]];
+      table = [[1, "人間性"], [2, "趣味"], [3, "技能"], [4, "なんとなく"], [5, "感覚"], [6, "雰囲気"], [7, "自分が知らないところ"], [8, "自分がよく知っているところ"], [9, "自分への態度"], [10, "自分との関係"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];
@@ -603,14 +603,14 @@
       var self = this, table = nil;
 
       
-      table = [[11, "\u30C0\u30FC\u30EA\u30F3\u3001\u30CF\u30CB\u30FC"], [12, "\u547C\u3073\u6368\u3066"], [13, "\uFF5E\u304F\u3093"], [14, "\uFF5E\u3055\u3093"], [15, "\uFF5E\u3061\u3083\u3093"], [16, "\uFF5E\u69D8\u3001\uFF5E\u6BBF"], [22, "\uFF5E\u5148\u8F29\u3001\uFF5E\u5F8C\u8F29"], [23, "\u76F8\u68D2"], [24, "\u3042\u3093\u305F"], [25, "\u3042\u306A\u305F"], [26, "\u5148\u751F\u3001\u30BB\u30F3\u30BB"], [33, "\u7269\u3067\u4F8B\u3048\u308B"], [34, "\u8CB4\u69D8\u3001\u8CB4\u6BBF"], [35, "\u3066\u3081\u3048\u3001\u304A\u307E\u3048"], [36, "\u3042\u3060\u540D"], [44, "\u30E6\u30FC"], [45, "\u304A\u524D\u3055\u3093"], [46, "\u63A2\u5075\u304F\u3093\u3001\u63A2\u5075\u3055\u3093"], [55, "\u89AA\u53CB"], [56, "\u30D1\u30FC\u30C8\u30CA\u30FC\u3068\u540C\u3058"], [66, "\u6BCE\u56DE\u547C\u3073\u65B9\u304C\u5909\u308F\u308B"]];
+      table = [[11, "ダーリン、ハニー"], [12, "呼び捨て"], [13, "～くん"], [14, "～さん"], [15, "～ちゃん"], [16, "～様、～殿"], [22, "～先輩、～後輩"], [23, "相棒"], [24, "あんた"], [25, "あなた"], [26, "先生、センセ"], [33, "物で例える"], [34, "貴様、貴殿"], [35, "てめえ、おまえ"], [36, "あだ名"], [44, "ユー"], [45, "お前さん"], [46, "探偵くん、探偵さん"], [55, "親友"], [56, "パートナーと同じ"], [66, "毎回呼び方が変わる"]];
       return self.$get_table_by_d66_swap(table);
     }, $FutariSousa_get_name_to_call_table_66$50.$$arity = 0);
     return (Opal.def(self, '$get_name_to_call_table_10', $FutariSousa_get_name_to_call_table_10$51 = function $$get_name_to_call_table_10() {
       var $a, $b, self = this, table = nil, diceText = nil, output = nil;
 
       
-      table = [[1, "\u547C\u3073\u6368\u3066"], [2, "\uFF5E\u304F\u3093"], [3, "\uFF5E\u3055\u3093"], [4, "\uFF5E\u3061\u3083\u3093"], [5, "\uFF5E\u69D8\u3001\uFF5E\u6BBF"], [6, "\u76F8\u68D2"], [7, "\u3042\u3093\u305F\u3001\u3042\u306A\u305F"], [8, "\u30AD\u30DF"], [9, "\u611B\u3057\u306E\uFF5E"], [10, "\u3042\u3060\u540D"]];
+      table = [[1, "呼び捨て"], [2, "～くん"], [3, "～さん"], [4, "～ちゃん"], [5, "～様、～殿"], [6, "相棒"], [7, "あんた、あなた"], [8, "キミ"], [9, "愛しの～"], [10, "あだ名"]];
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (diceText = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_table_by_number(diceText, table);
       return [output, diceText];

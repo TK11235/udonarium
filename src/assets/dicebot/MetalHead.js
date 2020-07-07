@@ -214,7 +214,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
       if (result == null) {
         result = nil;
       };
-      return "" + (table.$name()) + "(" + (result.$sum()) + ") \uFF1E " + (result.$content());}, $RangeTable$2.$$s = self, $RangeTable$2.$$arity = 2, $RangeTable$2)));
+      return "" + (table.$name()) + "(" + (result.$sum()) + ") ＞ " + (result.$content());}, $RangeTable$2.$$s = self, $RangeTable$2.$$arity = 2, $RangeTable$2)));
     self.$attr_reader("name");
     self.$attr_reader("num_of_dice");
     self.$attr_reader("num_of_sides");
@@ -420,9 +420,9 @@ Opal.modules["utils/range_table"] = function(Opal) {
     self.$$prototype.fractionType = nil;
     
     Opal.const_set($nesting[0], 'ID', "MetalHead");
-    Opal.const_set($nesting[0], 'NAME', "\u30E1\u30BF\u30EB\u30D8\u30C3\u30C9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3081\u305F\u308B\u3078\u3064\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u30A2\u30D3\u30EA\u30C6\u30A3\u30ED\u30FC\u30EB  AR>=\u76EE\u6A19\u5024\n" + "\u30FB\u30B9\u30AD\u30EB\u30ED\u30FC\u30EB      SR<=\u76EE\u6A19\u5024(%)\n" + "\u30FB\u547D\u4E2D\u5224\u5B9A\u30ED\u30FC\u30EB    HR<=\u76EE\u6A19\u5024(%)\n" + "\n" + "  \u4F8B\uFF09AR>=5\n" + "  \u4F8B\uFF09SR<=(40+25)\n" + "  \u4F8B\uFF09HR<=(50-10)\n" + "\n" + "  \u3053\u308C\u3089\u306E\u30ED\u30FC\u30EB\u3067\u6210\u5426\u3001\u7D76\u5BFE\u6210\u529F/\u7D76\u5BFE\u5931\u6557\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB/\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u3092\u81EA\u52D5\u5224\u5B9A\u3057\u307E\u3059\u3002\n" + "\n" + "\u30FB\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C1\u30E3\u30FC\u30C8  CC\n" + "\u30FB\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u30C1\u30E3\u30FC\u30C8  \u5C04\u6483\u30FB\u6295\u64F2\u7528:ACL  \u683C\u95D8\u7528:ACS\n" + "\u30FB\u6226\u95D8\u7D50\u679C\u30C1\u30E3\u30FC\u30C8      CRCsn   s=\u8010\u4E45\u30EC\u30D9\u30EB(SUV) n=\u6570\u5024\n" + "\n" + "  \u4F8B\uFF09CRCA61 SUV=A\u3092\u5BFE\u8C61\u3068\u3057\u305F\u6570\u502461(62\u306B\u5909\u63DB\u3055\u308C\u308B)\u306E\u6226\u95D8\u7D50\u679C\u3092\u53C2\u7167\u3059\u308B\u3002\n" + "  \u4F8B\uFF09CRCM98 \u5BFE\u7269\u3067\u6570\u502498\u306E\u6226\u95D8\u7D50\u679C\u3092\u53C2\u7167\u3059\u308B\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "メタルヘッド");
+    Opal.const_set($nesting[0], 'SORT_KEY', "めたるへつと");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・アビリティロール  AR>=目標値\n" + "・スキルロール      SR<=目標値(%)\n" + "・命中判定ロール    HR<=目標値(%)\n" + "\n" + "  例）AR>=5\n" + "  例）SR<=(40+25)\n" + "  例）HR<=(50-10)\n" + "\n" + "  これらのロールで成否、絶対成功/絶対失敗、クリティカル/アクシデントを自動判定します。\n" + "\n" + "・クリティカルチャート  CC\n" + "・アクシデントチャート  射撃・投擲用:ACL  格闘用:ACS\n" + "・戦闘結果チャート      CRCsn   s=耐久レベル(SUV) n=数値\n" + "\n" + "  例）CRCA61 SUV=Aを対象とした数値61(62に変換される)の戦闘結果を参照する。\n" + "  例）CRCM98 対物で数値98の戦闘結果を参照する。\n");
     self.$setPrefixes(["AR", "SR", "HR<=.+", "CC", "ACT", "ACL", "ACS", "CRC[A-Z]\\d+"]);
     
     Opal.def(self, '$rollDiceCommand', $MetalHead_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -463,13 +463,13 @@ Opal.modules["utils/range_table"] = function(Opal) {
       if ($truthy(($truthy($a = cmp_op['$!='](">=")) ? $a : target['$==']("?")))) {
         return ""};
       if ($truthy($rb_ge(dice_total, 12))) {
-        return " \uFF1E \u7D76\u5BFE\u6210\u529F"
+        return " ＞ 絶対成功"
       } else if ($truthy($rb_le(dice_total, 2))) {
-        return " \uFF1E \u7D76\u5BFE\u5931\u6557"
+        return " ＞ 絶対失敗"
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $MetalHead_check_2D6$5.$$arity = 5);
     
@@ -479,7 +479,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
       
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       resultText = self.$getHitResult(total, total, target);
-      text = "" + "(1D100<=" + (target) + ") \uFF1E " + (total) + (resultText);
+      text = "" + "(1D100<=" + (target) + ") ＞ " + (total) + (resultText);
       return text;
     }, $MetalHead_rollHit$6.$$arity = 1);
     
@@ -502,12 +502,12 @@ Opal.modules["utils/range_table"] = function(Opal) {
       dice1 = diceValue['$%'](10);
       self.$debug("total_n", total_n);
       if ($truthy($rb_gt(total_n, diff))) {
-        return " \uFF1E \u5931\u6557"};
+        return " ＞ 失敗"};
       if (dice1['$=='](1)) {
-        return " \uFF1E \u6210\u529F\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"};
+        return " ＞ 成功（クリティカル）"};
       if (dice1['$=='](0)) {
-        return " \uFF1E \u5931\u6557\uFF08\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\uFF09"};
-      return " \uFF1E \u6210\u529F";
+        return " ＞ 失敗（アクシデント）"};
+      return " ＞ 成功";
     }, $MetalHead_getHitResult$8.$$arity = 3);
     
     Opal.def(self, '$getResult', $MetalHead_getResult$9 = function $$getResult(total_n, dice_n, diff) {
@@ -515,24 +515,24 @@ Opal.modules["utils/range_table"] = function(Opal) {
 
       
       if ($truthy($rb_le(dice_n, 5))) {
-        return " \uFF1E \u7D76\u5BFE\u6210\u529F"};
+        return " ＞ 絶対成功"};
       if ($truthy($rb_ge(dice_n, 96))) {
-        return " \uFF1E \u7D76\u5BFE\u5931\u6557"};
+        return " ＞ 絶対失敗"};
       if ($truthy($rb_le(total_n, diff))) {
-        return " \uFF1E \u6210\u529F"};
-      return " \uFF1E \u5931\u6557";
+        return " ＞ 成功"};
+      return " ＞ 失敗";
     }, $MetalHead_getResult$9.$$arity = 3);
     
     Opal.def(self, '$mh_crc_table', $MetalHead_mh_crc_table$10 = function $$mh_crc_table(suv, num) {
       var $$11, self = this, header_parts = nil, separator = nil, numbuf = nil, num_d1 = nil, table_point = nil, table_damage = nil, damage_level = nil, result_parts = nil;
 
       
-      header_parts = ["\u6226\u95D8\u7D50\u679C\u30C1\u30E3\u30FC\u30C8", num];
-      separator = " \uFF1E ";
+      header_parts = ["戦闘結果チャート", num];
+      separator = " ＞ ";
       suv = suv.$to_s().$upcase();
       numbuf = num.$to_i();
       if ($truthy($rb_lt(numbuf, 1))) {
-        return $rb_plus(header_parts, ["\u6570\u5024\u304C\u4E0D\u6B63\u3067\u3059"]).$join(separator)};
+        return $rb_plus(header_parts, ["数値が不正です"]).$join(separator)};
       num_d1 = numbuf['$%'](10);
       self.$debug("" + "num_d1[" + (num_d1) + "]");
       if (num_d1['$=='](1)) {
@@ -541,10 +541,10 @@ Opal.modules["utils/range_table"] = function(Opal) {
         numbuf = $rb_minus(numbuf, 1)};
       num_d1 = numbuf['$%'](10);
       self.$debug("" + "num_d1[" + (num_d1) + "]");
-      table_point = [nil, nil, "\u8155\u90E8", "\u8155\u90E8", "\u811A\u90E8", "\u811A\u90E8", "\u80F4\u90E8", "\u80F4\u90E8", "\u80F4\u90E8", "\u982D\u90E8"];
+      table_point = [nil, nil, "腕部", "腕部", "脚部", "脚部", "胴部", "胴部", "胴部", "頭部"];
       table_damage = $hash2(["S", "A", "B", "C", "D", "E", "F", "G", "M"], {"S": [$hash2(["N"], {"N": 2}), $hash2(["LW"], {"LW": 16}), $hash2(["MD"], {"MD": 46}), $hash2(["MW"], {"MW": 56}), $hash2(["HD"], {"HD": 76}), $hash2(["HW"], {"HW": 96}), $hash2(["MO"], {"MO": 106}), $hash2(["K"], {"K": 116})], "A": [$hash2(["LW"], {"LW": 2}), $hash2(["MW"], {"MW": 46}), $hash2(["HW"], {"HW": 76}), $hash2(["MO"], {"MO": 96}), $hash2(["K"], {"K": 116})], "B": [$hash2(["LW"], {"LW": 2}), $hash2(["MW"], {"MW": 36}), $hash2(["HW"], {"HW": 66}), $hash2(["MO"], {"MO": 96}), $hash2(["K"], {"K": 106})], "C": [$hash2(["LW"], {"LW": 2}), $hash2(["MW"], {"MW": 26}), $hash2(["HW"], {"HW": 66}), $hash2(["MO"], {"MO": 86}), $hash2(["K"], {"K": 106})], "D": [$hash2(["LW"], {"LW": 2}), $hash2(["MW"], {"MW": 26}), $hash2(["HW"], {"HW": 46}), $hash2(["MO"], {"MO": 76}), $hash2(["K"], {"K": 96})], "E": [$hash2(["LW"], {"LW": 2}), $hash2(["MW"], {"MW": 26}), $hash2(["HW"], {"HW": 39}), $hash2(["MO"], {"MO": 54}), $hash2(["K"], {"K": 76})], "F": [$hash2(["LW"], {"LW": 2}), $hash2(["MW"], {"MW": 16}), $hash2(["HW"], {"HW": 39}), $hash2(["MO"], {"MO": 54}), $hash2(["K"], {"K": 66})], "G": [$hash2(["LW"], {"LW": 2}), $hash2(["MW"], {"MW": 6}), $hash2(["HW"], {"HW": 16}), $hash2(["MO"], {"MO": 26}), $hash2(["K"], {"K": 39})], "M": [$hash2(["0"], {"0": 2}), $hash2(["1"], {"1": 22}), $hash2(["2"], {"2": 42}), $hash2(["3"], {"3": 62}), $hash2(["4"], {"4": 82}), $hash2(["5"], {"5": 92}), $hash2(["6"], {"6": 102}), $hash2(["8"], {"8": 112})]});
       if ($truthy(table_damage['$[]'](suv)['$nil?']())) {
-        return $rb_plus(header_parts, ["" + "\u8010\u4E45\u30EC\u30D9\u30EB(SUV)[" + (suv) + "]", "\u8010\u4E45\u30EC\u30D9\u30EB(SUV)\u306E\u5024\u304C\u4E0D\u6B63\u3067\u3059"]).$join(separator)};
+        return $rb_plus(header_parts, ["" + "耐久レベル(SUV)[" + (suv) + "]", "耐久レベル(SUV)の値が不正です"]).$join(separator)};
       damage_level = "";
       $send(table_damage['$[]'](suv), 'each', [], ($$11 = function(v){var self = $$11.$$s || this, $$12;
 
@@ -574,9 +574,9 @@ Opal.modules["utils/range_table"] = function(Opal) {
       if ($truthy(numbuf['$!='](num.$to_i()))) {
         result_parts.$push(numbuf.$to_s())};
       if (suv['$==']("M")) {
-        result_parts.$push("\u8010\u7269", "" + "HP[" + (damage_level) + "]")
+        result_parts.$push("耐物", "" + "HP[" + (damage_level) + "]")
       } else {
-        result_parts.$push("" + "\u8010\u4E45\u30EC\u30D9\u30EB(SUV)[" + (suv) + "]", "" + "\u90E8\u4F4D[" + (table_point['$[]'](num_d1)) + "] \uFF1A \u640D\u50B7\u7A2E\u5225[" + (damage_level) + "]")
+        result_parts.$push("" + "耐久レベル(SUV)[" + (suv) + "]", "" + "部位[" + (table_point['$[]'](num_d1)) + "] ： 損傷種別[" + (damage_level) + "]")
       };
       return $rb_plus(header_parts, result_parts).$join(separator);
     }, $MetalHead_mh_crc_table$10.$$arity = 2);
@@ -591,7 +591,7 @@ Opal.modules["utils/range_table"] = function(Opal) {
       if (result == null) {
         result = nil;
       };
-      return [table.$name(), result.$sum(), result.$content()].$join(" \uFF1E ");}, $MetalHead$13.$$s = self, $MetalHead$13.$$arity = 2, $MetalHead$13)));
-    return Opal.const_set($nesting[0], 'TABLES', $hash2(["CC", "ACL", "ACS"], {"CC": $send($$($nesting, 'RangeTable'), 'new', ["\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C1\u30E3\u30FC\u30C8", "1D10", [[1, "\u76F8\u624B\u306F\u77E5\u899A\u7CFB\u306B\u591A\u5927\u306A\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u305F\u3002PER\u30921\u306B\u3057\u3066\u982D\u90E8\u306BHW\u306E\u30C0\u30E1\u30FC\u30B8\u3001\u304A\u3088\u3073\u5FC3\u7406\u30C1\u30A7\u30C3\u30AF\u3002"], [2, "\u76F8\u624B\u306E\u904B\u52D5\u795E\u7D4C\u3092\u65AD\u3061\u5207\u3063\u305F\u3002DEX\u30921\u306B\u3057\u3066\u8155\u90E8\u306BHW\u306E\u30C0\u30E1\u30FC\u30B8\u3001\u304A\u3088\u3073\u5FC3\u7406\u30C1\u30A7\u30C3\u30AF\u3002\u3055\u3089\u306B\u8155\u306B\u6301\u3063\u3066\u3044\u305F\u6B66\u5668\u306A\u3069\u306F\u843D\u3068\u3057\u3066\u3057\u307E\u3046\u3002"], [3, "\u76F8\u624B\u306E\u79FB\u52D5\u624B\u6BB5\u306F\u5B8C\u5168\u306B\u596A\u308F\u308C\u305F\u3002REF\u30921\u306B\u3057\u3066\u811A\u90E8\u306BHW\u30C0\u30E1\u30FC\u30B8\u3068\u5FC3\u7406\u30C1\u30A7\u30C3\u30AF\u3002\u307E\u305F\u3001\u6B21\u56DE\u304B\u3089\u306E\u3053\u3061\u3089\u306E\u653B\u6483\u306F\u5FC5\u305A\u547D\u4E2D\u3059\u308B\u3002"], [$range(4, 5, false), "\u76F8\u624B\u306E\u6025\u6240\u306B\u547D\u4E2D\u3002\u6FC0\u75DB\u306E\u305F\u3081\u6C17\u7D76\u3057\u305F\u4E0A\u3001\u80F4\u306BHW\u30C0\u30E1\u30FC\u30B8\u3002"], [6, "\u52B9\u679C\u7684\u306A\u4E00\u6483\u3002\u80F4\u306BHW\u30C0\u30E1\u30FC\u30B8\u3002\u5FC3\u7406\u30C1\u30A7\u30C3\u30AF\u3002"], [7, "\u52B9\u679C\u7684\u306A\u4E00\u6483\u3002\u80F4\u306BMO\u30C0\u30E1\u30FC\u30B8\u3002\u5FC3\u7406\u30C1\u30A7\u30C3\u30AF\u3002"], [$range(8, 10, false), "\u541B\u306E\u4E00\u6483\u306F\u76F8\u624B\u306E\u4E2D\u67A2\u3092\u5B8C\u5168\u306B\u7834\u58CA\u3057\u305F\u3002\u5373\u6B7B\u3067\u3042\u308B\u3002"]]], $$($nesting, 'TABLE_ROLL_RESULT_FORMATTER').$to_proc()), "ACL": $send($$($nesting, 'RangeTable'), 'new', ["\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u30C1\u30E3\u30FC\u30C8\uFF08\u5C04\u6483\u30FB\u6295\u64F2\uFF09", "1D10", [[$range(1, 7, false), "\u3055\u3055\u3044\u306A\u30DF\u30B9\u3002\u7279\u306B\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u306F\u306A\u3044\u3002"], [8, "\u4E0D\u767A\u3001\u307E\u305F\u306F\u30B8\u30E3\u30E0\u3002\u5F3E\u3092\u53D6\u308A\u51FA\u3055\u306D\u3070\u306A\u3089\u306A\u3044\u7269\u306F\u6B21\u306E\u30BF\u30FC\u30F3\u306F\u5C04\u6483\u3067\u304D\u306A\u3044\u3002"], [9, "\u3055\u3055\u3044\u306A\u6545\u969C\u3002\u53EF\u80FD\u306A\u3089\u6B21\u306E\u30BF\u30FC\u30F3\u304B\u3089\u500B\u5225\u6B66\u5668\u306E\u30B9\u30AD\u30EB\u30ED\u30FC\u30EB\u3067\u4FEE\u7406\u3092\u884C\u3048\u308B\u3002"], [10, "\u6B66\u5668\u306E\u66B4\u767A\u3001\u307E\u305F\u306F\u7206\u767A\u3002\u982D\u90E8HW\u306E\u5FC3\u7406\u52B9\u679C\u30ED\u30FC\u30EB\u3002\u3055\u3089\u306B\u3001\u305D\u306E\u6B66\u5668\u306F\u7834\u58CA\u3055\u308CPER\u3068DEX\u306E\u3069\u3061\u3089\u304B\u3001\u307E\u305F\u306F\u4E21\u65B9\u306B\u8A082\u30DD\u30A4\u30F3\u30C8\u306E\u30DE\u30A4\u30CA\u30B9\u3092\u4E0E\u3048\u308B\u3002\uFF08\u9060\u9694\u64CD\u4F5C\u306E\u5834\u5408\u3001\u5C04\u624B\u3078\u306E\u88AB\u5BB3\u306F\u7121\u3057\uFF09"]]], $$($nesting, 'TABLE_ROLL_RESULT_FORMATTER').$to_proc()), "ACS": $send($$($nesting, 'RangeTable'), 'new', ["\u30A2\u30AF\u30B7\u30C7\u30F3\u30C8\u30C1\u30E3\u30FC\u30C8\uFF08\u683C\u95D8\uFF09", "1D10", [[$range(1, 3, false), "\u8DB3\u3092\u6ED1\u3089\u305B\u3066\u8EE2\u5012\u3057\u3001\u8D77\u304D\u4E0A\u304C\u308B\u307E\u3067\u76F8\u624B\u306B+20\u306E\u547D\u4E2D\u4FEE\u6B63\u3092\u4E0E\u3048\u308B\u3002"], [$range(4, 6, false), "\u624B\u3092\u6ED1\u3089\u305B\u3066\u3001\u6B66\u5668\u3092\u843D\u3068\u3059\u3002\u7D20\u624B\u306E\u6642\u306F\u95A2\u4FC2\u306A\u3044\u3002"], [$range(7, 9, false), "\u4F7F\u7528\u6B66\u5668\u306E\u7834\u58CA\u3002\u7D20\u624B\u6226\u95D8\u306E\u3068\u304D\u306FMW\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002"], [10, "\u624B\u3092\u6ED1\u3089\u305B\u3001\u4E0D\u5E78\u306B\u3082\u6B66\u5668\u306F\u98DB\u3093\u3067\u3044\u304D\u30015m\u4EE5\u5185\u306B\u4EBA\u304C\u3044\u308C\u3070\u8AB0\u304B\u306B\u523A\u3055\u308B\u304B\u3001\u307E\u305F\u306F\u6253\u6483\u3092\u4E0E\u3048\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3002\u30E9\u30F3\u30C0\u30E0\u306B\u6C7A\u5B9A\u3057\u3001\u666E\u901A\u3069\u304A\u308A\u5224\u5B9A\u3092\u7D9A\u3051\u308B\u3002\u7D20\u624B\u306E\u3068\u304D\u306F\u95A2\u4FC2\u306A\u3044\u3002"]]], $$($nesting, 'TABLE_ROLL_RESULT_FORMATTER').$to_proc())}).$freeze());
+      return [table.$name(), result.$sum(), result.$content()].$join(" ＞ ");}, $MetalHead$13.$$s = self, $MetalHead$13.$$arity = 2, $MetalHead$13)));
+    return Opal.const_set($nesting[0], 'TABLES', $hash2(["CC", "ACL", "ACS"], {"CC": $send($$($nesting, 'RangeTable'), 'new', ["クリティカルチャート", "1D10", [[1, "相手は知覚系に多大なダメージを受けた。PERを1にして頭部にHWのダメージ、および心理チェック。"], [2, "相手の運動神経を断ち切った。DEXを1にして腕部にHWのダメージ、および心理チェック。さらに腕に持っていた武器などは落としてしまう。"], [3, "相手の移動手段は完全に奪われた。REFを1にして脚部にHWダメージと心理チェック。また、次回からのこちらの攻撃は必ず命中する。"], [$range(4, 5, false), "相手の急所に命中。激痛のため気絶した上、胴にHWダメージ。"], [6, "効果的な一撃。胴にHWダメージ。心理チェック。"], [7, "効果的な一撃。胴にMOダメージ。心理チェック。"], [$range(8, 10, false), "君の一撃は相手の中枢を完全に破壊した。即死である。"]]], $$($nesting, 'TABLE_ROLL_RESULT_FORMATTER').$to_proc()), "ACL": $send($$($nesting, 'RangeTable'), 'new', ["アクシデントチャート（射撃・投擲）", "1D10", [[$range(1, 7, false), "ささいなミス。特にペナルティーはない。"], [8, "不発、またはジャム。弾を取り出さねばならない物は次のターンは射撃できない。"], [9, "ささいな故障。可能なら次のターンから個別武器のスキルロールで修理を行える。"], [10, "武器の暴発、または爆発。頭部HWの心理効果ロール。さらに、その武器は破壊されPERとDEXのどちらか、または両方に計2ポイントのマイナスを与える。（遠隔操作の場合、射手への被害は無し）"]]], $$($nesting, 'TABLE_ROLL_RESULT_FORMATTER').$to_proc()), "ACS": $send($$($nesting, 'RangeTable'), 'new', ["アクシデントチャート（格闘）", "1D10", [[$range(1, 3, false), "足を滑らせて転倒し、起き上がるまで相手に+20の命中修正を与える。"], [$range(4, 6, false), "手を滑らせて、武器を落とす。素手の時は関係ない。"], [$range(7, 9, false), "使用武器の破壊。素手戦闘のときはMWのダメージを受ける。"], [10, "手を滑らせ、不幸にも武器は飛んでいき、5m以内に人がいれば誰かに刺さるか、または打撃を与えるかもしれない。ランダムに決定し、普通どおり判定を続ける。素手のときは関係ない。"]]], $$($nesting, 'TABLE_ROLL_RESULT_FORMATTER').$to_proc())}).$freeze());
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting);
 })(Opal);

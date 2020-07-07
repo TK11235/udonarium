@@ -32,9 +32,9 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "Raisondetre");
-    Opal.const_set($nesting[0], 'NAME', "\u53DB\u9006\u30EC\u30BE\u30F3\u30C7\u30FC\u30C8\u30EB");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306F\u3093\u304D\u3084\u304F\u308C\u305D\u3093\u3066\u3068\u304A\u308B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5224\u5B9A\uFF1A[\u5224\u5B9A\u5024]RD[\u6280\u80FD][@\u76EE\u6A19\u5024]\n" + "\u30C0\u30E1\u30FC\u30B8\u30ED\u30FC\u30EB\uFF1A[\u30C0\u30A4\u30B9\u6570]DD[\u88C5\u7532]\n" + "\n" + "[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\u300C\u5224\u5B9A\u5024\u300D\u3067\u5224\u5B9A\u306B\u4F7F\u7528\u3059\u308B\u30C0\u30A4\u30B9\u6570\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C1\u300D\u30020\u4EE5\u4E0B\u3082\u6307\u5B9A\u53EF\u3002\n" + "\u300C\u6280\u80FD\u300D\u3067\u6709\u52B9\u306A\u30C0\u30A4\u30B9\u6570\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C1\u300D\u3002\n" + "\u9054\u6210\u5024\u306F\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3092\u542B\u3081\u3066\u3001\u300C\u6700\u3082\u9AD8\u304F\u306A\u308B\u300D\u3088\u3046\u306B\u8A08\u7B97\u3057\u307E\u3059\u3002\n" + "\u300C@\u76EE\u6A19\u5024\u300D\u6307\u5B9A\u3067\u3001\u5224\u5B9A\u306E\u6210\u5426\u3092\u8FFD\u52A0\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\n" + "\u30C0\u30E1\u30FC\u30B8\u30ED\u30FC\u30EB\u306F[\u88C5\u7532]\u6307\u5B9A\u3067\u3001\u6709\u52B9\u306A\u30C0\u30A4\u30B9\u6570\u30680\u306E\u51FA\u76EE\u306E\u6570\u3092\u8868\u793A\u3057\u307E\u3059\u3002\n" + "[\u88C5\u7532]\u7701\u7565\u6642\u306F\u3001\u30C0\u30A4\u30B9\u7D50\u679C\u306E\u307F\u8868\u793A\u3057\u307E\u3059\u3002\uFF08\u8907\u6570\u306E\u5BFE\u8C61\u3078\u306E\u653B\u6483\u6642\u7528\uFF09\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "\u30FBRD \u2192 1D\u3067\u9054\u6210\u5024\u3092\u8868\u793A\u3002\n" + "\u30FB2RD1@8 \u2192 2D\uFF081\u500B\u9078\u629E\uFF09\u3067\u76EE\u6A19\u50248\u306E\u5224\u5B9A\u3002\n" + "\u30FB-3RD \u2192 1D\u3067\u30C0\u30A4\u30B9\u30DA\u30CA\u30EB\u30C6\u30A3-4\u306E\u5224\u5B9A\u3002\n" + "\u30FB4DD2 \u2192 4D\u3067\u88C5\u75322\u306E\u30C0\u30E1\u30FC\u30B8\u30ED\u30FC\u30EB\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "叛逆レゾンデートル");
+    Opal.const_set($nesting[0], 'SORT_KEY', "はんきやくれそんてとおる");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "判定：[判定値]RD[技能][@目標値]\n" + "ダメージロール：[ダイス数]DD[装甲]\n" + "\n" + "[]内のコマンドは省略可能。\n" + "「判定値」で判定に使用するダイス数を指定。省略時は「1」。0以下も指定可。\n" + "「技能」で有効なダイス数を指定。省略時は「1」。\n" + "達成値はクリティカルを含めて、「最も高くなる」ように計算します。\n" + "「@目標値」指定で、判定の成否を追加表示します。\n" + "\n" + "ダメージロールは[装甲]指定で、有効なダイス数と0の出目の数を表示します。\n" + "[装甲]省略時は、ダイス結果のみ表示します。（複数の対象への攻撃時用）\n" + "\n" + "【書式例】\n" + "・RD → 1Dで達成値を表示。\n" + "・2RD1@8 → 2D（1個選択）で目標値8の判定。\n" + "・-3RD → 1Dでダイスペナルティ-4の判定。\n" + "・4DD2 → 4Dで装甲2のダメージロール。\n");
     
     Opal.def(self, '$initialize', $Raisondetre_initialize$1 = function $$initialize() {
       var $iter = $Raisondetre_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -141,15 +141,15 @@
       result = "" + (rollCount) + "D10";
       if ($truthy($rb_gt(correction, 0))) {
         result = $rb_plus(result, "" + "-" + (correction))};
-      result = $rb_plus(result, "" + " \uFF1E [" + (diceText) + "] \uFF1E [" + (diceText2) + "] \uFF1E ");
+      result = $rb_plus(result, "" + " ＞ [" + (diceText) + "] ＞ [" + (diceText2) + "] ＞ ");
       if ($truthy(isFunble)) {
-        result = $rb_plus(result, "\u9054\u6210\u5024\uFF1A0 (Funble)")
+        result = $rb_plus(result, "達成値：0 (Funble)")
       } else {
         
         result = $rb_plus(result, "" + (dice) + "[" + (choiceText) + "]");
         if ($truthy($rb_gt(critical, 0))) {
           result = $rb_plus(result, "" + "+" + (critical))};
-        result = $rb_plus(result, "" + "=\u9054\u6210\u5024\uFF1A" + (success));
+        result = $rb_plus(result, "" + "=達成値：" + (success));
         if ($truthy($rb_gt(critical, 0))) {
           result = $rb_plus(result, "" + " (" + (criticalCount) + "Critical)")};
       };
@@ -157,9 +157,9 @@
         
         result = $rb_plus(result, "" + ">=" + (target) + " ");
         if ($truthy($rb_ge(success, target))) {
-          result = $rb_plus(result, "\u3010\u6210\u529F\u3011")};
+          result = $rb_plus(result, "【成功】")};
         if ($truthy($rb_lt(success, target))) {
-          result = $rb_plus(result, "\u3010\u5931\u6557\u3011")};};
+          result = $rb_plus(result, "【失敗】")};};
       return result;
     }, $Raisondetre_checkRoll$3.$$arity = 3);
     return (Opal.def(self, '$checkDamage', $Raisondetre_checkDamage$7 = function $$checkDamage(diceCount, armor) {
@@ -198,7 +198,7 @@
       result = "" + (rollCount) + "D10";
       if ($truthy($rb_gt(correction, 0))) {
         result = $rb_plus(result, "" + "-" + (correction))};
-      result = $rb_plus(result, "" + " \uFF1E [" + (diceText) + "] \uFF1E [" + (diceText2) + "]");
+      result = $rb_plus(result, "" + " ＞ [" + (diceText) + "] ＞ [" + (diceText2) + "]");
       if ($truthy($rb_gt(armor, 0))) {
         
         resultArray = [];
@@ -215,11 +215,11 @@
             resultArray.$push(i);
             return (success = $rb_plus(success, 1));
           } else {
-            return resultArray.$push("\u00D7")
+            return resultArray.$push("×")
           };}, $$10.$$s = self, $$10.$$arity = 1, $$10));
         resultText = resultArray.$join(",");
-        result = $rb_plus(result, "" + " \uFF1E [" + (resultText) + "]>=" + (armor) + " \u6709\u52B9\u6570\uFF1A" + (success));};
-      result = $rb_plus(result, "" + "\u30000=" + (criticalCount) + "\u500B");
+        result = $rb_plus(result, "" + " ＞ [" + (resultText) + "]>=" + (armor) + " 有効数：" + (success));};
+      result = $rb_plus(result, "" + "　0=" + (criticalCount) + "個");
       return result;
     }, $Raisondetre_checkDamage$7.$$arity = 2), nil) && 'checkDamage';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

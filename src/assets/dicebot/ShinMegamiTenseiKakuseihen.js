@@ -22,9 +22,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "SMTKakuseihen");
-    Opal.const_set($nesting[0], 'NAME', "\u771F\u30FB\u5973\u795E\u8EE2\u751FTRPG\u3000\u899A\u9192\u7BC7");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3057\u3093\u3081\u304B\u307F\u3066\u3093\u305B\u3044TRPG\u304B\u304F\u305B\u3044\u3078\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\n" + "1D100<=(\u76EE\u6A19\u5024) \u3067\u30B9\u30EF\u30C3\u30D7\u30FB\u901A\u5E38\u30FB\u9006\u30B9\u30EF\u30C3\u30D7\u5224\u5B9A\u3092\u5224\u5B9A\u3002\n" + "\u5A01\u529B\u30C0\u30A4\u30B9\u306F nU6[6] (n\u306F\u30C0\u30A4\u30B9\u500B\u6570)\u3067\u30ED\u30FC\u30EB\u53EF\u80FD\u3067\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "真・女神転生TRPG　覚醒篇");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しんめかみてんせいTRPGかくせいへん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "1D100<=(目標値) でスワップ・通常・逆スワップ判定を判定。\n" + "威力ダイスは nU6[6] (nはダイス個数)でロール可能です。\n");
     
     Opal.def(self, '$check_1D100', $ShinMegamiTenseiKakuseihen_check_1D100$1 = function $$check_1D100(total, dice_total, cmp_op, target) {
       var $a, $b, self = this, dice1 = nil, dice2 = nil, total1 = nil, total2 = nil, isRepdigit = nil, result = nil;
@@ -38,11 +38,11 @@
       total1 = $rb_plus($rb_times(dice1, 10), dice2);
       total2 = $rb_plus($rb_times(dice2, 10), dice1);
       isRepdigit = dice1['$=='](dice2);
-      result = " \uFF1E \u30B9\u30EF\u30C3\u30D7";
+      result = " ＞ スワップ";
       result = $rb_plus(result, self.$getCheckResultText(target, [total1, total2].$min(), isRepdigit));
-      result = $rb_plus(result, "\uFF0F\u901A\u5E38");
+      result = $rb_plus(result, "／通常");
       result = $rb_plus(result, self.$getCheckResultText(target, total['$%'](100), isRepdigit));
-      result = $rb_plus(result, "\uFF0F\u9006\u30B9\u30EF\u30C3\u30D7");
+      result = $rb_plus(result, "／逆スワップ");
       result = $rb_plus(result, self.$getCheckResultText(target, [total1, total2].$max(), isRepdigit));
       return result;
     }, $ShinMegamiTenseiKakuseihen_check_1D100$1.$$arity = 4);
@@ -80,16 +80,16 @@
 
       
       if ($truthy(isRepdigit)) {
-        return "\u7D76\u5BFE\u6210\u529F"};
-      return "\u6210\u529F";
+        return "絶対成功"};
+      return "成功";
     }, $ShinMegamiTenseiKakuseihen_getSuccessResult$5.$$arity = 1);
     return (Opal.def(self, '$getFailResult', $ShinMegamiTenseiKakuseihen_getFailResult$6 = function $$getFailResult(isRepdigit) {
       var self = this;
 
       
       if ($truthy(isRepdigit)) {
-        return "\u7D76\u5BFE\u5931\u6557"};
-      return "\u5931\u6557";
+        return "絶対失敗"};
+      return "失敗";
     }, $ShinMegamiTenseiKakuseihen_getFailResult$6.$$arity = 1), nil) && 'getFailResult';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

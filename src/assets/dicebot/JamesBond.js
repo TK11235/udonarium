@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "JamesBond");
-    Opal.const_set($nesting[0], 'NAME', "\u30B8\u30A7\u30FC\u30E0\u30BA\u30FB\u30DC\u30F3\u30C9007");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3057\u3048\u3048\u3080\u3059\u307B\u3093\u3068007");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB1D100\u306E\u76EE\u6A19\u5024\u5224\u5B9A\u3067\u3001\u52B9\u679C\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u30921\uFF5E4\u3067\u81EA\u52D5\u5224\u5B9A\u3002\n" + "\u3000\u4F8B\uFF091D100<=50\n" + "\u3000\u3000\u3000JamesBond : (1D100<=50) \u2192 20 \u2192 \u52B9\u679C3\uFF08\u826F\uFF09\n");
+    Opal.const_set($nesting[0], 'NAME', "ジェームズ・ボンド007");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しええむすほんと007");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・1D100の目標値判定で、効果レーティングを1～4で自動判定。\n" + "　例）1D100<=50\n" + "　　　JamesBond : (1D100<=50) → 20 → 効果3（良）\n");
     return (Opal.def(self, '$check_1D100', $JamesBond_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
       var self = this, base = nil;
 
@@ -38,17 +38,17 @@
       };
       base = $rb_divide($rb_plus(target, 9), 10).$floor();
       if ($truthy($rb_ge(total, 100))) {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       } else if ($truthy($rb_le(total, base))) {
-        return " \uFF1E \u52B9\u679C1\uFF08\u5B8C\u74A7\uFF09"
+        return " ＞ 効果1（完璧）"
       } else if ($truthy($rb_le(total, $rb_times(base, 2)))) {
-        return " \uFF1E \u52B9\u679C2\uFF08\u304B\u306A\u308A\u826F\u3044\uFF09"
+        return " ＞ 効果2（かなり良い）"
       } else if ($truthy($rb_le(total, $rb_times(base, 5)))) {
-        return " \uFF1E \u52B9\u679C3\uFF08\u826F\uFF09"
+        return " ＞ 効果3（良）"
       } else if ($truthy($rb_le(total, target))) {
-        return " \uFF1E \u52B9\u679C4\uFF08\u307E\u3042\u307E\u3042\uFF09"
+        return " ＞ 効果4（まあまあ）"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $JamesBond_check_1D100$1.$$arity = 4), nil) && 'check_1D100';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

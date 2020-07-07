@@ -19,9 +19,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "StrangerOfSwordCity");
-    Opal.const_set($nesting[0], 'NAME', "\u5263\u306E\u8857\u306E\u7570\u90A6\u4EBATRPG");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3051\u3093\u306E\u307E\u3061\u306E\u3044\u307B\u3046\u3057\u3093TRPG");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u3000xSR or xSRy or xSR+y or xSR-y or xSR+y>=z\n" + "\u3000x=\u30C0\u30A4\u30B9\u6570\u3001y=\u4FEE\u6B63\u5024(\u7701\u7565\u53EF\u3001\u00B1\u7701\u7565\u6642\u306F\uFF0B\u3068\u3057\u3066\u6271\u3046)\u3001z=\u96E3\u6613\u5EA6(\u7701\u7565\u53EF)\n" + "\u3000\u5224\u5B9A\u6642\u306F\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u30FB\u901A\u5E38\u306EnD6\u3067\u306F\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u306E\u81EA\u52D5\u5224\u5B9A\u306F\u884C\u3044\u307E\u305B\u3093\u3002\n" + "\u30FBD66\u30C0\u30A4\u30B9\u3042\u308A\n");
+    Opal.const_set($nesting[0], 'NAME', "剣の街の異邦人TRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "けんのまちのいほうしんTRPG");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定　xSR or xSRy or xSR+y or xSR-y or xSR+y>=z\n" + "　x=ダイス数、y=修正値(省略可、±省略時は＋として扱う)、z=難易度(省略可)\n" + "　判定時はクリティカル、ファンブルの自動判定を行います。\n" + "・通常のnD6ではクリティカル、ファンブルの自動判定は行いません。\n" + "・D66ダイスあり\n");
     self.$setPrefixes(["\\d+SR.*"]);
     
     Opal.def(self, '$initialize', $StrangerOfSwordCity_initialize$1 = function $$initialize() {
@@ -80,24 +80,24 @@
         return i.$to_i();}, $$4.$$s = self, $$4.$$arity = 1, $$4)).$sort();
       totalValue = $rb_plus(dice, modify);
       modifyText = self.$getModifyText(modify);
-      result = $rb_plus(result, "" + "(" + (command) + ") \uFF1E " + (dice) + "[" + (diceList.$join(",")) + "]" + (modifyText) + " \uFF1E " + (totalValue));
+      result = $rb_plus(result, "" + "(" + (command) + ") ＞ " + (dice) + "[" + (diceList.$join(",")) + "]" + (modifyText) + " ＞ " + (totalValue));
       criticalResult = self.$getCriticalResult(diceList);
       if ($truthy(criticalResult['$nil?']())) {
       } else {
         
-        result = $rb_plus(result, "" + " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB(+" + (criticalResult) + "D6)");
+        result = $rb_plus(result, "" + " ＞ クリティカル(+" + (criticalResult) + "D6)");
         return result;
       };
       if ($truthy(self.$isFumble(diceList, diceCount))) {
         
-        result = $rb_plus(result, " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB");
+        result = $rb_plus(result, " ＞ ファンブル");
         return result;};
       if ($truthy(difficulty['$nil?']())) {
       } else {
         result = $rb_plus(result, (function() {if ($truthy($rb_ge(totalValue, difficulty))) {
-          return " \uFF1E \u6210\u529F"
+          return " ＞ 成功"
         } else {
-          return " \uFF1E \u5931\u6557"
+          return " ＞ 失敗"
         }; return nil; })())
       };
       return result;

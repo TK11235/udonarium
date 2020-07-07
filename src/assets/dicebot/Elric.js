@@ -25,9 +25,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Elric!");
-    Opal.const_set($nesting[0], 'NAME', "\u30A8\u30EB\u30EA\u30C3\u30AF\uFF01");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3048\u308B\u308A\u3064\u304F");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u8CAB\u901A\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "エルリック！");
+    Opal.const_set($nesting[0], 'SORT_KEY', "えるりつく");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "貫通、クリティカル、ファンブルの自動判定を行います。\n");
     return (Opal.def(self, '$check_1D100', $Elric_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
       var $a, self = this;
 
@@ -37,16 +37,16 @@
         return ""
       };
       if ($truthy($rb_le(total, 1))) {
-        return " \uFF1E \u8CAB\u901A"};
+        return " ＞ 貫通"};
       if ($truthy($rb_ge(total, 100))) {
-        return " \uFF1E \u81F4\u547D\u7684\u5931\u6557"};
+        return " ＞ 致命的失敗"};
       if ($truthy($rb_le(total, $rb_plus($rb_divide(target, 5), 0.9)))) {
-        return " \uFF1E \u6C7A\u5B9A\u7684\u6210\u529F"};
+        return " ＞ 決定的成功"};
       if ($truthy($rb_le(total, target))) {
-        return " \uFF1E \u6210\u529F"};
+        return " ＞ 成功"};
       if ($truthy(($truthy($a = $rb_ge(total, 99)) ? $rb_lt(target, 100) : $a))) {
-        return " \uFF1E \u81F4\u547D\u7684\u5931\u6557"};
-      return " \uFF1E \u5931\u6557";
+        return " ＞ 致命的失敗"};
+      return " ＞ 失敗";
     }, $Elric_check_1D100$1.$$arity = 4), nil) && 'check_1D100';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

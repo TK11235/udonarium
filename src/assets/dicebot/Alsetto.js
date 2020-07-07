@@ -23,9 +23,9 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "Alsetto");
-    Opal.const_set($nesting[0], 'NAME', "\u8A69\u7247\u306E\u30A2\u30EB\u30BB\u30C3\u30C8");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3046\u305F\u304B\u305F\u306E\u3042\u308B\u305B\u3064\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u6210\u529F\u5224\u5B9A\uFF1AnAL[m]\u3000\u3000\u3000\u3000\u30FB\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5\u7121\u3057\uFF1AnALC[m]\n" + "\u30FB\u547D\u4E2D\u5224\u5B9A\uFF1AnAL[m]*p\u3000\u3000\u3000\u30FB\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5\u7121\u3057\uFF1AnALC[m]*p\n" + "\u30FB\u547D\u4E2D\u5224\u5B9A\uFF08\u30AC\u30F3\u30B9\u30EA\u30F3\u30AC\u30FC\u306E\u6839\u6E90\u8A69\uFF09\uFF1AnALG[m]*p\n" + "[]\u5185\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\n" + "AL\u30B3\u30DE\u30F3\u30C9\u306F\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5\u306E\u5206\u3060\u3051\u3001\u81EA\u52D5\u3067\u632F\u308A\u8DB3\u3057\u51E6\u7406\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u300Cn\u300D\u3067\u30C0\u30A4\u30B9\u6570\u3092\u6307\u5B9A\u3002\n" + "\u300Cm\u300D\u3067\u76EE\u6A19\u5024\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u3001\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u300C3\u300D\u304C\u4F7F\u7528\u3055\u308C\u307E\u3059\u3002\n" + "\u300Cp\u300D\u3067\u653B\u6483\u529B\u3092\u6307\u5B9A\u3002\u300C*\u300D\u306F\u300Cx\u300D\u3067\u3082\u53EF\u3002\n" + "\u653B\u6483\u529B\u6307\u5B9A\u3067\u547D\u4E2D\u5224\u5B9A\u3068\u306A\u308A\u3001\u6210\u529F\u6570\u3067\u306F\u306A\u304F\u3001\u30C0\u30E1\u30FC\u30B8\u3092\u7D50\u679C\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\n" + "ALC\u30B3\u30DE\u30F3\u30C9\u306F\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5\u7121\u3057\u3067\u3001\u6210\u529F\u6570\u3001\u30C0\u30E1\u30FC\u30B8\u3092\u7D50\u679C\u8868\u793A\u3057\u307E\u3059\u3002\n" + "ALG\u30B3\u30DE\u30F3\u30C9\u306F\u300C2\u4EE5\u4E0B\u300D\u3067\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5\u51E6\u7406\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "\u30FB5AL \u2192 5d6\u3067\u76EE\u6A19\u50243\u3002\n" + "\u30FB5ALC \u2192 5d6\u3067\u76EE\u6A19\u50243\u3002\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5\u7121\u3057\u3002\n" + "\u30FB6AL2 \u2192 6d6\u3067\u76EE\u6A19\u50242\u3002\n" + "\u30FB4AL*5 \u2192 4d6\u3067\u76EE\u6A19\u50243\u3001\u653B\u6483\u529B5\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n" + "\u30FB7AL2x10 \u2192 7d6\u3067\u76EE\u6A19\u50242\u3001\u653B\u6483\u529B10\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n" + "\u30FB8ALC4x5 \u2192 8d6\u3067\u76EE\u6A19\u50244\u3001\u653B\u6483\u529B5\u3001\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5\u7121\u3057\u306E\u547D\u4E2D\u5224\u5B9A\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "詩片のアルセット");
+    Opal.const_set($nesting[0], 'SORT_KEY', "うたかたのあるせつと");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・成功判定：nAL[m]　　　　・トライアンフ無し：nALC[m]\n" + "・命中判定：nAL[m]*p　　　・トライアンフ無し：nALC[m]*p\n" + "・命中判定（ガンスリンガーの根源詩）：nALG[m]*p\n" + "[]内は省略可能。\n" + "\n" + "ALコマンドはトライアンフの分だけ、自動で振り足し処理を行います。\n" + "「n」でダイス数を指定。\n" + "「m」で目標値を指定。省略時は、デフォルトの「3」が使用されます。\n" + "「p」で攻撃力を指定。「*」は「x」でも可。\n" + "攻撃力指定で命中判定となり、成功数ではなく、ダメージを結果表示します。\n" + "\n" + "ALCコマンドはトライアンフ無しで、成功数、ダメージを結果表示します。\n" + "ALGコマンドは「2以下」でトライアンフ処理を行います。\n" + "\n" + "【書式例】\n" + "・5AL → 5d6で目標値3。\n" + "・5ALC → 5d6で目標値3。トライアンフ無し。\n" + "・6AL2 → 6d6で目標値2。\n" + "・4AL*5 → 4d6で目標値3、攻撃力5の命中判定。\n" + "・7AL2x10 → 7d6で目標値2、攻撃力10の命中判定。\n" + "・8ALC4x5 → 8d6で目標値4、攻撃力5、トライアンフ無しの命中判定。\n");
     self.$setPrefixes(["\\d+AL(C|G)?(\\d+)?(x|\\*)\\d+", "\\d+ALC?(\\d+)?"]);
     
     Opal.def(self, '$initialize', $Alsetto_initialize$1 = function $$initialize() {
@@ -118,12 +118,12 @@
       if ($truthy(isDamage)) {
         
         totalDamage = $rb_times(totalSuccessCount, damage);
-        result = "" + "(" + (rapid) + "D6<=" + (target) + ") \uFF1E " + (text) + " \uFF1E Hits\uFF1A" + (totalSuccessCount) + "*" + (damage) + " \uFF1E " + (totalDamage) + "\u30C0\u30E1\u30FC\u30B8";
+        result = "" + "(" + (rapid) + "D6<=" + (target) + ") ＞ " + (text) + " ＞ Hits：" + (totalSuccessCount) + "*" + (damage) + " ＞ " + (totalDamage) + "ダメージ";
       } else {
-        result = "" + "(" + (rapid) + "D6<=" + (target) + ") \uFF1E " + (text) + " \uFF1E \u6210\u529F\u6570\uFF1A" + (totalSuccessCount)
+        result = "" + "(" + (rapid) + "D6<=" + (target) + ") ＞ " + (text) + " ＞ 成功数：" + (totalSuccessCount)
       };
       if ($truthy(isCritical)) {
-        result = $rb_plus(result, "" + " / " + (totalCriticalCount) + "\u30C8\u30E9\u30A4\u30A2\u30F3\u30D5")};
+        result = $rb_plus(result, "" + " / " + (totalCriticalCount) + "トライアンフ")};
       return result;
     }, $Alsetto_checkRoll$3.$$arity = 5), nil) && 'checkRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

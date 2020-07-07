@@ -29,9 +29,9 @@
     self.$$prototype.nick_e = nil;
     
     Opal.const_set($nesting[0], 'ID', "BeastBindTrinity");
-    Opal.const_set($nesting[0], 'NAME', "\u30D3\u30FC\u30B9\u30C8\u30D0\u30A4\u30F3\u30C9 \u30C8\u30EA\u30CB\u30C6\u30A3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3072\u3044\u3059\u3068\u306F\u3044\u3093\u3068\u3068\u308A\u306B\u3066\u3044");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u3000(nBB+m%w@x#y$z&v)\n" + "\u3000n\u500B\u306ED6\u3092\u632F\u308A\u3001\u51FA\u76EE\u306E\u5927\u304D\u30442\u500B\u304B\u3089\u9054\u6210\u5024\u3092\u7B97\u51FA\u3002\u4FEE\u6B63m\u3082\u53EF\u80FD\u3002\n" + "\n" + "\u3000%w\u3001@x\u3001#y\u3001$z\u3001&v\u306F\u3059\u3079\u3066\u7701\u7565\u53EF\u80FD\u3002\n" + "\uFF1E%w\uFF1A\u73FE\u5728\u306E\u4EBA\u9593\u6027\u304C w \u3067\u3042\u308B\u3068\u3057\u3066\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024(C\u5024)\u3092\u8A08\u7B97\u3002\n" + "\u30FB\u7701\u7565\u3057\u305F\u5834\u5408\u3001C\u5024=12\u3068\u3057\u3066\u9054\u6210\u5024\u3092\u7B97\u51FA\u3059\u308B\u3002\n" + "\uFF1E@x\uFF1A\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u4FEE\u6B63\u3002\uFF08\u52A0\u6E1B\u5F0F\u3067\u3082\u5165\u529B\u53EF\u80FD\uFF09\n" + "\u30FBx\u306B\u76F4\u63A5\u6570\u5B57\u3092\u66F8\u304F\u3068\u3001C\u5024\u3092\u305D\u306E\u6570\u5B57\u306B\u4E0A\u66F8\u304D\u3059\u308B\u3002\n" + "\u3000\u300C\u7D76\u5BFE\u306B\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3057\u306A\u3044\u300D\u72B6\u614B\u306F\u3001@13\u306A\u3069 x\u309213\u4EE5\u4E0A\u306B\u6307\u5B9A\u3059\u308B\u3053\u3068\u3002\n" + "\u30FBx\u306E\u5148\u982D\u304C\u300C+\u300D\u304B\u300C-\u300D\u306A\u3089\u3001\u8A08\u7B97\u3057\u305FC\u5024\u306B\u305D\u306E\u5024\u3092\u52A0\u7B97\u3002\u4F8B\uFF09@-1\u3001@+2\n" + "\u3000\u3053\u306E\u65B9\u6CD5\u3067C\u5024\u3092\u30D7\u30E9\u30B9\u3059\u308B\u5834\u5408\u3001\u4E0A\u9650\u306F12\u3068\u306A\u308B\u3002\n" + "\uFF1E#y\u3001#Ay\uFF1A\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u4FEE\u6B63\u3002\uFF08\u52A0\u6E1B\u5F0F\u3067\u3082\u5165\u529B\u53EF\u80FD\uFF09\n" + "\u30FBy\u306B\u76F4\u63A5\u6570\u5B57\u3092\u66F8\u304F\u3068\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u3092\u305D\u306E\u6570\u5B57\u306B\u8A2D\u5B9A\u3002\n" + "\u30FBy\u306E\u6570\u5B57\u306E\u5148\u982D\u304C\u300C+\u300D\u304B\u300C-\u300D\u306A\u3089\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024=2\u306B\u305D\u306E\u6570\u5B57\u3092\u52A0\u7B97\u3002\u4F8B\uFF09#+2\n" + "\u30FB\u203B#Ay\u3068\u3059\u308B\u3068\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u3057\u3066\u3082\u9054\u6210\u5024\u3092\u901A\u5E38\u901A\u308A\u7B97\u51FA\u3002\u3000\u4F8B\uFF09#A+1\n" + "\uFF1E$z\uFF1A\u30C0\u30A4\u30B9\u306E\u51FA\u76EE\u3092z\u306B\u56FA\u5B9A\u3057\u3066\u5224\u5B9A\u3059\u308B\u3002\u8907\u6570\u6307\u5B9A\u53EF\u3002\n" + "\u3000\u3000\u3000\u300A\u904B\u547D\u6B6A\u66F2\u300B\u306A\u3069\u300C\u30C0\u30A4\u30B9\u306E\uFF11\u500B\u3092\u632F\u308A\u76F4\u3059\u300D\u52B9\u679C\u7B49\u306B\u4F7F\u7528\u3059\u308B\u3002\n" + "\u3000\u4F8B\uFF092BB$1 \u2192\u30C0\u30A4\u30B9\u30922\u500B\u632F\u308B\u5224\u5B9A\u3067\u3001\u30C0\u30A4\u30B91\u500B\u306E\u51FA\u76EE\u30921\u3067\u56FA\u5B9A\n" + "\u3000\u4F8B\uFF092BB$16\u2192\u30C0\u30A4\u30B9\u30922\u500B\u632F\u308B\u5224\u5B9A\u3067\u3001\u30C0\u30A4\u30B9\u306E\u51FA\u76EE\u30921\u30686\u3067\u56FA\u5B9A\n" + "\uFF1E&v\uFF1A\u51FA\u76EE\u304Cv\u672A\u6E80\u306E\u30C0\u30A4\u30B9\u304C\u3042\u308C\u3070\u3001\u51FA\u76EE\u304Cv\u3060\u3063\u305F\u3082\u306E\u3068\u3057\u3066\u9054\u6210\u5024\u3092\u8A08\u7B97\u3059\u308B\u3002\n" + "\u3000\u4F8B\uFF092BB&3 \u2192\u51FA\u76EE3\u672A\u6E80\uFF08\u2192\u51FA\u76EE1\u30012\uFF09\u3092\u51FA\u76EE3\u3060\u3063\u305F\u3082\u306E\u3068\u3057\u3066\u8A08\u7B97\u3002\n" + "\n" + "\u30FBD66\u30C0\u30A4\u30B9\u3042\u308A\n" + "\u30FB\u9082\u9005\u8868\uFF1AEMO\n" + "\u30FB\u66B4\u9732\u8868\uFF1AEXPO_A\u3000\u3000\u30FB\u9B54\u7363\u5316\u66B4\u9732\u8868\uFF1AEXPO_B\n" + "\u30FB\u30A2\u30A4\u30C9\u30EB\u5C02\u7528\u66B4\u9732\u8868\uFF1AEXPO_I\n" + "\u30FB\u30A2\u30A4\u30C9\u30EB\u5C02\u7528\u9B54\u7363\u5316\u66B4\u9732\u8868\uFF1AEXPO_J\n" + "\u30FB\u6B63\u4F53\u5224\u660E\u30C1\u30E3\u30FC\u30C8A\uFF5EC\uFF1AFACE_A\u3001FACE_B\u3001FACE_C\n");
+    Opal.const_set($nesting[0], 'NAME', "ビーストバインド トリニティ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ひいすとはいんととりにてい");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定　(nBB+m%w@x#y$z&v)\n" + "　n個のD6を振り、出目の大きい2個から達成値を算出。修正mも可能。\n" + "\n" + "　%w、@x、#y、$z、&vはすべて省略可能。\n" + "＞%w：現在の人間性が w であるとして、クリティカル値(C値)を計算。\n" + "・省略した場合、C値=12として達成値を算出する。\n" + "＞@x：クリティカル値修正。（加減式でも入力可能）\n" + "・xに直接数字を書くと、C値をその数字に上書きする。\n" + "　「絶対にクリティカルしない」状態は、@13など xを13以上に指定すること。\n" + "・xの先頭が「+」か「-」なら、計算したC値にその値を加算。例）@-1、@+2\n" + "　この方法でC値をプラスする場合、上限は12となる。\n" + "＞#y、#Ay：ファンブル値修正。（加減式でも入力可能）\n" + "・yに直接数字を書くと、ファンブル値をその数字に設定。\n" + "・yの数字の先頭が「+」か「-」なら、ファンブル値=2にその数字を加算。例）#+2\n" + "・※#Ayとすると、ファンブルしても達成値を通常通り算出。　例）#A+1\n" + "＞$z：ダイスの出目をzに固定して判定する。複数指定可。\n" + "　　　《運命歪曲》など「ダイスの１個を振り直す」効果等に使用する。\n" + "　例）2BB$1 →ダイスを2個振る判定で、ダイス1個の出目を1で固定\n" + "　例）2BB$16→ダイスを2個振る判定で、ダイスの出目を1と6で固定\n" + "＞&v：出目がv未満のダイスがあれば、出目がvだったものとして達成値を計算する。\n" + "　例）2BB&3 →出目3未満（→出目1、2）を出目3だったものとして計算。\n" + "\n" + "・D66ダイスあり\n" + "・邂逅表：EMO\n" + "・暴露表：EXPO_A　　・魔獣化暴露表：EXPO_B\n" + "・アイドル専用暴露表：EXPO_I\n" + "・アイドル専用魔獣化暴露表：EXPO_J\n" + "・正体判明チャートA～C：FACE_A、FACE_B、FACE_C\n");
     self.$setPrefixes(["\\d+BB", "EMO", "EXPO_.", "FACE_."]);
     
     Opal.def(self, '$initialize', $BeastBindTrinity_initialize$1 = function $$initialize() {
@@ -124,42 +124,42 @@
         
         if ($truthy(m['$[]'](6))) {
           humanity = m['$[]'](6).$to_i()};
-        self.$debug("" + "\u25BC\u73FE\u5728\u4EBA\u9593\u6027 \u53D6\u5F97 " + (humanity));
+        self.$debug("" + "▼現在人間性 取得 " + (humanity));
         if ($truthy($rb_le(humanity, 0))) {
           
           critical = 9;
-          self.$debug("" + "\u25BC\u73FE\u5728\u4EBA\u9593\u6027\u304B\u3089C\u5024\u53D6\u5F97 " + (critical));
+          self.$debug("" + "▼現在人間性からC値取得 " + (critical));
         } else if ($truthy($rb_le(humanity, 20))) {
           
           critical = 10;
-          self.$debug("" + "\u25BC\u73FE\u5728\u4EBA\u9593\u6027\u304B\u3089C\u5024\u53D6\u5F97 " + (critical));
+          self.$debug("" + "▼現在人間性からC値取得 " + (critical));
         } else if ($truthy($rb_le(humanity, 40))) {
           
           critical = 11;
-          self.$debug("" + "\u25BC\u73FE\u5728\u4EBA\u9593\u6027\u304B\u3089C\u5024\u53D6\u5F97 " + (critical));};};
+          self.$debug("" + "▼現在人間性からC値取得 " + (critical));};};
       if ($truthy(m['$[]'](7))) {
         
         if ($truthy(m['$[]'](8))) {
           str_critical = m['$[]'](8)};
-        self.$debug("" + "\u25BCC\u5024\u6587\u5B57\u5217 \u53D6\u5F97 " + (str_critical));};
+        self.$debug("" + "▼C値文字列 取得 " + (str_critical));};
       if ($truthy(m['$[]'](9))) {
         
         if ($truthy(m['$[]'](10))) {
           nofumble = true};
-        self.$debug("" + "\u25BCF\u5024\u8010\u6027 " + (nofumble));
+        self.$debug("" + "▼F値耐性 " + (nofumble));
         if ($truthy(m['$[]'](11))) {
           str_fumble = m['$[]'](11)};
-        self.$debug("" + "\u25BCF\u5024\u6587\u5B57\u5217 \u53D6\u5F97 " + (str_fumble));};
+        self.$debug("" + "▼F値文字列 取得 " + (str_fumble));};
       if ($truthy(m['$[]'](12))) {
         
         if ($truthy(m['$[]'](13))) {
           str_dicesubs = m['$[]'](13)};
-        self.$debug("" + "\u25BC\u51FA\u76EE\u4E88\u7D04\u7528\u306E\u6587\u5B57\u5217 \u53D6\u5F97 " + (str_dicesubs));};
+        self.$debug("" + "▼出目予約用の文字列 取得 " + (str_dicesubs));};
       if ($truthy(m['$[]'](14))) {
         
         if ($truthy(m['$[]'](15))) {
           dicepull = m['$[]'](15).$to_i()};
-        self.$debug("" + "\u25BC\u51FA\u76EE\u5F15\u304D\u4E0A\u3052\u30E2\u30FC\u30C9 \u53D6\u5F97 " + (dicepull));};
+        self.$debug("" + "▼出目引き上げモード 取得 " + (dicepull));};
       if ($truthy(m['$[]'](17))) {
         signOfInequality = m['$[]'](17)};
       if ($truthy(m['$[]'](18))) {
@@ -175,13 +175,13 @@
             num = nil;
           };
           return (n_cri = $rb_plus(n_cri, num.$to_i()));}, $$14.$$s = self, $$14.$$arity = 1, $$14));
-        self.$debug("" + "\u25BCC\u5024\u6307\u5B9A\u7B26 \u7B97\u51FA " + (n_cri));
+        self.$debug("" + "▼C値指定符 算出 " + (n_cri));
         critical = (function() {if ($truthy(str_critical.$match(/^[\+\-][\+\-\d]+/))) {
           return [$rb_plus(critical, n_cri), 12].$min()
         } else {
           return n_cri
         }; return nil; })();
-        self.$debug("" + "\u25BC\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024 " + (critical));};
+        self.$debug("" + "▼クリティカル値 " + (critical));};
       if ($truthy(str_fumble)) {
         
         n_fum = 0;
@@ -193,13 +193,13 @@
             num = nil;
           };
           return (n_fum = $rb_plus(n_fum, num.$to_i()));}, $$15.$$s = self, $$15.$$arity = 1, $$15));
-        self.$debug("" + "\u25BCF\u5024\u6307\u5B9A\u7B26 \u7B97\u51FA " + (n_fum));
+        self.$debug("" + "▼F値指定符 算出 " + (n_fum));
         fumble = (function() {if ($truthy(str_fumble.$match(/^[\+\-][\+\-\d]+/))) {
           return $rb_plus(fumble, n_fum)
         } else {
           return n_fum
         }; return nil; })();
-        self.$debug("" + "\u25BC\u30D5\u30A1\u30F3\u30D6\u30EB\u5024 " + (fumble));};
+        self.$debug("" + "▼ファンブル値 " + (fumble));};
       if ($truthy(str_dicesubs)) {
         
         $send(str_dicesubs.$split(/(?:)/), 'each', [], ($$16 = function(i){var self = $$16.$$s || this;
@@ -214,7 +214,7 @@
           } else {
             return nil
           };}, $$16.$$s = self, $$16.$$arity = 1, $$16));
-        self.$debug("" + "\u25BC\u30C0\u30A4\u30B9\u51FA\u76EE\u4E88\u7D04 " + (dicesubs));};
+        self.$debug("" + "▼ダイス出目予約 " + (dicesubs));};
       dice_now = 0;
       dice_str = "";
       total_n = 0;
@@ -234,14 +234,14 @@
           };
           return n.$to_i();}, $$17.$$s = self, $$17.$$arity = 1, $$17));
       } else if ($truthy(dicesubs['$empty?']())) {
-        return "ERROR:\u632F\u308B\u30C0\u30A4\u30B9\u306E\u6570\u304C0\u500B\u3067\u3059"
+        return "ERROR:振るダイスの数が0個です"
       } else {
         dice_num = dicesubs
       };
       dice_num['$sort!']();
       if ($truthy(dicepull)) {
         
-        self.$debug("" + "\u25BC\u51FA\u76EE\u5F15\u304D\u4E0A\u3052 " + (dicepull));
+        self.$debug("" + "▼出目引き上げ " + (dicepull));
         dice_num_old = dice_num.$dup();
         $send(Opal.Range.$new(0,dice_num.$size(), true), 'each', [], ($$18 = function(i){var self = $$18.$$s || this, $writer = nil;
 
@@ -254,7 +254,7 @@
           $send(dice_num, '[]=', Opal.to_a($writer));
           return $writer[$rb_minus($writer["length"], 1)];}, $$18.$$s = self, $$18.$$arity = 1, $$18));
         pul_flg = dice_num['$!='](dice_num_old);
-        self.$debug("" + "\u25BC\u51FA\u76EE\u5F15\u304D\u4E0A\u3052\u306E\u6709\u7121\u306B\u3064\u3044\u3066 " + (pul_flg));
+        self.$debug("" + "▼出目引き上げの有無について " + (pul_flg));
         dice_num['$sort!']();
         dold_str = dice_num_old.$join(",");};
       dice_str = dice_num.$join(",");
@@ -278,20 +278,20 @@
       dice_str = "" + "[" + (dice_str) + "]";
       output = "";
       if ($truthy(pul_flg)) {
-        output = $rb_plus(output, "" + "[" + (dold_str) + "] \uFF1E ")};
+        output = $rb_plus(output, "" + "[" + (dold_str) + "] ＞ ")};
       output = $rb_plus(output, "" + (dice_now) + (dice_str));
       if ($truthy((($a = fum_flg['$=='](true)) ? nofumble['$=='](false) : fum_flg['$=='](true)))) {
-        output = $rb_plus(output, "\u3010\u30D5\u30A1\u30F3\u30D6\u30EB\u3011")
+        output = $rb_plus(output, "【ファンブル】")
       } else {
         
         if ($truthy(fum_flg)) {
-          output = $rb_plus(output, "\u3010\u30D5\u30A1\u30F3\u30D6\u30EB\u3011")};
+          output = $rb_plus(output, "【ファンブル】")};
         if ($truthy($rb_gt(bonus, 0))) {
           output = $rb_plus(output, "" + "+" + (bonus))
         } else if ($truthy($rb_lt(bonus, 0))) {
           output = $rb_plus(output, bonus.$to_s())};
         if ($truthy(cri_flg)) {
-          output = $rb_plus(output, "" + "+" + (cri_bonus) + "\u3010\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3011")};
+          output = $rb_plus(output, "" + "+" + (cri_bonus) + "【クリティカル】")};
       };
       showstring = "" + (dice_c) + "R6";
       if ($truthy($rb_gt(bonus, 0))) {
@@ -303,12 +303,12 @@
         showstring = $rb_plus(showstring, "" + (signOfInequality) + (diff))};
       if ($truthy($rb_gt(self.$sendMode(), 0))) {
         if ($truthy(/[^\d\[\]]+/['$=~'](output))) {
-          output = "" + (self.nick_e) + ": (" + (showstring) + ") \uFF1E " + (output) + " \uFF1E " + (total_n)
+          output = "" + (self.nick_e) + ": (" + (showstring) + ") ＞ " + (output) + " ＞ " + (total_n)
         } else {
-          output = "" + (self.nick_e) + ": (" + (showstring) + ") \uFF1E " + (total_n)
+          output = "" + (self.nick_e) + ": (" + (showstring) + ") ＞ " + (total_n)
         }
       } else {
-        output = "" + (self.nick_e) + ": (" + (showstring) + ") \uFF1E " + (total_n)
+        output = "" + (self.nick_e) + ": (" + (showstring) + ") ＞ " + (total_n)
       };
       if ($truthy(signOfInequality['$!='](""))) {
         
@@ -327,37 +327,37 @@
       total_n = 0;
       $case = command;
       if (/^EMO/i['$===']($case)) {
-      type = "\u9082\u9005\u8868";
+      type = "邂逅表";
       $b = self.$bbt_emotion_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/^EXPO_([ABIJ])/['$===']($case)) {
       $case = $$($nesting, 'Regexp').$last_match(1);
       if (/A/['$===']($case)) {
-      type = "\u66B4\u9732\u8868";
+      type = "暴露表";
       tabletype = 1;}
       else if (/B/['$===']($case)) {
-      type = "\u9B54\u7363\u5316\u66B4\u9732\u8868";
+      type = "魔獣化暴露表";
       tabletype = 2;}
       else if (/I/['$===']($case)) {
-      type = "\u30A2\u30A4\u30C9\u30EB\u5C02\u7528\u66B4\u9732\u8868";
+      type = "アイドル専用暴露表";
       tabletype = 3;}
       else if (/J/['$===']($case)) {
-      type = "\u30A2\u30A4\u30C9\u30EB\u5C02\u7528\u9B54\u7363\u5316\u66B4\u9732\u8868";
+      type = "アイドル専用魔獣化暴露表";
       tabletype = 4;};
       $b = self.$bbt_exposure_table(tabletype), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else if (/^FACE_([ABC])/['$===']($case)) {
       $case = $$($nesting, 'Regexp').$last_match(1);
       if (/A/['$===']($case)) {
-      type = "\u6B63\u4F53\u5224\u660E\u30C1\u30E3\u30FC\u30C8A";
+      type = "正体判明チャートA";
       tabletype = 1;}
       else if (/B/['$===']($case)) {
-      type = "\u6B63\u4F53\u5224\u660E\u30C1\u30E3\u30FC\u30C8B";
+      type = "正体判明チャートB";
       tabletype = 2;}
       else if (/C/['$===']($case)) {
-      type = "\u6B63\u4F53\u5224\u660E\u30C1\u30E3\u30FC\u30C8C";
+      type = "正体判明チャートC";
       tabletype = 3;};
       $b = self.$bbt_face_table(tabletype), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;};
       if ($truthy(output['$!=']("1"))) {
-        output = "" + (type) + "(" + (total_n) + ") \uFF1E " + (output)};
+        output = "" + (type) + "(" + (total_n) + ") ＞ " + (output)};
       return output;
     }, $BeastBindTrinity_rollDiceCommand$19.$$arity = 1);
     
@@ -365,7 +365,7 @@
       var self = this, table = nil;
 
       
-      table = ["\u5BB6\u65CF", "\u5BB6\u65CF", "\u4FE1\u983C", "\u4FE1\u983C", "\u5FD8\u5374", "\u5FD8\u5374", "\u6148\u611B", "\u6148\u611B", "\u61A7\u61AC", "\u61A7\u61AC", "\u611F\u9298", "\u611F\u9298", "\u540C\u5FD7", "\u540C\u5FD7", "\u5E7C\u5B50", "\u5E7C\u5B50", "\u8208\u5473", "\u8208\u5473", "\u30D3\u30B8\u30CD\u30B9", "\u30D3\u30B8\u30CD\u30B9", "\u5E2B\u4E8B", "\u5E2B\u4E8B", "\u597D\u6575\u624B", "\u597D\u6575\u624B", "\u53CB\u60C5", "\u53CB\u60C5", "\u5FE0\u8AA0", "\u5FE0\u8AA0", "\u6050\u6016", "\u6050\u6016", "\u57F7\u7740", "\u57F7\u7740", "\u8EFD\u8511", "\u8EFD\u8511", "\u618E\u60AA", "\u618E\u60AA"];
+      table = ["家族", "家族", "信頼", "信頼", "忘却", "忘却", "慈愛", "慈愛", "憧憬", "憧憬", "感銘", "感銘", "同志", "同志", "幼子", "幼子", "興味", "興味", "ビジネス", "ビジネス", "師事", "師事", "好敵手", "好敵手", "友情", "友情", "忠誠", "忠誠", "恐怖", "恐怖", "執着", "執着", "軽蔑", "軽蔑", "憎悪", "憎悪"];
       return self.$get_table_by_d66(table);
     }, $BeastBindTrinity_bbt_emotion_table$20.$$arity = 0);
     
@@ -374,10 +374,10 @@
 
       
       $case = type;
-      if ((1)['$===']($case)) {table = ["\u5642\u306B\u306A\u308B\u304C\u3059\u3050\u5FD8\u308C\u3089\u308C\u308B", "\u90FD\u5E02\u4F1D\u8AAC\u3068\u3057\u3066\u51E6\u7406\u3055\u308C\u308B", "\u30EF\u30A4\u30C9\u30B7\u30E7\u30FC\u3092\u306B\u304E\u308F\u3059", "\u30B7\u30CA\u30EA\u30AA\u4E2D\uFF3B\u8FEB\u5BB3\u72B6\u614B\uFF3D\u306B\u306A\u308B", "\u7D46\u306E\u5BFE\u8C61\u3072\u3068\u308A\u306B\u6B63\u4F53\u304C\u77E5\u3089\u308C\u308B", "\u9B54\u7363\u5316\u66B4\u9732\u8868\u3078"]}
-      else if ((2)['$===']($case)) {table = ["\u30C8\u30F3\u30C7\u30E2\u696D\u754C\u306E\u4F1D\u8AAC\u306B\u306A\u308B", "\u30B7\u30CA\u30EA\u30AA\u4E2D\uFF3B\u8FEB\u5BB3\u72B6\u614B\uFF3D\u306B\u306A\u308B", "\u30B7\u30CA\u30EA\u30AA\u4E2D\uFF3B\u8FEB\u5BB3\u72B6\u614B\uFF3D\u306B\u306A\u308B", "\u7D46\u306E\u5BFE\u8C61\u3072\u3068\u308A\u306B\u6B63\u4F53\u304C\u77E5\u3089\u308C\u308B", "\u7D46\u306E\u5BFE\u8C61\u3072\u3068\u308A\u306B\u6B63\u4F53\u304C\u77E5\u3089\u308C\u308B", "\u81EA\u885B\u968A\u9000\u9B54\u90E8\u968A\u00D72D6\u4F53\u306E\u8972\u6483"]}
-      else if ((3)['$===']($case)) {table = ["\u6109\u5FEB\u306A\u4F1D\u8AAC\u3068\u3057\u3066\u4EBA\u6C17\u306B\u306A\u308B", "\u30EF\u30A4\u30C9\u30B7\u30E7\u30FC\u3092\u306B\u304E\u308F\u3059", "\u708E\u4E0A\u3002\u30B7\u30CA\u30EA\u30AA\u4E2D\uFF3B\u8FEB\u5BB3\u72B6\u614B\uFF3D", "\u6240\u5C5E\u4E8B\u52D9\u6240\u306B2D6\u6642\u9593\u8AAC\u6559\u3055\u308C\u308B", "\u7D46\u306E\u5BFE\u8C61\u3072\u3068\u308A\u306B\u6B63\u4F53\u304C\u77E5\u3089\u308C\u308B", "\u30A2\u30A4\u30C9\u30EB\u5C02\u7528\u9B54\u7363\u5316\u66B4\u9732\u8868\u3078"]}
-      else if ((4)['$===']($case)) {table = ["\u30B7\u30CA\u30EA\u30AA\u4E2D\uFF3B\u8FEB\u5BB3\u72B6\u614B\uFF3D\u306B\u306A\u308B", "\u30B7\u30CA\u30EA\u30AA\u4E2D\uFF3B\u8FEB\u5BB3\u72B6\u614B\uFF3D\u306B\u306A\u308B", "\u7D46\u306E\u5BFE\u8C61\u3072\u3068\u308A\u306B\u6B63\u4F53\u304C\u77E5\u3089\u308C\u308B", "\u4E8B\u52D9\u6240\u304B\u3089\u5951\u7D04\u3092\u89E3\u9664\u3055\u308C\u308B", "\u7D46\u306E\u5BFE\u8C61\u3072\u3068\u308A\u306B\u6B63\u4F53\u304C\u77E5\u3089\u308C\u308B", "1D6\u672C\u306E\u30EC\u30AE\u30E5\u30E9\u30FC\u756A\u7D44\u3092\u5931\u3046"]};
+      if ((1)['$===']($case)) {table = ["噂になるがすぐ忘れられる", "都市伝説として処理される", "ワイドショーをにぎわす", "シナリオ中［迫害状態］になる", "絆の対象ひとりに正体が知られる", "魔獣化暴露表へ"]}
+      else if ((2)['$===']($case)) {table = ["トンデモ業界の伝説になる", "シナリオ中［迫害状態］になる", "シナリオ中［迫害状態］になる", "絆の対象ひとりに正体が知られる", "絆の対象ひとりに正体が知られる", "自衛隊退魔部隊×2D6体の襲撃"]}
+      else if ((3)['$===']($case)) {table = ["愉快な伝説として人気になる", "ワイドショーをにぎわす", "炎上。シナリオ中［迫害状態］", "所属事務所に2D6時間説教される", "絆の対象ひとりに正体が知られる", "アイドル専用魔獣化暴露表へ"]}
+      else if ((4)['$===']($case)) {table = ["シナリオ中［迫害状態］になる", "シナリオ中［迫害状態］になる", "絆の対象ひとりに正体が知られる", "事務所から契約を解除される", "絆の対象ひとりに正体が知られる", "1D6本のレギュラー番組を失う"]};
       return self.$get_table_by_1d6(table);
     }, $BeastBindTrinity_bbt_exposure_table$21.$$arity = 1);
     return (Opal.def(self, '$bbt_face_table', $BeastBindTrinity_bbt_face_table$22 = function $$bbt_face_table(type) {
@@ -385,9 +385,9 @@
 
       
       $case = type;
-      if ((1)['$===']($case)) {table = ["\u3042\u306A\u305F\u3092\u53D7\u3051\u5165\u308C\u3066\u304F\u308C\u308B", "\u3042\u306A\u305F\u3092\u53D7\u3051\u5165\u308C\u3066\u304F\u308C\u308B", "\u7D46\u304C\uFF08\u62D2\u7D76\uFF09\u306B\u66F8\u304D\u63DB\u308F\u308B", "\u7D46\u304C\u30A8\u30B4\u306B\u66F8\u304D\u63DB\u308F\u308B", "\u6C17\u7D76\u3057\u305D\u306E\u4E8B\u5B9F\u3092\u5FD8\u308C\u308B", "\u7CBE\u795E\u5D29\u58CA\u3059\u308B"]}
-      else if ((2)['$===']($case)) {table = ["\u3042\u306A\u305F\u3092\u53D7\u3051\u5165\u308C\u3066\u304F\u308C\u308B", "\u72C2\u4E71\u3057\u653B\u6483\u3057\u3066\u304F\u308B", "\u9000\u5834\u3002\u305D\u306E\u5834\u304B\u3089\u9003\u4EA1\u3002\u66B4\u9732\u8868\u3078", "\u7D46\u304C\u30A8\u30B4\u306B\u66F8\u304D\u63DB\u308F\u308B", "\u7CBE\u795E\u5D29\u58CA\u3059\u308B", "\u7CBE\u795E\u5D29\u58CA\u3059\u308B"]}
-      else if ((3)['$===']($case)) {table = ["\u3042\u306A\u305F\u3092\u53D7\u3051\u5165\u308C\u3066\u304F\u308C\u308B", "\u9000\u5834\u3002\u305D\u306E\u5834\u304B\u3089\u9003\u4EA1\u3002\u66B4\u9732\u8868\u3078", "\u9000\u5834\u3002\u305D\u306E\u5834\u304B\u3089\u9003\u4EA1\u3002\u66B4\u9732\u8868\u3078", "\u7D46\u304C\u30A8\u30B4\u306B\u66F8\u304D\u63DB\u308F\u308B", "\u7CBE\u795E\u5D29\u58CA\u3059\u308B", "\u7CBE\u795E\u5D29\u58CA\u3059\u308B"]};
+      if ((1)['$===']($case)) {table = ["あなたを受け入れてくれる", "あなたを受け入れてくれる", "絆が（拒絶）に書き換わる", "絆がエゴに書き換わる", "気絶しその事実を忘れる", "精神崩壊する"]}
+      else if ((2)['$===']($case)) {table = ["あなたを受け入れてくれる", "狂乱し攻撃してくる", "退場。その場から逃亡。暴露表へ", "絆がエゴに書き換わる", "精神崩壊する", "精神崩壊する"]}
+      else if ((3)['$===']($case)) {table = ["あなたを受け入れてくれる", "退場。その場から逃亡。暴露表へ", "退場。その場から逃亡。暴露表へ", "絆がエゴに書き換わる", "精神崩壊する", "精神崩壊する"]};
       return self.$get_table_by_1d6(table);
     }, $BeastBindTrinity_bbt_face_table$22.$$arity = 1), nil) && 'bbt_face_table';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

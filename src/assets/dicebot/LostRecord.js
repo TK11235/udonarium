@@ -9,9 +9,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "LostRecord");
-    Opal.const_set($nesting[0], 'NAME', "\u30ED\u30B9\u30C8\u30EC\u30B3\u30FC\u30C9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308D\u3059\u3068\u308C\u3053\u304A\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u203B\u3053\u306E\u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u306F\u90E8\u5C4B\u306E\u30B7\u30B9\u30C6\u30E0\u540D\u8868\u793A\u7528\u3068\u306A\u308A\u307E\u3059\u3002\n" + "D66\u3092\u632F\u3063\u305F\u6642\u3001\u5C0F\u3055\u3044\u76EE\u304C\u5341\u306E\u4F4D\u306B\u306A\u308A\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ロストレコード");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ろすとれこおと");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "※このダイスボットは部屋のシステム名表示用となります。\n" + "D66を振った時、小さい目が十の位になります。\n");
     return (Opal.def(self, '$initialize', $LostRecord_initialize$1 = function $$initialize() {
       var $iter = $LostRecord_initialize$1.$$p, $yield = $iter || nil, self = this;
 

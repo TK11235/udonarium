@@ -10,9 +10,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Gorilla");
-    Opal.const_set($nesting[0], 'NAME', "\u30B4\u30EA\u30E9TRPG");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3053\u308A\u3089TRPG");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "2D6\u30ED\u30FC\u30EB\u6642\u306E\u30B4\u30EA\u30C6\u30A3\u30AB\u30EB\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\n" + "G = 2D6\u306E\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\n" + "\n" + "\u4F8B) G>=7 : 2D6\u3057\u30667\u4EE5\u4E0A\u306A\u3089\u6210\u529F\n");
+    Opal.const_set($nesting[0], 'NAME', "ゴリラTRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "こりらTRPG");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "2D6ロール時のゴリティカル自動判定を行います。\n" + "\n" + "G = 2D6のショートカット\n" + "\n" + "例) G>=7 : 2D6して7以上なら成功\n");
     self.$setPrefixes(["G.*"]);
     
     Opal.def(self, '$changeText', $Gorilla_changeText$1 = function $$changeText(string) {
@@ -28,11 +28,11 @@
       var self = this;
 
       if (dice_list['$==']([5, 5])) {
-        return " \uFF1E \u30B4\u30EA\u30C6\u30A3\u30AB\u30EB\uFF08\u81EA\u52D5\u7684\u6210\u529F\uFF09"
+        return " ＞ ゴリティカル（自動的成功）"
       } else if ($truthy(total.$send(cmp_op, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       }
     }, $Gorilla_check_2D6$3.$$arity = 5), nil) && 'check_2D6';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

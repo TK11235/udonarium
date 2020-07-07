@@ -34,9 +34,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Tunnels & Trolls");
-    Opal.const_set($nesting[0], 'NAME', "\u30C8\u30F3\u30CD\u30EB\u30BA\uFF06\u30C8\u30ED\u30FC\u30EB\u30BA");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u3093\u306D\u308B\u3059\u3042\u3093\u3068\u3068\u308D\u304A\u308B\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u884C\u70BA\u5224\u5B9A\u3000(nD6+x>=nLV)\n" + "\u5931\u6557\u3001\u6210\u529F\u3001\u81EA\u52D5\u5931\u6557\u306E\u81EA\u52D5\u5224\u5B9A\u3068\u30BE\u30ED\u76EE\u306E\u632F\u308A\u8DB3\u3057\u7D4C\u9A13\u5024\u306E\u81EA\u52D5\u8A08\u7B97\u3092\u884C\u3044\u307E\u3059\u3002\n" + "SAVE\u306E\u96E3\u6613\u5EA6\u3092\u300C\u30EC\u30D9\u30EB\u300D\u3067\u8868\u8A18\u3059\u308B\u3053\u3068\u304C\u51FA\u6765\u307E\u3059\u3002\n" + "\u4F8B\u3048\u3070\u300C2Lv\u300D\u3068\u66F8\u304F\u3068\u300C25\u300D\u306B\u7F6E\u63DB\u3055\u308C\u307E\u3059\u3002\n" + "\u5224\u5B9A\u6642\u4EE5\u5916\u306F\u60AA\u610F\u30C0\u30E1\u30FC\u30B8\u3092\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u30D0\u30FC\u30B5\u30FC\u30AF\u3068\u30CF\u30A4\u30D1\u30FC\u30D0\u30FC\u30B5\u30FC\u30AF\u7528\u306B\u5C02\u7528\u30B3\u30DE\u30F3\u30C9\u304C\u4F7F\u3048\u307E\u3059\u3002\n" + "\u4F8B\uFF092D6+1>=1Lv\n" + "\u3000 (2D6+1>=20) \uFF1E 7[2,5]+1 \uFF1E 8 \uFF1E \u5931\u6557\n" + "\u3000\u5224\u5B9A\u6642\u306B\u306F\u30BE\u30ED\u76EE\u3092\u81EA\u52D5\u3067\u632F\u308A\u8DB3\u3057\u307E\u3059\u3002\n" + "\n" + "\u30FB\u30D0\u30FC\u30B5\u30FC\u30AF\u3068\u30CF\u30A4\u30D1\u30FC\u30D0\u30FC\u30B5\u30FC\u30AF\u3000(nBS+x or nHBS+x)\n" + "\u3000\"(\u30C0\u30A4\u30B9\u6570)BS(\u4FEE\u6B63\u5024)\"\u3067\u30D0\u30FC\u30B5\u30FC\u30AF\u3001\"(\u30C0\u30A4\u30B9\u6570)HBS(\u4FEE\u6B63\u5024)\"\u3067\u30CF\u30A4\u30D1\u30FC\u30D0\u30FC\u30B5\u30FC\u30AF\u3067\u30ED\u30FC\u30EB\u3067\u304D\u307E\u3059\u3002\n" + "\u3000\u6700\u521D\u306E\u30C0\u30A4\u30B9\u306E\u8AAD\u66FF\u306F\u3001\u500B\u5225\u306E\u51FA\u76EE\u306F\u305D\u306E\u307E\u307E\u3067\u8868\u793A\u3002\n" + "\u3000\u4E0B\u304B\u3089\uFF12\u756A\u76EE\u306E\u51FA\u76EE\u3092\u305A\u3089\u3057\u305F\u5206\u3060\u3051\u5408\u8A08\u306B\u30DE\u30A4\u30CA\u30B9\u4FEE\u6B63\u3092\u8FFD\u52A0\u3057\u3066\u8868\u793A\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "トンネルズ＆トロールズ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "とんねるすあんととろおるす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定　(nD6+x>=nLV)\n" + "失敗、成功、自動失敗の自動判定とゾロ目の振り足し経験値の自動計算を行います。\n" + "SAVEの難易度を「レベル」で表記することが出来ます。\n" + "例えば「2Lv」と書くと「25」に置換されます。\n" + "判定時以外は悪意ダメージを表示します。\n" + "バーサークとハイパーバーサーク用に専用コマンドが使えます。\n" + "例）2D6+1>=1Lv\n" + "　 (2D6+1>=20) ＞ 7[2,5]+1 ＞ 8 ＞ 失敗\n" + "　判定時にはゾロ目を自動で振り足します。\n" + "\n" + "・バーサークとハイパーバーサーク　(nBS+x or nHBS+x)\n" + "　\"(ダイス数)BS(修正値)\"でバーサーク、\"(ダイス数)HBS(修正値)\"でハイパーバーサークでロールできます。\n" + "　最初のダイスの読替は、個別の出目はそのままで表示。\n" + "　下から２番目の出目をずらした分だけ合計にマイナス修正を追加して表示します。\n");
     self.$setPrefixes(["(\\d+H?BS)"]);
     
     Opal.def(self, '$initialize', $TunnelsAndTrolls_initialize$1 = function $$initialize() {
@@ -97,15 +97,15 @@
         return ""
       };
       if (dice_total['$=='](3)) {
-        return " \uFF1E \u81EA\u52D5\u5931\u6557"
+        return " ＞ 自動失敗"
       } else if (target['$==']("?")) {
         return self.$getMaxSuccessLevel(total, dice_total)
       } else if ($truthy($rb_ge(total, target))) {
         
         experiencePoint = self.$getExperiencePoint(target, dice_total);
-        return "" + " \uFF1E \u6210\u529F \uFF1E \u7D4C\u9A13\u5024" + (experiencePoint);
+        return "" + " ＞ 成功 ＞ 経験値" + (experiencePoint);
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $TunnelsAndTrolls_check_2D6$9.$$arity = 5);
     
@@ -119,8 +119,8 @@
       };
       sucLv = $rb_minus(sucLv, 1);
       if ($truthy($rb_le(sucLv, 0))) {
-        return "" + " \uFF1E \u5931\u6557 \uFF1E \u7D4C\u9A13\u5024" + (dice_n)};
-      return "" + " \uFF1E " + (sucLv) + "Lv\u6210\u529F \uFF1E \u7D4C\u9A13\u5024" + (dice_n);
+        return "" + " ＞ 失敗 ＞ 経験値" + (dice_n)};
+      return "" + " ＞ " + (sucLv) + "Lv成功 ＞ 経験値" + (dice_n);
     }, $TunnelsAndTrolls_getMaxSuccessLevel$10.$$arity = 2);
     
     Opal.def(self, '$getDiceRolledAdditionalText', $TunnelsAndTrolls_getDiceRolledAdditionalText$11 = function $$getDiceRolledAdditionalText(n1, n_max, dice_max) {
@@ -129,7 +129,7 @@
       
       self.$debug("getDiceRolledAdditionalText n1, n_max, dice_max", n1, n_max, dice_max);
       if ($truthy(($truthy($a = $rb_gt(n_max, 0)) ? dice_max['$=='](6) : $a))) {
-        return "" + " \uFF1E \u60AA\u610F" + (n_max)};
+        return "" + " ＞ 悪意" + (n_max)};
       return "";
     }, $TunnelsAndTrolls_getDiceRolledAdditionalText$11.$$arity = 3);
     
@@ -295,15 +295,15 @@
         output = $rb_plus(output, bonus.$to_s())};
       if ($truthy($rb_gt(self.$sendMode(), 0))) {
         if ($truthy(output['$=~'](/[^\d\[\]]+/))) {
-          output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output) + " \uFF1E " + (total_n)
+          output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)
         } else {
-          output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (total_n)
+          output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (total_n)
         }
       } else {
-        output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (total_n)
+        output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (total_n)
       };
       if ($truthy($rb_gt(n_max, 0))) {
-        output = $rb_plus(output, "" + " \uFF1E \u60AA\u610F" + (n_max))};
+        output = $rb_plus(output, "" + " ＞ 悪意" + (n_max))};
       return output;
     }, $TunnelsAndTrolls_tandt_berserk$14.$$arity = 2), nil) && 'tandt_berserk';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

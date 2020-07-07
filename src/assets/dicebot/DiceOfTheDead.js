@@ -19,9 +19,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "DiceOfTheDead");
-    Opal.const_set($nesting[0], 'NAME', "\u30C0\u30A4\u30B9\u30FB\u30AA\u30D6\u30FB\u30B6\u30FB\u30C7\u30C3\u30C9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305F\u3044\u3059\u304A\u3075\u3055\u3066\u3064\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u30BE\u30F3\u30D3\u5316\u8868\u3000ZMB+x\n" + "\uFF08x=\u30AA\u30FC\u30D7\u30F3\u4E2D\u306E\u611F\u67D3\u5EA6\u30DE\u30B9\u306E\u6570\u3002+x\u306F\u7701\u7565\u53EF\u80FD\u3001\u7701\u7565\u6642\u306F0\uFF09\n" + "\u30FB\u611F\u67D3\u5EA6\u8868\u3000BIOx\n" + "\uFF08x\u306F\u88AB\u5F3E\u56DE\u6570\u3002x\u306F\u7701\u7565\u53EF\u80FD\u3001\u7701\u7565\u6642\u306F1\uFF09\n" + "\uFF08\u4E0A\u8A18\u4E8C\u3064\u306F\u6700\u521D\u304B\u3089\u30B7\u30FC\u30AF\u30EC\u30C3\u30C8\u30C0\u30A4\u30B9\u3067\u884C\u308F\u308C\u307E\u3059\uFF09\n");
+    Opal.const_set($nesting[0], 'NAME', "ダイス・オブ・ザ・デッド");
+    Opal.const_set($nesting[0], 'SORT_KEY', "たいすおふさてつと");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・ゾンビ化表　ZMB+x\n" + "（x=オープン中の感染度マスの数。+xは省略可能、省略時は0）\n" + "・感染度表　BIOx\n" + "（xは被弾回数。xは省略可能、省略時は1）\n" + "（上記二つは最初からシークレットダイスで行われます）\n");
     self.$setPrefixes(["(ZMB|BIO).*"]);
     
     Opal.def(self, '$initialize', $DiceOfTheDead_initialize$1 = function $$initialize() {
@@ -62,16 +62,16 @@
       var $$4, self = this, result = nil;
 
       
-      result = "\u611F\u67D3\u5EA6\u8868";
+      result = "感染度表";
       $send(roll_times, 'times', [], ($$4 = function(){var self = $$4.$$s || this, $a, $b, d1 = nil, d2 = nil, index1 = nil, index2 = nil, table = nil;
 
       
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (d1 = ($a[0] == null ? nil : $a[0])), $b;
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (d2 = ($a[0] == null ? nil : $a[0])), $b;
-        result = $rb_plus(result, "" + "\u3000\uFF1E\u3000\u51FA\u76EE\uFF1A" + (d1) + "\u3001" + (d2) + "\u3000");
+        result = $rb_plus(result, "" + "　＞　出目：" + (d1) + "、" + (d2) + "　");
         index1 = $rb_minus($rb_divide(d1, 2.0).$ceil(), 1);
         index2 = $rb_minus($rb_divide(d2, 2.0).$ceil(), 1);
-        table = [["\u300C\u53F3\u4E0B\uFF08\u3010\u8DB3\u3011\uFF0B\uFF11\uFF09\u300D", "\u300C\u53F3\u4E2D\uFF08\u3010\u8DB3\u3011\uFF0B\uFF11\uFF09\u300D", "\u300C\u53F3\u4E0A\uFF08\u3010\u8DB3\u3011\uFF0B\uFF11\uFF09\u300D"], ["\u300C\u4E2D\u4E0B\uFF08\u3010\u8155\u3011\uFF0B\uFF11\uFF09\u300D", "\u300C\u771F\u4E2D\uFF08\u3010\u8155\u3011\uFF0B\uFF11\uFF09\u300D", "\u300C\u4E2D\u4E0A\uFF08\u3010\u8155\u3011\uFF0B\uFF11\uFF09\u300D"], ["\u300C\u5DE6\u4E0B\uFF08\u3010\u982D\u3011\uFF0B\uFF11\uFF09\u300D", "\u300C\u5DE6\u4E2D\uFF08\u3010\u982D\u3011\uFF0B\uFF11\uFF09\u300D", "\u300C\u5DE6\u4E0A\uFF08\u3010\u982D\u3011\uFF0B\uFF11\uFF09\u300D"]];
+        table = [["「右下（【足】＋１）」", "「右中（【足】＋１）」", "「右上（【足】＋１）」"], ["「中下（【腕】＋１）」", "「真中（【腕】＋１）」", "「中上（【腕】＋１）」"], ["「左下（【頭】＋１）」", "「左中（【頭】＋１）」", "「左上（【頭】＋１）」"]];
         return (result = $rb_plus(result, table['$[]'](index1)['$[]'](index2)));}, $$4.$$s = self, $$4.$$arity = 0, $$4));
       return result;
     }, $DiceOfTheDead_checkInfection$3.$$arity = 1);
@@ -82,14 +82,14 @@
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (d1 = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (d2 = ($a[0] == null ? nil : $a[0])), $b;
       diceTotal = $rb_plus($rb_plus(d1, d2), value);
-      table = [[5, "\uFF15\u4EE5\u4E0B\uFF1A\u5F71\u97FF\u306A\u3057"], [6, "\uFF16\uFF1A\u4EFB\u610F\u306E\u90E8\u4F4D\u3092\uFF11\u70B9\u56DE\u5FA9"], [7, "\uFF17\uFF1A\u3008\u30A2\u30A4\u30C6\u30E0\u3009\u6B66\u5668\u3092\uFF11\u3064\u305D\u306E\u5834\u306B\u843D\u3068\u3059"], [8, "\uFF18\uFF1A\u3008\u30A2\u30A4\u30C6\u30E0\u3009\u4FBF\u5229\u9053\u5177\uFF11\u3064\u3092\u305D\u306E\u5834\u306B\u843D\u3068\u3059"], [9, "\uFF19\uFF1A\u3008\u30A2\u30A4\u30C6\u30E0\u3009\u6D88\u8017\u54C1\uFF11\u3064\u3092\u305D\u306E\u5834\u306B\u843D\u3068\u3059"], [10, "\uFF11\uFF10\uFF1A\u8155\u306E\u50B7\u304C\u5E83\u304C\u308B\u3002\u300C\u90E8\u4F4D\uFF1A\u3010\u8155\u3011\u300D\uFF11\u70B9\u30C0\u30E1\u30FC\u30B8"], [11, "\uFF11\uFF11\uFF1A\u8DB3\u306E\u50B7\u304C\u5E83\u304C\u308B\u3002\u300C\u90E8\u4F4D\uFF1A\u3010\u8DB3\u3011\u300D\uFF11\u70B9\u30C0\u30E1\u30FC\u30B8"], [12, "\uFF11\uFF12\uFF1A\u982D\u306E\u50B7\u304C\u5E83\u304C\u308B\u3002\u300C\u90E8\u4F4D\uFF1A\u3010\u982D\u3011\u300D\uFF11\u70B9\u30C0\u30E1\u30FC\u30B8"], [13, "\uFF11\uFF13\uFF1A\u3010\u30BE\u30F3\u30D3\u5316\u8868\u3011\u304C\u65B0\u305F\u306B\u9069\u7528\u3055\u308C\u308B\u307E\u3067\u300C\u3010\u611F\u67D3\u5EA6\u3011\uFF0B\uFF11\u30DE\u30B9\u300D\u306E\u52B9\u679C\u3092\u53D7\u3051\u308B"], [14, "\uFF11\uFF14\uFF1A\u5373\u5EA7\u306B\u81EA\u5206\u4EE5\u5916\u306E\u5473\u65B9\uFF11\u4EBA\u306E\u30B9\u30ED\u30C3\u30C8\u5185\u306E\u3008\u30A2\u30A4\u30C6\u30E0\u3009\uFF11\u3064\u3092\u30E9\u30F3\u30C0\u30E0\u306B\u6368\u3066\u3055\u305B\u308B"], [15, "\uFF11\uFF15\uFF1A\u5473\u65B9\uFF11\u4EBA\u306B\u7D20\u624B\u3067\u653B\u6483\u3092\u884C\u3046"], [16, "\uFF11\uFF16\uFF1A\u5373\u5EA7\u306B\u611F\u67D3\u5EA6\u304C\uFF11\u4E0A\u6607\u3059\u308B"], [17, "\uFF11\uFF17\uFF1A\u6B21\u306E\u30BF\u30FC\u30F3\u306E\u307F\u3001\u3059\u3079\u3066\u306E\u3010\u80FD\u529B\u5024\u3011\u3092\uFF12\u500D\u306B\u3059\u308B"], [18, "\uFF11\uFF18\u4EE5\u4E0A\uFF1A\u81EA\u5206\u4EE5\u5916\u306E\u5473\u65B9\uFF11\u4EBA\u306B\u3067\u304D\u308B\u9650\u308A\u5168\u529B\u3067\u653B\u6483\u3092\u884C\u3046\u3002\u3008\u30A2\u30A4\u30C6\u30E0\u3009\u3082\u53EF\u80FD\u306A\u9650\u308A\u4F7F\u7528\u3059\u308B"]];
+      table = [[5, "５以下：影響なし"], [6, "６：任意の部位を１点回復"], [7, "７：〈アイテム〉武器を１つその場に落とす"], [8, "８：〈アイテム〉便利道具１つをその場に落とす"], [9, "９：〈アイテム〉消耗品１つをその場に落とす"], [10, "１０：腕の傷が広がる。「部位：【腕】」１点ダメージ"], [11, "１１：足の傷が広がる。「部位：【足】」１点ダメージ"], [12, "１２：頭の傷が広がる。「部位：【頭】」１点ダメージ"], [13, "１３：【ゾンビ化表】が新たに適用されるまで「【感染度】＋１マス」の効果を受ける"], [14, "１４：即座に自分以外の味方１人のスロット内の〈アイテム〉１つをランダムに捨てさせる"], [15, "１５：味方１人に素手で攻撃を行う"], [16, "１６：即座に感染度が１上昇する"], [17, "１７：次のターンのみ、すべての【能力値】を２倍にする"], [18, "１８以上：自分以外の味方１人にできる限り全力で攻撃を行う。〈アイテム〉も可能な限り使用する"]];
       minDice = table.$first().$first();
       maxDice = table.$last().$first();
       index = diceTotal;
       index = [minDice, index].$max();
       index = [index, maxDice].$min();
       $b = table.$assoc(index), $a = Opal.to_ary($b), (_number = ($a[0] == null ? nil : $a[0])), (text = ($a[1] == null ? nil : $a[1])), $b;
-      result = "" + "\u30BE\u30F3\u30D3\u5316\u8868\u3000\uFF1E\u3000\u51FA\u76EE\uFF1A" + (d1) + "\uFF0B" + (d2) + "\u3000\u611F\u67D3\u5EA6\uFF1A" + (value) + "\u3000\u5408\u8A08\u5024\uFF1A" + (diceTotal) + "\u3000\uFF1E\u3000" + (text);
+      result = "" + "ゾンビ化表　＞　出目：" + (d1) + "＋" + (d2) + "　感染度：" + (value) + "　合計値：" + (diceTotal) + "　＞　" + (text);
       return result;
     }, $DiceOfTheDead_rollZombie$5.$$arity = 1), nil) && 'rollZombie';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

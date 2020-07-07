@@ -22,9 +22,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "EclipsePhase");
-    Opal.const_set($nesting[0], 'NAME', "\u30A8\u30AF\u30EA\u30D7\u30B9\u30FB\u30D5\u30A7\u30A4\u30BA");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3048\u304F\u308A\u3075\u3059\u3075\u3048\u3044\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "1D100<=m \u65B9\u5F0F\u306E\u5224\u5B9A\u3067\u6210\u5426\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30FB\u30D5\u30A1\u30F3\u30D6\u30EB\u3092\u81EA\u52D5\u5224\u5B9A");
+    Opal.const_set($nesting[0], 'NAME', "エクリプス・フェイズ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "えくりふすふえいす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "1D100<=m 方式の判定で成否、クリティカル・ファンブルを自動判定");
     return (Opal.def(self, '$check_1D100', $EclipsePhase_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
       var self = this, diceValue = nil, dice_ten_place = nil, dice_one_place = nil, diff_threshold = nil;
 
@@ -39,23 +39,23 @@
       if (dice_ten_place['$=='](dice_one_place)) {
         
         if (diceValue['$=='](99)) {
-          return " \uFF1E \u6C7A\u5B9A\u7684\u5931\u6557"};
+          return " ＞ 決定的失敗"};
         if (diceValue['$=='](0)) {
-          return " \uFF1E 00 \uFF1E \u6C7A\u5B9A\u7684\u6210\u529F"};
+          return " ＞ 00 ＞ 決定的成功"};
         if ($truthy($rb_le(total, target))) {
-          return " \uFF1E \u6C7A\u5B9A\u7684\u6210\u529F"};
-        return " \uFF1E \u6C7A\u5B9A\u7684\u5931\u6557";};
+          return " ＞ 決定的成功"};
+        return " ＞ 決定的失敗";};
       diff_threshold = 30;
       if ($truthy($rb_le(total, target))) {
         if ($truthy($rb_ge(total, diff_threshold))) {
-          return " \uFF1E \u30A8\u30AF\u30BB\u30EC\u30F3\u30C8"
+          return " ＞ エクセレント"
         } else {
-          return " \uFF1E \u6210\u529F"
+          return " ＞ 成功"
         }
       } else if ($truthy($rb_ge($rb_minus(total, target), diff_threshold))) {
-        return " \uFF1E \u30B7\u30D3\u30A2"
+        return " ＞ シビア"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $EclipsePhase_check_1D100$1.$$arity = 4), nil) && 'check_1D100';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

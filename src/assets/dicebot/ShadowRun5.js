@@ -19,9 +19,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "ShadowRun4");
-    Opal.const_set($nesting[0], 'NAME', "\u30B7\u30E3\u30C9\u30A6\u30E9\u30F3\u7B2C4\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3057\u3084\u3068\u3046\u3089\u30934");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u500B\u6570\u632F\u308A\u8DB3\u3057\u30ED\u30FC\u30EB(xRn)\u306E\u5883\u754C\u5024\u30926\u306B\u30BB\u30C3\u30C8\u3001\u30D0\u30E9\u30D0\u30E9\u30ED\u30FC\u30EB(xBn)\u306E\u76EE\u6A19\u5024\u30925\u4EE5\u4E0A\u306B\u30BB\u30C3\u30C8\u3057\u307E\u3059\u3002\n" + "B\u30B3\u30DE\u30F3\u30C9\u3068R\u30B3\u30DE\u30F3\u30C9\u6642\u306B\u3001\u30B0\u30EA\u30C3\u30C1\u306E\u8868\u793A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "シャドウラン第4版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しやとうらん4");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。\n" + "BコマンドとRコマンド時に、グリッチの表示を行います。\n");
     
     Opal.def(self, '$initialize', $ShadowRun4_initialize$1 = function $$initialize() {
       var $iter = $ShadowRun4_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -51,8 +51,8 @@
         return ""
       };
       if (successCount['$=='](0)) {
-        return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30B0\u30EA\u30C3\u30C1"};
-      return " \uFF1E \u30B0\u30EA\u30C3\u30C1";
+        return " ＞ クリティカルグリッチ"};
+      return " ＞ グリッチ";
     }, $ShadowRun4_getGrichText$2.$$arity = 3), nil) && 'getGrichText';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);
@@ -83,9 +83,9 @@ Opal.loaded(["diceBot/ShadowRun4.js"]);
 
     
     Opal.const_set($nesting[0], 'ID', "ShadowRun5");
-    Opal.const_set($nesting[0], 'NAME', "\u30B7\u30E3\u30C9\u30A6\u30E9\u30F3\u7B2C5\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3057\u3084\u3068\u3046\u3089\u30935");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u500B\u6570\u632F\u308A\u8DB3\u3057\u30ED\u30FC\u30EB(xRn)\u306E\u5883\u754C\u5024\u30926\u306B\u30BB\u30C3\u30C8\u3001\u30D0\u30E9\u30D0\u30E9\u30ED\u30FC\u30EB(xBn)\u306E\u76EE\u6A19\u5024\u30925\u4EE5\u4E0A\u306B\u30BB\u30C3\u30C8\u3057\u307E\u3059\u3002\n" + "\u30D0\u30E9\u30D0\u30E9\u30ED\u30FC\u30EB(xBn)\u306E\u307F\u3001\u30EA\u30DF\u30C3\u30C8\u3092\u30BB\u30C3\u30C8\u3067\u304D\u307E\u3059\u3002\u30EA\u30DF\u30C3\u30C8\u306E\u6307\u5B9A\u306F(xBn@l)\u306E\u3088\u3046\u306B\u6307\u5B9A\u3057\u307E\u3059\u3002(\u7701\u7565\u53EF)\n" + "B\u30B3\u30DE\u30F3\u30C9\u3068R\u30B3\u30DE\u30F3\u30C9\u6642\u306B\u3001\u30B0\u30EA\u30C3\u30C1\u306E\u8868\u793A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "シャドウラン第5版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しやとうらん5");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。\n" + "バラバラロール(xBn)のみ、リミットをセットできます。リミットの指定は(xBn@l)のように指定します。(省略可)\n" + "BコマンドとRコマンド時に、グリッチの表示を行います。\n");
     self.$setPrefixes(["(\\d+)B6@(\\d+)"]);
     
     Opal.def(self, '$initialize', $ShadowRun5_initialize$1 = function $$initialize() {
@@ -112,7 +112,7 @@ Opal.loaded(["diceBot/ShadowRun4.js"]);
       b_dice = m['$[]'](1);
       limit = m['$[]'](2).$to_i();
       output_before_limited = self.$bcdice().$bdice(b_dice);
-      m = /\u6210\u529F\u6570(\d+)/.$match(output_before_limited);
+      m = /成功数(\d+)/.$match(output_before_limited);
       output_after_limited = output_before_limited;
       before_suc_cnt = m['$[]'](1).$to_i();
       after_suc_cnt = m['$[]'](1).$to_i();
@@ -121,8 +121,8 @@ Opal.loaded(["diceBot/ShadowRun4.js"]);
         
         after_suc_cnt = limit;
         over_suc_cnt = $rb_minus(before_suc_cnt, limit);
-        output_after_limited = output_before_limited.$gsub(/\u6210\u529F\u6570(\d+)/, "" + "\u6210\u529F\u6570" + (after_suc_cnt));
-        output_after_limited = $rb_plus(output_after_limited, "" + "(\u30EA\u30DF\u30C3\u30C8\u8D85\u904E" + (over_suc_cnt) + ")");};
+        output_after_limited = output_before_limited.$gsub(/成功数(\d+)/, "" + "成功数" + (after_suc_cnt));
+        output_after_limited = $rb_plus(output_after_limited, "" + "(リミット超過" + (over_suc_cnt) + ")");};
       output = output_after_limited;
       output = output.$slice($range(2, -1, false));
       output = output.$gsub("B", "B6");
@@ -144,8 +144,8 @@ Opal.loaded(["diceBot/ShadowRun4.js"]);
         return ""
       };
       if (successCount['$=='](0)) {
-        return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30B0\u30EA\u30C3\u30C1"};
-      return " \uFF1E \u30B0\u30EA\u30C3\u30C1";
+        return " ＞ クリティカルグリッチ"};
+      return " ＞ グリッチ";
     }, $ShadowRun5_getGrichText$3.$$arity = 3), nil) && 'getGrichText';
   })($nesting[0], $$($nesting, 'ShadowRun4'), $nesting);
 })(Opal);

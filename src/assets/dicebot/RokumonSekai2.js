@@ -22,9 +22,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "RokumonSekai2");
-    Opal.const_set($nesting[0], 'NAME', "\u516D\u9580\u4E16\u754C2nd");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308D\u304F\u3082\u3093\u305B\u304B\u30442");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\n" + "aRSm<=t\n" + "\u80FD\u529B\u5024a,\u4FEE\u6B63\u5024m,\u76EE\u6A19\u5024t\u3067\u5224\u5B9A\u30ED\u30FC\u30EB\u3092\u884C\u3044\u307E\u3059\u3002\n" + "R\u30B3\u30DE\u30F3\u30C9(3R6m<=t[a])\u306B\u8AAD\u307F\u66FF\u3048\u307E\u3059\u3002\n" + "\u6210\u529F\u5EA6\u3001\u8A55\u4FA1\u3001\u30DC\u30FC\u30CA\u30B9\u30C0\u30A4\u30B9\u3092\u81EA\u52D5\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u3000\u4F8B) 3RS+1<=9\u30003R6+1<=9[3]\n");
+    Opal.const_set($nesting[0], 'NAME', "六門世界2nd");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ろくもんせかい2");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "aRSm<=t\n" + "能力値a,修正値m,目標値tで判定ロールを行います。\n" + "Rコマンド(3R6m<=t[a])に読み替えます。\n" + "成功度、評価、ボーナスダイスを自動表示します。\n" + "　例) 3RS+1<=9　3R6+1<=9[3]\n");
     self.$setPrefixes(["\\d+RS"]);
     
     Opal.def(self, '$initialize', $RokumonSekai2_initialize$1 = function $$initialize() {
@@ -78,10 +78,10 @@
       if ($truthy(modText)) {
         mod = self.$parren_killer("" + "(0" + (modText) + ")").$to_i()};
       $b = self.$rokumon2_roll(mod, target, abl), $a = Opal.to_ary($b), (dstr = ($a[0] == null ? nil : $a[0])), (suc = ($a[1] == null ? nil : $a[1])), (sum = ($a[2] == null ? nil : $a[2])), $b;
-      output = "" + (sum) + "[" + (dstr) + "] \uFF1E " + (suc) + " \uFF1E \u8A55\u4FA1" + (self.$rokumon2_suc_rank(suc));
+      output = "" + (sum) + "[" + (dstr) + "] ＞ " + (suc) + " ＞ 評価" + (self.$rokumon2_suc_rank(suc));
       if ($truthy(suc['$!='](0))) {
         output = $rb_plus(output, "" + "(+" + (suc) + "d6)")};
-      output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output);
+      output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output);
       return output;
     }, $RokumonSekai2_checkRoll$6.$$arity = 2);
     

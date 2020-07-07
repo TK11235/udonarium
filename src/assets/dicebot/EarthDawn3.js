@@ -26,9 +26,9 @@
     self.$$prototype.string = self.$$prototype.isFailed = nil;
     
     Opal.const_set($nesting[0], 'ID', "EarthDawn");
-    Opal.const_set($nesting[0], 'NAME', "\u30A2\u30FC\u30B9\u30C9\u30FC\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3042\u3042\u3059\u3068\u304A\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30B9\u30C6\u30C3\u30D7\u30C0\u30A4\u30B9\u3000(xEn+k)\n" + "\u30B9\u30C6\u30C3\u30D7x\u3001\u76EE\u6A19\u5024n(\u7701\u7565\u53EF\u80FD\uFF09\u3001\u30AB\u30EB\u30DE\u30C0\u30A4\u30B9k(D2-D20)\u3067\u30B9\u30C6\u30C3\u30D7\u30C0\u30A4\u30B9\u3092\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002\n" + "\u632F\u308A\u8DB3\u3057\u3082\u81EA\u52D5\u3002\n" + "\u4F8B\uFF099E\u300010E8\u300010E+D12\n");
+    Opal.const_set($nesting[0], 'NAME', "アースドーン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ああすとおん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "ステップダイス　(xEn+k)\n" + "ステップx、目標値n(省略可能）、カルマダイスk(D2-D20)でステップダイスをロールします。\n" + "振り足しも自動。\n" + "例）9E　10E8　10E+D12\n");
     self.$setPrefixes(["\\d+e.*"]);
     
     Opal.def(self, '$initialize', $EarthDawn_initialize$1 = function $$initialize() {
@@ -120,31 +120,31 @@
         
         self.string = $rb_plus(self.string, nmod.$to_s());
         stepTotal = $rb_plus(stepTotal, nmod);};
-      self.string = $rb_plus(self.string, "" + " \uFF1E " + (stepTotal));
-      output = "" + "\u30B9\u30C6\u30C3\u30D7" + (step) + " \uFF1E " + (self.string);
+      self.string = $rb_plus(self.string, "" + " ＞ " + (stepTotal));
+      output = "" + "ステップ" + (step) + " ＞ " + (self.string);
       if (targetNumber['$=='](0)) {
         return output};
-      self.string = $rb_plus(self.string, " \uFF1E ");
+      self.string = $rb_plus(self.string, " ＞ ");
       excelentSuccessNumber = stable['$[]'](7)['$[]']($rb_minus(targetNumber, 1));
       superSuccessNumber = stable['$[]'](8)['$[]']($rb_minus(targetNumber, 1));
       goodSuccessNumber = stable['$[]'](9)['$[]']($rb_minus(targetNumber, 1));
       failedNumber = stable['$[]'](11)['$[]']($rb_minus(targetNumber, 1));
       if ($truthy(self.isFailed)) {
-        self.string = $rb_plus(self.string, "\u81EA\u52D5\u5931\u6557")
+        self.string = $rb_plus(self.string, "自動失敗")
       } else if ($truthy($rb_ge(stepTotal, excelentSuccessNumber))) {
-        self.string = $rb_plus(self.string, "\u6700\u826F\u6210\u529F")
+        self.string = $rb_plus(self.string, "最良成功")
       } else if ($truthy($rb_ge(stepTotal, superSuccessNumber))) {
-        self.string = $rb_plus(self.string, "\u512A\u6210\u529F")
+        self.string = $rb_plus(self.string, "優成功")
       } else if ($truthy($rb_ge(stepTotal, goodSuccessNumber))) {
-        self.string = $rb_plus(self.string, "\u826F\u6210\u529F")
+        self.string = $rb_plus(self.string, "良成功")
       } else if ($truthy($rb_ge(stepTotal, targetNumber))) {
-        self.string = $rb_plus(self.string, "\u6210\u529F")
+        self.string = $rb_plus(self.string, "成功")
       } else if ($truthy($rb_lt(stepTotal, failedNumber))) {
-        self.string = $rb_plus(self.string, "\u5927\u5931\u6557")
+        self.string = $rb_plus(self.string, "大失敗")
       } else {
-        self.string = $rb_plus(self.string, "\u5931\u6557")
+        self.string = $rb_plus(self.string, "失敗")
       };
-      output = "" + "\u30B9\u30C6\u30C3\u30D7" + (step) + ">=" + (targetNumber) + " \uFF1E " + (self.string);
+      output = "" + "ステップ" + (step) + ">=" + (targetNumber) + " ＞ " + (self.string);
       return output;
     }, $EarthDawn_getStepResult$4.$$arity = 1);
     
@@ -246,9 +246,9 @@ Opal.loaded(["diceBot/EarthDawn.js"]);
     self.$$prototype.string = self.$$prototype.isFailed = nil;
     
     Opal.const_set($nesting[0], 'ID', "EarthDawn3");
-    Opal.const_set($nesting[0], 'NAME', "\u30A2\u30FC\u30B9\u30C9\u30FC\u30F33\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3042\u3042\u3059\u3068\u304A\u30933");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30B9\u30C6\u30C3\u30D7\u30C0\u30A4\u30B9\u3000(xEn+k)\n" + "\u30B9\u30C6\u30C3\u30D7x\u3001\u76EE\u6A19\u5024n(\u7701\u7565\u53EF\u80FD\uFF09\u3001\u30AB\u30EB\u30DE\u30C0\u30A4\u30B9k(D2\uFF5ED20)\u3067\u30B9\u30C6\u30C3\u30D7\u30C0\u30A4\u30B9\u3092\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002\n" + "\u632F\u308A\u8DB3\u3057\u3082\u81EA\u52D5\u3002\n" + "\u4F8B\uFF09\u30B9\u30C6\u30C3\u30D710\uFF1A10E\n" + "\u3000\u3000\u30B9\u30C6\u30C3\u30D710\u3001\u76EE\u6A19\u50248\uFF1A10E8\n" + "\u3000\u3000\u30B9\u30C6\u30C3\u30D712\u3001\u76EE\u6A19\u50248\u3001\u30AB\u30EB\u30DE\u30C0\u30A4\u30B9D12\uFF1A10E8+1D6\n");
+    Opal.const_set($nesting[0], 'NAME', "アースドーン3版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ああすとおん3");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "ステップダイス　(xEn+k)\n" + "ステップx、目標値n(省略可能）、カルマダイスk(D2～D20)でステップダイスをロールします。\n" + "振り足しも自動。\n" + "例）ステップ10：10E\n" + "　　ステップ10、目標値8：10E8\n" + "　　ステップ12、目標値8、カルマダイスD12：10E8+1D6\n");
     self.$setPrefixes(["\\d+e.*"]);
     
     Opal.def(self, '$initialize', $EarthDawn3_initialize$1 = function $$initialize() {
@@ -330,12 +330,12 @@ Opal.loaded(["diceBot/EarthDawn.js"]);
         return (stepTotal = $rb_plus(stepTotal, self.$rollStep(diceType, diceCount)));}, $$6.$$s = self, $$6.$$arity = 2, $$6));
       self.string = $rb_plus(self.string, $rb_plus(self.$getModifyText(modify), self.$getModifyText(diceModify)));
       stepTotal = $rb_plus(stepTotal, $rb_plus(modify, diceModify));
-      self.string = $rb_plus(self.string, "" + " \uFF1E " + (stepTotal));
-      output = "" + "\u30B9\u30C6\u30C3\u30D7" + (step) + " \uFF1E " + (self.string);
+      self.string = $rb_plus(self.string, "" + " ＞ " + (stepTotal));
+      output = "" + "ステップ" + (step) + " ＞ " + (self.string);
       if (targetNumber['$=='](0)) {
         return output};
-      self.string = $rb_plus(self.string, $rb_plus(" \uFF1E ", self.$getSuccess(targetNumber, stepTotal)));
-      output = "" + "\u30B9\u30C6\u30C3\u30D7" + (step) + ">=" + (targetNumber) + " \uFF1E " + (self.string);
+      self.string = $rb_plus(self.string, $rb_plus(" ＞ ", self.$getSuccess(targetNumber, stepTotal)));
+      output = "" + "ステップ" + (step) + ">=" + (targetNumber) + " ＞ " + (self.string);
       return output;
     }, $EarthDawn3_getStepResult$4.$$arity = 1);
     
@@ -404,22 +404,22 @@ Opal.loaded(["diceBot/EarthDawn.js"]);
 
       
       if ($truthy(self.isFailed)) {
-        return "\u81EA\u52D5\u5931\u6557"};
+        return "自動失敗"};
       successTable = self.$getSuccessTable();
       successInfo = self.$get_table_by_number(targetNumber, successTable);
       $b = successInfo, $a = Opal.to_ary($b), (pathetic = ($a[0] == null ? nil : $a[0])), (poor = ($a[1] == null ? nil : $a[1])), (average = ($a[2] == null ? nil : $a[2])), (good = ($a[3] == null ? nil : $a[3])), (excelent = ($a[4] == null ? nil : $a[4])), (extraordinary = ($a[5] == null ? nil : $a[5])), $b;
       if ($truthy($rb_ge(stepTotal, extraordinary))) {
-        return "Extraordinary(\u6975\u4E0A)"};
+        return "Extraordinary(極上)"};
       if ($truthy($rb_ge(stepTotal, excelent))) {
-        return "Excelent(\u6700\u9AD8)"};
+        return "Excelent(最高)"};
       if ($truthy($rb_ge(stepTotal, good))) {
-        return "Good(\u4E0A\u51FA\u6765)"};
+        return "Good(上出来)"};
       if ($truthy($rb_ge(stepTotal, average))) {
-        return "Average(\u305D\u3053\u305D\u3053)"};
+        return "Average(そこそこ)"};
       if ($truthy($rb_ge(stepTotal, poor))) {
-        return "Poor(\u304A\u7C97\u672B)"};
+        return "Poor(お粗末)"};
       if ($truthy($rb_ge(stepTotal, pathetic))) {
-        return "Pathetic(\u60E8\u3081)"
+        return "Pathetic(惨め)"
       } else {
         return nil
       };

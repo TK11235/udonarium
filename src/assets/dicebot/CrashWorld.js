@@ -16,9 +16,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "CrashWorld");
-    Opal.const_set($nesting[0], 'NAME', "\u589C\u843D\u4E16\u754C");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3064\u3044\u3089\u304F\u305B\u304B\u3044");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A CWn\n" + "\u521D\u671F\u76EE\u6A19\u5024n (\u5FC5\u9808)\n" + "\u4F8B\u30FBCW8\n");
+    Opal.const_set($nesting[0], 'NAME', "墜落世界");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ついらくせかい");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定 CWn\n" + "初期目標値n (必須)\n" + "例・CW8\n");
     self.$setPrefixes(["CW\\d+"]);
     
     Opal.def(self, '$rollDiceCommand', $CrashWorld_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -59,9 +59,9 @@
       };
       if (num['$=='](12)) {
         successness = 0};
-      output = "" + (output) + ")  \u6210\u529F\u5EA6 : " + (successness);
+      output = "" + (output) + ")  成功度 : " + (successness);
       if (num['$=='](12)) {
-        output = "" + (output) + " \u30D5\u30A1\u30F3\u30D6\u30EB"};
+        output = "" + (output) + " ファンブル"};
       return output;
     }, $CrashWorld_getCrashWorldRoll$2.$$arity = 1), nil) && 'getCrashWorldRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

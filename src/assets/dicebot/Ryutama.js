@@ -26,9 +26,9 @@
     self.$$prototype.validDiceTypes = nil;
     
     Opal.const_set($nesting[0], 'ID', "Ryutama");
-    Opal.const_set($nesting[0], 'NAME', "\u308A\u3085\u3046\u305F\u307E");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308A\u3086\u3046\u305F\u307E");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\n" + "\u3000Rx,y>=t\uFF08x,y\uFF1A\u4F7F\u7528\u3059\u308B\u80FD\u529B\u5024\u3001t\uFF1A\u76EE\u6A19\u5024\uFF09\n" + "\u30001\u30BE\u30ED\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3082\u542B\u3081\u3066\u5224\u5B9A\u7D50\u679C\u3092\u8868\u793A\u3057\u307E\u3059\n" + "\u3000\u80FD\u529B\u5024\uFF11\u3064\u3067\u306E\u5224\u5B9A\u306F Rx>=t \u3067\u884C\u3048\u307E\u3059\n" + "\u4F8B\uFF09R8,6>=13\n");
+    Opal.const_set($nesting[0], 'NAME', "りゅうたま");
+    Opal.const_set($nesting[0], 'SORT_KEY', "りゆうたま");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "　Rx,y>=t（x,y：使用する能力値、t：目標値）\n" + "　1ゾロ、クリティカルも含めて判定結果を表示します\n" + "　能力値１つでの判定は Rx>=t で行えます\n" + "例）R8,6>=13\n");
     self.$setPrefixes(["R\\d+.*"]);
     
     Opal.def(self, '$initialize', $Ryutama_initialize$1 = function $$initialize() {
@@ -72,7 +72,7 @@
       result = self.$getResultText(value1, value2, dice1, dice2, difficulty, total);
       if ($truthy(result['$empty?']())) {
       } else {
-        result = "" + " \uFF1E " + (result)
+        result = "" + " ＞ " + (result)
       };
       value1Text = "" + (value1) + "(" + (dice1) + ")";
       value2Text = (function() {if (value2['$=='](0)) {
@@ -82,7 +82,7 @@
       }; return nil; })();
       modifyText = self.$getModifyString(modify);
       baseText = self.$getBaseText(dice1, dice2, modify, difficulty);
-      output = "" + "(" + (baseText) + ") \uFF1E " + (value1Text) + (value2Text) + (modifyText) + " \uFF1E " + (total) + (result);
+      output = "" + "(" + (baseText) + ") ＞ " + (value1Text) + (value2Text) + (modifyText) + " ＞ " + (total) + (result);
       return output;
     }, $Ryutama_rollDiceCommand$2.$$arity = 1);
     
@@ -151,14 +151,14 @@
 
       
       if ($truthy(self.$isFamble(value1, value2))) {
-        return "\uFF11\u30BE\u30ED\u3010\uFF11\u30BE\u30ED\u30DD\u30A4\u30F3\u30C8\uFF0B\uFF11\u3011"};
+        return "１ゾロ【１ゾロポイント＋１】"};
       if ($truthy(self.$isCritical(value1, value2, dice1, dice2))) {
-        return "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u6210\u529F"};
+        return "クリティカル成功"};
       if ($truthy(difficulty['$nil?']())) {
         return ""};
       if ($truthy($rb_ge(total, difficulty))) {
-        return "\u6210\u529F"};
-      return "\u5931\u6557";
+        return "成功"};
+      return "失敗";
     }, $Ryutama_getResultText$8.$$arity = 6);
     
     Opal.def(self, '$isFamble', $Ryutama_isFamble$9 = function $$isFamble(value1, value2) {

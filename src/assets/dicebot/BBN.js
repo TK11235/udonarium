@@ -28,8 +28,8 @@
     self.$setPrefixes(["\\d+BN.*"]);
     Opal.const_set($nesting[0], 'ID', "BBN".$freeze());
     Opal.const_set($nesting[0], 'NAME', "BBNTRPG".$freeze());
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3072\u3044\u3072\u3044\u3048\u306CTRPG".$freeze());
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', ((((((((((("" + "\u30FB\u5224\u5B9A(xBN\u00B1y>=z[c,f])\n") + "\u3000xD6\u306E\u5224\u5B9A\u3002\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n") + "\u30001D\u306E\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3068\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u306F1\u30022D\u306E\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3068\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u306F2\u3002\n") + "\u3000nD\u306E\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3068\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u306F n/2 \u306E\u5207\u308A\u4E0A\u3052\u3002\n") + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3068\u30D5\u30A1\u30F3\u30D6\u30EB\u304C\u540C\u6642\u306B\u767A\u751F\u3057\u305F\u5834\u5408\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3092\u512A\u5148\u3002\n") + "\u3000x\uFF1Ax\u306B\u632F\u308B\u30C0\u30A4\u30B9\u6570\u3092\u5165\u529B\u3002\n") + "\u3000y\uFF1Ay\u306B\u4FEE\u6B63\u5024\u3092\u5165\u529B\u3002\u7701\u7565\u53EF\u80FD\u3002\n") + "  z\uFF1Az\u306B\u76EE\u6A19\u5024\u3092\u5165\u529B\u3002\u7701\u7565\u53EF\u80FD\u3002\n") + "  c\uFF1A\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u306B\u5FC5\u8981\u306A\u30C0\u30A4\u30B9\u76EE\u300C6\u300D\u306E\u6570\u306E\u5897\u6E1B\u3002\u7701\u7565\u53EF\u80FD\u3002\n") + "  f\uFF1A\u30D5\u30A1\u30F3\u30D6\u30EB\u306B\u5FC5\u8981\u306A\u30C0\u30A4\u30B9\u76EE\u300C1\u300D\u306E\u6570\u306E\u5897\u6E1B\u3002\u7701\u7565\u53EF\u80FD\u3002\n") + "\u3000\u4F8B\uFF09 3BN+4\u30003BN>=8\u30003BN+1>=10[-1] 3BN+1>=10[,1] 3BN+1>=10[1,1]\n").$freeze());
+    Opal.const_set($nesting[0], 'SORT_KEY', "ひいひいえぬTRPG".$freeze());
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', ((((((((((("" + "・判定(xBN±y>=z[c,f])\n") + "　xD6の判定。クリティカル、ファンブルの自動判定を行います。\n") + "　1Dのクリティカル値とファンブル値は1。2Dのクリティカル値とファンブル値は2。\n") + "　nDのクリティカル値とファンブル値は n/2 の切り上げ。\n") + "　クリティカルとファンブルが同時に発生した場合、クリティカルを優先。\n") + "　x：xに振るダイス数を入力。\n") + "　y：yに修正値を入力。省略可能。\n") + "  z：zに目標値を入力。省略可能。\n") + "  c：クリティカルに必要なダイス目「6」の数の増減。省略可能。\n") + "  f：ファンブルに必要なダイス目「1」の数の増減。省略可能。\n") + "　例） 3BN+4　3BN>=8　3BN+1>=10[-1] 3BN+1>=10[,1] 3BN+1>=10[1,1]\n").$freeze());
     
     Opal.def(self, '$rollDiceCommand', $BBN_rollDiceCommand$1 = function $$rollDiceCommand(command) {
       var $a, $b, self = this, dice = nil, dice_str = nil, dice_list = nil, total = nil, sequence = nil;
@@ -44,16 +44,16 @@
       total = $rb_plus(dice, self.modify);
       sequence = ["" + "(" + (command) + ")", "" + (dice) + "[" + (dice_str) + "]" + (self.modify_str), total];
       if ($truthy(self['$critical?'](dice_list))) {
-        $send(sequence, 'push', ["\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF01"].concat(Opal.to_a(self.$additional_roll(dice_list.$count(6), total))))
+        $send(sequence, 'push', ["クリティカル！"].concat(Opal.to_a(self.$additional_roll(dice_list.$count(6), total))))
       } else if ($truthy(self['$fumble?'](dice_list))) {
-        sequence.$push("\u30D5\u30A1\u30F3\u30D6\u30EB\uFF01")
+        sequence.$push("ファンブル！")
       } else if ($truthy(self.difficulty)) {
         sequence.$push((function() {if ($truthy($rb_ge(total, self.difficulty))) {
-          return "\u6210\u529F"
+          return "成功"
         } else {
-          return "\u5931\u6557"
+          return "失敗"
         }; return nil; })())};
-      return sequence.$join(" \uFF1E ");
+      return sequence.$join(" ＞ ");
     }, $BBN_rollDiceCommand$1.$$arity = 1);
     self.$private();
     
@@ -112,17 +112,17 @@
         additional_dice = $send(dice_str.$split(","), 'map', [], "to_i".$to_proc()).$count(6);
         sequence.$push("" + (total) + "+" + (dice_total) + "[" + (dice_str) + "]");
         if ($truthy($rb_gt(additional_dice, 0))) {
-          sequence.$push("\u8FFD\u52A0\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF01")};
+          sequence.$push("追加クリティカル！")};
         total = $rb_plus(total, dice_total);
       };
       if ($truthy($rb_gt(additional_dice, 0))) {
-        sequence.$push("\u7121\u9650\u30EB\u30FC\u30D7\u9632\u6B62\u306E\u305F\u3081\u4E2D\u65AD")};
+        sequence.$push("無限ループ防止のため中断")};
       sequence.$push(total);
       if ($truthy(self.difficulty)) {
         sequence.$push((function() {if ($truthy($rb_ge(total, self.difficulty))) {
-          return "\u6210\u529F"
+          return "成功"
         } else {
-          return "\u5931\u6557"
+          return "失敗"
         }; return nil; })())};
       return sequence;
     }, $BBN_additional_roll$6.$$arity = 2), nil) && 'additional_roll';

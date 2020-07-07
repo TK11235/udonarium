@@ -16,9 +16,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "HarnMaster");
-    Opal.const_set($nesting[0], 'NAME', "\u30CF\u30FC\u30F3\u30DE\u30B9\u30BF\u30FC");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306F\u3042\u3093\u307E\u3059\u305F\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\n" + "\u30001D100<=XX \u306E\u5224\u5B9A\u6642\u306B\u81F4\u547D\u7684\u5931\u6557\u30FB\u6C7A\u5B9A\u7684\u6210\u529F\u3092\u5224\u5B9A\n" + "\u30FB\u30B7\u30E7\u30C3\u30AF\u5224\u5B9A\uFF08SHKx\uFF09\n" + "\u3000\u4F8B\uFF09SHK13,3\n" + "\u30FB\u4EBA\u578B\u7528\u3000\u4E2D\u6BB5\u547D\u4E2D\u90E8\u4F4D\u8868 (SLH)\uFF0F\u4E0A\u6BB5\u547D\u4E2D\u90E8\u4F4D (SLHU)\uFF0F\u4E0A\u6BB5\u547D\u4E2D\u90E8\u4F4D (SLHD)\n");
+    Opal.const_set($nesting[0], 'NAME', "ハーンマスター");
+    Opal.const_set($nesting[0], 'SORT_KEY', "はあんますたあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "　1D100<=XX の判定時に致命的失敗・決定的成功を判定\n" + "・ショック判定（SHKx）\n" + "　例）SHK13,3\n" + "・人型用　中段命中部位表 (SLH)／上段命中部位 (SLHU)／上段命中部位 (SLHD)\n");
     self.$setPrefixes(["SHK\\d+.*", "SLH", "SLHU", "SLHD"]);
     
     Opal.def(self, '$check_1D100', $HarnMaster_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
@@ -30,7 +30,7 @@
         return ""
       };
       result = self.$getCheckResult(total, target);
-      return "" + "\uFF1E " + (result);
+      return "" + "＞ " + (result);
     }, $HarnMaster_check_1D100$1.$$arity = 4);
     
     Opal.def(self, '$getCheckResult', $HarnMaster_getCheckResult$2 = function $$getCheckResult(total, diff) {
@@ -47,8 +47,8 @@
 
       
       if (total['$%'](5)['$=='](0)) {
-        return "\u81F4\u547D\u7684\u5931\u6557"};
-      return "\u5931\u6557";
+        return "致命的失敗"};
+      return "失敗";
     }, $HarnMaster_getFailResult$3.$$arity = 1);
     
     Opal.def(self, '$getSuccessResult', $HarnMaster_getSuccessResult$4 = function $$getSuccessResult(total) {
@@ -56,8 +56,8 @@
 
       
       if (total['$%'](5)['$=='](0)) {
-        return "\u6C7A\u5B9A\u7684\u6210\u529F"};
-      return "\u6210\u529F";
+        return "決定的成功"};
+      return "成功";
     }, $HarnMaster_getSuccessResult$4.$$arity = 1);
     
     Opal.def(self, '$rollDiceCommand', $HarnMaster_rollDiceCommand$5 = function $$rollDiceCommand(command) {
@@ -83,11 +83,11 @@
       
       $b = self.$roll(damage, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       result = (function() {if ($truthy($rb_le(dice, toughness))) {
-        return "\u6210\u529F"
+        return "成功"
       } else {
-        return "\u5931\u6557"
+        return "失敗"
       }; return nil; })();
-      text = "" + "\u30B7\u30E7\u30C3\u30AF\u5224\u5B9A(\u30C0\u30E1\u30FC\u30B8:" + (damage) + ", \u8010\u4E45\u529B:" + (toughness) + ") \uFF1E (" + (dice) + "[" + (diceText) + "]) \uFF1E " + (result);
+      text = "" + "ショック判定(ダメージ:" + (damage) + ", 耐久力:" + (toughness) + ") ＞ (" + (dice) + "[" + (diceText) + "]) ＞ " + (result);
       return text;
     }, $HarnMaster_getCheckShockResult$6.$$arity = 2);
     
@@ -99,20 +99,20 @@
       table = nil;
       $case = type;
       if ("U"['$===']($case)) {
-      typeName = "\u547D\u4E2D\u90E8\u4F4D(\u4EBA\u578B \u4E0A\u6BB5)";
+      typeName = "命中部位(人型 上段)";
       table = self.$getStrikeLocationHumanUpperTable();}
       else if ("D"['$===']($case)) {
-      typeName = "\u547D\u4E2D\u90E8\u4F4D(\u4EBA\u578B \u4E0B\u6BB5)";
+      typeName = "命中部位(人型 下段)";
       table = self.$getStrikeLocationHumanDownTable();}
       else if (nil['$===']($case)) {
-      typeName = "\u547D\u4E2D\u90E8\u4F4D(\u4EBA\u578B \u4E2D\u6BB5)";
+      typeName = "命中部位(人型 中段)";
       table = self.$getStrikeLocationHumanNormalTable();}
       else {self.$raise("" + "unknow atak type " + (type))};
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), $b;
       part = self.$get_table_by_number(number, table);
       part = self.$getLocationSide(part, number);
       part = self.$getFaceLocation(part);
-      result = "" + (typeName) + " \uFF1E (" + (number) + ")" + (part);
+      result = "" + (typeName) + " ＞ (" + (number) + ")" + (part);
       return result;
     }, $HarnMaster_getStrikeLocationHuman$7.$$arity = 1);
     
@@ -128,9 +128,9 @@
       };
       self.$debug("part has side", part);
       side = (function() {if ($truthy(number['$odd?']())) {
-        return "\u5DE6"
+        return "左"
       } else {
-        return "\u53F3"
+        return "右"
       }; return nil; })();
       return part.$sub(/\*/, side);
     }, $HarnMaster_getLocationSide$8.$$arity = 2);
@@ -147,13 +147,13 @@
         return part;
       };
       self.$debug("is Face");
-      table = [[15, "\u984E"], [30, "*\u76EE"], [64, "*\u982C"], [80, "\u9F3B"], [90, "*\u8033"], [100, "\u53E3"]];
+      table = [[15, "顎"], [30, "*目"], [64, "*頬"], [80, "鼻"], [90, "*耳"], [100, "口"]];
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), $b;
       faceLocation = self.$get_table_by_number(number, table);
       self.$debug("faceLocation", faceLocation);
       self.$debug("number", number);
       faceLocation = self.$getLocationSide(faceLocation, number);
-      result = part.$sub(/\+$/, "" + " \uFF1E (" + (number) + ")" + (faceLocation));
+      result = part.$sub(/\+$/, "" + " ＞ (" + (number) + ")" + (faceLocation));
       return result;
     }, $HarnMaster_getFaceLocation$9.$$arity = 1);
     
@@ -161,7 +161,7 @@
       var self = this, table = nil;
 
       
-      table = [[15, "\u982D\u90E8"], [30, "\u9854+"], [45, "\u9996"], [57, "*\u80A9"], [69, "*\u4E0A\u8155"], [73, "*\u8098"], [81, "*\u524D\u8155"], [85, "*\u624B"], [95, "\u80F8\u90E8"], [100, "\u8179\u90E8"]];
+      table = [[15, "頭部"], [30, "顔+"], [45, "首"], [57, "*肩"], [69, "*上腕"], [73, "*肘"], [81, "*前腕"], [85, "*手"], [95, "胸部"], [100, "腹部"]];
       return table;
     }, $HarnMaster_getStrikeLocationHumanUpperTable$10.$$arity = 0);
     
@@ -169,14 +169,14 @@
       var self = this, table = nil;
 
       
-      table = [[5, "\u982D\u90E8"], [10, "\u9854+"], [15, "\u9996"], [27, "*\u80A9"], [33, "*\u4E0A\u8155"], [35, "*\u8098"], [39, "*\u524D\u8155"], [43, "*\u624B"], [60, "\u80F8\u90E8"], [70, "\u8179\u90E8"], [74, "\u80A1\u9593"], [80, "*\u81C0\u90E8"], [88, "*\u817F"], [90, "*\u819D"], [96, "*\u811B"], [100, "*\u8DB3"]];
+      table = [[5, "頭部"], [10, "顔+"], [15, "首"], [27, "*肩"], [33, "*上腕"], [35, "*肘"], [39, "*前腕"], [43, "*手"], [60, "胸部"], [70, "腹部"], [74, "股間"], [80, "*臀部"], [88, "*腿"], [90, "*膝"], [96, "*脛"], [100, "*足"]];
       return table;
     }, $HarnMaster_getStrikeLocationHumanNormalTable$11.$$arity = 0);
     return (Opal.def(self, '$getStrikeLocationHumanDownTable', $HarnMaster_getStrikeLocationHumanDownTable$12 = function $$getStrikeLocationHumanDownTable() {
       var self = this, table = nil;
 
       
-      table = [[6, "*\u524D\u8155"], [12, "*\u624B"], [19, "\u80F8\u90E8"], [29, "\u8179\u90E8"], [35, "\u80A1\u9593"], [49, "*\u81C0\u90E8"], [70, "*\u817F"], [78, "*\u819D"], [92, "*\u811B"], [100, "*\u8DB3"]];
+      table = [[6, "*前腕"], [12, "*手"], [19, "胸部"], [29, "腹部"], [35, "股間"], [49, "*臀部"], [70, "*腿"], [78, "*膝"], [92, "*脛"], [100, "*足"]];
       return table;
     }, $HarnMaster_getStrikeLocationHumanDownTable$12.$$arity = 0), nil) && 'getStrikeLocationHumanDownTable';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

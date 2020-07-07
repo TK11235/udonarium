@@ -31,9 +31,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "GehennaAn");
-    Opal.const_set($nesting[0], 'NAME', "\u30B2\u30D8\u30CA\u30FB\u30A2\u30CA\u30B9\u30BF\u30B7\u30B9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3051\u3078\u306A\u3042\u306A\u3059\u305F\u3057\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u6226\u95D8\u5224\u5B9A\u3068\u901A\u5E38\u5224\u5B9A\u306B\u5BFE\u5FDC\u3002\u5E78\u904B\u306E\u52A9\u3051\u3001\u9023\u6483\u5897\u52A0\u5024(\u6226\u95D8\u5224\u5B9A)\u3001\u95D8\u6280\u30C1\u30C3\u30C8(\u6226\u95D8\u5224\u5B9A)\u3092\u81EA\u52D5\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u30FB\u6226\u95D8\u5224\u5B9A\u3000(nGAt+m)\n" + "\u3000\u30C0\u30A4\u30B9\u6570n\u3001\u76EE\u6A19\u5024t\u3001\u4FEE\u6B63\u5024m\u3067\u6226\u95D8\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u5E78\u904B\u306E\u52A9\u3051\u3001\u9023\u6483\u5897\u52A0\u5024\u3001\u95D8\u6280\u30C1\u30C3\u30C8\u3092\u81EA\u52D5\u51E6\u7406\u3057\u307E\u3059\u3002\n" + "\u30FB\u901A\u5E38\u5224\u5B9A\u3000(nGt+m)\n" + "\u3000\u30C0\u30A4\u30B9\u6570n\u3001\u76EE\u6A19\u5024t\u3001\u4FEE\u6B63\u5024m\u3067\u901A\u5E38\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u5E78\u904B\u306E\u52A9\u3051\u3092\u81EA\u52D5\u51E6\u7406\u3057\u307E\u3059\u3002(\u9023\u6483\u5897\u52A0\u5024\u3001\u95D8\u6280\u30C1\u30C3\u30C8\u3092\u8868\u793A\u6291\u5236\u3057\u307E\u3059)\n");
+    Opal.const_set($nesting[0], 'NAME', "ゲヘナ・アナスタシス");
+    Opal.const_set($nesting[0], 'SORT_KEY', "けへなあなすたしす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "戦闘判定と通常判定に対応。幸運の助け、連撃増加値(戦闘判定)、闘技チット(戦闘判定)を自動表示します。\n" + "・戦闘判定　(nGAt+m)\n" + "　ダイス数n、目標値t、修正値mで戦闘判定を行います。\n" + "　幸運の助け、連撃増加値、闘技チットを自動処理します。\n" + "・通常判定　(nGt+m)\n" + "　ダイス数n、目標値t、修正値mで通常判定を行います。\n" + "　幸運の助けを自動処理します。(連撃増加値、闘技チットを表示抑制します)\n");
     self.$setPrefixes(["(\\d+G\\d+|\\d+GA\\d+)"]);
     
     Opal.def(self, '$initialize', $GehennaAn_initialize$1 = function $$initialize() {
@@ -133,9 +133,9 @@
       } else if ($truthy($rb_lt(mod, 0))) {
         output = $rb_plus(output, mod.$to_s())};
       if ($truthy(/[^\d\[\]]+/['$=~'](output))) {
-        output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output) + " \uFF1E \u6210\u529F" + (success) + "\u3001\u5931\u6557" + (failed)
+        output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ 成功" + (success) + "、失敗" + (failed)
       } else {
-        output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output)
+        output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output)
       };
       output = $rb_plus(output, self.$getAnastasisBonusText(mode, success));
       return output;
@@ -152,9 +152,9 @@
         ma_bonus = 7};
       bonus_str = "";
       if ($truthy($rb_gt(ma_bonus, 0))) {
-        bonus_str = $rb_plus(bonus_str, "" + "\u9023\u6483[+" + (ma_bonus) + "]/")};
-      bonus_str = $rb_plus(bonus_str, "" + "\u95D8\u6280[" + (self.$getTougiBonus(success)) + "]");
-      return "" + " \uFF1E " + (bonus_str);
+        bonus_str = $rb_plus(bonus_str, "" + "連撃[+" + (ma_bonus) + "]/")};
+      bonus_str = $rb_plus(bonus_str, "" + "闘技[" + (self.$getTougiBonus(success)) + "]");
+      return "" + " ＞ " + (bonus_str);
     }, $GehennaAn_getAnastasisBonusText$11.$$arity = 2);
     return (Opal.def(self, '$getTougiBonus', $GehennaAn_getTougiBonus$12 = function $$getTougiBonus(success) {
       var self = this, table = nil;

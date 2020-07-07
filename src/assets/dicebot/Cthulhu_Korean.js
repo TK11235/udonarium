@@ -35,9 +35,9 @@
     self.$$prototype.special_percentage = self.$$prototype.critical_percentage = self.$$prototype.fumble_percentage = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu:Korean");
-    Opal.const_set($nesting[0], 'NAME', "\uD06C\uD234\uB8E8");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u56FD\u969B\u5316:Korean:\uD06C\uD234\uB8E8\uC758\uBD80\uB9847");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "c=\uD06C\uB9AC\uD2F0\uCEEC\uCE58 \uFF0F f=\uD38C\uBE14\uCE58 \uFF0F s=\uC2A4\uD398\uC15C\n" + "\n" + "1d100<=n    c\u30FBf\u30FBs \uBAA8\uB450 \uC624\uD504\uFF08\uB2E8\uC21C\uD558\uAC8C \uC218\uCE58\uB9CC\uC744 \uBF51\uC544\uB0BC \uB54C \uC0AC\uC6A9\uFF09\n" + "\n" + "\u30FBcfs\uC774 \uBD99\uB294 \uD310\uC815\uC758 \uCEE4\uB9E8\uB4DC\n" + "\n" + "CC\t 1d100 \uD310\uC815\uC744 \uD589\uD568 c=1\u3001f=100\n" + "CCB  \uC704\uC640 \uB3D9\uC77C\u3001c=5\u3001f=96\n" + "\n" + "\uC608\uFF1ACC<=80  \uFF08\uAE30\uB2A5\uCE58 80\uB85C \uD589\uD718\uD310\uC815. 1%\uB8F0\uC73C\uB85C cf\uC801\uC6A9\uFF09\n" + "\uC608\uFF1ACCB<=55 \uFF08\uAE30\uB2A5\uCE58 55\uB85C \uD589\uD718\uD310\uC815. 5%\uB8F0\uC73C\uB85C cf\uC801\uC6A9\uFF09\n" + "\n" + "\u30FB\uACBD\uC6B0\uC758 \uC218 \uD310\uC815\uC5D0 \uB300\uD574\uC11C\n" + "\n" + "CBR(x,y)\tc=1\u3001f=100\n" + "CBRB(x,y)\tc=5\u3001f=96\n" + "\n" + "\u30FB\uC800\uD56D \uD310\uC815\uC5D0 \uB300\uD574\uC11C\n" + "RES(x-y)\tc=1\u3001f=100\n" + "RESB(x-y)\tc=5\u3001f=96\n" + "\n" + "\u203B\uACE0\uC7A5 \uB118\uBC84 \uD310\uC815\n" + "\n" + "\u30FBCC(x) c=1\u3001f=100\n" + "x=\uACE0\uC7A5 \uB118\uBC84. \uC8FC\uC0AC\uC704 \uB208x\uC774\uC0C1\uC774 \uB098\uC628 \uD6C4\uC5D0, \uD38C\uBE14\uC774 \uB3D9\uC2DC\uC5D0 \uBC1C\uC0DD\uD588\uC744 \uACBD\uC6B0. \uBAA8\uB450 \uCD9C\uB825\uD55C\uB2E4. \uFF08\uD14D\uC2A4\uD2B8 \u300C\uD38C\uBE14\uFF06\uACE0\uC7A5\u300D\uFF09\n" + "\uD38C\uBE14\uC774 \uC544\uB2CC \uACBD\uC6B0, \uC131\uACF5\u30FB\uC2E4\uD328\uC5D0 \uAD00\uB828\uB418\uC9C0 \uC54A\uACE0 \u300C\uACE0\uC7A5\u300D\uB9CC\uC744 \uCD9C\uB825\uD55C\uB2E4. \uFF08\uC131\uACF5\u30FB\uC2E4\uD328\uB97C \uCD9C\uB825\uD558\uC9C0 \uC54A\uACE0 \uB367\uC4F0\uAE30\uD55C \uAC83\uC744 \uCD9C\uB825\uD558\uB294 \uD615\uD0DC\uFF09\n" + "\n" + "\u30FBCCB(x) c=5\u3001f=96\n" + "\uC704\uC640 \uB3D9\uC77C\n");
+    Opal.const_set($nesting[0], 'NAME', "크툴루");
+    Opal.const_set($nesting[0], 'SORT_KEY', "国際化:Korean:크툴루의부름7");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "c=크리티컬치 ／ f=펌블치 ／ s=스페셜\n" + "\n" + "1d100<=n    c・f・s 모두 오프（단순하게 수치만을 뽑아낼 때 사용）\n" + "\n" + "・cfs이 붙는 판정의 커맨드\n" + "\n" + "CC\t 1d100 판정을 행함 c=1、f=100\n" + "CCB  위와 동일、c=5、f=96\n" + "\n" + "예：CC<=80  （기능치 80로 행휘판정. 1%룰으로 cf적용）\n" + "예：CCB<=55 （기능치 55로 행휘판정. 5%룰으로 cf적용）\n" + "\n" + "・경우의 수 판정에 대해서\n" + "\n" + "CBR(x,y)\tc=1、f=100\n" + "CBRB(x,y)\tc=5、f=96\n" + "\n" + "・저항 판정에 대해서\n" + "RES(x-y)\tc=1、f=100\n" + "RESB(x-y)\tc=5、f=96\n" + "\n" + "※고장 넘버 판정\n" + "\n" + "・CC(x) c=1、f=100\n" + "x=고장 넘버. 주사위 눈x이상이 나온 후에, 펌블이 동시에 발생했을 경우. 모두 출력한다. （텍스트 「펌블＆고장」）\n" + "펌블이 아닌 경우, 성공・실패에 관련되지 않고 「고장」만을 출력한다. （성공・실패를 출력하지 않고 덧쓰기한 것을 출력하는 형태）\n" + "\n" + "・CCB(x) c=5、f=96\n" + "위와 동일\n");
     self.$setPrefixes(["CC(B)?\\(\\d+\\)", "CC(B)?.*", "RES(B)?.*", "CBR(B)?\\(\\d+,\\d+\\)"]);
     
     Opal.def(self, '$initialize', $Cthulhu_Korean_initialize$1 = function $$initialize() {
@@ -104,14 +104,14 @@
         
         output = "" + "(1D100<=" + (diff) + ")";
         if ($truthy($rb_gt(broken_num, 0))) {
-          output = $rb_plus(output, "" + " \uACE0\uC7A5\uB118\uBC84[" + (broken_num) + "]")};
+          output = $rb_plus(output, "" + " 고장넘버[" + (broken_num) + "]")};
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = $rb_plus(output, "" + " \uFF1E " + (total_n));
-        output = $rb_plus(output, "" + " \uFF1E " + (self.$getCheckResultText(total_n, diff, broken_num)));
+        output = $rb_plus(output, "" + " ＞ " + (total_n));
+        output = $rb_plus(output, "" + " ＞ " + (self.$getCheckResultText(total_n, diff, broken_num)));
       } else {
         
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = "" + "(1D100) \uFF1E " + (total_n);
+        output = "" + "(1D100) ＞ " + (total_n);
       };
       return output;
     }, $Cthulhu_Korean_getCheckResult$3.$$arity = 1);
@@ -134,31 +134,31 @@
           diff_special = 1};};
       if ($truthy(($truthy($a = $rb_le(total_n, diff)) ? $rb_lt(total_n, 100) : $a))) {
         
-        result = "\uC131\uACF5";
+        result = "성공";
         if ($truthy($rb_gt(diff_special, 0))) {
           if ($truthy($rb_le(total_n, self.critical_percentage))) {
             if ($truthy($rb_le(total_n, diff_special))) {
-              result = "\uD06C\uB9AC\uD2F0\uCEEC/\uC2A4\uD398\uC15C"
+              result = "크리티컬/스페셜"
             } else {
-              result = "\uD06C\uB9AC\uD2F0\uCEEC"
+              result = "크리티컬"
             }
           } else if ($truthy($rb_le(total_n, diff_special))) {
-            result = "\uC2A4\uD398\uC15C"}};
+            result = "스페셜"}};
       } else {
         
-        result = "\uC2E4\uD328";
+        result = "실패";
         if ($truthy($rb_gt(diff_special, 0))) {
           if ($truthy(($truthy($a = $rb_ge(total_n, $rb_minus(101, self.fumble_percentage))) ? $rb_lt(diff, 100) : $a))) {
             
-            result = "\uD38C\uBE14";
+            result = "펌블";
             fumble = true;}};
       };
       if ($truthy($rb_gt(broken_num, 0))) {
         if ($truthy($rb_ge(total_n, broken_num))) {
           if ($truthy(fumble)) {
-            result = $rb_plus(result, "/\uACE0\uC7A5")
+            result = $rb_plus(result, "/고장")
           } else {
-            result = "\uACE0\uC7A5"
+            result = "고장"
           }}};
       return result;
     }, $Cthulhu_Korean_getCheckResultText$4.$$arity = -3);
@@ -175,12 +175,12 @@
       value = m['$[]'](2).$to_i();
       target = $rb_plus($rb_times(value, 5), 50);
       if ($truthy($rb_lt(target, 5))) {
-        return "" + "(1d100<=" + (target) + ") \uFF1E \uC790\uB3D9\uC2E4\uD328"};
+        return "" + "(1d100<=" + (target) + ") ＞ 자동실패"};
       if ($truthy($rb_gt(target, 95))) {
-        return "" + "(1d100<=" + (target) + ") \uFF1E \uC790\uB3D9\uC131\uACF5"};
+        return "" + "(1d100<=" + (target) + ") ＞ 자동성공"};
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       result = self.$getCheckResultText(total_n, target);
-      return "" + "(1d100<=" + (target) + ") \uFF1E " + (total_n) + " \uFF1E " + (result);
+      return "" + "(1d100<=" + (target) + ") ＞ " + (total_n) + " ＞ " + (result);
     }, $Cthulhu_Korean_getRegistResult$5.$$arity = 1);
     return (Opal.def(self, '$getCombineRoll', $Cthulhu_Korean_getCombineRoll$6 = function $$getCombineRoll(command) {
       var $a, $b, self = this, m = nil, diff_1 = nil, diff_2 = nil, total = nil, result_1 = nil, result_2 = nil, successList = nil, succesCount = nil, rank = nil;
@@ -196,7 +196,7 @@
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
-      successList = ["\uD06C\uB9AC\uD2F0\uCEEC/\uC2A4\uD398\uC15C", "\uD06C\uB9AC\uD2F0\uCEEC", "\uC2A4\uD398\uC15C", "\uC131\uACF5"];
+      successList = ["크리티컬/스페셜", "크리티컬", "스페셜", "성공"];
       succesCount = 0;
       if ($truthy(successList['$include?'](result_1))) {
         succesCount = $rb_plus(succesCount, 1)};
@@ -204,13 +204,13 @@
         succesCount = $rb_plus(succesCount, 1)};
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
-        return "\uC131\uACF5"
+        return "성공"
       } else if (succesCount['$=='](1)) {
-        return "\uBD80\uBD84\uC801 \uC131\uACF5"
+        return "부분적 성공"
       } else {
-        return "\uC2E4\uD328"
+        return "실패"
       }; return nil; })();
-      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") \uFF1E " + (total) + "[" + (result_1) + "," + (result_2) + "] \uFF1E " + (rank);
+      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") ＞ " + (total) + "[" + (result_1) + "," + (result_2) + "] ＞ " + (rank);
     }, $Cthulhu_Korean_getCombineRoll$6.$$arity = 1), nil) && 'getCombineRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

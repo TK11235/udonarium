@@ -35,9 +35,9 @@
     self.$$prototype.bonus_dice_range = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu7th:ChineseTraditional");
-    Opal.const_set($nesting[0], 'NAME', "\u514B\u8607\u9B6F\u795E\u8A71\u7B2C7\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u56FD\u969B\u5316:Chinese Traditional:\u514B\u8607\u9B6F\u795E\u8A71");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u3000CC(x)<=\uFF08\u76EE\u6A19\u5024\uFF09\n" + "\u3000x\uFF1A\u734E\u52F5\u9AB0/\u61F2\u7F70\u9AB0\uFF1ABonus/Penalty Dice (2\uFF5E\uFF0D2)\u3002\u6C92\u6709\u7684\u8A71\u53EF\u4EE5\u7701\u7565\u3002\n" + "\u3000\u81F4\u547D\u7684\u5931\u6557\uFF1AFumble\uFF0F\u5931\u6557\uFF1AFailure\uFF0F\u901A\u5E38\u6210\u529F\uFF1ARegular success\uFF0F\n" + "\u3000\u56F0\u96E3\u6210\u529F\uFF1AHard success\uFF0F\u6975\u9650\u6210\u529F\uFF1AExtreme success\uFF0F\n" + "\u3000\u6C7A\u5B9A\u6027\u7684\u6210\u529F\uFF1ACritical success\u3000\u81EA\u52D5\u5224\u5B9A\u3002\n" + "\u4F8B\uFF09CC<=30\u3000CC(2)<=50\u3000CC(-1)<=75\n" + "\n" + "\u30FB\u7D44\u5408\u5224\u5B9A\u3000(CBR(x,y))\n" + "\u3000\u9032\u884C\u76EE\u6A19\u5024 x \u548C y \u7684\u5224\u5B9A\u3002\n" + "\u3000\u4F8B\uFF09CBR(50,20)\n" + "\n" + "\u30FB\u9023\u5C04\uFF08Full Auto\uFF09\u5224\u5B9A\u3000FAR(w,x,y,z)\n" + "\u3000w\uFF1A\u5F48\u6578(1\uFF5E100\uFF09\u3001x\uFF1A\u6280\u80FD\u5024\uFF081\uFF5E100\uFF09\u3001y\uFF1A\u6545\u969C\u7387\n" + "\u3000z\uFF1A\u734E\u52F5\u3001\u61F2\u7F70\u9AB0(-2\uFF5E2)\u3002\u53EF\u7701\u7565\u3002\n" + "\u3000\u53EA\u8A08\u7B97\u547D\u4E2D\u6578\u3001\u8CAB\u7A7F\u6578\u53CA\u5269\u9918\u5F48\u85E5\uFF0C\u4E0D\u8A08\u7B97\u50B7\u5BB3\u3002\n" + "\u4F8B\uFF09FAR(25,70,98)\u3000FAR(50,80,98,-1)\n" + "\n" + "\u30FB\u760B\u72C2\u8868\n" + "\u30FB\u5BE6\u6642\u578B\u3000Short\uFF0F\u7E3D\u7D50\u578B\u3000Longer\n");
+    Opal.const_set($nesting[0], 'NAME', "克蘇魯神話第7版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "国際化:Chinese Traditional:克蘇魯神話");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定　CC(x)<=（目標値）\n" + "　x：獎勵骰/懲罰骰：Bonus/Penalty Dice (2～－2)。沒有的話可以省略。\n" + "　致命的失敗：Fumble／失敗：Failure／通常成功：Regular success／\n" + "　困難成功：Hard success／極限成功：Extreme success／\n" + "　決定性的成功：Critical success　自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75\n" + "\n" + "・組合判定　(CBR(x,y))\n" + "　進行目標値 x 和 y 的判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・連射（Full Auto）判定　FAR(w,x,y,z)\n" + "　w：彈數(1～100）、x：技能値（1～100）、y：故障率\n" + "　z：獎勵、懲罰骰(-2～2)。可省略。\n" + "　只計算命中數、貫穿數及剩餘彈藥，不計算傷害。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)\n" + "\n" + "・瘋狂表\n" + "・實時型　Short／總結型　Longer\n");
     self.$setPrefixes(["CC\\(\\d+\\)", "CC.*", "CBR\\(\\d+,\\d+\\)", "FAR\\(\\d+\\)", "FAR.*"]);
     
     Opal.def(self, '$initialize', $Cthulhu7th_ChineseTraditional_initialize$1 = function $$initialize() {
@@ -75,19 +75,19 @@
       bonus_dice_count = $$($nesting, 'Regexp').$last_match(1).$to_i();
       diff = $$($nesting, 'Regexp').$last_match(2).$to_i();
       if ($truthy($rb_le(diff, 0))) {
-        return "\u932F\u8AA4\u3002\u76EE\u6A19\u503C\u9700\u70BA1\u4EE5\u4E0A\u3002"};
+        return "錯誤。目標值需為1以上。"};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
       } else {
-        return "" + "\u932F\u8AA4\u3002\u734E\u52F5\u3001\u61F2\u7F70\u9AB0\u5024\u70BA" + (self.bonus_dice_range.$min()) + "\uFF5E" + (self.bonus_dice_range.$max()) + "\u3002"
+        return "" + "錯誤。獎勵、懲罰骰値為" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "。"
       };
       output = "";
       output = $rb_plus(output, "" + "(1D100<=" + (diff) + ")");
-      output = $rb_plus(output, "" + " \u734E\u52F5\u3001\u61F2\u7F70\u9AB0\u5024[" + (bonus_dice_count) + "]");
+      output = $rb_plus(output, "" + " 獎勵、懲罰骰値[" + (bonus_dice_count) + "]");
       units_digit = self.$rollPercentD10();
       total_list = self.$getTotalLists(bonus_dice_count, units_digit);
       total = self.$getTotal(total_list, bonus_dice_count);
       result_text = self.$getCheckResultText(total, diff);
-      output = $rb_plus(output, "" + " \uFF1E " + (total_list.$join(", ")) + " \uFF1E " + (total) + " \uFF1E " + (result_text));
+      output = $rb_plus(output, "" + " ＞ " + (total_list.$join(", ")) + " ＞ " + (total) + " ＞ " + (result_text));
       return output;
     }, $Cthulhu7th_ChineseTraditional_getCheckResult$3.$$arity = 1);
     
@@ -138,13 +138,13 @@
       if ($truthy($rb_le(total, diff))) {
         
         if (total['$=='](1)) {
-          return "\u6C7A\u5B9A\u6027\u7684\u6210\u529F"};
+          return "決定性的成功"};
         if ($truthy($rb_le(total, $rb_divide(diff, 5)))) {
-          return "\u6975\u9650\u7684\u6210\u529F"};
+          return "極限的成功"};
         if ($truthy($rb_le(total, $rb_divide(diff, 2)))) {
-          return "\u56F0\u96E3\u7684\u6210\u529F"};
-        return "\u901A\u5E38\u6210\u529F";};
-      fumble_text = "\u81F4\u547D\u7684\u5931\u6557";
+          return "困難的成功"};
+        return "通常成功";};
+      fumble_text = "致命的失敗";
       if (total['$=='](100)) {
         return fumble_text};
       if ($truthy($rb_ge(total, 96))) {
@@ -152,7 +152,7 @@
           return fumble_text
         } else if ($truthy(fumbleable)) {
           return fumble_text}};
-      return "\u5931\u6557";
+      return "失敗";
     }, $Cthulhu7th_ChineseTraditional_getCheckResultText$8.$$arity = -3);
     
     Opal.def(self, '$getCombineRoll', $Cthulhu7th_ChineseTraditional_getCombineRoll$9 = function $$getCombineRoll(command) {
@@ -168,7 +168,7 @@
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
-      successList = ["\u6C7A\u5B9A\u6027\u7684\u6210\u529F", "\u6975\u9650\u7684\u6210\u529F", "\u56F0\u96E3\u7684\u6210\u529F", "\u901A\u5E38\u6210\u529F"];
+      successList = ["決定性的成功", "極限的成功", "困難的成功", "通常成功"];
       succesCount = 0;
       if ($truthy(successList['$include?'](result_1))) {
         succesCount = $rb_plus(succesCount, 1)};
@@ -176,13 +176,13 @@
         succesCount = $rb_plus(succesCount, 1)};
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
-        return "\u6210\u529F"
+        return "成功"
       } else if (succesCount['$=='](1)) {
-        return "\u90E8\u5206\u7684\u6210\u529F"
+        return "部分的成功"
       } else {
-        return "\u5931\u6557"
+        return "失敗"
       }; return nil; })();
-      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") \uFF1E " + (total) + "[" + (result_1) + "," + (result_2) + "] \uFF1E " + (rank);
+      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") ＞ " + (total) + "[" + (result_1) + "," + (result_2) + "] ＞ " + (rank);
     }, $Cthulhu7th_ChineseTraditional_getCombineRoll$9.$$arity = 1);
     
     Opal.def(self, '$getFullAutoResult', $Cthulhu7th_ChineseTraditional_getFullAutoResult$10 = function $$getFullAutoResult(command) {
@@ -201,21 +201,21 @@
       bullet_count_limit = 100;
       if ($truthy($rb_gt(bullet_count, bullet_count_limit))) {
         
-        output = $rb_plus(output, "" + "\n\u5F48\u85E5\u592A\u591A\u3002\u8ACB\u6539\u88DD\u586B" + (bullet_count_limit) + "\u767C\u3002\n");
+        output = $rb_plus(output, "" + "\n彈藥太多。請改裝填" + (bullet_count_limit) + "發。\n");
         bullet_count = bullet_count_limit;};
       if ($truthy($rb_le(bullet_count, 0))) {
-        return "\u6B63\u78BA\u88DD\u586B\u6578\u3002"};
+        return "正確裝填數。"};
       if ($truthy($rb_le(diff, 0))) {
-        return "\u6B63\u78BA\u76EE\u6A19\u503C\u3002"};
+        return "正確目標值。"};
       if ($truthy($rb_lt(broken_number, 0))) {
         
-        output = $rb_plus(output, "\n\u6B63\u78BA\u6545\u969C\u503C\u3002\u6392\u9664\u734E\u52F5\u8A18\u865F\u3002\n");
+        output = $rb_plus(output, "\n正確故障值。排除獎勵記號。\n");
         broken_number = broken_number.$abs();};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
       } else {
-        return "" + "\n\u932F\u8AA4\u3002\u734E\u52F5\u3001\u61F2\u7F70\u9AB0\u5024\u70BA" + (self.bonus_dice_range.$min()) + "\uFF5E" + (self.bonus_dice_range.$max()) + "\u3067\u3059\u3002"
+        return "" + "\n錯誤。獎勵、懲罰骰値為" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
       };
-      output = $rb_plus(output, "" + "\u734E\u52F5\u3001\u61F2\u7F70\u9AB0\u5024[" + (bonus_dice_count) + "]");
+      output = $rb_plus(output, "" + "獎勵、懲罰骰値[" + (bonus_dice_count) + "]");
       output = $rb_plus(output, self.$rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count));
       return output;
     }, $Cthulhu7th_ChineseTraditional_getFullAutoResult$10.$$arity = 1);
@@ -241,10 +241,10 @@
           
           loopCount = $rb_plus(loopCount, 1);
           $c = self.$getHitResultInfos(dice_num, diff, more_difficlty), $b = Opal.to_ary($c), (hit_result = ($b[0] == null ? nil : $b[0])), (total = ($b[1] == null ? nil : $b[1])), (total_list = ($b[2] == null ? nil : $b[2])), $c;
-          output = $rb_plus(output, "" + "\n" + (loopCount) + "\u6B21: \uFF1E " + (total_list.$join(", ")) + " \uFF1E " + (hit_result));
+          output = $rb_plus(output, "" + "\n" + (loopCount) + "次: ＞ " + (total_list.$join(", ")) + " ＞ " + (hit_result));
           if ($truthy($rb_ge(total, broken_number))) {
             
-            output = $rb_plus(output, "\u5361\u5F48");
+            output = $rb_plus(output, "卡彈");
             Opal.ret(self.$getHitResultText(output, counts));};
           hit_type = self.$getHitType(more_difficlty, hit_result);
           $c = self.$getBulletResults(counts['$[]']("bullet"), hit_type, diff), $b = Opal.to_ary($c), (hit_bullet = ($b[0] == null ? nil : $b[0])), (impale_bullet = ($b[1] == null ? nil : $b[1])), (lost_bullet = ($b[2] == null ? nil : $b[2])), $c;
@@ -284,7 +284,7 @@
     Opal.def(self, '$getHitResultText', $Cthulhu7th_ChineseTraditional_getHitResultText$14 = function $$getHitResultText(output, counts) {
       var self = this;
 
-      return "" + (output) + "\n\uFF1E " + (counts['$[]']("hit_bullet")) + "\u767C\u5C04\u64CA\u547D\u4E2D\u3001" + (counts['$[]']("impale_bullet")) + "\u5C04\u64CA\u8CAB\u7A7F\u3001\u5269\u9918\u5F48\u85E5" + (counts['$[]']("bullet")) + "\u767C"
+      return "" + (output) + "\n＞ " + (counts['$[]']("hit_bullet")) + "發射擊命中、" + (counts['$[]']("impale_bullet")) + "射擊貫穿、剩餘彈藥" + (counts['$[]']("bullet")) + "發"
     }, $Cthulhu7th_ChineseTraditional_getHitResultText$14.$$arity = 2);
     
     Opal.def(self, '$getHitType', $Cthulhu7th_ChineseTraditional_getHitType$15 = function $$getHitType(more_difficlty, hit_result) {
@@ -338,16 +338,16 @@
       impaleBulletList = [];
       $case = more_difficlty;
       if ((0)['$===']($case)) {
-      successList = ["\u56F0\u96E3\u7684\u6210\u529F", "\u901A\u5E38\u6210\u529F"];
-      impaleBulletList = ["\u6C7A\u5B9A\u6027\u7684\u6210\u529F", "\u6975\u9650\u7684\u6210\u529F"];}
+      successList = ["困難的成功", "通常成功"];
+      impaleBulletList = ["決定性的成功", "極限的成功"];}
       else if ((1)['$===']($case)) {
-      successList = ["\u56F0\u96E3\u7684\u6210\u529F"];
-      impaleBulletList = ["\u6C7A\u5B9A\u6027\u7684\u6210\u529F", "\u6975\u9650\u7684\u6210\u529F"];}
+      successList = ["困難的成功"];
+      impaleBulletList = ["決定性的成功", "極限的成功"];}
       else if ((2)['$===']($case)) {
       successList = [];
-      impaleBulletList = ["\u6C7A\u5B9A\u6027\u7684\u6210\u529F", "\u6975\u9650\u7684\u6210\u529F"];}
+      impaleBulletList = ["決定性的成功", "極限的成功"];}
       else if ((3)['$===']($case)) {
-      successList = ["\u6C7A\u5B9A\u6027\u7684\u6210\u529F"];
+      successList = ["決定性的成功"];
       impaleBulletList = [];};
       return [successList, impaleBulletList];
     }, $Cthulhu7th_ChineseTraditional_getSuccessListImpaleBulletList$17.$$arity = 1);
@@ -357,9 +357,9 @@
 
       
       $case = more_difficlty;
-      if ((1)['$===']($case)) {return "\n    \u8B8A\u66F4\u96E3\u5EA6\u70BA\u56F0\u96E3\u7684\u6210\u529F"}
-      else if ((2)['$===']($case)) {return "\n    \u8B8A\u66F4\u96E3\u5EA6\u70BA\u6975\u9650\u7684\u6210\u529F"}
-      else if ((3)['$===']($case)) {return "\n    \u8B8A\u66F4\u96E3\u5EA6\u70BA\u6C7A\u5B9A\u6027\u7684\u6210\u529F"};
+      if ((1)['$===']($case)) {return "\n    變更難度為困難的成功"}
+      else if ((2)['$===']($case)) {return "\n    變更難度為極限的成功"}
+      else if ((3)['$===']($case)) {return "\n    變更難度為決定性的成功"};
       return "";
     }, $Cthulhu7th_ChineseTraditional_getNextDifficltyMessage$18.$$arity = 1);
     

@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "EmbryoMachine");
-    Opal.const_set($nesting[0], 'NAME', "\u30A8\u30E0\u30D6\u30EA\u30AA\u30DE\u30B7\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3048\u3080\u3075\u308A\u304A\u307E\u3057\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u30ED\u30FC\u30EB(EMt+m@c#f)\n" + "\u3000\u76EE\u6A19\u5024t\u3001\u4FEE\u6B63\u5024m\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024c(\u7701\u7565\u6642\u306F20)\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024f(\u7701\u7565\u6642\u306F2)\u3067\u653B\u6483\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u547D\u4E2D\u3057\u305F\u5834\u5408\u306F\u547D\u4E2D\u30EC\u30D9\u30EB\u3068\u547D\u4E2D\u90E8\u4F4D\u3082\u81EA\u52D5\u51FA\u529B\u3057\u307E\u3059\u3002\n" + "\u3000R\u30B3\u30DE\u30F3\u30C9\u306B\u8AAD\u307F\u66FF\u3048\u3055\u308C\u307E\u3059\u3002\n" + "\u30FB\u5404\u7A2E\u8868\n" + "\u3000\u30FB\u547D\u4E2D\u90E8\u4F4D\u8868\u3000HLT\n" + "\u3000\u30FB\u767D\u5175\u653B\u6483\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\u3000MFT\n" + "\u3000\u30FB\u5C04\u6483\u653B\u6483\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\u3000SFT\n");
+    Opal.const_set($nesting[0], 'NAME', "エムブリオマシン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "えむふりおましん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定ロール(EMt+m@c#f)\n" + "　目標値t、修正値m、クリティカル値c(省略時は20)、ファンブル値f(省略時は2)で攻撃判定を行います。\n" + "　命中した場合は命中レベルと命中部位も自動出力します。\n" + "　Rコマンドに読み替えされます。\n" + "・各種表\n" + "　・命中部位表　HLT\n" + "　・白兵攻撃ファンブル表　MFT\n" + "　・射撃攻撃ファンブル表　SFT\n");
     self.$setPrefixes(["(EM\\t+|HLT|MFT|SFT)"]);
     
     Opal.def(self, '$initialize', $EmbryoMachine_initialize$1 = function $$initialize() {
@@ -92,13 +92,13 @@
         return ""
       };
       if ($truthy($rb_le(dice_total, 2))) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else if ($truthy($rb_ge(dice_total, 20))) {
-        return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+        return " ＞ クリティカル"
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $EmbryoMachine_check_nD10$12.$$arity = 5);
     
@@ -144,18 +144,18 @@
       } else if ($truthy($rb_lt(mod, 0))) {
         output = $rb_plus(output, mod.$to_s())};
       if ($truthy(output['$=~'](/[^\d\[\]]+/))) {
-        output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output) + " \uFF1E " + (total_n)
+        output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output) + " ＞ " + (total_n)
       } else {
-        output = "" + (nick_e) + ": (" + (string) + ") \uFF1E " + (output)
+        output = "" + (nick_e) + ": (" + (string) + ") ＞ " + (output)
       };
       if ($truthy($rb_le(dice_now, fumble))) {
-        output = $rb_plus(output, " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB")
+        output = $rb_plus(output, " ＞ ファンブル")
       } else if ($truthy($rb_ge(dice_now, crit))) {
-        output = $rb_plus(output, $rb_plus($rb_plus(" \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB \uFF1E ", self.$get_hit_level_table(big_dice)), "" + "(\u30C0\u30E1\u30FC\u30B8+10) \uFF1E [" + (dice_loc) + "]" + (self.$get_hit_location_table(dice_loc))))
+        output = $rb_plus(output, $rb_plus($rb_plus(" ＞ クリティカル ＞ ", self.$get_hit_level_table(big_dice)), "" + "(ダメージ+10) ＞ [" + (dice_loc) + "]" + (self.$get_hit_location_table(dice_loc))))
       } else if ($truthy($rb_ge(total_n, diff))) {
-        output = $rb_plus(output, $rb_plus($rb_plus(" \uFF1E \u6210\u529F \uFF1E ", self.$get_hit_level_table(big_dice)), "" + " \uFF1E [" + (dice_loc) + "]" + (self.$get_hit_location_table(dice_loc))))
+        output = $rb_plus(output, $rb_plus($rb_plus(" ＞ 成功 ＞ ", self.$get_hit_level_table(big_dice)), "" + " ＞ [" + (dice_loc) + "]" + (self.$get_hit_location_table(dice_loc))))
       } else {
-        output = $rb_plus(output, " \uFF1E \u5931\u6557")
+        output = $rb_plus(output, " ＞ 失敗")
       };
       return output;
     }, $EmbryoMachine_checkRoll$13.$$arity = 2);
@@ -170,19 +170,19 @@
       number = 0;
       $case = command;
       if (/HLT/i['$===']($case)) {
-      type = "\u547D\u4E2D\u90E8\u4F4D";
+      type = "命中部位";
       $b = self.$roll(2, 10), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_hit_location_table(number);}
       else if (/SFT/i['$===']($case)) {
-      type = "\u5C04\u6483\u30D5\u30A1\u30F3\u30D6\u30EB";
+      type = "射撃ファンブル";
       $b = self.$roll(2, 10), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_shoot_fumble_table(number);}
       else if (/MFT/i['$===']($case)) {
-      type = "\u767D\u5175\u30D5\u30A1\u30F3\u30D6\u30EB";
+      type = "白兵ファンブル";
       $b = self.$roll(2, 10), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), $b;
       output = self.$get_melee_fumble_table(number);};
       if ($truthy(output['$!=']("1"))) {
-        output = "" + (type) + "\u8868(" + (number) + ") \uFF1E " + (output)};
+        output = "" + (type) + "表(" + (number) + ") ＞ " + (output)};
       return output;
     }, $EmbryoMachine_rollDiceCommand$15.$$arity = 1);
     
@@ -190,7 +190,7 @@
       var self = this, table = nil;
 
       
-      table = [[4, "\u982D"], [7, "\u5DE6\u811A"], [9, "\u5DE6\u8155"], [12, "\u80F4"], [14, "\u53F3\u8155"], [17, "\u53F3\u811A"], [20, "\u982D"]];
+      table = [[4, "頭"], [7, "左脚"], [9, "左腕"], [12, "胴"], [14, "右腕"], [17, "右脚"], [20, "頭"]];
       return self.$get_table_by_number(num, table);
     }, $EmbryoMachine_get_hit_location_table$16.$$arity = 1);
     
@@ -199,7 +199,7 @@
 
       
       output = "1";
-      table = ["\u66B4\u767A\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u304C\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u90E8\u4F4D\u306B\u547D\u4E2D\u30EC\u30D9\u30EBA\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u3042\u307E\u308A\u306B\u7121\u69D8\u306A\u8AA4\u5C04\u3092\u3057\u305F\u3002\u30D1\u30A4\u30ED\u30C3\u30C8\u306E\u7CBE\u795E\u7684\u8CA0\u50B7\u304C2\u6BB5\u968E\u4E0A\u6607\u3059\u308B\u3002", "\u8AA4\u5C04\u3092\u3057\u305F\u3002\u81EA\u6A5F\u306B\u6700\u3082\u8FD1\u3044\u5473\u65B9\u6A5F\u4F53\u306B\u547D\u4E2D\u30EC\u30D9\u30EBA\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u8AA4\u5C04\u3092\u3057\u305F\u3002\u5BFE\u8C61\u306B\u6700\u3082\u8FD1\u3044\u5473\u65B9\u6A5F\u4F53\u306B\u547D\u4E2D\u30EC\u30D9\u30EBA\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u6B66\u88C5\u304C\u66B4\u767A\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u304C\u7834\u640D\u3059\u308B\u3002\u30C0\u30E1\u30FC\u30B8\u306F\u767A\u751F\u3057\u306A\u3044\u3002", "\u8EE2\u5012\u3057\u305F\u3002\u6B21\u306E\u30BB\u30B0\u30E1\u30F3\u30C8\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u304C\u5F85\u6A5F\u306B\u5909\u66F4\u3055\u308C\u308B\u3002", "\u5F3E\u8A70\u307E\u308A\u3092\u8D77\u3053\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306F\u6226\u95D8\u7D42\u4E86\u307E\u3067\u4F7F\u7528\u3067\u304D\u306A\u304F\u306A\u308B\u3002", "\u7832\u8EAB\u304C\u5927\u304D\u304F\u6B6A\u3093\u3060\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306B\u3088\u308B\u5C04\u6483\u653B\u6483\u306E\u547D\u4E2D\u5024\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-3\u3055\u308C\u308B\u3002", "\u71B1\u91CF\u304C\u6FC0\u3057\u304F\u5897\u5927\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306E\u6D88\u8CBB\u5F3E\u85AC\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067+3\u3055\u308C\u308B\u3002", "\u66B4\u767A\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u304C\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u90E8\u4F4D\u306B\u547D\u4E2D\u30EC\u30D9\u30EBB\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u5F3E\u85AC\u304C\u52A3\u5316\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306E\u5168\u3066\u306E\u30C0\u30E1\u30FC\u30B8\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-2\u3055\u308C\u308B\u3002", "\u7121\u69D8\u306A\u8AA4\u5C04\u3092\u3057\u305F\u3002\u30D1\u30A4\u30ED\u30C3\u30C8\u306E\u7CBE\u795E\u7684\u8CA0\u50B7\u304C1\u6BB5\u968E\u4E0A\u6607\u3059\u308B\u3002", "\u8AA4\u5C04\u3092\u3057\u305F\u3002\u5BFE\u8C61\u306B\u6700\u3082\u8FD1\u3044\u5473\u65B9\u6A5F\u4F53\u306B\u547D\u4E2D\u30EC\u30D9\u30EBB\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u8AA4\u5C04\u3092\u3057\u305F\u3002\u81EA\u6A5F\u306B\u6700\u3082\u8FD1\u3044\u5473\u65B9\u6A5F\u4F53\u306B\u547D\u4E2D\u30EC\u30D9\u30EBB\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u7832\u8EAB\u304C\u6B6A\u3093\u3060\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306B\u3088\u308B\u5C04\u6483\u653B\u6483\u306E\u547D\u4E2D\u5024\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-2\u3055\u308C\u308B\u3002", "\u71B1\u91CF\u304C\u5897\u5927\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306E\u6D88\u8CBB\u5F3E\u85AC\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067+2\u3055\u308C\u308B\u3002", "\u7832\u8EAB\u304C\u308F\u305A\u304B\u306B\u6B6A\u3093\u3060\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306B\u3088\u308B\u5C04\u6483\u653B\u6483\u306E\u547D\u4E2D\u5024\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-1\u3055\u308C\u308B\u3002", "\u71B1\u91CF\u304C\u3084\u3084\u5897\u5927\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u5C04\u6483\u6B66\u5668\u306E\u6D88\u8CBB\u5F3E\u85AC\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067+1\u3055\u308C\u308B\u3002", "\u4F55\u3082\u8D77\u304D\u306A\u304B\u3063\u305F\u3002"];
+      table = ["暴発した。使用した射撃武器が搭載されている部位に命中レベルAで命中する。", "あまりに無様な誤射をした。パイロットの精神的負傷が2段階上昇する。", "誤射をした。自機に最も近い味方機体に命中レベルAで命中する。", "誤射をした。対象に最も近い味方機体に命中レベルAで命中する。", "武装が暴発した。使用した射撃武器が破損する。ダメージは発生しない。", "転倒した。次のセグメントのアクションが待機に変更される。", "弾詰まりを起こした。使用した射撃武器は戦闘終了まで使用できなくなる。", "砲身が大きく歪んだ。使用した射撃武器による射撃攻撃の命中値が戦闘終了まで-3される。", "熱量が激しく増大した。使用した射撃武器の消費弾薬が戦闘終了まで+3される。", "暴発した。使用した射撃武器が搭載されている部位に命中レベルBで命中する。", "弾薬が劣化した。使用した射撃武器の全てのダメージが戦闘終了まで-2される。", "無様な誤射をした。パイロットの精神的負傷が1段階上昇する。", "誤射をした。対象に最も近い味方機体に命中レベルBで命中する。", "誤射をした。自機に最も近い味方機体に命中レベルBで命中する。", "砲身が歪んだ。使用した射撃武器による射撃攻撃の命中値が戦闘終了まで-2される。", "熱量が増大した。使用した射撃武器の消費弾薬が戦闘終了まで+2される。", "砲身がわずかに歪んだ。使用した射撃武器による射撃攻撃の命中値が戦闘終了まで-1される。", "熱量がやや増大した。使用した射撃武器の消費弾薬が戦闘終了まで+1される。", "何も起きなかった。"];
       dc = 2;
       if ($truthy(table['$[]']($rb_minus(num, dc)))) {
         output = table['$[]']($rb_minus(num, dc))};
@@ -211,7 +211,7 @@
 
       
       output = "1";
-      table = ["\u5927\u632F\u308A\u3057\u3059\u304E\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u304C\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u90E8\u4F4D\u306E\u53CD\u5BFE\u306E\u90E8\u4F4D(\u53F3\u8155\u306B\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u306A\u3089\u5DE6\u5074)\u306B\u547D\u4E2D\u30EC\u30D9\u30EBA\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u6FC0\u3057\u304F\u982D\u3092\u6253\u3063\u305F\u3002\u30D1\u30A4\u30ED\u30C3\u30C8\u306E\u8089\u4F53\u7684\u8CA0\u50B7\u304C2\u6BB5\u968E\u4E0A\u6607\u3059\u308B\u3002", "\u904E\u8CA0\u8377\u3067\u90E8\u4F4D\u304C\u7206\u767A\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u304C\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u90E8\u4F4D\u304C\u5168\u58CA\u3059\u308B\u3002\u30C0\u30E1\u30FC\u30B8\u306F\u767A\u751F\u305B\u305A\u3001\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u6B66\u88C5\u3082\u7834\u640D\u3057\u306A\u3044\u3002", "\u5927\u632F\u308A\u3057\u3059\u304E\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u304C\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u90E8\u4F4D\u306E\u53CD\u5BFE\u306E\u90E8\u4F4D(\u53F3\u8155\u306B\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u306A\u3089\u5DE6\u5074)\u306B\u547D\u4E2D\u30EC\u30D9\u30EBB\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u6B66\u88C5\u304C\u7206\u767A\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u304C\u7834\u640D\u3059\u308B\u3002\u30C0\u30E1\u30FC\u30B8\u306F\u767A\u751F\u3057\u306A\u3044\u3002", "\u90E8\u5206\u7684\u306B\u6A5F\u80FD\u505C\u6B62\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u306F\u6226\u95D8\u7D42\u4E86\u307E\u3067\u4F7F\u7528\u3067\u304D\u306A\u304F\u306A\u308B\u3002", "\u8EE2\u5012\u3057\u305F\u3002\u6B21\u306E\u30BB\u30B0\u30E1\u30F3\u30C8\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u304C\u5F85\u6A5F\u306B\u5909\u66F4\u3055\u308C\u308B\u3002", "\u6FC0\u3057\u3044\u5203\u3053\u307C\u308C\u3092\u8D77\u3053\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u306E\u5168\u3066\u306E\u30C0\u30E1\u30FC\u30B8\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-3\u3055\u308C\u308B\u3002", "\u5730\u9762\u306E\u51F9\u51F8\u306B\u306F\u307E\u3063\u305F\u3002\u6B21\u306E2\u30BB\u30B0\u30E1\u30F3\u30C8\u306F\u79FB\u52D5\u3092\u884C\u3046\u3053\u3068\u304C\u3067\u304D\u306A\u3044\u3002", "\u5203\u3053\u307C\u308C\u3092\u8D77\u3053\u3057\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u306E\u5168\u3066\u306E\u30C0\u30E1\u30FC\u30B8\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-2\u3055\u308C\u308B\u3002", "\u5927\u632F\u308A\u3057\u3059\u304E\u305F\u3002\u4F7F\u7528\u3057\u305F\u767D\u5175\u6B66\u5668\u304C\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u90E8\u4F4D\u306E\u53CD\u5BFE\u306E\u90E8\u4F4D(\u53F3\u8155\u306B\u642D\u8F09\u3055\u308C\u3066\u3044\u308B\u306A\u3089\u5DE6\u5074)\u306B\u547D\u4E2D\u30EC\u30D9\u30EBC\u3067\u547D\u4E2D\u3059\u308B\u3002", "\u982D\u3092\u6253\u3063\u305F\u3002\u30D1\u30A4\u30ED\u30C3\u30C8\u306E\u8089\u4F53\u7684\u8CA0\u50B7\u304C1\u6BB5\u968E\u4E0A\u6607\u3059\u308B\u3002", "\u99C6\u52D5\u7CFB\u304C\u640D\u50B7\u3057\u305F\u3002\u79FB\u52D5\u529B\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-2\u3055\u308C\u308B(\u6700\u4F4E1)\u3002", "\u9593\u5408\u3044\u3092\u53D6\u308A\u640D\u306D\u305F\u3002\u96A3\u63A5\u3057\u3066\u3044\u308B\u6A5F\u4F53(\u8907\u6570\u306E\u5834\u5408\u306F1\u6A5F\u3092\u30E9\u30F3\u30C0\u30E0\u306B\u6C7A\u5B9A)\u306B\u6FC0\u7A81\u3059\u308B\u3002", "\u6A5F\u4F53\u3054\u3068\u7A81\u3063\u8FBC\u3093\u3060\u3002\u6A5F\u4F53\u304C\u5411\u3044\u3066\u3044\u308B\u65B9\u89D2\u3078\u79FB\u52D5\u529B\u3092\u3059\u3079\u3066\u6D88\u8CBB\u3059\u308B\u307E\u3067\u79FB\u52D5\u3059\u308B\u3002", "\u5236\u5FA1\u7CFB\u304C\u640D\u50B7\u3057\u305F\u3002\u56DE\u907F\u5024\u304C\u6226\u95D8\u7D42\u4E86\u307E\u3067-1\u3055\u308C\u308B(\u6700\u4F4E1)\u3002", "\u8E0F\u307F\u8AA4\u3063\u305F\u3002\u6A5F\u4F53\u304C\u5411\u3044\u3066\u3044\u308B\u65B9\u89D2\u3078\u79FB\u52D5\u529B\u306E\u534A\u5206\u3092\u6D88\u8CBB\u3059\u308B\u307E\u3067\u79FB\u52D5\u3059\u308B\u3002", "\u305F\u305F\u3089\u3092\u8E0F\u3093\u3060\u3002\u6A5F\u4F53\u304C\u5411\u3044\u3066\u3044\u308B\u65B9\u89D2\u30781\u306E\u79FB\u52D5\u529B\u3067\u79FB\u52D5\u3059\u308B\u3002", "\u4F55\u3082\u8D77\u304D\u306A\u304B\u3063\u305F\u3002"];
+      table = ["大振りしすぎた。使用した白兵武器が搭載されている部位の反対の部位(右腕に搭載されているなら左側)に命中レベルAで命中する。", "激しく頭を打った。パイロットの肉体的負傷が2段階上昇する。", "過負荷で部位が爆発した。使用した白兵武器が搭載されている部位が全壊する。ダメージは発生せず、搭載されている武装も破損しない。", "大振りしすぎた。使用した白兵武器が搭載されている部位の反対の部位(右腕に搭載されているなら左側)に命中レベルBで命中する。", "武装が爆発した。使用した白兵武器が破損する。ダメージは発生しない。", "部分的に機能停止した。使用した白兵武器は戦闘終了まで使用できなくなる。", "転倒した。次のセグメントのアクションが待機に変更される。", "激しい刃こぼれを起こした。使用した白兵武器の全てのダメージが戦闘終了まで-3される。", "地面の凹凸にはまった。次の2セグメントは移動を行うことができない。", "刃こぼれを起こした。使用した白兵武器の全てのダメージが戦闘終了まで-2される。", "大振りしすぎた。使用した白兵武器が搭載されている部位の反対の部位(右腕に搭載されているなら左側)に命中レベルCで命中する。", "頭を打った。パイロットの肉体的負傷が1段階上昇する。", "駆動系が損傷した。移動力が戦闘終了まで-2される(最低1)。", "間合いを取り損ねた。隣接している機体(複数の場合は1機をランダムに決定)に激突する。", "機体ごと突っ込んだ。機体が向いている方角へ移動力をすべて消費するまで移動する。", "制御系が損傷した。回避値が戦闘終了まで-1される(最低1)。", "踏み誤った。機体が向いている方角へ移動力の半分を消費するまで移動する。", "たたらを踏んだ。機体が向いている方角へ1の移動力で移動する。", "何も起きなかった。"];
       dc = 2;
       if ($truthy(table['$[]']($rb_minus(num, dc)))) {
         output = table['$[]']($rb_minus(num, dc))};
@@ -221,7 +221,7 @@
       var self = this, table = nil;
 
       
-      table = [[6, "\u547D\u4E2D\u30EC\u30D9\u30EBC"], [9, "\u547D\u4E2D\u30EC\u30D9\u30EBB"], [10, "\u547D\u4E2D\u30EC\u30D9\u30EBA"]];
+      table = [[6, "命中レベルC"], [9, "命中レベルB"], [10, "命中レベルA"]];
       return self.$get_table_by_number(num, table);
     }, $EmbryoMachine_get_hit_level_table$19.$$arity = 1), nil) && 'get_hit_level_table';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

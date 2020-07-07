@@ -31,9 +31,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "PhantasmAdventure");
-    Opal.const_set($nesting[0], 'NAME', "\u30D5\u30A1\u30F3\u30BF\u30BA\u30E0\u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3075\u3042\u3093\u305F\u3059\u3080\u3042\u3068\u3078\u3093\u3061\u3084\u3042");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u6210\u529F\u3001\u5931\u6557\u3001\u6C7A\u5B9A\u7684\u6210\u529F\u3001\u6C7A\u5B9A\u7684\u5931\u6557\u306E\u8868\u793A\u3068\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30FB\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u8A08\u7B97\u306E\u5B9F\u88C5\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ファンタズムアドベンチャー");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ふあんたすむあとへんちやあ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "成功、失敗、決定的成功、決定的失敗の表示とクリティカル・ファンブル値計算の実装。\n");
     
     Opal.def(self, '$initialize', $PhantasmAdventure_initialize$1 = function $$initialize() {
       var $iter = $PhantasmAdventure_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -73,14 +73,14 @@
         if ($truthy($rb_lt(fum_num, 1))) {
           fum_num = 1};
         if ($truthy($rb_le(self.$sendMode(), 1))) {
-          return "" + " \uFF1E \u81F4\u547D\u7684\u5931\u6557(" + (fum_num) + ")"};
+          return "" + " ＞ 致命的失敗(" + (fum_num) + ")"};
         fum_str = dice_now.$to_s();
         if ($truthy($rb_lt(skill_mod, 0))) {
           fum_str = $rb_plus(fum_str, "" + "+" + ($rb_times(skill_mod, -1)) + "=" + (fum_num))
         } else {
           fum_str = $rb_plus(fum_str, "" + "-" + (skill_mod) + "=" + (fum_num))
         };
-        return "" + " \uFF1E \u81F4\u547D\u7684\u5931\u6557(" + (fum_str) + ")";
+        return "" + " ＞ 致命的失敗(" + (fum_str) + ")";
       } else if ($truthy(($truthy($a = $rb_le(total, critical)) ? $a : $rb_le(total, 1)))) {
         
         crit_num = $rb_plus(dice_now, skill_mod);
@@ -89,14 +89,14 @@
         if ($truthy($rb_lt(crit_num, 1))) {
           crit_num = 1};
         if ($truthy($rb_lt(skill_mod, 0))) {
-          return " \uFF1E \u6210\u529F"};
+          return " ＞ 成功"};
         if ($truthy($rb_gt(self.$sendMode(), 1))) {
-          return "" + " \uFF1E \u6C7A\u5B9A\u7684\u6210\u529F(" + (dice_now) + "+" + (skill_mod) + "=" + (crit_num) + ")"};
-        return "" + " \uFF1E \u6C7A\u5B9A\u7684\u6210\u529F(" + (crit_num) + ")";
+          return "" + " ＞ 決定的成功(" + (dice_now) + "+" + (skill_mod) + "=" + (crit_num) + ")"};
+        return "" + " ＞ 決定的成功(" + (crit_num) + ")";
       } else if ($truthy($rb_le(total, diff))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $PhantasmAdventure_check_1D20$2.$$arity = 4), nil) && 'check_1D20';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

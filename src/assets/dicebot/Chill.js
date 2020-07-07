@@ -32,8 +32,8 @@
     
     Opal.const_set($nesting[0], 'ID', "Chill");
     Opal.const_set($nesting[0], 'NAME', "Chill");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3061\u308B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u30B9\u30C8\u30E9\u30A4\u30AF\u30FB\u30E9\u30F3\u30AF\u3000(SRx)\n" + "\u3000\"SR\u30B9\u30C8\u30E9\u30A4\u30AF\u30FB\u30E9\u30F3\u30AF\"\u306E\u5F62\u3067\u8A18\u5165\u3057\u307E\u3059\u3002\n" + "\u3000\u30B9\u30C8\u30E9\u30A4\u30AF\u30FB\u30E9\u30F3\u30AF\u30FB\u30C1\u30E3\u30FC\u30C8\u306B\u5F93\u3063\u3066\u81EA\u52D5\u3067\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\u3092\u884C\u3044\u3001\n" + "\u3000\u8CA0\u50B7\u3068\u30B9\u30BF\u30DF\u30CA\u30ED\u30B9\u3092\u8A08\u7B97\u3057\u307E\u3059\u3002\n" + "\u3000\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\u3068\u540C\u69D8\u306B\u3001\u4ED6\u306E\u30D7\u30EC\u30A4\u30E4\u30FC\u306B\u96A0\u308C\u3066\u30ED\u30FC\u30EB\u3059\u308B\u3053\u3068\u3082\u53EF\u80FD\u3067\u3059\u3002\n" + "\u3000\u4F8B\uFF09SR7\u3000\u3000\u3000sr13\u3000\u3000\u3000SR(7+4)\u3000\u3000\u3000Ssr10\n");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ちる");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・ストライク・ランク　(SRx)\n" + "　\"SRストライク・ランク\"の形で記入します。\n" + "　ストライク・ランク・チャートに従って自動でダイスロールを行い、\n" + "　負傷とスタミナロスを計算します。\n" + "　ダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）SR7　　　sr13　　　SR(7+4)　　　Ssr10\n");
     self.$setPrefixes(["SR\\d+.*"]);
     
     Opal.def(self, '$check_1D100', $Chill_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
@@ -43,17 +43,17 @@
       if ($truthy(cmp_op['$!=']("<="))) {
         return ""};
       if ($truthy($rb_ge(total, 100))) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else if ($truthy($rb_gt(total, target))) {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       } else if ($truthy($rb_ge(total, $rb_times(target, 0.9)))) {
-        return " \uFF1E \uFF2C\u6210\u529F"
+        return " ＞ Ｌ成功"
       } else if ($truthy($rb_ge(total, $rb_divide(target, 2)))) {
-        return " \uFF1E \uFF2D\u6210\u529F"
+        return " ＞ Ｍ成功"
       } else if ($truthy($rb_ge(total, $rb_divide(target, 10)))) {
-        return " \uFF1E \uFF28\u6210\u529F"
+        return " ＞ Ｈ成功"
       } else {
-        return " \uFF1E \uFF23\u6210\u529F"
+        return " ＞ Ｃ成功"
       };
     }, $Chill_check_1D100$1.$$arity = 4);
     
@@ -105,16 +105,16 @@
         wounds = $rb_plus(wounds, wounds_wk);
       };
       if ($truthy($rb_gt(self.$sendMode(), 1))) {
-        output = "" + (dice_str) + " \uFF1E " + (dice_add) + " \uFF1E \u30B9\u30BF\u30DF\u30CA\u640D\u5931" + (sta_loss) + ", \u8CA0\u50B7" + (wounds)
+        output = "" + (dice_str) + " ＞ " + (dice_add) + " ＞ スタミナ損失" + (sta_loss) + ", 負傷" + (wounds)
       } else if ($truthy($rb_gt(self.$sendMode(), 0))) {
-        output = "" + (dice_add) + " \uFF1E \u30B9\u30BF\u30DF\u30CA\u640D\u5931" + (sta_loss) + ", \u8CA0\u50B7" + (wounds)
+        output = "" + (dice_add) + " ＞ スタミナ損失" + (sta_loss) + ", 負傷" + (wounds)
       } else {
-        output = $rb_plus($rb_plus($rb_plus("\u30B9\u30BF\u30DF\u30CA\u640D\u5931", sta_loss), ", \u8CA0\u50B7"), wounds)
+        output = $rb_plus($rb_plus($rb_plus("スタミナ損失", sta_loss), ", 負傷"), wounds)
       };
       string = $rb_plus(string, $rb_plus(":", dice));
       if ($truthy(output['$empty?']())) {
         return "1"};
-      output = "" + "(" + (string) + ") \uFF1E " + (output);
+      output = "" + "(" + (string) + ") ＞ " + (output);
       self.$debug("strike_rank end output", output);
       return output;
     }, $Chill_roll_strike_rank_result$3.$$arity = 1);

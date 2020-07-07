@@ -16,9 +16,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "TokumeiTenkousei");
-    Opal.const_set($nesting[0], 'NAME', "\u7279\u547D\u8EE2\u653B\u751F");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u304F\u3081\u3044\u3066\u3093\u3053\u3046\u305B\u3044");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u300C1\u306E\u51FA\u76EE\u3067EPP\u7372\u5F97\u300D\u3001\u5224\u5B9A\u6642\u306E\u300C\u6210\u529F\u300D\u300C\u5931\u6557\u300D\u300C\u30BE\u30ED\u76EE\u3067\u81EA\u52D5\u632F\u308A\u8DB3\u3057\u300D\u3092\u5224\u5B9A\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "特命転攻生");
+    Opal.const_set($nesting[0], 'SORT_KEY', "とくめいてんこうせい");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "「1の出目でEPP獲得」、判定時の「成功」「失敗」「ゾロ目で自動振り足し」を判定。\n");
     
     Opal.def(self, '$initialize', $TokumeiTenkousei_initialize$1 = function $$initialize() {
       var $iter = $TokumeiTenkousei_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -43,9 +43,9 @@
       if ($truthy(($truthy($a = cmp_op['$!='](">=")) ? target['$==']("?") : $a))) {
         return ""};
       if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $TokumeiTenkousei_check_nD6$2.$$arity = 5);
     return (Opal.def(self, '$getDiceRolledAdditionalText', $TokumeiTenkousei_getDiceRolledAdditionalText$3 = function $$getDiceRolledAdditionalText(n1, _n_max, dice_max) {
@@ -56,7 +56,7 @@
       if ($truthy(($truthy($a = n1['$!='](0)) ? dice_max['$=='](6) : $a))) {
         
         point = $rb_times(n1, 5);
-        return "" + " \uFF1E " + (point) + "EPP\u7372\u5F97";};
+        return "" + " ＞ " + (point) + "EPP獲得";};
       return "";
     }, $TokumeiTenkousei_getDiceRolledAdditionalText$3.$$arity = 3), nil) && 'getDiceRolledAdditionalText';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

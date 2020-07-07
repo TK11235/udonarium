@@ -19,9 +19,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "TherapieSein");
-    Opal.const_set($nesting[0], 'NAME', "\u9752\u6625\u75BE\u60A3\u30BB\u30E9\u30D5\u30A3\u30B6\u30A4\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305B\u3044\u3057\u3086\u3093\u3057\u3064\u304B\u3093\u305B\u3089\u3075\u3044\u3055\u3044\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u4E00\u822C\u5224\u5B9A\uFF1ATS[n][\u00B1m][@t]\u3000\u3000[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\u80FD\u3002\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7121\u3002\n" + "\u30FB\u6226\u95D8\u5224\u5B9A\uFF1AOP[n][\u00B1m][@t]\u3000\u3000[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\u80FD\u3002\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u6709\u3002\n" + "\n" + "\u300Cn\u300D\u3067\u80FD\u529B\u5024\u4FEE\u6B63\u306A\u3069\u3092\u6307\u5B9A\u3002\n" + "\u300C\u00B1m\u300D\u3067\u9054\u6210\u5024\u3078\u306E\u4FEE\u6B63\u5024\u3092\u8FFD\u52A0\u6307\u5B9A\u3002+5+1-3\u306E\u3088\u3046\u306B\u3001\u8907\u6570\u6307\u5B9A\u3082\u53EF\u80FD\u3067\u3059\u3002\n" + "\u300C@t\u300D\u3067\u76EE\u6A19\u5024\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u9054\u6210\u5024\u306E\u307F\u8868\u793A\u3001\u6307\u5B9A\u6642\u306F\u5224\u5B9A\u306E\u6B63\u5426\u3092\u8FFD\u52A0\u8868\u793A\u3002\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "\u30FBTS \u2192 \u30C0\u30A4\u30B9\u306E\u5408\u8A08\u5024\u3092\u9054\u6210\u5024\u3068\u3057\u3066\u8868\u793A\u3002\n" + "\u30FBTS4 \u2192 \u30C0\u30A4\u30B9\u5408\u8A08+4\u3092\u9054\u6210\u5024\u8868\u793A\u3002\n" + "\u30FBTS4-1 \u2192 \u30C0\u30A4\u30B9\u5408\u8A08+4-1\uFF08\u8A08+3\uFF09\u3092\u9054\u6210\u5024\u8868\u793A\u3002\n" + "\u30FBTS2+1@10 \u2192 \u30C0\u30A4\u30B9\u5408\u8A08+2+1\uFF08\u8A08+3\uFF09\u306E\u9054\u6210\u5024\u3068\u3001\u5224\u5B9A\u306E\u6210\u5426\u3092\u8868\u793A\u3002\n" + "\u30FBOP4+3+1 \u2192 \u30C0\u30A4\u30B9\u5408\u8A08+4+3+1\uFF08\u8A08+8\uFF09\u3092\u9054\u6210\u5024\uFF06\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u8868\u793A\u3002\n" + "\u30FBOP3@12 \u2192 \u30C0\u30A4\u30B9\u5408\u8A08+3\u306E\u9054\u6210\u5024\uFF06\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u5224\u5B9A\u306E\u6210\u5426\u3092\u8868\u793A\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "青春疾患セラフィザイン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "せいしゆんしつかんせらふいさいん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・一般判定：TS[n][±m][@t]　　[]内のコマンドは省略可能。クリティカル無。\n" + "・戦闘判定：OP[n][±m][@t]　　[]内のコマンドは省略可能。クリティカル有。\n" + "\n" + "「n」で能力値修正などを指定。\n" + "「±m」で達成値への修正値を追加指定。+5+1-3のように、複数指定も可能です。\n" + "「@t」で目標値を指定。省略時は達成値のみ表示、指定時は判定の正否を追加表示。\n" + "\n" + "【書式例】\n" + "・TS → ダイスの合計値を達成値として表示。\n" + "・TS4 → ダイス合計+4を達成値表示。\n" + "・TS4-1 → ダイス合計+4-1（計+3）を達成値表示。\n" + "・TS2+1@10 → ダイス合計+2+1（計+3）の達成値と、判定の成否を表示。\n" + "・OP4+3+1 → ダイス合計+4+3+1（計+8）を達成値＆クリティカル表示。\n" + "・OP3@12 → ダイス合計+3の達成値＆クリティカル、判定の成否を表示。\n");
     self.$setPrefixes(["(TS|OP)(\\d+)?([\\+\\-]\\d)*(\\@\\d+)?"]);
     
     Opal.def(self, '$rollDiceCommand', $TherapieSein_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -61,18 +61,18 @@
         return "" + ">=" + (target)
       }; return nil; })();
       result = "" + "(2D6" + (modifyText) + (targetText) + ")";
-      result = $rb_plus(result, "" + " \uFF1E " + (dice) + "(" + (diceText) + ")" + (modifyText));
+      result = $rb_plus(result, "" + " ＞ " + (dice) + "(" + (diceText) + ")" + (modifyText));
       if ($truthy(($truthy($a = hasCritical) ? dice['$=='](12) : $a))) {
         
-        result = $rb_plus(result, " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF01");
+        result = $rb_plus(result, " ＞ クリティカル！");
         return result;};
-      result = $rb_plus(result, "" + " \uFF1E " + (successValue) + (targetText));
+      result = $rb_plus(result, "" + " ＞ " + (successValue) + (targetText));
       if (target['$=='](0)) {
         return result};
       if ($truthy($rb_ge(successValue, target))) {
-        result = $rb_plus(result, " \uFF1E \u3010\u6210\u529F\u3011")
+        result = $rb_plus(result, " ＞ 【成功】")
       } else {
-        result = $rb_plus(result, " \uFF1E \u3010\u5931\u6557\u3011")
+        result = $rb_plus(result, " ＞ 【失敗】")
       };
       return result;
     }, $TherapieSein_checkRoll$3.$$arity = 3);

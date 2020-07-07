@@ -20,9 +20,9 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "Illusio");
-    Opal.const_set($nesting[0], 'NAME', "\u6643\u5929\u306E\u30A4\u30EB\u30FC\u30B8\u30AA");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3044\u308B\u3046\u3057\u304A");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5224\u5B9A\uFF1A[n]IL(BNo)[P]\n" + "\n" + "[]\u5185\u306E\u30B3\u30DE\u30F3\u30C9\u306F\u7701\u7565\u53EF\u80FD\u3002\n" + "\u300Cn\u300D\u3067\u30C0\u30A4\u30B9\u6570\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F\u300C1\u300D\u3002\n" + "(BNo)\u3067\u30D6\u30ED\u30C3\u30AF\u30CA\u30F3\u30D0\u30FC\u3092\u6307\u5B9A\u3002\u300C236\u300D\u306E\u3088\u3046\u306B\u8A18\u8FF0\u3002\u9806\u4E0D\u540C\u53EF\u3002\n" + "\u30B3\u30DE\u30F3\u30C9\u672B\u306B\u300CP\u300D\u3092\u6307\u5B9A\u3067\u3001(BNo)\u306E\u30D1\u30EA\u30A3\u5224\u5B9A\u3002\uFF08\u4E00\u5FDC\u3001\u8907\u6570\u6307\u5B9A\u53EF\uFF09\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "\u30FB6IL236 \u2192 6d\u3067\u30D6\u30ED\u30C3\u30AF\u30CA\u30F3\u30D0\u30FC\u300C2,3,6\u300D\u306E\u5224\u5B9A\u3002\n" + "\u30FBIL4512 \u2192 1d\u3067\u30D6\u30ED\u30C3\u30AF\u30CA\u30F3\u30D0\u30FC\u300C1,2,4,5\u300D\u306E\u5224\u5B9A\u3002\n" + "\u30FB2IL1P \u2192 2d\u3067\u30D1\u30EA\u30A3\u30CA\u30F3\u30D0\u30FC\u300C1\u300D\u306E\u5224\u5B9A\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "晃天のイルージオ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "いるうしお");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "判定：[n]IL(BNo)[P]\n" + "\n" + "[]内のコマンドは省略可能。\n" + "「n」でダイス数を指定。省略時は「1」。\n" + "(BNo)でブロックナンバーを指定。「236」のように記述。順不同可。\n" + "コマンド末に「P」を指定で、(BNo)のパリィ判定。（一応、複数指定可）\n" + "\n" + "【書式例】\n" + "・6IL236 → 6dでブロックナンバー「2,3,6」の判定。\n" + "・IL4512 → 1dでブロックナンバー「1,2,4,5」の判定。\n" + "・2IL1P → 2dでパリィナンバー「1」の判定。\n");
     
     Opal.def(self, '$initialize', $Illusio_initialize$1 = function $$initialize() {
       var $iter = $Illusio_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -76,7 +76,7 @@
           i = nil;
         };
         if ($truthy($rb_gt(blockNo.$count(i), 0))) {
-          return resultArray.$push("\u00D7")
+          return resultArray.$push("×")
         } else {
           
           resultArray.$push(i);
@@ -87,15 +87,15 @@
       if ($truthy(isParry)) {
         blockText2 = "Parry"};
       resultText = resultArray.$join(",");
-      result = "" + (diceCount) + "D6(" + (blockText2) + ":" + (blockText) + ") \uFF1E " + (diceText) + " \uFF1E " + (resultText) + " \uFF1E ";
+      result = "" + (diceCount) + "D6(" + (blockText2) + ":" + (blockText) + ") ＞ " + (diceText) + " ＞ " + (resultText) + " ＞ ";
       if ($truthy(isParry)) {
         if ($truthy($rb_lt(success, diceCount))) {
-          result = $rb_plus(result, "\u30D1\u30EA\u30A3\u6210\u7ACB\uFF01\u3000\u6B21\u306E\u975E\u30C0\u30E1\u30FC\u30B82\u500D\u3002")
+          result = $rb_plus(result, "パリィ成立！　次の非ダメージ2倍。")
         } else {
-          result = $rb_plus(result, "" + "\u6210\u529F\u6570\uFF1A" + (success) + "\u3000\u30D1\u30EA\u30A3\u5931\u6557")
+          result = $rb_plus(result, "" + "成功数：" + (success) + "　パリィ失敗")
         }
       } else {
-        result = $rb_plus(result, "" + "\u6210\u529F\u6570\uFF1A" + (success))
+        result = $rb_plus(result, "" + "成功数：" + (success))
       };
       return result;
     }, $Illusio_checkRoll$3.$$arity = 3), nil) && 'checkRoll';

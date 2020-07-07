@@ -23435,8 +23435,8 @@ Opal.modules["configBcDice"] = function(Opal) {
   $gvars.DICE_MAXNUM = 1000;
   $gvars.ircCode = 6;
   $gvars.isHandSort = true;
-  $gvars.quitCommand = "\u304A\u75B2\u308C\u69D8";
-  $gvars.quitMessage = "\u3055\u3088\u3046\u306A\u3089";
+  $gvars.quitCommand = "お疲れ様";
+  $gvars.quitMessage = "さようなら";
   $gvars.OPEN_DICE = "Open Dice!";
   $gvars.OPEN_PLOT = "Open Plot!";
   $gvars.ADD_PLOT = "PLOT";
@@ -23501,7 +23501,7 @@ Opal.modules["CountHolder"] = function(Opal) {
       if ($truthy(output['$nil?']())) {
       } else {
         
-        output = "" + (nick) + ": " + (output) + " \u306E\u30AB\u30A6\u30F3\u30BF\u304C\u524A\u9664\u3055\u308C\u307E\u3057\u305F";
+        output = "" + (nick) + ": " + (output) + " のカウンタが削除されました";
         isSecret = true;
       };}
       else if (/^#RENAME!/i['$===']($case)) {
@@ -23534,27 +23534,27 @@ Opal.modules["CountHolder"] = function(Opal) {
       self.$debug("@command", self.command);
       $case = self.command;
       if (/^#([^:\uFF1A]+)(:|\uFF1A)(\w+?)\s*(\d+)(\/(\d+))?/['$===']($case)) {
-      self.$debug(" #(\u8B58\u5225\u540D):(\u30BF\u30B0)(\u73FE\u5728\u5024)/(\u6700\u5927\u5024) \u3067\u6307\u5B9A\u3057\u307E\u3059\u3002\u6700\u5927\u5024\u304C\u306A\u3044\u3082\u306E\u306F\u7701\u7565\u3067\u304D\u307E\u3059\u3002");
+      self.$debug(" #(識別名):(タグ)(現在値)/(最大値) で指定します。最大値がないものは省略できます。");
       self.characterName = $$($nesting, 'Regexp').$last_match(1);
       self.tagName = $$($nesting, 'Regexp').$last_match(3);
       self.currentValue = $$($nesting, 'Regexp').$last_match(4).$to_i();
       self.maxValue = $$($nesting, 'Regexp').$last_match(6);}
-      else if (/^#([^:\uFF1A]+)(:|\uFF1A)(\w+?)\s*([\+\-]\d+)/['$===']($case)) {
-      self.$debug(" #(\u8B58\u5225\u540D):(\u30BF\u30B0)(\u5909\u66F4\u91CF)");
+      else if (/^#([^:：]+)(:|：)(\w+?)\s*([\+\-]\d+)/['$===']($case)) {
+      self.$debug(" #(識別名):(タグ)(変更量)");
       self.characterName = $$($nesting, 'Regexp').$last_match(1);
       self.tagName = $$($nesting, 'Regexp').$last_match(3);
       self.modifyText = $$($nesting, 'Regexp').$last_match(4);}
       else if (/^#(\w+?)\s*(\d+)\/(\d+)/['$===']($case)) {
-      self.$debug(" #(\u30BF\u30B0)(\u73FE\u5728\u5024)/(\u6700\u5927\u5024) \u73FE\u5728\u5024/\u6700\u5927\u5024\u6307\u5B9A\u306F\u534A\u89D2\u306E\u307F\u3002");
+      self.$debug(" #(タグ)(現在値)/(最大値) 現在値/最大値指定は半角のみ。");
       self.tagName = $$($nesting, 'Regexp').$last_match(1);
       self.currentValue = $$($nesting, 'Regexp').$last_match(2).$to_i();
       self.maxValue = $$($nesting, 'Regexp').$last_match(3);}
       else if (/^#(\w+?)\s*([\+\-]\d+)/['$===']($case)) {
-      self.$debug(" #(\u30BF\u30B0)(\u5909\u66F4\u91CF)");
+      self.$debug(" #(タグ)(変更量)");
       self.tagName = $$($nesting, 'Regexp').$last_match(1);
       self.modifyText = $$($nesting, 'Regexp').$last_match(2);}
       else if (/^#(\w+?)\s*(\d+)/['$===']($case)) {
-      self.$debug(" #(\u30BF\u30B0)(\u73FE\u5728\u5024) \u3067\u6307\u5B9A\u3057\u307E\u3059\u3002\u73FE\u5728\u5024\u306F\u534A\u89D2\u3067\u3059\u3002");
+      self.$debug(" #(タグ)(現在値) で指定します。現在値は半角です。");
       self.tagName = $$($nesting, 'Regexp').$last_match(1);
       self.currentValue = $$($nesting, 'Regexp').$last_match(2).$to_i();}
       else {
@@ -23713,7 +23713,7 @@ Opal.modules["CountHolder"] = function(Opal) {
 
       
       self.$debug("getPointListAtSameNick(command, nick, channel, pointerMode, tag)", command, nick, channel, pointerMode, tag);
-      self.$debug("\u540C\u4E00Nick, \u81EA\u30AD\u30E3\u30E9\u306E\u4E00\u89A7\u8868\u793A(\u30D1\u30E9\u30E1\u30FC\u30BF\u6307\u5B9A\u4E0D\u8981)");
+      self.$debug("同一Nick, 自キャラの一覧表示(パラメータ指定不要)");
       pc_list = $gvars.point_counter['$[]'](nick);
       pc_out = "";
       if ($truthy(pc_list)) {
@@ -23769,7 +23769,7 @@ Opal.modules["CountHolder"] = function(Opal) {
           } else {
             return nil;
           };
-          self.$debug("\u4E2D\u8EAB\u304C\u3042\u308B\u306A\u3089");
+          self.$debug("中身があるなら");
           if ($truthy(pc_out)) {
             pc_out = $rb_plus(pc_out, ", ")};
           return (pc_out = $rb_plus(pc_out, "" + (pc_o.$downcase()) + ":" + (tag_out)));}, $$12.$$s = self, $$12.$$arity = 1, $$12));
@@ -23832,7 +23832,7 @@ Opal.modules["CountHolder"] = function(Opal) {
           };}, $$15.$$s = self, $$15.$$arity = 1, $$15));
         if ($truthy(tag_out)) {
           
-          self.$debug("\u4E2D\u8EAB\u304C\u3042\u308B\u306A\u3089");
+          self.$debug("中身があるなら");
           if ($truthy(pc_out)) {
             pc_out = $rb_plus(pc_out, ", ")};
           pc_out = $rb_plus(pc_out, tag_out.$to_s());};};
@@ -23844,7 +23844,7 @@ Opal.modules["CountHolder"] = function(Opal) {
 
       
       self.$debug("getPointListAtSameChannel(command, nick, channel, pointerMode, tagName)", self.command, self.nick, self.channel, self.pointerMode, tagName);
-      self.$debug("\u540C\u4E00\u30C1\u30E3\u30F3\u30CD\u30EB\u7279\u5B9A\u30BF\u30B0(\u30DD\u30A4\u30F3\u30C8)\u306E\u8868\u793A");
+      self.$debug("同一チャンネル特定タグ(ポイント)の表示");
       output = "";
       if ($truthy(tagName['$empty?']())) {
       } else {
@@ -23939,14 +23939,14 @@ Opal.modules["CountHolder"] = function(Opal) {
       if ($truthy($gvars.point_counter['$include?'](key))) {
       } else {
         
-        self.$debug("$point_counter\u306Bkey\u304C\u5B58\u5728\u3057\u306A\u3044\u306E\u3067\u65B0\u898F\u4F5C\u6210");
+        self.$debug("$point_counterにkeyが存在しないので新規作成");
         
         $writer = [key, data];
         $send($gvars.point_counter, '[]=', Opal.to_a($writer));
         $writer[$rb_minus($writer["length"], 1)];;
         return nil;
       };
-      self.$debug("$point_counter\u306Bkey\u304C\u5B58\u5728\u3059\u308B\u5834\u5408");
+      self.$debug("$point_counterにkeyが存在する場合");
       cnt_list = $gvars.point_counter['$[]'](key);
       if ($truthy(cnt_list['$include?'](data))) {
         return nil
@@ -24300,7 +24300,7 @@ Opal.modules["CardTrader"] = function(Opal) {
           message = nil;
         };
         return self.$sendMessageToOnlySender(message);}, $$10.$$s = self, $$10.$$arity = 1, $$10));
-      $send([["\u30FB\u30AB\u30FC\u30C9\u3092\u5F15\u304F\u3000\u3000\u3000\u3000\u3000\u3000\u3000(c-draw[n]) (n\u306F\u679A\u6570)", "\u30FB\u30AA\u30FC\u30D7\u30F3\u3067\u30AB\u30FC\u30C9\u3092\u5F15\u304F\u3000\u3000(c-odraw[n])", "\u30FB\u30AB\u30FC\u30C9\u3092\u9078\u3093\u3067\u5F15\u304F\u3000\u3000\u3000\u3000(c-pick[c[,c]]) (c\u306F\u30AB\u30FC\u30C9\u3002\u30AB\u30F3\u30DE\u3067\u8907\u6570\u6307\u5B9A\u53EF)", "\u30FB\u6368\u3066\u305F\u30AB\u30FC\u30C9\u3092\u624B\u672D\u306B\u623B\u3059\u3000(c-back[c[,c]])", "\u30FB\u7F6E\u3044\u305F\u30AB\u30FC\u30C9\u3092\u624B\u672D\u306B\u623B\u3059\u3000(c-back1[c[,c]])"], ["\u30FB\u624B\u672D\u3068\u5834\u672D\u3092\u898B\u308B\u3000\u3000\u3000\u3000\u3000(c-hand) (Talk\u53EF)", "\u30FB\u30AB\u30FC\u30C9\u3092\u51FA\u3059\u3000\u3000\u3000\u3000\u3000\u3000\u3000(c-play[c[,c]]", "\u30FB\u30AB\u30FC\u30C9\u3092\u5834\u306B\u51FA\u3059\u3000\u3000\u3000\u3000\u3000(c-play1[c[,c]]", "\u30FB\u30AB\u30FC\u30C9\u3092\u6368\u3066\u308B\u3000\u3000\u3000\u3000\u3000\u3000(c-discard[c[,c]]) (Talk\u53EF)", "\u30FB\u5834\u306E\u30AB\u30FC\u30C9\u3092\u9078\u3093\u3067\u6368\u3066\u308B\u3000(c-discard1[c[,c]])", "\u30FB\u5C71\u672D\u304B\u3089\u3081\u304F\u3063\u3066\u6368\u3066\u308B\u3000  (c-milstone[n])"], ["\u30FB\u30AB\u30FC\u30C9\u3092\u76F8\u624B\u306B\u4E00\u679A\u6E21\u3059\u3000\u3000(c-pass[c]\u76F8\u624B) (\u30AB\u30FC\u30C9\u6307\u5B9A\u304C\u7121\u3044\u3068\u304D\u306F\u30E9\u30F3\u30C0\u30E0)", "\u30FB\u5834\u306E\u30AB\u30FC\u30C9\u3092\u76F8\u624B\u306B\u6E21\u3059\u3000\u3000(c-pass1[c]\u76F8\u624B) (\u30AB\u30FC\u30C9\u6307\u5B9A\u304C\u7121\u3044\u3068\u304D\u306F\u30E9\u30F3\u30C0\u30E0)", "\u30FB\u30AB\u30FC\u30C9\u3092\u76F8\u624B\u306E\u5834\u306B\u51FA\u3059\u3000\u3000(c-place[c[,c]]\u76F8\u624B)", "\u30FB\u5834\u306E\u30AB\u30FC\u30C9\u3092\u76F8\u624B\u306E\u5834\u306B\u51FA\u3059(c-place1[c[,c]]\u76F8\u624B)"], ["\u30FB\u5834\u306E\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7\u3059\u308B\u3000\u3000(c-tap1[c[,c]]\u76F8\u624B)", "\u30FB\u5834\u306E\u30AB\u30FC\u30C9\u3092\u30A2\u30F3\u30BF\u30C3\u30D7\u3059\u308B(c-untap1[c[,c]]\u76F8\u624B)", "  ---"]], 'each', [], ($$11 = function(messages){var self = $$11.$$s || this;
+      $send([["・カードを引く　　　　　　　(c-draw[n]) (nは枚数)", "・オープンでカードを引く　　(c-odraw[n])", "・カードを選んで引く　　　　(c-pick[c[,c]]) (cはカード。カンマで複数指定可)", "・捨てたカードを手札に戻す　(c-back[c[,c]])", "・置いたカードを手札に戻す　(c-back1[c[,c]])"], ["・手札と場札を見る　　　　　(c-hand) (Talk可)", "・カードを出す　　　　　　　(c-play[c[,c]]", "・カードを場に出す　　　　　(c-play1[c[,c]]", "・カードを捨てる　　　　　　(c-discard[c[,c]]) (Talk可)", "・場のカードを選んで捨てる　(c-discard1[c[,c]])", "・山札からめくって捨てる　  (c-milstone[n])"], ["・カードを相手に一枚渡す　　(c-pass[c]相手) (カード指定が無いときはランダム)", "・場のカードを相手に渡す　　(c-pass1[c]相手) (カード指定が無いときはランダム)", "・カードを相手の場に出す　　(c-place[c[,c]]相手)", "・場のカードを相手の場に出す(c-place1[c[,c]]相手)"], ["・場のカードをタップする　　(c-tap1[c[,c]]相手)", "・場のカードをアンタップする(c-untap1[c[,c]]相手)", "  ---"]], 'each', [], ($$11 = function(messages){var self = $$11.$$s || this;
 
       
         
@@ -24310,9 +24310,9 @@ Opal.modules["CardTrader"] = function(Opal) {
         $send(messages, 'each', [], send_to_sender.$to_proc());
         return self.$sleep(1);}, $$11.$$s = self, $$11.$$arity = 1, $$11));
       self.$sleep(1);
-      $send(["\u30FB\u30AB\u30FC\u30C9\u3092\u914D\u308B\u3000\u3000\u3000\u3000\u3000\u3000\u3000(c-deal[n]\u76F8\u624B)", "\u30FB\u30AB\u30FC\u30C9\u3092\u898B\u3066\u304B\u3089\u914D\u308B\u3000\u3000\u3000(c-vdeal[n]\u76F8\u624B)", "\u30FB\u30AB\u30FC\u30C9\u306E\u30B7\u30E3\u30C3\u30D5\u30EB\u3000\u3000\u3000\u3000(c-shuffle)", "\u30FB\u6368\u3066\u30AB\u30FC\u30C9\u3092\u5C71\u306B\u623B\u3059\u3000\u3000\u3000(c-rshuffle)", "\u30FB\u5168\u54E1\u306E\u5834\u306E\u30AB\u30FC\u30C9\u3092\u6368\u3066\u308B\u3000(c-clean)"], 'each', [], send_to_sender.$to_proc());
+      $send(["・カードを配る　　　　　　　(c-deal[n]相手)", "・カードを見てから配る　　　(c-vdeal[n]相手)", "・カードのシャッフル　　　　(c-shuffle)", "・捨てカードを山に戻す　　　(c-rshuffle)", "・全員の場のカードを捨てる　(c-clean)"], 'each', [], send_to_sender.$to_proc());
       self.$sleep(1);
-      $send(["\u30FB\u76F8\u624B\u306E\u624B\u672D\u3068\u5834\u672D\u3092\u898B\u308B\u3000\u3000(c-vhand) (Talk\u4E0D\u53EF)", "\u30FB\u679A\u6570\u914D\u7F6E\u3092\u898B\u308B\u3000\u3000\u3000\u3000\u3000\u3000(c-check)", "\u30FB\u5FA9\u6D3B\u306E\u546A\u6587\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000(c-spell[\u546A\u6587]) (c-spell\u3067\u546A\u6587\u306E\u8868\u793A)"], 'each', [], send_to_sender.$to_proc());
+      $send(["・相手の手札と場札を見る　　(c-vhand) (Talk不可)", "・枚数配置を見る　　　　　　(c-check)", "・復活の呪文　　　　　　　　(c-spell[呪文]) (c-spellで呪文の表示)"], 'each', [], send_to_sender.$to_proc());
       return self.$sendMessageToOnlySender("  -- END ---");
     }, $CardTrader_printCardHelp$9.$$arity = 0);
     
@@ -24326,9 +24326,9 @@ Opal.modules["CardTrader"] = function(Opal) {
       };
       self.card_place = $$($nesting, 'Regexp').$last_match(1).$to_i();
       if ($truthy($rb_gt(self.card_place, 0))) {
-        return self.$sendMessageToChannels("\u30AB\u30FC\u30C9\u7F6E\u304D\u5834\u3042\u308A\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("カード置き場ありに変更しました")
       } else {
-        return self.$sendMessageToChannels("\u30AB\u30FC\u30C9\u7F6E\u304D\u5834\u7121\u3057\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("カード置き場無しに変更しました")
       };
     }, $CardTrader_setCardMode$12.$$arity = 0);
     
@@ -24338,7 +24338,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       try {
         
         self.$readExtraCard(self.tnick);
-        return self.$sendMessageToOnlySender("\u30AB\u30FC\u30C9\u30BB\u30C3\u30C8\u306E\u8AAD\u307F\u8FBC\u307F\u6210\u529F\u3057\u307E\u3057\u305F");
+        return self.$sendMessageToOnlySender("カードセットの読み込み成功しました");
       } catch ($err) {
         if (Opal.rescue($err, [$$($nesting, 'StandardError')])) {e = $err;
           try {
@@ -24374,7 +24374,7 @@ Opal.modules["CardTrader"] = function(Opal) {
         return nil};
       if ($truthy(cardFileName['$empty?']())) {
         return nil};
-      self.$debug("" + "Loading Cardset\u300E" + (cardFileName) + "\u300F...\n");
+      self.$debug("" + "Loading Cardset『" + (cardFileName) + "』...\n");
       self.card_val = [];
       
       try {
@@ -24407,7 +24407,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       } catch ($err) {
         if (Opal.rescue($err, [$$($nesting, 'StandardError')])) {e = $err;
           try {
-            return self.$raise("" + "\u30AB\u30FC\u30C9\u30C7\u30FC\u30BF\u3092\u958B\u3051\u307E\u305B\u3093 :\u300E" + (cardFileName) + "\u300F" + (e))
+            return self.$raise("" + "カードデータを開けません :『" + (cardFileName) + "』" + (e))
           } finally { Opal.pop_exception() }
         } else { throw $err; }
       };;
@@ -24437,7 +24437,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       else if (new RegExp("" + "c-vhand\\s*(" + ($gvars.ircNickRegExp) + ")($|\\s)")['$===']($case)) {
       name = $$($nesting, 'Regexp').$last_match(1);
       self.$debug("c-vhand name", name);
-      messageText = $rb_plus($rb_plus("" + (name) + " \u306E\u624B\u672D\u306F", self.$getHandAndPlaceCardInfoText("c-hand", name)), "\u3067\u3059");
+      messageText = $rb_plus($rb_plus("" + (name) + " の手札は", self.$getHandAndPlaceCardInfoText("c-hand", name)), "です");
       return self.$sendMessageToOnlySender(messageText);}
       else if (new RegExp("" + "c-play(\\d*)\\[" + (self.cardRegExp) + "(," + (self.cardRegExp) + ")*\\]($|\\s)")['$===']($case)) {return self.$playCardByCommandText(arg)}
       else if (/(c-rshuffle|c-rsh)($|\s)/['$===']($case)) {
@@ -24486,7 +24486,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       
       self.cardRest = self.card_val.$clone();
       self.deal_cards = $hash2(["card_played"], {"card_played": []});
-      return "\u30B7\u30E3\u30C3\u30D5\u30EB\u3057\u307E\u3057\u305F";
+      return "シャッフルしました";
     }, $CardTrader_shuffleCards$20.$$arity = 0);
     
     Opal.def(self, '$drawCardByCommandText', $CardTrader_drawCardByCommandText$21 = function $$drawCardByCommandText(arg) {
@@ -24499,9 +24499,9 @@ Opal.modules["CardTrader"] = function(Opal) {
       if ($truthy(cards['$empty?']()['$!']())) {
         
         self.$sendMessageToOnlySender(self.$getCardsTextFromCards(cards));
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (cards.$length()) + "\u679A\u5F15\u304D\u307E\u3057\u305F");
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (cards.$length()) + "枚引きました");
       } else {
-        self.$sendMessage(self.channel, "\u30AB\u30FC\u30C9\u304C\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093")
+        self.$sendMessage(self.channel, "カードが残っていません")
       };
       return ($truthy($a = self.card_channels['$[]'](self.nick_e)) ? $a : (($writer = [self.nick_e, self.channel]), $send(self.card_channels, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)]));
     }, $CardTrader_drawCardByCommandText$21.$$arity = 1);
@@ -24517,9 +24517,9 @@ Opal.modules["CardTrader"] = function(Opal) {
       };
       cards = self.$drawCard(cmd);
       if ($truthy(cards['$empty?']()['$!']())) {
-        self.$sendMessage(self.channel, $rb_plus($rb_plus("" + (self.nick_e) + ": ", self.$getCardsTextFromCards(cards)), "\u3092\u5F15\u304D\u307E\u3057\u305F"))
+        self.$sendMessage(self.channel, $rb_plus($rb_plus("" + (self.nick_e) + ": ", self.$getCardsTextFromCards(cards)), "を引きました"))
       } else {
-        self.$sendMessage(self.channel, "\u30AB\u30FC\u30C9\u304C\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093")
+        self.$sendMessage(self.channel, "カードが残っていません")
       };
       return ($truthy($a = self.card_channels['$[]'](self.nick_e)) ? $a : (($writer = [self.nick_e, self.channel]), $send(self.card_channels, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)]));
     }, $CardTrader_drawCardOpen$22.$$arity = 1);
@@ -24577,9 +24577,9 @@ Opal.modules["CardTrader"] = function(Opal) {
       self.$debug("pickupCardCommandText string", string);
       $b = self.$pickupCard(string), $a = Opal.to_ary($b), (count = ($a[0] == null ? nil : $a[0])), (output_msg = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_gt(count, 0))) {
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "\u679A\u9078\u3093\u3067\u5F15\u304D\u307E\u3057\u305F")};
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "枚選んで引きました")};
       if ($truthy(output_msg['$!='](""))) {
-        self.$sendMessage(self.channel, $rb_plus($rb_plus("[", self.$getCardsText(output_msg)), "]\u304C\u3042\u308A\u307E\u305B\u3093"))};
+        self.$sendMessage(self.channel, $rb_plus($rb_plus("[", self.$getCardsText(output_msg)), "]がありません"))};
       return self.$sendMessageToOnlySender(self.$getHandAndPlaceCardInfoText("Auto"));
     }, $CardTrader_pickupCardCommandText$25.$$arity = 1);
     
@@ -24639,7 +24639,7 @@ Opal.modules["CardTrader"] = function(Opal) {
 
       
       if ($truthy($rb_le(self.cardRest.$length(), 0))) {
-        return "\u5C71\u672D"};
+        return "山札"};
       targetCard = card.$upcase();
       destination = self.nick_e.$upcase();
       isDelete = $send(self.cardRest, 'delete_if', [], ($$31 = function(c){var self = $$31.$$s || this;
@@ -24666,9 +24666,9 @@ Opal.modules["CardTrader"] = function(Opal) {
       
       $b = self.$backCard(command), $a = Opal.to_ary($b), (count = ($a[0] == null ? nil : $a[0])), (output_msg = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_gt(count, 0))) {
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "\u679A\u623B\u3057\u307E\u3057\u305F")};
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "枚戻しました")};
       if ($truthy(output_msg['$!='](""))) {
-        return self.$sendMessage(self.channel, "" + "[" + (self.$getCardsText(output_msg)) + "]\u304C\u3042\u308A\u307E\u305B\u3093")
+        return self.$sendMessage(self.channel, "" + "[" + (self.$getCardsText(output_msg)) + "]がありません")
       } else {
         return self.$sendMessageToOnlySender(self.$getHandAndPlaceCardInfoText("Auto"))
       };
@@ -24721,7 +24721,7 @@ Opal.modules["CardTrader"] = function(Opal) {
 
       
       if ($truthy($rb_le(self.$getBurriedCard(), 0))) {
-        return "\u6368\u3066\u672D"};
+        return "捨て札"};
       targetCard = targetCard.$upcase();
       if ($truthy($rb_gt(self.card_place, 0))) {
         
@@ -24758,7 +24758,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       if ($truthy(cards['$empty?']()['$!']())) {
         self.$sendDealResult(targetNick, count, self.$getCardsTextFromCards(cards), isLook)
       } else {
-        self.$sendMessage(self.channel, "\u30AB\u30FC\u30C9\u304C\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093")
+        self.$sendMessage(self.channel, "カードが残っていません")
       };
       ($truthy($a = self.card_channels['$[]'](targetNick)) ? $a : (($writer = [targetNick, self.channel]), $send(self.card_channels, '[]=', Opal.to_a($writer)), $writer[$rb_minus($writer["length"], 1)]));
       return count;
@@ -24770,8 +24770,8 @@ Opal.modules["CardTrader"] = function(Opal) {
       
       self.$sendMessage(targetNick, output_msg);
       if ($truthy(isLook)) {
-        self.$sendMessage(self.nick_e, "" + (targetNick) + " \u306B " + (output_msg) + " \u3092\u914D\u308A\u307E\u3057\u305F")};
-      return self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (targetNick) + "\u306B" + (count) + "\u679A\u914D\u308A\u307E\u3057\u305F");
+        self.$sendMessage(self.nick_e, "" + (targetNick) + " に " + (output_msg) + " を配りました")};
+      return self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (targetNick) + "に" + (count) + "枚配りました");
     }, $CardTrader_sendDealResult$39.$$arity = 4);
     
     Opal.def(self, '$lookAndDealCard', $CardTrader_lookAndDealCard$40 = function $$lookAndDealCard(count, targetNick) {
@@ -24790,7 +24790,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       $b = self.$discardCards(commandText), $a = Opal.to_ary($b), (count = ($a[0] == null ? nil : $a[0])), (output_msg = ($a[1] == null ? nil : $a[1])), (_card_ok = ($a[2] == null ? nil : $a[2])), $b;
       if ($truthy($rb_gt(count, 0))) {
         
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "\u679A\u6368\u3066\u307E\u3057\u305F");
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "枚捨てました");
         if ($truthy(self.cardTitles['$empty?']())) {
         } else {
           
@@ -24800,7 +24800,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       if ($truthy(output_msg['$!='](""))) {
         
         cardText = self.$getCardsText(output_msg);
-        return self.$sendMessageToOnlySender("" + "[" + (cardText) + "]\u304C\u3042\u308A\u307E\u305B\u3093");
+        return self.$sendMessageToOnlySender("" + "[" + (cardText) + "]がありません");
       } else {
         return self.$sendMessageToOnlySender(self.$getHandAndPlaceCardInfoText("Auto"))
       };
@@ -24815,7 +24815,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       $b = self.$playCard(arg), $a = Opal.to_ary($b), (count = ($a[0] == null ? nil : $a[0])), (output_msg = ($a[1] == null ? nil : $a[1])), (_card_ok = ($a[2] == null ? nil : $a[2])), $b;
       if ($truthy($rb_gt(count, 0))) {
         
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "\u679A\u51FA\u3057\u307E\u3057\u305F");
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "枚出しました");
         if ($truthy(self.cardTitles['$empty?']())) {
         } else {
           self.$sendMessage(self.channel, $rb_plus($rb_plus("[", self.$getCardsText($gvars.card_ok)), "]"))
@@ -24823,7 +24823,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       if ($truthy(output_msg['$!='](""))) {
         
         self.$debug("output_msg", output_msg);
-        self.$sendMessage(self.channel, $rb_plus($rb_plus("[", self.$getCardsText(output_msg)), "]\u306F\u6301\u3063\u3066\u3044\u307E\u305B\u3093"));};
+        self.$sendMessage(self.channel, $rb_plus($rb_plus("[", self.$getCardsText(output_msg)), "]は持っていません"));};
       return self.$sendMessageToOnlySender(self.$getHandAndPlaceCardInfoText("Auto", self.nick_e));
     }, $CardTrader_playCardByCommandText$42.$$arity = 1);
     
@@ -25066,14 +25066,14 @@ Opal.modules["CardTrader"] = function(Opal) {
       self.$debug("transferCardsByCommandText commandText, sendTo", commandText, sendTo);
       $b = self.$transferCards(commandText), $a = Opal.to_ary($b), (count = ($a[0] == null ? nil : $a[0])), (output_msg = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_lt(count, 0))) {
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": \u76F8\u624B\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093")
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": 相手が登録されていません")
       } else {
         
         if ($truthy(output_msg['$!='](""))) {
-          self.$sendMessage(self.channel, $rb_plus($rb_plus("[", self.$getCardsText(output_msg)), "]\u304C\u3042\u308A\u307E\u305B\u3093"))};
+          self.$sendMessage(self.channel, $rb_plus($rb_plus("[", self.$getCardsText(output_msg)), "]がありません"))};
         if ($truthy($rb_gt(count, 0))) {
           
-          self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "\u679A\u6E21\u3057\u307E\u3057\u305F");
+          self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (count) + "枚渡しました");
           self.$debug("transferCardsByCommandText sendTo", sendTo);
           self.$sendMessage(sendTo, self.$getHandAndPlaceCardInfoText("Auto", sendTo));};
       };
@@ -25140,7 +25140,7 @@ Opal.modules["CardTrader"] = function(Opal) {
         result = self.$transferOneCard(card, nick_e, destination);
         self.$debug("transferOneCard result", result);
         return (function() {$case = result;
-        if ($gvars.ngResult['$===']($case)) {Opal.ret([-1, ["\u6E21\u3059\u76F8\u624B\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093"]])}
+        if ($gvars.ngResult['$===']($case)) {Opal.ret([-1, ["渡す相手が登録されていません"]])}
         else if ($gvars.okResult['$===']($case)) {return (okCount = $rb_plus(okCount, 1))}
         else {return ngCardList['$<<'](result)}})();}, $$61.$$s = self, $$61.$$arity = 1, $$61));
       return [okCount, ngCardList];
@@ -25165,13 +25165,13 @@ Opal.modules["CardTrader"] = function(Opal) {
       self.$debug("from, cards, @deal_cards", from, cards, self.deal_cards);
       if (targetCard['$==']("")) {
         
-        self.$debug("\u30AB\u30FC\u30C9\u6307\u5B9A\u304C\u306A\u3044\u306E\u3067\u30E9\u30F3\u30C0\u30E0\u3067\u4E00\u679A\u6E21\u3059");
+        self.$debug("カード指定がないのでランダムで一枚渡す");
         thisCard = self.$ejectOneCardRandomFromCards(cards);
         isTargetCardInHand = true;
         restCards = self.deal_cards['$[]'](from);
       } else {
         
-        self.$debug("\u30AB\u30FC\u30C9\u6307\u5B9A\u3042\u308A targetCard", targetCard);
+        self.$debug("カード指定あり targetCard", targetCard);
         $b = self.$transferTargetCard(targetCard, cards, toSend, from), $a = Opal.to_ary($b), (thisCard = ($a[0] == null ? nil : $a[0])), (restCards = ($a[1] == null ? nil : $a[1])), (isTargetCardInHand = ($a[2] == null ? nil : $a[2])), $b;
       };
       self.$debug("transferOneCard isTargetCardInHand", isTargetCardInHand);
@@ -25273,13 +25273,13 @@ Opal.modules["CardTrader"] = function(Opal) {
       self.$debug("getSendCardToTargetNickPlace okCardList, ngCardList", okCardList, ngCardList);
       if ($truthy($rb_lt(okCardList.$length(), 0))) {
         
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": \u76F8\u624B\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093");
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": 相手が登録されていません");
         return nil;};
       if ($truthy(ngCardList['$empty?']())) {
       } else {
         
         ngCardText = self.$getCardsTextFromCards(ngCardList);
-        self.$sendMessage(self.channel, "" + "[" + (ngCardText) + "]\u304C\u3042\u308A\u307E\u305B\u3093");
+        self.$sendMessage(self.channel, "" + "[" + (ngCardText) + "]がありません");
         return nil;
       };
       if ($truthy(okCardList['$empty?']())) {
@@ -25311,7 +25311,7 @@ Opal.modules["CardTrader"] = function(Opal) {
 
       
       self.$debug("getSendCardToTargetNickPlaceByCardSetAndDestination cardset, placeNumber, destination", cardset, placeNumber, destination);
-      self.$debug("\u4ECA\u306E\u3068\u3053\u308D\u5834\u304C\uFF11\u3064\u3057\u304B\u306A\u3044\u306E\u3067\u76F8\u624B\u306E\u5834\u306F\u6C7A\u3081\u3046\u3061");
+      self.$debug("今のところ場が１つしかないので相手の場は決めうち");
       toSend = "" + "1" + (destination);
       self.$debug("toSend", toSend);
       from = self.nick_e;
@@ -25344,7 +25344,7 @@ Opal.modules["CardTrader"] = function(Opal) {
         };
         result = self.$transferOneCard(card, destination, toSend);
         return (function() {$case = result;
-        if ($gvars.ngResult['$===']($case)) {Opal.ret([-1, "\u6E21\u3059\u76F8\u624B\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093"])}
+        if ($gvars.ngResult['$===']($case)) {Opal.ret([-1, "渡す相手が登録されていません"])}
         else if ($gvars.okResult['$===']($case)) {return okCardList['$<<'](card)}
         else {return ngCardList['$<<'](result)}})();}, $$71.$$s = self, $$71.$$arity = 1, $$71));
       return [okCardList, ngCardList];
@@ -25355,7 +25355,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       var self = this, cardText = nil;
 
       
-      self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (okCards.$length()) + "\u679A\u5834\u306B\u7F6E\u304D\u307E\u3057\u305F");
+      self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (okCards.$length()) + "枚場に置きました");
       if ($truthy(self.cardTitles['$empty?']())) {
       } else {
         
@@ -25375,11 +25375,11 @@ Opal.modules["CardTrader"] = function(Opal) {
       } else {
         
         tapTypeName = (function() {if ($truthy(isUntap)) {
-          return "\u30A2\u30F3\u30BF\u30C3\u30D7"
+          return "アンタップ"
         } else {
-          return "\u30BF\u30C3\u30D7"
+          return "タップ"
         }; return nil; })();
-        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (okList.$length()) + "\u679A" + (tapTypeName) + "\u3057\u307E\u3057\u305F");
+        self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (okList.$length()) + "枚" + (tapTypeName) + "しました");
         if ($truthy(self.cardTitles['$empty?']())) {
         } else {
           self.$sendMessage(self.channel, "" + "[" + (self.$getCardsTextFromCards(okList)) + "]")
@@ -25387,7 +25387,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       };
       if ($truthy(ngList['$empty?']())) {
       } else {
-        self.$sendMessage(self.channel, "" + "[" + (self.$getCardsTextFromCards(ngList)) + "]\u306F\u5834\u306B\u3042\u308A\u307E\u305B\u3093")
+        self.$sendMessage(self.channel, "" + "[" + (self.$getCardsTextFromCards(ngList)) + "]は場にありません")
       };
       return self.$sendMessageToOnlySender(self.$getHandAndPlaceCardInfoText("Auto", self.nick_e));
     }, $CardTrader_tapCardCommandText$73.$$arity = 1);
@@ -25476,9 +25476,9 @@ Opal.modules["CardTrader"] = function(Opal) {
       
       $b = self.$getCardMilstone(commandText), $a = Opal.to_ary($b), (count = ($a[0] == null ? nil : $a[0])), (output_msg = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_gt(count, 0))) {
-        return self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (self.$getCardsText(output_msg)) + "\u304C\u51FA\u307E\u3057\u305F")
+        return self.$sendMessage(self.channel, "" + (self.nick_e) + ": " + (self.$getCardsText(output_msg)) + "が出ました")
       } else {
-        return self.$sendMessage(self.channel, "\u30AB\u30FC\u30C9\u304C\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093")
+        return self.$sendMessage(self.channel, "カードが残っていません")
       };
     }, $CardTrader_printMilStoneResult$78.$$arity = 1);
     
@@ -25525,7 +25525,7 @@ Opal.modules["CardTrader"] = function(Opal) {
           cards = nil;
         };
         return self.$clearAllPlayerCardsWhenPlayedPlace(place, cards);}, $$81.$$s = self, $$81.$$arity = 2, $$81));
-      return "\u5834\u306E\u30AB\u30FC\u30C9\u3092\u6368\u3066\u307E\u3057\u305F";
+      return "場のカードを捨てました";
     }, $CardTrader_clearAllPlaceAllPlayerCards$80.$$arity = 0);
     
     Opal.def(self, '$clearAllPlayerCardsWhenPlayedPlace', $CardTrader_clearAllPlayerCardsWhenPlayedPlace$82 = function $$clearAllPlayerCardsWhenPlayedPlace(place, cards) {
@@ -25557,7 +25557,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       while ($truthy(cards['$empty?']()['$!']())) {
         self.cardRest.$push(cards.$shift())
       };
-      return "\u6368\u3066\u672D\u3092\u5C71\u306B\u623B\u3057\u307E\u3057\u305F";
+      return "捨て札を山に戻しました";
     }, $CardTrader_returnCards$84.$$arity = 0);
     
     Opal.def(self, '$getBurriedCard', $CardTrader_getBurriedCard$85 = function $$getBurriedCard() {
@@ -25579,7 +25579,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       var $$88, self = this, allText = nil, allPlaceText = nil;
 
       
-      allText = "" + "\u5C71\u672D:" + (self.cardRest.$length()) + "\u679A \u6368\u672D:" + (self.$getBurriedCard()) + "\u679A";
+      allText = "" + "山札:" + (self.cardRest.$length()) + "枚 捨札:" + (self.$getBurriedCard()) + "枚";
       allPlaceText = "";
       $send(self.deal_cards, 'each', [], ($$88 = function(place, cards){var self = $$88.$$s || this, $a, $b, text = nil, placeText = nil;
 
@@ -25613,7 +25613,7 @@ Opal.modules["CardTrader"] = function(Opal) {
         cnick = $$($nesting, 'Regexp').$last_match(2);
         placeText = self.$getCardLocationOnNumberdPlace(cards, placeNumber, cnick);
       } else {
-        text = "" + " " + (place) + ":" + (cards.$length()) + "\u679A"
+        text = "" + " " + (place) + ":" + (cards.$length()) + "枚"
       };
       return [text, placeText];
     }, $CardTrader_getCardLocationOnPlace$89.$$arity = 2);
@@ -25624,9 +25624,9 @@ Opal.modules["CardTrader"] = function(Opal) {
       
       cardText = self.$getCardsText(cards);
       if ($truthy(self.$isTapCardPlace(placeNumber))) {
-        return "" + " " + (cnick) + "\u306E\u30BF\u30C3\u30D7\u3057\u305F\u5834\u672D:" + (cardText)
+        return "" + " " + (cnick) + "のタップした場札:" + (cardText)
       } else {
-        return "" + " " + (cnick) + "\u306E\u5834\u672D:" + (cardText)
+        return "" + " " + (cnick) + "の場札:" + (cardText)
       };
     }, $CardTrader_getCardLocationOnNumberdPlace$90.$$arity = 3);
     
@@ -25657,7 +25657,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       self.$debug("getHandCardInfoText destination", destination);
       out_msg = self.$getDealCardsText(destination);
       if ($truthy(out_msg['$empty?']())) {
-        out_msg = "\u30AB\u30FC\u30C9\u3092\u6301\u3063\u3066\u3044\u307E\u305B\u3093"};
+        out_msg = "カードを持っていません"};
       return out_msg;
     }, $CardTrader_getHandCardInfoText$92.$$arity = 1);
     
@@ -25728,9 +25728,9 @@ Opal.modules["CardTrader"] = function(Opal) {
         cards = ($truthy($a = cards) ? $a : []);
         cardsText = self.$getCardsTextFromCards(cards);
         if ($truthy(self.$isTapCardPlace(index))) {
-          return (out_msg = $rb_plus(out_msg, "" + " \u30BF\u30C3\u30D7\u3057\u305F\u5834\u672D:[ " + (cardsText) + " ]"))
+          return (out_msg = $rb_plus(out_msg, "" + " タップした場札:[ " + (cardsText) + " ]"))
         } else {
-          return (out_msg = $rb_plus(out_msg, "" + " \u5834\u672D:[ " + (cardsText) + " ]"))
+          return (out_msg = $rb_plus(out_msg, "" + " 場札:[ " + (cardsText) + " ]"))
         };}, $$97.$$s = self, $$97.$$arity = 1, $$97));
       return out_msg;
     }, $CardTrader_getPlaceCardInfoText$96.$$arity = 1);
@@ -25777,7 +25777,7 @@ Opal.modules["CardTrader"] = function(Opal) {
         title = self.cardTitles['$[]'](cardNumber);
         return (out_msg = $rb_plus(out_msg, "" + (cardNumber) + "-" + (title)));}, $$101.$$s = self, $$101.$$arity = 1, $$101));
       if (out_msg['$==']("")) {
-        out_msg = "\u7121\u3057"};
+        out_msg = "無し"};
       return out_msg;
     }, $CardTrader_getCardsTextFromCards$99.$$arity = 1);
     
@@ -25798,7 +25798,7 @@ Opal.modules["CardTrader"] = function(Opal) {
       
       output_msg = self.$throwCardRestorationSpell(spellText);
       if (output_msg['$==']("readSpell")) {
-        return self.$sendMessage(self.channel, "" + (self.nick_e) + ": \u30AB\u30FC\u30C9\u914D\u7F6E\u3092\u5FA9\u6D3B\u3057\u307E\u3057\u305F")
+        return self.$sendMessage(self.channel, "" + (self.nick_e) + ": カード配置を復活しました")
       } else {
         return self.$sendMessage(self.channel, output_msg)
       };
@@ -25814,7 +25814,7 @@ Opal.modules["CardTrader"] = function(Opal) {
         
         self.$debug("getNewSpellText");
         spellText = self.$getNewSpellText();
-        output = "" + "\u5FA9\u6D3B\u306E\u546A\u6587 \uFF1E [" + (spellText) + "]";
+        output = "" + "復活の呪文 ＞ [" + (spellText) + "]";
       } else {
         
         self.$debug("setNewSpellText");
@@ -26228,7 +26228,7 @@ Opal.modules["TableFileData"] = function(Opal) {
       var self = this, key = nil, value = nil;
 
       
-      if ($truthy(/^[\s\u3000]*([^:\uFF1A]+)[\s\u3000]*[:\uFF1A][\s\u3000]*(.+)/['$==='](line))) {
+      if ($truthy(/^[\s　]*([^:：]+)[\s　]*[:：][\s　]*(.+)/['$==='](line))) {
       } else {
         return ["", ""]
       };
@@ -26491,9 +26491,9 @@ Opal.modules["TableFileData"] = function(Opal) {
           index = nil;
         };
         $b = $$($nesting, 'TableFileData').$getLineKeyValue(line), $a = Opal.to_ary($b), (key = ($a[0] == null ? nil : $a[0])), (value = ($a[1] == null ? nil : $a[1])), $b;
-        key['$tr!']("\u3000", "");
+        key['$tr!']("　", "");
         key['$tr!'](" ", "");
-        key['$tr!']("\uFF10-\uFF19", "0-9");
+        key['$tr!']("０-９", "0-9");
         key = self.$checkTableKey(key, index);
         return (result = $rb_plus(result, (((("" + (key)) + ":") + (value)) + "\n").$toutf8()));}, $$32.$$s = self, $$32.$$arity = 2, $$32));
       return result;
@@ -26608,7 +26608,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
     Opal.const_set($nesting[0], 'EMPTY_PREFIXES_PATTERN', /(^|\s)(S)?()(\s|$)/i.$freeze());
     Opal.const_set($nesting[0], 'ID', "DiceBot");
     Opal.const_set($nesting[0], 'NAME', "DiceBot");
-    Opal.const_set($nesting[0], 'SORT_KEY', "*\u305F\u3044\u3059\u307B\u3064\u3068");
+    Opal.const_set($nesting[0], 'SORT_KEY', "*たいすほつと");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "");
     (function(self, $parent_nesting) {
       var $nesting = [self].concat($parent_nesting), $setPrefixes$1, $clearPrefixes$2, $inherited$3;
@@ -26866,7 +26866,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
     Opal.def(self, '$removeDiceCommandMessage', $DiceBot_removeDiceCommandMessage$28 = function $$removeDiceCommandMessage(command) {
       var self = this;
 
-      return command.$sub(/[\s\u3000].+/, "")
+      return command.$sub(/[\s　].+/, "")
     }, $DiceBot_removeDiceCommandMessage$28.$$arity = 1);
     
     Opal.def(self, '$rollDiceCommandCatched', $DiceBot_rollDiceCommandCatched$29 = function $$rollDiceCommandCatched(command) {
@@ -26931,16 +26931,16 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
 
       
       if ($truthy(target['$is_a?']($$($nesting, 'String')))) {
-        return " \uFF1E \u5931\u6557"};
+        return " ＞ 失敗"};
       success = (function() {if (cmp_op['$==']("!=")) {
         return total['$!='](target)
       } else {
         return total.$send(cmp_op, target)
       }; return nil; })();
       if ($truthy(success)) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $DiceBot_check_nDx$33.$$arity = 3);
     
@@ -27212,8 +27212,8 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
       if ($truthy(text['$nil?']())) {
         return nil};
       if ($truthy(($truthy($a = isPrintDiceText) ? diceText['$nil?']()['$!']() : $a))) {
-        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) \uFF1E " + (text)};
-      return "" + (name) + "(" + (number) + ") \uFF1E " + (text);
+        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) ＞ " + (text)};
+      return "" + (name) + "(" + (number) + ") ＞ " + (text);
     }, $DiceBot_getTableCommandResult$62.$$arity = -3);
     
     Opal.def(self, '$getTableInfoFromExtraTableText', $DiceBot_getTableInfoFromExtraTableText$63 = function $$getTableInfoFromExtraTableText(text, count) {
@@ -27288,7 +27288,7 @@ Opal.modules["diceBot/DiceBotLoader"] = function(Opal) {
         if (Opal.rescue($err, [$$($nesting, 'LoadError'), $$($nesting, 'StandardError')])) {e = $err;
           try {
             
-            self.$debug("DiceBotLoader.loadUnknownGame: \u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u306E\u8AAD\u307F\u8FBC\u307F\u306B\u5931\u6557\u3057\u307E\u3057\u305F", e.$to_s());
+            self.$debug("DiceBotLoader.loadUnknownGame: ダイスボットの読み込みに失敗しました", e.$to_s());
             return nil;
           } finally { Opal.pop_exception() }
         } else { throw $err; }
@@ -28408,7 +28408,7 @@ Opal.modules["dice/add_dice/randomizer"] = function(Opal) {
               return true}
           } else if ($truthy($rb_le(self.dicebot.$sameDiceRerollType(), 1))) {
             
-            self.$debug("\u30C0\u30E1\u30FC\u30B8\u306E\u307F\u632F\u308A\u8DB3\u3057");
+            self.$debug("ダメージのみ振り足し");
             if ($truthy(self.cmp_op)) {
             } else {
               return true
@@ -28508,9 +28508,9 @@ Opal.modules["dice/AddDice"] = function(Opal) {
       randomizer = $$($nesting, 'Randomizer').$new(self.bcdice, self.diceBot, command.$cmp_op());
       total = command.$lhs().$eval(randomizer);
       output = (function() {if ($truthy(($truthy($a = $rb_le(randomizer.$dice_list().$size(), 1)) ? command.$lhs()['$is_a?']($$$($$($nesting, 'Node'), 'DiceRoll')) : $a))) {
-        return "" + (self.nick_e) + ": (" + (command) + ") \uFF1E " + (total)
+        return "" + (self.nick_e) + ": (" + (command) + ") ＞ " + (total)
       } else {
-        return "" + (self.nick_e) + ": (" + (command) + ") \uFF1E " + (command.$lhs().$output()) + " \uFF1E " + (total)
+        return "" + (self.nick_e) + ": (" + (command) + ") ＞ " + (command.$lhs().$output()) + " ＞ " + (total)
       }; return nil; })();
       dice_list = randomizer.$dice_list();
       num_one = dice_list.$count(1);
@@ -28589,7 +28589,7 @@ Opal.modules["dice/UpperDice"] = function(Opal) {
       self.upper = self.$getAddRollUpperTarget(upperTarget1, upperTarget2);
       if ($truthy($rb_le(self.upper, 1))) {
         
-        output = "" + (self.nick_e) + ": (" + (string) + "[" + (self.upper) + "]" + (modifier) + ") \uFF1E \u7121\u9650\u30ED\u30FC\u30EB\u306E\u6761\u4EF6\u304C\u307E\u3061\u304C\u3063\u3066\u3044\u307E\u3059";
+        output = "" + (self.nick_e) + ": (" + (string) + "[" + (self.upper) + "]" + (modifier) + ") ＞ 無限ロールの条件がまちがっています";
         return output;};
       diceCommands = string.$split("+");
       bonusValue = self.$getBonusValue(modifier);
@@ -28601,18 +28601,18 @@ Opal.modules["dice/UpperDice"] = function(Opal) {
       totalValue = $rb_plus(totalValue, bonusValue);
       string = $rb_plus(string, $rb_plus("" + "[" + (self.upper) + "]", modifier));
       if ($truthy(($truthy($a = self.diceBot.$isPrintMaxDice()) ? $rb_gt(totalDiceCount, 1) : $a))) {
-        output = "" + (output) + " \uFF1E " + (totalValue)};
+        output = "" + (output) + " ＞ " + (totalValue)};
       if ($truthy(self.signOfInequality['$!='](""))) {
         
-        output = "" + (output) + " \uFF1E \u6210\u529F\u6570" + (totalSuccessCount);
+        output = "" + (output) + " ＞ 成功数" + (totalSuccessCount);
         string = $rb_plus(string, "" + (self.signOfInequality) + (diff));
       } else {
         output = $rb_plus(output, self.$getMaxAndTotalValueResultStirng(maxValue, totalValue, totalDiceCount))
       };
-      output = "" + (self.nick_e) + ": (" + (string) + ") \uFF1E " + (output);
+      output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (output);
       if ($truthy($rb_gt(output.$length(), $gvars.SEND_STR_MAX))) {
         
-        output = "" + (self.nick_e) + ": (" + (string) + ") \uFF1E ... \uFF1E " + (totalValue);
+        output = "" + (self.nick_e) + ": (" + (string) + ") ＞ ... ＞ " + (totalValue);
         if (self.signOfInequality['$==']("")) {
           output = $rb_plus(output, self.$getMaxAndTotalValueResultStirng(maxValue, totalValue, totalDiceCount))};};
       return output;
@@ -28621,7 +28621,7 @@ Opal.modules["dice/UpperDice"] = function(Opal) {
     Opal.def(self, '$getMaxAndTotalValueResultStirng', $UpperDice_getMaxAndTotalValueResultStirng$3 = function $$getMaxAndTotalValueResultStirng(maxValue, totalValue, _totalDiceCount) {
       var self = this;
 
-      return "" + " \uFF1E " + (maxValue) + "/" + (totalValue) + "(\u6700\u5927/\u5408\u8A08)"
+      return "" + " ＞ " + (maxValue) + "/" + (totalValue) + "(最大/合計)"
     }, $UpperDice_getMaxAndTotalValueResultStirng$3.$$arity = 3);
     
     Opal.def(self, '$getAddRollUpperTarget', $UpperDice_getAddRollUpperTarget$4 = function $$getAddRollUpperTarget(target1, target2) {
@@ -28751,7 +28751,7 @@ Opal.modules["dice/RerollDice"] = function(Opal) {
       } catch ($err) {
         if (Opal.rescue($err, [$$($nesting, 'StandardError')])) {e = $err;
           try {
-            output = $rb_plus("" + (string) + " \uFF1E ", e.$to_s())
+            output = $rb_plus("" + (string) + " ＞ ", e.$to_s())
           } finally { Opal.pop_exception() }
         } else { throw $err; }
       };;
@@ -28814,13 +28814,13 @@ Opal.modules["dice/RerollDice"] = function(Opal) {
         if ($truthy($rb_gt(rerollCount, 0))) {
           diceQueue.$push([rerollCount, n, $rb_plus(depth, 1)])};
       };
-      output = "" + (diceStrList.$join(" + ")) + " \uFF1E \u6210\u529F\u6570" + (successCount);
+      output = "" + (diceStrList.$join(" + ")) + " ＞ 成功数" + (successCount);
       string = $rb_plus(string, "" + "[" + (rerollNumber) + "]" + (signOfInequality) + (diff));
       self.$debug("string", string);
       output = $rb_plus(output, self.diceBot.$getGrichText(numberSpot1Total, dice_cnt_total, successCount));
-      output = "" + "(" + (string) + ") \uFF1E " + (output);
+      output = "" + "(" + (string) + ") ＞ " + (output);
       if ($truthy($rb_gt(output.$length(), $gvars.SEND_STR_MAX))) {
-        output = "" + "(" + (string) + ") \uFF1E ... \uFF1E \u56DE\u8EE2\u6570" + (self.$round()) + " \uFF1E \u6210\u529F\u6570" + (successCount)};
+        output = "" + "(" + (string) + ") ＞ ... ＞ 回転数" + (self.$round()) + " ＞ 成功数" + (successCount)};
       return output;
     }, $RerollDice_rollDiceCatched$3.$$arity = 1);
     
@@ -28858,7 +28858,7 @@ Opal.modules["dice/RerollDice"] = function(Opal) {
     Opal.def(self, '$raiseErroForJudgeRule', $RerollDice_raiseErroForJudgeRule$8 = function $$raiseErroForJudgeRule() {
       var self = this;
 
-      return self.$raise("\u6761\u4EF6\u304C\u9593\u9055\u3063\u3066\u3044\u307E\u3059\u30022R6>=5 \u3042\u308B\u3044\u306F 2R6[5] \u306E\u3088\u3046\u306B\u632F\u308A\u8DB3\u3057\u76EE\u6A19\u5024\u3092\u6307\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002")
+      return self.$raise("条件が間違っています。2R6>=5 あるいは 2R6[5] のように振り足し目標値を指定してください。")
     }, $RerollDice_raiseErroForJudgeRule$8.$$arity = 0);
     return (Opal.def(self, '$checkReRollRule', $RerollDice_checkReRollRule$9 = function $$checkReRollRule(dice_max, signOfInequality, diff) {
       var $a, self = this, valid = nil, $case = nil;
@@ -29190,7 +29190,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       if (self.nick_e['$=='](self.parent.$master())) {
         return self.$setMasterByCurrentMasterOwnself()
       } else {
-        return self.$sendMessageToOnlySender("" + "Master\u306F" + (self.parent.$master()) + "\u3055\u3093\u306B\u306A\u3063\u3066\u3044\u307E\u3059")
+        return self.$sendMessageToOnlySender("" + "Masterは" + (self.parent.$master()) + "さんになっています")
       }
     }, $BCDice_setMasterWhenMasterAlreadySet$22.$$arity = 0);
     
@@ -29203,14 +29203,14 @@ Opal.modules["bcdiceCore"] = function(Opal) {
         $writer = [self.tnick];
         $send(self.parent, 'master=', Opal.to_a($writer));
         $writer[$rb_minus($writer["length"], 1)];;
-        return self.$sendMessageToChannels("" + (self.parent.$master()) + "\u3055\u3093\u3092Master\u306B\u8A2D\u5B9A\u3057\u307E\u3057\u305F");
+        return self.$sendMessageToChannels("" + (self.parent.$master()) + "さんをMasterに設定しました");
       } else {
         
         
         $writer = [""];
         $send(self.parent, 'master=', Opal.to_a($writer));
         $writer[$rb_minus($writer["length"], 1)];;
-        return self.$sendMessageToChannels("Master\u8A2D\u5B9A\u3092\u89E3\u9664\u3057\u307E\u3057\u305F");
+        return self.$sendMessageToChannels("Master設定を解除しました");
       }
     }, $BCDice_setMasterByCurrentMasterOwnself$23.$$arity = 0);
     
@@ -29229,7 +29229,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
         $send(self.parent, 'master=', Opal.to_a($writer));
         $writer[$rb_minus($writer["length"], 1)];
       };
-      return self.$sendMessageToChannels("" + (self.parent.$master()) + "\u3055\u3093\u3092Master\u306B\u8A2D\u5B9A\u3057\u307E\u3057\u305F");
+      return self.$sendMessageToChannels("" + (self.parent.$master()) + "さんをMasterに設定しました");
     }, $BCDice_setMasterWhenMasterYetSet$24.$$arity = 0);
     
     Opal.def(self, '$setGame', $BCDice_setGame$25 = function $$setGame() {
@@ -29260,7 +29260,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       };
       mode = $$($nesting, 'Regexp').$last_match(1).$to_i();
       self.diceBot.$setSendMode(mode);
-      return self.$sendMessageToChannels("" + "ViewMode" + (self.diceBot.$sendMode()) + "\u306B\u5909\u66F4\u3057\u307E\u3057\u305F");
+      return self.$sendMessageToChannels("" + "ViewMode" + (self.diceBot.$sendMode()) + "に変更しました");
     }, $BCDice_setDisplayMode$27.$$arity = 0);
     
     Opal.def(self, '$setUpplerRollThreshold', $BCDice_setUpplerRollThreshold$28 = function $$setUpplerRollThreshold() {
@@ -29280,9 +29280,9 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       $send(self.diceBot, 'upplerRollThreshold=', Opal.to_a($writer));
       $writer[$rb_minus($writer["length"], 1)];;
       if ($truthy($rb_gt(self.diceBot.$upplerRollThreshold(), 0))) {
-        return self.$sendMessageToChannels("" + "\u4E0A\u65B9\u7121\u9650\u30ED\u30FC\u30EB\u3092" + (self.diceBot.$upplerRollThreshold()) + "\u4EE5\u4E0A\u306B\u8A2D\u5B9A\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("" + "上方無限ロールを" + (self.diceBot.$upplerRollThreshold()) + "以上に設定しました")
       } else {
-        return self.$sendMessageToChannels("\u4E0A\u65B9\u7121\u9650\u30ED\u30FC\u30EB\u306E\u95BE\u5024\u8A2D\u5B9A\u3092\u89E3\u9664\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("上方無限ロールの閾値設定を解除しました")
       };
     }, $BCDice_setUpplerRollThreshold$28.$$arity = 0);
     
@@ -29303,9 +29303,9 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       $send(self.diceBot, 'rerollLimitCount=', Opal.to_a($writer));
       $writer[$rb_minus($writer["length"], 1)];;
       if ($truthy($rb_gt(self.diceBot.$rerollLimitCount(), 0))) {
-        return self.$sendMessageToChannels("" + "\u500B\u6570\u632F\u308A\u8DB3\u3057\u30ED\u30FC\u30EB\u56DE\u6570\u3092" + (self.diceBot.$rerollLimitCount()) + "\u4EE5\u4E0B\u306B\u8A2D\u5B9A\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("" + "個数振り足しロール回数を" + (self.diceBot.$rerollLimitCount()) + "以下に設定しました")
       } else {
-        return self.$sendMessageToChannels("\u500B\u6570\u632F\u308A\u8DB3\u3057\u30ED\u30FC\u30EB\u306E\u56DE\u6570\u3092\u7121\u9650\u306B\u8A2D\u5B9A\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("個数振り足しロールの回数を無限に設定しました")
       };
     }, $BCDice_setRerollLimit$29.$$arity = 0);
     
@@ -29324,9 +29324,9 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       sortType = $$($nesting, 'Regexp').$last_match(1).$to_i();
       self.diceBot.$setSortType(sortType);
       if ($truthy(self.diceBot.$sortType()['$!='](0))) {
-        return self.$sendMessageToChannels("\u30BD\u30FC\u30C8\u6709\u308A\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("ソート有りに変更しました")
       } else {
-        return self.$sendMessageToChannels("\u30BD\u30FC\u30C8\u7121\u3057\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("ソート無しに変更しました")
       };
     }, $BCDice_setSortMode$30.$$arity = 0);
     
@@ -29355,9 +29355,9 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       };
       self.isShortSpell = $$($nesting, 'Regexp').$last_match(1).$to_i()['$!='](0);
       if ($truthy(self.isShortSpell)) {
-        return self.$sendMessageToChannels("\u77ED\u3044\u546A\u6587\u30E2\u30FC\u30C9\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("短い呪文モードに変更しました")
       } else {
-        return self.$sendMessageToChannels("\u901A\u5E38\u546A\u6587\u30E2\u30FC\u30C9\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("通常呪文モードに変更しました")
       };
     }, $BCDice_setSpellMode$32.$$arity = 0);
     
@@ -29375,9 +29375,9 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       };
       self.canTapCard = $$($nesting, 'Regexp').$last_match(1).$to_i()['$!='](0);
       if ($truthy(self.canTapCard)) {
-        return self.$sendMessageToChannels("\u30BF\u30C3\u30D7\u53EF\u80FD\u30E2\u30FC\u30C9\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("タップ可能モードに変更しました")
       } else {
-        return self.$sendMessageToChannels("\u30BF\u30C3\u30D7\u4E0D\u53EF\u30E2\u30FC\u30C9\u306B\u5909\u66F4\u3057\u307E\u3057\u305F")
+        return self.$sendMessageToChannels("タップ不可モードに変更しました")
       };
     }, $BCDice_setTapMode$33.$$arity = 0);
     
@@ -29408,7 +29408,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       self.$debug("getPrintPlotChannel get channel", channel);
       if (channel['$==']("1")) {
         
-        self.$sendMessageToOnlySender("\u8868\u793A\u30C1\u30E3\u30F3\u30CD\u30EB\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093");
+        self.$sendMessageToOnlySender("表示チャンネルが登録されていません");
         return nil;};
       if ($truthy(self.tnick['$empty?']())) {
       } else {
@@ -29425,10 +29425,10 @@ Opal.modules["bcdiceCore"] = function(Opal) {
         return nil;};
       $case = pointerMode;
       if ("sameNick"['$===']($case)) {
-      self.$debug("executePointCounter:Talk\u3067\u8FD4\u4E8B");
+      self.$debug("executePointCounter:Talkで返事");
       self.$sendMessageToOnlySender(output);}
       else if ("sameChannel"['$===']($case)) {
-      self.$debug("executePointCounter:public\u3067\u8FD4\u4E8B");
+      self.$debug("executePointCounter:publicで返事");
       self.$sendMessage(channel, output);};
       return self.$debug("executePointCounter end");
     }, $BCDice_executePointCounter$35.$$arity = 0);
@@ -29439,7 +29439,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
 
       
       self.$debug("addPlot begin arg", arg);
-      if ($truthy(new RegExp("" + ($gvars.ADD_PLOT) + "[:\uFF1A](.+)", 'i')['$=~'](arg))) {
+      if ($truthy(new RegExp("" + ($gvars.ADD_PLOT) + "[:：](.+)", 'i')['$=~'](arg))) {
       } else {
         
         self.$debug("addPlot exit");
@@ -29451,12 +29451,12 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       if ($truthy(channel['$nil?']())) {
         
         self.$debug("channel.nil?");
-        return self.$sendMessageToOnlySender("\u30D7\u30ED\u30C3\u30C8\u51FA\u529B\u5148\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093");
+        return self.$sendMessageToOnlySender("プロット出力先が登録されていません");
       } else {
         
         self.$debug("addToSecretDiceResult calling...");
         self.$addToSecretDiceResult(plot, channel, 1);
-        return self.$sendMessage(channel, "" + (self.nick_e) + " \u3055\u3093\u304C\u30D7\u30ED\u30C3\u30C8\u3057\u307E\u3057\u305F");
+        return self.$sendMessage(channel, "" + (self.nick_e) + " さんがプロットしました");
       };
     }, $BCDice_addPlot$36.$$arity = 1);
     
@@ -29497,7 +29497,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
           message = nil;
         };
         return self.$sendMessageToOnlySender(message);}, $$40.$$s = self, $$40.$$arity = 1, $$40));
-      $send(["\u30FB\u52A0\u7B97\u30ED\u30FC\u30EB\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000(xDn) (n\u9762\u4F53\u30C0\u30A4\u30B9\u3092x\u500B)", "\u30FB\u30D0\u30E9\u30D0\u30E9\u30ED\u30FC\u30EB\u3000\u3000\u3000\u3000\u3000\u3000(xBn)", "\u30FB\u500B\u6570\u632F\u308A\u8DB3\u3057\u30ED\u30FC\u30EB\u3000\u3000\u3000\u3000(xRn[\u632F\u308A\u8DB3\u3057\u5024])", "\u30FB\u4E0A\u65B9\u7121\u9650\u30ED\u30FC\u30EB\u3000\u3000\u3000\u3000\u3000\u3000(xUn[\u5883\u754C\u5024])", "\u30FB\u30B7\u30FC\u30AF\u30EC\u30C3\u30C8\u30ED\u30FC\u30EB\u3000\u3000\u3000\u3000(S\u30C0\u30A4\u30B9\u30B3\u30DE\u30F3\u30C9)", "" + "\u30FB\u30B7\u30FC\u30AF\u30EC\u30C3\u30C8\u3092\u30AA\u30FC\u30D7\u30F3\u3059\u308B(" + ($gvars.OPEN_DICE) + ")", "\u30FB\u56DB\u5247\u8A08\u7B97(\u7AEF\u6570\u5207\u6368\u3066)\u3000\u3000\u3000(C(\u5F0F))"], 'each', [], send_to_sender.$to_proc());
+      $send(["・加算ロール　　　　　　　　(xDn) (n面体ダイスをx個)", "・バラバラロール　　　　　　(xBn)", "・個数振り足しロール　　　　(xRn[振り足し値])", "・上方無限ロール　　　　　　(xUn[境界値])", "・シークレットロール　　　　(Sダイスコマンド)", "" + "・シークレットをオープンする(" + ($gvars.OPEN_DICE) + ")", "・四則計算(端数切捨て)　　　(C(式))"], 'each', [], send_to_sender.$to_proc());
       self.$sleepForIrc(2);
       $send(self.diceBot.$help_message().$lines(), 'each_slice', [5], ($$41 = function(lines){var self = $$41.$$s || this;
 
@@ -29510,13 +29510,13 @@ Opal.modules["bcdiceCore"] = function(Opal) {
         return self.$sleepForIrc(1);}, $$41.$$s = self, $$41.$$arity = 1, $$41));
       self.$sendMessageToOnlySender("  ---");
       self.$sleepForIrc(1);
-      $send(["" + "\u30FB\u30D7\u30ED\u30C3\u30C8\u8868\u793A\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000(" + ($gvars.OPEN_PLOT) + ")", "" + "\u30FB\u30D7\u30ED\u30C3\u30C8\u8A18\u9332\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000(Talk\u3067 " + ($gvars.ADD_PLOT) + ":\u30D7\u30ED\u30C3\u30C8)", "  ---"], 'each', [], send_to_sender.$to_proc());
+      $send(["" + "・プロット表示　　　　　　　　(" + ($gvars.OPEN_PLOT) + ")", "" + "・プロット記録　　　　　　　　(Talkで " + ($gvars.ADD_PLOT) + ":プロット)", "  ---"], 'each', [], send_to_sender.$to_proc());
       self.$sleepForIrc(2);
-      $send(["\u30FB\u30DD\u30A4\u30F3\u30C8\u30AB\u30A6\u30F3\u30BF\u5024\u767B\u9332\u3000\u3000\u3000(#[\u540D\u524D:]\u30BF\u30B0n[/m]) (\u8B58\u5225\u540D\u3001\u6700\u5927\u5024\u7701\u7565\u53EF,Talk\u53EF)", "\u30FB\u30AB\u30A6\u30F3\u30BF\u5024\u64CD\u4F5C\u3000\u3000\u3000\u3000\u3000\u3000\u3000(#[\u540D\u524D:]\u30BF\u30B0+n) (\u3082\u3061\u308D\u3093-n\u3082OK,Talk\u53EF)", "\u30FB\u8B58\u5225\u540D\u5909\u66F4\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000(#RENAME!\u540D\u524D1->\u540D\u524D2) (Talk\u53EF)"], 'each', [], send_to_sender.$to_proc());
+      $send(["・ポイントカウンタ値登録　　　(#[名前:]タグn[/m]) (識別名、最大値省略可,Talk可)", "・カウンタ値操作　　　　　　　(#[名前:]タグ+n) (もちろん-nもOK,Talk可)", "・識別名変更　　　　　　　　　(#RENAME!名前1->名前2) (Talk可)"], 'each', [], send_to_sender.$to_proc());
       self.$sleepForIrc(1);
-      $send(["\u30FB\u540C\u4E00\u30BF\u30B0\u306E\u30AB\u30A6\u30F3\u30BF\u5024\u4E00\u89A7\u3000\u3000(#OPEN!\u30BF\u30B0)", "\u30FB\u81EA\u30AD\u30E3\u30E9\u306E\u30AB\u30A6\u30F3\u30BF\u5024\u4E00\u89A7\u3000\u3000(Talk\u3067#OPEN![\u30BF\u30B0]) (\u5168\u30AB\u30A6\u30F3\u30BF\u8868\u793A\u6642\u3001\u30BF\u30B0\u7701\u7565)", "\u30FB\u81EA\u30AD\u30E3\u30E9\u306E\u30AB\u30A6\u30F3\u30BF\u524A\u9664\u3000\u3000\u3000(#[\u540D\u524D:]DIED!) (\u30C7\u30D5\u30A9\u30EB\u30C8\u6642\u3001\u8B58\u5225\u540D\u7701\u7565)", "\u30FB\u5168\u81EA\u30AD\u30E3\u30E9\u306E\u30AB\u30A6\u30F3\u30BF\u524A\u9664\u3000\u3000(#ALL!:DIED!)", "" + "\u30FB\u30AB\u30A6\u30F3\u30BF\u8868\u793A\u30C1\u30E3\u30F3\u30CD\u30EB\u767B\u9332\u3000(" + ($gvars.READY_CMD) + ")", "  ---"], 'each', [], send_to_sender.$to_proc());
+      $send(["・同一タグのカウンタ値一覧　　(#OPEN!タグ)", "・自キャラのカウンタ値一覧　　(Talkで#OPEN![タグ]) (全カウンタ表示時、タグ省略)", "・自キャラのカウンタ削除　　　(#[名前:]DIED!) (デフォルト時、識別名省略)", "・全自キャラのカウンタ削除　　(#ALL!:DIED!)", "" + "・カウンタ表示チャンネル登録　(" + ($gvars.READY_CMD) + ")", "  ---"], 'each', [], send_to_sender.$to_proc());
       self.$sleepForIrc(2);
-      self.$sendMessageToOnlySender("\u30FB\u30AB\u30FC\u30C9\u6A5F\u80FD\u30D8\u30EB\u30D7\u3000\u3000\u3000\u3000\u3000\u3000(c-help)");
+      self.$sendMessageToOnlySender("・カード機能ヘルプ　　　　　　(c-help)");
       return self.$sendMessageToOnlySender("  -- END ---");
     }, $BCDice_printHelp$39.$$arity = 0);
     
@@ -29567,7 +29567,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
         
         output = $$($nesting, 'Regexp').$last_match(2);
         if ($truthy(output['$!='](""))) {
-          self.$sendMessage(self.channel, "" + (self.nick_e) + ": \u8A08\u7B97\u7D50\u679C \uFF1E " + (output))};};
+          self.$sendMessage(self.channel, "" + (self.nick_e) + ": 計算結果 ＞ " + (output))};};
       self.$changeMessageOriginal();
       self.$executeCard();
       return self.$debug("\non_public end");
@@ -29649,7 +29649,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       if ($truthy(new RegExp("" + "^" + ($gvars.READY_CMD) + "(\\s+|$)", 'i')['$=~'](self.message))) {
         
         self.$setPrintPlotChannel();
-        self.$sendMessageToOnlySender("\u8868\u793A\u30C1\u30E3\u30F3\u30CD\u30EB\u3092\u8A2D\u5B9A\u3057\u307E\u3057\u305F");
+        self.$sendMessageToOnlySender("表示チャンネルを設定しました");
         return nil;};
       if ($truthy(/^#/['$=~'](self.message))) {
       } else {
@@ -29878,7 +29878,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       if ($truthy(message['$nil?']())) {
         return nil};
       message = self.$rollTableMessageDiceText(message);
-      output = "" + (self.$nick_e()) + ":" + (title) + "(" + (value) + "[" + (diceText) + "]) \uFF1E " + (message);
+      output = "" + (self.$nick_e()) + ":" + (title) + "(" + (value) + "[" + (diceText) + "]) ＞ " + (message);
       return [output, secret];
     }, $BCDice_getTableDataResult$61.$$arity = 1);
     
@@ -30199,9 +30199,9 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       if ($truthy(signOfInequality['$!='](""))) {
         
         string = $rb_plus(string, "" + (signOfInequality) + (diff));
-        output = "" + (output) + " \uFF1E \u6210\u529F\u6570" + (suc);
+        output = "" + (output) + " ＞ 成功数" + (suc);
         output = $rb_plus(output, self.diceBot.$getGrichText(numberSpot1, dice_cnt_total, suc));};
-      output = "" + (self.nick_e) + ": (" + (string) + ") \uFF1E " + (output);
+      output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (output);
       return output;
     }, $BCDice_bdice$80.$$arity = 1);
     
@@ -30242,7 +30242,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
         return d66List['$<<'](self.$getD66ValueByMarker(swapMarker));}, $$84.$$s = self, $$84.$$arity = 1, $$84));
       d66Text = d66List.$join(",");
       self.$debug("d66Text", d66Text);
-      output = "" + (self.nick_e) + ": (" + (string) + ") \uFF1E " + (d66Text);
+      output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (d66Text);
       return [output, secret];
     }, $BCDice_d66dice$83.$$arity = 1);
     
@@ -30448,7 +30448,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       targets = targetList.$split(/,/);
       index = self.$rand(targets.$length());
       target = targets['$[]'](index);
-      output = "" + (self.nick_e) + ": (" + (string) + ") \uFF1E " + (target);
+      output = "" + (self.nick_e) + ": (" + (string) + ") ＞ " + (target);
       return output;
     }, $BCDice_choice_random$98.$$arity = 1);
     
@@ -30618,7 +30618,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       }; return nil; })();
       self.$setDiceBot(diceBot);
       diceBot.$postSet();
-      message = "" + "Game\u8A2D\u5B9A\u3092" + (diceBot.$name()) + "\u306B\u8A2D\u5B9A\u3057\u307E\u3057\u305F";
+      message = "" + "Game設定を" + (diceBot.$name()) + "に設定しました";
       self.$debug("setGameByTitle message", message);
       return message;
     }, $BCDice_setGameByTitle$111.$$arity = 1);

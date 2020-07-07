@@ -13,9 +13,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "WaresBlade");
-    Opal.const_set($nesting[0], 'NAME', "\u30EF\u30FC\u30B9\u30D6\u30EC\u30A4\u30C9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308F\u3042\u3059\u3075\u308C\u3044\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "nD10>=m \u65B9\u5F0F\u306E\u5224\u5B9A\u3067\u6210\u5426\u3001\u5B8C\u5168\u6210\u529F\u3001\u5B8C\u5168\u5931\u6557\u3092\u81EA\u52D5\u5224\u5B9A\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ワースブレイド");
+    Opal.const_set($nesting[0], 'SORT_KEY', "わあすふれいと");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "nD10>=m 方式の判定で成否、完全成功、完全失敗を自動判定します。\n");
     return (Opal.def(self, '$check_nD10', $WaresBlade_check_nD10$1 = function $$check_nD10(total, _dice_total, dice_list, cmp_op, target) {
       var self = this;
 
@@ -25,13 +25,13 @@
         return ""
       };
       if (dice_list.$count(10)['$=='](dice_list.$size())) {
-        return " \uFF1E \u5B8C\u5168\u6210\u529F"
+        return " ＞ 完全成功"
       } else if (dice_list.$count(1)['$=='](dice_list.$size())) {
-        return " \uFF1E \u7D76\u5BFE\u5931\u6557"
+        return " ＞ 絶対失敗"
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $WaresBlade_check_nD10$1.$$arity = 5), nil) && 'check_nD10';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

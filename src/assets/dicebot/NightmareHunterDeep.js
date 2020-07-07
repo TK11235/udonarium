@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "NightmareHunterDeep");
-    Opal.const_set($nesting[0], 'NAME', "\u30CA\u30A4\u30C8\u30E1\u30A2\u30CF\u30F3\u30BF\u30FC=\u30C7\u30A3\u30FC\u30D7");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306A\u3044\u3068\u3081\u3042\u306F\u3093\u305F\u3042\u3066\u3044\u3044\u3075");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u52A0\u7B97\u30ED\u30FC\u30EB\u6642\u306B\uFF16\u306E\u500B\u6570\u3092\u30AB\u30A6\u30F3\u30C8\u3057\u3066\u3001\u305D\u306E\uFF14\u500D\u3092\u81EA\u52D5\u7684\u306B\u52A0\u7B97\u3057\u307E\u3059\u3002\n" + "(\u51FA\u76EE\u306F\u305D\u306E\u307E\u307E\u8868\u793A\u3067\u5408\u8A08\u5024\u304C6-10\u306E\u8AAD\u307F\u66FF\u3048\u306B\u306A\u308A\u307E\u3059)\n");
+    Opal.const_set($nesting[0], 'NAME', "ナイトメアハンター=ディープ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ないとめあはんたあていいふ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "加算ロール時に６の個数をカウントして、その４倍を自動的に加算します。\n" + "(出目はそのまま表示で合計値が6-10の読み替えになります)\n");
     
     Opal.def(self, '$initialize', $NightmareHunterDeep_initialize$1 = function $$initialize() {
       var $iter = $NightmareHunterDeep_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -71,9 +71,9 @@
       };
       if ($truthy(target['$!=']("?"))) {
         if ($truthy($rb_ge(total, target))) {
-          return " \uFF1E \u6210\u529F"
+          return " ＞ 成功"
         } else {
-          return " \uFF1E \u5931\u6557"
+          return " ＞ 失敗"
         }};
       sucLv = 1;
       sucNL = 0;
@@ -86,9 +86,9 @@
       sucLv = $rb_minus(sucLv, 1);
       sucNL = $rb_minus(sucNL, 1);
       if ($truthy($rb_le(sucLv, 0))) {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       } else {
-        return "" + " \uFF1E Lv" + (sucLv) + "/NL" + (sucNL) + "\u6210\u529F"
+        return "" + " ＞ Lv" + (sucLv) + "/NL" + (sucNL) + "成功"
       };
     }, $NightmareHunterDeep_check_nD6$5.$$arity = 5);
     
@@ -98,7 +98,7 @@
       
       self.$debug("getDiceRolledAdditionalText begin: n1, n_max, dice_max", n1, n_max, dice_max);
       if ($truthy(($truthy($a = n1['$!='](0)) ? dice_max['$=='](6) : $a))) {
-        return " \uFF1E \u5BBF\u547D\u7372\u5F97"};
+        return " ＞ 宿命獲得"};
       return "";
     }, $NightmareHunterDeep_getDiceRolledAdditionalText$6.$$arity = 3);
     return (Opal.def(self, '$getDiceRevision', $NightmareHunterDeep_getDiceRevision$7 = function $$getDiceRevision(n_max, dice_max, total_n) {
@@ -110,7 +110,7 @@
       if ($truthy(($truthy($a = $rb_gt(n_max, 0)) ? dice_max['$=='](6) : $a))) {
         
         revision = $rb_times(n_max, 4);
-        addText = "" + "+" + (n_max) + "*4 \uFF1E " + ($rb_plus(total_n, revision));};
+        addText = "" + "+" + (n_max) + "*4 ＞ " + ($rb_plus(total_n, revision));};
       return [addText, revision];
     }, $NightmareHunterDeep_getDiceRevision$7.$$arity = 3), nil) && 'getDiceRevision';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

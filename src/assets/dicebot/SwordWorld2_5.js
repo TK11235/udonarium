@@ -66,9 +66,9 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
     
     self.$include($$($nesting, 'ModifierFormatter'));
     Opal.const_set($nesting[0], 'ID', "SwordWorld");
-    Opal.const_set($nesting[0], 'NAME', "\u30BD\u30FC\u30C9\u30EF\u30FC\u30EB\u30C9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305D\u304A\u3068\u308F\u3042\u308B\u3068");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u30FBSW\u3000\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3000(Kx[c]+m$f) (x:\u30AD\u30FC, c:\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024, m:\u30DC\u30FC\u30CA\u30B9, f:\u51FA\u76EE\u4FEE\u6B63)\n");
+    Opal.const_set($nesting[0], 'NAME', "ソードワールド");
+    Opal.const_set($nesting[0], 'SORT_KEY', "そおとわあると");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "・SW　レーティング表　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)\n");
     self.$setPrefixes(["H?K\\d+.*"]);
     
     Opal.def(self, '$initialize', $SwordWorld_initialize$1 = function $$initialize() {
@@ -111,15 +111,15 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       var $a, self = this;
 
       if ($truthy($rb_ge(dice_total, 12))) {
-        return " \uFF1E \u81EA\u52D5\u7684\u6210\u529F"
+        return " ＞ 自動的成功"
       } else if ($truthy($rb_le(dice_total, 2))) {
-        return " \uFF1E \u81EA\u52D5\u7684\u5931\u6557"
+        return " ＞ 自動的失敗"
       } else if ($truthy(($truthy($a = cmp_op['$!='](">=")) ? $a : target['$==']("?")))) {
         return ""
       } else if ($truthy($rb_ge(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       }
     }, $SwordWorld_check_2D6$8.$$arity = 5);
     
@@ -159,7 +159,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       keyMax = $rb_minus(rate_sw2_0.$length(), 1);
       self.$debug("keyMax", keyMax);
       if ($truthy($rb_gt(key, keyMax))) {
-        return "" + "\u30AD\u30FC\u30CA\u30F3\u30D0\u30FC\u306F" + (keyMax) + "\u307E\u3067\u3067\u3059"};
+        return "" + "キーナンバーは" + (keyMax) + "までです"};
       newRates = self.$getNewRates(rate_sw2_0);
       output = "" + "KeyNo." + (key);
       if ($truthy($rb_lt(crit, 13))) {
@@ -178,7 +178,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
           output = $rb_plus(output, "" + "+" + (addValue))};
         if ($truthy($rb_lt(addValue, 0))) {
           output = $rb_plus(output, addValue.$to_s())};};
-      output = $rb_plus(output, " \uFF1E ");
+      output = $rb_plus(output, " ＞ ");
       diceResultTotals = [];
       diceResults = [];
       rateResults = [];
@@ -385,8 +385,8 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       if ($truthy($rb_le(dice_total, 2))) {
         
         sequence.$push(rateResults.$join(","));
-        sequence.$push("\u81EA\u52D5\u7684\u5931\u6557");
-        return sequence.$join(" \uFF1E ");};
+        sequence.$push("自動的失敗");
+        return sequence.$join(" ＞ ");};
       if ($truthy(($truthy($a = $rb_gt(rateResults.$size(), 1)) ? $a : modifier['$!='](0)))) {
         
         text = $rb_plus(rateResults.$join(","), self.$format_modifier(modifier));
@@ -397,7 +397,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
         sequence.$push("" + (rateResults.$first()) + "/2")};
       if ($truthy($rb_gt(round, 1))) {
         
-        round_text = "" + ($rb_minus(round, 1)) + "\u56DE\u8EE2";
+        round_text = "" + ($rb_minus(round, 1)) + "回転";
         sequence.$push(round_text);
         short$.$push(round_text);};
       total = $rb_plus(rating_total, modifier);
@@ -406,9 +406,9 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       total_text = total.$to_s();
       sequence.$push(total_text);
       short$.$push(total_text);
-      ret = sequence.$join(" \uFF1E ");
+      ret = sequence.$join(" ＞ ");
       if ($truthy($rb_gt(ret.$length(), limitLength))) {
-        return short$.$join(" \uFF1E ")
+        return short$.$join(" ＞ ")
       } else {
         return ret
       };
@@ -449,7 +449,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       };
       if (self.rating_table['$=='](pre_mode)) {
         return "1"};
-      return "" + "RatingTable\u3092" + (mode_str) + "\u306B\u5909\u66F4\u3057\u307E\u3057\u305F";
+      return "" + "RatingTableを" + (mode_str) + "に変更しました";
     }, $SwordWorld_setRatingTable$23.$$arity = 1), nil) && 'setRatingTable';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting);
 })(Opal);
@@ -483,9 +483,9 @@ Opal.loaded(["diceBot/SwordWorld.js"]);
 
     
     Opal.const_set($nesting[0], 'ID', "SwordWorld2.0");
-    Opal.const_set($nesting[0], 'NAME', "\u30BD\u30FC\u30C9\u30EF\u30FC\u30EB\u30C92.0");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305D\u304A\u3068\u308F\u3042\u308B\u30682.0");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u81EA\u52D5\u7684\u6210\u529F\u3001\u6210\u529F\u3001\u5931\u6557\u3001\u81EA\u52D5\u7684\u5931\u6557\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\n" + "\u30FB\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3000(Kx)\n" + "\u3000\"K\u30AD\u30FC\u30CA\u30F3\u30D0\u30FC+\u30DC\u30FC\u30CA\u30B9\"\u306E\u5F62\u3067\u8A18\u5165\u3057\u307E\u3059\u3002\n" + "\u3000\u30DC\u30FC\u30CA\u30B9\u306E\u90E8\u5206\u306B\u300CK20+K30\u300D\u306E\u3088\u3046\u306B\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u3092\u53D6\u308B\u3053\u3068\u306F\u51FA\u6765\u307E\u305B\u3093\u3002\n" + "\u3000\u307E\u305F\u3001\u30DC\u30FC\u30CA\u30B9\u306F\u8907\u6570\u53D6\u308B\u3053\u3068\u304C\u51FA\u6765\u307E\u3059\u3002\n" + "\u3000\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3082\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\u3068\u540C\u69D8\u306B\u3001\u4ED6\u306E\u30D7\u30EC\u30A4\u30E4\u30FC\u306B\u96A0\u308C\u3066\u30ED\u30FC\u30EB\u3059\u308B\u3053\u3068\u3082\u53EF\u80FD\u3067\u3059\u3002\n" + "\u3000\u4F8B\uFF09K20\u3000\u3000\u3000K10+5\u3000\u3000\u3000k30\u3000\u3000\u3000k10+10\u3000\u3000\u3000Sk10-1\u3000\u3000\u3000k10+5+2\n" + "\n" + "\u30FB\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u306E\u8A2D\u5B9A\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u306F\"[\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024]\"\u3067\u6307\u5B9A\u3057\u307E\u3059\u3002\n" + "\u3000\u6307\u5B9A\u3057\u306A\u3044\u5834\u5408\u306F\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u502410\u3068\u3057\u307E\u3059\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u51E6\u7406\u304C\u5FC5\u8981\u306A\u3044\u3068\u304D\u306F13\u306A\u3069\u3068\u3057\u3066\u304F\u3060\u3055\u3044\u3002(\u9632\u5FA1\u6642\u306A\u3069\u306E\u5BFE\u5FDC)\n" + "\u3000\u307E\u305F\u30BF\u30A4\u30D7\u306E\u8EFD\u6E1B\u5316\u306E\u305F\u3081\u306B\u672B\u5C3E\u306B\u300C@\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u300D\u3067\u3082\u51E6\u7406\u3059\u308B\u3088\u3046\u306B\u3057\u307E\u3057\u305F\u3002\n" + "\u3000\u4F8B\uFF09K20[10]\u3000\u3000\u3000K10+5[9]\u3000\u3000\u3000k30[10]\u3000\u3000\u3000k10[9]+10\u3000\u3000\u3000k10-5@9\n" + "\n" + "\u30FB\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u306E\u534A\u6E1B (HKx)\n" + "\u3000\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u306E\u5148\u982D\u307E\u305F\u306F\u672B\u5C3E\u306B\"H\"\u3092\u3064\u3051\u308B\u3068\u3001\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3092\u632F\u3063\u3066\u6700\u7D42\u7D50\u679C\u3092\u534A\u6E1B\u3055\u305B\u307E\u3059\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3092\u6307\u5B9A\u3057\u306A\u3044\u5834\u5408\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u306A\u3057\u3068\u6271\u308F\u308C\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09HK20\u3000\u3000K20h\u3000\u3000HK10-5@9\u3000\u3000K10-5@9H\u3000\u3000K20gfH\n" + "\n" + "\u30FB\u30C0\u30A4\u30B9\u76EE\u306E\u4FEE\u6B63\uFF08\u904B\u547D\u5909\u8EE2\u3084\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30EC\u30A4\u7528\uFF09\n" + "\u3000\u672B\u5C3E\u306B\u300C$\u4FEE\u6B63\u5024\u300D\u3067\u30C0\u30A4\u30B9\u76EE\u306B\u4FEE\u6B63\u304C\u304B\u304B\u308A\u307E\u3059\u3002\n" + "\u3000$\uFF0B\uFF11\u3068\u4FEE\u6B63\u8868\u8A18\u306A\u3089\u30C0\u30A4\u30B9\u76EE\u306B\uFF0B\u4FEE\u6B63\u3001\uFF04\uFF19\u306E\u3088\u3046\u306B\u56FA\u5B9A\u5024\u306A\u3089\u30C0\u30A4\u30B9\u76EE\u3092\u305D\u306E\u51FA\u76EE\u306B\u5DEE\u3057\u66FF\u3048\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3057\u305F\u5834\u5408\u3067\u3082\u56FA\u5B9A\u5024\u3084\u4FEE\u6B63\u5024\u306E\u9069\u7528\u306F\u6700\u521D\u306E\u4E00\u56DE\u3060\u3051\u3067\u3059\u3002\n" + "\u3000\u4F8B\uFF09K20$+1\u3000\u3000\u3000K10+5$9\u3000\u3000\u3000k10-5@9$+2\u3000\u3000\u3000k10[9]+10$9\n" + "\n" + "\u30FB\u9996\u5207\u308A\u5200\u7528\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u4E0A\u6607 r10\n" + "\u3000\u4F8B\uFF09K20r10\u3000K30+24@8R10\u3000K40+24@8$12r10\n" + "\n" + "\u30FB\u30B0\u30EC\u30A4\u30C6\u30B9\u30C8\u30D5\u30A9\u30FC\u30C1\u30E5\u30F3\u306F\u672B\u5C3E\u306B gf\n" + "\u3000\u4F8B\uFF09K20gf\u3000K30+24@8GF\u3000K40+24@8$12r10gf\n" + "\n" + "\u30FB\u8D85\u8D8A\u5224\u5B9A\u7528\u306B2d6\u30ED\u30FC\u30EB\u306B 2D6@10 \u66F8\u5F0F\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u4ED8\u4E0E\u304C\u53EF\u80FD\u306B\u3002\n" + "\u3000\u4F8B\uFF092D6@10\u30002D6@10+11>=30\n" + "\n" + "\u30FB\u6210\u9577\u3000(Gr)\n" + "\u3000\u672B\u5C3E\u306B\u6570\u5B57\u3092\u4ED8\u52A0\u3059\u308B\u3053\u3068\u3067\u3001\u8907\u6570\u56DE\u306E\u6210\u9577\u3092\u307E\u3068\u3081\u3066\u884C\u3048\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09Gr3\n" + "\n" + "\u30FB\u9632\u5FA1\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\u3000(FT)\n" + "\u3000\u9632\u5FA1\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\u3092\u51FA\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002\n" + "\n" + "\u30FB\u7D61\u307F\u52B9\u679C\u8868\u3000(TT)\n" + "\u3000\u7D61\u307F\u52B9\u679C\u8868\u3092\u51FA\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ソードワールド2.0");
+    Opal.const_set($nesting[0], 'SORT_KEY', "そおとわあると2.0");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "自動的成功、成功、失敗、自動的失敗の自動判定を行います。\n" + "\n" + "・レーティング表　(Kx)\n" + "　\"Kキーナンバー+ボーナス\"の形で記入します。\n" + "　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。\n" + "　また、ボーナスは複数取ることが出来ます。\n" + "　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2\n" + "\n" + "・クリティカル値の設定\n" + "　クリティカル値は\"[クリティカル値]\"で指定します。\n" + "　指定しない場合はクリティカル値10とします。\n" + "　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)\n" + "　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。\n" + "　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9\n" + "\n" + "・レーティング表の半減 (HKx)\n" + "　レーティング表の先頭または末尾に\"H\"をつけると、レーティング表を振って最終結果を半減させます。\n" + "　クリティカル値を指定しない場合、クリティカルなしと扱われます。\n" + "　例）HK20　　K20h　　HK10-5@9　　K10-5@9H　　K20gfH\n" + "\n" + "・ダイス目の修正（運命変転やクリティカルレイ用）\n" + "　末尾に「$修正値」でダイス目に修正がかかります。\n" + "　$＋１と修正表記ならダイス目に＋修正、＄９のように固定値ならダイス目をその出目に差し替え。\n" + "　クリティカルした場合でも固定値や修正値の適用は最初の一回だけです。\n" + "　例）K20$+1　　　K10+5$9　　　k10-5@9$+2　　　k10[9]+10$9\n" + "\n" + "・首切り刀用レーティング上昇 r10\n" + "　例）K20r10　K30+24@8R10　K40+24@8$12r10\n" + "\n" + "・グレイテストフォーチュンは末尾に gf\n" + "　例）K20gf　K30+24@8GF　K40+24@8$12r10gf\n" + "\n" + "・超越判定用に2d6ロールに 2D6@10 書式でクリティカル値付与が可能に。\n" + "　例）2D6@10　2D6@10+11>=30\n" + "\n" + "・成長　(Gr)\n" + "　末尾に数字を付加することで、複数回の成長をまとめて行えます。\n" + "　例）Gr3\n" + "\n" + "・防御ファンブル表　(FT)\n" + "　防御ファンブル表を出すことができます。\n" + "\n" + "・絡み効果表　(TT)\n" + "　絡み効果表を出すことができます。\n");
     self.$setPrefixes(["H?K\\d+.*", "Gr(\\d+)?", "FT", "TT"]);
     
     Opal.def(self, '$initialize', $SwordWorld2_0_initialize$1 = function $$initialize() {
@@ -612,7 +612,7 @@ Opal.loaded(["diceBot/SwordWorld.js"]);
         critical = $$($nesting, 'Regexp').$last_match(1).$to_i();
         if ($truthy($rb_ge(dice_total, critical))) {
           if ($truthy($rb_ge(total, superSuccessValue))) {
-            return " \uFF1E \u8D85\u6210\u529F"}};};
+            return " ＞ 超成功"}};};
       return result;
     }, $SwordWorld2_0_check_nD6$9.$$arity = 5);
     
@@ -647,24 +647,24 @@ Opal.loaded(["diceBot/SwordWorld.js"]);
     Opal.def(self, '$get_ability_by_dice', $SwordWorld2_0_get_ability_by_dice$13 = function $$get_ability_by_dice(dice) {
       var self = this;
 
-      return ["\u5668\u7528\u5EA6", "\u654F\u6377\u5EA6", "\u7B4B\u529B", "\u751F\u547D\u529B", "\u77E5\u529B", "\u7CBE\u795E\u529B"]['$[]']($rb_minus(dice, 1))
+      return ["器用度", "敏捷度", "筋力", "生命力", "知力", "精神力"]['$[]']($rb_minus(dice, 1))
     }, $SwordWorld2_0_get_ability_by_dice$13.$$arity = 1);
     
     Opal.def(self, '$get_fumble_table', $SwordWorld2_0_get_fumble_table$14 = function $$get_fumble_table() {
       var $a, $b, self = this, table = nil, text = nil, num = nil;
 
       
-      table = ["\u3053\u306E\u8868\u30922\u56DE\u632F\u308A\u3001\u305D\u306E\u4E21\u65B9\u3092\u9069\u7528\u3059\u308B\u3002\uFF08\u540C\u3058\u51FA\u76EE\u306B\u3088\u308B\u5F71\u97FF\u306F\u7D2F\u7A4D\u3057\u306A\u3044\uFF09\u3002\u3053\u306E\u81EA\u52D5\u5931\u6557\u306B\u3088\u308A\u5F97\u3089\u308C\u308B\u7D4C\u9A13\u70B9\u306F\u3001+50\u70B9\u3055\u308C\u308B", "\u30C0\u30E1\u30FC\u30B8\u306B\u3001\u653B\u6483\u8005\u3092\u5F37\u5316\u3057\u3066\u3044\u308B\u300C\u5263\u306E\u304B\u3051\u3089\u300D\u306E\u6570\u304C\u8FFD\u52A0\u3055\u308C\u308B", "\u30C0\u30E1\u30FC\u30B8\u306B\u3001\u653B\u6483\u8005\u306E\u300C\u30EC\u30D9\u30EB\u300D\u304C\u8FFD\u52A0\u3055\u308C\u308B", "\u30C0\u30E1\u30FC\u30B8\u6C7A\u5B9A\u30922\u56DE\u884C\u3044\u3001\u3088\u308A\u9AD8\u3044\u65B9\u3092\u63A1\u7528\u3059\u308B", "\u5408\u7B97\u30C0\u30E1\u30FC\u30B8\u30922\u500D\u3059\u308B", "\u9632\u8B77\u70B9\u7121\u52B9"];
+      table = ["この表を2回振り、その両方を適用する。（同じ出目による影響は累積しない）。この自動失敗により得られる経験点は、+50点される", "ダメージに、攻撃者を強化している「剣のかけら」の数が追加される", "ダメージに、攻撃者の「レベル」が追加される", "ダメージ決定を2回行い、より高い方を採用する", "合算ダメージを2倍する", "防護点無効"];
       $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (num = ($a[1] == null ? nil : $a[1])), $b;
-      return "" + "\u9632\u5FA1\u30D5\u30A1\u30F3\u30D6\u30EB\u8868(" + (num) + ") \u2192 " + (text);
+      return "" + "防御ファンブル表(" + (num) + ") → " + (text);
     }, $SwordWorld2_0_get_fumble_table$14.$$arity = 0);
     return (Opal.def(self, '$get_tangle_table', $SwordWorld2_0_get_tangle_table$15 = function $$get_tangle_table() {
       var $a, $b, self = this, table = nil, text = nil, num = nil;
 
       
-      table = ["\u982D\u3084\u9854\uFF1A\u7259\u3084\u565B\u307F\u3064\u304D\u306A\u3069\u306B\u304A\u3051\u308B\u547D\u4E2D\u529B\u5224\u5B9A\u53CA\u3073\u3001\u9B54\u6CD5\u306E\u884C\u4F7F\u3084\u30D6\u30EC\u30B9\u306B-2\u306E\u30DA\u30CA\u30EB\u30C6\u30A3\u4FEE\u6B63\u3092\u53D7\u3051\u308B", "\u6B66\u5668\u3084\u76FE\uFF1A\u6B66\u5668\u306E\u4F7F\u7528\u4E0D\u53EF\u3001\u53C8\u306F\u76FE\u306E\u56DE\u907F\u529B\u4FEE\u6B63\u53CA\u3073\u9632\u8B77\u70B9\u3092\u7121\u52B9\u5316\u3059\u308B", "\u8155\u3084\u624B\uFF1A\u6B66\u5668\u3084\u722A\u306A\u3069\u306B\u304A\u3051\u308B\u547D\u4E2D\u529B\u5224\u5B9A\u306B-2\u306E\u30DA\u30CA\u30EB\u30C6\u30A3\u4FEE\u6B63\u3001\u76FE\u3092\u6301\u3064\u8155\u65B9\u306E\u8155\u306A\u3089\u305D\u306E\u76FE\u306E\u56DE\u907F\u529B\u4FEE\u6B63\u53CA\u3073\u9632\u8B77\u70B9\u3092\u7121\u52B9\u5316\u3059\u308B", "\u811A\u3084\u8DB3\uFF1A\u79FB\u52D5\u4E0D\u53EF\u3001\u66F4\u306B\u56DE\u907F\u529B\u5224\u5B9A\u306B-2\u306E\u30DA\u30CA\u30EB\u30C6\u30A3\u4FEE\u6B63\u3092\u53D7\u3051\u308B \u203B\u4E21\u8DB3\u306B\u7D61\u3093\u3067\u3082\u7D2F\u7A4D\u3057\u306A\u3044", "\u80F4\u4F53\uFF1A\u751F\u547D\u30FB\u7CBE\u795E\u62B5\u6297\u529B\u3092\u57FA\u6E96\u5024\u306B\u7528\u3044\u308B\u5224\u5B9A\u3092\u9664\u304D\u3001\u3042\u3089\u3086\u308B\u884C\u70BA\u5224\u5B9A\u306B-1\u306E\u30DA\u30CA\u30EB\u30C6\u30A3\u4FEE\u6B63\u3092\u53D7\u3051\u308B", "\u7279\u6B8A\uFF1A\u5C3B\u5C3E\u3084\u7FFC\u306A\u3069\u306B\u547D\u4E2D\u3002\u7D61\u3081\u3089\u308C\u305F\u90E8\u4F4D\u3092\u4F7F\u7528\u3059\u308B\u5224\u5B9A\u306B\u304A\u3044\u3066-2\u306E\u30DA\u30CA\u30EB\u30C6\u30A3\u4FEE\u6B63\u3001\u307E\u305F\u306F\u305D\u3053\u304C\u4F7F\u3048\u3066\u3044\u305F\u3053\u3068\u306B\u3088\u308B\u30DC\u30FC\u30CA\u30B9\u4FEE\u6B63\u3092\u5931\u3046 \u203B\u5B58\u5728\u3057\u306A\u3044\u5834\u5408\u306F\u6C7A\u3081\u76F4\u3057"];
+      table = ["頭や顔：牙や噛みつきなどにおける命中力判定及び、魔法の行使やブレスに-2のペナルティ修正を受ける", "武器や盾：武器の使用不可、又は盾の回避力修正及び防護点を無効化する", "腕や手：武器や爪などにおける命中力判定に-2のペナルティ修正、盾を持つ腕方の腕ならその盾の回避力修正及び防護点を無効化する", "脚や足：移動不可、更に回避力判定に-2のペナルティ修正を受ける ※両足に絡んでも累積しない", "胴体：生命・精神抵抗力を基準値に用いる判定を除き、あらゆる行為判定に-1のペナルティ修正を受ける", "特殊：尻尾や翼などに命中。絡められた部位を使用する判定において-2のペナルティ修正、またはそこが使えていたことによるボーナス修正を失う ※存在しない場合は決め直し"];
       $b = self.$get_table_by_1d6(table), $a = Opal.to_ary($b), (text = ($a[0] == null ? nil : $a[0])), (num = ($a[1] == null ? nil : $a[1])), $b;
-      return "" + "\u7D61\u307F\u52B9\u679C\u8868(" + (num) + ") \u2192 " + (text);
+      return "" + "絡み効果表(" + (num) + ") → " + (text);
     }, $SwordWorld2_0_get_tangle_table$15.$$arity = 0), nil) && 'get_tangle_table';
   })($nesting[0], $$($nesting, 'SwordWorld'), $nesting);
 })(Opal);
@@ -689,9 +689,9 @@ Opal.loaded(["diceBot/SwordWorld2_0.js"]);
 
     
     Opal.const_set($nesting[0], 'ID', "SwordWorld2.5");
-    Opal.const_set($nesting[0], 'NAME', "\u30BD\u30FC\u30C9\u30EF\u30FC\u30EB\u30C92.5");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u305D\u304A\u3068\u308F\u3042\u308B\u30682.5");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u81EA\u52D5\u7684\u6210\u529F\u3001\u6210\u529F\u3001\u5931\u6557\u3001\u81EA\u52D5\u7684\u5931\u6557\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\n" + "\u30FB\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3000(Kx)\n" + "\u3000\"K\u30AD\u30FC\u30CA\u30F3\u30D0\u30FC+\u30DC\u30FC\u30CA\u30B9\"\u306E\u5F62\u3067\u8A18\u5165\u3057\u307E\u3059\u3002\n" + "\u3000\u30DC\u30FC\u30CA\u30B9\u306E\u90E8\u5206\u306B\u300CK20+K30\u300D\u306E\u3088\u3046\u306B\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u3092\u53D6\u308B\u3053\u3068\u306F\u51FA\u6765\u307E\u305B\u3093\u3002\n" + "\u3000\u307E\u305F\u3001\u30DC\u30FC\u30CA\u30B9\u306F\u8907\u6570\u53D6\u308B\u3053\u3068\u304C\u51FA\u6765\u307E\u3059\u3002\n" + "\u3000\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3082\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\u3068\u540C\u69D8\u306B\u3001\u4ED6\u306E\u30D7\u30EC\u30A4\u30E4\u30FC\u306B\u96A0\u308C\u3066\u30ED\u30FC\u30EB\u3059\u308B\u3053\u3068\u3082\u53EF\u80FD\u3067\u3059\u3002\n" + "\u3000\u4F8B\uFF09K20\u3000\u3000\u3000K10+5\u3000\u3000\u3000k30\u3000\u3000\u3000k10+10\u3000\u3000\u3000Sk10-1\u3000\u3000\u3000k10+5+2\n" + "\n" + "\u30FB\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u306E\u8A2D\u5B9A\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u306F\"[\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024]\"\u3067\u6307\u5B9A\u3057\u307E\u3059\u3002\n" + "\u3000\u6307\u5B9A\u3057\u306A\u3044\u5834\u5408\u306F\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u502410\u3068\u3057\u307E\u3059\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u51E6\u7406\u304C\u5FC5\u8981\u306A\u3044\u3068\u304D\u306F13\u306A\u3069\u3068\u3057\u3066\u304F\u3060\u3055\u3044\u3002(\u9632\u5FA1\u6642\u306A\u3069\u306E\u5BFE\u5FDC)\n" + "\u3000\u307E\u305F\u30BF\u30A4\u30D7\u306E\u8EFD\u6E1B\u5316\u306E\u305F\u3081\u306B\u672B\u5C3E\u306B\u300C@\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u300D\u3067\u3082\u51E6\u7406\u3059\u308B\u3088\u3046\u306B\u3057\u307E\u3057\u305F\u3002\n" + "\u3000\u4F8B\uFF09K20[10]\u3000\u3000\u3000K10+5[9]\u3000\u3000\u3000k30[10]\u3000\u3000\u3000k10[9]+10\u3000\u3000\u3000k10-5@9\n" + "\n" + "\u30FB\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u306E\u534A\u6E1B (HKx)\n" + "\u3000\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u306E\u5148\u982D\u307E\u305F\u306F\u672B\u5C3E\u306B\"H\"\u3092\u3064\u3051\u308B\u3068\u3001\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u8868\u3092\u632F\u3063\u3066\u6700\u7D42\u7D50\u679C\u3092\u534A\u6E1B\u3055\u305B\u307E\u3059\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3092\u6307\u5B9A\u3057\u306A\u3044\u5834\u5408\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u306A\u3057\u3068\u6271\u308F\u308C\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09HK20\u3000\u3000K20h\u3000\u3000HK10-5@9\u3000\u3000K10-5@9H\u3000\u3000K20gfH\n" + "\n" + "\u30FB\u30C0\u30A4\u30B9\u76EE\u306E\u4FEE\u6B63\uFF08\u904B\u547D\u5909\u8EE2\u3084\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30EC\u30A4\u7528\uFF09\n" + "\u3000\u672B\u5C3E\u306B\u300C$\u4FEE\u6B63\u5024\u300D\u3067\u30C0\u30A4\u30B9\u76EE\u306B\u4FEE\u6B63\u304C\u304B\u304B\u308A\u307E\u3059\u3002\n" + "\u3000$\uFF0B\uFF11\u3068\u4FEE\u6B63\u8868\u8A18\u306A\u3089\u30C0\u30A4\u30B9\u76EE\u306B\uFF0B\u4FEE\u6B63\u3001\uFF04\uFF19\u306E\u3088\u3046\u306B\u56FA\u5B9A\u5024\u306A\u3089\u30C0\u30A4\u30B9\u76EE\u3092\u305D\u306E\u51FA\u76EE\u306B\u5DEE\u3057\u66FF\u3048\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3057\u305F\u5834\u5408\u3067\u3082\u56FA\u5B9A\u5024\u3084\u4FEE\u6B63\u5024\u306E\u9069\u7528\u306F\u6700\u521D\u306E\u4E00\u56DE\u3060\u3051\u3067\u3059\u3002\n" + "\u3000\u4F8B\uFF09K20$+1\u3000\u3000\u3000K10+5$9\u3000\u3000\u3000k10-5@9$+2\u3000\u3000\u3000k10[9]+10$9\n" + "\n" + "\u30FB\u30C0\u30A4\u30B9\u76EE\u306E\u4FEE\u6B63\uFF08\u5FC5\u6BBA\u653B\u6483\u7528\uFF09\n" + "\u3000\u300C\uFF03\u4FEE\u6B63\u5024\u300D\u3067\u30C0\u30A4\u30B9\u76EE\u306B\u4FEE\u6B63\u304C\u304B\u304B\u308A\u307E\u3059\u3002\n" + "\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3057\u305F\u5834\u5408\u3067\u3082\u4FEE\u6B63\u5024\u306E\u9069\u7528\u306F\u7D99\u7D9A\u3055\u308C\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09K20#1\u3000\u3000\u3000k10-5@9#2\n" + "\n" + "\u30FB\u9996\u5207\u308A\u5200\u7528\u30EC\u30FC\u30C6\u30A3\u30F3\u30B0\u4E0A\u6607 r10\n" + "\u3000\u4F8B\uFF09K20r10\u3000K30+24@8R10\u3000K40+24@8$12r10\n" + "\n" + "\u30FB\u30B0\u30EC\u30A4\u30C6\u30B9\u30C8\u30D5\u30A9\u30FC\u30C1\u30E5\u30F3\u306F\u672B\u5C3E\u306B gf\n" + "\u3000\u4F8B\uFF09K20gf\u3000K30+24@8GF\u3000K40+24@8$12r10gf\n" + "\n" + "\u30FB\u8D85\u8D8A\u5224\u5B9A\u7528\u306B2d6\u30ED\u30FC\u30EB\u306B 2D6@10 \u66F8\u5F0F\u3067\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u4ED8\u4E0E\u304C\u53EF\u80FD\u306B\u3002\n" + "\u3000\u4F8B\uFF092D6@10\u30002D6@10+11>=30\n" + "\n" + "\u30FB\u6210\u9577\u3000(Gr)\n" + "\u3000\u672B\u5C3E\u306B\u6570\u5B57\u3092\u4ED8\u52A0\u3059\u308B\u3053\u3068\u3067\u3001\u8907\u6570\u56DE\u306E\u6210\u9577\u3092\u307E\u3068\u3081\u3066\u884C\u3048\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09Gr3\n" + "\n" + "\u30FB\u9632\u5FA1\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\u3000(FT)\n" + "\u3000\u9632\u5FA1\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\u3092\u51FA\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002\n" + "\n" + "\u30FB\u7D61\u307F\u52B9\u679C\u8868\u3000(TT)\n" + "\u3000\u7D61\u307F\u52B9\u679C\u8868\u3092\u51FA\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ソードワールド2.5");
+    Opal.const_set($nesting[0], 'SORT_KEY', "そおとわあると2.5");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "自動的成功、成功、失敗、自動的失敗の自動判定を行います。\n" + "\n" + "・レーティング表　(Kx)\n" + "　\"Kキーナンバー+ボーナス\"の形で記入します。\n" + "　ボーナスの部分に「K20+K30」のようにレーティングを取ることは出来ません。\n" + "　また、ボーナスは複数取ることが出来ます。\n" + "　レーティング表もダイスロールと同様に、他のプレイヤーに隠れてロールすることも可能です。\n" + "　例）K20　　　K10+5　　　k30　　　k10+10　　　Sk10-1　　　k10+5+2\n" + "\n" + "・クリティカル値の設定\n" + "　クリティカル値は\"[クリティカル値]\"で指定します。\n" + "　指定しない場合はクリティカル値10とします。\n" + "　クリティカル処理が必要ないときは13などとしてください。(防御時などの対応)\n" + "　またタイプの軽減化のために末尾に「@クリティカル値」でも処理するようにしました。\n" + "　例）K20[10]　　　K10+5[9]　　　k30[10]　　　k10[9]+10　　　k10-5@9\n" + "\n" + "・レーティング表の半減 (HKx)\n" + "　レーティング表の先頭または末尾に\"H\"をつけると、レーティング表を振って最終結果を半減させます。\n" + "　クリティカル値を指定しない場合、クリティカルなしと扱われます。\n" + "　例）HK20　　K20h　　HK10-5@9　　K10-5@9H　　K20gfH\n" + "\n" + "・ダイス目の修正（運命変転やクリティカルレイ用）\n" + "　末尾に「$修正値」でダイス目に修正がかかります。\n" + "　$＋１と修正表記ならダイス目に＋修正、＄９のように固定値ならダイス目をその出目に差し替え。\n" + "　クリティカルした場合でも固定値や修正値の適用は最初の一回だけです。\n" + "　例）K20$+1　　　K10+5$9　　　k10-5@9$+2　　　k10[9]+10$9\n" + "\n" + "・ダイス目の修正（必殺攻撃用）\n" + "　「＃修正値」でダイス目に修正がかかります。\n" + "　クリティカルした場合でも修正値の適用は継続されます。\n" + "　例）K20#1　　　k10-5@9#2\n" + "\n" + "・首切り刀用レーティング上昇 r10\n" + "　例）K20r10　K30+24@8R10　K40+24@8$12r10\n" + "\n" + "・グレイテストフォーチュンは末尾に gf\n" + "　例）K20gf　K30+24@8GF　K40+24@8$12r10gf\n" + "\n" + "・超越判定用に2d6ロールに 2D6@10 書式でクリティカル値付与が可能に。\n" + "　例）2D6@10　2D6@10+11>=30\n" + "\n" + "・成長　(Gr)\n" + "　末尾に数字を付加することで、複数回の成長をまとめて行えます。\n" + "　例）Gr3\n" + "\n" + "・防御ファンブル表　(FT)\n" + "　防御ファンブル表を出すことができます。\n" + "\n" + "・絡み効果表　(TT)\n" + "　絡み効果表を出すことができます。\n");
     self.$setPrefixes(["H?K\\d+.*", "Gr(\\d+)?", "FT", "TT"]);
     
     Opal.def(self, '$changeText', $SwordWorld2_5_changeText$1 = function $$changeText(string) {

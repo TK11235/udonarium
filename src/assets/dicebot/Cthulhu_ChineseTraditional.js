@@ -35,9 +35,9 @@
     self.$$prototype.special_percentage = self.$$prototype.critical_percentage = self.$$prototype.fumble_percentage = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu:ChineseTraditional");
-    Opal.const_set($nesting[0], 'NAME', "\u514B\u8607\u9B6F\u795E\u8A71");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u56FD\u969B\u5316:Chinese Traditional:\u514B\u8607\u9B6F\u795E\u8A717");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "c=\u7206\u64CA\u7387 \uFF0F f=\u5927\u5931\u6557\u503C \uFF0F s=\u7279\u6B8A\n" + "\n" + "1d100<=n    c\u30FBf\u30FBs\u5168\u95DC\u9589\uFF08\u53EA\u9032\u884C\u55AE\u7D14\u6578\u503C\u6BD4\u8F03\u5224\u5B9A\uFF09\n" + "\n" + "\u30FBcfs\u4ED8\u8A3B\u5224\u5B9A\u6307\u4EE4\n" + "\n" + "CC\t 1d100\u64F2\u9AB0 c=1\u3001f=100\n" + "CCB  \u540C\u4E0A\u3001c=5\u3001f=96\n" + "\n" + "\u4F8B\uFF1ACC<=80  \uFF08\u4EE5\u6280\u80FD\u503C80\u4F86\u5224\u5B9A\u3002cf\u9069\u7528\u65BC1%\u898F\u5247\uFF09\n" + "\u4F8B\uFF1ACCB<=55 \uFF08\u4EE5\u6280\u80FD\u503C55\u4F86\u5224\u5B9A\u3002cf\u9069\u7528\u65BC5%\u898F\u5247\uFF09\n" + "\n" + "\u30FB\u95DC\u65BC\u7D44\u5408\u9AB0\u7D44\n" + "\n" + "CBR(x,y)\tc=1\u3001f=100\n" + "CBRB(x,y)\tc=5\u3001f=96\n" + "\n" + "\u30FB\u95DC\u65BC\u5C0D\u6297\u9AB0\n" + "RES(x-y)\tc=1\u3001f=100\n" + "RESB(x-y)\tc=5\u3001f=96\n" + "\n" + "\u203B\u6545\u969C\u7387\u5224\u5B9A\n" + "\n" + "\u30FBCC(x) c=1\u3001f=100\n" + "x=\u6545\u969C\u7387\u3002\u64F2\u51FA\u9AB0\u503Cx\u4EE5\u4E0A\u6642\u3001\u9700\u5728\u5927\u5931\u6557\u767C\u751F\u540C\u6642\u8F38\u51FA\uFF08\u53C3\u7167\u300C\u5927\u5931\u6557\uFF06\u6545\u969C\u300D\uFF09\n" + "\u6C92\u6709\u5927\u5931\u6557\u6642\uFF0C\u7121\u8AD6\u6210\u529F\u6216\u5931\u6557\u53EA\u9700\u53C3\u8003[\u6545\u969C]\u4F86\u8F38\u51FA(\u4E26\u975E\u6210\u529F\u6216\u5931\u6557\u4F86\u8F38\u51FA\uFF0C\u800C\u662F\u8986\u84CB\u4E0A\u53BB\u4E26\u5C0D\u5176\u8F38\u51FA)\n" + "\n" + "\u30FBCCB(x) c=5\u3001f=96\n" + "\u540C\u4E0A\n" + "\n" + "\u30FB\u760B\u72C2\u8868\n" + "\u30FB\u77ED\u671F\u760B\u671F\u3000Short\uFF0F\u9577\u671F\u760B\u72C2\u3000Longer\n" + "\n");
+    Opal.const_set($nesting[0], 'NAME', "克蘇魯神話");
+    Opal.const_set($nesting[0], 'SORT_KEY', "国際化:Chinese Traditional:克蘇魯神話7");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "c=爆擊率 ／ f=大失敗值 ／ s=特殊\n" + "\n" + "1d100<=n    c・f・s全關閉（只進行單純數值比較判定）\n" + "\n" + "・cfs付註判定指令\n" + "\n" + "CC\t 1d100擲骰 c=1、f=100\n" + "CCB  同上、c=5、f=96\n" + "\n" + "例：CC<=80  （以技能值80來判定。cf適用於1%規則）\n" + "例：CCB<=55 （以技能值55來判定。cf適用於5%規則）\n" + "\n" + "・關於組合骰組\n" + "\n" + "CBR(x,y)\tc=1、f=100\n" + "CBRB(x,y)\tc=5、f=96\n" + "\n" + "・關於對抗骰\n" + "RES(x-y)\tc=1、f=100\n" + "RESB(x-y)\tc=5、f=96\n" + "\n" + "※故障率判定\n" + "\n" + "・CC(x) c=1、f=100\n" + "x=故障率。擲出骰值x以上時、需在大失敗發生同時輸出（參照「大失敗＆故障」）\n" + "沒有大失敗時，無論成功或失敗只需參考[故障]來輸出(並非成功或失敗來輸出，而是覆蓋上去並對其輸出)\n" + "\n" + "・CCB(x) c=5、f=96\n" + "同上\n" + "\n" + "・瘋狂表\n" + "・短期瘋期　Short／長期瘋狂　Longer\n" + "\n");
     self.$setPrefixes(["CC(B)?\\(\\d+\\)", "CC(B)?.*", "RES(B)?.*", "CBR(B)?\\(\\d+,\\d+\\)"]);
     
     Opal.def(self, '$initialize', $Cthulhu_ChineseTraditional_initialize$1 = function $$initialize() {
@@ -104,14 +104,14 @@
         
         output = "" + "(1D100<=" + (diff) + ")";
         if ($truthy($rb_gt(broken_num, 0))) {
-          output = $rb_plus(output, "" + " \u6545\u969C\u7387[" + (broken_num) + "]")};
+          output = $rb_plus(output, "" + " 故障率[" + (broken_num) + "]")};
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = $rb_plus(output, "" + " \uFF1E " + (total_n));
-        output = $rb_plus(output, "" + " \uFF1E " + (self.$getCheckResultText(total_n, diff, broken_num)));
+        output = $rb_plus(output, "" + " ＞ " + (total_n));
+        output = $rb_plus(output, "" + " ＞ " + (self.$getCheckResultText(total_n, diff, broken_num)));
       } else {
         
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = "" + "(1D100) \uFF1E " + (total_n);
+        output = "" + "(1D100) ＞ " + (total_n);
       };
       return output;
     }, $Cthulhu_ChineseTraditional_getCheckResult$3.$$arity = 1);
@@ -134,31 +134,31 @@
           diff_special = 1};};
       if ($truthy(($truthy($a = $rb_le(total_n, diff)) ? $rb_lt(total_n, 100) : $a))) {
         
-        result = "\u6210\u529F";
+        result = "成功";
         if ($truthy($rb_gt(diff_special, 0))) {
           if ($truthy($rb_le(total_n, self.critical_percentage))) {
             if ($truthy($rb_le(total_n, diff_special))) {
-              result = "\u6C7A\u5B9A\u6027\u7684\u6210\u529F/\u7279\u6B8A"
+              result = "決定性的成功/特殊"
             } else {
-              result = "\u6C7A\u5B9A\u6027\u7684\u6210\u529F"
+              result = "決定性的成功"
             }
           } else if ($truthy($rb_le(total_n, diff_special))) {
-            result = "\u7279\u6B8A"}};
+            result = "特殊"}};
       } else {
         
-        result = "\u5931\u6557";
+        result = "失敗";
         if ($truthy($rb_gt(diff_special, 0))) {
           if ($truthy(($truthy($a = $rb_ge(total_n, $rb_minus(101, self.fumble_percentage))) ? $rb_lt(diff, 100) : $a))) {
             
-            result = "\u81F4\u547D\u6027\u5931\u6557";
+            result = "致命性失敗";
             fumble = true;}};
       };
       if ($truthy($rb_gt(broken_num, 0))) {
         if ($truthy($rb_ge(total_n, broken_num))) {
           if ($truthy(fumble)) {
-            result = $rb_plus(result, "/\u6545\u969C")
+            result = $rb_plus(result, "/故障")
           } else {
-            result = "\u6545\u969C"
+            result = "故障"
           }}};
       return result;
     }, $Cthulhu_ChineseTraditional_getCheckResultText$4.$$arity = -3);
@@ -175,12 +175,12 @@
       value = m['$[]'](2).$to_i();
       target = $rb_plus($rb_times(value, 5), 50);
       if ($truthy($rb_lt(target, 5))) {
-        return "" + "(1d100<=" + (target) + ") \uFF1E \u81EA\u52D5\u5931\u6557"};
+        return "" + "(1d100<=" + (target) + ") ＞ 自動失敗"};
       if ($truthy($rb_gt(target, 95))) {
-        return "" + "(1d100<=" + (target) + ") \uFF1E \u81EA\u52D5\u6210\u529F"};
+        return "" + "(1d100<=" + (target) + ") ＞ 自動成功"};
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       result = self.$getCheckResultText(total_n, target);
-      return "" + "(1d100<=" + (target) + ") \uFF1E " + (total_n) + " \uFF1E " + (result);
+      return "" + "(1d100<=" + (target) + ") ＞ " + (total_n) + " ＞ " + (result);
     }, $Cthulhu_ChineseTraditional_getRegistResult$5.$$arity = 1);
     return (Opal.def(self, '$getCombineRoll', $Cthulhu_ChineseTraditional_getCombineRoll$6 = function $$getCombineRoll(command) {
       var $a, $b, self = this, m = nil, diff_1 = nil, diff_2 = nil, total = nil, result_1 = nil, result_2 = nil, successList = nil, succesCount = nil, rank = nil;
@@ -196,7 +196,7 @@
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
-      successList = ["\u6C7A\u5B9A\u6027\u6210\u529F/\u7279\u6B8A", "\u6C7A\u5B9A\u6027\u6210\u529F", "\u7279\u6B8A", "\u6210\u529F"];
+      successList = ["決定性成功/特殊", "決定性成功", "特殊", "成功"];
       succesCount = 0;
       if ($truthy(successList['$include?'](result_1))) {
         succesCount = $rb_plus(succesCount, 1)};
@@ -204,13 +204,13 @@
         succesCount = $rb_plus(succesCount, 1)};
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
-        return "\u6210\u529F"
+        return "成功"
       } else if (succesCount['$=='](1)) {
-        return "\u90E8\u5206\u6027\u6210\u529F"
+        return "部分性成功"
       } else {
-        return "\u5931\u6557"
+        return "失敗"
       }; return nil; })();
-      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") \uFF1E " + (total) + "[" + (result_1) + "," + (result_2) + "] \uFF1E " + (rank);
+      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") ＞ " + (total) + "[" + (result_1) + "," + (result_2) + "] ＞ " + (rank);
     }, $Cthulhu_ChineseTraditional_getCombineRoll$6.$$arity = 1), nil) && 'getCombineRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

@@ -19,9 +19,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "TokyoGhostResearch");
-    Opal.const_set($nesting[0], 'NAME', "\u6771\u4EAC\u30B4\u30FC\u30B9\u30C8\u30EA\u30B5\u30FC\u30C1");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u3046\u304D\u3088\u3046\u3053\u304A\u3059\u3068\u308A\u3055\u3042\u3061");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5224\u5B9A\n" + "\u30FB\u30BF\u30B9\u30AF\u51E6\u7406\u306F\u76EE\u6A19\u5024\u4EE5\u4E0A\u306E\u5024\u3067\u6210\u529F\u3068\u306A\u308A\u307E\u3059\u3002\n" + "  1d10>={\u76EE\u6A19\u5024}\n" + "  \u4F8B\uFF1A\u76EE\u6A19\u5024\u300C5\u300D\u306E\u5834\u5408\u30015\uFF5E0\u3067\u6210\u529F\n" + "\u5404\u7A2E\u8868\n" + "  \u30FB\u5C0E\u5165\u8868  OP\n" + "  \u30FB\u4E00\u822C\u30C8\u30E9\u30D6\u30EB\u8868  TB\n");
+    Opal.const_set($nesting[0], 'NAME', "東京ゴーストリサーチ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "とうきようこおすとりさあち");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "判定\n" + "・タスク処理は目標値以上の値で成功となります。\n" + "  1d10>={目標値}\n" + "  例：目標値「5」の場合、5～0で成功\n" + "各種表\n" + "  ・導入表  OP\n" + "  ・一般トラブル表  TB\n");
     self.$setPrefixes(["OP", "TB", "TK?\\(\\d+\\)"]);
     
     Opal.def(self, '$rollDiceCommand', $TokyoGhostResearch_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -48,8 +48,8 @@
         
         output = $rb_plus(output, "" + "(1D10<=" + (diff) + ")");
         $b = self.$roll(1, 10), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = $rb_plus(output, $rb_plus(" \uFF1E ", total_n.$to_s()));
-        output = $rb_plus(output, $rb_plus(" \uFF1E ", self.$getCheckResultText(total_n, diff)));};
+        output = $rb_plus(output, $rb_plus(" ＞ ", total_n.$to_s()));
+        output = $rb_plus(output, $rb_plus(" ＞ ", self.$getCheckResultText(total_n, diff)));};
       return output;
     }, $TokyoGhostResearch_getCheckResult$2.$$arity = 1);
     
@@ -58,9 +58,9 @@
 
       
       if ($truthy($rb_ge(total_n, diff))) {
-        result = "\u6210\u529F"
+        result = "成功"
       } else {
-        result = "\u5931\u6557"
+        result = "失敗"
       };
       return result;
     }, $TokyoGhostResearch_getCheckResultText$3.$$arity = 2);
@@ -69,8 +69,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u5C0E\u5165\u8868";
-      table = [[1, "\u3010\u75C5\u4F11\u4E2D\u65AD\u3011\u4F53\u8ABF\u4E0D\u826F\u307E\u305F\u306F\u602A\u6211\u3067\u7642\u990A\u4E2D\u3060\u3063\u305F\u304C\u5F37\u5236\u53EC\u559A\u3055\u308C\u305F\u3002"], [2, "\u3010\u5FD9\u6BBA\u4E2D\u3011\u5225\u306E\u696D\u52D9\u3067\u5FD9\u6BBA\u4E2D\u3067\u3042\u3063\u305F\u3002"], [3, "\u3010\u51FA\u5F35\u5E30\u308A\u3011\u9060\u65B9\u3067\u306E\u4ED5\u4E8B\u304B\u3089\u623B\u3063\u305F\u3070\u304B\u308A\u3002"], [4, "\u3010\u4F11\u6687\u53D6\u308A\u6D88\u3057\u3011\u4F11\u6687\u4E2D\u3060\u3063\u305F\u304C\u547C\u3073\u623B\u3055\u308C\u305F\u3002"], [5, "\u3010\u5E73\u5E38\u904B\u8EE2\u3011\u3044\u3064\u3082\u3069\u304A\u308A\u306E\u4ED5\u4E8B\u4E2D\u3060\u3063\u305F\u3002"], [6, "\u3010\u4F11\u6687\u660E\u3051\u3011\u5341\u5206\u306B\u4F11\u990A\u3092\u3068\u3063\u305F\u3042\u3068\u3067\u3001\u5FC3\u8EAB\u3068\u3082\u306B\u5145\u5B9F\u3057\u3066\u3044\u308B\u3002"], [7, "\u3010\u4EBA\u751F\u306E\u5C90\u8DEF\u3011\u4EBA\u751F\u306E\u5C90\u8DEF\u306B\u307E\u3055\u306B\u5DEE\u3057\u639B\u304B\u3063\u305F\u3068\u3053\u308D\u3067\u3042\u3063\u305F\u3002"], [8, "\u3010\u540C\u7A93\u4F1A\u3011\u304B\u3064\u3066\u306E\u540C\u7D1A\u751F\u306B\u4F1A\u3044\u3001\u5DEE\u3092\u5B9F\u611F\u3057\u305F\u3070\u304B\u308A\u3060\u3063\u305F\u3002"], [9, "\u3010\u8EE2\u8077\u6D3B\u52D5\u4E2D\u3011\u8EE2\u8077\u3092\u8003\u3048\u3066\u6C42\u4EBA\u30B5\u30A4\u30C8\u3092\u898B\u3066\u3044\u308B\u3068\u3053\u308D\u3060\u3063\u305F\u3002"], [10, "\u3010\u30B5\u30DC\u30EA\u4E2D\u3011\u4ED5\u4E8B\u3092\u30B5\u30DC\u3063\u3066\u3044\u308B\u3068\u3053\u308D\u306B\u547C\u3073\u51FA\u3057\u304C\u3042\u3063\u305F\u3002"]];
+      name = "導入表";
+      table = [[1, "【病休中断】体調不良または怪我で療養中だったが強制召喚された。"], [2, "【忙殺中】別の業務で忙殺中であった。"], [3, "【出張帰り】遠方での仕事から戻ったばかり。"], [4, "【休暇取り消し】休暇中だったが呼び戻された。"], [5, "【平常運転】いつもどおりの仕事中だった。"], [6, "【休暇明け】十分に休養をとったあとで、心身ともに充実している。"], [7, "【人生の岐路】人生の岐路にまさに差し掛かったところであった。"], [8, "【同窓会】かつての同級生に会い、差を実感したばかりだった。"], [9, "【転職活動中】転職を考えて求人サイトを見ているところだった。"], [10, "【サボリ中】仕事をサボっているところに呼び出しがあった。"]];
       return self.$get_1d10_table_result(name, table);
     }, $TokyoGhostResearch_tgr_opening_table$4.$$arity = 0);
     
@@ -78,8 +78,8 @@
       var self = this, name = nil, table = nil;
 
       
-      name = "\u4E00\u822C\u30C8\u30E9\u30D6\u30EB\u8868";
-      table = [[1, "\u30C8\u30E9\u30D6\u30EB\u304C\u751F\u3058\u305F\u304C\u3001\u9593\u4E00\u9AEA\u3001\u5371\u6A5F\u3092\u8131\u3057\u305F\u3002\u3010\u30C0\u30E1\u30FC\u30B8\u306A\u3057\u3011"], [2, "\u3069\u3046\u306B\u304B\u30BF\u30B9\u30AF\u3092\u51E6\u7406\u3057\u305F\u304C\u3001\u975E\u5E38\u306B\u75B2\u52B4\u3057\u3066\u3057\u307E\u3063\u305F\u3002\u3010\u8089\u4F53\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [3, "\u30BF\u30B9\u30AF\u51E6\u7406\u306E\u904E\u7A0B\u3067\u8CA0\u50B7\u3057\u3066\u3057\u307E\u3063\u305F\u3002\u3010\u8089\u4F53\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [4, "\u6050\u6016\u3084\u6DF7\u4E71\u3001\u30B9\u30C8\u30EC\u30B9\u306A\u3069\u3067\u7CBE\u795E\u306E\u5747\u8861\u3092\u5D29\u3057\u3066\u3057\u307E\u3063\u305F\u3002\u3010\u7CBE\u795E\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [5, "\u904E\u53BB\u306E\u30C8\u30E9\u30A6\u30DE\u306A\u3069\u3092\u601D\u3044\u51FA\u3057\u3001\u6C17\u5206\u304C\u6C88\u3093\u3067\u3057\u307E\u3063\u305F\u3002\u3010\u7CBE\u795E\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [6, "\u81EA\u8EAB\u306E\u4FE1\u7528\u3092\u30AD\u30BA\u3064\u3051\u305F\u308A\u3001\u6C5A\u540D\u3092\u80CC\u8CA0\u3063\u3066\u3057\u307E\u3063\u305F\u3002\u3010\u74B0\u5883\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [7, "\u4F1A\u793E\u3084\u4E0A\u53F8\u306E\u4E0D\u8208\u3092\u8CB7\u3063\u3066\u3057\u307E\u3063\u305F\u3002\u3010\u74B0\u5883\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [8, "\u75B2\u52B4\u56F0\u618A\u3067\u52D5\u304F\u3053\u3068\u3082\u307E\u307E\u306A\u3089\u306A\u3044\u3002\u3010\u8089\u4F53\u30C0\u30E1\u30FC\u30B81\u70B9\uFF0B\u7CBE\u795E\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [9, "\u8CA0\u50B7\u3057\u305F\u3046\u3048\u3001\u4F1A\u793E\u306B\u640D\u5BB3\u3092\u4E0E\u3048\u3066\u3057\u307E\u3063\u305F\u3002\u3010\u8089\u4F53\u30C0\u30E1\u30FC\u30B81\u70B9\uFF0B\u74B0\u5883\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"], [10, "\u4E0A\u53F8\u304B\u3089\u53B3\u3057\u304F\u53F1\u8CAC\u3055\u308C\u3001\u307E\u305A\u3044\u7ACB\u5834\u306B\u306A\u3063\u305F\u3002\u3010\u7CBE\u795E\u30C0\u30E1\u30FC\u30B81\u70B9\uFF0B\u74B0\u5883\u30C0\u30E1\u30FC\u30B81\u70B9\u3011"]];
+      name = "一般トラブル表";
+      table = [[1, "トラブルが生じたが、間一髪、危機を脱した。【ダメージなし】"], [2, "どうにかタスクを処理したが、非常に疲労してしまった。【肉体ダメージ1点】"], [3, "タスク処理の過程で負傷してしまった。【肉体ダメージ1点】"], [4, "恐怖や混乱、ストレスなどで精神の均衡を崩してしまった。【精神ダメージ1点】"], [5, "過去のトラウマなどを思い出し、気分が沈んでしまった。【精神ダメージ1点】"], [6, "自身の信用をキズつけたり、汚名を背負ってしまった。【環境ダメージ1点】"], [7, "会社や上司の不興を買ってしまった。【環境ダメージ1点】"], [8, "疲労困憊で動くこともままならない。【肉体ダメージ1点＋精神ダメージ1点】"], [9, "負傷したうえ、会社に損害を与えてしまった。【肉体ダメージ1点＋環境ダメージ1点】"], [10, "上司から厳しく叱責され、まずい立場になった。【精神ダメージ1点＋環境ダメージ1点】"]];
       return self.$get_1d10_table_result(name, table);
     }, $TokyoGhostResearch_tgr_common_trouble_table$5.$$arity = 0);
     
@@ -94,7 +94,7 @@
     return (Opal.def(self, '$get_table_result', $TokyoGhostResearch_get_table_result$7 = function $$get_table_result(name, dice, output) {
       var self = this;
 
-      return "" + (name) + "(" + (dice) + ") \uFF1E " + (output)
+      return "" + (name) + "(" + (dice) + ") ＞ " + (output)
     }, $TokyoGhostResearch_get_table_result$7.$$arity = 3), nil) && 'get_table_result';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

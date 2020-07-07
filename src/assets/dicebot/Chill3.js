@@ -20,8 +20,8 @@
     
     Opal.const_set($nesting[0], 'ID', "Chill3");
     Opal.const_set($nesting[0], 'NAME', "Chill 3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3061\u308B3");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB1D100\u3067\u5224\u5B9A\u6642\u306B\u6210\u5426\u3001Botch\u3092\u5224\u5B9A\n" + "\u3000\u4F8B\uFF091D100<=50\n" + "\u3000\u3000\u3000Chill3 : (1D100<=50) \uFF1E 55 \uFF1E Botch\n");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ちる3");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・1D100で判定時に成否、Botchを判定\n" + "　例）1D100<=50\n" + "　　　Chill3 : (1D100<=50) ＞ 55 ＞ Botch\n");
     return (Opal.def(self, '$check_1D100', $Chill3_check_1D100$1 = function $$check_1D100(total, dice_total, cmp_op, target) {
       var $a, self = this, tens = nil, ones = nil;
 
@@ -35,21 +35,21 @@
       if (tens['$=='](ones)) {
         if ($truthy(($truthy($a = $rb_gt(total, target)) ? $a : dice_total['$=='](100)))) {
           if ($truthy($rb_gt(target, 100))) {
-            return " \uFF1E \u5931\u6557"
+            return " ＞ 失敗"
           } else {
-            return " \uFF1E Botch"
+            return " ＞ Botch"
           }
         } else {
-          return " \uFF1E \uFF23\u6210\u529F"
+          return " ＞ Ｃ成功"
         }
       } else if ($truthy(($truthy($a = $rb_le(total, target)) ? $a : dice_total['$=='](1)))) {
         if ($truthy($rb_le(total, $rb_divide(target, 2)))) {
-          return " \uFF1E \uFF28\u6210\u529F"
+          return " ＞ Ｈ成功"
         } else {
-          return " \uFF1E \uFF2C\u6210\u529F"
+          return " ＞ Ｌ成功"
         }
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $Chill3_check_1D100$1.$$arity = 4), nil) && 'check_1D100';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

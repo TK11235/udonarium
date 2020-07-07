@@ -26,8 +26,8 @@
     
     Opal.const_set($nesting[0], 'ID', "RecordOfSteam");
     Opal.const_set($nesting[0], 'NAME', "Record of Steam");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308C\u3053\u304A\u3068\u304A\u3075\u3059\u3061\u3044\u3080");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "2S2@1\n" + "RecordOfSteam : (2S2@1) \uFF1E 1,2,3,4 \uFF1E 1\u56DE\u8EE2 \uFF1E \u6210\u529F\u65702\n" + "\n" + "4S3@2\n" + "RecordOfSteam : (4S3@2) \uFF1E 2,1,2,4,4,4,2,3,4,5,6,6 \uFF1E 4\u56DE\u8EE2 \uFF1E \u6210\u529F\u65705\n");
+    Opal.const_set($nesting[0], 'SORT_KEY', "れこおとおふすちいむ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "2S2@1\n" + "RecordOfSteam : (2S2@1) ＞ 1,2,3,4 ＞ 1回転 ＞ 成功数2\n" + "\n" + "4S3@2\n" + "RecordOfSteam : (4S3@2) ＞ 2,1,2,4,4,4,2,3,4,5,6,6 ＞ 4回転 ＞ 成功数5\n");
     self.$setPrefixes(["\\d+S\\d+.*"]);
     
     Opal.def(self, '$rollDiceCommand', $RecordOfSteam_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -45,14 +45,14 @@
       criticalValue = ($truthy($a = criticalValue) ? $a : 1);
       criticalValue = criticalValue.$to_i();
       if ($truthy($rb_ge(diceCount, 150))) {
-        return "(\u591A\u5206)\u7121\u9650\u500B\u306A\u306E\u3067\u632F\u308C\u307E\u305B\u3093\uFF01 \u30E4\u30E1\u30C6\u30AF\u30C0\u30B5\u30A4\u3001(\u30D7\u30ED\u30BB\u30B9\u304C)\u6B7B\u3093\u3067\u3057\u307E\u3044\u307E\u3059\u3063"};
+        return "(多分)無限個なので振れません！ ヤメテクダサイ、(プロセスが)死んでしまいますっ"};
       if ($truthy($rb_ge(criticalValue, 3))) {
-        return "(\u591A\u5206)\u7121\u9650\u500B\u306A\u306E\u3067\u632F\u308C\u307E\u305B\u3093\uFF01 \u30E4\u30E1\u30C6\u30AF\u30C0\u30B5\u30A4\u3001(\u30D7\u30ED\u30BB\u30B9\u304C)\u6B7B\u3093\u3067\u3057\u307E\u3044\u307E\u3059\u3063"};
+        return "(多分)無限個なので振れません！ ヤメテクダサイ、(プロセスが)死んでしまいますっ"};
       specialValue = criticalValue;
       $b = self.$getDiceRollResult(diceCount, targetNumber, criticalValue, specialValue), $a = Opal.to_ary($b), (rollResult = ($a[0] == null ? nil : $a[0])), (successCount = ($a[1] == null ? nil : $a[1])), (roundCount = ($a[2] == null ? nil : $a[2])), (specialCount = ($a[3] == null ? nil : $a[3])), (fumbleCount = ($a[4] == null ? nil : $a[4])), $b;
-      output = "" + "(" + (command) + ") \uFF1E " + (rollResult);
+      output = "" + "(" + (command) + ") ＞ " + (rollResult);
       if ($truthy($rb_gt(output.$length(), $gvars.SEND_STR_MAX))) {
-        output = "" + "(" + (command) + ") \uFF1E ..."};
+        output = "" + "(" + (command) + ") ＞ ..."};
       roundCountText = self.$getRoundCountText(roundCount);
       successText = self.$getSuccessText(successCount);
       specialText = self.$getSpecialText(specialCount);
@@ -132,7 +132,7 @@
       
       if ($truthy($rb_le(roundCount, 0))) {
         return ""};
-      return "" + " \uFF1E " + (roundCount) + "\u56DE\u8EE2";
+      return "" + " ＞ " + (roundCount) + "回転";
     }, $RecordOfSteam_getRoundCountText$5.$$arity = 1);
     
     Opal.def(self, '$getSuccessText', $RecordOfSteam_getSuccessText$6 = function $$getSuccessText(successCount) {
@@ -140,15 +140,15 @@
 
       
       if ($truthy($rb_gt(successCount, 0))) {
-        return "" + " \uFF1E \u6210\u529F\u6570" + (successCount)};
-      return " \uFF1E \u5931\u6557";
+        return "" + " ＞ 成功数" + (successCount)};
+      return " ＞ 失敗";
     }, $RecordOfSteam_getSuccessText$6.$$arity = 1);
     
     Opal.def(self, '$getSpecialText', $RecordOfSteam_getSpecialText$7 = function $$getSpecialText(specialCount) {
       var self = this;
 
       if (specialCount['$=='](1)) {
-        return " \uFF1E \u30B9\u30DA\u30B7\u30E3\u30EB"
+        return " ＞ スペシャル"
       } else {
         return nil
       }
@@ -157,7 +157,7 @@
       var self = this;
 
       if (fumbleCount['$=='](1)) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else {
         return nil
       }

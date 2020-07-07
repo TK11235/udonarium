@@ -31,9 +31,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "BlindMythos");
-    Opal.const_set($nesting[0], 'NAME', "\u30D6\u30E9\u30A4\u30F3\u30C9\u30FB\u30DF\u30C8\u30B9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3075\u3089\u3044\u3093\u3068\u307F\u3068\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\uFF1ABMx@y>=z\u3001BMSx@y>=z\n" + "  \u3000x:\u30B9\u30AD\u30EB\u30EC\u30D9\u30EB\n" + "\u3000\u3000y:\u76EE\u6A19\u96E3\u6613\u5EA6\uFF08\u7701\u7565\u53EF\u3002\u30C7\u30D5\u30A9\u30EB\u30C84\uFF09\n" + "\u3000\u3000z:\u5FC5\u8981\u6210\u529F\u5EA6\n" + "\u3000BM\u30B3\u30DE\u30F3\u30C9\u306F\u30C0\u30A4\u30B9\u306E\u632F\u308A\u8DB3\u3057\u3092\u5E38\u306B\u884C\u3044\u3001\n" + "\u3000BMS\u306F\u632F\u308A\u8DB3\u3057\u3092\u81EA\u52D5\u3067\u306F\u884C\u3044\u307E\u305B\u3093\u3002\n" + " \u4F8B\uFF09BM>=1\u3000BM@3>=1\u3000BMS2>=1\n" + "\n" + "\u30FB\u5224\u5B9A\u632F\u308A\u8DB3\u3057\uFF1AReRollx,x,x...@y>=1\n" + "  \u3000x:\u632F\u308B\u30C0\u30A4\u30B9\u306E\u500B\u6570\n" + "\u3000\u3000y:\u76EE\u6A19\u96E3\u6613\u5EA6\uFF08\u7701\u7565\u53EF\u3002\u30C7\u30D5\u30A9\u30EB\u30C84\uFF09\n" + "\u3000\u3000z:\u5FC5\u8981\u6210\u529F\u5EA6\n" + "\u3000\u632F\u308A\u8DB3\u3057\u3092\u81EA\u52D5\u3067\u884C\u308F\u306A\u3044\u5834\u5408\uFF08BMS\u30B3\u30DE\u30F3\u30C9\uFF09\u306B\u4F7F\u7528\u3057\u307E\u3059\u3002\n" + "\n" + "\u30FBLE\uFF1A\u5931\u3046\u611F\u60C5\u8868\n" + "\u30FB\u611F\u60C5\u5F8C\u907A\u75C7\u8868 ESx\n" + "\u3000ESH\uFF1A\u559C\u3001ESA\uFF1A\u6012\u3001ESS\uFF1A\u54C0\u3001ESP\uFF1A\u697D\u3001ESL\uFF1A\u611B\u3001ESE\uFF1A\u611F\n" + "\u30FBDT\uFF1A\u6C5A\u67D3\u30C1\u30E3\u30FC\u30C8\n" + "\u30FBRPxyz\uFF1A\u5B88\u8B77\u661F\u8868\u30C1\u30A7\u30C3\u30AF\n" + " xyz:\u5B88\u8B77\u661F\u30CA\u30F3\u30D0\u30FC\u3092\u6307\u5B9A\n" + " \u4F8B\uFF09RP123\u3000RP258\n");
+    Opal.const_set($nesting[0], 'NAME', "ブラインド・ミトス");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ふらいんとみとす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定：BMx@y>=z、BMSx@y>=z\n" + "  　x:スキルレベル\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　BMコマンドはダイスの振り足しを常に行い、\n" + "　BMSは振り足しを自動では行いません。\n" + " 例）BM>=1　BM@3>=1　BMS2>=1\n" + "\n" + "・判定振り足し：ReRollx,x,x...@y>=1\n" + "  　x:振るダイスの個数\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　振り足しを自動で行わない場合（BMSコマンド）に使用します。\n" + "\n" + "・LE：失う感情表\n" + "・感情後遺症表 ESx\n" + "　ESH：喜、ESA：怒、ESS：哀、ESP：楽、ESL：愛、ESE：感\n" + "・DT：汚染チャート\n" + "・RPxyz：守護星表チェック\n" + " xyz:守護星ナンバーを指定\n" + " 例）RP123　RP258\n");
     
     Opal.def(self, '$rollDiceCommand', $BlindMythos_rollDiceCommand$1 = function $$rollDiceCommand(command) {
       var $a, $b, self = this, text = nil, isStop = nil;
@@ -177,8 +177,8 @@
           };
           return i.$to_i();}, $$8.$$s = self, $$8.$$arity = 1, $$8));
         if ($truthy(isReRoll)) {
-          message = $rb_plus(message, " \uFF1E ")};
-        message = $rb_plus(message, "" + "(" + (commandText) + ") \uFF1E " + (diceCount) + "D6[" + (diceText) + "] \uFF1E ");
+          message = $rb_plus(message, " ＞ ")};
+        message = $rb_plus(message, "" + "(" + (commandText) + ") ＞ " + (diceCount) + "D6[" + (diceText) + "] ＞ ");
         $b = self.$getSuccessResultText(diceList, judgeNumber), $a = Opal.to_ary($b), (success = ($a[0] == null ? nil : $a[0])), (countOne = ($a[1] == null ? nil : $a[1])), (resultText = ($a[2] == null ? nil : $a[2])), $b;
         if ($truthy(isReRoll)) {
         } else {
@@ -218,14 +218,14 @@
             i = nil;
           };
           return i.$count();}, $$11.$$s = self, $$11.$$arity = 1, $$11)).$join(","));
-        return (message = $rb_plus(message, "" + "\u3001\u30EA\u30ED\u30FC\u30EB[" + (rerollText) + "]"));}, $$7.$$s = self, $$7.$$arity = 2, $$7));
+        return (message = $rb_plus(message, "" + "、リロール[" + (rerollText) + "]"));}, $$7.$$s = self, $$7.$$arity = 2, $$7));
       rerollCommand = "";
       if ($truthy(rerollTargetList['$empty?']())) {
       } else {
         
         rerollCommand = "" + "ReRoll" + (rerollTargetList.$join(",")) + (judgeNumberText) + ">=" + (targetNumber);
         if ($truthy(isStop)) {
-          message = $rb_plus(message, "" + "\n \uFF1E \u30B3\u30DE\u30F3\u30C9\uFF1A" + (rerollCommand))};
+          message = $rb_plus(message, "" + "\n ＞ コマンド：" + (rerollCommand))};
       };
       canReRoll = rerollCommand['$empty?']()['$!']();
       if ($truthy(canReRoll)) {
@@ -270,29 +270,29 @@
         return $rb_plus(sum, i);}, $$14.$$s = self, $$14.$$arity = 2, $$14));
       result = "";
       if ($truthy($rb_gt(successList.$size(), 1))) {
-        result = $rb_plus(result, "" + "\n \uFF1E \u6700\u7D42\u6210\u529F\u6570:" + (success))};
+        result = $rb_plus(result, "" + "\n ＞ 最終成功数:" + (success))};
       if ($truthy(($truthy($a = canReRoll) ? isStop : $a))) {
         
         result = $rb_plus(result, "\n");
         if ($truthy($rb_ge(success, targetNumber))) {
-          result = $rb_plus(result, " \uFF1E \u73FE\u72B6\u3067\u6210\u529F\u3002\u30B3\u30DE\u30F3\u30C9\u5B9F\u884C\u3067\u8FFD\u52A0\u30EA\u30ED\u30FC\u30EB\u3082\u53EF\u80FD")
+          result = $rb_plus(result, " ＞ 現状で成功。コマンド実行で追加リロールも可能")
         } else {
           
-          result = $rb_plus(result, " \uFF1E \u73FE\u72B6\u306E\u307E\u307E\u3067\u306F\u5931\u6557");
+          result = $rb_plus(result, " ＞ 現状のままでは失敗");
           if ($truthy($rb_ge(countOne, 1))) {
-            result = $rb_plus(result, "" + "\u3002\u6C5A\u67D3\u30DD\u30A4\u30F3\u30C8+" + (countOne))};
+            result = $rb_plus(result, "" + "。汚染ポイント+" + (countOne))};
         };
         return result;};
       if ($truthy($rb_ge(success, targetNumber))) {
         
-        result = $rb_plus(result, " \uFF1E \u6210\u529F");
+        result = $rb_plus(result, " ＞ 成功");
         if ($truthy($rb_ge(bitList.$size(), 1))) {
-          result = $rb_plus(result, "" + "\u3001\u7981\u66F8\u30D3\u30C3\u30C8\u767A\u751F[" + (bitList.$join(",")) + "]")};
+          result = $rb_plus(result, "" + "、禁書ビット発生[" + (bitList.$join(",")) + "]")};
       } else {
         
-        result = $rb_plus(result, " \uFF1E \u5931\u6557");
+        result = $rb_plus(result, " ＞ 失敗");
         if ($truthy($rb_ge(countOne, 1))) {
-          result = $rb_plus(result, "" + "\u3002\u6C5A\u67D3\u30DD\u30A4\u30F3\u30C8+" + (countOne))};
+          result = $rb_plus(result, "" + "。汚染ポイント+" + (countOne))};
       };
       return result;
     }, $BlindMythos_getTotalResultMessageText$12.$$arity = 6);
@@ -345,7 +345,7 @@
           return nil;
         };
         return (success = $rb_plus(success, 1));}, $$19.$$s = self, $$19.$$arity = 1, $$19));
-      result = "" + "\u6210\u529F\u6570:" + (success);
+      result = "" + "成功数:" + (success);
       return [success, countOne, result];
     }, $BlindMythos_getSuccessResultText$18.$$arity = 2);
     
@@ -366,7 +366,7 @@
         };
         return i.$to_i();}, $$21.$$s = self, $$21.$$arity = 1, $$21));
       diceList = self.$getRulingPlanetDice();
-      matchResult = "\u5931\u6557";
+      matchResult = "失敗";
       (function(){var $brk = Opal.new_brk(); try {return $send(targetNumbers, 'each', [], ($$22 = function(i){var self = $$22.$$s || this;
 
       
@@ -376,14 +376,14 @@
         };
         if ($truthy(diceList['$include?'](i))) {
           
-          matchResult = "\u767A\u52D5";
+          matchResult = "発動";
           
           Opal.brk(nil, $brk);
         } else {
           return nil
         };}, $$22.$$s = self, $$22.$$brk = $brk, $$22.$$arity = 1, $$22))
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
-      text = "" + "\u5B88\u8B77\u661F\u8868\u30C1\u30A7\u30C3\u30AF(" + (targetNumbers.$join(",")) + ") \uFF1E " + (diceList.$count()) + "D10[" + (diceList.$join(",")) + "] \uFF1E " + (matchResult);
+      text = "" + "守護星表チェック(" + (targetNumbers.$join(",")) + ") ＞ " + (diceList.$count()) + "D10[" + (diceList.$join(",")) + "] ＞ " + (matchResult);
       return text;
     }, $BlindMythos_getRulingPlanetDiceCommandResult$20.$$arity = 1);
     
@@ -418,14 +418,14 @@
       } else {
         return nil
       };
-      table = "" + "\u6C5A\u67D3\u30C1\u30E3\u30FC\u30C8\u3092\uFF12\u56DE\u632F\u308A\u3001\u305D\u306E\u52B9\u679C\u3092\u9069\u7528\u3059\u308B\uFF081\u30FB2-2,5\u30FB6-12 \u306A\u3089\u632F\u308A\u76F4\u3059\uFF09\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\uFF12\u3064\u306B\uFF14\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u3055\u3089\u306B\u6C5A\u67D3\u304C\uFF12\u5897\u3048\u308B\n" + "\uFF30\uFF23\u5168\u54E1\u3001\uFF11\u3064\u306E\u3010\u8A18\u61B6\u3011\u306E\u4E21\u65B9\u306E\u5024\u304C\uFF10\u306B\u306A\u308B\u3002\u3053\u306E\u3068\u304D\u30A2\u30AF\u30ED\u30D0\u30C3\u30C8\u30C0\u30A4\u30B9\u7372\u5F97\u4E0D\u53EF\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\uFF11\u3064\u306B\uFF14\u30C0\u30E1\u30FC\u30B8\u3002\u3053\u306E\u3068\u304D\u30A2\u30AF\u30ED\u30D0\u30C3\u30C8\u30C0\u30A4\u30B9\u7372\u5F97\u4E0D\u53EF\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u3059\u3079\u3066\u306B\uFF11\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u3055\u3089\u306B\u6C5A\u67D3\u304C\uFF13\u5897\u3048\u308B\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u3059\u3079\u3066\u306B\uFF11\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u30A2\u30AF\u30ED\u30D0\u30C3\u30C8\u30C0\u30A4\u30B9\u3092\uFF30\uFF23\u4EBA\u6570\u5206\u5931\u3046\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\u3002\u7981\u66F8\u30D3\u30C3\u30C8\u3092\u3059\u3079\u3066\u5931\u3046\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\uFF12\u3064\u306B\uFF13\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u3055\u3089\u306B\u6C5A\u67D3\u304C\uFF11\u5897\u3048\u308B\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF11\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\uFF11\u3064\u306B\uFF14\u30C0\u30E1\u30FC\u30B8\u3002\u7981\u66F8\u30D3\u30C3\u30C8\u3092\u3059\u3079\u3066\u5931\u3046\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\uFF11\u3064\u306E\u3010\u8A18\u61B6\u3011\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u300C\u55AA\u5931\u300D\u305D\u308C\u305E\u308C\u306B\uFF13\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF11\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\uFF13\u3064\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u3068\u300C\u55AA\u5931\u300D\u305D\u308C\u305E\u308C\uFF11\u3064\u306B\uFF13\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\uFF13\u3064\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u3059\u3079\u3066\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u306B1 \u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u3072\u3068\u3064\u306E\u3010\u8A18\u61B6\u3011\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u300C\u55AA\u5931\u300D\u305D\u308C\u305E\u308C\u306B\uFF13\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u3072\u3068\u3064\u306B\uFF14\u30C0\u30E1\u30FC\u30B8\u3002\u7981\u66F8\u30D3\u30C3\u30C8\u3092\u3059\u3079\u3066\u5931\u3046\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF11\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\uFF12\u3064\u306B\uFF13\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u3055\u3089\u306B\u6C5A\u67D3\u304C\uFF11\u5897\u3048\u308B\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\u3002\u7981\u66F8\u30D3\u30C3\u30C8\u3092\u3059\u3079\u3066\u5931\u3046\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF11\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u30A2\u30AF\u30ED\u30D0\u30C3\u30C8\u30C0\u30A4\u30B9\u3092\uFF30\uFF23\u4EBA\u6570\u5206\u5931\u3046\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF11\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u3055\u3089\u306B\u6C5A\u67D3\u304C\uFF13\u5897\u3048\u308B\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\uFF11\u3064\u306B\uFF14\u30C0\u30E1\u30FC\u30B8\u3002\u3053\u306E\u3068\u304D\u30A2\u30AF\u30ED\u30D0\u30C3\u30C8\u30C0\u30A4\u30B9\u7372\u5F97\u4E0D\u53EF\n" + "\uFF30\uFF23\u5168\u54E1\u3001\uFF11\u3064\u306E\u3010\u8A18\u61B6\u3011\u306E\u4E21\u65B9\u306E\u5024\u304C\uFF10\u306B\u306A\u308B\u3002\u3053\u306E\u3068\u304D\u30A2\u30AF\u30ED\u30D0\u30C3\u30C8\u30C0\u30A4\u30B9\u7372\u5F97\u4E0D\u53EF\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\u3002\u305D\u306E\u5F8C\u3055\u3089\u306B\u6C5A\u67D3\u304C\uFF12\u5897\u3048\u308B\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\uFF12\u3064\u306B\uFF14\u30C0\u30E1\u30FC\u30B8\n" + "\uFF30\uFF23\u5168\u54E1\u306E\u300C\u30C8\u30E9\u30A6\u30DE\u300D\u300C\u55AA\u5931\u300D\u3059\u3079\u3066\u306B\uFF12\u30C0\u30E1\u30FC\u30B8\n" + "\u6C5A\u67D3\u30C1\u30E3\u30FC\u30C8\u3092\uFF12\u56DE\u632F\u308A\u3001\u305D\u306E\u52B9\u679C\u3092\u9069\u7528\u3059\u308B\uFF081\u30FB2-2,5\u30FB6-12 \u306A\u3089\u632F\u308A\u76F4\u3059\uFF09\n";
+      table = "" + "汚染チャートを２回振り、その効果を適用する（1・2-2,5・6-12 なら振り直す）\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに２ダメージ\n" + "ＰＣ全員の「喪失」２つに４ダメージ\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ。その後さらに汚染が２増える\n" + "ＰＣ全員、１つの【記憶】の両方の値が０になる。このときアクロバットダイス獲得不可\n" + "ＰＣ全員の「喪失」１つに４ダメージ。このときアクロバットダイス獲得不可\n" + "ＰＣ全員の「トラウマ」すべてに１ダメージ。その後さらに汚染が３増える\n" + "ＰＣ全員の「トラウマ」すべてに１ダメージ。その後アクロバットダイスをＰＣ人数分失う\n" + "ＰＣ全員の「喪失」すべてに２ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」２つに３ダメージ。その後さらに汚染が１増える\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「喪失」１つに４ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ\n" + "ＰＣ全員の１つの【記憶】の「トラウマ」「喪失」それぞれに３ダメージ\n" + "ＰＣ全員の「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「トラウマ」３つに２ダメージ\n" + "ＰＣ全員の「トラウマ」と「喪失」それぞれ１つに３ダメージ\n" + "ＰＣ全員の「喪失」３つに２ダメージ\n" + "ＰＣ全員のすべての「トラウマ」に1 ダメージ\n" + "ＰＣ全員のひとつの【記憶】の「トラウマ」「喪失」それぞれに３ダメージ\n" + "ＰＣ全員の「喪失」すべてに２ダメージ\n" + "ＰＣ全員の「トラウマ」ひとつに４ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに１ダメージ\n" + "ＰＣ全員の「喪失」２つに３ダメージ。その後さらに汚染が１増える\n" + "ＰＣ全員の「トラウマ」すべてに２ダメージ。禁書ビットをすべて失う\n" + "ＰＣ全員の「喪失」すべてに１ダメージ。その後アクロバットダイスをＰＣ人数分失う\n" + "ＰＣ全員の「喪失」すべてに１ダメージ。その後さらに汚染が３増える\n" + "ＰＣ全員の「トラウマ」１つに４ダメージ。このときアクロバットダイス獲得不可\n" + "ＰＣ全員、１つの【記憶】の両方の値が０になる。このときアクロバットダイス獲得不可\n" + "ＰＣ全員の「喪失」すべてに２ダメージ。その後さらに汚染が２増える\n" + "ＰＣ全員の「トラウマ」２つに４ダメージ\n" + "ＰＣ全員の「トラウマ」「喪失」すべてに２ダメージ\n" + "汚染チャートを２回振り、その効果を適用する（1・2-2,5・6-12 なら振り直す）\n";
       table = table.$split("\n");
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice1 = ($a[0] == null ? nil : $a[0])), $b;
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice2 = ($a[0] == null ? nil : $a[0])), $b;
       index = $rb_minus($rb_plus($rb_times($rb_minus(dice2, 2), 3), $rb_divide(dice1, 2.0).$ceil()), 1);
-      return "" + "\u6C5A\u67D3\u30C1\u30E3\u30FC\u30C8(" + (dice1) + "," + (dice2) + ") \uFF1E " + (table['$[]'](index));
+      return "" + "汚染チャート(" + (dice1) + "," + (dice2) + ") ＞ " + (table['$[]'](index));
     }, $BlindMythos_getDurtyTableCommandReuslt$25.$$arity = 1);
-    Opal.const_set($nesting[0], 'TABLES', $hash2(["LE", "ESH", "ESA", "ESS", "ESP", "ESL", "ESE"], {"LE": $hash2(["name", "type", "table"], {"name": "\u5931\u3046\u611F\u60C5\u8868", "type": "1D6", "table": ["\u559C\uFF1A\u559C\u3073\u306F\u6D88\u3048\u305F\u3002\u5B09\u3057\u3044\u6C17\u6301\u3061\u3068\u306F\u3001\u306A\u3093\u3060\u3063\u305F\u3060\u308D\u3046\u3002", "\u6012\uFF1A\u6FC0\u60C5\u306F\u5931\u308F\u308C\u3001\u618E\u3057\u307F\u3082\u3069\u3053\u304B\u3078\u3068\u6D88\u3048\u308B\u3002", "\u54C0\uFF1A\u3069\u3093\u306A\u306B\u8F9B\u304F\u3066\u3082\u3001\u60B2\u3057\u3055\u3092\u611F\u3058\u306A\u3044\u3002\u3069\u3046\u3084\u3089\u6D99\u3082\u6DB8\u308C\u305F\u3089\u3057\u3044\u3002", "\u697D\uFF1A\u3082\u306F\u3084\u697D\u3057\u3044\u3053\u3068\u306A\u3069\u306A\u3044\u3002\u5E0C\u671B\u3092\u62B1\u304F\u3060\u3051\u7121\u99C4\u306A\u306E\u3060\u3002", "\u611B\uFF1A\u611B\u306A\u3069\u5E7B\u60F3\u2026\u2026\u7121\u529B\u3067\u511A\u3044\u3001\u5F79\u306B\u7ACB\u305F\u306A\u3044\u4E16\u8FF7\u3044\u8A00\u3060\u3002", "\u611F\uFF1A\u306A\u306B\u3092\u898B\u3066\u3082\u3001\u611F\u52D5\u306F\u306A\u3044\u3002\u5FC3\u306F\u51CD\u3066\u3064\u3044\u3066\u3044\u308B\u3002"]}), "ESH": $hash2(["name", "type", "table"], {"name": "\u300C\u559C\u300D\u306E\u611F\u60C5\u5F8C\u907A\u75C7\u8868", "type": "2D6", "table": ["\u65E5\u3005\u559C\u3073\u3092\u6C42\u3081\u3066\u3057\u307E\u3046\u3002", "\u65E5\u3005\u559C\u3073\u3092\u6C42\u3081\u3066\u3057\u307E\u3046\u3002", "\u5B09\u3057\u3044\u6642\u9593\u304C\u9577\u7D9A\u304D\u3057\u306A\u3044\u3002", "\u7D20\u76F4\u306B\u559C\u3073\u3092\u5171\u6709\u3067\u304D\u306A\u3044\u3053\u3068\u304C\u3042\u308B\u3002", "\u5C0F\u3055\u306A\u3053\u3068\u3067\u5927\u304D\u304F\u559C\u3073\u3092\u611F\u3058\u308B\u3002", "\u5C0F\u3055\u306A\u3053\u3068\u3067\u5927\u304D\u304F\u559C\u3073\u3092\u611F\u3058\u308B\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u300C\u559C\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u559C\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u559C\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002"]}), "ESA": $hash2(["name", "type", "table"], {"name": "\u300C\u6012\u300D\u306E\u611F\u60C5\u5F8C\u907A\u75C7\u8868", "type": "2D6", "table": ["\u59CB\u7D42\u4E0D\u6A5F\u5ACC\u306B\u306A\u308B\u3002", "\u59CB\u7D42\u4E0D\u6A5F\u5ACC\u306B\u306A\u308B\u3002", "\u4E00\u5EA6\u6012\u308B\u3068\u3001\u306A\u304B\u306A\u304B\u53CE\u307E\u3089\u306A\u3044\u3002", "\u6012\u308A\u3063\u307D\u304F\u306A\u308B", "\u6012\u308A\u304B\u305F\u304C\u6FC0\u3057\u304F\u306A\u308B\u3002", "\u6012\u308A\u304B\u305F\u304C\u6FC0\u3057\u304F\u306A\u308B\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u300C\u6012\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u6012\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u6012\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002"]}), "ESS": $hash2(["name", "type", "table"], {"name": "\u300C\u54C0\u300D\u306E\u611F\u60C5\u5F8C\u907A\u75C7\u8868", "type": "2D6", "table": ["\u4E00\u5EA6\u6D99\u304C\u51FA\u308B\u3068\u306A\u304B\u306A\u304B\u6B62\u307E\u3089\u306A\u3044\u3002", "\u4E00\u5EA6\u6D99\u304C\u51FA\u308B\u3068\u306A\u304B\u306A\u304B\u6B62\u307E\u3089\u306A\u3044\u3002", "\u591C\u3001\u54C0\u3057\u3044\u3053\u3068\u3092\u601D\u3044\u51FA\u3057\u3066\u76EE\u304C\u899A\u3081\u308B\u3002", "\u4E0D\u610F\u306B\u54C0\u3057\u3044\u6C17\u6301\u3061\u306B\u306A\u308B\u3002", "\u6D99\u3082\u308D\u304F\u306A\u308B\u3002", "\u6D99\u3082\u308D\u304F\u306A\u308B\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u300C\u54C0\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u54C0\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u54C0\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002"]}), "ESP": $hash2(["name", "type", "table"], {"name": "\u300C\u697D\u300D\u306E\u611F\u60C5\u5F8C\u907A\u75C7\u8868", "type": "2D6", "table": ["\u7A81\u7136\u967D\u6C17\u306B\u306A\u3063\u305F\u308A\u3001\u4E0D\u610F\u306B\u7B11\u3044\u51FA\u3057\u3066\u3057\u307E\u3046\u3002", "\u7A81\u7136\u967D\u6C17\u306B\u306A\u3063\u305F\u308A\u3001\u4E0D\u610F\u306B\u7B11\u3044\u51FA\u3057\u3066\u3057\u307E\u3046\u3002", "\u5468\u308A\u304C\u697D\u3057\u304F\u306A\u3055\u305D\u3046\u3060\u3068\u4E0D\u5B89\u306B\u306A\u308B\u3002", "\u697D\u3057\u3044\u3053\u3068\u304C\u306A\u3044\u3068\u843D\u3061\u7740\u304B\u306A\u3044\u3002", "\u4E9B\u7D30\u306A\u3053\u3068\u3067\u3082\u7B11\u3063\u3066\u3057\u307E\u3046\u3002", "\u4E9B\u7D30\u306A\u3053\u3068\u3067\u3082\u7B11\u3063\u3066\u3057\u307E\u3046\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u300C\u697D\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u697D\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u697D\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002"]}), "ESL": $hash2(["name", "type", "table"], {"name": "\u300C\u611B\u300D\u306E\u611F\u60C5\u5F8C\u907A\u75C7\u8868", "type": "2D6", "table": ["\u5C11\u3057\u3067\u3082\u6C17\u306B\u306A\u308B\u76F8\u624B\u306B\u611B\u3092\u6C42\u3081\u3066\u3057\u307E\u3046\u3002", "\u5C11\u3057\u3067\u3082\u6C17\u306B\u306A\u308B\u76F8\u624B\u306B\u611B\u3092\u6C42\u3081\u3066\u3057\u307E\u3046\u3002", "\u611B\u3059\u308B\u76F8\u624B\uFF08\u604B\u4EBA\u30FB\u5BB6\u65CF\u30FB\u30DA\u30C3\u30C8\u30FB\u7A7A\u60F3\uFF09\u304B\u3089\u96E2\u308C\u305F\u304F\u306A\u3044\u3002", "\u8AB0\u5F7C\u69CB\u308F\u305A\u512A\u3057\u304F\u3057\u3066\u3057\u307E\u3046\u3002", "\u3072\u3068\u308A\u3067\u3044\u308B\u3068\u4E0D\u5B89\u3092\u611F\u3058\u308B\u3002", "\u3072\u3068\u308A\u3067\u3044\u308B\u3068\u4E0D\u5B89\u3092\u611F\u3058\u308B\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u300C\u611B\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u611B\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u611B\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002"]}), "ESE": $hash2(["name", "type", "table"], {"name": "\u300C\u611F\u300D\u306E\u611F\u60C5\u5F8C\u907A\u75C7\u8868", "type": "2D6", "table": ["\u611F\u52D5\u3092\u5171\u6709\u3067\u304D\u306A\u3044\u76F8\u624B\u3092\u4E0D\u4FE1\u306B\u601D\u3063\u3066\u3057\u307E\u3046\u3002", "\u611F\u52D5\u3092\u5171\u6709\u3067\u304D\u306A\u3044\u76F8\u624B\u3092\u4E0D\u4FE1\u306B\u601D\u3063\u3066\u3057\u307E\u3046\u3002", "\u5B09\u3057\u304F\u3066\u3082\u54C0\u3057\u304F\u3066\u3082\u3059\u3050\u306B\u6D99\u304C\u51FA\u308B\u3002", "\u30EA\u30A2\u30AF\u30B7\u30E7\u30F3\u304C\u30AA\u30FC\u30D0\u30FC\u306B\u306A\u308B\u3002", "\u3061\u3087\u3063\u3068\u3057\u305F\u3053\u3068\u3067\u611F\u52D5\u3059\u308B\u3002", "\u3061\u3087\u3063\u3068\u3057\u305F\u3053\u3068\u3067\u611F\u52D5\u3059\u308B\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u5F71\u97FF\u306A\u3057\u3002", "\u300C\u611F\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u611F\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002", "\u300C\u611F\u300D\u306E\u5F8C\u907A\u75C7\u3092\u3072\u3068\u3064\u6D88\u3057\u3066\u3082\u3088\u3044\u3002"]})}).$freeze());
+    Opal.const_set($nesting[0], 'TABLES', $hash2(["LE", "ESH", "ESA", "ESS", "ESP", "ESL", "ESE"], {"LE": $hash2(["name", "type", "table"], {"name": "失う感情表", "type": "1D6", "table": ["喜：喜びは消えた。嬉しい気持ちとは、なんだっただろう。", "怒：激情は失われ、憎しみもどこかへと消える。", "哀：どんなに辛くても、悲しさを感じない。どうやら涙も涸れたらしい。", "楽：もはや楽しいことなどない。希望を抱くだけ無駄なのだ。", "愛：愛など幻想……無力で儚い、役に立たない世迷い言だ。", "感：なにを見ても、感動はない。心は凍てついている。"]}), "ESH": $hash2(["name", "type", "table"], {"name": "「喜」の感情後遺症表", "type": "2D6", "table": ["日々喜びを求めてしまう。", "日々喜びを求めてしまう。", "嬉しい時間が長続きしない。", "素直に喜びを共有できないことがある。", "小さなことで大きく喜びを感じる。", "小さなことで大きく喜びを感じる。", "影響なし。", "影響なし。", "「喜」の後遺症をひとつ消してもよい。", "「喜」の後遺症をひとつ消してもよい。", "「喜」の後遺症をひとつ消してもよい。"]}), "ESA": $hash2(["name", "type", "table"], {"name": "「怒」の感情後遺症表", "type": "2D6", "table": ["始終不機嫌になる。", "始終不機嫌になる。", "一度怒ると、なかなか収まらない。", "怒りっぽくなる", "怒りかたが激しくなる。", "怒りかたが激しくなる。", "影響なし。", "影響なし。", "「怒」の後遺症をひとつ消してもよい。", "「怒」の後遺症をひとつ消してもよい。", "「怒」の後遺症をひとつ消してもよい。"]}), "ESS": $hash2(["name", "type", "table"], {"name": "「哀」の感情後遺症表", "type": "2D6", "table": ["一度涙が出るとなかなか止まらない。", "一度涙が出るとなかなか止まらない。", "夜、哀しいことを思い出して目が覚める。", "不意に哀しい気持ちになる。", "涙もろくなる。", "涙もろくなる。", "影響なし。", "影響なし。", "「哀」の後遺症をひとつ消してもよい。", "「哀」の後遺症をひとつ消してもよい。", "「哀」の後遺症をひとつ消してもよい。"]}), "ESP": $hash2(["name", "type", "table"], {"name": "「楽」の感情後遺症表", "type": "2D6", "table": ["突然陽気になったり、不意に笑い出してしまう。", "突然陽気になったり、不意に笑い出してしまう。", "周りが楽しくなさそうだと不安になる。", "楽しいことがないと落ち着かない。", "些細なことでも笑ってしまう。", "些細なことでも笑ってしまう。", "影響なし。", "影響なし。", "「楽」の後遺症をひとつ消してもよい。", "「楽」の後遺症をひとつ消してもよい。", "「楽」の後遺症をひとつ消してもよい。"]}), "ESL": $hash2(["name", "type", "table"], {"name": "「愛」の感情後遺症表", "type": "2D6", "table": ["少しでも気になる相手に愛を求めてしまう。", "少しでも気になる相手に愛を求めてしまう。", "愛する相手（恋人・家族・ペット・空想）から離れたくない。", "誰彼構わず優しくしてしまう。", "ひとりでいると不安を感じる。", "ひとりでいると不安を感じる。", "影響なし。", "影響なし。", "「愛」の後遺症をひとつ消してもよい。", "「愛」の後遺症をひとつ消してもよい。", "「愛」の後遺症をひとつ消してもよい。"]}), "ESE": $hash2(["name", "type", "table"], {"name": "「感」の感情後遺症表", "type": "2D6", "table": ["感動を共有できない相手を不信に思ってしまう。", "感動を共有できない相手を不信に思ってしまう。", "嬉しくても哀しくてもすぐに涙が出る。", "リアクションがオーバーになる。", "ちょっとしたことで感動する。", "ちょっとしたことで感動する。", "影響なし。", "影響なし。", "「感」の後遺症をひとつ消してもよい。", "「感」の後遺症をひとつ消してもよい。", "「感」の後遺症をひとつ消してもよい。"]})}).$freeze());
     return self.$setPrefixes($rb_plus(["BM.*", "ReRoll\\d+.*", "RP\\d+", "DT"], $$($nesting, 'TABLES').$keys()));
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

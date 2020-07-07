@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "VampireTheMasquerade5th");
-    Opal.const_set($nesting[0], 'NAME', "\u30F4\u30A1\u30F3\u30D1\u30A4\u30A2\uFF1A\u30B6 \u30DE\u30B9\u30AB\u30EC\u30FC\u30C9 \u7B2C\uFF15\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3046\u3042\u3093\u306F\u3044\u3042\u3055\u307E\u3059\u304B\u308C\u3048\u30685");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u30B3\u30DE\u30F3\u30C9(nVTFx+x)\n" + "  \u6CE8\u610F\uFF1A\u96E3\u6613\u5EA6\u306F\u5FC5\u8981\u6210\u529F\u6570\u3092\u8868\u3059\n" + "\n" + "  \u96E3\u6613\u5EA6\u6307\u5B9A\uFF1A\u5224\u5B9A\u6210\u529F\u3068\u5931\u6557\u3001Critical\u5224\u5B9A\u3001\n" + "             \uFF08Hunger\u30C0\u30A4\u30B9\u304C\u3042\u308B\u5834\u5408\uFF09Messy Critical\u3068Bestial Failure\u30C1\u30A7\u30C3\u30AF\u3092\u884C\u3046\n" + "  \u4F8B) (\u96E3\u6613\u5EA6)VMF(\u30C0\u30A4\u30B9\u30D7\u30FC\u30EB)+(Hunger\u30C0\u30A4\u30B9)\n" + "      (\u96E3\u6613\u5EA6)VMF(\u30C0\u30A4\u30B9\u30D7\u30FC\u30EB)\n" + "\n" + "  \u96E3\u6613\u5EA6\u7701\u7565\uFF1A\u5224\u5B9A\u5931\u6557\u3001Critical\u3001\uFF08Hunger\u30C0\u30A4\u30B9\u304C\u3042\u308B\u5834\u5408\uFF09Bestial Failure\u30C1\u30A7\u30C3\u30AF\u3092\u884C\u3046\n" + "              \u5224\u5B9A\u6210\u529F\u3001Messy Critical\u306E\u30C1\u30A7\u30C3\u30AF\u3092\u884C\u308F\u306A\u3044\n" + "  \u4F8B) VMF(\u30C0\u30A4\u30B9\u30D7\u30FC\u30EB)+(Hunger\u30C0\u30A4\u30B9)\n" + "      VMF(\u30C0\u30A4\u30B9\u30D7\u30FC\u30EB)\n" + "\n" + "  \u96E3\u6613\u5EA60\u6307\u5B9A\uFF1A\u5168\u3066\u306E\u30C1\u30A7\u30C3\u30AF\u3092\u884C\u308F\u306A\u3044\n" + "  \u4F8B) 0VMF(\u30C0\u30A4\u30B9\u30D7\u30FC\u30EB)+(Hunger\u30C0\u30A4\u30B9)\n" + "      0VMF(\u30C0\u30A4\u30B9\u30D7\u30FC\u30EB)\n" + "\n");
+    Opal.const_set($nesting[0], 'NAME', "ヴァンパイア：ザ マスカレード 第５版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "うあんはいあさますかれえと5");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定コマンド(nVTFx+x)\n" + "  注意：難易度は必要成功数を表す\n" + "\n" + "  難易度指定：判定成功と失敗、Critical判定、\n" + "             （Hungerダイスがある場合）Messy CriticalとBestial Failureチェックを行う\n" + "  例) (難易度)VMF(ダイスプール)+(Hungerダイス)\n" + "      (難易度)VMF(ダイスプール)\n" + "\n" + "  難易度省略：判定失敗、Critical、（Hungerダイスがある場合）Bestial Failureチェックを行う\n" + "              判定成功、Messy Criticalのチェックを行わない\n" + "  例) VMF(ダイスプール)+(Hungerダイス)\n" + "      VMF(ダイスプール)\n" + "\n" + "  難易度0指定：全てのチェックを行わない\n" + "  例) 0VMF(ダイスプール)+(Hungerダイス)\n" + "      0VMF(ダイスプール)\n" + "\n");
     Opal.const_set($nesting[0], 'DIFFICULTY_INDEX', 1);
     Opal.const_set($nesting[0], 'DICE_POOL_INDEX', 3);
     Opal.const_set($nesting[0], 'HUNGER_DICE_INDEX', 5);
@@ -55,12 +55,12 @@
         $b = self.$makeDiceRoll(hungerDicePool), $a = Opal.to_ary($b), (hungerDiceText = ($a[0] == null ? nil : $a[0])), (hungerSuccessDice = ($a[1] == null ? nil : $a[1])), (hungerTenDice = ($a[2] == null ? nil : $a[2])), (hungerBotchDice = ($a[3] == null ? nil : $a[3])), $b;
         tenDice = $rb_plus(tenDice, hungerTenDice);
         successDice = $rb_plus(successDice, hungerSuccessDice);
-        resultText = "" + (resultText) + "+" + (hungerDicePool) + "D10) \uFF1E [" + (diceText) + "]+[" + (hungerDiceText) + "] ";
+        resultText = "" + (resultText) + "+" + (hungerDicePool) + "D10) ＞ [" + (diceText) + "]+[" + (hungerDiceText) + "] ";
       } else {
         
         hungerTenDice = 0;
         hungerBotchDice = 0;
-        resultText = "" + (resultText) + ") \uFF1E [" + (diceText) + "] ";
+        resultText = "" + (resultText) + ") ＞ [" + (diceText) + "] ";
       };
       successDice = $rb_plus(successDice, self.$getCriticalSuccess(tenDice));
       difficulty = (function() {if ($truthy(m['$[]']($$($nesting, 'DIFFICULTY_INDEX')))) {
@@ -68,7 +68,7 @@
       } else {
         return $$($nesting, 'NOT_CHECK_SUCCESS')
       }; return nil; })();
-      resultText = "" + (resultText) + " \u6210\u529F\u6570=" + (successDice);
+      resultText = "" + (resultText) + " 成功数=" + (successDice);
       if ($truthy($rb_gt(difficulty, 0))) {
         
         if ($truthy($rb_ge(successDice, difficulty))) {
@@ -76,7 +76,7 @@
         } else {
           judgmentResult = self.$getFailResult(hungerBotchDice)
         };
-        resultText = "" + (resultText) + " \u96E3\u6613\u5EA6=" + (difficulty) + (judgmentResult);
+        resultText = "" + (resultText) + " 難易度=" + (difficulty) + (judgmentResult);
       } else if ($truthy($rb_lt(difficulty, 0))) {
         
         if (successDice['$=='](0)) {
@@ -129,7 +129,7 @@
       var $a, self = this, judgmentResult = nil;
 
       
-      judgmentResult = "\uFF1A\u5224\u5B9A\u6210\u529F!";
+      judgmentResult = "：判定成功!";
       if ($truthy(($truthy($a = $rb_gt(hungerTenDice, 0)) ? isCritical : $a))) {
         return "" + (judgmentResult) + " [Messy Critical]"
       } else if ($truthy(isCritical)) {
@@ -140,7 +140,7 @@
       var self = this, judgmentResult = nil;
 
       
-      judgmentResult = "\uFF1A\u5224\u5B9A\u5931\u6557!";
+      judgmentResult = "：判定失敗!";
       if ($truthy($rb_gt(hungerBotchDice, 0))) {
         return "" + (judgmentResult) + " [Bestial Failure]"};
       return judgmentResult;

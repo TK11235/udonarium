@@ -22,9 +22,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Skynauts");
-    Opal.const_set($nesting[0], 'NAME', "\u6B6F\u8ECA\u306E\u5854\u306E\u63A2\u7A7A\u58EB");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3059\u304B\u3044\u306E\u304A\u3064");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u25C6\u5224\u5B9A\u3000(SNn)\u3001(2D6<=n)\u3000n:\u76EE\u6A19\u5024\uFF08\u7701\u7565\u6642:7\uFF09\n" + "\u3000\u4F8B\uFF09SN5\u3000SN5\u3000SN(3+2)\n" + "\u25C6\u822A\u884C\u30C1\u30A7\u30C3\u30AF\u3000(NV+n)\u3000n:\u4FEE\u6B63\u5024\uFF08\u7701\u7565\u6642:0\uFF09\n" + "\u3000\u4F8B\uFF09NV\u3000NV+1\n" + "\u25C6\u30C0\u30E1\u30FC\u30B8\u30C1\u30A7\u30C3\u30AF\u3000(Dx/y@m)\u3000x:\u30C0\u30E1\u30FC\u30B8\u5DE6\u5074\u306E\u5024\u3001y:\u30C0\u30E1\u30FC\u30B8\u53F3\u5074\u306E\u5024\n" + "\u3000m:\u300A\u5F3E\u9053\u5B66\u300B\uFF08\u7701\u7565\u53EF\uFF09\u4E0A:8\u3001\u4E0B:2\u3001\u5DE6:4\u3001\u53F3:6\n" + "\u3000\u98DB\u7A7A\u8247\u30B7\u30FC\u30C8\u5916\u306E\u5EA7\u6A19\u306F()\u304C\u4ED8\u304D\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09 D/4\u3000D19/2\u3000D/3@8\u3000D[\u5927\u63FA\u308C]/2\n" + "\u25C6\u7832\u6483\u5224\u5B9A+\u30C0\u30E1\u30FC\u30B8\u30C1\u30A7\u30C3\u30AF\u3000(BOMn/Dx/y@m)\u3000n:\u76EE\u6A19\u5024\uFF08\u7701\u7565\u6642:7\uFF09\n" + "\u3000x:\u30C0\u30E1\u30FC\u30B8\u5DE6\u5074\u306E\u5024\u3001y:\u30C0\u30E1\u30FC\u30B8\u53F3\u5074\u306E\u5024\n" + "\u3000m:\u300A\u5F3E\u9053\u5B66\u300B\uFF08\u7701\u7565\u53EF\uFF09\u4E0A:8\u3001\u4E0B:2\u3001\u5DE6:4\u3001\u53F3:6\n" + "\u3000\u4F8B\uFF09 BOM/D/4\u3000BOM9/D19@4\n" + "\u25C6\u300A\u56DE\u907F\u904B\u52D5\u300B\u3000(AVOn@mXX)\u3000n:\u76EE\u6A19\u5024\uFF08\u7701\u7565\u6642:7\uFF09\n" + "\u3000m:\u56DE\u907F\u65B9\u5411\u3002\u4E0A:8\u3001\u4E0B:2\u3001\u5DE6:4\u3001\u53F3:6\u3001XX\uFF1A\u30C0\u30E1\u30FC\u30B8\u30C1\u30A7\u30C3\u30AF\u7D50\u679C\n" + "\u3000\u4F8B\uFF09\n" + "\u3000AVO9@8[\u7E261,\u6A2A4],[\u7E262,\u6A2A6],[\u7E263,\u6A2A8]\u3000AVO@2[\u7E266,\u6A2A4],[\u7E262,\u6A2A6]\n");
+    Opal.const_set($nesting[0], 'NAME', "歯車の塔の探空士");
+    Opal.const_set($nesting[0], 'SORT_KEY', "すかいのおつ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "◆判定　(SNn)、(2D6<=n)　n:目標値（省略時:7）\n" + "　例）SN5　SN5　SN(3+2)\n" + "◆航行チェック　(NV+n)　n:修正値（省略時:0）\n" + "　例）NV　NV+1\n" + "◆ダメージチェック　(Dx/y@m)　x:ダメージ左側の値、y:ダメージ右側の値\n" + "　m:《弾道学》（省略可）上:8、下:2、左:4、右:6\n" + "　飛空艇シート外の座標は()が付きます。\n" + "　例） D/4　D19/2　D/3@8　D[大揺れ]/2\n" + "◆砲撃判定+ダメージチェック　(BOMn/Dx/y@m)　n:目標値（省略時:7）\n" + "　x:ダメージ左側の値、y:ダメージ右側の値\n" + "　m:《弾道学》（省略可）上:8、下:2、左:4、右:6\n" + "　例） BOM/D/4　BOM9/D19@4\n" + "◆《回避運動》　(AVOn@mXX)　n:目標値（省略時:7）\n" + "　m:回避方向。上:8、下:2、左:4、右:6、XX：ダメージチェック結果\n" + "　例）\n" + "　AVO9@8[縦1,横4],[縦2,横6],[縦3,横8]　AVO@2[縦6,横4],[縦2,横6]\n");
     self.$setPrefixes(["D.*", "2[Dd]6<=.*", "SN.*", "NV.*", "AVO.*", "BOM.*"]);
     
     Opal.def(self, '$initialize', $Skynauts_initialize$1 = function $$initialize() {
@@ -89,16 +89,16 @@
       } else {
         return m['$[]'](1).$to_i()
       }; return nil; })();
-      self.$debug("\u76EE\u6A19\u5024", target);
+      self.$debug("目標値", target);
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_le(total, 2))) {
-        result = "\u30D5\u30A1\u30F3\u30D6\u30EB"
+        result = "ファンブル"
       } else if ($truthy($rb_le(total, target))) {
-        result = "\u6210\u529F"
+        result = "成功"
       } else {
-        result = "\u5931\u6557"
+        result = "失敗"
       };
-      text = "" + "(2D6<=" + (target) + ") \uFF1E " + (total) + "[" + (diceText) + "] \uFF1E " + (total) + " \uFF1E " + (result);
+      text = "" + "(2D6<=" + (target) + ") ＞ " + (total) + "[" + (diceText) + "] ＞ " + (total) + " ＞ " + (result);
       return text;
     }, $Skynauts_getJudgeResult$3.$$arity = 1);
     
@@ -112,7 +112,7 @@
       };
       self.$debug("====navigationResult====");
       bonus = m['$[]'](2).$to_i();
-      self.$debug("\u79FB\u52D5\u4FEE\u6B63", bonus);
+      self.$debug("移動修正", bonus);
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       movePointBase = (function() {if ($truthy($rb_le($rb_divide(total, 2).$floor(), 0))) {
         return 1
@@ -120,12 +120,12 @@
         return $rb_divide(total, 2).$floor()
       }; return nil; })();
       movePoint = $rb_plus(movePointBase, bonus);
-      self.$debug("\u79FB\u52D5\u30A8\u30EA\u30A2\u6570", movePoint);
-      text = "" + "\u822A\u884C\u30C1\u30A7\u30C3\u30AF(\u6700\u4F4E1)\u3000(1D6/2+" + (bonus) + ") \uFF1E " + (total) + " /2+" + (bonus) + " \uFF1E ";
-      text = $rb_plus(text, "" + (movePointBase) + "+" + (bonus) + " \uFF1E " + (movePoint) + "\u30A8\u30EA\u30A2\u9032\u3080");
+      self.$debug("移動エリア数", movePoint);
+      text = "" + "航行チェック(最低1)　(1D6/2+" + (bonus) + ") ＞ " + (total) + " /2+" + (bonus) + " ＞ ";
+      text = $rb_plus(text, "" + (movePointBase) + "+" + (bonus) + " ＞ " + (movePoint) + "エリア進む");
       return text;
     }, $Skynauts_navigationResult$4.$$arity = 1);
-    Opal.const_set($nesting[0], 'DIRECTION_INFOS', $hash(1, $hash2(["name", "position_diff"], {"name": "\u5DE6\u4E0B", "position_diff": $hash2(["x", "y"], {"x": -1, "y": 1})}), 2, $hash2(["name", "position_diff"], {"name": "\u4E0B", "position_diff": $hash2(["x", "y"], {"x": 0, "y": 1})}), 3, $hash2(["name", "position_diff"], {"name": "\u53F3\u4E0B", "position_diff": $hash2(["x", "y"], {"x": 1, "y": 1})}), 4, $hash2(["name", "position_diff"], {"name": "\u5DE6", "position_diff": $hash2(["x", "y"], {"x": -1, "y": 0})}), 6, $hash2(["name", "position_diff"], {"name": "\u53F3", "position_diff": $hash2(["x", "y"], {"x": 1, "y": 0})}), 7, $hash2(["name", "position_diff"], {"name": "\u5DE6\u4E0A", "position_diff": $hash2(["x", "y"], {"x": -1, "y": -1})}), 8, $hash2(["name", "position_diff"], {"name": "\u4E0A", "position_diff": $hash2(["x", "y"], {"x": 0, "y": -1})}), 9, $hash2(["name", "position_diff"], {"name": "\u53F3\u4E0A", "position_diff": $hash2(["x", "y"], {"x": 1, "y": -1})})).$freeze());
+    Opal.const_set($nesting[0], 'DIRECTION_INFOS', $hash(1, $hash2(["name", "position_diff"], {"name": "左下", "position_diff": $hash2(["x", "y"], {"x": -1, "y": 1})}), 2, $hash2(["name", "position_diff"], {"name": "下", "position_diff": $hash2(["x", "y"], {"x": 0, "y": 1})}), 3, $hash2(["name", "position_diff"], {"name": "右下", "position_diff": $hash2(["x", "y"], {"x": 1, "y": 1})}), 4, $hash2(["name", "position_diff"], {"name": "左", "position_diff": $hash2(["x", "y"], {"x": -1, "y": 0})}), 6, $hash2(["name", "position_diff"], {"name": "右", "position_diff": $hash2(["x", "y"], {"x": 1, "y": 0})}), 7, $hash2(["name", "position_diff"], {"name": "左上", "position_diff": $hash2(["x", "y"], {"x": -1, "y": -1})}), 8, $hash2(["name", "position_diff"], {"name": "上", "position_diff": $hash2(["x", "y"], {"x": 0, "y": -1})}), 9, $hash2(["name", "position_diff"], {"name": "右上", "position_diff": $hash2(["x", "y"], {"x": 1, "y": -1})})).$freeze());
     
     Opal.def(self, '$getDirectionInfo', $Skynauts_getDirectionInfo$5 = function $$getDirectionInfo(direction, key, defaultValue) {
       var self = this, info = nil;
@@ -162,11 +162,11 @@
       fireText = self.$getFirePointText(firePoint, fireCount);
       if ($truthy(ballistics['$!='](0))) {
         
-        fireText = $rb_plus(fireText, " \uFF1E \u300A\u5F3E\u9053\u5B66\u300B:");
+        fireText = $rb_plus(fireText, " ＞ 《弾道学》:");
         fireText = $rb_plus(fireText, self.$getDirectionInfo(ballistics, "name", ""));
-        fireText = $rb_plus(fireText, "\n \uFF1E ");
+        fireText = $rb_plus(fireText, "\n ＞ ");
         fireText = $rb_plus(fireText, self.$getFirePointText(firePoint, fireCount, ballistics));};
-      text = "" + (command) + " \uFF1E " + (fireText);
+      text = "" + (command) + " ＞ " + (fireText);
       return text;
     }, $Skynauts_getFireResult$6.$$arity = 1);
     
@@ -183,13 +183,13 @@
         if (count == null) {
           count = nil;
         };
-        self.$debug("\n\u7832\u6483\u56DE\u6570", $rb_plus(count, 1));
+        self.$debug("\n砲撃回数", $rb_plus(count, 1));
         firePoint['$<<']([]);
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (yPos = ($a[0] == null ? nil : $a[0])), $b;
         $b = self.$roll(2, 6), $a = Opal.to_ary($b), (xPos = ($a[0] == null ? nil : $a[0])), $b;
         position = [xPos, yPos];
         firePoint['$[]'](-1)['$<<'](position);
-        self.$debug("\u7740\u5F3E\u70B9", firePoint);
+        self.$debug("着弾点", firePoint);
         return $send(fireRange.$split(/(?:)/), 'each', [], ($$9 = function(rangeText){var self = $$9.$$s || this, position_diff = nil;
 
         
@@ -197,12 +197,12 @@
           if (rangeText == null) {
             rangeText = nil;
           };
-          self.$debug("\u7BC4\u56F2", rangeText);
+          self.$debug("範囲", rangeText);
           position_diff = self.$getDirectionInfo(rangeText, "position_diff", $hash2([], {}));
           position = [$rb_plus(xPos, position_diff['$[]']("x").$to_i()), $rb_plus(yPos, position_diff['$[]']("y").$to_i())];
           firePoint['$[]'](-1)['$<<'](position);
-          return self.$debug("\u7740\u5F3E\u70B9:\u7BC4\u56F2", firePoint);}, $$9.$$s = self, $$9.$$arity = 1, $$9));}, $$8.$$s = self, $$8.$$arity = 1, $$8));
-      self.$debug("\n\u6700\u7D42\u7740\u5F3E\u70B9", firePoint);
+          return self.$debug("着弾点:範囲", firePoint);}, $$9.$$s = self, $$9.$$arity = 1, $$9));}, $$8.$$s = self, $$8.$$arity = 1, $$8));
+      self.$debug("\n最終着弾点", firePoint);
       return firePoint;
     }, $Skynauts_getFirePoint$7.$$arity = 2);
     
@@ -237,14 +237,14 @@
           };
           $b = self.$getMovePoint(x, y, direction), $a = Opal.to_ary($b), (x = ($a[0] == null ? nil : $a[0])), (y = ($a[1] == null ? nil : $a[1])), $b;
           text = $rb_plus(text, (function() {if ($truthy(self.$isInMapPosition(x, y))) {
-            return "" + "[\u7E26" + (y) + ",\u6A2A" + (x) + "]"
+            return "" + "[縦" + (y) + ",横" + (x) + "]"
           } else {
-            return "" + "([\u7E26" + (y) + ",\u6A2A" + (x) + "])"
+            return "" + "([縦" + (y) + ",横" + (x) + "])"
           }; return nil; })());
-          return self.$debug("\u7740\u5F3E\u70B9\u30C6\u30AD\u30B9\u30C8", text);}, $$12.$$s = self, $$12.$$arity = 2, $$12));
+          return self.$debug("着弾点テキスト", text);}, $$12.$$s = self, $$12.$$arity = 2, $$12));
         return fireTextList['$<<'](text);}, $$11.$$s = self, $$11.$$arity = 1, $$11));
       fireText = fireTextList.$join(",");
-      self.$debug("\n\u6700\u7D42\u7740\u5F3E\u70B9\u30C6\u30AD\u30B9\u30C8", fireText);
+      self.$debug("\n最終着弾点テキスト", fireText);
       return fireText;
     }, $Skynauts_getFirePointText$10.$$arity = -3);
     
@@ -259,14 +259,14 @@
 
       
       self.$debug("====getMovePoint====");
-      self.$debug("\u65B9\u5411", direction);
-      self.$debug("\u5EA7\u6A19\u79FB\u52D5\u524Dx", x);
-      self.$debug("\u5EA7\u6A19\u79FB\u52D5\u524Dy", y);
+      self.$debug("方向", direction);
+      self.$debug("座標移動前x", x);
+      self.$debug("座標移動前y", y);
       position_diff = self.$getDirectionInfo(direction, "position_diff", $hash2([], {}));
       x = $rb_plus(x, position_diff['$[]']("x").$to_i());
       y = $rb_plus(y, position_diff['$[]']("y").$to_i());
-      self.$debug("\n\u5EA7\u6A19\u79FB\u52D5\u5F8Cx", x);
-      self.$debug("\u5EA7\u6A19\u79FB\u52D5\u5F8Cy", y);
+      self.$debug("\n座標移動後x", x);
+      self.$debug("座標移動後y", y);
       return [x, y];
     }, $Skynauts_getMovePoint$14.$$arity = 3);
     
@@ -281,15 +281,15 @@
       self.$debug("====getBomberResult====", command);
       target = m['$[]'](1).$to_s();
       direction = m['$[]'](6).$to_i();
-      self.$debug("\u5F3E\u9053\u5B66\u65B9\u5411", direction);
-      text = "" + (command) + " \uFF1E ";
+      self.$debug("弾道学方向", direction);
+      text = "" + (command) + " ＞ ";
       text = $rb_plus(text, self.$getJudgeResult($rb_plus("SN", target)));
-      if ($truthy(/\u6210\u529F/['$==='](text))) {
+      if ($truthy(/成功/['$==='](text))) {
       } else {
         return text
       };
       fireCommand = command.$slice(/D([12346789]*)(\[.+\])*\/(\d+)(@([2468]))?/);
-      text = $rb_plus(text, "" + "\n \uFF1E " + (self.$getFireResult(fireCommand)));
+      text = $rb_plus(text, "" + "\n ＞ " + (self.$getFireResult(fireCommand)));
       return text;
     }, $Skynauts_getBomberResult$15.$$arity = 1);
     
@@ -297,27 +297,27 @@
       var self = this, m = nil, direction = nil, judgeCommand = nil, text = nil, pointCommand = nil, firePoint = nil, fireCount = nil;
 
       
-      if ($truthy((m = /^AVO(\d*)?(@([2468]))(\(?\[\u7E26\d+,\u6A2A\d+\]\)?,?)+$/.$match(command)))) {
+      if ($truthy((m = /^AVO(\d*)?(@([2468]))(\(?\[縦\d+,横\d+\]\)?,?)+$/.$match(command)))) {
       } else {
         return nil
       };
       self.$debug("====getAvoidResult====", command);
       direction = m['$[]'](3).$to_i();
-      self.$debug("\u56DE\u907F\u65B9\u5411", direction);
+      self.$debug("回避方向", direction);
       judgeCommand = command.$slice(/^AVO(\d*)?(@([2468]))/);
-      text = "" + (judgeCommand) + " \uFF1E \u300A\u56DE\u907F\u904B\u52D5\u300B";
+      text = "" + (judgeCommand) + " ＞ 《回避運動》";
       text = $rb_plus(text, self.$getJudgeResult($rb_plus("SN", $$($nesting, 'Regexp').$last_match(1).$to_s())));
-      if ($truthy(/\u6210\u529F/['$==='](text))) {
+      if ($truthy(/成功/['$==='](text))) {
       } else {
         return text
       };
-      pointCommand = command.$slice(/(\(?\[\u7E26\d+,\u6A2A\d+\]\)?,?)+/);
+      pointCommand = command.$slice(/(\(?\[縦\d+,横\d+\]\)?,?)+/);
       firePoint = self.$scanFirePoints(pointCommand);
       fireCount = firePoint.$size();
-      text = $rb_plus(text, "" + "\n \uFF1E " + (pointCommand));
-      text = $rb_plus(text, " \uFF1E \u300A\u56DE\u907F\u904B\u52D5\u300B:");
+      text = $rb_plus(text, "" + "\n ＞ " + (pointCommand));
+      text = $rb_plus(text, " ＞ 《回避運動》:");
       text = $rb_plus(text, self.$getDirectionInfo(direction, "name", ""));
-      text = $rb_plus(text, "\n \uFF1E ");
+      text = $rb_plus(text, "\n ＞ ");
       text = $rb_plus(text, self.$getFirePointText(firePoint, fireCount, direction));
       return text;
     }, $Skynauts_getAvoidResult$16.$$arity = 1);
@@ -356,7 +356,7 @@
           $writer = [-1, [x, y]];
           $send(firePoint['$[]'](-1), '[]=', Opal.to_a($writer));
           $writer[$rb_minus($writer["length"], 1)];;
-          return self.$debug("\u7740\u5F3E\u70B9", firePoint);}, $$19.$$s = self, $$19.$$arity = 1, $$19));}, $$18.$$s = self, $$18.$$arity = 1, $$18));
+          return self.$debug("着弾点", firePoint);}, $$19.$$s = self, $$19.$$arity = 1, $$19));}, $$18.$$s = self, $$18.$$arity = 1, $$18));
       return firePoint;
     }, $Skynauts_scanFirePoints$17.$$arity = 1), nil) && 'scanFirePoints';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

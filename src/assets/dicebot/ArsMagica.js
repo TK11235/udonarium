@@ -65,9 +65,9 @@ Opal.modules["utils/normalize"] = function(Opal) {
 
     
     Opal.const_set($nesting[0], 'ID', "ArsMagica");
-    Opal.const_set($nesting[0], 'NAME', "\u30A2\u30EB\u30B9\u30DE\u30AE\u30AB");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3042\u308B\u3059\u307E\u304D\u304B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u30B9\u30C8\u30EC\u30B9\u30C0\u30A4\u30B9\u3000(ArSx+y)\n" + "\u3000\"ArS(\u30DC\u30C3\u30C1\u30C0\u30A4\u30B9)+(\u4FEE\u6B63)\"\u3067\u3059\u3002\u5224\u5B9A\u306B\u3082\u4F7F\u3048\u307E\u3059\u3002R\u30B3\u30DE\u30F3\u30C9(1R10+y[m])\u306B\u8AAD\u66FF\u3092\u3057\u307E\u3059\u3002\n" + "\u3000\u30DC\u30C3\u30C1\u30C0\u30A4\u30B9\u3068\u4FEE\u6B63\u306F\u7701\u7565\u53EF\u80FD\u3067\u3059\u3002(\u30DC\u30C3\u30C1\u30C0\u30A4\u30B9\u3092\u7701\u7565\u3059\u308B\u30681\u3068\u3057\u3066\u6271\u3044\u307E\u3059)\n" + "\u3000botch\u30C0\u30A4\u30B9\u306E0\u306E\u6570\u304C2\u4EE5\u4E0A\u306E\u6642\u306F\u3001\u6570\u3048\u3066\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u3000\uFF08\u6CE8\u610F\uFF01\uFF09 botch\u306E\u5224\u65AD\u304C\u767A\u751F\u3057\u305F\u3068\u304D\u306B\u306F\u3001\u305D\u306E\u30C0\u30A4\u30B9\u3092\u542B\u3081\u3066\u30ED\u30FC\u30EB\u3057\u305F\u5168\u3066\u306E\u30C0\u30A4\u30B9\u3092[]\u306E\u4E2D\u306B\u4E26\u3079\u3066\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u3000\u4F8B) (1R10[5]) \uFF1E 0[0,1,8,0,8,1] \uFF1E Botch!\n" + "\u3000\u3000\u6700\u521D\u306E0\u304C\u5224\u65AD\u57FA\u6E96\u3067\u3001\u305D\u306E\u53F3\u50745\u3064\u304C\u30DC\u30C3\u30C1\u30C0\u30A4\u30B9\u3067\u3059\u30021*2,8*2,0*1\u306A\u306E\u30671botch\u3068\u3044\u3046\u8A33\u3067\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "アルスマギカ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "あるすまきか");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・ストレスダイス　(ArSx+y)\n" + "　\"ArS(ボッチダイス)+(修正)\"です。判定にも使えます。Rコマンド(1R10+y[m])に読替をします。\n" + "　ボッチダイスと修正は省略可能です。(ボッチダイスを省略すると1として扱います)\n" + "　botchダイスの0の数が2以上の時は、数えて表示します。\n" + "　（注意！） botchの判断が発生したときには、そのダイスを含めてロールした全てのダイスを[]の中に並べて表示します。\n" + "　例) (1R10[5]) ＞ 0[0,1,8,0,8,1] ＞ Botch!\n" + "　　最初の0が判断基準で、その右側5つがボッチダイスです。1*2,8*2,0*1なので1botchという訳です。\n");
     self.$setPrefixes(["ArS"]);
     
     Opal.def(self, '$initialize', $ArsMagica_initialize$1 = function $$initialize() {
@@ -137,7 +137,7 @@ Opal.modules["utils/normalize"] = function(Opal) {
         bonus = self.$parren_killer("" + "(0" + (bonusText) + ")").$to_i()
       };
       die = self.$rand(10);
-      output = "" + "(" + (m['$[]'](2)) + ") \uFF1E ";
+      output = "" + "(" + (m['$[]'](2)) + ") ＞ ";
       if (die['$=='](0)) {
         
         count0 = 0;
@@ -160,19 +160,19 @@ Opal.modules["utils/normalize"] = function(Opal) {
           
           bonus = 0;
           if ($truthy($rb_gt(count0, 1))) {
-            output = $rb_plus(output, "" + " \uFF1E " + (count0) + "Botch!")
+            output = $rb_plus(output, "" + " ＞ " + (count0) + "Botch!")
           } else {
-            output = $rb_plus(output, " \uFF1E Botch!")
+            output = $rb_plus(output, " ＞ Botch!")
           };
           cmp_op = nil;
         } else {
           
           if ($truthy($rb_gt(bonus, 0))) {
-            output = $rb_plus(output, "" + "+" + (bonus) + " \uFF1E " + (bonus))
+            output = $rb_plus(output, "" + "+" + (bonus) + " ＞ " + (bonus))
           } else if ($truthy($rb_lt(bonus, 0))) {
-            output = $rb_plus(output, "" + (bonus) + " \uFF1E " + (bonus))
+            output = $rb_plus(output, "" + (bonus) + " ＞ " + (bonus))
           } else {
-            output = $rb_plus(output, " \uFF1E 0")
+            output = $rb_plus(output, " ＞ 0")
           };
           total = bonus;
         };
@@ -192,25 +192,25 @@ Opal.modules["utils/normalize"] = function(Opal) {
           output = $rb_plus(output, "" + "[1," + (crit_dice) + "]")};
         total = $rb_plus(total, bonus);
         if ($truthy($rb_gt(bonus, 0))) {
-          output = $rb_plus(output, "" + "+" + (bonus) + " \uFF1E " + (total))
+          output = $rb_plus(output, "" + "+" + (bonus) + " ＞ " + (total))
         } else if ($truthy($rb_lt(bonus, 0))) {
-          output = $rb_plus(output, "" + (bonus) + " \uFF1E " + (total))};
+          output = $rb_plus(output, "" + (bonus) + " ＞ " + (total))};
       } else {
         
         total = $rb_plus(die, bonus);
         if ($truthy($rb_gt(bonus, 0))) {
-          output = $rb_plus(output, "" + (die) + "+" + (bonus) + " \uFF1E " + (total))
+          output = $rb_plus(output, "" + (die) + "+" + (bonus) + " ＞ " + (total))
         } else if ($truthy($rb_lt(bonus, 0))) {
-          output = $rb_plus(output, "" + (die) + (bonus) + " \uFF1E " + (total))
+          output = $rb_plus(output, "" + (die) + (bonus) + " ＞ " + (total))
         } else {
           output = $rb_plus(output, total.$to_s())
         };
       };
       if (cmp_op['$=='](">=")) {
         output = $rb_plus(output, (function() {if ($truthy($rb_ge(total, diff))) {
-          return " \uFF1E \u6210\u529F"
+          return " ＞ 成功"
         } else {
-          return " \uFF1E \u5931\u6557"
+          return " ＞ 失敗"
         }; return nil; })())};
       return "" + ": " + (output);
     }, $ArsMagica_arsmagica_stress$8.$$arity = 2), nil) && 'arsmagica_stress';

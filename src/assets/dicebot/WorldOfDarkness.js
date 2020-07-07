@@ -22,9 +22,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "WorldOfDarkness");
-    Opal.const_set($nesting[0], 'NAME', "\u30EF\u30FC\u30EB\u30C9\u30AA\u30D6\u30C0\u30FC\u30AF\u30CD\u30B9");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308F\u3042\u308B\u3068\u304A\u3075\u305F\u3042\u304F\u306D\u3059");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A\u30B3\u30DE\u30F3\u30C9(xSTn+y or xSTSn+y or xSTAn+y)\n" + "\u3000(\u30C0\u30A4\u30B9\u500B\u6570)ST(\u96E3\u6613\u5EA6)+(\u81EA\u52D5\u6210\u529F)\n" + "\u3000(\u30C0\u30A4\u30B9\u500B\u6570)STS(\u96E3\u6613\u5EA6)+(\u81EA\u52D5\u6210\u529F) \u203B\u51FA\u76EE10\u3067\u632F\u308A\u8DB3\u3057\n" + "\u3000(\u30C0\u30A4\u30B9\u500B\u6570)STA(\u96E3\u6613\u5EA6)+(\u81EA\u52D5\u6210\u529F) \u203B\u51FA\u76EE10\u306F2\u6210\u529F [20th\u30EB\u30FC\u30EB]\n" + "\n" + "\u3000\u96E3\u6613\u5EA6=\u7701\u7565\u66426\n" + "\u3000\u81EA\u52D5\u6210\u529F=\u7701\u7565\u66420\n");
+    Opal.const_set($nesting[0], 'NAME', "ワールドオブダークネス");
+    Opal.const_set($nesting[0], 'SORT_KEY', "わあるとおふたあくねす");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定コマンド(xSTn+y or xSTSn+y or xSTAn+y)\n" + "　(ダイス個数)ST(難易度)+(自動成功)\n" + "　(ダイス個数)STS(難易度)+(自動成功) ※出目10で振り足し\n" + "　(ダイス個数)STA(難易度)+(自動成功) ※出目10は2成功 [20thルール]\n" + "\n" + "　難易度=省略時6\n" + "　自動成功=省略時0\n");
     self.$setPrefixes(["\\d+ST.*"]);
     
     Opal.def(self, '$initialize', $WorldOfDarkness_initialize$1 = function $$initialize() {
@@ -86,13 +86,13 @@
           total_botch = $rb_plus(total_botch, botch);
         }};
       if ($truthy($rb_gt(total_success, 0))) {
-        sequence.$push("" + "\u6210\u529F\u6570" + (total_success))
+        sequence.$push("" + "成功数" + (total_success))
       } else if ($truthy($rb_gt(total_botch, 0))) {
-        sequence.$push("\u5927\u5931\u6557")
+        sequence.$push("大失敗")
       } else {
-        sequence.$push("\u5931\u6557")
+        sequence.$push("失敗")
       };
-      output = sequence.$join(" \uFF1E ");
+      output = sequence.$join(" ＞ ");
       secret = false;
       return [output, secret];
     }, $WorldOfDarkness_rollDiceCommand$2.$$arity = 1);

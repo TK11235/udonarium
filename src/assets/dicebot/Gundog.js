@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Gundog");
-    Opal.const_set($nesting[0], 'NAME', "\u30AC\u30F3\u30C9\u30C3\u30B0");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u304B\u3093\u3068\u3064\u304F");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5931\u6557\u3001\u6210\u529F\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u3068\u30ED\u30FC\u30EB\u306E\u9054\u6210\u5024\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "nD9\u30ED\u30FC\u30EB\u3082\u5BFE\u5FDC\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ガンドッグ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "かんとつく");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。\n" + "nD9ロールも対応。\n");
     
     Opal.def(self, '$check_1D100', $Gundog_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
       var self = this, dig10 = nil, dig1 = nil;
@@ -41,9 +41,9 @@
         return ""
       };
       if ($truthy($rb_ge(total, 100))) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else if ($truthy($rb_le(total, 1))) {
-        return " \uFF1E \u7D76\u5BFE\u6210\u529F(\u9054\u6210\u50241+SL)"
+        return " ＞ 絶対成功(達成値1+SL)"
       } else if ($truthy($rb_le(total, target))) {
         
         dig10 = $rb_divide(total, 10).$floor();
@@ -53,12 +53,12 @@
         if ($truthy($rb_ge(dig1, 10))) {
           dig1 = 0};
         if ($truthy($rb_le(dig1, 0))) {
-          return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB(\u9054\u6210\u502420+SL)"
+          return " ＞ クリティカル(達成値20+SL)"
         } else {
-          return "" + " \uFF1E \u6210\u529F(\u9054\u6210\u5024" + ($rb_plus(dig10, dig1)) + "+SL)"
+          return "" + " ＞ 成功(達成値" + ($rb_plus(dig10, dig1)) + "+SL)"
         };
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $Gundog_check_1D100$1.$$arity = 4);
     return (Opal.def(self, '$isD9', $Gundog_isD9$2 = function $$isD9() {

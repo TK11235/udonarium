@@ -20,8 +20,8 @@
     
     Opal.const_set($nesting[0], 'ID', "NJSLYRBATTLE");
     Opal.const_set($nesting[0], 'NAME', "NJSLYRBATTLE");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u306B\u3093\u3057\u3084\u3059\u308C\u3044\u3084\u3042\u306F\u3068\u308B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u30AB\u30E9\u30C6\u30ED\u30FC\u30EB\n" + "2d6<=(\u30AB\u30E9\u30C6\u70B9)\n" + "\u4F8B\uFF092d6<=5\n" + "(2D6<=5) \uFF1E 2[1,1] \uFF1E 2 \uFF1E \u6210\u529F \u91CD\u70B9 3 \u6E9C\u307E\u308B\n");
+    Opal.const_set($nesting[0], 'SORT_KEY', "にんしやすれいやあはとる");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・カラテロール\n" + "2d6<=(カラテ点)\n" + "例）2d6<=5\n" + "(2D6<=5) ＞ 2[1,1] ＞ 2 ＞ 成功 重点 3 溜まる\n");
     
     Opal.def(self, '$check_2D6', $NjslyrBattle_check_2D6$1 = function $$check_2D6(total, _dice_total, dice_list, cmp_op, target) {
       var self = this;
@@ -36,9 +36,9 @@
       var self = this;
 
       if ($truthy($rb_le(total, target))) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       }
     }, $NjslyrBattle_success_text$2.$$arity = 2);
     return (Opal.def(self, '$juuten', $NjslyrBattle_juuten$3 = function $$juuten(dice_list) {
@@ -49,7 +49,7 @@
       if (dice_list['$[]'](0)['$=='](dice_list['$[]'](1))) {
         juuten = $rb_plus(juuten, 1)};
       if ($truthy($rb_gt(juuten, 0))) {
-        return "" + " \u91CD\u70B9 " + (juuten) + " \u6E9C\u307E\u308B"
+        return "" + " 重点 " + (juuten) + " 溜まる"
       } else {
         return ""
       };

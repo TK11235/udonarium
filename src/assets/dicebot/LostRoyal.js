@@ -22,9 +22,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "LostRoyal");
-    Opal.const_set($nesting[0], 'NAME', "\u30ED\u30B9\u30C8\u30ED\u30A4\u30E4\u30EB");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u308D\u3059\u3068\u308D\u3044\u3084\u308B");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FBD66\u30C0\u30A4\u30B9\u3042\u308A\n" + "\n" + "\u884C\u70BA\u5224\u5B9A\n" + "\u3000LR[x,x,x,x,x,x]\n" + "\u3000\u3000x \u306E\u4E26\u3073\u306B\u306F\u3010\u5224\u5B9A\u8868\u3011\u306E\u6570\u5024\u3092\u9806\u756A\u306B\u5165\u529B\u3059\u308B\u3002\n" + "\u3000\u3000\uFF08\u4F8B\uFF1A LR[1,3,0,1,2] \uFF09\n" + "\n" + "\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\n" + "\u3000FC\n" + "\n" + "\u98A8\u529B\u6C7A\u5B9A\u8868\n" + "\u3000WPC\n" + "\n" + "\u611F\u60C5\u6C7A\u5B9A\u8868\n" + "\u3000EC\n" + "\n" + "\u5E0C\u671B\u70B9\u306E\u6C7A\u5B9A\n" + "\u3000HRx\n" + "\u3000\u3000x \u306B\u306F\u30C0\u30A4\u30B9\u306E\u6570\uFF08 1 - 2 \uFF09\u3092\u6307\u5B9A\n");
+    Opal.const_set($nesting[0], 'NAME', "ロストロイヤル");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ろすとろいやる");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・D66ダイスあり\n" + "\n" + "行為判定\n" + "　LR[x,x,x,x,x,x]\n" + "　　x の並びには【判定表】の数値を順番に入力する。\n" + "　　（例： LR[1,3,0,1,2] ）\n" + "\n" + "ファンブル表\n" + "　FC\n" + "\n" + "風力決定表\n" + "　WPC\n" + "\n" + "感情決定表\n" + "　EC\n" + "\n" + "希望点の決定\n" + "　HRx\n" + "　　x にはダイスの数（ 1 - 2 ）を指定\n");
     self.$setPrefixes(["LR\\[[0-5],[0-5],[0-5],[0-5],[0-5],[0-5]\\]", "FC", "WPC", "EC", "HR[1-2]"]);
     
     Opal.def(self, '$initialize', $LostRoyal_initialize$1 = function $$initialize() {
@@ -90,9 +90,9 @@
         }; return nil; })();
         text = $rb_plus(text, "" + " | " + (chained_sequence.$size()) + " chain! (" + (chained_sequence.$join(",")) + ") => " + ($rb_plus(total_score, bonus)));
         if ($truthy($rb_ge(chained_sequence.$size(), 3))) {
-          text = $rb_plus(text, " [\u30B9\u30DA\u30B7\u30E3\u30EB]")};
+          text = $rb_plus(text, " [スペシャル]")};
         if ($truthy(self['$fumble?'](keys, chained_sequence))) {
-          text = $rb_plus(text, " [\u30D5\u30A1\u30F3\u30D6\u30EB]")};
+          text = $rb_plus(text, " [ファンブル]")};
       };
       return text;
     }, $LostRoyal_check_lostroyal$3.$$arity = 1);
@@ -180,7 +180,7 @@
 
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (key = ($a[0] == null ? nil : $a[0])), $b;
-      text = ["\u4F55\u304B\u306E\u554F\u984C\u3067\u8A00\u3044\u4E89\u3044\u3001\u4E3B\u541B\u306B\u7121\u793C\u3092\u50CD\u3044\u3066\u3057\u307E\u3046\u3002\u3042\u306A\u305F\u306F\u4E3B\u541B\u306E\u540D\u8A89\u70B9\u3092\uFF11\u70B9\u5931\u3046\u304B\u3001\u3010\u6642\u9593\u3011\u3092\uFF11\u70B9\u6D88\u8CBB\u3057\u3066\u548C\u89E3\u306E\u8A71\u3057\u5408\u3044\u3092\u6301\u3064\u304B\u9078\u3079\u308B\u3002", "\u898B\u904E\u3054\u305B\u3070\u4EBA\u3005\u3092\u4E0D\u5E78\u306B\u3059\u308B\u5371\u967A\u306B\u906D\u9047\u3059\u308B\u3002\u3042\u306A\u305F\u306F\u9003\u3052\u51FA\u3057\u3066\u5192\u967A\u306E\u540D\u8A89\u70B9\u3092\uFF11\u70B9\u5931\u3046\u304B\u3001\u3053\u308C\u306B\u7ACB\u3061\u5411\u304B\u3044\u3010\u547D\u6570\u3011\u3092\uFF12\u70B9\u6E1B\u3089\u3059\u304B\u3092\u9078\u3079\u308B\u3002", "\u3042\u306A\u305F\u304C\u60F9\u304B\u308C\u305F\u306E\u306F\u597D\u610F\u306B\u4ED8\u3051\u8FBC\u3080\u4EBA\u3060\u3063\u305F\u3002\u3042\u306A\u305F\u306F\u305D\u306E\u5834\u3092\u53BB\u3063\u3066\u604B\u6155\u306E\u540D\u8A89\u70B9\u3092\uFF11\u70B9\u5931\u3046\u304B\u3010\u6B63\u7FA9\u3011\u3092\uFF11\u70B9\u6E1B\u3089\u3057\u3066\u793C\u3092\u5C3D\u304F\u3059\u304B\u3092\u9078\u3079\u308B\u3002", "\u91D1\u92AD\u7684\u306A\u554F\u984C\u3067\u3001\u751F\u547D\u3068\u9B42\u306E\u82E6\u3057\u307F\u3092\u80CC\u8CA0\u3046\u4EBA\u306B\u51FA\u4F1A\u3046\u3002\u3042\u306A\u305F\u306F\u5E87\u8B77\u306E\u540D\u8A89\u70B9\u3092\uFF11\u70B9\u5931\u3046\u304B\u51FA\u8CBB\u3092\uFF13\u70B9\u5897\u3084\u3059\u304B\u3092\u9078\u3079\u308B\u3002", "\u8972\u6483\u3092\u53D7\u3051\u308B\u3002\u82E6\u3082\u306A\u304F\u53E9\u304D\u4F0F\u305B\u308B\u3068\u3001\u5351\u5C48\u306A\u614B\u5EA6\u3067\u547D\u4E5E\u3044\u3092\u3057\u3066\u304D\u305F\u3002\u5BB9\u8D66\u306A\u304F\u547D\u3092\u596A\u3044\u5BDB\u5BB9\u306E\u540D\u8A89\u70B9\u3092\uFF11\u70B9\u5931\u3046\u304B\u3001\u5BC6\u544A\u306B\u3088\u3063\u3066\u3010\u8840\u8DEF\u3011\u304C\uFF11\uFF24\uFF16\u70B9\u5897\u3048\u308B\u304B\u3092\u9078\u3076\u3053\u3068\u304C\u3067\u304D\u308B\u3002", "\u98A8\u805E\u306B\u3088\u308A\u3001\u53CB\u304C\u60AA\u306B\u8EAB\u3092\u8CB6\u3081\u305F\u3068\u77E5\u308B\u3002\u5171\u306B\u4E26\u3093\u3060\u6226\u5834\u304C\u8272\u892A\u305B\u308B\u60F3\u3044\u3060\u3002\u6226\u53CB\u306E\u540D\u8A89\u70B9\u3092\uFF11\u70B9\u6E1B\u3089\u3059\u304B\u3001\u3010\u9152\u3068\u6B4C\u3011\u3059\u3079\u3066\u3092\u5931\u3046\u304B\u3092\u9078\u3079\u308B\u3002"]['$[]']($rb_minus(key, 1));
+      text = ["何かの問題で言い争い、主君に無礼を働いてしまう。あなたは主君の名誉点を１点失うか、【時間】を１点消費して和解の話し合いを持つか選べる。", "見過ごせば人々を不幸にする危険に遭遇する。あなたは逃げ出して冒険の名誉点を１点失うか、これに立ち向かい【命数】を２点減らすかを選べる。", "あなたが惹かれたのは好意に付け込む人だった。あなたはその場を去って恋慕の名誉点を１点失うか【正義】を１点減らして礼を尽くすかを選べる。", "金銭的な問題で、生命と魂の苦しみを背負う人に出会う。あなたは庇護の名誉点を１点失うか出費を３点増やすかを選べる。", "襲撃を受ける。苦もなく叩き伏せると、卑屈な態度で命乞いをしてきた。容赦なく命を奪い寛容の名誉点を１点失うか、密告によって【血路】が１Ｄ６点増えるかを選ぶことができる。", "風聞により、友が悪に身を貶めたと知る。共に並んだ戦場が色褪せる想いだ。戦友の名誉点を１点減らすか、【酒と歌】すべてを失うかを選べる。"]['$[]']($rb_minus(key, 1));
       return "" + "1D6 => [" + (key) + "] " + (text);
     }, $LostRoyal_roll_fumble_chart$13.$$arity = 0);
     
@@ -197,7 +197,7 @@
       
         $b = self.$roll(1, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
         key = $rb_plus(key, dice);
-        $b = [[true, 0, "\u307B\u307C\u51EA\uFF08\u632F\u308A\u8DB3\u3057\uFF09"], [true, 0, "\u5F31\u3044\u98A8\uFF08\u632F\u308A\u8DB3\u3057\uFF09"], [false, 0, "\u3086\u308B\u3084\u304B\u306A\u98A8"], [false, 0, "\u3086\u308B\u3084\u304B\u306A\u98A8"], [false, 1, "\u3084\u3084\u5F37\u3044\u98A8\uFF08\u5100\u5F0F\u70B9\u30D7\u30E9\u30B9\uFF11\uFF09"], [false, 2, "\u5F37\u3044\u98A8\uFF08\u9F8D\u3092\u5E7B\u8996\u3001\u5100\u5F0F\u70B9\u30D7\u30E9\u30B9\uFF12\uFF09"], [false, 3, "\u4F53\u304C\u63FA\u3089\u3050\u307B\u3069\u306E\u98A8\uFF08\u9F8D\u3092\u5E7B\u8996\u3001\u5100\u5F0F\u70B9\u30D7\u30E9\u30B9\uFF13\uFF09"]]['$[]']($rb_minus([key, 7].$min(), 1)), $a = Opal.to_ary($b), (add = ($a[0] == null ? nil : $a[0])), (bonus = ($a[1] == null ? nil : $a[1])), (current_text = ($a[2] == null ? nil : $a[2])), $b;
+        $b = [[true, 0, "ほぼ凪（振り足し）"], [true, 0, "弱い風（振り足し）"], [false, 0, "ゆるやかな風"], [false, 0, "ゆるやかな風"], [false, 1, "やや強い風（儀式点プラス１）"], [false, 2, "強い風（龍を幻視、儀式点プラス２）"], [false, 3, "体が揺らぐほどの風（龍を幻視、儀式点プラス３）"]]['$[]']($rb_minus([key, 7].$min(), 1)), $a = Opal.to_ary($b), (add = ($a[0] == null ? nil : $a[0])), (bonus = ($a[1] == null ? nil : $a[1])), (current_text = ($a[2] == null ? nil : $a[2])), $b;
         total_bonus = $rb_plus(total_bonus, bonus);
         if ($truthy(key['$!='](dice))) {
           current_text = "" + "1D6[" + (dice) + "]+" + ($rb_minus(key, dice)) + " " + (current_text)
@@ -213,7 +213,7 @@
           return nil
         } else {
           
-          text = $rb_plus(text, "" + " [\u5408\u8A08\uFF1A\u5100\u5F0F\u70B9 +" + (total_bonus) + " ]");
+          text = $rb_plus(text, "" + " [合計：儀式点 +" + (total_bonus) + " ]");
           Opal.ret(text);
         };}, $$15.$$s = self, $$15.$$arity = 0, $$15));
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
@@ -224,7 +224,7 @@
 
       
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (key = ($a[0] == null ? nil : $a[0])), $b;
-      text = ["\u611B\u60C5\uFF0F\u6BBA\u610F", "\u53CB\u60C5\uFF0F\u8CA0\u76EE", "\u5D07\u62DD\uFF0F\u5ACC\u60AA", "\u8208\u5473\uFF0F\u4FAE\u8511", "\u4FE1\u983C\uFF0F\u5AC9\u59AC", "\u5B88\u8B77\uFF0F\u6B32\u60C5"]['$[]']($rb_minus(key, 1));
+      text = ["愛情／殺意", "友情／負目", "崇拝／嫌悪", "興味／侮蔑", "信頼／嫉妬", "守護／欲情"]['$[]']($rb_minus(key, 1));
       return "" + "1D6 => [" + (key) + "] " + (text);
     }, $LostRoyal_roll_emotion_chart$16.$$arity = 0);
     
@@ -249,10 +249,10 @@
           text = $rb_plus(text, "" + "1D6[" + (d1) + "]")
         };
         if ($truthy(($truthy($a = self.$is_1or2(d1)) ? $a : self.$is_1or2(d2)))) {
-          return (text = $rb_plus(text, " \uFF08\u632F\u308A\u8DB3\u3057\uFF09 => "))
+          return (text = $rb_plus(text, " （振り足し） => "))
         } else {
           
-          text = $rb_plus(text, "" + " => \u5408\u8A08 " + (total));
+          text = $rb_plus(text, "" + " => 合計 " + (total));
           Opal.ret(text);
         };}, $$18.$$s = self, $$18.$$arity = 0, $$18));
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }

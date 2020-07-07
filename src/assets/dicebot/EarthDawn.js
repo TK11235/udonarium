@@ -26,9 +26,9 @@
     self.$$prototype.string = self.$$prototype.isFailed = nil;
     
     Opal.const_set($nesting[0], 'ID', "EarthDawn");
-    Opal.const_set($nesting[0], 'NAME', "\u30A2\u30FC\u30B9\u30C9\u30FC\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3042\u3042\u3059\u3068\u304A\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30B9\u30C6\u30C3\u30D7\u30C0\u30A4\u30B9\u3000(xEn+k)\n" + "\u30B9\u30C6\u30C3\u30D7x\u3001\u76EE\u6A19\u5024n(\u7701\u7565\u53EF\u80FD\uFF09\u3001\u30AB\u30EB\u30DE\u30C0\u30A4\u30B9k(D2-D20)\u3067\u30B9\u30C6\u30C3\u30D7\u30C0\u30A4\u30B9\u3092\u30ED\u30FC\u30EB\u3057\u307E\u3059\u3002\n" + "\u632F\u308A\u8DB3\u3057\u3082\u81EA\u52D5\u3002\n" + "\u4F8B\uFF099E\u300010E8\u300010E+D12\n");
+    Opal.const_set($nesting[0], 'NAME', "アースドーン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ああすとおん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "ステップダイス　(xEn+k)\n" + "ステップx、目標値n(省略可能）、カルマダイスk(D2-D20)でステップダイスをロールします。\n" + "振り足しも自動。\n" + "例）9E　10E8　10E+D12\n");
     self.$setPrefixes(["\\d+e.*"]);
     
     Opal.def(self, '$initialize', $EarthDawn_initialize$1 = function $$initialize() {
@@ -120,31 +120,31 @@
         
         self.string = $rb_plus(self.string, nmod.$to_s());
         stepTotal = $rb_plus(stepTotal, nmod);};
-      self.string = $rb_plus(self.string, "" + " \uFF1E " + (stepTotal));
-      output = "" + "\u30B9\u30C6\u30C3\u30D7" + (step) + " \uFF1E " + (self.string);
+      self.string = $rb_plus(self.string, "" + " ＞ " + (stepTotal));
+      output = "" + "ステップ" + (step) + " ＞ " + (self.string);
       if (targetNumber['$=='](0)) {
         return output};
-      self.string = $rb_plus(self.string, " \uFF1E ");
+      self.string = $rb_plus(self.string, " ＞ ");
       excelentSuccessNumber = stable['$[]'](7)['$[]']($rb_minus(targetNumber, 1));
       superSuccessNumber = stable['$[]'](8)['$[]']($rb_minus(targetNumber, 1));
       goodSuccessNumber = stable['$[]'](9)['$[]']($rb_minus(targetNumber, 1));
       failedNumber = stable['$[]'](11)['$[]']($rb_minus(targetNumber, 1));
       if ($truthy(self.isFailed)) {
-        self.string = $rb_plus(self.string, "\u81EA\u52D5\u5931\u6557")
+        self.string = $rb_plus(self.string, "自動失敗")
       } else if ($truthy($rb_ge(stepTotal, excelentSuccessNumber))) {
-        self.string = $rb_plus(self.string, "\u6700\u826F\u6210\u529F")
+        self.string = $rb_plus(self.string, "最良成功")
       } else if ($truthy($rb_ge(stepTotal, superSuccessNumber))) {
-        self.string = $rb_plus(self.string, "\u512A\u6210\u529F")
+        self.string = $rb_plus(self.string, "優成功")
       } else if ($truthy($rb_ge(stepTotal, goodSuccessNumber))) {
-        self.string = $rb_plus(self.string, "\u826F\u6210\u529F")
+        self.string = $rb_plus(self.string, "良成功")
       } else if ($truthy($rb_ge(stepTotal, targetNumber))) {
-        self.string = $rb_plus(self.string, "\u6210\u529F")
+        self.string = $rb_plus(self.string, "成功")
       } else if ($truthy($rb_lt(stepTotal, failedNumber))) {
-        self.string = $rb_plus(self.string, "\u5927\u5931\u6557")
+        self.string = $rb_plus(self.string, "大失敗")
       } else {
-        self.string = $rb_plus(self.string, "\u5931\u6557")
+        self.string = $rb_plus(self.string, "失敗")
       };
-      output = "" + "\u30B9\u30C6\u30C3\u30D7" + (step) + ">=" + (targetNumber) + " \uFF1E " + (self.string);
+      output = "" + "ステップ" + (step) + ">=" + (targetNumber) + " ＞ " + (self.string);
       return output;
     }, $EarthDawn_getStepResult$4.$$arity = 1);
     

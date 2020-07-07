@@ -10,9 +10,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "SystemID");
-    Opal.const_set($nesting[0], 'NAME', "\u30B2\u30FC\u30E0\u30B7\u30B9\u30C6\u30E0\u540D");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3051\u3048\u3080\u3057\u3059\u3066\u3080\u3081\u3044");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30D8\u30EB\u30D7\u30E1\u30C3\u30BB\u30FC\u30B8\n" + "\u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u306E\u4F7F\u3044\u65B9\u3092\u3053\u3053\u306B\u8A18\u8FF0\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ゲームシステム名");
+    Opal.const_set($nesting[0], 'SORT_KEY', "けえむしすてむめい");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "ヘルプメッセージ\n" + "ダイスボットの使い方をここに記述します。\n");
     self.$setPrefixes([]);
     
     Opal.def(self, '$initialize', $Template_initialize$1 = function $$initialize() {

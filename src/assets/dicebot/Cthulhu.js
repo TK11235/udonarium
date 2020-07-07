@@ -216,9 +216,9 @@ Opal.modules["utils/ArithmeticEvaluator"] = function(Opal) {
     self.$$prototype.special_percentage = self.$$prototype.critical_percentage = self.$$prototype.fumble_percentage = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu");
-    Opal.const_set($nesting[0], 'NAME', "\u30AF\u30C8\u30A5\u30EB\u30D5");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u304F\u3068\u3046\u308B\u3075");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "c=\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024 \uFF0F f=\u30D5\u30A1\u30F3\u30D6\u30EB\u5024 \uFF0F s=\u30B9\u30DA\u30B7\u30E3\u30EB\n" + "\n" + "1d100<=n    c\u30FBf\u30FBs\u3059\u3079\u3066\u30AA\u30D5\uFF08\u5358\u7D14\u306A\u6570\u5024\u6BD4\u8F03\u5224\u5B9A\u306E\u307F\u884C\u3044\u307E\u3059\uFF09\n" + "\n" + "\u30FBcfs\u5224\u5B9A\u4ED8\u304D\u5224\u5B9A\u30B3\u30DE\u30F3\u30C9\n" + "\n" + "CC\t 1d100\u30ED\u30FC\u30EB\u3092\u884C\u3046 c=1\u3001f=100\n" + "CCB  \u540C\u4E0A\u3001c=5\u3001f=96\n" + "\n" + "\u4F8B\uFF1ACC<=80  \uFF08\u6280\u80FD\u502480\u3067\u884C\u70BA\u5224\u5B9A\u30021%\u30EB\u30FC\u30EB\u3067cf\u9069\u7528\uFF09\n" + "\u4F8B\uFF1ACCB<=55 \uFF08\u6280\u80FD\u502455\u3067\u884C\u70BA\u5224\u5B9A\u30025%\u30EB\u30FC\u30EB\u3067cf\u9069\u7528\uFF09\n" + "\n" + "\u30FB\u7D44\u307F\u5408\u308F\u305B\u30ED\u30FC\u30EB\u306B\u3064\u3044\u3066\n" + "\n" + "CBR(x,y)\tc=1\u3001f=100\n" + "CBRB(x,y)\tc=5\u3001f=96\n" + "\n" + "\u30FB\u62B5\u6297\u8868\u30ED\u30FC\u30EB\u306B\u3064\u3044\u3066\n" + "RES(x-y)\tc=1\u3001f=100\n" + "RESB(x-y)\tc=5\u3001f=96\n" + "\n" + "\u203B\u6545\u969C\u30CA\u30F3\u30D0\u30FC\u5224\u5B9A\n" + "\n" + "\u30FBCC(x) c=1\u3001f=100\n" + "x=\u6545\u969C\u30CA\u30F3\u30D0\u30FC\u3002\u51FA\u76EEx\u4EE5\u4E0A\u304C\u51FA\u305F\u4E0A\u3067\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u304C\u540C\u6642\u306B\u767A\u751F\u3057\u305F\u5834\u5408\u3001\u5171\u306B\u51FA\u529B\u3059\u308B\uFF08\u30C6\u30AD\u30B9\u30C8\u300C\u30D5\u30A1\u30F3\u30D6\u30EB\uFF06\u6545\u969C\u300D\uFF09\n" + "\u30D5\u30A1\u30F3\u30D6\u30EB\u3067\u306A\u3044\u5834\u5408\u3001\u6210\u529F\u30FB\u5931\u6557\u306B\u95A2\u308F\u3089\u305A\u30C6\u30AD\u30B9\u30C8\u300C\u6545\u969C\u300D\u306E\u307F\u3092\u51FA\u529B\u3059\u308B\uFF08\u6210\u529F\u30FB\u5931\u6557\u3092\u51FA\u529B\u305B\u305A\u3001\u4E0A\u66F8\u304D\u3057\u305F\u3082\u306E\u3092\u51FA\u529B\u3059\u308B\u5F62\uFF09\n" + "\n" + "\u30FBCCB(x) c=5\u3001f=96\n" + "\u540C\u4E0A\n" + "\n");
+    Opal.const_set($nesting[0], 'NAME', "クトゥルフ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "くとうるふ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "c=クリティカル値 ／ f=ファンブル値 ／ s=スペシャル\n" + "\n" + "1d100<=n    c・f・sすべてオフ（単純な数値比較判定のみ行います）\n" + "\n" + "・cfs判定付き判定コマンド\n" + "\n" + "CC\t 1d100ロールを行う c=1、f=100\n" + "CCB  同上、c=5、f=96\n" + "\n" + "例：CC<=80  （技能値80で行為判定。1%ルールでcf適用）\n" + "例：CCB<=55 （技能値55で行為判定。5%ルールでcf適用）\n" + "\n" + "・組み合わせロールについて\n" + "\n" + "CBR(x,y)\tc=1、f=100\n" + "CBRB(x,y)\tc=5、f=96\n" + "\n" + "・抵抗表ロールについて\n" + "RES(x-y)\tc=1、f=100\n" + "RESB(x-y)\tc=5、f=96\n" + "\n" + "※故障ナンバー判定\n" + "\n" + "・CC(x) c=1、f=100\n" + "x=故障ナンバー。出目x以上が出た上で、ファンブルが同時に発生した場合、共に出力する（テキスト「ファンブル＆故障」）\n" + "ファンブルでない場合、成功・失敗に関わらずテキスト「故障」のみを出力する（成功・失敗を出力せず、上書きしたものを出力する形）\n" + "\n" + "・CCB(x) c=5、f=96\n" + "同上\n" + "\n");
     self.$setPrefixes(["CC(B)?\\(\\d+\\)", "CC(B)?.*", "RES(B)?.*", "CBR(B)?\\(\\d+,\\d+\\)"]);
     
     Opal.def(self, '$initialize', $Cthulhu_initialize$1 = function $$initialize() {
@@ -283,14 +283,14 @@ Opal.modules["utils/ArithmeticEvaluator"] = function(Opal) {
         
         output = "" + "(1D100<=" + (diff) + ")";
         if ($truthy($rb_gt(broken_num, 0))) {
-          output = $rb_plus(output, "" + " \u6545\u969C\u30CA\u30F3\u30D0\u30FC[" + (broken_num) + "]")};
+          output = $rb_plus(output, "" + " 故障ナンバー[" + (broken_num) + "]")};
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = $rb_plus(output, "" + " \uFF1E " + (total_n));
-        output = $rb_plus(output, "" + " \uFF1E " + (self.$getCheckResultText(total_n, diff, broken_num)));
+        output = $rb_plus(output, "" + " ＞ " + (total_n));
+        output = $rb_plus(output, "" + " ＞ " + (self.$getCheckResultText(total_n, diff, broken_num)));
       } else {
         
         $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
-        output = "" + "(1D100) \uFF1E " + (total_n);
+        output = "" + "(1D100) ＞ " + (total_n);
       };
       return output;
     }, $Cthulhu_getCheckResult$3.$$arity = 1);
@@ -313,31 +313,31 @@ Opal.modules["utils/ArithmeticEvaluator"] = function(Opal) {
           diff_special = 1};};
       if ($truthy(($truthy($a = $rb_le(total_n, diff)) ? $rb_lt(total_n, 100) : $a))) {
         
-        result = "\u6210\u529F";
+        result = "成功";
         if ($truthy($rb_gt(diff_special, 0))) {
           if ($truthy($rb_le(total_n, self.critical_percentage))) {
             if ($truthy($rb_le(total_n, diff_special))) {
-              result = "\u6C7A\u5B9A\u7684\u6210\u529F/\u30B9\u30DA\u30B7\u30E3\u30EB"
+              result = "決定的成功/スペシャル"
             } else {
-              result = "\u6C7A\u5B9A\u7684\u6210\u529F"
+              result = "決定的成功"
             }
           } else if ($truthy($rb_le(total_n, diff_special))) {
-            result = "\u30B9\u30DA\u30B7\u30E3\u30EB"}};
+            result = "スペシャル"}};
       } else {
         
-        result = "\u5931\u6557";
+        result = "失敗";
         if ($truthy($rb_gt(diff_special, 0))) {
           if ($truthy(($truthy($a = $rb_ge(total_n, $rb_minus(101, self.fumble_percentage))) ? $rb_lt(diff, 100) : $a))) {
             
-            result = "\u81F4\u547D\u7684\u5931\u6557";
+            result = "致命的失敗";
             fumble = true;}};
       };
       if ($truthy($rb_gt(broken_num, 0))) {
         if ($truthy($rb_ge(total_n, broken_num))) {
           if ($truthy(fumble)) {
-            result = $rb_plus(result, "/\u6545\u969C")
+            result = $rb_plus(result, "/故障")
           } else {
-            result = "\u6545\u969C"
+            result = "故障"
           }}};
       return result;
     }, $Cthulhu_getCheckResultText$4.$$arity = -3);
@@ -354,12 +354,12 @@ Opal.modules["utils/ArithmeticEvaluator"] = function(Opal) {
       value = m['$[]'](2).$to_i();
       target = $rb_plus($rb_times(value, 5), 50);
       if ($truthy($rb_lt(target, 5))) {
-        return "" + "(1d100<=" + (target) + ") \uFF1E \u81EA\u52D5\u5931\u6557"};
+        return "" + "(1d100<=" + (target) + ") ＞ 自動失敗"};
       if ($truthy($rb_gt(target, 95))) {
-        return "" + "(1d100<=" + (target) + ") \uFF1E \u81EA\u52D5\u6210\u529F"};
+        return "" + "(1d100<=" + (target) + ") ＞ 自動成功"};
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total_n = ($a[0] == null ? nil : $a[0])), $b;
       result = self.$getCheckResultText(total_n, target);
-      return "" + "(1d100<=" + (target) + ") \uFF1E " + (total_n) + " \uFF1E " + (result);
+      return "" + "(1d100<=" + (target) + ") ＞ " + (total_n) + " ＞ " + (result);
     }, $Cthulhu_getRegistResult$5.$$arity = 1);
     return (Opal.def(self, '$getCombineRoll', $Cthulhu_getCombineRoll$6 = function $$getCombineRoll(command) {
       var $a, $b, self = this, m = nil, diff_1 = nil, diff_2 = nil, total = nil, result_1 = nil, result_2 = nil, successList = nil, succesCount = nil, rank = nil;
@@ -375,7 +375,7 @@ Opal.modules["utils/ArithmeticEvaluator"] = function(Opal) {
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
-      successList = ["\u6C7A\u5B9A\u7684\u6210\u529F/\u30B9\u30DA\u30B7\u30E3\u30EB", "\u6C7A\u5B9A\u7684\u6210\u529F", "\u30B9\u30DA\u30B7\u30E3\u30EB", "\u6210\u529F"];
+      successList = ["決定的成功/スペシャル", "決定的成功", "スペシャル", "成功"];
       succesCount = 0;
       if ($truthy(successList['$include?'](result_1))) {
         succesCount = $rb_plus(succesCount, 1)};
@@ -383,13 +383,13 @@ Opal.modules["utils/ArithmeticEvaluator"] = function(Opal) {
         succesCount = $rb_plus(succesCount, 1)};
       self.$debug("succesCount", succesCount);
       rank = (function() {if ($truthy($rb_ge(succesCount, 2))) {
-        return "\u6210\u529F"
+        return "成功"
       } else if (succesCount['$=='](1)) {
-        return "\u90E8\u5206\u7684\u6210\u529F"
+        return "部分的成功"
       } else {
-        return "\u5931\u6557"
+        return "失敗"
       }; return nil; })();
-      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") \uFF1E " + (total) + "[" + (result_1) + "," + (result_2) + "] \uFF1E " + (rank);
+      return "" + "(1d100<=" + (diff_1) + "," + (diff_2) + ") ＞ " + (total) + "[" + (result_1) + "," + (result_2) + "] ＞ " + (rank);
     }, $Cthulhu_getCombineRoll$6.$$arity = 1), nil) && 'getCombineRoll';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting);
 })(Opal);

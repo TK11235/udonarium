@@ -9,9 +9,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "ShadowRun");
-    Opal.const_set($nesting[0], 'NAME', "\u30B7\u30E3\u30C9\u30A6\u30E9\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3057\u3084\u3068\u3046\u3089\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u4E0A\u65B9\u7121\u9650\u30ED\u30FC\u30EB(xUn)\u306E\u5883\u754C\u5024\u30926\u306B\u30BB\u30C3\u30C8\u3057\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "シャドウラン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しやとうらん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "上方無限ロール(xUn)の境界値を6にセットします。\n");
     return (Opal.def(self, '$initialize', $ShadowRun_initialize$1 = function $$initialize() {
       var $iter = $ShadowRun_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
 

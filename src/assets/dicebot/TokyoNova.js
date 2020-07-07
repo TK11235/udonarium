@@ -9,8 +9,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "TokyoNova");
-    Opal.const_set($nesting[0], 'NAME', "\u30C8\u30FC\u30AD\u30E7\u30FC\uFF2E\u25CE\uFF36\uFF21");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3068\u304A\u304D\u3088\u304A\u306E\u306F");
-    return Opal.const_set($nesting[0], 'HELP_MESSAGE', "\u203B\u3053\u306E\u30C0\u30A4\u30B9\u30DC\u30C3\u30C8\u306F\u90E8\u5C4B\u306E\u30B7\u30B9\u30C6\u30E0\u540D\u8868\u793A\u7528\u3068\u306A\u308A\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "トーキョーＮ◎ＶＡ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "とおきよおのは");
+    return Opal.const_set($nesting[0], 'HELP_MESSAGE', "※このダイスボットは部屋のシステム名表示用となります。\n");
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

@@ -13,9 +13,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "GeishaGirlwithKatana");
-    Opal.const_set($nesting[0], 'NAME', "\u30B2\u30A4\u30B7\u30E3\u30FB\u30AC\u30FC\u30EB\u30FB\u30A6\u30A3\u30BA\u30FB\u30AB\u30BF\u30CA");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3051\u3044\u3057\u3084\u304B\u3042\u308B\u3046\u3044\u3059\u304B\u305F\u306A");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u30FB\u5224\u5B9A (GK#n)\n" + "  \u5F79\u3084\u30C1\u30E7\u30E0\u30D0\u3092\u542B\u3081\u30661\u56DE\u5206\u306E\u30C0\u30A4\u30B9\u30ED\u30FC\u30EB\u3092\u5224\u5B9A\u3057\u307E\u3059\u3002\n" + "\u3000\u5F79\u306F\u3000\uFF08\u901A\u5E38\u5224\u5B9A\uFF09\uFF0F\uFF08\u6226\u95D8\u6642\uFF09\u3000\u306E\u9806\u3067\u4E21\u65B9\u51FA\u529B\u3055\u308C\u307E\u3059\u3002\n" + "  GK \u306E\u307F\u306E\u5834\u54085%\u306E\u78BA\u7387\u3067\u30C1\u30E7\u30E0\u30D0\u307E\u3059\u3002\n" + "  GK#3 \u306E\u69D8\u306B #n \u3092\u3064\u3051\u308B\u3053\u3068\u306B\u3088\u3063\u3066\u30C1\u30E7\u30E0\u30D0\u306E\u78BA\u7387\u3092n%\u306B\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09GK\u3000GK#10\n" + "\u30FB\u96A0\u3057\u30B3\u30DE\u30F3\u30C9 (GL)\n" + "  \u5FC5\u305A\u30C1\u30E7\u30E0\u30D0\u3057\u307E\u3059\u3002GM\u304C\u7A7A\u6C17\u3092\u8AAD\u3093\u3067\u30C1\u30E7\u30E0\u30D0\u3055\u305B\u305F\u3044\u3068\u304D\u3084\u3001\n" + "  GK\u30B3\u30DE\u30F3\u30C9\u3092\u6253\u3061\u9593\u9055\u3048\u3066\u30C1\u30E7\u30E0\u30D0\u3059\u308B\u3092\u60F3\u5B9A\u3057\u3066\u307E\u3059\u3002\n" + "\u3000\u4F8B\uFF09GL\n");
+    Opal.const_set($nesting[0], 'NAME', "ゲイシャ・ガール・ウィズ・カタナ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "けいしやかあるういすかたな");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定 (GK#n)\n" + "  役やチョムバを含めて1回分のダイスロールを判定します。\n" + "　役は　（通常判定）／（戦闘時）　の順で両方出力されます。\n" + "  GK のみの場合5%の確率でチョムバます。\n" + "  GK#3 の様に #n をつけることによってチョムバの確率をn%にすることができます。\n" + "　例）GK　GK#10\n" + "・隠しコマンド (GL)\n" + "  必ずチョムバします。GMが空気を読んでチョムバさせたいときや、\n" + "  GKコマンドを打ち間違えてチョムバするを想定してます。\n" + "　例）GL\n");
     self.$setPrefixes(["GK(#\\d+)?", "GL"]);
     
     Opal.def(self, '$rollDiceCommand', $GeishaGirlwithKatana_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -45,17 +45,17 @@
       yakuResult = self.$getYaku(diceList);
       if ($truthy(yakuResult['$nil?']())) {
       } else {
-        return self.$getResultTextByDice(diceList, "" + "\u3010\u5F79\u3011" + (yakuResult))
+        return self.$getResultTextByDice(diceList, "" + "【役】" + (yakuResult))
       };
       $b = self.$getDemeZorome(diceList), $a = Opal.to_ary($b), (deme = ($a[0] == null ? nil : $a[0])), (zorome = ($a[1] == null ? nil : $a[1])), $b;
       if (deme['$=='](0)) {
-        return self.$getResultTextByDice(diceList, "\u5931\u6557")};
+        return self.$getResultTextByDice(diceList, "失敗")};
       yp = (function() {if (zorome['$=='](1)) {
-        return " YP\u304C1\u5897\u52A0"
+        return " YPが1増加"
       } else {
         return ""
       }; return nil; })();
-      output = self.$getResultTextByDice(diceList, "" + "\u9054\u6210\u5024" + (deme) + (yp));
+      output = self.$getResultTextByDice(diceList, "" + "達成値" + (deme) + (yp));
       self.$debug("getGGwKResult(command) result", output);
       return output;
     }, $GeishaGirlwithKatana_rollDiceCommand$1.$$arity = 1);
@@ -73,14 +73,14 @@
     Opal.def(self, '$getChombaResultText', $GeishaGirlwithKatana_getChombaResultText$4 = function $$getChombaResultText() {
       var self = this;
 
-      return self.$getResultText("\u30C1\u30E7\u30E0\u30D0\uFF01\uFF01")
+      return self.$getResultText("チョムバ！！")
     }, $GeishaGirlwithKatana_getChombaResultText$4.$$arity = 0);
     
     Opal.def(self, '$getYaku', $GeishaGirlwithKatana_getYaku$5 = function $$getYaku(diceList) {
       var self = this, rule = nil, yaku = nil;
 
       
-      rule = $hash([1, 2, 3], "\u81EA\u52D5\u5931\u6557\uFF0F\u81EA\u5206\u306E\u88C5\u7532\u52B9\u679C\u7121\u3057\u3067\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u3066\u3057\u307E\u3046", [4, 5, 6], "\u81EA\u52D5\u6210\u529F\uFF0F\u6575\u306E\u88C5\u7532\u3092\u7121\u8996\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B", [1, 1, 1], "10\u500D\u6210\u529F YP\u304C10\u5897\u52A0\uFF0F10\u500D\u30C0\u30E1\u30FC\u30B8 YP\u304C10\u5897\u52A0", [2, 2, 2], "2\u500D\u6210\u529F\uFF0F2\u500D\u30C0\u30E1\u30FC\u30B8", [3, 3, 3], "3\u500D\u6210\u529F\uFF0F3\u500D\u30C0\u30E1\u30FC\u30B8", [4, 4, 4], "4\u500D\u6210\u529F\uFF0F4\u500D\u30C0\u30E1\u30FC\u30B8", [5, 5, 5], "5\u500D\u6210\u529F\uFF0F5\u500D\u30C0\u30E1\u30FC\u30B8", [6, 6, 6], "6\u500D\u6210\u529F\uFF0F6\u500D\u30C0\u30E1\u30FC\u30B8");
+      rule = $hash([1, 2, 3], "自動失敗／自分の装甲効果無しでダメージを受けてしまう", [4, 5, 6], "自動成功／敵の装甲を無視してダメージを与える", [1, 1, 1], "10倍成功 YPが10増加／10倍ダメージ YPが10増加", [2, 2, 2], "2倍成功／2倍ダメージ", [3, 3, 3], "3倍成功／3倍ダメージ", [4, 4, 4], "4倍成功／4倍ダメージ", [5, 5, 5], "5倍成功／5倍ダメージ", [6, 6, 6], "6倍成功／6倍ダメージ");
       yaku = rule['$[]'](diceList);
       return yaku;
     }, $GeishaGirlwithKatana_getYaku$5.$$arity = 1);
@@ -105,12 +105,12 @@
     Opal.def(self, '$getResultTextByDice', $GeishaGirlwithKatana_getResultTextByDice$7 = function $$getResultTextByDice(diceList, result) {
       var self = this;
 
-      return self.$getResultText("" + (diceList.$join(",")) + " \uFF1E " + (result))
+      return self.$getResultText("" + (diceList.$join(",")) + " ＞ " + (result))
     }, $GeishaGirlwithKatana_getResultTextByDice$7.$$arity = 2);
     return (Opal.def(self, '$getResultText', $GeishaGirlwithKatana_getResultText$8 = function $$getResultText(result) {
       var self = this;
 
-      return "" + "(3B6) \uFF1E " + (result)
+      return "" + "(3B6) ＞ " + (result)
     }, $GeishaGirlwithKatana_getResultText$8.$$arity = 1), nil) && 'getResultText';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

@@ -29,8 +29,8 @@
     
     Opal.const_set($nesting[0], 'ID', "AFF2e");
     Opal.const_set($nesting[0], 'NAME', "ADVANCED FIGHTING FANTASY 2nd Edition");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3042\u3068\u306F\u3093\u3059\u3068\u3075\u3042\u3044\u3066\u3044\u3093\u304F\u3075\u3042\u3093\u305F\u3057\u30442");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5BFE\u6297\u306A\u3057\u30ED\u30FC\u30EB\tFF{\u76EE\u6A19\u5024}+{\u88DC\u6B63}\n" + "\u5BFE\u6297\u30ED\u30FC\u30EB\tFR{\u80FD\u529B\u5024}+{\u88DC\u6B63}\n" + "\u6B66\u5668\u30ED\u30FC\u30EB\tFD[2,3,3,3,3,3,4]+{\u88DC\u6B63}\n" + "\u9632\u5177\u30ED\u30FC\u30EB\tFD[0,0,0,0,1+1,1+1,2+2]+{\u88DC\u6B63}\n");
+    Opal.const_set($nesting[0], 'SORT_KEY', "あとはんすとふあいていんくふあんたしい2");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "対抗なしロール\tFF{目標値}+{補正}\n" + "対抗ロール\tFR{能力値}+{補正}\n" + "武器ロール\tFD[2,3,3,3,3,3,4]+{補正}\n" + "防具ロール\tFD[0,0,0,0,1+1,1+1,2+2]+{補正}\n");
     self.$setPrefixes(["FF.+", "FR.+", "FD.+"]);
     
     Opal.def(self, '$explicit_sign', $AFF2e_explicit_sign$1 = function $$explicit_sign(i) {
@@ -66,19 +66,19 @@
 
       return (function() {$case = total;
       if ((2)['$===']($case)) {if ($truthy($rb_le(diff, 1))) {
-        return "\u6210\u529F\uFF08\u5927\u6210\u529F\u3067\u306F\u306A\u3044\uFF09"
+        return "成功（大成功ではない）"
       } else {
-        return "\u5927\u6210\u529F\uFF01"
+        return "大成功！"
       }}
       else if ((12)['$===']($case)) {if ($truthy($rb_ge(diff, 12))) {
-        return "\u5931\u6557\uFF08\u5927\u5931\u6557\u3067\u306F\u306A\u3044\uFF09"
+        return "失敗（大失敗ではない）"
       } else {
-        return "\u5927\u5931\u6557\uFF01"
+        return "大失敗！"
       }}
       else {if ($truthy($rb_le(total, diff))) {
-        return "\u6210\u529F"
+        return "成功"
       } else {
-        return "\u5931\u6557"
+        return "失敗"
       }}})()
     }, $AFF2e_successful_or_failed$5.$$arity = 2);
     
@@ -121,7 +121,7 @@
       md = /^\[(.+)\]/.$match(term);
       if ($truthy(md)) {
       } else {
-        return ["\u30C0\u30E1\u30FC\u30B8\u30B9\u30ED\u30C3\u30C8\u306F\u5FC5\u9808\u3067\u3059\u3002", false]
+        return ["ダメージスロットは必須です。", false]
       };
       term = md.$post_match();
       damage_slots = $send(md['$[]'](1).$split(","), 'map', [], ($$8 = function(t){var self = $$8.$$s || this;
@@ -133,15 +133,15 @@
         };
         return self.$eval_term(t);}, $$8.$$s = self, $$8.$$arity = 1, $$8));
       if ($truthy(damage_slots.$size()['$!='](7))) {
-        return ["\u30C0\u30E1\u30FC\u30B8\u30B9\u30ED\u30C3\u30C8\u306E\u9577\u3055\u306B\u8AA4\u308A\u304C\u3042\u308A\u307E\u3059\u3002", false]};
+        return ["ダメージスロットの長さに誤りがあります。", false]};
       corr = self.$eval_term(term);
       dice_command = "" + "1D6" + (self.$explicit_sign(corr));
       $b = self.$roll(1, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
       expr = "" + (total) + (self.$explicit_sign(corr));
       slot_number = self.$clamp($rb_plus(total, corr), 1, 7);
       damage = damage_slots['$[]']($rb_minus(slot_number, 1));
-      sequence = [self.$parentheses(dice_command), expr, $rb_plus(total, corr), "" + (damage) + "\u30C0\u30E1\u30FC\u30B8"];};
-      result = sequence.$join(" \uFF1E ");
+      sequence = [self.$parentheses(dice_command), expr, $rb_plus(total, corr), "" + (damage) + "ダメージ"];};
+      result = sequence.$join(" ＞ ");
       secret = false;
       return [result, secret];
     }, $AFF2e_rollDiceCommand$7.$$arity = 1), nil) && 'rollDiceCommand';

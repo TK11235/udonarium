@@ -23,9 +23,9 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "Postman");
-    Opal.const_set($nesting[0], 'NAME', "\u58CA\u308C\u305F\u4E16\u754C\u306E\u30DD\u30B9\u30C8\u30DE\u30F3");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u307B\u3059\u3068\u307E\u3093");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u25C6\u5224\u5B9A\uFF1A[n]PO[+-a][> or >= or @X]\u3000\u3000[]\u5185\u7701\u7565\u53EF\u3002\n" + "\n" + "\u9054\u6210\u5024\u3068\u5224\u5B9A\u306E\u6210\u5426\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u3092\u7D50\u679C\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\u300Cn\u300D\u3067\u30C0\u30A4\u30B9\u6570\u3092\u6307\u5B9A\u3002\u7701\u7565\u6642\u306F2D\u3002\n" + "\u300C+-a\u300D\u3067\u9054\u6210\u5024\u3078\u306E\u4FEE\u6B63\u3092\u6307\u5B9A\u3002\u300C+2+1-4\u300D\u306E\u3088\u3046\u306A\u8907\u6570\u56DE\u6307\u5B9A\u53EF\u3002\n" + "\u300C>X\u300D\u300C>=X\u300D\u300C@X\u300D\u3067\u96E3\u6613\u5EA6\u3092\u6307\u5B9A\u53EF\u3002\n" + "\u300C>X\u300D\u306F\u9054\u6210\u5024>\u96E3\u6613\u5EA6\u3001\u300C>=X\u300D\u300C@X\u300D\u306F\u9054\u6210\u5024>=\u96E3\u6613\u5EA6\u3067\u5224\u5B9A\u3057\u307E\u3059\u3002\n" + "\n" + "\u3010\u66F8\u5F0F\u4F8B\u3011\n" + "3PO+2-1 \u2192 3D\u3067\u9054\u6210\u5024\u4FEE\u6B63+1\u306E\u5224\u5B9A\u3002\u9054\u6210\u5024\u306E\u307F\u8868\u793A\u3002\n" + "PO@5+2 \u2192 2D\u3067\u76EE\u6A19\u50247\u306E\u5224\u5B9A\u3002\u5224\u5B9A\u306E\u6210\u5426\u3068\u9054\u6210\u5024\u3092\u8868\u793A\u3002\n" + "4PO-2+1>7+2 \u2192 4D\u3067\u9054\u6210\u5024\u4FEE\u6B63-1\u3001\u76EE\u6A19\u50249\uFF08\u540C\u5024\u306F\u5931\u6557\uFF09\u306E\u5224\u5B9A\u3002\n" + "\n" + "\n" + "\u25C6\u5929\u5019\u30C1\u30A7\u30C3\u30AF\uFF1AWEA[n]\u3000\u3000[]\u5185\u7701\u7565\u53EF\u3002\n" + "\n" + "\u5929\u5019\u30C1\u30A7\u30C3\u30AF\u8868\u3092\u53C2\u7167\u3057\u307E\u3059\u3002\n" + "\u300Cn\u300D\u3092\u6307\u5B9A\u3059\u308B\u3068\u3001\u6307\u5B9A\u3057\u305F\u7D50\u679C\u3092\u8868\u793A\u3057\u307E\u3059\u3002\uFF08\u3010\u5E78\u904B\u70B9\u3011\u4F7F\u7528\u6642\u7528\uFF09\n" + "\n" + "\n" + "\u25C6\u81EA\u7531\u884C\u52D5\u30B7\u30C1\u30E5\u30A8\u30FC\u30B7\u30E7\u30F3\u8868\uFF1AFRE\n");
+    Opal.const_set($nesting[0], 'NAME', "壊れた世界のポストマン");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ほすとまん");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "◆判定：[n]PO[+-a][> or >= or @X]　　[]内省略可。\n" + "\n" + "達成値と判定の成否、クリティカル、ファンブルを結果表示します。\n" + "「n」でダイス数を指定。省略時は2D。\n" + "「+-a」で達成値への修正を指定。「+2+1-4」のような複数回指定可。\n" + "「>X」「>=X」「@X」で難易度を指定可。\n" + "「>X」は達成値>難易度、「>=X」「@X」は達成値>=難易度で判定します。\n" + "\n" + "【書式例】\n" + "3PO+2-1 → 3Dで達成値修正+1の判定。達成値のみ表示。\n" + "PO@5+2 → 2Dで目標値7の判定。判定の成否と達成値を表示。\n" + "4PO-2+1>7+2 → 4Dで達成値修正-1、目標値9（同値は失敗）の判定。\n" + "\n" + "\n" + "◆天候チェック：WEA[n]　　[]内省略可。\n" + "\n" + "天候チェック表を参照します。\n" + "「n」を指定すると、指定した結果を表示します。（【幸運点】使用時用）\n" + "\n" + "\n" + "◆自由行動シチュエーション表：FRE\n");
     self.$setPrefixes(["WEA\\d*", "(\\d+)?PO.*", "FRE"]);
     
     Opal.def(self, '$initialize', $Postman_initialize$1 = function $$initialize() {
@@ -116,22 +116,22 @@
       result = $rb_plus(dice2, modify);
       if ($truthy(type['$!='](""))) {
         
-        resultText = " \u3010\u5931\u6557\u3011";
+        resultText = " 【失敗】";
         operatorText = ">";
         if (type['$=='](">")) {
           if ($truthy($rb_gt(result, target))) {
-            resultText = " \u3010\u6210\u529F\u3011"}
+            resultText = " 【成功】"}
         } else {
           
           operatorText = $rb_plus(operatorText, "=");
           if ($truthy($rb_ge(result, target))) {
-            resultText = " \u3010\u6210\u529F\u3011"};
+            resultText = " 【成功】"};
         };};
       if ($truthy($rb_ge(criticalCount, 2))) {
-        resultText = " \u3010\u6210\u529F\u3011\uFF08\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF09"
+        resultText = " 【成功】（クリティカル）"
       } else if (dice['$=='](diceCount)) {
-        resultText = " \u3010\u5931\u6557\u3011\uFF08\u30D5\u30A1\u30F3\u30D6\u30EB\uFF09"};
-      text = "" + (diceCount) + "D6(" + (diceText) + ")" + (modifyText) + " \uFF1E " + (dice2) + "(" + (diceText2) + ")" + (modifyText) + " = \u9054\u6210\u5024\uFF1A" + (result);
+        resultText = " 【失敗】（ファンブル）"};
+      text = "" + (diceCount) + "D6(" + (diceText) + ")" + (modifyText) + " ＞ " + (dice2) + "(" + (diceText2) + ")" + (modifyText) + " = 達成値：" + (result);
       if ($truthy($rb_gt(target, 0))) {
         text = $rb_plus(text, "" + (operatorText) + (target) + " ")};
       text = $rb_plus(text, resultText.$to_s());
@@ -142,8 +142,8 @@
       var $a, $b, self = this, name = nil, table = nil, dice = nil, diceText = nil, tableText = nil, text = nil;
 
       
-      name = "\u5929\u5019\u30C1\u30A7\u30C3\u30AF";
-      table = [[2, "\u5927\u96E8\u3068\u5F37\u98A8\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+4\u3002"], [3, "\u98A8\u304C\u5F37\u30441\u65E5\u306B\u306A\u308A\u305D\u3046\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+2\u3002"], [4, "\u6674\u308C\u3002\u7279\u306B\u306A\u3057\u3002"], [5, "\u591C\u306E\u9593\u306E\u96E8\u3067\u306C\u304B\u308B\u3080\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+2\u3002"], [6, "\u305D\u308C\u306A\u308A\u306E\u96E8\u8DB3\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+2\u3002"], [7, "\u6674\u308C\u3002\u7279\u306B\u306A\u3057\u3002"], [8, "\u5929\u6C17\u306F\u5927\u8352\u308C\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+4\u3002"], [9, "\u5C0F\u96E8\u304C\u964D\u308B\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+1\u3002"], [10, "\u305D\u308C\u306A\u308A\u306E\u96E8\u8DB3\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+2\u3002"], [11, "\u6674\u308C\u3002\u7279\u306B\u306A\u3057\u3002"], [12, "\u98A8\u304C\u5F37\u30441\u65E5\u306B\u306A\u308A\u305D\u3046\u3002\u63A2\u7D22\u5224\u5B9A\u306E\u96E3\u6613\u5EA6\u306B+2\u3002"]];
+      name = "天候チェック";
+      table = [[2, "大雨と強風。探索判定の難易度に+4。"], [3, "風が強い1日になりそう。探索判定の難易度に+2。"], [4, "晴れ。特になし。"], [5, "夜の間の雨でぬかるむ。探索判定の難易度に+2。"], [6, "それなりの雨足。探索判定の難易度に+2。"], [7, "晴れ。特になし。"], [8, "天気は大荒れ。探索判定の難易度に+4。"], [9, "小雨が降る。探索判定の難易度に+1。"], [10, "それなりの雨足。探索判定の難易度に+2。"], [11, "晴れ。特になし。"], [12, "風が強い1日になりそう。探索判定の難易度に+2。"]];
       if (roc['$=='](0)) {
         $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b
       } else {
@@ -156,18 +156,18 @@
         diceText = "" + "Choice:" + (roc);
       };
       tableText = self.$get_table_by_number(dice, table);
-      text = "" + (name) + "(" + (diceText) + ") \uFF1E " + (dice) + "\uFF1A" + (tableText);
+      text = "" + (name) + "(" + (diceText) + ") ＞ " + (dice) + "：" + (tableText);
       return text;
     }, $Postman_get_weather_table$8.$$arity = 1);
     return (Opal.def(self, '$get_free_situation_table', $Postman_get_free_situation_table$9 = function $$get_free_situation_table() {
       var $a, $b, self = this, name = nil, table = nil, dice = nil, diceText = nil, tableText = nil, text = nil;
 
       
-      name = "\u81EA\u7531\u884C\u52D5\u30B7\u30C1\u30E5\u30A8\u30FC\u30B7\u30E7\u30F3\u8868";
-      table = [[2, "\u4F55\u3092\u3059\u308B\u3067\u3082\u306A\u304F\u3001\u971E\u304C\u304B\u3063\u305F\u3088\u3046\u306A\u591C\u7A7A\u3092\u898B\u4E0A\u3052\u308B\u3002\u3075\u3068\u96A3\u306B\u76EE\u3092\u5411\u3051\u308C\u3070\u3001\u5F7C/\u5F7C\u5973\u304C\u5C45\u305F\u3002\u5F7C/\u5F7C\u5973\u306F\u3001\u3053\u3046\u306A\u308B\u524D\u306E\u591C\u7A7A\u3092\u77E5\u3063\u3066\u3044\u308B\u306E\u3060\u308D\u3046\u304B\u3002"], [3, "\u5922\u3092\u898B\u305F\u3002\u5927\u6226\u306E\u6700\u4E2D\u3001\u8857\u304C\u3001\u4EBA\u304C\u3001\u4E16\u754C\u304C\u713C\u3051\u3066\u3044\u304F\u60AA\u5922\u3092\u3002\u8FFD\u3044\u7ACB\u3066\u3089\u308C\u308B\u3088\u3046\u306B\u3057\u3066\u76EE\u3092\u899A\u307E\u3059\u3068\u3001\u5F7C/\u5F7C\u5973\u304C\u541B\u3092\u898B\u3066\u3044\u305F\u3002\u3000\u2026\u2026\u3082\u3057\u304B\u3057\u3066\u3001\u81EA\u5206\u306F\u3088\u307B\u3069\u3046\u306A\u3055\u308C\u3066\u3044\u305F\u306E\u3060\u308D\u3046\u304B\u3002"], [4, "\u5468\u56F2\u3067\u898B\u3064\u3051\u305F\u30AC\u30E9\u30AF\u30BF\u3092\u4F7F\u3063\u3066\u3001\u3061\u3087\u3063\u3068\u3057\u305F\u30D3\u30C3\u30AF\u30EA\u73A9\u5177\u3092\u4F5C\u3063\u3066\u307F\u305F\u3002\u300C\u5F7C/ \u5F7C\u5973\u300D\u306B\u30B3\u30A4\u30C4\u3092\u3051\u3057\u304B\u3051\u305F\u3089\u3001\u3069\u3093\u306A\u53CD\u5FDC\u3092\u3059\u308B\u3060\u308D\u3046\u304B\uFF1F"], [5, "\u4F7F\u3048\u305D\u3046\u306A\u3082\u306E\u304C\u306A\u3044\u304B\u63A2\u3057\u3066\u3044\u308B\u3068\u3001\u30AB\u30BF\u30F3\u3068\u7269\u97F3\u304C\u3057\u3066\u4F55\u304B\u304C\u843D\u3061\u305F\u3002\u62FE\u3044\u4E0A\u3052\u3066\u307F\u305F\u305D\u308C\u306F\u3001\u304B\u3064\u3066\u3053\u3053\u3067\u751F\u6D3B\u3057\u3066\u3044\u305F\u8AB0\u304B\u306E\u540D\u6B8B\uFF08\u5199\u771F\u3001\u5BB6\u5177\u3001\u73A9\u5177\u7B49\uFF09\u3060\u3063\u305F\u3002"], [6, "\u30C6\u30F3\u30C8\u306E\u4E2D\u3067\u591C\u3092\u904E\u3054\u3057\u3066\u3044\u308B\u3068\u3001\u3075\u3068\u5F7C/\u5F7C\u5973\u3068\u8A71\u3057\u305F\u304F\u3066\u305F\u307E\u3089\u306A\u3044\u6C17\u6301\u3061\u306B\u306A\u3063\u305F\u3002\u8A00\u3063\u3066\u3057\u307E\u3048\u3070\u3001\u591C\u306E\u9759\u3051\u3055\u306B\u5BC2\u3057\u3055\u3092\u899A\u3048\u3066\u3057\u307E\u3063\u305F\u306E\u3060\u3002"], [7, "\u3053\u3053\u307E\u3067\u306E\u914D\u9054\u306E\u8A18\u9332\u3092\u3064\u3051\u3066\u3044\u305F\u3089\u3001\u80CC\u5F8C\u304B\u3089\u8996\u7DDA\u3092\u611F\u3058\u308B\u2026\u2026\uFF01\u3000\u3082\u3057\u3084\u3001\u5F7C/\u5F7C\u5973\u306B\u8997\u304B\u308C\u3066\u3044\u308B\u2026\u2026\uFF01\uFF1F"], [8, "\u5468\u56F2\u3092\u63A2\u7D22\u3057\u3066\u3044\u308B\u3068\u3001\u541B\u4E00\u4EBA\u3067\u306F\u624B\u306E\u5C4A\u304B\u306A\u3044\u3068\u3053\u308D\u306B\u91D1\u5C5E\u88FD\u306E\u7BB1\u304B\u4F55\u304B\u304C\u3042\u308B\u3053\u3068\u306B\u6C17\u3065\u3044\u305F\u3002\u5F7C/\u5F7C\u5973\u306B\u624B\u4F1D\u3063\u3066\u3082\u3089\u3048\u3070\u3001\u53D6\u308C\u308B\u3060\u308D\u3046\u304B\u2026\u2026\uFF1F"], [9, "\u671D\u307E\u3067\u306F\u307E\u3060\u3057\u3070\u3089\u304F\u3042\u308B\u3068\u3044\u3046\u306E\u306B\u3001\u76EE\u304C\u899A\u3081\u3066\u3057\u307E\u3063\u305F\u3002\u4E8C\u5EA6\u5BDD\u3057\u3088\u3046\u306B\u3082\u5BDD\u4ED8\u3051\u305A\u306B\u5C45\u308B\u3068\u3001\u96A3\u3067\u3082\u305E\u3082\u305E\u3068\u52D5\u304F\u6C17\u914D\u304C\u3059\u308B\u3002\u5F7C/\u5F7C\u5973\u3082\u3001\u3069\u3046\u3084\u3089\u540C\u3058\u3089\u3057\u3044\u3002"], [10, "\u4ED6\u611B\u306E\u306A\u3044\u8A71\u3092\u3059\u308B\u3046\u3061\u306B\u3001\u541B\u306F\u5F7C/\u5F7C\u5973\u306B\u554F\u3044\u304B\u3051\u3066\u3044\u305F\u3002\u300C\u4F55\u6545\u3001\u30DD\u30B9\u30C8\u30DE\u30F3\u306B\u306A\u308D\u3046\u3068\u601D\u3063\u305F\u306E\u304B\u300D\u3000\u2026\u2026\u305D\u3046\u3044\u3048\u3070\u3001\u541B\u81EA\u8EAB\u306F\u3069\u3046\u3060\u3063\u305F\u308D\u3046\u304B\u3002"], [11, "\u4FDD\u5B58\u98DF\u306B\u3042\u308A\u3064\u3053\u3046\u3068\u3057\u305F\u305D\u306E\u6642\u3001\u541B\u306F\u6C17\u3065\u3044\u305F\u3002\u4E00\u5339\u306E\u30CD\u30BA\u30DF\u304C\u3001\u5F7C/\u5F7C\u5973\u306E\u8377\u7269\u306E\u4E2D\u306B\u6F5C\u308A\u8FBC\u3082\u3046\u3068\u3057\u3066\u3044\u308B\u3002\u5F7C/\u5F7C\u5973\u306F\u6C17\u3065\u3044\u3066\u3044\u306A\u3044\u304C\u3001\u3053\u306E\u307E\u307E\u3067\u306F\u98DF\u6599\u304C\u5371\u306A\u3044\uFF01"], [12, "\u30C6\u30F3\u30C8\u3092\u8A2D\u55B6\u3057\u3001\u843D\u3061\u7740\u3044\u305F\u9803\u306B\u3075\u3068\u6C17\u3065\u304F\u3002\u3000\u2026\u2026\u8EAB\u4F53\u304C\u71B1\u3044\u3002\u5C11\u3057\u3001\u3060\u308B\u3055\u3082\u3042\u308B\u3088\u3046\u306A\u6C17\u3082\u3059\u308B\u3002\u5927\u3057\u305F\u3053\u3068\u306F\u306A\u3044\u3068\u601D\u3046\u304C\u3001\u5F7C/\u5F7C\u5973\u306B\u76F8\u8AC7\u3057\u3066\u304A\u3044\u305F\u65B9\u304C\u3044\u3044\u3060\u308D\u3046\u304B\u3002"]];
+      name = "自由行動シチュエーション表";
+      table = [[2, "何をするでもなく、霞がかったような夜空を見上げる。ふと隣に目を向ければ、彼/彼女が居た。彼/彼女は、こうなる前の夜空を知っているのだろうか。"], [3, "夢を見た。大戦の最中、街が、人が、世界が焼けていく悪夢を。追い立てられるようにして目を覚ますと、彼/彼女が君を見ていた。　……もしかして、自分はよほどうなされていたのだろうか。"], [4, "周囲で見つけたガラクタを使って、ちょっとしたビックリ玩具を作ってみた。「彼/ 彼女」にコイツをけしかけたら、どんな反応をするだろうか？"], [5, "使えそうなものがないか探していると、カタンと物音がして何かが落ちた。拾い上げてみたそれは、かつてここで生活していた誰かの名残（写真、家具、玩具等）だった。"], [6, "テントの中で夜を過ごしていると、ふと彼/彼女と話したくてたまらない気持ちになった。言ってしまえば、夜の静けさに寂しさを覚えてしまったのだ。"], [7, "ここまでの配達の記録をつけていたら、背後から視線を感じる……！　もしや、彼/彼女に覗かれている……！？"], [8, "周囲を探索していると、君一人では手の届かないところに金属製の箱か何かがあることに気づいた。彼/彼女に手伝ってもらえば、取れるだろうか……？"], [9, "朝まではまだしばらくあるというのに、目が覚めてしまった。二度寝しようにも寝付けずに居ると、隣でもぞもぞと動く気配がする。彼/彼女も、どうやら同じらしい。"], [10, "他愛のない話をするうちに、君は彼/彼女に問いかけていた。「何故、ポストマンになろうと思ったのか」　……そういえば、君自身はどうだったろうか。"], [11, "保存食にありつこうとしたその時、君は気づいた。一匹のネズミが、彼/彼女の荷物の中に潜り込もうとしている。彼/彼女は気づいていないが、このままでは食料が危ない！"], [12, "テントを設営し、落ち着いた頃にふと気づく。　……身体が熱い。少し、だるさもあるような気もする。大したことはないと思うが、彼/彼女に相談しておいた方がいいだろうか。"]];
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       tableText = self.$get_table_by_number(dice, table);
-      text = "" + (name) + "(" + (diceText) + ") \uFF1E " + (dice) + "\uFF1A" + (tableText);
+      text = "" + (name) + "(" + (diceText) + ") ＞ " + (dice) + "：" + (tableText);
       return text;
     }, $Postman_get_free_situation_table$9.$$arity = 0), nil) && 'get_free_situation_table';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

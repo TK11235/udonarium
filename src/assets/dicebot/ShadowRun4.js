@@ -19,9 +19,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "ShadowRun4");
-    Opal.const_set($nesting[0], 'NAME', "\u30B7\u30E3\u30C9\u30A6\u30E9\u30F3\u7B2C4\u7248");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3057\u3084\u3068\u3046\u3089\u30934");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u500B\u6570\u632F\u308A\u8DB3\u3057\u30ED\u30FC\u30EB(xRn)\u306E\u5883\u754C\u5024\u30926\u306B\u30BB\u30C3\u30C8\u3001\u30D0\u30E9\u30D0\u30E9\u30ED\u30FC\u30EB(xBn)\u306E\u76EE\u6A19\u5024\u30925\u4EE5\u4E0A\u306B\u30BB\u30C3\u30C8\u3057\u307E\u3059\u3002\n" + "B\u30B3\u30DE\u30F3\u30C9\u3068R\u30B3\u30DE\u30F3\u30C9\u6642\u306B\u3001\u30B0\u30EA\u30C3\u30C1\u306E\u8868\u793A\u3092\u884C\u3044\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "シャドウラン第4版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しやとうらん4");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。\n" + "BコマンドとRコマンド時に、グリッチの表示を行います。\n");
     
     Opal.def(self, '$initialize', $ShadowRun4_initialize$1 = function $$initialize() {
       var $iter = $ShadowRun4_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -51,8 +51,8 @@
         return ""
       };
       if (successCount['$=='](0)) {
-        return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30B0\u30EA\u30C3\u30C1"};
-      return " \uFF1E \u30B0\u30EA\u30C3\u30C1";
+        return " ＞ クリティカルグリッチ"};
+      return " ＞ グリッチ";
     }, $ShadowRun4_getGrichText$2.$$arity = 3), nil) && 'getGrichText';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

@@ -28,9 +28,9 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Gundog");
-    Opal.const_set($nesting[0], 'NAME', "\u30AC\u30F3\u30C9\u30C3\u30B0");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u304B\u3093\u3068\u3064\u304F");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5931\u6557\u3001\u6210\u529F\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u3068\u30ED\u30FC\u30EB\u306E\u9054\u6210\u5024\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "nD9\u30ED\u30FC\u30EB\u3082\u5BFE\u5FDC\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ガンドッグ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "かんとつく");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。\n" + "nD9ロールも対応。\n");
     
     Opal.def(self, '$check_1D100', $Gundog_check_1D100$1 = function $$check_1D100(total, _dice_total, cmp_op, target) {
       var self = this, dig10 = nil, dig1 = nil;
@@ -41,9 +41,9 @@
         return ""
       };
       if ($truthy($rb_ge(total, 100))) {
-        return " \uFF1E \u30D5\u30A1\u30F3\u30D6\u30EB"
+        return " ＞ ファンブル"
       } else if ($truthy($rb_le(total, 1))) {
-        return " \uFF1E \u7D76\u5BFE\u6210\u529F(\u9054\u6210\u50241+SL)"
+        return " ＞ 絶対成功(達成値1+SL)"
       } else if ($truthy($rb_le(total, target))) {
         
         dig10 = $rb_divide(total, 10).$floor();
@@ -53,12 +53,12 @@
         if ($truthy($rb_ge(dig1, 10))) {
           dig1 = 0};
         if ($truthy($rb_le(dig1, 0))) {
-          return " \uFF1E \u30AF\u30EA\u30C6\u30A3\u30AB\u30EB(\u9054\u6210\u502420+SL)"
+          return " ＞ クリティカル(達成値20+SL)"
         } else {
-          return "" + " \uFF1E \u6210\u529F(\u9054\u6210\u5024" + ($rb_plus(dig10, dig1)) + "+SL)"
+          return "" + " ＞ 成功(達成値" + ($rb_plus(dig10, dig1)) + "+SL)"
         };
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $Gundog_check_1D100$1.$$arity = 4);
     return (Opal.def(self, '$isD9', $Gundog_isD9$2 = function $$isD9() {
@@ -92,9 +92,9 @@ Opal.loaded(["diceBot/Gundog.js"]);
 
     
     Opal.const_set($nesting[0], 'ID', "GundogZero");
-    Opal.const_set($nesting[0], 'NAME', "\u30AC\u30F3\u30C9\u30C3\u30B0\u30FB\u30BC\u30ED");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u304B\u3093\u3068\u3064\u304F\u305B\u308D");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "\u5931\u6557\u3001\u6210\u529F\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u3068\u30ED\u30FC\u30EB\u306E\u9054\u6210\u5024\u306E\u81EA\u52D5\u5224\u5B9A\u3092\u884C\u3044\u307E\u3059\u3002\n" + "nD9\u30ED\u30FC\u30EB\u3082\u5BFE\u5FDC\u3002\n" + "\u30FB\u30C0\u30E1\u30FC\u30B8\u30DA\u30CA\u30EB\u30C6\u30A3\u8868\u3000\u3000(\u301CDPTx) (x:\u4FEE\u6B63)\n" + "\u3000\u5C04\u6483(SDPT)\u3001\u683C\u95D8(MDPT)\u3001\u8ECA\u4E21(VDPT)\u3001\u6C4E\u7528(GDPT)\u306E\u5404\u8868\u3092\u5F15\u304F\u3053\u3068\u304C\u51FA\u6765\u307E\u3059\u3002\n" + "\u3000\u4FEE\u6B63\u3092\u5F8C\u308D\u306B\u66F8\u304F\u3053\u3068\u3082\u51FA\u6765\u307E\u3059\u3002\n" + "\u30FB\u30D5\u30A1\u30F3\u30D6\u30EB\u8868\u3000\u3000\u3000\u3000\u3000\u3000(\u301CFTx)  (x:\u4FEE\u6B63)\n" + "\u3000\u5C04\u6483(SFT)\u3001\u683C\u95D8(MFT)\u3001\u6295\u64F2(TFT)\u306E\u5404\u8868\u3092\u5F15\u304F\u3053\u3068\u304C\u51FA\u6765\u307E\u3059\u3002\n" + "\u3000\u4FEE\u6B63\u3092\u5F8C\u308D\u306B\u66F8\u304F\u3053\u3068\u3082\u51FA\u6765\u307E\u3059\u3002\n");
+    Opal.const_set($nesting[0], 'NAME', "ガンドッグ・ゼロ");
+    Opal.const_set($nesting[0], 'SORT_KEY', "かんとつくせろ");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "失敗、成功、クリティカル、ファンブルとロールの達成値の自動判定を行います。\n" + "nD9ロールも対応。\n" + "・ダメージペナルティ表　　(〜DPTx) (x:修正)\n" + "　射撃(SDPT)、格闘(MDPT)、車両(VDPT)、汎用(GDPT)の各表を引くことが出来ます。\n" + "　修正を後ろに書くことも出来ます。\n" + "・ファンブル表　　　　　　(〜FTx)  (x:修正)\n" + "　射撃(SFT)、格闘(MFT)、投擲(TFT)の各表を引くことが出来ます。\n" + "　修正を後ろに書くことも出来ます。\n");
     self.$setPrefixes(["(.DPT|.FT)\\d*"]);
     
     Opal.def(self, '$rollDiceCommand', $GundogZero_rollDiceCommand$1 = function $$rollDiceCommand(command) {
@@ -109,14 +109,14 @@ Opal.loaded(["diceBot/Gundog.js"]);
       mod = 0;
       if ($truthy(/(\w)DPT([\+\-\d]*)/i['$=~'](string))) {
         
-        ttype = "\u30C0\u30E1\u30FC\u30B8\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC";
+        ttype = "ダメージペナルティー";
         head = $$($nesting, 'Regexp').$last_match(1);
         if ($truthy($$($nesting, 'Regexp').$last_match(2))) {
           mod = self.$parren_killer("" + "(0" + ($$($nesting, 'Regexp').$last_match(2)) + ")").$to_i()};
         $b = self.$getDamageTypeAndTable(head), $a = Opal.to_ary($b), (type = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;};
       if ($truthy(/(\w)FT([\+\-\d]*)/i['$=~'](string))) {
         
-        ttype = "\u30D5\u30A1\u30F3\u30D6\u30EB";
+        ttype = "ファンブル";
         head = $$($nesting, 'Regexp').$last_match(1);
         if ($truthy($$($nesting, 'Regexp').$last_match(2))) {
           mod = self.$parren_killer("" + "(0" + ($$($nesting, 'Regexp').$last_match(2)) + ")").$to_i()};
@@ -129,7 +129,7 @@ Opal.loaded(["diceBot/Gundog.js"]);
         dice = 0};
       if ($truthy($rb_gt(dice, 18))) {
         dice = 18};
-      output = "" + (type) + (ttype) + "\u8868[" + (diceOriginalText) + "] \uFF1E " + (table['$[]'](dice));
+      output = "" + (type) + (ttype) + "表[" + (diceOriginalText) + "] ＞ " + (table['$[]'](dice));
       return output;
     }, $GundogZero_rollDiceCommand$1.$$arity = 1);
     
@@ -139,17 +139,17 @@ Opal.loaded(["diceBot/Gundog.js"]);
       
       $case = head;
       if ("S"['$===']($case)) {
-      type = "\u5C04\u6483";
-      table = ["\u5BFE\u8C61\u306F[\u6B7B\u4EA1]", "[\u8FFD\u52A0D]4D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]15", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]14", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]14", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]1D6/[\u91CD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u51FA\u8840]1D6/[\u91CD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]10", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]10", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]8", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]6", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]4", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-20\uFF05", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-20\uFF05", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-10\uFF05", "[\u8EFD\u50B7]-20\uFF05", "[\u8EFD\u50B7]-10\uFF05", "[\u8EFD\u50B7]-10\uFF05", "\u624B\u306B\u6301\u3063\u305F\u6B66\u5668\u3092\u843D\u3068\u3059", "\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u7121\u3057"];}
+      type = "射撃";
+      table = ["対象は[死亡]", "[追加D]4D6/[出血]2D6/[重傷]-30％/[朦朧判定]15", "[追加D]3D6/[出血]2D6/[重傷]-30％/[朦朧判定]14", "[追加D]3D6/[出血]2D6/[重傷]-20％/[朦朧判定]14", "[追加D]3D6/[出血]1D6/[重傷]-20％/[朦朧判定]12", "[追加D]2D6/[出血]1D6/[重傷]-10％/[朦朧判定]12", "[追加D]2D6/[軽傷]-20％/[朦朧判定]10", "[追加D]2D6/[軽傷]-10％/[朦朧判定]10", "[追加D]2D6/[軽傷]-20％/[朦朧判定]8", "[追加D]2D6/[軽傷]-20％/[朦朧判定]6", "[追加D]2D6/[軽傷]-10％/[朦朧判定]4", "[追加D]1D6/[軽傷]-20％", "[追加D]1D6/[軽傷]-20％", "[追加D]1D6/[軽傷]-10％", "[軽傷]-20％", "[軽傷]-10％", "[軽傷]-10％", "手に持った武器を落とす", "ペナルティー無し"];}
       else if ("M"['$===']($case)) {
-      type = "\u683C\u95D8";
-      table = ["\u5BFE\u8C61\u306F[\u6B7B\u4EA1]", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]15", "[\u8FFD\u52A0D]2D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]14", "[\u8FFD\u52A0D]2D6/[\u51FA\u8840]1D6/[\u91CD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]14", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]1D6/[\u91CD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]10", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]8", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]8", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]6", "[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]6", "[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]6", "[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]4", "[\u8EFD\u50B7]-20\uFF05", "[\u8EFD\u50B7]-10\uFF05", "[\u8EFD\u50B7]-10\uFF05", "\u624B\u306B\u6301\u3063\u305F\u6B66\u5668\u3092\u843D\u3068\u3059", "\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u7121\u3057"];}
+      type = "格闘";
+      table = ["対象は[死亡]", "[追加D]3D6/[出血]2D6/[重傷]-30％/[朦朧判定]15", "[追加D]2D6/[出血]2D6/[重傷]-30％/[朦朧判定]14", "[追加D]2D6/[出血]1D6/[重傷]-20％/[朦朧判定]14", "[追加D]3D6/[出血]1D6/[重傷]-10％/[朦朧判定]12", "[追加D]2D6/[軽傷]-20％/[朦朧判定]12", "[追加D]2D6/[軽傷]-10％/[朦朧判定]12", "[追加D]2D6/[軽傷]-10％/[朦朧判定]10", "[追加D]1D6/[軽傷]-20％/[朦朧判定]8", "[追加D]1D6/[軽傷]-10％/[朦朧判定]8", "[追加D]1D6/[軽傷]-10％/[朦朧判定]6", "[軽傷]-20％/[朦朧判定]6", "[軽傷]-10％/[朦朧判定]6", "[軽傷]-10％/[朦朧判定]4", "[軽傷]-20％", "[軽傷]-10％", "[軽傷]-10％", "手に持った武器を落とす", "ペナルティー無し"];}
       else if ("V"['$===']($case)) {
-      type = "\u8ECA\u4E21";
-      table = ["[\u30AF\u30E9\u30C3\u30B7\u30E5]\u3059\u308B\u3002[\u30C1\u30A7\u30A4\u30B9]\u304B\u3089\u9664\u5916", "[\u4E57\u54E1D]3D6/[\u64CD\u7E26\u6027]-20\uFF05/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]3D6/[\u64CD\u7E26\u6027]-20\uFF05/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]2D6/[\u64CD\u7E26\u6027]-10\uFF05/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]2D6/[\u64CD\u7E26\u6027]-10\uFF05/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]3D6/[\u30B9\u30D4\u30FC\u30C9]-2/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]3D6/[\u30B9\u30D4\u30FC\u30C9]-2/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]2D6/[\u30B9\u30D4\u30FC\u30C9]-1/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]2D6/[\u30B9\u30D4\u30FC\u30C9]-1/[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u4E57\u54E1D]2D6/[\u64CD\u7E26\u5224\u5B9A]-20\uFF05", "[\u4E57\u54E1D]2D6/[\u64CD\u7E26\u5224\u5B9A]-20\uFF05", "[\u4E57\u54E1D]1D6/[\u64CD\u7E26\u5224\u5B9A]-10\uFF05", "[\u4E57\u54E1D]1D6/[\u64CD\u7E26\u5224\u5B9A]-10\uFF05", "[\u30B9\u30D4\u30F3\u5224\u5B9A]", "[\u30B9\u30D4\u30F3\u5224\u5B9A]", "\u4E57\u54E1\u306B[\u30B7\u30E7\u30C3\u30AF]-20\uFF05", "\u4E57\u54E1\u306B[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u4E57\u54E1\u306B[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u7121\u3057"];}
+      type = "車両";
+      table = ["[クラッシュ]する。[チェイス]から除外", "[乗員D]3D6/[操縦性]-20％/[スピン判定]", "[乗員D]3D6/[操縦性]-20％/[スピン判定]", "[乗員D]2D6/[操縦性]-10％/[スピン判定]", "[乗員D]2D6/[操縦性]-10％/[スピン判定]", "[乗員D]3D6/[スピード]-2/[スピン判定]", "[乗員D]3D6/[スピード]-2/[スピン判定]", "[乗員D]2D6/[スピード]-1/[スピン判定]", "[乗員D]2D6/[スピード]-1/[スピン判定]", "[乗員D]2D6/[操縦判定]-20％", "[乗員D]2D6/[操縦判定]-20％", "[乗員D]1D6/[操縦判定]-10％", "[乗員D]1D6/[操縦判定]-10％", "[スピン判定]", "[スピン判定]", "乗員に[ショック]-20％", "乗員に[ショック]-10％", "乗員に[ショック]-10％", "ペナルティー無し"];}
       else if ("G"['$===']($case)) {
-      type = "\u6C4E\u7528";
-      table = ["\u5BFE\u8C61\u306F[\u6B7B\u4EA1]", "[\u8FFD\u52A0D]4D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]18", "[\u8FFD\u52A0D]4D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]16", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]14", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]2D6/[\u91CD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]14", "[\u8FFD\u52A0D]3D6/[\u51FA\u8840]1D6/[\u91CD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u51FA\u8840]1D6/[\u91CD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]12", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]10", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-30\uFF05/[\u6726\u6727\u5224\u5B9A]8", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]8", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]6", "[\u8FFD\u52A0D]2D6/[\u8EFD\u50B7]-10\uFF05/[\u6726\u6727\u5224\u5B9A]6", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-20\uFF05/[\u6726\u6727\u5224\u5B9A]4", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-20\uFF05", "[\u8FFD\u52A0D]1D6/[\u8EFD\u50B7]-10\uFF05", "[\u8EFD\u50B7]-20\uFF05", "[\u8EFD\u50B7]-10\uFF05", "\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u7121\u3057"];}
+      type = "汎用";
+      table = ["対象は[死亡]", "[追加D]4D6/[出血]2D6/[重傷]-30％/[朦朧判定]18", "[追加D]4D6/[出血]2D6/[重傷]-30％/[朦朧判定]16", "[追加D]3D6/[出血]2D6/[重傷]-20％/[朦朧判定]14", "[追加D]3D6/[出血]2D6/[重傷]-20％/[朦朧判定]14", "[追加D]3D6/[出血]1D6/[重傷]-10％/[朦朧判定]12", "[追加D]2D6/[出血]1D6/[重傷]-10％/[朦朧判定]12", "[追加D]2D6/[軽傷]-30％/[朦朧判定]12", "[追加D]2D6/[軽傷]-30％/[朦朧判定]10", "[追加D]2D6/[軽傷]-30％/[朦朧判定]8", "[追加D]2D6/[軽傷]-20％/[朦朧判定]8", "[追加D]2D6/[軽傷]-20％/[朦朧判定]6", "[追加D]2D6/[軽傷]-10％/[朦朧判定]6", "[追加D]1D6/[軽傷]-20％/[朦朧判定]4", "[追加D]1D6/[軽傷]-20％", "[追加D]1D6/[軽傷]-10％", "[軽傷]-20％", "[軽傷]-10％", "ペナルティー無し"];}
       else {
       head = "S";
       $b = self.$getDamageTypeAndTable(head), $a = Opal.to_ary($b), (type = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;};
@@ -161,14 +161,14 @@ Opal.loaded(["diceBot/Gundog.js"]);
       
       $case = head;
       if ("S"['$===']($case)) {
-      type = "\u5C04\u6483";
-      table = ["\u9283\u5668\u304C\u66B4\u767A\u3001\u81EA\u5206\u306B\u547D\u4E2D\u3002[\u8CAB\u901AD]", "\u9283\u5668\u304C\u66B4\u767A\u3001\u81EA\u5206\u306B\u547D\u4E2D\u3002[\u975E\u8CAB\u901AD]", "\u8AA4\u5C04\u3002\u30E9\u30F3\u30C0\u30E0\u306B\u5473\u65B9\u306B\u547D\u4E2D\u3002[\u8CAB\u901AD]", "\u8AA4\u5C04\u3002\u30E9\u30F3\u30C0\u30E0\u306B\u5473\u65B9\u306B\u547D\u4E2D\u3002[\u975E\u8CAB\u901AD]", "\u9283\u5668\u304C\u5B8C\u5168\u306B\u6545\u969C", "\u9283\u5668\u304C\u5B8C\u5168\u306B\u6545\u969C", "\u6545\u969C\u3002\u3008\u30E1\u30AB\u30CB\u30C3\u30AF\u3009\u5224\u5B9A\u306B\u6210\u529F\u3059\u308B\u307E\u3067\u5C04\u6483\u4E0D\u53EF", "\u6545\u969C\u3002\u3008\u30E1\u30AB\u30CB\u30C3\u30AF\u3009\u5224\u5B9A\u306B\u6210\u529F\u3059\u308B\u307E\u3067\u5C04\u6483\u4E0D\u53EF", "\u4F5C\u52D5\u4E0D\u826F\u3002[\u30A2\u30A4\u30C6\u30E0\u4F7F\u7528]\u30922\u56DE\u884C\u3063\u3066\u4FEE\u7406\u3059\u308B\u307E\u3067\u5C04\u6483\u4E0D\u53EF", "\u4F5C\u52D5\u4E0D\u826F\u3002[\u30A2\u30A4\u30C6\u30E0\u4F7F\u7528]\u30922\u56DE\u884C\u3063\u3066\u4FEE\u7406\u3059\u308B\u307E\u3067\u5C04\u6483\u4E0D\u53EF", "\u4F5C\u52D5\u4E0D\u826F\u3002[\u30A2\u30A4\u30C6\u30E0\u4F7F\u7528]\u3092\u884C\u3063\u3066\u4FEE\u7406\u3059\u308B\u307E\u3067\u5C04\u6483\u4E0D\u53EF", "\u4F5C\u52D5\u4E0D\u826F\u3002[\u30A2\u30A4\u30C6\u30E0\u4F7F\u7528]\u3092\u884C\u3063\u3066\u4FEE\u7406\u3059\u308B\u307E\u3067\u5C04\u6483\u4E0D\u53EF", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u4E0D\u5B89\u5B9A]", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u4E0D\u5B89\u5B9A]", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-20\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-20\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u7121\u3057"];}
+      type = "射撃";
+      table = ["銃器が暴発、自分に命中。[貫通D]", "銃器が暴発、自分に命中。[非貫通D]", "誤射。ランダムに味方に命中。[貫通D]", "誤射。ランダムに味方に命中。[非貫通D]", "銃器が完全に故障", "銃器が完全に故障", "故障。〈メカニック〉判定に成功するまで射撃不可", "故障。〈メカニック〉判定に成功するまで射撃不可", "作動不良。[アイテム使用]を2回行って修理するまで射撃不可", "作動不良。[アイテム使用]を2回行って修理するまで射撃不可", "作動不良。[アイテム使用]を行って修理するまで射撃不可", "作動不良。[アイテム使用]を行って修理するまで射撃不可", "姿勢を崩す。[不安定]", "姿勢を崩す。[不安定]", "姿勢を崩す。[ショック]-20％", "姿勢を崩す。[ショック]-20％", "姿勢を崩す。[ショック]-10％", "姿勢を崩す。[ショック]-10％", "ペナルティー無し"];}
       else if ("M"['$===']($case)) {
-      type = "\u683C\u95D8";
-      table = ["\u907F\u3051\u3089\u308C\u3066[\u8EE2\u5012]\u3001[\u6726\u6727]\u72B6\u614B", "\u30E9\u30F3\u30C0\u30E0\u306B[\u81F3\u8FD1\u8DDD\u96E2]\u306E\u5473\u65B9(\u5C45\u306A\u3051\u308C\u3070\u81EA\u5206)\u306B\u547D\u4E2D\u3002[\u8CAB\u901AD]", "\u30E9\u30F3\u30C0\u30E0\u306B[\u81F3\u8FD1\u8DDD\u96E2]\u306E\u5473\u65B9(\u5C45\u306A\u3051\u308C\u3070\u81EA\u5206)\u306B\u547D\u4E2D\u3002[\u8CAB\u901AD]", "\u6B66\u5668\u304C\u5B8C\u5168\u306B\u58CA\u308C\u308B", "\u6B66\u5668\u304C\u30AC\u30BF\u3064\u304F\u3002\u3008\u624B\u5148\u3009\u5224\u5B9A\u306B\u6210\u529F\u3059\u308B\u307E\u3067\u4F7F\u7528\u4E0D\u53EF", "\u6B66\u5668\u304C\u30AC\u30BF\u3064\u304F\u3002\u3008\u624B\u5148\u3009\u5224\u5B9A\u306B\u6210\u529F\u3059\u308B\u307E\u3067\u4F7F\u7528\u4E0D\u53EF", "\u7121\u7406\u306A\u59FF\u52E2\u3067\u7B4B\u3092\u4F38\u3070\u3059\u3002[\u8EFD\u50B7]-30\uFF05", "\u7121\u7406\u306A\u59FF\u52E2\u3067\u7B4B\u3092\u4F38\u3070\u3059\u3002[\u8EFD\u50B7]-30\uFF05", "\u7121\u7406\u306A\u59FF\u52E2\u3067\u7B4B\u3092\u4F38\u3070\u3059\u3002[\u8EFD\u50B7]-20\uFF05", "\u7121\u7406\u306A\u59FF\u52E2\u3067\u7B4B\u3092\u4F38\u3070\u3059\u3002[\u8EFD\u50B7]-20\uFF05", "\u7121\u7406\u306A\u59FF\u52E2\u3067\u7B4B\u3092\u4F38\u3070\u3059\u3002[\u8EFD\u50B7]-10\uFF05", "\u7121\u7406\u306A\u59FF\u52E2\u3067\u7B4B\u3092\u4F38\u3070\u3059\u3002[\u8EFD\u50B7]-10\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u4E0D\u5B89\u5B9A]", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u4E0D\u5B89\u5B9A]", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-20\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-20\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u7121\u3057"];}
+      type = "格闘";
+      table = ["避けられて[転倒]、[朦朧]状態", "ランダムに[至近距離]の味方(居なければ自分)に命中。[貫通D]", "ランダムに[至近距離]の味方(居なければ自分)に命中。[貫通D]", "武器が完全に壊れる", "武器がガタつく。〈手先〉判定に成功するまで使用不可", "武器がガタつく。〈手先〉判定に成功するまで使用不可", "無理な姿勢で筋を伸ばす。[軽傷]-30％", "無理な姿勢で筋を伸ばす。[軽傷]-30％", "無理な姿勢で筋を伸ばす。[軽傷]-20％", "無理な姿勢で筋を伸ばす。[軽傷]-20％", "無理な姿勢で筋を伸ばす。[軽傷]-10％", "無理な姿勢で筋を伸ばす。[軽傷]-10％", "姿勢を崩す。[不安定]", "姿勢を崩す。[不安定]", "姿勢を崩す。[ショック]-20％", "姿勢を崩す。[ショック]-20％", "姿勢を崩す。[ショック]-10％", "姿勢を崩す。[ショック]-10％", "ペナルティー無し"];}
       else if ("T"['$===']($case)) {
-      type = "\u6295\u64F2";
-      table = ["[\u8EE2\u5012]\u3001[\u6726\u6727]\u72B6\u614B", "\u81EA\u5206\u306B\u547D\u4E2D\u3002[\u8CAB\u901AD]", "\u81EA\u5206\u306B\u547D\u4E2D\u3002[\u975E\u8CAB\u901AD]", "\u30E9\u30F3\u30C0\u30E0\u306B\u5473\u65B9(\u5C45\u306A\u3051\u308C\u3070\u81EA\u5206)\u306B\u547D\u4E2D\u3002[\u975E\u8CAB\u901AD]", "\u30E9\u30F3\u30C0\u30E0\u306B\u5473\u65B9(\u5C45\u306A\u3051\u308C\u3070\u81EA\u5206)\u306B\u547D\u4E2D\u3002[\u975E\u8CAB\u901AD]", "\u6B66\u5668\u304C\u5B8C\u5168\u306B\u58CA\u308C\u308B", "\u6B66\u5668\u304C\u5B8C\u5168\u306B\u58CA\u308C\u308B", "\u8170\u3092\u75DB\u3081\u308B\u3002[\u8EFD\u50B7]-30\uFF05", "\u80A9\u3092\u75DB\u3081\u308B\u3002[\u8EFD\u50B7]-20\uFF05", "\u80A9\u3092\u75DB\u3081\u308B\u3002[\u8EFD\u50B7]-20\uFF05", "\u8098\u306B\u9055\u548C\u611F\u3002[\u8EFD\u50B7]-10\uFF05", "\u8098\u306B\u9055\u548C\u611F\u3002[\u8EFD\u50B7]-10\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u4E0D\u5B89\u5B9A]", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u4E0D\u5B89\u5B9A]", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-20\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-20\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u59FF\u52E2\u3092\u5D29\u3059\u3002[\u30B7\u30E7\u30C3\u30AF]-10\uFF05", "\u30DA\u30CA\u30EB\u30C6\u30A3\u30FC\u7121\u3057"];}
+      type = "投擲";
+      table = ["[転倒]、[朦朧]状態", "自分に命中。[貫通D]", "自分に命中。[非貫通D]", "ランダムに味方(居なければ自分)に命中。[非貫通D]", "ランダムに味方(居なければ自分)に命中。[非貫通D]", "武器が完全に壊れる", "武器が完全に壊れる", "腰を痛める。[軽傷]-30％", "肩を痛める。[軽傷]-20％", "肩を痛める。[軽傷]-20％", "肘に違和感。[軽傷]-10％", "肘に違和感。[軽傷]-10％", "姿勢を崩す。[不安定]", "姿勢を崩す。[不安定]", "姿勢を崩す。[ショック]-20％", "姿勢を崩す。[ショック]-20％", "姿勢を崩す。[ショック]-10％", "姿勢を崩す。[ショック]-10％", "ペナルティー無し"];}
       else {
       head = "S";
       $b = self.$getFumbleTypeAndTable(head), $a = Opal.to_ary($b), (type = ($a[0] == null ? nil : $a[0])), (table = ($a[1] == null ? nil : $a[1])), $b;};

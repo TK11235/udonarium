@@ -31,7 +31,7 @@
     Opal.const_set($nesting[0], 'EMPTY_PREFIXES_PATTERN', /(^|\s)(S)?()(\s|$)/i.$freeze());
     Opal.const_set($nesting[0], 'ID', "DiceBot");
     Opal.const_set($nesting[0], 'NAME', "DiceBot");
-    Opal.const_set($nesting[0], 'SORT_KEY', "*\u305F\u3044\u3059\u307B\u3064\u3068");
+    Opal.const_set($nesting[0], 'SORT_KEY', "*たいすほつと");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "");
     (function(self, $parent_nesting) {
       var $nesting = [self].concat($parent_nesting), $setPrefixes$1, $clearPrefixes$2, $inherited$3;
@@ -289,7 +289,7 @@
     Opal.def(self, '$removeDiceCommandMessage', $DiceBot_removeDiceCommandMessage$28 = function $$removeDiceCommandMessage(command) {
       var self = this;
 
-      return command.$sub(/[\s\u3000].+/, "")
+      return command.$sub(/[\s　].+/, "")
     }, $DiceBot_removeDiceCommandMessage$28.$$arity = 1);
     
     Opal.def(self, '$rollDiceCommandCatched', $DiceBot_rollDiceCommandCatched$29 = function $$rollDiceCommandCatched(command) {
@@ -354,16 +354,16 @@
 
       
       if ($truthy(target['$is_a?']($$($nesting, 'String')))) {
-        return " \uFF1E \u5931\u6557"};
+        return " ＞ 失敗"};
       success = (function() {if (cmp_op['$==']("!=")) {
         return total['$!='](target)
       } else {
         return total.$send(cmp_op, target)
       }; return nil; })();
       if ($truthy(success)) {
-        return " \uFF1E \u6210\u529F"
+        return " ＞ 成功"
       } else {
-        return " \uFF1E \u5931\u6557"
+        return " ＞ 失敗"
       };
     }, $DiceBot_check_nDx$33.$$arity = 3);
     
@@ -635,8 +635,8 @@
       if ($truthy(text['$nil?']())) {
         return nil};
       if ($truthy(($truthy($a = isPrintDiceText) ? diceText['$nil?']()['$!']() : $a))) {
-        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) \uFF1E " + (text)};
-      return "" + (name) + "(" + (number) + ") \uFF1E " + (text);
+        return "" + (name) + "(" + (number) + "[" + (diceText) + "]) ＞ " + (text)};
+      return "" + (name) + "(" + (number) + ") ＞ " + (text);
     }, $DiceBot_getTableCommandResult$62.$$arity = -3);
     
     Opal.def(self, '$getTableInfoFromExtraTableText', $DiceBot_getTableInfoFromExtraTableText$63 = function $$getTableInfoFromExtraTableText(text, count) {
@@ -914,11 +914,11 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
     
     Opal.const_set($nesting[0], 'ID', "SRS");
     Opal.const_set($nesting[0], 'NAME', "Standard RPG System");
-    Opal.const_set($nesting[0], 'SORT_KEY', "\u3059\u305F\u3093\u305F\u3042\u3068RPG\u3057\u3059\u3066\u3080");
+    Opal.const_set($nesting[0], 'SORT_KEY', "すたんたあとRPGしすてむ");
     self.$include($$($nesting, 'ModifierFormatter'));
-    Opal.const_set($nesting[0], 'HELP_MESSAGE_1', "" + "\u30FB\u5224\u5B9A\n" + "\u3000\u30FB\u901A\u5E38\u5224\u5B9A\uFF1A2D6+m>=t[c,f]\n" + "\u3000\u3000\u4FEE\u6B63\u5024m\u3001\u76EE\u6A19\u5024t\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024c\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024f\u3067\u5224\u5B9A\u30ED\u30FC\u30EB\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u3000\u4FEE\u6B63\u5024\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u306F\u7701\u7565\u53EF\u80FD\u3067\u3059\uFF08[]\u3054\u3068\u7701\u7565\u53EF\uFF09\u3002\n" + "\u3000\u3000\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u306E\u65E2\u5B9A\u5024\u306F\u3001\u305D\u308C\u305E\u308C12\u30012\u3067\u3059\u3002\n" + "\u3000\u3000\u81EA\u52D5\u6210\u529F\u3001\u81EA\u52D5\u5931\u6557\u3001\u6210\u529F\u3001\u5931\u6557\u3092\u81EA\u52D5\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\n" + "\u3000\u3000\u4F8B) 2d6>=10\u3000\u3000\u3000\u3000\u3000\u4FEE\u6B63\u50240\u3001\u76EE\u6A19\u502410\u3067\u5224\u5B9A\n" + "\u3000\u3000\u4F8B) 2d6+2>=10\u3000\u3000\u3000\u3000\u4FEE\u6B63\u5024+2\u3001\u76EE\u6A19\u502410\u3067\u5224\u5B9A\n" + "\u3000\u3000\u4F8B) 2d6+2>=10[11]\u3000\u3000\u2191\u3092\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u502411\u3067\u5224\u5B9A\n" + "\u3000\u3000\u4F8B) 2d6+2>=10[12,4]\u3000\u2191\u3092\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u502412\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u50244\u3067\u5224\u5B9A\n");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE_2', "" + "\u3000\u30FB\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u304A\u3088\u3073\u30D5\u30A1\u30F3\u30D6\u30EB\u306E\u307F\u306E\u5224\u5B9A\uFF1A2D6+m[c,f]\n" + "\u3000\u3000\u76EE\u6A19\u5024\u3092\u6307\u5B9A\u305B\u305A\u3001\u4FEE\u6B63\u5024m\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024c\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024f\u3067\u5224\u5B9A\u30ED\u30FC\u30EB\u3092\u884C\u3044\u307E\u3059\u3002\n" + "\u3000\u3000\u4FEE\u6B63\u5024\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5024\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u5024\u306F\u7701\u7565\u53EF\u80FD\u3067\u3059\uFF08[]\u306F\u7701\u7565\u4E0D\u53EF\uFF09\u3002\n" + "\u3000\u3000\u81EA\u52D5\u6210\u529F\u3001\u81EA\u52D5\u5931\u6557\u3092\u81EA\u52D5\u8868\u793A\u3057\u307E\u3059\u3002\n" + "\n" + "\u3000\u3000\u4F8B) 2d6[]\u3000\u3000\u3000\u3000\u4FEE\u6B63\u50240\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u502412\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u50242\u3067\u5224\u5B9A\n" + "\u3000\u3000\u4F8B) 2d6+2[11]\u3000\u3000\u4FEE\u6B63\u5024+2\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u502411\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u50242\u3067\u5224\u5B9A\n" + "\u3000\u3000\u4F8B) 2d6+2[12,4]\u3000\u4FEE\u6B63\u5024+2\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u502412\u3001\u30D5\u30A1\u30F3\u30D6\u30EB\u50244\u3067\u5224\u5B9A\n");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE_3', "\u30FBD66\u30C0\u30A4\u30B9\u3042\u308A\uFF08\u5165\u308C\u66FF\u3048\u306A\u3057)\n");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE_1', "" + "・判定\n" + "　・通常判定：2D6+m>=t[c,f]\n" + "　　修正値m、目標値t、クリティカル値c、ファンブル値fで判定ロールを行います。\n" + "　　修正値、クリティカル値、ファンブル値は省略可能です（[]ごと省略可）。\n" + "　　クリティカル値、ファンブル値の既定値は、それぞれ12、2です。\n" + "　　自動成功、自動失敗、成功、失敗を自動表示します。\n" + "\n" + "　　例) 2d6>=10　　　　　修正値0、目標値10で判定\n" + "　　例) 2d6+2>=10　　　　修正値+2、目標値10で判定\n" + "　　例) 2d6+2>=10[11]　　↑をクリティカル値11で判定\n" + "　　例) 2d6+2>=10[12,4]　↑をクリティカル値12、ファンブル値4で判定\n");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE_2', "" + "　・クリティカルおよびファンブルのみの判定：2D6+m[c,f]\n" + "　　目標値を指定せず、修正値m、クリティカル値c、ファンブル値fで判定ロールを行います。\n" + "　　修正値、クリティカル値、ファンブル値は省略可能です（[]は省略不可）。\n" + "　　自動成功、自動失敗を自動表示します。\n" + "\n" + "　　例) 2d6[]　　　　修正値0、クリティカル値12、ファンブル値2で判定\n" + "　　例) 2d6+2[11]　　修正値+2、クリティカル値11、ファンブル値2で判定\n" + "　　例) 2d6+2[12,4]　修正値+2、クリティカル値12、ファンブル値4で判定\n");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE_3', "・D66ダイスあり（入れ替えなし)\n");
     Opal.const_set($nesting[0], 'DEFAULT_HELP_MESSAGE', "" + ($$($nesting, 'HELP_MESSAGE_1')) + "\n" + ($$($nesting, 'HELP_MESSAGE_2')) + "\n" + ($$($nesting, 'HELP_MESSAGE_3')));
     (function($base, $parent_nesting) {
       var self = $module($base, 'ClassMethods');
@@ -976,7 +976,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
           if (a == null) {
             a = nil;
           };
-          return "" + "\u3000\u3000\u4F8B) " + (a) + "+2>=10\u3000\u3000\u3000\u3000 2d6+2>=10\u3068\u540C\u3058\uFF08" + (a) + "\u304C2D6\u306E\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\u30B3\u30DE\u30F3\u30C9\uFF09\n";}, $$5.$$s = self, $$5.$$arity = 1, $$5)).$join();
+          return "" + "　　例) " + (a) + "+2>=10　　　　 2d6+2>=10と同じ（" + (a) + "が2D6のショートカットコマンド）\n";}, $$5.$$s = self, $$5.$$arity = 1, $$5)).$join();
         self.help_msg_for_aliases_for_srs_roll_without_target_value = $send(aliases, 'map', [], ($$6 = function(a){var self = $$6.$$s || this;
 
         
@@ -984,7 +984,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
           if (a == null) {
             a = nil;
           };
-          return "" + ("" + "\u3000\u3000\u4F8B) " + (a) + "\u3000\u3000\u3000\u3000\u3000 2d6[]\u3068\u540C\u3058\uFF08" + (a) + "\u304C2D6\u306E\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\u30B3\u30DE\u30F3\u30C9\uFF09\n") + ("" + "\u3000\u3000\u4F8B) " + (a) + "+2[12,4]\u3000 2d6+2[12,4]\u3068\u540C\u3058\uFF08" + (a) + "\u304C2D6\u306E\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\u30B3\u30DE\u30F3\u30C9\uFF09\n");}, $$6.$$s = self, $$6.$$arity = 1, $$6)).$join();
+          return "" + ("" + "　　例) " + (a) + "　　　　　 2d6[]と同じ（" + (a) + "が2D6のショートカットコマンド）\n") + ("" + "　　例) " + (a) + "+2[12,4]　 2d6+2[12,4]と同じ（" + (a) + "が2D6のショートカットコマンド）\n");}, $$6.$$s = self, $$6.$$arity = 1, $$6)).$join();
         return self;
       }, $ClassMethods_prepare_help_msg_for_aliases_for_srs_roll$4.$$arity = 1);
       
@@ -1139,21 +1139,21 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       $b = self.$roll(2, 6, self.sortType['$&'](1)), $a = Opal.to_ary($b), (sum = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
       modified_sum = $rb_plus(sum, srs_roll.$modifier());
       parts = ["" + "(" + (srs_roll) + ")", "" + (sum) + "[" + (dice_str) + "]" + (self.$format_modifier(srs_roll.$modifier())), modified_sum, self.$compare_result(srs_roll, sum, modified_sum)];
-      return parts.$compact().$join(" \uFF1E ");
+      return parts.$compact().$join(" ＞ ");
     }, $SRS_execute_srs_roll$22.$$arity = 1);
     return (Opal.def(self, '$compare_result', $SRS_compare_result$23 = function $$compare_result(srs_roll, sum, modified_sum) {
       var self = this;
 
       
       if ($truthy($rb_ge(sum, srs_roll.$critical_value()))) {
-        return "\u81EA\u52D5\u6210\u529F"};
+        return "自動成功"};
       if ($truthy($rb_le(sum, srs_roll.$fumble_value()))) {
-        return "\u81EA\u52D5\u5931\u6557"};
+        return "自動失敗"};
       if ($truthy(srs_roll.$target_value())) {
         return (function() {if ($truthy($rb_ge(modified_sum, srs_roll.$target_value()))) {
-          return "\u6210\u529F"
+          return "成功"
         } else {
-          return "\u5931\u6557"
+          return "失敗"
         }; return nil; })()};
       return nil;
     }, $SRS_compare_result$23.$$arity = 3), nil) && 'compare_result';
