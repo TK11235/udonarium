@@ -6,7 +6,7 @@ import { CustomCharacter } from "../custom-character";
  * キャラクターシート倉庫 モノトーンミュージアム
  * https://character-sheets.appspot.com/mnt/
  */
-export class MonotoneMusium {
+export class MonotoneMuseum {
   static geneateByAppspot(
     json: any,
     url: string,
@@ -99,7 +99,7 @@ export class MonotoneMusium {
       gameCharacter.createDataElement(
         "境遇",
         `${json.lifepath.environment.name || ""}/${
-          json.lifepath.environment.memo || ""
+        json.lifepath.environment.memo || ""
         }`
       )
     );
@@ -209,9 +209,9 @@ export class MonotoneMusium {
         gameCharacter.createDataElement(
           skill.name,
           `${skill.class || ""}/${skill.level || ""}/${skill.type || ""}/${
-            skill.timing || ""
+          skill.timing || ""
           }/${skill.judge || ""}/${skill.difficulty || ""}/${
-            skill.target || ""
+          skill.target || ""
           }/${skill.range || ""}/${skill.cost || ""}/${skill.memo || ""}`
         )
       );
@@ -223,7 +223,7 @@ export class MonotoneMusium {
     const palette: ChatPalette = new ChatPalette(
       "ChatPalette_" + gameCharacter.identifier
     );
-    palette.dicebot = "MonotoneMusium";
+    palette.dicebot = "MonotoneMuseum";
     // チャパレ内容
     let cp = `HP: {HP}
 MP: {MP}
@@ -256,9 +256,9 @@ WDT2 世界歪曲表2.0
         (txt: string, special: any) =>
           txt +
           `《${special.name}》 ${special.timing || ""}/${
-            special.target || ""
+          special.target || ""
           }/${special.range || ""}/${special.cost || ""}/${
-            special.effect || ""
+          special.effect || ""
           }\n`,
         "\n"
       );
@@ -268,11 +268,11 @@ WDT2 世界歪曲表2.0
         (txt: string, skill: any) =>
           txt +
           `《${skill.name}》 ${skill.class || ""}/${skill.level || ""}/${
-            skill.type || ""
+          skill.type || ""
           }/${skill.timing || ""}/${skill.judge || ""}/${
-            skill.difficulty || ""
+          skill.difficulty || ""
           }/${skill.target || ""}/${skill.range || ""}/${skill.cost || ""}/${
-            skill.memo || ""
+          skill.memo || ""
           }\n`,
         "\n"
       );
