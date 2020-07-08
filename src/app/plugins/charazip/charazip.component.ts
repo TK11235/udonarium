@@ -10,7 +10,7 @@ import { Cthulhu } from "./system/cthulhu";
 import { DivineCharger } from "./system/divine-charger";
 import { DoubleCross3rd } from "./system/double-cross-3rd";
 import { SwordWorld2 } from "./system/sword-world-2";
-import { MonotoneMusium } from "./system/monotone-musium";
+import { MonotoneMusium } from "./system/monotone-museum";
 import { Shinobigami } from "./system/shinobigami";
 import { DeadlineHeroes } from "./system/deadline-heroes";
 import { LogHorizon, LhrpgCharacter } from "./system/log-horizon";
@@ -43,7 +43,7 @@ export class CharazipComponent implements OnInit {
     return CharazipComponent.appspotInfos;
   }
 
-  constructor() {}
+  constructor() { }
 
   private static vampireBloodInfos: SystemInfo[] = [
     {
@@ -264,7 +264,7 @@ export class CharazipComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onFocus(): void {
     this.inputElementRef.nativeElement.select();
