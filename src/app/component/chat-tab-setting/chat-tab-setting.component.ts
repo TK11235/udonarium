@@ -94,11 +94,13 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
     let fileName: string = 'chatlog_' + y + m + d + "_" + h + min + sec + "_" + this.selectedTab.name + ".html";
 
     let html_doc = "";
+
     for (let i = 0; i < msg_arr.length; i++) {
       let msg = msg_arr[i];
       let color = msg["color"] ? msg["color"] : "#000000";
       let name = msg["name"].match(/^<BCDice：/) ? "<span style='padding-left:20px;'>&nbsp;</span>" : (msg["name"] + ": ");
-      html_doc += "<font color='" + color + "'><b>" + name + "</b>" + msg.value + "</font><br>\n";
+      console.log(msg.value);
+      html_doc += "<font color='" + color + "'><b>" + name + "</b>" + msg.value.toString().replace(/\n/g, '<br>\n') + "</font><br>\n";
     }
     this.downloadHtml(fileName, html_doc);
   }
