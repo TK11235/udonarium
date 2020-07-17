@@ -29,6 +29,8 @@
           [src]="gameCharacter.imageFile?.url | safe: 'resourceUrl'" />
         <img class="image" *ngIf="!gameCharacter && myPeer && myPeer?.image != null"
           [src]="myPeer?.image?.url | safe: 'resourceUrl'" (click)="changeIcon()" />
+        <img class="image" *ngIf="!gameCharacter && myPeer && myPeer?.image == null"
+          [src]="'./assets/images/ic_account_circle_black_24dp_2x.png'| safe: 'resourceUrl'" (click)="changeIcon()" />
       </div>
       <div class="table-cell">
         <div>

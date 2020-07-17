@@ -1,29 +1,40 @@
 <div *ngIf="myPeer">
-  <!--<button (click)="changeIcon()">變更頭像</button>-->
-  <div *ngIf="myPeer.image" class="image cover" [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' "
+  <!--<button (click)="changeIcon()">變更頭像</button>
+  './assets/images/ic_account_circle_black_24dp_2x.png'
+
+-->
+  <div *ngIf="myPeer.image" class="image cover"
+    [style.background-image]="'url(' + myPeer.image.url + ')' | safe: 'style' " (click)="changeIcon()">
+    <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
+  </div>
+  <div *ngIf="!myPeer.image" class="image cover"
+    [style.background-image]="'./assets/images/ic_account_circle_black_24dp_2x.png'| safe: 'style'"
     (click)="changeIcon()">
     <!--<img *ngIf="myPeer.image" [src]="myPeer.image.url | safe: 'resourceUrl'" />-->
   </div>
+
 
   <span>你的名字： <input [(ngModel)]="myPeer.name" placeholder="暱稱" (change)="onChangeNickname(myPeer.name)" /></span>
 
 </div>
 <div>
   <span>你的ID： <span *ngIf="networkService.isOpen" style="font-weight: bold;"> {{networkService.peerContext.id}}</span>
-  <span *ngIf="!networkService.isOpen" style="font-weight: bold;">???</span>
+    <span *ngIf="!networkService.isOpen" style="font-weight: bold;">???</span>
   </span>
 </div>
 <!--<div>host ID:{{networkService.hostPeerID}}</div>-->
 <ng-container *ngIf="18 < networkService.peerId.length">
-  <hr/>
+  <hr />
   <div>
-    <span>房間名稱：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
+    <span>房間名稱：<span *ngIf="networkService.isOpen"
+        style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
   </div>
   <div>
-    <span>密碼：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>
+    <span>密碼：<span *ngIf="networkService.isOpen"
+        style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>
   </div>
 </ng-container>
-<hr/>
+<hr />
 <div *ngFor="let conn of networkService.peerContexts">
   <div>
     <span *ngIf="!conn.isOpen">[連線中]</span>
@@ -35,7 +46,8 @@
     <input [(ngModel)]="targetPeerId" placeholder="連線對像的ID" name="targetPeerId" />
     <button (click)="connectPeer()" [disabled]="!networkService.isOpen">私人連線</button><br>
   </ng-container>
-  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isOpen">顯示大廳（房間列表）</button>
+  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()"
+    [disabled]="!networkService.isOpen">顯示大廳（房間列表）</button>
 </div>
 <div><span style="font-size: 12px;">{{help}}</span></div>
 <ng-container *ngIf="networkService.peerId.length <= 18">
