@@ -22,7 +22,6 @@
             <input type="checkbox" [(ngModel)]="receiveInfo" />
           </label>
           <br />
-
           <button (click)="save_log()">輸出聊天紀錄(.html)</button>
           <button (click)="upTabIndex()">↑</button>
           <button (click)="downTabIndex()">↓</button>
@@ -32,7 +31,8 @@
           -->
 
           <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
-
+          <br>
+          <button class="danger" (click)="delete2()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">清除聊天紀錄</button>
         </ng-container>
         <ng-container *ngIf="isDeleted">
           <button (click)="restore()">撒回</button>
@@ -41,12 +41,15 @@
     </ng-container>
   </div>
 </div>
+
+
 <button class="danger" (click)="enableEdit = true">清除所有聊天紀錄</button>
 <div>
   <button *ngIf="enableEdit" class="danger" (click)="allMessageClear()"
     [attr.disabled]="chatTabs.length <= 1 ? '' : null">危險! 一按即清除所有聊天紀錄</button>
   <button *ngIf="enableEdit" (click)="enableEdit=false">取消</button>
 </div>
+
 <ng-container *ngIf="isEmpty">
 
   <div style="font-size: 12px;">※尚未新增聊天分頁。 您可以使用「新增聊天分頁」。</div>

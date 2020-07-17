@@ -123,6 +123,12 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
       this.selectedTab.destroy();
     }
   }
+  delete2() {
+    if (!this.isEmpty && this.selectedTab) {
+      this.selectedTabXml = this.selectedTab.toXml();
+      this.selectedTab.destroyChat();
+    }
+  }
 
   allMessageClear() {
     this.chatTabs.map(function (nowTab) {
