@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
-import { ImageFile } from '@udonarium/core/file-storage/image-file';
+import { ImageContext, ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { EventSystem, Network } from '@udonarium/core/system';
 
@@ -16,7 +16,7 @@ import { ImageTag } from '@udonarium/image-tag';
 })
 export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   searchWord: string = '';
-
+  imgUrl: string = "";
   private _searchWord: string;
   private _searchWords: string[];
   get searchWords(): string[] {
@@ -66,6 +66,21 @@ export class FileStorageComponent implements OnInit, OnDestroy, AfterViewInit {
   handleFileSelect(event: Event) {
     let files = (<HTMLInputElement>event.target).files;
     if (files.length) FileArchiver.instance.load(files);
+  }
+  uploadByUrl() {
+    let file: ImageFile = null;
+    let fileContext: ImageContext = null;
+    fileContext = ImageFile.createEmpty(this.imgUrl).toContext();
+    fileContext.name = this.imgUrl;
+    fileContext.url = this.imgUrl;
+    file = ImageStorage.instance.add(fileContext);
+    this.imgUrl = '';
+  }
+  //REF:
+  //https://github.com/zeteticl/udonarium/commit/235e33729c8f17387357da56e53864c52c4f72fa
+  deleteFile(file: ImageFile) {
+    console.log("deleteFile Target: " + file.identifier);
+    ImageStorage.instance.delete(file.identifier);
   }
 
   onSelectedFile(file: ImageFile) {
