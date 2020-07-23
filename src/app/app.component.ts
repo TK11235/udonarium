@@ -1,10 +1,7 @@
 import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
-<<<<<<< HEAD
 import { ChatTabList } from '@udonarium/chat-tab-list';
-=======
 import { GameCharacter } from '@udonarium/game-character';
 import { ChatTab } from '@udonarium/chat-tab';
->>>>>>> parent of 4c584029... update 20200617 官方更新
 import { AudioPlayer } from '@udonarium/core/file-storage/audio-player';
 import { AudioSharingSystem } from '@udonarium/core/file-storage/audio-sharing-system';
 import { AudioStorage } from '@udonarium/core/file-storage/audio-storage';
@@ -44,7 +41,6 @@ import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { SaveDataService } from 'service/save-data.service';
 import { ImageTag } from '@udonarium/image-tag';
-import { GameCharacter } from '@udonarium/game-character';
 
 @Component({
   selector: 'app-root',

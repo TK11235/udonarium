@@ -106,11 +106,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-<<<<<<< HEAD
       text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。\n2020/06/17 更新直到今天的官方修正，版本號沒有改變。\n2020/07/08 更新1.11.0\n2020/07/17 刪除圖片功能, 圖片直接使用LINK功能, 修正LOG輸出不換行的BUG"
-=======
-      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。"
->>>>>>> parent of 4c584029... update 20200617 官方更新
     }
     , {
       from: "System",
@@ -139,30 +135,12 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     return this._chatMessages;
   }
 
-<<<<<<< HEAD
-  get minScrollHeight(): number {
-    let length = this.chatTab ? this.chatTab.chatMessages.length : this.sampleMessages.length;
-    return (length < 10000 ? length : 10000) * this.minMessageHeight;
-  }
-
-  get topSpace(): number { return this.minScrollHeight - this.bottomSpace; }
-  get bottomSpace(): number {
-    return 0 < this.chatMessages.length
-      ? (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight
-      : (this.sampleMessages.length - this.bottomIndex - 1);
-  }
-
-  private scrollEventShortTimer: NodeJS.Timer = null;
-  private scrollEventLongTimer: NodeJS.Timer = null;
-  private addMessageEventTimer: NodeJS.Timer = null;
-=======
   get hasMany(): boolean {
     if (!this.chatTab) return false;
     return this.maxMessages < this.chatTab.chatMessages.length;
   };
 
   private callbackOnScroll: any = (e) => this.onScroll(e);
->>>>>>> parent of 4c584029... update 20200617 官方更新
 
   private asyncMessagesInitializeTimer: NodeJS.Timer;
 
@@ -197,15 +175,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
-<<<<<<< HEAD
-        if (!message) return;
-        if (!this.chatTab || !this.chatTab.contains(message)) return;
-
-        if (this.topTimestamp < message.timestamp) {
-          this.changeDetector.markForCheck();
-          this.needUpdate = true;
-          this.onMessageInit();
-=======
         if (!message || message.parent !== this.chatTab) return;
         let time = this.chatMessageService.getTime();
 
@@ -224,7 +193,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
             clearInterval(this.asyncMessagesInitializeTimer);
             this.ngZone.run(() => this.resetMessages());
           }, 2000);
->>>>>>> parent of 4c584029... update 20200617 官方更新
         }
       })
       .on('UPDATE_GAME_OBJECT', event => {
@@ -258,21 +226,9 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   moreMessages(length: number = 100) {
     if (!this.hasMany) return;
 
-<<<<<<< HEAD
-  resetMessages() {
-    let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
-    this.topIndex = lastIndex - Math.floor(this.panelService.scrollablePanel.clientHeight / this.minMessageHeight);
-    this.bottomIndex = lastIndex;
-    this.needUpdate = true;
-    this.preScrollTop = -1;
-    this.scrollSpeed = 0;
-    this.topElm = this.bottomElm = null;
-    this.adjustIndex();
-=======
     this.maxMessages += length;
     let maxLength = this.chatTab.chatMessages.length;
     if (this.chatTab && maxLength < this.maxMessages) this.maxMessages = maxLength;
->>>>>>> parent of 4c584029... update 20200617 官方更新
     this.changeDetector.markForCheck();
     this.needUpdate = true;
 
@@ -299,14 +255,9 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     }, 0);
   }
 
-<<<<<<< HEAD
-  private markForReadIfNeeded() {
-    if (!this.chatTab||!this.chatTab.hasUnread) return;
-=======
   trackByChatMessage(index: number, message: ChatMessage) {
     return message.identifier;
   }
->>>>>>> parent of 4c584029... update 20200617 官方更新
 
   private onScroll(e: Event) {
     if (this.hasMany && this.panelService.scrollablePanel.scrollTop <= 200) {
@@ -317,82 +268,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       if (top - 100 <= this.panelService.scrollablePanel.scrollTop) {
         this.chatTab.markForRead();
         this.ngZone.run(() => { });
-<<<<<<< HEAD
-      });
-    }
-  }
-
-  private onScroll() {
-    clearTimeout(this.scrollEventShortTimer);
-    this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
-    if (this.scrollEventLongTimer == null) {
-      this.scrollEventLongTimer = setTimeout(() => this.lazyScrollUpdate(false), 66);
-    }
-  }
-
-  private lazyScrollUpdate(isNormalUpdate: boolean = true) {
-    clearTimeout(this.scrollEventShortTimer);
-    this.scrollEventShortTimer = null;
-    clearTimeout(this.scrollEventLongTimer);
-    this.scrollEventLongTimer = null;
-
-    let chatMessageElements = this.messageContainerRef.nativeElement.querySelectorAll<HTMLElement>('chat-message');
-    let maxHeight = this.minMessageHeight;
-
-    for (let i = chatMessageElements.length - 1; 0 <= i; i--) {
-      let height = chatMessageElements[i].clientHeight;
-      if (maxHeight < height) maxHeight = height;
-    }
-
-    let messageBoxTop = this.messageContainerRef.nativeElement.offsetTop;
-    let messageBoxBottom = messageBoxTop + this.messageContainerRef.nativeElement.clientHeight;
-
-    let preTopIndex = this.topIndex;
-    let preBottomIndex = this.bottomIndex;
-
-    let scrollPosition = this.getScrollPosition();
-    this.scrollSpeed = scrollPosition.top - this.preScrollTop;
-    this.preScrollTop = scrollPosition.top;
-
-    let hasTopBlank = scrollPosition.top < messageBoxTop;
-    let hasBotomBlank = messageBoxBottom < scrollPosition.bottom && scrollPosition.bottom < scrollPosition.scrollHeight;
-
-    if (!isNormalUpdate) {
-      clearTimeout(this.scrollEventShortTimer);
-      this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
-    }
-
-    if (!isNormalUpdate && !hasTopBlank && !hasBotomBlank) {
-      return;
-    }
-
-    let scrollWideTop = scrollPosition.top - (!isNormalUpdate && hasTopBlank ? 100 : 1200);
-    let scrollWideBottom = scrollPosition.bottom + (!isNormalUpdate && hasBotomBlank ? 100 : 1200);
-
-    this.markForReadIfNeeded();
-
-    if (scrollWideTop >= messageBoxBottom || messageBoxTop >= scrollWideBottom) {
-      let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
-      let scrollBottomHeight = scrollPosition.scrollHeight - scrollPosition.top - scrollPosition.clientHeight;
-
-      this.bottomIndex = lastIndex - Math.floor(scrollBottomHeight / this.minMessageHeight);
-      this.topIndex = this.bottomIndex - Math.floor(scrollPosition.clientHeight / this.minMessageHeight);
-
-      this.bottomIndex += 1;
-      this.topIndex -= 1;
-    } else {
-      if (scrollWideTop < messageBoxTop) {
-        this.topIndex -= Math.floor((messageBoxTop - scrollWideTop) / maxHeight) + 1;
-      } else if (scrollWideTop > messageBoxTop) {
-        if (!isiOS) this.topIndex += Math.floor((scrollWideTop - messageBoxTop) / maxHeight);
-      }
-
-      if (messageBoxBottom > scrollWideBottom) {
-        if (!isiOS) this.bottomIndex -= Math.floor((messageBoxBottom - scrollWideBottom) / maxHeight);
-      } else if (messageBoxBottom < scrollWideBottom) {
-        this.bottomIndex += Math.floor((scrollWideBottom - messageBoxBottom) / maxHeight) + 1;
-=======
->>>>>>> parent of 4c584029... update 20200617 官方更新
       }
     }
   }
