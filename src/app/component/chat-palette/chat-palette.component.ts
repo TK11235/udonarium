@@ -22,7 +22,7 @@ import { GameObjectInventoryService} from 'service/game-object-inventory.service
 })
 export class ChatPaletteComponent implements OnInit, OnDestroy {
   @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef<HTMLTextAreaElement>;
-  @ViewChild('chatPlette') chatPletteElementRef: ElementRef<HTMLSelectElement>;
+  @ViewChild('chatPlette', { static: false }) chatPletteElementRef: ElementRef<HTMLSelectElement>;
   @Input() character: GameCharacter = null;
 
   get palette(): ChatPalette { return this.character.chatPalette; }
@@ -71,7 +71,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    Promise.resolve().then(() => this.updatePanelTitle());
+    this.panelService.title = this.character.name + ' 的對話組合版';
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
 
     this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';

@@ -1,14 +1,9 @@
-<div class="log" [style.minHeight.px]="minScrollHeight" #logContainer>
-  <div class="virtual-scroll-container" [style.marginBottom.px]="bottomSpace" #messageContainer>
-    <ng-container *ngIf="0 < chatMessages.length">
-      <ng-container *ngFor="let chatMessage of chatMessages; trackBy: trackByChatMessage">
-        <chat-message *ngIf="chatMessage.isDisplayable" [chatMessage]="chatMessage">
-        </chat-message>
-      </ng-container>
-    </ng-container>
-    <ng-container *ngIf="chatMessages.length <= 0">
-      <chat-message *ngFor="let chatMessage of sampleMessages" [chatMessage]="chatMessage">
-      </chat-message>
-    </ng-container>
-  </div>
+<div class="log" *ngIf="0 < chatMessages.length">
+  <button *ngIf="hasMany" (click)="moreMessages()">查看舊信息</button>
+  <ng-container *ngFor="let chatMessage of chatMessages; trackBy: trackByChatMessage">
+    <chat-message *ngIf="chatMessage.isDisplayable" [chatMessage]="chatMessage" (onInit)="onMessageInit()"></chat-message>
+  </ng-container>
+</div>
+<div class="log" *ngIf="chatMessages.length < 1">
+  <chat-message *ngFor="let chatMessage of sampleMessages" [chatMessage]="chatMessage" (onInit)="onMessageInit()"></chat-message>
 </div>

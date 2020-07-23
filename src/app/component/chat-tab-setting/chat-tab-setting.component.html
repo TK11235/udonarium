@@ -3,8 +3,7 @@
     <div>
       <button (click)="create()">新增聊天分頁</button>
     </div>
-    <select style="width: 10em;" size="10" (change)="onChangeSelectTab($event.target.value)"
-      [ngModel]="selectedTab?.identifier">
+    <select style="width: 10em;" size="10" (change)="onChangeSelectTab($event.target.value)" [ngModel]="selectedTab?.identifier">
       <option *ngFor="let chatTab of chatTabs" value="{{chatTab.identifier}}">{{chatTab.name}}</option>
     </select>
   </div>
@@ -13,7 +12,7 @@
       <div>分頁名 :
         <input [(ngModel)]="tabName" placeholder="Name" [attr.disabled]="!isEditable ? '' : null" />
       </div>
-      <hr />
+      <hr/>
       <div>
         <ng-container *ngIf="!isDeleted">
 
@@ -23,12 +22,15 @@
           </label>
           <br />
           <button (click)="save_log()">輸出聊天紀錄(.html)</button>
-          <button (click)="upTabIndex()">↑</button>
-          <button (click)="downTabIndex()">↓</button>
+
           <button (click)="save()">保存</button>
-          <!--
+
           <button (click)="moveLast()">移動到最後</button>
+<<<<<<< HEAD
           -->
+=======
+          <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
+>>>>>>> parent of 4c584029... update 20200617 官方更新
 
           <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
           <br>
@@ -42,15 +44,19 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 
 <button class="danger" (click)="enableEdit = true">清除所有聊天紀錄</button>
+=======
+<button class="danger"  (click)="enableEdit = true">清除所有聊天紀錄</button>
+>>>>>>> parent of 4c584029... update 20200617 官方更新
 <div>
-  <button *ngIf="enableEdit" class="danger" (click)="allMessageClear()"
-    [attr.disabled]="chatTabs.length <= 1 ? '' : null">危險! 一按即清除所有聊天紀錄</button>
-  <button *ngIf="enableEdit" (click)="enableEdit=false">取消</button>
+    <button *ngIf="enableEdit" class="danger" (click)="allMessageClear()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">危險! 一按即清除所有聊天紀錄</button>
+    <button *ngIf="enableEdit" (click)="enableEdit=false">取消</button>
 </div>
 
 <ng-container *ngIf="isEmpty">
 
   <div style="font-size: 12px;">※尚未新增聊天分頁。 您可以使用「新增聊天分頁」。</div>
 </ng-container>
+

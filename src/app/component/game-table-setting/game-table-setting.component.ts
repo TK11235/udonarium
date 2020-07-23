@@ -48,7 +48,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   get tableGridShow(): boolean { return this.tableSelecter.gridShow; }
   set tableGridShow(tableGridShow: boolean) {
     this.tableSelecter.gridShow = tableGridShow;
-    EventSystem.trigger('UPDATE_GAME_OBJECT', this.tableSelecter.toContext()); // 自分にだけイベントを発行してグリッド更新を誘発
   }
 
   get tableGridSnap(): boolean { return this.tableSelecter.gridSnap; }
@@ -83,7 +82,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   ) { }
 
   ngOnInit() {
-    Promise.resolve().then(() => this.modalService.title = this.panelService.title = '桌面設定');
+    this.modalService.title = this.panelService.title = '桌面設定';
     this.selectedTable = this.tableSelecter.viewTable;
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', 1000, event => {

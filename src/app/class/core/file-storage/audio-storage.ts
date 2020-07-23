@@ -59,7 +59,7 @@ export class AudioStorage {
     this.lazySynchronize(100);
     if (this.update(audio)) return this.hash[audio.identifier];
     this.hash[audio.identifier] = audio;
-    console.log('add Audio: ' + audio.identifier);
+    console.log('addNewFile()', audio);
     return audio;
   }
 

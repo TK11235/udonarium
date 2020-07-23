@@ -49,7 +49,7 @@ export class FileSelecterComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    Promise.resolve().then(() => this.modalService.title = this.panelService.title = '檔案列表');
+    this.modalService.title = this.panelService.title = '檔案列表';
   }
 
   ngAfterViewInit() {

@@ -1,5 +1,10 @@
 import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+<<<<<<< HEAD
 import { ChatTabList } from '@udonarium/chat-tab-list';
+=======
+import { GameCharacter } from '@udonarium/game-character';
+import { ChatTab } from '@udonarium/chat-tab';
+>>>>>>> parent of 4c584029... update 20200617 官方更新
 import { AudioPlayer } from '@udonarium/core/file-storage/audio-player';
 import { AudioSharingSystem } from '@udonarium/core/file-storage/audio-sharing-system';
 import { AudioStorage } from '@udonarium/core/file-storage/audio-storage';
@@ -48,7 +53,7 @@ import { GameCharacter } from '@udonarium/game-character';
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
 
-
+  
 
   @ViewChild('modalLayer', { read: ViewContainerRef, static: true }) modalLayerViewContainerRef: ViewContainerRef;
   private immediateUpdateTimer: NodeJS.Timer = null;
@@ -81,7 +86,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.appConfigService.initialize();
     this.pointerDeviceService.initialize();
 
-    ChatTabList.instance.initialize();
     DataSummarySetting.instance.initialize();
 
     let diceBot: DiceBot = new DiceBot('DiceBot');
@@ -93,8 +97,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let soundEffect: SoundEffect = new SoundEffect('SoundEffect');
     soundEffect.initialize();
 
-    ChatTabList.instance.addChatTab('主要分頁', 'MainTab', true);
-    ChatTabList.instance.addChatTab('閒聊分頁', 'SubTab', false);
+    let chatTab: ChatTab = new ChatTab('MainTab');
+
+    chatTab.name = '主要分頁';
+    chatTab.receiveInfo = true;
+    chatTab.initialize();
+
+    chatTab = new ChatTab('SubTab');
+    chatTab.name = '閒聊分頁';
+    chatTab.initialize();
 
     let fileContext = ImageFile.createEmpty('none_icon').toContext();
     fileContext.url = './assets/images/ic_account_circle_black_24dp_2x.png';
@@ -175,10 +186,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       })
       .on('CONNECT_PEER', event => {
         if (event.isSendFromSelf) this.chatMessageService.calibrateTimeOffset();
-        this.lazyNgZoneUpdate(event.isSendFromSelf);
       })
       .on('DISCONNECT_PEER', event => {
-        this.lazyNgZoneUpdate(event.isSendFromSelf);
+        //
       });
   }
 
