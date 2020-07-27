@@ -22,6 +22,8 @@ import { ModalService } from 'service/modal.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
 
+import { GridLineRender } from './grid-line-render';
+
 @Component({
   selector: 'game-table',
   templateUrl: './game-table.component.html',
@@ -458,66 +460,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.gameTable.nativeElement.style.width = width * gridSize + 'px';
     this.gameTable.nativeElement.style.height = height * gridSize + 'px';
 
-    let canvasElement: HTMLCanvasElement = this.gridCanvas.nativeElement;
-    canvasElement.width = width * gridSize;
-    canvasElement.height = height * gridSize;
-    let context: CanvasRenderingContext2D = canvasElement.getContext('2d');
-    context.strokeStyle = gridColor;
-    context.fillStyle = context.strokeStyle;
-    context.lineWidth = 1;
-
-    // 座標描画用font設定
-    let fontSize: number = Math.floor(gridSize / 5);
-    context.font = 'bold ' + fontSize + 'px sans-serif';
-    context.textBaseline = 'top';
-    context.textAlign = 'center';
-
-    let gx: number; // グリッド用Rect描画開始位置(x)
-    let gy: number; // 同上(y)
-
-    let calcGridPosition: { (w: number, h: number): void };
-
-    switch (gridType) {
-      case GridType.HEX_VERTICAL: // ヘクス縦揃え
-        calcGridPosition = (w, h) => {
-          if ((w % 2) === 1) {
-            gx = w * gridSize;
-            gy = h * gridSize;
-          } else {
-            gx = w * gridSize;
-            gy = h * gridSize + (gridSize / 2);
-          }
-        }
-        break;
-      case GridType.HEX_HORIZONTAL: // ヘクス横揃え(どどんとふ互換)
-        calcGridPosition = (w, h) => {
-          if ((h % 2) === 1) {
-            gx = w * gridSize;
-            gy = h * gridSize;
-          } else {
-            gx = w * gridSize + (gridSize / 2);
-            gy = h * gridSize;
-          }
-        }
-        break;
-      default: // スクエア(default)
-        calcGridPosition = (w, h) => {
-          gx = w * gridSize;
-          gy = h * gridSize;
-        }
-        break;
-    }
-
-    if (0 <= gridType) {
-      for (let h = 0; h <= height; h++) {
-        for (let w = 0; w <= width; w++) {
-          calcGridPosition(w, h);
-          context.beginPath();
-          context.strokeRect(gx, gy, gridSize, gridSize);
-          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
-        }
-      }
-    }
+    let render = new GridLineRender(this.gridCanvas.nativeElement);
+    render.render(width, height, gridSize, gridType, gridColor);
 
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity + '';
