@@ -1,28 +1,3 @@
-.imagebox {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  max-width: 50px;
-  max-height: 50px;
-  vertical-align: top;
-  text-align: center;
-}
-.image{
-  width: 100%;
-  height: 100%;
-  vertical-align: bottom;
-  object-fit: cover;
-  object-position: 50% 0%;
-}
-.table {
-  box-sizing: border-box;
-  padding : 5px;
-  display: table;
-  width: 100%;
-}
-.table .table-cell {
-  display: table-cell;
-}
 .edit-info {
   width: 100%;
   text-align: center;
@@ -35,30 +10,6 @@
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Verdana, Meiryo, sans-serif;
   width: 100%;
   height: 100%;
-}
-.direct-message {
-  background-color: #555;
-  color: #CCC;
-}
-.chat-input {
-  font-family: Arial;
-  font-size: 13px;
-
-  width: calc(100% - 100px);
-  height: calc(1em + 4px);
-  min-height: calc(1em + 7px);
-  max-height: calc(6em + 7px);
-  resize: none;
-  overflow: auto;
-
-  padding: 1px;
-  margin: 5px;
-
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  vertical-align: bottom;
 }
 
 .flex-container {
