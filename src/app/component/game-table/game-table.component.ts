@@ -477,7 +477,78 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let calcGridPosition: { (w: number, h: number): void };
 
+
+
+    function HexCell(x, y, z) {
+      this._x = x;
+      this._y = y;
+      this._z = z;
+    }
+
+    function initGrid(mapSizeWidth, mapSizeHeight) {
+      mapSizeWidth = Math.max(1, Math.floor(mapSizeWidth / 2));
+      mapSizeHeight = Math.max(1, Math.floor(mapSizeHeight / 2));
+      let mapSizeZ = 10;
+      mapSizeZ = Math.max(1, Math.max(mapSizeHeight, mapSizeWidth));
+      console.log('mapSizeWidth, mapSizeHeight', mapSizeWidth, mapSizeHeight, mapSizeZ)
+      let gridArray = [];
+      let cnt = 0;
+
+      for (let i = -mapSizeWidth; i < mapSizeWidth + 1; i += 1) {
+        for (let j = -mapSizeHeight; j < mapSizeHeight + 1; j += 1) {
+          for (let k = -mapSizeZ; k < mapSizeZ + 1; k += 1) {
+            if (i + j + k == 0) {
+              gridArray.push(new HexCell(i, j, k));
+              cnt += 1;
+            }
+          }
+        }
+      }
+
+      return gridArray;
+    }
+
+    function drawGrid(gridArray) {
+      let edgeLength = gridSize;
+      let edgeW = edgeLength * 3 / 2;
+      let edgeH = edgeLength * Math.sqrt(3) / 2;
+
+      canvasElement.width = width * gridSize;
+      canvasElement.height = height * gridSize;
+      context = canvasElement.getContext('2d');
+      context.strokeStyle = gridColor;
+      context.fillStyle = "rgba(255, 255, 255, 0.0)";
+      context.lineWidth = 3;
+      let x, y, z;
+      let posX, posY;
+      let centerX = canvasElement.width / 2;
+      let centerY = canvasElement.height / 2;
+
+      for (let i = 0; i < gridArray.length; i++) {
+        [x, y, z] = [gridArray[i]._x, gridArray[i]._y, gridArray[i]._z];
+        posX = x * edgeW + centerX;
+        posY = (-y + z) * edgeH + centerY;
+
+        context.moveTo(posX + Math.cos(0) * edgeLength,
+          posY + Math.sin(0) * edgeLength);
+        for (let j = 1; j <= 6; j++) {
+          context.lineTo(posX + Math.cos(j / 6 * (Math.PI * 2)) * edgeLength,
+            posY + Math.sin(j / 6 * (Math.PI * 2)) * edgeLength);
+        }
+        context.fill();
+        context.stroke();
+      }
+    }
+
+
+
+
+
     switch (gridType) {
+      case GridType.HEX_ZETETIC:
+        let hexGrid = initGrid(width, height);
+        drawGrid(hexGrid);
+        break;
       case GridType.HEX_VERTICAL: // ヘクス縦揃え
         calcGridPosition = (w, h) => {
           if ((w % 2) === 1) {
@@ -508,7 +579,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
 
-    if (0 <= gridType) {
+    if (0 <= gridType && gridType !== 3) {
       for (let h = 0; h <= height; h++) {
         for (let w = 0; w <= width; w++) {
           calcGridPosition(w, h);
@@ -518,6 +589,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+
+
 
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity + '';
