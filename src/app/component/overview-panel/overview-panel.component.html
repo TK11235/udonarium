@@ -43,7 +43,7 @@
     <div *ngIf="0 < card?.name?.length" class="component-title title-background"
       [ngClass]="{'with-button-marign': hasImage}">
       <ng-container *ngIf="card.isVisible == null || card.isVisible">{{card.name}}</ng-container>
-      <ng-container *ngIf="card.isVisible != null && !card.isVisible">カード</ng-container>
+      <ng-container *ngIf="card.isVisible != null && !card.isVisible">卡牌</ng-container>
     </div>
     <div class="component-background">
       <div class="grid-container-root" *ngIf="hasDataElms && card.isVisible">
@@ -89,6 +89,15 @@
       [ngClass]="{ 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }">
       <div class="grid-container-root" *ngIf="hasDataElms">
         <!--<ng-container *ngFor="let dataElm of dataElms">-->
+        <div><button type="submit" (click)="movetocommon()">共有</button>
+          <button type="submit" (click)="movetoid()">個人</button>
+          <button type="submit" (click)="movetograveyard()">墓場</button>
+          <input type="text" class="PosZ"pInputText (change)="changePosZ($event.target.value)" placeholder="高度" />
+          <button type="submit" (click)="PosZplus100()">+100</button>
+          <button type="submit" (click)="PosZ0()">地面</button>
+
+        </div>
+
         <ng-container *ngFor="let dataElm of inventoryDataElms">
           <ng-container *ngIf="dataElm && dataElm.name !== newLineString">
             <div class="grid-container">

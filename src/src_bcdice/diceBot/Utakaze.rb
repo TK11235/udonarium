@@ -19,9 +19,9 @@ class Utakaze < DiceBot
   例）UK  ：サイコロ2個で行為判定
   不等号用いた成否判定は現時点では実装してません。
 ・クリティカルコール付き行為判定ロール（nUK@c or nUKc）
-　cに「龍のダイス目」を指定した行為判定ロール。
+　cに「龍の骰子目」を指定した行為判定ロール。
   ゾロ目ではなく、cと同じ値の出目数x2が成功レベルとなります。
-  例）3UK@5 ：龍のダイス「月」でクリティカルコール宣言したサイコロ3個の行為判定
+  例）3UK@5 ：龍の骰子「月」でクリティカルコール宣言したサイコロ3個の行為判定
 MESSAGETEXT
 
   setPrefixes(['\d*UK[@\d]*.*'])
@@ -81,7 +81,7 @@ MESSAGETEXT
     result = ""
 
     if isDragonDice(crit)
-      result += "龍のダイス「#{@arrayDragonDiceName[crit]}」(#{crit})を使用 ＞ "
+      result += "龍の骰子「#{@arrayDragonDiceName[crit]}」(#{crit})を使用 ＞ "
     end
 
     if  success
@@ -124,7 +124,7 @@ MESSAGETEXT
       return false, 0, 0
     end
 
-    # 竜のダイスの場合
+    # 竜の骰子の場合
     maxnum *= 2 if isDragonDice(crit)
 
     # 成功：ゾロ目あり

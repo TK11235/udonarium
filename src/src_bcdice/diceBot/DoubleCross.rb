@@ -28,7 +28,7 @@ class DoubleCross < DiceBot
 　　ポジティブとネガティブの両方を振って、表になっている側に○を付けて表示します。
 　　もちろん任意で選ぶ部分は変更して構いません。
 
-・D66ダイスあり
+・D66骰子あり
 INFO_MESSAGE_TEXT
 
   setPrefixes(['\d+DX.*', 'ET'])

@@ -6,7 +6,7 @@ import { EventSystem } from './core/system';
 
 @SyncObject('chat-tab')
 export class ChatTab extends ObjectNode implements InnerXml {
-  @SyncVar() name: string = 'タブ';
+  @SyncVar() name: string = '分頁';
   get chatMessages(): ChatMessage[] { return <ChatMessage[]>this.children; }
 
   private _unreadLength: number = 0;
@@ -17,6 +17,8 @@ export class ChatTab extends ObjectNode implements InnerXml {
     let lastIndex = this.chatMessages.length - 1;
     return lastIndex < 0 ? 0 : this.chatMessages[lastIndex].timestamp;
   }
+
+  @SyncVar() receiveInfo = false;
 
   // ObjectNode Lifecycle
   onChildAdded(child: ObjectNode) {

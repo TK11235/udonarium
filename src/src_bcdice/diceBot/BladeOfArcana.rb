@@ -14,7 +14,7 @@ class BladeOfArcana < DiceBot
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ■行為判定　nA[m][Cx][Fy]
-　n：ダイス数　　m：判定値(省略時はクリティカル値と同じ)
+　n：骰子数　　m：判定値(省略時はクリティカル値と同じ)
 　x：クリティカル値(省略時は1)　　y：ファンブル値(省略時は20)
 　注）[m]、[Cx]、[Fy]は省略可能。
 　　例）3A12C4F15→3個振り12以下で成功。C値4、F値は15。

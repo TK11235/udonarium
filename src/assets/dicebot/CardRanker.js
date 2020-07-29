@@ -81,7 +81,7 @@
       var $a, $b, self = this, type = nil, colorTable = nil, color = nil, colorIndex = nil, monsters = nil, monsterName = nil, monsterIndex = nil, output = nil;
 
       
-      type = "ランダムモンスター選択";
+      type = "ランダム怪獸選択";
       colorTable = self.$getColorTable();
       $b = self.$get_table_by_1d6(colorTable), $a = Opal.to_ary($b), (color = ($a[0] == null ? nil : $a[0])), (colorIndex = ($a[1] == null ? nil : $a[1])), $b;
       monsters = self.$getMonsterTables($rb_minus(colorIndex, 1));
@@ -110,7 +110,7 @@
       
       if ($truthy($rb_lt(monsterIndex, 2))) {
         return nil};
-      type = "モンスター選択";
+      type = "怪獸選択";
       colorWords = ["W", "U", "V", "G", "R", "B"];
       colorIndex = colorWords.$index(color);
       self.$debug("colorIndex");

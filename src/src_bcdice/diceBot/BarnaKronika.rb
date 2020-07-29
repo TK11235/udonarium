@@ -33,12 +33,12 @@ INFO_MESSAGE_TEXT
     @sortType = 3
   end
 
-  # ダイスボット設定後に行う処理
+  # 骰子ボット設定後に行う処理
   # @return [void]
   def postSet
     if bcdice
       bcdice.cardTrader.set1Deck2Jokers
-      # 手札の他のカード置き場
+      # 手札の他の卡牌置き場
       bcdice.cardTrader.card_place = 0
       # 場札のタップ処理の必要があるか？
       bcdice.cardTrader.canTapCard = false

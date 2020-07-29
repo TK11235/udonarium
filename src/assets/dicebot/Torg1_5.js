@@ -197,7 +197,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg_get_torg_interaction_result_intimidate_test$9.$$arity = 1);
     
@@ -205,7 +205,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "萎縮"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg_get_torg_interaction_result_taunt_trick$10.$$arity = 1);
     
@@ -213,7 +213,7 @@
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "技能なし"], [5, "疲労"], [10, "萎縮／疲労"], [15, "逆転負け／疲労"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "技能なし"], [5, "疲労"], [10, "萎縮／疲労"], [15, "逆転負け／疲労"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg_get_torg_interaction_result_maneuver$11.$$arity = 1);
     
@@ -364,7 +364,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "萎縮"], [5, "技能なし"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "萎縮"], [5, "技能なし"], [10, "逆転負け"], [15, "モラル崩壊"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg1_5_get_torg_interaction_result_intimidate_test$2.$$arity = 1);
     
@@ -372,7 +372,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "萎縮"], [5, "技能なし"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "萎縮"], [5, "技能なし"], [10, "逆転負け"], [15, "高揚／逆転負け"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg1_5_get_torg_interaction_result_taunt_trick$3.$$arity = 1);
     
@@ -380,7 +380,7 @@ Opal.loaded(["diceBot/Torg.js"]);
       var self = this, interaction_results_table = nil;
 
       
-      interaction_results_table = [[0, "疲労"], [5, "萎縮"], [10, "技能なし"], [15, "逆転負け／疲労"], [17, "プレイヤーズコール"]];
+      interaction_results_table = [[0, "疲労"], [5, "萎縮"], [10, "技能なし"], [15, "逆転負け／疲労"], [17, "玩家ズコール"]];
       return self.$get_torg_table_result(value, interaction_results_table);
     }, $Torg1_5_get_torg_interaction_result_maneuver$4.$$arity = 1);
     

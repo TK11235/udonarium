@@ -33,7 +33,7 @@ MESSAGETEXT
     # @d66Type = 0;        #d66の差し替え
     # @isPrintMaxDice = false;      #最大値表示
     # @upplerRollThreshold = 0;      #上方無限
-    # @unlimitedRollDiceType = 0;    #無限ロールのダイス
+    # @unlimitedRollDiceType = 0;    #無限ロールの骰子
     # @rerollNumber = 0;      #振り足しする条件
     # @defaultSuccessTarget = "";      #目標値が空欄の時の目標値
     # @rerollLimitCount = 0;    #振り足し回数上限
@@ -73,7 +73,7 @@ MESSAGETEXT
     ''
   end
 
-  # 以下のメソッドはテーブルの参照用に便利
+  # 以下のメソッドは桌面の参照用に便利
   # get_table_by_2d6(table)
   # get_table_by_1d6(table)
   # get_table_by_nD6(table, 1)

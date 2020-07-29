@@ -17,7 +17,7 @@ export class ChatTabList extends ObjectNode implements InnerXml {
   get chatTabs(): ChatTab[] { return this.children as ChatTab[]; }
 
   addChatTab(chatTab: ChatTab)
-  addChatTab(tabName: string, identifier?: string)
+  addChatTab(tabName: string, identifier?: string, receiveInfo?: boolean)
   addChatTab(...args: any[]) {
     let chatTab: ChatTab = null;
     if (args[0] instanceof ChatTab) {
@@ -25,8 +25,10 @@ export class ChatTabList extends ObjectNode implements InnerXml {
     } else {
       let tabName: string = args[0];
       let identifier: string = args[1];
+      let receiveInfo: boolean = args[2] || false;
       chatTab = new ChatTab(identifier);
       chatTab.name = tabName;
+      chatTab.receiveInfo = receiveInfo;
       chatTab.initialize();
     }
     this.appendChild(chatTab);

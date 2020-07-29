@@ -36,7 +36,7 @@ class Torg1_5 < Torg
       [5, "技能なし"],
       [10, "逆転負け"],
       [15, "モラル崩壊"],
-      [17, "プレイヤーズコール" ]
+      [17, "玩家ズコール" ]
     ]
 
     return get_torg_table_result(value, interaction_results_table)
@@ -49,7 +49,7 @@ class Torg1_5 < Torg
       [5, "技能なし"],
       [10, "逆転負け"],
       [15, "高揚／逆転負け"],
-      [17, "プレイヤーズコール" ]
+      [17, "玩家ズコール" ]
     ]
 
     return get_torg_table_result(value, interaction_results_table)
@@ -62,7 +62,7 @@ class Torg1_5 < Torg
       [5, "萎縮"],
       [10, "技能なし"],
       [15, "逆転負け／疲労"],
-      [17, "プレイヤーズコール" ]
+      [17, "玩家ズコール" ]
     ]
 
     return get_torg_table_result(value, interaction_results_table)

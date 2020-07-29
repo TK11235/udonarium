@@ -194,13 +194,13 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.contextMenuService.open(position, [
       (!this.isVisible || this.isHand
         ? {
-          name: '表にする', action: () => {
+          name: '表面', action: () => {
             this.card.faceUp();
             SoundEffect.play(PresetSound.cardDraw);
           }
         }
         : {
-          name: '裏にする', action: () => {
+          name: '背面', action: () => {
             this.card.faceDown();
             SoundEffect.play(PresetSound.cardDraw);
           }
@@ -208,13 +208,13 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       ),
       (this.isHand
         ? {
-          name: '裏にする', action: () => {
+          name: '背面', action: () => {
             this.card.faceDown();
             SoundEffect.play(PresetSound.cardDraw);
           }
         }
         : {
-          name: '自分だけ見る', action: () => {
+          name: '只有自己看見', action: () => {
             SoundEffect.play(PresetSound.cardDraw);
             this.card.faceDown();
             this.owner = Network.peerId;
@@ -222,15 +222,15 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         }),
       ContextMenuSeparator,
       {
-        name: '重なったカードで山札を作る', action: () => {
+        name: '新增牌堆', action: () => {
           this.createStack();
           SoundEffect.play(PresetSound.cardPut);
         }
       },
       ContextMenuSeparator,
-      { name: 'カードを編集', action: () => { this.showDetail(this.card); } },
+      { name: '編輯卡牌', action: () => { this.showDetail(this.card); } },
       {
-        name: 'コピーを作る', action: () => {
+        name: '複製', action: () => {
           let cloneObject = this.card.clone();
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
@@ -239,12 +239,12 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       },
       {
-        name: '削除する', action: () => {
+        name: '刪除', action: () => {
           this.card.destroy();
           SoundEffect.play(PresetSound.sweep);
         }
       },
-    ], this.isVisible ? this.name : 'カード');
+    ], this.isVisible ? this.name : '卡牌');
   }
 
   onMove() {
@@ -309,7 +309,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   private showDetail(gameObject: Card) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = 'カード設定';
+    let title = '卡牌設定';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x - 300, top: coordinate.y - 300, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);

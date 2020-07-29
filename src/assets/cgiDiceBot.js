@@ -29516,7 +29516,7 @@ Opal.modules["bcdiceCore"] = function(Opal) {
       self.$sleepForIrc(1);
       $send(["・同一タグのカウンタ値一覧　　(#OPEN!タグ)", "・自キャラのカウンタ値一覧　　(Talkで#OPEN![タグ]) (全カウンタ表示時、タグ省略)", "・自キャラのカウンタ削除　　　(#[名前:]DIED!) (デフォルト時、識別名省略)", "・全自キャラのカウンタ削除　　(#ALL!:DIED!)", "" + "・カウンタ表示チャンネル登録　(" + ($gvars.READY_CMD) + ")", "  ---"], 'each', [], send_to_sender.$to_proc());
       self.$sleepForIrc(2);
-      self.$sendMessageToOnlySender("・カード機能ヘルプ　　　　　　(c-help)");
+      self.$sendMessageToOnlySender("・卡牌機能ヘルプ　　　　　　(c-help)");
       return self.$sendMessageToOnlySender("  -- END ---");
     }, $BCDice_printHelp$39.$$arity = 0);
     

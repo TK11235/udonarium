@@ -213,7 +213,7 @@ INFO_MESSAGE_TEXT
     (0..3).each do |more_difficlty|
       output += getNextDifficltyMessage(more_difficlty)
 
-      # ペナルティダイスを減らしながらロール用ループ削減獎勵骰時角色用Lｏｏｐ
+      # ペナルティ骰子を減らしながらロール用ループ削減獎勵骰時角色用Lｏｏｐ
       while dice_num >= @bonus_dice_range.min
 
         loopCount += 1

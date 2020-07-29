@@ -28,7 +28,7 @@ export class CardStackListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    Promise.resolve().then(() => this.cardStack.name + ' のカード一覧');
+    Promise.resolve().then(() => this.cardStack.name + ' 卡牌列表');
     EventSystem.register(this)
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
@@ -98,7 +98,7 @@ export class CardStackListComponent implements OnInit, OnDestroy {
       x: this.panelService.left,
       y: this.panelService.top
     };
-    let title = 'カード設定';
+    let title = '卡牌設定';
     if (gameObject.name.length) title += ' - ' + gameObject.name;
     let option: PanelOption = { title: title, left: coordinate.x + 10, top: coordinate.y + 20, width: 600, height: 600 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);

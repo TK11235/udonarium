@@ -40,7 +40,7 @@ IA イケメンアクション決定表
  IAH 渋い
  IAI 賢い
  IAJ 超自然
-・D66ダイスあり
+・D66骰子あり
 INFO_MESSAGE_TEXT
 
   def initialize

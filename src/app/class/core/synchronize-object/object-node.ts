@@ -47,6 +47,9 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     }
     this._children = [];
   }
+  destroyChat() {
+    this._children = [];
+  }
 
   // GameObject Lifecycle
   onStoreAdded() {

@@ -25,10 +25,24 @@ export class DiceBot extends GameObject {
   private static queue: PromiseQueue = new PromiseQueue('DiceBotQueue');
 
   public static diceBotInfos: DiceBotInfo[] = [
-    { script: 'EarthDawn', game: 'アースドーン' },
-    { script: 'EarthDawn3', game: 'アースドーン3版' },
-    { script: 'EarthDawn4', game: 'アースドーン4版' },
-    { script: 'Airgetlamh', game: '朱の孤塔のエアゲトラム' },
+    { script: 'Cthulhu', game: 'CoC(日文)' },
+    { script: 'Cthulhu7th', game: 'CoC第7版(日文)' },
+    { script: 'Insane', game: 'Insane' },
+    { script: 'Kamigakari', game: '神我狩' },
+    { script: 'ShinobiGami', game: '忍神' },
+    { script: 'SwordWorld', game: '劍世界' },
+    { script: 'SwordWorld2_0', game: '劍世界2.0' },
+    { script: 'SwordWorld2_5', game: '劍世界2.5' },
+    { script: 'Airgetlamh', game: '朱的孤塔' },
+    { script: 'Satasupe', game: '亞俠必死的冒險' },
+    { script: 'ShadowRun', game: 'ShadowRun' },
+    { script: 'ShadowRun4', game: 'ShadowRun第４版' },
+    { script: 'ShadowRun5', game: 'ShadowRun第５版' },
+    { script: 'BloodCrusade', game: 'ブラッド・クルセイド' },
+    { script: 'HatsuneMiku', game: '初音TRPG ココロダンジョン' },
+    { script: 'Utakaze', game: '歌風' },
+    { script: 'KillDeathBusiness', game: '惡魔電視台' },
+    { script: 'Pathfinder', game: 'Pathfinder' },
     { script: 'AFF2e', game: 'ADVANCED FIGHTING FANTASY 2nd Edition' },
     { script: 'Amadeus', game: 'アマデウス' },
     { script: 'Arianrhod', game: 'アリアンロッド' },
@@ -36,14 +50,14 @@ export class DiceBot extends GameObject {
     { script: 'ArsMagica', game: 'アルスマギカ' },
     { script: 'Alter_raise', game: '心衝想機TRPGアルトレイズ' },
     { script: 'IthaWenUa', game: 'イサー・ウェン＝アー' },
+    { script: 'EarthDawn', game: '地球黎明' },
+    { script: 'EarthDawn3', game: '地球黎明3版' },
+    { script: 'EarthDawn4', game: '地球黎明4版' },
     { script: 'YearZeroEngine', game: 'イヤーゼロエンジン' },
-    { script: 'Illusio', game: '晃天のイルージオ' },
-    { script: 'Insane', game: 'インセイン' },
     { script: 'VampireTheMasquerade5th', game: 'ヴァンパイア：ザ マスカレード 第５版' },
     { script: 'WitchQuest', game: 'ウィッチクエスト' },
     { script: 'Warhammer', game: 'ウォーハンマー' },
-    { script: 'Utakaze', game: 'ウタカゼ' },
-    { script: 'Alsetto', game: '詩片のアルセット' },
+    { script: 'Alsetto', game: '詩片的アルセット' },
     { script: 'AceKillerGene', game: 'エースキラージーン' },
     { script: 'EclipsePhase', game: 'エクリプス・フェイズ' },
     { script: 'EmbryoMachine', game: 'エムブリオマシン' },
@@ -53,40 +67,34 @@ export class DiceBot extends GameObject {
     { script: 'Oukahoushin3rd', game: '央華封神RPG第三版' },
     { script: 'OrgaRain', game: '在りて遍くオルガレイン' },
     { script: 'GardenOrder', game: 'ガーデンオーダー' },
-    { script: 'CardRanker', game: 'カードランカー' },
-    { script: 'Gurps', game: 'ガープス' },
-    { script: 'GurpsFW', game: 'ガープスフィルトウィズ' },
+    { script: 'CardRanker', game: '卡牌ランカー' },
+    { script: 'Gurps', game: 'GURPS' },
+    { script: 'GurpsFW', game: 'GURPSFW' },
     { script: 'ChaosFlare', game: 'カオスフレア' },
     { script: 'OneWayHeroics', game: '片道勇者' },
-    { script: 'Kamigakari', game: '神我狩' },
-    { script: 'Garako', game: 'ガラコと破界の塔' },
+    { script: 'Garako', game: 'ガラコと破界的塔' },
     { script: 'KanColle', game: '艦これRPG' },
     { script: 'Gundog', game: 'ガンドッグ' },
     { script: 'GundogZero', game: 'ガンドッグ・ゼロ' },
     { script: 'GundogRevised', game: 'ガンドッグ・リヴァイズド' },
-    { script: 'KillDeathBusiness', game: 'キルデスビジネス' },
-    { script: 'StellarKnights', game: '銀剣のステラナイツ' },
-    { script: 'Cthulhu', game: 'クトゥルフ' },
-    { script: 'CthulhuTech', game: 'クトゥルフテック' },
+    { script: 'StellarKnights', game: '銀剣的ステラナイツ' },
+    { script: 'CthulhuTech', game: 'CthulhuTech' },
     { script: 'KurayamiCrying', game: 'クラヤミクライン' },
     { script: 'GranCrest', game: 'グランクレスト' },
     { script: 'GeishaGirlwithKatana', game: 'ゲイシャ・ガール・ウィズ・カタナ' },
     { script: 'GehennaAn', game: 'ゲヘナ・アナスタシス' },
+    { script: 'Illusio', game: '晃天的イルージオ' },
     { script: 'KemonoNoMori', game: '獸ノ森' },
     { script: 'CodeLayerd', game: 'コード：レイヤード' },
-    { script: 'Avandner', game: '黒絢のアヴァンドナー' },
-    { script: 'Gorilla', game: 'ゴリラTRPG' },
+    { script: 'Avandner', game: '黒絢的アヴァンドナー' },
+    { script: 'Gorilla', game: 'GorillaTRPG' },
     { script: 'ColossalHunter', game: 'コロッサルハンター' },
-    { script: 'Satasupe', game: 'サタスペ' },
+    { script: 'Postman', game: '壊れた世界的ポストマン' },
     { script: 'SharedFantasia', game: 'Shared†Fantasia' },
     { script: 'JamesBond', game: 'ジェームズ・ボンド007' },
-    { script: 'ShinobiGami', game: 'シノビガミ' },
-    { script: 'ShadowRun', game: 'シャドウラン' },
-    { script: 'ShadowRun4', game: 'シャドウラン第4版' },
-    { script: 'ShadowRun5', game: 'シャドウラン第5版' },
+    { script: 'LiveraDoll', game: '紫縞的リヴラドール' },
     { script: 'ShoujoTenrankai', game: '少女展爛会' },
     { script: 'ShinkuuGakuen', game: '真空学園' },
-    { script: 'Cthulhu7th', game: '新クトゥルフ' },
     { script: 'ShinMegamiTenseiKakuseihen', game: '真・女神転生TRPG　覚醒篇' },
     { script: 'Skynauts', game: '歯車の塔の探空士' },
     { script: 'ScreamHighSchool', game: 'スクリームハイスクール' },
@@ -94,25 +102,23 @@ export class DiceBot extends GameObject {
     { script: 'SterileLife', game: 'ステラーライフ' },
     { script: 'StratoShout', game: 'ストラトシャウト' },
     { script: 'TherapieSein', game: '青春疾患セラフィザイン' },
-    { script: 'EtrianOdysseySRS', game: '世界樹の迷宮SRS' },
+    { script: 'EtrianOdysseySRS', game: '世界樹的迷宮SRS' },
     { script: 'ZettaiReido', game: '絶対隷奴' },
     { script: 'SevenFortressMobius', game: 'セブン＝フォートレス メビウス' },
-    { script: 'Villaciel', game: '蒼天のヴィラシエル' },
-    { script: 'SwordWorld', game: 'ソードワールド' },
-    { script: 'SwordWorld2_0', game: 'ソードワールド2.0' },
-    { script: 'SwordWorld2_5', game: 'ソードワールド2.5' },
-    { script: 'DarkSouls', game: 'ダークソウルTRPG' },
+    { script: 'Villaciel', game: '蒼天的ヴィラシエル' },
+    { script: 'DarkSouls', game: 'DarkSoulsTRPG' },
     { script: 'DarkDaysDrive', game: 'ダークデイズドライブ' },
     { script: 'DarkBlaze', game: 'ダークブレイズ' },
-    { script: 'DiceOfTheDead', game: 'ダイス・オブ・ザ・デッド' },
-    { script: 'DoubleCross', game: 'ダブルクロス2nd,3rd' },
+    { script: 'DungeonsAndDoragons', game: 'DND' },
+    { script: 'DiceOfTheDead', game: '骰子・オブ・ザ・デッド' },
+    { script: 'DoubleCross', game: 'DX2nd,3rd' },
     { script: 'DungeonsAndDragons', game: 'ダンジョンズ＆ドラゴンズ' },
     { script: 'Paradiso', game: 'チェレステ色のパラディーゾ' },
     { script: 'Chill', game: 'Chill' },
     { script: 'Chill3', game: 'Chill 3' },
     { script: 'CrashWorld', game: '墜落世界' },
-    { script: 'StrangerOfSwordCity', game: '剣の街の異邦人TRPG' },
-    { script: 'DetatokoSaga', game: 'でたとこサーガ' },
+    { script: 'StrangerOfSwordCity', game: '剣的街的異邦人TRPG' },
+    { script: 'DetatokoSaga', game: 'DetatokoSaga' },
     { script: 'DeadlineHeroes', game: 'デッドラインヒーローズ' },
     { script: 'DemonParasite', game: 'デモンパラサイト' },
     { script: 'TokyoGhostResearch', game: '東京ゴーストリサーチ' },
@@ -131,11 +137,9 @@ export class DiceBot extends GameObject {
     { script: 'NinjaSlayer', game: 'ニンジャスレイヤーTRPG' },
     { script: 'NjslyrBattle', game: 'NJSLYRBATTLE' },
     { script: 'Nuekagami', game: '鵺鏡' },
-    { script: 'Nechronica', game: 'ネクロニカ' },
+    { script: 'Nechronica', game: '永遠的後日談' },
     { script: 'HarnMaster', game: 'ハーンマスター' },
-    { script: 'Pathfinder', game: 'Pathfinder' },
     { script: 'BadLife', game: '犯罪活劇RPGバッドライフ' },
-    { script: 'HatsuneMiku', game: '初音ミクTRPG ココロダンジョン' },
     { script: 'BattleTech', game: 'バトルテック' },
     { script: 'ParasiteBlood', game: 'パラサイトブラッド' },
     { script: 'Paranoia', game: 'パラノイア' },
@@ -154,14 +158,12 @@ export class DiceBot extends GameObject {
     { script: 'FilledWith', game: 'フィルトウィズ' },
     { script: 'FutariSousa', game: 'フタリソウサ' },
     { script: 'BlindMythos', game: 'ブラインド・ミトス' },
-    { script: 'BloodCrusade', game: 'ブラッド・クルセイド' },
     { script: 'BloodMoon', game: 'ブラッド・ムーン' },
     { script: 'FullMetalPanic', game: 'フルメタル・パニック！' },
     { script: 'BladeOfArcana', game: 'ブレイド・オブ・アルカナ' },
-    { script: 'Strave', game: '碧空のストレイヴ' },
+    { script: 'Strave', game: '碧空的ストレイヴ' },
     { script: 'Pendragon', game: 'ペンドラゴン' },
-    { script: 'HouraiGakuen', game: '蓬莱学園の冒険!!' },
-    { script: 'Postman', game: '壊れた世界のポストマン' },
+    { script: 'HouraiGakuen', game: '蓬莱学園的冒険!!' },
     { script: 'MagicaLogia', game: 'マギカロギア' },
     { script: 'InfiniteFantasia', game: '無限のファンタジア' },
     { script: 'MeikyuKingdom', game: '迷宮キングダム' },
@@ -293,7 +295,13 @@ export class DiceBot extends GameObject {
     'BloodCrusade_DMST.txt',
     'BloodCrusade_MNST.txt',
     'BloodCrusade_SLST.txt',
-    'BloodCrusade_TD1T.txt'
+    'BloodCrusade_TD1T.txt',
+    'Cthulhu7thChineseTraditional_Manias.txt', 
+    'Cthulhu7thChineseTraditional_phobias.txt',
+    'Cthulhu7thChineseTraditional_Realtime.txt',
+    'Cthulhu7thChineseTraditional_Summary.txt',
+    'CthulhuChineseTraditional_longer.txt',
+    'CthulhuChineseTraditional_short.txt'
   ];
 
   // GameObject Lifecycle
@@ -381,8 +389,8 @@ export class DiceBot extends GameObject {
         Opal.gvars.isDebug = false;
         let cgiDiceBot = Opal.CgiDiceBot.$new();
         result = cgiDiceBot.$roll(message, gameType, dir, diceBotTablePrefix, isNeedResult);
-        console.log('diceRoll!!!', result);
-        console.log('isSecret!!!', cgiDiceBot.isSecret);
+        //console.log('diceRoll!!!', result);
+        //console.log('isSecret!!!', cgiDiceBot.isSecret);
         return { result: result[0], isSecret: cgiDiceBot.isSecret };
       } catch (e) {
         console.error(e);
@@ -412,11 +420,11 @@ export class DiceBot extends GameObject {
 
   static loadDiceBotAsync(gameType: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      console.log('loadDiceBotAsync');
+      //console.log('loadDiceBotAsync');
       gameType = gameType.replace(/\./g, s => '_');
 
       if ((!gameType && gameType.length < 1) || DiceBot.loadedDiceBots[gameType]) {
-        console.log(gameType + ' is loaded');
+        //console.log(gameType + ' is loaded');
         resolve();
         return;
       }

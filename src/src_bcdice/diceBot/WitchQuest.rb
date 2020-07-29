@@ -14,10 +14,10 @@ class WitchQuest < DiceBot
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT
 ・チャレンジ(成功判定)(WQn)
-　n回2d6ダイスを振って判定を行います。
+　n回2d6骰子を振って判定を行います。
 　例）WQ3
-・SET（ストラクチャーカードの遭遇表(SETn)
-　ストラクチャーカードの番号(n)の遭遇表結果を得ます。
+・SET（ストラクチャー卡牌の遭遇表(SETn)
+　ストラクチャー卡牌の番号(n)の遭遇表結果を得ます。
 　例）SET1　SET48
 MESSAGETEXT
 

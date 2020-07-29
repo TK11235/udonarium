@@ -21,6 +21,7 @@ import { GameCharacterSheetComponent } from 'component/game-character-sheet/game
 import { GameCharacterComponent } from 'component/game-character/game-character.component';
 import { GameDataElementComponent } from 'component/game-data-element/game-data-element.component';
 import { GameObjectInventoryComponent } from 'component/game-object-inventory/game-object-inventory.component';
+import { NoteInventoryComponent } from 'component/note-inventory/note-inventory.component';
 import { GameTableMaskComponent } from 'component/game-table-mask/game-table-mask.component';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
 import { GameTableComponent } from 'component/game-table/game-table.component';
@@ -75,6 +76,7 @@ import { AppComponent } from './app.component';
     GameCharacterComponent,
     GameDataElementComponent,
     GameObjectInventoryComponent,
+    NoteInventoryComponent,
     GameTableMaskComponent,
     GameTableSettingComponent,
     GameTableComponent,

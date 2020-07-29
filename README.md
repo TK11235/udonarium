@@ -119,9 +119,13 @@ PRのコードが完全ではない場合でも作業中PRとして送ること�
 - モバイル向け対応
 - 機能追加
 - ドキュメント整備
+- GM LAYER
+- 觀戰功能
+- 文字倉庫(不完美實現)
+- 快捷組合版
 
 ## License
 
 [MIT License](https://github.com/TK11235/udonarium/blob/master/LICENSE)
 
-[1]: https://udonarium.app/
+[1]: https://z01.hktrpg.com/

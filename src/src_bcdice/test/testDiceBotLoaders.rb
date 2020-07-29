@@ -10,14 +10,14 @@ require 'bcdiceCore'
 require 'diceBot/DiceBotLoader'
 require 'diceBot/DiceBotLoaderList'
 
-# ダイスボット読み込みのテスト
+# 骰子ボット読み込みのテスト
 #
 # 1. ゲームシステムの識別子が有効かを調べるテストケース
 # 2. 特定の名前のダイスボットの読み込み禁止を確認するテストケース
 # 3. 複数の名前で読み込めるダイスボットの読み込みを確認するテストケース
 # 4. ダイスボットファイルを置いただけで読み込めることを確認するテストケース
 class TestDiceBotLoaders < Test::Unit::TestCase
-  # ダイスボットのディレクトリ
+  # 骰子ボットのディレクトリ
   DICE_BOT_DIR = File.expand_path('../diceBot', File.dirname(__FILE__))
 
   def setup
@@ -56,41 +56,41 @@ class TestDiceBotLoaders < Test::Unit::TestCase
   end
 
   #--
-  # 2. 特定の名前のダイスボットの読み込み禁止を確認するテストケース
+  # 2. 特定の名前の骰子ボットの読み込み禁止を確認するテストケース
   #++
 
-  # 存在しないダイスボットを読み込まない
+  # 存在しない骰子ボットを読み込まない
   def test_shouldNotLoadDiceBotNotFound
     assertDiceBotNotFound('NotFound')
   end
 
-  # 「DiceBot」という名前のダイスボットを読み込まない
+  # 「DiceBot」という名前の骰子ボットを読み込まない
   def test_shouldNotLoadDiceBotNamedDiceBot
     assertDiceBotIgnored('DiceBot')
   end
 
-  # 「DiceBotLoader」という名前のダイスボットを読み込まない
+  # 「DiceBotLoader」という名前の骰子ボットを読み込まない
   def test_shouldNotLoadDiceBotNamedDiceBotLoader
     assertDiceBotIgnored('DiceBotLoader')
   end
 
-  # 「DiceBotLoaderList」という名前のダイスボットを読み込まない
+  # 「DiceBotLoaderList」という名前の骰子ボットを読み込まない
   def test_shouldNotLoadDiceBotNamedDiceBotLoaderList
     assertDiceBotIgnored('DiceBotLoaderList')
   end
 
-  # 「_Template」という名前のダイスボットを読み込まない
+  # 「_Template」という名前の骰子ボットを読み込まない
   def test_shouldNotLoadDiceBotNamed_Template
     assertDiceBotIgnored('_Template')
   end
 
-  # 「_InsaneScp」という名前のダイスボットを読み込まない
+  # 「_InsaneScp」という名前の骰子ボットを読み込まない
   def test_shouldNotLoadDiceBotNamed_InsaceScp
     assertDiceBotIgnored('_InsaneScp')
   end
 
   #--
-  # 3. 複数の名前で読み込めるダイスボットの読み込みを確認するテストケース
+  # 3. 複数の名前で読み込める骰子ボットの読み込みを確認するテストケース
   #++
 
   def test_None
@@ -531,7 +531,7 @@ class TestDiceBotLoaders < Test::Unit::TestCase
   end
 
   #--
-  # 4. ダイスボットファイルを置いただけで読み込めることを確認するテストケース
+  # 4. 骰子ボットファイルを置いただけで読み込めることを確認するテストケース
   #++
 
   def test_AceKillerGene

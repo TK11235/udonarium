@@ -15,14 +15,30 @@ import { TextViewComponent } from 'component/text-view/text-view.component';
 import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { GameObjectInventoryService } from 'service/game-object-inventory.service';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 
+import { ModalService } from 'service/modal.service';
 @Component({
   selector: 'chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css']
 })
+
+
+
 export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
+  public static SoundEffectSwitch: boolean = true;
+  public onSoundEffectSwitchChanged() {
+    if (ChatWindowComponent.SoundEffectSwitch)
+      ChatWindowComponent.SoundEffectSwitch = false
+    else ChatWindowComponent.SoundEffectSwitch = true
+  }
+  public SoundEffectSwitch2() {
+    return ChatWindowComponent.SoundEffectSwitch;
+  }
+
 
   sender: string = 'Guest';
   text: string = '';
@@ -72,15 +88,18 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   get otherPeers(): PeerCursor[] { return ObjectStore.instance.getObjects(PeerCursor); }
 
   constructor(
+    private modalService: ModalService,
     private ngZone: NgZone,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private pointerDeviceService: PointerDeviceService
+    private pointerDeviceService: PointerDeviceService,
+    private inventoryService: GameObjectInventoryService
   ) { }
 
   ngOnInit() {
     this.sender = this.myPeer.identifier;
     this._chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
+    this.gameType = this.inventoryService.gameType;
 
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
@@ -171,9 +190,9 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   updatePanelTitle() {
     if (this.chatTab) {
-      this.panelService.title = 'チャットウィンドウ - ' + this.chatTab.name;
+      this.panelService.title = '聊天視窗 - ' + this.chatTab.name;
     } else {
-      this.panelService.title = 'チャットウィンドウ';
+      this.panelService.title = '聊天視窗';
     }
   }
 
@@ -198,40 +217,45 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  private _color: string = "#000000";
+  onChangeColor(color: string) {
+    this._color = color;
+  }
+
   showDicebotHelp() {
     DiceBot.getHelpMessage(this.gameType).then(help => {
       this.gameHelp = help;
 
-      let gameName: string = 'ダイスボット';
+      let gameName: string = '骰子機械人';
       for (let diceBotInfo of DiceBot.diceBotInfos) {
         if (diceBotInfo.script === this.gameType) {
-          gameName = 'ダイスボット<' + diceBotInfo.game + '＞'
+          gameName = '骰子機械人<' + diceBotInfo.game + '＞'
         }
       }
-      gameName += 'の説明';
+      gameName += '的説明';
 
       let coordinate = this.pointerDeviceService.pointers[0];
       let option: PanelOption = { left: coordinate.x, top: coordinate.y, width: 600, height: 500 };
       let textView = this.panelService.open(TextViewComponent, option);
       textView.title = gameName;
       textView.text =
-        '【ダイスボット】チャットにダイス用の文字を入力するとダイスロールが可能\n'
-        + '入力例）２ｄ６＋１　攻撃！\n'
-        + '出力例）2d6+1　攻撃！\n'
-        + '　　　　  diceBot: (2d6) → 7\n'
-        + '上記のようにダイス文字の後ろに空白を入れて発言する事も可能。\n'
-        + '以下、使用例\n'
-        + '　3D6+1>=9 ：3d6+1で目標値9以上かの判定\n'
-        + '　1D100<=50 ：D100で50％目標の下方ロールの例\n'
-        + '　3U6[5] ：3d6のダイス目が5以上の場合に振り足しして合計する(上方無限)\n'
-        + '　3B6 ：3d6のダイス目をバラバラのまま出力する（合計しない）\n'
-        + '　10B6>=4 ：10d6を振り4以上のダイス目の個数を数える\n'
-        + '　(8/2)D(4+6)<=(5*3)：個数・ダイス・達成値には四則演算も使用可能\n'
-        + '　C(10-4*3/2+2)：C(計算式）で計算だけの実行も可能\n'
-        + '　choice[a,b,c]：列挙した要素から一つを選択表示。ランダム攻撃対象決定などに\n'
-        + '　S3d6 ： 各コマンドの先頭に「S」を付けると他人結果の見えないシークレットロール\n'
-        + '　3d6/2 ： ダイス出目を割り算（切り捨て）。切り上げは /2U、四捨五入は /2R。\n'
-        + '　D66 ： D66ダイス。順序はゲームに依存。D66N：そのまま、D66S：昇順。\n'
+        '【擲骰BOT】你可以在聊天中進行自定義的擲骰\n'
+        + '例如輸入）2D6+1　攻撃！\n'
+        + '會輸出）   2D6+1　攻撃！\n'
+        + '　　　　  DiceBot: (2D6) → 7\n'
+        + '如上面一樣,在骰子數字後方隔空白位打字,就可以進行發言。\n'
+        + '以下還有其他例子\n'
+        + '　3D6+1>=9 ：骰出3d6+1然後判定是否大過等於9\n'
+        + '　1D100<=50 ：進行D100 50%的判定\n'
+        + '　3U6[5] ：擲出3D6，每骰出一粒5或以上的話會有獎勵骰一粒(可以無限獎勵)\n'
+        + '　3B6 ：和3D6一樣,但不進行合併計算\n'
+        + '　10B6>=4 ：擲出10d6,計算其中有多少粒骰大過等於4\n'
+        + '　(8/2)D(4+6)<=(5*3)：骰子粒數和條件可以用算式\n'
+        + '　C(10-4*3/2+2)：C(計算式）也可以只進行數字計算\n'
+        + '　Choice[a,b,c]：列出不同的元素去選擇。例如隨機選出攻擊對象\n'
+        + '　S3D6 ： 進行暗骰，其他人看不到結果\n'
+        + '　3D6/2 ： 骰出的點數除2 (捨棄小數點)。RoundUp /2U、四捨五入 /2R。\n'
+        + '　D66 ： 投擲D66。順序根據遊戲設定。D66N：正常、D66S：升序。\n'
         + '===================================\n'
         + this.gameHelp;
     });
@@ -245,7 +269,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (!this.sender.length) this.sender = this.myPeer.identifier;
     if (this.chatTab) {
-      this.chatMessageService.sendMessage(this.chatTab, this.text, this.gameType, this.sender, this.sendTo);
+      this.chatMessageService.sendMessage(this.chatTab, this.text, this.gameType, this.sender, this.sendTo, this._color);
     }
     this.text = '';
     this.previousWritingLength = this.text.length;
@@ -303,6 +327,12 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         return true;
     }
+  }
+  changeIcon() {
+    this.modalService.open<string>(FileSelecterComponent).then(value => {
+      if (!this.myPeer || !value) return;
+      this.myPeer.imageIdentifier = value;
+    });
   }
 
   trackByChatTab(index: number, chatTab: ChatTab) {

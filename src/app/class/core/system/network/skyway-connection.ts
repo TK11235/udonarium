@@ -184,7 +184,6 @@ export class SkyWayConnection implements Connection {
         this.peerContext = new PeerContext(id);
       }
       this.peerContext.isOpen = true;
-      console.log('My peer Context', this.peerContext);
       if (this.callback.onOpen) this.callback.onOpen(this.peerId);
     });
 
@@ -390,9 +389,9 @@ export class SkyWayConnection implements Connection {
       case 'server-error':
         return 'SkyWayのシグナリングサーバからPeer一覧を取得できませんでした。';
       case 'disconnected':
-        return 'SkyWayのシグナリングサーバに接続されていません。';
+        return 'SkyWayのシグナリングサーバに連線されていません。';
       case 'socket-error':
-        return 'SkyWayのシグナリングサーバとの接続が失われました。';
+        return 'SkyWayのシグナリングサーバとの連線が失われました。';
       default:
         return 'SkyWayに関する不明なエラーが発生しました(' + errType + ')';
     }

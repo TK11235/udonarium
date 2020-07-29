@@ -11,6 +11,9 @@ import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { PeerCursor } from '@udonarium/peer-cursor';
+import { Network } from '@udonarium/core/system';
+import { ContextMenuSeparator } from 'service/context-menu.service';
 
 @Component({
   selector: 'text-note',
@@ -23,6 +26,24 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() textNote: TextNote = null;
   @Input() is3D: boolean = false;
+
+  //GM
+  get GM(): string { return this.textNote.GM; }
+  set GM(GM: string) { this.textNote.GM = GM; }
+  get isMine(): boolean { return this.textNote.isMine; }
+  get hasGM(): boolean { return this.textNote.hasGM; }
+  get GMName(): string { return this.textNote.GMName; }
+  get isDisabled(): boolean {
+    if (this.textNote.location.name == 'common') return true
+    else
+      return this.textNote.isDisabled;
+  }
+
+
+  //STORE
+  get location(): string { return this.textNote.location.name; }
+  set location(location: string) { this.textNote.location.name = location; }
+
 
   get title(): string { return this.textNote.title; }
   get text(): string { this.calcFitHeightIfNeeded(); return this.textNote.text; }
@@ -58,7 +79,7 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
       .on('UPDATE_GAME_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!this.textNote || !object) return;
-        if (this.textNote === object || (object instanceof ObjectNode && this.textNote.contains(object))) {
+        if (this.textNote === object || (object instanceof ObjectNode && this.textNote.contains(object)) || (object instanceof PeerCursor && object.peerId === this.textNote.GM)) {
           this.changeDetector.markForCheck();
         }
       })
@@ -67,6 +88,9 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
       })
       .on('UPDATE_FILE_RESOURE', -1000, event => {
         this.changeDetector.markForCheck();
+      }).on('DISCONNECT_PEER', event => {
+        //GM
+        if (this.textNote.GM === event.data.peer) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.textNote,
@@ -130,11 +154,35 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
     this.contextMenuService.open(position, [
-      { name: 'メモを編集', action: () => { this.showDetail(this.textNote); } },
+
+      //GM
+      (!this.isMine
+        ? {
+          name: 'GM圖層-只供自己看見', action: () => {
+            this.GM = PeerCursor.myCursor.name;
+            SoundEffect.play(PresetSound.lock);
+          }
+        }
+        : {
+          name: '回到普通圖層', action: () => {
+            this.GM = '';
+            SoundEffect.play(PresetSound.unlock);
+          }
+        }
+      ),
+      ContextMenuSeparator,
       {
-        name: 'コピーを作る', action: () => {
+        name: '移動到共有倉庫', action: () => {
+
+          this.textNote.setLocation('common')
+        }
+      },
+
+      { name: '編輯筆記', action: () => { this.showDetail(this.textNote); } },
+      {
+        name: '複製', action: () => {
           let cloneObject = this.textNote.clone();
-          console.log('コピー', cloneObject);
+          console.log('複製', cloneObject);
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.toTopmost();
@@ -142,7 +190,7 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       },
       {
-        name: '削除する', action: () => {
+        name: '刪除', action: () => {
           this.textNote.destroy();
           SoundEffect.play(PresetSound.sweep);
         }
@@ -188,10 +236,10 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
     document.body.removeEventListener('mouseup', this.callbackOnMouseUp, false);
   }
 
-  private showDetail(gameObject: TextNote) {
+  public showDetail(gameObject: TextNote) {
     EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: gameObject.identifier, className: gameObject.aliasName });
     let coordinate = this.pointerDeviceService.pointers[0];
-    let title = '共有メモ設定';
+    let title = '設定共用筆記';
     if (gameObject.title.length) title += ' - ' + gameObject.title;
     let option: PanelOption = { title: title, left: coordinate.x - 350, top: coordinate.y - 200, width: 700, height: 400 };
     let component = this.panelService.open<GameCharacterSheetComponent>(GameCharacterSheetComponent, option);
