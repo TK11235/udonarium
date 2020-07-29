@@ -143,7 +143,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
           this.updateWritingPeerNames();
         });
       });
-    Promise.resolve().then(() => this.updatePanelTitle());
+    this.updatePanelTitle();
   }
 
   ngAfterViewInit() {
@@ -169,11 +169,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.chatTab) this.chatTab.markForRead();
       this.scrollToBottomTimer = null;
       this.isAutoScroll = false;
-      if (this.panelService.scrollablePanel) {
-        this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
-        let event = new CustomEvent('scrolltobottom', {});
-        this.panelService.scrollablePanel.dispatchEvent(event);
-      }
+      if (this.panelService.scrollablePanel) this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight;
     }, 0);
   }
 

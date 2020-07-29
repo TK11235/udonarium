@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   NgZone,
@@ -12,19 +11,17 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 
 import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
-import { setZeroTimeout } from '@udonarium/core/system/util/zero-timeout';
 
+import { ChatMessageService } from 'service/chat-message.service';
 import { PanelService } from 'service/panel.service';
 
-const ua = window.navigator.userAgent.toLowerCase();
-const isiOS = ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document;
+const DEFAULT_MESSAGE_LENGTH = 200;
 
 @Component({
   selector: 'chat-tab',
@@ -33,6 +30,9 @@ const isiOS = ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges, AfterViewChecked {
+  maxMessages: number = 0;
+  preScrollBottom: number = -1;
+
   sampleMessages: ChatMessageContext[] = [
     {
       from: "System",
@@ -106,11 +106,11 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       imageIdentifier: "",
       tag: "",
       name: "教學Zzzzzz",
-      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。\n2020/06/17 更新直到今天的官方修正，版本號沒有改變。\n2020/07/08 更新1.11.0\n2020/07/17 刪除圖片功能, 圖片直接使用LINK功能, 修正LOG輸出不換行的BUG"
+      text: "更新日誌：2020/06/05 \n  加上最小化視窗功能, 方便手機端使用\n2020/06/09 更新package的版本。點擊聊天視窗的角色圖可以更改圖示。更改背景GIF圖為月亮，雲動的太快，好暈。\n2020/06/17 更新直到今天的官方修正，版本號沒有改變。\n2020/07/08 更新1.11.0\n2020/07/17 刪除圖片功能, 圖片直接使用LINK功能, 修正LOG輸出不換行的BUG\n2020/07/23 聽說v1.11的連線不穏定, 嘗試退回。"
     }
     , {
       from: "System",
-      timestamp: 2445551999,
+      timestamp: 9999999999999,
       imageIdentifier: "",
       tag: "",
       name: "連結:",
@@ -118,60 +118,31 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     }
   ];
 
-  private topTimestamp = 0;
-  private botomTimestamp = 0;
-
+  private oldestTimestamp = 0;
   private needUpdate = true;
-
-  @ViewChild('logContainer', { static: true }) logContainerRef: ElementRef<HTMLDivElement>;
-  @ViewChild('messageContainer', { static: true }) messageContainerRef: ElementRef<HTMLDivElement>;
-
-  private topElm: HTMLElement = null;
-  private bottomElm: HTMLElement = null;
-  private topElmBox: ClientRect = null;
-  private bottomElmBox: ClientRect = null;
-
-  private topIndex = 0;
-  private bottomIndex = 0;
-
-  private minMessageHeight: number = 61;
-
-  private preScrollTop = 0;
-  private scrollSpeed = 0;
-
   private _chatMessages: ChatMessage[] = [];
   get chatMessages(): ChatMessage[] {
     if (!this.chatTab) return [];
     if (this.needUpdate) {
+      let chatMessages = this.chatTab.chatMessages;
+      let length = chatMessages.length;
+      this._chatMessages = length <= this.maxMessages
+        ? chatMessages
+        : chatMessages.slice(length - this.maxMessages);
+      this.oldestTimestamp = 0 < this._chatMessages.length ? this._chatMessages[0].timestamp : 0;
       this.needUpdate = false;
-      let chatMessages = this.chatTab ? this.chatTab.chatMessages : [];
-      this.adjustIndex();
-
-      this._chatMessages = chatMessages.slice(this.topIndex, this.bottomIndex + 1);
-      this.topTimestamp = 0 < this._chatMessages.length ? this._chatMessages[0].timestamp : 0;
-      this.botomTimestamp = 0 < this._chatMessages.length ? this._chatMessages[this._chatMessages.length - 1].timestamp : 0;
     }
     return this._chatMessages;
   }
 
-  get minScrollHeight(): number {
-    let length = this.chatTab ? this.chatTab.chatMessages.length : this.sampleMessages.length;
-    return (length < 10000 ? length : 10000) * this.minMessageHeight;
-  }
+  get hasMany(): boolean {
+    if (!this.chatTab) return false;
+    return this.maxMessages < this.chatTab.chatMessages.length;
+  };
 
-  get topSpace(): number { return this.minScrollHeight - this.bottomSpace; }
-  get bottomSpace(): number {
-    return 0 < this.chatMessages.length
-      ? (this.chatTab.chatMessages.length - this.bottomIndex - 1) * this.minMessageHeight
-      : (this.sampleMessages.length - this.bottomIndex - 1);
-  }
+  private callbackOnScroll: any = (e) => this.onScroll(e);
 
-  private scrollEventShortTimer: NodeJS.Timer = null;
-  private scrollEventLongTimer: NodeJS.Timer = null;
-  private addMessageEventTimer: NodeJS.Timer = null;
-
-  private callbackOnScroll: any = () => this.onScroll();
-  private callbackOnScrollToBottom: any = () => this.resetMessages();
+  private asyncMessagesInitializeTimer: NodeJS.Timer;
 
   @Input() chatTab: ChatTab;
   @Output() onAddMessage: EventEmitter<null> = new EventEmitter();
@@ -179,6 +150,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   constructor(
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
+    private chatMessageService: ChatMessageService,
     private panelService: PanelService
   ) { }
 
@@ -203,256 +175,100 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
-        if (!message) return;
-        if (!this.chatTab || !this.chatTab.contains(message)) return;
+        if (!message || message.parent !== this.chatTab) return;
+        let time = this.chatMessageService.getTime();
 
-        if (this.topTimestamp < message.timestamp) {
-          this.changeDetector.markForCheck();
-          this.needUpdate = true;
-          this.onMessageInit();
+        if (!this.needUpdate && this.oldestTimestamp < message.timestamp) this.changeDetector.markForCheck();
+        this.needUpdate = true;
+
+        if (time - (1000 * 60 * 3) < message.timestamp) {
+          let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+          if (this.panelService.scrollablePanel.scrollTop < top - 150) {
+            this.maxMessages += 1;
+          }
+        } else {
+          this.maxMessages = 3;
+          clearInterval(this.asyncMessagesInitializeTimer);
+          this.asyncMessagesInitializeTimer = setInterval(() => {
+            clearInterval(this.asyncMessagesInitializeTimer);
+            this.ngZone.run(() => this.resetMessages());
+          }, 2000);
         }
       })
       .on('UPDATE_GAME_OBJECT', event => {
         let message = ObjectStore.instance.get(event.data.identifier);
-        if (message && message instanceof ChatMessage
-          && this.topTimestamp <= message.timestamp && message.timestamp < this.botomTimestamp
-          && this.chatTab.contains(message)) {
-          this.changeDetector.markForCheck();
-        }
+        if (message && message instanceof ChatMessage && this.oldestTimestamp <= message.timestamp && this.chatTab.contains(message)) this.changeDetector.markForCheck();
       });
   }
 
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
-      this.onScroll();
-      this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false);
-      this.panelService.scrollablePanel.addEventListener('scrolltobottom', this.callbackOnScrollToBottom, false);
+      setTimeout(() => this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false));
     });
   }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
     this.panelService.scrollablePanel.removeEventListener('scroll', this.callbackOnScroll, false);
-    this.panelService.scrollablePanel.removeEventListener('scrolltobottom', this.callbackOnScrollToBottom, false);
   }
 
   ngOnChanges() {
-    Promise.resolve().then(() => this.resetMessages());
+    this.resetMessages();
   }
 
   ngAfterViewChecked() {
-    if (!this.topElm || !this.bottomElm) return;
-    this.ngZone.runOutsideAngular(() => {
-      Promise.resolve().then(() => this.adjustScrollPosition());
-    });
+    if (0 <= this.preScrollBottom) {
+      this.panelService.scrollablePanel.scrollTop = this.panelService.scrollablePanel.scrollHeight - this.preScrollBottom;
+      this.preScrollBottom = -1;
+    }
+  }
+
+  moreMessages(length: number = 100) {
+    if (!this.hasMany) return;
+
+    this.maxMessages += length;
+    let maxLength = this.chatTab.chatMessages.length;
+    if (this.chatTab && maxLength < this.maxMessages) this.maxMessages = maxLength;
+    this.changeDetector.markForCheck();
+    this.needUpdate = true;
+
+    this.preScrollBottom = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.scrollTop;
   }
 
   onMessageInit() {
-    if (this.addMessageEventTimer != null) return;
-    this.ngZone.runOutsideAngular(() => {
-      this.addMessageEventTimer = setTimeout(() => {
-        this.ngZone.run(() => {
-          clearTimeout(this.addMessageEventTimer);
-          this.addMessageEventTimer = null;
-          this.onAddMessage.emit()
-        });
-      }, 66);
-    });
+    this.onAddMessage.emit();
   }
 
   resetMessages() {
-    let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
-    this.topIndex = lastIndex - Math.floor(this.panelService.scrollablePanel.clientHeight / this.minMessageHeight);
-    this.bottomIndex = lastIndex;
     this.needUpdate = true;
-    this.preScrollTop = -1;
-    this.scrollSpeed = 0;
-    this.topElm = this.bottomElm = null;
-    this.adjustIndex();
-    this.changeDetector.markForCheck();
+    this.maxMessages = 10;
+
+    clearInterval(this.asyncMessagesInitializeTimer);
+    let length = DEFAULT_MESSAGE_LENGTH;
+    this.asyncMessagesInitializeTimer = setInterval(() => {
+      if (this.hasMany && 0 < length) {
+        length -= 10;
+        this.moreMessages(10);
+      } else {
+        clearInterval(this.asyncMessagesInitializeTimer);
+      }
+    }, 0);
   }
 
   trackByChatMessage(index: number, message: ChatMessage) {
     return message.identifier;
   }
 
-  private adjustIndex() {
-    let chatMessages = this.chatTab ? this.chatTab.chatMessages : [];
-    let lastIndex = 0 < chatMessages.length ? chatMessages.length - 1 : 0;
-
-    if (this.topIndex < 0) {
-      this.topIndex = 0;
-    }
-    if (lastIndex < this.bottomIndex) {
-      this.bottomIndex = lastIndex;
-    }
-
-    if (this.topIndex < 0) this.topIndex = 0;
-    if (this.bottomIndex < 0) this.bottomIndex = 0;
-    if (lastIndex < this.topIndex) this.topIndex = lastIndex;
-    if (lastIndex < this.bottomIndex) this.bottomIndex = lastIndex;
-  }
-
-  private getScrollPosition(): { top: number, bottom: number, clientHeight: number, scrollHeight: number } {
-    let top = this.panelService.scrollablePanel.scrollTop;
-    let clientHeight = this.panelService.scrollablePanel.clientHeight;
-    let scrollHeight = this.panelService.scrollablePanel.scrollHeight;
-    if (top < 0) top = 0;
-    if (scrollHeight - clientHeight < top)
-      top = scrollHeight - clientHeight;
-    let bottom = top + clientHeight;
-    return { top, bottom, clientHeight, scrollHeight };
-  }
-
-  private adjustScrollPosition() {
-    if (!this.topElm || !this.bottomElm) return;
-
-    let hasTopElm = this.logContainerRef.nativeElement.contains(this.topElm);
-    let hasBotomElm = this.logContainerRef.nativeElement.contains(this.bottomElm);
-
-    let hasTopBlank = !hasTopElm;
-    let hasBotomBlank = !hasBotomElm;
-
-    if (hasTopElm || hasBotomElm) {
-      let elm: HTMLElement = null;
-      let prevBox: ClientRect = null;
-      let currentBox: ClientRect = null;
-      let diff: number = 0;
-      if (hasBotomElm) {
-        elm = this.bottomElm;
-        prevBox = this.bottomElmBox;
-      } else if (hasTopElm) {
-        elm = this.topElm;
-        prevBox = this.topElmBox;
-      }
-      currentBox = elm.getBoundingClientRect();
-      diff = Math.floor(prevBox.top - currentBox.top - this.scrollSpeed);
-      if ((!hasTopBlank || !hasBotomBlank) && 3 ** 2 < diff ** 2) {
-        this.panelService.scrollablePanel.scrollTop -= diff;
-      }
-
-      let logBox: ClientRect = this.logContainerRef.nativeElement.getBoundingClientRect();
-      let messageBox: ClientRect = this.messageContainerRef.nativeElement.getBoundingClientRect();
-
-      let messageBoxTop = messageBox.top - logBox.top;
-      let messageBoxBottom = messageBoxTop + messageBox.height;
-
-      let scrollPosition = this.getScrollPosition();
-
-      hasTopBlank = scrollPosition.top < messageBoxTop;
-      hasBotomBlank = messageBoxBottom < scrollPosition.bottom && scrollPosition.bottom < scrollPosition.scrollHeight;
-    }
-
-    this.topElm = this.bottomElm = null;
-
-    if (hasTopBlank || hasBotomBlank || (!hasTopElm && !hasBotomElm)) {
-      setZeroTimeout(() => this.lazyScrollUpdate());
-    }
-  }
-
-  private markForReadIfNeeded() {
-    if (!this.chatTab||!this.chatTab.hasUnread) return;
-
-    let scrollPosition = this.getScrollPosition();
-    if (scrollPosition.scrollHeight <= scrollPosition.bottom + 100) {
-      setZeroTimeout(() => {
-        this.chatTab.markForRead();
-        this.changeDetector.markForCheck();
-        this.ngZone.run(() => { });
-      });
-    }
-  }
-
-  private onScroll() {
-    clearTimeout(this.scrollEventShortTimer);
-    this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
-    if (this.scrollEventLongTimer == null) {
-      this.scrollEventLongTimer = setTimeout(() => this.lazyScrollUpdate(false), 66);
-    }
-  }
-
-  private lazyScrollUpdate(isNormalUpdate: boolean = true) {
-    clearTimeout(this.scrollEventShortTimer);
-    this.scrollEventShortTimer = null;
-    clearTimeout(this.scrollEventLongTimer);
-    this.scrollEventLongTimer = null;
-
-    let chatMessageElements = this.messageContainerRef.nativeElement.querySelectorAll<HTMLElement>('chat-message');
-    let maxHeight = this.minMessageHeight;
-
-    for (let i = chatMessageElements.length - 1; 0 <= i; i--) {
-      let height = chatMessageElements[i].clientHeight;
-      if (maxHeight < height) maxHeight = height;
-    }
-
-    let messageBoxTop = this.messageContainerRef.nativeElement.offsetTop;
-    let messageBoxBottom = messageBoxTop + this.messageContainerRef.nativeElement.clientHeight;
-
-    let preTopIndex = this.topIndex;
-    let preBottomIndex = this.bottomIndex;
-
-    let scrollPosition = this.getScrollPosition();
-    this.scrollSpeed = scrollPosition.top - this.preScrollTop;
-    this.preScrollTop = scrollPosition.top;
-
-    let hasTopBlank = scrollPosition.top < messageBoxTop;
-    let hasBotomBlank = messageBoxBottom < scrollPosition.bottom && scrollPosition.bottom < scrollPosition.scrollHeight;
-
-    if (!isNormalUpdate) {
-      clearTimeout(this.scrollEventShortTimer);
-      this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
-    }
-
-    if (!isNormalUpdate && !hasTopBlank && !hasBotomBlank) {
-      return;
-    }
-
-    let scrollWideTop = scrollPosition.top - (!isNormalUpdate && hasTopBlank ? 100 : 1200);
-    let scrollWideBottom = scrollPosition.bottom + (!isNormalUpdate && hasBotomBlank ? 100 : 1200);
-
-    this.markForReadIfNeeded();
-
-    if (scrollWideTop >= messageBoxBottom || messageBoxTop >= scrollWideBottom) {
-      let lastIndex = this.chatTab ? this.chatTab.chatMessages.length - 1 : this.sampleMessages.length - 1;
-      let scrollBottomHeight = scrollPosition.scrollHeight - scrollPosition.top - scrollPosition.clientHeight;
-
-      this.bottomIndex = lastIndex - Math.floor(scrollBottomHeight / this.minMessageHeight);
-      this.topIndex = this.bottomIndex - Math.floor(scrollPosition.clientHeight / this.minMessageHeight);
-
-      this.bottomIndex += 1;
-      this.topIndex -= 1;
-    } else {
-      if (scrollWideTop < messageBoxTop) {
-        this.topIndex -= Math.floor((messageBoxTop - scrollWideTop) / maxHeight) + 1;
-      } else if (scrollWideTop > messageBoxTop) {
-        if (!isiOS) this.topIndex += Math.floor((scrollWideTop - messageBoxTop) / maxHeight);
-      }
-
-      if (messageBoxBottom > scrollWideBottom) {
-        if (!isiOS) this.bottomIndex -= Math.floor((messageBoxBottom - scrollWideBottom) / maxHeight);
-      } else if (messageBoxBottom < scrollWideBottom) {
-        this.bottomIndex += Math.floor((scrollWideBottom - messageBoxBottom) / maxHeight) + 1;
-      }
-    }
-
-    this.adjustIndex();
-    let isChangedIndex = this.topIndex != preTopIndex || this.bottomIndex != preBottomIndex;
-
-    if (!isChangedIndex) return;
-
-    this.needUpdate = true;
-
-    this.topElm = chatMessageElements[0];
-    this.bottomElm = chatMessageElements[chatMessageElements.length - 1];
-    this.topElmBox = this.topElm.getBoundingClientRect();
-    this.bottomElmBox = this.bottomElm.getBoundingClientRect();
-
-    setZeroTimeout(() => {
-      let scrollPosition = this.getScrollPosition();
-      this.scrollSpeed = scrollPosition.top - this.preScrollTop;
-      this.preScrollTop = scrollPosition.top;
-      this.changeDetector.markForCheck();
+  private onScroll(e: Event) {
+    if (this.hasMany && this.panelService.scrollablePanel.scrollTop <= 200) {
+      this.moreMessages(8);
       this.ngZone.run(() => { });
-    });
+    } else if (this.chatTab.hasUnread) {
+      let top = this.panelService.scrollablePanel.scrollHeight - this.panelService.scrollablePanel.clientHeight;
+      if (top - 100 <= this.panelService.scrollablePanel.scrollTop) {
+        this.chatTab.markForRead();
+        this.ngZone.run(() => { });
+      }
+    }
   }
 }

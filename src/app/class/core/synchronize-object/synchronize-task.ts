@@ -1,7 +1,4 @@
-import { EventSystem } from '../system';
-
-type PeerId = string;
-type ObjectIdentifier = string;
+import { EventSystem, Network } from '../system';
 
 export interface SynchronizeRequest {
   identifier: string;
@@ -12,23 +9,20 @@ export interface SynchronizeRequest {
 
 export class SynchronizeTask {
   private static key: any = {};
-  private static tasksMap: Map<ObjectIdentifier, SynchronizeTask[]> = new Map();
+  private static tasksMap: Map<string, SynchronizeTask[]> = new Map();
 
   onsynchronize: (task: SynchronizeTask, identifier: string) => void;
   onfinish: (task: SynchronizeTask) => void;
   ontimeout: (task: SynchronizeTask, remainedRequests: SynchronizeRequest[]) => void;
 
-  private requestMap: Map<ObjectIdentifier, SynchronizeRequest> = new Map();
+  private requestMap: Map<string, SynchronizeRequest> = new Map();
   private timeoutTimer: NodeJS.Timer;
 
-  private constructor(readonly peerId: PeerId) { }
+  private constructor() { }
 
-  static create(peerId: PeerId, requests: SynchronizeRequest[]): SynchronizeTask {
+  static create(requests: SynchronizeRequest[]): SynchronizeTask {
     if (SynchronizeTask.tasksMap.size < 1) {
       EventSystem.register(SynchronizeTask.key)
-        .on('DISCONNECT_PEER', event => {
-          SynchronizeTask.onDisconnect(event.data.peer);
-        })
         .on('UPDATE_GAME_OBJECT', event => {
           if (event.isSendFromSelf) return;
           SynchronizeTask.onUpdate(event.data.identifier);
@@ -38,20 +32,14 @@ export class SynchronizeTask {
           SynchronizeTask.onUpdate(event.data.identifier);
         });
     }
-    let task = new SynchronizeTask(peerId);
+    let task = new SynchronizeTask();
     task.initialize(requests);
     return task;
   }
 
   private cancel() {
     clearTimeout(this.timeoutTimer);
-    this.onsynchronize = this.onfinish = this.ontimeout = null;
-
-    for (let request of this.requestMap.values()) {
-      this.deleteTasksMap(request.identifier);
-    };
-
-    this.requestMap.clear();
+    this.onfinish = this.ontimeout = null;
   }
 
   private initialize(requests: SynchronizeRequest[]) {
@@ -62,65 +50,58 @@ export class SynchronizeTask {
       if (tasks == null) tasks = [];
       tasks.push(this);
       SynchronizeTask.tasksMap.set(request.identifier, tasks);
-      let sendTo = this.peerId != null && request.holderIds.includes(this.peerId) ? this.peerId : null;
-      EventSystem.call('REQUEST_GAME_OBJECT', request.identifier, sendTo);
+      EventSystem.call('REQUEST_GAME_OBJECT', request.identifier, this.randomChoice(request.holderIds));
     }
 
     if (this.requestMap.size < 1) {
-      setTimeout(() => this.finish());
+      setTimeout(() => {
+        if (this.onfinish) this.onfinish(this);
+        this.cancel();
+      });
       return;
     }
 
     this.resetTimeout();
   }
 
-  private finish() {
-    if (this.onfinish) this.onfinish(this);
-    this.cancel();
-  }
-
-  private timeout() {
-    if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()).filter(request => 0 <= request.ttl));
-    this.finish();
-  }
-
-  private static onDisconnect(peerId: PeerId) {
-    for (let tasks of SynchronizeTask.tasksMap.values()) {
-      for (let task of tasks.concat()) {
-        if (task.peerId === peerId) task.timeout();
-      }
-    }
-    if (SynchronizeTask.tasksMap.size < 1) EventSystem.unregister(SynchronizeTask.key);
-  }
-
-  private static onUpdate(identifier: ObjectIdentifier) {
+  private static onUpdate(identifier: string) {
     if (!SynchronizeTask.tasksMap.has(identifier)) return;
     let tasks = SynchronizeTask.tasksMap.get(identifier);
     for (let task of tasks.concat()) {
       task.onUpdate(identifier);
+      if (task.requestMap.size < 1) tasks.splice(tasks.indexOf(task), 1);
     }
+    if (tasks.length < 1) SynchronizeTask.tasksMap.delete(identifier);
     if (SynchronizeTask.tasksMap.size < 1) EventSystem.unregister(SynchronizeTask.key);
   }
 
-  private onUpdate(identifier: ObjectIdentifier) {
+  private onUpdate(identifier: string) {
     this.requestMap.delete(identifier);
     if (this.onsynchronize) this.onsynchronize(this, identifier);
     if (this.requestMap.size < 1) {
-      this.finish();
+      if (this.onfinish) this.onfinish(this);
+      this.cancel();
     } else {
       this.resetTimeout();
     }
   }
 
-  private deleteTasksMap(identifier: ObjectIdentifier) {
-    let tasks = SynchronizeTask.tasksMap.get(identifier);
-    let index = tasks.indexOf(this);
-    if (-1 < index) tasks.splice(index, 1);
-    if (tasks.length < 1) SynchronizeTask.tasksMap.delete(identifier);
+  private randomChoice(peers: string[]): string {
+    let peerContexts = Network.peerContexts.filter(peerContext => peerContext.isOpen && -1 < peers.indexOf(peerContext.fullstring));
+    if (peerContexts.length < 1) return null;
+    let min = 0;
+    let max = peerContexts.length;
+    let index = Math.floor(Math.random() * (max - min)) + min;
+    let peerId = peerContexts[index].fullstring;
+    return peerId;
   }
 
   private resetTimeout() {
     clearTimeout(this.timeoutTimer);
-    this.timeoutTimer = setTimeout(() => this.timeout(), 30 * 1000);
+    this.timeoutTimer = setTimeout(() => {
+      if (this.ontimeout) this.ontimeout(this, Array.from(this.requestMap.values()).filter(request => 0 <= request.ttl));
+      if (this.onfinish) this.onfinish(this);
+      this.cancel();
+    }, 30 * 1000);
   }
 }
