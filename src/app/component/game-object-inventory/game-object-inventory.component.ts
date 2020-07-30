@@ -70,7 +70,7 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   ) { }
 
   ngOnInit() {
-    this.panelService.title = '倉庫';
+    Promise.resolve().then(() => this.panelService.title = '倉庫');
     EventSystem.register(this)
       .on('SELECT_TABLETOP_OBJECT', -1000, event => {
         let object = ObjectStore.instance.get(event.data.identifier);

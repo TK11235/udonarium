@@ -23,11 +23,12 @@
           </label>
           <br />
           <button (click)="save_log()">輸出聊天紀錄(.html)</button>
-
+          <button (click)="upTabIndex()">↑</button>
+          <button (click)="downTabIndex()">↓</button>
           <button (click)="save()">保存</button>
-
+          <!--
           <button (click)="moveLast()">移動到最後</button>
-
+          -->
 
           <button class="danger" (click)="delete()" [attr.disabled]="chatTabs.length <= 1 ? '' : null">刪除</button>
           <br>

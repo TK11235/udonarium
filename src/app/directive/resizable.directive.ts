@@ -86,7 +86,6 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
     this.startPointer = handle.input.pointer;
     this.prevTrans = { left: 0, top: 0, width: 0, height: 0 };
 
-    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 
@@ -161,10 +160,12 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
     this.elementRef.nativeElement.style.height = trans.height + this.startPosition.height + 'px';
 
     this.prevTrans = trans;
+    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 
   private onResizeEnd(e: MouseEvent | TouchEvent, handle: ResizeHandler) {
+    if (handle.input.isDragging && e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
 

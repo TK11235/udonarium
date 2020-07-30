@@ -85,15 +85,21 @@ export class FileArchiver {
 
   private async handleImage(file: File) {
     if (file.type.indexOf('image/') < 0) return;
+    if (2 * 1024 * 1024 < file.size) {
+      console.warn(`File size limit exceeded. -> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+      return;
+    }
     console.log(file.name + ' type:' + file.type);
-    if (2 * 1024 * 1024 < file.size) return;
     await ImageStorage.instance.addAsync(file);
   }
 
   private async handleAudio(file: File) {
     if (file.type.indexOf('audio/') < 0) return;
+    if (10 * 1024 * 1024 < file.size) {
+      console.warn(`File size limit exceeded. -> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+      return;
+    }
     console.log(file.name + ' type:' + file.type);
-    if (10 * 1024 * 1024 < file.size) return;
     await AudioStorage.instance.addAsync(file);
   }
 
@@ -122,7 +128,7 @@ export class FileArchiver {
     for (let zipEntry of zipEntries) {
       try {
         let arraybuffer = await zipEntry.async('arraybuffer');
-        console.log(zipEntry.name + ' 解凍...', arraybuffer);
+        console.log(zipEntry.name + ' 解凍...');
         await this.load([new File([arraybuffer], zipEntry.name, { type: MimeType.type(zipEntry.name) })]);
       } catch (reason) {
         console.warn(reason);
