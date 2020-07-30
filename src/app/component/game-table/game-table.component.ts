@@ -492,7 +492,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let calcGridPosition: { (w: number, h: number): void };
 
 
-
+    //REF: https://greentec.github.io/hexagonal-map-en/#introduction
     function HexCell(x, y, z) {
       this._x = x;
       this._y = y;
@@ -504,7 +504,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       mapSizeHeight = Math.max(1, Math.floor(mapSizeHeight / 2));
       let mapSizeZ = 10;
       mapSizeZ = Math.max(1, Math.max(mapSizeHeight, mapSizeWidth));
-      console.log('mapSizeWidth, mapSizeHeight', mapSizeWidth, mapSizeHeight, mapSizeZ)
       let gridArray = [];
       let cnt = 0;
 
@@ -529,7 +528,6 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
       canvasElement.width = width * gridSize;
       canvasElement.height = height * gridSize;
-      context = canvasElement.getContext('2d');
       context.strokeStyle = gridColor;
       context.fillStyle = "rgba(255, 255, 255, 0.0)";
       context.lineWidth = 3;
@@ -554,7 +552,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
 
-
+    //REF END
 
 
 
