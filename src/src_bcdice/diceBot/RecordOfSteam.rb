@@ -22,7 +22,7 @@ MESSAGETEXT
 
   setPrefixes(['\d+S\d+.*'])
 
-  # サンプルの骰子コマンドは「nSt@c」で n=骰子個数, t=目標値, c=クリティカル値。@cのみ省略可
+  # サンプルのダイスコマンドは「nSt@c」で n=ダイス個数, t=目標値, c=クリティカル値。@cのみ省略可
 
   def rollDiceCommand(command)
     unless /(\d+)[sS](\d+)(@(\d+))?/i =~ command

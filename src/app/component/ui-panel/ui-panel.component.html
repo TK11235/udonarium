@@ -2,13 +2,9 @@
   [style.left.px]="left" [style.top.px]="top" [style.width.px]="width" [style.height.px]="height"
   [draggable.stack]="'.draggable-panel'" appDraggable appResizable #draggablePanel>
   <div class="title">
-    <div class="title-button" *ngIf="title!=='功能表'">
-      <button (click)="toggleminimize()"><i class="material-icons" style="font-size: 14px;">minimize</i></button>
+    <div class="title-button">
       <button (click)="toggleFullScreen()"><i class="material-icons" style="font-size: 14px;">fullscreen</i></button>
       <button (click)="close()"><i class="material-icons" style="font-size: 14px;">close</i></button>
-    </div>
-    <div class="title-button" *ngIf="title=='功能表'">
-      <button (click)="toggleminimize()"><i class="material-icons" style="font-size: 14px;">minimize</i></button>
     </div>
     {{panelService.title}}
   </div>

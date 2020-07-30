@@ -1,9 +1,3 @@
-.is-disabled {
-  display: none;
-  color:#555555;
-  background-color: #000000;
-}
-
 .component {
   width: 100%;
 }
@@ -23,12 +17,7 @@
   border: 2px dotted #666;
   border-left: 6px solid #444;
 }
-hr.style-one {
-  border: 0;
-  height: 1px;
-  background: #333;
-  background-image: linear-gradient(to right, #ccc, #333, #ccc);
-}
+
 .hidden-spacer {
   visibility: hidden;
   height: 0;
@@ -251,14 +240,6 @@ input[type='range']::-ms-tooltip {
   cursor: pointer;
 }
 
-button[type='submit']{
-  font-size: 5px;
-}
-.PosZ{
-  border-radius: 5px; 
-  font-size: 5px;
-  width:40px;
-}
 .tab-setting:hover {
   background-color: #888;
   color: #eee;

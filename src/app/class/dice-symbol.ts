@@ -41,7 +41,7 @@ export class DiceSymbol extends TabletopObject {
     return object ? object.name : '';
   }
   get hasOwner(): boolean { return PeerCursor.find(this.owner) != null; }
-  get isMine(): boolean { return PeerCursor.myCursor.name === this.owner; }
+  get isMine(): boolean { return Network.peerId === this.owner; }
   get isVisible(): boolean { return !this.hasOwner || this.isMine; }
 
   diceRoll(): string {

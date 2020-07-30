@@ -70,10 +70,10 @@ class DiceBot
     @sortType = 0 # ソート設定(1 = 足し算ダイスでソート有, 2 = バラバラロール（Bコマンド）でソート有, 3 = １と２両方ソート有）
     @sameDiceRerollCount = 0 # ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=ダイスのうち2個以上同じ目)
     @sameDiceRerollType = 0 # ゾロ目で振り足しのロール種別(0=判定のみ, 1=ダメージのみ, 2=両方)
-    @d66Type = 1 # d66の差し替え(0=D66無し, 1=順番そのまま([5,3]->53), 2=升序入れ替え([5,3]->35)
+    @d66Type = 1 # d66の差し替え(0=D66無し, 1=順番そのまま([5,3]->53), 2=昇順入れ替え([5,3]->35)
     @isPrintMaxDice = false # 最大値表示
     @upplerRollThreshold = 0      # 上方無限
-    @unlimitedRollDiceType = 0    # 無限ロールの骰子
+    @unlimitedRollDiceType = 0    # 無限ロールのダイス
     @rerollNumber = 0 # 振り足しする条件
     @defaultSuccessTarget = "" # 目標値が空欄の時の目標値
     @rerollLimitCount = 10000 # 振り足し回数上限
@@ -93,7 +93,7 @@ class DiceBot
   attr_reader :isPrintMaxDice, :upplerRollThreshold
   attr_reader :defaultSuccessTarget, :rerollNumber, :fractionType
 
-  # 骰子ボット設定後に行う処理
+  # ダイスボット設定後に行う処理
   # @return [void]
   #
   # 既定では何もしない。
@@ -251,7 +251,7 @@ class DiceBot
     return output_msg, secret_flg
   end
 
-  # 通常骰子ボットのコマンド文字列は全て大文字に強制されるが、
+  # 通常ダイスボットのコマンド文字列は全て大文字に強制されるが、
   # これを嫌う場合にはこのメソッドを true を返すようにオーバーライドすること。
   def isGetOriginalMessage
     false
@@ -424,12 +424,12 @@ class DiceBot
     return text, indexText
   end
 
-  # 骰子ロールによるポイント等の取得処理用（T&T悪意、ナイトメアハンター・ディープ宿命、特命転校生エクストラパワーポイントなど）
+  # ダイスロールによるポイント等の取得処理用（T&T悪意、ナイトメアハンター・ディープ宿命、特命転校生エクストラパワーポイントなど）
   def getDiceRolledAdditionalText(_n1, _n_max, _dice_max)
     ''
   end
 
-  # 骰子目による補正処理（現状ナイトメアハンターディープ専用）
+  # ダイス目による補正処理（現状ナイトメアハンターディープ専用）
   def getDiceRevision(_n_max, _dice_max, _total_n)
     return '', 0
   end

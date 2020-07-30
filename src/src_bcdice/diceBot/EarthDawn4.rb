@@ -20,7 +20,7 @@ class EarthDawn4 < EarthDawn
 カルマダイス使用時は末尾にKを追加（省略可能）
 例）ステップ10：10E
 　　ステップ10、目標値8：10E8
-　　ステップ10、目標値8、カルマ骰子：10E8K
+　　ステップ10、目標値8、カルマダイス：10E8K
 INFO_MESSAGE_TEXT
 
   setPrefixes(['\d+e.*'])
@@ -107,7 +107,7 @@ INFO_MESSAGE_TEXT
     targetNumber = Regexp.last_match(2).to_i # 目標値
     return nil if targetNumber < 0
 
-    hasKarmaDice = !Regexp.last_match(3).nil? # カルマ骰子の有無
+    hasKarmaDice = !Regexp.last_match(3).nil? # カルマダイスの有無
     diceModify = Regexp.last_match(4).to_i
     nextText = Regexp.last_match(6)
 

@@ -21,7 +21,7 @@ INFO_MESSAGE_TEXT
   def postSet
     if bcdice
       bcdice.cardTrader.set2Decks2Jokers
-      # 手札の他の卡牌置き場
+      # 手札の他のカード置き場
       bcdice.cardTrader.card_place = 0
       # 場札のタップ処理の必要があるか？
       bcdice.cardTrader.canTapCard = false

@@ -7,7 +7,7 @@ class RerollDice
     @nick_e = @bcdice.nick_e
   end
 
-  ####################        個数振り足し骰子     ########################
+  ####################        個数振り足しダイス     ########################
   def rollDice(string)
     output = ''
 

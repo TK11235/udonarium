@@ -20,7 +20,7 @@ class EarthDawn3 < EarthDawn
 振り足しも自動。
 例）ステップ10：10E
 　　ステップ10、目標値8：10E8
-　　ステップ12、目標値8、カルマ骰子D12：10E8+1D6
+　　ステップ12、目標値8、カルマダイスD12：10E8+1D6
 INFO_MESSAGE_TEXT
 
   setPrefixes(['\d+e.*'])
@@ -50,9 +50,9 @@ INFO_MESSAGE_TEXT
 
     step = Regexp.last_match(1).to_i # ステップ
     targetNumber = [Regexp.last_match(2).to_i, 20].min # 目標値
-    hasKarmaDice = !Regexp.last_match(3).nil? # カルマ骰子の有無
-    karmaDiceCount = [1, Regexp.last_match(4).to_i].max # カルマ骰子の個数
-    karmaDiceType = Regexp.last_match(5).to_i # カルマ骰子の種類
+    hasKarmaDice = !Regexp.last_match(3).nil? # カルマダイスの有無
+    karmaDiceCount = [1, Regexp.last_match(4).to_i].max # カルマダイスの個数
+    karmaDiceType = Regexp.last_match(5).to_i # カルマダイスの種類
     diceModify = Regexp.last_match(6).to_i
 
     karmaDiceInfo = Hash.new(0)

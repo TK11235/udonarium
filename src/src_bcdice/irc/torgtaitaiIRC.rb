@@ -13,7 +13,7 @@ class TorgtaitaiIRC
   end
 
   def privmsg(to, message)
-    # シークレット骰子の場合はここでマーカーを出力し、どどんとふにその旨を通達。
+    # シークレットダイスの場合はここでマーカーを出力し、どどんとふにその旨を通達。
     # マーカーは1回だけ出力すれば十分なので2回目以降は抑止
     unless  @isSecretMarkerPrinted
       print("##>isSecretDice<##") unless @isTest

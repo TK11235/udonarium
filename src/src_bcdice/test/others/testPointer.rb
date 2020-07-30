@@ -101,7 +101,7 @@ class TestPointer < Test::Unit::TestCase
     assert_equal("test_nick: (TESTX) 0/1 -> 1/1", getResultCutHeaderSendMessageToTestChannel)
 
     # タグ全体を開くOPEN!コマンドは受け付けるけど
-    # 発言者が管理している角色のタグを表示するOPEN!コマンドは受け付けない？
+    # 発言者が管理しているキャラクターのタグを表示するOPEN!コマンドは受け付けない？
     execute("#OPEN!")
     assert_equal("TEST_NICK(1/1) テスト(1/1)", getResultCutHeaderSendMessageToTestChannel)
 

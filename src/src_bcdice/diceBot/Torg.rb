@@ -190,7 +190,7 @@ INFO_MESSAGE_TEXT
       [5, "萎縮"],
       [10, "逆転負け"],
       [15, "モラル崩壊"],
-      [17, "玩家ズコール" ]
+      [17, "プレイヤーズコール" ]
     ]
 
     return get_torg_table_result(value, interaction_results_table)
@@ -203,7 +203,7 @@ INFO_MESSAGE_TEXT
       [5, "萎縮"],
       [10, "逆転負け"],
       [15, "高揚／逆転負け"],
-      [17, "玩家ズコール" ]
+      [17, "プレイヤーズコール" ]
     ]
 
     return get_torg_table_result(value, interaction_results_table)
@@ -216,7 +216,7 @@ INFO_MESSAGE_TEXT
       [5, "疲労"],
       [10, "萎縮／疲労"],
       [15, "逆転負け／疲労"],
-      [17, "玩家ズコール" ]
+      [17, "プレイヤーズコール" ]
     ]
 
     return get_torg_table_result(value, interaction_results_table)

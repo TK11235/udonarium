@@ -60,9 +60,9 @@ class BCDiceDialog < Wx::Dialog
     @nickName = createAddedTextInput($nick, "ニックネーム")
     initGameType
     initCharacterCode
-    @extraCardFileText = createAddedTextInput($extraCardFileName, "拡張卡牌ファイル名")
+    @extraCardFileText = createAddedTextInput($extraCardFileName, "拡張カードファイル名")
 
-    @executeButton = createButton('連線')
+    @executeButton = createButton('接続')
     evt_button(@executeButton.get_id) { |_event| on_execute }
 
     @stopButton = createButton('切断')

@@ -24,9 +24,6 @@ export class JukeboxComponent implements OnInit, OnDestroy {
   get auditionVolume(): number { return AudioPlayer.auditionVolume; }
   set auditionVolume(auditionVolume: number) { AudioPlayer.auditionVolume = auditionVolume; }
 
-  get sfxVolume(): number { return AudioPlayer.sfxVolume; }
-  set sfxVolume(sfxVolume: number) { AudioPlayer.sfxVolume = sfxVolume; }
-
   get audios(): AudioFile[] { return AudioStorage.instance.audios.filter(audio => !audio.isHidden); }
   get jukebox(): Jukebox { return ObjectStore.instance.get<Jukebox>('Jukebox'); }
 
@@ -40,7 +37,7 @@ export class JukeboxComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    Promise.resolve().then(() => this.modalService.title = this.panelService.title = '音樂播放器');
+    Promise.resolve().then(() => this.modalService.title = this.panelService.title = 'ジュークボックス');
     this.auditionPlayer.volumeType = VolumeType.AUDITION;
     EventSystem.register(this)
       .on('*', event => {

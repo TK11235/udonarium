@@ -15,7 +15,7 @@ class Alter_raise < DiceBot
   HELP_MESSAGE = <<MESSAGETEXT
 ◆解放判定：EMA[x]
 
-[x]で達成値を指定してください。省略時は骰子ロールします。
+[x]で達成値を指定してください。省略時はダイスロールします。
 
 
 【各種表】
@@ -24,13 +24,13 @@ class Alter_raise < DiceBot
 ◆心の傷・経験表：TRA[ab]　　　　◆シーン演出表：SCE[n]
 ◆スタンス表：STA[n]　　　　　　 ◆感情表：EMO[ab]
 
-[]内のコマンドを省略で骰子ロール、指定でROC結果を表示します。
+[]内のコマンドを省略でダイスロール、指定でROC結果を表示します。
 [n]は「1D6」、[ab]は「D66」の出目を指定してください。
 
 【書式例】
 PER3：性格傾向表の「3」をROC
 LOC52：場所表の「52」をROC
-QUI：平穏・経験表を骰子ロール
+QUI：平穏・経験表をダイスロール
 MESSAGETEXT
 
   setPrefixes([

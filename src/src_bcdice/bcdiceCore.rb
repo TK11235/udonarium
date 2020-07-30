@@ -22,7 +22,7 @@ require 'utils/ArithmeticEvaluator.rb'
 # -n Nick設定        「-n(Nick)」                    (ex. -nDicebot)
 # -g ゲーム設定      「-g(ゲーム指定文字列)」        (ex. -gCthulhu)
 # -m メッセージ設定  「-m(Notice_flgの番号)」        (ex. -m0)
-# -e エクストラ卡牌「-e(卡牌セットのファイル名)」(ex. -eTORG_SET.txt)
+# -e エクストラカード「-e(カードセットのファイル名)」(ex. -eTORG_SET.txt)
 # -i IRC文字コード   「-i(文字コード名称)」          (ex. -iISO-2022-JP)
 #
 # ex. ruby bcdice.rb -sirc.trpg.net:6667 -c#CoCtest -gCthulhu
@@ -271,7 +271,7 @@ class BCDice
       setSortMode()
 
     when 'cardplace', 'cp'
-      # 卡牌モード設定
+      # カードモード設定
       setCardMode()
 
     when 'shortspell', 'ss'
@@ -283,7 +283,7 @@ class BCDice
       setTapMode()
 
     when 'cardset', 'cs'
-      # 卡牌読み込み
+      # カード読み込み
       readCardSet()
     end
   end
@@ -508,11 +508,11 @@ class BCDice
     send_to_sender = lambda { |message| sendMessageToOnlySender message }
 
     [
-      "・加算ロール　　　　　　　　(xDn) (n面体骰子をx個)",
+      "・加算ロール　　　　　　　　(xDn) (n面体ダイスをx個)",
       "・バラバラロール　　　　　　(xBn)",
       "・個数振り足しロール　　　　(xRn[振り足し値])",
       "・上方無限ロール　　　　　　(xUn[境界値])",
-      "・シークレットロール　　　　(S骰子コマンド)",
+      "・シークレットロール　　　　(Sダイスコマンド)",
       "・シークレットをオープンする(#{$OPEN_DICE})",
       "・四則計算(端数切捨て)　　　(C(式))"
     ].each(&send_to_sender)
@@ -555,7 +555,7 @@ class BCDice
 
     sleepForIrc 2
 
-    sendMessageToOnlySender "・卡牌機能ヘルプ　　　　　　(c-help)"
+    sendMessageToOnlySender "・カード機能ヘルプ　　　　　　(c-help)"
 
     sendMessageToOnlySender "  -- END ---"
   end
@@ -596,7 +596,7 @@ class BCDice
     # ポイントカウンター関係
     executePointCounterPublic
 
-    # 骰子ロールの処理
+    # ダイスロールの処理
     executeDiceRoll
 
     # 四則計算代行
@@ -610,7 +610,7 @@ class BCDice
     # ここから大文字・小文字を考慮するようにメッセージを変更
     changeMessageOriginal
 
-    # 卡牌処理
+    # カード処理
     executeCard
 
     debug("\non_public end")
@@ -732,7 +732,7 @@ class BCDice
   #=========================================================================
   # **                           コマンド分岐
   #=========================================================================
-  def dice_command # 骰子コマンドの分岐処理
+  def dice_command # ダイスコマンドの分岐処理
     arg = @message.upcase
 
     debug('dice_command arg', arg)
@@ -896,7 +896,7 @@ class BCDice
   #=========================================================================
   # **                           ランダマイザ
   #=========================================================================
-  # 骰子ロール
+  # ダイスロール
   def roll(dice_cnt, dice_max, dice_sort = 0, dice_add = 0, dice_ul = '', dice_diff = 0, dice_re = nil)
     dice_cnt = dice_cnt.to_i
     dice_max = dice_max.to_i
@@ -1091,7 +1091,7 @@ class BCDice
   end
 
   #==========================================================================
-  # **                            骰子コマンド処理
+  # **                            ダイスコマンド処理
   #==========================================================================
 
   ####################         バラバラダイス       ########################
@@ -1101,7 +1101,7 @@ class BCDice
     diff = 0
     output = ""
 
-    string = string.gsub(/-[\d]+B[\d]+/, '') # バラバラ骰子を引き算しようとしているのを除去
+    string = string.gsub(/-[\d]+B[\d]+/, '') # バラバラダイスを引き算しようとしているのを除去
 
     unless /(^|\s)S?(([\d]+B[\d]+(\+[\d]+B[\d]+)*)(([<>=]+)([\d]+))?)($|\s)/ =~ string
       output = '1'
@@ -1232,7 +1232,7 @@ class BCDice
     return output
   end
 
-  ####################        その他骰子関係      ########################
+  ####################        その他ダイス関係      ########################
   def openSecretRoll(channel, mode)
     debug("openSecretRoll begin")
     channel = channel.upcase
@@ -1287,7 +1287,7 @@ class BCDice
     # まずはチャンネルごとの管理リストに追加
     addToSecretRollMembersHolder(channel, mode)
 
-    # 次に骰子の出力結果を保存
+    # 次にダイスの出力結果を保存
     saveSecretDiceResult(diceResult, channel, mode)
   end
 

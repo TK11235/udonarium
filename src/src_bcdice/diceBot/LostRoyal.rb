@@ -31,7 +31,7 @@ class LostRoyal < DiceBot
 
 希望点の決定
 　HRx
-　　x には骰子の数（ 1 - 2 ）を指定
+　　x にはダイスの数（ 1 - 2 ）を指定
 INFO_MESSAGE_TEXT
 
   setPrefixes(['LR\[[0-5],[0-5],[0-5],[0-5],[0-5],[0-5]\]', 'FC', 'WPC', 'EC', 'HR[1-2]'])

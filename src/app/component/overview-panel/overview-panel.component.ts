@@ -11,11 +11,10 @@ import {
 } from '@angular/core';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
-import { EventSystem, Network } from '@udonarium/core/system';
+import { EventSystem } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
-import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
 @Component({
@@ -32,7 +31,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
         ]))
       ]),
       transition('* => void', [
-        animate('80ms ease-in', keyframes([
+        animate('100ms ease-in', keyframes([
           style({ opacity: 1, offset: 0 }),
           style({ opacity: 0, offset: 1.0 })
         ]))
@@ -92,34 +91,6 @@ export class OverviewPanelComponent implements AfterViewInit, OnDestroy {
     EventSystem.unregister(this);
   }
 
-  movetocommon() {
-    this.tabletopObject.setLocation('common');
-    SoundEffect.play(PresetSound.lock);
-  }
-  movetoid() {
-    this.tabletopObject.setLocation(Network.peerId);
-    SoundEffect.play(PresetSound.lock);
-  }
-  movetograveyard() {
-    this.tabletopObject.setLocation('graveyard');
-    SoundEffect.play(PresetSound.lock);
-  }
-  changePosZ(Z: number) {
-    if (Z < 0)
-      Z = 0
-    if (Z > 500)
-      Z = 500
-    this.tabletopObject.posZ = Z;
-    SoundEffect.play(PresetSound.lock);
-  }
-  PosZplus100() {
-    this.tabletopObject.posZ = Number(this.tabletopObject.posZ) + Number(100);
-    SoundEffect.play(PresetSound.lock);
-  }
-  PosZ0() {
-    this.tabletopObject.posZ = 0;
-    SoundEffect.play(PresetSound.lock);
-  }
   private initPanelPosition() {
     let panel: HTMLElement = this.draggablePanel.nativeElement;
     let outerWidth = panel.offsetWidth;

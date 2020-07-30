@@ -13,7 +13,7 @@ class AddDice
     @dice_list = []
   end
 
-  ####################             加算骰子        ########################
+  ####################             加算ダイス        ########################
 
   def rollDice(string)
     parser = Parser.new(string)

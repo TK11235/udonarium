@@ -18,13 +18,13 @@ class NinjaSlayer < DiceBot
   HELP_MESSAGE = <<MESSAGETEXT
 ・通常判定　NJ
 　NJx[y] or NJx@y or NJx
-　x=判定骰子 y=難易度 省略時はNORMAL(4)
-　例:NJ4@H 難易度HARD、判定骰子4で判定
+　x=判定ダイス y=難易度 省略時はNORMAL(4)
+　例:NJ4@H 難易度HARD、判定ダイス4で判定
 ・回避判定　EV
 　EVx[y]/z or EVx@y/z or EVx/z or EVx[y] or EVx@y or EVx
-　x=判定骰子 y=難易度 z=攻撃側の成功数(省略可) 難易度を省略時はNORMAL(4)
+　x=判定ダイス y=難易度 z=攻撃側の成功数(省略可) 難易度を省略時はNORMAL(4)
 　攻撃側の成功数を指定した場合、カウンターカラテ発生時には表示
-　例:EV5/3 難易度NORMAL(省略時)、判定骰子5、攻撃側の成功数3で判定
+　例:EV5/3 難易度NORMAL(省略時)、判定ダイス5、攻撃側の成功数3で判定
 ・近接攻撃　AT
 　ATx[y] or ATx@y or ATx
 　x=判定ダイス y=難易度 省略時はNORMAL(4) サツバツ！発生時には表示
@@ -239,7 +239,7 @@ MESSAGETEXT
   end
 
   # バラバラロールのコマンドを返す
-  # @param [#to_s] num 骰子数
+  # @param [#to_s] num ダイス数
   # @param [#to_s] difficulty 難易度
   # @return [String]
   def bRollCommand(num, difficulty)

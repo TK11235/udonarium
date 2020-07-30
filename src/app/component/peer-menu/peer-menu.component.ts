@@ -33,7 +33,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    Promise.resolve().then(() => this.panelService.title = '連線情報');
+    Promise.resolve().then(() => this.panelService.title = '接続情報');
   }
 
   ngAfterViewInit() {
@@ -69,7 +69,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       Network.connect(this.targetPeerId);
     } else {
       if (Network.peerContexts.length) {
-        this.help = '輸入的ID類似於房間ID，但是房間ID和常規ID不能混合使用。請先切斷私人連線。 （*可以通過重新加載頁面來斷開連接）';
+        this.help = '入力されたIDはルーム用のIDのようですが、ルーム用IDと通常のIDを混在させることはできません。プライベート接続を切ってください。（※ページリロードで切断ができます）';
         return;
       }
 
@@ -84,12 +84,12 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
           EventSystem.unregister(dummy);
           EventSystem.register(dummy)
             .on('CONNECT_PEER', event => {
-              console.log('連線成功！', event.data.peer);
+              console.log('接続成功！', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
             })
             .on('DISCONNECT_PEER', event => {
-              console.warn('連線失敗', event.data.peer);
+              console.warn('接続失敗', event.data.peer);
               this.resetPeerIfNeeded();
               EventSystem.unregister(dummy);
             });
@@ -126,7 +126,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       if (conectPeers.length < 1) {
-        this.help = '找不到上次連線的房間。 它可能已經解散了。';
+        this.help = '前回接続していたルームが見つかりませんでした。既に解散しているかもしれません。';
         console.warn('Room is already closed...');
         return;
       }
@@ -156,17 +156,5 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   findPeerName(peerId: string) {
     const peerCursor = PeerCursor.find(peerId);
     return peerCursor ? peerCursor.name : '';
-  }
-
-  onChangeNickname(name: string) {
-    // this.isChangedNickname = true;
-    const value = name
-    localStorage.setItem('PeerName', value)
-  }
-
-  onBlurNickname(): void {
-    //if (this.isChangedNickname) {
-      //EventSystem.call('CHANGE_NICKNAME', this.myPeer.name, this.myPeer.peerId);
-   // }
   }
 }

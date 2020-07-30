@@ -24,8 +24,8 @@ SAVEの難易度を「レベル」で表記することが出来ます。
 　判定時にはゾロ目を自動で振り足します。
 
 ・バーサークとハイパーバーサーク　(nBS+x or nHBS+x)
-　"(骰子数)BS(修正値)"でバーサーク、"(骰子数)HBS(修正値)"でハイパーバーサークでロールできます。
-　最初の骰子の読替は、個別の出目はそのままで表示。
+　"(ダイス数)BS(修正値)"でバーサーク、"(ダイス数)HBS(修正値)"でハイパーバーサークでロールできます。
+　最初のダイスの読替は、個別の出目はそのままで表示。
 　下から２番目の出目をずらした分だけ合計にマイナス修正を追加して表示します。
 INFO_MESSAGE_TEXT
 
@@ -160,7 +160,7 @@ INFO_MESSAGE_TEXT
       debug('rollTotal, rollDiceResultText, roll_cnt1, rollDiceMaxCount, roll_n_max, roll_cnt_suc, roll_cnt_re',
             rollTotal, rollDiceResultText, roll_cnt1, rollDiceMaxCount, roll_n_max, roll_cnt_suc, roll_cnt_re)
 
-      if dice_wk >= 2 # 骰子が二個以上
+      if dice_wk >= 2 # ダイスが二個以上
 
         dice_num = rollDiceResultText.split(/,/).collect { |i| i.to_i }
         debug('dice_num', dice_num)

@@ -3,30 +3,16 @@
     <div>
       <i class="material-icons large-font">add_photo_alternate</i>
     </div>
-    <div>拖曳圖片到這裡上傳</div>
-    <div class="small-font">或點擊這裡選擇圖片</div>
-    <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple accept="image/*" />
+    <div>ここに画像をドロップ</div>
+    <div class="small-font">またはここをクリックして選択</div>
+    <input type="file" style="display: none;" (change)="handleFileSelect($event)" multiple accept="image/*"/>
     <div class="small-font">
-      <br>每張圖片最大2MB</div>
+      <br>１ファイルにつき2MBまで</div>
   </div>
 </label>
-<div>
-  使用圖片網址：<input type="text" [(ngModel)]="imgUrl" placeholder="圖片網址"> <button (click)="uploadByUrl()">上傳</button>
-</div>
-
-<div class="sticky-top">
-  <div>
-    検索: <input [(ngModel)]="searchWord" placeholder="部分匹配搜索 如指定多個標籤 加上空格" />
-  </div>
-  <div>
-    標籤: <input [(ngModel)]="selectedTag" placeholder="標籤名" [attr.disabled]="isSelected ? null : ''" />
-  </div>
-</div>
 <div id="file-list">
-  <div *ngFor="let file of images" [ngClass]="{ image: true, selected: selectedFile === file }">
-    <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120"
-      (click)="onSelectedFile(file)" (error)="deleteFile(file)">>
+  <span *ngFor="let file of fileStorageService.images" class="image">
+    <img *ngIf="0 < file.url.length" [src]="file.url | safe: 'resourceUrl'" [alt]="file.name" height="120" (click)="onSelectedFile(file)">
     <img *ngIf="file.url.length <= 0" src="assets/images/loading.gif" alt="{{file.name}}">
-    <button (click)="deleteFile(file)">刪除</button>
-  </div>
+  </span>
 </div>

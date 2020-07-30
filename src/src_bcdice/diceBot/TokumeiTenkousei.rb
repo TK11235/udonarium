@@ -18,7 +18,7 @@ class TokumeiTenkousei < DiceBot
     super
     @sendMode = 2
     @sortType = 1
-    @sameDiceRerollCount = 1 # ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=骰子のうち2個以上同じ目)
+    @sameDiceRerollCount = 1 # ゾロ目で振り足し(0=無し, 1=全部同じ目, 2=ダイスのうち2個以上同じ目)
     @sameDiceRerollType = 2 # ゾロ目で振り足しのロール種別(0=判定のみ, 1=ダメージのみ, 2=両方)
   end
 

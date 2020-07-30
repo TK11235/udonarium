@@ -63,14 +63,14 @@
   white-space: pre-wrap;
 }
 
-.system-message .msg-name {
+.dicebot-message .msg-name {
   font-size: 8px;
 }
 
-.system-message .msg-text {
+.dicebot-message .msg-text {
   /*color:#22F;*/
 }
 
-.direct-message.system-message .msg-text {
+.direct-message.dicebot-message .msg-text {
   /*color:#CCF;*/
 }

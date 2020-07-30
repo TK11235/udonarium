@@ -14,7 +14,7 @@ class Arianrhod < DiceBot
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT
 ・クリティカル、ファンブルの自動判定を行います。(クリティカル時の追加ダメージも表示されます)
-・D66骰子あり
+・D66ダイスあり
 INFO_MESSAGE_TEXT
 
   def initialize
