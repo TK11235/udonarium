@@ -14,42 +14,6 @@
       <button class="tab-setting small-font" (click)="showTabSetting()"><i class="material-icons small-font">settings</i>タブ設定</button>
     </div>
   </form>
-<div class="table" [ngClass]="{'direct-message': isDirect}">
-  <div class="table-cell imagebox">
-    <img class="image" *ngIf="gameCharacter && gameCharacter.imageFile != null && 0 < gameCharacter.imageFile?.url?.length" [src]="gameCharacter.imageFile?.url | safe: 'resourceUrl'"
-    />
-    <img class="image" *ngIf="!gameCharacter && myPeer && myPeer?.image != null" [src]="myPeer?.image?.url | safe: 'resourceUrl'"
-    />
-  </div>
-  <div class="table-cell">
-    <div>
-      <select style="width: 12em;" (change)="onSelectedCharacter($event.target.value)">
-        <option value="{{myPeer?.identifier}}">{{myPeer?.name}}（あなた）</option>
-        <option *ngFor="let gameCharacter of gameCharacters" value="{{gameCharacter.identifier}}">{{gameCharacter.name}}</option>
-      </select> ＞
-      <select style="width: 10em;" [(ngModel)]="sendTo">
-        <option value="">全員</option>
-        <option *ngFor="let peer of otherPeers" value="{{peer.identifier}}">{{peer.name}}<ng-container *ngIf="peer === myPeer">（あなた）</ng-container></option>
-      </select>
-      <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
-        <option value="">ダイスボット指定なし</option>
-        <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
-      </select>
-      <button (click)="showDicebotHelp()">?</button>
-    </div>
-    <div>
-      <form #chatWindowForm="ngForm">
-        <textarea #textArea [(ngModel)]="text" placeholder="Enterで送信  Shift+Enterで改行" [ngModelOptions]="{standalone: true}" class="chat-input" (input)="onInput()" (keydown.enter)="sendChat($event)"></textarea>
-        <button type="submit" (click)="sendChat(null)">SEND</button>
-      </form>
-    </div>
-    <div class="writing-info">
-      <ng-container *ngIf="0 < writingPeerNames.length" >
-        <span *ngFor="let peerName of writingPeerNames; index as i" style="font-weight: bold;">{{peerName}}<span *ngIf="writingPeerNames.length !== (i + 1)">, </span></span>
-        <span> が入力中...</span>
-      </ng-container>
-    </div>
-  </div>
-</div>
+  <chat-input [chatTabidentifier]="chatTabidentifier" [(gameType)]="gameType" [(sendFrom)]="sendFrom" (chat)="sendChat($event)"></chat-input>
 </div>
 <!--<div style="white-space:pre-wrap; font-size: 8px;"><span>{{gameHelp}}</span></div>-->

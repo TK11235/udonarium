@@ -23,6 +23,8 @@ import { setZeroTimeout } from '@udonarium/core/system/util/zero-timeout';
 
 import { PanelService } from 'service/panel.service';
 
+type ScrollPosition = { top: number, bottom: number, clientHeight: number, scrollHeight: number, };
+
 const ua = window.navigator.userAgent.toLowerCase();
 const isiOS = ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document;
 
@@ -216,7 +218,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     if (lastIndex < this.bottomIndex) this.bottomIndex = lastIndex;
   }
 
-  private getScrollPosition(): { top: number, bottom: number, clientHeight: number, scrollHeight: number } {
+  private getScrollPosition(): ScrollPosition {
     let top = this.panelService.scrollablePanel.scrollTop;
     let clientHeight = this.panelService.scrollablePanel.clientHeight;
     let scrollHeight = this.panelService.scrollablePanel.scrollHeight;
@@ -233,44 +235,50 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     let hasTopElm = this.logContainerRef.nativeElement.contains(this.topElm);
     let hasBotomElm = this.logContainerRef.nativeElement.contains(this.bottomElm);
 
-    let hasTopBlank = !hasTopElm;
-    let hasBotomBlank = !hasBotomElm;
-
-    if (hasTopElm || hasBotomElm) {
-      let elm: HTMLElement = null;
-      let prevBox: ClientRect = null;
-      let currentBox: ClientRect = null;
-      let diff: number = 0;
-      if (hasBotomElm) {
-        elm = this.bottomElm;
-        prevBox = this.bottomElmBox;
-      } else if (hasTopElm) {
-        elm = this.topElm;
-        prevBox = this.topElmBox;
-      }
-      currentBox = elm.getBoundingClientRect();
-      diff = Math.floor(prevBox.top - currentBox.top - this.scrollSpeed);
-      if ((!hasTopBlank || !hasBotomBlank) && 3 ** 2 < diff ** 2) {
-        this.panelService.scrollablePanel.scrollTop -= diff;
-      }
-
-      let logBox: ClientRect = this.logContainerRef.nativeElement.getBoundingClientRect();
-      let messageBox: ClientRect = this.messageContainerRef.nativeElement.getBoundingClientRect();
-
-      let messageBoxTop = messageBox.top - logBox.top;
-      let messageBoxBottom = messageBoxTop + messageBox.height;
-
-      let scrollPosition = this.getScrollPosition();
-
-      hasTopBlank = scrollPosition.top < messageBoxTop;
-      hasBotomBlank = messageBoxBottom < scrollPosition.bottom && scrollPosition.bottom < scrollPosition.scrollHeight;
-    }
+    let { hasTopBlank, hasBotomBlank } = this.checkBlank(hasTopElm, hasBotomElm);
 
     this.topElm = this.bottomElm = null;
 
     if (hasTopBlank || hasBotomBlank || (!hasTopElm && !hasBotomElm)) {
       setZeroTimeout(() => this.lazyScrollUpdate());
     }
+  }
+
+  private checkBlank(hasTopElm: boolean, hasBotomElm: boolean) {
+    let hasTopBlank = !hasTopElm;
+    let hasBotomBlank = !hasBotomElm;
+
+    if (!hasTopElm && !hasBotomElm) return { hasTopBlank, hasBotomBlank };
+
+    let elm: HTMLElement = null;
+    let prevBox: ClientRect = null;
+    let currentBox: ClientRect = null;
+    let diff: number = 0;
+    if (hasBotomElm) {
+      elm = this.bottomElm;
+      prevBox = this.bottomElmBox;
+    } else if (hasTopElm) {
+      elm = this.topElm;
+      prevBox = this.topElmBox;
+    }
+    currentBox = elm.getBoundingClientRect();
+    diff = Math.floor(prevBox.top - currentBox.top - this.scrollSpeed);
+    if ((!hasTopBlank || !hasBotomBlank) && 3 ** 2 < diff ** 2) {
+      this.panelService.scrollablePanel.scrollTop -= diff;
+    }
+
+    let logBox: ClientRect = this.logContainerRef.nativeElement.getBoundingClientRect();
+    let messageBox: ClientRect = this.messageContainerRef.nativeElement.getBoundingClientRect();
+
+    let messageBoxTop = messageBox.top - logBox.top;
+    let messageBoxBottom = messageBoxTop + messageBox.height;
+
+    let scrollPosition = this.getScrollPosition();
+
+    hasTopBlank = scrollPosition.top < messageBoxTop;
+    hasBotomBlank = messageBoxBottom < scrollPosition.bottom && scrollPosition.bottom < scrollPosition.scrollHeight;
+
+    return { hasTopBlank, hasBotomBlank };
   }
 
   private markForReadIfNeeded() {
@@ -301,12 +309,6 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.scrollEventLongTimer = null;
 
     let chatMessageElements = this.messageContainerRef.nativeElement.querySelectorAll<HTMLElement>('chat-message');
-    let maxHeight = this.minMessageHeight;
-
-    for (let i = chatMessageElements.length - 1; 0 <= i; i--) {
-      let height = chatMessageElements[i].clientHeight;
-      if (maxHeight < height) maxHeight = height;
-    }
 
     let messageBoxTop = this.messageContainerRef.nativeElement.offsetTop;
     let messageBoxBottom = messageBoxTop + this.messageContainerRef.nativeElement.clientHeight;
@@ -334,33 +336,9 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     let scrollWideBottom = scrollPosition.bottom + (!isNormalUpdate && hasBotomBlank ? 100 : 1200);
 
     this.markForReadIfNeeded();
+    this.calcItemIndexRange(messageBoxTop, messageBoxBottom, scrollWideTop, scrollWideBottom, scrollPosition, chatMessageElements);
 
-    if (scrollWideTop >= messageBoxBottom || messageBoxTop >= scrollWideBottom) {
-      let lastIndex = this.chatTab.chatMessages.length - 1;
-      let scrollBottomHeight = scrollPosition.scrollHeight - scrollPosition.top - scrollPosition.clientHeight;
-
-      this.bottomIndex = lastIndex - Math.floor(scrollBottomHeight / this.minMessageHeight);
-      this.topIndex = this.bottomIndex - Math.floor(scrollPosition.clientHeight / this.minMessageHeight);
-
-      this.bottomIndex += 1;
-      this.topIndex -= 1;
-    } else {
-      if (scrollWideTop < messageBoxTop) {
-        this.topIndex -= Math.floor((messageBoxTop - scrollWideTop) / maxHeight) + 1;
-      } else if (scrollWideTop > messageBoxTop) {
-        if (!isiOS) this.topIndex += Math.floor((scrollWideTop - messageBoxTop) / maxHeight);
-      }
-
-      if (messageBoxBottom > scrollWideBottom) {
-        if (!isiOS) this.bottomIndex -= Math.floor((messageBoxBottom - scrollWideBottom) / maxHeight);
-      } else if (messageBoxBottom < scrollWideBottom) {
-        this.bottomIndex += Math.floor((scrollWideBottom - messageBoxBottom) / maxHeight) + 1;
-      }
-    }
-
-    this.adjustIndex();
     let isChangedIndex = this.topIndex != preTopIndex || this.bottomIndex != preBottomIndex;
-
     if (!isChangedIndex) return;
 
     this.needUpdate = true;
@@ -377,5 +355,41 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       this.changeDetector.markForCheck();
       this.ngZone.run(() => { });
     });
+  }
+
+  private calcElementMaxHeight(chatMessageElements: NodeListOf<HTMLElement>): number {
+    let maxHeight = this.minMessageHeight;
+    for (let i = chatMessageElements.length - 1; 0 <= i; i--) {
+      let height = chatMessageElements[i].clientHeight;
+      if (maxHeight < height) maxHeight = height;
+    }
+    return maxHeight;
+  }
+
+  private calcItemIndexRange(messageBoxTop: number, messageBoxBottom: number, scrollWideTop: number, scrollWideBottom: number, scrollPosition: ScrollPosition, chatMessageElements: NodeListOf<HTMLElement>) {
+    if (scrollWideTop >= messageBoxBottom || messageBoxTop >= scrollWideBottom) {
+      let lastIndex = this.chatTab.chatMessages.length - 1;
+      let scrollBottomHeight = scrollPosition.scrollHeight - scrollPosition.top - scrollPosition.clientHeight;
+
+      this.bottomIndex = lastIndex - Math.floor(scrollBottomHeight / this.minMessageHeight);
+      this.topIndex = this.bottomIndex - Math.floor(scrollPosition.clientHeight / this.minMessageHeight);
+
+      this.bottomIndex += 1;
+      this.topIndex -= 1;
+    } else {
+      let maxHeight = this.calcElementMaxHeight(chatMessageElements);
+      if (scrollWideTop < messageBoxTop) {
+        this.topIndex -= Math.floor((messageBoxTop - scrollWideTop) / maxHeight) + 1;
+      } else if (scrollWideTop > messageBoxTop) {
+        if (!isiOS) this.topIndex += Math.floor((scrollWideTop - messageBoxTop) / maxHeight);
+      }
+
+      if (messageBoxBottom > scrollWideBottom) {
+        if (!isiOS) this.bottomIndex -= Math.floor((messageBoxBottom - scrollWideBottom) / maxHeight);
+      } else if (messageBoxBottom < scrollWideBottom) {
+        this.bottomIndex += Math.floor((scrollWideBottom - messageBoxBottom) / maxHeight) + 1;
+      }
+    }
+    this.adjustIndex();
   }
 }

@@ -9,22 +9,7 @@
   justify-content: space-between;
   align-content: space-between;
 }
-.imagebox {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  max-width: 50px;
-  max-height: 50px;
-  vertical-align: top;
-  text-align: center;
-}
-.image{
-  width: 100%;
-  height: 100%;
-  vertical-align: bottom;
-  object-fit: cover;
-  object-position: 50% 0%;
-}
+
 .sticky-bottom {
   position: sticky;
   bottom : 0;
@@ -32,52 +17,6 @@
   background-color: rgba(240,218,189, 0.8);
   border-top:1px dotted #666;
   margin-bottom: 0;
-}
-.table {
-  box-sizing: border-box;
-  padding : 5px;
-  /*position : fixed;*/
-  /*bottom : 0;*/
-  display: table;
-  /*width: calc(100% - 30px);*/
-  width: 100%;
-}
-.table .table-cell {
-  display: table-cell;
-}
-.message .body {
-  display: table-cell;
-}
-
-.chat-input {
-  font-family: Arial;
-  font-size: 13px;
-
-  width: calc(100% - 100px);
-  height: calc(1em + 4px);
-  min-height: calc(1em + 7px);
-  max-height: calc(6em + 7px);
-  resize: none;
-  overflow: auto;
-
-  padding: 1px;
-  margin: 5px;
-
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  vertical-align: bottom;
-}
-
-.writing-info {
-  font-size: 8px;
-  height: 1.3em;
-}
-
-.direct-message {
-  background-color: #555;
-  color: #CCC;
 }
 
 .chat-tab {
