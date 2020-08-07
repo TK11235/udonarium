@@ -23,6 +23,7 @@ MESSAGETEXT
   setPrefixes(['SHK\d+.*', 'SLH', 'SLHU', 'SLHD'])
 
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     result = getCheckResult(total, target)

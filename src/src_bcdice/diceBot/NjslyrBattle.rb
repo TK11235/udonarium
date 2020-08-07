@@ -21,6 +21,7 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total, _dice_total, dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' if cmp_op != :<=
 
     return success_text(total, target) + juuten(dice_list)

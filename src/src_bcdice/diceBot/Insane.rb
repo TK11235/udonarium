@@ -40,12 +40,13 @@ class Insane < DiceBot
 遭遇表　都市　(ECT)　山林　(EMT)　海辺　(EAT)/反応表　RET
 残業ホラースケープ表　OHT/残業電話表　OPT/残業シーン表　OWT
 社名決定表1　CNT1/社名決定表2　CNT2/社名決定表3　CNT3
+暫定整理番号作成表　IRN
 ・D66ダイスあり
 INFO_MESSAGE_TEXT
 
   setPrefixes([
     'ST', 'HJST', 'MTST', 'DVST', 'DT', 'BT', 'PT', 'FT', 'JT', 'BET', 'RTT', 'TVT', 'TET', 'TPT', 'TST', 'TKT', 'TMT',
-    'CHT', 'VHT', 'IHT', 'RHT', 'MHT', 'LHT', 'ECT', 'EMT', 'EAT', 'OPT', 'OHT', 'OWT', 'CNT1', 'CNT2', 'CNT3', 'RET'
+    'CHT', 'VHT', 'IHT', 'RHT', 'MHT', 'LHT', 'ECT', 'EMT', 'EAT', 'OPT', 'OHT', 'OWT', 'CNT1', 'CNT2', 'CNT3', 'RET', 'IRN'
   ])
 
   def initialize
@@ -63,6 +64,8 @@ INFO_MESSAGE_TEXT
       " ＞ ファンブル(判定失敗。山札から【狂気】を1枚獲得)"
     elsif dice_total >= 12
       " ＞ スペシャル(判定成功。【生命力】1点か【正気度】1点回復)"
+    elsif target == "?"
+      ""
     elsif total >= target
       " ＞ 成功"
     else
@@ -175,6 +178,9 @@ INFO_MESSAGE_TEXT
     when 'RET'
       type = '反応表'
       output, total_n = get_reaction_scene_table
+    when 'IRN'
+      type = '暫定整理番号作成'
+      output, total_n = get_interim_reference_number
     end
 
     return "#{type}(#{total_n}) ＞ #{output}"
@@ -763,5 +769,48 @@ INFO_MESSAGE_TEXT
       "「……なんじゃこりゃぁっ！？」助けを求めた相手が突然死亡する。ヤツらの手は、こんなところまで及んでいるのか？「反応表」を使用したキャラクターは、暴力の特技分野からランダムに一つを選んで恐怖判定を行う。",
     ]
     return get_table_by_2d6(table)
+  end
+
+  # 暫定整理番号作成表
+  def get_interim_reference_number
+    table = [
+      [11, '1'],
+      [12, '2'],
+      [13, '3'],
+      [14, '4'],
+      [15, '5'],
+      [16, '6'],
+      [22, 'G'],
+      [23, 'I'],
+      [24, 'J'],
+      [25, 'K'],
+      [26, 'O'],
+      [33, 'P'],
+      [34, 'Q'],
+      [35, 'S'],
+      [36, 'T'],
+      [44, 'U'],
+      [45, 'V'],
+      [46, 'X'],
+      [55, 'Y'],
+      [56, 'Z'],
+      [66, '-'],
+    ]
+
+    number, total_n = roll(1, 6)
+    counts = 3
+    if number <= 4
+      counts = number + 5
+    elsif number == 5
+      counts = 4
+    end
+
+    output = ''
+    counts.times do
+      character, number = get_table_by_d66_swap(table)
+      output += character
+      total_n += ",#{number}"
+    end
+    return output, total_n
   end
 end

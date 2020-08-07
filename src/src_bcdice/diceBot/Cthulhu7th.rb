@@ -6,10 +6,10 @@ class Cthulhu7th < DiceBot
   ID = 'Cthulhu7th'
 
   # ゲームシステム名
-  NAME = '新クトゥルフ'
+  NAME = '新クトゥルフ神話TRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'しんくとうるふ'
+  SORT_KEY = 'しんくとうるふしんわTRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT
@@ -17,21 +17,22 @@ class Cthulhu7th < DiceBot
 ・判定　CC(x)<=（目標値）
 　x：ボーナス・ペナルティダイス (2～－2)。省略可。
 　目標値が無くても1D100は表示される。
-　ファンブル／失敗／
-　成功／ハード成功／イクストリーム成功／クリティカル を自動判定。
+　ファンブル／失敗／　レギュラー成功／ハード成功／
+　イクストリーム成功／クリティカル を自動判定。
 例）CC<=30　CC(2)<=50　CC(-1)<=75 CC-1<=50 CC1<=65 CC
 
 ・組み合わせ判定　(CBR(x,y))
 　目標値 x と y で％ロールを行い、成否を判定。
 　例）CBR(50,20)
 
-・自動火器の射撃判定　FAR(w,x,y,z,d)
+・自動火器の射撃判定　FAR(w,x,y,z,d,v)
 　w：弾丸の数(1～100）、x：技能値（1～100）、y：故障ナンバー、
 　z：ボーナス・ペナルティダイス(-2～2)。省略可。
 　d：指定難易度で連射を終える（レギュラー：r,ハード：h,イクストリーム：e）。省略可。
+　v：ボレーの弾丸の数を変更する。省略可。
 　命中数と貫通数、残弾数のみ算出。ダメージ算出はありません。
 例）FAR(25,70,98)　FAR(50,80,98,-1)　far(30,70,99,1,R)
-　　far(25,88,96,2,h)　FaR(40,77,100,,e)
+　　far(25,88,96,2,h,5)　FaR(40,77,100,,e,4)　fAr(20,47,100,,,3)
 
 ・各種表
 　【狂気関連】
@@ -166,7 +167,7 @@ INFO_MESSAGE_TEXT
       return "イクストリーム成功" if total <= (diff / 5)
       return "ハード成功" if total <= (diff / 2)
 
-      return "成功"
+      return "レギュラー成功"
     end
 
     fumble_text = "ファンブル"
@@ -195,7 +196,7 @@ INFO_MESSAGE_TEXT
     result_1 = getCheckResultText(total, diff_1)
     result_2 = getCheckResultText(total, diff_2)
 
-    successList = ["クリティカル", "イクストリーム成功", "ハード成功", "成功"]
+    successList = ["クリティカル", "イクストリーム成功", "ハード成功", "レギュラー成功"]
 
     succesCount = 0
     succesCount += 1 if successList.include?(result_1)
@@ -215,13 +216,14 @@ INFO_MESSAGE_TEXT
   end
 
   def getFullAutoResult(command)
-    return nil unless /^FAR\((-?\d+),(-?\d+),(-?\d+)(?:,(-?\d+)?)?(?:,(-?\w+)?)?\)/i =~ command
+    return nil unless /^FAR\((-?\d+),(-?\d+),(-?\d+)(?:,(-?\d+)?)?(?:,(-?\w+)?)?(?:,(-?\d+)?)?\)/i =~ command
 
     bullet_count = Regexp.last_match(1).to_i
     diff = Regexp.last_match(2).to_i
     broken_number = Regexp.last_match(3).to_i
     bonus_dice_count = (Regexp.last_match(4) || 0).to_i
     stop_count = (Regexp.last_match(5) || "").to_s.downcase
+    bullet_set_count_cap = (Regexp.last_match(6) || (diff / 10).floor).to_i # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
 
     output = ""
 
@@ -230,6 +232,23 @@ INFO_MESSAGE_TEXT
     if bullet_count > bullet_count_limit
       output += "\n弾薬が多すぎます。装填された弾薬を#{bullet_count_limit}発に変更します。\n"
       bullet_count = bullet_count_limit
+    end
+
+    # ボレーの上限の設定がおかしい場合の注意表示
+    if (bullet_set_count_cap > (diff / 10).floor) && (diff > 39) && !Regexp.last_match(6).nil? # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+      bullet_set_count_cap = (diff / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+      output += "ボレーの弾丸の数の上限は\[技能値÷10（切り捨て）\]発なので、それより高い数を指定できません。ボレーの弾丸の数を#{bullet_set_count_cap}発に変更します。\n"
+    elsif (diff <= 39) && (bullet_set_count_cap > 3) && !Regexp.last_match(6).nil?
+      bullet_set_count_cap = 3
+      output += "技能値が39以下ではボレーの弾丸の数の上限および下限は3発です。ボレーの弾丸の数を#{bullet_set_count_cap}発に変更します。\n"
+    end
+
+    # ボレーの下限の設定がおかしい場合の注意表示およびエラー表示
+    return "ボレーの弾丸の数は正の数です。" if (bullet_set_count_cap <= 0) && !Regexp.last_match(6).nil?
+
+    if (bullet_set_count_cap < 3) && !Regexp.last_match(6).nil?
+      bullet_set_count_cap = 3
+      output += "ボレーの弾丸の数の下限は3発です。ボレーの弾丸の数を3発に変更します。\n"
     end
 
     return "弾薬は正の数です。" if bullet_count <= 0
@@ -245,12 +264,12 @@ INFO_MESSAGE_TEXT
     end
 
     output += "ボーナス・ペナルティダイス[#{bonus_dice_count}]"
-    output += rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count, stop_count)
+    output += rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count, stop_count, bullet_set_count_cap)
 
     return output
   end
 
-  def rollFullAuto(bullet_count, diff, broken_number, dice_num, stop_count)
+  def rollFullAuto(bullet_count, diff, broken_number, dice_num, stop_count, bullet_set_count_cap)
     output = ""
     loopCount = 0
 
@@ -272,12 +291,14 @@ INFO_MESSAGE_TEXT
         output += "\n#{loopCount}回目: ＞ #{total_list.join(', ')} ＞ #{hit_result}"
 
         if total >= broken_number
-          output += " ジャム"
+          output += "　ジャム"
           return getHitResultText(output, counts)
         end
 
         hit_type = getHitType(more_difficulty, hit_result)
-        hit_bullet, impale_bullet, lost_bullet = getBulletResults(counts[:bullet], hit_type, diff)
+        hit_bullet, impale_bullet, lost_bullet = getBulletResults(counts[:bullet], hit_type, diff, bullet_set_count_cap)
+
+        output += "　（#{hit_bullet}発が命中、#{impale_bullet}発が貫通）"
 
         counts[:hit_bullet] += hit_bullet
         counts[:impale_bullet] += impale_bullet
@@ -290,7 +311,7 @@ INFO_MESSAGE_TEXT
 
       # 指定された難易度となった場合、連射処理を途中で止める
       if shouldStopRollFullAuto?(stop_count, more_difficulty)
-        output += "\n指定の難易度となったので、処理を終了します。"
+        output += "\n【指定の難易度となったので、処理を終了します。】"
         break
       end
 
@@ -346,8 +367,8 @@ INFO_MESSAGE_TEXT
     return ""
   end
 
-  def getBulletResults(bullet_count, hit_type, diff)
-    bullet_set_count = getSetOfBullet(diff)
+  def getBulletResults(bullet_count, hit_type, diff, bullet_set_count_cap)
+    bullet_set_count = getSetOfBullet(diff, bullet_set_count_cap)
     hit_bullet_count_base = getHitBulletCountBase(diff, bullet_set_count)
     impale_bullet_count_base = (bullet_set_count / 2.to_f)
 
@@ -391,7 +412,7 @@ INFO_MESSAGE_TEXT
 
     case more_difficulty
     when 0
-      successList = ["ハード成功", "成功"]
+      successList = ["ハード成功", "レギュラー成功"]
       impaleBulletList = ["クリティカル", "イクストリーム成功"]
     when 1
       successList = ["ハード成功"]
@@ -410,19 +431,22 @@ INFO_MESSAGE_TEXT
   def getNextDifficultyMessage(more_difficulty)
     case more_difficulty
     when 1
-      return "\n    難易度がハードに変更"
+      return "\n【難易度がハードに変更】"
     when 2
-      return "\n    難易度がイクストリームに変更"
+      return "\n【難易度がイクストリームに変更】"
     when 3
-      return "\n    難易度がクリティカルに変更"
+      return "\n【難易度がクリティカルに変更】"
     end
 
     return ""
   end
 
-  def getSetOfBullet(diff)
-    #bullet_set_count = diff / 10
+  def getSetOfBullet(diff, bullet_set_count_cap)
     bullet_set_count = (diff / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+
+    if bullet_set_count_cap < bullet_set_count
+      bullet_set_count = bullet_set_count_cap
+    end
 
     if (diff >= 1) && (diff < 30)
       bullet_set_count = 3 # 技能値が29以下での最低値保障処理

@@ -28,6 +28,8 @@ MESSAGETEXT
   end
 
   def check_2D6(total, _dice_total, dice_list, cmp_op, target)
+    return '' if target == '?'
+
     if dice_list == [5, 5]
       " ＞ ゴリティカル（自動的成功）"
     elsif total.send(cmp_op, target)

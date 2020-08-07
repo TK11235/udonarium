@@ -6,10 +6,10 @@ class LogHorizon < DiceBot
   ID = 'LogHorizon'
 
   # ゲームシステム名
-  NAME = 'ログ・ホライズン'
+  NAME = 'ログ・ホライズンTRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'ろくほらいすん'
+  SORT_KEY = 'ろくほらいすんTRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

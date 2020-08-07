@@ -6,10 +6,10 @@ class RokumonSekai2 < DiceBot
   ID = 'RokumonSekai2'
 
   # ゲームシステム名
-  NAME = '六門世界2nd'
+  NAME = '六門世界RPG セカンドエディション'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'ろくもんせかい2'
+  SORT_KEY = 'ろくもんせかいRPG2'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT

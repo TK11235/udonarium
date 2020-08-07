@@ -24,6 +24,7 @@ INFO_MESSAGE_TEXT
   setPrefixes(['SR\d+.*'])
 
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' if cmp_op != :<=
 
     if total >= 100

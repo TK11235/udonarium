@@ -6,10 +6,10 @@ class Arianrhod < DiceBot
   ID = 'Arianrhod'
 
   # ゲームシステム名
-  NAME = 'アリアンロッド'
+  NAME = 'アリアンロッドRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'ありあんろつと'
+  SORT_KEY = 'ありあんろつとRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT

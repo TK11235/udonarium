@@ -6,10 +6,10 @@ class EmbryoMachine < DiceBot
   ID = 'EmbryoMachine'
 
   # ゲームシステム名
-  NAME = 'エムブリオマシン'
+  NAME = 'エムブリオマシンRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'えむふりおましん'
+  SORT_KEY = 'えむふりおましんRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT
@@ -48,6 +48,7 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(nD10)
   def check_nD10(total, dice_total, _dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :>=
 
     if dice_total <= 2

@@ -8,7 +8,7 @@ class GundogZero < Gundog
   ID = 'GundogZero'
 
   # ゲームシステム名
-  NAME = 'ガンドッグ・ゼロ'
+  NAME = 'ガンドッグゼロ'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'かんとつくせろ'

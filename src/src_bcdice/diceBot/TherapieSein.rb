@@ -6,10 +6,10 @@ class TherapieSein < DiceBot
   ID = 'TherapieSein'
 
   # ゲームシステム名
-  NAME = '青春疾患セラフィザイン'
+  NAME = 'セラフィザイン'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'せいしゆんしつかんせらふいさいん'
+  SORT_KEY = 'せらふいさいん'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

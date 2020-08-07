@@ -3,7 +3,7 @@
 
 class Elric < DiceBot
   # ゲームシステムの識別子
-  ID = 'Elric!'
+  ID = 'Elric'
 
   # ゲームシステム名
   NAME = 'エルリック！'
@@ -16,6 +16,7 @@ class Elric < DiceBot
 
   # ゲーム別成功度判定(1d100)
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     # 1は常に貫通

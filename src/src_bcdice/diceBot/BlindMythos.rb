@@ -6,10 +6,10 @@ class BlindMythos < DiceBot
   ID = 'BlindMythos'
 
   # ゲームシステム名
-  NAME = 'ブラインド・ミトス'
+  NAME = 'ブラインド・ミトスRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'ふらいんとみとす'
+  SORT_KEY = 'ふらいんとみとすRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

@@ -18,6 +18,7 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(1d20)
   def check_1D20(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     if total <= target

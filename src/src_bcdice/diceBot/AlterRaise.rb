@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # frozen_string_literal: true
 
-class Alter_raise < DiceBot
+class AlterRaise < DiceBot
   # ゲームシステムの識別子
-  ID = 'Alter_raise'
+  ID = 'AlterRaise'
 
   # ゲームシステム名
-  NAME = '心衝想機TRPGアルトレイズ'
+  NAME = 'アルトレイズ'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'あるとれいす'
@@ -119,7 +119,7 @@ MESSAGETEXT
       [5, '論理'],
       [6, '思慮']
     ]
-    return get_Alter_raise_1d6_table_result(name, table, roc)
+    return get_AlterRaise_1d6_table_result(name, table, roc)
   end
 
   def get_location_table(roc)
@@ -138,7 +138,7 @@ MESSAGETEXT
       [63, '自然'],
       [66, '家']
     ]
-    return get_Alter_raise_d66_table_result(name, table, roc)
+    return get_AlterRaise_d66_table_result(name, table, roc)
   end
 
   def get_quiet_table(roc)
@@ -157,7 +157,7 @@ MESSAGETEXT
       [63, '一人'],
       [66, 'お気に入り']
     ]
-    return get_Alter_raise_d66_table_result(name, table, roc)
+    return get_AlterRaise_d66_table_result(name, table, roc)
   end
 
   def get_delight_table(roc)
@@ -176,7 +176,7 @@ MESSAGETEXT
       [63, '証明'],
       [66, '生還']
     ]
-    return get_Alter_raise_d66_table_result(name, table, roc)
+    return get_AlterRaise_d66_table_result(name, table, roc)
   end
 
   def get_trauma_table(roc)
@@ -195,7 +195,7 @@ MESSAGETEXT
       [63, '病'],
       [66, '事故']
     ]
-    return get_Alter_raise_d66_table_result(name, table, roc)
+    return get_AlterRaise_d66_table_result(name, table, roc)
   end
 
   def get_scene_production_table(roc)
@@ -208,7 +208,7 @@ MESSAGETEXT
       [5, 'お願い。君は相手にお願いしたいことがあった。'],
       [6, '扉を開く前に。アクセルダイブ・ゲートをくぐる前に、君は相手に話したいことがあった。（＊ダイブした後のシーンも演出すること）']
     ]
-    return get_Alter_raise_1d6_table_result(name, table, roc)
+    return get_AlterRaise_1d6_table_result(name, table, roc)
   end
 
   def get_stance_table(roc)
@@ -221,7 +221,7 @@ MESSAGETEXT
       [5, '家族'],
       [6, '守護']
     ]
-    return get_Alter_raise_1d6_table_result(name, table, roc)
+    return get_AlterRaise_1d6_table_result(name, table, roc)
   end
 
   def get_emotion_table(roc)
@@ -240,10 +240,10 @@ MESSAGETEXT
       [63, '信頼'],
       [66, '好意']
     ]
-    return get_Alter_raise_d66_table_result(name, table, roc)
+    return get_AlterRaise_d66_table_result(name, table, roc)
   end
 
-  def get_Alter_raise_1d6_table_result(name, table, roc)
+  def get_AlterRaise_1d6_table_result(name, table, roc)
     if roc > 0
       dice = roc
       dice = 6 if dice > 6
@@ -254,7 +254,7 @@ MESSAGETEXT
     return "#{name} ＞ #{dice}：#{tableText}"
   end
 
-  def get_Alter_raise_d66_table_result(name, table, roc)
+  def get_AlterRaise_d66_table_result(name, table, roc)
     if roc > 10
       diceText = roc.to_s
       dice1 = diceText[0, 1].to_i

@@ -8,10 +8,10 @@ class Cthulhu < DiceBot
   ID = 'Cthulhu'
 
   # ゲームシステム名
-  NAME = 'クトゥルフ'
+  NAME = 'クトゥルフ神話TRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'くとうるふ'
+  SORT_KEY = 'くとうるふしんわTRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT

@@ -15,6 +15,7 @@ class WaresBlade < DiceBot
   HELP_MESSAGE = "nD10>=m 方式の判定で成否、完全成功、完全失敗を自動判定します。\n"
 
   def check_nD10(total, _dice_total, dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :>=
 
     if dice_list.count(10) == dice_list.size

@@ -6,10 +6,10 @@ class MonotoneMuseum < DiceBot
   ID = 'MonotoneMuseum'
 
   # ゲームシステム名
-  NAME = 'モノトーン・ミュージアム'
+  NAME = 'モノトーンミュージアムRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'ものとおんみゆうしあむ'
+  SORT_KEY = 'ものとおんみゆうしあむRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT

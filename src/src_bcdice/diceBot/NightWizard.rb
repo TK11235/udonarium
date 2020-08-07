@@ -8,7 +8,7 @@ class NightWizard < DiceBot
   ID = 'NightWizard'
 
   # ゲームシステム名
-  NAME = 'ナイトウィザード2版'
+  NAME = 'ナイトウィザード The 2nd Edition'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'ないとういさあと2'

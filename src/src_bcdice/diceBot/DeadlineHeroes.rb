@@ -6,10 +6,10 @@ class DeadlineHeroes < DiceBot
   ID = 'DeadlineHeroes'
 
   # ゲームシステム名
-  NAME = 'デッドラインヒーローズ'
+  NAME = 'デッドラインヒーローズRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'てつとらいんひいろおす'
+  SORT_KEY = 'てつとらいんひいろおすRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT

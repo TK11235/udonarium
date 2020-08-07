@@ -45,6 +45,7 @@ INFO_MESSAGE_TEXT
   end
 
   def check_nD10(total, _dice_total, dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :>=
 
     if total >= 11

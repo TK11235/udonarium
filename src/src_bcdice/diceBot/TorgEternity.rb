@@ -64,13 +64,14 @@ INFO_MESSAGE_TEXT
   end
 
   def torg_check(string, nick_e)
-    output = '1'
-    unless /(^|\s)S?(1R20([+-]\d+)*)(\s|$)/i =~ string
-      return '1'
+    m = /(^|\s)S?(1R20(([+-]\d+)*))(\s|$)/i.match(string)
+    unless m
+      return nil
     end
 
-    string = Regexp.last_match(2)
-    mod = Regexp.last_match(3)
+    string = m[2]
+    mod = m[3]
+
     debug(mod)
     mod = parren_killer("(0#{mod})").to_i if mod
     debug(mod)
@@ -98,15 +99,12 @@ INFO_MESSAGE_TEXT
   # ロールコマンド (通常ロール)
   def getRolld20DiceCommandResult(command)
     debug("Torg Eternity Dice Roll Command ? ", command)
-    m = /(^|\s)(S)?(TE)/i =~ command
-    #debug(Regexp.last_match(2)) #正規表現の結果はメソッドを挟むとnilになる
-    #secret = !Regexp.last_match(2).nil?
+    m = /(^|\s)(S)?(TE)/i.match(command)
     unless m
-      debug("None")
       return nil
     end
-    secret = !Regexp.last_match(2).nil?
-    debug("Yes!")
+
+    secret = !m[2].nil?
     skilled, unskilled, dice_str, mishap = torg_eternity_dice(false, true)
     if mishap == 1
       output = "d20ロール（通常） ＞ 1d20[#{dice_str}] ＞ Mishap!　絶対失敗！"
@@ -126,15 +124,12 @@ INFO_MESSAGE_TEXT
   # ロールコマンド (高揚ロール)
   def getUpRollDiceCommandResult(command)
     debug("Torg Eternity Dice Roll ( UP ) Command ? ", command)
-    m = /(^|\s)(S)?(UP)/i =~ command
-    #debug(Regexp.last_match(2)) #正規表現の結果はメソッドを挟むとnilになる
-    #secret = !Regexp.last_match(2).nil?
+    m = /(^|\s)(S)?(UP)/i.match(command)
     unless m
-      debug("None")
       return nil
     end
-    secret = !Regexp.last_match(2).nil?
-    debug("Yes!")
+
+    secret = !m[2].nil?
     skilled1, unskilled1, dice_str1, mishap = torg_eternity_dice(false, true)
     if mishap == 1
       output = "d20ロール（高揚） ＞ 1d20[#{dice_str1}] ＞ Mishap!　絶対失敗！"
@@ -157,17 +152,13 @@ INFO_MESSAGE_TEXT
   # ロールコマンド (ポシビリティロール)
   def getPossibilityRollDiceCommandResult(command)
     debug("Torg Eternity Possibility Roll Command ? ", command)
-    m = /(^|\s)(S)?(POS)((\d+)(\+\d+)?)/i =~ command
-    #debug(Regexp.last_match(2)) #正規表現の結果はメソッドを挟むとnilになる
-    #debug(Regexp.last_match(4))
-    #secret = !Regexp.last_match(2).nil?
+    m = /(^|\s)(S)?(POS)((\d+)(\+\d+)?)/i.match(command)
     unless m
-      debug("None")
       return nil
     end
-    secret = !Regexp.last_match(2).nil?
-    debug("Yes!")
-    output_modifier = parren_killer("(0#{Regexp.last_match(4)})").to_i
+
+    secret = !m[2].nil?
+    output_modifier = parren_killer("(0#{m[4]})").to_i
     skilled, unskilled, dice_str, = torg_eternity_dice(true, false)
     subtotal_skilled = skilled + output_modifier
     subtotal_unskilled = unskilled + output_modifier
@@ -186,15 +177,12 @@ INFO_MESSAGE_TEXT
   def getBonusDamageDiceCommandResult(command)
     debug("TorgEternity Bonus Damage Roll Command ? ", command)
     m = /(\d+)(BD)(([\+\-]\d+)*)/i.match(command)
-    #debug(Regexp.last_match(1)) #正規表現の結果はメソッドを挟むとnilになる
-    #debug(Regexp.last_match(3)) 
     unless m
-      debug("None")
       return nil
     end
-    debug("Yes!")
-    number_bonus_die = Regexp.last_match(1).to_i
-    value_modifier, output_modifier = get_torg_eternity_modifier(Regexp.last_match(3))
+
+    number_bonus_die = m[1].to_i
+    value_modifier, output_modifier = get_torg_eternity_modifier(m[3])
     if number_bonus_die <= 0
       output = "エラーです。xBD (x≧1) として下さい"
     else
@@ -208,14 +196,12 @@ INFO_MESSAGE_TEXT
   # 成功レベル表コマンド
   def getSuccessLevelDiceCommandResult(command)
     debug("TorgEternity Success Level Table Command ? ", command)
-    m = /(RT|Result)(\d+([\+\-]\d+)*)/i.match(command)
-    #debug(Regexp.last_match(2)) #正規表現の結果はメソッドを挟むとnilになる
+    m = /(RT|Result)(\-*\d+([\+\-]\d+)*)/i.match(command)
     unless m
-      debug("None")
       return nil
     end
-    debug("Yes!")
-    value = parren_killer("(0#{Regexp.last_match(2)})").to_i
+
+    value = parren_killer("(0#{m[2]})").to_i
     debug(value)
     if value < 0
       output = "Failure."
@@ -230,14 +216,12 @@ INFO_MESSAGE_TEXT
   # ダメージ結果表コマンド
   def getDamageResultDiceCommandResult(command)
     debug("TorgEternity Damage Result Table Command ? ", command)
-    m = /(DT|Damage)(\d+([\+\-]\d+)*)/i.match(command)
-    #debug(Regexp.last_match(2)) #正規表現の結果はメソッドを挟むとnilになる
+    m = /(DT|Damage)(\-*\d+([\+\-]\d+)*)/i.match(command)
     unless m
-      debug("None")
       return nil
     end
-    debug("Yes!")
-    value = parren_killer("(0#{Regexp.last_match(2)})").to_i
+
+    value = parren_killer("(0#{m[2]})").to_i
     debug(value)
     output = get_torg_eternity_damage_result(value)
     output = "ダメージ結果表[#{value}] ＞ #{output}"
@@ -249,17 +233,14 @@ INFO_MESSAGE_TEXT
   def getRollBonusDiceCommandResult(command)
     debug("TorgEternity Roll Bonus Table Command ? ", command)
     m = /(BT|Bonus)(\d+)(([\+\-]\d+)*)/i.match(command)
-    #debug(Regexp.last_match(2)) #正規表現の結果はメソッドを挟むとnilになる
-    #debug(Regexp.last_match(3))
     unless m
-      debug("None")
       return nil
     end
-    debug("Yes!")
-    value_roll = Regexp.last_match(2).to_i
+
+    value_roll = m[2].to_i
     output_bonus = get_torg_eternity_bonus(value_roll)
     debug(output_bonus)
-    value_modifier, output_modifier = get_torg_eternity_modifier(Regexp.last_match(3))
+    value_modifier, output_modifier = get_torg_eternity_modifier(m[3])
     if value_roll <= 1
       output = "ロールボーナス表[#{value_roll}] ＞ Mishap!!"
     elsif output_modifier.empty?

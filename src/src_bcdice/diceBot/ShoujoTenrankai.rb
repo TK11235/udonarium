@@ -6,10 +6,10 @@ class ShoujoTenrankai < DiceBot
   ID = 'ShoujoTenrankai'
 
   # ゲームシステム名
-  NAME = '少女展爛会'
+  NAME = '少女展爛会TRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'しようしよてんらんかい'
+  SORT_KEY = 'しようしよてんらんかいTRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

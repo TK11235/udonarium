@@ -6,7 +6,7 @@ class WorldOfDarkness < DiceBot
   ID = 'WorldOfDarkness'
 
   # ゲームシステム名
-  NAME = 'ワールドオブダークネス'
+  NAME = 'ワールド・オブ・ダークネス'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'わあるとおふたあくねす'

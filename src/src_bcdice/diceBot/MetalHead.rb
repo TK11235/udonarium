@@ -85,6 +85,7 @@ MESSAGETEXT
   end
 
   def check_1D100(total, dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     return getResult(total, dice_total, target)

@@ -92,6 +92,7 @@ INFO_MESSAGE_TEXT
 
   # 게임별 성공도 판정(2D6)
   def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :>=
 
     if dice_total <= 2

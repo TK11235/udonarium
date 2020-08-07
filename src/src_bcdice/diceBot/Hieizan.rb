@@ -16,6 +16,8 @@ class Hieizan < DiceBot
 
   # ゲーム別成功度判定(1d100)
   def check_1D100(total, _dice_total, _cmp_op, target)
+    return '' if target == '?'
+
     if total <= 1
       # 1は自動成功
       if total <= (target / 5)

@@ -6,7 +6,7 @@ class ShadowRun4 < DiceBot
   ID = 'ShadowRun4'
 
   # ゲームシステム名
-  NAME = 'シャドウラン第4版'
+  NAME = 'シャドウラン 4th Edition'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'しやとうらん4'

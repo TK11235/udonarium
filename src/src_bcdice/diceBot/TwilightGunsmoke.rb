@@ -6,7 +6,7 @@ class TwilightGunsmoke < DiceBot
   ID = 'TwilightGunsmoke'
 
   # ゲームシステム名
-  NAME = 'トワイライト・ガンスモーク'
+  NAME = 'トワイライトガンスモーク'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'とわいらいとかんすもおく'

@@ -6,7 +6,7 @@ class TokyoNova < DiceBot
   ID = 'TokyoNova'
 
   # ゲームシステム名
-  NAME = 'トーキョーＮ◎ＶＡ'
+  NAME = 'トーキョーN◎VA'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'とおきよおのは'

@@ -46,6 +46,7 @@ class DiceBotLoader
   def self.loadUnknownGame(gameType)
     debug('DiceBotLoader.loadUnknownGame gameType', gameType)
 
+    # TKfix
     # unless validGameType?(gameType)
     #   # クラス名として正しくない名前が指定された場合、後の
     #   # Object.const_getで必ず失敗するため、読み込みを中止する
@@ -88,17 +89,20 @@ class DiceBotLoader
 
     # botFiles = Dir.glob("#{diceBotDir}/*.rb")
     # botNames =
-    #   botFiles.map { |botFile| File.basename(botFile, '.rb').untaint }
+    #   botFiles.map { |botFile| File.basename(botFile, '.rb') }
     # validBotNames =
     #   # 特別な名前のものを除外する
     #   (botNames - BOT_NAMES_TO_IGNORE).
     #   # 正しいクラス名になるものだけ選ぶ
     #   select { |botName| BOT_NAME_PATTERN === botName }
 
-    # validBotNames.map do |botName|
+    # bots = validBotNames.map do |botName|
     #   require("#{diceBotDir}/#{botName}")
     #   Object.const_get(botName).new
-    # }
+    # end
+
+    # return bots.sort_by(&:sort_key)
+    return []
   end
 
   # 読み込み処理を初期化する
@@ -150,9 +154,9 @@ class DiceBotLoader
   #
   # 例：
   #
-  #   DiceBotLoader.new(%w(Elric! EL), :filenames => %w(Elric))
+  #   DiceBotLoader.new(%w(Elric EL), :filenames => %w(Elric))
   #
-  # * マッチするタイトルは 'Elric!', 'EL'（大文字小文字区別なし）
+  # * マッチするタイトルは 'Elric', 'EL'（大文字小文字区別なし）
   # * 読み込むダイスボットファイルは diceBot/Elric.rb（大文字小文字区別あり）
   # * ダイスボットのクラス名は :filenames で最初に指定した Elric（大文字小文字区別あり）
   #

@@ -6,7 +6,7 @@ class Chill3 < DiceBot
   ID = 'Chill3'
 
   # ゲームシステム名
-  NAME = 'Chill 3'
+  NAME = 'Chill 3rd Edition'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'ちる3'
@@ -19,6 +19,7 @@ class Chill3 < DiceBot
 INFO_MESSAGE_TEXT
 
   def check_1D100(total, dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     # ゾロ目ならC-ResultかBotch

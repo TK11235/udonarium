@@ -5,7 +5,7 @@ require 'diceBot/NightWizard'
 
 class NightWizard3rd < NightWizard
   # ゲームシステム名
-  NAME = 'ナイトウィザード3版'
+  NAME = 'ナイトウィザード The 3rd Edition'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'ないとういさあと3'

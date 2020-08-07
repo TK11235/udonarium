@@ -340,7 +340,7 @@ INFO_MESSAGE_TEXT
       diff = Regexp.last_match(1)
       depth = Regexp.last_match(2).to_i
       # num = depth / 10
-      num = (depth/10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+      num = (depth / 10).floor # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
       if num >= 6
         num = 5
       end

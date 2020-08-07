@@ -6,10 +6,10 @@ class GranCrest < DiceBot
   ID = 'GranCrest'
 
   # ゲームシステム名
-  NAME = 'グランクレスト'
+  NAME = 'グランクレストRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'くらんくれすと'
+  SORT_KEY = 'くらんくれすとRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

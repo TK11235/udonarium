@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # frozen_string_literal: true
 
+require 'utils/ArithmeticEvaluator'
+require 'utils/modifier_formatter'
+
 require 'diceBot/SwordWorld'
 
 class SwordWorld2_0 < SwordWorld
@@ -62,13 +65,124 @@ class SwordWorld2_0 < SwordWorld
 　絡み効果表を出すことができます。
 INFO_MESSAGE_TEXT
 
-  setPrefixes(['H?K\d+.*', 'Gr(\d+)?', 'FT', 'TT'])
+  setPrefixes(['H?K\d+.*', 'Gr(\d+)?', '2D6?@\d+.*', 'FT', 'TT'])
+
+  # 超越判定のノード
+  class TranscendentTest
+    include ModifierFormatter
+
+    # @param [Integer] critical_value クリティカル値
+    # @param [Integer] modifier 修正値
+    # @param [String, nil] cmp_op 比較演算子（> または >=）
+    # @param [Integer, nil] target 目標値
+    def initialize(critical_value, modifier, cmp_op, target)
+      @critical_value = critical_value
+      @modifier = modifier
+      @cmp_op = cmp_op
+      @target = target
+
+      @modifier_str = format_modifier(@modifier)
+      @expression = node_expression()
+    end
+
+    # 超越判定を行う
+    # @param [SwordWorld2_0] bot ダイスボット
+    # @return [String]
+    def execute(bot)
+      if @critical_value < 3
+        return "(#{@expression}) ＞ クリティカル値が小さすぎます。3以上を指定してください。"
+      end
+
+      first_value_group = roll_2d6(bot)
+      value_groups = [first_value_group]
+
+      fumble = first_value_group == [1, 1]
+      critical = first_value_group == [6, 6]
+
+      if !fumble && !critical
+        while sum_of_dice(value_groups.last) >= @critical_value
+          value_groups.push(roll_2d6(bot))
+        end
+      end
+
+      sum = sum_of_dice(value_groups)
+      total_sum = sum + @modifier
+
+      parts = [
+        "(#{@expression})",
+        "#{dice_str(value_groups, sum)}#{@modifier_str}",
+        total_sum,
+        @target && result_str(total_sum, value_groups.length, fumble, critical)
+      ].compact
+
+      return parts.join(' ＞ ')
+    end
+
+    private
+
+    # 数式表記を返す
+    # @return [String]
+    def node_expression
+      lhs = "2D6@#{@critical_value}#{@modifier_str}"
+
+      return @target ? "#{lhs}#{@cmp_op}#{@target}" : lhs
+    end
+
+    # 出目の合計を返す
+    # @param [(Integer, Integer), Array<(Integer, Integer)>] value_groups
+    #   出目のグループまたはその配列
+    # @return [Integer]
+    def sum_of_dice(value_groups)
+      # TODO: Ruby 2.4以降では Array#sum が使える
+      value_groups.flatten.reduce(0, &:+)
+    end
+
+    # ダイス部分の文字列を返す
+    # @param [Array<(Integer, Integer)>] value_groups 出目のグループの配列
+    # @param [Integer] sum 出目の合計
+    # @return [String]
+    def dice_str(value_groups, sum)
+      value_groups_str =
+        value_groups.
+        map { |values| "[#{values.join(',')}]" }.
+        join
+
+      return "#{sum}#{value_groups_str}"
+    end
+
+    # 判定結果の文字列を返す
+    # @param [Integer] total_sum 合計値
+    # @param [Integer] n_value_groups 出目のグループの数
+    # @param [Boolean] fumble ファンブルかどうか
+    # @param [Boolean] critical クリティカルかどうか
+    # @return [String]
+    def result_str(total_sum, n_value_groups, fumble, critical)
+      return '自動的失敗' if fumble
+      return '自動的成功' if critical
+
+      if total_sum.send(@cmp_op, @target)
+        # 振り足しが行われ、合計値が41以上ならば「超成功」
+        n_value_groups >= 2 && total_sum >= 41 ? '超成功' : '成功'
+      else
+        '失敗'
+      end
+    end
+
+    # 2D6を振る
+    # @return [(Integer, Integer)] 出目のグループ
+    def roll_2d6(bot)
+      Array.new(2) { bot.roll(1, 6)[0] }
+    end
+  end
 
   def initialize
     rating_table = 2
     super()
     @rating_table = rating_table
   end
+
+  # 超越判定のパターン
+  TRANSCENDENT_TEST_RE = /\A2D6?@(\d+)([-+\d]+)?(?:(>=?)(\d+))?/.freeze
 
   def rollDiceCommand(command)
     case command
@@ -78,6 +192,16 @@ INFO_MESSAGE_TEXT
       else
         growth
       end
+    when TRANSCENDENT_TEST_RE
+      m = Regexp.last_match
+
+      critical_value = m[1].to_i
+      modifier = m[2] ? ArithmeticEvaluator.new.eval(m[2]) : 0
+      cmp_op = m[3]
+      target = m[3] && m[4].to_i
+
+      node = TranscendentTest.new(critical_value, modifier, cmp_op, target)
+      node.execute(self)
     when 'FT'
       get_fumble_table
     when 'TT'
@@ -135,46 +259,6 @@ INFO_MESSAGE_TEXT
     end
 
     return isGratestFortune, string
-  end
-
-  def is2dCritical
-    true
-  end
-
-  # SW2.0 の超成功用
-  # @param (see DiceBot#check2dCritical)
-  def check2dCritical(critical, dice_new, dice_arry, loop_count)
-    return if critical.nil? || critical <= 2
-
-    if loop_count == 0
-      return if  dice_new == 12
-      return if  dice_new == 2
-    end
-
-    if dice_new >= critical
-      dice_arry.push(2)
-    end
-  end
-
-  def check_nD6(total, dice_total, dice_list, cmp_op, target)
-    result = super(total, dice_total, dice_list, cmp_op, target)
-
-    return result unless result.nil?
-
-    string = bcdice.getOriginalMessage
-
-    superSuccessValue = 41
-
-    if /@(\d+)/ === string
-      critical = Regexp.last_match(1).to_i
-      if dice_total >= critical
-        if  total >= superSuccessValue
-          return " ＞ 超成功"
-        end
-      end
-    end
-
-    return result
   end
 
   def growth(count = 1)

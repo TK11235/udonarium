@@ -18,6 +18,7 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(1d100)
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return nil unless cmp_op == :<=
 
     # RuneQuest QUICK-START RULESを元に修正

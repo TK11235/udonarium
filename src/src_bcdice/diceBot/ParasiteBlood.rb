@@ -8,10 +8,10 @@ class ParasiteBlood < DemonParasite
   ID = 'ParasiteBlood'
 
   # ゲームシステム名
-  NAME = 'パラサイトブラッド'
+  NAME = 'パラサイトブラッドRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'はらさいとふらつと'
+  SORT_KEY = 'はらさいとふらつとRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT

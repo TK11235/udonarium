@@ -51,6 +51,7 @@ INFO_MESSAGE_TEXT
   end
 
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     if total <= target

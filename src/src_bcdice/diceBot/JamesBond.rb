@@ -19,6 +19,7 @@ class JamesBond < DiceBot
 INFO_MESSAGE_TEXT
 
   def check_1D100(total, _dice_total, cmp_op, target) # ゲーム別成功度判定(1d100)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     base = ((target + 9) / 10).floor

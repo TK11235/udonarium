@@ -6,7 +6,7 @@ class PhantasmAdventure < DiceBot
   ID = 'PhantasmAdventure'
 
   # ゲームシステム名
-  NAME = 'ファンタズムアドベンチャー'
+  NAME = 'ファンタズム・アドベンチャー'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'ふあんたすむあとへんちやあ'
@@ -23,6 +23,7 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(1d20)
   def check_1D20(total, _dice_total, cmp_op, diff)
+    return '' if diff == '?'
     return '' unless cmp_op == :<=
 
     # 技能値の修正を計算する

@@ -16,6 +16,7 @@ class EclipsePhase < DiceBot
     '1D100<=m 方式の判定で成否、クリティカル・ファンブルを自動判定'
 
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     diceValue = total % 100 # 出目00は100ではなく00とする

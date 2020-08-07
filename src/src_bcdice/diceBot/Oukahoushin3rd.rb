@@ -6,10 +6,10 @@ class Oukahoushin3rd < DiceBot
   ID = 'Oukahoushin3rd'
 
   # ゲームシステム名
-  NAME = '央華封神RPG第三版'
+  NAME = '央華封神RPG 第三版'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'おうかほうしん3'
+  SORT_KEY = 'おうかほうしんRPG3'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT

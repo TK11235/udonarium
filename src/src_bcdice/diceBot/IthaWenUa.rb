@@ -15,6 +15,7 @@ class IthaWenUa < DiceBot
   HELP_MESSAGE = "1D100<=m 方式の判定で成否、クリティカル(01)・ファンブル(00)を自動判定します。\n"
 
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     diceValue = total % 100

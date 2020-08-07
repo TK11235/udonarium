@@ -8,7 +8,7 @@ class ShadowRun5 < ShadowRun4
   ID = 'ShadowRun5'
 
   # ゲームシステム名
-  NAME = 'シャドウラン第5版'
+  NAME = 'シャドウラン 5th Edition'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'しやとうらん5'

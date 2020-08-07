@@ -84,7 +84,7 @@ INFO_MESSAGE_TEXT
         loop_count += 1
       end
 
-      return result_str(value_groups, loop_count)
+      return result_str(value_groups)
     end
 
     private
@@ -99,49 +99,16 @@ INFO_MESSAGE_TEXT
 
     # 判定結果の文字列を返す
     # @param [Array<ValueGroup>] value_groups 出目のグループの配列
-    # @param [Integer] loop_count 回転数
     # @return [String]
-    def result_str(value_groups, loop_count)
+    def result_str(value_groups)
       fumble = value_groups[0].values.all? { |value| value == 1 }
       # TODO: Ruby 2.4以降では Array#sum が使える
       sum = value_groups.map(&:max).reduce(0, &:+)
       achieved_value = fumble ? 0 : (sum + @modifier)
 
-      long_str = result_str_long(value_groups, achieved_value, fumble)
-
-      if long_str.length > $SEND_STR_MAX
-        return result_str_short(loop_count, achieved_value, fumble)
-      end
-
-      return long_str
-    end
-
-    # ダイスロール結果の長い文字列表記を返す
-    # @param [Array<ValueGroup>] value_groups 出目のグループの配列
-    # @param [Integer] achieved_value 達成値
-    # @param [Boolean] fumble ファンブルしたか
-    # @return [String]
-    def result_str_long(value_groups, achieved_value, fumble)
       parts = [
         "(#{@expression})",
         "#{value_groups.join('+')}#{@modifier_str}",
-        achieved_value_with_if_fumble(achieved_value, fumble),
-        compare_result(achieved_value, fumble)
-      ]
-
-      return parts.compact.join(' ＞ ')
-    end
-
-    # ダイスロール結果の短い文字列表記を返す
-    # @param [Integer] loop_count 回転数
-    # @param [Integer] achieved_value 達成値
-    # @param [Boolean] fumble ファンブルしたか
-    # @return [String]
-    def result_str_short(loop_count, achieved_value, fumble)
-      parts = [
-        "(#{@expression})",
-        '...',
-        "回転数#{loop_count}",
         achieved_value_with_if_fumble(achieved_value, fumble),
         compare_result(achieved_value, fumble)
       ]
@@ -228,6 +195,7 @@ INFO_MESSAGE_TEXT
   end
 
   def check_nD10(total, _dice_total, dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :>=
 
     if dice_list.count(1) == dice_list.size

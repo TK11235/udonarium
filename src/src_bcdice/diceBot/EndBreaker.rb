@@ -6,7 +6,7 @@ class EndBreaker < DiceBot
   ID = 'EndBreaker'
 
   # ゲームシステム名
-  NAME = 'エンドブレイカー'
+  NAME = 'エンドブレイカー！'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'えんとふれいかあ'

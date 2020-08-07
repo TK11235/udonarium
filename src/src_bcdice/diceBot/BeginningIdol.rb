@@ -151,6 +151,7 @@ INFO_MESSAGE_TEXT
   end
 
   def check_nD6(total, dice_total, _dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :>=
 
     if dice_total <= 2

@@ -51,10 +51,6 @@ MESSAGETEXT
 
     output = "(#{command}) ＞ #{rollResult}"
 
-    if output.length > $SEND_STR_MAX
-      output = "(#{command}) ＞ ..."
-    end
-
     roundCountText = getRoundCountText(roundCount)
     successText = getSuccessText(successCount)
     specialText = getSpecialText(specialCount)

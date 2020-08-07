@@ -46,7 +46,9 @@ INFO_MESSAGE_TEXT
     if dice_total <= 2
       " ＞ ファンブル"
     elsif dice_total >= 12
-      " ＞ スペシャル(生命点1点か変調1つ回復)"
+      " ＞ スペシャル(【生命力】1点か変調一つを回復)"
+    elsif target == "?"
+      ""
     elsif total >= target
       " ＞ 成功"
     else

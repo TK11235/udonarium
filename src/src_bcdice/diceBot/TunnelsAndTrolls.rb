@@ -3,7 +3,7 @@
 
 class TunnelsAndTrolls < DiceBot
   # ゲームシステムの識別子
-  ID = 'Tunnels & Trolls'
+  ID = 'TunnelsAndTrolls'
 
   # ゲームシステム名
   NAME = 'トンネルズ＆トロールズ'
@@ -39,7 +39,7 @@ INFO_MESSAGE_TEXT
   end
 
   def changeText(string)
-    debug('Tunnels & Trolls parren_killer begin string', string)
+    debug('TunnelsAndTrolls parren_killer begin string', string)
 
     if /(\d+)LV/i =~ string
       level_diff = Regexp.last_match(1).to_i * 5 + 15

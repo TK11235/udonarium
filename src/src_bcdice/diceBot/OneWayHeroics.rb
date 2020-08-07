@@ -6,10 +6,10 @@ class OneWayHeroics < DiceBot
   ID = 'OneWayHeroics'
 
   # ゲームシステム名
-  NAME = '片道勇者'
+  NAME = '片道勇者TRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'かたみちゆうしや'
+  SORT_KEY = 'かたみちゆうしやTRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

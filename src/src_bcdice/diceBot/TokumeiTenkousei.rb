@@ -23,7 +23,7 @@ class TokumeiTenkousei < DiceBot
   end
 
   def check_nD6(total, _dice_total, _dice_list, cmp_op, target)
-    if cmp_op != :>= && target == "?"
+    if cmp_op != :>= || target == "?"
       return ''
     end
 

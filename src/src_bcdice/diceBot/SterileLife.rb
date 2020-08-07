@@ -6,10 +6,10 @@ class SterileLife < DiceBot
   ID = 'SterileLife'
 
   # ゲームシステム名
-  NAME = 'ステラーライフ'
+  NAME = 'ステラーライフTRPG'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'すてらあらいふ'
+  SORT_KEY = 'すてらあらいふTRPG'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

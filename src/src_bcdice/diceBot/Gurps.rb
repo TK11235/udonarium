@@ -41,6 +41,7 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(nD6)
   def check_nD6(total, dice_total, dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless dice_list.size == 3 && cmp_op == :<=
 
     success = target - total # 成功度

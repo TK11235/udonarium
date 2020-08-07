@@ -30,6 +30,7 @@ INFO_MESSAGE_TEXT
   # ---- 以降、Gundog.rbよりほぼコピペ（絶対成功→ベアリーに用語変更対応の為、継承だと不都合）
   # ゲーム別成功度判定(1d100)
   def check_1D100(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :<=
 
     if total >= 100

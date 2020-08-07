@@ -6,7 +6,7 @@ class HuntersMoon < DiceBot
   ID = 'HuntersMoon'
 
   # ゲームシステム名
-  NAME = 'ハンターズムーン'
+  NAME = 'ハンターズ・ムーン'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'はんたあすむうん'
@@ -51,6 +51,7 @@ INFO_MESSAGE_TEXT
 
   # ゲーム別成功度判定(2D6)
   def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' if target == '?'
     return '' unless cmp_op == :>=
 
     if dice_total <= 2

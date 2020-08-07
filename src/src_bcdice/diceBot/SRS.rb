@@ -15,7 +15,7 @@ class SRS < DiceBot
   ID = 'SRS'
 
   # ゲームシステム名
-  NAME = 'Standard RPG System'
+  NAME = 'スタンダードRPGシステム'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'すたんたあとRPGしすてむ'

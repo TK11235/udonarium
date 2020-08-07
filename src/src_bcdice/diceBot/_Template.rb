@@ -32,7 +32,7 @@ MESSAGETEXT
     # @sameDiceRerollType = 0;   #ゾロ目で振り足しのロール種別(0=判定のみ, 1=ダメージのみ, 2=両方)
     # @d66Type = 0;        #d66の差し替え
     # @isPrintMaxDice = false;      #最大値表示
-    # @upplerRollThreshold = 0;      #上方無限
+    # @upperRollThreshold = 0;      #上方無限
     # @unlimitedRollDiceType = 0;    #無限ロールのダイス
     # @rerollNumber = 0;      #振り足しする条件
     # @defaultSuccessTarget = "";      #目標値が空欄の時の目標値

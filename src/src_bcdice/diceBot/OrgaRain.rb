@@ -9,7 +9,7 @@ class OrgaRain < DiceBot
   NAME = '在りて遍くオルガレイン'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'おるかれいん'
+  SORT_KEY = 'ありてあまねくおるかれいん'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

@@ -117,13 +117,9 @@ MESSAGETEXT
       resultTexts << hitResult
     end
 
+    resultTexts.push(" ＞ #{hitCount}回命中")
+
     totalResultText = resultTexts.join("\n")
-
-    if  totalResultText.length >= $SEND_STR_MAX
-      totalResultText = "..."
-    end
-
-    totalResultText += "\n ＞ #{hitCount}回命中"
     totalResultText += " 命中箇所：" + getTotalDamage(damages) if hitCount > 0
 
     return totalResultText

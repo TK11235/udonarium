@@ -49,6 +49,15 @@ MESSAGETEXT
     end
   end
 
+  def critical(total)
+    case total
+    when  2
+      'ファンブル！'
+    when 12
+      '強打！'
+    end
+  end
+
   def clamp(i, min, max)
     if i < min
       min
@@ -89,7 +98,8 @@ MESSAGETEXT
       dice_command = "2D6#{explicit_sign corr}"
       total, dice_str = roll(2, 6)
       expr = "#{total}[#{dice_str}]#{explicit_sign corr}"
-      sequence = [ parentheses(dice_command), expr, total + corr ]
+      crit = critical(total)
+      sequence = [ parentheses(dice_command), expr, crit, total + corr ].compact
     when /\AFD/
       # 武器防具ロール
       # ダメージを出力する

@@ -6,7 +6,7 @@ class BadLife < DiceBot
   ID = 'BadLife'
 
   # ゲームシステム名
-  NAME = '犯罪活劇RPGバッドライフ'
+  NAME = 'バッドライフ'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'はつとらいふ'

@@ -10,7 +10,7 @@ class SwordWorld < DiceBot
   ID = 'SwordWorld'
 
   # ゲームシステム名
-  NAME = 'ソードワールド'
+  NAME = 'ソードワールドRPG'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'そおとわあると'
@@ -175,9 +175,8 @@ class SwordWorld < DiceBot
       break unless dice >= crit
     end
 
-    limitLength = $SEND_STR_MAX - output.length
     output += getResultText(totalValue, addValue, diceResults, diceResultTotals,
-                            rateResults, diceOnlyTotal, round, limitLength, half)
+                            rateResults, diceOnlyTotal, round, half)
 
     return output
   end
@@ -414,12 +413,10 @@ class SwordWorld < DiceBot
   # @param rateResults  [Array<String>]
   # @param dice_total [Integer]
   # @param round [Integer]
-  # @param limitLength [Integer]
   # @param half [Boolean]
   def getResultText(rating_total, modifier, diceResults, diceResultTotals,
-                    rateResults, dice_total, round, limitLength, half)
+                    rateResults, dice_total, round, half)
     sequence = []
-    short = ["..."]
 
     sequence.push("2D:[#{diceResults.join(' ')}]=#{diceResultTotals.join(',')}")
 
@@ -443,7 +440,6 @@ class SwordWorld < DiceBot
     if round > 1
       round_text = "#{round - 1}回転"
       sequence.push(round_text)
-      short.push(round_text)
     end
 
     total = rating_total + modifier
@@ -453,14 +449,8 @@ class SwordWorld < DiceBot
 
     total_text = total.to_s
     sequence.push(total_text)
-    short.push(total_text)
 
-    ret = sequence.join(" ＞ ")
-    if ret.length > limitLength
-      short.join(" ＞ ")
-    else
-      ret
-    end
+    return sequence.join(" ＞ ")
   end
 
   def setRatingTable(tnick)

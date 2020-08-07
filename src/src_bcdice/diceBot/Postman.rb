@@ -9,7 +9,7 @@ class Postman < DiceBot
   NAME = '壊れた世界のポストマン'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'ほすとまん'
+  SORT_KEY = 'こわれたせかいのほすとまん'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

@@ -9,7 +9,7 @@ class Illusio < DiceBot
   NAME = '晃天のイルージオ'
 
   # ゲームシステム名の読みがな
-  SORT_KEY = 'いるうしお'
+  SORT_KEY = 'こうてんのいるうしお'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT

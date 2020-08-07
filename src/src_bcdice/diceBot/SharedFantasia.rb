@@ -34,6 +34,8 @@ MESSAGETEXT
   end
 
   def check_2D6(total, dice_total, _dice_list, cmp_op, target)
+    return '' if target == '?'
+
     critical = false
     fumble   = false
 

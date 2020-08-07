@@ -16,6 +16,8 @@ class InfiniteFantasia < DiceBot
 
   # ゲーム別成功度判定(1d20)
   def check_1D20(total, _dice_total, cmp_op, target)
+    return '' if target == '?'
+
     if cmp_op != :<=
       return ''
     elsif total > target
