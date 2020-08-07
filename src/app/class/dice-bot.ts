@@ -136,6 +136,7 @@ export class DiceBot extends GameObject {
     { script: 'NjslyrBattle', game: 'NJSLYRBATTLE' },
     { script: 'Nuekagami', game: '鵺鏡' },
     { script: 'Nechronica', game: 'ネクロニカ' },
+    { script: 'NeverCloud', game: 'ネバークラウドTRPG' },
     { script: 'HarnMaster', game: 'ハーンマスター' },
     { script: 'Pathfinder', game: 'Pathfinder' },
     { script: 'BadLife', game: 'バッドライフ' },
