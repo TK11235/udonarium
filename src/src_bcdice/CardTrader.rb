@@ -6,6 +6,9 @@ require 'configBcDice.rb'
 $ircNickRegExp = '[A-Za-z\d\-\[\]\\\'^{}_]+'
 
 class CardTrader
+  OK_RESULT = '_OK_'.freeze
+  NG_RESULT = '_NG_'.freeze
+
   # カード置き場数。0なら無し。
   # @return [Integer]
   attr_accessor :card_place
@@ -111,78 +114,6 @@ class CardTrader
     @tnick = t
   end
 
-  # カード機能ヘルプ
-  def printCardHelp
-    send_to_sender = lambda { |message| sendMessageToOnlySender message }
-
-    [
-      [
-        "・カードを引く　　　　　　　(c-draw[n]) (nは枚数)",
-        "・オープンでカードを引く　　(c-odraw[n])",
-        "・カードを選んで引く　　　　(c-pick[c[,c]]) (cはカード。カンマで複数指定可)",
-        "・捨てたカードを手札に戻す　(c-back[c[,c]])",
-        "・置いたカードを手札に戻す　(c-back1[c[,c]])"
-      ],
-
-      [
-        "・手札と場札を見る　　　　　(c-hand) (Talk可)",
-        "・カードを出す　　　　　　　(c-play[c[,c]]",
-        "・カードを場に出す　　　　　(c-play1[c[,c]]",
-        "・カードを捨てる　　　　　　(c-discard[c[,c]]) (Talk可)",
-        "・場のカードを選んで捨てる　(c-discard1[c[,c]])",
-        "・山札からめくって捨てる　  (c-milstone[n])"
-      ],
-
-      [
-        "・カードを相手に一枚渡す　　(c-pass[c]相手) (カード指定が無いときはランダム)",
-        "・場のカードを相手に渡す　　(c-pass1[c]相手) (カード指定が無いときはランダム)",
-        "・カードを相手の場に出す　　(c-place[c[,c]]相手)",
-        "・場のカードを相手の場に出す(c-place1[c[,c]]相手)"
-      ],
-
-      [
-        "・場のカードをタップする　　(c-tap1[c[,c]]相手)",
-        "・場のカードをアンタップする(c-untap1[c[,c]]相手)",
-        "  ---"
-      ]
-    ].each do |messages|
-      messages.each(&send_to_sender)
-      sleep 1
-    end
-
-    sleep 1
-
-    [
-      "・カードを配る　　　　　　　(c-deal[n]相手)",
-      "・カードを見てから配る　　　(c-vdeal[n]相手)",
-      "・カードのシャッフル　　　　(c-shuffle)",
-      "・捨てカードを山に戻す　　　(c-rshuffle)",
-      "・全員の場のカードを捨てる　(c-clean)"
-    ].each(&send_to_sender)
-
-    sleep 1
-
-    [
-      "・相手の手札と場札を見る　　(c-vhand) (Talk不可)",
-      "・枚数配置を見る　　　　　　(c-check)",
-      "・復活の呪文　　　　　　　　(c-spell[呪文]) (c-spellで呪文の表示)"
-    ].each(&send_to_sender)
-
-    sendMessageToOnlySender "  -- END ---"
-  end
-
-  def setCardMode()
-    return unless /(\d+)/ =~ @tnick
-
-    @card_place = Regexp.last_match(1).to_i
-
-    if @card_place > 0
-      sendMessageToChannels("カード置き場ありに変更しました")
-    else
-      sendMessageToChannels("カード置き場無しに変更しました")
-    end
-  end
-
   def readCardSet()
     readExtraCard(@tnick)
     sendMessageToOnlySender("カードセットの読み込み成功しました")
@@ -237,6 +168,9 @@ class CardTrader
     end
   end
 
+  # カード機能のコマンドを実行する
+  # @param [String] arg コマンド
+  # @param [String] channel IRCチャンネル
   def executeCard(arg, channel)
     @channel = channel
 
@@ -246,81 +180,102 @@ class CardTrader
     count = 0
 
     case arg
+
+    # カードのシャッフル
     when /(c-shuffle|c-sh)($|\s)/
       output_msg = shuffleCards
       sendMessage(@channel, output_msg)
 
+    # カードを引く
     when /c-draw(\[[\d]+\])?($|\s)/
       drawCardByCommandText(arg)
 
+    # オープンでカードを引く
     when /(c-odraw|c-opend)(\[[\d]+\])?($|\s)/
       value = Regexp.last_match(2)
       drawCardOpen(value)
 
+    # 手札と場札を見る
     when /c-hand($|\s)/
       sendMessageToOnlySender(getHandAndPlaceCardInfoText(arg, @nick_e))
 
+    # 相手の手札と場札を見る
     when /c-vhand\s*(#{$ircNickRegExp})($|\s)/
       name = Regexp.last_match(1)
       debug("c-vhand name", name)
       messageText = ("#{name} の手札は" + getHandAndPlaceCardInfoText("c-hand", name) + "です")
       sendMessageToOnlySender(messageText)
 
+    # カードを出す / カードを場に出す
     when /c-play(\d*)\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
       playCardByCommandText(arg)
 
+    # 捨てカードを山に戻す
     when /(c-rshuffle|c-rsh)($|\s)/
       output_msg = returnCards
       sendMessage(@channel, output_msg)
 
+    # 全員の場のカードを捨てる
     when /c-clean($|\s)/
       output_msg = clearAllPlaceAllPlayerCards
       sendMessage(@channel, output_msg)
 
+    # @todo 説明文に記載されていないコマンド
     when /c-review($|\s)/
       output_msg = reviewCards
       sendMessageToOnlySender(output_msg)
 
+    # 枚数配置を見る
     when /c-check($|\s)/
       out_msg, place_msg = getAllCardLocation
       sendMessage(@channel, out_msg)
       sendMessage(@channel, place_msg)
 
+    # カードを相手に一枚渡す / 場のカードを相手に渡す
     when /c-pass(\d)*(\[#{@cardRegExp}(,#{@cardRegExp})*\])?\s*(#{$ircNickRegExp})($|\s)/
       sendTo = Regexp.last_match(4)
       transferCardsByCommandText(arg, sendTo)
 
+    # カードを選んで引く
     when /c-pick\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
       pickupCardCommandText(arg)
+
+    # 捨てたカードを手札に戻す / 置いたカードを手札に戻す
     # FIXME
     when /c-back(\d)*\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
       backCardCommandText(arg)
 
+    # カードを配る
     when /c-deal(\[[\d]+\]|\s)\s*(#{$ircNickRegExp})($|\s)/
       count = Regexp.last_match(1)
       targetNick = Regexp.last_match(2)
       dealCard(count, targetNick)
 
+    # カードを見てから配る
     when /c-vdeal(\[[\d]+\]|\s)\s*(#{$ircNickRegExp})($|\s)/
       count = Regexp.last_match(1)
       targetNick = Regexp.last_match(2)
       lookAndDealCard(count, targetNick)
 
+    # カードを捨てる / 場のカードを選んで捨てる
     when /c-(dis|discard)(\d)*\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
       discardCardCommandText(arg)
 
+    # カードを相手の場に出す / 場のカードを相手の場に出す
     when /c-place(\d)*(\[#{@cardRegExp}(,#{@cardRegExp})*\])?\s*(#{$ircNickRegExp})($|\s)/
       targetNick = Regexp.last_match(4)
       sendCardToTargetNickPlaceCommandText(arg, targetNick)
 
+    # 場のカードをタップする / 場のカードをアンタップする
     when /c-(un)?tap(\d+)\[#{@cardRegExp}(,#{@cardRegExp})*\]($|\s)/
       tapCardCommandText(arg)
 
+    # 復活の呪文を表示する / 復活の呪文を唱える
     when /c-spell(\[(#{$ircNickRegExp}[^\]]+?)\])?($|\s)/
       spellText = Regexp.last_match(2)
       printCardRestorationSpellResult(spellText)
-      # c_spell_caller(arg)
 
+    # 山札からめくって捨てる
     when /(c-mil(stone)?(\[[\d]+\])?)($|\s)/
       commandText = Regexp.last_match(1)
       printMilStoneResult(commandText)
@@ -449,7 +404,7 @@ class CardTrader
 
     cards.each do |card|
       string = pickupOneCard(card)
-      if string == $okResult
+      if string == OK_RESULT
         okCount += 1
       else
         ngCardList << string
@@ -472,7 +427,7 @@ class CardTrader
     if isDelete
       @deal_cards[destination] ||= []
       @deal_cards[destination] << targetCard
-      return $okResult
+      return OK_RESULT
     else
       return targetCard; # 無かったカードを返す
     end
@@ -515,7 +470,7 @@ class CardTrader
 
       cards.each do |card|
         string = backOneCard(card, destination, place)
-        if string == $okResult
+        if string == OK_RESULT
           okCount += 1
         else
           ngCards << string
@@ -535,7 +490,7 @@ class CardTrader
 
     if @card_place > 0 # 場があるときのみ処理
       string = transferOneCard(targetCard, "#{place}#{destination}", destination); # 場から手札への移動
-      return $okResult if string == $okResult
+      return OK_RESULT if string == OK_RESULT
     end
 
     @deal_cards['card_played'] ||= []
@@ -544,7 +499,7 @@ class CardTrader
 
     if isDelete
       @deal_cards[destination] << targetCard
-      return $okResult
+      return OK_RESULT
     end
 
     return "${targetCard}"; # 戻せるカードが無かったらNGのカードを返す
@@ -676,7 +631,7 @@ class CardTrader
     result = playOneCard(card, place)
     debug("playOneCard result", result)
 
-    if result == $okResult
+    if result == OK_RESULT
       okList << card
     else
       ngList << result
@@ -699,7 +654,7 @@ class CardTrader
       result = discardOneCard(card, place, destination); # 場を使わないときは捨て札扱い
     end
 
-    if result == $okResult
+    if result == OK_RESULT
       return result
     else
       return card
@@ -747,7 +702,7 @@ class CardTrader
     cards.each do |card|
       result = discardOneCard(card, place, destination)
 
-      if result == $okResult
+      if result == OK_RESULT
         okList << card
       else
         ngList << result
@@ -785,7 +740,7 @@ class CardTrader
       @deal_cards['card_played'] += this_cards
       debug("@deal_cards", @deal_cards)
 
-      return $okResult
+      return OK_RESULT
     else
       return card; # 指定のカードが無いので、無いカードを返す
     end
@@ -895,9 +850,9 @@ class CardTrader
       debug('transferOneCard result', result)
 
       case result
-      when $ngResult
+      when NG_RESULT
         return -1, ['渡す相手が登録されていません']
-      when $okResult
+      when OK_RESULT
         okCount += 1
       else
         ngCardList << result
@@ -951,13 +906,13 @@ class CardTrader
       # debug('相手は未登録済み')
       isSuccess = transferTargetCardToNewMember(toSend, thisCard)
       debug('isSuccess', isSuccess)
-      return $ngResult unless isSuccess
+      return NG_RESULT unless isSuccess
     end
 
     @deal_cards[from] = restCards
     debug("transferOneCard @deal_cards", @deal_cards)
 
-    return $okResult
+    return OK_RESULT
   end
 
   def ejectOneCardRandomFromCards(cards)
@@ -1091,9 +1046,9 @@ class CardTrader
       result = transferOneCard(card, destination, toSend)
 
       case result
-      when $ngResult
+      when NG_RESULT
         return -1, '渡す相手が登録されていません'
-      when $okResult
+      when OK_RESULT
         okCardList << card
       else
         ngCardList << result
@@ -1193,7 +1148,7 @@ class CardTrader
 
     @nick_e = nick_e_original
 
-    if result == $okResult
+    if result == OK_RESULT
       return card, nil
     else
       return nil, card

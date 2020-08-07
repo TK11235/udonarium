@@ -2,7 +2,6 @@
 
 $:.push(File.dirname(__FILE__) + "/..")
 require 'test/unit'
-require 'Kconv'
 require 'log'
 require 'BCDice_forTest'
 
@@ -11,7 +10,6 @@ $isDebug = false
 class TestSecretDice < Test::Unit::TestCase
   def setup
     $isDebug = false
-    # $isRollVoidDiceAtAnyRecive = false
 
     @nick = "test_nick"
     @channel = "test_channel"

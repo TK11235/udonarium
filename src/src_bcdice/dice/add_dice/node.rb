@@ -281,11 +281,9 @@ class AddDice
       # ノードを初期化する
       # @param [Number] times ダイスを振る回数のノード
       # @param [Number] sides ダイスの面数のノード
-      # @param [Number, nil] critical クリティカル値のノード
-      def initialize(times, sides, critical)
+      def initialize(times, sides)
         @times = times.literal
         @sides = sides.literal
-        @critical = critical.nil? ? nil : critical.literal
 
         # ダイスを振った結果の出力
         @text = nil
@@ -299,7 +297,7 @@ class AddDice
       # @param [Randomizer] randomizer ランダマイザ
       # @return [Integer] 評価結果（出目の合計値）
       def eval(randomizer)
-        dice_groups = randomizer.roll(@times, @sides, @critical)
+        dice_groups = randomizer.roll(@times, @sides)
 
         # TODO: Ruby 2.4以降では Array#sum が使える
         total = dice_groups.flatten.reduce(0, &:+)
@@ -315,11 +313,7 @@ class AddDice
       # 文字列に変換する
       # @return [String]
       def to_s
-        if @critical
-          "#{@times}D#{@sides}@#{@critical}"
-        else
-          "#{@times}D#{@sides}"
-        end
+        "#{@times}D#{@sides}"
       end
 
       # メッセージへの出力を返す
@@ -331,9 +325,7 @@ class AddDice
       # ノードのS式を返す
       # @return [String]
       def s_exp
-        parts = [@times, @sides, @critical].compact
-
-        "(DiceRoll #{parts.join(' ')})"
+        "(DiceRoll #{@times} #{@sides})"
       end
     end
 

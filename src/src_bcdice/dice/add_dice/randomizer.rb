@@ -15,13 +15,11 @@ class AddDice
     # ダイスを振る
     # @param [Integer] times ダイス数
     # @param [Integer] sides 面数
-    # @param [Integer, nil] critical クリティカルヒットの閾値
     # @return [Array<Array<Integer>>] 出目のグループの配列
-    def roll(times, sides, critical)
+    def roll(times, sides)
       # 振り足し分も含めた出目グループの配列
       dice_groups = []
 
-      loop_count = 0
       queue = [times]
       while !queue.empty?
         times = queue.shift
@@ -29,15 +27,9 @@ class AddDice
         dice_list = roll_once(times, sides)
         @dice_list.concat(dice_list)
 
-        # 出目の小計
-        # TODO: Ruby 2.4以降では dice_list.sum とできる
-        sum = dice_list.reduce(0, &:+)
-
         dice_groups.push(dice_list)
 
         enqueue_reroll(dice_list, queue, times)
-        @dicebot.check2dCritical(critical, sum, queue, loop_count)
-        loop_count += 1
       end
 
       return dice_groups

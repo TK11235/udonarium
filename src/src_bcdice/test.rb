@@ -17,7 +17,6 @@ rootDir = File.expand_path(File.dirname(__FILE__))
 libPaths = [
   "#{rootDir}/test",
   rootDir,
-  "#{rootDir}/irc"
 ]
 libPaths.each do |libPath|
   $:.push(libPath)

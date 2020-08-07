@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-require 'kconv'
 require 'fileutils'
-require 'configBcDice.rb'
 
 # extratables ディレクトリに置かれたテーブル定義ファイルを読み込む。
 # 詳細はREADME.txtの「７．オリジナルの表追加」を参照。

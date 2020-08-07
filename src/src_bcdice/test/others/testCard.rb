@@ -3,7 +3,6 @@
 $:.push(File.dirname(__FILE__) + "/..")
 require 'test/unit'
 require 'CardTrader'
-require 'Kconv'
 require 'log'
 require 'BCDice_forTest'
 

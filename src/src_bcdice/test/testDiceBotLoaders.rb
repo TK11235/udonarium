@@ -84,11 +84,6 @@ class TestDiceBotLoaders < Test::Unit::TestCase
     assertDiceBotIgnored('_Template')
   end
 
-  # 「_InsaneScp」という名前のダイスボットを読み込まない
-  def test_shouldNotLoadDiceBotNamed_InsaceScp
-    assertDiceBotIgnored('_InsaneScp')
-  end
-
   #--
   # 3. 複数の名前で読み込めるダイスボットの読み込みを確認するテストケース
   #++
@@ -108,8 +103,8 @@ class TestDiceBotLoaders < Test::Unit::TestCase
   end
 
   def test_Elric
-    assertDiceBotWithLoader('Elric!', 'Elric!')
-    assertDiceBotWithLoader('Elric!', 'EL')
+    assertDiceBotWithLoader('Elric', 'Elric')
+    assertDiceBotWithLoader('Elric', 'EL')
   end
 
   def test_RuneQuest
@@ -196,11 +191,11 @@ class TestDiceBotLoaders < Test::Unit::TestCase
   end
 
   def test_TunnelsAndTrolls
-    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels & Trolls')
-    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels &Trolls')
-    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels& Trolls')
-    assertDiceBotWithLoader('Tunnels & Trolls', 'Tunnels&Trolls')
-    assertDiceBotWithLoader('Tunnels & Trolls', 'TuT')
+    assertDiceBotWithLoader('TunnelsAndTrolls', 'Tunnels & Trolls')
+    assertDiceBotWithLoader('TunnelsAndTrolls', 'Tunnels &Trolls')
+    assertDiceBotWithLoader('TunnelsAndTrolls', 'Tunnels& Trolls')
+    assertDiceBotWithLoader('TunnelsAndTrolls', 'Tunnels&Trolls')
+    assertDiceBotWithLoader('TunnelsAndTrolls', 'TuT')
   end
 
   def test_NightmareHunterDeep
@@ -228,13 +223,13 @@ class TestDiceBotLoaders < Test::Unit::TestCase
   end
 
   def test_ChaosFlare
-    assertDiceBotWithLoader('Chaos Flare', 'Chaos Flare')
-    assertDiceBotWithLoader('Chaos Flare', 'ChaosFlare')
-    assertDiceBotWithLoader('Chaos Flare', 'CF')
+    assertDiceBotWithLoader('ChaosFlare', 'ChaosFlare')
+    assertDiceBotWithLoader('ChaosFlare', 'ChaosFlare')
+    assertDiceBotWithLoader('ChaosFlare', 'CF')
   end
 
   def test_ChaosFlare_cards
-    assertDiceBotWithLoader('Chaos Flare', 'Chaos Flare')
+    assertDiceBotWithLoader('ChaosFlare', 'ChaosFlare')
 
     cardTrader = @bcDice.cardTrader
     assert_equal(2, cardTrader.numOfDecks)
@@ -722,8 +717,8 @@ class TestDiceBotLoaders < Test::Unit::TestCase
     assertDiceBotWithoutLoader('MetalHeadExtream')
   end
 
-  def test_MetallicGuadian
-    assertDiceBotWithoutLoader('MetallicGuadian')
+  def test_MetallicGuardian
+    assertDiceBotWithoutLoader('MetallicGuardian')
   end
 
   def test_MonotoneMuseum_Korean

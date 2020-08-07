@@ -164,9 +164,8 @@ class AddDice
         end
 
         # 通常のダイスロール
-        critical = consume("@") ? expect_number() : nil
         @contain_dice_roll = true
-        return Node::DiceRoll.new(times, sides, critical)
+        return Node::DiceRoll.new(times, sides)
       end
 
       return num

@@ -6,8 +6,6 @@ $:.push(File.dirname(__FILE__)) # require_relative対策
 require 'configBcDice.rb'
 
 class Cli
-  def quit; end
-
   def sendMessage(_to, message)
     print message
   end
@@ -44,13 +42,6 @@ def mainBcDiceCli(args)
 end
 
 if $0 === __FILE__
-
-  if  ARGV.empty? || (ARGV[0] == "createExe")
-    require 'bcdiceGui.rb'
-    mainBcDiceGui
-  else
-    require 'bcdiceCore.rb'
-    mainBcDiceCli(ARGV)
-  end
-
+  require 'bcdiceCore.rb'
+  mainBcDiceCli(ARGV)
 end
