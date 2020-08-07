@@ -51,6 +51,7 @@ export class DiceBot extends GameObject {
     { script: 'Elric', game: 'エルリック！' },
     { script: 'EndBreaker', game: 'エンドブレイカー！' },
     { script: 'Oukahoushin3rd', game: '央華封神RPG 第三版' },
+    { script: 'OracleEngine', game: 'オラクルエンジン' },
     { script: 'GardenOrder', game: 'ガーデンオーダー' },
     { script: 'CardRanker', game: 'カードランカー' },
     { script: 'Gurps', game: 'ガープス' },
