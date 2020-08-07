@@ -297,3 +297,9 @@ input:
 output:
 NightmareHunterDeep : (4D6>=15) ＞ 17[2,5,5,5] ＞ 17 ＞ 成功
 rand:2/6,5/6,5/6,5/6
+============================
+input:
+3D6>=? 目標値?でバグらない
+output:
+NightmareHunterDeep : (3D6>=?) ＞ 9[3,3,3] ＞ 9 ＞ Lv2/NL0成功
+rand:3/6,3/6,3/6

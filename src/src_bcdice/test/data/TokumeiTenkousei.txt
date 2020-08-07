@@ -177,3 +177,9 @@ input:
 output:
 TokumeiTenkousei : (5D6>=18) ＞ 19[1,2,5,5,6] ＞ 19 ＞ 成功 ＞ 5EPP獲得
 rand:6/6,1/6,5/6,2/6,5/6
+============================
+input:
+3D6>=? 目標値?でバグらない
+output:
+TokumeiTenkousei : (3D6>=?) ＞ 6[1,2,3] ＞ 6 ＞ 失敗 ＞ 5EPP獲得
+rand:1/6,2/6,3/6

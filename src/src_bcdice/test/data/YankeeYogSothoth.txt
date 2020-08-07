@@ -292,3 +292,8 @@ output:
 YankeeYogSothoth : 二つ名決定表(6,66) ＞ 「名古屋」
 rand:6/6,6/6,6/6
 ============================
+input:
+2D6>=? 目標値?でバグらない
+output:
+YankeeYogSothoth : (2D6>=?) ＞ 7[3,4] ＞ 7 ＞ 失敗
+rand:3/6,4/6

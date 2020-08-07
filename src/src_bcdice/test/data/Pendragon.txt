@@ -177,3 +177,9 @@ input:
 output:
 Pendragon : (1D20<=10) ＞ 6 ＞ 成功
 rand:6/20
+============================
+input:
+1D20>=? 目標値?でバグらない
+output:
+Pendragon : (1D20>=?) ＞ 10 ＞ 失敗
+rand:10/20

@@ -342,3 +342,8 @@ input:
 output:TrinitySeven : (1D100<=50) ＞ 51 ＞ 失敗
 rand:51/100
 ============================
+input:
+1D100>=? 目標値?でバグらない
+output:
+TrinitySeven : (1D100>=?) ＞ 42 ＞ 失敗
+rand:42/100

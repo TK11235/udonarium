@@ -76,3 +76,8 @@ output:
 EclipsePhase : (1D100<=120) ＞ 99 ＞ 決定的失敗
 rand:99/100
 ============================
+input:
+1D100>=? 目標値?でバグらない
+output:
+EclipsePhase : (1D100>=?) ＞ 42 ＞ 失敗
+rand:42/100

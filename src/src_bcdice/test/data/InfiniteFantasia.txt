@@ -177,3 +177,9 @@ input:
 output:
 InfiniteFantasia : (1D20<=10) ＞ 11 ＞ 失敗
 rand:11/20
+============================
+input:
+1D20>=? 目標値?でバグらない
+output:
+InfiniteFantasia : (1D20>=?) ＞ 10 ＞ 失敗
+rand:10/20

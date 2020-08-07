@@ -791,3 +791,9 @@ WKT
 output:
 KillDeathBusiness : 일주일간표(66)：묘하게 기부를 모집하는 영업전화가 걸려오는 주였다
 rand:6/6,6/6
+============================
+input:
+2D6>=? 目標値?でバグらない
+output:
+KillDeathBusiness : (2D6>=?) ＞ 7[3,4] ＞ 7 ＞ 失敗
+rand:3/6,4/6

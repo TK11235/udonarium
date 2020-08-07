@@ -45,3 +45,9 @@ input:
 output:
 NJSLYRBATTLE : (2D6<=5) ＞ 12[6,6] ＞ 12 ＞ 失敗 重点 3 溜まる
 rand:6/6,6/6
+============================
+input:
+2D6>=? 目標値?でバグらない
+output:
+NJSLYRBATTLE : (2D6>=?) ＞ 7[3,4] ＞ 7 ＞ 失敗
+rand:3/6,4/6

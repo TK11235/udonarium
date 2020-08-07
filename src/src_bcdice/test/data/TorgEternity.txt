@@ -133,7 +133,13 @@ rand:20/20,10/20,11/20
 input:
 TG12+5
 output:
-TorgEternity : (1R20+12+5) ＞ -4[5]+5 ＞ 1
+TorgEternity : (1R20+12+5) ＞ -4[5]+17 ＞ 13
+rand:5/20
+============================
+input:
+TG+12+5
+output:
+TorgEternity : (1R20+12+5) ＞ -4[5]+17 ＞ 13
 rand:5/20
 ============================
 input:
@@ -179,6 +185,12 @@ TorgEternity : 成功レベル表[-1] ＞ Failure.
 rand:
 ============================
 input:
+Result-5
+output:
+TorgEternity : 成功レベル表[-5] ＞ Failure.
+rand:
+============================
+input:
 RT9-2+4
 output:
 TorgEternity : 成功レベル表[11] ＞ Success - Outstanding!!
@@ -191,7 +203,7 @@ TorgEternity : ダメージ結果表[-6] ＞ ノーダメージ
 rand:
 ============================
 input:
-Damage3-8
+Damage-5
 output:
 TorgEternity : ダメージ結果表[-5] ＞ 1ショック
 rand:

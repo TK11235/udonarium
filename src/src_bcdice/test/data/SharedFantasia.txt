@@ -87,3 +87,8 @@ output:
 SharedFantasia : (2D6-2>=7) ＞ 8[5,3]-2 ＞ 6 ＞ 失敗
 rand:5/6,3/6
 ============================
+input:
+2D6>=? 目標値?でバグらない
+output:
+SharedFantasia : (2D6>=?) ＞ 7[3,4] ＞ 7 ＞ 失敗
+rand:3/6,4/6

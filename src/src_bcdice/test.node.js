@@ -2,13 +2,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const DiceBotDir = path.join(__dirname, './diceBot/');
+const DiceBotDir = path.join(__dirname, './lib/diceBot/');
 const DataDir = path.join(__dirname, './test/data/');
 
 const diceBots = fs.readdirSync(DiceBotDir).filter(file => file.match(/\.js$/));
 const files = fs.readdirSync(DataDir).filter(file => file.match(/\.txt$/));
 
-require('./cgiDiceBot.js');
+require('./lib/cgiDiceBot.js');
 
 const errorLog = [];
 

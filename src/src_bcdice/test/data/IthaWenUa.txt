@@ -33,3 +33,9 @@ S1D100<=70
 output:
 IthaWenUa : (1D100<=70) ＞ 1 ＞ 01 ＞ クリティカル###secret dice###
 rand:1/100
+============================
+input:
+1D100>=? 目標値?でバグらない
+output:
+IthaWenUa : (1D100>=?) ＞ 42 ＞ 失敗
+rand:42/100
