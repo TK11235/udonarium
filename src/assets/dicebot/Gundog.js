@@ -36,6 +36,8 @@
       var self = this, dig10 = nil, dig1 = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

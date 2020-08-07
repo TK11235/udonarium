@@ -40,6 +40,8 @@
       var self = this, critical = nil, fumble = nil, totalValueBonus = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       critical = false;
       fumble = false;
       if (dice_total['$=='](12)) {

@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$<=', '$/', '$>=']);
+  Opal.add_stubs(['$==', '$<=', '$/', '$>=']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'Hieizan');
 
@@ -25,6 +25,9 @@
     return (Opal.def(self, '$check_1D100', $Hieizan_check_1D100$1 = function $$check_1D100(total, _dice_total, _cmp_op, target) {
       var self = this;
 
+      
+      if (target['$==']("?")) {
+        return ""};
       if ($truthy($rb_le(total, 1))) {
         if ($truthy($rb_le(total, $rb_divide(target, 5)))) {
           return " ＞ 大成功"
@@ -43,7 +46,7 @@
         }
       } else {
         return " ＞ 失敗"
-      }
+      };
     }, $Hieizan_check_1D100$1.$$arity = 4), nil) && 'check_1D100';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

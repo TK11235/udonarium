@@ -256,11 +256,11 @@ Opal.modules["utils/range_table"] = function(Opal) {
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  function $rb_ge(lhs, rhs) {
-    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
-  }
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
+  }
+  function $rb_ge(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
@@ -268,9 +268,9 @@ Opal.modules["utils/range_table"] = function(Opal) {
   function $rb_minus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs - rhs : lhs['$-'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send, $hash2 = Opal.hash2, $gvars = Opal.gvars, $range = Opal.range;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send, $hash2 = Opal.hash2, $range = Opal.range;
 
-  Opal.add_stubs(['$require', '$setPrefixes', '$sub', '$roll_tables', '$===', '$to_i', '$last_match', '$debug', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$key?', '$raise', '$[]', '$roll', '$bcdice', '$start_with?', '$content', '$*', '$sum', '$match', '$getBaseValue', '$times', '$getHitText', '$+', '$getDamages', '$<<', '$join', '$>=', '$length', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]=', '$-', '$empty?', '$to_s', '$each', '$delete', '$inject', '$size', '$inspect', '$critical_hit_may_occur', '$name', '$push', '$get_table_by_number', '$freeze', '$new']);
+  Opal.add_stubs(['$require', '$setPrefixes', '$sub', '$roll_tables', '$===', '$to_i', '$last_match', '$debug', '$getCheckDieResult', '$lambda', '$getXrmDamage', '$getHitResult', '$key?', '$raise', '$[]', '$roll', '$bcdice', '$start_with?', '$content', '$*', '$sum', '$match', '$getBaseValue', '$times', '$getHitText', '$+', '$getDamages', '$<<', '$push', '$join', '$>', '$getTotalDamage', '$nil?', '$parren_killer', '$>=', '$call', '$ceil', '$/', '$getDamageInfo', '$getHitResultOne', '$[]=', '$-', '$empty?', '$to_s', '$each', '$delete', '$inject', '$size', '$inspect', '$critical_hit_may_occur', '$name', '$get_table_by_number', '$freeze', '$new']);
   
   self.$require("utils/table");
   self.$require("utils/range_table");
@@ -353,7 +353,6 @@ Opal.modules["utils/range_table"] = function(Opal) {
     
     Opal.def(self, '$getHitResult', $BattleTech_getHitResult$6 = function $$getHitResult(count, damageFunc, tail) {
       var $a, $$7, self = this, m = nil, side = nil, baseString = nil, target = nil, base = nil, partTable = nil, resultTexts = nil, damages = nil, hitCount = nil, totalResultText = nil;
-      if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       
       m = /([LCR][LU]?)?(\+\d+)?>=(\d+)/.$match(tail);
@@ -380,10 +379,8 @@ Opal.modules["utils/range_table"] = function(Opal) {
           $c = self.$getDamages(damageFunc, partTable, damages), $b = Opal.to_ary($c), (damages = ($b[0] == null ? nil : $b[0])), (damageText = ($b[1] == null ? nil : $b[1])), $c;
           hitResult = $rb_plus(hitResult, damageText);};
         return resultTexts['$<<'](hitResult);}, $$7.$$s = self, $$7.$$arity = 0, $$7));
+      resultTexts.$push("" + " ＞ " + (hitCount) + "回命中");
       totalResultText = resultTexts.$join("\n");
-      if ($truthy($rb_ge(totalResultText.$length(), $gvars.SEND_STR_MAX))) {
-        totalResultText = "..."};
-      totalResultText = $rb_plus(totalResultText, "" + "\n ＞ " + (hitCount) + "回命中");
       if ($truthy($rb_gt(hitCount, 0))) {
         totalResultText = $rb_plus(totalResultText, $rb_plus(" 命中箇所：", self.$getTotalDamage(damages)))};
       return totalResultText;

@@ -23,6 +23,8 @@
       var $a, self = this, diceValue = nil, dice0 = nil, dice1 = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

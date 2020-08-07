@@ -22,7 +22,7 @@
 
     
     Opal.const_set($nesting[0], 'ID', "WorldOfDarkness");
-    Opal.const_set($nesting[0], 'NAME', "ワールドオブダークネス");
+    Opal.const_set($nesting[0], 'NAME', "ワールド・オブ・ダークネス");
     Opal.const_set($nesting[0], 'SORT_KEY', "わあるとおふたあくねす");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定コマンド(xSTn+y or xSTSn+y or xSTAn+y)\n" + "　(ダイス個数)ST(難易度)+(自動成功)\n" + "　(ダイス個数)STS(難易度)+(自動成功) ※出目10で振り足し\n" + "　(ダイス個数)STA(難易度)+(自動成功) ※出目10は2成功 [20thルール]\n" + "\n" + "　難易度=省略時6\n" + "　自動成功=省略時0\n");
     self.$setPrefixes(["\\d+ST.*"]);

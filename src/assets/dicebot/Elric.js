@@ -24,7 +24,7 @@
     var $nesting = [self].concat($parent_nesting), $Elric_check_1D100$1;
 
     
-    Opal.const_set($nesting[0], 'ID', "Elric!");
+    Opal.const_set($nesting[0], 'ID', "Elric");
     Opal.const_set($nesting[0], 'NAME', "エルリック！");
     Opal.const_set($nesting[0], 'SORT_KEY', "えるりつく");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "貫通、クリティカル、ファンブルの自動判定を行います。\n");
@@ -32,6 +32,8 @@
       var $a, self = this;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

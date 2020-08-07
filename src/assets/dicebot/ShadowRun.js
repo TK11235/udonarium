@@ -23,7 +23,7 @@
       
       $send(self, Opal.find_super_dispatcher(self, 'initialize', $ShadowRun_initialize$1, false), $zuper, $iter);
       self.sortType = 3;
-      self.upplerRollThreshold = 6;
+      self.upperRollThreshold = 6;
       return (self.unlimitedRollDiceType = 6);
     }, $ShadowRun_initialize$1.$$arity = 0), nil) && 'initialize';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

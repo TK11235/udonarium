@@ -34,8 +34,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "LogHorizon");
-    Opal.const_set($nesting[0], 'NAME', "ログ・ホライズン");
-    Opal.const_set($nesting[0], 'SORT_KEY', "ろくほらいすん");
+    Opal.const_set($nesting[0], 'NAME', "ログ・ホライズンTRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ろくほらいすんTRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定(xLH±y>=z)\n" + "　xD6の判定。クリティカル、ファンブルの自動判定を行います。\n" + "　x：xに振るダイス数を入力。\n" + "　±y：yに修正値を入力。±の計算に対応。省略可能。\n" + "  >=z：zに目標値を入力。±の計算に対応。省略可能。\n" + "　例） 3LH　2LH>=8　3LH+1>=10\n" + "・消耗表(tCTx±y$z)\n" + "　PCT 体力／ECT 気力／GCT 物品／CCT 金銭\n" + "　x:CRを指定。\n" + "　±y:修正値。＋と－の計算に対応。省略可能。\n" + "　$z：＄を付けるとダイス目を z 固定。表の特定の値参照用に。省略可能。\n" + "　例） PCT1　ECT2+1　GCT3-1　CCT3$5\n" + "・財宝表(tTRSx±y$)\n" + "　CTRS 金銭／MTRS 魔法素材／ITRS 換金アイテム／OTRS そのほか／※HTRS ヒロイン／GTRS ゴブリン財宝表\n" + "　x：CRを指定。省略時はダイス値 0 固定で修正値の表参照。《ゴールドフィンガー》使用時など。\n" + "　±y：修正値。＋と－の計算に対応。省略可能。\n" + "　$：＄を付けると財宝表のダイス目を7固定（1回分のプライズ用）。省略可能。\n" + "　例） CTRS1　MTRS2+1　ITRS3-1　ITRS+27　CTRS3$\n" + "・パーソナリティタグ表(PTAG)\n" + "・交友表(KOYU)\n" + "・イースタル探索表(ESTLx±y$z)\n" + "　x：CRを指定。省略時はダイス値 0 固定で修正値の表参照。\n" + "　±y：修正値。＋と－の計算に対応。省略可能。\n" + "　$z：＄を付けるとダイス目を z 固定。特定CRの表参照用に。省略可能。\n" + "　例） ESTL1　ESTL+15　ESTL2+1$5　ESTL2-1$5\n" + "・プレフィックスドマジックアイテム効果表(MGRx) xはMGを指定。(LHZB1用)\n" + "†楽器種別表(MIIx) xは楽器の種類(1～6を指定)、省略可能\n" + "　1 打楽器１／2 鍵盤楽器／3 弦楽器１／4 弦楽器２／5 管楽器１／6 管楽器２\n" + "☆特殊消耗表(tSCTx±y$z)　消耗表と同様、ただしCRは省略可能。\n" + "　ESCT ロデ研は爆発だ！／CSCT アルヴの呪いじゃ！\n" + "※攻撃命中箇所ランダム決定表(HLOC)\n" + "※PC名ランダム決定表(PCNM)\n" + "※ロデ研の新発明ランダム決定表(IATt)\n" + "  IATA 特徴A(メリット)／IATB 特徴B(デメリット)／IATL 見た目／IATT 種類\n" + "  tを省略すると全て表示。tにA/B/L/Tを任意の順で連結可能\n" + "  例）IAT　IATALT  IATABBLT  IATABL\n" + "※アキバの街で遭遇するトラブルランダム決定表(TIAS)\n" + "※廃棄児ランダム決定表(ABDC)\n" + "†印は☆印は「イントゥ・ザ・セルデシア さらなるビルドの羽ばたき（１）」より、\n" + "☆印はセルデシア・ガゼット「できるかな66」Vol.1より、\n" + "※印は「実録・七面体工房スタッフ座談会(夏の陣)」より。利用法などはそちら参照。\n" + "・D66ダイスあり\n");
     self.$setPrefixes(["\\d+LH.*", "PC.*", "EC.*", "GC.*", "CC.*", "CTR.*", "MTR.*", "ITR.*", "OTR.*", "HTR.*", "GTR.*", "PTAG", "KOYU", "MGR.", "HLOC", "PCNM", "IAT.*", "TIAS", "ABDC", "MII.*", "ESCT.*", "CSCT.*", "ESTL.*"]);
     

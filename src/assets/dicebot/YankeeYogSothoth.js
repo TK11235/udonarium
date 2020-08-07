@@ -129,6 +129,8 @@ Opal.modules["utils/d66_table"] = function(Opal) {
       var self = this;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$=='](">=")) {
       } else {
         return ""

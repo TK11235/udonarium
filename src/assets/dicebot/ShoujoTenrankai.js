@@ -16,8 +16,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "ShoujoTenrankai");
-    Opal.const_set($nesting[0], 'NAME', "少女展爛会");
-    Opal.const_set($nesting[0], 'SORT_KEY', "しようしよてんらんかい");
+    Opal.const_set($nesting[0], 'NAME', "少女展爛会TRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しようしよてんらんかいTRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "出来事表：\n" + "・季節\n" + "　SPRING  春／SUMMER  夏／AUTUMN  秋／WINTER  冬\n" + "・時刻\n" + "　MORNING  朝／NOON  昼／AFTERNOON  昼下がり／\n" + "　TWILIGHT  黄昏／NIGHT  夜中／MIDNIGHT  夜更け\n" + "・棲み処\n" + "　NORBLE  貴族趣味／MARCHEN  メルヒェン／COLONIAL  コロニアル／\n" + "　SHELF  本棚のある場所／LITTLE  小さな妹の部屋／\n" + "　ELDER  素敵なお姉さまの部屋／ATERIEL  アトリエ／OPEN  集まれる場所／\n" + "　HAUNTED  SIMPLE  侘び住まい\n" + "・いろいろな場所\n" + "　LARGE  広い場所／CORRIDOR  廊下／STAIRS  階段／\n" + "　COSY  居心地のいい場所／TERRACE  テラス・ベランダ／\n" + "　GARRET  屋根裏／KITCHEN  台所／BATH  浴室／REST  化粧室／\n" + "　CELLER  地下倉庫／LUMBER  物置／GARDEN  庭園／WASTED  廃園／\n" + "　RUIN  廃屋／SHORE  水のほとり\n");
     self.$setPrefixes(["SPRING", "SUMMER", "AUTUMN", "WINTER", "MORNING", "NOON", "AFTERNOON", "TWILIGHT", "NIGHT", "MIDNIGHT", "NORBLE", "MARCHEN", "COLONIAL", "SHELF", "LITTLE", "ELDER", "ATERIEL", "OPEN", "HAUNTED", "SIMPLE", "LARGE", "CORRIDOR", "STAIRS", "COSY", "TERRACE", "GARRET", "KITCHEN", "BATH", "REST", "CELLER", "LUMBER", "GARDEN", "WASTED", "RUIN", "SHORE"]);
     

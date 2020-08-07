@@ -9,7 +9,7 @@
 
     
     Opal.const_set($nesting[0], 'ID', "TokyoNova");
-    Opal.const_set($nesting[0], 'NAME', "トーキョーＮ◎ＶＡ");
+    Opal.const_set($nesting[0], 'NAME', "トーキョーN◎VA");
     Opal.const_set($nesting[0], 'SORT_KEY', "とおきよおのは");
     return Opal.const_set($nesting[0], 'HELP_MESSAGE', "※このダイスボットは部屋のシステム名表示用となります。\n");
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

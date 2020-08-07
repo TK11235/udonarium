@@ -19,7 +19,7 @@
 
     
     Opal.const_set($nesting[0], 'ID', "HuntersMoon");
-    Opal.const_set($nesting[0], 'NAME', "ハンターズムーン");
+    Opal.const_set($nesting[0], 'NAME', "ハンターズ・ムーン");
     Opal.const_set($nesting[0], 'SORT_KEY', "はんたあすむうん");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "　判定時にクリティカルとファンブルを自動判定します。\n" + "・各種表\n" + "　・遭遇表　(ET)\n" + "　・都市ロケーション表　(CLT)\n" + "　・閉所ロケーション表　(SLT)\n" + "　・炎熱ロケーション表　(HLT)\n" + "　・冷暗ロケーション表　(FLT)\n" + "　・部位ダメージ決定表　(DLT)\n" + "　・モノビースト行動表　(MAT)\n" + "　・異形アビリティー表　(SATx) (xは個数)\n" + "　・異形アビリティー表2　(SA2Tx) (xは個数)\n" + "　　→表１と表２の振り分けも判定\n" + "　・指定特技(社会)表　　(TST)\n" + "　・指定特技(頭部)表　　(THT)\n" + "　・指定特技(腕部)表　　(TAT)\n" + "　・指定特技(胴部)表　　(TBT)\n" + "　・指定特技(脚部)表　　(TLT)\n" + "　・指定特技(環境)表　　(TET)\n" + "　・異形化表　　　　　　(MST)\n" + "　・代償表　　　　　　　(ERT)\n" + "　・ディフェンス遭遇表1/2/3 (DS1ET/DS2ET/DS3ET)\n" + "　・エスケープ遭遇表1/2/3 (EE1ET/EE2ET/EE3ET)\n" + "　・エスコート遭遇表1/2/3 (ET1ET/ET2ET/ET3ET)\n" + "　・トラッキング遭遇表1/2/3 (TK1ET/TK2ET/TK3ET)\n" + "・D66ダイスあり\n");
     
@@ -43,6 +43,8 @@
       var self = this;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$=='](">=")) {
       } else {
         return ""

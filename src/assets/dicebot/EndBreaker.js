@@ -19,7 +19,7 @@
 
     
     Opal.const_set($nesting[0], 'ID', "EndBreaker");
-    Opal.const_set($nesting[0], 'NAME', "エンドブレイカー");
+    Opal.const_set($nesting[0], 'NAME', "エンドブレイカー！");
     Opal.const_set($nesting[0], 'SORT_KEY', "えんとふれいかあ");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定 (nEB)\n" + "  n個のD6を振る判定。ダブルトリガー発動で自動振り足し。\n" + "・各種表\n" + "  ・生死不明表 (LDUT)\n");
     self.$setPrefixes(["\\d+EB", "LDUT"]);

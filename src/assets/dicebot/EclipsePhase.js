@@ -29,6 +29,8 @@
       var self = this, diceValue = nil, dice_ten_place = nil, dice_one_place = nil, diff_threshold = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

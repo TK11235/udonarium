@@ -95,7 +95,9 @@ Opal.modules["utils/table"] = function(Opal) {
       if ($truthy($rb_le(dice_total, 2))) {
         return " ＞ ファンブル"
       } else if ($truthy($rb_ge(dice_total, 12))) {
-        return " ＞ スペシャル(生命点1点か変調1つ回復)"
+        return " ＞ スペシャル(【生命力】1点か変調一つを回復)"
+      } else if (target['$==']("?")) {
+        return ""
       } else if ($truthy($rb_ge(total, target))) {
         return " ＞ 成功"
       } else {

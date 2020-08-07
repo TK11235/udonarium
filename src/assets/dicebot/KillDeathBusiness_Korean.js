@@ -49,6 +49,8 @@
       var self = this;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$=='](">=")) {
       } else {
         return ""

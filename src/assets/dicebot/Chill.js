@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$!=', '$>=', '$>', '$*', '$/', '$roll_strike_rank_result', '$debug', '$=~', '$to_i', '$last_match', '$<', '$check_strike_rank', '$-', '$+', '$roll', '$to_s', '$sendMode', '$empty?']);
+  Opal.add_stubs(['$setPrefixes', '$==', '$!=', '$>=', '$>', '$*', '$/', '$roll_strike_rank_result', '$debug', '$=~', '$to_i', '$last_match', '$<', '$check_strike_rank', '$-', '$+', '$roll', '$to_s', '$sendMode', '$empty?']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'Chill');
 
@@ -40,6 +40,8 @@
       var self = this;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if ($truthy(cmp_op['$!=']("<="))) {
         return ""};
       if ($truthy($rb_ge(total, 100))) {

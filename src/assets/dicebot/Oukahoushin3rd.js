@@ -13,8 +13,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Oukahoushin3rd");
-    Opal.const_set($nesting[0], 'NAME', "央華封神RPG第三版");
-    Opal.const_set($nesting[0], 'SORT_KEY', "おうかほうしん3");
+    Opal.const_set($nesting[0], 'NAME', "央華封神RPG 第三版");
+    Opal.const_set($nesting[0], 'SORT_KEY', "おうかほうしんRPG3");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・各種表\n" + "　・能力値判定裏成功表（NHT）\n" + "　・武器攻撃裏成功表（BKT）\n" + "　・受け・回避裏成功表（UKT）\n" + "　・仙術行使裏成功表（SKT）\n" + "　・仙術抵抗裏成功表（STT）\n" + "　・精神値ダメージ悪影響表（SDT）\n" + "　・狂気表（KKT）\n");
     
     Opal.def(self, '$rollDiceCommand', $Oukahoushin3rd_rollDiceCommand$1 = function $$rollDiceCommand(command) {

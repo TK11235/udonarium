@@ -20,8 +20,8 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "MonotoneMuseum");
-    Opal.const_set($nesting[0], 'NAME', "モノトーン・ミュージアム");
-    Opal.const_set($nesting[0], 'SORT_KEY', "ものとおんみゆうしあむ");
+    Opal.const_set($nesting[0], 'NAME', "モノトーンミュージアムRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ものとおんみゆうしあむRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "　・通常判定　　　　　　2D6+m>=t[c,f]\n" + "　　修正値m,目標値t,クリティカル値c,ファンブル値fで判定ロールを行います。\n" + "　　クリティカル値、ファンブル値は省略可能です。([]ごと省略できます)\n" + "　　自動成功、自動失敗、成功、失敗を自動表示します。\n" + "・各種表\n" + "　・感情表　ET／感情表 2.0　ET2\n" + "　・兆候表　　OT／兆候表ver2.0　OT2\n" + "　・歪み表　DT／歪み表ver2.0　DT2／歪み表(野外)　DTO／歪み表(海)　DTS\n" + "　・世界歪曲表　　WDT／世界歪曲表2.0　WDT2\n" + "・D66ダイスあり\n");
     self.$setPrefixes(["2D6.*", "ET", "ET2", "OT", "DT", "DT2", "WDT", "WDT2", "OT2", "DTO", "DTS"]);
     

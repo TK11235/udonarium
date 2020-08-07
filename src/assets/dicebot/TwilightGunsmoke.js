@@ -20,7 +20,7 @@
     self.$$prototype.sortType = nil;
     
     Opal.const_set($nesting[0], 'ID', "TwilightGunsmoke");
-    Opal.const_set($nesting[0], 'NAME', "トワイライト・ガンスモーク");
+    Opal.const_set($nesting[0], 'NAME', "トワイライトガンスモーク");
     Opal.const_set($nesting[0], 'SORT_KEY', "とわいらいとかんすもおく");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "　・通常判定　　　　　　2D6+m>=t[c,f]\n" + "　　修正値m,目標値t,クリティカル値c,ファンブル値fで判定ロールを行います。\n" + "　　クリティカル値、ファンブル値は省略可能です。([]ごと省略できます)\n" + "　　自動成功、自動失敗、成功、失敗を自動表示します。\n" + "・各種表\n" + "　・邂逅表　　CT\n" + "　・オープニングチャート\n" + "　　リアリスティック　OPR｜シネマティック　OPC\n" + "　・エンディングチャート\n" + "　　リアリスティック　EDR｜シネマティック　EDC\n" + "　・情報収集チャート\n" + "　　荒野　RWL｜ウェブ　RWB｜ストリート　RST｜上流　RUP\n" + "　・ドロップチャート\n" + "　　コーポレイト　DCP｜バンデッド　DBD｜クリミナル　DCR｜ニンジャ　DNJ\n" + "　　ロボ　DRB｜武装車輛　DBS｜ターレット　DTR｜メルカバ　DMK\n" + "　　ヘリ　DHL｜マシンライフ　DML｜ゾンビ　DZB｜ミュータント　DMT\n" + "　　BM／飛竜科　DHR｜BM／巨爪科　DKS｜フィーンド　DFD\n" + "・D66ダイスあり\n");
     self.$setPrefixes(["2D6.*", "CT", "OPR", "OPC", "EDR", "EDC", "RWL", "RWB", "RST", "RUP", "DCP", "DBD", "DCR", "DNJ", "DRB", "DBS", "DTR", "DMK", "DHL", "DML", "DZB", "DMT", "DHR", "DKS", "DFD"]);

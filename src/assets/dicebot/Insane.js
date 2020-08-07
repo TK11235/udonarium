@@ -6,20 +6,23 @@
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
+  function $rb_plus(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
+  }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$==', '$<=', '$>=', '$===', '$get_scene_table', '$get_horror_scene_table', '$get_mania_scene_table', '$get_dark_scene_table', '$get_description_table', '$get_body_table', '$get_parts_table', '$get_fortunechange_table', '$get_job_table', '$get_badend_table', '$get_random_skill_table', '$get_violence_skill_table', '$get_emotion_skill_table', '$get_perception_skill_table', '$get_skill_skill_table', '$get_knowledge_skill_table', '$get_mystery_skill_table', '$get_conversation_horror_table', '$get_ville_horror_table', '$get_inattendu_horror_table', '$get_ruines_horror_table', '$get_Mlle_horror_table', '$get_latence_horror_table', '$get_city_table', '$get_mountainforest_table', '$get_seaside_table', '$get_overtime_horror_table', '$get_overtimephone_table', '$get_overtimework_scene_table', '$get_corporatenameone_table', '$get_corporatenametwo_table', '$get_corporatenamethree_table', '$get_reaction_scene_table', '$get_table_by_2d6', '$get_table_by_d66_swap', '$get_table_by_1d6', '$lambda', '$get_random_skill_table_text_only']);
+  Opal.add_stubs(['$setPrefixes', '$==', '$<=', '$>=', '$===', '$get_scene_table', '$get_horror_scene_table', '$get_mania_scene_table', '$get_dark_scene_table', '$get_description_table', '$get_body_table', '$get_parts_table', '$get_fortunechange_table', '$get_job_table', '$get_badend_table', '$get_random_skill_table', '$get_violence_skill_table', '$get_emotion_skill_table', '$get_perception_skill_table', '$get_skill_skill_table', '$get_knowledge_skill_table', '$get_mystery_skill_table', '$get_conversation_horror_table', '$get_ville_horror_table', '$get_inattendu_horror_table', '$get_ruines_horror_table', '$get_Mlle_horror_table', '$get_latence_horror_table', '$get_city_table', '$get_mountainforest_table', '$get_seaside_table', '$get_overtime_horror_table', '$get_overtimephone_table', '$get_overtimework_scene_table', '$get_corporatenameone_table', '$get_corporatenametwo_table', '$get_corporatenamethree_table', '$get_reaction_scene_table', '$get_interim_reference_number', '$get_table_by_2d6', '$get_table_by_d66_swap', '$get_table_by_1d6', '$lambda', '$get_random_skill_table_text_only', '$roll', '$+', '$times']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'Insane');
 
-    var $nesting = [self].concat($parent_nesting), $Insane_initialize$1, $Insane_check_2D6$2, $Insane_rollDiceCommand$3, $Insane_get_scene_table$4, $Insane_get_horror_scene_table$5, $Insane_get_mania_scene_table$6, $Insane_get_dark_scene_table$7, $Insane_get_description_table$8, $Insane_get_body_table$9, $Insane_get_parts_table$10, $Insane_get_fortunechange_table$11, $Insane_get_job_table$12, $Insane_get_badend_table$13, $Insane_get_random_skill_table$16, $Insane_get_random_skill_table_text_only$17, $Insane_get_violence_skill_table$18, $Insane_get_emotion_skill_table$19, $Insane_get_perception_skill_table$20, $Insane_get_skill_skill_table$21, $Insane_get_knowledge_skill_table$22, $Insane_get_mystery_skill_table$23, $Insane_get_conversation_horror_table$24, $Insane_get_ville_horror_table$25, $Insane_get_inattendu_horror_table$26, $Insane_get_ruines_horror_table$27, $Insane_get_Mlle_horror_table$28, $Insane_get_latence_horror_table$29, $Insane_get_city_table$30, $Insane_get_mountainforest_table$31, $Insane_get_seaside_table$32, $Insane_get_overtime_horror_table$33, $Insane_get_overtimephone_table$34, $Insane_get_overtimework_scene_table$35, $Insane_get_corporatenameone_table$36, $Insane_get_corporatenametwo_table$37, $Insane_get_corporatenamethree_table$38, $Insane_get_reaction_scene_table$39;
+    var $nesting = [self].concat($parent_nesting), $Insane_initialize$1, $Insane_check_2D6$2, $Insane_rollDiceCommand$3, $Insane_get_scene_table$4, $Insane_get_horror_scene_table$5, $Insane_get_mania_scene_table$6, $Insane_get_dark_scene_table$7, $Insane_get_description_table$8, $Insane_get_body_table$9, $Insane_get_parts_table$10, $Insane_get_fortunechange_table$11, $Insane_get_job_table$12, $Insane_get_badend_table$13, $Insane_get_random_skill_table$16, $Insane_get_random_skill_table_text_only$17, $Insane_get_violence_skill_table$18, $Insane_get_emotion_skill_table$19, $Insane_get_perception_skill_table$20, $Insane_get_skill_skill_table$21, $Insane_get_knowledge_skill_table$22, $Insane_get_mystery_skill_table$23, $Insane_get_conversation_horror_table$24, $Insane_get_ville_horror_table$25, $Insane_get_inattendu_horror_table$26, $Insane_get_ruines_horror_table$27, $Insane_get_Mlle_horror_table$28, $Insane_get_latence_horror_table$29, $Insane_get_city_table$30, $Insane_get_mountainforest_table$31, $Insane_get_seaside_table$32, $Insane_get_overtime_horror_table$33, $Insane_get_overtimephone_table$34, $Insane_get_overtimework_scene_table$35, $Insane_get_corporatenameone_table$36, $Insane_get_corporatenametwo_table$37, $Insane_get_corporatenamethree_table$38, $Insane_get_reaction_scene_table$39, $Insane_get_interim_reference_number$40;
 
     
     Opal.const_set($nesting[0], 'ID', "Insane");
     Opal.const_set($nesting[0], 'NAME', "インセイン");
     Opal.const_set($nesting[0], 'SORT_KEY', "いんせいん");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "シーン表　　　ST\n" + "　本当は怖い現代日本シーン表 HJST／狂騒の二〇年代シーン表 MTST\n" + "　暗黒のヴィクトリアシーン表 DVST\n" + "形容表　　　　DT\n" + "　本体表 BT／部位表 PT\n" + "感情表　　　　　　FT\n" + "職業表　　　　　　JT\n" + "バッドエンド表　　BET\n" + "ランダム特技決定表　RTT\n" + "指定特技(暴力)表　　(TVT)\n" + "指定特技(情動)表　　(TET)\n" + "指定特技(知覚)表　　(TPT)\n" + "指定特技(技術)表　　(TST)\n" + "指定特技(知識)表　　(TKT)\n" + "指定特技(怪異)表　　(TMT)\n" + "会話ホラースケープ表(CHT)\n" + "街中ホラースケープ表(VHT)\n" + "不意訪問ホラースケープ表(IHT)\n" + "廃墟遭遇ホラースケープ表(RHT)\n" + "野外遭遇ホラースケープ表(MHT)\n" + "情報潜在ホラースケープ表(LHT)\n" + "遭遇表　都市　(ECT)　山林　(EMT)　海辺　(EAT)/反応表　RET\n" + "残業ホラースケープ表　OHT/残業電話表　OPT/残業シーン表　OWT\n" + "社名決定表1　CNT1/社名決定表2　CNT2/社名決定表3　CNT3\n" + "・D66ダイスあり\n");
-    self.$setPrefixes(["ST", "HJST", "MTST", "DVST", "DT", "BT", "PT", "FT", "JT", "BET", "RTT", "TVT", "TET", "TPT", "TST", "TKT", "TMT", "CHT", "VHT", "IHT", "RHT", "MHT", "LHT", "ECT", "EMT", "EAT", "OPT", "OHT", "OWT", "CNT1", "CNT2", "CNT3", "RET"]);
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "スペシャル／ファンブル／成功／失敗を判定\n" + "・各種表\n" + "シーン表　　　ST\n" + "　本当は怖い現代日本シーン表 HJST／狂騒の二〇年代シーン表 MTST\n" + "　暗黒のヴィクトリアシーン表 DVST\n" + "形容表　　　　DT\n" + "　本体表 BT／部位表 PT\n" + "感情表　　　　　　FT\n" + "職業表　　　　　　JT\n" + "バッドエンド表　　BET\n" + "ランダム特技決定表　RTT\n" + "指定特技(暴力)表　　(TVT)\n" + "指定特技(情動)表　　(TET)\n" + "指定特技(知覚)表　　(TPT)\n" + "指定特技(技術)表　　(TST)\n" + "指定特技(知識)表　　(TKT)\n" + "指定特技(怪異)表　　(TMT)\n" + "会話ホラースケープ表(CHT)\n" + "街中ホラースケープ表(VHT)\n" + "不意訪問ホラースケープ表(IHT)\n" + "廃墟遭遇ホラースケープ表(RHT)\n" + "野外遭遇ホラースケープ表(MHT)\n" + "情報潜在ホラースケープ表(LHT)\n" + "遭遇表　都市　(ECT)　山林　(EMT)　海辺　(EAT)/反応表　RET\n" + "残業ホラースケープ表　OHT/残業電話表　OPT/残業シーン表　OWT\n" + "社名決定表1　CNT1/社名決定表2　CNT2/社名決定表3　CNT3\n" + "暫定整理番号作成表　IRN\n" + "・D66ダイスあり\n");
+    self.$setPrefixes(["ST", "HJST", "MTST", "DVST", "DT", "BT", "PT", "FT", "JT", "BET", "RTT", "TVT", "TET", "TPT", "TST", "TKT", "TMT", "CHT", "VHT", "IHT", "RHT", "MHT", "LHT", "ECT", "EMT", "EAT", "OPT", "OHT", "OWT", "CNT1", "CNT2", "CNT3", "RET", "IRN"]);
     
     Opal.def(self, '$initialize', $Insane_initialize$1 = function $$initialize() {
       var $iter = $Insane_initialize$1.$$p, $yield = $iter || nil, self = this, $zuper = nil, $zuper_i = nil, $zuper_ii = nil;
@@ -48,6 +51,8 @@
         return " ＞ ファンブル(判定失敗。山札から【狂気】を1枚獲得)"
       } else if ($truthy($rb_ge(dice_total, 12))) {
         return " ＞ スペシャル(判定成功。【生命力】1点か【正気度】1点回復)"
+      } else if (target['$==']("?")) {
+        return ""
       } else if ($truthy($rb_ge(total, target))) {
         return " ＞ 成功"
       } else {
@@ -161,7 +166,10 @@
       $b = self.$get_corporatenamethree_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
       else if ("RET"['$===']($case)) {
       type = "反応表";
-      $b = self.$get_reaction_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;};
+      $b = self.$get_reaction_scene_table(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;}
+      else if ("IRN"['$===']($case)) {
+      type = "暫定整理番号作成";
+      $b = self.$get_interim_reference_number(), $a = Opal.to_ary($b), (output = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;};
       return "" + (type) + "(" + (total_n) + ") ＞ " + (output);
     }, $Insane_rollDiceCommand$3.$$arity = 1);
     
@@ -437,12 +445,33 @@
       table = ["(株)", "(株)", "(株)", "(有)", "(有)", "(有)"];
       return self.$get_table_by_1d6(table);
     }, $Insane_get_corporatenamethree_table$38.$$arity = 0);
-    return (Opal.def(self, '$get_reaction_scene_table', $Insane_get_reaction_scene_table$39 = function $$get_reaction_scene_table() {
+    
+    Opal.def(self, '$get_reaction_scene_table', $Insane_get_reaction_scene_table$39 = function $$get_reaction_scene_table() {
       var self = this, table = nil;
 
       
       table = ["「ちょっとこちらにきてもらえますか。」いきなり逮捕、拘束される。「反応表」を使用したキャラクターは、このシーンが終わってから2シーンの間、自分がシーンプレイヤーでないシーンに登場することができなくなる（マスターシーンには登場可能）。", "「私が協力できるのはここまでだ。」協力を求めた人物は、怯えたような様子で手に持った包みをあなたに押し付けた。「反応表」を使用したキャラクターは、何か好きなアイテム一つを獲得する。", "「その件は捜査中です。情報提供ありがとうございます。」協力を求めた人物は、にこにこ笑って、そう答える。何を言っても、同じ返答しか返ってこない。「反応表」を使用したキャラクターは、【正気度】を1点減少する。", "「もしかして、お前、あの事件の関係者か……？」どうやら協力を求めた人物も、ちょうど同じ事件を調査していたようだ。いろいろ情報を提供してくれるようだ。「反応表」を使用したキャラクターは、以降、調査判定を行うときプラス1の修正がつく。", "「夢でも見たんじゃないですか？」どんなに強く訴えても信じてもらえない。……もしかして、おかしいのは私の方なのか？情動の特技分野からランダムに特技一つを選んで恐怖判定を行う。", "「はいはい。我々もヒマじゃないんだよ。」色々話しても相手にしてもらえない。門前払いを喰らう。", "「ちょっと身体検査よろしいでしょうか？」怪しい人物だと思われたらしい。「反応表」を使用したキャラクターが、アイテムや、違法そうなプライズを持っていた場合、このシーンが終わってから2シーンの間、自分がシーンプレイヤーでないシーンに登場することができなくなる（マスターシーンには登場可能）。", "「それは気になりますね。こちらでも調査してみましょう。」親身になって相談に乗ってくれる。何か分かったら連絡してくれると言うが……。1D6を振る。奇数なら、2シーン後に情報をくれる。「反応表」を使用したキャラクターは、好きな【秘密】一つを獲得する。偶数なら調査していたNPCが謎の死を遂げる。「反応表」を使用したキャラクターは、知識の特技分野からランダムに特技一つを選んで恐怖判定を行う。", "「命が惜しければこれ以上関わるな。」あなたは人気のない場所に連れていかれ、殴られた。協力を求めた人物は、助けを求めたはずのあなたを激しく拒絶する。「反応表」を使用したキャラクターは、【生命力】を1点減少する。", "「分かりました。念のためパトロールを強化しましょう。」周辺の警護を約束してくれる。「反応表」を使用したキャラクターは、このセッションの間、一度だけ自分が受けたダメージを無効化することができる。ダメージを無効化した場合、「反応表」を使用したキャラクターは、暴力の特技分野からランダムに一つを選んで恐怖判定を行う。", "「……なんじゃこりゃぁっ！？」助けを求めた相手が突然死亡する。ヤツらの手は、こんなところまで及んでいるのか？「反応表」を使用したキャラクターは、暴力の特技分野からランダムに一つを選んで恐怖判定を行う。"];
       return self.$get_table_by_2d6(table);
-    }, $Insane_get_reaction_scene_table$39.$$arity = 0), nil) && 'get_reaction_scene_table';
+    }, $Insane_get_reaction_scene_table$39.$$arity = 0);
+    return (Opal.def(self, '$get_interim_reference_number', $Insane_get_interim_reference_number$40 = function $$get_interim_reference_number() {
+      var $a, $b, $$41, self = this, table = nil, number = nil, total_n = nil, counts = nil, output = nil;
+
+      
+      table = [[11, "1"], [12, "2"], [13, "3"], [14, "4"], [15, "5"], [16, "6"], [22, "G"], [23, "I"], [24, "J"], [25, "K"], [26, "O"], [33, "P"], [34, "Q"], [35, "S"], [36, "T"], [44, "U"], [45, "V"], [46, "X"], [55, "Y"], [56, "Z"], [66, "-"]];
+      $b = self.$roll(1, 6), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (total_n = ($a[1] == null ? nil : $a[1])), $b;
+      counts = 3;
+      if ($truthy($rb_le(number, 4))) {
+        counts = $rb_plus(number, 5)
+      } else if (number['$=='](5)) {
+        counts = 4};
+      output = "";
+      $send(counts, 'times', [], ($$41 = function(){var self = $$41.$$s || this, $c, $d, character = nil;
+
+      
+        $d = self.$get_table_by_d66_swap(table), $c = Opal.to_ary($d), (character = ($c[0] == null ? nil : $c[0])), (number = ($c[1] == null ? nil : $c[1])), $d;
+        output = $rb_plus(output, character);
+        return (total_n = $rb_plus(total_n, "" + "," + (number)));}, $$41.$$s = self, $$41.$$arity = 0, $$41));
+      return [output, total_n];
+    }, $Insane_get_interim_reference_number$40.$$arity = 0), nil) && 'get_interim_reference_number';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

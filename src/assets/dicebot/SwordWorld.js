@@ -52,7 +52,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
   function $rb_divide(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $gvars = Opal.gvars, $hash2 = Opal.hash2;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
   Opal.add_stubs(['$require', '$include', '$setPrefixes', '$freeze', '$match', '$gsub', '$last_match', '$>=', '$<=', '$!=', '$==', '$rating', '$private', '$debug', '$getRatingCommandStrings', '$[]', '$include?', '$getRateUpFromString', '$getCriticalFromString', '$getDiceChangesFromString', '$getKeyAndAddValueFromString', '$=~', '$to_i', '$getSW2_0_RatingTable', '$-', '$length', '$>', '$getNewRates', '$<', '$+', '$getAdditionalString', '$to_s', '$loop', '$rollDice', '$<<', '$getAdditionalDiceValue', '$min', '$*', '$getResultText', '$parren_killer', '$each', '$split', '$push', '$[]=', '$roll', '$join', '$size', '$format_modifier', '$first', '$ceil', '$/', '$===']);
   
@@ -66,7 +66,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
     
     self.$include($$($nesting, 'ModifierFormatter'));
     Opal.const_set($nesting[0], 'ID', "SwordWorld");
-    Opal.const_set($nesting[0], 'NAME', "ソードワールド");
+    Opal.const_set($nesting[0], 'NAME', "ソードワールドRPG");
     Opal.const_set($nesting[0], 'SORT_KEY', "そおとわあると");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "・SW　レーティング表　(Kx[c]+m$f) (x:キー, c:クリティカル値, m:ボーナス, f:出目修正)\n");
     self.$setPrefixes(["H?K\\d+.*"]);
@@ -131,8 +131,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
     self.$private();
     
     Opal.def(self, '$rating', $SwordWorld_rating$10 = function $$rating(string) {
-      var $a, $b, $$11, self = this, commands = nil, m = nil, half = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil, limitLength = nil;
-      if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
+      var $a, $b, $$11, self = this, commands = nil, m = nil, half = nil, rateUp = nil, crit = nil, firstDiceChanteTo = nil, firstDiceChangeModify = nil, key = nil, addValue = nil, rate_sw2_0 = nil, keyMax = nil, newRates = nil, output = nil, values = nil, diceResultTotals = nil, diceResults = nil, rateResults = nil, dice = nil, diceOnlyTotal = nil, totalValue = nil, round = nil;
 
       
       self.$debug("rating string", string);
@@ -233,8 +232,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
           Opal.brk(nil, $brk)
         };}, $$11.$$s = self, $$11.$$brk = $brk, $$11.$$arity = 0, $$11))
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
-      limitLength = $rb_minus($gvars.SEND_STR_MAX, output.$length());
-      output = $rb_plus(output, self.$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, limitLength, half));
+      output = $rb_plus(output, self.$getResultText(totalValue, addValue, diceResults, diceResultTotals, rateResults, diceOnlyTotal, round, half));
       return output;
     }, $SwordWorld_rating$10.$$arity = 1);
     
@@ -375,12 +373,11 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       return [dice, diceText];
     }, $SwordWorld_rollDice$21.$$arity = 1);
     
-    Opal.def(self, '$getResultText', $SwordWorld_getResultText$22 = function $$getResultText(rating_total, modifier, diceResults, diceResultTotals, rateResults, dice_total, round, limitLength, half) {
-      var $a, self = this, sequence = nil, short$ = nil, text = nil, round_text = nil, total = nil, total_text = nil, ret = nil;
+    Opal.def(self, '$getResultText', $SwordWorld_getResultText$22 = function $$getResultText(rating_total, modifier, diceResults, diceResultTotals, rateResults, dice_total, round, half) {
+      var $a, self = this, sequence = nil, text = nil, round_text = nil, total = nil, total_text = nil;
 
       
       sequence = [];
-      short$ = ["..."];
       sequence.$push("" + "2D:[" + (diceResults.$join(" ")) + "]=" + (diceResultTotals.$join(",")));
       if ($truthy($rb_le(dice_total, 2))) {
         
@@ -398,21 +395,14 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       if ($truthy($rb_gt(round, 1))) {
         
         round_text = "" + ($rb_minus(round, 1)) + "回転";
-        sequence.$push(round_text);
-        short$.$push(round_text);};
+        sequence.$push(round_text);};
       total = $rb_plus(rating_total, modifier);
       if ($truthy(half)) {
         total = $rb_divide(total, 2.0).$ceil()};
       total_text = total.$to_s();
       sequence.$push(total_text);
-      short$.$push(total_text);
-      ret = sequence.$join(" ＞ ");
-      if ($truthy($rb_gt(ret.$length(), limitLength))) {
-        return short$.$join(" ＞ ")
-      } else {
-        return ret
-      };
-    }, $SwordWorld_getResultText$22.$$arity = 9);
+      return sequence.$join(" ＞ ");
+    }, $SwordWorld_getResultText$22.$$arity = 8);
     return (Opal.def(self, '$setRatingTable', $SwordWorld_setRatingTable$23 = function $$setRatingTable(tnick) {
       var self = this, mode_str = nil, pre_mode = nil, $case = nil;
 

@@ -216,8 +216,8 @@ Opal.modules["utils/ArithmeticEvaluator"] = function(Opal) {
     self.$$prototype.special_percentage = self.$$prototype.critical_percentage = self.$$prototype.fumble_percentage = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu");
-    Opal.const_set($nesting[0], 'NAME', "クトゥルフ");
-    Opal.const_set($nesting[0], 'SORT_KEY', "くとうるふ");
+    Opal.const_set($nesting[0], 'NAME', "クトゥルフ神話TRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "くとうるふしんわTRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "c=クリティカル値 ／ f=ファンブル値 ／ s=スペシャル\n" + "\n" + "1d100<=n    c・f・sすべてオフ（単純な数値比較判定のみ行います）\n" + "\n" + "・cfs判定付き判定コマンド\n" + "\n" + "CC\t 1d100ロールを行う c=1、f=100\n" + "CCB  同上、c=5、f=96\n" + "\n" + "例：CC<=80  （技能値80で行為判定。1%ルールでcf適用）\n" + "例：CCB<=55 （技能値55で行為判定。5%ルールでcf適用）\n" + "\n" + "・組み合わせロールについて\n" + "\n" + "CBR(x,y)\tc=1、f=100\n" + "CBRB(x,y)\tc=5、f=96\n" + "\n" + "・抵抗表ロールについて\n" + "RES(x-y)\tc=1、f=100\n" + "RESB(x-y)\tc=5、f=96\n" + "\n" + "※故障ナンバー判定\n" + "\n" + "・CC(x) c=1、f=100\n" + "x=故障ナンバー。出目x以上が出た上で、ファンブルが同時に発生した場合、共に出力する（テキスト「ファンブル＆故障」）\n" + "ファンブルでない場合、成功・失敗に関わらずテキスト「故障」のみを出力する（成功・失敗を出力せず、上書きしたものを出力する形）\n" + "\n" + "・CCB(x) c=5、f=96\n" + "同上\n" + "\n");
     self.$setPrefixes(["CC(B)?\\(\\d+\\)", "CC(B)?.*", "RES(B)?.*", "CBR(B)?\\(\\d+,\\d+\\)"]);
     

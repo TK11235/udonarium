@@ -24,7 +24,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'DiceBot');
 
-    var $nesting = [self].concat($parent_nesting), $DiceBot_initialize$4, $DiceBot_postSet$5, $DiceBot_info$6, $DiceBot_id$7, $DiceBot_gameType$8, $DiceBot_name$9, $DiceBot_gameName$10, $DiceBot_sort_key$11, $DiceBot_help_message$12, $DiceBot_getHelpMessage$13, $DiceBot_prefixes$14, $DiceBot_setSendMode$15, $DiceBot_bcdice$eq$16, $DiceBot_bcdice$17, $DiceBot_rand$18, $DiceBot_roll$19, $DiceBot_marshalSignOfInequality$20, $DiceBot_unlimitedRollDiceType$21, $DiceBot_setSortType$22, $DiceBot_d66$23, $DiceBot_parren_killer$24, $DiceBot_changeText$25, $DiceBot_dice_command$26, $DiceBot_isGetOriginalMessage$27, $DiceBot_removeDiceCommandMessage$28, $DiceBot_rollDiceCommandCatched$29, $DiceBot_rollDiceCommand$30, $DiceBot_dice_command_xRn$31, $DiceBot_check_result$32, $DiceBot_check_nDx$33, $DiceBot_check_1D100$34, $DiceBot_check_1D20$35, $DiceBot_check_nD10$36, $DiceBot_check_2D6$37, $DiceBot_check_nD6$38, $DiceBot_get_table_by_2d6$39, $DiceBot_get_table_by_1d6$40, $DiceBot_get_table_by_nD6$41, $DiceBot_get_table_by_nDx$42, $DiceBot_get_table_by_1d3$43, $DiceBot_getD66$44, $DiceBot_get_table_by_d66_swap$45, $DiceBot_get_table_by_d66$46, $DiceBot_getDiceRolledAdditionalText$47, $DiceBot_getDiceRevision$48, $DiceBot_isD9$49, $DiceBot_getGrichText$50, $DiceBot_check2dCritical$51, $DiceBot_is2dCritical$52, $DiceBot_should_reroll$ques$53, $DiceBot_get_table_by_number$54, $DiceBot_getTableValue$56, $DiceBot_analyzeDiceCommandResultMethod$58, $DiceBot_get_table_by_nDx_extratable$61, $DiceBot_getTableCommandResult$62, $DiceBot_getTableInfoFromExtraTableText$63, $DiceBot_roll_tables$65;
+    var $nesting = [self].concat($parent_nesting), $DiceBot_initialize$4, $DiceBot_postSet$5, $DiceBot_info$6, $DiceBot_id$7, $DiceBot_gameType$8, $DiceBot_name$9, $DiceBot_gameName$10, $DiceBot_sort_key$11, $DiceBot_help_message$12, $DiceBot_getHelpMessage$13, $DiceBot_prefixes$14, $DiceBot_setSendMode$15, $DiceBot_bcdice$eq$16, $DiceBot_bcdice$17, $DiceBot_rand$18, $DiceBot_roll$19, $DiceBot_marshalSignOfInequality$20, $DiceBot_unlimitedRollDiceType$21, $DiceBot_setSortType$22, $DiceBot_d66$23, $DiceBot_parren_killer$24, $DiceBot_changeText$25, $DiceBot_dice_command$26, $DiceBot_isGetOriginalMessage$27, $DiceBot_removeDiceCommandMessage$28, $DiceBot_rollDiceCommandCatched$29, $DiceBot_rollDiceCommand$30, $DiceBot_dice_command_xRn$31, $DiceBot_check_result$32, $DiceBot_check_nDx$33, $DiceBot_check_1D100$34, $DiceBot_check_1D20$35, $DiceBot_check_nD10$36, $DiceBot_check_2D6$37, $DiceBot_check_nD6$38, $DiceBot_get_table_by_2d6$39, $DiceBot_get_table_by_1d6$40, $DiceBot_get_table_by_nD6$41, $DiceBot_get_table_by_nDx$42, $DiceBot_get_table_by_1d3$43, $DiceBot_getD66$44, $DiceBot_get_table_by_d66_swap$45, $DiceBot_get_table_by_d66$46, $DiceBot_getDiceRolledAdditionalText$47, $DiceBot_getDiceRevision$48, $DiceBot_isD9$49, $DiceBot_getGrichText$50, $DiceBot_should_reroll$ques$51, $DiceBot_get_table_by_number$52, $DiceBot_getTableValue$54, $DiceBot_analyzeDiceCommandResultMethod$56, $DiceBot_get_table_by_nDx_extratable$59, $DiceBot_getTableCommandResult$60, $DiceBot_getTableInfoFromExtraTableText$61, $DiceBot_roll_tables$63;
 
     self.$$prototype.rerollLimitCount = self.$$prototype.d66Type = nil;
     
@@ -78,7 +78,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
       self.sameDiceRerollType = 0;
       self.d66Type = 1;
       self.isPrintMaxDice = false;
-      self.upplerRollThreshold = 0;
+      self.upperRollThreshold = 0;
       self.unlimitedRollDiceType = 0;
       self.rerollNumber = 0;
       self.defaultSuccessTarget = "";
@@ -94,7 +94,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
     }, $DiceBot_initialize$4.$$arity = 0);
     self.$attr_accessor("rerollLimitCount");
     self.$attr_reader("sendMode", "sameDiceRerollCount", "sameDiceRerollType", "d66Type");
-    self.$attr_reader("isPrintMaxDice", "upplerRollThreshold");
+    self.$attr_reader("isPrintMaxDice", "upperRollThreshold");
     self.$attr_reader("defaultSuccessTarget", "rerollNumber", "fractionType");
     
     Opal.def(self, '$postSet', $DiceBot_postSet$5 = function $$postSet() {
@@ -169,7 +169,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
 
       return (self.sendMode = m)
     }, $DiceBot_setSendMode$15.$$arity = 1);
-    self.$attr_writer("upplerRollThreshold");
+    self.$attr_writer("upperRollThreshold");
     
     Opal.def(self, '$bcdice=', $DiceBot_bcdice$eq$16 = function(b) {
       var self = this;
@@ -495,34 +495,22 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
       return ""
     }, $DiceBot_getGrichText$50.$$arity = 3);
     
-    Opal.def(self, '$check2dCritical', $DiceBot_check2dCritical$51 = function $$check2dCritical(critical, dice_new, dice_arry, loop_count) {
-      var self = this;
-
-      return nil
-    }, $DiceBot_check2dCritical$51.$$arity = 4);
-    
-    Opal.def(self, '$is2dCritical', $DiceBot_is2dCritical$52 = function $$is2dCritical() {
-      var self = this;
-
-      return false
-    }, $DiceBot_is2dCritical$52.$$arity = 0);
-    
-    Opal.def(self, '$should_reroll?', $DiceBot_should_reroll$ques$53 = function(loop_count) {
+    Opal.def(self, '$should_reroll?', $DiceBot_should_reroll$ques$51 = function(loop_count) {
       var $a, self = this;
 
       return ($truthy($a = $rb_lt(loop_count, self.rerollLimitCount)) ? $a : self.rerollLimitCount['$=='](0))
-    }, $DiceBot_should_reroll$ques$53.$$arity = 1);
+    }, $DiceBot_should_reroll$ques$51.$$arity = 1);
     
-    Opal.def(self, '$get_table_by_number', $DiceBot_get_table_by_number$54 = function $$get_table_by_number(index, table, default$) {try {
+    Opal.def(self, '$get_table_by_number', $DiceBot_get_table_by_number$52 = function $$get_table_by_number(index, table, default$) {try {
 
-      var $$55, self = this;
+      var $$53, self = this;
 
       
       
       if (default$ == null) {
         default$ = "1";
       };
-      $send(table, 'each', [], ($$55 = function(item){var self = $$55.$$s || this, number = nil;
+      $send(table, 'each', [], ($$53 = function(item){var self = $$53.$$s || this, number = nil;
 
       
         
@@ -534,40 +522,40 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
           Opal.ret(self.$getTableValue(item['$[]'](1)))
         } else {
           return nil
-        };}, $$55.$$s = self, $$55.$$arity = 1, $$55));
+        };}, $$53.$$s = self, $$53.$$arity = 1, $$53));
       return self.$getTableValue(default$);
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, $DiceBot_get_table_by_number$54.$$arity = -3);
+    }, $DiceBot_get_table_by_number$52.$$arity = -3);
     
-    Opal.def(self, '$getTableValue', $DiceBot_getTableValue$56 = function $$getTableValue(data) {try {
+    Opal.def(self, '$getTableValue', $DiceBot_getTableValue$54 = function $$getTableValue(data) {try {
 
-      var $$57, self = this, lambdaBlock = nil;
+      var $$55, self = this, lambdaBlock = nil;
 
       
       if ($truthy(data['$kind_of?']($$($nesting, 'Proc')))) {
         
-        lambdaBlock = $send(self, 'lambda', [], ($$57 = function(){var self = $$57.$$s || this;
+        lambdaBlock = $send(self, 'lambda', [], ($$55 = function(){var self = $$55.$$s || this;
 
-        Opal.ret(data.$call())}, $$57.$$s = self, $$57.$$arity = 0, $$57));
+        Opal.ret(data.$call())}, $$55.$$s = self, $$55.$$arity = 0, $$55));
         return lambdaBlock.$call();};
       return data;
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, $DiceBot_getTableValue$56.$$arity = 1);
+    }, $DiceBot_getTableValue$54.$$arity = 1);
     
-    Opal.def(self, '$analyzeDiceCommandResultMethod', $DiceBot_analyzeDiceCommandResultMethod$58 = function $$analyzeDiceCommandResultMethod(command) {try {
+    Opal.def(self, '$analyzeDiceCommandResultMethod', $DiceBot_analyzeDiceCommandResultMethod$56 = function $$analyzeDiceCommandResultMethod(command) {try {
 
-      var $$59, $$60, self = this, methodList = nil;
+      var $$57, $$58, self = this, methodList = nil;
 
       
-      methodList = $send(self.$public_methods(), 'select', [], ($$59 = function(method){var self = $$59.$$s || this;
+      methodList = $send(self.$public_methods(), 'select', [], ($$57 = function(method){var self = $$57.$$s || this;
 
       
         
         if (method == null) {
           method = nil;
         };
-        return /^get.+DiceCommandResult$/['$==='](method.$to_s());}, $$59.$$s = self, $$59.$$arity = 1, $$59));
-      $send(methodList, 'each', [], ($$60 = function(method){var self = $$60.$$s || this, result = nil;
+        return /^get.+DiceCommandResult$/['$==='](method.$to_s());}, $$57.$$s = self, $$57.$$arity = 1, $$57));
+      $send(methodList, 'each', [], ($$58 = function(method){var self = $$58.$$s || this, result = nil;
 
       
         
@@ -579,21 +567,21 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
           return nil
         } else {
           Opal.ret(result)
-        };}, $$60.$$s = self, $$60.$$arity = 1, $$60));
+        };}, $$58.$$s = self, $$58.$$arity = 1, $$58));
       return nil;
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, $DiceBot_analyzeDiceCommandResultMethod$58.$$arity = 1);
+    }, $DiceBot_analyzeDiceCommandResultMethod$56.$$arity = 1);
     
-    Opal.def(self, '$get_table_by_nDx_extratable', $DiceBot_get_table_by_nDx_extratable$61 = function $$get_table_by_nDx_extratable(table, count, diceType) {
+    Opal.def(self, '$get_table_by_nDx_extratable', $DiceBot_get_table_by_nDx_extratable$59 = function $$get_table_by_nDx_extratable(table, count, diceType) {
       var $a, $b, self = this, number = nil, diceText = nil, text = nil;
 
       
       $b = self.$roll(count, diceType), $a = Opal.to_ary($b), (number = ($a[0] == null ? nil : $a[0])), (diceText = ($a[1] == null ? nil : $a[1])), $b;
       text = self.$getTableValue(table['$[]']($rb_minus(number, count)));
       return [text, number, diceText];
-    }, $DiceBot_get_table_by_nDx_extratable$61.$$arity = 3);
+    }, $DiceBot_get_table_by_nDx_extratable$59.$$arity = 3);
     
-    Opal.def(self, '$getTableCommandResult', $DiceBot_getTableCommandResult$62 = function $$getTableCommandResult(command, tables, isPrintDiceText) {
+    Opal.def(self, '$getTableCommandResult', $DiceBot_getTableCommandResult$60 = function $$getTableCommandResult(command, tables, isPrintDiceText) {
       var $a, $b, $c, $d, self = this, info = nil, name = nil, type = nil, table = nil, $case = nil, count = nil, diceType = nil, limit = nil, item = nil, value = nil, output = nil, diceText = nil, text = nil, number = nil;
 
       
@@ -637,10 +625,10 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
       if ($truthy(($truthy($a = isPrintDiceText) ? diceText['$nil?']()['$!']() : $a))) {
         return "" + (name) + "(" + (number) + "[" + (diceText) + "]) ＞ " + (text)};
       return "" + (name) + "(" + (number) + ") ＞ " + (text);
-    }, $DiceBot_getTableCommandResult$62.$$arity = -3);
+    }, $DiceBot_getTableCommandResult$60.$$arity = -3);
     
-    Opal.def(self, '$getTableInfoFromExtraTableText', $DiceBot_getTableInfoFromExtraTableText$63 = function $$getTableInfoFromExtraTableText(text, count) {
-      var $$64, self = this, newTable = nil;
+    Opal.def(self, '$getTableInfoFromExtraTableText', $DiceBot_getTableInfoFromExtraTableText$61 = function $$getTableInfoFromExtraTableText(text, count) {
+      var $$62, self = this, newTable = nil;
 
       
       
@@ -649,7 +637,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
       };
       if ($truthy(text['$is_a?']($$($nesting, 'String')))) {
         text = text.$split(/\n/)};
-      newTable = $send(text, 'map', [], ($$64 = function(item){var self = $$64.$$s || this, $a;
+      newTable = $send(text, 'map', [], ($$62 = function(item){var self = $$62.$$s || this, $a;
 
       
         
@@ -660,13 +648,13 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
           return [$$($nesting, 'Regexp').$last_match(1).$to_i(), $$($nesting, 'Regexp').$last_match(2)]
         } else {
           return item
-        };}, $$64.$$s = self, $$64.$$arity = 1, $$64));
+        };}, $$62.$$s = self, $$62.$$arity = 1, $$62));
       if ($truthy(count['$nil?']())) {
       } else if ($truthy(newTable.$size()['$!='](count))) {
         self.$raise("" + "invalid table size:" + (newTable.$size()) + "\n" + (newTable.$inspect()))};
       return newTable;
-    }, $DiceBot_getTableInfoFromExtraTableText$63.$$arity = -2);
-    return (Opal.def(self, '$roll_tables', $DiceBot_roll_tables$65 = function $$roll_tables(command, tables) {
+    }, $DiceBot_getTableInfoFromExtraTableText$61.$$arity = -2);
+    return (Opal.def(self, '$roll_tables', $DiceBot_roll_tables$63 = function $$roll_tables(command, tables) {
       var self = this, table = nil;
 
       
@@ -676,7 +664,7 @@ Opal.modules["diceBot/DiceBot"] = function(Opal) {
         return nil
       };
       return table.$roll(self.$bcdice()).$to_s();
-    }, $DiceBot_roll_tables$65.$$arity = 2), nil) && 'roll_tables';
+    }, $DiceBot_roll_tables$63.$$arity = 2), nil) && 'roll_tables';
   })($nesting[0], null, $nesting)
 };
 

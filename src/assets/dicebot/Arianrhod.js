@@ -13,8 +13,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Arianrhod");
-    Opal.const_set($nesting[0], 'NAME', "アリアンロッド");
-    Opal.const_set($nesting[0], 'SORT_KEY', "ありあんろつと");
+    Opal.const_set($nesting[0], 'NAME', "アリアンロッドRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ありあんろつとRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・クリティカル、ファンブルの自動判定を行います。(クリティカル時の追加ダメージも表示されます)\n" + "・D66ダイスあり\n");
     
     Opal.def(self, '$initialize', $Arianrhod_initialize$1 = function $$initialize() {

@@ -32,6 +32,8 @@
       var self = this, base = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

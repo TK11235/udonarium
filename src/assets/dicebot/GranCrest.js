@@ -16,8 +16,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "GranCrest");
-    Opal.const_set($nesting[0], 'NAME', "グランクレスト");
-    Opal.const_set($nesting[0], 'SORT_KEY', "くらんくれすと");
+    Opal.const_set($nesting[0], 'NAME', "グランクレストRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "くらんくれすとRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・2D6の目標値判定でクリティカル処理\n" + "　例）3d6>=19 3d6+5>=24\n" + "・邂逅表（MT）\n" + "・感情表（-FT）\n" + "　ポジティブ感情表（PFT）、ネガティブ感情表（NFT）\n" + "・国特徴表（-CT）\n" + "　カテゴリー表（CT）、地形表（TCT）、産業表（ICT）、人物表（PCT）\n" + "　組織表（OCT）、拠点表（BCT）、文化表（CCT）\n");
     self.$setPrefixes(["MT", "PFT", "NFT", "CT", "TCT", "ICT", "PCT", "OCT", "BCT", "CCT"]);
     

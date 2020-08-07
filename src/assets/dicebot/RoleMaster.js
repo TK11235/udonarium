@@ -22,7 +22,7 @@
       }
       
       $send(self, Opal.find_super_dispatcher(self, 'initialize', $RoleMaster_initialize$1, false), $zuper, $iter);
-      self.upplerRollThreshold = 96;
+      self.upperRollThreshold = 96;
       return (self.unlimitedRollDiceType = 100);
     }, $RoleMaster_initialize$1.$$arity = 0), nil) && 'initialize';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)

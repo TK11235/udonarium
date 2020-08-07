@@ -57,7 +57,7 @@ Opal.modules["utils/normalize"] = function(Opal) {
     self.$$prototype.criticalValues = self.$$prototype.fumbleValues = nil;
     
     Opal.const_set($nesting[0], 'ID', "NightWizard");
-    Opal.const_set($nesting[0], 'NAME', "ナイトウィザード2版");
+    Opal.const_set($nesting[0], 'NAME', "ナイトウィザード The 2nd Edition");
     Opal.const_set($nesting[0], 'SORT_KEY', "ないとういさあと2");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定用コマンド　(nNW+m@x#y)\n" + "　\"(基本値)NW(常時および常時に準じる特技等及び状態異常（省略可）)@(クリティカル値)#(ファンブル値)（常時以外の特技等及び味方の支援効果等の影響（省略可））\"でロールします。\n" + "　Rコマンド(2R6m[n,m]c[x]f[y]>=t tは目標値)に読替されます。\n" + "　クリティカル値、ファンブル値が無い場合は1や13などのあり得ない数値を入れてください。\n" + "　例）12NW-5@7#2　　1NW　　50nw+5@7,10#2,5　50nw-5+10@7,10#2,5+15+25\n");
     self.$setPrefixes(["\\d+NW"]);

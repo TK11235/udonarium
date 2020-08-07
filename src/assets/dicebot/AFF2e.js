@@ -20,11 +20,11 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$format', '$scan', '$+', '$to_i', '$===', '$<=', '$>=', '$<', '$>', '$last_match', '$post_match', '$eval_term', '$roll', '$successful_or_failed', '$parentheses', '$explicit_sign', '$match', '$map', '$split', '$[]', '$!=', '$size', '$clamp', '$-', '$join']);
+  Opal.add_stubs(['$setPrefixes', '$format', '$scan', '$+', '$to_i', '$===', '$<=', '$>=', '$<', '$>', '$last_match', '$post_match', '$eval_term', '$roll', '$successful_or_failed', '$parentheses', '$explicit_sign', '$critical', '$compact', '$match', '$map', '$split', '$[]', '$!=', '$size', '$clamp', '$-', '$join']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'AFF2e');
 
-    var $nesting = [self].concat($parent_nesting), $AFF2e_explicit_sign$1, $AFF2e_eval_term$2, $AFF2e_parentheses$4, $AFF2e_successful_or_failed$5, $AFF2e_clamp$6, $AFF2e_rollDiceCommand$7;
+    var $nesting = [self].concat($parent_nesting), $AFF2e_explicit_sign$1, $AFF2e_eval_term$2, $AFF2e_parentheses$4, $AFF2e_successful_or_failed$5, $AFF2e_critical$6, $AFF2e_clamp$7, $AFF2e_rollDiceCommand$8;
 
     
     Opal.const_set($nesting[0], 'ID', "AFF2e");
@@ -82,7 +82,16 @@
       }}})()
     }, $AFF2e_successful_or_failed$5.$$arity = 2);
     
-    Opal.def(self, '$clamp', $AFF2e_clamp$6 = function $$clamp(i, min, max) {
+    Opal.def(self, '$critical', $AFF2e_critical$6 = function $$critical(total) {
+      var self = this, $case = nil;
+
+      return (function() {$case = total;
+      if ((2)['$===']($case)) {return "ファンブル！"}
+      else if ((12)['$===']($case)) {return "強打！"}
+      else { return nil }})()
+    }, $AFF2e_critical$6.$$arity = 1);
+    
+    Opal.def(self, '$clamp', $AFF2e_clamp$7 = function $$clamp(i, min, max) {
       var self = this;
 
       if ($truthy($rb_lt(i, min))) {
@@ -92,9 +101,9 @@
       } else {
         return i
       }
-    }, $AFF2e_clamp$6.$$arity = 3);
-    return (Opal.def(self, '$rollDiceCommand', $AFF2e_rollDiceCommand$7 = function $$rollDiceCommand(command) {
-      var $a, $b, $$8, self = this, $case = nil, md = nil, term = nil, diff = nil, dice_command = nil, total = nil, dice_str = nil, expr = nil, succ = nil, sequence = nil, corr = nil, damage_slots = nil, slot_number = nil, damage = nil, result = nil, secret = nil;
+    }, $AFF2e_clamp$7.$$arity = 3);
+    return (Opal.def(self, '$rollDiceCommand', $AFF2e_rollDiceCommand$8 = function $$rollDiceCommand(command) {
+      var $a, $b, $$9, self = this, $case = nil, md = nil, term = nil, diff = nil, dice_command = nil, total = nil, dice_str = nil, expr = nil, succ = nil, sequence = nil, corr = nil, crit = nil, damage_slots = nil, slot_number = nil, damage = nil, result = nil, secret = nil;
 
       
       $case = command;
@@ -114,7 +123,8 @@
       dice_command = "" + "2D6" + (self.$explicit_sign(corr));
       $b = self.$roll(2, 6), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (dice_str = ($a[1] == null ? nil : $a[1])), $b;
       expr = "" + (total) + "[" + (dice_str) + "]" + (self.$explicit_sign(corr));
-      sequence = [self.$parentheses(dice_command), expr, $rb_plus(total, corr)];}
+      crit = self.$critical(total);
+      sequence = [self.$parentheses(dice_command), expr, crit, $rb_plus(total, corr)].$compact();}
       else if (/^FD/['$===']($case)) {
       md = $$($nesting, 'Regexp').$last_match();
       term = md.$post_match();
@@ -124,14 +134,14 @@
         return ["ダメージスロットは必須です。", false]
       };
       term = md.$post_match();
-      damage_slots = $send(md['$[]'](1).$split(","), 'map', [], ($$8 = function(t){var self = $$8.$$s || this;
+      damage_slots = $send(md['$[]'](1).$split(","), 'map', [], ($$9 = function(t){var self = $$9.$$s || this;
 
       
         
         if (t == null) {
           t = nil;
         };
-        return self.$eval_term(t);}, $$8.$$s = self, $$8.$$arity = 1, $$8));
+        return self.$eval_term(t);}, $$9.$$s = self, $$9.$$arity = 1, $$9));
       if ($truthy(damage_slots.$size()['$!='](7))) {
         return ["ダメージスロットの長さに誤りがあります。", false]};
       corr = self.$eval_term(term);
@@ -144,6 +154,6 @@
       result = sequence.$join(" ＞ ");
       secret = false;
       return [result, secret];
-    }, $AFF2e_rollDiceCommand$7.$$arity = 1), nil) && 'rollDiceCommand';
+    }, $AFF2e_rollDiceCommand$8.$$arity = 1), nil) && 'rollDiceCommand';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

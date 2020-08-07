@@ -15,9 +15,9 @@
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $gvars = Opal.gvars, $send = Opal.send;
+  var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send;
 
-  Opal.add_stubs(['$setPrefixes', '$=~', '$to_i', '$last_match', '$>=', '$getDiceRollResult', '$>', '$length', '$getRoundCountText', '$getSuccessText', '$getSpecialText', '$getFumbleText', '$roll', '$debug', '$!=', '$+', '$collect', '$split', '$==', '$uniq', '$<=', '$first', '$*', '$map']);
+  Opal.add_stubs(['$setPrefixes', '$=~', '$to_i', '$last_match', '$>=', '$getDiceRollResult', '$getRoundCountText', '$getSuccessText', '$getSpecialText', '$getFumbleText', '$>', '$roll', '$debug', '$!=', '$+', '$collect', '$split', '$==', '$length', '$uniq', '$<=', '$first', '$*', '$map']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'RecordOfSteam');
 
@@ -32,7 +32,6 @@
     
     Opal.def(self, '$rollDiceCommand', $RecordOfSteam_rollDiceCommand$1 = function $$rollDiceCommand(command) {
       var $a, $b, self = this, diceCount = nil, targetNumber = nil, criticalValue = nil, specialValue = nil, rollResult = nil, successCount = nil, roundCount = nil, specialCount = nil, fumbleCount = nil, output = nil, roundCountText = nil, successText = nil, specialText = nil, fumbleText = nil, result = nil;
-      if ($gvars.SEND_STR_MAX == null) $gvars.SEND_STR_MAX = nil;
 
       
       if ($truthy(/(\d+)[sS](\d+)(@(\d+))?/i['$=~'](command))) {
@@ -51,8 +50,6 @@
       specialValue = criticalValue;
       $b = self.$getDiceRollResult(diceCount, targetNumber, criticalValue, specialValue), $a = Opal.to_ary($b), (rollResult = ($a[0] == null ? nil : $a[0])), (successCount = ($a[1] == null ? nil : $a[1])), (roundCount = ($a[2] == null ? nil : $a[2])), (specialCount = ($a[3] == null ? nil : $a[3])), (fumbleCount = ($a[4] == null ? nil : $a[4])), $b;
       output = "" + "(" + (command) + ") ＞ " + (rollResult);
-      if ($truthy($rb_gt(output.$length(), $gvars.SEND_STR_MAX))) {
-        output = "" + "(" + (command) + ") ＞ ..."};
       roundCountText = self.$getRoundCountText(roundCount);
       successText = self.$getSuccessText(successCount);
       specialText = self.$getSpecialText(specialCount);

@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$debug', '$gsub', '$last_match', '$mayokin_check', '$get2D6Result', '$+', '$getKiryokuResult', '$==', '$<=', '$>=', '$get2D6ResultOnlySuccess', '$count', '$sort', '$reject', '$to_i', '$pop', '$-', '$match', '$[]', '$eval', '$new', '$roll', '$&', '$sortType', '$map', '$split', '$to_proc', '$>', '$<', '$to_s', '$sendMode', '$=~', '$!=', '$comparison_operator', '$check_result', '$===', '$d66', '$mk_name_a_table', '$mk_name_b_table', '$mk_name_ex_table', '$mk_name_fa_table', '$getCount', '$times', '$mk_name_table', '$mk_pn_decide_table', '$mk_ls_decide_table', '$mk_device_factory_table', '$mk_life_research_table', '$mk_order_research_table', '$mk_calture_research_table', '$mk_army_research_table', '$mk_festival_table', '$mk_talent_break_table', '$mk_charm_break_table', '$mk_search_break_table', '$mk_valor_break_table', '$mk_festival_break_table', '$mk_talent_happening_table', '$mk_charm_happening_table', '$mk_search_happening_table', '$mk_valor_happening_table', '$mk_market_price_table', '$mk_treasure1_table', '$mk_treasure2_table', '$mk_treasure3_table', '$mk_treasure4_table', '$mk_treasure5_table', '$mk_rare_weapon_item_table', '$mk_rare_item_table', '$mk_weapon_item_table', '$mk_life_item_table', '$mk_rest_item_table', '$mk_search_item_table', '$mk_item_features_table', '$mk_item_decide_table', '$mk_random_encount1_table', '$mk_random_encount2_table', '$mk_random_encount3_table', '$mk_random_encount4_table', '$mk_random_encount5_table', '$mk_random_encount6_table', '$mk_kingdom_disaster_table', '$mk_kingdom_change_table', '$mk_kingdom_mischange_table', '$mk_critical_attack_table', '$mk_fatal_wounds_table', '$mk_combat_fumble_table', '$mk_travel_table', '$mk_negotiation_table', '$mk_emotion_table', '$mk_kingdom_name_1_table', '$mk_kingdom_name_2_table', '$mk_kingdom_name_3_table', '$mk_word_1_table', '$mk_word_2_table', '$mk_word_3_table', '$mk_word_4_table', '$getAftersearchBreakTable', '$getWholeBreakTable', '$getLoversBreakTable', '$empty?', '$get_table_by_2d6', '$get_table_by_1d3', '$get_table_by_1d6', '$rand', '$mk_nick_a_table', '$mk_nick_b_table', '$get_table_by_number', '$lambda', '$mk_item_power_table', '$mk_item_jyumon_table', '$mk_item_jyuka_table', '$mk_item_aptitude_table', '$mk_item_attribute_table', '$mk_family_business_table', '$mk_gender_table', '$odd?', '$ceil', '$/', '$mk_decoration_table', '$mk_placename_table', '$mk_basic_decoration_table', '$mk_spooky_decoration_table', '$mk_katakana_decoration_table', '$mk_passage_placename_table', '$mk_natural_placename_table', '$mk_artifact_placename_table', '$mk_landscape_table', '$mk_artifact_landscape_table', '$mk_cave_landscape_table', '$mk_natural_landscape_table', '$mk_waterside_landscape_table', '$mk_skyrealm_landscape_table', '$mk_strange_place_landscape_table']);
+  Opal.add_stubs(['$setPrefixes', '$debug', '$gsub', '$last_match', '$mayokin_check', '$==', '$get2D6Result', '$+', '$getKiryokuResult', '$<=', '$>=', '$get2D6ResultOnlySuccess', '$count', '$sort', '$reject', '$to_i', '$pop', '$-', '$match', '$[]', '$eval', '$new', '$roll', '$&', '$sortType', '$map', '$split', '$to_proc', '$>', '$<', '$to_s', '$sendMode', '$=~', '$!=', '$comparison_operator', '$check_result', '$===', '$d66', '$mk_name_a_table', '$mk_name_b_table', '$mk_name_ex_table', '$mk_name_fa_table', '$getCount', '$times', '$mk_name_table', '$mk_pn_decide_table', '$mk_ls_decide_table', '$mk_device_factory_table', '$mk_life_research_table', '$mk_order_research_table', '$mk_calture_research_table', '$mk_army_research_table', '$mk_festival_table', '$mk_talent_break_table', '$mk_charm_break_table', '$mk_search_break_table', '$mk_valor_break_table', '$mk_festival_break_table', '$mk_talent_happening_table', '$mk_charm_happening_table', '$mk_search_happening_table', '$mk_valor_happening_table', '$mk_market_price_table', '$mk_treasure1_table', '$mk_treasure2_table', '$mk_treasure3_table', '$mk_treasure4_table', '$mk_treasure5_table', '$mk_rare_weapon_item_table', '$mk_rare_item_table', '$mk_weapon_item_table', '$mk_life_item_table', '$mk_rest_item_table', '$mk_search_item_table', '$mk_item_features_table', '$mk_item_decide_table', '$mk_random_encount1_table', '$mk_random_encount2_table', '$mk_random_encount3_table', '$mk_random_encount4_table', '$mk_random_encount5_table', '$mk_random_encount6_table', '$mk_kingdom_disaster_table', '$mk_kingdom_change_table', '$mk_kingdom_mischange_table', '$mk_critical_attack_table', '$mk_fatal_wounds_table', '$mk_combat_fumble_table', '$mk_travel_table', '$mk_negotiation_table', '$mk_emotion_table', '$mk_kingdom_name_1_table', '$mk_kingdom_name_2_table', '$mk_kingdom_name_3_table', '$mk_word_1_table', '$mk_word_2_table', '$mk_word_3_table', '$mk_word_4_table', '$getAftersearchBreakTable', '$getWholeBreakTable', '$getLoversBreakTable', '$empty?', '$get_table_by_2d6', '$get_table_by_1d3', '$get_table_by_1d6', '$rand', '$mk_nick_a_table', '$mk_nick_b_table', '$get_table_by_number', '$lambda', '$mk_item_power_table', '$mk_item_jyumon_table', '$mk_item_jyuka_table', '$mk_item_aptitude_table', '$mk_item_attribute_table', '$mk_family_business_table', '$mk_gender_table', '$odd?', '$ceil', '$/', '$mk_decoration_table', '$mk_placename_table', '$mk_basic_decoration_table', '$mk_spooky_decoration_table', '$mk_katakana_decoration_table', '$mk_passage_placename_table', '$mk_natural_placename_table', '$mk_artifact_placename_table', '$mk_landscape_table', '$mk_artifact_landscape_table', '$mk_cave_landscape_table', '$mk_natural_landscape_table', '$mk_waterside_landscape_table', '$mk_skyrealm_landscape_table', '$mk_strange_place_landscape_table']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'MeikyuKingdom');
 
@@ -76,6 +76,8 @@
       var self = this, result = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       result = self.$get2D6Result(total, dice_total, cmp_op, target);
       result = $rb_plus(result, self.$getKiryokuResult(total, dice_list, target));
       return result;
@@ -648,7 +650,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "“災い転じて福となす”"], [12, "“七転び八起きの”"], [13, "“冗談にも程がある”"], [14, "“虎の尾を踏む”"], [15, "“石橋を叩いて渡る”"], [16, "“一を聞いて十を知る”"], [22, "“喉から手が出る”"], [23, "“据え膳食わぬは男の恥の”"], [24, "“天につば吐く”"], [25, "“風に柳の”"], [26, "“目に入れても痛くない”"], [33, "“とかく浮世は色と酒の”"], [34, "“当たるも八卦、当たらぬも八卦の”"], [35, "“泣く子も黙る”"], [36, "“天上天下唯我独尊”"], [44, "“虫も殺さぬ”"], [45, "“花も恥じらう”"], [46, "“触らぬ神に祟り無しの”"], [55, "“両手に花の”"], [56, "“（ゲーム会場の地名）でも一、二を争う”"]];
+      table = [[11, "“災い転じて福となす”"], [12, "“七転び八起きの”"], [13, "“冗談にも程がある”"], [14, "“虎の尾を踏む”"], [15, "“石橋を叩いて渡る”"], [16, "“一を聴いて十を知る”"], [22, "“喉から手が出る”"], [23, "“据え膳食わぬは男の恥の”"], [24, "“天につば吐く”"], [25, "“風に柳の”"], [26, "“目に入れても痛くない”"], [33, "“とかく浮世は色と酒の”"], [34, "“当たるも八卦、当たらぬも八卦の”"], [35, "“泣く子も黙る”"], [36, "“天上天下唯我独尊”"], [44, "“虫も殺さぬ”"], [45, "“花も恥じらう”"], [46, "“触らぬ神に祟り無しの”"], [55, "“両手に花の”"], [56, "“（ゲーム会場の地名）でも一、二を争う”"]];
       if ($truthy($rb_lt(num, 66))) {
         output = $rb_plus(self.$get_table_by_number(num, table), output)
       } else {
@@ -669,7 +671,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "オレンジ／ジャスミン"], [12, "ホウズキ／アサガオ"], [13, "クローバー／ダチュラ"], [14, "ダフニ／キノコ"], [15, "クラナーダ／プリムローズ"], [16, "ラディッシュ／マリーゴールド"], [22, "サイプレス／マグノリア"], [23, "バンブー／オリーブ"], [24, "クラウド／クリマ"], [25, "タオ／スノウ"], [26, "アヴァランチ／エクレール"], [33, "ビバシータ／メトロノーム"], [34, "カノン／ファゴット"], [35, "オーボエ／アルモニカ"], [36, "チューバ／オルガノ"], [44, "ナン／クッキー"], [45, "ウイロウ／カシュカシュ"], [46, "スコーン／クスクス"], [55, "フラスコ／クリップ"], [56, "クラバドーラ／クレヨン"], [66, "ソープ／プルーム"]];
+      table = [[11, "オレンジ／ジャスミン"], [12, "ホオズキ／アサガオ"], [13, "クローバー／ダチュラ"], [14, "ダフニ／キノコ"], [15, "グラナーダ／プリムローズ"], [16, "ラディッシュ／マリーゴールド"], [22, "サイプレス／マグノリア"], [23, "バンブー／オリーブ"], [24, "クラウド／クリマ"], [25, "タオ／スノウ"], [26, "アヴァランチ／エクレール"], [33, "ビバシータ／メトロノーム"], [34, "カノン／ファゴット"], [35, "オーボエ／アルモニカ"], [36, "チューバ／オルガノ"], [44, "ナン／クッキー"], [45, "ウイロウ／カシュカシュ"], [46, "スコーン／クスクス"], [55, "フラスコ／クリップ"], [56, "クラパドーラ／クレヨン"], [66, "ソープ／ブルーム"]];
       return self.$get_table_by_number(num, table);
     }, $MeikyuKingdom_mk_name_a_table$47.$$arity = 1);
     
@@ -677,7 +679,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "エイジ／ウェンズデイ"], [12, "ジョルノ／ノエル"], [13, "タスク／マニャーナ"], [14, "ウィンター／ジュノー"], [15, "ハイラン／ブランカ"], [16, "ウォルナット／ルージュ"], [22, "グレイ／スカーレット"], [23, "シュバルツ／モエギ"], [24, "スロット／キリエ"], [25, "ジョーカー／ダイス"], [26, "ジグソウ／ドミノ"], [33, "バックギャモン／マーブル"], [34, "シーガロ／ココア"], [35, "スピーチカ／オレンジペコー"], [36, "ジッポ／ショコラ"], [44, "ナインビンズ／ルチャ"], [45, "デカスロン／ラクロス"], [46, "カバディ／ピンポン"], [55, "ボンド／ヴェルベット"], [56, "ルーブル／コットン"], [66, "シリング／シルク"]];
+      table = [[11, "エイジ／ウェンズデイ"], [12, "ジョルノ／ノエル"], [13, "タスク／マニャーナ"], [14, "ウィンター／ジュノー"], [15, "ハイラン／ブランカ"], [16, "ウォルナット／ルージュ"], [22, "グレイ／スカーレット"], [23, "シュバルツ／モエギ"], [24, "スロット／キリエ"], [25, "ジョーカー／ダイス"], [26, "ジグソウ／ドミノ"], [33, "バックギャモン／マーブル"], [34, "シーガロ／ココア"], [35, "スピーチカ／オレンジペコー"], [36, "ジッポ／ショコラ"], [44, "ナインピンズ／ルチャ"], [45, "デカスロン／ラクロス"], [46, "カバディ／ピンポン"], [55, "ポンド／ヴェルベット"], [56, "ルーブル／コットン"], [66, "シリング／シルク"]];
       return self.$get_table_by_number(num, table);
     }, $MeikyuKingdom_mk_name_b_table$48.$$arity = 1);
     
@@ -685,7 +687,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "モアイ／スイショウドクロ"], [12, "チュパカプラ／ムペンペ"], [13, "カンフー／インヤン"], [14, "ブシドー／ミヤコ"], [15, "チャンピオン／バービー"], [16, "ウパニシャッド／ゾルゲ"], [22, "デスマーチ／インテル"], [23, "ゴッホ／ヴィクトリア"], [24, "ゾンビ／オニャンコポン"], [25, "ケロッパ／カルメン"], [26, "オーバーキル／サシミ"], [33, "ブッチャー／デヴィ"], [34, "ブロンソン／マドンナ"], [35, "ガイギャックス／エロイカ"], [36, "好きな星の名前"], [44, "好きな武器の名前"], [45, "好きな動物の名前"], [46, "好きな鉱物の名前"], [55, "好きな言葉＋ドラゴン"], [56, "好きな単語表で決定する"], [66, "プレイヤーと同じ名前"]];
+      table = [[11, "モアイ／スイショウドクロ"], [12, "チュパカブラ／ムベンベ"], [13, "カンフー／インヤン"], [14, "ブシドー／ミヤコ"], [15, "チャンピオン／バービー"], [16, "ウパニシャッド／ゾルゲ"], [22, "デスマーチ／インテル"], [23, "ゴッホ／ヴィクトリア"], [24, "ゾンビ／オニャンコポン"], [25, "ゲロッパ／カルメン"], [26, "オーバーキル／サシミ"], [33, "ブッチャー／デヴィ"], [34, "ブロンソン／マドンナ"], [35, "ガイギャックス／エロイカ"], [36, "好きな星の名前（スピカ,オリオン）"], [44, "好きな武器の名前（エペ,フランベルジュ）"], [45, "好きな動物の名前（イタチ,パグ）"], [46, "好きな鉱物の名前（ルビィ,ヒスイ）"], [55, "好きな言葉＋ドラゴン"], [56, "好きな単語表で決定する"], [66, "プレイヤーと同じ名前"]];
       return self.$get_table_by_number(num, table);
     }, $MeikyuKingdom_mk_name_ex_table$49.$$arity = 1);
     
@@ -693,7 +695,7 @@
       var self = this, table = nil;
 
       
-      table = [[11, "アダム／イヴ"], [12, "ジャック／モモ"], [13, "オズ／アリス"], [14, "コナン／レダ"], [15, "アーサー／イシス"], [16, "エルリック／グローリアーナ"], [22, "ギルガメッシュ／アマテラス"], [23, "マハラジャ／クリシュナ"], [24, "カゲオトコ／クロトカゲ"], [25, "オルフェウス／ヴィーナス"], [26, "ソロモン／サロメ"], [33, "ワタリガラス／ディードリット"], [34, "ニャルラトホテプ／バースト"], [35, "アンナタール／フォルトゥナ"], [36, "ザナドゥ／ヨミ"], [44, "アルビオン／ラピュタ"], [45, "ゼンダ／ゴーメンガースト"], [46, "インスマウス／イース"], [55, "フウヌイム／ヤプー"], [56, "ザンス／ナルニア"], [66, "カレワラ／イーハトープ"]];
+      table = [[11, "アダム／イヴ"], [12, "ジャック／モモ"], [13, "オズ／アリス"], [14, "コナン／レダ"], [15, "アーサー／イシス"], [16, "エルリック／グローリアーナ"], [22, "ギルガメッシュ／アマテラス"], [23, "マハラジャ／クリシュナ"], [24, "カゲオトコ／クロトカゲ"], [25, "オルフェウス／ヴィーナス"], [26, "ソロモン／サロメ"], [33, "ワタリガラス／ディードリット"], [34, "ニャルラトホテプ／バースト"], [35, "アンナタール／フォルトゥナ"], [36, "ザナドゥ／ヨミ"], [44, "アルビオン／ラピュタ"], [45, "ゼンダ／ゴーメンガースト"], [46, "インスマウス／イース"], [55, "フウヌイム／ヤプー"], [56, "ザンス／ナルニア"], [66, "カレワラ／イーハトーブ"]];
       return self.$get_table_by_number(num, table);
     }, $MeikyuKingdom_mk_name_fa_table$50.$$arity = 1);
     
@@ -1177,7 +1179,7 @@
     Opal.def(self, '$getWholeBreakTable', $MeikyuKingdom_getWholeBreakTable$120 = function $$getWholeBreakTable() {
       var self = this;
 
-      return self.$get_table_by_2d6(["部屋の中から使えそうな装備をみつくろう。宮廷全員は、それぞれ好きなコモンアイテムのカテゴリを選び、そのランダムにコモンアイテムを1つ獲得する。そのアイテムにレベルがあれば、それは1レベルのものとなる。", "みんなで今後の作戦を練る。宮廷全員は、そのターンの間、あらゆる判定の達成値が1上昇する。", "手分けして物資の調達を行う。各キャラクターは、好きな素材を1d6個獲得できる。このとき、素材が揃っていれば、各キャラクターにつき1個までアイテムを作成することができる。", "体を休めながら他愛もない世間ば暗視に花が咲く。宮廷全員は、それぞれ宮廷の中から好きなキャラクター1人を選び、そのキャラクターに対する《好意》が1点上昇する。", "宮廷メンバーで交代で見張りを行い、疲労した配下たちを休ませる。《民の声》が宮廷の人数と同じ値だけ回復する。", "一行はしっかりと休息を取り、鋭気を養う。宮廷全員の《気力》が1点回復する。", "配下たちと一緒に体を休める。《民の声》が1d6点回復する。", "配下たちに見張りを任せ、体を休める。宮廷全員の《HP》がすべて回復する。", "緊急ミーティング！　国家運営に関してみんなで知恵を出し合う。《予算》を[宮廷の人数*1]MG獲得する。", "負傷した配下たちの治療を行う。宮廷全員の《配下》が1d6人回復する。", "宮廷の前に光り輝くアイテムが降臨する。レア武具アイテムかレア一般アイテムのどちらかを選ぶ。ランダムにそのアイテムを1つ選び、それを獲得する。"])
+      return self.$get_table_by_2d6(["部屋の中から使えそうな装備をみつくろう。宮廷全員は、それぞれ好きなコモンアイテムのカテゴリを選び、そのランダムにコモンアイテムを1つ獲得する。そのアイテムにレベルがあれば、それは1レベルのものとなる。", "みんなで今後の作戦を練る。宮廷全員は、そのターンの間、あらゆる判定の達成値が1上昇する。", "手分けして物資の調達を行う。各キャラクターは、好きな素材を1d6個獲得できる。このとき、素材が揃っていれば、各キャラクターにつき1個までアイテムを作成することができる。", "体を休めながら他愛もない世間話に花が咲く。宮廷全員は、それぞれ宮廷の中から好きなキャラクター1人を選び、そのキャラクターに対する《好意》が1点上昇する。", "宮廷メンバーで交代で見張りを行い、疲労した配下たちを休ませる。《民の声》が宮廷の人数と同じ値だけ回復する。", "一行はしっかりと休息を取り、鋭気を養う。宮廷全員の《気力》が1点回復する。", "配下たちと一緒に体を休める。《民の声》が1d6点回復する。", "配下たちに見張りを任せ、体を休める。宮廷全員の《HP》がすべて回復する。", "緊急ミーティング！　国家運営に関してみんなで知恵を出し合う。《予算》を[宮廷の人数*1]MG獲得する。", "負傷した配下たちの治療を行う。宮廷全員の《配下》が1d6人回復する。", "宮廷の前に光り輝くアイテムが降臨する。レア武具アイテムかレア一般アイテムのどちらかを選ぶ。ランダムにそのアイテムを1つ選び、それを獲得する。"])
     }, $MeikyuKingdom_getWholeBreakTable$120.$$arity = 0);
     return (Opal.def(self, '$getLoversBreakTable', $MeikyuKingdom_getLoversBreakTable$121 = function $$getLoversBreakTable() {
       var self = this, table = nil, value = nil;

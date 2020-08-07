@@ -29,6 +29,8 @@
       var $a, self = this, critical_value = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return nil

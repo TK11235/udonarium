@@ -23,7 +23,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $range = Opal.range, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$roll_bmr_table', '$roll_bms_table', '$roll_1d8_table', '$roll_1d100_table', '$private', '$roll', '$-', '$[]', '$match', '$to_i', '$nil?', '$<=', '$==', '$include?', '$min', '$max', '$rollPercentD10', '$getTotalLists', '$getTotal', '$+', '$join', '$getCheckResultText', '$abs', '$times', '$roll_tens_d10', '$bcdice', '$push', '$>=', '$/', '$<', '$=~', '$last_match', '$debug', '$downcase', '$to_s', '$>', '$rollFullAuto', '$each', '$getNextDifficultyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]=', '$shouldStopRollFullAuto?', '$freeze', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$!', '$isLastBulletTurn', '$floor', '$ceil', '$getLastHitBulletCount']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$roll_bmr_table', '$roll_bms_table', '$roll_1d8_table', '$roll_1d100_table', '$private', '$roll', '$-', '$[]', '$match', '$to_i', '$nil?', '$<=', '$==', '$include?', '$min', '$max', '$rollPercentD10', '$getTotalLists', '$getTotal', '$+', '$join', '$getCheckResultText', '$abs', '$times', '$roll_tens_d10', '$bcdice', '$push', '$>=', '$/', '$<', '$=~', '$last_match', '$debug', '$downcase', '$to_s', '$floor', '$>', '$!', '$rollFullAuto', '$each', '$getNextDifficultyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]=', '$shouldStopRollFullAuto?', '$freeze', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$isLastBulletTurn', '$ceil', '$getLastHitBulletCount']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'Cthulhu7th');
 
@@ -32,9 +32,9 @@
     self.$$prototype.bonus_dice_range = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu7th");
-    Opal.const_set($nesting[0], 'NAME', "新クトゥルフ");
-    Opal.const_set($nesting[0], 'SORT_KEY', "しんくとうるふ");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "※コマンドは入力内容の前方一致で検出しています。\n" + "・判定　CC(x)<=（目標値）\n" + "　x：ボーナス・ペナルティダイス (2～－2)。省略可。\n" + "　目標値が無くても1D100は表示される。\n" + "　ファンブル／失敗／\n" + "　成功／ハード成功／イクストリーム成功／クリティカル を自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75 CC-1<=50 CC1<=65 CC\n" + "\n" + "・組み合わせ判定　(CBR(x,y))\n" + "　目標値 x と y で％ロールを行い、成否を判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・自動火器の射撃判定　FAR(w,x,y,z,d)\n" + "　w：弾丸の数(1～100）、x：技能値（1～100）、y：故障ナンバー、\n" + "　z：ボーナス・ペナルティダイス(-2～2)。省略可。\n" + "　d：指定難易度で連射を終える（レギュラー：r,ハード：h,イクストリーム：e）。省略可。\n" + "　命中数と貫通数、残弾数のみ算出。ダメージ算出はありません。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)　far(30,70,99,1,R)\n" + "　　far(25,88,96,2,h)　FaR(40,77,100,,e)\n" + "\n" + "・各種表\n" + "　【狂気関連】\n" + "　・狂気の発作（リアルタイム）（Bouts of Madness Real Time）　BMR\n" + "　・狂気の発作（サマリー）（Bouts of Madness Summary）　BMS\n" + "　・恐怖症（Sample Phobias）表　PH／マニア（Sample Manias）表　MA\n" + "　【魔術関連】\n" + "　・プッシュ時のキャスティング・ロール（Casting Roll）の失敗表\n" + "　　強力でない呪文の場合　FCL／強力な呪文の場合　FCM\n");
+    Opal.const_set($nesting[0], 'NAME', "新クトゥルフ神話TRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "しんくとうるふしんわTRPG");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "※コマンドは入力内容の前方一致で検出しています。\n" + "・判定　CC(x)<=（目標値）\n" + "　x：ボーナス・ペナルティダイス (2～－2)。省略可。\n" + "　目標値が無くても1D100は表示される。\n" + "　ファンブル／失敗／　レギュラー成功／ハード成功／\n" + "　イクストリーム成功／クリティカル を自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75 CC-1<=50 CC1<=65 CC\n" + "\n" + "・組み合わせ判定　(CBR(x,y))\n" + "　目標値 x と y で％ロールを行い、成否を判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・自動火器の射撃判定　FAR(w,x,y,z,d,v)\n" + "　w：弾丸の数(1～100）、x：技能値（1～100）、y：故障ナンバー、\n" + "　z：ボーナス・ペナルティダイス(-2～2)。省略可。\n" + "　d：指定難易度で連射を終える（レギュラー：r,ハード：h,イクストリーム：e）。省略可。\n" + "　v：ボレーの弾丸の数を変更する。省略可。\n" + "　命中数と貫通数、残弾数のみ算出。ダメージ算出はありません。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)　far(30,70,99,1,R)\n" + "　　far(25,88,96,2,h,5)　FaR(40,77,100,,e,4)　fAr(20,47,100,,,3)\n" + "\n" + "・各種表\n" + "　【狂気関連】\n" + "　・狂気の発作（リアルタイム）（Bouts of Madness Real Time）　BMR\n" + "　・狂気の発作（サマリー）（Bouts of Madness Summary）　BMS\n" + "　・恐怖症（Sample Phobias）表　PH／マニア（Sample Manias）表　MA\n" + "　【魔術関連】\n" + "　・プッシュ時のキャスティング・ロール（Casting Roll）の失敗表\n" + "　　強力でない呪文の場合　FCL／強力な呪文の場合　FCM\n");
     self.$setPrefixes(["CC\\(\\d+\\)", "CC.*", "CBR\\(\\d+,\\d+\\)", "FAR.*", "BMR", "BMS", "FCL", "FCM", "PH", "MA"]);
     
     Opal.def(self, '$initialize', $Cthulhu7th_initialize$1 = function $$initialize() {
@@ -175,7 +175,7 @@
           return "イクストリーム成功"};
         if ($truthy($rb_le(total, $rb_divide(diff, 2)))) {
           return "ハード成功"};
-        return "成功";};
+        return "レギュラー成功";};
       fumble_text = "ファンブル";
       if (total['$=='](100)) {
         return fumble_text};
@@ -200,7 +200,7 @@
       $b = self.$roll(1, 100), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), $b;
       result_1 = self.$getCheckResultText(total, diff_1);
       result_2 = self.$getCheckResultText(total, diff_2);
-      successList = ["クリティカル", "イクストリーム成功", "ハード成功", "成功"];
+      successList = ["クリティカル", "イクストリーム成功", "ハード成功", "レギュラー成功"];
       succesCount = 0;
       if ($truthy(successList['$include?'](result_1))) {
         succesCount = $rb_plus(succesCount, 1)};
@@ -218,10 +218,10 @@
     }, $Cthulhu7th_getCombineRoll$11.$$arity = 1);
     
     Opal.def(self, '$getFullAutoResult', $Cthulhu7th_getFullAutoResult$12 = function $$getFullAutoResult(command) {
-      var $a, self = this, bullet_count = nil, diff = nil, broken_number = nil, bonus_dice_count = nil, stop_count = nil, output = nil, bullet_count_limit = nil;
+      var $a, $b, self = this, bullet_count = nil, diff = nil, broken_number = nil, bonus_dice_count = nil, stop_count = nil, bullet_set_count_cap = nil, output = nil, bullet_count_limit = nil;
 
       
-      if ($truthy(/^FAR\((-?\d+),(-?\d+),(-?\d+)(?:,(-?\d+)?)?(?:,(-?\w+)?)?\)/i['$=~'](command))) {
+      if ($truthy(/^FAR\((-?\d+),(-?\d+),(-?\d+)(?:,(-?\d+)?)?(?:,(-?\w+)?)?(?:,(-?\d+)?)?\)/i['$=~'](command))) {
       } else {
         return nil
       };
@@ -230,12 +230,27 @@
       broken_number = $$($nesting, 'Regexp').$last_match(3).$to_i();
       bonus_dice_count = ($truthy($a = $$($nesting, 'Regexp').$last_match(4)) ? $a : 0).$to_i();
       stop_count = ($truthy($a = $$($nesting, 'Regexp').$last_match(5)) ? $a : "").$to_s().$downcase();
+      bullet_set_count_cap = ($truthy($a = $$($nesting, 'Regexp').$last_match(6)) ? $a : $rb_divide(diff, 10).$floor()).$to_i();
       output = "";
       bullet_count_limit = 100;
       if ($truthy($rb_gt(bullet_count, bullet_count_limit))) {
         
         output = $rb_plus(output, "" + "\n弾薬が多すぎます。装填された弾薬を" + (bullet_count_limit) + "発に変更します。\n");
         bullet_count = bullet_count_limit;};
+      if ($truthy(($truthy($a = ($truthy($b = $rb_gt(bullet_set_count_cap, $rb_divide(diff, 10).$floor())) ? $rb_gt(diff, 39) : $b)) ? $$($nesting, 'Regexp').$last_match(6)['$nil?']()['$!']() : $a))) {
+        
+        bullet_set_count_cap = $rb_divide(diff, 10).$floor();
+        output = $rb_plus(output, "" + "ボレーの弾丸の数の上限は[技能値÷10（切り捨て）]発なので、それより高い数を指定できません。ボレーの弾丸の数を" + (bullet_set_count_cap) + "発に変更します。\n");
+      } else if ($truthy(($truthy($a = ($truthy($b = $rb_le(diff, 39)) ? $rb_gt(bullet_set_count_cap, 3) : $b)) ? $$($nesting, 'Regexp').$last_match(6)['$nil?']()['$!']() : $a))) {
+        
+        bullet_set_count_cap = 3;
+        output = $rb_plus(output, "" + "技能値が39以下ではボレーの弾丸の数の上限および下限は3発です。ボレーの弾丸の数を" + (bullet_set_count_cap) + "発に変更します。\n");};
+      if ($truthy(($truthy($a = $rb_le(bullet_set_count_cap, 0)) ? $$($nesting, 'Regexp').$last_match(6)['$nil?']()['$!']() : $a))) {
+        return "ボレーの弾丸の数は正の数です。"};
+      if ($truthy(($truthy($a = $rb_lt(bullet_set_count_cap, 3)) ? $$($nesting, 'Regexp').$last_match(6)['$nil?']()['$!']() : $a))) {
+        
+        bullet_set_count_cap = 3;
+        output = $rb_plus(output, "ボレーの弾丸の数の下限は3発です。ボレーの弾丸の数を3発に変更します。\n");};
       if ($truthy($rb_le(bullet_count, 0))) {
         return "弾薬は正の数です。"};
       if ($truthy($rb_le(diff, 0))) {
@@ -249,11 +264,11 @@
         return "" + "\nエラー。ボーナス・ペナルティダイスの値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
       };
       output = $rb_plus(output, "" + "ボーナス・ペナルティダイス[" + (bonus_dice_count) + "]");
-      output = $rb_plus(output, self.$rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count, stop_count));
+      output = $rb_plus(output, self.$rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count, stop_count, bullet_set_count_cap));
       return output;
     }, $Cthulhu7th_getFullAutoResult$12.$$arity = 1);
     
-    Opal.def(self, '$rollFullAuto', $Cthulhu7th_rollFullAuto$13 = function $$rollFullAuto(bullet_count, diff, broken_number, dice_num, stop_count) {try {
+    Opal.def(self, '$rollFullAuto', $Cthulhu7th_rollFullAuto$13 = function $$rollFullAuto(bullet_count, diff, broken_number, dice_num, stop_count, bullet_set_count_cap) {try {
 
       var $$14, self = this, output = nil, loopCount = nil, counts = nil;
 
@@ -277,10 +292,11 @@
           output = $rb_plus(output, "" + "\n" + (loopCount) + "回目: ＞ " + (total_list.$join(", ")) + " ＞ " + (hit_result));
           if ($truthy($rb_ge(total, broken_number))) {
             
-            output = $rb_plus(output, " ジャム");
+            output = $rb_plus(output, "　ジャム");
             Opal.ret(self.$getHitResultText(output, counts));};
           hit_type = self.$getHitType(more_difficulty, hit_result);
-          $c = self.$getBulletResults(counts['$[]']("bullet"), hit_type, diff), $b = Opal.to_ary($c), (hit_bullet = ($b[0] == null ? nil : $b[0])), (impale_bullet = ($b[1] == null ? nil : $b[1])), (lost_bullet = ($b[2] == null ? nil : $b[2])), $c;
+          $c = self.$getBulletResults(counts['$[]']("bullet"), hit_type, diff, bullet_set_count_cap), $b = Opal.to_ary($c), (hit_bullet = ($b[0] == null ? nil : $b[0])), (impale_bullet = ($b[1] == null ? nil : $b[1])), (lost_bullet = ($b[2] == null ? nil : $b[2])), $c;
+          output = $rb_plus(output, "" + "　（" + (hit_bullet) + "発が命中、" + (impale_bullet) + "発が貫通）");
           
           $writer = ["hit_bullet", $rb_plus(counts['$[]']("hit_bullet"), hit_bullet)];
           $send(counts, '[]=', Opal.to_a($writer));
@@ -299,14 +315,14 @@
         };
         if ($truthy(self['$shouldStopRollFullAuto?'](stop_count, more_difficulty))) {
           
-          output = $rb_plus(output, "\n指定の難易度となったので、処理を終了します。");
+          output = $rb_plus(output, "\n【指定の難易度となったので、処理を終了します。】");
           
           Opal.brk(nil, $brk);};
         return (dice_num = $rb_plus(dice_num, 1));}, $$14.$$s = self, $$14.$$brk = $brk, $$14.$$arity = 1, $$14))
       } catch (err) { if (err === $brk) { return err.$v } else { throw err } }})();
       return self.$getHitResultText(output, counts);
       } catch ($returner) { if ($returner === Opal.returner) { return $returner.$v } throw $returner; }
-    }, $Cthulhu7th_rollFullAuto$13.$$arity = 5);
+    }, $Cthulhu7th_rollFullAuto$13.$$arity = 6);
     Opal.const_set($nesting[0], 'ROLL_FULL_AUTO_DIFFICULTY_THRESHOLD', $hash2(["r", "h", "e"], {"r": 0, "h": 1, "e": 2}).$freeze());
     
     Opal.def(self, '$shouldStopRollFullAuto?', $Cthulhu7th_shouldStopRollFullAuto$ques$15 = function(stop_count, difficulty) {
@@ -347,11 +363,11 @@
       return "";
     }, $Cthulhu7th_getHitType$18.$$arity = 2);
     
-    Opal.def(self, '$getBulletResults', $Cthulhu7th_getBulletResults$19 = function $$getBulletResults(bullet_count, hit_type, diff) {
+    Opal.def(self, '$getBulletResults', $Cthulhu7th_getBulletResults$19 = function $$getBulletResults(bullet_count, hit_type, diff, bullet_set_count_cap) {
       var self = this, bullet_set_count = nil, hit_bullet_count_base = nil, impale_bullet_count_base = nil, lost_bullet_count = nil, hit_bullet_count = nil, impale_bullet_count = nil, $case = nil;
 
       
-      bullet_set_count = self.$getSetOfBullet(diff);
+      bullet_set_count = self.$getSetOfBullet(diff, bullet_set_count_cap);
       hit_bullet_count_base = self.$getHitBulletCountBase(diff, bullet_set_count);
       impale_bullet_count_base = $rb_divide(bullet_set_count, (2).$to_f());
       lost_bullet_count = 0;
@@ -375,7 +391,7 @@
         lost_bullet_count = bullet_count;
       };
       return [hit_bullet_count, impale_bullet_count, lost_bullet_count];
-    }, $Cthulhu7th_getBulletResults$19.$$arity = 3);
+    }, $Cthulhu7th_getBulletResults$19.$$arity = 4);
     
     Opal.def(self, '$getSuccessListImpaleBulletList', $Cthulhu7th_getSuccessListImpaleBulletList$20 = function $$getSuccessListImpaleBulletList(more_difficulty) {
       var self = this, successList = nil, impaleBulletList = nil, $case = nil;
@@ -385,7 +401,7 @@
       impaleBulletList = [];
       $case = more_difficulty;
       if ((0)['$===']($case)) {
-      successList = ["ハード成功", "成功"];
+      successList = ["ハード成功", "レギュラー成功"];
       impaleBulletList = ["クリティカル", "イクストリーム成功"];}
       else if ((1)['$===']($case)) {
       successList = ["ハード成功"];
@@ -404,21 +420,23 @@
 
       
       $case = more_difficulty;
-      if ((1)['$===']($case)) {return "\n    難易度がハードに変更"}
-      else if ((2)['$===']($case)) {return "\n    難易度がイクストリームに変更"}
-      else if ((3)['$===']($case)) {return "\n    難易度がクリティカルに変更"};
+      if ((1)['$===']($case)) {return "\n【難易度がハードに変更】"}
+      else if ((2)['$===']($case)) {return "\n【難易度がイクストリームに変更】"}
+      else if ((3)['$===']($case)) {return "\n【難易度がクリティカルに変更】"};
       return "";
     }, $Cthulhu7th_getNextDifficultyMessage$21.$$arity = 1);
     
-    Opal.def(self, '$getSetOfBullet', $Cthulhu7th_getSetOfBullet$22 = function $$getSetOfBullet(diff) {
+    Opal.def(self, '$getSetOfBullet', $Cthulhu7th_getSetOfBullet$22 = function $$getSetOfBullet(diff, bullet_set_count_cap) {
       var $a, self = this, bullet_set_count = nil;
 
       
       bullet_set_count = $rb_divide(diff, 10).$floor();
+      if ($truthy($rb_lt(bullet_set_count_cap, bullet_set_count))) {
+        bullet_set_count = bullet_set_count_cap};
       if ($truthy(($truthy($a = $rb_ge(diff, 1)) ? $rb_lt(diff, 30) : $a))) {
         bullet_set_count = 3};
       return bullet_set_count;
-    }, $Cthulhu7th_getSetOfBullet$22.$$arity = 1);
+    }, $Cthulhu7th_getSetOfBullet$22.$$arity = 2);
     
     Opal.def(self, '$getHitBulletCountBase', $Cthulhu7th_getHitBulletCountBase$23 = function $$getHitBulletCountBase(diff, bullet_set_count) {
       var $a, self = this, hit_bullet_count_base = nil;

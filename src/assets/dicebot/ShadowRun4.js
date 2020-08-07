@@ -19,7 +19,7 @@
 
     
     Opal.const_set($nesting[0], 'ID', "ShadowRun4");
-    Opal.const_set($nesting[0], 'NAME', "シャドウラン第4版");
+    Opal.const_set($nesting[0], 'NAME', "シャドウラン 4th Edition");
     Opal.const_set($nesting[0], 'SORT_KEY', "しやとうらん4");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "個数振り足しロール(xRn)の境界値を6にセット、バラバラロール(xBn)の目標値を5以上にセットします。\n" + "BコマンドとRコマンド時に、グリッチの表示を行います。\n");
     

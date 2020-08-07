@@ -40,7 +40,7 @@
       var $a, self = this;
 
       
-      if ($truthy(($truthy($a = cmp_op['$!='](">=")) ? target['$==']("?") : $a))) {
+      if ($truthy(($truthy($a = cmp_op['$!='](">=")) ? $a : target['$==']("?")))) {
         return ""};
       if ($truthy($rb_ge(total, target))) {
         return " ＞ 成功"

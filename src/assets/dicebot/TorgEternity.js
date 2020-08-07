@@ -20,7 +20,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$gsub', '$last_match', '$torg_check', '$=~', '$debug', '$to_i', '$parren_killer', '$torg_eternity_dice', '$get_torg_eternity_bonus', '$>', '$+', '$to_s', '$!=', '$!', '$nil?', '$==', '$format', '$match', '$get_torg_eternity_modifier', '$<=', '$get_torg_eternity_damage_bonus_dice', '$<', '$get_torg_eternity_success_level', '$get_torg_eternity_damage_result', '$empty?', '$each', '$[]', '$roll', '$shift', '$&', '$-', '$get_torg_eternity_table_result', '$/']);
+  Opal.add_stubs(['$setPrefixes', '$analyzeDiceCommandResultMethod', '$gsub', '$last_match', '$torg_check', '$match', '$[]', '$debug', '$to_i', '$parren_killer', '$torg_eternity_dice', '$get_torg_eternity_bonus', '$>', '$+', '$to_s', '$!=', '$!', '$nil?', '$==', '$format', '$get_torg_eternity_modifier', '$<=', '$get_torg_eternity_damage_bonus_dice', '$<', '$get_torg_eternity_success_level', '$get_torg_eternity_damage_result', '$empty?', '$each', '$roll', '$shift', '$&', '$-', '$get_torg_eternity_table_result', '$/']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'TorgEternity');
 
@@ -70,16 +70,16 @@
     }, $TorgEternity_dice_command_xRn$5.$$arity = 2);
     
     Opal.def(self, '$torg_check', $TorgEternity_torg_check$6 = function $$torg_check(string, nick_e) {
-      var $a, $b, self = this, output = nil, mod = nil, skilled = nil, unskilled = nil, dice_str = nil, sk_bonus = nil;
+      var $a, $b, self = this, m = nil, mod = nil, skilled = nil, unskilled = nil, dice_str = nil, sk_bonus = nil, output = nil;
 
       
-      output = "1";
-      if ($truthy(/(^|\s)S?(1R20([+-]\d+)*)(\s|$)/i['$=~'](string))) {
+      m = /(^|\s)S?(1R20(([+-]\d+)*))(\s|$)/i.$match(string);
+      if ($truthy(m)) {
       } else {
-        return "1"
+        return nil
       };
-      string = $$($nesting, 'Regexp').$last_match(2);
-      mod = $$($nesting, 'Regexp').$last_match(3);
+      string = m['$[]'](2);
+      mod = m['$[]'](3);
       self.$debug(mod);
       if ($truthy(mod)) {
         mod = self.$parren_killer("" + "(0" + (mod) + ")").$to_i()};
@@ -108,15 +108,12 @@
 
       
       self.$debug("Torg Eternity Dice Roll Command ? ", command);
-      m = /(^|\s)(S)?(TE)/i['$=~'](command);
+      m = /(^|\s)(S)?(TE)/i.$match(command);
       if ($truthy(m)) {
       } else {
-        
-        self.$debug("None");
-        return nil;
+        return nil
       };
-      secret = $$($nesting, 'Regexp').$last_match(2)['$nil?']()['$!']();
-      self.$debug("Yes!");
+      secret = m['$[]'](2)['$nil?']()['$!']();
       $b = self.$torg_eternity_dice(false, true), $a = Opal.to_ary($b), (skilled = ($a[0] == null ? nil : $a[0])), (unskilled = ($a[1] == null ? nil : $a[1])), (dice_str = ($a[2] == null ? nil : $a[2])), (mishap = ($a[3] == null ? nil : $a[3])), $b;
       if (mishap['$=='](1)) {
         output = "" + "d20ロール（通常） ＞ 1d20[" + (dice_str) + "] ＞ Mishap!　絶対失敗！"
@@ -140,15 +137,12 @@
 
       
       self.$debug("Torg Eternity Dice Roll ( UP ) Command ? ", command);
-      m = /(^|\s)(S)?(UP)/i['$=~'](command);
+      m = /(^|\s)(S)?(UP)/i.$match(command);
       if ($truthy(m)) {
       } else {
-        
-        self.$debug("None");
-        return nil;
+        return nil
       };
-      secret = $$($nesting, 'Regexp').$last_match(2)['$nil?']()['$!']();
-      self.$debug("Yes!");
+      secret = m['$[]'](2)['$nil?']()['$!']();
       $b = self.$torg_eternity_dice(false, true), $a = Opal.to_ary($b), (skilled1 = ($a[0] == null ? nil : $a[0])), (unskilled1 = ($a[1] == null ? nil : $a[1])), (dice_str1 = ($a[2] == null ? nil : $a[2])), (mishap = ($a[3] == null ? nil : $a[3])), $b;
       if (mishap['$=='](1)) {
         output = "" + "d20ロール（高揚） ＞ 1d20[" + (dice_str1) + "] ＞ Mishap!　絶対失敗！"
@@ -175,16 +169,13 @@
 
       
       self.$debug("Torg Eternity Possibility Roll Command ? ", command);
-      m = /(^|\s)(S)?(POS)((\d+)(\+\d+)?)/i['$=~'](command);
+      m = /(^|\s)(S)?(POS)((\d+)(\+\d+)?)/i.$match(command);
       if ($truthy(m)) {
       } else {
-        
-        self.$debug("None");
-        return nil;
+        return nil
       };
-      secret = $$($nesting, 'Regexp').$last_match(2)['$nil?']()['$!']();
-      self.$debug("Yes!");
-      output_modifier = self.$parren_killer("" + "(0" + ($$($nesting, 'Regexp').$last_match(4)) + ")").$to_i();
+      secret = m['$[]'](2)['$nil?']()['$!']();
+      output_modifier = self.$parren_killer("" + "(0" + (m['$[]'](4)) + ")").$to_i();
       $b = self.$torg_eternity_dice(true, false), $a = Opal.to_ary($b), (skilled = ($a[0] == null ? nil : $a[0])), (unskilled = ($a[1] == null ? nil : $a[1])), (dice_str = ($a[2] == null ? nil : $a[2])), $b;
       subtotal_skilled = $rb_plus(skilled, output_modifier);
       subtotal_unskilled = $rb_plus(unskilled, output_modifier);
@@ -208,13 +199,10 @@
       m = /(\d+)(BD)(([\+\-]\d+)*)/i.$match(command);
       if ($truthy(m)) {
       } else {
-        
-        self.$debug("None");
-        return nil;
+        return nil
       };
-      self.$debug("Yes!");
-      number_bonus_die = $$($nesting, 'Regexp').$last_match(1).$to_i();
-      $b = self.$get_torg_eternity_modifier($$($nesting, 'Regexp').$last_match(3)), $a = Opal.to_ary($b), (value_modifier = ($a[0] == null ? nil : $a[0])), (output_modifier = ($a[1] == null ? nil : $a[1])), $b;
+      number_bonus_die = m['$[]'](1).$to_i();
+      $b = self.$get_torg_eternity_modifier(m['$[]'](3)), $a = Opal.to_ary($b), (value_modifier = ($a[0] == null ? nil : $a[0])), (output_modifier = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_le(number_bonus_die, 0))) {
         output = "エラーです。xBD (x≧1) として下さい"
       } else {
@@ -231,15 +219,12 @@
 
       
       self.$debug("TorgEternity Success Level Table Command ? ", command);
-      m = /(RT|Result)(\d+([\+\-]\d+)*)/i.$match(command);
+      m = /(RT|Result)(\-*\d+([\+\-]\d+)*)/i.$match(command);
       if ($truthy(m)) {
       } else {
-        
-        self.$debug("None");
-        return nil;
+        return nil
       };
-      self.$debug("Yes!");
-      value = self.$parren_killer("" + "(0" + ($$($nesting, 'Regexp').$last_match(2)) + ")").$to_i();
+      value = self.$parren_killer("" + "(0" + (m['$[]'](2)) + ")").$to_i();
       self.$debug(value);
       if ($truthy($rb_lt(value, 0))) {
         output = "Failure."
@@ -256,15 +241,12 @@
 
       
       self.$debug("TorgEternity Damage Result Table Command ? ", command);
-      m = /(DT|Damage)(\d+([\+\-]\d+)*)/i.$match(command);
+      m = /(DT|Damage)(\-*\d+([\+\-]\d+)*)/i.$match(command);
       if ($truthy(m)) {
       } else {
-        
-        self.$debug("None");
-        return nil;
+        return nil
       };
-      self.$debug("Yes!");
-      value = self.$parren_killer("" + "(0" + ($$($nesting, 'Regexp').$last_match(2)) + ")").$to_i();
+      value = self.$parren_killer("" + "(0" + (m['$[]'](2)) + ")").$to_i();
       self.$debug(value);
       output = self.$get_torg_eternity_damage_result(value);
       output = "" + "ダメージ結果表[" + (value) + "] ＞ " + (output);
@@ -280,15 +262,12 @@
       m = /(BT|Bonus)(\d+)(([\+\-]\d+)*)/i.$match(command);
       if ($truthy(m)) {
       } else {
-        
-        self.$debug("None");
-        return nil;
+        return nil
       };
-      self.$debug("Yes!");
-      value_roll = $$($nesting, 'Regexp').$last_match(2).$to_i();
+      value_roll = m['$[]'](2).$to_i();
       output_bonus = self.$get_torg_eternity_bonus(value_roll);
       self.$debug(output_bonus);
-      $b = self.$get_torg_eternity_modifier($$($nesting, 'Regexp').$last_match(3)), $a = Opal.to_ary($b), (value_modifier = ($a[0] == null ? nil : $a[0])), (output_modifier = ($a[1] == null ? nil : $a[1])), $b;
+      $b = self.$get_torg_eternity_modifier(m['$[]'](3)), $a = Opal.to_ary($b), (value_modifier = ($a[0] == null ? nil : $a[0])), (output_modifier = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy($rb_le(value_roll, 1))) {
         output = "" + "ロールボーナス表[" + (value_roll) + "] ＞ Mishap!!"
       } else if ($truthy(output_modifier['$empty?']())) {

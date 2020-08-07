@@ -14,7 +14,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$!=', '$>', '$<=', '$/', '$+']);
+  Opal.add_stubs(['$==', '$!=', '$>', '$<=', '$/', '$+']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'InfiniteFantasia');
 
@@ -29,6 +29,8 @@
       var self = this, output = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if ($truthy(cmp_op['$!=']("<="))) {
         return ""
       } else if ($truthy($rb_gt(total, target))) {

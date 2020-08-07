@@ -31,8 +31,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "BlindMythos");
-    Opal.const_set($nesting[0], 'NAME', "ブラインド・ミトス");
-    Opal.const_set($nesting[0], 'SORT_KEY', "ふらいんとみとす");
+    Opal.const_set($nesting[0], 'NAME', "ブラインド・ミトスRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ふらいんとみとすRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定：BMx@y>=z、BMSx@y>=z\n" + "  　x:スキルレベル\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　BMコマンドはダイスの振り足しを常に行い、\n" + "　BMSは振り足しを自動では行いません。\n" + " 例）BM>=1　BM@3>=1　BMS2>=1\n" + "\n" + "・判定振り足し：ReRollx,x,x...@y>=1\n" + "  　x:振るダイスの個数\n" + "　　y:目標難易度（省略可。デフォルト4）\n" + "　　z:必要成功度\n" + "　振り足しを自動で行わない場合（BMSコマンド）に使用します。\n" + "\n" + "・LE：失う感情表\n" + "・感情後遺症表 ESx\n" + "　ESH：喜、ESA：怒、ESS：哀、ESP：楽、ESL：愛、ESE：感\n" + "・DT：汚染チャート\n" + "・RPxyz：守護星表チェック\n" + " xyz:守護星ナンバーを指定\n" + " 例）RP123　RP258\n");
     
     Opal.def(self, '$rollDiceCommand', $BlindMythos_rollDiceCommand$1 = function $$rollDiceCommand(command) {

@@ -11,7 +11,7 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$!=', '$+', '$success_text', '$juuten', '$<=', '$count', '$==', '$[]', '$>']);
+  Opal.add_stubs(['$==', '$!=', '$+', '$success_text', '$juuten', '$<=', '$count', '$[]', '$>']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'NjslyrBattle');
 
@@ -27,6 +27,8 @@
       var self = this;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if ($truthy(cmp_op['$!=']("<="))) {
         return ""};
       return $rb_plus(self.$success_text(total, target), self.$juuten(dice_list));

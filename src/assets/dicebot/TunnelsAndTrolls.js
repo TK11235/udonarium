@@ -33,7 +33,7 @@
     var $nesting = [self].concat($parent_nesting), $TunnelsAndTrolls_initialize$1, $TunnelsAndTrolls_changeText$2, $TunnelsAndTrolls_dice_command_xRn$8, $TunnelsAndTrolls_check_2D6$9, $TunnelsAndTrolls_getMaxSuccessLevel$10, $TunnelsAndTrolls_getDiceRolledAdditionalText$11, $TunnelsAndTrolls_getExperiencePoint$12, $TunnelsAndTrolls_int$ques$13, $TunnelsAndTrolls_tandt_berserk$14;
 
     
-    Opal.const_set($nesting[0], 'ID', "Tunnels & Trolls");
+    Opal.const_set($nesting[0], 'ID', "TunnelsAndTrolls");
     Opal.const_set($nesting[0], 'NAME', "トンネルズ＆トロールズ");
     Opal.const_set($nesting[0], 'SORT_KEY', "とんねるすあんととろおるす");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定　(nD6+x>=nLV)\n" + "失敗、成功、自動失敗の自動判定とゾロ目の振り足し経験値の自動計算を行います。\n" + "SAVEの難易度を「レベル」で表記することが出来ます。\n" + "例えば「2Lv」と書くと「25」に置換されます。\n" + "判定時以外は悪意ダメージを表示します。\n" + "バーサークとハイパーバーサーク用に専用コマンドが使えます。\n" + "例）2D6+1>=1Lv\n" + "　 (2D6+1>=20) ＞ 7[2,5]+1 ＞ 8 ＞ 失敗\n" + "　判定時にはゾロ目を自動で振り足します。\n" + "\n" + "・バーサークとハイパーバーサーク　(nBS+x or nHBS+x)\n" + "　\"(ダイス数)BS(修正値)\"でバーサーク、\"(ダイス数)HBS(修正値)\"でハイパーバーサークでロールできます。\n" + "　最初のダイスの読替は、個別の出目はそのままで表示。\n" + "　下から２番目の出目をずらした分だけ合計にマイナス修正を追加して表示します。\n");
@@ -58,7 +58,7 @@
       var $$3, $$4, $$5, $$6, $$7, self = this, level_diff = nil;
 
       
-      self.$debug("Tunnels & Trolls parren_killer begin string", string);
+      self.$debug("TunnelsAndTrolls parren_killer begin string", string);
       if ($truthy(/(\d+)LV/i['$=~'](string))) {
         
         level_diff = $rb_plus($rb_times($$($nesting, 'Regexp').$last_match(1).$to_i(), 5), 15);

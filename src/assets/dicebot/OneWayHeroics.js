@@ -29,8 +29,8 @@
     self.$$prototype.d66Type = nil;
     
     Opal.const_set($nesting[0], 'ID', "OneWayHeroics");
-    Opal.const_set($nesting[0], 'NAME', "片道勇者");
-    Opal.const_set($nesting[0], 'SORT_KEY', "かたみちゆうしや");
+    Opal.const_set($nesting[0], 'NAME', "片道勇者TRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "かたみちゆうしやTRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定　aJDx+y,z\n" + "　a:ダイス数（省略時2個)、x:能力値、\n" + "　y:修正値（省略可。「＋」のみなら＋１）、z:目標値（省略可）\n" + "　例１）JD2+1,8 or JD2+,8　：能力値２、修正＋１、目標値８\n" + "　例２）JD3,10 能力値３、修正なし、目標値10\n" + "　例３）3JD4+ ダイス3個から2個選択、能力値４、修正なし、目標値なし\n" + "・ファンブル表 FT／魔王追撃表   DC／進行ルート表 PR／会話テーマ表 TT\n" + "逃走判定表   EC／ランダムNPC特徴表 RNPC／偵察表 SCT\n" + "施設表　FCLT／施設表プラス　FCLTP／希少動物表 RANI／王特徴表プラス KNGFTP\n" + "野外遭遇表 OUTENC／野外遭遇表プラス OUTENCP\n" + "モンスター特徴表 MONFT／モンスター特徴表プラス MONFTP\n" + "ドロップアイテム表 DROP／ドロップアイテム表プラス DROPP\n" + "武器ドロップ表 DROPWP／武器ドロップ表2 DROPWP2\n" + "防具ドロップ表 DROPAR／防具ドロップ表2 DROPAR2\n" + "聖武具ドロップ表 DROPHW／聖武具ドロップ表プラス DROPHWP\n" + "食品ドロップ表 DROPFD／食品ドロップ表2 DROPFD2\n" + "巻物ドロップ表 DROPSC／巻物ドロップ表2 DROPSC2\n" + "その他ドロップ表 DROPOT／その他 ドロップ表2 DROPOT2\n" + "薬品ドロップ表プラス DROPDRP／珍しい箱ドロップ表2 DROPRAREBOX2\n" + "・ランダムイベント表 RETx（x：現在の日数）、ランダムイベント表プラス RETPx\n" + "　例）RET3、RETP4\n" + "・ダンジョン表 DNGNx（x：現在の日数）、ダンジョン表プラス DNGNPx\n" + "　例）DNGN3、DNGNP4\n");
     
     Opal.def(self, '$initialize', $OneWayHeroics_initialize$1 = function $$initialize() {

@@ -22,8 +22,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "RokumonSekai2");
-    Opal.const_set($nesting[0], 'NAME', "六門世界2nd");
-    Opal.const_set($nesting[0], 'SORT_KEY', "ろくもんせかい2");
+    Opal.const_set($nesting[0], 'NAME', "六門世界RPG セカンドエディション");
+    Opal.const_set($nesting[0], 'SORT_KEY', "ろくもんせかいRPG2");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "aRSm<=t\n" + "能力値a,修正値m,目標値tで判定ロールを行います。\n" + "Rコマンド(3R6m<=t[a])に読み替えます。\n" + "成功度、評価、ボーナスダイスを自動表示します。\n" + "　例) 3RS+1<=9　3R6+1<=9[3]\n");
     self.$setPrefixes(["\\d+RS"]);
     

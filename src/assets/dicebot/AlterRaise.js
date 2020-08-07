@@ -17,20 +17,20 @@
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy;
 
-  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$get_emancipation_table', '$get_personality_table', '$get_location_table', '$get_quiet_table', '$get_delight_table', '$get_trauma_table', '$get_scene_production_table', '$get_stance_table', '$get_emotion_table', '$>', '$roll', '$get_table_by_number', '$>=', '$+', '$get_Alter_raise_1d6_table_result', '$get_Alter_raise_d66_table_result', '$to_s', '$[]', '$<', '$*']);
+  Opal.add_stubs(['$setPrefixes', '$upcase', '$===', '$to_i', '$last_match', '$get_emancipation_table', '$get_personality_table', '$get_location_table', '$get_quiet_table', '$get_delight_table', '$get_trauma_table', '$get_scene_production_table', '$get_stance_table', '$get_emotion_table', '$>', '$roll', '$get_table_by_number', '$>=', '$+', '$get_AlterRaise_1d6_table_result', '$get_AlterRaise_d66_table_result', '$to_s', '$[]', '$<', '$*']);
   return (function($base, $super, $parent_nesting) {
-    var self = $klass($base, $super, 'Alter_raise');
+    var self = $klass($base, $super, 'AlterRaise');
 
-    var $nesting = [self].concat($parent_nesting), $Alter_raise_rollDiceCommand$1, $Alter_raise_get_emancipation_table$2, $Alter_raise_get_personality_table$3, $Alter_raise_get_location_table$4, $Alter_raise_get_quiet_table$5, $Alter_raise_get_delight_table$6, $Alter_raise_get_trauma_table$7, $Alter_raise_get_scene_production_table$8, $Alter_raise_get_stance_table$9, $Alter_raise_get_emotion_table$10, $Alter_raise_get_Alter_raise_1d6_table_result$11, $Alter_raise_get_Alter_raise_d66_table_result$12;
+    var $nesting = [self].concat($parent_nesting), $AlterRaise_rollDiceCommand$1, $AlterRaise_get_emancipation_table$2, $AlterRaise_get_personality_table$3, $AlterRaise_get_location_table$4, $AlterRaise_get_quiet_table$5, $AlterRaise_get_delight_table$6, $AlterRaise_get_trauma_table$7, $AlterRaise_get_scene_production_table$8, $AlterRaise_get_stance_table$9, $AlterRaise_get_emotion_table$10, $AlterRaise_get_AlterRaise_1d6_table_result$11, $AlterRaise_get_AlterRaise_d66_table_result$12;
 
     
-    Opal.const_set($nesting[0], 'ID', "Alter_raise");
-    Opal.const_set($nesting[0], 'NAME', "心衝想機TRPGアルトレイズ");
+    Opal.const_set($nesting[0], 'ID', "AlterRaise");
+    Opal.const_set($nesting[0], 'NAME', "アルトレイズ");
     Opal.const_set($nesting[0], 'SORT_KEY', "あるとれいす");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "◆解放判定：EMA[x]\n" + "\n" + "[x]で達成値を指定してください。省略時はダイスロールします。\n" + "\n" + "\n" + "【各種表】\n" + "◆性格傾向表：PER[n]　　　　　　 ◆場所表：LOC[ab]\n" + "◆平穏・経験表：QUI[ab]　　　　　◆喜び・経験表：DEL[ab]\n" + "◆心の傷・経験表：TRA[ab]　　　　◆シーン演出表：SCE[n]\n" + "◆スタンス表：STA[n]　　　　　　 ◆感情表：EMO[ab]\n" + "\n" + "[]内のコマンドを省略でダイスロール、指定でROC結果を表示します。\n" + "[n]は「1D6」、[ab]は「D66」の出目を指定してください。\n" + "\n" + "【書式例】\n" + "PER3：性格傾向表の「3」をROC\n" + "LOC52：場所表の「52」をROC\n" + "QUI：平穏・経験表をダイスロール\n");
     self.$setPrefixes(["EMA(\\d+)?", "PER(\\d+)?", "LOC(\\d+)?", "QUI(\\d+)?", "DEL(\\d+)?", "TRA(\\d+)?", "SCE(\\d+)?", "STA(\\d+)?", "EMO(\\d+)?"]);
     
-    Opal.def(self, '$rollDiceCommand', $Alter_raise_rollDiceCommand$1 = function $$rollDiceCommand(command) {
+    Opal.def(self, '$rollDiceCommand', $AlterRaise_rollDiceCommand$1 = function $$rollDiceCommand(command) {
       var $a, self = this, output = nil, $case = nil, roc = nil;
 
       
@@ -64,9 +64,9 @@
       return self.$get_emotion_table(roc);}
       else { return nil }})();
       return output;
-    }, $Alter_raise_rollDiceCommand$1.$$arity = 1);
+    }, $AlterRaise_rollDiceCommand$1.$$arity = 1);
     
-    Opal.def(self, '$get_emancipation_table', $Alter_raise_get_emancipation_table$2 = function $$get_emancipation_table(roc) {
+    Opal.def(self, '$get_emancipation_table', $AlterRaise_get_emancipation_table$2 = function $$get_emancipation_table(roc) {
       var $a, $b, self = this, name = nil, table = nil, dice = nil, diceText = nil, tableText = nil;
 
       
@@ -87,81 +87,81 @@
       if ($truthy($rb_ge(dice, 7))) {
         tableText = $rb_plus(tableText, "\n【達成値7以上】GM：攻撃ルーチン1つを開示（番号はペアPLが指定）　PL：戦闘開始時のアクセルレベル+1")};
       return "" + (name) + " ＞ " + (dice) + (diceText) + "：" + (tableText);
-    }, $Alter_raise_get_emancipation_table$2.$$arity = 1);
+    }, $AlterRaise_get_emancipation_table$2.$$arity = 1);
     
-    Opal.def(self, '$get_personality_table', $Alter_raise_get_personality_table$3 = function $$get_personality_table(roc) {
+    Opal.def(self, '$get_personality_table', $AlterRaise_get_personality_table$3 = function $$get_personality_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "性格傾向表";
       table = [[1, "挑戦"], [2, "調和"], [3, "感性"], [4, "信念"], [5, "論理"], [6, "思慮"]];
-      return self.$get_Alter_raise_1d6_table_result(name, table, roc);
-    }, $Alter_raise_get_personality_table$3.$$arity = 1);
+      return self.$get_AlterRaise_1d6_table_result(name, table, roc);
+    }, $AlterRaise_get_personality_table$3.$$arity = 1);
     
-    Opal.def(self, '$get_location_table', $Alter_raise_get_location_table$4 = function $$get_location_table(roc) {
+    Opal.def(self, '$get_location_table', $AlterRaise_get_location_table$4 = function $$get_location_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "場所表";
       table = [[13, "教室"], [16, "部室"], [23, "商店街"], [26, "田舎"], [33, "都会"], [36, "駅"], [43, "バイト"], [46, "ステージ"], [53, "図書館"], [56, "病院"], [63, "自然"], [66, "家"]];
-      return self.$get_Alter_raise_d66_table_result(name, table, roc);
-    }, $Alter_raise_get_location_table$4.$$arity = 1);
+      return self.$get_AlterRaise_d66_table_result(name, table, roc);
+    }, $AlterRaise_get_location_table$4.$$arity = 1);
     
-    Opal.def(self, '$get_quiet_table', $Alter_raise_get_quiet_table$5 = function $$get_quiet_table(roc) {
+    Opal.def(self, '$get_quiet_table', $AlterRaise_get_quiet_table$5 = function $$get_quiet_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "平穏・経験表";
       table = [[13, "友達"], [16, "幼馴染み"], [23, "両親"], [26, "兄弟"], [33, "親戚"], [36, "理解者"], [43, "友人"], [46, "仲間"], [53, "趣味"], [56, "練習"], [63, "一人"], [66, "お気に入り"]];
-      return self.$get_Alter_raise_d66_table_result(name, table, roc);
-    }, $Alter_raise_get_quiet_table$5.$$arity = 1);
+      return self.$get_AlterRaise_d66_table_result(name, table, roc);
+    }, $AlterRaise_get_quiet_table$5.$$arity = 1);
     
-    Opal.def(self, '$get_delight_table', $Alter_raise_get_delight_table$6 = function $$get_delight_table(roc) {
+    Opal.def(self, '$get_delight_table', $AlterRaise_get_delight_table$6 = function $$get_delight_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "喜び・経験表";
       table = [[13, "勝利"], [16, "優勝"], [23, "出会い"], [26, "理解"], [33, "幸運"], [36, "プレゼント"], [43, "成就"], [46, "成長"], [53, "創造"], [56, "好転"], [63, "証明"], [66, "生還"]];
-      return self.$get_Alter_raise_d66_table_result(name, table, roc);
-    }, $Alter_raise_get_delight_table$6.$$arity = 1);
+      return self.$get_AlterRaise_d66_table_result(name, table, roc);
+    }, $AlterRaise_get_delight_table$6.$$arity = 1);
     
-    Opal.def(self, '$get_trauma_table', $Alter_raise_get_trauma_table$7 = function $$get_trauma_table(roc) {
+    Opal.def(self, '$get_trauma_table', $AlterRaise_get_trauma_table$7 = function $$get_trauma_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "心の傷・経験表";
       table = [[13, "敗北"], [16, "仲違い"], [23, "失恋"], [26, "無理解"], [33, "無力"], [36, "孤独"], [43, "別離"], [46, "死別"], [53, "損壊"], [56, "喪失"], [63, "病"], [66, "事故"]];
-      return self.$get_Alter_raise_d66_table_result(name, table, roc);
-    }, $Alter_raise_get_trauma_table$7.$$arity = 1);
+      return self.$get_AlterRaise_d66_table_result(name, table, roc);
+    }, $AlterRaise_get_trauma_table$7.$$arity = 1);
     
-    Opal.def(self, '$get_scene_production_table', $Alter_raise_get_scene_production_table$8 = function $$get_scene_production_table(roc) {
+    Opal.def(self, '$get_scene_production_table', $AlterRaise_get_scene_production_table$8 = function $$get_scene_production_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "シーン演出表";
       table = [[1, "相談。君は相手に相談したいことがあった。"], [2, "遊び。君は相手と遊びたかった。"], [3, "案内。君は自身のアリウス・パーソナルを案内したかった。"], [4, "勝負。君は相手と何らかの勝負をしたかった。"], [5, "お願い。君は相手にお願いしたいことがあった。"], [6, "扉を開く前に。アクセルダイブ・ゲートをくぐる前に、君は相手に話したいことがあった。（＊ダイブした後のシーンも演出すること）"]];
-      return self.$get_Alter_raise_1d6_table_result(name, table, roc);
-    }, $Alter_raise_get_scene_production_table$8.$$arity = 1);
+      return self.$get_AlterRaise_1d6_table_result(name, table, roc);
+    }, $AlterRaise_get_scene_production_table$8.$$arity = 1);
     
-    Opal.def(self, '$get_stance_table', $Alter_raise_get_stance_table$9 = function $$get_stance_table(roc) {
+    Opal.def(self, '$get_stance_table', $AlterRaise_get_stance_table$9 = function $$get_stance_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "スタンス表";
       table = [[1, "友人"], [2, "恋愛"], [3, "師事"], [4, "ライバル"], [5, "家族"], [6, "守護"]];
-      return self.$get_Alter_raise_1d6_table_result(name, table, roc);
-    }, $Alter_raise_get_stance_table$9.$$arity = 1);
+      return self.$get_AlterRaise_1d6_table_result(name, table, roc);
+    }, $AlterRaise_get_stance_table$9.$$arity = 1);
     
-    Opal.def(self, '$get_emotion_table', $Alter_raise_get_emotion_table$10 = function $$get_emotion_table(roc) {
+    Opal.def(self, '$get_emotion_table', $AlterRaise_get_emotion_table$10 = function $$get_emotion_table(roc) {
       var self = this, name = nil, table = nil;
 
       
       name = "感情表";
       table = [[13, "勇気"], [16, "怒り"], [23, "悲しみ"], [26, "喜び"], [33, "驚き"], [36, "恐れ"], [43, "安らぎ"], [46, "誠意"], [53, "庇護"], [56, "謝意"], [63, "信頼"], [66, "好意"]];
-      return self.$get_Alter_raise_d66_table_result(name, table, roc);
-    }, $Alter_raise_get_emotion_table$10.$$arity = 1);
+      return self.$get_AlterRaise_d66_table_result(name, table, roc);
+    }, $AlterRaise_get_emotion_table$10.$$arity = 1);
     
-    Opal.def(self, '$get_Alter_raise_1d6_table_result', $Alter_raise_get_Alter_raise_1d6_table_result$11 = function $$get_Alter_raise_1d6_table_result(name, table, roc) {
+    Opal.def(self, '$get_AlterRaise_1d6_table_result', $AlterRaise_get_AlterRaise_1d6_table_result$11 = function $$get_AlterRaise_1d6_table_result(name, table, roc) {
       var $a, $b, self = this, dice = nil, tableText = nil;
 
       
@@ -175,8 +175,8 @@
       };
       tableText = self.$get_table_by_number(dice, table);
       return "" + (name) + " ＞ " + (dice) + "：" + (tableText);
-    }, $Alter_raise_get_Alter_raise_1d6_table_result$11.$$arity = 3);
-    return (Opal.def(self, '$get_Alter_raise_d66_table_result', $Alter_raise_get_Alter_raise_d66_table_result$12 = function $$get_Alter_raise_d66_table_result(name, table, roc) {
+    }, $AlterRaise_get_AlterRaise_1d6_table_result$11.$$arity = 3);
+    return (Opal.def(self, '$get_AlterRaise_d66_table_result', $AlterRaise_get_AlterRaise_d66_table_result$12 = function $$get_AlterRaise_d66_table_result(name, table, roc) {
       var $a, $b, self = this, diceText = nil, dice1 = nil, dice2 = nil, dice = nil, tableText = nil;
 
       
@@ -206,6 +206,6 @@
       diceText = "" + (dice1) + "," + (dice2);
       tableText = self.$get_table_by_number(dice, table);
       return "" + (name) + " ＞ " + (diceText) + "：" + (tableText);
-    }, $Alter_raise_get_Alter_raise_d66_table_result$12.$$arity = 3), nil) && 'get_Alter_raise_d66_table_result';
+    }, $AlterRaise_get_AlterRaise_d66_table_result$12.$$arity = 3), nil) && 'get_AlterRaise_d66_table_result';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

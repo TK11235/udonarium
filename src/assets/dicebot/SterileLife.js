@@ -34,8 +34,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "SterileLife");
-    Opal.const_set($nesting[0], 'NAME', "ステラーライフ");
-    Opal.const_set($nesting[0], 'SORT_KEY', "すてらあらいふ");
+    Opal.const_set($nesting[0], 'NAME', "ステラーライフTRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "すてらあらいふTRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "◆判定　nDAc[s,d,t]　n:ダイス数　c:各種修正　s:1成功（省略不可）　d:2成功（省略不可）　t:3成功（ダイス目一致時のみ　省略時:無し）\n" + "　例）2DA-3[7,10]\n" + "◆船名ランダム表\n" + "　・船名接頭辞表　VPFT\n" + "　・船名前半表　VNFT\n" + "　・船名後半表　VNRT\n" + "　・アバターアルファベット表①　AAFT\n" + "　・アバターアルファベット表②　AAST\n" + "◆ヴォヤージュ各種表\n" + "　・ランダムNPC艦表　RNST\n" + "　・ランダムイベント表　RET\n" + "　・お宝特徴表　TRST\n" + "　・お宝形容表　TRAT\n" + "　・お宝外見表　TRMT\n" + "　・お宝物品表　TROT\n" + "◆ステラーライフお題表\n" + "　・超未来の技術　TET\n" + "　・超未来のエンタメ　ENT\n" + "　・超未来の文化　CUT\n" + "　・超未来の自然　NAT\n" + "　・超未来の宇宙船内　INT\n");
     self.$setPrefixes(["(\\d+)*DA.*\\[(\\d+),(\\d+)(,(\\d+))?\\]", "VPFT", "VNFT", "VNRT", "AAFT", "AST", "RNST", "RET", "TRST", "TRAT", "TRMT", "TROT", "TET", "ENT", "CUT", "NAT", "INT"]);
     

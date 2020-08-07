@@ -31,7 +31,7 @@
 
     
     Opal.const_set($nesting[0], 'ID', "PhantasmAdventure");
-    Opal.const_set($nesting[0], 'NAME', "ファンタズムアドベンチャー");
+    Opal.const_set($nesting[0], 'NAME', "ファンタズム・アドベンチャー");
     Opal.const_set($nesting[0], 'SORT_KEY', "ふあんたすむあとへんちやあ");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "成功、失敗、決定的成功、決定的失敗の表示とクリティカル・ファンブル値計算の実装。\n");
     
@@ -51,6 +51,8 @@
       var $a, $b, self = this, skill_mod = nil, fumble = nil, critical = nil, dice_now = nil, fum_num = nil, fum_str = nil, crit_num = nil;
 
       
+      if (diff['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

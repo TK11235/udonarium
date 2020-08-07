@@ -28,8 +28,8 @@
 
     
     Opal.const_set($nesting[0], 'ID', "EmbryoMachine");
-    Opal.const_set($nesting[0], 'NAME', "エムブリオマシン");
-    Opal.const_set($nesting[0], 'SORT_KEY', "えむふりおましん");
+    Opal.const_set($nesting[0], 'NAME', "エムブリオマシンRPG");
+    Opal.const_set($nesting[0], 'SORT_KEY', "えむふりおましんRPG");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定ロール(EMt+m@c#f)\n" + "　目標値t、修正値m、クリティカル値c(省略時は20)、ファンブル値f(省略時は2)で攻撃判定を行います。\n" + "　命中した場合は命中レベルと命中部位も自動出力します。\n" + "　Rコマンドに読み替えされます。\n" + "・各種表\n" + "　・命中部位表　HLT\n" + "　・白兵攻撃ファンブル表　MFT\n" + "　・射撃攻撃ファンブル表　SFT\n");
     self.$setPrefixes(["(EM\\t+|HLT|MFT|SFT)"]);
     
@@ -87,6 +87,8 @@
       var self = this;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$=='](">=")) {
       } else {
         return ""

@@ -27,13 +27,16 @@
     return (Opal.def(self, '$check_2D6', $Gorilla_check_2D6$3 = function $$check_2D6(total, _dice_total, dice_list, cmp_op, target) {
       var self = this;
 
+      
+      if (target['$==']("?")) {
+        return ""};
       if (dice_list['$==']([5, 5])) {
         return " ＞ ゴリティカル（自動的成功）"
       } else if ($truthy(total.$send(cmp_op, target))) {
         return " ＞ 成功"
       } else {
         return " ＞ 失敗"
-      }
+      };
     }, $Gorilla_check_2D6$3.$$arity = 5), nil) && 'check_2D6';
   })($nesting[0], $$($nesting, 'DiceBot'), $nesting)
 })(Opal);

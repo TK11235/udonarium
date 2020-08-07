@@ -19,13 +19,15 @@
 
     
     Opal.const_set($nesting[0], 'ID', "Chill3");
-    Opal.const_set($nesting[0], 'NAME', "Chill 3");
+    Opal.const_set($nesting[0], 'NAME', "Chill 3rd Edition");
     Opal.const_set($nesting[0], 'SORT_KEY', "ちる3");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・1D100で判定時に成否、Botchを判定\n" + "　例）1D100<=50\n" + "　　　Chill3 : (1D100<=50) ＞ 55 ＞ Botch\n");
     return (Opal.def(self, '$check_1D100', $Chill3_check_1D100$1 = function $$check_1D100(total, dice_total, cmp_op, target) {
       var $a, self = this, tens = nil, ones = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

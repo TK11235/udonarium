@@ -22,7 +22,7 @@
 
     
     Opal.const_set($nesting[0], 'ID', "SMTKakuseihen");
-    Opal.const_set($nesting[0], 'NAME', "真・女神転生TRPG　覚醒篇");
+    Opal.const_set($nesting[0], 'NAME', "真・女神転生TRPG 覚醒篇");
     Opal.const_set($nesting[0], 'SORT_KEY', "しんめかみてんせいTRPGかくせいへん");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・判定\n" + "1D100<=(目標値) でスワップ・通常・逆スワップ判定を判定。\n" + "威力ダイスは nU6[6] (nはダイス個数)でロール可能です。\n");
     
@@ -30,6 +30,8 @@
       var $a, $b, self = this, dice1 = nil, dice2 = nil, total1 = nil, total2 = nil, isRepdigit = nil, result = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if (cmp_op['$==']("<=")) {
       } else {
         return ""

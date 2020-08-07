@@ -21,7 +21,7 @@
     
     Opal.const_set($nesting[0], 'ID', "Illusio");
     Opal.const_set($nesting[0], 'NAME', "晃天のイルージオ");
-    Opal.const_set($nesting[0], 'SORT_KEY', "いるうしお");
+    Opal.const_set($nesting[0], 'SORT_KEY', "こうてんのいるうしお");
     Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "判定：[n]IL(BNo)[P]\n" + "\n" + "[]内のコマンドは省略可能。\n" + "「n」でダイス数を指定。省略時は「1」。\n" + "(BNo)でブロックナンバーを指定。「236」のように記述。順不同可。\n" + "コマンド末に「P」を指定で、(BNo)のパリィ判定。（一応、複数指定可）\n" + "\n" + "【書式例】\n" + "・6IL236 → 6dでブロックナンバー「2,3,6」の判定。\n" + "・IL4512 → 1dでブロックナンバー「1,2,4,5」の判定。\n" + "・2IL1P → 2dでパリィナンバー「1」の判定。\n");
     
     Opal.def(self, '$initialize', $Illusio_initialize$1 = function $$initialize() {
