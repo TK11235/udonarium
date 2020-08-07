@@ -97,6 +97,7 @@ export class DiceBot extends GameObject {
     { script: 'Skynauts', game: '歯車の塔の探空士' },
     { script: 'ScreamHighSchool', game: 'スクリームハイスクール' },
     { script: 'SRS', game: 'スタンダードRPGシステム' },
+    { script: 'SteamPunkers', game: 'スチームパンカーズ' },
     { script: 'SterileLife', game: 'ステラーライフTRPG' },
     { script: 'StratoShout', game: 'ストラトシャウト' },
     { script: 'EtrianOdysseySRS', game: '世界樹の迷宮SRS' },
