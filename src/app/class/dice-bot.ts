@@ -182,6 +182,7 @@ export class DiceBot extends GameObject {
     { script: 'Ryutama', game: 'りゅうたま' },
     { script: 'RuneQuest', game: 'ルーンクエスト' },
     { script: 'RecordOfSteam', game: 'Record of Steam' },
+    { script: 'RecordOfLodossWar', game: 'ロードス島戦記RPG' },
     { script: 'RoleMaster', game: 'ロールマスター' },
     { script: 'LogHorizon', game: 'ログ・ホライズンTRPG' },
     { script: 'RokumonSekai2', game: '六門世界RPG セカンドエディション' },
