@@ -185,6 +185,21 @@ export class DiceBot extends GameObject {
     { script: 'WaresBlade', game: 'ワースブレイド' },
     { script: 'WARPS', game: 'ワープス' },
     { script: 'WorldOfDarkness', game: 'ワールド・オブ・ダークネス' },
+    { script: 'Cthulhu7th_ChineseTraditional', game: '克蘇魯神話第7版' },
+    { script: 'Cthulhu_ChineseTraditional', game: '克蘇魯神話' },
+    { script: 'KillDeathBusiness_Korean', game: 'Kill Death Business (한국어)' },
+    { script: 'Nechronica_Korean', game: '네크로니카' },
+    { script: 'DetatokoSaga_Korean', game: '데타토코 사가' },
+    { script: 'FutariSousa_Korean', game: '둘이서 수사(후타리소우사)' },
+    { script: 'Dracurouge_Korean', game: '드라크루주' },
+    { script: 'LogHorizon_Korean', game: '로그 호라이즌' },
+    { script: 'MonotoneMuseum_Korean', game: '모노톤 뮤지엄' },
+    { script: 'BeginningIdol_Korean', game: '비기닝 아이돌' },
+    { script: 'Amadeus_Korean', game: '아마데우스' },
+    { script: 'Insane_Korean', game: '인세인' },
+    { script: 'Kamigakari_Korean', game: '카미가카리' },
+    { script: 'Cthulhu7th_Korean', game: '크툴루의 부름 7판' },
+    { script: 'Cthulhu_Korean', game: '크툴루' }
   ];
 
   public static extratablesTables: string[] = [
