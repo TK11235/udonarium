@@ -30,6 +30,7 @@ export class DiceBot extends GameObject {
     { script: 'EarthDawn4', game: 'アースドーン4版' },
     { script: 'Airgetlamh', game: '朱の孤塔のエアゲトラム' },
     { script: 'AFF2e', game: 'ADVANCED FIGHTING FANTASY 2nd Edition' },
+    { script: 'AnimaAnimus', game: 'アニマアニムス' },
     { script: 'Amadeus', game: 'アマデウス' },
     { script: 'Arianrhod', game: 'アリアンロッドRPG' },
     { script: 'OrgaRain', game: '在りて遍くオルガレイン' },
