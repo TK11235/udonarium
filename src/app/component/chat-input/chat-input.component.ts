@@ -13,6 +13,7 @@ import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 import { ModalService } from 'service/modal.service';
+import { PeerCursorComponent } from 'component/peer-cursor/peer-cursor.component';
 
 @Component({
   selector: 'chat-input',
@@ -236,21 +237,27 @@ export class ChatInputComponent implements OnInit, OnDestroy {
 
   openCharacterImageChange() {
     let object = ObjectStore.instance.get(this.sendFrom);
-    if(!object) return;
+    if(!object) {
+      console.log("this is null")
+      return;
+    }
 
     this.modalService.open<string>(FileSelecterComponent, { isAllowedEmpty: true }).then(value => {
-      let character = ObjectStore.instance.get<GameCharacter>(this.sendFrom);
-      let peer = ObjectStore.instance.get<PeerCursor>(this.sendFrom);
+      let object = ObjectStore.instance.get(this.sendFrom);
+      
 
-      if(character) {
-        if(!character.imageDataElement || !value) return;
-        let element = character.imageDataElement.getFirstElementByName('imageIdentifier');
+      if(object instanceof PeerCursor) {
+        console.log("this is peerCursor");
+        if(!object.image || !value) return;
+        object.imageIdentifier = value;
+      }
+      else if(object instanceof GameCharacter) {
+        console.log("this is character");
+        if(!object.imageDataElement || !value) return;
+        let element = object.imageDataElement.getFirstElementByName('imageIdentifier');
         if(!element) return;
         element.value = value;
-      } else if(peer) {
-        if(!peer.imageIdentifier || !value) return;
-        peer.imageIdentifier = value;
-      }
+      } 
     });
     
   }
