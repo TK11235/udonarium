@@ -11,6 +11,8 @@ import { TextViewComponent } from 'component/text-view/text-view.component';
 import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
 
 @Component({
   selector: 'chat-input',
@@ -84,7 +86,8 @@ export class ChatInputComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private pointerDeviceService: PointerDeviceService
+    private pointerDeviceService: PointerDeviceService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -229,6 +232,10 @@ export class ChatInputComponent implements OnInit, OnDestroy {
         + '===================================\n'
         + this.gameHelp;
     });
+  }
+
+  openCharacterImageChange() {
+    
   }
 
   private allowsChat(gameCharacter: GameCharacter): boolean {

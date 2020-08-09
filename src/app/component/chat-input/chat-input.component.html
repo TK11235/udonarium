@@ -1,6 +1,6 @@
 <div class="table" [ngClass]="{ 'direct-message': isDirect }">
   <div class="table-cell imagebox">
-    <img *ngIf="0 < imageFile.url.length" class="image" [src]="imageFile.url | safe: 'resourceUrl'" />
+    <img (click)="openCharacterImageChange()" *ngIf="0 < imageFile.url.length" class="image" [src]="imageFile.url | safe: 'resourceUrl'" />
   </div>
   <div class="table-cell">
     <div>
@@ -24,7 +24,7 @@
     </div>
     <div>
       <form>
-        <textarea class="chat-input" placeholder="Enterで送信  Shift+Enterで改行" [(ngModel)]="text"
+        <textarea class="chat-input" placeholder="Enterで送信  Shift+Enterで改行 アイコンクリックで画像変更" [(ngModel)]="text"
           [ngModelOptions]="{standalone: true}" (input)="onInput()" (keydown.enter)="sendChat($event)"
           #textArea></textarea>
         <button type="submit" (click)="sendChat(null)">SEND</button>
