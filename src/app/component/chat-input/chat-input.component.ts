@@ -235,6 +235,23 @@ export class ChatInputComponent implements OnInit, OnDestroy {
   }
 
   openCharacterImageChange() {
+    let object = ObjectStore.instance.get(this.sendFrom);
+    if(!object) return;
+
+    this.modalService.open<string>(FileSelecterComponent, { isAllowedEmpty: true }).then(value => {
+      let character = ObjectStore.instance.get<GameCharacter>(this.sendFrom);
+      let peer = ObjectStore.instance.get<PeerCursor>(this.sendFrom);
+
+      if(character) {
+        if(!character.imageDataElement || !value) return;
+        let element = character.imageDataElement.getFirstElementByName('imageIdentifier');
+        if(!element) return;
+        element.value = value;
+      } else if(peer) {
+        if(!peer.imageIdentifier || !value) return;
+        peer.imageIdentifier = value;
+      }
+    });
     
   }
 
