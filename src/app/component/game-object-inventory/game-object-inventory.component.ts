@@ -15,6 +15,7 @@ import { ContextMenuAction, ContextMenuService, ContextMenuSeparator } from 'ser
 import { GameObjectInventoryService } from 'service/game-object-inventory.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { DiceBot } from '@udonarium/dice-bot';
 
 @Component({
   selector: 'game-object-inventory',
@@ -41,6 +42,10 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '昇順' : '降順'; }
 
   get newLineString(): string { return this.inventoryService.newLineString; }
+
+  get diceBotInfos() { return DiceBot.diceBotInfos }
+  get gameType(): string { return this.inventoryService.gameType; }
+  set gameType(gameType: string) { this.inventoryService.gameType = gameType; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -215,5 +220,12 @@ export class GameObjectInventoryComponent implements OnInit, AfterViewInit, OnDe
 
   trackByGameObject(index: number, gameObject: GameObject) {
     return gameObject ? gameObject.identifier : index;
+  }
+
+  onChangeGameType(gameType: string) {
+    console.log('onChangeGameType ready');
+    DiceBot.getHelpMessage(this.gameType).then(help => {
+      console.log('onChangeGameType done\n' + help + gameType);
+    });
   }
 }
