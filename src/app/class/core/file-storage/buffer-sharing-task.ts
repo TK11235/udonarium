@@ -160,9 +160,7 @@ export class BufferSharingTask<T> {
           this.finishReceive();
         } else {
           this.resetTimeout();
-          if ((event.data.index + 1) % 1 === 0) {
-            EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index, event.sendFrom);
-          }
+          EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index, event.sendFrom);
         }
       })
       .on('DISCONNECT_PEER', event => {
