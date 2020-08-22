@@ -133,7 +133,7 @@ export class BufferSharingTask<T> {
     this.sendChankTimer = null;
     if (this.chanks.length <= index + 1) {
       console.log('バッファ送信完了', this.identifier);
-      this.finish();
+      setZeroTimeout(() => this.finish());
     } else if (this.completedChankIndex + 4 <= index) {
       this.resetTimeout();
     } else {
