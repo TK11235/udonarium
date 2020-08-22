@@ -57,7 +57,7 @@ export class ImageStorage {
   }
 
   private _add(image: ImageFile): ImageFile {
-    this.lazySynchronize(100);
+    if (ImageState.COMPLETE <= image.state) this.lazySynchronize(100);
     if (this.update(image)) return this.imageHash[image.identifier];
     this.imageHash[image.identifier] = image;
     console.log('add Image: ' + image.identifier);

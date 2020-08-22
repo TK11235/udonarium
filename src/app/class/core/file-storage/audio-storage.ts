@@ -56,7 +56,7 @@ export class AudioStorage {
   }
 
   private _add(audio: AudioFile): AudioFile {
-    this.lazySynchronize(100);
+    if (AudioState.COMPLETE <= audio.state) this.lazySynchronize(100);
     if (this.update(audio)) return this.hash[audio.identifier];
     this.hash[audio.identifier] = audio;
     console.log('add Audio: ' + audio.identifier);
