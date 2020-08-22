@@ -166,6 +166,11 @@ export class BufferSharingTask<T> {
           }
         }
       })
+      .on('DISCONNECT_PEER', event => {
+        if (event.data.peer !== this.sendTo) return;
+        console.warn('受信キャンセル（Peer切断）', this, event.data.peer);
+        this._cancel();
+      })
       .on('CANCEL_TASK_' + this.identifier, event => {
         console.warn('受信キャンセル', this, event.sendFrom);
         this._cancel();
