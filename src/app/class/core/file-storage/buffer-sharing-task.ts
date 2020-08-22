@@ -1,7 +1,7 @@
 import * as MessagePack from 'msgpack-lite';
 
 import { EventSystem } from '../system';
-import { setZeroTimeout } from '../system/util/zero-timeout';
+import { clearZeroTimeout, setZeroTimeout } from '../system/util/zero-timeout';
 import { FileReaderUtil } from './file-reader-util';
 
 interface ChankData {
@@ -78,8 +78,8 @@ export class BufferSharingTask<T> {
 
   private dispose() {
     EventSystem.unregister(this);
-    clearTimeout(this.sendChankTimer);
-    clearTimeout(this.timeoutTimer);
+    if (this.sendChankTimer) clearZeroTimeout(this.sendChankTimer);
+    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
     this.onprogress = this.onfinish = this.ontimeout = this.oncancel = null;
   }
 

@@ -45,7 +45,7 @@ export class SynchronizeTask {
   }
 
   private cancel() {
-    clearTimeout(this.timeoutTimer);
+    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
     this.onsynchronize = this.onfinish = this.ontimeout = null;
 
     for (let request of this.requestMap.values()) {
