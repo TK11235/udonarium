@@ -104,7 +104,7 @@ export class FileSharingSystem {
         let identifier = event.data.taskIdentifier;
         let image: ImageFile = ImageStorage.instance.get(identifier);
         if (this.receiveTaskMap.has(identifier) || (image && ImageState.COMPLETE <= image.state)) {
-          console.warn('CANCEL_TASK_ ' + event.data.fileIdentifier);
+          console.warn('CANCEL_TASK_ ' + identifier);
           EventSystem.call('CANCEL_TASK_' + identifier, null, event.sendFrom);
         } else {
           this.startReceiveTransmission(identifier);

@@ -101,7 +101,7 @@ export class AudioSharingSystem {
         let identifier: string = event.data.fileIdentifier;
         let audio: AudioFile = AudioStorage.instance.get(identifier);
         if (this.receiveTaskMap.has(identifier) || (audio && AudioState.COMPLETE <= audio.state)) {
-          console.warn('CANCEL_TASK_ ' + event.data.fileIdentifier);
+          console.warn('CANCEL_TASK_ ' + identifier);
           EventSystem.call('CANCEL_TASK_' + identifier, null, event.sendFrom);
         } else {
           this.startReceiveTransmission(identifier);
