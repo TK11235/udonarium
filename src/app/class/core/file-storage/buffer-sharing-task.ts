@@ -56,6 +56,21 @@ export class BufferSharingTask<T> {
     return task;
   }
 
+  private progress(loded: number, total: number) {
+    if (this.onprogress) this.onprogress(this, loded, total);
+  }
+
+  private finish() {
+    if (this.onfinish) this.onfinish(this, this.data);
+    this.dispose();
+  }
+
+  private timeout() {
+    if (this.ontimeout) this.ontimeout(this);
+    if (this.onfinish) this.onfinish(this, this.data);
+    this.dispose();
+  }
+
   cancel() {
     this.dispose();
     if (this.oncancel) this.oncancel(this);
@@ -85,10 +100,8 @@ export class BufferSharingTask<T> {
       })
       .on('DISCONNECT_PEER', event => {
         if (event.data.peer !== this.sendTo) return;
-        console.warn('送信キャンセル', this, event.data.peer);
-        if (this.ontimeout) this.ontimeout(this);
-        if (this.onfinish) this.onfinish(this, this.data);
-        this.dispose();
+        console.warn('送信キャンセル（Peer切断）', this, event.data.peer);
+        this.timeout();
       });
     this.sentChankIndex = this.completedChankIndex = 0;
     setZeroTimeout(() => this.sendChank(0));
@@ -102,8 +115,7 @@ export class BufferSharingTask<T> {
     if (this.chanks.length <= index + 1) {
       EventSystem.call('FILE_SEND_END_' + this.identifier, null, this.sendTo);
       console.log('バッファ送信完了', this.identifier);
-      if (this.onfinish) this.onfinish(this, this.data);
-      this.dispose();
+      this.finish();
     } else if (this.completedChankIndex + 4 <= index) {
       this.sendChankTimer = null;
       this.resetTimeout();
@@ -126,7 +138,7 @@ export class BufferSharingTask<T> {
         }
         this.chankReceiveCount++;
         this.chanks[event.data.index] = event.data.chank;
-        if (this.onprogress) this.onprogress(this, event.data.index, event.data.length);
+        this.progress(event.data.index, event.data.length);
         if (this.chanks.length <= this.chankReceiveCount) {
           this.finishReceive();
         } else {
@@ -159,8 +171,7 @@ export class BufferSharingTask<T> {
     }
 
     this.data = MessagePack.decode(uint8Array);
-    if (this.onfinish) this.onfinish(this, this.data);
-    this.dispose();
+    this.finish();
   }
 
   private resetTimeout() {
@@ -175,9 +186,7 @@ export class BufferSharingTask<T> {
       if (Date.now() < this.timeoutDate) {
         this.setTimeout();
       } else {
-        if (this.ontimeout) this.ontimeout(this);
-        if (this.onfinish) this.onfinish(this, this.data);
-        this.dispose();  
+        this.timeout();
       }
     }, this.timeoutDate - Date.now());
   }
