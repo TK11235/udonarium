@@ -55,15 +55,16 @@ export class ChatMessageService {
         console.log('st: ' + st + '');
         console.log('timeOffset: ' + this.timeOffset);
         console.log('performanceOffset: ' + this.performanceOffset);
-        this.setRerequest();
+        this.setIntervalTimer();
       })
       .catch(error => {
         console.warn('There has been a problem with your fetch operation: ', error.message);
-        this.setRerequest();
+        this.setIntervalTimer();
       });
+      this.setIntervalTimer();
   }
 
-  private setRerequest() {
+  private setIntervalTimer() {
     this.intervalTimer = setTimeout(() => {
       this.intervalTimer = null;
       this.calibrateTimeOffset();
