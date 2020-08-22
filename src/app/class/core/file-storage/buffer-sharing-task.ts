@@ -34,6 +34,7 @@ export class BufferSharingTask<T> {
   oncancel: (task: BufferSharingTask<T>) => void;
 
   private timeoutTimer: NodeJS.Timer;
+  private timeoutDate: number;
 
   private constructor(data?: T, sendTo?: string) {
     this.data = data;
@@ -163,11 +164,21 @@ export class BufferSharingTask<T> {
   }
 
   private resetTimeout() {
-    clearTimeout(this.timeoutTimer);
+    this.timeoutDate = Date.now() + 15 * 1000;
+    if (this.timeoutTimer !== null) return;
+    this.setTimeout();
+  }
+
+  private setTimeout() {
     this.timeoutTimer = setTimeout(() => {
-      if (this.ontimeout) this.ontimeout(this);
-      if (this.onfinish) this.onfinish(this, this.data);
-      this.dispose();
-    }, 15 * 1000);
+      this.timeoutTimer = null;
+      if (Date.now() < this.timeoutDate) {
+        this.setTimeout();
+      } else {
+        if (this.ontimeout) this.ontimeout(this);
+        if (this.onfinish) this.onfinish(this, this.data);
+        this.dispose();  
+      }
+    }, this.timeoutDate - Date.now());
   }
 }
