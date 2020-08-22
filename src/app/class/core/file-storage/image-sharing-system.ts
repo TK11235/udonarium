@@ -67,7 +67,7 @@ export class FileSharingSystem {
 
         for (let item of request) {
           let image: ImageFile = ImageStorage.instance.get(item.identifier);
-          if (item.state < image.state)
+          if (image && item.state < image.state)
             randomRequest.push({ identifier: item.identifier, state: item.state });
         }
 

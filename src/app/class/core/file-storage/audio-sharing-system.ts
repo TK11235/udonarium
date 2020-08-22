@@ -64,7 +64,7 @@ export class AudioSharingSystem {
 
         for (let item of request) {
           let audio: AudioFile = AudioStorage.instance.get(item.identifier);
-          if (item.state < audio.state) randomRequest.push({ identifier: item.identifier, state: item.state });
+          if (audio && item.state < audio.state) randomRequest.push({ identifier: item.identifier, state: item.state });
         }
 
         if (this.isSendTransmission() === false && 0 < randomRequest.length) {
