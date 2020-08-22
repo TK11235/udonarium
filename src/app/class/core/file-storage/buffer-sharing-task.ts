@@ -27,6 +27,7 @@ export class BufferSharingTask<T> {
   private completedChankIndex = 0;
 
   private startTime = 0;
+  private isCanceled = false;
 
   onprogress: (task: BufferSharingTask<T>, loded: number, total: number) => void;
   onfinish: (task: BufferSharingTask<T>, data: T) => void;
@@ -61,22 +62,29 @@ export class BufferSharingTask<T> {
   }
 
   private finish() {
+    if (this.isCanceled) return;
+    this.isCanceled = true;
     if (this.onfinish) this.onfinish(this, this.data);
     this.dispose();
   }
 
   private timeout() {
+    if (this.isCanceled) return;
+    this.isCanceled = true;
     if (this.ontimeout) this.ontimeout(this);
     if (this.onfinish) this.onfinish(this, this.data);
     this.dispose();
   }
 
   cancel() {
+    if (this.isCanceled) return;
     if (this.sendTo != null) EventSystem.call('CANCEL_TASK_' + this.identifier, null, this.sendTo);
     this._cancel();
   }
 
   private _cancel() {
+    if (this.isCanceled) return;
+    this.isCanceled = true;
     if (this.oncancel) this.oncancel(this);
     if (this.onfinish) this.onfinish(this, this.data);
     this.dispose();
