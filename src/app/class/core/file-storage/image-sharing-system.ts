@@ -45,7 +45,7 @@ export class FileSharingSystem {
             image = ImageFile.createEmpty(item.identifier);
             ImageStorage.instance.add(image);
           }
-          if (image.state < ImageState.COMPLETE) {
+          if (image.state < ImageState.COMPLETE && !this.receiveTaskMap.has(item.identifier)) {
             request.push({ identifier: item.identifier, state: image.state });
           }
         }
@@ -102,7 +102,8 @@ export class FileSharingSystem {
       .on('START_FILE_TRANSMISSION', event => {
         console.log('START_FILE_TRANSMISSION ' + event.data.taskIdentifier);
         let identifier = event.data.taskIdentifier;
-        if (this.receiveTaskMap.has(identifier)) {
+        let image: ImageFile = ImageStorage.instance.get(identifier);
+        if (this.receiveTaskMap.has(identifier) || (image && ImageState.COMPLETE <= image.state)) {
           console.warn('CANCEL_TASK_ ' + event.data.fileIdentifier);
           EventSystem.call('CANCEL_TASK_' + identifier, null, event.sendFrom);
         } else {
@@ -116,7 +117,7 @@ export class FileSharingSystem {
   }
 
   private async startSendTransmission(updateImages: ImageContext[], sendTo: string) {
-    let identifier = UUID.generateUuid();
+    let identifier = updateImages.length === 1 ? updateImages[0].identifier : UUID.generateUuid();
     this.sendTaskMap.set(identifier, null);
     EventSystem.call('START_FILE_TRANSMISSION', { taskIdentifier: identifier }, sendTo);
 
