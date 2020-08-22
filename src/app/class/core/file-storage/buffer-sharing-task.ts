@@ -72,8 +72,14 @@ export class BufferSharingTask<T> {
   }
 
   cancel() {
-    this.dispose();
+    if (this.sendTo != null) EventSystem.call('CANCEL_TASK_' + this.identifier, null, this.sendTo);
+    this._cancel();
+  }
+
+  private _cancel() {
     if (this.oncancel) this.oncancel(this);
+    if (this.onfinish) this.onfinish(this, this.data);
+    this.dispose();
   }
 
   private dispose() {
@@ -101,7 +107,11 @@ export class BufferSharingTask<T> {
       .on('DISCONNECT_PEER', event => {
         if (event.data.peer !== this.sendTo) return;
         console.warn('送信キャンセル（Peer切断）', this, event.data.peer);
-        this.timeout();
+        this._cancel();
+      })
+      .on('CANCEL_TASK_' + this.identifier, event => {
+        console.warn('送信キャンセル', this, event.sendFrom);
+        this._cancel();
       });
     this.sentChankIndex = this.completedChankIndex = 0;
     setZeroTimeout(() => this.sendChank(0));
@@ -147,6 +157,10 @@ export class BufferSharingTask<T> {
             EventSystem.call('FILE_MORE_CHANK_' + this.identifier, event.data.index, event.sendFrom);
           }
         }
+      })
+      .on('CANCEL_TASK_' + this.identifier, event => {
+        console.warn('受信キャンセル', this, event.sendFrom);
+        this._cancel();
       });
   }
 
