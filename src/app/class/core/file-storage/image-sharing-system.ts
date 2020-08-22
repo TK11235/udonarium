@@ -132,10 +132,6 @@ export class FileSharingSystem {
       this.stopSendTransmission(task.identifier);
       ImageStorage.instance.synchronize();
     }
-    task.ontimeout = (task) => {
-      this.stopSendTransmission(task.identifier);
-      ImageStorage.instance.synchronize();
-    }
   }
 
   private startReceiveTransmission(identifier: string) {
@@ -146,11 +142,7 @@ export class FileSharingSystem {
     this.receiveTaskMap.set(identifier, task);
     task.onfinish = (task, data) => {
       this.stopReceiveTransmission(task.identifier);
-      EventSystem.trigger('UPDATE_FILE_RESOURE', { identifier: task.identifier, updateImages: data });
-      ImageStorage.instance.synchronize();
-    }
-    task.ontimeout = (task) => {
-      this.stopReceiveTransmission(task.identifier);
+      if (data) EventSystem.trigger('UPDATE_FILE_RESOURE', { identifier: task.identifier, updateImages: data });
       ImageStorage.instance.synchronize();
     }
     console.log('startFileTransmission => ', this.receiveTaskMap.size);

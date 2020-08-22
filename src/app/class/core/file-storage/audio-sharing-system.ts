@@ -144,10 +144,6 @@ export class AudioSharingSystem {
       this.stopSendTransmission(task.identifier);
       AudioStorage.instance.synchronize();
     }
-    task.ontimeout = () => {
-      this.stopSendTransmission(task.identifier);
-      AudioStorage.instance.synchronize();
-    }
   }
 
   private startReceiveTransmission(identifier: string) {
@@ -165,11 +161,7 @@ export class AudioSharingSystem {
     }
     task.onfinish = (task, data) => {
       this.stopReceiveTransmission(task.identifier);
-      EventSystem.trigger('UPDATE_AUDIO_RESOURE', [data]);
-      AudioStorage.instance.synchronize();
-    }
-    task.ontimeout = () => {
-      this.stopReceiveTransmission(task.identifier);
+      if (data) EventSystem.trigger('UPDATE_AUDIO_RESOURE', [data]);
       AudioStorage.instance.synchronize();
     }
     console.log('startReceiveTransmission => ', this.receiveTaskMap.size);
