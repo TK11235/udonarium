@@ -218,10 +218,9 @@ export class FileSharingSystem {
           ? context.thumbnail.blob.size
           : 100;
 
-      if (0 < byteSize && maxSize < byteSize + size) break;
-
       updateImages.push(context);
       byteSize += size;
+      if (maxSize < byteSize) break;
     }
     return updateImages;
   }
