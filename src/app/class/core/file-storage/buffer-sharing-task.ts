@@ -131,7 +131,6 @@ export class BufferSharingTask<T> {
     EventSystem.call('FILE_SEND_CHANK_' + this.identifier, data, this.sendTo);
     this.sentChankIndex = index;
     if (this.chanks.length <= index + 1) {
-      EventSystem.call('FILE_SEND_END_' + this.identifier, null, this.sendTo);
       console.log('バッファ送信完了', this.identifier);
       this.finish();
     } else if (this.completedChankIndex + 4 <= index) {
