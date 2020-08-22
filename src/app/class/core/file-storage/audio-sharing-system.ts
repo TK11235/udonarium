@@ -88,12 +88,6 @@ export class AudioSharingSystem {
           console.log('REQUEST_FILE_RESOURE AudioStorageService あぶれた...' + event.data.receiver, randomRequest.length);
         }
       })
-      .on('STOP_AUDIO_TRANSMISSION', event => {
-        let identifier: string = event.data.identifier;
-        this.stopSendTransmission(identifier);
-        AudioStorage.instance.synchronize();
-        console.log('STOP_AUDIO_TRANSMISSION ' + identifier);
-      })
       .on('UPDATE_AUDIO_RESOURE', event => {
         let updateAudios: AudioFileContext[] = event.data;
         console.log('UPDATE_AUDIO_RESOURE AudioStorageService ' + event.sendFrom + ' -> ', updateAudios);
@@ -105,8 +99,10 @@ export class AudioSharingSystem {
       .on('START_AUDIO_TRANSMISSION', event => {
         console.log('START_AUDIO_TRANSMISSION ' + event.data.fileIdentifier);
         let identifier: string = event.data.fileIdentifier;
-        if (this.isReceiveTransmission() || this.receiveTaskMap.has(identifier)) {
-          EventSystem.call('STOP_AUDIO_TRANSMISSION', { identifier: identifier }, event.sendFrom);
+        let audio: AudioFile = AudioStorage.instance.get(identifier);
+        if (this.receiveTaskMap.has(identifier) || (audio && AudioState.COMPLETE <= audio.state)) {
+          console.warn('CANCEL_TASK_ ' + event.data.fileIdentifier);
+          EventSystem.call('CANCEL_TASK_' + identifier, null, event.sendFrom);
         } else {
           this.startReceiveTransmission(identifier);
         }
@@ -147,9 +143,6 @@ export class AudioSharingSystem {
   }
 
   private startReceiveTransmission(identifier: string) {
-    this.stopTransmission(identifier);
-    if (this.taskMap.has(identifier)) return;
-
     let audio: AudioFile = AudioStorage.instance.get(identifier);
     let task = BufferSharingTask.createReceiveTask<AudioFileContext>(identifier);
     this.receiveTaskMap.set(identifier, task);

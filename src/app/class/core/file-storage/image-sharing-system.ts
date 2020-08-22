@@ -100,9 +100,14 @@ export class FileSharingSystem {
         }
       })
       .on('START_FILE_TRANSMISSION', event => {
-        let identifier = event.data.taskIdentifier
-        console.log('START_FILE_TRANSMISSION ' + identifier);
-        this.startReceiveTransmission(identifier);
+        console.log('START_FILE_TRANSMISSION ' + event.data.taskIdentifier);
+        let identifier = event.data.taskIdentifier;
+        if (this.receiveTaskMap.has(identifier)) {
+          console.warn('CANCEL_TASK_ ' + event.data.fileIdentifier);
+          EventSystem.call('CANCEL_TASK_' + identifier, null, event.sendFrom);
+        } else {
+          this.startReceiveTransmission(identifier);
+        }
       });
   }
 
@@ -135,9 +140,6 @@ export class FileSharingSystem {
   }
 
   private startReceiveTransmission(identifier: string) {
-    this.stopTransmission(identifier);
-    if (this.taskMap.has(identifier)) return;
-
     let task = BufferSharingTask.createReceiveTask<ImageContext[]>(identifier);
     this.receiveTaskMap.set(identifier, task);
     task.onfinish = (task, data) => {
