@@ -6,11 +6,11 @@ import { ImageContext, ImageFile, ImageState } from './image-file';
 import { CatalogItem, ImageStorage } from './image-storage';
 import { MimeType } from './mime-type';
 
-export class FileSharingSystem {
-  private static _instance: FileSharingSystem
-  static get instance(): FileSharingSystem {
-    if (!FileSharingSystem._instance) FileSharingSystem._instance = new FileSharingSystem();
-    return FileSharingSystem._instance;
+export class ImageSharingSystem {
+  private static _instance: ImageSharingSystem
+  static get instance(): ImageSharingSystem {
+    if (!ImageSharingSystem._instance) ImageSharingSystem._instance = new ImageSharingSystem();
+    return ImageSharingSystem._instance;
   }
 
   private sendTaskMap: Map<string, BufferSharingTask<ImageContext[]>> = new Map();
