@@ -50,10 +50,6 @@ export class ImageSharingSystem {
           }
         }
 
-        if (request.length < 1 && otherCatalog.length < ImageStorage.instance.getCatalog().length) {
-          ImageStorage.instance.synchronize(event.sendFrom);
-        }
-
         if (request.length < 1 || this.isReceiveTransmission()) {
           return;
         }

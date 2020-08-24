@@ -46,10 +46,6 @@ export class AudioSharingSystem {
           }
         }
 
-        if (request.length < 1 && otherCatalog.length < AudioStorage.instance.getCatalog().length) {
-          AudioStorage.instance.synchronize(event.sendFrom);
-        }
-
         if (request.length < 1 || this.isReceiveTransmission()) {
           return;
         }
