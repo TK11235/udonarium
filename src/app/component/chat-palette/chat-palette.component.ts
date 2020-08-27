@@ -9,6 +9,7 @@ import { PeerCursor } from '@udonarium/peer-cursor';
 import { ChatInputComponent } from 'component/chat-input/chat-input.component';
 import { ChatMessageService } from 'service/chat-message.service';
 import { PanelService } from 'service/panel.service';
+import { GameObjectInventoryService} from 'service/game-object-inventory.service';
 
 @Component({
   selector: 'chat-palette',
@@ -51,13 +52,20 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
 
   constructor(
     public chatMessageService: ChatMessageService,
-    private panelService: PanelService
+    private panelService: PanelService,
+    private inventoryService: GameObjectInventoryService
   ) { }
 
   ngOnInit() {
     Promise.resolve().then(() => this.updatePanelTitle());
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
-    this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
+
+    if(this.character.chatPalette != null && this.character.chatPalette.dicebot != '') {
+      this.gameType = this.character.chatPalette.dicebot;
+    } else {
+      this.gameType = this.inventoryService.gameType;
+    }
+
     EventSystem.register(this)
       .on('DELETE_GAME_OBJECT', -1000, event => {
         if (this.character && this.character.identifier === event.data.identifier) {
