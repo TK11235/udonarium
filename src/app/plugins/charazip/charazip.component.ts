@@ -18,6 +18,7 @@ import { Cthulhu7th } from "./system/cthulhu-7th";
 import { Amadeus } from "./system/amadeus";
 import { TokyoNovaX } from "./system/tokyo-nova-x";
 import { TokyoNightmare } from "./system/tokyo-nightmare";
+import { Satasupe } from "./system/satasupe";
 
 interface SystemInfo {
   system: string;
@@ -86,6 +87,12 @@ export class CharazipComponent implements OnInit {
       generater: Insane.geneateByAppspot
     },
     {
+      system: "satasupe",
+      name: "サタスペ",
+      href: "https://character-sheets.appspot.com/satasupe/",
+      generater: Satasupe.geneateByAppspot
+    },
+    {
       system: "shinobigami",
       name: "シノビガミ",
       href: "https://character-sheets.appspot.com/shinobigami/",
@@ -126,7 +133,7 @@ export class CharazipComponent implements OnInit {
       name: "モノトーンミュージアム",
       href: "https://character-sheets.appspot.com/mnt/",
       generater: MonotoneMuseum.geneateByAppspot
-    }
+    },
   ];
 
   @ViewChild("input", { static: true })
