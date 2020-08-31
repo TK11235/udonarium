@@ -178,8 +178,6 @@ export class BufferSharingTask<T> {
 
   private finishReceive() {
     console.log('バッファ受信完了', this.identifier);
-    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
-    EventSystem.unregister(this);
 
     let sumLength = 0;
     for (let chank of this.chanks) { sumLength += chank.byteLength; }
