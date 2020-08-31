@@ -94,6 +94,8 @@ export class BufferSharingTask<T> {
     EventSystem.unregister(this);
     if (this.sendChankTimer) clearZeroTimeout(this.sendChankTimer);
     if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
+    this.sendChankTimer = null;
+    this.timeoutTimer = null;
     this.onprogress = this.onfinish = this.ontimeout = this.oncancel = null;
   }
 
