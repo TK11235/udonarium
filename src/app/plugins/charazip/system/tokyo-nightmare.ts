@@ -1,6 +1,6 @@
-import { ChatPalette } from "@udonarium/chat-palette";
+import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from "../custom-character";
+import { CustomCharacter } from '../custom-character';
 
 interface Style {
   name: string;
@@ -34,181 +34,181 @@ export class TokyoNightmare {
      * パーソナルデータ
      */
     const personalElement = gameCharacter.createDataElement(
-      "パーソナルデータ",
-      ""
+      'パーソナルデータ',
+      ''
     );
     gameCharacter.detailDataElement.appendChild(personalElement);
     personalElement.appendChild(
-      gameCharacter.createDataElement("PL", json.base.player || "")
+      gameCharacter.createDataElement('PL', json.base.player || '')
     );
     personalElement.appendChild(
-      gameCharacter.createDataElement("キャスト番号", "")
+      gameCharacter.createDataElement('キャスト番号', '')
     );
     personalElement.appendChild(
-      gameCharacter.createDataElement("所属", json.base.post)
+      gameCharacter.createDataElement('所属', json.base.post)
     );
-    const baseMemo = (json.base.memo || "").trim();
-    const baseMemoir = (json.base.memoir || "").trim();
+    const baseMemo = (json.base.memo || '').trim();
+    const baseMemoir = (json.base.memoir || '').trim();
     const memo =
-      baseMemo === "" || baseMemoir === ""
+      baseMemo === '' || baseMemoir === ''
         ? baseMemoir + baseMemo
         : `${baseMemoir}\n---\n${baseMemo}`;
-    personalElement.appendChild(gameCharacter.createNoteElement("設定", memo));
-    personalElement.appendChild(gameCharacter.createNoteElement("URL", url));
+    personalElement.appendChild(gameCharacter.createNoteElement('設定', memo));
+    personalElement.appendChild(gameCharacter.createNoteElement('URL', url));
 
     /*
      * スタイル・神業
      */
-    const styleElement = gameCharacter.createDataElement("スタイル・神業", "");
+    const styleElement = gameCharacter.createDataElement('スタイル・神業', '');
     gameCharacter.detailDataElement.appendChild(styleElement);
     const styleList: { [styleNo: string]: Style } = {
-      "0": {
-        name: "カブキ",
-        divineWork: "チャイ",
-        effect: "神業や判定の効果ひとつを打ち消す",
+      '0': {
+        name: 'カブキ',
+        divineWork: 'チャイ',
+        effect: '神業や判定の効果ひとつを打ち消す',
       },
-      "1": {
-        name: "バサラ",
-        divineWork: "天変地異",
-        effect: "トループ1グループを倒すか、住居やヴィークルひとつを破壊する",
+      '1': {
+        name: 'バサラ',
+        divineWork: '天変地異',
+        effect: 'トループ1グループを倒すか、住居やヴィークルひとつを破壊する',
       },
-      "2": {
-        name: "タタラ",
-        divineWork: "タイムリー",
-        effect: "必要なアウトフィットを入手する",
+      '2': {
+        name: 'タタラ',
+        divineWork: 'タイムリー',
+        effect: '必要なアウトフィットを入手する',
       },
-      "3": {
-        name: "ミストレス",
-        divineWork: "ファイト！",
-        effect: "対象の神業使用回数をひとつ増やす",
+      '3': {
+        name: 'ミストレス',
+        divineWork: 'ファイト！',
+        effect: '対象の神業使用回数をひとつ増やす',
       },
-      "4": {
-        name: "カブト",
-        divineWork: "難攻不落",
-        effect: "どんな攻撃によるダメージも防ぐ",
+      '4': {
+        name: 'カブト',
+        divineWork: '難攻不落',
+        effect: 'どんな攻撃によるダメージも防ぐ',
       },
-      "5": {
-        name: "カリスマ",
-        divineWork: "神の御言葉",
+      '5': {
+        name: 'カリスマ',
+        divineWork: '神の御言葉',
         effect:
-          "キャラクターひとりを［精神崩壊］させるか、任意の精神ダメージを与える",
+          'キャラクターひとりを［精神崩壊］させるか、任意の精神ダメージを与える',
       },
-      "6": {
-        name: "マネキン",
-        divineWork: "プリーズ！",
-        effect: "対象に神業を1回使用させる／お願いひとつを聞いてもらう",
+      '6': {
+        name: 'マネキン',
+        divineWork: 'プリーズ！',
+        effect: '対象に神業を1回使用させる／お願いひとつを聞いてもらう',
       },
-      "7": {
-        name: "カゼ",
-        divineWork: "脱出",
-        effect: "ヴィークルでどんな状況からも逃げ出す",
+      '7': {
+        name: 'カゼ',
+        divineWork: '脱出',
+        effect: 'ヴィークルでどんな状況からも逃げ出す',
       },
-      "8": {
-        name: "フェイト",
-        divineWork: "真実",
-        effect: "キャラクターひとりから本当のことを聞き出す",
+      '8': {
+        name: 'フェイト',
+        divineWork: '真実',
+        effect: 'キャラクターひとりから本当のことを聞き出す',
       },
-      "9": {
-        name: "クロマク",
-        divineWork: "腹心",
+      '9': {
+        name: 'クロマク',
+        divineWork: '腹心',
         effect:
-          "自分が受けたダメージひとつを打ち消す（腹心が代わりに受けてくれる）",
+          '自分が受けたダメージひとつを打ち消す（腹心が代わりに受けてくれる）',
       },
-      "10": {
-        name: "エグゼク",
-        divineWork: "買収",
-        effect: "アウトフィットや組織ひとつを買い取る",
+      '10': {
+        name: 'エグゼク',
+        divineWork: '買収',
+        effect: 'アウトフィットや組織ひとつを買い取る',
       },
-      "11": {
-        name: "カタナ",
-        divineWork: "死の舞踏",
+      '11': {
+        name: 'カタナ',
+        divineWork: '死の舞踏',
         effect:
-          "近距離までのキャラクターひとりに任意の肉体ダメージ（［完全死亡］含む）を与える",
+          '近距離までのキャラクターひとりに任意の肉体ダメージ（［完全死亡］含む）を与える',
       },
-      "12": {
-        name: "クグツ",
-        divineWork: "完全偽装",
-        effect: "情報や事実ひとつを完璧に偽装する",
+      '12': {
+        name: 'クグツ',
+        divineWork: '完全偽装',
+        effect: '情報や事実ひとつを完璧に偽装する',
       },
-      "13": {
-        name: "カゲ",
-        divineWork: "不可知",
+      '13': {
+        name: 'カゲ',
+        divineWork: '不可知',
         effect:
-          "誰にも気づかれずに行動（メインプロセス）を1回行なう。リアクション不可",
+          '誰にも気づかれずに行動（メインプロセス）を1回行なう。リアクション不可',
       },
-      "14": {
-        name: "チャクラ",
-        divineWork: "黄泉還り",
+      '14': {
+        name: 'チャクラ',
+        divineWork: '黄泉還り',
         effect:
-          "キャラクターひとりが受けている肉体・精神ダメージをすべて回復する。癒やすのが他のキャラクターの場合、そのシーン中に受けたダメージのみ可能。",
+          'キャラクターひとりが受けている肉体・精神ダメージをすべて回復する。癒やすのが他のキャラクターの場合、そのシーン中に受けたダメージのみ可能。',
       },
-      "15": {
-        name: "レッガー",
-        divineWork: "不可触",
-        effect: "事実をもみ消したり、他人に押しつけたりする",
+      '15': {
+        name: 'レッガー',
+        divineWork: '不可触',
+        effect: '事実をもみ消したり、他人に押しつけたりする',
       },
-      "16": {
-        name: "カブトワリ",
-        divineWork: "とどめの一撃",
+      '16': {
+        name: 'カブトワリ',
+        divineWork: 'とどめの一撃',
         effect:
-          "至近距離以外にいるキャラクターひとりに任意の肉体ダメージ（［完全死亡］含む）を与える",
+          '至近距離以外にいるキャラクターひとりに任意の肉体ダメージ（［完全死亡］含む）を与える',
       },
-      "17": {
-        name: "ハイランダー",
-        divineWork: "天罰",
-        effect: "なんでもひとつ望む効果を得る",
+      '17': {
+        name: 'ハイランダー',
+        divineWork: '天罰',
+        effect: 'なんでもひとつ望む効果を得る',
       },
-      "18": {
-        name: "マヤカシ",
-        divineWork: "守護神",
-        effect: "キャラクターひとりに対する任意のダメージひとつを打ち消す",
+      '18': {
+        name: 'マヤカシ',
+        divineWork: '守護神',
+        effect: 'キャラクターひとりに対する任意のダメージひとつを打ち消す',
       },
-      "19": {
-        name: "トーキー",
-        divineWork: "暴露",
-        effect: "どんな事柄でも自由に報道する",
+      '19': {
+        name: 'トーキー',
+        divineWork: '暴露',
+        effect: 'どんな事柄でも自由に報道する',
       },
-      "20": {
-        name: "イヌ",
-        divineWork: "制裁",
+      '20': {
+        name: 'イヌ',
+        divineWork: '制裁',
         effect:
-          "キャラクターひとりに任意の社会ダメージ（［抹殺］含む）を与えるか、社会ダメージを打ち消す",
+          'キャラクターひとりに任意の社会ダメージ（［抹殺］含む）を与えるか、社会ダメージを打ち消す',
       },
-      "21": {
-        name: "ニューロ",
-        divineWork: "電脳神",
+      '21': {
+        name: 'ニューロ',
+        divineWork: '電脳神',
         effect:
-          "ウェブやウェブに接続されたものを操り、ダメージを与える以外の望む効果を得る",
+          'ウェブやウェブに接続されたものを操り、ダメージを与える以外の望む効果を得る',
       },
-      "-2": {
-        name: "テツジン",
-        divineWork: "鋼鉄心",
-        effect: "〈タイプ〉による",
+      '-2': {
+        name: 'テツジン',
+        divineWork: '鋼鉄心',
+        effect: '〈タイプ〉による',
       },
-      "-9": {
-        name: "ハンドラー",
-        divineWork: "友情",
+      '-9': {
+        name: 'ハンドラー',
+        divineWork: '友情',
         effect:
-          "キャラクターひとりに対するダメージのような不都合な効果をひとつ打ち消す。",
+          'キャラクターひとりに対するダメージのような不都合な効果をひとつ打ち消す。',
       },
-      "-14": {
-        name: "ヒルコ",
-        divineWork: "突然変異",
-        effect: "神業をひとつコピーする",
+      '-14': {
+        name: 'ヒルコ',
+        divineWork: '突然変異',
+        effect: '神業をひとつコピーする',
       },
-      "-18": {
-        name: "アヤカシ",
-        divineWork: "霧散",
+      '-18': {
+        name: 'アヤカシ',
+        divineWork: '霧散',
         effect:
-          "いつでも、自分の受けたダメージひとつを消去し、甦ることができる",
+          'いつでも、自分の受けたダメージひとつを消去し、甦ることができる',
       },
     };
     const pkDisp: { [pkIndex: string]: string } = {
-      null: "",
-      "0": "",
-      "1": "●",
-      "2": "◎",
-      "3": "◎●",
+      null: '',
+      '0': '',
+      '1': '●',
+      '2': '◎',
+      '3': '◎●',
     };
     const style1 = styleList[json.styles.style1];
     const pk1 = pkDisp[json.styles.pk1];
@@ -218,11 +218,11 @@ export class TokyoNightmare {
     const pk3 = pkDisp[json.styles.pk3];
     styleElement.appendChild(
       gameCharacter.createDataElement(
-        "スタイル",
+        'スタイル',
         `${style1.name}${pk1}、${style2.name}${pk2}、${style3.name}${pk3}`
       )
     );
-    const divineWorkElement = gameCharacter.createDataElement("神業", "");
+    const divineWorkElement = gameCharacter.createDataElement('神業', '');
     styleElement.appendChild(divineWorkElement);
     divineWorkElement.appendChild(
       gameCharacter.createResourceElement(style1.divineWork, 1, 1)
@@ -238,78 +238,81 @@ export class TokyoNightmare {
      * 能力値・制御値
      */
     const abilityElement = gameCharacter.createDataElement(
-      "能力値・制御値",
-      ""
+      '能力値・制御値',
+      ''
     );
     gameCharacter.detailDataElement.appendChild(abilityElement);
-    const reasonElement = gameCharacter.createDataElement("理性♠", "");
+    const abilityRe = /\d+\((\d+)\)/;
+    const reasonElement = gameCharacter.createDataElement('理性♠', '');
     abilityElement.appendChild(reasonElement);
+    const reasonAbl = json.ability.reason.abl.replace(abilityRe, '$1');
+    const reasonCtl = json.ability.reason.ctl.replace(abilityRe, '$1');
     reasonElement.appendChild(
-      gameCharacter.createDataElement("理性", json.ability.reason.abl)
+      gameCharacter.createDataElement('理性', reasonAbl)
     );
     reasonElement.appendChild(
-      gameCharacter.createDataElement("理性(制)", json.ability.reason.ctl)
+      gameCharacter.createDataElement('理性(制)', reasonCtl)
     );
-    const passionElement = gameCharacter.createDataElement("感情♣", "");
+    const passionElement = gameCharacter.createDataElement('感情♣', '');
     abilityElement.appendChild(passionElement);
+    const passionAbl = json.ability.passion.abl.replace(abilityRe, '$1');
+    const passionCtl = json.ability.passion.ctl.replace(abilityRe, '$1');
     passionElement.appendChild(
-      gameCharacter.createDataElement("感情", json.ability.passion.abl)
+      gameCharacter.createDataElement('感情', passionAbl)
     );
     passionElement.appendChild(
-      gameCharacter.createDataElement("感情(制)", json.ability.passion.ctl)
+      gameCharacter.createDataElement('感情(制)', passionCtl)
     );
-    const lifeElement = gameCharacter.createDataElement("生命♥", "");
+    const lifeElement = gameCharacter.createDataElement('生命♥', '');
     abilityElement.appendChild(lifeElement);
+    const lifeAbl = json.ability.life.abl.replace(abilityRe, '$1');
+    const lifeCtl = json.ability.life.ctl.replace(abilityRe, '$1');
+    lifeElement.appendChild(gameCharacter.createDataElement('生命', lifeAbl));
     lifeElement.appendChild(
-      gameCharacter.createDataElement("生命", json.ability.life.abl)
+      gameCharacter.createDataElement('生命(制)', lifeCtl)
     );
-    lifeElement.appendChild(
-      gameCharacter.createDataElement("生命(制)", json.ability.life.ctl)
-    );
-    const mundaneElement = gameCharacter.createDataElement("外界◆", "");
+    const mundaneElement = gameCharacter.createDataElement('外界◆', '');
     abilityElement.appendChild(mundaneElement);
+    const mundaneAbl = json.ability.mundane.abl.replace(abilityRe, '$1');
+    const mundaneCtl = json.ability.mundane.ctl.replace(abilityRe, '$1');
     mundaneElement.appendChild(
-      gameCharacter.createDataElement("外界", json.ability.mundane.abl)
+      gameCharacter.createDataElement('外界', mundaneAbl)
     );
     mundaneElement.appendChild(
-      gameCharacter.createDataElement("外界(制)", json.ability.mundane.ctl)
+      gameCharacter.createDataElement('外界(制)', mundaneCtl)
     );
 
     /*
      * アクトデータ
      */
-    const actElement = gameCharacter.createDataElement("アクトデータ", "");
+    const actElement = gameCharacter.createDataElement('アクトデータ', '');
     gameCharacter.detailDataElement.appendChild(actElement);
     actElement.appendChild(
-      gameCharacter.createResourceElement(
-        "報酬点",
-        21,
-        json.ability.mundane.abl
-      )
+      gameCharacter.createResourceElement('報酬点', 21, json.base.reward)
     );
     actElement.appendChild(
-      gameCharacter.createNoteElement("アクトコネ", "（得たコネ）")
+      gameCharacter.createNoteElement('アクトコネ', '（得たコネ）')
     );
     actElement.appendChild(
       gameCharacter.createNoteElement(
-        "メモ",
-        "（得たアドレスやアウトフィットなど）"
+        'メモ',
+        '（得たアドレスやアウトフィットなど）'
       )
     );
 
     /*
      * 戦闘データ
      */
-    const combatElement = gameCharacter.createDataElement("戦闘データ", "");
+    const combatElement = gameCharacter.createDataElement('戦闘データ', '');
     gameCharacter.detailDataElement.appendChild(combatElement);
     combatElement.appendChild(
       gameCharacter.createResourceElement(
-        "CS",
+        'CS',
         json.ability.cs,
         json.ability.cs
       )
     );
-    const protectElement = gameCharacter.createDataElement("防御力", "");
+    const protectElement = gameCharacter.createDataElement('防御力', '');
     combatElement.appendChild(protectElement);
     const { protecS, protecP, protecI }: Protect = json.armours
       .map((armour) => {
@@ -333,39 +336,39 @@ export class TokyoNightmare {
           protecI: 0,
         }
       );
-    protectElement.appendChild(gameCharacter.createDataElement("S", protecS));
-    protectElement.appendChild(gameCharacter.createDataElement("P", protecP));
-    protectElement.appendChild(gameCharacter.createDataElement("I", protecI));
+    protectElement.appendChild(gameCharacter.createDataElement('S', protecS));
+    protectElement.appendChild(gameCharacter.createDataElement('P', protecP));
+    protectElement.appendChild(gameCharacter.createDataElement('I', protecI));
     combatElement.appendChild(
-      gameCharacter.createNoteElement("肉体ダメージ", "")
+      gameCharacter.createNoteElement('肉体ダメージ', '')
     );
     combatElement.appendChild(
-      gameCharacter.createNoteElement("精神ダメージ", "")
+      gameCharacter.createNoteElement('精神ダメージ', '')
     );
     combatElement.appendChild(
-      gameCharacter.createNoteElement("社会ダメージ", "")
+      gameCharacter.createNoteElement('社会ダメージ', '')
     );
 
     /*
      * BS
      */
-    const bsElement = gameCharacter.createDataElement("BS", "");
+    const bsElement = gameCharacter.createDataElement('BS', '');
     gameCharacter.detailDataElement.appendChild(bsElement);
-    bsElement.appendChild(gameCharacter.createDataElement("恐慌", ""));
-    bsElement.appendChild(gameCharacter.createDataElement("蛇毒", ""));
-    bsElement.appendChild(gameCharacter.createNoteElement("重圧", ""));
-    bsElement.appendChild(gameCharacter.createDataElement("衰弱", ""));
-    bsElement.appendChild(gameCharacter.createNoteElement("捕縛", ""));
-    bsElement.appendChild(gameCharacter.createNoteElement("酩酊", ""));
-    bsElement.appendChild(gameCharacter.createDataElement("狼狽", ""));
+    bsElement.appendChild(gameCharacter.createDataElement('恐慌', ''));
+    bsElement.appendChild(gameCharacter.createDataElement('蛇毒', ''));
+    bsElement.appendChild(gameCharacter.createNoteElement('重圧', ''));
+    bsElement.appendChild(gameCharacter.createDataElement('衰弱', ''));
+    bsElement.appendChild(gameCharacter.createNoteElement('捕縛', ''));
+    bsElement.appendChild(gameCharacter.createNoteElement('酩酊', ''));
+    bsElement.appendChild(gameCharacter.createDataElement('狼狽', ''));
 
     const domParser: DOMParser = new DOMParser();
-    domParser.parseFromString(gameCharacter.toXml(), "application/xml");
+    domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 
     const palette: ChatPalette = new ChatPalette(
-      "ChatPalette_" + gameCharacter.identifier
+      'ChatPalette_' + gameCharacter.identifier
     );
-    palette.dicebot = "";
+    palette.dicebot = '';
     // チャパレ内容
     let cp = `//-----神業
 《${style1.divineWork}》${style1.effect}
@@ -384,17 +387,17 @@ C({感情(制)}) 感情(制御値)♣
 C({生命(制)}) 生命(制御値)♥
 C({外界(制)}) 外界(制御値)◆
 `;
-    cp += "\n//-----一般技能\n";
+    cp += '\n//-----一般技能\n';
     const skills = json.skills1
       .concat(json.skills2)
       .concat(json.skills3)
       .concat(json.skills4);
     const toSuit = (skill: { s: string; c: string; h: string; d: string }) => {
-      let ret = "";
-      ret += skill.s === "1" ? "♠" : "♤";
-      ret += skill.c === "1" ? "♣" : "♧";
-      ret += skill.h === "1" ? "♥" : "♡";
-      ret += skill.d === "1" ? "◆" : "◇";
+      let ret = '';
+      ret += skill.s === '1' ? '♠' : '♤';
+      ret += skill.c === '1' ? '♣' : '♧';
+      ret += skill.h === '1' ? '♥' : '♡';
+      ret += skill.d === '1' ? '◆' : '◇';
       return ret;
     };
     for (const skill of skills) {
@@ -404,7 +407,7 @@ C({外界(制)}) 外界(制御値)◆
       const suit = toSuit(skill);
       cp += `〈${skill.name}〉Lv.${skill.level}[${suit}]\n`;
     }
-    cp += "\n//-----スタイル技能\n";
+    cp += '\n//-----スタイル技能\n';
     for (const skill of json.superhumanskills) {
       if (!skill.name || !skill.level) {
         continue;
@@ -417,91 +420,91 @@ C({外界(制)}) 外界(制御値)◆
       if (skill.range) arr.push(skill.range);
       if (skill.aim) arr.push(skill.aim);
       if (skill.confront) arr.push(skill.confront);
-      const text = `〈${skill.name}〉 ${arr.join(" | ")} | ${
-        skill.notes || ""
-      }`.replace(/\r|\n/g, " ");
-      cp += text + "\n";
+      const text = `〈${skill.name}〉 ${arr.join(' | ')} | ${
+        skill.notes || ''
+      }`.replace(/\r|\n/g, ' ');
+      cp += text + '\n';
     }
-    cp += "\n//-----武器\n";
+    cp += '\n//-----武器\n';
     for (const weapon of json.weapons) {
       if (!weapon.name) {
         continue;
       }
       const arr: string[] = [];
       if (weapon.concealA || weapon.concealB)
-        arr.push(`${weapon.concealA || "0"}/${weapon.concealB || "0"}`);
+        arr.push(`${weapon.concealA || '0'}/${weapon.concealB || '0'}`);
       if (weapon.attack) arr.push(weapon.attack);
       if (weapon.defense) arr.push(weapon.defense);
       if (weapon.electrical_control) arr.push(weapon.electrical_control);
-      const text = `「${weapon.name}」 ${arr.join(" | ")} | ${
-        weapon.notes || ""
-      }`.replace(/\r|\n/g, " ");
-      cp += text + "\n";
+      const text = `「${weapon.name}」 ${arr.join(' | ')} | ${
+        weapon.notes || ''
+      }`.replace(/\r|\n/g, ' ');
+      cp += text + '\n';
     }
-    cp += "\n//-----防具\n";
+    cp += '\n//-----防具\n';
     for (const armour of json.armours) {
       if (!armour.name) {
         continue;
       }
       const arr: string[] = [];
       if (armour.concealA || armour.concealB)
-        arr.push(`${armour.concealA || "0"}/${armour.concealB || "0"}`);
+        arr.push(`${armour.concealA || '0'}/${armour.concealB || '0'}`);
       if (armour.control) arr.push(armour.control);
       if (armour.electrical_control) arr.push(armour.electrical_control);
-      const text = `「${armour.name}」 ${arr.join(" | ")} | ${
-        armour.notes || ""
-      }`.replace(/\r|\n/g, " ");
-      cp += text + "\n";
+      const text = `「${armour.name}」 ${arr.join(' | ')} | ${
+        armour.notes || ''
+      }`.replace(/\r|\n/g, ' ');
+      cp += text + '\n';
     }
-    cp += "\n//-----装備\n";
+    cp += '\n//-----装備\n';
     for (const outfit of json.outfits) {
       if (!outfit.name) {
         continue;
       }
       const arr: string[] = [];
       if (outfit.concealA || outfit.concealB)
-        arr.push(`${outfit.concealA || "0"}/${outfit.concealB || "0"}`);
+        arr.push(`${outfit.concealA || '0'}/${outfit.concealB || '0'}`);
       if (outfit.electrical_control) arr.push(outfit.electrical_control);
-      const text = `「${outfit.name}」 ${arr.join(" | ")} | ${
-        outfit.notes || ""
-      }`.replace(/\r|\n/g, " ");
-      cp += text + "\n";
+      const text = `「${outfit.name}」 ${arr.join(' | ')} | ${
+        outfit.notes || ''
+      }`.replace(/\r|\n/g, ' ');
+      cp += text + '\n';
     }
-    cp += "\n//-----ヴィークル\n";
+    cp += '\n//-----ヴィークル\n';
     for (const vehicle of json.vehicles) {
       if (!vehicle.name) {
         continue;
       }
       const arr: string[] = [];
       if (vehicle.concealA || vehicle.concealB)
-        arr.push(`${vehicle.concealA || "0"}/${vehicle.concealB || "0"}`);
+        arr.push(`${vehicle.concealA || '0'}/${vehicle.concealB || '0'}`);
       if (vehicle.attack) arr.push(vehicle.attack);
       if (vehicle.sf) arr.push(vehicle.sf);
       if (vehicle.protecS || vehicle.protecP || vehicle.protecI)
         arr.push(
-          `${vehicle.protecS || "0"}/${vehicle.protecS || "0"}/${
-            vehicle.protecI || "0"
+          `${vehicle.protecS || '0'}/${vehicle.protecS || '0'}/${
+            vehicle.protecI || '0'
           }`
         );
       if (vehicle.control) arr.push(vehicle.control);
       if (vehicle.crew) arr.push(vehicle.crew);
       if (vehicle.electrical_control) arr.push(vehicle.electrical_control);
-      const text = `「${vehicle.name}」 ${arr.join(" | ")} | ${
-        vehicle.notes || ""
-      }`.replace(/\r|\n/g, " ");
-      cp += text + "\n";
+      const text = `「${vehicle.name}」 ${arr.join(' | ')} | ${
+        vehicle.notes || ''
+      }`.replace(/\r|\n/g, ' ');
+      cp += text + '\n';
     }
-    cp += "\n//-----住居\n";
+    cp += '\n//-----住居\n';
     for (const residence of json.residences) {
       if (!residence.name) {
         continue;
       }
       const arr: string[] = [];
       if (residence.entry) arr.push(residence.entry);
-      const text = `「${residence.name}」 ${arr.join(" | ")} | ${
-        residence.notes || ""
-      }`.replace(/\r|\n/g, " ");
-      cp += text + "\n";
+      const text = `「${residence.name}」 ${arr.join(' | ')} | ${
+        residence.notes || ''
+      }`.replace(/\r|\n/g, ' ');
+      cp += text + '\n';
     }
 
     palette.setPalette(cp);
