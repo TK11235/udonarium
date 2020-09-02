@@ -1,6 +1,7 @@
 import * as MessagePack from 'msgpack-lite';
 
 import { EventSystem } from '../system';
+import { ResettableTimeout } from '../system/util/resettable-timeout';
 import { clearZeroTimeout, setZeroTimeout } from '../system/util/zero-timeout';
 import { FileReaderUtil } from './file-reader-util';
 
@@ -34,8 +35,7 @@ export class BufferSharingTask<T> {
   ontimeout: (task: BufferSharingTask<T>) => void;
   oncancel: (task: BufferSharingTask<T>) => void;
 
-  private timeoutTimer: NodeJS.Timer;
-  private timeoutDate: number;
+  private timeoutTimer: ResettableTimeout;
 
   private constructor(data?: T, sendTo?: string) {
     this.data = data;
@@ -93,7 +93,7 @@ export class BufferSharingTask<T> {
   private dispose() {
     EventSystem.unregister(this);
     if (this.sendChankTimer) clearZeroTimeout(this.sendChankTimer);
-    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
+    if (this.timeoutTimer) this.timeoutTimer.clear();
     this.sendChankTimer = null;
     this.timeoutTimer = null;
     this.onprogress = this.onfinish = this.ontimeout = this.oncancel = null;
@@ -110,7 +110,7 @@ export class BufferSharingTask<T> {
         if (this.sendTo !== event.sendFrom) return;
         this.completedChankIndex = event.data;
         if (this.sendChankTimer == null) {
-          clearTimeout(this.timeoutTimer);
+          this.resetTimeout();
           this.sendChank(this.sentChankIndex + 1);
         }
       })
@@ -199,19 +199,7 @@ export class BufferSharingTask<T> {
   }
 
   private resetTimeout() {
-    this.timeoutDate = Date.now() + 15 * 1000;
-    if (this.timeoutTimer !== null) return;
-    this.setTimeout();
-  }
-
-  private setTimeout() {
-    this.timeoutTimer = setTimeout(() => {
-      this.timeoutTimer = null;
-      if (Date.now() < this.timeoutDate) {
-        this.setTimeout();
-      } else {
-        this.timeout();
-      }
-    }, this.timeoutDate - Date.now());
+    if (this.timeoutTimer == null) this.timeoutTimer = new ResettableTimeout(() => this.timeout(), 15 * 1000);
+    this.timeoutTimer.reset();
   }
 }

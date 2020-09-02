@@ -1,4 +1,5 @@
 import { EventSystem } from '../system';
+import { ResettableTimeout } from '../system/util/resettable-timeout';
 
 type PeerId = string;
 type ObjectIdentifier = string;
@@ -19,8 +20,7 @@ export class SynchronizeTask {
   ontimeout: (task: SynchronizeTask, remainedRequests: SynchronizeRequest[]) => void;
 
   private requestMap: Map<ObjectIdentifier, SynchronizeRequest> = new Map();
-  private timeoutTimer: NodeJS.Timer;
-  private timeoutDate: number;
+  private timeoutTimer: ResettableTimeout;
 
   private constructor(readonly peerId: PeerId) { }
 
@@ -45,7 +45,7 @@ export class SynchronizeTask {
   }
 
   private cancel() {
-    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
+    if (this.timeoutTimer) this.timeoutTimer.clear();
     this.timeoutTimer = null;
     this.onsynchronize = this.onfinish = this.ontimeout = null;
 
@@ -122,19 +122,7 @@ export class SynchronizeTask {
   }
 
   private resetTimeout() {
-    this.timeoutDate = Date.now() + 30 * 1000;
-    if (this.timeoutTimer !== null) return;
-    this.setTimeout();
-  }
-
-  private setTimeout() {
-    this.timeoutTimer = setTimeout(() => {
-      this.timeoutTimer = null;
-      if (Date.now() < this.timeoutDate) {
-        this.setTimeout();
-      } else {
-        this.timeout();
-      }
-    }, this.timeoutDate - Date.now());
+    if (this.timeoutTimer == null) this.timeoutTimer = new ResettableTimeout(() => this.timeout(), 30 * 1000);
+    this.timeoutTimer.reset();
   }
 }
