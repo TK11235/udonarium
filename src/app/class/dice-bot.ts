@@ -210,6 +210,7 @@ export class DiceBot extends GameObject {
     { script: 'Kamigakari_Korean', game: '카미가카리' },
     { script: 'Cthulhu7th_Korean', game: '크툴루의 부름 7판' },
     { script: 'Cthulhu_Korean', game: '크툴루' },
+    { script: 'Fiasco_Korean', game: '피아스코' },
   ];
 
   public static extratablesTables: string[] = [
