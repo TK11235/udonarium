@@ -1,133 +1,133 @@
 input:
 2BB+5
 output:
-BeastBindTrinity : (2R6+5[C12,F2]) ＞ 11[5,6]+5 ＞ 16
+BeastBindTrinity : (2BB+5@12#2) ＞ 11[5,6]+5 ＞ 16
 rand:6/6,5/6
 ============================
 input:
 2BB+5>=16
 output:
-BeastBindTrinity : (2R6+5[C12,F2]>=16) ＞ 11[5,6]+5 ＞ 16 ＞ 成功
+BeastBindTrinity : (2BB+5@12#2>=16) ＞ 11[5,6]+5 ＞ 16 ＞ 成功
 rand:5/6,6/6
 ============================
 input:
 2BB+5>=17
 output:
-BeastBindTrinity : (2R6+5[C12,F2]>=17) ＞ 11[5,6]+5 ＞ 16 ＞ 失敗
+BeastBindTrinity : (2BB+5@12#2>=17) ＞ 11[5,6]+5 ＞ 16 ＞ 失敗
 rand:5/6,6/6
 ============================
 input:
 2BB+5@11#5
 output:
-BeastBindTrinity : (2R6+5[C11,F5]) ＞ 11[5,6]+5+20【クリティカル】 ＞ 36
+BeastBindTrinity : (2BB+5@11#5) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36
 rand:5/6,6/6
 ============================
 input:
 2BB+5@11#5>=36
 output:
-BeastBindTrinity : (2R6+5[C11,F5]>=36) ＞ 11[5,6]+5+20【クリティカル】 ＞ 36 ＞ 成功
+BeastBindTrinity : (2BB+5@11#5>=36) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36 ＞ 成功
 rand:5/6,6/6
 ============================
 input:
 2BB+5@11#5>=37
 output:
-BeastBindTrinity : (2R6+5[C11,F5]>=37) ＞ 11[5,6]+5+20【クリティカル】 ＞ 36 ＞ 失敗
+BeastBindTrinity : (2BB+5@11#5>=37) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36 ＞ 失敗
 rand:5/6,6/6
 ============================
 input:
 2BB+5@11#6
 output:
-BeastBindTrinity : (2R6+5[C11,F6]) ＞ 6[1,5]【ファンブル】 ＞ 0
+BeastBindTrinity : (2BB+5@11#6) ＞ 6[1,5]+5 ＞ ファンブル ＞ 0
 rand:5/6,1/6
 ============================
 input:
 2BB+5@11#6>=1
 output:
-BeastBindTrinity : (2R6+5[C11,F6]>=1) ＞ 6[1,5]【ファンブル】 ＞ 0 ＞ 失敗
+BeastBindTrinity : (2BB+5@11#6>=1) ＞ 6[1,5]+5 ＞ ファンブル ＞ 0 ＞ 失敗
 rand:5/6,1/6
 ============================
 input:
 2BB+5%41
 output:
-BeastBindTrinity : (2R6+5[C12,F2]) ＞ 6[1,5]+5 ＞ 11
+BeastBindTrinity : (2BB+5@12#2) ＞ 6[1,5]+5 ＞ 11
 rand:5/6,1/6
 ============================
 input:
 2BB+5%41>=30
 output:
-BeastBindTrinity : (2R6+5[C12,F2]>=30) ＞ 11[5,6]+5 ＞ 16 ＞ 失敗
+BeastBindTrinity : (2BB+5@12#2>=30) ＞ 11[5,6]+5 ＞ 16 ＞ 失敗
 rand:5/6,6/6
 ============================
 input:
 2BB+5%41>=30
 output:
-BeastBindTrinity : (2R6+5[C12,F2]>=30) ＞ 12[6,6]+5+20【クリティカル】 ＞ 37 ＞ 成功
+BeastBindTrinity : (2BB+5@12#2>=30) ＞ 12[6,6]+5+20 ＞ クリティカル ＞ 37 ＞ 成功
 rand:6/6,6/6
 ============================
 input:
 2BB+5%21>=30
 output:
-BeastBindTrinity : (2R6+5[C11,F2]>=30) ＞ 12[6,6]+5+20【クリティカル】 ＞ 37 ＞ 成功
+BeastBindTrinity : (2BB+5@11#2>=30) ＞ 12[6,6]+5+20 ＞ クリティカル ＞ 37 ＞ 成功
 rand:6/6,6/6
 ============================
 input:
 2BB+5%21>=30
 output:
-BeastBindTrinity : (2R6+5[C11,F2]>=30) ＞ 11[5,6]+5+20【クリティカル】 ＞ 36 ＞ 成功
+BeastBindTrinity : (2BB+5@11#2>=30) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36 ＞ 成功
 rand:5/6,6/6
 ============================
 input:
 2BB+5%21>=30
 output:
-BeastBindTrinity : (2R6+5[C11,F2]>=30) ＞ 10[4,6]+5 ＞ 15 ＞ 失敗
+BeastBindTrinity : (2BB+5@11#2>=30) ＞ 10[4,6]+5 ＞ 15 ＞ 失敗
 rand:4/6,6/6
 ============================
 input:
 2BB+5%1>=30
 output:
-BeastBindTrinity : (2R6+5[C10,F2]>=30) ＞ 11[5,6]+5+20【クリティカル】 ＞ 36 ＞ 成功
+BeastBindTrinity : (2BB+5@10#2>=30) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36 ＞ 成功
 rand:5/6,6/6
 ============================
 input:
 2BB+5%1>=30
 output:
-BeastBindTrinity : (2R6+5[C10,F2]>=30) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35 ＞ 成功
+BeastBindTrinity : (2BB+5@10#2>=30) ＞ 10[4,6]+5+20 ＞ クリティカル ＞ 35 ＞ 成功
 rand:4/6,6/6
 ============================
 input:
 2BB+5%1>=30
 output:
-BeastBindTrinity : (2R6+5[C10,F2]>=30) ＞ 9[4,5]+5 ＞ 14 ＞ 失敗
+BeastBindTrinity : (2BB+5@10#2>=30) ＞ 9[4,5]+5 ＞ 14 ＞ 失敗
 rand:4/6,5/6
 ============================
 input:
 2BB+5%-1>=30
 output:
-BeastBindTrinity : (2R6+5[C9,F2]>=30) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35 ＞ 成功
+BeastBindTrinity : (2BB+5@9#2>=30) ＞ 10[4,6]+5+20 ＞ クリティカル ＞ 35 ＞ 成功
 rand:4/6,6/6
 ============================
 input:
 2BB+5%-1>=30
 output:
-BeastBindTrinity : (2R6+5[C9,F2]>=30) ＞ 9[4,5]+5+20【クリティカル】 ＞ 34 ＞ 成功
+BeastBindTrinity : (2BB+5@9#2>=30) ＞ 9[4,5]+5+20 ＞ クリティカル ＞ 34 ＞ 成功
 rand:4/6,5/6
 ============================
 input:
 2BB+5%1@9>=30
 output:
-BeastBindTrinity : (2R6+5[C9,F2]>=30) ＞ 9[4,5]+5+20【クリティカル】 ＞ 34 ＞ 成功
+BeastBindTrinity : (2BB+5@9#2>=30) ＞ 9[4,5]+5+20 ＞ クリティカル ＞ 34 ＞ 成功
 rand:4/6,5/6
 ============================
 input:
 2BB+5%12$56
 output:
-BeastBindTrinity : (2R6+5[C10,F2]) ＞ 11[5,6]+5+20【クリティカル】 ＞ 36
+BeastBindTrinity : (2BB+5@10#2) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36
 rand:
 ============================
 input:
 2BB+5$2
 output:
-BeastBindTrinity : (2R6+5[C12,F2]) ＞ 7[2,5]+5 ＞ 12
+BeastBindTrinity : (2BB+5@12#2) ＞ 7[2,5]+5 ＞ 12
 rand:5/6
 ============================
 input:
@@ -139,80 +139,92 @@ rand:1/6,1/6
 input:
 2BB+5@-1
 output:
-BeastBindTrinity : (2R6+5[C11,F2]) ＞ 10[4,6]+5 ＞ 15
+BeastBindTrinity : (2BB+5@11#2) ＞ 10[4,6]+5 ＞ 15
 rand:4/6,6/6
 ============================
 input:
 2BB+5%20@-1
 output:
-BeastBindTrinity : (2R6+5[C9,F2]) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35
+BeastBindTrinity : (2BB+5@9#2) ＞ 10[4,6]+5+20 ＞ クリティカル ＞ 35
 rand:4/6,6/6
 ============================
 input:
 2BB+5%20@-1>=30
 output:
-BeastBindTrinity : (2R6+5[C9,F2]>=30) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35 ＞ 成功
+BeastBindTrinity : (2BB+5@9#2>=30) ＞ 10[4,6]+5+20 ＞ クリティカル ＞ 35 ＞ 成功
 rand:4/6,6/6
 ============================
 input:
 2BB+5@-1-2
 output:
-BeastBindTrinity : (2R6+5[C9,F2]) ＞ 10[4,6]+5+20【クリティカル】 ＞ 35
+BeastBindTrinity : (2BB+5@9#2) ＞ 10[4,6]+5+20 ＞ クリティカル ＞ 35
 rand:4/6,6/6
 ============================
 input:
 2BB+5%-5@+2#+2
 output:
-BeastBindTrinity : (2R6+5[C11,F4]) ＞ 10[4,6]+5 ＞ 15
+BeastBindTrinity : (2BB+5@11#4) ＞ 10[4,6]+5 ＞ 15
 rand:4/6,6/6
 ============================
 input:
 2BB+5#A6
 output:
-BeastBindTrinity : (2R6+5[C12,F6]) ＞ 6[1,5]【ファンブル】+5 ＞ 11
+BeastBindTrinity : (2BB+5@12#6) ＞ 6[1,5]+5 ＞ ファンブル ＞ 11
 rand:5/6,1/6
 ============================
 input:
 2BB+5#A+6
 output:
-BeastBindTrinity : (2R6+5[C12,F8]) ＞ 6[1,5]【ファンブル】+5 ＞ 11
+BeastBindTrinity : (2BB+5@12#8) ＞ 6[1,5]+5 ＞ ファンブル ＞ 11
 rand:5/6,1/6
 ============================
 input:
 2BB+5&3
 output:
-BeastBindTrinity : (2R6+5[C12,F2]) ＞ [1,1] ＞ 6[3,3]+5 ＞ 11
+BeastBindTrinity : (2BB+5@12#2) ＞ [1,1] ＞ 6[3,3]+5 ＞ 11
 rand:1/6,1/6
 ============================
 input:
 1BB
 output:
-BeastBindTrinity : (1R6[C12,F2]) ＞ 3
+BeastBindTrinity : (1BB@12#2) ＞ 3[3] ＞ 3
 rand:3/6
 ============================
 input:
 1BB+3
 output:
-BeastBindTrinity : (1R6+3[C12,F2]) ＞ 3[3]+3 ＞ 6
+BeastBindTrinity : (1BB+3@12#2) ＞ 3[3]+3 ＞ 6
 rand:3/6
 ============================
 input:
 1BB&3
 output:
-BeastBindTrinity : (1R6[C12,F2]) ＞ [1] ＞ 3[3] ＞ 3
+BeastBindTrinity : (1BB@12#2) ＞ [1] ＞ 3[3] ＞ 3
 rand:1/6
 ============================
 input:
 2BB+5%20@+3
 output:
-BeastBindTrinity : (2R6+5[C12,F2]) ＞ 11[5,6]+5 ＞ 16
+BeastBindTrinity : (2BB+5@12#2) ＞ 11[5,6]+5 ＞ 16
 rand:5/6,6/6
 ============================
 input:
 2BB+5%20@13
 output:
-BeastBindTrinity : (2R6+5[C13,F2]) ＞ 12[6,6]+5 ＞ 17
+BeastBindTrinity : (2BB+5@13#2) ＞ 12[6,6]+5 ＞ 17
 rand:6/6,6/6
+============================
+input:
+2BB6+5@11#5
+output:
+BeastBindTrinity : (2BB+5@11#5) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36
+rand:5/6,6/6
+============================
+input:
+2R6+5@11#5
+output:
+BeastBindTrinity : (2BB+5@11#5) ＞ 11[5,6]+5+20 ＞ クリティカル ＞ 36
+rand:5/6,6/6
 ============================
 input:
 EXPO_A
