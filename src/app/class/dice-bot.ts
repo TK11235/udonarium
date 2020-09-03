@@ -204,6 +204,7 @@ export class DiceBot extends GameObject {
     { script: 'LogHorizon_Korean', game: '로그 호라이즌' },
     { script: 'MonotoneMuseum_Korean', game: '모노톤 뮤지엄' },
     { script: 'BeginningIdol_Korean', game: '비기닝 아이돌' },
+    { script: 'StratoShout_Korean', game: '스트라토 샤우트' },
     { script: 'Amadeus_Korean', game: '아마데우스' },
     { script: 'Insane_Korean', game: '인세인' },
     { script: 'Kamigakari_Korean', game: '카미가카리' },
