@@ -40,7 +40,7 @@ export class DiceBot extends GameObject {
     { script: 'IthaWenUa', game: 'イサー・ウェン＝アー' },
     { script: 'YearZeroEngine', game: 'YearZeroEngine' },
     { script: 'Insane', game: 'インセイン' },
-    { script: 'VampireTheMasquerade5th', game: 'ヴァンパイア：ザ マスカレード 第５版' },
+    { script: 'VampireTheMasquerade5th', game: 'Vampire: The Masquerade 5th Edition' },
     { script: 'WitchQuest', game: 'ウィッチクエスト' },
     { script: 'Warhammer', game: 'ウォーハンマー' },
     { script: 'Utakaze', game: 'ウタカゼ' },
@@ -205,7 +205,7 @@ export class DiceBot extends GameObject {
     { script: 'Insane_Korean', game: '인세인' },
     { script: 'Kamigakari_Korean', game: '카미가카리' },
     { script: 'Cthulhu7th_Korean', game: '크툴루의 부름 7판' },
-    { script: 'Cthulhu_Korean', game: '크툴루' }
+    { script: 'Cthulhu_Korean', game: '크툴루' },
   ];
 
   public static extratablesTables: string[] = [
