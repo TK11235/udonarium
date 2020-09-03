@@ -15,4 +15,18 @@ module Format
       op.to_s
     end
   end
+
+  # 修正値を文字列表記にする
+  #
+  # @param number [Integer]
+  # @return [String]
+  def modifier(number)
+    if number == 0
+      ''
+    elsif number > 0
+      "+#{number}"
+    else
+      number.to_s
+    end
+  end
 end

@@ -72,24 +72,28 @@ class TestDetailedRandResults < Test::Unit::TestCase
   def test_coc7th
     dicebot = DiceBotLoader.loadUnknownGame("Cthulhu7th")
     @bcdice.setDiceBot(dicebot)
-    @bcdice.setRandomValues([[4, 10], [5, 10], [6, 10]])
+    @bcdice.setRandomValues([[5, 10], [6, 10], [7, 10], [4, 10]])
 
     @bcdice.setMessage("CC(2)")
     @bcdice.dice_command
 
     details = @bcdice.detailed_rand_results
-    assert_equal(3, details.size)
+    assert_equal(4, details.size)
 
-    assert_equal(:normal, details[0].kind)
+    assert_equal(:tens_d10, details[0].kind)
     assert_equal(10, details[0].sides)
-    assert_equal(4, details[0].value)
+    assert_equal(50, details[0].value)
 
     assert_equal(:tens_d10, details[1].kind)
     assert_equal(10, details[1].sides)
-    assert_equal(50, details[1].value)
+    assert_equal(60, details[1].value)
 
     assert_equal(:tens_d10, details[2].kind)
     assert_equal(10, details[2].sides)
-    assert_equal(60, details[2].value)
+    assert_equal(70, details[2].value)
+
+    assert_equal(:normal, details[3].kind)
+    assert_equal(10, details[3].sides)
+    assert_equal(4, details[3].value)
   end
 end

@@ -47,7 +47,7 @@ end
 
 class BCDice
   # BCDiceのバージョン番号
-  VERSION = "2.07.03".freeze
+  VERSION = "2.08.00".freeze
 
   # @return [DiceBot] 使用するダイスボット
   attr_reader :diceBot
