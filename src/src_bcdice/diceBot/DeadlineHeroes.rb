@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # frozen_string_literal: true
 
+require 'utils/range_table'
+
 class DeadlineHeroes < DiceBot
   # ゲームシステムの識別子
   ID = 'DeadlineHeroes'
@@ -38,71 +40,63 @@ INFO_MESSAGE_TEXT
 
   def rollDiceCommand(command)
     case command
-    when /^DLH(\d+([\+\-]\d+)*)/i
-      expressions = Regexp.last_match(1)
-      return resolute_action(expressions)
-
-    when /^DC(L||S|C)(\d+)/i
-      type = Regexp.last_match(1)
-      minusScore = Regexp.last_match(2).to_i
-
-      chartName =
-        case type
-        when "L"  # L は「ライフ」
-          '肉体'
-        when "S"  # S は「サニティ」
-          '精神'
-        when "C"  # C は「クレジット」
-          '環境'
-        end
-
-      return fetchDeathChart(chartName, minusScore)
-
-    when /^RNC([JO])/i
-      type = Regexp.last_match(1)
-      chartName = (type == 'J' ? '日本' : '海外')
-
-      roll_result, dice10, dice01 = roll_d100
-
-      text = "リアルネームチャート（#{chartName}）"
-      text += ": 1D100[#{dice10},#{dice01}]=#{roll_result}"
-      text += " ＞ " + fetchResultFromRealNameChart(roll_result, getRealNameChartByName(chartName))
-
-      return text
-
-    when /^HNC/i
-      result = rollHeroNameTemplateChart()
-      return "ヒーローネームチャート: 1D10[#{result[:dice]}] ＞ #{result[:result]}" unless result.nil?
+    when /^DLH/i
+      resolute_action(command)
+    when /^DC\w/i
+      roll_death_chart(command)
+    when 'HNC'
+      roll_hero_name_chart()
+    else
+      roll_tables(command, TABLES)
     end
-
-    return nil
   end
 
-  SUCCESS_STR = " ＞ 成功"
-  FAILURE_STR = " ＞ 失敗"
+  private
+
+  def resolute_action(command)
+    m = /^DLH(\d+([\+\-]\d+)*)$/.match(command)
+    unless m
+      return nil
+    end
+
+    success_rate = ArithmeticEvaluator.new().eval(m[1])
+
+    roll_result, dice10, dice01 = roll_d100
+    roll_result_text = format('%02d', roll_result)
+
+    result = action_result(roll_result, dice10, dice01, success_rate)
+
+    sequence = [
+      "行為判定(成功率:#{success_rate}％)",
+      "1D100[#{dice10},#{dice01}]=#{roll_result_text}",
+      roll_result_text.to_s,
+      result
+    ]
+
+    return sequence.join(" ＞ ")
+  end
+
+  SUCCESS_STR = "成功"
+  FAILURE_STR = "失敗"
   CRITICAL_STR = (SUCCESS_STR + " ＞ クリティカル！ パワーの代償１／２").freeze
   FUMBLE_STR = (FAILURE_STR + " ＞ ファンブル！ パワーの代償２倍＆振り直し不可").freeze
 
-  def resolute_action(expressions)
-    success_rate = parren_killer("(" + expressions + ")").to_i
-
-    roll_result, dice10, dice01 = roll_d100
-
-    text = "行為判定(成功率:#{success_rate}％)"
-    text += " ＞ 1D100[#{dice10},#{dice01}]=#{format('%02d', roll_result)}"
-    text += " ＞ #{format('%02d', roll_result)}"
-
-    if roll_result == 100 || success_rate <= 0
-      text += FUMBLE_STR
-    elsif roll_result <= success_rate - 100
-      text += CRITICAL_STR
-    elsif roll_result <= success_rate
-      text += dice10 == dice01 ? CRITICAL_STR : SUCCESS_STR
+  def action_result(total, tens, ones, success_rate)
+    if total == 100 || success_rate <= 0
+      FUMBLE_STR
+    elsif total <= success_rate - 100
+      CRITICAL_STR
+    elsif tens == ones
+      if total <= success_rate
+        CRITICAL_STR
+      else
+        FUMBLE_STR
+      end
+    elsif total <= success_rate
+      SUCCESS_STR
     else
-      text += dice10 == dice01 ? FUMBLE_STR : FAILURE_STR
+      FAILURE_STR
     end
-
-    return text
   end
 
   def roll_d100
@@ -117,404 +111,470 @@ INFO_MESSAGE_TEXT
     return roll_result, dice10, dice01
   end
 
-  def fetchDeathChart(chartName, minusScore)
-    dice, = roll(1, 10)
-    keyNumber = dice + minusScore
+  class DeathChart
+    def initialize(name, chart)
+      @name = name
+      @chart = chart.freeze
 
-    keyText, resultText, = fetchFromChart(keyNumber, getDeathChartByName(chartName))
-
-    return "デスチャート（#{chartName}）[マイナス値:#{minusScore} + 1D10(->#{dice}) = #{keyNumber}] ＞ #{keyText} ： #{resultText}"
-  end
-
-  def fetchFromChart(keyNumber, chart)
-    unless chart.empty?
-      # return "key number = #{keyNumber}, size of chart = #{chart.size}, class of chart = #{chart.class}]"
-      minKey = chart.keys.min
-      maxKey = chart.keys.max
-
-      return ["#{minKey}以下", chart[minKey]] if keyNumber < minKey
-      return ["#{maxKey}以上", chart[maxKey]] if keyNumber > maxKey
-      return [keyNumber.to_s, chart[keyNumber]] if chart.key? keyNumber
+      if @chart.size != 11
+        raise ArgumentError, "unexpected chart size #{name.inspect} (given #{@chart.size}, expected 11)"
+      end
     end
 
-    return ["未定義", "？？？"]
+    # @params bot [#roll]
+    # @params minus_score [Integer]
+    # @return [String]
+    def roll(bot, minus_score)
+      dice, = bot.roll(1, 10)
+      key_number = dice + minus_score
+
+      key_text, chosen = at(key_number)
+
+      return "デスチャート（#{@name}）[マイナス値:#{minus_score} + 1D10(->#{dice}) = #{key_number}] ＞ #{key_text} ： #{chosen}"
+    end
+
+    private
+
+    # key_numberの10から20がindexの0から10に対応する
+    def at(key_number)
+      if key_number < 10
+        ["10以下", @chart.first]
+      elsif key_number > 20
+        ["20以上", @chart.last]
+      else
+        [key_number.to_s, @chart[key_number - 10]]
+      end
+    end
   end
 
-  def getDeathChartByName(chartName)
-    return {} unless DEATH_CHARTS.key? chartName
+  def roll_death_chart(command)
+    m = /^DC([LSC])(\d+)$/i.match(command)
+    unless m
+      return m
+    end
 
-    return DEATH_CHARTS[chartName]
+    chart = DEATH_CHARTS[m[1]]
+    minus_score = m[2].to_i
+
+    return chart.roll(self, minus_score)
   end
 
   DEATH_CHARTS = {
-    '肉体' => {
-      10 => "何も無し。キミは奇跡的に一命を取り留めた。闘いは続く。",
-      11 => "激痛が走る。以後、イベント終了時まで、全ての判定の成功率－10％。",
-      12 => "キミは［硬直］ポイント２点を得る。［硬直］ポイントを所持している間、キミは「属性：妨害」のパワーを使用することができない。各ラウンド終了時、キミは所持している［硬直］ポイントを１点減らしてもよい。",
-      13 => "渾身の一撃!!　キミは〈生存〉判定を行なう。失敗した場合、［死亡］する。",
-      14 => "キミは［気絶］ポイント２点を得る。［気絶］ポイントを所持している間、キミはあらゆるパワーを使用できず、自身のターンを得ることもできない。各ラウンド終了時、キミは所持している［気絶］ポイントを１点減らしてもよい。",
-      15 => "以後、イベント終了時まで、全ての判定の成功率－20％。",
-      16 => "記録的一撃!!　キミは〈生存〉－20％の判定を行なう。失敗した場合、［死亡］する。",
-      17 => "キミは［瀕死］ポイント２点を得る。［瀕死］ポイントを所持している間、キミはあらゆるパワーを使用できず、自身のターンを得ることもできない。各ラウンド終了時、キミは所持している［瀕死］ポイントを１点を失う。全ての［瀕死］ポイントを失う前に戦闘が終了しなかった場合、キミは［死亡］する。",
-      18 => "叙事詩的一撃!!　キミは〈生存〉－30％の判定を行なう。失敗した場合、［死亡］する。",
-      19 => "以後、イベント終了時まで、全ての判定の成功率－30％。",
-      20 => "神話的一撃!!　キミは宙を舞って三回転ほどした後、地面に叩きつけられる。見るも無惨な姿。肉体は原型を留めていない（キミは［死亡］した）。",
-    },
-    '精神' => {
-      10 => "何も無し。キミは歯を食いしばってストレスに耐えた。",
-      11 => "以後、イベント終了時まで、全ての判定の成功率－10％。",
-      12 => "キミは［恐怖］ポイント２点を得る。［恐怖］ポイントを所持している間、キミは「属性：攻撃」のパワーを使用できない。各ラウンド終了時、キミは所持している［恐怖］ポイントを１点減らしてもよい。",
-      13 => "とても傷ついた。キミは〈意志〉判定を行なう。失敗した場合、［絶望］してＮＰＣとなる。",
-      14 => "キミは［気絶］ポイント２点を得る。［気絶］ポイントを所持している間、キミはあらゆるパワーを使用できず、自身のターンを得ることもできない。各ラウンド終了時、キミは所持している［気絶］ポイントを１点減らしてもよい。",
-      15 => "以後、イベント終了時まで、全ての判定の成功率－20％。",
-      16 => "信じるものに裏切られたような痛み。キミは〈意志〉－20％の判定を行なう。失敗した場合、［絶望］してＮＰＣとなる。",
-      17 => "キミは［混乱］ポイント２点を得る。［混乱］ポイントを所持している間、キミは本来味方であったキャラクターに対して、可能な限り最大の被害を与える様、行動し続ける。各ラウンド終了時、キミは所持している［混乱］ポイントを１点減らしてもよい。",
-      18 => "あまりに残酷な現実。キミは〈意志〉－30％の判定を行なう。失敗した場合、［絶望］してＮＰＣとなる。",
-      19 => "以後、イベント終了時まで、全ての判定の成功率－30％。",
-      20 => "宇宙開闢の理に触れるも、それは人類の認識限界を超える何かであった。キミは［絶望］し、以後ＮＰＣとなる。",
-    },
-    '環境' => {
-      10 => "何も無し。キミは黒い噂を握りつぶした。",
-      11 => "以後、イベント終了時まで、全ての判定の成功率－10％。",
-      12 => "ピンチ！　以後、イベント終了時まで、キミは《支援》を使用できない。",
-      13 => "裏切り!!　キミは〈経済〉判定を行なう。失敗した場合、キミはヒーローとしての名声を失い、［汚名］を受ける。",
-      14 => "以後、シナリオ終了時まで、代償にクレジットを消費するパワーを使用できない。",
-      15 => "キミの悪評は大変なもののようだ。協力者からの支援が打ち切られる。以後、シナリオ終了時まで、全ての判定の成功率－20％。",
-      16 => "信頼の失墜!!　キミは〈経済〉－20％の判定を行なう。失敗した場合、キミはヒーローとしての名声を失い、［汚名］を受ける。",
-      17 => "以後、シナリオ終了時まで、【環境】系の技能のレベルがすべて０となる。",
-      18 => "捏造報道!!　身の覚えのない犯罪への荷担が、スクープとして報道される。キミは〈経済〉－30％の判定を行なう。失敗した場合、キミはヒーローとしての名声を失い、［汚名］を受ける。",
-      19 => "以後、イベント終了時まで、全ての判定の成功率－30％。",
-      20 => "キミの名は史上最悪の汚点として永遠に歴史に刻まれる。もはやキミを信じる仲間はなく、キミを助ける社会もない。キミは［汚名］を受けた。",
-    },
+    'L' => DeathChart.new(
+      '肉体',
+      [
+        "何も無し。キミは奇跡的に一命を取り留めた。闘いは続く。",
+        "激痛が走る。以後、イベント終了時まで、全ての判定の成功率－10％。",
+        "キミは［硬直］ポイント２点を得る。［硬直］ポイントを所持している間、キミは「属性：妨害」のパワーを使用することができない。各ラウンド終了時、キミは所持している［硬直］ポイントを１点減らしてもよい。",
+        "渾身の一撃!!　キミは〈生存〉判定を行なう。失敗した場合、［死亡］する。",
+        "キミは［気絶］ポイント２点を得る。［気絶］ポイントを所持している間、キミはあらゆるパワーを使用できず、自身のターンを得ることもできない。各ラウンド終了時、キミは所持している［気絶］ポイントを１点減らしてもよい。",
+        "以後、イベント終了時まで、全ての判定の成功率－20％。",
+        "記録的一撃!!　キミは〈生存〉－20％の判定を行なう。失敗した場合、［死亡］する。",
+        "キミは［瀕死］ポイント２点を得る。［瀕死］ポイントを所持している間、キミはあらゆるパワーを使用できず、自身のターンを得ることもできない。各ラウンド終了時、キミは所持している［瀕死］ポイントを１点を失う。全ての［瀕死］ポイントを失う前に戦闘が終了しなかった場合、キミは［死亡］する。",
+        "叙事詩的一撃!!　キミは〈生存〉－30％の判定を行なう。失敗した場合、［死亡］する。",
+        "以後、イベント終了時まで、全ての判定の成功率－30％。",
+        "神話的一撃!!　キミは宙を舞って三回転ほどした後、地面に叩きつけられる。見るも無惨な姿。肉体は原型を留めていない（キミは［死亡］した）。",
+      ]
+    ),
+    'S' => DeathChart.new(
+      '精神',
+      [
+        "何も無し。キミは歯を食いしばってストレスに耐えた。",
+        "以後、イベント終了時まで、全ての判定の成功率－10％。",
+        "キミは［恐怖］ポイント２点を得る。［恐怖］ポイントを所持している間、キミは「属性：攻撃」のパワーを使用できない。各ラウンド終了時、キミは所持している［恐怖］ポイントを１点減らしてもよい。",
+        "とても傷ついた。キミは〈意志〉判定を行なう。失敗した場合、［絶望］してＮＰＣとなる。",
+        "キミは［気絶］ポイント２点を得る。［気絶］ポイントを所持している間、キミはあらゆるパワーを使用できず、自身のターンを得ることもできない。各ラウンド終了時、キミは所持している［気絶］ポイントを１点減らしてもよい。",
+        "以後、イベント終了時まで、全ての判定の成功率－20％。",
+        "信じるものに裏切られたような痛み。キミは〈意志〉－20％の判定を行なう。失敗した場合、［絶望］してＮＰＣとなる。",
+        "キミは［混乱］ポイント２点を得る。［混乱］ポイントを所持している間、キミは本来味方であったキャラクターに対して、可能な限り最大の被害を与える様、行動し続ける。各ラウンド終了時、キミは所持している［混乱］ポイントを１点減らしてもよい。",
+        "あまりに残酷な現実。キミは〈意志〉－30％の判定を行なう。失敗した場合、［絶望］してＮＰＣとなる。",
+        "以後、イベント終了時まで、全ての判定の成功率－30％。",
+        "宇宙開闢の理に触れるも、それは人類の認識限界を超える何かであった。キミは［絶望］し、以後ＮＰＣとなる。",
+      ]
+    ),
+    'C' => DeathChart.new(
+      '環境',
+      [
+        "何も無し。キミは黒い噂を握りつぶした。",
+        "以後、イベント終了時まで、全ての判定の成功率－10％。",
+        "ピンチ！　以後、イベント終了時まで、キミは《支援》を使用できない。",
+        "裏切り!!　キミは〈経済〉判定を行なう。失敗した場合、キミはヒーローとしての名声を失い、［汚名］を受ける。",
+        "以後、シナリオ終了時まで、代償にクレジットを消費するパワーを使用できない。",
+        "キミの悪評は大変なもののようだ。協力者からの支援が打ち切られる。以後、シナリオ終了時まで、全ての判定の成功率－20％。",
+        "信頼の失墜!!　キミは〈経済〉－20％の判定を行なう。失敗した場合、キミはヒーローとしての名声を失い、［汚名］を受ける。",
+        "以後、シナリオ終了時まで、【環境】系の技能のレベルがすべて０となる。",
+        "捏造報道!!　身の覚えのない犯罪への荷担が、スクープとして報道される。キミは〈経済〉－30％の判定を行なう。失敗した場合、キミはヒーローとしての名声を失い、［汚名］を受ける。",
+        "以後、イベント終了時まで、全ての判定の成功率－30％。",
+        "キミの名は史上最悪の汚点として永遠に歴史に刻まれる。もはやキミを信じる仲間はなく、キミを助ける社会もない。キミは［汚名］を受けた。",
+      ]
+    )
   }.freeze
 
-  def fetchResultFromRealNameChart(keyNumber, chartInfo)
-    columns, chart, = chartInfo
-
-    range, elements = chart.find do |range, _elements|
-      range.include?(keyNumber)
+  class RealNameChart < RangeTable
+    def initialize(name, columns, chart)
+      items = chart.map { |l| mix_column(columns, l) }
+      super(name, "1D100", items)
     end
 
-    return nil if range.nil?
+    private
 
-    result = "(#{range}) ＞ "
+    def mix_column(columns, item)
+      range, names = item
+      if names.size == 1
+        return range, names[0]
+      end
 
-    if elements.size <= 1
-      result += elements.first
-      return result
+      candidate = columns.zip(names).map { |l| "\n" + l.join(": ") }.join("")
+      return range, candidate
     end
-
-    nameTextList = []
-
-    columns.each_with_index do |title, i|
-      text = elements[i]
-      next if text.nil?
-
-      nameTextList << "#{title}: #{text}"
-    end
-
-    result += nameTextList.join("\n")
-
-    return result
   end
 
-  def getRealNameChartByName(chartName)
-    return {} unless REAL_NAME_CHARTS.key? chartName
-
-    return REAL_NAME_CHARTS[chartName]
-  end
-
-  REAL_NAME_CHARTS = {
-    '日本' => [['姓', '名（男）', '名（女）'], [
-      [ 1..6, ['アイカワ／相川、愛川', 'アキラ／晶、章', 'アン／杏']],
-      [ 7..12, ['アマミヤ／雨宮', 'エイジ／映司、英治', 'イノリ／祈鈴、祈']],
-      [13..18, ['イブキ／伊吹', 'カズキ／和希、一輝', 'エマ／英真、恵茉']],
-      [19..24, ['オガミ／尾上', 'ギンガ／銀河', 'カノン／花音、観音']],
-      [25..30, ['カイ／甲斐', 'ケンイチロウ／健一郎', 'サラ／沙羅']],
-      [31..36, ['サカキ／榊、阪木', 'ゴウ／豪、剛', 'シズク／雫']],
-      [37..42, ['シシド／宍戸', 'ジロー／次郎、治郎', 'チズル／千鶴、千尋']],
-      [43..48, ['タチバナ／橘、立花', 'タケシ／猛、武', 'ナオミ／直美、尚美']],
-      [49..54, ['ツブラヤ／円谷', 'ツバサ／翼', 'ハル／華、波留']],
-      [55..60, ['ハヤカワ／早川', 'テツ／鉄、哲', 'ヒカル／光']],
-      [61..66, ['ハラダ／原田', 'ヒデオ／英雄', 'ベニ／紅']],
-      [67..72, ['フジカワ／藤川', 'マサムネ／正宗、政宗', 'マチ／真知、町']],
-      [73..78, ['ホシ／星', 'ヤマト／大和', 'ミア／深空、美杏']],
-      [79..84, ['ミゾグチ／溝口', 'リュウセイ／流星', 'ユリコ／由里子']],
-      [85..90, ['ヤシダ／矢志田', 'レツ／烈、裂', 'ルイ／瑠衣、涙']],
-      [91..96, ['ユウキ／結城', 'レン／連、錬', 'レナ／玲奈']],
-      [97..100, ['名無し（何らかの理由で名前を持たない、もしくは失った）']],
-    ]],
-    '海外' => [['名（男）', '名（女）', '姓'], [
-      [ 1..6, ['アルバス', 'アイリス', 'アレン']],
-      [ 7..12, ['クリス', 'オリーブ', 'ウォーケン']],
-      [13..18, ['サミュエル', 'カーラ', 'ウルフマン']],
-      [19..24, ['シドニー', 'キルスティン', 'オルセン']],
-      [25..30, ['スパイク', 'グウェン', 'カーター']],
-      [31..36, ['ダミアン', 'サマンサ', 'キャラダイン']],
-      [37..42, ['ディック', 'ジャスティナ', 'シーゲル']],
-      [43..48, ['デンゼル', 'タバサ', 'ジョーンズ']],
-      [49..54, ['ドン', 'ナディン', 'パーカー']],
-      [55..60, ['ニコラス', 'ノエル', 'フリーマン']],
-      [61..66, ['ネビル', 'ハーリーン', 'マーフィー']],
-      [67..72, ['バリ', 'マルセラ', 'ミラー']],
-      [73..78, ['ビリー', 'ラナ', 'ムーア']],
-      [79..84, ['ブルース', 'リンジー', 'リーヴ']],
-      [85..90, ['マーヴ', 'ロザリー', 'レイノルズ']],
-      [91..96, ['ライアン', 'ワンダ', 'ワード']],
-      [97..100, ['名無し（何らかの理由で名前を持たない、もしくは失った）']],
-    ]],
+  TABLES = {
+    'RNCJ' => RealNameChart.new(
+      'リアルネームチャート（日本）',
+      ['姓', '名（男）', '名（女）'],
+      [
+        [ 1..6, ['アイカワ／相川、愛川', 'アキラ／晶、章', 'アン／杏']],
+        [ 7..12, ['アマミヤ／雨宮', 'エイジ／映司、英治', 'イノリ／祈鈴、祈']],
+        [13..18, ['イブキ／伊吹', 'カズキ／和希、一輝', 'エマ／英真、恵茉']],
+        [19..24, ['オガミ／尾上', 'ギンガ／銀河', 'カノン／花音、観音']],
+        [25..30, ['カイ／甲斐', 'ケンイチロウ／健一郎', 'サラ／沙羅']],
+        [31..36, ['サカキ／榊、阪木', 'ゴウ／豪、剛', 'シズク／雫']],
+        [37..42, ['シシド／宍戸', 'ジロー／次郎、治郎', 'チズル／千鶴、千尋']],
+        [43..48, ['タチバナ／橘、立花', 'タケシ／猛、武', 'ナオミ／直美、尚美']],
+        [49..54, ['ツブラヤ／円谷', 'ツバサ／翼', 'ハル／華、波留']],
+        [55..60, ['ハヤカワ／早川', 'テツ／鉄、哲', 'ヒカル／光']],
+        [61..66, ['ハラダ／原田', 'ヒデオ／英雄', 'ベニ／紅']],
+        [67..72, ['フジカワ／藤川', 'マサムネ／正宗、政宗', 'マチ／真知、町']],
+        [73..78, ['ホシ／星', 'ヤマト／大和', 'ミア／深空、美杏']],
+        [79..84, ['ミゾグチ／溝口', 'リュウセイ／流星', 'ユリコ／由里子']],
+        [85..90, ['ヤシダ／矢志田', 'レツ／烈、裂', 'ルイ／瑠衣、涙']],
+        [91..96, ['ユウキ／結城', 'レン／連、錬', 'レナ／玲奈']],
+        [97..100, ['名無し（何らかの理由で名前を持たない、もしくは失った）']],
+      ]
+    ),
+    'RNCO' => RealNameChart.new(
+      'リアルネームチャート（海外）',
+      ['名（男）', '名（女）', '姓'],
+      [
+        [ 1..6, ['アルバス', 'アイリス', 'アレン']],
+        [ 7..12, ['クリス', 'オリーブ', 'ウォーケン']],
+        [13..18, ['サミュエル', 'カーラ', 'ウルフマン']],
+        [19..24, ['シドニー', 'キルスティン', 'オルセン']],
+        [25..30, ['スパイク', 'グウェン', 'カーター']],
+        [31..36, ['ダミアン', 'サマンサ', 'キャラダイン']],
+        [37..42, ['ディック', 'ジャスティナ', 'シーゲル']],
+        [43..48, ['デンゼル', 'タバサ', 'ジョーンズ']],
+        [49..54, ['ドン', 'ナディン', 'パーカー']],
+        [55..60, ['ニコラス', 'ノエル', 'フリーマン']],
+        [61..66, ['ネビル', 'ハーリーン', 'マーフィー']],
+        [67..72, ['バリ', 'マルセラ', 'ミラー']],
+        [73..78, ['ビリー', 'ラナ', 'ムーア']],
+        [79..84, ['ブルース', 'リンジー', 'リーヴ']],
+        [85..90, ['マーヴ', 'ロザリー', 'レイノルズ']],
+        [91..96, ['ライアン', 'ワンダ', 'ワード']],
+        [97..100, ['名無し（何らかの理由で名前を持たない、もしくは失った）']],
+      ]
+    )
   }.freeze
 
-  def rollHeroNameTemplateChart()
-    chart = HERO_NAME_TEMPLATES
-
+  def roll_hero_name_chart()
     dice, = roll(1, 10)
+    template = HERO_NAME_TEMPLATES[dice - 1]
 
-    templateText = chart[dice][:text]
-    return nil if templateText.nil?
-
-    result = {:dice => dice, :result => templateText}
-    return result if templateText == "任意"
-
-    elements = chart[dice][:elements]
-
-    resolvedElements = elements.map { |i| rollHeroNameBaseChart(i) }
-
-    text = resolvedElements.map { |i| getHeroNameElementText(i) }.join(" ＋ ")
-    resultText = resolvedElements.map { |i| i[:coreResult] }.join("").sub(/・{2,}/, "・").sub(/・$/, "")
-
-    result[:result] += " ＞ ( #{text} ) ＞ 「#{resultText}」"
-
-    return result
-  end
-
-  def getHeroNameElementText(info)
-    result = ""
-    result += (info[:chartName]).to_s if info.key?(:chartName)
-    result += "(1D10[#{info[:dice]}]) ＞ " if info.key?(:dice)
-    result += "［#{info[:innerChartName]}］ ＞ 1D10[#{info[:innerResult][:dice]}] ＞ " if info.key?(:innerChartName)
-    result += "「#{info[:coreResult]}」"
-  end
-
-  def rollHeroNameBaseChart(chartName)
-    defaultResult = {:result => chartName, :coreResult => chartName}
-
-    chart = HERO_NAME_BASE_CHARTS[chartName]
-    return defaultResult if chart.nil?
-
-    dice, = roll(1, 10)
-    return defaultResult unless chart.key?(dice)
-
-    result = {:dice => dice, :result => chart[dice], :chartName => chartName}
-    result[:coreResult] = result[:result]
-
-    if result[:result] =~ /［(.+)］/
-      innerResult = rollHeroNameElementChart(Regexp.last_match(1).to_s)
-      result[:innerResult] = innerResult
-      result[:innerChartName] = innerResult[:chartName]
-      result[:coreResult] = innerResult[:name]
-      result[:result] += " ＞ 1D10[#{innerResult[:dice]}] ＞ #{innerResult[:name]}（意味：#{innerResult[:mean]}）"
+    template_result = "ヒーローネームチャート(#{dice}) ＞ #{template[:text]}"
+    if template[:text] == "任意"
+      return template_result
     end
 
-    return result
+    results = [template_result]
+    elements = []
+    template[:elements].each do |type|
+      base_chart = HERO_NAME_BASE_CHARTS[type]
+      unless base_chart
+        elements.push(type)
+        next
+      end
+
+      result, element = base_chart.roll(self)
+      results.push(result)
+      elements.push(element)
+    end
+
+    hero_name = elements.join("").gsub(/・{2,}/, "・").sub(/・$/, "")
+    results.push("ヒーローネーム ＞ #{hero_name}")
+
+    return results.join("\n")
   end
 
-  def rollHeroNameElementChart(chartName)
-    chart = HERO_NAME_ELEMENT_CHARTS[chartName.sub("/", "／")]
-    return nil if chart.nil?
+  HERO_NAME_TEMPLATES = [
+    {:text => 'ベースＡ＋ベースＡ', :elements => ['ベースＡ', 'ベースＢ']},
+    {:text => 'ベースＢ', :elements => ['ベースＢ']},
+    {:text => 'ベースＢ×2回', :elements => ['ベースＢ', 'ベースＢ']},
+    {:text => 'ベースＢ＋ベースＣ', :elements => ['ベースＢ', 'ベースＣ']},
+    {:text => 'ベースＡ＋ベースＢ＋ベースＣ', :elements => ['ベースＡ', 'ベースＢ', 'ベースＣ']},
+    {:text => 'ベースＡ＋ベースＢ×2回', :elements => ['ベースＡ', 'ベースＢ', 'ベースＢ']},
+    {:text => 'ベースＢ×2回＋ベースＣ', :elements => ['ベースＢ', 'ベースＢ', 'ベースＣ']},
+    {:text => '（ベースＢ）・オブ・（ベースＢ）', :elements => ['ベースＢ', '・オブ・', 'ベースＢ']},
+    {:text => '（ベースＢ）・ザ・（ベースＢ）', :elements => ['ベースＢ', '・ザ・', 'ベースＢ']},
+    {:text => '任意', :elements => ['任意']},
+  ].freeze
 
-    dice, = roll(1, 10)
-    return nil unless chart.key?(dice)
+  class HeroNameBaseChart
+    def initialize(name, items)
+      @name = name
+      @items = items
+    end
 
-    name, mean, = chart[dice]
+    # @param bot [#roll]
+    # @return [Array<(String, String)>]
+    def roll(bot)
+      dice, = bot.roll(1, 10)
+      chosen = @items[dice - 1]
 
-    return {:dice => dice, :name => name, :coreResult => name, :mean => mean, :chartName => chartName}
+      result = "#{@name}(#{dice}) ＞ #{chosen}"
+      if (m = chosen.match(/^［(.+)］$/))
+        element_type = m[1]
+        element_chart = HERO_NAME_ELEMENT_CHARTS[element_type]
+
+        element_result, chosen = element_chart.roll(bot)
+        result = [result, element_result].join(" ＞ ")
+      end
+
+      return result, chosen
+    end
   end
 
-  HERO_NAME_TEMPLATES = {
-    1 => {:text => 'ベースＡ＋ベースＢ', :elements => ['ベースＡ', 'ベースＢ']},
-    2 => {:text => 'ベースＢ', :elements => ['ベースＢ']},
-    3 => {:text => 'ベースＢ×２回', :elements => ['ベースＢ', 'ベースＢ']},
-    4 => {:text => 'ベースＢ＋ベースＣ', :elements => ['ベースＢ', 'ベースＣ']},
-    5 => {:text => 'ベースＡ＋ベースＢ＋ベースＣ', :elements => ['ベースＡ', 'ベースＢ', 'ベースＣ']},
-    6 => {:text => 'ベースＡ＋ベースＢ×２回',         :elements => ['ベースＡ', 'ベースＢ', 'ベースＢ']},
-    7 => {:text => 'ベースＢ×２回＋ベースＣ',         :elements => ['ベースＢ', 'ベースＢ', 'ベースＣ']},
-    8 => {:text => '（ベースＢ）・オブ・（ベースＢ）', :elements => ['ベースＢ', '・オブ・', 'ベースＢ']},
-    9 => {:text => '（ベースＢ）・ザ・（ベースＢ）', :elements => ['ベースＢ', '・ザ・', 'ベースＢ']},
-    10 => {:text => '任意', :elements => ['任意']},
-  }.freeze
+  class HeroNameElementChart
+    def initialize(name, items)
+      @name = name
+      @items = items
+    end
+
+    # @param bot [#roll]
+    # @return [Array<(String, String)>]
+    def roll(bot)
+      dice, = bot.roll(1, 10)
+      chosen = @items[dice - 1]
+
+      result = "#{@name}(#{dice}) ＞ #{chosen[:element]} （意味：#{chosen[:mean]}）"
+      return result, chosen[:element]
+    end
+  end
 
   HERO_NAME_BASE_CHARTS = {
-    'ベースＡ' => {
-      1 => 'ザ・',
-      2 => 'キャプテン・',
-      3 => 'ミスター／ミス／ミセス・',
-      4 => 'ドクター／プロフェッサー・',
-      5 => 'ロード／バロン／ジェネラル・',
-      6 => 'マン・オブ・',
-      7 => '［強さ］',
-      8 => '［色］',
-      9 => 'マダム／ミドル・',
-      10 => '数字（１～10）・',
-    },
-    'ベースＢ' => {
-      1 => '［神話／夢］',
-      2 => '［武器］',
-      3 => '［動物］',
-      4 => '［鳥］',
-      5 => '［虫／爬虫類］',
-      6 => '［部位］',
-      7 => '［光］',
-      8 => '［攻撃］',
-      9 => '［その他］',
-      10 => '数字（１～10）・',
-    },
-    'ベースＣ' => {
-      1 => 'マン／ウーマン',
-      2 => 'ボーイ／ガール',
-      3 => 'マスク／フード',
-      4 => 'ライダー',
-      5 => 'マスター',
-      6 => 'ファイター／ソルジャー',
-      7 => 'キング／クイーン',
-      8 => '［色］',
-      9 => 'ヒーロー／スペシャル',
-      10 => 'ヒーロー／スペシャル',
-    },
+    "ベースＡ" => HeroNameBaseChart.new(
+      "ベースＡ",
+      [
+        "ザ・",
+        "キャプテン・",
+        "ミスター／ミス／ミセス・",
+        "ドクター／プロフェッサー・",
+        "ロード／バロン／ジェネラル・",
+        "マン・オブ・",
+        "［強さ］",
+        "［色］",
+        "マダム／ミドル・",
+        "数字（1～10）・",
+      ]
+    ),
+    "ベースＢ" => HeroNameBaseChart.new(
+      "ベースＢ",
+      [
+        "［神話／夢］",
+        "［武器］",
+        "［動物］",
+        "［鳥］",
+        "［虫／爬虫類］",
+        "［部位］",
+        "［光］",
+        "［攻撃］",
+        "［その他］",
+        "数字（1～10）・",
+      ]
+    ),
+    "ベースＣ" => HeroNameBaseChart.new(
+      "ベースＣ",
+      [
+        "マン／ウーマン",
+        "ボーイ／ガール",
+        "マスク／フード",
+        "ライダー",
+        "マスター",
+        "ファイター／ソルジャー",
+        "キング／クイーン",
+        "［色］",
+        "ヒーロー／スペシャル",
+        "ヒーロー／スペシャル",
+      ]
+    ),
   }.freeze
 
   HERO_NAME_ELEMENT_CHARTS = {
-    '部位' => {
-      1 => ['ハート', '心臓'],
-      2 => ['フェイス', '顔'],
-      3 => ['アーム', '腕'],
-      4 => ['ショルダー', '肩'],
-      5 => ['ヘッド', '頭'],
-      6 => ['アイ', '眼'],
-      7 => ['フィスト', '拳'],
-      8 => ['ハンド', '手'],
-      9 => ['クロウ', '爪'],
-      10 => ['ボーン', '骨'],
-    },
-    '武器' => {
-      1 => ['ナイヴス', '短剣'],
-      2 => ['ソード', '剣'],
-      3 => ['ハンマー', '鎚'],
-      4 => ['ガン', '銃'],
-      5 => ['スティール', '刃'],
-      6 => ['タスク', '牙'],
-      7 => ['ニューク', '核'],
-      8 => ['アロー', '矢'],
-      9 => ['ソウ', 'ノコギリ'],
-      10 => ['レイザー', '剃刀'],
-    },
-    '色' => {
-      1 => ['ブラック', '黒'],
-      2 => ['グリーン', '緑'],
-      3 => ['ブルー', '青'],
-      4 => ['イエロー', '黃'],
-      5 => ['レッド', '赤'],
-      6 => ['バイオレット', '紫'],
-      7 => ['シルバー', '銀'],
-      8 => ['ゴールド', '金'],
-      9 => ['ホワイト', '白'],
-      10 => ['クリア', '透明'],
-    },
-    '動物' => {
-      1 => ['バニー', 'ウサギ'],
-      2 => ['タイガー', '虎'],
-      3 => ['シャーク', '鮫'],
-      4 => ['キャット', '猫'],
-      5 => ['コング', 'ゴリラ'],
-      6 => ['ドッグ', '犬'],
-      7 => ['フォックス', '狐'],
-      8 => ['パンサー', '豹'],
-      9 => ['アス', 'ロバ'],
-      10 => ['バット', '蝙蝠'],
-    },
-    '神話／夢' => {
-      1 => ['アポカリプス', '黙示録'],
-      2 => ['ウォー', '戦争'],
-      3 => ['エターナル', '永遠'],
-      4 => ['エンジェル', '天使'],
-      5 => ['デビル', '悪魔'],
-      6 => ['イモータル', '死なない'],
-      7 => ['デス', '死神'],
-      8 => ['ドリーム', '夢'],
-      9 => ['ゴースト', '幽霊'],
-      10 => ['デッド', '死んでいる'],
-    },
-    '攻撃' => {
-      1 => ['ストローク', '一撃'],
-      2 => ['クラッシュ', '壊す'],
-      3 => ['ブロウ', '吹き飛ばす'],
-      4 => ['ヒット', '打つ'],
-      5 => ['パンチ', '殴る'],
-      6 => ['キック', '蹴る'],
-      7 => ['スラッシュ', '斬る'],
-      8 => ['ペネトレイト', '貫く'],
-      9 => ['ショット', '撃つ'],
-      10 => ['キル', '殺す'],
-    },
-    'その他' => {
-      1 => ['ヒューマン', '人間'],
-      2 => ['エージェント', '代理人'],
-      3 => ['ブースター', '泥棒'],
-      4 => ['アイアン', '鉄'],
-      5 => ['サンダー', '雷'],
-      6 => ['ウォッチャー', '監視者'],
-      7 => ['プール', '水たまり'],
-      8 => ['マシーン', '機械'],
-      9 => ['コールド', '冷たい'],
-      10 => ['サイド', '側面'],
-    },
-    '鳥' => {
-      1 => ['ホーク', '鷹'],
-      2 => ['ファルコン', '隼'],
-      3 => ['キャナリー', 'カナリア'],
-      4 => ['ロビン', 'コマツグミ'],
-      5 => ['イーグル', '鷲'],
-      6 => ['オウル', 'フクロウ'],
-      7 => ['レイブン', 'ワタリガラス'],
-      8 => ['ダック', 'アヒル'],
-      9 => ['ペンギン', 'ペンギン'],
-      10 => ['フェニックス', '不死鳥'],
-    },
-    '光' => {
-      1 => ['ライト', '光'],
-      2 => ['シャドウ', '影'],
-      3 => ['ファイアー', '炎'],
-      4 => ['ダーク', '暗い'],
-      5 => ['ナイト', '夜'],
-      6 => ['ファントム', '幻影'],
-      7 => ['トーチ', '灯火'],
-      8 => ['フラッシュ', '閃光'],
-      9 => ['ランタン', '手さげランプ'],
-      10 => ['サン', '太陽'],
-    },
-    '虫／爬虫類' => {
-      1 => ['ビートル', '甲虫'],
-      2 => ['バタフライ／モス', '蝶／蛾'],
-      3 => ['スネーク／コブラ', '蛇'],
-      4 => ['アリゲーター', 'ワニ'],
-      5 => ['ローカスト', 'バッタ'],
-      6 => ['リザード', 'トカゲ'],
-      7 => ['タートル', '亀'],
-      8 => ['スパイダー', '蜘蛛'],
-      9 => ['アント', 'アリ'],
-      10 => ['マンティス', 'カマキリ'],
-    },
-    '強さ' => {
-      1 => ['スーパー／ウルトラ', '超'],
-      2 => ['ワンダー', '驚異的'],
-      3 => ['アルティメット', '究極の'],
-      4 => ['ファンタスティック', '途方もない'],
-      5 => ['マイティ', '強い'],
-      6 => ['インクレディブル', '凄い'],
-      7 => ['アメージング', '素晴らしい'],
-      8 => ['ワイルド', '狂乱の'],
-      9 => ['グレイテスト', '至高の'],
-      10 => ['マーベラス', '驚くべき'],
-    },
+    "部位" => HeroNameElementChart.new(
+      "部位",
+      [
+        {:element => "ハート", :mean => "心臓"},
+        {:element => "フェイス", :mean => "顔"},
+        {:element => "アーム", :mean => "腕"},
+        {:element => "ショルダー", :mean => "肩"},
+        {:element => "ヘッド", :mean => "頭"},
+        {:element => "アイ", :mean => "眼"},
+        {:element => "フィスト", :mean => "拳"},
+        {:element => "ハンド", :mean => "手"},
+        {:element => "クロウ", :mean => "爪"},
+        {:element => "ボーン", :mean => "骨"},
+      ]
+    ),
+    "武器" => HeroNameElementChart.new(
+      "武器",
+      [
+        {:element => "ナイヴス", :mean => "短剣"},
+        {:element => "ソード", :mean => "剣"},
+        {:element => "ハンマー", :mean => "鎚"},
+        {:element => "ガン", :mean => "銃"},
+        {:element => "スティール", :mean => "刃"},
+        {:element => "タスク", :mean => "牙"},
+        {:element => "ニューク", :mean => "核"},
+        {:element => "アロー", :mean => "矢"},
+        {:element => "ソウ", :mean => "ノコギリ"},
+        {:element => "レイザー", :mean => "剃刀"},
+      ]
+    ),
+    "色" => HeroNameElementChart.new(
+      "色",
+      [
+        {:element => "ブラック", :mean => "黒"},
+        {:element => "グリーン", :mean => "緑"},
+        {:element => "ブルー", :mean => "青"},
+        {:element => "イエロー", :mean => "黃"},
+        {:element => "レッド", :mean => "赤"},
+        {:element => "バイオレット", :mean => "紫"},
+        {:element => "シルバー", :mean => "銀"},
+        {:element => "ゴールド", :mean => "金"},
+        {:element => "ホワイト", :mean => "白"},
+        {:element => "クリア", :mean => "透明"},
+      ]
+    ),
+    "動物" => HeroNameElementChart.new(
+      "動物",
+      [
+        {:element => "バニー", :mean => "ウサギ"},
+        {:element => "タイガー", :mean => "虎"},
+        {:element => "シャーク", :mean => "鮫"},
+        {:element => "キャット", :mean => "猫"},
+        {:element => "コング", :mean => "ゴリラ"},
+        {:element => "ドッグ", :mean => "犬"},
+        {:element => "フォックス", :mean => "狐"},
+        {:element => "パンサー", :mean => "豹"},
+        {:element => "アス", :mean => "ロバ"},
+        {:element => "バット", :mean => "蝙蝠"},
+      ]
+    ),
+    "神話／夢" => HeroNameElementChart.new(
+      "神話／夢",
+      [
+        {:element => "アポカリプス", :mean => "黙示録"},
+        {:element => "ウォー", :mean => "戦争"},
+        {:element => "エターナル", :mean => "永遠"},
+        {:element => "エンジェル", :mean => "天使"},
+        {:element => "デビル", :mean => "悪魔"},
+        {:element => "イモータル", :mean => "死なない"},
+        {:element => "デス", :mean => "死神"},
+        {:element => "ドリーム", :mean => "夢"},
+        {:element => "ゴースト", :mean => "幽霊"},
+        {:element => "デッド", :mean => "死んでいる"},
+      ]
+    ),
+    "攻撃" => HeroNameElementChart.new(
+      "攻撃",
+      [
+        {:element => "ストローク", :mean => "一撃"},
+        {:element => "クラッシュ", :mean => "壊す"},
+        {:element => "ブロウ", :mean => "吹き飛ばす"},
+        {:element => "ヒット", :mean => "打つ"},
+        {:element => "パンチ", :mean => "殴る"},
+        {:element => "キック", :mean => "蹴る"},
+        {:element => "スラッシュ", :mean => "斬る"},
+        {:element => "ペネトレイト", :mean => "貫く"},
+        {:element => "ショット", :mean => "撃つ"},
+        {:element => "キル", :mean => "殺す"},
+      ]
+    ),
+    "その他" => HeroNameElementChart.new(
+      "その他",
+      [
+        {:element => "ヒューマン", :mean => "人間"},
+        {:element => "エージェント", :mean => "代理人"},
+        {:element => "ブースター", :mean => "泥棒"},
+        {:element => "アイアン", :mean => "鉄"},
+        {:element => "サンダー", :mean => "雷"},
+        {:element => "ウォッチャー", :mean => "監視者"},
+        {:element => "プール", :mean => "水たまり"},
+        {:element => "マシーン", :mean => "機械"},
+        {:element => "コールド", :mean => "冷たい"},
+        {:element => "サイド", :mean => "側面"},
+      ]
+    ),
+    "鳥" => HeroNameElementChart.new(
+      "鳥",
+      [
+        {:element => "ホーク", :mean => "鷹"},
+        {:element => "ファルコン", :mean => "隼"},
+        {:element => "キャナリー", :mean => "カナリア"},
+        {:element => "ロビン", :mean => "コマツグミ"},
+        {:element => "イーグル", :mean => "鷲"},
+        {:element => "オウル", :mean => "フクロウ"},
+        {:element => "レイブン", :mean => "ワタリガラス"},
+        {:element => "ダック", :mean => "アヒル"},
+        {:element => "ペンギン", :mean => "ペンギン"},
+        {:element => "フェニックス", :mean => "不死鳥"},
+      ]
+    ),
+    "光" => HeroNameElementChart.new(
+      "光",
+      [
+        {:element => "ライト", :mean => "光"},
+        {:element => "シャドウ", :mean => "影"},
+        {:element => "ファイアー", :mean => "炎"},
+        {:element => "ダーク", :mean => "暗い"},
+        {:element => "ナイト", :mean => "夜"},
+        {:element => "ファントム", :mean => "幻影"},
+        {:element => "トーチ", :mean => "灯火"},
+        {:element => "フラッシュ", :mean => "閃光"},
+        {:element => "ランタン", :mean => "手さげランプ"},
+        {:element => "サン", :mean => "太陽"},
+      ]
+    ),
+    "虫／爬虫類" => HeroNameElementChart.new(
+      "虫／爬虫類",
+      [
+        {:element => "ビートル", :mean => "甲虫"},
+        {:element => "バタフライ／モス", :mean => "蝶／蛾"},
+        {:element => "スネーク／コブラ", :mean => "蛇"},
+        {:element => "アリゲーター", :mean => "ワニ"},
+        {:element => "ローカスト", :mean => "バッタ"},
+        {:element => "リザード", :mean => "トカゲ"},
+        {:element => "タートル", :mean => "亀"},
+        {:element => "スパイダー", :mean => "蜘蛛"},
+        {:element => "アント", :mean => "アリ"},
+        {:element => "マンティス", :mean => "カマキリ"},
+      ]
+    ),
+    "強さ" => HeroNameElementChart.new(
+      "強さ",
+      [
+        {:element => "スーパー／ウルトラ", :mean => "超"},
+        {:element => "ワンダー", :mean => "驚異的"},
+        {:element => "アルティメット", :mean => "究極の"},
+        {:element => "ファンタスティック", :mean => "途方もない"},
+        {:element => "マイティ", :mean => "強い"},
+        {:element => "インクレディブル", :mean => "凄い"},
+        {:element => "アメージング", :mean => "素晴らしい"},
+        {:element => "ワイルド", :mean => "狂乱の"},
+        {:element => "グレイテスト", :mean => "至高の"},
+        {:element => "マーベラス", :mean => "驚くべき"},
+      ]
+    ),
   }.freeze
 end

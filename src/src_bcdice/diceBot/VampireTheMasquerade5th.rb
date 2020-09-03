@@ -6,14 +6,14 @@ class VampireTheMasquerade5th < DiceBot
   ID = 'VampireTheMasquerade5th'
 
   # ゲームシステム名
-  NAME = 'ヴァンパイア：ザ マスカレード 第５版'
+  NAME = 'Vampire: The Masquerade 5th Edition'
 
   # ゲームシステム名の読みがな
   SORT_KEY = 'うあんはいあさますかれえと5'
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<MESSAGETEXT
-・判定コマンド(nVTFx+x)
+・判定コマンド(nVMFx+x)
   注意：難易度は必要成功数を表す
 
   難易度指定：判定成功と失敗、Critical判定、
@@ -48,91 +48,91 @@ MESSAGETEXT
       return ''
     end
 
-    dicePool = m[DICE_POOL_INDEX]
-    diceText, successDice, tenDice, = makeDiceRoll(dicePool)
-    resultText = "(#{dicePool}D10"
+    dice_pool = m[DICE_POOL_INDEX]
+    dice_text, success_dice, ten_dice, = make_dice_roll(dice_pool)
+    result_text = "(#{dice_pool}D10"
 
-    hungerDicePool = m[HUNGER_DICE_INDEX]
-    if hungerDicePool
-      hungerDiceText, hungerSuccessDice, hungerTenDice, hungerBotchDice = makeDiceRoll(hungerDicePool)
+    hunger_dice_pool = m[HUNGER_DICE_INDEX]
+    if hunger_dice_pool
+      hunger_dice_text, hunger_success_dice, hunger_ten_dice, hunger_botch_dice = make_dice_roll(hunger_dice_pool)
 
-      tenDice += hungerTenDice
-      successDice += hungerSuccessDice
+      ten_dice += hunger_ten_dice
+      success_dice += hunger_success_dice
 
-      resultText = "#{resultText}+#{hungerDicePool}D10) ＞ [#{diceText}]+[#{hungerDiceText}] "
+      result_text = "#{result_text}+#{hunger_dice_pool}D10) ＞ [#{dice_text}]+[#{hunger_dice_text}] "
     else
-      hungerTenDice = 0
-      hungerBotchDice = 0
-      resultText = "#{resultText}) ＞ [#{diceText}] "
+      hunger_ten_dice = 0
+      hunger_botch_dice = 0
+      result_text = "#{result_text}) ＞ [#{dice_text}] "
     end
 
-    successDice += getCriticalSuccess(tenDice)
+    success_dice += get_critical_success(ten_dice)
 
     difficulty = m[DIFFICULTY_INDEX] ? m[DIFFICULTY_INDEX].to_i : NOT_CHECK_SUCCESS
 
-    resultText = "#{resultText} 成功数=#{successDice}"
+    result_text = "#{result_text} 成功数=#{success_dice}"
 
     if difficulty > 0
-      if successDice >= difficulty
-        judgmentResult = getSuccessResult(tenDice >= 2, hungerTenDice)
+      if success_dice >= difficulty
+        judgment_result = get_success_result(ten_dice >= 2, hunger_ten_dice)
       else
-        judgmentResult = getFailResult(hungerBotchDice)
+        judgment_result = get_fail_result(hunger_botch_dice)
       end
-      resultText = "#{resultText} 難易度=#{difficulty}#{judgmentResult}"
+      result_text = "#{result_text} 難易度=#{difficulty}#{judgment_result}"
     elsif difficulty < 0
-      if successDice == 0
-        judgmentResult = getFailResult(hungerBotchDice)
+      if success_dice == 0
+        judgment_result = get_fail_result(hunger_botch_dice)
       else
-        judgmentResult = ""
+        judgment_result = ""
       end
-      resultText = "#{resultText}#{judgmentResult}"
+      result_text = "#{result_text}#{judgment_result}"
     end
 
-    return resultText
+    return result_text
   end
 
-  def getCriticalSuccess(tenDice)
+  def get_critical_success(ten_dice)
     # 10の目が2個毎に追加2成功
-    return ((tenDice / 2).floor * 2) # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
+    return ((ten_dice / 2).floor * 2) # TKfix Rubyでは常に整数が返るが、JSだと実数になる可能性がある
   end
 
-  def makeDiceRoll(dicePool)
-    _, diceText, = roll(dicePool, 10)
-    successDice = 0
-    tenDice = 0
-    botchDice = 0
+  def make_dice_roll(dice_pool)
+    _, dice_text, = roll(dice_pool, 10)
+    success_dice = 0
+    ten_dice = 0
+    botch_dice = 0
 
-    diceText.split(',').each do |takeDice|
-      if takeDice.to_i >= 6
-        successDice += 1
-        if takeDice == "10"
-          tenDice += 1
+    dice_text.split(',').each do |take_dice|
+      if take_dice.to_i >= 6
+        success_dice += 1
+        if take_dice == "10"
+          ten_dice += 1
         end
-      elsif takeDice == "1"
-        botchDice += 1
+      elsif take_dice == "1"
+        botch_dice += 1
       end
     end
 
-    return diceText, successDice, tenDice, botchDice
+    return dice_text, success_dice, ten_dice, botch_dice
   end
 
-  def getSuccessResult(isCritical, hungerTenDice)
-    judgmentResult = "：判定成功!"
-    if hungerTenDice > 0 && isCritical
-      return "#{judgmentResult} [Messy Critical]"
-    elsif isCritical
-      return "#{judgmentResult} [Critical Win]"
+  def get_success_result(is_critical, hunger_ten_dice)
+    judgment_result = "：判定成功!"
+    if hunger_ten_dice > 0 && is_critical
+      return "#{judgment_result} [Messy Critical]"
+    elsif is_critical
+      return "#{judgment_result} [Critical Win]"
     end
 
-    return judgmentResult
+    return judgment_result
   end
 
-  def getFailResult(hungerBotchDice)
-    judgmentResult = "：判定失敗!"
-    if hungerBotchDice > 0
-      return "#{judgmentResult} [Bestial Failure]"
+  def get_fail_result(hunger_botch_dice)
+    judgment_result = "：判定失敗!"
+    if hunger_botch_dice > 0
+      return "#{judgment_result} [Bestial Failure]"
     end
 
-    return judgmentResult
+    return judgment_result
   end
 end

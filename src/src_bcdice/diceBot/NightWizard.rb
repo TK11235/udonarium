@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 require "utils/normalize"
+require "utils/format"
+require "utils/command_parser"
 
 class NightWizard < DiceBot
   # ゲームシステムの識別子
@@ -15,166 +17,211 @@ class NightWizard < DiceBot
 
   # ダイスボットの使い方
   HELP_MESSAGE = <<INFO_MESSAGE_TEXT
-・判定用コマンド　(nNW+m@x#y)
-　"(基本値)NW(常時および常時に準じる特技等及び状態異常（省略可）)@(クリティカル値)#(ファンブル値)（常時以外の特技等及び味方の支援効果等の影響（省略可））"でロールします。
-　Rコマンド(2R6m[n,m]c[x]f[y]>=t tは目標値)に読替されます。
+・判定用コマンド　(aNW+b@x#y$z+c)
+　　a : 基本値
+　　b : 常時に準じる特技による補正
+　　c : 常時以外の特技、および支援効果による補正（ファンブル時には適用されない）
+　　x : クリティカル値のカンマ区切り（省略時 10）
+　　y : ファンブル値のカンマ区切り（省略時 5）
+　　z : プラーナによる達成値補正のプラーナ消費数（ファンブル時には適用されない）
 　クリティカル値、ファンブル値が無い場合は1や13などのあり得ない数値を入れてください。
-　例）12NW-5@7#2　　1NW　　50nw+5@7,10#2,5　50nw-5+10@7,10#2,5+15+25
+　例）12NW-5@7#2$3 1NW 50nw+5@7,10#2,5 50nw-5+10@7,10#2,5+15+25
 INFO_MESSAGE_TEXT
 
-  setPrefixes(['\d+NW'])
+  setPrefixes(['([-+]?\d+)?NW.*', '2R6.*'])
 
   def initialize
     super
     @sendMode = 2
+    @nw_command = "NW"
   end
 
-  def changeText(string)
-    return string unless string =~ /NW/i
-
-    string = string.gsub(/([\-\d]+)NW([\+\-\d]*)@([,\d]+)#([,\d]+)([\+\-\d]*)/i) do
-      modify = Regexp.last_match(5).empty? ? "" : ",#{Regexp.last_match(5)}"
-      "2R6m[#{Regexp.last_match(1)}#{Regexp.last_match(2)}#{modify}]c[#{Regexp.last_match(3)}]f[#{Regexp.last_match(4)}]"
+  # @return [String, nil]
+  def rollDiceCommand(string)
+    cmd = parse_nw(string) || parse_2r6(string)
+    unless cmd
+      return nil
     end
 
-    string = string.gsub(/([\-\d]+)NW([\+\-\d]*)/i) { "2R6m[#{Regexp.last_match(1)}#{Regexp.last_match(2)}]" }
-    string = string.gsub(/NW([\+\-\d]*)/i) { "2R6m[0#{Regexp.last_match(1)}]" }
+    total, interim_expr, status = roll_nw(cmd)
+    result =
+      if cmd.cmp_op
+        total.send(cmd.cmp_op, cmd.target_number) ? "成功" : "失敗"
+      end
+
+    sequence = [
+      "(#{cmd})",
+      interim_expr,
+      status,
+      total.to_s,
+      result,
+    ].compact
+    return sequence.join(" ＞ ")
   end
 
-  def dice_command_xRn(string, nick_e)
-    return checkRoll(string, nick_e)
+  private
+
+  class Parsed
+    # @return [Array<Integer>] クリティカルになる出目の一覧
+    attr_accessor :critical_numbers
+
+    # @return [Array<Integer>] ファンブルになる出目の一覧
+    attr_accessor :fumble_numbers
+
+    # @return [Integer, nil] プラーナによる補正
+    attr_accessor :prana
+
+    # @return [Integer] ファンブルでない時に適用される修正値
+    attr_accessor :active_modify_number
+
+    # @return [Symbol, nil] 比較演算子
+    attr_accessor :cmp_op
+
+    # @return [Integer, nil] 目標値
+    attr_accessor :target_number
   end
 
-  def checkRoll(string, nick_e)
-    debug('checkRoll string', string)
+  class ParsedNW < Parsed
+    # @return [Integer] 判定の基礎値
+    attr_accessor :base
 
-    output = '1'
+    # @return [Integer] 修正値
+    attr_accessor :modify_number
 
-    num = '[,\d\+\-]+'
-    return output unless /(^|\s)S?(2R6m\[(#{num})\](c\[(#{num})\])?(f\[(#{num})\])?(([>=]+)(\d+))?)(\s|$)/i =~ string
-
-    debug('is valid string')
-
-    string = Regexp.last_match(2)
-    base_and_modify = Regexp.last_match(3)
-    criticalText = Regexp.last_match(4)
-    criticalValue = Regexp.last_match(5)
-    fumbleText = Regexp.last_match(6)
-    fumbleValue = Regexp.last_match(7)
-    judgeText = Regexp.last_match(8)
-    judgeOperator = Regexp.last_match(9)
-    judgeValue = Regexp.last_match(10).to_i
-
-    crit = "0"
-    fumble = "0"
-    cmp_op = nil
-    diff = 0
-
-    if criticalText
-      crit = criticalValue
+    def initialize(command)
+      @command = command
     end
 
-    if fumbleText
-      fumble = fumbleValue
-    end
-    if judgeText
-      diff = judgeValue
-      debug('judgeOperator', judgeOperator)
-      cmp_op = Normalize.comparison_operator(judgeOperator)
+    # 常に適用される修正値を返す
+    #
+    # @return [Integer]
+    def passive_modify_number
+      @base + @modify_number
     end
 
-    base, modify = base_and_modify.split(/,/)
-    base = parren_killer("(0#{base})").to_i
-    modify = parren_killer("(0#{modify})").to_i
-    debug("base_and_modify, base, modify", base_and_modify, base, modify)
+    # @return [String]
+    def to_s
+      base = @base.zero? ? nil : @base
+      modify_number = Format.modifier(@modify_number)
+      active_modify_number = Format.modifier(@active_modify_number)
+      dollar = @prana && "$#{@prana}"
 
-    total, out_str = nw_dice(base, modify, crit, fumble)
-
-    output = "#{nick_e}: (#{string}) ＞ #{out_str}"
-    if cmp_op
-      output += check_nDx(total, cmp_op, diff)
+      return "#{base}#{@command}#{modify_number}@#{@critical_numbers.join(',')}##{@fumble_numbers.join(',')}#{dollar}#{active_modify_number}#{@cmp_op}#{@target_number}"
     end
-
-    return output
   end
 
-  def getValueText(text)
-    value = text.to_i
-    return value.to_s if value < 0
+  class Parsed2R6 < Parsed
+    # @return [Integer] 常に適用される修正値
+    attr_accessor :passive_modify_number
 
-    return "+#{value}"
+    # @return [String]
+    def to_s
+      "2R6M[#{@passive_modify_number},#{@active_modify_number}]C[#{@critical_numbers.join(',')}]F[#{@fumble_numbers.join(',')}]#{@cmp_op}#{@target_number}"
+    end
   end
 
-  def nw_dice(base, modify, criticalText, fumbleText)
-    debug("nw_dice : base, modify, criticalText, fumbleText", base, modify, criticalText, fumbleText)
+  # @return [ParsedNW, nil]
+  def parse_nw(string)
+    m = /^([-+]?\d+)?#{@nw_command}((?:[-+]\d+)+)?(?:@(\d+(?:,\d+)*))?(?:#(\d+(?:,\d+)*))?(?:\$(\d+(?:,\d+)*))?((?:[-+]\d+)+)?(?:([>=]+)(\d+))?$/.match(string)
+    unless m
+      return nil
+    end
 
-    @criticalValues = getValuesFromText(criticalText, [10])
-    @fumbleValues = getValuesFromText(fumbleText, [5])
-    total = 0
-    output = ""
+    ae = ArithmeticEvaluator.new
 
-    debug('@criticalValues', @criticalValues)
-    debug('@fumbleValues', @fumbleValues)
+    command = ParsedNW.new(@nw_command)
+    command.base = m[1].to_i
+    command.modify_number = m[2] ? ae.eval(m[2]) : 0
+    command.critical_numbers = m[3] ? m[3].split(',').map(&:to_i) : [10]
+    command.fumble_numbers = m[4] ? m[4].split(',').map(&:to_i) : [5]
+    command.prana = m[5] && m[5].to_i
+    command.active_modify_number = m[6] ? ae.eval(m[6]) : 0
+    command.cmp_op = Normalize.comparison_operator(m[7])
+    command.target_number = m[8] && m[8].to_i
 
-    dice_n, dice_str, = roll(2, 6, 0)
+    return command
+  end
 
-    total = 0
+  # @return [Parsed2R6, nil]
+  def parse_2r6(string)
+    m = /^2R6m\[([-+]?\d+(?:[-+]\d+)*)(?:,([-+]?\d+(?:[-+]\d+)*))?\](?:c\[(\d+(?:,\d+)*)\])?(?:f\[(\d+(?:,\d+)*)\])?(?:([>=]+)(\d+))?/i.match(string)
+    unless m
+      return nil
+    end
 
-    if @fumbleValues.include?(dice_n)
-      fumble_text, total = getFumbleTextAndTotal(base, modify, dice_str)
-      output = "#{fumble_text} ＞ ファンブル ＞ #{total}"
+    ae = ArithmeticEvaluator.new
+
+    command = Parsed2R6.new
+    command.passive_modify_number = ae.eval(m[1])
+    command.active_modify_number = m[2] ? ae.eval(m[2]) : 0
+    command.critical_numbers = m[3] ? m[3].split(',').map(&:to_i) : [10]
+    command.fumble_numbers = m[4] ? m[4].split(',').map(&:to_i) : [5]
+    command.cmp_op = Normalize.comparison_operator(m[5])
+    command.target_number = m[6] && m[6].to_i
+
+    return command
+  end
+
+  def roll_nw(parsed)
+    @critical_numbers = parsed.critical_numbers
+    @fumble_numbers = parsed.fumble_numbers
+
+    @total = 0
+    @interim_expr = ""
+    @status = nil
+
+    status = roll_once_first()
+    while status == :critical
+      status = roll_once()
+    end
+
+    if status != :fumble && parsed.prana
+      prana_bonus, prana_list = roll(parsed.prana, 6)
+      @total += prana_bonus
+      @interim_expr += "+#{prana_bonus}[#{prana_list}]"
+    end
+
+    base =
+      if status == :fumble
+        fumble_base_number(parsed)
+      else
+        parsed.passive_modify_number + parsed.active_modify_number
+      end
+
+    @total += base
+    @interim_expr = base.to_s + @interim_expr
+
+    return @total, @interim_expr, @status
+  end
+
+  # @return [Symbol, nil]
+  def roll_once(fumbleable = false)
+    dice_value, dice_str = roll(2, 6)
+
+    if fumbleable && @fumble_numbers.include?(dice_value)
+      @total -= 10
+      @interim_expr += "-10[#{dice_str}]"
+      @status = "ファンブル"
+      return :fumble
+    elsif @critical_numbers.include?(dice_value)
+      @total += 10
+      @interim_expr += "+10[#{dice_str}]"
+      @status = "クリティカル"
+      return :critical
     else
-      total = base + modify
-      total, output = checkCritical(total, dice_str, dice_n)
+      @total += dice_value
+      @interim_expr += "+#{dice_value}[#{dice_str}]"
+      return nil
     end
-
-    return total, output
   end
 
-  def getFumbleTextAndTotal(base, _modify, dice_str)
-    total = base
-    total += -10
-    text = "#{base}-10[#{dice_str}]"
-    return text, total
+  # @return [Symbol, nil]
+  def roll_once_first
+    roll_once(true)
   end
 
-  def setCriticalValues(text)
-    @criticalValues = getValuesFromText(text, [10])
-  end
-
-  def getValuesFromText(text, default)
-    if  text == "0"
-      return default
-    end
-
-    return text.split(/,/).collect { |i| i.to_i }
-  end
-
-  def checkCritical(total, dice_str, dice_n)
-    debug("addRollWhenCritical begin total, dice_str", total, dice_str)
-    output = total.to_s
-
-    criticalText = ""
-    criticalValue = getCriticalValue(dice_n)
-
-    while criticalValue
-      total += 10
-      output += "+10[#{dice_str}]"
-
-      criticalText = "＞ クリティカル "
-      dice_n, dice_str, = roll(2, 6, 0)
-
-      criticalValue = getCriticalValue(dice_n)
-      debug("criticalValue", criticalValue)
-    end
-
-    total += dice_n
-    output += "+#{dice_n}[#{dice_str}] #{criticalText}＞ #{total}"
-
-    return total, output
-  end
-
-  def getCriticalValue(dice_n)
-    return @criticalValues.include?(dice_n)
+  # @return [Integer]
+  def fumble_base_number(parsed)
+    parsed.passive_modify_number
   end
 end

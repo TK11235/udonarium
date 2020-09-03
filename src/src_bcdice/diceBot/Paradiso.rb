@@ -111,11 +111,14 @@ MESSAGETEXT
     biggun = [0, 0, 0]
 
     case command
-    when /^DC(\d+)(\[(\d+)(,(\d+))?(,(\d+))?\])?$/i
+    when /^DC(\d+)(\[(\d+)(,(\d+))?(,(\d+))?(,(\d+))?(,(\d+))?(,(\d+))?\])?$/i
       attack = (Regexp.last_match(1) || 1).to_i # ダイス数。省略時は1
       biggun[0] = (Regexp.last_match(3) || 0).to_i # コダワリ機銃、省略時は0
-      biggun[1] = (Regexp.last_match(5) || 0).to_i # コダワリ機銃、省略時は0
-      biggun[2] = (Regexp.last_match(7) || 0).to_i # コダワリ機銃、省略時は0
+      biggun[1] = (Regexp.last_match(5) || 0).to_i
+      biggun[2] = (Regexp.last_match(7) || 0).to_i
+      biggun[3] = (Regexp.last_match(9) || 0).to_i
+      biggun[4] = (Regexp.last_match(11) || 0).to_i
+      biggun[5] = (Regexp.last_match(13) || 0).to_i
     else return nil
     end
 
