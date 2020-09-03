@@ -197,6 +197,7 @@ export class DiceBot extends GameObject {
     { script: 'Cthulhu_ChineseTraditional', game: '克蘇魯神話' },
     { script: 'KillDeathBusiness_Korean', game: 'Kill Death Business (한국어)' },
     { script: 'Nechronica_Korean', game: '네크로니카' },
+    { script: 'DoubleCross_Korean', game: '더블크로스2nd,3rd' },
     { script: 'DetatokoSaga_Korean', game: '데타토코 사가' },
     { script: 'FutariSousa_Korean', game: '둘이서 수사(후타리소우사)' },
     { script: 'Dracurouge_Korean', game: '드라크루주' },
