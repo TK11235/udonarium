@@ -23,18 +23,18 @@ Opal.modules["diceBot/Cthulhu7th"] = function(Opal) {
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $send = Opal.send, $range = Opal.range, $truthy = Opal.truthy, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$roll_bmr_table', '$roll_bms_table', '$roll_1d8_table', '$roll_1d100_table', '$private', '$roll', '$-', '$[]', '$match', '$to_i', '$nil?', '$<=', '$==', '$include?', '$min', '$max', '$rollPercentD10', '$getTotalLists', '$getTotal', '$+', '$join', '$getCheckResultText', '$abs', '$times', '$roll_tens_d10', '$bcdice', '$push', '$>=', '$/', '$<', '$=~', '$last_match', '$debug', '$downcase', '$to_s', '$floor', '$>', '$!', '$rollFullAuto', '$each', '$getNextDifficultyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]=', '$shouldStopRollFullAuto?', '$freeze', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$isLastBulletTurn', '$ceil', '$getLastHitBulletCount']);
+  Opal.add_stubs(['$setPrefixes', '$===', '$getCheckResult', '$getCombineRoll', '$getFullAutoResult', '$roll_bmr_table', '$roll_bms_table', '$roll_1d8_table', '$roll_1d100_table', '$private', '$roll', '$-', '$[]', '$match', '$to_i', '$nil?', '$<=', '$==', '$include?', '$min', '$max', '$roll_with_bonus', '$+', '$join', '$getCheckResultText', '$new', '$abs', '$roll_tens_d10', '$bcdice', '$roll_ones_d10', '$map', '$>=', '$/', '$<', '$=~', '$last_match', '$debug', '$downcase', '$to_s', '$floor', '$>', '$!', '$rollFullAuto', '$each', '$getNextDifficultyMessage', '$getHitResultInfos', '$getHitResultText', '$getHitType', '$getBulletResults', '$[]=', '$shouldStopRollFullAuto?', '$freeze', '$getFumbleable', '$getSuccessListImpaleBulletList', '$getSetOfBullet', '$getHitBulletCountBase', '$to_f', '$isLastBulletTurn', '$ceil', '$getLastHitBulletCount']);
   return (function($base, $super, $parent_nesting) {
     var self = $klass($base, $super, 'Cthulhu7th');
 
-    var $nesting = [self].concat($parent_nesting), $Cthulhu7th_initialize$1, $Cthulhu7th_rollDiceCommand$2, $Cthulhu7th_roll_1d8_table$3, $Cthulhu7th_roll_1d100_table$4, $Cthulhu7th_getCheckResult$5, $Cthulhu7th_rollPercentD10$6, $Cthulhu7th_getTotalLists$7, $Cthulhu7th_getTotal$9, $Cthulhu7th_getCheckResultText$10, $Cthulhu7th_getCombineRoll$11, $Cthulhu7th_getFullAutoResult$12, $Cthulhu7th_rollFullAuto$13, $Cthulhu7th_shouldStopRollFullAuto$ques$15, $Cthulhu7th_getHitResultInfos$16, $Cthulhu7th_getHitResultText$17, $Cthulhu7th_getHitType$18, $Cthulhu7th_getBulletResults$19, $Cthulhu7th_getSuccessListImpaleBulletList$20, $Cthulhu7th_getNextDifficultyMessage$21, $Cthulhu7th_getSetOfBullet$22, $Cthulhu7th_getHitBulletCountBase$23, $Cthulhu7th_isLastBulletTurn$24, $Cthulhu7th_getLastHitBulletCount$25, $Cthulhu7th_getFumbleable$26, $Cthulhu7th_roll_bmr_table$27, $Cthulhu7th_roll_bms_table$28;
+    var $nesting = [self].concat($parent_nesting), $Cthulhu7th_initialize$1, $Cthulhu7th_rollDiceCommand$2, $Cthulhu7th_roll_1d8_table$3, $Cthulhu7th_roll_1d100_table$4, $Cthulhu7th_getCheckResult$5, $Cthulhu7th_roll_ones_d10$6, $Cthulhu7th_roll_with_bonus$7, $Cthulhu7th_getCheckResultText$10, $Cthulhu7th_getCombineRoll$11, $Cthulhu7th_getFullAutoResult$12, $Cthulhu7th_rollFullAuto$13, $Cthulhu7th_shouldStopRollFullAuto$ques$15, $Cthulhu7th_getHitResultInfos$16, $Cthulhu7th_getHitResultText$17, $Cthulhu7th_getHitType$18, $Cthulhu7th_getBulletResults$19, $Cthulhu7th_getSuccessListImpaleBulletList$20, $Cthulhu7th_getNextDifficultyMessage$21, $Cthulhu7th_getSetOfBullet$22, $Cthulhu7th_getHitBulletCountBase$23, $Cthulhu7th_isLastBulletTurn$24, $Cthulhu7th_getLastHitBulletCount$25, $Cthulhu7th_getFumbleable$26, $Cthulhu7th_roll_bmr_table$27, $Cthulhu7th_roll_bms_table$28;
 
     self.$$prototype.bonus_dice_range = nil;
     
     Opal.const_set($nesting[0], 'ID', "Cthulhu7th");
     Opal.const_set($nesting[0], 'NAME', "新クトゥルフ神話TRPG");
     Opal.const_set($nesting[0], 'SORT_KEY', "しんくとうるふしんわTRPG");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "※コマンドは入力内容の前方一致で検出しています。\n" + "・判定　CC(x)<=（目標値）\n" + "　x：ボーナス・ペナルティダイス (2～－2)。省略可。\n" + "　目標値が無くても1D100は表示される。\n" + "　ファンブル／失敗／　レギュラー成功／ハード成功／\n" + "　イクストリーム成功／クリティカル を自動判定。\n" + "例）CC<=30　CC(2)<=50　CC(-1)<=75 CC-1<=50 CC1<=65 CC\n" + "\n" + "・組み合わせ判定　(CBR(x,y))\n" + "　目標値 x と y で％ロールを行い、成否を判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・自動火器の射撃判定　FAR(w,x,y,z,d,v)\n" + "　w：弾丸の数(1～100）、x：技能値（1～100）、y：故障ナンバー、\n" + "　z：ボーナス・ペナルティダイス(-2～2)。省略可。\n" + "　d：指定難易度で連射を終える（レギュラー：r,ハード：h,イクストリーム：e）。省略可。\n" + "　v：ボレーの弾丸の数を変更する。省略可。\n" + "　命中数と貫通数、残弾数のみ算出。ダメージ算出はありません。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)　far(30,70,99,1,R)\n" + "　　far(25,88,96,2,h,5)　FaR(40,77,100,,e,4)　fAr(20,47,100,,,3)\n" + "\n" + "・各種表\n" + "　【狂気関連】\n" + "　・狂気の発作（リアルタイム）（Bouts of Madness Real Time）　BMR\n" + "　・狂気の発作（サマリー）（Bouts of Madness Summary）　BMS\n" + "　・恐怖症（Sample Phobias）表　PH／マニア（Sample Manias）表　MA\n" + "　【魔術関連】\n" + "　・プッシュ時のキャスティング・ロール（Casting Roll）の失敗表\n" + "　　強力でない呪文の場合　FCL／強力な呪文の場合　FCM\n");
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "※コマンドは入力内容の前方一致で検出しています。\n" + "・判定　CC(x)<=（目標値）\n" + "　x：ボーナス・ペナルティダイス (2～－2)。省略可。\n" + "　目標値が無くても1D100は表示される。\n" + "　ファンブル／失敗／　レギュラー成功／ハード成功／\n" + "　イクストリーム成功／クリティカル を自動判定。\n" + "例）CC<=30　CC(2)<=50 CC(+2)<=50 CC(-1)<=75 CC-1<=50 CC1<=65 CC+1<=65 CC\n" + "\n" + "・組み合わせ判定　(CBR(x,y))\n" + "　目標値 x と y で％ロールを行い、成否を判定。\n" + "　例）CBR(50,20)\n" + "\n" + "・自動火器の射撃判定　FAR(w,x,y,z,d,v)\n" + "　w：弾丸の数(1～100）、x：技能値（1～100）、y：故障ナンバー、\n" + "　z：ボーナス・ペナルティダイス(-2～2)。省略可。\n" + "　d：指定難易度で連射を終える（レギュラー：r,ハード：h,イクストリーム：e）。省略可。\n" + "　v：ボレーの弾丸の数を変更する。省略可。\n" + "　命中数と貫通数、残弾数のみ算出。ダメージ算出はありません。\n" + "例）FAR(25,70,98)　FAR(50,80,98,-1)　far(30,70,99,1,R)\n" + "　　far(25,88,96,2,h,5)　FaR(40,77,100,,e,4)　fAr(20,47,100,,,3)\n" + "\n" + "・各種表\n" + "　【狂気関連】\n" + "　・狂気の発作（リアルタイム）（Bouts of Madness Real Time）　BMR\n" + "　・狂気の発作（サマリー）（Bouts of Madness Summary）　BMS\n" + "　・恐怖症（Sample Phobias）表　PH／マニア（Sample Manias）表　MA\n" + "　【魔術関連】\n" + "　・プッシュ時のキャスティング・ロール（Casting Roll）の失敗表\n" + "　　強力でない呪文の場合　FCL／強力な呪文の場合　FCM\n");
     self.$setPrefixes(["CC\\(\\d+\\)", "CC.*", "CBR\\(\\d+,\\d+\\)", "FAR.*", "BMR", "BMS", "FCL", "FCM", "PH", "MA"]);
     
     Opal.def(self, '$initialize', $Cthulhu7th_initialize$1 = function $$initialize() {
@@ -88,10 +88,10 @@ Opal.modules["diceBot/Cthulhu7th"] = function(Opal) {
     }, $Cthulhu7th_roll_1d100_table$4.$$arity = 2);
     
     Opal.def(self, '$getCheckResult', $Cthulhu7th_getCheckResult$5 = function $$getCheckResult(command) {
-      var $a, $b, self = this, m = nil, bonus_dice_count = nil, diff = nil, without_compare = nil, dice = nil, units_digit = nil, total_list = nil, total = nil, output = nil, result_text = nil;
+      var $a, $b, self = this, m = nil, bonus_dice_count = nil, diff = nil, without_compare = nil, dice = nil, total = nil, total_list = nil, output = nil, result_text = nil;
 
       
-      m = /^CC([-\d]+)?(<=(\d+))?/i.$match(command);
+      m = /^CC([-+]?\d+)?(<=(\d+))?/i.$match(command);
       if ($truthy(m)) {
       } else {
         return nil
@@ -107,9 +107,7 @@ Opal.modules["diceBot/Cthulhu7th"] = function(Opal) {
       } else {
         return "" + "エラー。ボーナス・ペナルティダイスの値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
       };
-      units_digit = self.$rollPercentD10();
-      total_list = self.$getTotalLists(bonus_dice_count, units_digit);
-      total = self.$getTotal(total_list, bonus_dice_count);
+      $b = self.$roll_with_bonus(bonus_dice_count), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (total_list = ($a[1] == null ? nil : $a[1])), $b;
       if ($truthy(without_compare)) {
         
         output = "" + "(1D100) ボーナス・ペナルティダイス[" + (bonus_dice_count) + "]";
@@ -123,41 +121,44 @@ Opal.modules["diceBot/Cthulhu7th"] = function(Opal) {
       return output;
     }, $Cthulhu7th_getCheckResult$5.$$arity = 1);
     
-    Opal.def(self, '$rollPercentD10', $Cthulhu7th_rollPercentD10$6 = function $$rollPercentD10() {
+    Opal.def(self, '$roll_ones_d10', $Cthulhu7th_roll_ones_d10$6 = function $$roll_ones_d10() {
       var $a, $b, self = this, dice = nil;
 
       
       $b = self.$roll(1, 10), $a = Opal.to_ary($b), (dice = ($a[0] == null ? nil : $a[0])), $b;
       if (dice['$=='](10)) {
-        dice = 0};
+        return 0};
       return dice;
-    }, $Cthulhu7th_rollPercentD10$6.$$arity = 0);
+    }, $Cthulhu7th_roll_ones_d10$6.$$arity = 0);
     
-    Opal.def(self, '$getTotalLists', $Cthulhu7th_getTotalLists$7 = function $$getTotalLists(bonus_dice_count, units_digit) {
-      var $$8, self = this, total_list = nil, tens_digit_count = nil;
+    Opal.def(self, '$roll_with_bonus', $Cthulhu7th_roll_with_bonus$7 = function $$roll_with_bonus(bonus) {
+      var $$8, $$9, self = this, tens_list = nil, ones = nil, dice_list = nil, dice = nil;
 
       
-      total_list = [];
-      tens_digit_count = $rb_plus(1, bonus_dice_count.$abs());
-      $send(tens_digit_count, 'times', [], ($$8 = function(){var self = $$8.$$s || this, bonus = nil, total = nil;
+      tens_list = $send($$($nesting, 'Array'), 'new', [$rb_plus(bonus.$abs(), 1)], ($$8 = function(){var self = $$8.$$s || this;
+
+      return self.$bcdice().$roll_tens_d10()}, $$8.$$s = self, $$8.$$arity = 0, $$8));
+      ones = self.$roll_ones_d10();
+      dice_list = $send(tens_list, 'map', [], ($$9 = function(tens){var self = $$9.$$s || this, dice = nil;
 
       
-        bonus = self.$bcdice().$roll_tens_d10();
-        total = $rb_plus(bonus, units_digit);
-        if (total['$=='](0)) {
-          total = 100};
-        return total_list.$push(total);}, $$8.$$s = self, $$8.$$arity = 0, $$8));
-      return total_list;
-    }, $Cthulhu7th_getTotalLists$7.$$arity = 2);
-    
-    Opal.def(self, '$getTotal', $Cthulhu7th_getTotal$9 = function $$getTotal(total_list, bonus_dice_count) {
-      var self = this;
-
-      
-      if ($truthy($rb_ge(bonus_dice_count, 0))) {
-        return total_list.$min()};
-      return total_list.$max();
-    }, $Cthulhu7th_getTotal$9.$$arity = 2);
+        
+        if (tens == null) {
+          tens = nil;
+        };
+        dice = $rb_plus(tens, ones);
+        if (dice['$=='](0)) {
+          return 100
+        } else {
+          return dice
+        };}, $$9.$$s = self, $$9.$$arity = 1, $$9));
+      dice = (function() {if ($truthy($rb_ge(bonus, 0))) {
+        return dice_list.$min()
+      } else {
+        return dice_list.$max()
+      }; return nil; })();
+      return [dice, dice_list];
+    }, $Cthulhu7th_roll_with_bonus$7.$$arity = 1);
     
     Opal.def(self, '$getCheckResultText', $Cthulhu7th_getCheckResultText$10 = function $$getCheckResultText(total, diff, fumbleable) {
       var self = this, fumble_text = nil;
@@ -235,7 +236,7 @@ Opal.modules["diceBot/Cthulhu7th"] = function(Opal) {
       bullet_count_limit = 100;
       if ($truthy($rb_gt(bullet_count, bullet_count_limit))) {
         
-        output = $rb_plus(output, "" + "\n弾薬が多すぎます。装填された弾薬を" + (bullet_count_limit) + "発に変更します。\n");
+        output = $rb_plus(output, "" + "弾薬が多すぎます。装填された弾薬を" + (bullet_count_limit) + "発に変更します。\n");
         bullet_count = bullet_count_limit;};
       if ($truthy(($truthy($a = ($truthy($b = $rb_gt(bullet_set_count_cap, $rb_divide(diff, 10).$floor())) ? $rb_gt(diff, 39) : $b)) ? $$($nesting, 'Regexp').$last_match(6)['$nil?']()['$!']() : $a))) {
         
@@ -257,11 +258,11 @@ Opal.modules["diceBot/Cthulhu7th"] = function(Opal) {
         return "目標値は正の数です。"};
       if ($truthy($rb_lt(broken_number, 0))) {
         
-        output = $rb_plus(output, "\n故障ナンバーは正の数です。マイナス記号を外します。\n");
+        output = $rb_plus(output, "故障ナンバーは正の数です。マイナス記号を外します。\n");
         broken_number = broken_number.$abs();};
       if ($truthy(self.bonus_dice_range['$include?'](bonus_dice_count))) {
       } else {
-        return "" + "\nエラー。ボーナス・ペナルティダイスの値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
+        return "" + "エラー。ボーナス・ペナルティダイスの値は" + (self.bonus_dice_range.$min()) + "～" + (self.bonus_dice_range.$max()) + "です。"
       };
       output = $rb_plus(output, "" + "ボーナス・ペナルティダイス[" + (bonus_dice_count) + "]");
       output = $rb_plus(output, self.$rollFullAuto(bullet_count, diff, broken_number, bonus_dice_count, stop_count, bullet_set_count_cap));
@@ -334,12 +335,10 @@ Opal.modules["diceBot/Cthulhu7th"] = function(Opal) {
     }, $Cthulhu7th_shouldStopRollFullAuto$ques$15.$$arity = 2);
     
     Opal.def(self, '$getHitResultInfos', $Cthulhu7th_getHitResultInfos$16 = function $$getHitResultInfos(dice_num, diff, more_difficulty) {
-      var self = this, units_digit = nil, total_list = nil, total = nil, fumbleable = nil, hit_result = nil;
+      var $a, $b, self = this, total = nil, total_list = nil, fumbleable = nil, hit_result = nil;
 
       
-      units_digit = self.$rollPercentD10();
-      total_list = self.$getTotalLists(dice_num, units_digit);
-      total = self.$getTotal(total_list, dice_num);
+      $b = self.$roll_with_bonus(dice_num), $a = Opal.to_ary($b), (total = ($a[0] == null ? nil : $a[0])), (total_list = ($a[1] == null ? nil : $a[1])), $b;
       fumbleable = self.$getFumbleable(more_difficulty);
       hit_result = self.$getCheckResultText(total, diff, fumbleable);
       return [hit_result, total, total_list];

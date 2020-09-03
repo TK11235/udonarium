@@ -31,21 +31,18 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
   function $rb_plus(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
   }
-  function $rb_lt(lhs, rhs) {
-    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs < rhs : lhs['$<'](rhs);
+  function $rb_le(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
   function $rb_gt(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs > rhs : lhs['$>'](rhs);
-  }
-  function $rb_le(lhs, rhs) {
-    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs <= rhs : lhs['$<='](rhs);
   }
   function $rb_ge(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
   }
   var self = Opal.top, $nesting = [], nil = Opal.nil, $$$ = Opal.const_get_qualified, $$ = Opal.const_get_relative, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $truthy = Opal.truthy, $send = Opal.send;
 
-  Opal.add_stubs(['$require', '$include', '$setPrefixes', '$debug', '$===', '$last_match', '$to_i', '$[]', '$checkRoll', '$+', '$empty?', '$getValue', '$<', '$>', '$format_modifier', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$==', '$!=', '$getSuccessResultText', '$<=', '$to_s', '$>=', '$each']);
+  Opal.add_stubs(['$require', '$include', '$setPrefixes', '$debug', '$===', '$last_match', '$to_i', '$[]', '$checkRoll', '$+', '$empty?', '$getValue', '$<=', '$>', '$format_modifier', '$roll', '$sort', '$collect', '$split', '$join', '$getRollResultString', '$getSuccessInfo', '$==', '$!=', '$getSuccessResultText', '$to_s', '$>=', '$each']);
   
   self.$require("utils/modifier_formatter");
   return (function($base, $super, $parent_nesting) {
@@ -58,8 +55,8 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
     Opal.const_set($nesting[0], 'ID', "CodeLayerd");
     Opal.const_set($nesting[0], 'NAME', "コード：レイヤード");
     Opal.const_set($nesting[0], 'SORT_KEY', "こおとれいやあと");
-    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定（nCL@m[c]+x または nCL+x@m[c]） クリティカル・ファンブル判定あり\n" + "  (ダイス数)CL+(修正値)@(判定値)[(クリティカル値)]+(修正値2)\n" + "\n" + "  @m,[c],+xは省略可能。(@6[1]として処理)\n" + "  n個のD10でmを判定値、cをクリティカル値とした行為判定を行う。\n" + "  例）\n" + "  7CL>=5 ：サイコロ7個で判定値6のロールを行い、目標値5に対して判定\n" + "  4CL@7  ：サイコロ4個で判定値7のロールを行い達成値を出す\n" + "  4CL+2@7 または 4CL@7+2  ：サイコロ4個で判定値7のロールを行い達成値を出し、修正値2を足す。\n" + "  4CL[2] ：サイコロ4個でクリティカル値2のロールを行う。\n");
-    self.$setPrefixes(["\\d*CL([+-]\\d+)?[@\\d]*.*"]);
+    Opal.const_set($nesting[0], 'HELP_MESSAGE', "" + "・行為判定（nCL@m[c]+x または nCL+x@m[c]） クリティカル・ファンブル判定あり\n" + "  (ダイス数)CL+(修正値)@(判定値)[(クリティカル値)]+(修正値2)\n" + "\n" + "  @m,[c],+xは省略可能。(@6[1]として処理)\n" + "  n個のD10でmを判定値、cをクリティカル値とした行為判定を行う。\n" + "  nが0以下のときはクリティカルしない1CL判定を行う。(1CL[0]と同一)\n" + "  例）\n" + "  7CL>=5 ：サイコロ7個で判定値6のロールを行い、目標値5に対して判定\n" + "  4CL@7  ：サイコロ4個で判定値7のロールを行い達成値を出す\n" + "  4CL+2@7 または 4CL@7+2  ：サイコロ4個で判定値7のロールを行い達成値を出し、修正値2を足す。\n" + "  4CL[2] ：サイコロ4個でクリティカル値2のロールを行う。\n" + "  0CL : 1CL[0]と同じ判定\n");
+    self.$setPrefixes(["[+-]?\\d*CL([+-]\\d+)?[@\\d]*.*"]);
     
     Opal.def(self, '$isGetOriginalMessage', $CodeLayerd_isGetOriginalMessage$1 = function $$isGetOriginalMessage() {
       var self = this;
@@ -74,7 +71,7 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       self.$debug("rollDiceCommand command", command);
       result = "";
       $case = command;
-      if (/(\d+)?CL([+-]\d+)?(\@(\d))?(\[(\d+)\])?([+-]\d+)?(>=(\d+))?/i['$===']($case)) {
+      if (/([+-]?\d+)?CL([+-]\d+)?(\@(\d))?(\[(\d+)\])?([+-]\d+)?(>=(\d+))?/i['$===']($case)) {
       m = $$($nesting, 'Regexp').$last_match();
       base = ($truthy($a = m['$[]'](1)) ? $a : 1).$to_i();
       modifier1 = m['$[]'](2).$to_i();
@@ -96,8 +93,10 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       base = self.$getValue(base);
       target = self.$getValue(target);
       criticalTarget = self.$getValue(criticalTarget);
-      if ($truthy($rb_lt(base, 1))) {
-        return result};
+      if ($truthy($rb_le(base, 0))) {
+        
+        criticalTarget = 0;
+        base = 1;};
       if ($truthy($rb_gt(target, 10))) {
         target = 10};
       result = $rb_plus(result, "" + "(" + (base) + "d10" + (self.$format_modifier(modifier)) + ")");
@@ -122,12 +121,19 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       $b = self.$getSuccessInfo(diceList, target, criticalTarget), $a = Opal.to_ary($b), (successCount = ($a[0] == null ? nil : $a[0])), (criticalCount = ($a[1] == null ? nil : $a[1])), $b;
       successTotal = $rb_plus($rb_plus(successCount, criticalCount), modifier);
       result = "";
-      result = $rb_plus(result, "" + "判定値[" + (target) + "] ");
+      if (target['$=='](6)) {
+      } else {
+        result = $rb_plus(result, "" + "判定値[" + (target) + "] ")
+      };
       if (criticalTarget['$=='](1)) {
       } else {
         result = $rb_plus(result, "" + "クリティカル値[" + (criticalTarget) + "] ")
       };
       result = $rb_plus(result, "" + "達成値[" + (successCount) + "]");
+      if ($truthy($rb_le(successCount, 0))) {
+        
+        result = $rb_plus(result, " ＞ ファンブル！");
+        return result;};
       if ($truthy($rb_gt(criticalCount, 0))) {
         result = $rb_plus(result, "" + "+クリティカル[" + (criticalCount) + "]")};
       result = $rb_plus(result, self.$format_modifier(modifier));
@@ -142,8 +148,6 @@ Opal.modules["utils/modifier_formatter"] = function(Opal) {
       var self = this;
 
       
-      if ($truthy($rb_le(successTotal, 0))) {
-        return "ファンブル！"};
       if (diff['$=='](0)) {
         return successTotal.$to_s()};
       if ($truthy($rb_ge(successTotal, diff))) {

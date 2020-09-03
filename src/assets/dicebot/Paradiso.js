@@ -113,7 +113,7 @@
       
       biggun = [0, 0, 0];
       $case = command;
-      if (/^DC(\d+)(\[(\d+)(,(\d+))?(,(\d+))?\])?$/i['$===']($case)) {
+      if (/^DC(\d+)(\[(\d+)(,(\d+))?(,(\d+))?(,(\d+))?(,(\d+))?(,(\d+))?\])?$/i['$===']($case)) {
       attack = ($truthy($a = $$($nesting, 'Regexp').$last_match(1)) ? $a : 1).$to_i();
       
       $writer = [0, ($truthy($a = $$($nesting, 'Regexp').$last_match(3)) ? $a : 0).$to_i()];
@@ -125,6 +125,18 @@
       $writer[$rb_minus($writer["length"], 1)];;
       
       $writer = [2, ($truthy($a = $$($nesting, 'Regexp').$last_match(7)) ? $a : 0).$to_i()];
+      $send(biggun, '[]=', Opal.to_a($writer));
+      $writer[$rb_minus($writer["length"], 1)];;
+      
+      $writer = [3, ($truthy($a = $$($nesting, 'Regexp').$last_match(9)) ? $a : 0).$to_i()];
+      $send(biggun, '[]=', Opal.to_a($writer));
+      $writer[$rb_minus($writer["length"], 1)];;
+      
+      $writer = [4, ($truthy($a = $$($nesting, 'Regexp').$last_match(11)) ? $a : 0).$to_i()];
+      $send(biggun, '[]=', Opal.to_a($writer));
+      $writer[$rb_minus($writer["length"], 1)];;
+      
+      $writer = [5, ($truthy($a = $$($nesting, 'Regexp').$last_match(13)) ? $a : 0).$to_i()];
       $send(biggun, '[]=', Opal.to_a($writer));
       $writer[$rb_minus($writer["length"], 1)];;}
       else {return nil};

@@ -72,6 +72,8 @@
       var $a, self = this, success = nil, crt_string = nil, fmb_string = nil, fail_string = nil;
 
       
+      if (target['$==']("?")) {
+        return ""};
       if ($truthy((($a = dice_list.$size()['$=='](3)) ? cmp_op['$==']("<=") : dice_list.$size()['$=='](3)))) {
       } else {
         return ""
