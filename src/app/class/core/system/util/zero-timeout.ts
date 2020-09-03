@@ -17,10 +17,8 @@ export function clearZeroTimeout(id: number) {
 
 channel.port1.onmessage = function (ev) {
   const fn = timeouts.get(ev.data);
-  if (fn) {
-    timeouts.delete(ev.data);
-    fn();
-  }
+  timeouts.delete(ev.data);
+  if (fn) fn();
 }
 
 channel.port1.start();
