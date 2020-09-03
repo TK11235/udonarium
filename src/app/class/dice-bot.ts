@@ -181,6 +181,7 @@ export class DiceBot extends GameObject {
     { script: 'YankeeYogSothoth', game: 'ヤンキー＆ヨグ＝ソトース' },
     { script: 'GoldenSkyStories', game: 'ゆうやけこやけ' },
     { script: 'Ryutama', game: 'りゅうたま' },
+    { script: 'RyuTuber', game: 'リューチューバーとちいさな奇跡' },
     { script: 'RuneQuest', game: 'ルーンクエスト' },
     { script: 'RecordOfSteam', game: 'Record of Steam' },
     { script: 'RecordOfLodossWar', game: 'ロードス島戦記RPG' },
