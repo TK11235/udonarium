@@ -78,6 +78,7 @@ export class DiceBot extends GameObject {
     { script: 'Illusio', game: '晃天のイルージオ' },
     { script: 'CodeLayerd', game: 'コード：レイヤード' },
     { script: 'Avandner', game: '黒絢のアヴァンドナー' },
+    { script: 'GoblinSlayer', game: 'ゴブリンスレイヤーTRPG' },
     { script: 'Gorilla', game: 'ゴリラTRPG' },
     { script: 'ColossalHunter', game: 'コロッサルハンター' },
     { script: 'Postman', game: '壊れた世界のポストマン' },
