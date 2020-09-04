@@ -12,12 +12,16 @@ export class ResettableTimeout {
     this.reset();
   }
 
+  stop() {
+    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
+    this.timeoutTimer = null;
+  }
+
   clear() {
     this.callback = null;
     this.timerMilliSecond = 0;
     this.timeoutDate = 0;
-    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
-    this.timeoutTimer = null;
+    this.stop();
   }
 
   reset(ms: number = this.timerMilliSecond) {
