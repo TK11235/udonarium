@@ -97,14 +97,15 @@ export class AudioStorage {
   }
 
   synchronize(peer?: string) {
-    clearTimeout(this.lazyTimer);
+    if (this.lazyTimer) clearTimeout(this.lazyTimer);
     this.lazyTimer = null;
     EventSystem.call('SYNCHRONIZE_AUDIO_LIST', this.getCatalog(), peer);
   }
 
   lazySynchronize(ms: number, peer?: string) {
-    clearTimeout(this.lazyTimer);
+    if (this.lazyTimer) clearTimeout(this.lazyTimer);
     this.lazyTimer = setTimeout(() => {
+      this.lazyTimer = null;
       this.synchronize(peer);
     }, ms);
   }

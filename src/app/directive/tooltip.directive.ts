@@ -74,6 +74,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     let pointerY = this.pointerDeviceService.pointerY;
 
     this.openTooltipTimer = setTimeout(() => {
+      this.openTooltipTimer = null;
       let magnitude = (pointerX - this.pointerDeviceService.pointerX) ** 2 + (pointerY - this.pointerDeviceService.pointerY) ** 2;
       if (4 < magnitude) {
         this.startOpenTimer();
@@ -85,6 +86,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
   private startCloseTimer() {
     this.closeTooltipTimer = setTimeout(() => {
+      this.closeTooltipTimer = null;
       if (this.tooltipComponentRef && this.tooltipComponentRef.location.nativeElement.contains(document.activeElement)) {
         this.startCloseTimer();
       } else {
@@ -94,8 +96,9 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private clearTimer() {
-    clearTimeout(this.closeTooltipTimer);
-    clearTimeout(this.openTooltipTimer);
+    if (this.closeTooltipTimer) clearTimeout(this.closeTooltipTimer);
+    if (this.openTooltipTimer) clearTimeout(this.openTooltipTimer);
+    this.closeTooltipTimer = this.openTooltipTimer = null;
   }
 
   private open() {
