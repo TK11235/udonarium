@@ -6,6 +6,8 @@ export class ResettableTimeout {
   private timeoutDate: number = 0;
   private timeoutTimer: NodeJS.Timer;
 
+  get isActive(): boolean { return this.timeoutTimer != null; }
+
   constructor(callback: TimerCallback, ms: number) {
     this.callback = callback;
     this.timerMilliSecond = ms;
