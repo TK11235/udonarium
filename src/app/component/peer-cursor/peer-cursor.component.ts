@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { EventSystem, Network } from '@udonarium/core/system';
+import { ResettableTimeout } from '@udonarium/core/system/util/resettable-timeout';
 import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
@@ -23,7 +24,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private cursorElement: HTMLElement = null;
   private opacityElement: HTMLElement = null;
-  private fadeOutTimer: NodeJS.Timer = null;
+  private fadeOutTimer: ResettableTimeout = null;
 
   private updateInterval: NodeJS.Timer = null;
   private callcack: any = (e) => this.onMouseMove(e);
@@ -77,6 +78,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     document.body.removeEventListener('touchmove', this.callcack);
     EventSystem.unregister(this);
     this.tabletopService.removeBatch(this);
+    if (this.fadeOutTimer) this.fadeOutTimer.clear();
   }
 
   private onMouseMove(e: any) {
@@ -111,10 +113,12 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private resetFadeOut() {
     this.opacityElement.style.opacity = '1.0';
-    clearTimeout(this.fadeOutTimer);
-    this.fadeOutTimer = setTimeout(() => {
-      this.opacityElement.style.opacity = '0.0';
-    }, 3000);
+    if (this.fadeOutTimer == null) {
+      this.fadeOutTimer = new ResettableTimeout(() => {
+        this.opacityElement.style.opacity = '0.0';
+      }, 3000);
+    }
+    this.fadeOutTimer.reset();
   }
 
   private stopTransition() {

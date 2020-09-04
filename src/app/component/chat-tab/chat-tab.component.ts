@@ -19,6 +19,7 @@ import { ChatMessage, ChatMessageContext } from '@udonarium/chat-message';
 import { ChatTab } from '@udonarium/chat-tab';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
+import { ResettableTimeout } from '@udonarium/core/system/util/resettable-timeout';
 import { setZeroTimeout } from '@udonarium/core/system/util/zero-timeout';
 
 import { PanelService } from 'service/panel.service';
@@ -92,8 +93,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       : 0;
   }
 
-  private scrollEventShortTimer: NodeJS.Timer = null;
-  private scrollEventLongTimer: NodeJS.Timer = null;
+  private scrollEventShortTimer: ResettableTimeout = null;
+  private scrollEventLongTimer: ResettableTimeout = null;
   private addMessageEventTimer: NodeJS.Timer = null;
 
   private callbackOnScroll: any = () => this.onScroll();
@@ -149,6 +150,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
+      this.scrollEventShortTimer = new ResettableTimeout(() => this.lazyScrollUpdate(), 33);
+      this.scrollEventLongTimer = new ResettableTimeout(() => this.lazyScrollUpdate(false), 66);
       this.onScroll();
       this.panelService.scrollablePanel.addEventListener('scroll', this.callbackOnScroll, false);
       this.panelService.scrollablePanel.addEventListener('scrolltobottom', this.callbackOnScrollToBottom, false);
@@ -159,6 +162,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     EventSystem.unregister(this);
     this.panelService.scrollablePanel.removeEventListener('scroll', this.callbackOnScroll, false);
     this.panelService.scrollablePanel.removeEventListener('scrolltobottom', this.callbackOnScrollToBottom, false);
+    this.scrollEventShortTimer.clear();
+    this.scrollEventLongTimer.clear();
   }
 
   ngOnChanges() {
@@ -295,18 +300,15 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   }
 
   private onScroll() {
-    clearTimeout(this.scrollEventShortTimer);
-    this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
-    if (this.scrollEventLongTimer == null) {
-      this.scrollEventLongTimer = setTimeout(() => this.lazyScrollUpdate(false), 66);
+    this.scrollEventShortTimer.reset();
+    if (!this.scrollEventLongTimer.isActive) {
+      this.scrollEventLongTimer.reset();
     }
   }
 
   private lazyScrollUpdate(isNormalUpdate: boolean = true) {
-    clearTimeout(this.scrollEventShortTimer);
-    this.scrollEventShortTimer = null;
-    clearTimeout(this.scrollEventLongTimer);
-    this.scrollEventLongTimer = null;
+    this.scrollEventShortTimer.stop();
+    this.scrollEventLongTimer.stop();
 
     let chatMessageElements = this.messageContainerRef.nativeElement.querySelectorAll<HTMLElement>('chat-message');
 
@@ -324,8 +326,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     let hasBotomBlank = messageBoxBottom < scrollPosition.bottom && scrollPosition.bottom < scrollPosition.scrollHeight;
 
     if (!isNormalUpdate) {
-      clearTimeout(this.scrollEventShortTimer);
-      this.scrollEventShortTimer = setTimeout(() => this.lazyScrollUpdate(), 33);
+      this.scrollEventShortTimer.reset();
     }
 
     if (!isNormalUpdate && !hasTopBlank && !hasBotomBlank) {
