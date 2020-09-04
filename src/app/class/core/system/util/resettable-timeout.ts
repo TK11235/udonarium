@@ -35,6 +35,8 @@ export class ResettableTimeout {
 
   private setTimeout() {
     if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
+    this.timeoutTimer = null;
+    if (!this.callback) return;
 
     this.timeoutTimer = setTimeout(() => {
       this.timeoutTimer = null;
