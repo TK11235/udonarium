@@ -164,6 +164,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     this.panelService.scrollablePanel.removeEventListener('scrolltobottom', this.callbackOnScrollToBottom, false);
     this.scrollEventShortTimer.clear();
     this.scrollEventLongTimer.clear();
+    if (this.addMessageEventTimer) clearTimeout(this.addMessageEventTimer);
+    this.addMessageEventTimer = null;
   }
 
   ngOnChanges() {
@@ -181,11 +183,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     if (this.addMessageEventTimer != null) return;
     this.ngZone.runOutsideAngular(() => {
       this.addMessageEventTimer = setTimeout(() => {
-        this.ngZone.run(() => {
-          clearTimeout(this.addMessageEventTimer);
-          this.addMessageEventTimer = null;
-          this.onAddMessage.emit()
-        });
+        this.addMessageEventTimer = null;
+        this.ngZone.run(() => this.onAddMessage.emit());
       }, 66);
     });
   }
