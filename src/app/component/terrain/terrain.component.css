@@ -70,7 +70,7 @@
 
   transform-origin: 50% 100%;
   transform: rotateX(-90deg);
-  filter: brightness(1.0);
+  /*filter: brightness(1.0);*/
 }
 
 .of-wall-left {

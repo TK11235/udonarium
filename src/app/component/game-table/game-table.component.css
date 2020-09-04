@@ -92,11 +92,11 @@
 }
 
 .background-image.is-filter.white {
-  filter: blur(5px) contrast(1);
+  filter: blur(5px);
 }
 
 .background-image.is-filter.black {
-  filter: blur(5px) contrast(1);
+  filter: blur(5px);
 }
 
 .background-image.is-filter::after {
