@@ -24,8 +24,17 @@ export class ResettableTimeout {
     this.stop();
   }
 
-  reset(ms: number = this.timerMilliSecond) {
-    this.timerMilliSecond = ms;
+  reset()
+  reset(ms: number)
+  reset(callback: TimerCallback, ms: number)
+  reset(...args: any[]) {
+    if (args.length === 1) {
+      this.timerMilliSecond = args[0];
+    } else if (1 < args.length) {
+      this.callback = args[0];
+      this.timerMilliSecond = args[1];
+    }
+
     let oldTimeoutDate = this.timeoutDate;
     this.timeoutDate = performance.now() + this.timerMilliSecond;
 
