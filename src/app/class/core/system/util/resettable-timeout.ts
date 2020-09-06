@@ -5,6 +5,7 @@ export class ResettableTimeout {
   private timerMilliSecond: number = 0;
   private timeoutDate: number = 0;
   private timeoutTimer: NodeJS.Timer;
+  private isStopped: boolean = false;
 
   get isActive(): boolean { return this.timeoutTimer != null; }
 
@@ -15,15 +16,16 @@ export class ResettableTimeout {
   }
 
   stop() {
-    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
-    this.timeoutTimer = null;
+    this.isStopped = true;
   }
 
   clear() {
     this.callback = null;
     this.timerMilliSecond = 0;
     this.timeoutDate = 0;
-    this.stop();
+    if (this.timeoutTimer) clearTimeout(this.timeoutTimer);
+    this.timeoutTimer = null;
+    this.isStopped = false;
   }
 
   reset()
@@ -36,6 +38,7 @@ export class ResettableTimeout {
       this.callback = args[0];
       this.timerMilliSecond = args[1];
     }
+    this.isStopped = false;
 
     let oldTimeoutDate = this.timeoutDate;
     this.timeoutDate = performance.now() + this.timerMilliSecond;
@@ -51,6 +54,8 @@ export class ResettableTimeout {
 
     this.timeoutTimer = setTimeout(() => {
       this.timeoutTimer = null;
+      if (this.isStopped) return;
+
       if (performance.now() < this.timeoutDate) {
         this.setTimeout();
       } else {
