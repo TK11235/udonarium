@@ -44,7 +44,7 @@ export class ImageStorage {
   add(image: ImageFile): ImageFile
   add(context: ImageContext): ImageFile
   add(arg: any): ImageFile {
-    let image: ImageFile
+    let image: ImageFile;
     if (typeof arg === 'string') {
       image = ImageFile.create(arg);
     } else if (arg instanceof ImageFile) {

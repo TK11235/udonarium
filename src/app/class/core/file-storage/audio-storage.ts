@@ -43,7 +43,7 @@ export class AudioStorage {
   add(audio: AudioFile): AudioFile
   add(context: AudioFileContext): AudioFile
   add(arg: any): AudioFile {
-    let audio: AudioFile
+    let audio: AudioFile;
     if (typeof arg === 'string') {
       audio = AudioFile.create(arg);
     } else if (arg instanceof AudioFile) {
