@@ -1,7 +1,7 @@
 import { EventSystem } from '../system';
 import { ImageContext, ImageFile, ImageState } from './image-file';
 
-export type CatalogItem = { identifier: string, state: number };
+export type CatalogItem = { readonly identifier: string, readonly state: number };
 
 export class ImageStorage {
   private static _instance: ImageStorage

@@ -1,7 +1,7 @@
 import { EventSystem } from '../system';
 import { AudioFile, AudioFileContext, AudioState } from './audio-file';
 
-export type CatalogItem = { identifier: string, state: number };
+export type CatalogItem = { readonly identifier: string, readonly state: number };
 
 export class AudioStorage {
   private static _instance: AudioStorage
