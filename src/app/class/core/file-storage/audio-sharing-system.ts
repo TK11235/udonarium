@@ -46,6 +46,11 @@ export class AudioSharingSystem {
           }
         }
 
+        // Peer切断時などのエッジケースに対応する
+        if (request.length < 1 && !this.hasActiveTask() && otherCatalog.length < AudioStorage.instance.getCatalog().length) {
+          AudioStorage.instance.synchronize(event.sendFrom);
+        }
+
         if (request.length < 1 || this.isReceiveTransmission()) {
           return;
         }
@@ -177,6 +182,10 @@ export class AudioSharingSystem {
     let peers = Network.peerIds;
     peers.splice(peers.indexOf(Network.peerId), 1);
     EventSystem.call('REQUEST_AUDIO_RESOURE', { identifiers: request, receiver: Network.peerId, candidatePeers: peers }, peer);
+  }
+
+  private hasActiveTask(): boolean {
+    return 0 < this.sendTaskMap.size || 0 < this.receiveTaskMap.size;
   }
 
   private isSendTransmission(): boolean {

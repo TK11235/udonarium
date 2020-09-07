@@ -50,6 +50,11 @@ export class ImageSharingSystem {
           }
         }
 
+        // Peer切断時などのエッジケースに対応する
+        if (request.length < 1 && !this.hasActiveTask() && otherCatalog.length < ImageStorage.instance.getCatalog().length) {
+          ImageStorage.instance.synchronize(event.sendFrom);
+        }
+
         if (request.length < 1 || this.isReceiveTransmission()) {
           return;
         }
@@ -220,6 +225,10 @@ export class ImageSharingSystem {
       if (maxSize < byteSize) break;
     }
     return updateImages;
+  }
+
+  private hasActiveTask(): boolean {
+    return 0 < this.sendTaskMap.size || 0 < this.receiveTaskMap.size;
   }
 
   private isSendTransmission(): boolean {
