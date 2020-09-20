@@ -2,6 +2,7 @@ import { SyncObject } from '@udonarium/core/synchronize-object/decorator';
 
 import { DataElement } from '@udonarium/data-element';
 import { GameCharacter } from '@udonarium/game-character';
+import { ChatPalette } from '@udonarium/chat-palette';
 import { StringUtil } from '@udonarium/core/system/util/string-util';
 
 @SyncObject('custom-character')
@@ -39,6 +40,15 @@ export class CustomCharacter extends GameCharacter {
     return super.toXml().replace(/custom-character/g, 'character');
   }
 
+  createParentElement(name: string, parentElement?: DataElement): DataElement {
+    const element = Utils.createDataElement(name, '');
+    if (parentElement) {
+      parentElement.appendChild(element);
+    } else {
+      this.detailDataElement.appendChild(element);
+    }
+    return element;
+  }
 }
 
 export class Utils {
@@ -62,5 +72,17 @@ export class Utils {
   static createNoteElement(name: string, value: string | number): DataElement {
     name = StringUtil.toHalfWidth(name);
     return DataElement.create(name, value, { type: 'note' });
+  }
+
+  static formatModifier(value: number): string {
+    if (value < 0) return value.toString();
+    if (value > 0) return `+${value}`;
+    return '';
+  }
+
+  static createChatPalette(gameSystem: string): ChatPalette {
+    const palette: ChatPalette = new ChatPalette();
+    palette.dicebot = gameSystem;
+    return palette;
   }
 }

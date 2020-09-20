@@ -19,6 +19,7 @@ import { Amadeus } from './system/amadeus';
 import { TokyoNovaX } from './system/tokyo-nova-x';
 import { TokyoNightmare } from './system/tokyo-nightmare';
 import { Satasupe } from './system/satasupe';
+import { Arianrhod2e } from './system/arianrhod-2e';
 
 export interface AppspotFactory {
   gameSystem: string;
@@ -40,6 +41,7 @@ export interface VampireBloodFactory {
 
 export class GameSystemList {
   static vampireBlood: VampireBloodFactory[] = [
+    Arianrhod2e.vampireBloodFactory(),
     Cthulhu.vampireBloodFactory(),
     Cthulhu7th.vampireBloodFactory(),
     SwordWorld2.vampireBloodFactory(),
