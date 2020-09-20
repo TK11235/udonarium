@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { StringUtil } from '@udonarium/core/system/util/string-util';
 
 /**
@@ -18,165 +18,124 @@ export class LogHorizon {
     /*
      *情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
+    infoElement.appendChild(Utils.createDataElement('PL', json.player_name));
+    infoElement.appendChild(Utils.createDataElement('CR', json.character_rank));
+    infoElement.appendChild(Utils.createDataElement('種族', json.race));
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.player_name)
+      Utils.createDataElement('メイン職業', json.main_job)
     );
-    infoElement.appendChild(
-      gameCharacter.createDataElement('CR', json.character_rank)
-    );
-    infoElement.appendChild(gameCharacter.createDataElement('種族', json.race));
-    infoElement.appendChild(
-      gameCharacter.createDataElement('メイン職業', json.main_job)
-    );
-    infoElement.appendChild(
-      gameCharacter.createDataElement('サブ職業', json.sub_job)
-    );
-    const tagsText = json.tags.map(tag => `[${tag}]`).join(' ');
-    infoElement.appendChild(gameCharacter.createNoteElement('タグ', tagsText));
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.remarks)
-    );
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('URL', json.sheet_url)
-    );
+    infoElement.appendChild(Utils.createDataElement('サブ職業', json.sub_job));
+    const tagsText = json.tags.map((tag) => `[${tag}]`).join(' ');
+    infoElement.appendChild(Utils.createNoteElement('タグ', tagsText));
+    infoElement.appendChild(Utils.createNoteElement('説明', json.remarks));
+    infoElement.appendChild(Utils.createNoteElement('URL', json.sheet_url));
     /*
      * 戦闘値
      */
-    const battleElement = gameCharacter.createDataElement('戦闘値', '');
+    const battleElement = Utils.createDataElement('戦闘値', '');
     gameCharacter.detailDataElement.appendChild(battleElement);
     battleElement.appendChild(
-      gameCharacter.createResourceElement(
-        'HP',
-        json.max_hitpoint,
-        json.max_hitpoint
-      )
+      Utils.createResourceElement('HP', json.max_hitpoint, json.max_hitpoint)
     );
     battleElement.appendChild(
-      gameCharacter.createResourceElement('因果力', 10, json.effect)
+      Utils.createResourceElement('因果力', 10, json.effect)
+    );
+    battleElement.appendChild(Utils.createDataElement('行動力', json.action));
+    battleElement.appendChild(
+      Utils.createDataElement('攻撃力', json.physical_attack)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('行動力', json.action)
+      Utils.createDataElement('魔力', json.magic_attack)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('攻撃力', json.physical_attack)
+      Utils.createDataElement('回復力', json.heal_power)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('魔力', json.magic_attack)
+      Utils.createDataElement('物防', json.physical_defense)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('回復力', json.heal_power)
-    );
-    battleElement.appendChild(
-      gameCharacter.createDataElement('物防', json.physical_defense)
-    );
-    battleElement.appendChild(
-      gameCharacter.createDataElement('魔防', json.magic_defense)
+      Utils.createDataElement('魔防', json.magic_defense)
     );
     /*
      * 状態
      */
-    const statusElement = gameCharacter.createDataElement('状態', '');
+    const statusElement = Utils.createDataElement('状態', '');
     gameCharacter.detailDataElement.appendChild(statusElement);
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('ヘイト', 20, 0)
-    );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('待機', 1, 0)
-    );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('隠密', 1, 0)
-    );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('障壁', 100, 0)
-    );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('再生', 100, 0)
-    );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('疲労', 100, 0)
-    );
-    statusElement.appendChild(gameCharacter.createNoteElement('BS', ''));
-    statusElement.appendChild(
-      gameCharacter.createNoteElement('LS・CS・OS', '')
-    );
+    statusElement.appendChild(Utils.createResourceElement('ヘイト', 20, 0));
+    statusElement.appendChild(Utils.createResourceElement('待機', 1, 0));
+    statusElement.appendChild(Utils.createResourceElement('隠密', 1, 0));
+    statusElement.appendChild(Utils.createResourceElement('障壁', 100, 0));
+    statusElement.appendChild(Utils.createResourceElement('再生', 100, 0));
+    statusElement.appendChild(Utils.createResourceElement('疲労', 100, 0));
+    statusElement.appendChild(Utils.createNoteElement('BS', ''));
+    statusElement.appendChild(Utils.createNoteElement('LS・CS・OS', ''));
     /*
      * 能力値
      */
-    const abilityElement = gameCharacter.createDataElement('探索技能', '');
+    const abilityElement = Utils.createDataElement('探索技能', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
+    abilityElement.appendChild(Utils.createDataElement('STR', json.str_value));
+    abilityElement.appendChild(Utils.createDataElement('DEX', json.dex_value));
+    abilityElement.appendChild(Utils.createDataElement('POW', json.pow_value));
+    abilityElement.appendChild(Utils.createDataElement('INT', json.int_value));
     abilityElement.appendChild(
-      gameCharacter.createDataElement('STR', json.str_value)
+      Utils.createDataElement('STR基本値', json.str_basic_value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('DEX', json.dex_value)
+      Utils.createDataElement('DEX基本値', json.dex_basic_value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('POW', json.pow_value)
+      Utils.createDataElement('POW基本値', json.pow_basic_value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('INT', json.int_value)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('STR基本値', json.str_basic_value)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('DEX基本値', json.dex_basic_value)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('POW基本値', json.pow_basic_value)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('INT基本値', json.int_basic_value)
+      Utils.createDataElement('INT基本値', json.int_basic_value)
     );
     /*
      * 装備
      */
-    const equipmentElement = gameCharacter.createDataElement('装備', '');
+    const equipmentElement = Utils.createDataElement('装備', '');
     gameCharacter.detailDataElement.appendChild(equipmentElement);
     equipmentElement.appendChild(
-      gameCharacter.createDataElement('手1', json.hand1 ? json.hand1.alias : '')
+      Utils.createDataElement('手1', json.hand1 ? json.hand1.alias : '')
     );
     equipmentElement.appendChild(
-      gameCharacter.createDataElement('手2', json.hand2 ? json.hand2.alias : '')
+      Utils.createDataElement('手2', json.hand2 ? json.hand2.alias : '')
     );
     equipmentElement.appendChild(
-      gameCharacter.createDataElement(
-        '防具',
-        json.armor ? json.armor.alias : ''
-      )
+      Utils.createDataElement('防具', json.armor ? json.armor.alias : '')
     );
     equipmentElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         '補助1',
         json.support_item1 ? json.support_item1.alias : ''
       )
     );
     equipmentElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         '補助2',
         json.support_item2 ? json.support_item2.alias : ''
       )
     );
     equipmentElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         '補助3',
         json.support_item3 ? json.support_item3.alias : ''
       )
     );
     equipmentElement.appendChild(
-      gameCharacter.createDataElement('鞄', json.bag ? json.bag.alias : '')
+      Utils.createDataElement('鞄', json.bag ? json.bag.alias : '')
     );
     /*
      * 所持品
      */
-    const itemElement = gameCharacter.createDataElement('所持品', '');
+    const itemElement = Utils.createDataElement('所持品', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (let i = 1; i <= json.items.length; i++) {
       const item = json.items[i];
       itemElement.appendChild(
-        gameCharacter.createDataElement(`所持品${i}`, item ? item.alias : '')
+        Utils.createDataElement(`所持品${i}`, item ? item.alias : '')
       );
     }
 
@@ -184,45 +143,45 @@ export class LogHorizon {
     domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 
     const palette: ChatPalette = new ChatPalette(
-      "ChatPalette_" + gameCharacter.identifier
+      'ChatPalette_' + gameCharacter.identifier
     );
-    palette.dicebot = "LogHorizon";
+    palette.dicebot = 'LogHorizon';
     const skillToRoll = (json: LhrpgCharacter) => (skillText: string) => {
-      const splitIndex = skillText.indexOf("+");
+      const splitIndex = skillText.indexOf('+');
       const skillName =
         splitIndex < 0 ? skillText : skillText.substring(0, splitIndex);
-      const addText = splitIndex < 0 ? "" : skillText.substring(splitIndex);
-      if (skillName === "運動") {
+      const addText = splitIndex < 0 ? '' : skillText.substring(splitIndex);
+      if (skillName === '運動') {
         return json.abl_motion + addText;
       }
-      if (skillName === "耐久") {
+      if (skillName === '耐久') {
         return json.abl_durability + addText;
       }
-      if (skillName === "解除") {
+      if (skillName === '解除') {
         return json.abl_dismantle + addText;
       }
-      if (skillName === "操作") {
+      if (skillName === '操作') {
         return json.abl_operate + addText;
       }
-      if (skillName === "知覚") {
+      if (skillName === '知覚') {
         return json.abl_sense + addText;
       }
-      if (skillName === "交渉") {
+      if (skillName === '交渉') {
         return json.abl_negotiate + addText;
       }
-      if (skillName === "知識") {
+      if (skillName === '知識') {
         return json.abl_knowledge + addText;
       }
-      if (skillName === "解析") {
+      if (skillName === '解析') {
         return json.abl_analyze + addText;
       }
-      if (skillName === "回避") {
+      if (skillName === '回避') {
         return json.abl_avoid + addText;
       }
-      if (skillName === "抵抗") {
+      if (skillName === '抵抗') {
         return json.abl_resist + addText;
       }
-      if (skillName === "命中") {
+      if (skillName === '命中') {
         return json.abl_hit + addText;
       }
     };
@@ -266,15 +225,15 @@ C({HP}+{再生}) HP=現HP+再生回復量
       'ブリーフィング',
       'レストタイム',
       'インタールード',
-      '常時'
+      '常時',
     ];
     for (const timing of timingList) {
       const sep = timing === 'メジャー' ? '\n' : '';
-      const skills = json.skills.filter(skill => skill.timing === timing);
+      const skills = json.skills.filter((skill) => skill.timing === timing);
       if (skills.length > 0) {
         cp += `\n○${timing}\n`;
         cp += skills
-          .map(skill => this.formatSkill(skill, skillToRoll(json)))
+          .map((skill) => this.formatSkill(skill, skillToRoll(json)))
           .join(sep);
       }
     }
@@ -304,38 +263,34 @@ C({HP}+{再生}) HP=現HP+再生回復量
       json.support_item1,
       json.support_item2,
       json.support_item3,
-      json.bag
-    ].filter(item => item && (item.recipe || item.prefix_function));
+      json.bag,
+    ].filter((item) => item && (item.recipe || item.prefix_function));
     if (itemList.length > 0) {
       cp += '\n○装備アイテム効果\n';
       cp += itemList
-        .map(item => {
+        .map((item) => {
           if (item.recipe) {
             return `${item.alias} ネームド効果：${
               item.function.split('\n')[0]
             }\n`;
           }
           if (item.prefix_function) {
-            return `${item.alias} プレフィックスド効果：${
-              item.prefix_function
-            }\n`;
+            return `${item.alias} プレフィックスド効果：${item.prefix_function}\n`;
           }
           return '';
         })
         .join('');
     }
-    itemList = json.items.filter(item => item);
+    itemList = json.items.filter((item) => item);
     if (itemList.length > 0) {
       cp += '\n○所持アイテム一覧\n';
       cp += itemList
-        .map(item => {
-          const tags = item.tags.map(tag => `[${tag}] `).join('');
+        .map((item) => {
+          const tags = item.tags.map((tag) => `[${tag}] `).join('');
           const txt =
             item.timing === '－'
               ? ''
-              : `タイミング:${item.timing} 判定:${item.roll} 対象:${
-                  item.target
-                } 射程:${item.range} `;
+              : `タイミング:${item.timing} 判定:${item.roll} 対象:${item.target} 射程:${item.range} `;
 
           return `${item.alias} ${tags}${txt}効果：${
             item.function.split('\n')[0]
@@ -384,11 +339,11 @@ ITRS{CR}+0 換金アイテム財宝表
   ): string {
     let val = 0;
     let dice = 0;
-    const s = skill.split("+");
+    const s = skill.split('+');
     for (const elm of s) {
       if (elm.match(/(\d+)D/)) {
-        dice += Number.parseInt(elm.replace("D", ""), 10);
-      } else if (elm === "SR") {
+        dice += Number.parseInt(elm.replace('D', ''), 10);
+      } else if (elm === 'SR') {
         val += skillRank;
       } else {
         val += Number.parseInt(elm, 10);
@@ -407,13 +362,9 @@ ITRS{CR}+0 換金アイテム財宝表
     skill: LhrpgSkill,
     conv: (skillName: string) => string
   ): string {
-    const tagsText = skill.tags.map(tag => `[${tag}] `).join('');
+    const tagsText = skill.tags.map((tag) => `[${tag}] `).join('');
     // 効果
-    const effect = `《${skill.name}》 ${tagsText}SR:${skill.skill_rank}/${
-      skill.skill_max_rank
-    } タイミング:${skill.timing} 判定:${skill.roll} 対象:${skill.target} 射程:${
-      skill.range
-    } コスト:${skill.cost} 制限:${skill.limit} 効果:${skill.function}\n`;
+    const effect = `《${skill.name}》 ${tagsText}SR:${skill.skill_rank}/${skill.skill_max_rank} タイミング:${skill.timing} 判定:${skill.roll} 対象:${skill.target} 射程:${skill.range} コスト:${skill.cost} 制限:${skill.limit} 効果:${skill.function}\n`;
     // 判定
     let judge = '';
     const jMatch = skill.roll.match(/対決\(((.*)\/.*)\)/);
@@ -457,10 +408,7 @@ ITRS{CR}+0 換金アイテム財宝表
 
   private static convertToCalc(str: string, skillRank: number): string {
     const txt = StringUtil.toHalfWidth(
-      str
-        .replace(/【/g, '{')
-        .replace(/】/g, '}')
-        .replace(/×/g, '*')
+      str.replace(/【/g, '{').replace(/】/g, '}').replace(/×/g, '*')
     ).replace(/SR/g, skillRank.toString());
     if (txt.includes('D')) {
       if (txt.match(/^\(([^\(\)]+)\)$/)) {

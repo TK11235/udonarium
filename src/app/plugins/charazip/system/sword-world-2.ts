@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { VampireBloodFactory } from '../system-factory';
 
 /**
@@ -26,28 +26,24 @@ export class SwordWorld2 implements VampireBloodFactory {
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    const resourceElement = Utils.createDataElement('リソース', '');
     gameCharacter.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('HP', json.HP, json.HP)
+      Utils.createResourceElement('HP', json.HP, json.HP)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('MP', json.MP, json.MP)
+      Utils.createResourceElement('MP', json.MP, json.MP)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('防護点', json.bougo, json.bougo)
+      Utils.createResourceElement('防護点', json.bougo, json.bougo)
     );
+    resourceElement.appendChild(Utils.createResourceElement('1ゾロ', 10, 0));
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('1ゾロ', 10, 0)
+      Utils.createResourceElement('穢れ度', 5, json.kegare || 0)
     );
+    resourceElement.appendChild(Utils.createDataElement('所持金', json.money));
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('穢れ度', 5, json.kegare || 0)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createDataElement('所持金', json.money)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         '名誉点',
         `${json.total_honor_point}(${json.now_honor_point})`
       )
@@ -55,50 +51,34 @@ export class SwordWorld2 implements VampireBloodFactory {
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
-    infoElement.appendChild(gameCharacter.createDataElement('PL', ''));
+    infoElement.appendChild(Utils.createDataElement('PL', ''));
+    infoElement.appendChild(Utils.createDataElement('種族', json.shuzoku_name));
     infoElement.appendChild(
-      gameCharacter.createDataElement('種族', json.shuzoku_name)
+      Utils.createDataElement('種族特徴', json.shuzoku_tokucho)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('種族特徴', json.shuzoku_tokucho)
+      Utils.createNoteElement('説明', json.pc_making_memo)
     );
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.pc_making_memo)
-    );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
     /*
      * 能力値
      */
-    const abliityElement = gameCharacter.createDataElement('能力値', '');
+    const abliityElement = Utils.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abliityElement);
-    abliityElement.appendChild(
-      gameCharacter.createDataElement('器用度', json.NP1)
-    );
-    abliityElement.appendChild(
-      gameCharacter.createDataElement('敏捷度', json.NP2)
-    );
-    abliityElement.appendChild(
-      gameCharacter.createDataElement('筋力', json.NP3)
-    );
-    abliityElement.appendChild(
-      gameCharacter.createDataElement('生命力', json.NP4)
-    );
-    abliityElement.appendChild(
-      gameCharacter.createDataElement('知力', json.NP5)
-    );
-    abliityElement.appendChild(
-      gameCharacter.createDataElement('精神力', json.NP6)
-    );
+    abliityElement.appendChild(Utils.createDataElement('器用度', json.NP1));
+    abliityElement.appendChild(Utils.createDataElement('敏捷度', json.NP2));
+    abliityElement.appendChild(Utils.createDataElement('筋力', json.NP3));
+    abliityElement.appendChild(Utils.createDataElement('生命力', json.NP4));
+    abliityElement.appendChild(Utils.createDataElement('知力', json.NP5));
+    abliityElement.appendChild(Utils.createDataElement('精神力', json.NP6));
     /*
      * 技能
      */
-    const skillElement = gameCharacter.createDataElement('技能', '');
+    const skillElement = Utils.createDataElement('技能', '');
     gameCharacter.detailDataElement.appendChild(skillElement);
-    skillElement.appendChild(
-      gameCharacter.createDataElement('冒険者レベル', json.lv)
-    );
+    skillElement.appendChild(Utils.createDataElement('冒険者レベル', json.lv));
     const skillList = [
       'ファイター',
       'グラップラー',
@@ -133,48 +113,30 @@ export class SwordWorld2 implements VampireBloodFactory {
       }
       skillLevelList.push(Number.parseInt(skillLevel, 10));
       skillElement.appendChild(
-        gameCharacter.createDataElement(skillList[i], skillLevel)
+        Utils.createDataElement(skillList[i], skillLevel)
       );
     }
     /*
      * バフ・デバフ
      */
-    const modifyElement = gameCharacter.createDataElement('バフ・デバフ', '');
+    const modifyElement = Utils.createDataElement('バフ・デバフ', '');
     gameCharacter.detailDataElement.appendChild(modifyElement);
+    modifyElement.appendChild(Utils.createResourceElement('命中', 5, 0));
+    modifyElement.appendChild(Utils.createResourceElement('回避', 5, 0));
+    modifyElement.appendChild(Utils.createResourceElement('攻撃', 5, 0));
+    modifyElement.appendChild(Utils.createResourceElement('クリレイ', 5, 0));
+    modifyElement.appendChild(Utils.createResourceElement('出目固定', 12, 0));
+    modifyElement.appendChild(Utils.createResourceElement('魔法行使', 5, 0));
+    modifyElement.appendChild(Utils.createResourceElement('魔法威力', 5, 0));
+    modifyElement.appendChild(Utils.createResourceElement('生命抵抗', 5, 0));
+    modifyElement.appendChild(Utils.createResourceElement('精神抵抗', 5, 0));
     modifyElement.appendChild(
-      gameCharacter.createResourceElement('命中', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('回避', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('攻撃', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('クリレイ', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('出目固定', 12, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('魔法行使', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('魔法威力', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('生命抵抗', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('精神抵抗', 5, 0)
-    );
-    modifyElement.appendChild(
-      gameCharacter.createResourceElement('ダメージ軽減', 5, 0)
+      Utils.createResourceElement('ダメージ軽減', 5, 0)
     );
     /*
      * 所持品
      */
-    const itemElement = gameCharacter.createDataElement('所持品', '');
+    const itemElement = Utils.createDataElement('所持品', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (let i = 0; i < json.item_name.length; i++) {
       const itemName = json.item_name[i];
@@ -183,7 +145,7 @@ export class SwordWorld2 implements VampireBloodFactory {
       }
       const itemNum = json.item_num[i];
       itemElement.appendChild(
-        gameCharacter.createResourceElement(itemName, itemNum, itemNum)
+        Utils.createResourceElement(itemName, itemNum, itemNum)
       );
     }
 

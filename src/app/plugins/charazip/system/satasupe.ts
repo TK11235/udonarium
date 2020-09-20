@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 /**
@@ -30,16 +30,12 @@ export class Satasupe implements AppspotFactory {
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    const resourceElement = Utils.createDataElement('リソース', '');
     gameCharacter.detailDataElement.appendChild(resourceElement);
+    resourceElement.appendChild(Utils.createResourceElement('肉体点', 10, 10));
+    resourceElement.appendChild(Utils.createResourceElement('精神点', 10, 10));
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('肉体点', 10, 10)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createResourceElement('精神点', 10, 10)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         'サイフ',
         json.base.abl.life.value,
         json.base.abl.life.value
@@ -49,113 +45,110 @@ export class Satasupe implements AppspotFactory {
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('故郷', json.base.homeland || '')
+      Utils.createDataElement('故郷', json.base.homeland || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('性別', json.base.sex || '')
+      Utils.createDataElement('性別', json.base.sex || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('年齢', json.base.age || '')
+      Utils.createDataElement('年齢', json.base.age || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('外見', json.base.style || '')
+      Utils.createDataElement('外見', json.base.style || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('所属チーム', json.base.team || '')
+      Utils.createDataElement('所属チーム', json.base.team || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('表の顔', json.base.surface || '')
+      Utils.createDataElement('表の顔', json.base.surface || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('盟約', json.base.alliance || '')
+      Utils.createDataElement('盟約', json.base.alliance || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('階級', json.base.hierarchy || '')
+      Utils.createDataElement('階級', json.base.hierarchy || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('好きななもの', json.base.likes || '')
+      Utils.createDataElement('好きななもの', json.base.likes || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('嫌いなもの', json.base.dislikes || '')
+      Utils.createDataElement('嫌いなもの', json.base.dislikes || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('好みのタイプ', json.base.favorites || '')
+      Utils.createDataElement('好みのタイプ', json.base.favorites || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('好みの映画', json.base.movie || '')
+      Utils.createDataElement('好みの映画', json.base.movie || '')
     );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * 環境値
      */
-    const abilityElement = gameCharacter.createDataElement('環境値', '');
+    const abilityElement = Utils.createDataElement('環境値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     abilityElement.appendChild(
-      gameCharacter.createDataElement('犯罪', json.base.abl.crime.value)
+      Utils.createDataElement('犯罪', json.base.abl.crime.value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('生活', json.base.abl.life.value)
+      Utils.createDataElement('生活', json.base.abl.life.value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('恋愛', json.base.abl.love.value)
+      Utils.createDataElement('恋愛', json.base.abl.love.value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('教養', json.base.abl.culture.value)
+      Utils.createDataElement('教養', json.base.abl.culture.value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('戦闘', json.base.abl.combat.value)
+      Utils.createDataElement('戦闘', json.base.abl.combat.value)
     );
 
     /*
      * 天分値
      */
-    const giftElement = gameCharacter.createDataElement('天分値', '');
+    const giftElement = Utils.createDataElement('天分値', '');
     gameCharacter.detailDataElement.appendChild(giftElement);
     giftElement.appendChild(
-      gameCharacter.createDataElement('肉体', json.base.gift.body.value)
+      Utils.createDataElement('肉体', json.base.gift.body.value)
     );
     giftElement.appendChild(
-      gameCharacter.createDataElement('精神', json.base.gift.mind.value)
+      Utils.createDataElement('精神', json.base.gift.mind.value)
     );
 
     /*
      * 戦闘値
      */
-    const powerElement = gameCharacter.createDataElement('天分値', '');
+    const powerElement = Utils.createDataElement('天分値', '');
     gameCharacter.detailDataElement.appendChild(powerElement);
     powerElement.appendChild(
-      gameCharacter.createDataElement('反応値', json.base.power.initiative)
+      Utils.createDataElement('反応値', json.base.power.initiative)
     );
     powerElement.appendChild(
-      gameCharacter.createDataElement('攻撃力', json.base.power.attack)
+      Utils.createDataElement('攻撃力', json.base.power.attack)
     );
     powerElement.appendChild(
-      gameCharacter.createDataElement('破壊力', json.base.power.destroy)
+      Utils.createDataElement('破壊力', json.base.power.destroy)
     );
 
     /*
      * 性業値
      */
-    const emotionElement = gameCharacter.createDataElement('性業', '');
+    const emotionElement = Utils.createDataElement('性業', '');
     gameCharacter.detailDataElement.appendChild(emotionElement);
     emotionElement.appendChild(
-      gameCharacter.createDataElement('性業値', json.base.emotion)
+      Utils.createDataElement('性業値', json.base.emotion)
     );
 
     /*
      * 趣味
      */
-    const hobbyElement = gameCharacter.createDataElement(
-      '趣味(コミュニティ)　',
-      ''
-    );
+    const hobbyElement = Utils.createDataElement('趣味(コミュニティ)　', '');
     gameCharacter.detailDataElement.appendChild(hobbyElement);
     const hobbyNameList = [
       ['イベント', '音楽', 'アラサガシ', 'アウトドア', '育成', 'アダルト'],
@@ -209,7 +202,7 @@ export class Satasupe implements AppspotFactory {
         '風俗系',
       ][colId];
       hobbyElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           `趣味${hobbyCount}`,
           `${hobbyName} (${category})`
         )
@@ -219,22 +212,22 @@ export class Satasupe implements AppspotFactory {
     /*
      * 状態
      */
-    const conditionElement = gameCharacter.createDataElement('状態　', '');
+    const conditionElement = Utils.createDataElement('状態　', '');
     gameCharacter.detailDataElement.appendChild(conditionElement);
     conditionElement.appendChild(
-      gameCharacter.createDataElement('トラウマ', json.cond.trauma.value || '')
+      Utils.createDataElement('トラウマ', json.cond.trauma.value || '')
     );
     conditionElement.appendChild(
-      gameCharacter.createDataElement('中毒', json.cond.addiction.value || '')
+      Utils.createDataElement('中毒', json.cond.addiction.value || '')
     );
     conditionElement.appendChild(
-      gameCharacter.createDataElement('トリコ', json.cond.prisoner.value || '')
+      Utils.createDataElement('トリコ', json.cond.prisoner.value || '')
     );
     conditionElement.appendChild(
-      gameCharacter.createDataElement('SAN', json.cond.san.value || '')
+      Utils.createDataElement('SAN', json.cond.san.value || '')
     );
     conditionElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         'クトゥルフ神話技能',
         json.cond.cthulhu.value || ''
       )
@@ -243,22 +236,22 @@ export class Satasupe implements AppspotFactory {
     /*
      * アジト
      */
-    const homeElement = gameCharacter.createDataElement('アジト　', '');
+    const homeElement = Utils.createDataElement('アジト　', '');
     gameCharacter.detailDataElement.appendChild(homeElement);
     homeElement.appendChild(
-      gameCharacter.createDataElement('トラウマ', json.home.place || '')
+      Utils.createDataElement('トラウマ', json.home.place || '')
     );
     homeElement.appendChild(
-      gameCharacter.createDataElement('中毒', json.home.comfortable || '')
+      Utils.createDataElement('中毒', json.home.comfortable || '')
     );
     homeElement.appendChild(
-      gameCharacter.createDataElement('トリコ', json.home.security || '')
+      Utils.createDataElement('トリコ', json.home.security || '')
     );
 
     /*
      * 一般装備
      */
-    const outfitsElement = gameCharacter.createDataElement(
+    const outfitsElement = Utils.createDataElement(
       '一般装備　使用／効果／特殊機能',
       ''
     );
@@ -268,7 +261,7 @@ export class Satasupe implements AppspotFactory {
         continue;
       }
       outfitsElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           outfits.name,
           `${outfits.use || ''}／${outfits.effect || ''}／${
             outfits.notes || ''
@@ -280,7 +273,7 @@ export class Satasupe implements AppspotFactory {
     /*
      * 武器
      */
-    const weaponsElement = gameCharacter.createDataElement(
+    const weaponsElement = Utils.createDataElement(
       '武器　命中／ダメージ／射程／特殊機能',
       ''
     );
@@ -290,7 +283,7 @@ export class Satasupe implements AppspotFactory {
         continue;
       }
       weaponsElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           weapons.name,
           `${weapons.aim || ''}／${weapons.damage || ''}／${
             weapons.range || ''
@@ -302,7 +295,7 @@ export class Satasupe implements AppspotFactory {
     /*
      * 乗り物
      */
-    const vehiclesElement = gameCharacter.createDataElement(
+    const vehiclesElement = Utils.createDataElement(
       '乗り物　名称／スピード／車体／荷物／特殊機能',
       ''
     );
@@ -312,7 +305,7 @@ export class Satasupe implements AppspotFactory {
         continue;
       }
       vehiclesElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           vehicles.name,
           `${vehicles.speed || ''}／${vehicles.frame || ''}／${
             vehicles.burden || ''
@@ -324,7 +317,7 @@ export class Satasupe implements AppspotFactory {
     /*
      * カルマ
      */
-    const karmaElement = gameCharacter.createDataElement(
+    const karmaElement = Utils.createDataElement(
       'カルマ　異能or代償名／使用／対象／判定／効果',
       ''
     );
@@ -334,7 +327,7 @@ export class Satasupe implements AppspotFactory {
         continue;
       }
       karmaElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           `${karma.name} (異能)`,
           `${karma.talent.name || ''}／${karma.talent.use || ''}／${
             karma.talent.target || ''
@@ -342,7 +335,7 @@ export class Satasupe implements AppspotFactory {
         )
       );
       karmaElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           `${karma.name} (代償)`,
           `${karma.price.name || ''}／${karma.price.use || ''}／${
             karma.price.target || ''

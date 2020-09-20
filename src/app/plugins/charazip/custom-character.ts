@@ -39,12 +39,15 @@ export class CustomCharacter extends GameCharacter {
     return super.toXml().replace(/custom-character/g, 'character');
   }
 
-  createDataElement(name: string, value: string | number): DataElement {
+}
+
+export class Utils {
+  static createDataElement(name: string, value: string | number): DataElement {
     name = StringUtil.toHalfWidth(name);
     return DataElement.create(name, value, {});
   }
 
-  createResourceElement(
+  static createResourceElement(
     name: string,
     value: string | number,
     currentValue: string | number
@@ -56,7 +59,7 @@ export class CustomCharacter extends GameCharacter {
     });
   }
 
-  createNoteElement(name: string, value: string | number): DataElement {
+  static createNoteElement(name: string, value: string | number): DataElement {
     name = StringUtil.toHalfWidth(name);
     return DataElement.create(name, value, { type: 'note' });
   }

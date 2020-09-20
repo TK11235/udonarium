@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 /**
@@ -30,17 +30,17 @@ export class Insane implements AppspotFactory {
     /*
      * ステータス
      */
-    const statusElement = gameCharacter.createDataElement('ステータス', '');
+    const statusElement = Utils.createDataElement('ステータス', '');
     gameCharacter.detailDataElement.appendChild(statusElement);
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '生命力',
         json.hitpoint.max,
         json.hitpoint.value
       )
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '正気度',
         json.sanepoint.max,
         json.sanepoint.value
@@ -55,39 +55,36 @@ export class Insane implements AppspotFactory {
       e: '怪異',
     };
     statusElement.appendChild(
-      gameCharacter.createDataElement(
-        '好奇心',
-        curiosities[json.base.curiosity]
-      )
+      Utils.createDataElement('好奇心', curiosities[json.base.curiosity])
     );
     statusElement.appendChild(
-      gameCharacter.createDataElement('恐怖心', json.base.nightmare)
+      Utils.createDataElement('恐怖心', json.base.nightmare)
     );
 
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
     );
     const pcno = Number.parseInt(json.scenario.pcno, 10);
     infoElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         'HO',
         Number.isNaN(pcno) ? json.scenario.pcno || '' : `PC${pcno}`
       )
     );
     infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.base.memo || '')
+      Utils.createNoteElement('説明', json.base.memo || '')
     );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * 特技
      */
-    const skillElement = gameCharacter.createDataElement('特技', '');
+    const skillElement = Utils.createDataElement('特技', '');
     gameCharacter.detailDataElement.appendChild(skillElement);
     const skillNameList = [
       ['焼却', '恋', '痛み', '分解', '物理学', '時間'],
@@ -117,22 +114,20 @@ export class Insane implements AppspotFactory {
       const nameId = matchData[2];
       const skillName = skillNameList[rowId][nameId];
       const category = ['暴力', '情動', '知覚', '技術', '知識', '怪異'][nameId];
-      skillElement.appendChild(
-        gameCharacter.createDataElement(category, skillName)
-      );
+      skillElement.appendChild(Utils.createDataElement(category, skillName));
     }
 
     /*
      * アイテム
      */
-    const itemElement = gameCharacter.createDataElement('アイテム', '');
+    const itemElement = Utils.createDataElement('アイテム', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (const item of json.item) {
       if (!item.name) {
         continue;
       }
       itemElement.appendChild(
-        gameCharacter.createResourceElement(item.name, 2, item.count || '0')
+        Utils.createResourceElement(item.name, 2, item.count || '0')
       );
     }
 
@@ -143,7 +138,7 @@ export class Insane implements AppspotFactory {
       ['共感', '友情', '愛情', '忠誠', '憧憬', '狂信'],
       ['不信', '怒り', '妬み', '侮蔑', '劣等感', '殺意'],
     ];
-    const personalityElement = gameCharacter.createDataElement('人物欄', '');
+    const personalityElement = Utils.createDataElement('人物欄', '');
     gameCharacter.detailDataElement.appendChild(personalityElement);
     let personalityCount = 0;
     for (const personality of json.personalities) {
@@ -154,26 +149,24 @@ export class Insane implements AppspotFactory {
       const emotion =
         emotionList[personality.direction - 1][personality.emotion - 1];
       personalityElement.appendChild(
-        gameCharacter.createDataElement(personality.name, emotion)
+        Utils.createDataElement(personality.name, emotion)
       );
     }
     for (; personalityCount < 3; personalityCount++) {
-      personalityElement.appendChild(
-        gameCharacter.createDataElement('人物名', '感情')
-      );
+      personalityElement.appendChild(Utils.createDataElement('人物名', '感情'));
     }
 
     /*
      * アビリティ
      */
-    const abilityElement = gameCharacter.createDataElement('アビリティ', '');
+    const abilityElement = Utils.createDataElement('アビリティ', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     for (const ability of json.ability) {
       if (!ability.name) {
         continue;
       }
       abilityElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           ability.name,
           `${ability.type}／${ability.targetSkill || 'なし'}／${
             ability.effect || ''

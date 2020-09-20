@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 /**
@@ -30,93 +30,85 @@ export class MonotoneMuseum implements AppspotFactory {
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.base.memo || '')
+      Utils.createNoteElement('説明', json.base.memo || '')
     );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    const resourceElement = Utils.createDataElement('リソース', '');
     gameCharacter.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         'HP',
         json.outfits.total.hp,
         json.outfits.total.hp
       )
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         'MP',
         json.outfits.total.mp,
         json.outfits.total.mp
       )
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
-        '剥離値',
-        20,
-        json.base.exfoliation.value
-      )
+      Utils.createResourceElement('剥離値', 20, json.base.exfoliation.value)
     );
     const fortunePoint: number =
       Number.parseInt(json.fortunepoint || 0, 10) +
       Number.parseInt(json.addfortunepoint || 0, 10);
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
-        '財産ポイント',
-        fortunePoint,
-        fortunePoint
-      )
+      Utils.createResourceElement('財産ポイント', fortunePoint, fortunePoint)
     );
     /*
      * ステータス
      */
-    const statusElement = gameCharacter.createDataElement('ステータス', '');
+    const statusElement = Utils.createDataElement('ステータス', '');
     gameCharacter.detailDataElement.appendChild(statusElement);
     statusElement.appendChild(
-      gameCharacter.createDataElement('演者レベル', json.base.level)
+      Utils.createDataElement('演者レベル', json.base.level)
     );
-    const classElement = gameCharacter.createDataElement('クラス', '');
+    const classElement = Utils.createDataElement('クラス', '');
     statusElement.appendChild(classElement);
     for (const clazz of json.classes) {
       classElement.appendChild(
-        gameCharacter.createDataElement(clazz.name, clazz.level)
+        Utils.createDataElement(clazz.name, clazz.level)
       );
     }
     statusElement.appendChild(
-      gameCharacter.createDataElement('基本剥離値', json.base.exfoliation.init)
+      Utils.createDataElement('基本剥離値', json.base.exfoliation.init)
     );
     /*
      * 配役
      */
-    const lifepathElement = gameCharacter.createDataElement('配役', '');
+    const lifepathElement = Utils.createDataElement('配役', '');
     gameCharacter.detailDataElement.appendChild(lifepathElement);
     lifepathElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         '出自',
         `${json.lifepath.birth.name || ''}/${json.lifepath.birth.memo || ''}`
       )
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         '境遇',
         `${json.lifepath.environment.name || ''}/${
           json.lifepath.environment.memo || ''
         }`
       )
     );
-    const partnerElement = gameCharacter.createDataElement('パートナー', '');
+    const partnerElement = Utils.createDataElement('パートナー', '');
     lifepathElement.appendChild(partnerElement);
     for (const connection of json.lifepath.connection) {
       partnerElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           connection.name || '',
           connection.relation || ''
         )
@@ -125,69 +117,67 @@ export class MonotoneMuseum implements AppspotFactory {
     /*
      * 能力値
      */
-    const abilityElement = gameCharacter.createDataElement('能力値', '');
+    const abilityElement = Utils.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     abilityElement.appendChild(
-      gameCharacter.createDataElement('肉体', json.abl.body.bonus)
+      Utils.createDataElement('肉体', json.abl.body.bonus)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('知覚', json.abl.sense.bonus)
+      Utils.createDataElement('知覚', json.abl.sense.bonus)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('意志', json.abl.will.bonus)
+      Utils.createDataElement('意志', json.abl.will.bonus)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('感応', json.abl.sympathy.bonus)
+      Utils.createDataElement('感応', json.abl.sympathy.bonus)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('社会', json.abl.society.bonus)
+      Utils.createDataElement('社会', json.abl.society.bonus)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('縫製', json.abl.sewing.bonus)
+      Utils.createDataElement('縫製', json.abl.sewing.bonus)
     );
     /*
      * 戦闘値
      */
-    const battleElement = gameCharacter.createDataElement('戦闘値', '');
+    const battleElement = Utils.createDataElement('戦闘値', '');
     gameCharacter.detailDataElement.appendChild(battleElement);
     battleElement.appendChild(
-      gameCharacter.createDataElement('命中値', json.outfits.total.hit)
+      Utils.createDataElement('命中値', json.outfits.total.hit)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('回避値', json.outfits.total.dodge)
+      Utils.createDataElement('回避値', json.outfits.total.dodge)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('術操値', json.outfits.total.magic)
+      Utils.createDataElement('術操値', json.outfits.total.magic)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('抵抗値', json.outfits.total.countermagic)
+      Utils.createDataElement('抵抗値', json.outfits.total.countermagic)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('行動値', json.outfits.total.action)
+      Utils.createDataElement('行動値', json.outfits.total.action)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('耐久力', json.outfits.total.hp)
+      Utils.createDataElement('耐久力', json.outfits.total.hp)
     );
     battleElement.appendChild(
-      gameCharacter.createDataElement('精神力', json.outfits.total.mp)
+      Utils.createDataElement('精神力', json.outfits.total.mp)
     );
     /*
      * アイテム
      */
-    const itemElement = gameCharacter.createDataElement('アイテム', '');
+    const itemElement = Utils.createDataElement('アイテム', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (const item of json.items) {
       if (!item.name) {
         continue;
       }
-      itemElement.appendChild(
-        gameCharacter.createDataElement(item.name, item.effect)
-      );
+      itemElement.appendChild(Utils.createDataElement(item.name, item.effect));
     }
     /*
      * 逸脱能力
      */
-    const specialElement = gameCharacter.createDataElement('逸脱能力', '');
+    const specialElement = Utils.createDataElement('逸脱能力', '');
     gameCharacter.detailDataElement.appendChild(specialElement);
     let specialCount = 0;
     for (const special of json.specials) {
@@ -196,26 +186,26 @@ export class MonotoneMuseum implements AppspotFactory {
       }
       specialCount++;
       specialElement.appendChild(
-        gameCharacter.createDataElement(`逸脱能力${specialCount}`, special.name)
+        Utils.createDataElement(`逸脱能力${specialCount}`, special.name)
       );
     }
     while (specialCount < 3) {
       specialCount++;
       specialElement.appendChild(
-        gameCharacter.createDataElement(`逸脱能力${specialCount}`, '')
+        Utils.createDataElement(`逸脱能力${specialCount}`, '')
       );
     }
     /*
      * 特技
      */
-    const skillElement = gameCharacter.createDataElement('特技', '');
+    const skillElement = Utils.createDataElement('特技', '');
     gameCharacter.detailDataElement.appendChild(skillElement);
     for (const skill of json.skills) {
       if (!skill.name) {
         continue;
       }
       skillElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           skill.name,
           `${skill.class || ''}/${skill.level || ''}/${skill.type || ''}/${
             skill.timing || ''

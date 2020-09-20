@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 interface Style {
@@ -42,22 +42,17 @@ export class TokyoNovaX implements AppspotFactory {
     /*
      * パーソナルデータ
      */
-    const personalElement = gameCharacter.createDataElement(
-      'パーソナルデータ',
-      ''
-    );
+    const personalElement = Utils.createDataElement('パーソナルデータ', '');
     gameCharacter.detailDataElement.appendChild(personalElement);
     personalElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
+    );
+    personalElement.appendChild(Utils.createDataElement('キャスト番号', ''));
+    personalElement.appendChild(
+      Utils.createDataElement('所属', json.base.post)
     );
     personalElement.appendChild(
-      gameCharacter.createDataElement('キャスト番号', '')
-    );
-    personalElement.appendChild(
-      gameCharacter.createDataElement('所属', json.base.post)
-    );
-    personalElement.appendChild(
-      gameCharacter.createDataElement('市民ランク', json.base.rank)
+      Utils.createDataElement('市民ランク', json.base.rank)
     );
     const baseMemo = (json.base.memo || '').trim();
     const baseMemoir = (json.base.memoir || '').trim();
@@ -65,13 +60,13 @@ export class TokyoNovaX implements AppspotFactory {
       baseMemo === '' || baseMemoir === ''
         ? baseMemoir + baseMemo
         : `${baseMemoir}\n\n---\n\n${baseMemo}`;
-    personalElement.appendChild(gameCharacter.createNoteElement('設定', memo));
-    personalElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    personalElement.appendChild(Utils.createNoteElement('設定', memo));
+    personalElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * スタイル・神業
      */
-    const styleElement = gameCharacter.createDataElement('スタイル・神業', '');
+    const styleElement = Utils.createDataElement('スタイル・神業', '');
     gameCharacter.detailDataElement.appendChild(styleElement);
     const styleList: { [styleNo: string]: Style } = {
       '0': {
@@ -252,102 +247,78 @@ export class TokyoNovaX implements AppspotFactory {
     const style3 = styleList[json.styles.style3];
     const pk3 = pkDisp[json.styles.pk3];
     styleElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         'スタイル',
         `${style1.name}${pk1}、${style2.name}${pk2}、${style3.name}${pk3}`
       )
     );
-    const divineWorkElement = gameCharacter.createDataElement('神業', '');
+    const divineWorkElement = Utils.createDataElement('神業', '');
     styleElement.appendChild(divineWorkElement);
     divineWorkElement.appendChild(
-      gameCharacter.createResourceElement(style1.divineWork, 1, 1)
+      Utils.createResourceElement(style1.divineWork, 1, 1)
     );
     divineWorkElement.appendChild(
-      gameCharacter.createResourceElement(style2.divineWork, 1, 1)
+      Utils.createResourceElement(style2.divineWork, 1, 1)
     );
     divineWorkElement.appendChild(
-      gameCharacter.createResourceElement(style3.divineWork, 1, 1)
+      Utils.createResourceElement(style3.divineWork, 1, 1)
     );
 
     /*
      * 能力値・制御値
      */
-    const abilityElement = gameCharacter.createDataElement(
-      '能力値・制御値',
-      ''
-    );
+    const abilityElement = Utils.createDataElement('能力値・制御値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     const abilityRe = /\d+\((\d+)\)/;
-    const reasonElement = gameCharacter.createDataElement('理性♠', '');
+    const reasonElement = Utils.createDataElement('理性♠', '');
     abilityElement.appendChild(reasonElement);
     const reasonAbl = json.ability.reason.abl.replace(abilityRe, '$1');
     const reasonCtl = json.ability.reason.ctl.replace(abilityRe, '$1');
-    reasonElement.appendChild(
-      gameCharacter.createDataElement('理性', reasonAbl)
-    );
-    reasonElement.appendChild(
-      gameCharacter.createDataElement('理性(制)', reasonCtl)
-    );
-    const passionElement = gameCharacter.createDataElement('感情♣', '');
+    reasonElement.appendChild(Utils.createDataElement('理性', reasonAbl));
+    reasonElement.appendChild(Utils.createDataElement('理性(制)', reasonCtl));
+    const passionElement = Utils.createDataElement('感情♣', '');
     abilityElement.appendChild(passionElement);
     const passionAbl = json.ability.passion.abl.replace(abilityRe, '$1');
     const passionCtl = json.ability.passion.ctl.replace(abilityRe, '$1');
-    passionElement.appendChild(
-      gameCharacter.createDataElement('感情', passionAbl)
-    );
-    passionElement.appendChild(
-      gameCharacter.createDataElement('感情(制)', passionCtl)
-    );
-    const lifeElement = gameCharacter.createDataElement('生命♥', '');
+    passionElement.appendChild(Utils.createDataElement('感情', passionAbl));
+    passionElement.appendChild(Utils.createDataElement('感情(制)', passionCtl));
+    const lifeElement = Utils.createDataElement('生命♥', '');
     abilityElement.appendChild(lifeElement);
     const lifeAbl = json.ability.life.abl.replace(abilityRe, '$1');
     const lifeCtl = json.ability.life.ctl.replace(abilityRe, '$1');
-    lifeElement.appendChild(gameCharacter.createDataElement('生命', lifeAbl));
-    lifeElement.appendChild(
-      gameCharacter.createDataElement('生命(制)', lifeCtl)
-    );
-    const mundaneElement = gameCharacter.createDataElement('外界◆', '');
+    lifeElement.appendChild(Utils.createDataElement('生命', lifeAbl));
+    lifeElement.appendChild(Utils.createDataElement('生命(制)', lifeCtl));
+    const mundaneElement = Utils.createDataElement('外界◆', '');
     abilityElement.appendChild(mundaneElement);
     const mundaneAbl = json.ability.mundane.abl.replace(abilityRe, '$1');
     const mundaneCtl = json.ability.mundane.ctl.replace(abilityRe, '$1');
-    mundaneElement.appendChild(
-      gameCharacter.createDataElement('外界', mundaneAbl)
-    );
-    mundaneElement.appendChild(
-      gameCharacter.createDataElement('外界(制)', mundaneCtl)
-    );
+    mundaneElement.appendChild(Utils.createDataElement('外界', mundaneAbl));
+    mundaneElement.appendChild(Utils.createDataElement('外界(制)', mundaneCtl));
 
     /*
      * アクトデータ
      */
-    const actElement = gameCharacter.createDataElement('アクトデータ', '');
+    const actElement = Utils.createDataElement('アクトデータ', '');
     gameCharacter.detailDataElement.appendChild(actElement);
     actElement.appendChild(
-      gameCharacter.createResourceElement('報酬点', 21, json.base.reward)
+      Utils.createResourceElement('報酬点', 21, json.base.reward)
     );
     actElement.appendChild(
-      gameCharacter.createNoteElement('アクトコネ', '（得たコネ）')
+      Utils.createNoteElement('アクトコネ', '（得たコネ）')
     );
     actElement.appendChild(
-      gameCharacter.createNoteElement(
-        'メモ',
-        '（得たアドレスやアウトフィットなど）'
-      )
+      Utils.createNoteElement('メモ', '（得たアドレスやアウトフィットなど）')
     );
 
     /*
      * 戦闘データ
      */
-    const combatElement = gameCharacter.createDataElement('戦闘データ', '');
+    const combatElement = Utils.createDataElement('戦闘データ', '');
     gameCharacter.detailDataElement.appendChild(combatElement);
     combatElement.appendChild(
-      gameCharacter.createResourceElement(
-        'CS',
-        json.ability.cs,
-        json.ability.cs
-      )
+      Utils.createResourceElement('CS', json.ability.cs, json.ability.cs)
     );
-    const protectElement = gameCharacter.createDataElement('防御力', '');
+    const protectElement = Utils.createDataElement('防御力', '');
     combatElement.appendChild(protectElement);
     const { protecS, protecP, protecI }: Protect = json.armours
       .map((armour) => {
@@ -371,35 +342,29 @@ export class TokyoNovaX implements AppspotFactory {
           protecI: 0,
         }
       );
-    protectElement.appendChild(gameCharacter.createDataElement('S', protecS));
-    protectElement.appendChild(gameCharacter.createDataElement('P', protecP));
-    protectElement.appendChild(gameCharacter.createDataElement('I', protecI));
-    combatElement.appendChild(
-      gameCharacter.createNoteElement('肉体ダメージ', '')
-    );
-    combatElement.appendChild(
-      gameCharacter.createNoteElement('精神ダメージ', '')
-    );
-    combatElement.appendChild(
-      gameCharacter.createNoteElement('社会ダメージ', '')
-    );
+    protectElement.appendChild(Utils.createDataElement('S', protecS));
+    protectElement.appendChild(Utils.createDataElement('P', protecP));
+    protectElement.appendChild(Utils.createDataElement('I', protecI));
+    combatElement.appendChild(Utils.createNoteElement('肉体ダメージ', ''));
+    combatElement.appendChild(Utils.createNoteElement('精神ダメージ', ''));
+    combatElement.appendChild(Utils.createNoteElement('社会ダメージ', ''));
 
     /*
      * BS
      */
-    const bsElement = gameCharacter.createDataElement('BS', '');
+    const bsElement = Utils.createDataElement('BS', '');
     gameCharacter.detailDataElement.appendChild(bsElement);
-    bsElement.appendChild(gameCharacter.createDataElement('恐慌', ''));
-    bsElement.appendChild(gameCharacter.createDataElement('蛇毒', ''));
-    bsElement.appendChild(gameCharacter.createNoteElement('重圧', ''));
-    bsElement.appendChild(gameCharacter.createDataElement('衰弱', ''));
-    bsElement.appendChild(gameCharacter.createNoteElement('捕縛', ''));
-    bsElement.appendChild(gameCharacter.createNoteElement('酩酊', ''));
-    bsElement.appendChild(gameCharacter.createDataElement('狼狽', ''));
-    bsElement.appendChild(gameCharacter.createDataElement('萎縮', ''));
-    bsElement.appendChild(gameCharacter.createDataElement('憎悪', ''));
-    bsElement.appendChild(gameCharacter.createNoteElement('支配', ''));
-    bsElement.appendChild(gameCharacter.createDataElement('電子妨害', ''));
+    bsElement.appendChild(Utils.createDataElement('恐慌', ''));
+    bsElement.appendChild(Utils.createDataElement('蛇毒', ''));
+    bsElement.appendChild(Utils.createNoteElement('重圧', ''));
+    bsElement.appendChild(Utils.createDataElement('衰弱', ''));
+    bsElement.appendChild(Utils.createNoteElement('捕縛', ''));
+    bsElement.appendChild(Utils.createNoteElement('酩酊', ''));
+    bsElement.appendChild(Utils.createDataElement('狼狽', ''));
+    bsElement.appendChild(Utils.createDataElement('萎縮', ''));
+    bsElement.appendChild(Utils.createDataElement('憎悪', ''));
+    bsElement.appendChild(Utils.createNoteElement('支配', ''));
+    bsElement.appendChild(Utils.createDataElement('電子妨害', ''));
 
     const domParser: DOMParser = new DOMParser();
     domParser.parseFromString(gameCharacter.toXml(), 'application/xml');

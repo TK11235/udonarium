@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory, VampireBloodFactory } from '../system-factory';
 
 export class DoubleCross3rd {
@@ -36,19 +36,19 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('基本情報', '');
+    const infoElement = Utils.createDataElement('基本情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('コードネーム', json.base.nameKana)
+      Utils.createDataElement('コードネーム', json.base.nameKana)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('ワークス', json.base.works)
+      Utils.createDataElement('ワークス', json.base.works)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('カヴァー', json.base.cover)
+      Utils.createDataElement('カヴァー', json.base.cover)
     );
     const syndrome =
       json.base.syndromes.primary.syndrome +
@@ -58,34 +58,30 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
       (json.base.syndromes.tertiary.syndrome
         ? `／${json.base.syndromes.tertiary.syndrome}`
         : '');
-    infoElement.appendChild(
-      gameCharacter.createDataElement('シンドローム', syndrome)
-    );
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.base.memo)
-    );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createDataElement('シンドローム', syndrome));
+    infoElement.appendChild(Utils.createNoteElement('説明', json.base.memo));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    const resourceElement = Utils.createDataElement('リソース', '');
     gameCharacter.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         'HP',
         json.subAbility.hp.total,
         json.subAbility.hp.total
       )
     );
     resourceElement.appendChild(
-      gameCharacter.createDataElement('行動値', json.subAbility.action.total)
+      Utils.createDataElement('行動値', json.subAbility.action.total)
     );
     resourceElement.appendChild(
-      gameCharacter.createDataElement('移動', json.subAbility.moveSen.total)
+      Utils.createDataElement('移動', json.subAbility.moveSen.total)
     );
     resourceElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         '装甲値',
         json.armours
           .filter((armour: any) => armour.armour)
@@ -94,62 +90,57 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
       )
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '財産点',
         json.subAbility.property.total,
         json.subAbility.property.total
       )
     );
+    resourceElement.appendChild(Utils.createResourceElement('ロイス', 7, 7));
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('ロイス', 7, 7)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createResourceElement('クリティカル値', 11, 10)
+      Utils.createResourceElement('クリティカル値', 11, 10)
     );
 
     /*
      * 侵蝕率の影響
      */
-    const erotionElement = gameCharacter.createDataElement('侵蝕率の影響', '');
+    const erotionElement = Utils.createDataElement('侵蝕率の影響', '');
     gameCharacter.detailDataElement.appendChild(erotionElement);
     erotionElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '侵蝕率',
         200,
         json.erotion.shock || json.subAbility.erotion.total
       )
     );
-    erotionElement.appendChild(gameCharacter.createResourceElement('Lv', 3, 0));
-    erotionElement.appendChild(gameCharacter.createResourceElement('D', 8, 0));
+    erotionElement.appendChild(Utils.createResourceElement('Lv', 3, 0));
+    erotionElement.appendChild(Utils.createResourceElement('D', 8, 0));
 
     /*
      * ライフパス
      */
-    const lifepathElement = gameCharacter.createDataElement('ライフパス', '');
+    const lifepathElement = Utils.createDataElement('ライフパス', '');
     gameCharacter.detailDataElement.appendChild(lifepathElement);
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('出自', json.lifepath.origins.name)
+      Utils.createDataElement('出自', json.lifepath.origins.name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('経験', json.lifepath.experience.name)
+      Utils.createDataElement('経験', json.lifepath.experience.name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('邂逅', json.lifepath.encounter.name)
+      Utils.createDataElement('邂逅', json.lifepath.encounter.name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('覚醒', json.lifepath.arousal.name)
+      Utils.createDataElement('覚醒', json.lifepath.arousal.name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('衝動', json.lifepath.impulse.name)
+      Utils.createDataElement('衝動', json.lifepath.impulse.name)
     );
 
     /*
      * ロイス
      */
-    const loisElement = gameCharacter.createDataElement(
-      'ロイス（好意／悪意）',
-      ''
-    );
+    const loisElement = Utils.createDataElement('ロイス（好意／悪意）', '');
     gameCharacter.detailDataElement.appendChild(loisElement);
     let loisNo = 0;
     for (const lois of json.lois) {
@@ -158,7 +149,7 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
       }
       loisNo++;
       loisElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           `ロイス${loisNo}`,
           `${lois.name}（${lois.Pfeel || ''}／${lois.Nfeel || ''}）`
         )
@@ -166,112 +157,88 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
     }
     for (; loisNo < 7; loisNo++) {
       loisElement.appendChild(
-        gameCharacter.createDataElement(`ロイス${loisNo + 1}`, '')
+        Utils.createDataElement(`ロイス${loisNo + 1}`, '')
       );
     }
 
     /*
      * 能力値／技能
      */
-    const abilityElement = gameCharacter.createDataElement('能力値／技能', '');
+    const abilityElement = Utils.createDataElement('能力値／技能', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     abilityElement.appendChild(
-      gameCharacter.createDataElement(
-        '【肉体】',
-        json.baseAbility.body.subtotal
-      )
+      Utils.createDataElement('【肉体】', json.baseAbility.body.subtotal)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('白兵', json.skills.hak.A.lv || '0')
+      Utils.createDataElement('白兵', json.skills.hak.A.lv || '0')
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('回避', json.skills.kai.A.lv || '0')
+      Utils.createDataElement('回避', json.skills.kai.A.lv || '0')
     );
     for (const skills of json.skills.B) {
       if (!skills.name1) {
         continue;
       }
       abilityElement.appendChild(
-        gameCharacter.createDataElement(
-          `運転:${skills.name1}`,
-          skills.lv1 || '0'
-        )
+        Utils.createDataElement(`運転:${skills.name1}`, skills.lv1 || '0')
       );
     }
     abilityElement.appendChild(
-      gameCharacter.createDataElement(
-        '【感覚】',
-        json.baseAbility.sense.subtotal
-      )
+      Utils.createDataElement('【感覚】', json.baseAbility.sense.subtotal)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('射撃', json.skills.sha.A.lv || '0')
+      Utils.createDataElement('射撃', json.skills.sha.A.lv || '0')
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('知覚', json.skills.tik.A.lv || '0')
+      Utils.createDataElement('知覚', json.skills.tik.A.lv || '0')
     );
     for (const skills of json.skills.B) {
       if (!skills.name2) {
         continue;
       }
       abilityElement.appendChild(
-        gameCharacter.createDataElement(
-          `芸術:${skills.name2}`,
-          skills.lv2 || '0'
-        )
+        Utils.createDataElement(`芸術:${skills.name2}`, skills.lv2 || '0')
       );
     }
     abilityElement.appendChild(
-      gameCharacter.createDataElement(
-        '【精神】',
-        json.baseAbility.mind.subtotal
-      )
+      Utils.createDataElement('【精神】', json.baseAbility.mind.subtotal)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('RC', json.skills.rc.A.lv || '0')
+      Utils.createDataElement('RC', json.skills.rc.A.lv || '0')
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('意志', json.skills.isi.A.lv || '0')
+      Utils.createDataElement('意志', json.skills.isi.A.lv || '0')
     );
     for (const skills of json.skills.B) {
       if (!skills.name3) {
         continue;
       }
       abilityElement.appendChild(
-        gameCharacter.createDataElement(
-          `知識:${skills.name3}`,
-          skills.lv3 || '0'
-        )
+        Utils.createDataElement(`知識:${skills.name3}`, skills.lv3 || '0')
       );
     }
     abilityElement.appendChild(
-      gameCharacter.createDataElement(
-        '【社会】',
-        json.baseAbility.society.subtotal
-      )
+      Utils.createDataElement('【社会】', json.baseAbility.society.subtotal)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('交渉', json.skills.kou.A.lv || '0')
+      Utils.createDataElement('交渉', json.skills.kou.A.lv || '0')
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('調達', json.skills.tyo.A.lv || '0')
+      Utils.createDataElement('調達', json.skills.tyo.A.lv || '0')
     );
     for (const skills of json.skills.B) {
       if (!skills.name4) {
         continue;
       }
       abilityElement.appendChild(
-        gameCharacter.createDataElement(
-          `情報:${skills.name4}`,
-          skills.lv4 || '0'
-        )
+        Utils.createDataElement(`情報:${skills.name4}`, skills.lv4 || '0')
       );
     }
 
     /*
      * エフェクト
      */
-    const effectElement = gameCharacter.createDataElement('エフェクト', '');
+    const effectElement = Utils.createDataElement('エフェクト', '');
     gameCharacter.detailDataElement.appendChild(effectElement);
     for (const art of json.arts) {
       if (!art.name) {
@@ -282,17 +249,14 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
         sl = '★';
       }
       effectElement.appendChild(
-        gameCharacter.createDataElement(
-          art.name,
-          `Lv:${sl}｜侵蝕:${art.cost || '-'}`
-        )
+        Utils.createDataElement(art.name, `Lv:${sl}｜侵蝕:${art.cost || '-'}`)
       );
     }
 
     /*
      * コンボ
      */
-    const comboElement = gameCharacter.createDataElement('コンボ', '');
+    const comboElement = Utils.createDataElement('コンボ', '');
     gameCharacter.detailDataElement.appendChild(comboElement);
     for (const combo of json.combo) {
       if (!combo.name) {
@@ -321,15 +285,13 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
       if (notes) {
         comboText += `効果[${notes}]`;
       }
-      comboElement.appendChild(
-        gameCharacter.createNoteElement(combo.name, comboText)
-      );
+      comboElement.appendChild(Utils.createNoteElement(combo.name, comboText));
     }
 
     /*
      * 武器
      */
-    const weaponElement = gameCharacter.createDataElement('武器', '');
+    const weaponElement = Utils.createDataElement('武器', '');
     gameCharacter.detailDataElement.appendChild(weaponElement);
     for (const weapon of json.weapons) {
       if (!weapon.name) {
@@ -349,14 +311,14 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
         weaponText += `その他[${weapon.notes}]`;
       }
       weaponElement.appendChild(
-        gameCharacter.createNoteElement(weapon.name, weaponText)
+        Utils.createNoteElement(weapon.name, weaponText)
       );
     }
 
     /*
      * 防具
      */
-    const armourElement = gameCharacter.createDataElement('防具', '');
+    const armourElement = Utils.createDataElement('防具', '');
     gameCharacter.detailDataElement.appendChild(armourElement);
     for (const armour of json.armours) {
       if (!armour.name) {
@@ -376,21 +338,21 @@ class DoubleCross3rdAppspotFactory implements AppspotFactory {
         armourText += `その他[${armour.notes}]`;
       }
       armourElement.appendChild(
-        gameCharacter.createNoteElement(armour.name, armourText)
+        Utils.createNoteElement(armour.name, armourText)
       );
     }
 
     /*
      * 一般アイテム
      */
-    const itemElement = gameCharacter.createDataElement('一般アイテム', '');
+    const itemElement = Utils.createDataElement('一般アイテム', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (const item of json.items) {
       if (!item.name) {
         continue;
       }
       itemElement.appendChild(
-        gameCharacter.createNoteElement(item.name, item.notes || '')
+        Utils.createNoteElement(item.name, item.notes || '')
       );
     }
 
@@ -587,107 +549,98 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('基本情報', '');
+    const infoElement = Utils.createDataElement('基本情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
-    infoElement.appendChild(gameCharacter.createDataElement('PL', ''));
+    infoElement.appendChild(Utils.createDataElement('PL', ''));
     infoElement.appendChild(
-      gameCharacter.createDataElement('コードネーム', json.pc_codename)
+      Utils.createDataElement('コードネーム', json.pc_codename)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('ワークス', json.works_name)
+      Utils.createDataElement('ワークス', json.works_name)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('カヴァー', json.cover_name)
+      Utils.createDataElement('カヴァー', json.cover_name)
     );
     const syndrome =
       json.class1_name +
       (json.class2_name ? `／${json.class2_name}` : '') +
       (json.class3_name ? `／${json.class3_name}` : '');
+    infoElement.appendChild(Utils.createDataElement('シンドローム', syndrome));
     infoElement.appendChild(
-      gameCharacter.createDataElement('シンドローム', syndrome)
+      Utils.createNoteElement('説明', json.pc_making_memo)
     );
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.pc_making_memo)
-    );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    const resourceElement = Utils.createDataElement('リソース', '');
     gameCharacter.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('HP', json.NP5, json.NP5)
+      Utils.createResourceElement('HP', json.NP5, json.NP5)
     );
     resourceElement.appendChild(
-      gameCharacter.createDataElement('行動値', json.armer_total_act)
+      Utils.createDataElement('行動値', json.armer_total_act)
+    );
+    resourceElement.appendChild(Utils.createDataElement('移動', json.NP8));
+    resourceElement.appendChild(
+      Utils.createDataElement('装甲値', json.armer_total_def)
     );
     resourceElement.appendChild(
-      gameCharacter.createDataElement('移動', json.NP8)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createDataElement('装甲値', json.armer_total_def)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '財産点',
         json.money_point,
         json.money || json.money_point
       )
     );
+    resourceElement.appendChild(Utils.createResourceElement('ロイス', 7, 7));
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('ロイス', 7, 7)
-    );
-    resourceElement.appendChild(
-      gameCharacter.createResourceElement('クリティカル値', 11, 10)
+      Utils.createResourceElement('クリティカル値', 11, 10)
     );
 
     /*
      * 侵蝕率の影響
      */
-    const erotionElement = gameCharacter.createDataElement('侵蝕率の影響', '');
+    const erotionElement = Utils.createDataElement('侵蝕率の影響', '');
     gameCharacter.detailDataElement.appendChild(erotionElement);
     erotionElement.appendChild(
-      gameCharacter.createResourceElement('侵蝕率', 200, json.NP6)
+      Utils.createResourceElement('侵蝕率', 200, json.NP6)
     );
-    erotionElement.appendChild(gameCharacter.createResourceElement('Lv', 3, 0));
-    erotionElement.appendChild(gameCharacter.createResourceElement('D', 8, 0));
+    erotionElement.appendChild(Utils.createResourceElement('Lv', 3, 0));
+    erotionElement.appendChild(Utils.createResourceElement('D', 8, 0));
 
     /*
      * ライフパス
      */
-    const lifepathElement = gameCharacter.createDataElement('ライフパス', '');
+    const lifepathElement = Utils.createDataElement('ライフパス', '');
     gameCharacter.detailDataElement.appendChild(lifepathElement);
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('出自', json.shutuji_name)
+      Utils.createDataElement('出自', json.shutuji_name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('経験', json.keiken_name)
+      Utils.createDataElement('経験', json.keiken_name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('邂逅', json.kaikou_name)
+      Utils.createDataElement('邂逅', json.kaikou_name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('覚醒', json.birth_name)
+      Utils.createDataElement('覚醒', json.birth_name)
     );
     lifepathElement.appendChild(
-      gameCharacter.createDataElement('衝動', json.think_name)
+      Utils.createDataElement('衝動', json.think_name)
     );
 
     /*
      * ロイス
      */
-    const roiceElement = gameCharacter.createDataElement(
-      'ロイス（好意／悪意）',
-      ''
-    );
+    const roiceElement = Utils.createDataElement('ロイス（好意／悪意）', '');
     gameCharacter.detailDataElement.appendChild(roiceElement);
     for (let i = 0; i < json.roice_name.length; i++) {
       const roiceName = json.roice_name[i];
       const positive = json.roice_pos[i];
       const negative = json.roice_neg[i];
       roiceElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           `ロイス${i + 1}`,
           `${roiceName}（${positive}／${negative}）`
         )
@@ -697,7 +650,7 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
     /*
      * 能力値／技能
      */
-    const abilityElement = gameCharacter.createDataElement('能力値／技能', '');
+    const abilityElement = Utils.createDataElement('能力値／技能', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     const skillInfos = [
       { type: 1, name: '白兵' },
@@ -754,53 +707,42 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
     const mentalSkills = skills.filter((skill) => skill.type === 3);
     const socialSkills = skills.filter((skill) => skill.type === 4);
 
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('【肉体】', json.NP1)
-    );
+    abilityElement.appendChild(Utils.createDataElement('【肉体】', json.NP1));
     for (const skill of bodySkills) {
       abilityElement.appendChild(
-        gameCharacter.createDataElement(skill.name, skill.total)
+        Utils.createDataElement(skill.name, skill.total)
       );
     }
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('【感覚】', json.NP2)
-    );
+    abilityElement.appendChild(Utils.createDataElement('【感覚】', json.NP2));
     for (const skill of senseSkills) {
       abilityElement.appendChild(
-        gameCharacter.createDataElement(skill.name, skill.total)
+        Utils.createDataElement(skill.name, skill.total)
       );
     }
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('【精神】', json.NP3)
-    );
+    abilityElement.appendChild(Utils.createDataElement('【精神】', json.NP3));
     for (const skill of mentalSkills) {
       abilityElement.appendChild(
-        gameCharacter.createDataElement(skill.name, skill.total)
+        Utils.createDataElement(skill.name, skill.total)
       );
     }
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('【社会】', json.NP4)
-    );
+    abilityElement.appendChild(Utils.createDataElement('【社会】', json.NP4));
     for (const skill of socialSkills) {
       abilityElement.appendChild(
-        gameCharacter.createDataElement(skill.name, skill.total)
+        Utils.createDataElement(skill.name, skill.total)
       );
     }
 
     /*
      * エフェクト
      */
-    const effectElement = gameCharacter.createDataElement('エフェクト', '');
+    const effectElement = Utils.createDataElement('エフェクト', '');
     gameCharacter.detailDataElement.appendChild(effectElement);
     effectElement.appendChild(
-      gameCharacter.createDataElement('ワーディング', 'Lv:★｜侵蝕:-')
+      Utils.createDataElement('ワーディング', 'Lv:★｜侵蝕:-')
     );
     const ressurectLv = Number.parseInt(json.ressurect_lv, 10) + 1;
     effectElement.appendChild(
-      gameCharacter.createDataElement(
-        'リザレクト',
-        `Lv:${ressurectLv}｜侵蝕:[SL]d`
-      )
+      Utils.createDataElement('リザレクト', `Lv:${ressurectLv}｜侵蝕:[SL]d`)
     );
     const convertEffectLv = [
       '★',
@@ -840,7 +782,7 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
       }
       const cost = json.effect_cost[i];
       effectElement.appendChild(
-        gameCharacter.createDataElement(effectName, `Lv:${sl}｜侵蝕:${cost}`)
+        Utils.createDataElement(effectName, `Lv:${sl}｜侵蝕:${cost}`)
       );
     }
     for (let i = 0; i < json.easyeffect_name.length; i++) {
@@ -854,14 +796,14 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
       }
       const cost = json.easyeffect_cost[i] || '';
       effectElement.appendChild(
-        gameCharacter.createDataElement(effectName, `Lv:${sl}｜侵蝕:${cost}`)
+        Utils.createDataElement(effectName, `Lv:${sl}｜侵蝕:${cost}`)
       );
     }
 
     /*
      * 武器・コンボ
      */
-    const armElement = gameCharacter.createDataElement('武器・コンボ', '');
+    const armElement = Utils.createDataElement('武器・コンボ', '');
     gameCharacter.detailDataElement.appendChild(armElement);
     for (let i = 0; i < json.arms_name.length; i++) {
       const armName = json.arms_name[i];
@@ -889,13 +831,13 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
       if (memo) {
         armText += `その他[${memo}]`;
       }
-      armElement.appendChild(gameCharacter.createNoteElement(armName, armText));
+      armElement.appendChild(Utils.createNoteElement(armName, armText));
     }
 
     /*
      * 防具
      */
-    const armerElement = gameCharacter.createDataElement('防具', '');
+    const armerElement = Utils.createDataElement('防具', '');
     gameCharacter.detailDataElement.appendChild(armerElement);
     const armerName = json.armer_name;
     let armerText = '';
@@ -916,9 +858,7 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
       if (memo) {
         armerText += `その他[${memo}]`;
       }
-      armerElement.appendChild(
-        gameCharacter.createNoteElement(armerName, armerText)
-      );
+      armerElement.appendChild(Utils.createNoteElement(armerName, armerText));
     }
     const armer2Name = json.armer2_name;
     let armer2Text = '';
@@ -939,15 +879,13 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
       if (memo) {
         armer2Text += `その他[${memo}]`;
       }
-      armerElement.appendChild(
-        gameCharacter.createNoteElement(armer2Name, armer2Text)
-      );
+      armerElement.appendChild(Utils.createNoteElement(armer2Name, armer2Text));
     }
 
     /*
      * 一般アイテム
      */
-    const itemElement = gameCharacter.createDataElement('一般アイテム', '');
+    const itemElement = Utils.createDataElement('一般アイテム', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (let i = 0; i < json.item_name.length; i++) {
       const itemName = json.item_name[i];
@@ -955,7 +893,7 @@ class DoubleCross3rdVampireBloodFactory implements VampireBloodFactory {
         continue;
       }
       const memo = json.item_memo[i];
-      itemElement.appendChild(gameCharacter.createNoteElement(itemName, memo));
+      itemElement.appendChild(Utils.createNoteElement(itemName, memo));
     }
 
     const domParser: DOMParser = new DOMParser();

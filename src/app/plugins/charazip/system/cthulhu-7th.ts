@@ -1,7 +1,7 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 import { DataElement } from '@udonarium/data-element';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { VampireBloodFactory } from '../system-factory';
 
 /**
@@ -27,108 +27,74 @@ export class Cthulhu7th implements VampireBloodFactory {
     /*
      *情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
-    infoElement.appendChild(gameCharacter.createDataElement('PL', ''));
+    infoElement.appendChild(Utils.createDataElement('PL', ''));
+    infoElement.appendChild(Utils.createDataElement('職業', json.shuzoku));
+    infoElement.appendChild(Utils.createDataElement('年齢', json.age));
+    infoElement.appendChild(Utils.createDataElement('性別', json.sex));
+    infoElement.appendChild(Utils.createDataElement('出身', json.pc_kigen));
     infoElement.appendChild(
-      gameCharacter.createDataElement('職業', json.shuzoku)
+      Utils.createNoteElement('プロフ', json.pc_making_memo)
     );
-    infoElement.appendChild(gameCharacter.createDataElement('年齢', json.age));
-    infoElement.appendChild(gameCharacter.createDataElement('性別', json.sex));
-    infoElement.appendChild(
-      gameCharacter.createDataElement('出身', json.pc_kigen)
-    );
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('プロフ', json.pc_making_memo)
-    );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    const resourceElement = Utils.createDataElement('リソース', '');
     gameCharacter.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('耐久力', json.NA10, json.NA10)
+      Utils.createResourceElement('耐久力', json.NA10, json.NA10)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
-        'マジック・ポイント',
-        json.NA11,
-        json.NA11
-      )
+      Utils.createResourceElement('マジック・ポイント', json.NA11, json.NA11)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
-        '正気度',
-        json.SAN_start,
-        json.SAN_Left
-      )
+      Utils.createResourceElement('正気度', json.SAN_start, json.SAN_Left)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
-        '幸運',
-        json.Luck_start,
-        json.Luck_Left
-      )
+      Utils.createResourceElement('幸運', json.Luck_start, json.Luck_Left)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('ボーナス・ペナルティ', 2, 0)
+      Utils.createResourceElement('ボーナス・ペナルティ', 2, 0)
     );
 
     /*
      * 能力値
      */
-    const abilityElement = gameCharacter.createDataElement('能力値', '');
+    const abilityElement = Utils.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('STR', json.NP1)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('CON', json.NP2)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('DEX', json.NP3)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('APP', json.NP4)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('POW', json.NP5)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('SIZ', json.NP6)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('INT', json.NP7)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('EDU', json.NP8)
-    );
-    abilityElement.appendChild(
-      gameCharacter.createDataElement('MOV', json.NA9)
-    );
+    abilityElement.appendChild(Utils.createDataElement('STR', json.NP1));
+    abilityElement.appendChild(Utils.createDataElement('CON', json.NP2));
+    abilityElement.appendChild(Utils.createDataElement('DEX', json.NP3));
+    abilityElement.appendChild(Utils.createDataElement('APP', json.NP4));
+    abilityElement.appendChild(Utils.createDataElement('POW', json.NP5));
+    abilityElement.appendChild(Utils.createDataElement('SIZ', json.NP6));
+    abilityElement.appendChild(Utils.createDataElement('INT', json.NP7));
+    abilityElement.appendChild(Utils.createDataElement('EDU', json.NP8));
+    abilityElement.appendChild(Utils.createDataElement('MOV', json.NA9));
     const dmgBonus = json.dmg_bonus;
     abilityElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         'DB',
         dmgBonus.indexOf('-') < 0 ? `+${dmgBonus}` : dmgBonus
       )
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('ビルド', json.build_bonus)
+      Utils.createDataElement('ビルド', json.build_bonus)
     );
 
     /*
      *戦闘技能
      */
     const skillElements: DataElement[] = [
-      gameCharacter.createDataElement('戦闘技能', ''),
-      gameCharacter.createDataElement('探索技能', ''),
-      gameCharacter.createDataElement('踏破技能', ''),
-      gameCharacter.createDataElement('行動技能', ''),
-      gameCharacter.createDataElement('交渉技能', ''),
-      gameCharacter.createDataElement('知識技能', ''),
+      Utils.createDataElement('戦闘技能', ''),
+      Utils.createDataElement('探索技能', ''),
+      Utils.createDataElement('踏破技能', ''),
+      Utils.createDataElement('行動技能', ''),
+      Utils.createDataElement('交渉技能', ''),
+      Utils.createDataElement('知識技能', ''),
     ];
     skillElements.forEach((element) =>
       gameCharacter.detailDataElement.appendChild(element)
@@ -142,14 +108,14 @@ export class Cthulhu7th implements VampireBloodFactory {
       const skillPoint = json.SKAP[i];
       const skillType = Number.parseInt(json.SKTP[i], 10);
       skillElements[skillType].appendChild(
-        gameCharacter.createDataElement(skillName, skillPoint)
+        Utils.createDataElement(skillName, skillPoint)
       );
     }
 
     /*
      * 武器・防具
      */
-    const armsElement = gameCharacter.createDataElement('武器・防具', '');
+    const armsElement = Utils.createDataElement('武器・防具', '');
     gameCharacter.detailDataElement.appendChild(armsElement);
     for (let i = 0; i < json.arms_name.length; i++) {
       const armName = json.arms_name[i];
@@ -157,14 +123,14 @@ export class Cthulhu7th implements VampireBloodFactory {
         continue;
       }
       armsElement.appendChild(
-        gameCharacter.createDataElement(armName, json.arms_hit[i])
+        Utils.createDataElement(armName, json.arms_hit[i])
       );
     }
 
     /*
      * 所持品
      */
-    const itemElement = gameCharacter.createDataElement('所持品', '');
+    const itemElement = Utils.createDataElement('所持品', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (let i = 0; i < json.item_name.length; i++) {
       const itemName = json.item_name[i];
@@ -172,7 +138,7 @@ export class Cthulhu7th implements VampireBloodFactory {
         continue;
       }
       itemElement.appendChild(
-        gameCharacter.createNoteElement(itemName, json.item_memo[i])
+        Utils.createNoteElement(itemName, json.item_memo[i])
       );
     }
 

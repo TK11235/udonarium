@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 /**
@@ -30,64 +30,62 @@ export class Shinobigami implements AppspotFactory {
     /*
      * 体力
      */
-    const statusElement = gameCharacter.createDataElement('体力', '');
+    const statusElement = Utils.createDataElement('体力', '');
     gameCharacter.detailDataElement.appendChild(statusElement);
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '器術',
         1,
         json.skills.damage.check0 == null ? 1 : 0
       )
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '体術',
         1,
         json.skills.damage.check1 == null ? 1 : 0
       )
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '忍術',
         1,
         json.skills.damage.check2 == null ? 1 : 0
       )
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '謀術',
         1,
         json.skills.damage.check3 == null ? 1 : 0
       )
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '戦術',
         1,
         json.skills.damage.check4 == null ? 1 : 0
       )
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '妖術',
         1,
         json.skills.damage.check5 == null ? 1 : 0
       )
     );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('頑健', 4, 0)
-    );
+    statusElement.appendChild(Utils.createResourceElement('頑健', 4, 0));
 
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement(
+      Utils.createDataElement(
         'HO',
         json.scenario.pcno ? `PC${json.scenario.pcno}` : ''
       )
@@ -101,16 +99,14 @@ export class Shinobigami implements AppspotFactory {
       e: '隠忍の血統',
     };
     const style = `${upperstyles[json.base.upperstyle]}/${json.base.substyle}`;
-    infoElement.appendChild(gameCharacter.createDataElement('流派', style));
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.base.memo)
-    );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createDataElement('流派', style));
+    infoElement.appendChild(Utils.createNoteElement('説明', json.base.memo));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * 特技
      */
-    const skillElement = gameCharacter.createDataElement('特技', '');
+    const skillElement = Utils.createDataElement('特技', '');
     gameCharacter.detailDataElement.appendChild(skillElement);
     const tokui = {
       a: '器術',
@@ -121,7 +117,7 @@ export class Shinobigami implements AppspotFactory {
       e: '妖術',
     };
     skillElement.appendChild(
-      gameCharacter.createDataElement('得意分野', tokui[json.base.upperstyle])
+      Utils.createDataElement('得意分野', tokui[json.base.upperstyle])
     );
     const skillNameList = [
       ['絡繰術', '騎乗術', '生存術', '医術', '兵糧術', '異形化'],
@@ -152,7 +148,7 @@ export class Shinobigami implements AppspotFactory {
       const skillName = skillNameList[rowId][nameId];
       const category = ['器術', '体術', '忍術', '謀術', '戦術', '妖術'][nameId];
       skillElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           `特技${skillCount}`,
           `${skillName}(${category})`
         )
@@ -162,7 +158,7 @@ export class Shinobigami implements AppspotFactory {
     /*
      * 忍法
      */
-    const ninpouElement = gameCharacter.createDataElement(
+    const ninpouElement = Utils.createDataElement(
       '忍法　タイプ/指定特技/間合/コスト/エフェクト',
       ''
     );
@@ -172,7 +168,7 @@ export class Shinobigami implements AppspotFactory {
         continue;
       }
       ninpouElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           ninpou.name,
           `${ninpou.type}／${ninpou.targetSkill}／${ninpou.range}／${ninpou.cost}／${ninpou.effect}`
         )
@@ -182,14 +178,14 @@ export class Shinobigami implements AppspotFactory {
     /*
      * 背景
      */
-    const backgroundElement = gameCharacter.createDataElement('背景', '');
+    const backgroundElement = Utils.createDataElement('背景', '');
     gameCharacter.detailDataElement.appendChild(backgroundElement);
     for (const background of json.background) {
       if (!background.name) {
         continue;
       }
       backgroundElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           background.name,
           `${background.type}／${background.effect || ''}`
         )

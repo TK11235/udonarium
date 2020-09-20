@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 /**
@@ -30,174 +30,138 @@ export class DeadlineHeroes implements AppspotFactory {
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('本名', json.base.nameKana || '')
+      Utils.createDataElement('本名', json.base.nameKana || '')
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement('オリジン', json.base.origin)
+      Utils.createDataElement('オリジン', json.base.origin)
     );
-    infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.base.memo)
-    );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('説明', json.base.memo));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * リソース
      */
-    const resourceElement = gameCharacter.createDataElement('リソース', '');
+    const resourceElement = Utils.createDataElement('リソース', '');
     gameCharacter.detailDataElement.appendChild(resourceElement);
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('ターン・カウンタ', 21, 0)
+      Utils.createResourceElement('ターン・カウンタ', 21, 0)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         'ライフ',
         json.energy.life.max,
         json.energy.life.current
       )
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         'サニティ',
         json.energy.sanity.max,
         json.energy.sanity.current
       )
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         'クレジット',
         json.energy.credit.max,
         json.energy.credit.current
       )
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement(
-        'リマーク',
-        1,
-        json.energy.remark ? 1 : 0
-      )
+      Utils.createResourceElement('リマーク', 1, json.energy.remark ? 1 : 0)
     );
-    resourceElement.appendChild(gameCharacter.createNoteElement('状態', ''));
+    resourceElement.appendChild(Utils.createNoteElement('状態', ''));
 
     /*
      * 能力値
      */
-    const abilityElement = gameCharacter.createDataElement('能力値', '');
+    const abilityElement = Utils.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     abilityElement.appendChild(
-      gameCharacter.createDataElement('肉体', json.ability.body.value)
+      Utils.createDataElement('肉体', json.ability.body.value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('精神', json.ability.mental.value)
+      Utils.createDataElement('精神', json.ability.mental.value)
     );
     abilityElement.appendChild(
-      gameCharacter.createDataElement('環境', json.ability.env.value)
+      Utils.createDataElement('環境', json.ability.env.value)
     );
 
     /*
      * 技能
      */
     // 肉体技能
-    const bodySkillElement = gameCharacter.createDataElement('肉体技能', '');
+    const bodySkillElement = Utils.createDataElement('肉体技能', '');
     gameCharacter.detailDataElement.appendChild(bodySkillElement);
     bodySkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '白兵Lv',
-        json.skills.body.s1.level || '0'
-      )
+      Utils.createDataElement('白兵Lv', json.skills.body.s1.level || '0')
     );
     bodySkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '射撃Lv',
-        json.skills.body.s2.level || '0'
-      )
+      Utils.createDataElement('射撃Lv', json.skills.body.s2.level || '0')
     );
     bodySkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '運動Lv',
-        json.skills.body.s3.level || '0'
-      )
+      Utils.createDataElement('運動Lv', json.skills.body.s3.level || '0')
     );
     bodySkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '生存Lv',
-        json.skills.body.s4.level || '0'
-      )
+      Utils.createDataElement('生存Lv', json.skills.body.s4.level || '0')
     );
     bodySkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '操縦Lv',
-        json.skills.body.s5.level || '0'
-      )
+      Utils.createDataElement('操縦Lv', json.skills.body.s5.level || '0')
     );
     // 精神技能
-    const mentalSkillElement = gameCharacter.createDataElement('精神技能', '');
+    const mentalSkillElement = Utils.createDataElement('精神技能', '');
     gameCharacter.detailDataElement.appendChild(mentalSkillElement);
     mentalSkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '霊能Lv',
-        json.skills.mental.s1.level || '0'
-      )
+      Utils.createDataElement('霊能Lv', json.skills.mental.s1.level || '0')
     );
     mentalSkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '心理Lv',
-        json.skills.mental.s2.level || '0'
-      )
+      Utils.createDataElement('心理Lv', json.skills.mental.s2.level || '0')
     );
     mentalSkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '意志Lv',
-        json.skills.mental.s3.level || '0'
-      )
+      Utils.createDataElement('意志Lv', json.skills.mental.s3.level || '0')
     );
     mentalSkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '知覚Lv',
-        json.skills.mental.s4.level || '0'
-      )
+      Utils.createDataElement('知覚Lv', json.skills.mental.s4.level || '0')
     );
     mentalSkillElement.appendChild(
-      gameCharacter.createDataElement(
-        '追憶Lv',
-        json.skills.mental.s5.level || '0'
-      )
+      Utils.createDataElement('追憶Lv', json.skills.mental.s5.level || '0')
     );
     // 環境技能
-    const envSkillElement = gameCharacter.createDataElement('環境技能', '');
+    const envSkillElement = Utils.createDataElement('環境技能', '');
     gameCharacter.detailDataElement.appendChild(envSkillElement);
     envSkillElement.appendChild(
-      gameCharacter.createDataElement('作戦Lv', json.skills.env.s1.level || '0')
+      Utils.createDataElement('作戦Lv', json.skills.env.s1.level || '0')
     );
     envSkillElement.appendChild(
-      gameCharacter.createDataElement('隠密Lv', json.skills.env.s2.level || '0')
+      Utils.createDataElement('隠密Lv', json.skills.env.s2.level || '0')
     );
     envSkillElement.appendChild(
-      gameCharacter.createDataElement('交渉Lv', json.skills.env.s3.level || '0')
+      Utils.createDataElement('交渉Lv', json.skills.env.s3.level || '0')
     );
     envSkillElement.appendChild(
-      gameCharacter.createDataElement('科学Lv', json.skills.env.s4.level || '0')
+      Utils.createDataElement('科学Lv', json.skills.env.s4.level || '0')
     );
     envSkillElement.appendChild(
-      gameCharacter.createDataElement('経済Lv', json.skills.env.s5.level || '0')
+      Utils.createDataElement('経済Lv', json.skills.env.s5.level || '0')
     );
 
     /*
      * パワー
      */
-    const powerElement = gameCharacter.createDataElement('パワー', '');
+    const powerElement = Utils.createDataElement('パワー', '');
     gameCharacter.detailDataElement.appendChild(powerElement);
     for (const power of json.power) {
       if (!power.name) {
         continue;
       }
       powerElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           power.name,
           `${power.attribute || '-'} / ${power.judge || '-'} / ${
             power.timing || '-'

@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 /**
@@ -30,47 +30,37 @@ export class Amadeus implements AppspotFactory {
     /*
      * ステータス
      */
-    const statusElement = gameCharacter.createDataElement('ステータス', '');
+    const statusElement = Utils.createDataElement('ステータス', '');
     gameCharacter.detailDataElement.appendChild(statusElement);
     const maxHp = Number.parseInt(json.base.hp.max, 10);
     const vitality = Number.parseInt(json.base.hp.vitality, 10);
     statusElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '生命力',
         Number.isNaN(vitality) ? maxHp : maxHp + vitality,
         json.base.hp.current
       )
     );
-    statusElement.appendChild(gameCharacter.createNoteElement('変調', ''));
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('目標値', 6, 4)
-    );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('判定修正', 5, 0)
-    );
-    statusElement.appendChild(
-      gameCharacter.createResourceElement('スペシャル', 6, 6)
-    );
+    statusElement.appendChild(Utils.createNoteElement('変調', ''));
+    statusElement.appendChild(Utils.createResourceElement('目標値', 6, 4));
+    statusElement.appendChild(Utils.createResourceElement('判定修正', 5, 0));
+    statusElement.appendChild(Utils.createResourceElement('スペシャル', 6, 6));
 
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement('情報', '');
+    const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement('PL', json.base.player || '')
+      Utils.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      gameCharacter.createResourceElement('レベル', 10, json.base.level)
+      Utils.createResourceElement('レベル', 10, json.base.level)
     );
+    infoElement.appendChild(Utils.createDataElement('神群', json.base.cluster));
+    infoElement.appendChild(Utils.createDataElement('親神', json.base.parent));
     infoElement.appendChild(
-      gameCharacter.createDataElement('神群', json.base.cluster)
-    );
-    infoElement.appendChild(
-      gameCharacter.createDataElement('親神', json.base.parent)
-    );
-    infoElement.appendChild(
-      gameCharacter.createDataElement('背景', json.base.background)
+      Utils.createDataElement('背景', json.base.background)
     );
     const attribute: string = {
       'base.attribute.black': '黒',
@@ -79,14 +69,14 @@ export class Amadeus implements AppspotFactory {
       'base.attribute.green': '緑',
       'base.attribute.white': '白',
     }[json.base.attribute.value];
-    infoElement.appendChild(gameCharacter.createDataElement('属性', attribute));
+    infoElement.appendChild(Utils.createDataElement('属性', attribute));
     infoElement.appendChild(
-      gameCharacter.createDataElement('職業', json.base.job.name)
+      Utils.createDataElement('職業', json.base.job.name)
     );
     infoElement.appendChild(
-      gameCharacter.createNoteElement('説明', json.base.memo || '')
+      Utils.createNoteElement('説明', json.base.memo || '')
     );
-    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+    infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
      * 能力値
@@ -132,11 +122,11 @@ export class Amadeus implements AppspotFactory {
       { name: '愛', id: 'love' },
       { name: '日常', id: 'mundane' },
     ];
-    const abilityElement = gameCharacter.createDataElement('能力値', '');
+    const abilityElement = Utils.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     for (const abilityInfo of abilityList) {
       abilityElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           abilityInfo.name,
           abilityEval(json.ability[abilityInfo.id])
         )
@@ -146,14 +136,14 @@ export class Amadeus implements AppspotFactory {
     /*
      * ギフト
      */
-    const giftElement = gameCharacter.createDataElement('特技', '');
+    const giftElement = Utils.createDataElement('特技', '');
     gameCharacter.detailDataElement.appendChild(giftElement);
     for (const gift of json.gifts) {
       if (!gift.name) {
         continue;
       }
       giftElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           gift.name,
           `${gift.type}／${gift.cost}／${gift.judge}／${gift.tag}／${gift.effect}`
         )
@@ -163,10 +153,10 @@ export class Amadeus implements AppspotFactory {
     /*
      * アイテム
      */
-    const itemElement = gameCharacter.createDataElement('アイテム', '');
+    const itemElement = Utils.createDataElement('アイテム', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     itemElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '所持金',
         10,
         (json.itemsfoot.money || '').trim()
@@ -183,15 +173,15 @@ export class Amadeus implements AppspotFactory {
         text += `／${item.power}`;
       }
       text += `／${item.effect || ''}`;
-      itemElement.appendChild(gameCharacter.createNoteElement(item.name, text));
+      itemElement.appendChild(Utils.createNoteElement(item.name, text));
     }
     for (; itemCount < 3; itemCount++) {
       itemElement.appendChild(
-        gameCharacter.createNoteElement('アイテム', '種別／威力／効果')
+        Utils.createNoteElement('アイテム', '種別／威力／効果')
       );
     }
     itemElement.appendChild(
-      gameCharacter.createResourceElement(
+      Utils.createResourceElement(
         '食料',
         5,
         json.itemsfoot.name.replace(/\D/g, '')
@@ -201,7 +191,7 @@ export class Amadeus implements AppspotFactory {
     /*
      * 人物欄
      */
-    const personalityElement = gameCharacter.createDataElement('人物欄', '');
+    const personalityElement = Utils.createDataElement('人物欄', '');
     gameCharacter.detailDataElement.appendChild(personalityElement);
     let personalityCount = 0;
     for (const personality of json.personalities) {
@@ -210,7 +200,7 @@ export class Amadeus implements AppspotFactory {
       }
       personalityCount++;
       personalityElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           personality.name,
           `${personality.relation}(${personality.plusminus}${personality.thought})`
         )
@@ -218,27 +208,27 @@ export class Amadeus implements AppspotFactory {
     }
     for (; personalityCount < 4; personalityCount++) {
       personalityElement.appendChild(
-        gameCharacter.createDataElement('人物名', '関係(想い)')
+        Utils.createDataElement('人物名', '関係(想い)')
       );
     }
 
     /*
      * 協力者
      */
-    const collaboratorElement = gameCharacter.createDataElement('協力者', '');
+    const collaboratorElement = Utils.createDataElement('協力者', '');
     gameCharacter.detailDataElement.appendChild(collaboratorElement);
     const collaborators = [json.personalitiesfoot1, json.personalitiesfoot2];
     for (const collaborator of collaborators) {
       if (collaborator.name) {
         collaboratorElement.appendChild(
-          gameCharacter.createDataElement(
+          Utils.createDataElement(
             collaborator.name,
             `${collaborator.relation}(${collaborator.plusminus}${collaborator.thought})`
           )
         );
       } else {
         collaboratorElement.appendChild(
-          gameCharacter.createDataElement('人物名', '関係(想い)')
+          Utils.createDataElement('人物名', '関係(想い)')
         );
       }
     }

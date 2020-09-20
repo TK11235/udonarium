@@ -1,6 +1,6 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from '../custom-character';
+import { CustomCharacter, Utils } from '../custom-character';
 import { AppspotFactory } from '../system-factory';
 
 /**
@@ -36,138 +36,107 @@ export class DivineCharger implements AppspotFactory {
       /*
        *情報
        */
-      const infoElement = gameCharacter.createDataElement('情報', '');
+      const infoElement = Utils.createDataElement('情報', '');
       gameCharacter.detailDataElement.appendChild(infoElement);
       infoElement.appendChild(
-        gameCharacter.createDataElement('PL', json.base.player || '')
+        Utils.createDataElement('PL', json.base.player || '')
       );
+      infoElement.appendChild(Utils.createDataElement('種族', json.base.race));
       infoElement.appendChild(
-        gameCharacter.createDataElement('種族', json.base.race)
-      );
-      infoElement.appendChild(
-        gameCharacter.createDataElement(
+        Utils.createDataElement(
           '職業',
           `${json.base.mainjob}/${json.base.subjob}`
         )
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('レベル', json.base.level)
+        Utils.createDataElement('レベル', json.base.level)
       );
-      infoElement.appendChild(
-        gameCharacter.createNoteElement('説明', json.base.memo)
-      );
-      infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
+      infoElement.appendChild(Utils.createNoteElement('説明', json.base.memo));
+      infoElement.appendChild(Utils.createNoteElement('URL', url));
 
       /*
        * 主能力値
        */
-      const abilityElement = gameCharacter.createDataElement('主能力値', '');
+      const abilityElement = Utils.createDataElement('主能力値', '');
       gameCharacter.detailDataElement.appendChild(abilityElement);
       abilityElement.appendChild(
-        gameCharacter.createDataElement('体力', json.ability.current.strength)
+        Utils.createDataElement('体力', json.ability.current.strength)
       );
       abilityElement.appendChild(
-        gameCharacter.createDataElement('感覚', json.ability.current.sense)
+        Utils.createDataElement('感覚', json.ability.current.sense)
       );
       abilityElement.appendChild(
-        gameCharacter.createDataElement('機敏', json.ability.current.agility)
+        Utils.createDataElement('機敏', json.ability.current.agility)
       );
       abilityElement.appendChild(
-        gameCharacter.createDataElement(
-          '知性',
-          json.ability.current.intelligence
-        )
+        Utils.createDataElement('知性', json.ability.current.intelligence)
       );
       abilityElement.appendChild(
-        gameCharacter.createDataElement('精神', json.ability.current.mind)
+        Utils.createDataElement('精神', json.ability.current.mind)
       );
       /*
        * 戦闘値／副能力値
        */
-      const battleabilityElement = gameCharacter.createDataElement(
+      const battleabilityElement = Utils.createDataElement(
         '戦闘値／副能力値',
         ''
       );
       gameCharacter.detailDataElement.appendChild(battleabilityElement);
       battleabilityElement.appendChild(
-        gameCharacter.createResourceElement(
+        Utils.createResourceElement(
           'HP',
           json.subability.current.maxhp,
           json.subability.current.maxhp
         )
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement(
-          '行動値',
-          json.battleability.current.action
-        )
+        Utils.createDataElement('行動値', json.battleability.current.action)
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement('命中', json.battleability.current.hit)
+        Utils.createDataElement('命中', json.battleability.current.hit)
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement(
-          '回避',
-          json.battleability.current.dodge
-        )
+        Utils.createDataElement('回避', json.battleability.current.dodge)
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement(
-          '発動',
-          json.battleability.current.activate
-        )
+        Utils.createDataElement('発動', json.battleability.current.activate)
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement(
-          '抵抗',
-          json.battleability.current.resistance
-        )
+        Utils.createDataElement('抵抗', json.battleability.current.resistance)
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement(
-          '物理D',
-          json.subability.current.physicald
-        )
+        Utils.createDataElement('物理D', json.subability.current.physicald)
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement(
-          '魔法D',
-          json.subability.current.magicald
-        )
+        Utils.createDataElement('魔法D', json.subability.current.magicald)
       );
       battleabilityElement.appendChild(
-        gameCharacter.createDataElement('財産', json.subability.current.money)
+        Utils.createDataElement('財産', json.subability.current.money)
       );
       /*
        * 神聖石／所持金／ポイント
        */
-      const pointElement = gameCharacter.createDataElement(
+      const pointElement = Utils.createDataElement(
         '神聖石／所持金／ポイント',
         ''
       );
       gameCharacter.detailDataElement.appendChild(pointElement);
+      pointElement.appendChild(Utils.createDataElement('GR', json.points.gr));
       pointElement.appendChild(
-        gameCharacter.createDataElement('GR', json.points.gr)
+        Utils.createDataElement('神聖石', json.points.divinestone)
       );
       pointElement.appendChild(
-        gameCharacter.createDataElement('神聖石', json.points.divinestone)
+        Utils.createDataElement('所持金', json.points.money)
       );
       pointElement.appendChild(
-        gameCharacter.createDataElement('所持金', json.points.money)
-      );
-      pointElement.appendChild(
-        gameCharacter.createResourceElement(
+        Utils.createResourceElement(
           '借金',
           json.points.limit || '2000',
           json.points.debt || '0'
         )
       );
       pointElement.appendChild(
-        gameCharacter.createResourceElement(
-          'GACHAp',
-          8,
-          json.points.gachap || '0'
-        )
+        Utils.createResourceElement('GACHAp', 8, json.points.gachap || '0')
       );
       /*
        * スキル
@@ -178,7 +147,7 @@ export class DivineCharger implements AppspotFactory {
         '神聖装着',
         'ファイナルストライク',
       ];
-      const skillElement = gameCharacter.createDataElement('スキル', '');
+      const skillElement = Utils.createDataElement('スキル', '');
       gameCharacter.detailDataElement.appendChild(skillElement);
       let skillCount = 0;
       for (const skill of json.skills) {
@@ -187,13 +156,13 @@ export class DivineCharger implements AppspotFactory {
         }
         skillCount++;
         skillElement.appendChild(
-          gameCharacter.createNoteElement(
+          Utils.createNoteElement(
             `スキル${skillCount}`,
             `《${skill.name}》＿${skill.timing}／${skill.range}／${skill.target}／${skill.effect}`
           )
         );
         skillElement.appendChild(
-          gameCharacter.createResourceElement(
+          Utils.createResourceElement(
             `回数${skillCount}`,
             skill.count2 || '0',
             skill.count1 || '0'
@@ -203,14 +172,14 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 消耗品
        */
-      const expendableElement = gameCharacter.createDataElement('消耗品', '');
+      const expendableElement = Utils.createDataElement('消耗品', '');
       gameCharacter.detailDataElement.appendChild(expendableElement);
       for (const expendable of json.expendables) {
         if (!expendable.name) {
           continue;
         }
         expendableElement.appendChild(
-          gameCharacter.createResourceElement(
+          Utils.createResourceElement(
             expendable.name,
             expendable.count,
             expendable.count
@@ -346,35 +315,30 @@ export class DivineCharger implements AppspotFactory {
       /*
        *情報
        */
-      const infoElement = gameCharacter.createDataElement('情報', '');
+      const infoElement = Utils.createDataElement('情報', '');
       gameCharacter.detailDataElement.appendChild(infoElement);
       infoElement.appendChild(
-        gameCharacter.createDataElement(
-          '種別',
-          `${weapon.type}(${weapon.usage})`
-        )
+        Utils.createDataElement('種別', `${weapon.type}(${weapon.usage})`)
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('☆', weapon.reality || '')
+        Utils.createDataElement('☆', weapon.reality || '')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('命／発', weapon.hit || '0')
+        Utils.createDataElement('命／発', weapon.hit || '0')
+      );
+      infoElement.appendChild(Utils.createDataElement('距離', weapon.range));
+      infoElement.appendChild(
+        Utils.createDataElement('ダメージ', `${weapon.damage}d`)
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('距離', weapon.range)
-      );
-      infoElement.appendChild(
-        gameCharacter.createDataElement('ダメージ', `${weapon.damage}d`)
-      );
-      infoElement.appendChild(
-        gameCharacter.createResourceElement(
+        Utils.createResourceElement(
           '耐久',
           weapon.endurance2,
           weapon.endurance1 || weapon.endurance2
         )
       );
       infoElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           '付随／神能力',
           weapon.option
             ? `《${weapon.option}》＿${weapon.optiontiming || ''}／${
@@ -389,16 +353,13 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.createDataElement(
-        '所有者（並び替え用）',
-        ''
-      );
+      const sortElement = Utils.createDataElement('所有者（並び替え用）', '');
       gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
-        gameCharacter.createDataElement('PL', json.base.player || '')
+        Utils.createDataElement('PL', json.base.player || '')
       );
       sortElement.appendChild(
-        gameCharacter.createDataElement('行動値', json.base.name)
+        Utils.createDataElement('行動値', json.base.name)
       );
 
       const palette: ChatPalette = new ChatPalette(
@@ -446,32 +407,30 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 情報
        */
-      const infoElement = gameCharacter.createDataElement('情報', '');
+      const infoElement = Utils.createDataElement('情報', '');
       gameCharacter.detailDataElement.appendChild(infoElement);
+      infoElement.appendChild(Utils.createDataElement('種別', shield.type));
       infoElement.appendChild(
-        gameCharacter.createDataElement('種別', shield.type)
+        Utils.createDataElement('☆', shield.reality || '')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('☆', shield.reality || '')
+        Utils.createDataElement('回避', shield.dodge || '0')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('回避', shield.dodge || '0')
+        Utils.createDataElement('抵抗', shield.resistance || '0')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('抵抗', shield.resistance || '0')
+        Utils.createDataElement('装甲', shield.armor || '0')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('装甲', shield.armor || '0')
-      );
-      infoElement.appendChild(
-        gameCharacter.createResourceElement(
+        Utils.createResourceElement(
           '耐久',
           shield.endurance2,
           shield.endurance1 || shield.endurance2
         )
       );
       infoElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           '付随／神能力',
           shield.option
             ? `《${shield.option}》＿${shield.optiontiming || ''}／${
@@ -486,16 +445,13 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.createDataElement(
-        '所有者（並び替え用）',
-        ''
-      );
+      const sortElement = Utils.createDataElement('所有者（並び替え用）', '');
       gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
-        gameCharacter.createDataElement('PL', json.base.player || '')
+        Utils.createDataElement('PL', json.base.player || '')
       );
       sortElement.appendChild(
-        gameCharacter.createDataElement('行動値', json.base.name)
+        Utils.createDataElement('行動値', json.base.name)
       );
 
       const palette: ChatPalette = new ChatPalette(
@@ -536,29 +492,27 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 情報
        */
-      const infoElement = gameCharacter.createDataElement('情報', '');
+      const infoElement = Utils.createDataElement('情報', '');
       gameCharacter.detailDataElement.appendChild(infoElement);
+      infoElement.appendChild(Utils.createDataElement('種別', armour.type));
       infoElement.appendChild(
-        gameCharacter.createDataElement('種別', armour.type)
+        Utils.createDataElement('☆', armour.reality || '')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('☆', armour.reality || '')
+        Utils.createDataElement('行動', armour.action || '0')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('行動', armour.action || '0')
+        Utils.createDataElement('装甲', armour.armor || '0')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('装甲', armour.armor || '0')
-      );
-      infoElement.appendChild(
-        gameCharacter.createResourceElement(
+        Utils.createResourceElement(
           '耐久',
           armour.endurance2,
           armour.endurance1 || armour.endurance2
         )
       );
       infoElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           '付随／神能力',
           armour.option
             ? `《${armour.option}》＿${armour.optiontiming || ''}／${
@@ -573,16 +527,13 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.createDataElement(
-        '所有者（並び替え用）',
-        ''
-      );
+      const sortElement = Utils.createDataElement('所有者（並び替え用）', '');
       gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
-        gameCharacter.createDataElement('PL', json.base.player || '')
+        Utils.createDataElement('PL', json.base.player || '')
       );
       sortElement.appendChild(
-        gameCharacter.createDataElement('行動値', json.base.name)
+        Utils.createDataElement('行動値', json.base.name)
       );
 
       const palette: ChatPalette = new ChatPalette(
@@ -623,23 +574,21 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 情報
        */
-      const infoElement = gameCharacter.createDataElement('情報', '');
+      const infoElement = Utils.createDataElement('情報', '');
       gameCharacter.detailDataElement.appendChild(infoElement);
+      infoElement.appendChild(Utils.createDataElement('種別', accessory.type));
       infoElement.appendChild(
-        gameCharacter.createDataElement('種別', accessory.type)
+        Utils.createDataElement('☆', accessory.reality || '')
       );
       infoElement.appendChild(
-        gameCharacter.createDataElement('☆', accessory.reality || '')
-      );
-      infoElement.appendChild(
-        gameCharacter.createResourceElement(
+        Utils.createResourceElement(
           '耐久',
           accessory.endurance2,
           accessory.endurance1 || accessory.endurance2
         )
       );
       infoElement.appendChild(
-        gameCharacter.createNoteElement(
+        Utils.createNoteElement(
           '付随／神能力',
           accessory.option
             ? `《${accessory.option}》＿${accessory.optiontiming || ''}／${
@@ -656,16 +605,13 @@ export class DivineCharger implements AppspotFactory {
       /*
        * 所有者（並び替え用）
        */
-      const sortElement = gameCharacter.createDataElement(
-        '所有者（並び替え用）',
-        ''
-      );
+      const sortElement = Utils.createDataElement('所有者（並び替え用）', '');
       gameCharacter.detailDataElement.appendChild(sortElement);
       sortElement.appendChild(
-        gameCharacter.createDataElement('PL', json.base.player || '')
+        Utils.createDataElement('PL', json.base.player || '')
       );
       sortElement.appendChild(
-        gameCharacter.createDataElement('行動値', json.base.name)
+        Utils.createDataElement('行動値', json.base.name)
       );
 
       const palette: ChatPalette = new ChatPalette(
