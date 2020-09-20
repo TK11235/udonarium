@@ -21,31 +21,26 @@
   <h2>○対応システム</h2>
   <ul>
     <li>
-      <a href="https://character-sheets.appspot.com/" target="_blank">
-        キャラクターシート倉庫
-      </a>
-      :
-      <span *ngFor="let info of appspotList">
-        <a href="{{ info.href }}" target="_blank">{{ info.name }}</a> &nbsp;
-      </span>
+      <a href="https://character-sheets.appspot.com/" target="_blank"
+        >キャラクターシート倉庫</a
+      >:
+      <ng-container *ngFor="let info of appspotList">
+        <a href="{{ info.href }}" target="_blank">{{ info.name }}</a> &#8203;
+      </ng-container>
     </li>
     <li>
-      <a href="https://charasheet.vampire-blood.net/" target="_blank">
-        キャラクター保管所
-      </a>
-      :
-      <span *ngFor="let info of vampireBloodList">
-        <a href="{{ info.href }}" target="_blank">{{ info.name }}</a> &nbsp;
-      </span>
+      <a href="https://charasheet.vampire-blood.net/" target="_blank"
+        >キャラクター保管所</a
+      >:
+      <ng-container *ngFor="let info of vampireBloodList">
+        <a href="{{ info.href }}" target="_blank">{{ info.name }}</a> &#8203;
+      </ng-container>
     </li>
     <li>
-      その他 :
-      <span>
-        <a href="https://lhrpg.com" target="_blank"
-          >ログ・ホライズンTRPG 冒険窓口</a
-        >
-        &nbsp;
-      </span>
+      <span>その他:</span>
+      <a href="https://lhrpg.com" target="_blank"
+        >ログ・ホライズンTRPG 冒険窓口</a
+      >
     </li>
   </ul>
 
@@ -83,7 +78,7 @@
   <a href="https://twitter.com/trpg_yoshi" target="_blank">
     よっしー@trpg_yoshi
   </a>
-  <ul style="font-size: smaller;">
+  <ul style="font-size: smaller">
     <li>
       このシステムに対応してほしい！
       って要望があれば、キャラシのurlとそのキャラシから作って欲しいユドナリウムのコマデータをいただければ対応が早いと思います。
