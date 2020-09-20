@@ -61,7 +61,7 @@ export class TokyoNightmare implements AppspotFactory {
     const memo =
       baseMemo === '' || baseMemoir === ''
         ? baseMemoir + baseMemo
-        : `${baseMemoir}\n---\n${baseMemo}`;
+        : `${baseMemoir}\n\n---\n\n${baseMemo}`;
     personalElement.appendChild(gameCharacter.createNoteElement('設定', memo));
     personalElement.appendChild(gameCharacter.createNoteElement('URL', url));
 
@@ -515,6 +515,7 @@ C({外界(制)}) 外界(制御値)◆
       }`.replace(/\r|\n/g, ' ');
       cp += text + '\n';
     }
+    cp += `\n//-----メモ\n${baseMemo}`;
 
     palette.setPalette(cp);
     palette.initialize();
