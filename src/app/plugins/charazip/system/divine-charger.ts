@@ -1,13 +1,22 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 /**
  * キャラクターシート倉庫 ディヴァインチャージャー
- * https://character-sheets.appspot.com/divinecharger/
  */
-export class DivineCharger {
-  static generateByAppspot(
+export class DivineCharger implements AppspotFactory {
+  gameSystem = 'divinecharger';
+  name = 'ディヴァインチャージャー';
+  href = 'https://character-sheets.appspot.com/divinecharger/';
+  create = DivineCharger.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new DivineCharger();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string
@@ -167,7 +176,7 @@ export class DivineCharger {
         '神聖課金',
         '神聖増力',
         '神聖装着',
-        'ファイナルストライク'
+        'ファイナルストライク',
       ];
       const skillElement = gameCharacter.createDataElement('スキル', '');
       gameCharacter.detailDataElement.appendChild(skillElement);
@@ -180,9 +189,7 @@ export class DivineCharger {
         skillElement.appendChild(
           gameCharacter.createNoteElement(
             `スキル${skillCount}`,
-            `《${skill.name}》＿${skill.timing}／${skill.range}／${
-              skill.target
-            }／${skill.effect}`
+            `《${skill.name}》＿${skill.timing}／${skill.range}／${skill.target}／${skill.effect}`
           )
         );
         skillElement.appendChild(
@@ -252,10 +259,11 @@ export class DivineCharger {
           cp += `${weapon.damage}D6+{物理D} ${weapon.name}／物理ダメージ\n`;
         }
         if (weapon.option) {
-          cp += `《${weapon.option}》（${
-            weapon.name
-          }）＿${weapon.optiontiming || ''}／${weapon.optionrange ||
-            ''}／${weapon.optiontarget || ''}／${weapon.optioneffect || ''}\n`;
+          cp += `《${weapon.option}》（${weapon.name}）＿${
+            weapon.optiontiming || ''
+          }／${weapon.optionrange || ''}／${weapon.optiontarget || ''}／${
+            weapon.optioneffect || ''
+          }\n`;
         }
       }
       cp += '\n//------盾／鎧／装飾品\n';
@@ -264,9 +272,11 @@ export class DivineCharger {
         .reduce(
           (txt: string, shield: any) =>
             txt +
-            `《${shield.option}》（${shield.name}）＿${shield.optiontiming ||
-              ''}／${shield.optionrange || ''}／${shield.optiontarget ||
-              ''}／${shield.optioneffect || ''}\n`,
+            `《${shield.option}》（${shield.name}）＿${
+              shield.optiontiming || ''
+            }／${shield.optionrange || ''}／${shield.optiontarget || ''}／${
+              shield.optioneffect || ''
+            }\n`,
           ''
         );
       cp += json.armours
@@ -274,9 +284,11 @@ export class DivineCharger {
         .reduce(
           (txt: string, armour: any) =>
             txt +
-            `《${armour.option}》（${armour.name}）＿${armour.optiontiming ||
-              ''}／${armour.optionrange || ''}／${armour.optiontarget ||
-              ''}／${armour.optioneffect || ''}\n`,
+            `《${armour.option}》（${armour.name}）＿${
+              armour.optiontiming || ''
+            }／${armour.optionrange || ''}／${armour.optiontarget || ''}／${
+              armour.optioneffect || ''
+            }\n`,
           ''
         );
       cp += json.accessories
@@ -284,11 +296,11 @@ export class DivineCharger {
         .reduce(
           (txt: string, accessory: any) =>
             txt +
-            `《${accessory.option}》（${
-              accessory.name
-            }）＿${accessory.optiontiming || ''}／${accessory.optionrange ||
-              ''}／${accessory.optiontarget || ''}／${accessory.optioneffect ||
-              ''}\n`,
+            `《${accessory.option}》（${accessory.name}）＿${
+              accessory.optiontiming || ''
+            }／${accessory.optionrange || ''}／${
+              accessory.optiontarget || ''
+            }／${accessory.optioneffect || ''}\n`,
           ''
         );
       cp += '\n//------神聖能力／スキル\n';
@@ -297,9 +309,7 @@ export class DivineCharger {
         .reduce(
           (txt: string, skill: any) =>
             txt +
-            `《${skill.name}》＿${skill.timing}／${skill.range}／${
-              skill.target
-            }／${skill.effect}\n`,
+            `《${skill.name}》＿${skill.timing}／${skill.range}／${skill.target}／${skill.effect}\n`,
           ''
         );
       cp += '\n//------消耗品\n';
@@ -308,9 +318,7 @@ export class DivineCharger {
         .reduce(
           (txt: string, expendable: any) =>
             txt +
-            `「${expendable.name}」＿${expendable.timing}／${
-              expendable.effect
-            }\n`,
+            `「${expendable.name}」＿${expendable.timing}／${expendable.effect}\n`,
           ''
         );
 
@@ -369,9 +377,9 @@ export class DivineCharger {
         gameCharacter.createNoteElement(
           '付随／神能力',
           weapon.option
-            ? `《${weapon.option}》＿${weapon.optiontiming ||
-                ''}／${weapon.optionrange || ''}／${weapon.optiontarget ||
-                ''}／${weapon.optioneffect || ''}`
+            ? `《${weapon.option}》＿${weapon.optiontiming || ''}／${
+                weapon.optionrange || ''
+              }／${weapon.optiontarget || ''}／${weapon.optioneffect || ''}`
             : ''
         )
       );
@@ -400,25 +408,18 @@ export class DivineCharger {
       // チャパレ内容
       let cp = '';
       if (weapon.type === '魔') {
-        cp += `2D6+${json.battleability.current.activate}+${weapon.hit} ${
-          weapon.name
-        }（${json.base.name}）／発動\n`;
-        cp += `${weapon.damage}D6+${json.subability.current.magicald} ${
-          weapon.name
-        }（${json.base.name}）／魔法ダメージ\n`;
+        cp += `2D6+${json.battleability.current.activate}+${weapon.hit} ${weapon.name}（${json.base.name}）／発動\n`;
+        cp += `${weapon.damage}D6+${json.subability.current.magicald} ${weapon.name}（${json.base.name}）／魔法ダメージ\n`;
       } else {
-        cp += `2D6+${json.battleability.current.hit}+${weapon.hit} ${
-          weapon.name
-        }（${json.base.name}）／命中\n`;
-        cp += `${weapon.damage}D6+${json.subability.current.physicald} ${
-          weapon.name
-        }（${json.base.name}）／物理ダメージ\n`;
+        cp += `2D6+${json.battleability.current.hit}+${weapon.hit} ${weapon.name}（${json.base.name}）／命中\n`;
+        cp += `${weapon.damage}D6+${json.subability.current.physicald} ${weapon.name}（${json.base.name}）／物理ダメージ\n`;
       }
       if (weapon.option) {
-        cp += `《${weapon.option}》（${weapon.name}／${
-          json.base.name
-        }）＿${weapon.optiontiming || ''}／${weapon.optionrange ||
-          ''}／${weapon.optiontarget || ''}／${weapon.optioneffect || ''}\n`;
+        cp += `《${weapon.option}》（${weapon.name}／${json.base.name}）＿${
+          weapon.optiontiming || ''
+        }／${weapon.optionrange || ''}／${weapon.optiontarget || ''}／${
+          weapon.optioneffect || ''
+        }\n`;
       }
 
       palette.setPalette(cp);
@@ -473,9 +474,9 @@ export class DivineCharger {
         gameCharacter.createNoteElement(
           '付随／神能力',
           shield.option
-            ? `《${shield.option}》＿${shield.optiontiming ||
-                ''}／${shield.optionrange || ''}／${shield.optiontarget ||
-                ''}／${shield.optioneffect || ''}`
+            ? `《${shield.option}》＿${shield.optiontiming || ''}／${
+                shield.optionrange || ''
+              }／${shield.optiontarget || ''}／${shield.optioneffect || ''}`
             : ''
         )
       );
@@ -504,10 +505,11 @@ export class DivineCharger {
       // チャパレ内容
       let cp = '';
       if (shield.option) {
-        cp += `《${shield.option}》（${shield.name}／${
-          json.base.name
-        }）＿${shield.optiontiming || ''}／${shield.optionrange ||
-          ''}／${shield.optiontarget || ''}／${shield.optioneffect || ''}\n`;
+        cp += `《${shield.option}》（${shield.name}／${json.base.name}）＿${
+          shield.optiontiming || ''
+        }／${shield.optionrange || ''}／${shield.optiontarget || ''}／${
+          shield.optioneffect || ''
+        }\n`;
       }
 
       palette.setPalette(cp);
@@ -559,9 +561,9 @@ export class DivineCharger {
         gameCharacter.createNoteElement(
           '付随／神能力',
           armour.option
-            ? `《${armour.option}》＿${armour.optiontiming ||
-                ''}／${armour.optionrange || ''}／${armour.optiontarget ||
-                ''}／${armour.optioneffect || ''}`
+            ? `《${armour.option}》＿${armour.optiontiming || ''}／${
+                armour.optionrange || ''
+              }／${armour.optiontarget || ''}／${armour.optioneffect || ''}`
             : ''
         )
       );
@@ -590,10 +592,11 @@ export class DivineCharger {
       // チャパレ内容
       let cp = '';
       if (armour.option) {
-        cp += `《${armour.option}》（${armour.name}／${
-          json.base.name
-        }）＿${armour.optiontiming || ''}／${armour.optionrange ||
-          ''}／${armour.optiontarget || ''}／${armour.optioneffect || ''}\n`;
+        cp += `《${armour.option}》（${armour.name}／${json.base.name}）＿${
+          armour.optiontiming || ''
+        }／${armour.optionrange || ''}／${armour.optiontarget || ''}／${
+          armour.optioneffect || ''
+        }\n`;
       }
 
       palette.setPalette(cp);
@@ -639,9 +642,11 @@ export class DivineCharger {
         gameCharacter.createNoteElement(
           '付随／神能力',
           accessory.option
-            ? `《${accessory.option}》＿${accessory.optiontiming ||
-                ''}／${accessory.optionrange || ''}／${accessory.optiontarget ||
-                ''}／${accessory.optioneffect || ''}`
+            ? `《${accessory.option}》＿${accessory.optiontiming || ''}／${
+                accessory.optionrange || ''
+              }／${accessory.optiontarget || ''}／${
+                accessory.optioneffect || ''
+              }`
             : ''
         )
       );
@@ -672,9 +677,9 @@ export class DivineCharger {
       if (accessory.option) {
         cp += `《${accessory.option}》（${accessory.name}／${
           json.base.name
-        }）＿${accessory.optiontiming || ''}／${accessory.optionrange ||
-          ''}／${accessory.optiontarget || ''}／${accessory.optioneffect ||
-          ''}\n`;
+        }）＿${accessory.optiontiming || ''}／${accessory.optionrange || ''}／${
+          accessory.optiontarget || ''
+        }／${accessory.optioneffect || ''}\n`;
       }
 
       palette.setPalette(cp);

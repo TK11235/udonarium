@@ -1,13 +1,22 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 /**
  * キャラクターシート倉庫 モノトーンミュージアム
- * https://character-sheets.appspot.com/mnt/
  */
-export class MonotoneMuseum {
-  static geneateByAppspot(
+export class MonotoneMuseum implements AppspotFactory {
+  gameSystem = 'mnt';
+  name = 'モノトーンミュージアム';
+  href = 'https://character-sheets.appspot.com/mnt/';
+  create = MonotoneMuseum.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new MonotoneMuseum();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string

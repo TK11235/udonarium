@@ -1,13 +1,22 @@
-import { ChatPalette } from "@udonarium/chat-palette";
+import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from "../custom-character";
+import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 /**
  * キャラクターシート倉庫 インセイン
- * https://character-sheets.appspot.com/insane/
  */
-export class Insane {
-  static geneateByAppspot(
+export class Insane implements AppspotFactory {
+  gameSystem = 'insane';
+  name = 'インセイン';
+  href = 'https://character-sheets.appspot.com/insane/';
+  create = Insane.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new Insane();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string
@@ -21,77 +30,77 @@ export class Insane {
     /*
      * ステータス
      */
-    const statusElement = gameCharacter.createDataElement("ステータス", "");
+    const statusElement = gameCharacter.createDataElement('ステータス', '');
     gameCharacter.detailDataElement.appendChild(statusElement);
     statusElement.appendChild(
       gameCharacter.createResourceElement(
-        "生命力",
+        '生命力',
         json.hitpoint.max,
         json.hitpoint.value
       )
     );
     statusElement.appendChild(
       gameCharacter.createResourceElement(
-        "正気度",
+        '正気度',
         json.sanepoint.max,
         json.sanepoint.value
       )
     );
     const curiosities = {
-      a: "暴力",
-      ab: "情動",
-      bc: "知覚",
-      cd: "技術",
-      de: "知識",
-      e: "怪異",
+      a: '暴力',
+      ab: '情動',
+      bc: '知覚',
+      cd: '技術',
+      de: '知識',
+      e: '怪異',
     };
     statusElement.appendChild(
       gameCharacter.createDataElement(
-        "好奇心",
+        '好奇心',
         curiosities[json.base.curiosity]
       )
     );
     statusElement.appendChild(
-      gameCharacter.createDataElement("恐怖心", json.base.nightmare)
+      gameCharacter.createDataElement('恐怖心', json.base.nightmare)
     );
 
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement("情報", "");
+    const infoElement = gameCharacter.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement("PL", json.base.player || "")
+      gameCharacter.createDataElement('PL', json.base.player || '')
     );
     const pcno = Number.parseInt(json.scenario.pcno, 10);
     infoElement.appendChild(
       gameCharacter.createDataElement(
-        "HO",
-        Number.isNaN(pcno) ? json.scenario.pcno || "" : `PC${pcno}`
+        'HO',
+        Number.isNaN(pcno) ? json.scenario.pcno || '' : `PC${pcno}`
       )
     );
     infoElement.appendChild(
-      gameCharacter.createNoteElement("説明", json.base.memo || "")
+      gameCharacter.createNoteElement('説明', json.base.memo || '')
     );
-    infoElement.appendChild(gameCharacter.createNoteElement("URL", url));
+    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
 
     /*
      * 特技
      */
-    const skillElement = gameCharacter.createDataElement("特技", "");
+    const skillElement = gameCharacter.createDataElement('特技', '');
     gameCharacter.detailDataElement.appendChild(skillElement);
     const skillNameList = [
-      ["焼却", "恋", "痛み", "分解", "物理学", "時間"],
-      ["拷問", "悦び", "官能", "電子機器", "数学", "混沌"],
-      ["緊縛", "憂い", "手触り", "整理", "化学", "深海"],
-      ["脅す", "恥じらい", "におい", "薬品", "生物学", "死"],
-      ["破壊", "笑い", "味", "効率", "医学", "霊魂"],
-      ["殴打", "我慢", "物音", "メディア", "教養", "魔術"],
-      ["切断", "驚き", "情景", "カメラ", "人類学", "暗黒"],
-      ["刺す", "怒り", "追跡", "乗物", "歴史", "終末"],
-      ["射撃", "恨み", "芸術", "機械", "民俗学", "夢"],
-      ["戦争", "哀しみ", "第六感", "罠", "考古学", "地底"],
-      ["埋葬", "愛", "物陰", "兵器", "天文学", "宇宙"],
+      ['焼却', '恋', '痛み', '分解', '物理学', '時間'],
+      ['拷問', '悦び', '官能', '電子機器', '数学', '混沌'],
+      ['緊縛', '憂い', '手触り', '整理', '化学', '深海'],
+      ['脅す', '恥じらい', 'におい', '薬品', '生物学', '死'],
+      ['破壊', '笑い', '味', '効率', '医学', '霊魂'],
+      ['殴打', '我慢', '物音', 'メディア', '教養', '魔術'],
+      ['切断', '驚き', '情景', 'カメラ', '人類学', '暗黒'],
+      ['刺す', '怒り', '追跡', '乗物', '歴史', '終末'],
+      ['射撃', '恨み', '芸術', '機械', '民俗学', '夢'],
+      ['戦争', '哀しみ', '第六感', '罠', '考古学', '地底'],
+      ['埋葬', '愛', '物陰', '兵器', '天文学', '宇宙'],
     ];
     let skillCount = 0;
     for (const skill of json.learned) {
@@ -107,7 +116,7 @@ export class Insane {
       const rowId = matchData[1];
       const nameId = matchData[2];
       const skillName = skillNameList[rowId][nameId];
-      const category = ["暴力", "情動", "知覚", "技術", "知識", "怪異"][nameId];
+      const category = ['暴力', '情動', '知覚', '技術', '知識', '怪異'][nameId];
       skillElement.appendChild(
         gameCharacter.createDataElement(category, skillName)
       );
@@ -116,14 +125,14 @@ export class Insane {
     /*
      * アイテム
      */
-    const itemElement = gameCharacter.createDataElement("アイテム", "");
+    const itemElement = gameCharacter.createDataElement('アイテム', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     for (const item of json.item) {
       if (!item.name) {
         continue;
       }
       itemElement.appendChild(
-        gameCharacter.createResourceElement(item.name, 2, item.count || "0")
+        gameCharacter.createResourceElement(item.name, 2, item.count || '0')
       );
     }
 
@@ -131,10 +140,10 @@ export class Insane {
      * 人物欄
      */
     const emotionList = [
-      ["共感", "友情", "愛情", "忠誠", "憧憬", "狂信"],
-      ["不信", "怒り", "妬み", "侮蔑", "劣等感", "殺意"],
+      ['共感', '友情', '愛情', '忠誠', '憧憬', '狂信'],
+      ['不信', '怒り', '妬み', '侮蔑', '劣等感', '殺意'],
     ];
-    const personalityElement = gameCharacter.createDataElement("人物欄", "");
+    const personalityElement = gameCharacter.createDataElement('人物欄', '');
     gameCharacter.detailDataElement.appendChild(personalityElement);
     let personalityCount = 0;
     for (const personality of json.personalities) {
@@ -150,14 +159,14 @@ export class Insane {
     }
     for (; personalityCount < 3; personalityCount++) {
       personalityElement.appendChild(
-        gameCharacter.createDataElement("人物名", "感情")
+        gameCharacter.createDataElement('人物名', '感情')
       );
     }
 
     /*
      * アビリティ
      */
-    const abilityElement = gameCharacter.createDataElement("アビリティ", "");
+    const abilityElement = gameCharacter.createDataElement('アビリティ', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     for (const ability of json.ability) {
       if (!ability.name) {
@@ -166,20 +175,20 @@ export class Insane {
       abilityElement.appendChild(
         gameCharacter.createNoteElement(
           ability.name,
-          `${ability.type}／${ability.targetSkill || "なし"}／${
-            ability.effect || ""
+          `${ability.type}／${ability.targetSkill || 'なし'}／${
+            ability.effect || ''
           }`
         )
       );
     }
 
     const domParser: DOMParser = new DOMParser();
-    domParser.parseFromString(gameCharacter.toXml(), "application/xml");
+    domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 
     const palette: ChatPalette = new ChatPalette(
-      "ChatPalette_" + gameCharacter.identifier
+      'ChatPalette_' + gameCharacter.identifier
     );
-    palette.dicebot = "Insane";
+    palette.dicebot = 'Insane';
     // チャパレ内容
     let cp = `1D6
 2D6
@@ -203,7 +212,7 @@ BET 【バッドエンド表】
       .reduce(
         (txt: string, ability: any) =>
           txt + `[${ability.name}] {${ability.name}}\n`,
-        ""
+        ''
       );
     cp += `
 RTT 【ランダム特技決定表】

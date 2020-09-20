@@ -1,13 +1,22 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 /**
  * キャラクターシート倉庫 シノビガミ
- * https://character-sheets.appspot.com/shinobigami/
  */
-export class Shinobigami {
-  static geneateByAppspot(
+export class Shinobigami implements AppspotFactory {
+  gameSystem = 'shinobigami';
+  name = 'シノビガミ';
+  href = 'https://character-sheets.appspot.com/shinobigami/';
+  create = Shinobigami.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new Shinobigami();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string
@@ -89,7 +98,7 @@ export class Shinobigami {
       bc: 'ハグレモノ',
       cd: '比良坂機関',
       de: '私立御斎学園',
-      e: '隠忍の血統'
+      e: '隠忍の血統',
     };
     const style = `${upperstyles[json.base.upperstyle]}/${json.base.substyle}`;
     infoElement.appendChild(gameCharacter.createDataElement('流派', style));
@@ -109,7 +118,7 @@ export class Shinobigami {
       bc: '忍術',
       cd: '謀術',
       de: '戦術',
-      e: '妖術'
+      e: '妖術',
     };
     skillElement.appendChild(
       gameCharacter.createDataElement('得意分野', tokui[json.base.upperstyle])
@@ -125,7 +134,7 @@ export class Shinobigami {
       ['登術', '飛術', '香術', '九ノ一の術', '見敵術', '瞳術'],
       ['拷問術', '骨法術', '分身の術', '傀儡の術', '暗号術', '千里眼の術'],
       ['壊器術', '刀術', '隠蔽術', '流言の術', '伝達術', '憑依術'],
-      ['掘削術', '怪力', '第六感', '経済力', '人脈', '呪術']
+      ['掘削術', '怪力', '第六感', '経済力', '人脈', '呪術'],
     ];
     let skillCount = 0;
     for (const skill of json.learned) {
@@ -165,9 +174,7 @@ export class Shinobigami {
       ninpouElement.appendChild(
         gameCharacter.createNoteElement(
           ninpou.name,
-          `${ninpou.type}／${ninpou.targetSkill}／${ninpou.range}／${
-            ninpou.cost
-          }／${ninpou.effect}`
+          `${ninpou.type}／${ninpou.targetSkill}／${ninpou.range}／${ninpou.cost}／${ninpou.effect}`
         )
       );
     }

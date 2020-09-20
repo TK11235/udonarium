@@ -1,13 +1,22 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 /**
  * キャラクターシート倉庫 サタスペ
- * https://character-sheets.appspot.com/satasupe/
  */
-export class Satasupe {
-  static geneateByAppspot(
+export class Satasupe implements AppspotFactory {
+  gameSystem = 'satasupe';
+  name = 'サタスペ';
+  href = 'https://character-sheets.appspot.com/satasupe/';
+  create = Satasupe.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new Satasupe();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string
@@ -30,9 +39,12 @@ export class Satasupe {
       gameCharacter.createResourceElement('精神点', 10, 10)
     );
     resourceElement.appendChild(
-      gameCharacter.createResourceElement('サイフ', json.base.abl.life.value, json.base.abl.life.value)
+      gameCharacter.createResourceElement(
+        'サイフ',
+        json.base.abl.life.value,
+        json.base.abl.life.value
+      )
     );
-
 
     /*
      * 情報
@@ -136,19 +148,43 @@ export class Satasupe {
     emotionElement.appendChild(
       gameCharacter.createDataElement('性業値', json.base.emotion)
     );
-    
+
     /*
      * 趣味
      */
-    const hobbyElement = gameCharacter.createDataElement('趣味(コミュニティ)　',　'');
+    const hobbyElement = gameCharacter.createDataElement(
+      '趣味(コミュニティ)　',
+      ''
+    );
     gameCharacter.detailDataElement.appendChild(hobbyElement);
     const hobbyNameList = [
       ['イベント', '音楽', 'アラサガシ', 'アウトドア', '育成', 'アダルト'],
-      ['アブノーマル', '好きなタグ', 'おせっかい', '工作', 'サビシガリヤ', '飲食'],
-      ['カワイイ', 'トレンド', '好きなタグ', 'スポーツ', 'ヒマツブシ', 'ギャンブル'],
+      [
+        'アブノーマル',
+        '好きなタグ',
+        'おせっかい',
+        '工作',
+        'サビシガリヤ',
+        '飲食',
+      ],
+      [
+        'カワイイ',
+        'トレンド',
+        '好きなタグ',
+        'スポーツ',
+        'ヒマツブシ',
+        'ギャンブル',
+      ],
       ['トンデモ', '読書', '家事', '同一のタグ', '宗教', 'ゴシップ'],
-      ['マニア', 'パフォーマンス', 'ガリ勉', 'ハイソ', '同一のタグ', 'ファッション'],
-      ['オタク', '美術', '健康', '旅行', 'ワビサビ', 'ハプニング']
+      [
+        'マニア',
+        'パフォーマンス',
+        'ガリ勉',
+        'ハイソ',
+        '同一のタグ',
+        'ファッション',
+      ],
+      ['オタク', '美術', '健康', '旅行', 'ワビサビ', 'ハプニング'],
     ];
     let hobbyCount = 0;
     for (const hobby of json.learned) {
@@ -161,22 +197,29 @@ export class Satasupe {
       if (!matchData) {
         continue;
       }
-      const colId = matchData[1] -1;
-      const rowId = matchData[2] -1;
+      const colId = matchData[1] - 1;
+      const rowId = matchData[2] - 1;
       const hobbyName = hobbyNameList[rowId][colId];
-      const category = ['ｻﾌﾞｶﾙ系', 'ｱｰﾄ系', 'ﾏｼﾞﾒ系', '休日系', 'ｲﾔｼ系', '風俗系'][colId];
+      const category = [
+        'ｻﾌﾞｶﾙ系',
+        'ｱｰﾄ系',
+        'ﾏｼﾞﾒ系',
+        '休日系',
+        'ｲﾔｼ系',
+        '風俗系',
+      ][colId];
       hobbyElement.appendChild(
         gameCharacter.createDataElement(
           `趣味${hobbyCount}`,
-         `${hobbyName} (${category})`
+          `${hobbyName} (${category})`
         )
       );
     }
-    
+
     /*
      * 状態
      */
-    const conditionElement = gameCharacter.createDataElement('状態　',　'');
+    const conditionElement = gameCharacter.createDataElement('状態　', '');
     gameCharacter.detailDataElement.appendChild(conditionElement);
     conditionElement.appendChild(
       gameCharacter.createDataElement('トラウマ', json.cond.trauma.value || '')
@@ -191,13 +234,16 @@ export class Satasupe {
       gameCharacter.createDataElement('SAN', json.cond.san.value || '')
     );
     conditionElement.appendChild(
-      gameCharacter.createDataElement('クトゥルフ神話技能', json.cond.cthulhu.value || '')
+      gameCharacter.createDataElement(
+        'クトゥルフ神話技能',
+        json.cond.cthulhu.value || ''
+      )
     );
 
     /*
      * アジト
      */
-    const homeElement = gameCharacter.createDataElement('アジト　',　'');
+    const homeElement = gameCharacter.createDataElement('アジト　', '');
     gameCharacter.detailDataElement.appendChild(homeElement);
     homeElement.appendChild(
       gameCharacter.createDataElement('トラウマ', json.home.place || '')
@@ -208,11 +254,14 @@ export class Satasupe {
     homeElement.appendChild(
       gameCharacter.createDataElement('トリコ', json.home.security || '')
     );
-    
+
     /*
      * 一般装備
      */
-    const outfitsElement = gameCharacter.createDataElement('一般装備　使用／効果／特殊機能',　'');
+    const outfitsElement = gameCharacter.createDataElement(
+      '一般装備　使用／効果／特殊機能',
+      ''
+    );
     gameCharacter.detailDataElement.appendChild(outfitsElement);
     for (const outfits of json.outfits) {
       if (!outfits.name) {
@@ -221,7 +270,9 @@ export class Satasupe {
       outfitsElement.appendChild(
         gameCharacter.createNoteElement(
           outfits.name,
-          `${outfits.use || ''}／${outfits.effect || ''}／${outfits.notes || ''}`
+          `${outfits.use || ''}／${outfits.effect || ''}／${
+            outfits.notes || ''
+          }`
         )
       );
     }
@@ -229,7 +280,10 @@ export class Satasupe {
     /*
      * 武器
      */
-    const weaponsElement = gameCharacter.createDataElement('武器　命中／ダメージ／射程／特殊機能',　'');
+    const weaponsElement = gameCharacter.createDataElement(
+      '武器　命中／ダメージ／射程／特殊機能',
+      ''
+    );
     gameCharacter.detailDataElement.appendChild(weaponsElement);
     for (const weapons of json.weapons) {
       if (!weapons.name) {
@@ -238,7 +292,9 @@ export class Satasupe {
       weaponsElement.appendChild(
         gameCharacter.createNoteElement(
           weapons.name,
-          `${weapons.aim || ''}／${weapons.damage || ''}／${weapons.range || ''}／${weapons.notes || ''}`
+          `${weapons.aim || ''}／${weapons.damage || ''}／${
+            weapons.range || ''
+          }／${weapons.notes || ''}`
         )
       );
     }
@@ -246,7 +302,10 @@ export class Satasupe {
     /*
      * 乗り物
      */
-    const vehiclesElement = gameCharacter.createDataElement('乗り物　名称／スピード／車体／荷物／特殊機能',　'');
+    const vehiclesElement = gameCharacter.createDataElement(
+      '乗り物　名称／スピード／車体／荷物／特殊機能',
+      ''
+    );
     gameCharacter.detailDataElement.appendChild(vehiclesElement);
     for (const vehicles of json.vehicles) {
       if (!vehicles.name) {
@@ -255,15 +314,20 @@ export class Satasupe {
       vehiclesElement.appendChild(
         gameCharacter.createNoteElement(
           vehicles.name,
-          `${vehicles.speed || ''}／${vehicles.frame || ''}／${vehicles.burden || ''}／${vehicles.notes || ''}`
+          `${vehicles.speed || ''}／${vehicles.frame || ''}／${
+            vehicles.burden || ''
+          }／${vehicles.notes || ''}`
         )
       );
     }
- 
+
     /*
      * カルマ
      */
-    const karmaElement = gameCharacter.createDataElement('カルマ　異能or代償名／使用／対象／判定／効果',　'');
+    const karmaElement = gameCharacter.createDataElement(
+      'カルマ　異能or代償名／使用／対象／判定／効果',
+      ''
+    );
     gameCharacter.detailDataElement.appendChild(karmaElement);
     for (const karma of json.karma) {
       if (!karma.name) {
@@ -272,17 +336,21 @@ export class Satasupe {
       karmaElement.appendChild(
         gameCharacter.createNoteElement(
           `${karma.name} (異能)`,
-          `${karma.talent.name || ''}／${karma.talent.use || ''}／${karma.talent.target || ''}／${karma.talent.judge || ''}／${karma.talent.effect || ''}`
+          `${karma.talent.name || ''}／${karma.talent.use || ''}／${
+            karma.talent.target || ''
+          }／${karma.talent.judge || ''}／${karma.talent.effect || ''}`
         )
       );
       karmaElement.appendChild(
         gameCharacter.createNoteElement(
           `${karma.name} (代償)`,
-          `${karma.price.name || ''}／${karma.price.use || ''}／${karma.price.target || ''}／${karma.price.judge || ''}／${karma.price.effect || ''}`
+          `${karma.price.name || ''}／${karma.price.use || ''}／${
+            karma.price.target || ''
+          }／${karma.price.judge || ''}／${karma.price.effect || ''}`
         )
       );
     }
- 
+
     const domParser: DOMParser = new DOMParser();
     domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 

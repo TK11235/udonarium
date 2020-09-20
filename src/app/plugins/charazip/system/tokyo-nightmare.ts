@@ -1,6 +1,7 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 interface Style {
   name: string;
@@ -16,10 +17,18 @@ interface Protect {
 
 /**
  * キャラクターシート倉庫 トーキョー・ナイトメア
- * https://character-sheets.appspot.com/tnm/
  */
-export class TokyoNightmare {
-  static geneateByAppspot(
+export class TokyoNightmare implements AppspotFactory {
+  gameSystem = 'tnm';
+  name = 'トーキョー・ナイトメア';
+  href = 'https://character-sheets.appspot.com/tnm/';
+  create = TokyoNightmare.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new TokyoNightmare();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string

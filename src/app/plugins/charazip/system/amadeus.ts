@@ -1,13 +1,22 @@
-import { ChatPalette } from "@udonarium/chat-palette";
+import { ChatPalette } from '@udonarium/chat-palette';
 
-import { CustomCharacter } from "../custom-character";
+import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 /**
  * キャラクターシート倉庫 アマデウス
- * https://character-sheets.appspot.com/amadeus/
  */
-export class Amadeus {
-  static geneateByAppspot(
+export class Amadeus implements AppspotFactory {
+  gameSystem = 'amadeus';
+  name = 'アマデウス';
+  href = 'https://character-sheets.appspot.com/amadeus/';
+  create = Amadeus.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new Amadeus();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string
@@ -21,109 +30,109 @@ export class Amadeus {
     /*
      * ステータス
      */
-    const statusElement = gameCharacter.createDataElement("ステータス", "");
+    const statusElement = gameCharacter.createDataElement('ステータス', '');
     gameCharacter.detailDataElement.appendChild(statusElement);
     const maxHp = Number.parseInt(json.base.hp.max, 10);
     const vitality = Number.parseInt(json.base.hp.vitality, 10);
     statusElement.appendChild(
       gameCharacter.createResourceElement(
-        "生命力",
+        '生命力',
         Number.isNaN(vitality) ? maxHp : maxHp + vitality,
         json.base.hp.current
       )
     );
-    statusElement.appendChild(gameCharacter.createNoteElement("変調", ""));
+    statusElement.appendChild(gameCharacter.createNoteElement('変調', ''));
     statusElement.appendChild(
-      gameCharacter.createResourceElement("目標値", 6, 4)
+      gameCharacter.createResourceElement('目標値', 6, 4)
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement("判定修正", 5, 0)
+      gameCharacter.createResourceElement('判定修正', 5, 0)
     );
     statusElement.appendChild(
-      gameCharacter.createResourceElement("スペシャル", 6, 6)
+      gameCharacter.createResourceElement('スペシャル', 6, 6)
     );
 
     /*
      * 情報
      */
-    const infoElement = gameCharacter.createDataElement("情報", "");
+    const infoElement = gameCharacter.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
     infoElement.appendChild(
-      gameCharacter.createDataElement("PL", json.base.player || "")
+      gameCharacter.createDataElement('PL', json.base.player || '')
     );
     infoElement.appendChild(
-      gameCharacter.createResourceElement("レベル", 10, json.base.level)
+      gameCharacter.createResourceElement('レベル', 10, json.base.level)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement("神群", json.base.cluster)
+      gameCharacter.createDataElement('神群', json.base.cluster)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement("親神", json.base.parent)
+      gameCharacter.createDataElement('親神', json.base.parent)
     );
     infoElement.appendChild(
-      gameCharacter.createDataElement("背景", json.base.background)
+      gameCharacter.createDataElement('背景', json.base.background)
     );
     const attribute: string = {
-      "base.attribute.black": "黒",
-      "base.attribute.red": "赤",
-      "base.attribute.blue": "青",
-      "base.attribute.green": "緑",
-      "base.attribute.white": "白"
+      'base.attribute.black': '黒',
+      'base.attribute.red': '赤',
+      'base.attribute.blue': '青',
+      'base.attribute.green': '緑',
+      'base.attribute.white': '白',
     }[json.base.attribute.value];
-    infoElement.appendChild(gameCharacter.createDataElement("属性", attribute));
+    infoElement.appendChild(gameCharacter.createDataElement('属性', attribute));
     infoElement.appendChild(
-      gameCharacter.createDataElement("職業", json.base.job.name)
+      gameCharacter.createDataElement('職業', json.base.job.name)
     );
     infoElement.appendChild(
-      gameCharacter.createNoteElement("説明", json.base.memo || "")
+      gameCharacter.createNoteElement('説明', json.base.memo || '')
     );
-    infoElement.appendChild(gameCharacter.createNoteElement("URL", url));
+    infoElement.appendChild(gameCharacter.createNoteElement('URL', url));
 
     /*
      * 能力値
      */
     const diceEval = (dice: string): string => {
       switch (dice) {
-        case "1/2":
-          return "D";
-        case "1":
-          return "C";
-        case "2":
-          return "B";
-        case "3":
-          return "A";
-        case "4":
-          return "S";
+        case '1/2':
+          return 'D';
+        case '1':
+          return 'C';
+        case '2':
+          return 'B';
+        case '3':
+          return 'A';
+        case '4':
+          return 'S';
       }
     };
     const modEval = (plus: string) => {
       switch (plus) {
-        case "-2":
-          return "--";
-        case "-1":
-          return "-";
-        case "+-0":
-          return "";
-        case "+1":
-          return "+";
-        case "+2":
-          return "++";
-        case "+3":
-          return "+++";
+        case '-2':
+          return '--';
+        case '-1':
+          return '-';
+        case '+-0':
+          return '';
+        case '+1':
+          return '+';
+        case '+2':
+          return '++';
+        case '+3':
+          return '+++';
       }
     };
     const abilityEval = (ability: { eval: string; plus: string }): string => {
       return `${diceEval(ability.eval)}${modEval(ability.plus)}`;
     };
     const abilityList: { name: string; id: string }[] = [
-      { name: "武勇", id: "brave" },
-      { name: "技術", id: "technic" },
-      { name: "頭脳", id: "brain" },
-      { name: "霊力", id: "spirit" },
-      { name: "愛", id: "love" },
-      { name: "日常", id: "mundane" }
+      { name: '武勇', id: 'brave' },
+      { name: '技術', id: 'technic' },
+      { name: '頭脳', id: 'brain' },
+      { name: '霊力', id: 'spirit' },
+      { name: '愛', id: 'love' },
+      { name: '日常', id: 'mundane' },
     ];
-    const abilityElement = gameCharacter.createDataElement("能力値", "");
+    const abilityElement = gameCharacter.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
     for (const abilityInfo of abilityList) {
       abilityElement.appendChild(
@@ -137,7 +146,7 @@ export class Amadeus {
     /*
      * ギフト
      */
-    const giftElement = gameCharacter.createDataElement("特技", "");
+    const giftElement = gameCharacter.createDataElement('特技', '');
     gameCharacter.detailDataElement.appendChild(giftElement);
     for (const gift of json.gifts) {
       if (!gift.name) {
@@ -154,13 +163,13 @@ export class Amadeus {
     /*
      * アイテム
      */
-    const itemElement = gameCharacter.createDataElement("アイテム", "");
+    const itemElement = gameCharacter.createDataElement('アイテム', '');
     gameCharacter.detailDataElement.appendChild(itemElement);
     itemElement.appendChild(
       gameCharacter.createResourceElement(
-        "所持金",
+        '所持金',
         10,
-        (json.itemsfoot.money || "").trim()
+        (json.itemsfoot.money || '').trim()
       )
     );
     let itemCount = 0;
@@ -173,26 +182,26 @@ export class Amadeus {
       if (item.power) {
         text += `／${item.power}`;
       }
-      text += `／${item.effect || ""}`;
+      text += `／${item.effect || ''}`;
       itemElement.appendChild(gameCharacter.createNoteElement(item.name, text));
     }
     for (; itemCount < 3; itemCount++) {
       itemElement.appendChild(
-        gameCharacter.createNoteElement("アイテム", "種別／威力／効果")
+        gameCharacter.createNoteElement('アイテム', '種別／威力／効果')
       );
     }
     itemElement.appendChild(
       gameCharacter.createResourceElement(
-        "食料",
+        '食料',
         5,
-        json.itemsfoot.name.replace(/\D/g, "")
+        json.itemsfoot.name.replace(/\D/g, '')
       )
     );
 
     /*
      * 人物欄
      */
-    const personalityElement = gameCharacter.createDataElement("人物欄", "");
+    const personalityElement = gameCharacter.createDataElement('人物欄', '');
     gameCharacter.detailDataElement.appendChild(personalityElement);
     let personalityCount = 0;
     for (const personality of json.personalities) {
@@ -209,14 +218,14 @@ export class Amadeus {
     }
     for (; personalityCount < 4; personalityCount++) {
       personalityElement.appendChild(
-        gameCharacter.createDataElement("人物名", "関係(想い)")
+        gameCharacter.createDataElement('人物名', '関係(想い)')
       );
     }
 
     /*
      * 協力者
      */
-    const collaboratorElement = gameCharacter.createDataElement("協力者", "");
+    const collaboratorElement = gameCharacter.createDataElement('協力者', '');
     gameCharacter.detailDataElement.appendChild(collaboratorElement);
     const collaborators = [json.personalitiesfoot1, json.personalitiesfoot2];
     for (const collaborator of collaborators) {
@@ -229,18 +238,18 @@ export class Amadeus {
         );
       } else {
         collaboratorElement.appendChild(
-          gameCharacter.createDataElement("人物名", "関係(想い)")
+          gameCharacter.createDataElement('人物名', '関係(想い)')
         );
       }
     }
 
     const domParser: DOMParser = new DOMParser();
-    domParser.parseFromString(gameCharacter.toXml(), "application/xml");
+    domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
 
     const palette: ChatPalette = new ChatPalette(
-      "ChatPalette_" + gameCharacter.identifier
+      'ChatPalette_' + gameCharacter.identifier
     );
-    palette.dicebot = "Amadeus";
+    palette.dicebot = 'Amadeus';
     // チャパレ内容
     let cp = `1d6
 2d6
@@ -252,21 +261,21 @@ export class Amadeus {
     for (const abilityInfo of abilityList) {
       const ability = json.ability[abilityInfo.id];
       cp += `R${diceEval(ability.eval)}`;
-      if (ability.plus !== "+-0") {
+      if (ability.plus !== '+-0') {
         cp += ability.plus;
       }
       cp += `+{判定修正}@{スペシャル}>={目標値} ${
         abilityInfo.name
       }${abilityEval(ability)}\n`;
     }
-    cp += "\n//-----ギフト\n";
+    cp += '\n//-----ギフト\n';
     for (const gift of json.gifts) {
       if (!gift.name) {
         continue;
       }
       cp += `《${gift.name}》 {${gift.name}}\n`;
     }
-    cp += "\n//-----アイテム\n";
+    cp += '\n//-----アイテム\n';
     for (const item of json.items) {
       if (!item.name) {
         continue;

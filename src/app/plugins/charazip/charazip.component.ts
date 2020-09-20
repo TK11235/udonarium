@@ -6,8 +6,8 @@ import { MimeType } from '@udonarium/core/file-storage/mime-type';
 
 import { CustomCharacter } from './custom-character';
 import {
-  GameSystem,
   GameSystemList,
+  AppspotFactory,
   VampireBloodFactory,
 } from './system-factory';
 
@@ -20,7 +20,7 @@ export class CharazipComponent implements OnInit {
   get vampireBloodList(): VampireBloodFactory[] {
     return GameSystemList.vampireBlood;
   }
-  get appspotList(): GameSystem[] {
+  get appspotList(): AppspotFactory[] {
     return GameSystemList.appspot;
   }
 
@@ -61,7 +61,7 @@ export class CharazipComponent implements OnInit {
           );
           break;
         case 'character-sheets.appspot.com':
-          gameCharacters = await GameSystemList.generateByAppspotCharacter(url);
+          gameCharacters = await GameSystemList.createAppspotCharacter(url);
           break;
         case 'lhrpg.com':
           gameCharacters = await GameSystemList.generateByLhrpgCharacter(url);

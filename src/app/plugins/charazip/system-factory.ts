@@ -20,14 +20,14 @@ import { TokyoNovaX } from './system/tokyo-nova-x';
 import { TokyoNightmare } from './system/tokyo-nightmare';
 import { Satasupe } from './system/satasupe';
 
-export interface GameSystem {
-  system: string;
+export interface AppspotFactory {
+  gameSystem: string;
   name: string;
   href: string;
-  generater: (
+  create: (
     json: any,
     url: string,
-    imageIdentifier?: string
+    imageIdentifier: string
   ) => CustomCharacter[];
 }
 
@@ -46,67 +46,17 @@ export class GameSystemList {
     DoubleCross3rd.vampireBloodFactory(),
   ];
 
-  static appspot: GameSystem[] = [
-    {
-      system: 'amadeus',
-      name: 'アマデウス',
-      href: 'https://character-sheets.appspot.com/amadeus/',
-      generater: Amadeus.geneateByAppspot,
-    },
-    {
-      system: 'insane',
-      name: 'インセイン',
-      href: 'https://character-sheets.appspot.com/insane/',
-      generater: Insane.geneateByAppspot,
-    },
-    {
-      system: 'satasupe',
-      name: 'サタスペ',
-      href: 'https://character-sheets.appspot.com/satasupe/',
-      generater: Satasupe.geneateByAppspot,
-    },
-    {
-      system: 'shinobigami',
-      name: 'シノビガミ',
-      href: 'https://character-sheets.appspot.com/shinobigami/',
-      generater: Shinobigami.geneateByAppspot,
-    },
-    {
-      system: 'dx3',
-      name: 'ダブルクロス3rd',
-      href: 'https://character-sheets.appspot.com/dx3/',
-      generater: DoubleCross3rd.geneateByAppspot,
-    },
-    {
-      system: 'divinecharger',
-      name: 'ディヴァインチャージャー',
-      href: 'https://character-sheets.appspot.com/divinecharger/',
-      generater: DivineCharger.generateByAppspot,
-    },
-    {
-      system: 'dlh',
-      name: 'デッドラインヒーローズ',
-      href: 'https://character-sheets.appspot.com/dlh/',
-      generater: DeadlineHeroes.geneateByAppspot,
-    },
-    {
-      system: 'tnm',
-      name: 'トーキョー・ナイトメア',
-      href: 'https://character-sheets.appspot.com/tnm/',
-      generater: TokyoNightmare.geneateByAppspot,
-    },
-    {
-      system: 'tnx',
-      name: 'トーキョーN◎VA THE AXLERATION',
-      href: 'https://character-sheets.appspot.com/tnx/',
-      generater: TokyoNovaX.geneateByAppspot,
-    },
-    {
-      system: 'mnt',
-      name: 'モノトーンミュージアム',
-      href: 'https://character-sheets.appspot.com/mnt/',
-      generater: MonotoneMuseum.geneateByAppspot,
-    },
+  static appspot: AppspotFactory[] = [
+    Amadeus.appspotFactory(),
+    Insane.appspotFactory(),
+    Satasupe.appspotFactory(),
+    Shinobigami.appspotFactory(),
+    DoubleCross3rd.appspotFactory(),
+    DivineCharger.appspotFactory(),
+    DeadlineHeroes.appspotFactory(),
+    TokyoNightmare.appspotFactory(),
+    TokyoNovaX.appspotFactory(),
+    MonotoneMuseum.appspotFactory(),
   ];
 
   static async createVampireBloodCharacter(
@@ -138,9 +88,7 @@ export class GameSystemList {
     return factory.create(json, sheetUrl);
   }
 
-  static async generateByAppspotCharacter(
-    url: URL
-  ): Promise<CustomCharacter[]> {
+  static async createAppspotCharacter(url: URL): Promise<CustomCharacter[]> {
     if (!url.searchParams || !url.searchParams.has('key')) {
       throw new Error('URLが正しくありません。');
     }
@@ -149,16 +97,16 @@ export class GameSystemList {
       throw new Error('URLが正しくありません。');
     }
     // pathnameは常に"/"から始まる
-    const system = url.pathname.substring(1, url.pathname.lastIndexOf('/'));
-    const systemInfo = GameSystemList.appspot.find(
-      (info) => info.system === system
+    const gameSystem = url.pathname.substring(1, url.pathname.lastIndexOf('/'));
+    const factory = GameSystemList.appspot.find(
+      (factory) => factory.gameSystem === gameSystem
     );
-    if (!systemInfo) {
-      throw new Error(`未対応のシステムです。system=${system}`);
+    if (!factory) {
+      throw new Error(`未対応のシステムです。gameSystem=${gameSystem}`);
     }
 
     const json = await fetchJsonp(
-      `//character-sheets.appspot.com/${system}/display?ajax=1&base64Image=1&key=${key}`
+      `//character-sheets.appspot.com/${gameSystem}/display?ajax=1&base64Image=1&key=${key}`
     ).then((response) => response.json());
     // URLが正しくない場合、空のjsonが帰ってくる
     if (!json || Object.keys(json).length < 1) {
@@ -175,8 +123,8 @@ export class GameSystemList {
       }
     }
 
-    const sheetUrl = `https://character-sheets.appspot.com/${system}/edit.html?key=${key}`;
-    return systemInfo.generater(json, sheetUrl, imageIdentifier);
+    const sheetUrl = `https://character-sheets.appspot.com/${gameSystem}/edit.html?key=${key}`;
+    return factory.create(json, sheetUrl, imageIdentifier);
   }
 
   static async generateByLhrpgCharacter(url: URL): Promise<CustomCharacter[]> {

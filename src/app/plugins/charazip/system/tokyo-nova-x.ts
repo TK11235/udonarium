@@ -1,6 +1,7 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 interface Style {
   name: string;
@@ -16,10 +17,18 @@ interface Protect {
 
 /**
  * キャラクターシート倉庫 トーキョーN◎VA THE AXLERATION
- * https://character-sheets.appspot.com/tnx/
  */
-export class TokyoNovaX {
-  static geneateByAppspot(
+export class TokyoNovaX implements AppspotFactory {
+  gameSystem = 'tnx';
+  name = 'トーキョーN◎VA THE AXLERATION';
+  href = 'https://character-sheets.appspot.com/tnx/';
+  create = TokyoNovaX.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new TokyoNovaX();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string

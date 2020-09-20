@@ -1,18 +1,28 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
-import { VampireBloodFactory } from '../system-factory';
+import { AppspotFactory, VampireBloodFactory } from '../system-factory';
 
 export class DoubleCross3rd {
   static vampireBloodFactory(): VampireBloodFactory {
     return new DoubleCross3rdVampireBloodFactory();
   }
 
-  /**
-   * キャラクターシート倉庫 ダブルクロス3rd
-   * https://character-sheets.appspot.com/dx3/
-   */
-  static geneateByAppspot(
+  static appspotFactory(): AppspotFactory {
+    return new DoubleCross3rdAppspotFactory();
+  }
+}
+
+/**
+ * キャラクターシート倉庫 ダブルクロス3rd
+ */
+class DoubleCross3rdAppspotFactory implements AppspotFactory {
+  gameSystem = 'dx3';
+  name = 'ダブルクロス3rd';
+  href = 'https://character-sheets.appspot.com/dx3/';
+  create = DoubleCross3rdAppspotFactory.create;
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string

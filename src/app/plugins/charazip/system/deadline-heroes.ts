@@ -1,13 +1,22 @@
 import { ChatPalette } from '@udonarium/chat-palette';
 
 import { CustomCharacter } from '../custom-character';
+import { AppspotFactory } from '../system-factory';
 
 /**
  * キャラクターシート倉庫 デッドラインヒーローズ
- * https://character-sheets.appspot.com/dlh/
  */
-export class DeadlineHeroes {
-  static geneateByAppspot(
+export class DeadlineHeroes implements AppspotFactory {
+  gameSystem = 'dlh';
+  name = 'デッドラインヒーローズ';
+  href = 'https://character-sheets.appspot.com/dlh/';
+  create = DeadlineHeroes.create;
+
+  static appspotFactory(): AppspotFactory {
+    return new DeadlineHeroes();
+  }
+
+  private static create(
     json: any,
     url: string,
     imageIdentifier: string
@@ -190,9 +199,11 @@ export class DeadlineHeroes {
       powerElement.appendChild(
         gameCharacter.createNoteElement(
           power.name,
-          `${power.attribute || '-'} / ${power.judge || '-'} / ${power.timing ||
-            '-'} / ${power.range || '-'} / ${power.target ||
-            '-'} / ${power.cost || '-'} / ${power.effect || '-'}`
+          `${power.attribute || '-'} / ${power.judge || '-'} / ${
+            power.timing || '-'
+          } / ${power.range || '-'} / ${power.target || '-'} / ${
+            power.cost || '-'
+          } / ${power.effect || '-'}`
         )
       );
     }
@@ -238,10 +249,14 @@ DLH{経済} 経済判定
       .reduce(
         (txt: string, power: any) =>
           txt +
-          `【${power.name}】 ${power.attribute || '-'} / ${power.judge ||
-            '-'} / ${power.timing || '-'} / ${power.range ||
-            '-'} / ${power.target || '-'} / ${power.cost ||
-            '-'} / ${power.effect || '-'}`.replace(/\n/g, ' ') +
+          `【${power.name}】 ${power.attribute || '-'} / ${
+            power.judge || '-'
+          } / ${power.timing || '-'} / ${power.range || '-'} / ${
+            power.target || '-'
+          } / ${power.cost || '-'} / ${power.effect || '-'}`.replace(
+            /\n/g,
+            ' '
+          ) +
           '\n',
         ''
       );
