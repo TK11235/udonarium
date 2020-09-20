@@ -31,32 +31,19 @@ export interface GameSystem {
   ) => CustomCharacter[];
 }
 
+export interface VampireBloodFactory {
+  gameSystem: string;
+  name: string;
+  href: string;
+  create: (json: any, url: string) => CustomCharacter[];
+}
+
 export class GameSystemList {
-  static vampireBlood: GameSystem[] = [
-    {
-      system: 'coc',
-      name: 'クトゥルフ',
-      href: 'https://charasheet.vampire-blood.net/list_coc.html',
-      generater: Cthulhu.generateByVampireVlood,
-    },
-    {
-      system: 'coc7',
-      name: '新クトゥルフ',
-      href: 'https://charasheet.vampire-blood.net/list_coc7.html',
-      generater: Cthulhu7th.generateByVampireVlood,
-    },
-    {
-      system: 'swordworld2',
-      name: 'ソードワールド2.0',
-      href: 'https://charasheet.vampire-blood.net/list_swordworld2.html',
-      generater: SwordWorld2.generateByVampireVlood,
-    },
-    {
-      system: 'dx3',
-      name: 'ダブルクロス3rd',
-      href: 'https://charasheet.vampire-blood.net/list_dx3.html',
-      generater: DoubleCross3rd.generateByVampireVlood,
-    },
+  static vampireBlood: VampireBloodFactory[] = [
+    Cthulhu.vampireBloodFactory(),
+    Cthulhu7th.vampireBloodFactory(),
+    SwordWorld2.vampireBloodFactory(),
+    DoubleCross3rd.vampireBloodFactory(),
   ];
 
   static appspot: GameSystem[] = [
@@ -122,7 +109,7 @@ export class GameSystemList {
     },
   ];
 
-  static async generateByVampireBloodCharacter(
+  static async createVampireBloodCharacter(
     url: URL
   ): Promise<CustomCharacter[]> {
     // pathnameは常に"/"から始まる
@@ -142,13 +129,13 @@ export class GameSystemList {
     if (!json.game) {
       throw new Error('このキャラクターシートは使用できません。');
     }
-    const systemInfo = GameSystemList.vampireBlood.find(
-      (info) => info.system === json.game
+    const factory = GameSystemList.vampireBlood.find(
+      (factory) => factory.gameSystem === json.game
     );
-    if (!systemInfo) {
+    if (!factory) {
       throw new Error(`未対応のシステムです。game=${json.game}`);
     }
-    return systemInfo.generater(json, sheetUrl);
+    return factory.create(json, sheetUrl);
   }
 
   static async generateByAppspotCharacter(

@@ -5,7 +5,11 @@ import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
 
 import { CustomCharacter } from './custom-character';
-import { GameSystem, GameSystemList } from './system-factory';
+import {
+  GameSystem,
+  GameSystemList,
+  VampireBloodFactory,
+} from './system-factory';
 
 @Component({
   selector: 'app-charazip',
@@ -13,7 +17,7 @@ import { GameSystem, GameSystemList } from './system-factory';
   styleUrls: ['./charazip.component.css'],
 })
 export class CharazipComponent implements OnInit {
-  get vampireBloodList(): GameSystem[] {
+  get vampireBloodList(): VampireBloodFactory[] {
     return GameSystemList.vampireBlood;
   }
   get appspotList(): GameSystem[] {
@@ -52,7 +56,7 @@ export class CharazipComponent implements OnInit {
     try {
       switch (url.host) {
         case 'charasheet.vampire-blood.net':
-          gameCharacters = await GameSystemList.generateByVampireBloodCharacter(
+          gameCharacters = await GameSystemList.createVampireBloodCharacter(
             url
           );
           break;
