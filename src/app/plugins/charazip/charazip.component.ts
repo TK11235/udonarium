@@ -1,8 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
-import { ImageState } from '@udonarium/core/file-storage/image-file';
+import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
+import { XmlUtil } from '@udonarium/core/system/util/xml-util';
+
+import * as Beautify from 'vkbeautify';
 
 import { CustomCharacter } from './custom-character';
 import {
@@ -100,17 +103,55 @@ export class CharazipComponent implements OnInit {
     gameCharacters: CustomCharacter[],
     fileName: string = 'xml_data'
   ): void {
-    const files: File[] = [];
+    let files: File[] = [];
     for (let i = 0; i < gameCharacters.length; i++) {
-      const xml: string = gameCharacters[i].toXml();
+      const xml: string = this.convertToXml(gameCharacters[i]);
       files.push(new File([xml], `data${i}.xml`, { type: 'text/plain' }));
+      files = files.concat(this.searchImageFiles(xml));
     }
 
-    const imageIdentifier = gameCharacters[0].imageDataElement.getFirstElementByName(
-      'imageIdentifier'
-    ).value;
-    if (imageIdentifier) {
-      const image = ImageStorage.instance.get(imageIdentifier.toString());
+    FileArchiver.instance.save(files, this.appendTimestamp(fileName));
+  }
+
+  private convertToXml(gameObject: CustomCharacter): string {
+    let xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
+    return xmlDeclaration + '\n' + Beautify.xml(gameObject.toXml(), 2);
+  }
+
+  private searchImageFiles(xml: string): File[] {
+    let xmlElement: Element = XmlUtil.xml2element(xml);
+    let files: File[] = [];
+    if (!xmlElement) return files;
+
+    let images: { [identifier: string]: ImageFile } = {};
+    let imageElements = xmlElement.ownerDocument.querySelectorAll(
+      '*[type="image"]'
+    );
+
+    for (let i = 0; i < imageElements.length; i++) {
+      let identifier = imageElements[i].innerHTML;
+      images[identifier] = ImageStorage.instance.get(identifier);
+    }
+
+    imageElements = xmlElement.ownerDocument.querySelectorAll(
+      '*[imageIdentifier], *[backgroundImageIdentifier]'
+    );
+
+    for (let i = 0; i < imageElements.length; i++) {
+      let identifier = imageElements[i].getAttribute('imageIdentifier');
+      if (identifier)
+        images[identifier] = ImageStorage.instance.get(identifier);
+
+      let backgroundImageIdentifier = imageElements[i].getAttribute(
+        'backgroundImageIdentifier'
+      );
+      if (backgroundImageIdentifier)
+        images[backgroundImageIdentifier] = ImageStorage.instance.get(
+          backgroundImageIdentifier
+        );
+    }
+    for (let identifier in images) {
+      let image = images[identifier];
       if (image && image.state === ImageState.COMPLETE) {
         files.push(
           new File(
@@ -121,7 +162,17 @@ export class CharazipComponent implements OnInit {
         );
       }
     }
+    return files;
+  }
 
-    FileArchiver.instance.save(files, fileName);
+  private appendTimestamp(fileName: string): string {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ('00' + (date.getMonth() + 1)).slice(-2);
+    let day = ('00' + date.getDate()).slice(-2);
+    let hours = ('00' + date.getHours()).slice(-2);
+    let minutes = ('00' + date.getMinutes()).slice(-2);
+
+    return fileName + `_${year}-${month}-${day}_${hours}${minutes}`;
   }
 }
