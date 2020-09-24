@@ -38,7 +38,6 @@ export class BufferSharingTask<T> {
     this.identifier = identifier;
     this.sendTo = sendTo;
     this.data = data;
-    this.uint8Array = MessagePack.encode(data);
   }
 
   static createSendTask<T>(identifier: string, sendTo: string, data?: T): BufferSharingTask<T> {
@@ -96,6 +95,7 @@ export class BufferSharingTask<T> {
   }
 
   private initializeSend() {
+    this.uint8Array = MessagePack.encode(this.data);
     let total = Math.ceil(this.uint8Array.byteLength / this.chankSize);
     this.chanks = new Array(total);
 
