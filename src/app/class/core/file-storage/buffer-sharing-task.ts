@@ -41,7 +41,7 @@ export class BufferSharingTask<T> {
     this.uint8Array = MessagePack.encode(data);
   }
 
-  static async createSendTask<T>(data: T, sendTo: string, identifier?: string): Promise<BufferSharingTask<T>> {
+  static createSendTask<T>(identifier: string, sendTo: string, data?: T): BufferSharingTask<T> {
     let task = new BufferSharingTask(identifier, sendTo, data);
     task.initializeSend();
     return task;

@@ -134,7 +134,7 @@ export class AudioSharingSystem {
       context.type = audio.blob.type;
     }
 
-    let task = await BufferSharingTask.createSendTask(context, sendTo, audio.identifier);
+    let task = BufferSharingTask.createSendTask(audio.identifier, sendTo, context);
     this.sendTaskMap.set(audio.identifier, task);
 
     task.onfinish = () => {

@@ -132,7 +132,7 @@ export class ImageSharingSystem {
     }
     /* */
 
-    let task = await BufferSharingTask.createSendTask(updateImages, sendTo, identifier);
+    let task = BufferSharingTask.createSendTask(identifier, sendTo, updateImages);
     this.sendTaskMap.set(task.identifier, task);
 
     task.onfinish = (task, data) => {
