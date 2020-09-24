@@ -119,7 +119,8 @@ export class ImageSharingSystem {
 
   private async startSendTransmission(updateImages: ImageContext[], sendTo: string) {
     let identifier = updateImages.length === 1 ? updateImages[0].identifier : UUID.generateUuid();
-    this.sendTaskMap.set(identifier, null);
+    let task = BufferSharingTask.createSendTask<ImageContext[]>(identifier, sendTo);
+    this.sendTaskMap.set(task.identifier, task);
     EventSystem.call('START_FILE_TRANSMISSION', { taskIdentifier: identifier }, sendTo);
 
     /* hotfix issue #1 */
@@ -132,13 +133,12 @@ export class ImageSharingSystem {
     }
     /* */
 
-    let task = BufferSharingTask.createSendTask(identifier, sendTo, updateImages);
-    this.sendTaskMap.set(task.identifier, task);
-
     task.onfinish = (task, data) => {
       this.stopSendTransmission(task.identifier);
       ImageStorage.instance.synchronize();
     }
+
+    task.start(updateImages);
   }
 
   private startReceiveTransmission(identifier: string) {
@@ -149,6 +149,8 @@ export class ImageSharingSystem {
       if (data) EventSystem.trigger('UPDATE_FILE_RESOURE', { identifier: task.identifier, updateImages: data });
       ImageStorage.instance.synchronize();
     }
+
+    task.start();
     console.log('startFileTransmission => ', this.receiveTaskMap.size);
   }
 

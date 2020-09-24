@@ -27,6 +27,7 @@ export class BufferSharingTask<T> {
   private startTime = 0;
   private isCanceled = false;
 
+  private onstart: () => void;
   onprogress: (task: BufferSharingTask<T>, loded: number, total: number) => void;
   onfinish: (task: BufferSharingTask<T>, data: T) => void;
   ontimeout: (task: BufferSharingTask<T>) => void;
@@ -42,14 +43,24 @@ export class BufferSharingTask<T> {
 
   static createSendTask<T>(identifier: string, sendTo: string, data?: T): BufferSharingTask<T> {
     let task = new BufferSharingTask(identifier, sendTo, data);
-    task.initializeSend();
+    task.onstart = () => task.initializeSend();
     return task;
   }
 
   static createReceiveTask<T>(identifier: string): BufferSharingTask<T> {
     let task = new BufferSharingTask<T>(identifier);
-    task.initializeReceive();
+    task.onstart = () => task.initializeReceive();
     return task;
+  }
+
+  start(data?: T) {
+    if (!this.onstart) {
+      console.warn('再起動する仕様など無い。');
+      return;
+    }
+    this.data = data;
+    this.onstart();
+    this.onstart = null;
   }
 
   private progress(loded: number, total: number) {

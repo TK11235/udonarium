@@ -115,7 +115,8 @@ export class AudioSharingSystem {
   }
 
   private async startSendTransmission(audio: AudioFile, sendTo: string) {
-    this.sendTaskMap.set(audio.identifier, null);
+    let task = BufferSharingTask.createSendTask<AudioFileContext>(audio.identifier, sendTo);
+    this.sendTaskMap.set(audio.identifier, task);
 
     EventSystem.call('START_AUDIO_TRANSMISSION', { fileIdentifier: audio.identifier }, sendTo);
 
@@ -134,13 +135,12 @@ export class AudioSharingSystem {
       context.type = audio.blob.type;
     }
 
-    let task = BufferSharingTask.createSendTask(audio.identifier, sendTo, context);
-    this.sendTaskMap.set(audio.identifier, task);
-
     task.onfinish = () => {
       this.stopSendTransmission(task.identifier);
       AudioStorage.instance.synchronize();
     }
+
+    task.start(context);
   }
 
   private startReceiveTransmission(identifier: string) {
@@ -158,6 +158,8 @@ export class AudioSharingSystem {
       if (data) EventSystem.trigger('UPDATE_AUDIO_RESOURE', [data]);
       AudioStorage.instance.synchronize();
     }
+
+    task.start();
     console.log('startReceiveTransmission => ', this.receiveTaskMap.size);
   }
 
