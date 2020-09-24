@@ -13,7 +13,7 @@ export class AudioSharingSystem {
 
   private sendTaskMap: Map<string, BufferSharingTask<AudioFileContext>> = new Map();
   private receiveTaskMap: Map<string, BufferSharingTask<AudioFileContext>> = new Map();
-  private maxSendTransmission: number = 1;
+  private maxSendTransmission: number = 2;
   private maxReceiveTransmission: number = 4;
 
   private constructor() { }
@@ -68,7 +68,7 @@ export class AudioSharingSystem {
           if (audio && item.state < audio.state) randomRequest.push({ identifier: item.identifier, state: item.state });
         }
 
-        if (this.isSendTransmission() === false && 0 < randomRequest.length) {
+        if (this.isSendTransmission() === false && 0 < randomRequest.length && !this.existsSendTask(event.data.receiver)) {
           // 送信
           console.log('REQUEST_AUDIO_RESOURE Send!!! ' + event.data.receiver + ' -> ' + randomRequest);
           let index = Math.floor(Math.random() * randomRequest.length);
@@ -196,5 +196,12 @@ export class AudioSharingSystem {
 
   private isReceiveTransmission(): boolean {
     return this.maxReceiveTransmission <= this.receiveTaskMap.size;
+  }
+
+  private existsSendTask(peer: string): boolean {
+    for (let task of this.sendTaskMap.values()) {
+      if (task && task.sendTo === peer) return true;
+    }
+    return false;
   }
 }
