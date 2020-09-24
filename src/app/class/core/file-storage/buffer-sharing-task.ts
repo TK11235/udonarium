@@ -3,7 +3,6 @@ import * as MessagePack from 'msgpack-lite';
 import { EventSystem } from '../system';
 import { ResettableTimeout } from '../system/util/resettable-timeout';
 import { clearZeroTimeout, setZeroTimeout } from '../system/util/zero-timeout';
-import { FileReaderUtil } from './file-reader-util';
 
 interface ChankData {
   index: number;
@@ -12,10 +11,8 @@ interface ChankData {
 }
 
 export class BufferSharingTask<T> {
-  private _identifier: string;
-  get identifier(): string { return this._identifier };
-  private _sendTo: string;
-  get sendTo(): string { return this._sendTo };
+  readonly identifier: string;
+  readonly sendTo: string;
 
   private data: T;
   private uint8Array: Uint8Array;
@@ -37,22 +34,21 @@ export class BufferSharingTask<T> {
 
   private timeoutTimer: ResettableTimeout;
 
-  private constructor(data?: T, sendTo?: string) {
+  private constructor(identifier: string, sendTo?: string, data?: T) {
+    this.identifier = identifier;
+    this.sendTo = sendTo;
     this.data = data;
     this.uint8Array = MessagePack.encode(data);
-    this._sendTo = sendTo;
   }
 
   static async createSendTask<T>(data: T, sendTo: string, identifier?: string): Promise<BufferSharingTask<T>> {
-    let task = new BufferSharingTask(data, sendTo);
-    task._identifier = identifier != null ? identifier : await FileReaderUtil.calcSHA256Async(task.uint8Array);
+    let task = new BufferSharingTask(identifier, sendTo, data);
     task.initializeSend();
     return task;
   }
 
   static createReceiveTask<T>(identifier: string): BufferSharingTask<T> {
-    let task = new BufferSharingTask<T>();
-    task._identifier = identifier;
+    let task = new BufferSharingTask<T>(identifier);
     task.initializeReceive();
     return task;
   }
