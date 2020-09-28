@@ -148,6 +148,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ngZone.run(() => this.contextMenuService.close());
     }
 
+    if (srcEvent.cancelable) srcEvent.preventDefault();
+
     //
     let scale = (1000 + Math.abs(this.viewPotisonZ)) / 1000;
     transformX *= scale;
@@ -215,6 +217,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.currentPositionX = x;
     this.currentPositionY = y;
 
+    if (e.cancelable) e.preventDefault();
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
 

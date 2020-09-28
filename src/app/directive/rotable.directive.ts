@@ -110,7 +110,6 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   onInputStart(e: MouseEvent | TouchEvent) {
     this.grabbingElement = e.target as HTMLElement;
     if (this.isDisable || !this.isAllowedToRotate || (e as MouseEvent).button === 1 || (e as MouseEvent).button === 2) return this.cancel();
-    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
     this.onstart.emit(e as PointerEvent);
 
@@ -125,6 +124,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     }
     if (this.isDisable || !this.input.isGrabbing) return this.cancel();
 
+    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
     let pointer3d = PointerDeviceService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
     let angle = this.calcRotate(pointer3d, this.rotateOffset);
@@ -145,7 +145,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
 
   onContextMenu(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     this.cancel();
     this.snapToPolygonal();
   }

@@ -149,6 +149,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
       return this.cancel(); // todo
     }
     if (this.isDisable || !this.input.isGrabbing) return this.cancel();
+    if (e.cancelable) e.preventDefault();
 
     if (!this.input.isDragging) this.setPointerEvents(false);
     let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
@@ -183,7 +184,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
 
   onContextMenu(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
 
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
     if (tableSelecter.gridSnap) this.snapToGrid();
