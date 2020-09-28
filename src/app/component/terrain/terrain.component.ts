@@ -1,4 +1,15 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
@@ -52,6 +63,7 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   private input: InputHandler = null;
 
   constructor(
+    private ngZone: NgZone,
     private tabletopService: TabletopService,
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef<HTMLElement>,
@@ -85,7 +97,9 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.input = new InputHandler(this.elementRef.nativeElement);
+    this.ngZone.runOutsideAngular(() => {
+      this.input = new InputHandler(this.elementRef.nativeElement);
+    });
     this.input.onStart = this.onInputStart.bind(this);
   }
 

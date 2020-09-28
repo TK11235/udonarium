@@ -111,8 +111,10 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.input = new InputHandler(this.elementRef.nativeElement);
-    this.input.onStart = this.onInputStart.bind(this);
+    this.ngZone.runOutsideAngular(() => {
+      this.input = new InputHandler(this.elementRef.nativeElement);
+    });
+    this.input.onStart = e => this.ngZone.run(() => this.onInputStart(e));
   }
 
   ngOnDestroy() {
@@ -182,7 +184,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   onInputStart(e: MouseEvent | TouchEvent) {
     this.startDoubleClickTimer(e);
     this.card.toTopmost();
-    if (e instanceof MouseEvent) this.startIconHiddenTimer();
+    this.startIconHiddenTimer();
   }
 
   @HostListener('contextmenu', ['$event'])
