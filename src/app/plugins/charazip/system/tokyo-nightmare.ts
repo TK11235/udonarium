@@ -195,10 +195,20 @@ export class TokyoNightmare implements AppspotFactory {
         effect:
           'キャラクターひとりに対するダメージのような不都合な効果をひとつ打ち消す。',
       },
+      '-12': {
+        name: 'クロガネ',
+        divineWork: '万能道具',
+        effect: '〈フォルム〉による',
+      },
       '-14': {
         name: 'ヒルコ',
         divineWork: '突然変異',
         effect: '神業をひとつコピーする',
+      },
+      '-17': {
+        name: 'エトランゼ',
+        divineWork: '超越品',
+        effect: 'なんでもひとつ望む効果を得る',
       },
       '-18': {
         name: 'アヤカシ',
