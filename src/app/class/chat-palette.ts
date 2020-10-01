@@ -52,7 +52,6 @@ export class ChatPalette extends ObjectNode {
     } else {
       evaluate = line.palette;
     }
-    evaluate = StringUtil.toHalfWidth(evaluate);
 
     console.log(evaluate);
     let limit = 128;
@@ -61,7 +60,8 @@ export class ChatPalette extends ObjectNode {
     while (isContinue) {
       loop++;
       isContinue = false;
-      evaluate = evaluate.replace(/\{\s*([^\{\}]+)\s*\}/g, (match, name) => {
+      evaluate = evaluate.replace(/[{｛]\s*([^{}｛｝]+)\s*[}｝]/g, (match, name) => {
+        name = StringUtil.toHalfWidth(name);
         console.log(name);
         isContinue = true;
         for (let variable of this.paletteVariables) {
@@ -97,11 +97,10 @@ export class ChatPalette extends ObjectNode {
   }
 
   private parseVariable(palette: string): PaletteVariable {
-    palette = StringUtil.toHalfWidth(palette);
-    let array = /^\s*\/\/([^=\{\}\s]+)\s*=\s*(.+)\s*/gi.exec(palette);
+    let array = /^\s*[/／]{2}([^=＝{}｛｝\s]+)\s*[=＝]\s*(.+)\s*/gi.exec(palette);
     if (!array) return null;
     let variable: PaletteVariable = {
-      name: array[1],
+      name: StringUtil.toHalfWidth(array[1]),
       value: array[2]
     }
     return variable;
