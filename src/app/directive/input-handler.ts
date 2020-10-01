@@ -84,7 +84,15 @@ export class InputHandler {
     } else {
       let changedTouches = Array.from(e.changedTouches);
       let touch = changedTouches.find(touch => touch.identifier === this.primaryPointer.identifier);
-      if (touch == null) return;
+      if (touch == null) {
+        let isTouchContinues = Array.from(e.touches).find(touch => touch.identifier === this.primaryPointer.identifier);
+        if (!isTouchContinues) {
+          // タッチを追跡できなくなったら終了
+          if (this.onEnd) this.onEnd(e);
+          this.cancel();
+        }
+        return;
+      }
       let touchPointer: PointerData = { x: touch.pageX, y: touch.pageY, z: 0, identifier: touch.identifier };
       this.primaryPointer = touchPointer;
     }
