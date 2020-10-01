@@ -223,6 +223,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   cancelInput() {
     this.input.cancel();
+    this.isTransformMode = true;
     this.pointerDeviceService.isDragging = false;
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity + '';
