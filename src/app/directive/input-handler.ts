@@ -85,7 +85,7 @@ export class InputHandler {
       let changedTouches = Array.from(e.changedTouches);
       let touch = changedTouches.find(touch => touch.identifier === this.primaryPointer.identifier);
       if (touch == null) {
-        let isTouchContinues = Array.from(e.touches).find(touch => touch.identifier === this.primaryPointer.identifier);
+        let isTouchContinues = Array.from(e.touches).find(touch => touch.identifier === this.primaryPointer.identifier) != null;
         if (!isTouchContinues) {
           // タッチを追跡できなくなったら終了
           if (this.onEnd) this.onEnd(e);
