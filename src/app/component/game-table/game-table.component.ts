@@ -231,6 +231,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('wheel', ['$event'])
   onWheel(e: WheelEvent) {
+    if (!this.isTransformMode) return;
+
     let transformX = 0;
     let transformY = 0;
     let transformZ = 0;
@@ -250,7 +252,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('document:keydown', ['$event'])
   onKeydown(e: KeyboardEvent) {
-    if (document.body !== document.activeElement) return;
+    if (!this.isTransformMode || document.body !== document.activeElement) return;
     let transformX = 0;
     let transformY = 0;
     let transformZ = 0;
