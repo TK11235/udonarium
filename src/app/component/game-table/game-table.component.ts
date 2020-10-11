@@ -233,6 +233,19 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   onWheel(e: WheelEvent) {
     if (!this.isTransformMode) return;
 
+    let pixelDeltaY = 0;
+    switch (e.deltaMode) {
+      case WheelEvent.DOM_DELTA_LINE:
+        pixelDeltaY = e.deltaY * 16;
+        break;
+      case WheelEvent.DOM_DELTA_PAGE:
+        pixelDeltaY = e.deltaY * window.innerHeight;
+        break;
+      default:
+        pixelDeltaY = e.deltaY;
+        break;
+    }
+
     let transformX = 0;
     let transformY = 0;
     let transformZ = 0;
@@ -241,11 +254,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let rotateY = 0;
     let rotateZ = 0;
 
-    if (e.deltaY < 0) {
-      transformZ = 150;
-    } else if (0 < e.deltaY) {
-      transformZ = -150;
-    }
+    transformZ = pixelDeltaY * -1.5;
 
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
