@@ -255,6 +255,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let rotateZ = 0;
 
     transformZ = pixelDeltaY * -1.5;
+    if (300 ** 2 < transformZ ** 2) transformZ = Math.min(Math.max(transformZ, -300), 300);
 
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
