@@ -112,9 +112,10 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
       return;
     }
 
-    if (!this._children.length) return;
+    let childrenLength = this._children.length;
+    if (!childrenLength) return;
     let prevIndex = index - 1 < 0 ? 0 : index - 1;
-    let nextIndex = this._children.length - 1 < index + 1 ? this._children.length - 1 : index + 1;
+    let nextIndex = childrenLength - 1 < index + 1 ? childrenLength - 1 : index + 1;
 
     if (this._children[prevIndex].index > child.index || child.index > this._children[nextIndex].index) this.needsSort = true;
     if (isAdded) this._onChildAdded(child);
@@ -230,8 +231,9 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
 
   parseInnerXml(element: Element) {
     let children = element.children;
-    if (0 < children.length) {
-      for (let i = 0; i < children.length; i++) {
+    let length = children.length;
+    if (0 < length) {
+      for (let i = 0; i < length; i++) {
         let child = ObjectSerializer.instance.parseXml(children[i]);
         if (child instanceof ObjectNode) this.appendChild(child);
       }
