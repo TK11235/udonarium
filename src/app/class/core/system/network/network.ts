@@ -26,7 +26,7 @@ export class Network {
   private key: string = '';
   private connection: Connection;
 
-  private queue: QueueItem[] = [];
+  private queue: Set<QueueItem> = new Set();
   private sendInterval: number = null;
   private sendCallback = () => { this.sendQueue(); }
   private callbackUnload: any = (e) => { this.close(); };
@@ -71,7 +71,7 @@ export class Network {
   }
 
   send(data: any, sendTo?: string) {
-    this.queue.push({ data: data, sendTo: sendTo });
+    this.queue.add({ data: data, sendTo: sendTo });
     if (this.sendInterval === null) {
       this.sendInterval = setZeroTimeout(this.sendCallback);
     }
@@ -82,9 +82,11 @@ export class Network {
     let unicast: { [sendTo: string]: any[] } = {};
     let echocast: any[] = [];
 
-    let length = this.queue.length < 128 ? this.queue.length : 128;
-    let items = this.queue.splice(0, length);
-    for (let item of items) {
+    let loopCount = this.queue.size < 128 ? this.queue.size : 128;
+    for (let item of this.queue) {
+      if (loopCount <= 0) break;
+      loopCount--;
+      this.queue.delete(item);
       if (item.sendTo == null) {
         broadcast.push(item.data);
       } else if (item.sendTo === this.peerId) {
@@ -107,7 +109,7 @@ export class Network {
       this.callback.onData(this.peerId, echocast);
     }
 
-    if (0 < this.queue.length) {
+    if (0 < this.queue.size) {
       this.sendInterval = setZeroTimeout(this.sendCallback);
     } else {
       this.sendInterval = null;
@@ -134,7 +136,7 @@ export class Network {
     store.callback.onData = (peerId, data: any[]) => { if (this.callback.onData) this.callback.onData(peerId, data); }
     store.callback.onError = (peerId, err) => { if (this.callback.onError) this.callback.onError(peerId, err); }
 
-    if (0 < this.queue.length && this.sendInterval === null) this.sendInterval = setZeroTimeout(this.sendCallback);
+    if (0 < this.queue.size && this.sendInterval === null) this.sendInterval = setZeroTimeout(this.sendCallback);
 
     return store;
   }
