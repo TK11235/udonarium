@@ -8,6 +8,9 @@ import { FileReaderUtil } from './file-reader-util';
 import { ImageStorage } from './image-storage';
 import { MimeType } from './mime-type';
 
+type MetaData = { percent: number, currentFile: string };
+type UpdateCallback = (metadata: MetaData) => void;
+
 export class FileArchiver {
   private static _instance: FileArchiver
   static get instance(): FileArchiver {
@@ -136,9 +139,9 @@ export class FileArchiver {
     }
   }
 
-  save(files: File[], zipName: string)
-  save(files: FileList, zipName: string)
-  save(files: any, zipName: string) {
+  async saveAsync(files: File[], zipName: string, updateCallback?: UpdateCallback): Promise<void>
+  async saveAsync(files: FileList, zipName: string, updateCallback?: UpdateCallback): Promise<void>
+  async saveAsync(files: any, zipName: string, updateCallback?: UpdateCallback): Promise<void> {
     if (!files) return;
 
     let zip = new JSZip();
@@ -148,12 +151,13 @@ export class FileArchiver {
       zip.file(file.name, file);
     }
 
-    zip.generateAsync({
+    let blob = await zip.generateAsync({
       type: 'blob',
       compression: 'DEFLATE',
       compressionOptions: {
         level: 6
       }
-    }).then(blob => saveAs(blob, zipName + '.zip'));
+    }, updateCallback);
+    saveAs(blob, zipName + '.zip');
   }
 }

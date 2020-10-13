@@ -29,7 +29,7 @@ export class SaveDataService {
     files = files.concat(this.searchImageFiles(roomXml));
     files = files.concat(this.searchImageFiles(chatXml));
 
-    FileArchiver.instance.save(files, this.appendTimestamp(fileName));
+    FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
   }
 
   saveGameObject(gameObject: GameObject, fileName: string = 'xml_data') {
@@ -39,7 +39,7 @@ export class SaveDataService {
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
     files = files.concat(this.searchImageFiles(xml));
 
-    FileArchiver.instance.save(files, this.appendTimestamp(fileName));
+    FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
   }
 
   private convertToXml(gameObject: GameObject): string {
