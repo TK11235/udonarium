@@ -21,7 +21,7 @@ export class TabletopObject extends ObjectNode {
 
   @SyncVar() posZ: number = 0;
 
-  get isVisibleOnTable(): boolean { return this.location.name === 'table' && (!this.parentIsAssigned || this.parentIsDestroyed); }
+  get isVisibleOnTable(): boolean { return this.location.name === 'table'; }
 
   private _imageFile: ImageFile = ImageFile.Empty;
   private _dataElements: { [name: string]: string } = {};
