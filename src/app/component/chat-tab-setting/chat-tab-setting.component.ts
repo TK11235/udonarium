@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ChatTab } from '@udonarium/chat-tab';
 import { ChatTabList } from '@udonarium/chat-tab-list';
@@ -28,7 +28,6 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
   get isDeleted(): boolean { return this.selectedTab ? ObjectStore.instance.get(this.selectedTab.identifier) == null : false; }
   get isEditable(): boolean { return !this.isEmpty && !this.isDeleted; }
 
-  private zoneUpdateTimer: NodeJS.Timer = null;
   isSaveing: boolean = false;
   progresPercent: number = 0;
 
@@ -36,8 +35,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private panelService: PanelService,
     private chatMessageService: ChatMessageService,
-    private saveDataService: SaveDataService,
-    private ngZone: NgZone
+    private saveDataService: SaveDataService
   ) { }
 
   ngOnInit() {
@@ -72,15 +70,8 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
     let fileName: string = 'chat_' + this.selectedTab.name;
 
-    await this.saveDataService.saveGameObjectAsync(this.selectedTab, fileName, meta => {
-      let percent = meta.percent | 0;
-      if (percent <= this.progresPercent) return;
+    await this.saveDataService.saveGameObjectAsync(this.selectedTab, fileName, percent => {
       this.progresPercent = percent;
-      if (this.zoneUpdateTimer != null) return;
-      this.zoneUpdateTimer = setTimeout(() => {
-        this.zoneUpdateTimer = null;
-        this.ngZone.run(() => { });
-      }, 0);
     });
 
     setTimeout(() => {

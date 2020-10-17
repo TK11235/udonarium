@@ -232,11 +232,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
       ? Network.peerContext.roomName
       : 'ルームデータ';
-    await this.saveDataService.saveRoomAsync(roomName, meta => {
-      let percent = meta.percent | 0;
-      if (percent <= this.progresPercent) return;
+    await this.saveDataService.saveRoomAsync(roomName, percent => {
       this.progresPercent = percent;
-      this.lazyNgZoneUpdate(true);
     });
 
     setTimeout(() => {

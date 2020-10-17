@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
@@ -76,15 +76,13 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     return !this.isEmpty && !this.isDeleted;
   }
 
-  private zoneUpdateTimer: NodeJS.Timer = null;
   isSaveing: boolean = false;
   progresPercent: number = 0;
 
   constructor(
     private modalService: ModalService,
     private saveDataService: SaveDataService,
-    private panelService: PanelService,
-    private ngZone: NgZone
+    private panelService: PanelService
   ) { }
 
   ngOnInit() {
@@ -130,15 +128,8 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.progresPercent = 0;
 
     this.selectedTable.selected = true;
-    await this.saveDataService.saveGameObjectAsync(this.selectedTable, 'map_' + this.selectedTable.name, meta => {
-      let percent = meta.percent | 0;
-      if (percent <= this.progresPercent) return;
+    await this.saveDataService.saveGameObjectAsync(this.selectedTable, 'map_' + this.selectedTable.name, percent => {
       this.progresPercent = percent;
-      if (this.zoneUpdateTimer != null) return;
-      this.zoneUpdateTimer = setTimeout(() => {
-        this.zoneUpdateTimer = null;
-        this.ngZone.run(() => { });
-      }, 0);
     });
 
     setTimeout(() => {
