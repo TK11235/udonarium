@@ -50,10 +50,16 @@
           </label>
         </a>
       </li>
-      <li (click)="save()">
+      <li *ngIf="!isSaveing" (click)="save()">
         <a routerLink="/" routerLinkActive="active">
           <div><i class="material-icons">sd_storage</i></div>
           <div>保存</div>
+        </a>
+      </li>
+      <li *ngIf="isSaveing" style="pointer-events: none;">
+        <a>
+          <div><i class="material-icons vibration-amine">sd_storage</i></div>
+          <div>{{progresPercent}}%</div>
         </a>
       </li>
     </ul>

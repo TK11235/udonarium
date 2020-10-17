@@ -70,7 +70,12 @@
           <input type="checkbox" [(ngModel)]="tableGridSnap" name="tableGridSnap" />
         </label>
         <ng-container *ngIf="!isDeleted">
-          <button (click)="save()">保存</button>
+          <button [disabled]="isSaveing" (click)="save()">
+            <div style="position: relative;">
+              <div [ngClass]="{'is-hidden': isSaveing}">保存</div>
+              <div *ngIf="isSaveing" class="progress">{{progresPercent}}%</div>
+            </div>
+          </button>
           <button class="danger" (click)="delete()" [attr.disabled]="getGameTables().length <= 1 ? '' : null">削除</button>
         </ng-container>
         <ng-container *ngIf="isDeleted">

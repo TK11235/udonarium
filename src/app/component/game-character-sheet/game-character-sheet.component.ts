@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { EventSystem, Network } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
@@ -22,10 +22,15 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   networkService = Network;
 
+  private zoneUpdateTimer: NodeJS.Timer = null;
+  isSaveing: boolean = false;
+  progresPercent: number = 0;
+
   constructor(
     private saveDataService: SaveDataService,
     private panelService: PanelService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -88,13 +93,29 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
     }
   }
 
-  saveToXML() {
-    if (!this.tabletopObject) return;
+  async saveToXML() {
+    if (!this.tabletopObject || this.isSaveing) return;
+    this.isSaveing = true;
+    this.progresPercent = 0;
 
     let element = this.tabletopObject.getElement('name', this.tabletopObject.commonDataElement);
     let objectName: string = element ? <string>element.value : '';
 
-    this.saveDataService.saveGameObject(this.tabletopObject, 'xml_' + objectName);
+    await this.saveDataService.saveGameObject(this.tabletopObject, 'xml_' + objectName, meta => {
+      let percent = meta.percent | 0;
+      if (percent <= this.progresPercent) return;
+      this.progresPercent = percent;
+      if (this.zoneUpdateTimer != null) return;
+      this.zoneUpdateTimer = setTimeout(() => {
+        this.zoneUpdateTimer = null;
+        this.ngZone.run(() => { });
+      }, 0);
+    });
+
+    setTimeout(() => {
+      this.isSaveing = false;
+      this.progresPercent = 0;
+    }, 500);
   }
 
   setLocation(locationName: string) {

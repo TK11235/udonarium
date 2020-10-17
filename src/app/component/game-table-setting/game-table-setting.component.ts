@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
-import { GameTable, GridType, FilterType } from '@udonarium/game-table';
+import { FilterType, GameTable, GridType } from '@udonarium/game-table';
 import { TableSelecter } from '@udonarium/table-selecter';
 
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
@@ -76,10 +76,15 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     return !this.isEmpty && !this.isDeleted;
   }
 
+  private zoneUpdateTimer: NodeJS.Timer = null;
+  isSaveing: boolean = false;
+  progresPercent: number = 0;
+
   constructor(
     private modalService: ModalService,
     private saveDataService: SaveDataService,
-    private panelService: PanelService
+    private panelService: PanelService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -119,10 +124,27 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.selectGameTable(gameTable.identifier);
   }
 
-  save() {
-    if (!this.selectedTable) return;
+  async save() {
+    if (!this.selectedTable || this.isSaveing) return;
+    this.isSaveing = true;
+    this.progresPercent = 0;
+
     this.selectedTable.selected = true;
-    this.saveDataService.saveGameObject(this.selectedTable, 'map_' + this.selectedTable.name);
+    await this.saveDataService.saveGameObject(this.selectedTable, 'map_' + this.selectedTable.name, meta => {
+      let percent = meta.percent | 0;
+      if (percent <= this.progresPercent) return;
+      this.progresPercent = percent;
+      if (this.zoneUpdateTimer != null) return;
+      this.zoneUpdateTimer = setTimeout(() => {
+        this.zoneUpdateTimer = null;
+        this.ngZone.run(() => { });
+      }, 0);
+    });
+
+    setTimeout(() => {
+      this.isSaveing = false;
+      this.progresPercent = 0;
+    }, 500);
   }
 
   delete() {
