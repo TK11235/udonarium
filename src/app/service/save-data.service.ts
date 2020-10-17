@@ -6,6 +6,7 @@ import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { MimeType } from '@udonarium/core/file-storage/mime-type';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
+import { PromiseQueue } from '@udonarium/core/system/util/promise-queue';
 import { XmlUtil } from '@udonarium/core/system/util/xml-util';
 import { DataSummarySetting } from '@udonarium/data-summary-setting';
 import { Room } from '@udonarium/room';
@@ -16,8 +17,13 @@ import * as Beautify from 'vkbeautify';
   providedIn: 'root'
 })
 export class SaveDataService {
+  private static queue: PromiseQueue = new PromiseQueue('SaveDataServiceQueue');
 
-  saveRoom(fileName: string = 'ルームデータ') {
+  saveRoom(fileName: string = 'ルームデータ'): Promise<void> {
+    return SaveDataService.queue.add((resolve, reject) => resolve(this._saveRoomAsync(fileName)));
+  }
+
+  private _saveRoomAsync(fileName: string = 'ルームデータ'): Promise<void> {
     let files: File[] = [];
     let roomXml = this.convertToXml(new Room());
     let chatXml = this.convertToXml(ChatTabList.instance);
@@ -29,17 +35,21 @@ export class SaveDataService {
     files = files.concat(this.searchImageFiles(roomXml));
     files = files.concat(this.searchImageFiles(chatXml));
 
-    FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
+    return FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
   }
 
-  saveGameObject(gameObject: GameObject, fileName: string = 'xml_data') {
+  saveGameObject(gameObject: GameObject, fileName: string = 'xml_data'): Promise<void> {
+    return SaveDataService.queue.add((resolve, reject) => resolve(this._saveGameObjectAsync(gameObject, fileName)));
+  }
+
+  private _saveGameObjectAsync(gameObject: GameObject, fileName: string = 'xml_data'): Promise<void> {
     let files: File[] = [];
     let xml: string = this.convertToXml(gameObject);
 
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
     files = files.concat(this.searchImageFiles(xml));
 
-    FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
+    return FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
   }
 
   private convertToXml(gameObject: GameObject): string {
