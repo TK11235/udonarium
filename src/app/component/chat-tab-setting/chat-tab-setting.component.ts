@@ -72,7 +72,7 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
 
     let fileName: string = 'chat_' + this.selectedTab.name;
 
-    await this.saveDataService.saveGameObject(this.selectedTab, fileName, meta => {
+    await this.saveDataService.saveGameObjectAsync(this.selectedTab, fileName, meta => {
       let percent = meta.percent | 0;
       if (percent <= this.progresPercent) return;
       this.progresPercent = percent;

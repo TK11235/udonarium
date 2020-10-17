@@ -22,7 +22,7 @@ type UpdateCallback = (metadata: MetaData) => void;
 export class SaveDataService {
   private static queue: PromiseQueue = new PromiseQueue('SaveDataServiceQueue');
 
-  saveRoom(fileName: string = 'ルームデータ', updateCallback?: UpdateCallback): Promise<void> {
+  saveRoomAsync(fileName: string = 'ルームデータ', updateCallback?: UpdateCallback): Promise<void> {
     return SaveDataService.queue.add((resolve, reject) => resolve(this._saveRoomAsync(fileName, updateCallback)));
   }
 
@@ -41,7 +41,7 @@ export class SaveDataService {
     return FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName), updateCallback);
   }
 
-  saveGameObject(gameObject: GameObject, fileName: string = 'xml_data', updateCallback?: UpdateCallback): Promise<void> {
+  saveGameObjectAsync(gameObject: GameObject, fileName: string = 'xml_data', updateCallback?: UpdateCallback): Promise<void> {
     return SaveDataService.queue.add((resolve, reject) => resolve(this._saveGameObjectAsync(gameObject, fileName, updateCallback)));
   }
 

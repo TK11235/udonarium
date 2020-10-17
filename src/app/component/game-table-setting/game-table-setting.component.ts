@@ -130,7 +130,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     this.progresPercent = 0;
 
     this.selectedTable.selected = true;
-    await this.saveDataService.saveGameObject(this.selectedTable, 'map_' + this.selectedTable.name, meta => {
+    await this.saveDataService.saveGameObjectAsync(this.selectedTable, 'map_' + this.selectedTable.name, meta => {
       let percent = meta.percent | 0;
       if (percent <= this.progresPercent) return;
       this.progresPercent = percent;
