@@ -13,17 +13,20 @@ import { Room } from '@udonarium/room';
 
 import * as Beautify from 'vkbeautify';
 
+type MetaData = { percent: number, currentFile: string };
+type UpdateCallback = (metadata: MetaData) => void;
+
 @Injectable({
   providedIn: 'root'
 })
 export class SaveDataService {
   private static queue: PromiseQueue = new PromiseQueue('SaveDataServiceQueue');
 
-  saveRoom(fileName: string = 'ルームデータ'): Promise<void> {
-    return SaveDataService.queue.add((resolve, reject) => resolve(this._saveRoomAsync(fileName)));
+  saveRoom(fileName: string = 'ルームデータ', updateCallback?: UpdateCallback): Promise<void> {
+    return SaveDataService.queue.add((resolve, reject) => resolve(this._saveRoomAsync(fileName, updateCallback)));
   }
 
-  private _saveRoomAsync(fileName: string = 'ルームデータ'): Promise<void> {
+  private _saveRoomAsync(fileName: string = 'ルームデータ', updateCallback?: UpdateCallback): Promise<void> {
     let files: File[] = [];
     let roomXml = this.convertToXml(new Room());
     let chatXml = this.convertToXml(ChatTabList.instance);
@@ -35,21 +38,21 @@ export class SaveDataService {
     files = files.concat(this.searchImageFiles(roomXml));
     files = files.concat(this.searchImageFiles(chatXml));
 
-    return FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
+    return FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName), updateCallback);
   }
 
-  saveGameObject(gameObject: GameObject, fileName: string = 'xml_data'): Promise<void> {
-    return SaveDataService.queue.add((resolve, reject) => resolve(this._saveGameObjectAsync(gameObject, fileName)));
+  saveGameObject(gameObject: GameObject, fileName: string = 'xml_data', updateCallback?: UpdateCallback): Promise<void> {
+    return SaveDataService.queue.add((resolve, reject) => resolve(this._saveGameObjectAsync(gameObject, fileName, updateCallback)));
   }
 
-  private _saveGameObjectAsync(gameObject: GameObject, fileName: string = 'xml_data'): Promise<void> {
+  private _saveGameObjectAsync(gameObject: GameObject, fileName: string = 'xml_data', updateCallback?: UpdateCallback): Promise<void> {
     let files: File[] = [];
     let xml: string = this.convertToXml(gameObject);
 
     files.push(new File([xml], 'data.xml', { type: 'text/plain' }));
     files = files.concat(this.searchImageFiles(xml));
 
-    return FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
+    return FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName), updateCallback);
   }
 
   private convertToXml(gameObject: GameObject): string {
