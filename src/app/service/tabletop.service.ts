@@ -176,11 +176,7 @@ export class TabletopService {
   }
 
   private shouldRefreshCache(object: TabletopObject) {
-    if (this.locationMap.has(object.identifier) || this.parentMap.has(object.identifier)) {
-      return this.locationMap.get(object.identifier) !== object.location.name || this.parentMap.get(object.identifier) !== object.parentId;
-    } else {
-      return object.isVisibleOnTable;
-    }
+    return this.locationMap.get(object.identifier) !== object.location.name || this.parentMap.get(object.identifier) !== object.parentId;
   }
 
   private updateMap(object: TabletopObject) {
