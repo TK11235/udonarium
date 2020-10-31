@@ -17,6 +17,8 @@ export namespace XmlUtil {
     '&apos;': '\'',
   };
 
+  const sanitizePattern = /((?:[\0-\x08\x0B\f\x0E-\x1F\uFFFD\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]))/g;
+
   export function xml2element(xml: string) {
     let domParser: DOMParser = new DOMParser();
     let xmlDocument: Document = null;
@@ -43,7 +45,7 @@ export namespace XmlUtil {
   }
 
   function sanitizeXml(xml: string): string {
-    return xml.replace(/((?:[\0-\x08\x0B\f\x0E-\x1F\uFFFD\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]))/g, '').trim();
+    return xml.replace(sanitizePattern, '').trim();
   }
 
   function encodeReplacer(char: string): string {
