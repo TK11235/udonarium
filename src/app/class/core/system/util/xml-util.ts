@@ -43,7 +43,7 @@ export namespace XmlUtil {
   }
 
   function sanitizeXml(xml: string): string {
-    return xml.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '').trim();
+    return xml.replace(/((?:[\0-\x08\x0B\f\x0E-\x1F\uFFFD\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]))/g, '').trim();
   }
 
   function encodeReplacer(char: string): string {
