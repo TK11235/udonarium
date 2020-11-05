@@ -1,14 +1,14 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Card } from "@udonarium/card";
-import { ModalService } from "service/modal.service";
-import { SaveDataService } from "service/save-data.service";
-import { DataElement } from "@udonarium/data-element";
-import { FileSelecterComponent } from "component/file-selecter/file-selecter.component";
+import { Component, OnInit, Input } from '@angular/core';
+import { Card } from '@udonarium/card';
+import { ModalService } from 'service/modal.service';
+import { SaveDataService } from 'service/save-data.service';
+import { DataElement } from '@udonarium/data-element';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 
 @Component({
-  selector: "app-card-editor",
-  templateUrl: "./card-editor.component.html",
-  styleUrls: ["./card-editor.component.css"]
+  selector: 'app-card-editor',
+  templateUrl: './card-editor.component.html',
+  styleUrls: ['./card-editor.component.css'],
 })
 export class CardEditorComponent implements OnInit {
   @Input() card: Card = null;
@@ -29,11 +29,15 @@ export class CardEditorComponent implements OnInit {
     this.isEdit = !this.isEdit;
   }
 
-  save(): void {
-    const element = this.card.getElement("name", this.card.commonDataElement);
-    const objectName: string = element ? (element.value as string) : "";
+  async save(): Promise<void> {
+    const element = this.card.getElement('name', this.card.commonDataElement);
+    const objectName: string = element ? (element.value as string) : '';
 
-    this.saveDataService.saveGameObject(this.card, "xml_" + objectName);
+    await this.saveDataService.saveGameObjectAsync(
+      this.card,
+      'xml_' + objectName,
+      () => {}
+    );
   }
 
   delete(): void {
@@ -74,17 +78,17 @@ export class CardEditorComponent implements OnInit {
 
   addDataElement(): void {
     if (this.card.detailDataElement) {
-      const title = DataElement.create("見出し", "", {});
-      const tag = DataElement.create("タグ", "", {});
+      const title = DataElement.create('見出し', '', {});
+      const tag = DataElement.create('タグ', '', {});
       title.appendChild(tag);
       this.card.detailDataElement.appendChild(title);
     }
   }
 
-  openModal(name: string = "", isAllowedEmpty: boolean = false): void {
+  openModal(name: string = '', isAllowedEmpty: boolean = false): void {
     this.modalService
       .open<string>(FileSelecterComponent, { isAllowedEmpty })
-      .then(value => {
+      .then((value) => {
         if (!this.card || !this.card.imageDataElement || !value) return;
         const element = this.card.imageDataElement.getFirstElementByName(name);
         if (!element) return;

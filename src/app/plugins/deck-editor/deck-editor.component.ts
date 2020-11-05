@@ -6,42 +6,42 @@ import {
   NgZone,
   AfterViewInit,
   OnDestroy,
-} from "@angular/core";
-import { CardStack } from "@udonarium/card-stack";
-import { Card } from "@udonarium/card";
-import { ImageStorage } from "@udonarium/core/file-storage/image-storage";
-import { SaveDataService } from "service/save-data.service";
-import { ModalService } from "service/modal.service";
-import { FileArchiver } from "@udonarium/core/file-storage/file-archiver";
-import { ObjectStore } from "@udonarium/core/synchronize-object/object-store";
-import { EventSystem } from "@udonarium/core/system";
-import { ObjectFactory } from "@udonarium/core/synchronize-object/object-factory";
-import { ObjectSerializer } from "@udonarium/core/synchronize-object/object-serializer";
-import { TabletopService } from "service/tabletop.service";
-import { ContextMenuService } from "service/context-menu.service";
-import { PointerDeviceService } from "service/pointer-device.service";
-import { FileSelecterComponent } from "component/file-selecter/file-selecter.component";
+} from '@angular/core';
+import { CardStack } from '@udonarium/card-stack';
+import { Card } from '@udonarium/card';
+import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
+import { SaveDataService } from 'service/save-data.service';
+import { ModalService } from 'service/modal.service';
+import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
+import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
+import { EventSystem } from '@udonarium/core/system';
+import { ObjectFactory } from '@udonarium/core/synchronize-object/object-factory';
+import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
+import { TabletopService } from 'service/tabletop.service';
+import { ContextMenuService } from 'service/context-menu.service';
+import { PointerDeviceService } from 'service/pointer-device.service';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 
 @Component({
-  selector: "app-deck-editor",
-  templateUrl: "./deck-editor.component.html",
-  styleUrls: ["./deck-editor.component.css"],
+  selector: 'app-deck-editor',
+  templateUrl: './deck-editor.component.html',
+  styleUrls: ['./deck-editor.component.css'],
 })
 export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("modalLayer", { read: ViewContainerRef, static: true })
+  @ViewChild('modalLayer', { read: ViewContainerRef, static: true })
   modalLayerViewContainerRef: ViewContainerRef;
   private immediateUpdateTimer: NodeJS.Timer = null;
   private lazyUpdateTimer: NodeJS.Timer = null;
 
   selectedStack: CardStack = null;
-  selectedStackXml: string = "";
+  selectedStackXml: string = '';
   get stackName(): string {
     return this.selectedStack.name;
   }
   set stackName(name: string) {
     if (this.isEditable) {
       const element = this.selectedStack.getElement(
-        "name",
+        'name',
         this.selectedStack.commonDataElement
       );
       element.value = name;
@@ -80,7 +80,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.pointerDeviceService.initialize();
     this.tabletopService.makeDefaultTable();
     this.createBlankDeck();
-    EventSystem.register(this).on<File>("FILE_LOADED", (event) => {
+    EventSystem.register(this).on<File>('FILE_LOADED', (event) => {
       this.lazyNgZoneUpdate(false);
     });
   }
@@ -97,17 +97,17 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onChangeSelectStack(identifier: string): void {
     this.selectedStack = ObjectStore.instance.get<CardStack>(identifier);
-    this.selectedStackXml = "";
+    this.selectedStackXml = '';
   }
 
   createTrump(): void {
     this.selectedStack = this.tabletopService.createTrump({ x: 0, y: 0, z: 0 });
-    this.selectedStackXml = "";
+    this.selectedStackXml = '';
   }
 
   createBlankDeck(): void {
-    this.selectedStack = CardStack.create("空の山札");
-    this.selectedStackXml = "";
+    this.selectedStack = CardStack.create('空の山札');
+    this.selectedStackXml = '';
   }
 
   addCard(): void {
@@ -123,20 +123,21 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedStack.faceDownAll();
   }
 
-  save(): void {
+  async save(): Promise<void> {
     if (!this.selectedStack) {
       return;
     }
 
     const element = this.selectedStack.getElement(
-      "name",
+      'name',
       this.selectedStack.commonDataElement
     );
-    const objectName: string = element ? (element.value as string) : "";
+    const objectName: string = element ? (element.value as string) : '';
 
-    this.saveDataService.saveGameObject(
+    await this.saveDataService.saveGameObjectAsync(
       this.selectedStack,
-      "xml_" + objectName
+      'xml_' + objectName,
+      () => {}
     );
   }
 
@@ -152,7 +153,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedStack = ObjectSerializer.instance.parseXml(
         this.selectedStackXml
       ) as CardStack;
-      this.selectedStackXml = "";
+      this.selectedStackXml = '';
     }
   }
 
@@ -160,11 +161,11 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     return card.identifier;
   }
 
-  openModal(name: string = "", isAllowedEmpty: boolean = false): void {
+  openModal(name: string = '', isAllowedEmpty: boolean = false): void {
     this.modalService
       .open<string>(FileSelecterComponent, { isAllowedEmpty })
       .then((value) => {
-        if (!confirm("すべての裏面の画像を変更しますがよろしいでしょうか？"))
+        if (!confirm('すべての裏面の画像を変更しますがよろしいでしょうか？'))
           return;
         if (!this.selectedStack || !this.isEditable || !value) return;
         for (const card of this.selectedStack.cards) {
@@ -179,15 +180,15 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
    * @see TabletopService#createTrump from 'service/tabletop.service';
    */
   private static createCard(): Card {
-    const back = "./assets/images/trump/z02.gif";
+    const back = './assets/images/trump/z02.gif';
     if (!ImageStorage.instance.get(back)) {
       ImageStorage.instance.add(back);
     }
-    const url: string = "./assets/images/trump/x01.gif";
+    const url: string = './assets/images/trump/x01.gif';
     if (!ImageStorage.instance.get(url)) {
       ImageStorage.instance.add(url);
     }
-    return Card.create("カード", url, back);
+    return Card.create('カード', url, back);
   }
 
   private lazyNgZoneUpdate(isImmediate: boolean) {

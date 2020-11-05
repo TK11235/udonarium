@@ -93,13 +93,13 @@ export class CharazipComponent implements OnInit {
     );
     const objectName: string = element ? element.value.toString() : '';
 
-    this.saveGameCharacters(gameCharacters, 'xml_' + objectName);
+    this._saveGameCharactersAsync(gameCharacters, 'xml_' + objectName);
   }
 
   /**
-   * @see SaveDataService#saveGameObject from service/save-data.service
+   * @see SaveDataService#_saveGameObjectAsync from service/save-data.service
    */
-  private saveGameCharacters(
+  private _saveGameCharactersAsync(
     gameCharacters: CustomCharacter[],
     fileName: string = 'xml_data'
   ): void {
@@ -110,7 +110,7 @@ export class CharazipComponent implements OnInit {
       files = files.concat(this.searchImageFiles(xml));
     }
 
-    FileArchiver.instance.save(files, this.appendTimestamp(fileName));
+    FileArchiver.instance.saveAsync(files, this.appendTimestamp(fileName));
   }
 
   private convertToXml(gameObject: CustomCharacter): string {
