@@ -81,16 +81,15 @@ export class GameObject {
   }
 }
 
-function deepCopy<T extends Object>(obj: T): T {
-  let clone: any = {};
-  for (let key in obj) {
-    if (typeof obj[key] === 'object') {
-      if (Array.isArray(obj)) {
-        clone[key] = JSON.parse(JSON.stringify(this.context.syncData));
-      } else {
-        clone[key] = deepCopy(obj[key]);
-      }
-    } else {
+function deepCopy(obj: Object): Object {
+  if (obj == null) return obj;
+  let clone = Array.isArray(obj) ? [] : {};
+  let keys = Object.getOwnPropertyNames(obj);
+  for (let key of keys) {
+    let type = typeof obj[key];
+    if (obj[key] != null && type === 'object') {
+      clone[key] = deepCopy(obj[key]);
+    } else if (type !== 'function') {
       clone[key] = obj[key];
     }
   }
