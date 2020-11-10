@@ -19,6 +19,9 @@ export interface AppConfig {
   }
 }
 
+const objectPropertyKeys = Object.getOwnPropertyNames(Object.prototype);
+const arrayPropertyKeys = Object.getOwnPropertyNames(Array.prototype);
+
 @Injectable()
 export class AppConfigService {
 
@@ -143,20 +146,20 @@ export class AppConfigService {
   }
 
   private static applyConfig(config: Object, root: Object = AppConfigService.appConfig): Object {
-    for (let key in config) {
-      if (isArray(config[key])) {
-        root[key] = config[key];
-      } else if (typeof config[key] === 'object') {
-        if (!(key in root)) root[key] = {};
+    if (config == null) return root;
+    let keys = Object.getOwnPropertyNames(config);
+    for (let key of keys) {
+      let invalidPropertyKeys = Array.isArray(config) || Array.isArray(root) ? objectPropertyKeys.concat(arrayPropertyKeys) : objectPropertyKeys;
+      if (invalidPropertyKeys.includes(key)) {
+        console.log(`skip invalid key (${key})`);
+        continue;
+      } else if (config[key] != null && typeof config[key] === 'object') {
+        if (root[key] == null) root[key] = Array.isArray(config[key]) ? [] : {};
         AppConfigService.applyConfig(config[key], root[key]);
-      } else {
+      } else if (typeof config[key] !== 'function' && typeof root[key] !== 'function') {
         root[key] = config[key];
       }
     }
     return root;
   }
-}
-
-function isArray(obj) {
-  return Object.prototype.toString.call(obj) === '[object Array]';
 }

@@ -13,6 +13,9 @@ export interface InnerXml extends GameObject {
   parseInnerXml(element: Element);
 }
 
+const objectPropertyKeys = Object.getOwnPropertyNames(Object.prototype);
+const arrayPropertyKeys = Object.getOwnPropertyNames(Array.prototype);
+
 export class ObjectSerializer {
   private static _instance: ObjectSerializer
   static get instance(): ObjectSerializer {
@@ -139,8 +142,15 @@ export class ObjectSerializer {
       let key: string | number = split[0];
       let obj: Object | Array<any> = syncData;
 
+      let pollutionKey = split.find(splitKey => objectPropertyKeys.includes(splitKey));
+      if (pollutionKey != null) {
+        console.log(`skip invalid key (${pollutionKey})`);
+        continue;
+      }
+
       if (1 < split.length) {
         ({ obj, key } = ObjectSerializer.attributes2object(split, obj, key));
+        if (key == null) continue;
       }
 
       let type = typeof obj[key];
@@ -164,8 +174,13 @@ export class ObjectSerializer {
         obj = parentObj[key];
       }
       key = Number.isNaN(index) ? split[i] : index;
+
+      if (Array.isArray(obj) && typeof key !== 'number') {
+        console.warn('Arrayにはindexの挿入しか許可しない');
+        return { obj, key: null };
+      }
       if (i + 1 < length) {
-        if (obj[key] === undefined)
+        if (obj[key] == null)
           obj[key] = typeof key === 'number' ? [] : {};
         parentObj = obj;
         obj = obj[key];
