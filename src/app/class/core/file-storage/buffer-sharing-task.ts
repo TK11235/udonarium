@@ -206,7 +206,7 @@ export class BufferSharingTask<T> {
   }
 
   private resetTimeout() {
-    if (this.timeoutTimer == null) this.timeoutTimer = new ResettableTimeout(() => this.timeout(), 15 * 1000);
+    if (this.timeoutTimer == null) this.timeoutTimer = new ResettableTimeout(() => this.timeout(), 30 * 1000);
     this.timeoutTimer.reset();
   }
 }
