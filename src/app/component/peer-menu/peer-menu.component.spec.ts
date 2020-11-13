@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PeerMenuComponent } from './peer-menu.component';
 
@@ -6,7 +6,7 @@ describe('PeerMenuComponent', () => {
   let component: PeerMenuComponent;
   let fixture: ComponentFixture<PeerMenuComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PeerMenuComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DiceSymbolComponent } from './dice-symbol.component';
 
@@ -6,7 +6,7 @@ describe('DiceSymbolComponent', () => {
   let component: DiceSymbolComponent;
   let fixture: ComponentFixture<DiceSymbolComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DiceSymbolComponent ]
     })
