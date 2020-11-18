@@ -289,6 +289,19 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       },
       {
+        name: '山札をN人分に分割する', action: null,
+        subActions: Array.from({ length: 9 }, (_, i) => {
+          const N = i + 2;
+          return {
+            name: N + '人分',
+            action: () => {
+              this.splitStack(N);
+              SoundEffect.play(PresetSound.cardDraw);
+            }
+          };
+        })
+      },
+      {
         name: '山札を崩す', action: () => {
           this.breakStack();
           SoundEffect.play(PresetSound.cardShuffle);
