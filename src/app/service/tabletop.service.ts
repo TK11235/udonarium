@@ -319,6 +319,24 @@ export class TabletopService {
     return cardStack;
   }
 
+  createCard(position: PointerCoordinate):Card {
+    let front_url: string = './assets/images/trump/x01.gif';
+    if (!ImageStorage.instance.get(front_url)) {
+      ImageStorage.instance.add(front_url);
+    }
+
+    let back_url: string = './assets/images/trump/z02.gif';
+    if (!ImageStorage.instance.get(back_url)) {
+      ImageStorage.instance.add(back_url);
+    }
+
+    let card:Card = Card.create('新しいカード',front_url,back_url);
+
+    card.location.x = position.x;
+    card.location.y = position.y;
+    return card;
+  }
+
   makeDefaultTable() {
     let tableSelecter = new TableSelecter('tableSelecter');
     tableSelecter.initialize();
@@ -406,6 +424,7 @@ export class TabletopService {
       this.getCreateTerrainMenu(position),
       this.getCreateTextNoteMenu(position),
       this.getCreateTrumpMenu(position),
+      this.getCreateCardMenu(position),
       this.getCreateDiceSymbolMenu(position),
     ];
   }
@@ -451,6 +470,15 @@ export class TabletopService {
     return {
       name: 'トランプの山札を作成', action: () => {
         this.createTrump(position);
+        SoundEffect.play(PresetSound.cardPut);
+      }
+    }
+  }
+
+  private getCreateCardMenu(position: PointerCoordinate): ContextMenuAction {
+    return {
+      name: 'カードを作成', action: () => {
+        this.createCard(position);
         SoundEffect.play(PresetSound.cardPut);
       }
     }
