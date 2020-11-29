@@ -185,7 +185,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       this.addMessageEventTimer = setTimeout(() => {
         this.addMessageEventTimer = null;
         this.ngZone.run(() => this.onAddMessage.emit());
-      }, 66);
+      }, 0);
     });
   }
 
