@@ -132,7 +132,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
         if (!message || !this.chatTab.contains(message)) return;
 
-        if (this.topTimestamp < message.timestamp) {
+        if (this.topTimestamp <= message.timestamp) {
           this.changeDetector.markForCheck();
           this.needUpdate = true;
           this.onMessageInit();
@@ -141,7 +141,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       .on('UPDATE_GAME_OBJECT', event => {
         let message = ObjectStore.instance.get(event.data.identifier);
         if (message && message instanceof ChatMessage
-          && this.topTimestamp <= message.timestamp && message.timestamp < this.botomTimestamp
+          && this.topTimestamp <= message.timestamp && message.timestamp <= this.botomTimestamp
           && this.chatTab.contains(message)) {
           this.changeDetector.markForCheck();
         }
