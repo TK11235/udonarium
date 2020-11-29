@@ -73,7 +73,9 @@
   box-sizing: border-box;
   font-size: 15px;
   padding: 3px 9px;
+  overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
   backface-visibility: hidden;
 }
 
