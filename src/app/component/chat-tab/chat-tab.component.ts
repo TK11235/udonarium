@@ -266,8 +266,8 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       prevBox = this.topElmBox;
     }
     currentBox = elm.getBoundingClientRect();
-    diff = Math.floor(prevBox.top - currentBox.top - this.scrollSpeed);
-    if ((!hasTopBlank || !hasBotomBlank) && 3 ** 2 < diff ** 2) {
+    diff = prevBox.top - currentBox.top - this.scrollSpeed;
+    if ((!hasTopBlank || !hasBotomBlank) && 0.5 ** 2 < diff ** 2) {
       this.panelService.scrollablePanel.scrollTop -= diff;
     }
 
