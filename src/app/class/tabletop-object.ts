@@ -64,7 +64,7 @@ export class TabletopObject extends ObjectNode {
     if (!this.detailDataElement) this.rootDataElement.appendChild(DataElement.create('detail', '', {}, 'detail_' + this.identifier));
   }
 
-  getElement(name: string, from: DataElement = this.rootDataElement): DataElement {
+  protected getElement(name: string, from: DataElement = this.rootDataElement): DataElement {
     if (!from) return null;
     let element: DataElement = this._dataElements[name] ? ObjectStore.instance.get(this._dataElements[name]) : null;
     if (!element || !from.contains(element)) {
