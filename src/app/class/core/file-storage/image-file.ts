@@ -50,6 +50,8 @@ export class ImageFile {
     return ImageState.COMPLETE;
   }
 
+  get isEmpty(): boolean { return this.state <= ImageState.NULL; }
+
   private constructor() { }
 
   static createEmpty(identifier: string): ImageFile {
