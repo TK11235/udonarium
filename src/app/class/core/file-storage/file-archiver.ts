@@ -55,17 +55,14 @@ export class FileArchiver {
   }
 
   private onDragEnter(event: DragEvent) {
-    event.stopPropagation();
     event.preventDefault();
   };
 
   private onDragOver(event: DragEvent) {
-    event.stopPropagation();
     event.preventDefault();
   };
 
   private onDrop(event: DragEvent) {
-    event.stopPropagation();
     event.preventDefault();
 
     console.log('onDrop', event.dataTransfer);
