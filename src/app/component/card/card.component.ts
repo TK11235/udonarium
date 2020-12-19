@@ -53,9 +53,9 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   get hasOwner(): boolean { return this.card.hasOwner; }
   get ownerName(): string { return this.card.ownerName; }
 
-  get imageFile(): ImageFile { return this.card.imageFile; }
-  get frontImage(): ImageFile { return this.card.frontImage; }
-  get backImage(): ImageFile { return this.card.backImage; }
+  get imageFile(): ImageFile { return this.tabletopService.getSkeletonImageOr(this.card.imageFile); }
+  get frontImage(): ImageFile { return this.tabletopService.getSkeletonImageOr(this.card.frontImage); }
+  get backImage(): ImageFile { return this.tabletopService.getSkeletonImageOr(this.card.backImage); }
 
   private iconHiddenTimer: NodeJS.Timer = null;
   get isIconHidden(): boolean { return this.iconHiddenTimer != null };

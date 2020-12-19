@@ -44,8 +44,8 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
   get hasWall(): boolean { return this.terrain.hasWall; }
   get hasFloor(): boolean { return this.terrain.hasFloor; }
 
-  get wallImage(): ImageFile { return this.terrain.wallImage; }
-  get floorImage(): ImageFile { return this.terrain.floorImage; }
+  get wallImage(): ImageFile { return this.tabletopService.getSkeletonImageOr(this.terrain.wallImage); }
+  get floorImage(): ImageFile { return this.tabletopService.getSkeletonImageOr(this.terrain.floorImage); }
 
   get height(): number { return this.adjustMinBounds(this.terrain.height); }
   get width(): number { return this.adjustMinBounds(this.terrain.width); }

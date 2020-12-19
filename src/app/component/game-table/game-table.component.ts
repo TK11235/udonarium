@@ -44,7 +44,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get tableImage(): ImageFile {
     let file: ImageFile = ImageStorage.instance.get(this.currentTable.imageIdentifier);
-    return file ? file : ImageFile.Empty;
+    return this.tabletopService.getSkeletonImageOr(file);
   }
 
   get backgroundImage(): ImageFile {
