@@ -114,7 +114,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       })
       .on('DISCONNECT_PEER', event => {
         let object = ObjectStore.instance.get(this.sendTo);
-        if (object instanceof PeerCursor && object.peerId === event.data.peer) {
+        if (object instanceof PeerCursor && object.peerFullstring === event.data.peer) {
           this.sendTo = '';
         }
       })
@@ -149,7 +149,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
         let object = ObjectStore.instance.get(this.sendTo);
         if (object instanceof PeerCursor) {
           let peer = PeerContext.parse(object.peerFullstring);
-          if (peer) sendTo = peer.id;
+          if (peer) sendTo = peer.fullstring;
         }
       }
       EventSystem.call('WRITING_A_MESSAGE', this.chatTabidentifier, sendTo);
@@ -234,7 +234,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
   private allowsChat(gameCharacter: GameCharacter): boolean {
     switch (gameCharacter.location.name) {
       case 'table':
-      case this.myPeer.peerId:
+      case this.myPeer.peerFullstring:
         return true;
       case 'graveyard':
         return false;

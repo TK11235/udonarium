@@ -57,7 +57,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   private resetPeerIfNeeded() {
     if (Network.peerContexts.length < 1) {
       Network.open();
-      PeerCursor.myCursor.peerId = Network.peerId;
+      PeerCursor.myCursor.peerFullstring = Network.peerId;
     }
   }
 
@@ -136,7 +136,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       Network.open();
     }
 
-    PeerCursor.myCursor.peerId = Network.peerId;
+    PeerCursor.myCursor.peerFullstring = Network.peerId;
 
     let listener = EventSystem.register(this);
     listener.on('OPEN_NETWORK', event => {

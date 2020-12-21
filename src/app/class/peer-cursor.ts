@@ -8,11 +8,12 @@ import { EventSystem, Network } from './core/system';
 @SyncObject('PeerCursor')
 export class PeerCursor extends GameObject {
   @SyncVar() peerId: string = '';
+  @SyncVar() peerFullstring: string = '';
   @SyncVar() name: string = '';
   @SyncVar() imageIdentifier: string = '';
 
   static myCursor: PeerCursor = null;
-  private static hash: { [peerId: string]: string } = {};
+  private static hash: { [peerFullstring: string]: string } = {};
 
   get isMine(): boolean { return (PeerCursor.myCursor && PeerCursor.myCursor === this); }
   get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
@@ -23,8 +24,8 @@ export class PeerCursor extends GameObject {
     if (!this.isMine) {
       EventSystem.register(this)
         .on('DISCONNECT_PEER', -1000, event => {
-          if (event.data.peer !== this.peerId) return;
-          delete PeerCursor.hash[this.peerId];
+          if (event.data.peer !== this.peerFullstring) return;
+          delete PeerCursor.hash[this.peerFullstring];
           ObjectStore.instance.remove(this);
         });
     }
@@ -34,16 +35,16 @@ export class PeerCursor extends GameObject {
   onStoreRemoved() {
     super.onStoreRemoved();
     EventSystem.unregister(this);
-    delete PeerCursor.hash[this.peerId];
+    delete PeerCursor.hash[this.peerFullstring];
   }
 
-  static find(peerId): PeerCursor {
-    let identifier = PeerCursor.hash[peerId];
+  static find(peerFullstring: string): PeerCursor {
+    let identifier = PeerCursor.hash[peerFullstring];
     if (identifier != null && ObjectStore.instance.get(identifier)) return ObjectStore.instance.get<PeerCursor>(identifier);
     let cursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
     for (let cursor of cursors) {
-      if (cursor.peerId === peerId) {
-        PeerCursor.hash[peerId] = cursor.identifier;
+      if (cursor.peerFullstring === peerFullstring) {
+        PeerCursor.hash[peerFullstring] = cursor.identifier;
         return cursor;
       }
     }
@@ -56,21 +57,21 @@ export class PeerCursor extends GameObject {
       return PeerCursor.myCursor;
     }
     PeerCursor.myCursor = new PeerCursor();
-    PeerCursor.myCursor.peerId = Network.peerId;
+    PeerCursor.myCursor.peerFullstring = Network.peerId;
     PeerCursor.myCursor.initialize();
     return PeerCursor.myCursor;
   }
 
   // override
   apply(context: ObjectContext) {
-    if (context.syncData['peerId'] !== this.peerId) {
-      PeerCursor.hash[context.syncData['peerId']] = PeerCursor.hash[this.peerId];
-      delete PeerCursor.hash[this.peerId];
+    if (context.syncData['peerFullstring'] !== this.peerFullstring) {
+      PeerCursor.hash[context.syncData['peerFullstring']] = PeerCursor.hash[this.peerFullstring];
+      delete PeerCursor.hash[this.peerFullstring];
     }
     super.apply(context);
   }
 
   isPeerAUdon() {
-    return /u.*d.*o.*n/ig.exec(this.peerId) != null;
+    return /u.*d.*o.*n/ig.exec(this.peerFullstring) != null;
   }
 }

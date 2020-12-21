@@ -93,7 +93,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
     let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
     Network.open(peerId, context.room, context.roomName, context.password);
-    PeerCursor.myCursor.peerId = Network.peerId;
+    PeerCursor.myCursor.peerFullstring = Network.peerId;
 
     let triedPeer: string[] = [];
     EventSystem.register(triedPeer)
@@ -129,7 +129,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   private resetNetwork() {
     if (Network.peerContexts.length < 1) {
       Network.open();
-      PeerCursor.myCursor.peerId = Network.peerId;
+      PeerCursor.myCursor.peerFullstring = Network.peerId;
     }
   }
 

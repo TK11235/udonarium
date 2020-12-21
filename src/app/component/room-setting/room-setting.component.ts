@@ -48,7 +48,7 @@ export class RoomSettingComponent implements OnInit, OnDestroy {
   createRoom() {
     let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
     Network.open(peerId, PeerContext.generateId('***'), this.roomName, this.password);
-    PeerCursor.myCursor.peerId = Network.peerId;
+    PeerCursor.myCursor.peerFullstring = Network.peerId;
 
     this.modalService.resolve();
   }

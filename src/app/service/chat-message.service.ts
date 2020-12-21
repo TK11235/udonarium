@@ -5,7 +5,6 @@ import { ChatTab } from '@udonarium/chat-tab';
 import { ChatTabList } from '@udonarium/chat-tab-list';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { Network } from '@udonarium/core/system';
-import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { GameCharacter } from '@udonarium/game-character';
 import { PeerCursor } from '@udonarium/peer-cursor';
 
@@ -94,7 +93,7 @@ export class ChatMessageService {
     if (object instanceof GameCharacter) {
       return object.identifier;
     } else if (object instanceof PeerCursor) {
-      return PeerContext.parse(object.peerId).id;
+      return object.peerId;
     }
     return null;
   }
