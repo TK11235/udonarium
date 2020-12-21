@@ -76,7 +76,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private shouldConnect(peerId: string): boolean {
-    if (!this.peer || !this.peerId) {
+    if (!this.peerContext || !this.peer || !this.peerId) {
       console.log('connect() is Fail. IDが割り振られるまで待てや');
       return false;
     }
