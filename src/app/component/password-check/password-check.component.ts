@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
 
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
@@ -14,7 +15,7 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
   password: string = '';
   help: string = '';
 
-  private needPassword: string = '';
+  private targetPeerContext: PeerContext = null;
   title: string = '';
 
   get peerId(): string { return Network.peerId; }
@@ -26,7 +27,7 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
     private panelService: PanelService,
     private modalService: ModalService
   ) {
-    this.needPassword = modalService.option.password ? modalService.option.password : '';
+    this.targetPeerContext = modalService.option.peerFullstring ? PeerContext.parse(modalService.option.peerFullstring) : PeerContext.parse('???');
     this.title = modalService.option.title ? modalService.option.title : '';
   }
 
@@ -44,7 +45,7 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    if (this.needPassword === this.password) this.modalService.resolve(this.password);
+    if (this.targetPeerContext.verifyPassword(this.password)) this.modalService.resolve(this.password);
     this.help = 'パスワードが違います';
   }
 }
