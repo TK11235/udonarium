@@ -26,7 +26,7 @@ export class PeerContext implements IPeerContext {
     this.parse(fullstring);
   }
 
-  private parse(fullstring) {
+  private parse(fullstring: string) {
     try {
       this.fullstring = fullstring;
       let array = /^(\w{6})((\w{3})(\w*)-(\w*))?/ig.exec(fullstring);
@@ -48,7 +48,6 @@ export class PeerContext implements IPeerContext {
   static create(peerId: string): PeerContext
   static create(peerId: string, roomId: string, roomName: string, password: string): PeerContext
   static create(...args: any[]): PeerContext {
-    console.log('create', args);
     if (args.length <= 1) {
       return PeerContext._create.apply(this, args);
     } else {

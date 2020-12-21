@@ -60,7 +60,7 @@ export class ChatMessageService {
         console.warn('There has been a problem with your fetch operation: ', error.message);
         this.setIntervalTimer();
       });
-      this.setIntervalTimer();
+    this.setIntervalTimer();
   }
 
   private setIntervalTimer() {

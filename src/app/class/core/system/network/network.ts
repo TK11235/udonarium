@@ -45,7 +45,7 @@ export class Network {
       this.close();
     }
 
-    console.log('PeerRoom ready...', args);
+    console.log('Network open...', args);
     this.connection = this.initializeConnection();
     this.connection.open.apply(this.connection, args);
 
