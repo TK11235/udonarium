@@ -31,7 +31,7 @@ export class PeerContext implements IPeerContext {
   isOpen: boolean = false;
 
   get isRoom(): boolean { return 0 < this.room.length; }
-  get hasPassword(): boolean { return 0 < this.password.length; }
+  get hasPassword(): boolean { return 0 < this.password.length + this.digestPassword.length; }
 
   private constructor(fullstring: string) {
     this.parse(fullstring);
