@@ -64,37 +64,9 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   connectPeer() {
     this.help = '';
     let context = PeerContext.create(this.targetPeerId);
-    if (!context.isRoom) {
-      ObjectStore.instance.clearDeleteHistory();
-      Network.connect(this.targetPeerId);
-    } else {
-      if (Network.peerContexts.length) {
-        this.help = '入力されたIDはルーム用のIDのようですが、ルーム用IDと通常のIDを混在させることはできません。プライベート接続を切ってください。（※ページリロードで切断ができます）';
-        return;
-      }
-
-      Network.open(Network.peerContext.id, context.room, context.roomName, context.password);
-      PeerCursor.myCursor.peerId = Network.peerId;
-
-      let dummy = {};
-      EventSystem.register(dummy)
-        .on('OPEN_NETWORK', event => {
-          ObjectStore.instance.clearDeleteHistory();
-          Network.connect(this.targetPeerId);
-          EventSystem.unregister(dummy);
-          EventSystem.register(dummy)
-            .on('CONNECT_PEER', event => {
-              console.log('接続成功！', event.data.peer);
-              this.resetPeerIfNeeded();
-              EventSystem.unregister(dummy);
-            })
-            .on('DISCONNECT_PEER', event => {
-              console.warn('接続失敗', event.data.peer);
-              this.resetPeerIfNeeded();
-              EventSystem.unregister(dummy);
-            });
-        });
-    }
+    if (context.isRoom) return;
+    ObjectStore.instance.clearDeleteHistory();
+    Network.connect(context.fullstring);
   }
 
   async connectPeerHistory() {
