@@ -94,7 +94,7 @@ export class ChatMessageService {
     if (object instanceof GameCharacter) {
       return object.identifier;
     } else if (object instanceof PeerCursor) {
-      return PeerContext.create(object.peerId).id;
+      return PeerContext.parse(object.peerId).id;
     }
     return null;
   }

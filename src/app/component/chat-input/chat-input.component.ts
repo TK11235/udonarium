@@ -148,7 +148,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       if (this.isDirect) {
         let object = ObjectStore.instance.get(this.sendTo);
         if (object instanceof PeerCursor) {
-          let peer = PeerContext.create(object.peerId);
+          let peer = PeerContext.parse(object.peerFullstring);
           if (peer) sendTo = peer.id;
         }
       }

@@ -103,7 +103,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     let room: string = '';
 
     for (let peer of this.appConfigService.peerHistory) {
-      let context = PeerContext.create(peer);
+      let context = PeerContext.parse(peer);
       if (context.isRoom) {
         if (room !== context.room) conectPeers = [];
         room = context.room;
@@ -120,7 +120,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       let peerIds = await Network.listAllPeers();
       for (let id of peerIds) {
         console.log(id);
-        let context = new PeerContext(id);
+        let context = PeerContext.parse(id);
         if (context.room === room) {
           conectPeers.push(context);
         }

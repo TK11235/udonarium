@@ -22,7 +22,7 @@ export class PeerContext implements IPeerContext {
   get isRoom(): boolean { return 0 < this.room.length; }
   get hasPassword(): boolean { return 0 < this.password.length; }
 
-  constructor(fullstring: string) {
+  private constructor(fullstring: string) {
     this.parse(fullstring);
   }
 
@@ -39,6 +39,10 @@ export class PeerContext implements IPeerContext {
       this.id = fullstring;
       console.warn(e);
     }
+  }
+
+  static parse(fullstring: string): PeerContext {
+    return new PeerContext(fullstring);
   }
 
   static create(peerId: string): PeerContext

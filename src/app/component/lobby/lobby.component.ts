@@ -62,7 +62,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
     let peersOfroom: { [room: string]: PeerContext[] } = {};
     let peerIds = await Network.listAllPeers();
     for (let id of peerIds) {
-      let context = new PeerContext(id);
+      let context = PeerContext.parse(id);
       if (context.isRoom) {
         let alias = context.room + context.roomName;
         if (!(alias in peersOfroom)) {

@@ -181,7 +181,7 @@ export class SkyWayConnection implements Connection {
     peer.on('open', id => {
       console.log('My peer ID is: ' + id);
       if (!this.peerContext || this.peerContext.fullstring !== id) {
-        this.peerContext = new PeerContext(id);
+        this.peerContext = PeerContext.parse(id);
       }
       this.peerContext.isOpen = true;
       console.log('My peer Context', this.peerContext);
@@ -292,7 +292,7 @@ export class SkyWayConnection implements Connection {
       return false;
     }
     this.connections.push(conn);
-    this.peerContexts.push(new PeerContext(conn.remoteId));
+    this.peerContexts.push(PeerContext.parse(conn.remoteId));
     console.log('<add()> Peer:' + conn.remoteId + ' length:' + this.connections.length);
     return true;
   }
