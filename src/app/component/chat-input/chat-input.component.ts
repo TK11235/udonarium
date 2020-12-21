@@ -12,6 +12,7 @@ import { TextViewComponent } from 'component/text-view/text-view.component';
 import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { TabletopService } from 'service/tabletop.service';
 
 @Component({
   selector: 'chat-input',
@@ -84,6 +85,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
   constructor(
     private ngZone: NgZone,
     public chatMessageService: ChatMessageService,
+    private tabletopService: TabletopService,
     private panelService: PanelService,
     private pointerDeviceService: PointerDeviceService
   ) { }
@@ -121,21 +123,21 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       })
       .on<string>('WRITING_A_MESSAGE', event => {
         if (event.isSendFromSelf || event.data !== this.chatTabidentifier) return;
-        this.ngZone.run(() => {
-          if (!this.writingPeers.has(event.sendFrom)) {
-            this.writingPeers.set(event.sendFrom, new ResettableTimeout(() => {
-              this.writingPeers.delete(event.sendFrom);
-              this.updateWritingPeerNames();
-            }, 2000));
-          }
-          this.writingPeers.get(event.sendFrom).reset();
-          this.updateWritingPeerNames();
-        });
+        if (!this.writingPeers.has(event.sendFrom)) {
+          this.writingPeers.set(event.sendFrom, new ResettableTimeout(() => {
+            this.writingPeers.delete(event.sendFrom);
+            this.updateWritingPeerNames();
+          }, 2000));
+        }
+        this.writingPeers.get(event.sendFrom).reset();
+        this.updateWritingPeerNames();
+        this.tabletopService.addBatch(() => this.ngZone.run(() => { }), this);
       });
   }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
+    this.tabletopService.removeBatch(this);
   }
 
   private updateWritingPeerNames() {
