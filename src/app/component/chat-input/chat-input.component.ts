@@ -4,6 +4,7 @@ import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerContext } from '@udonarium/core/system/network/peer-context';
+import { ResettableTimeout } from '@udonarium/core/system/util/resettable-timeout';
 import { DiceBot } from '@udonarium/dice-bot';
 import { GameCharacter } from '@udonarium/game-character';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -73,7 +74,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
 
   private writingEventInterval: NodeJS.Timer = null;
   private previousWritingLength: number = 0;
-  writingPeers: Map<string, NodeJS.Timer> = new Map();
+  writingPeers: Map<string, ResettableTimeout> = new Map();
   writingPeerNames: string[] = [];
 
   get diceBotInfos() { return DiceBot.diceBotInfos }
@@ -94,7 +95,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
         let sendFrom = message ? message.from : '?';
         if (this.writingPeers.has(sendFrom)) {
-          clearTimeout(this.writingPeers.get(sendFrom));
+          this.writingPeers.get(sendFrom).stop();
           this.writingPeers.delete(sendFrom);
           this.updateWritingPeerNames();
         }
@@ -121,11 +122,13 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       .on<string>('WRITING_A_MESSAGE', event => {
         if (event.isSendFromSelf || event.data !== this.chatTabidentifier) return;
         this.ngZone.run(() => {
-          if (this.writingPeers.has(event.sendFrom)) clearTimeout(this.writingPeers.get(event.sendFrom));
-          this.writingPeers.set(event.sendFrom, setTimeout(() => {
-            this.writingPeers.delete(event.sendFrom);
-            this.updateWritingPeerNames();
-          }, 2000));
+          if (!this.writingPeers.has(event.sendFrom)) {
+            this.writingPeers.set(event.sendFrom, new ResettableTimeout(() => {
+              this.writingPeers.delete(event.sendFrom);
+              this.updateWritingPeerNames();
+            }, 2000));
+          }
+          this.writingPeers.get(event.sendFrom).reset();
           this.updateWritingPeerNames();
         });
       });
