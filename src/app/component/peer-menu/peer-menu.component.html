@@ -12,7 +12,7 @@
   </span>
 </div>
 <!--<div>host ID:{{networkService.hostPeerID}}</div>-->
-<ng-container *ngIf="18 < networkService.peerId.length">
+<ng-container *ngIf="networkService.peerContext.isRoom">
   <hr/>
   <div>
     <span>ルーム名：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
@@ -29,17 +29,17 @@
   </div>
 </div>
 <div>
-  <ng-container *ngIf="networkService.peerId.length <= 18">
+  <ng-container *ngIf="!networkService.peerContext.isRoom">
     <input [(ngModel)]="targetPeerId" placeholder="接続したい相手のID" name="targetPeerId" />
     <button (click)="connectPeer()" [disabled]="!networkService.isOpen">プライベート接続</button><br>
   </ng-container>
   <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isOpen">ロビー（ルーム一覧）を表示</button>
 </div>
 <div><span style="font-size: 12px;">{{help}}</span></div>
-<ng-container *ngIf="networkService.peerId.length <= 18">
+<ng-container *ngIf="!networkService.peerContext.isRoom">
   <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※プライベート接続を使用する場合は、お互いのIDをユドナリウム外で共有してください。</div>
   <div style="font-size: 12px;" *ngIf="networkService.peerContexts.length < 1">※一人で動作確認を行いたい場合はブラウザを2つ開くと良いと思います。</div>
 </ng-container>
-<ng-container *ngIf="18 < networkService.peerId.length">
+<ng-container *ngIf="networkService.peerContext.isRoom">
   <div style="font-size: 12px;">※ルーム機能を利用している時はプライベート接続を利用できません。</div>
 </ng-container>

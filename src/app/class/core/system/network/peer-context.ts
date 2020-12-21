@@ -7,6 +7,7 @@ export interface IPeerContext {
   readonly roomName: string;
   readonly password: string;
   readonly isOpen: boolean;
+  readonly isRoom: boolean;
 }
 
 export class PeerContext implements IPeerContext {
@@ -17,7 +18,7 @@ export class PeerContext implements IPeerContext {
   password: string = '';
   isOpen: boolean = false;
 
-  get isRoom(): boolean { return 0 < this.room.length ? true : false; }
+  get isRoom(): boolean { return 0 < this.room.length; }
 
   constructor(fullstring: string) {
     this.parse(fullstring);
