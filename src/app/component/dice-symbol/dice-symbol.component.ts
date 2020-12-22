@@ -125,7 +125,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.diceSymbol || !object) return;
         if ((this.diceSymbol === object)
           || (object instanceof ObjectNode && this.diceSymbol.contains(object))
-          || (object instanceof PeerCursor && object.peerId === this.diceSymbol.owner)) {
+          || (object instanceof PeerCursor && object.userId === this.diceSymbol.owner)) {
           this.changeDetector.markForCheck();
         }
       })
@@ -136,7 +136,8 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {
-        if (this.diceSymbol.owner === event.data.peerId) this.changeDetector.markForCheck();
+        let cursor = PeerCursor.find(event.data.peerId);
+        if (!cursor || this.diceSymbol.owner === cursor.userId) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.diceSymbol,
@@ -234,7 +235,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isMine) {
       actions.push({
         name: '自分だけ見る', action: () => {
-          this.owner = Network.peerId;
+          this.owner = Network.peerContext.userId;
           SoundEffect.play(PresetSound.lock);
         }
       });

@@ -87,7 +87,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!this.card || !object) return;
         if ((this.card === object)
           || (object instanceof ObjectNode && this.card.contains(object))
-          || (object instanceof PeerCursor && object.peerId === this.card.owner)) {
+          || (object instanceof PeerCursor && object.userId === this.card.owner)) {
           this.changeDetector.markForCheck();
         }
       })
@@ -98,7 +98,8 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {
-        if (this.card.owner === event.data.peerId) this.changeDetector.markForCheck();
+        let cursor = PeerCursor.find(event.data.peerId);
+        if (!cursor || this.card.owner === cursor.userId) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.card,
@@ -219,7 +220,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           name: '自分だけ見る', action: () => {
             SoundEffect.play(PresetSound.cardDraw);
             this.card.faceDown();
-            this.owner = Network.peerId;
+            this.owner = Network.peerContext.userId;
           }
         }),
       ContextMenuSeparator,

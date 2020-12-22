@@ -109,7 +109,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.cardStack || !object) return;
         if ((this.cardStack === object)
           || (object instanceof ObjectNode && this.cardStack.contains(object))
-          || (object instanceof PeerCursor && object.peerId === this.cardStack.owner)) {
+          || (object instanceof PeerCursor && object.userId === this.cardStack.owner)) {
           this.changeDetector.markForCheck();
         }
       })
@@ -123,7 +123,8 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {
-        if (this.cardStack.owner === event.data.peerId) this.changeDetector.markForCheck();
+        let cursor = PeerCursor.find(event.data.peerId);
+        if (!cursor || this.cardStack.owner === cursor.userId) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.cardStack,
@@ -425,7 +426,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     let coordinate = this.pointerDeviceService.pointers[0];
     let option: PanelOption = { left: coordinate.x - 200, top: coordinate.y - 300, width: 400, height: 600 };
 
-    this.cardStack.owner = Network.peerId;
+    this.cardStack.owner = Network.peerContext.userId;
     let component = this.panelService.open<CardStackListComponent>(CardStackListComponent, option);
     component.cardStack = gameObject;
   }

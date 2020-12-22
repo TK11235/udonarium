@@ -29,12 +29,12 @@ export class Card extends TabletopObject {
   get imageFile(): ImageFile { return this.isVisible ? this.frontImage : this.backImage; }
 
   get ownerName(): string {
-    let object = PeerCursor.find(this.owner);
+    let object = PeerCursor.findByUserId(this.owner);
     return object ? object.name : '';
   }
 
-  get hasOwner(): boolean { return PeerCursor.find(this.owner) != null; }
-  get isHand(): boolean { return Network.peerId === this.owner; }
+  get hasOwner(): boolean { return PeerCursor.findByUserId(this.owner) != null; }
+  get isHand(): boolean { return Network.peerContext.userId === this.owner; }
   get isFront(): boolean { return this.state === CardState.FRONT; }
   get isVisible(): boolean { return this.isHand || this.isFront; }
 
