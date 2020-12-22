@@ -97,10 +97,7 @@ export class PeerContext implements IPeerContext {
     const h: string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     let k: string = format;
-    k = format.replace(/\*/g, function (c) {
-      let r: number = Math.floor(Math.random() * (h.length));
-      return h[r];
-    });
+    k = format.replace(/\*/g, c => h[Math.floor(Math.random() * (h.length))]);
 
     return k;
   }
