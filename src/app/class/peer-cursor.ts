@@ -46,25 +46,21 @@ export class PeerCursor extends GameObject {
   }
 
   static findByUserId(userId: UserId): PeerCursor {
-    let identifier = PeerCursor.userIdMap.get(userId);
-    if (identifier != null && ObjectStore.instance.get(identifier)) return ObjectStore.instance.get<PeerCursor>(identifier);
-    let cursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
-    for (let cursor of cursors) {
-      if (cursor.userId === userId) {
-        PeerCursor.userIdMap.set(userId, cursor.identifier);
-        return cursor;
-      }
-    }
-    return null;
+    return this.find(PeerCursor.userIdMap, userId, true);
   }
 
   static findByPeerId(peerId: PeerId): PeerCursor {
-    let identifier = PeerCursor.peerIdMap.get(peerId);
+    return this.find(PeerCursor.peerIdMap, peerId, false);
+  }
+
+  private static find(map: Map<string, string>, key: string, isUserId: boolean): PeerCursor {
+    let identifier = map.get(key);
     if (identifier != null && ObjectStore.instance.get(identifier)) return ObjectStore.instance.get<PeerCursor>(identifier);
     let cursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
     for (let cursor of cursors) {
-      if (cursor.peerId === peerId) {
-        PeerCursor.peerIdMap.set(peerId, cursor.identifier);
+      let id = isUserId ? cursor.userId : cursor.peerId;
+      if (id === key) {
+        map.set(id, cursor.identifier);
         return cursor;
       }
     }
