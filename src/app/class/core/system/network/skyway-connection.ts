@@ -21,7 +21,7 @@ interface DataContainer {
 }
 
 export class SkyWayConnection implements Connection {
-  get peerId(): string { return this.peerContext ? this.peerContext.fullstring : '???'; }
+  get peerId(): string { return this.peerContext ? this.peerContext.peerId : '???'; }
 
   private _peerIds: string[] = [];
   get peerIds(): string[] { return this._peerIds }
@@ -177,10 +177,10 @@ export class SkyWayConnection implements Connection {
       console.warn('It is already opened.');
       this.close();
     }
-    let peer = new Peer(this.peerContext.fullstring, { key: this.key });// SkyWay
+    let peer = new Peer(this.peerContext.peerId, { key: this.key });// SkyWay
     peer.on('open', id => {
       console.log('My peer ID is: ' + id);
-      if (!this.peerContext || this.peerContext.fullstring !== id) {
+      if (!this.peerContext || this.peerContext.peerId !== id) {
         this.peerContext = PeerContext.parse(id);
       }
       this.peerContext.isOpen = true;
@@ -356,22 +356,22 @@ export class SkyWayConnection implements Connection {
   }
 
   private updatePeerList(): string[] {
-    let peers: string[] = [];
+    let peerIds: string[] = [];
     for (let conn of this.connections) {
-      if (conn.open) peers.push(conn.remoteId);
+      if (conn.open) peerIds.push(conn.remoteId);
     }
-    peers.push(this.peerId);
-    peers.sort(function (a, b) {
+    peerIds.push(this.peerId);
+    peerIds.sort(function (a, b) {
       if (a > b) return 1;
       if (a < b) return -1;
       return 0;
     });
 
-    this._peerIds = peers;
+    this._peerIds = peerIds;
 
-    console.log('<update()>', peers);
+    console.log('<update()>', peerIds);
     this.notifyPeerList();
-    return peers;
+    return peerIds;
   }
 
   private notifyPeerList() {

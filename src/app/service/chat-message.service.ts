@@ -76,7 +76,7 @@ export class ChatMessageService {
 
   sendMessage(chatTab: ChatTab, text: string, gameType: string, sendFrom: string, sendTo?: string): ChatMessage {
     let chatMessage: ChatMessageContext = {
-      from: Network.peerContext.id,
+      from: Network.peerContext.userId,
       to: this.findId(sendTo),
       name: this.makeMessageName(sendFrom, sendTo),
       imageIdentifier: this.findImageIdentifier(sendFrom),
@@ -93,7 +93,7 @@ export class ChatMessageService {
     if (object instanceof GameCharacter) {
       return object.identifier;
     } else if (object instanceof PeerCursor) {
-      return object.peerId;
+      return object.userId;
     }
     return null;
   }

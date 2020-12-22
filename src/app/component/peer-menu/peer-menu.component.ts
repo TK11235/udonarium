@@ -18,7 +18,7 @@ import { PanelService } from 'service/panel.service';
 })
 export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  targetPeerId: string = '';
+  targetUserId: string = '';
   networkService = Network
   gameRoomService = ObjectStore.instance;
   help: string = '';
@@ -57,16 +57,16 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   private resetPeerIfNeeded() {
     if (Network.peerContexts.length < 1) {
       Network.open();
-      PeerCursor.myCursor.peerFullstring = Network.peerId;
+      PeerCursor.myCursor.peerId = Network.peerId;
     }
   }
 
   connectPeer() {
     this.help = '';
-    let context = PeerContext.create(this.targetPeerId);
+    let context = PeerContext.create(this.targetUserId);
     if (context.isRoom) return;
     ObjectStore.instance.clearDeleteHistory();
-    Network.connect(context.fullstring);
+    Network.connect(context.peerId);
   }
 
   async connectPeerHistory() {
@@ -74,8 +74,8 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     let conectPeers: PeerContext[] = [];
     let room: string = '';
 
-    for (let peer of this.appConfigService.peerHistory) {
-      let context = PeerContext.parse(peer);
+    for (let peerId of this.appConfigService.peerHistory) {
+      let context = PeerContext.parse(peerId);
       if (context.isRoom) {
         if (room !== context.room) conectPeers = [];
         room = context.room;
@@ -88,11 +88,11 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (room.length) {
       console.warn('connectPeerRoom <' + room + '>');
-      let conectPeers = [];
+      let conectPeers: PeerContext[] = [];
       let peerIds = await Network.listAllPeers();
-      for (let id of peerIds) {
-        console.log(id);
-        let context = PeerContext.parse(id);
+      for (let peerId of peerIds) {
+        console.log(peerId);
+        let context = PeerContext.parse(peerId);
         if (context.room === room) {
           conectPeers.push(context);
         }
@@ -108,7 +108,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       Network.open();
     }
 
-    PeerCursor.myCursor.peerFullstring = Network.peerId;
+    PeerCursor.myCursor.peerId = Network.peerId;
 
     let listener = EventSystem.register(this);
     listener.on('OPEN_NETWORK', event => {
@@ -116,7 +116,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       EventSystem.unregisterListener(listener);
       ObjectStore.instance.clearDeleteHistory();
       for (let context of conectPeers) {
-        Network.connect(context.fullstring);
+        Network.connect(context.peerId);
       }
     });
   }

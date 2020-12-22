@@ -176,10 +176,10 @@ export class ObjectSynchronizer {
     }
 
     for (let peerContext of peerContexts) {
-      let tasks = this.peerMap.get(peerContext.fullstring);
+      let tasks = this.peerMap.get(peerContext.peerId);
       if (peerContext.isOpen && tasks && tasks.length < min) {
         min = tasks.length;
-        selectPeerId = peerContext.fullstring;
+        selectPeerId = peerContext.peerId;
       }
     }
     return selectPeerId;

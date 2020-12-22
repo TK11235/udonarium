@@ -7,7 +7,7 @@
   <span>あなたのニックネーム：  <input [(ngModel)]="myPeer.name"  placeholder="ニックネーム" /></span>
 </div>
 <div>
-  <span>あなたのID：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.id}}</span>
+  <span>あなたのID：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.userId}}</span>
   <span *ngIf="!networkService.isOpen" style="font-weight: bold;">???</span>
   </span>
 </div>
@@ -22,15 +22,15 @@
   </div>
 </ng-container>
 <hr/>
-<div *ngFor="let conn of networkService.peerContexts">
+<div *ngFor="let context of networkService.peerContexts">
   <div>
-    <span *ngIf="!conn.isOpen">[接続中]</span>
-    <span>他の参加者：{{conn.id}} [{{findPeerName(conn.fullstring)}}]</span>
+    <span *ngIf="!context.isOpen">[接続中]</span>
+    <span>他の参加者：{{context.userId}} [{{findPeerName(context.peerId)}}]</span>
   </div>
 </div>
 <div>
   <ng-container *ngIf="!networkService.peerContext.isRoom">
-    <input [(ngModel)]="targetPeerId" placeholder="接続したい相手のID" name="targetPeerId" />
+    <input [(ngModel)]="targetUserId" placeholder="接続したい相手のID" name="targetUserId" />
     <button (click)="connectPeer()" [disabled]="!networkService.isOpen">プライベート接続</button><br>
   </ng-container>
   <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isOpen">ロビー（ルーム一覧）を表示</button>

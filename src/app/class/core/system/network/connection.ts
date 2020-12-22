@@ -18,7 +18,7 @@ export interface Connection {
   readonly bandwidthUsage: number;
 
   open(peerId: string)
-  open(peerId: string, roomId: string, roomName: string, password: string)
+  open(userId: string, roomId: string, roomName: string, password: string)
   close()
   connect(peerId: string): boolean
   disconnect(peerId: string): boolean

@@ -125,7 +125,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.diceSymbol || !object) return;
         if ((this.diceSymbol === object)
           || (object instanceof ObjectNode && this.diceSymbol.contains(object))
-          || (object instanceof PeerCursor && object.peerFullstring === this.diceSymbol.owner)) {
+          || (object instanceof PeerCursor && object.peerId === this.diceSymbol.owner)) {
           this.changeDetector.markForCheck();
         }
       })

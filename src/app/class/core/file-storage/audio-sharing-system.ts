@@ -81,9 +81,9 @@ export class AudioSharingSystem {
           let index = candidatePeers.indexOf(Network.peerId);
           if (-1 < index) candidatePeers.splice(index, 1);
 
-          for (let peer of candidatePeers) {
-            console.log('REQUEST_AUDIO_RESOURE AudioStorageService Relay!!! ' + peer + ' -> ' + event.data.identifiers);
-            EventSystem.call(event, peer);
+          for (let peerId of candidatePeers) {
+            console.log('REQUEST_AUDIO_RESOURE AudioStorageService Relay!!! ' + peerId + ' -> ' + event.data.identifiers);
+            EventSystem.call(event, peerId);
             return;
           }
           console.log('REQUEST_FILE_RESOURE AudioStorageService あぶれた...' + event.data.receiver, randomRequest.length);
@@ -179,11 +179,11 @@ export class AudioSharingSystem {
     console.log('stopReceiveTask => ', this.receiveTaskMap.size);
   }
 
-  private request(request: CatalogItem[], peer: string) {
-    console.log('requestFile() ' + peer);
-    let peers = Network.peerIds;
-    peers.splice(peers.indexOf(Network.peerId), 1);
-    EventSystem.call('REQUEST_AUDIO_RESOURE', { identifiers: request, receiver: Network.peerId, candidatePeers: peers }, peer);
+  private request(request: CatalogItem[], peerId: string) {
+    console.log('requestFile() ' + peerId);
+    let peerIds = Network.peerIds;
+    peerIds.splice(peerIds.indexOf(Network.peerId), 1);
+    EventSystem.call('REQUEST_AUDIO_RESOURE', { identifiers: request, receiver: Network.peerId, candidatePeers: peerIds }, peerId);
   }
 
   private hasActiveTask(): boolean {
@@ -198,9 +198,9 @@ export class AudioSharingSystem {
     return this.maxReceiveTask <= this.receiveTaskMap.size;
   }
 
-  private existsSendTask(peer: string): boolean {
+  private existsSendTask(peerId: string): boolean {
     for (let task of this.sendTaskMap.values()) {
-      if (task && task.sendTo === peer) return true;
+      if (task && task.sendTo === peerId) return true;
     }
     return false;
   }

@@ -87,7 +87,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!this.card || !object) return;
         if ((this.card === object)
           || (object instanceof ObjectNode && this.card.contains(object))
-          || (object instanceof PeerCursor && object.peerFullstring === this.card.owner)) {
+          || (object instanceof PeerCursor && object.peerId === this.card.owner)) {
           this.changeDetector.markForCheck();
         }
       })

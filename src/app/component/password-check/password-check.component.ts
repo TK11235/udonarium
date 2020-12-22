@@ -27,7 +27,7 @@ export class PasswordCheckComponent implements OnInit, OnDestroy {
     private panelService: PanelService,
     private modalService: ModalService
   ) {
-    this.targetPeerContext = modalService.option.peerFullstring ? PeerContext.parse(modalService.option.peerFullstring) : PeerContext.parse('???');
+    this.targetPeerContext = modalService.option.peerId ? PeerContext.parse(modalService.option.peerId) : PeerContext.parse('???');
     this.title = modalService.option.title ? modalService.option.title : '';
   }
 

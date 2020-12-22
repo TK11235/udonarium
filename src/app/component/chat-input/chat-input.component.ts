@@ -95,8 +95,8 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       .on('MESSAGE_ADDED', event => {
         if (event.data.tabIdentifier !== this.chatTabidentifier) return;
         let message = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
-        let peerCursor = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor).find(obj => obj.peerId === message.from);
-        let sendFrom = peerCursor ? peerCursor.peerFullstring : '?';
+        let peerCursor = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor).find(obj => obj.userId === message.from);
+        let sendFrom = peerCursor ? peerCursor.peerId : '?';
         if (this.writingPeers.has(sendFrom)) {
           this.writingPeers.get(sendFrom).stop();
           this.writingPeers.delete(sendFrom);
@@ -118,7 +118,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       })
       .on('DISCONNECT_PEER', event => {
         let object = ObjectStore.instance.get(this.sendTo);
-        if (object instanceof PeerCursor && object.peerFullstring === event.data.peer) {
+        if (object instanceof PeerCursor && object.peerId === event.data.peer) {
           this.sendTo = '';
         }
       })
@@ -154,8 +154,8 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       if (this.isDirect) {
         let object = ObjectStore.instance.get(this.sendTo);
         if (object instanceof PeerCursor) {
-          let peer = PeerContext.parse(object.peerFullstring);
-          if (peer) sendTo = peer.fullstring;
+          let peer = PeerContext.parse(object.peerId);
+          if (peer) sendTo = peer.peerId;
         }
       }
       EventSystem.call('WRITING_A_MESSAGE', this.chatTabidentifier, sendTo);
@@ -240,13 +240,13 @@ export class ChatInputComponent implements OnInit, OnDestroy {
   private allowsChat(gameCharacter: GameCharacter): boolean {
     switch (gameCharacter.location.name) {
       case 'table':
-      case this.myPeer.peerFullstring:
+      case this.myPeer.peerId:
         return true;
       case 'graveyard':
         return false;
       default:
         for (const conn of Network.peerContexts) {
-          if (conn.isOpen && gameCharacter.location.name === conn.fullstring) {
+          if (conn.isOpen && gameCharacter.location.name === conn.peerId) {
             return false;
           }
         }

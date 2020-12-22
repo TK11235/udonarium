@@ -16,7 +16,7 @@ import { PanelService } from 'service/panel.service';
   styleUrls: ['./lobby.component.css'],
 })
 export class LobbyComponent implements OnInit, OnDestroy {
-  rooms: { alias: string, roomName: string, peers: PeerContext[] }[] = [];
+  rooms: { alias: string, roomName: string, peerContexts: PeerContext[] }[] = [];
 
   isReloading: boolean = false;
 
@@ -61,8 +61,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
     this.rooms = [];
     let peersOfroom: { [room: string]: PeerContext[] } = {};
     let peerIds = await Network.listAllPeers();
-    for (let id of peerIds) {
-      let context = PeerContext.parse(id);
+    for (let peerId of peerIds) {
+      let context = PeerContext.parse(peerId);
       if (context.isRoom) {
         let alias = context.room + context.roomName;
         if (!(alias in peersOfroom)) {
@@ -72,7 +72,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
       }
     }
     for (let alias in peersOfroom) {
-      this.rooms.push({ alias: alias, roomName: peersOfroom[alias][0].roomName, peers: peersOfroom[alias] });
+      this.rooms.push({ alias: alias, roomName: peersOfroom[alias][0].roomName, peerContexts: peersOfroom[alias] });
     }
     this.rooms.sort((a, b) => {
       if (a.alias < b.alias) return -1;
@@ -88,15 +88,15 @@ export class LobbyComponent implements OnInit, OnDestroy {
     let password = '';
 
     if (context.hasPassword) {
-      password = await this.modalService.open<string>(PasswordCheckComponent, { peerFullstring: context.fullstring, title: `${context.roomName}/${context.room}` });
+      password = await this.modalService.open<string>(PasswordCheckComponent, { peerId: context.peerId, title: `${context.roomName}/${context.room}` });
       if (password == null) password = '';
     }
 
     if (!context.verifyPassword(password)) return;
 
-    let peerId = Network.peerContext ? Network.peerContext.id : PeerContext.generateId();
-    Network.open(peerId, context.room, context.roomName, password);
-    PeerCursor.myCursor.peerFullstring = Network.peerId;
+    let userId = Network.peerContext ? Network.peerContext.userId : PeerContext.generateId();
+    Network.open(userId, context.room, context.roomName, password);
+    PeerCursor.myCursor.peerId = Network.peerId;
 
     let triedPeer: string[] = [];
     EventSystem.register(triedPeer)
@@ -104,8 +104,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
         console.log('LobbyComponent OPEN_PEER', event.data.peer);
         EventSystem.unregister(triedPeer);
         ObjectStore.instance.clearDeleteHistory();
-        for (let peer of peerContexts) {
-          Network.connect(peer.fullstring);
+        for (let context of peerContexts) {
+          Network.connect(context.peerId);
         }
         EventSystem.register(triedPeer)
           .on('CONNECT_PEER', event => {
@@ -132,7 +132,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   private resetNetwork() {
     if (Network.peerContexts.length < 1) {
       Network.open();
-      PeerCursor.myCursor.peerFullstring = Network.peerId;
+      PeerCursor.myCursor.peerId = Network.peerId;
     }
   }
 

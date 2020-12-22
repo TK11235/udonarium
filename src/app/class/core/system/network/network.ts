@@ -14,7 +14,7 @@ export class Network {
     return Network._instance;
   }
 
-  get peerId(): string { return this.connection ? this.connection.peerId : unknownContext.fullstring; }
+  get peerId(): string { return this.connection ? this.connection.peerId : unknownContext.peerId; }
   get peerIds(): string[] { return this.connection ? this.connection.peerIds.concat() : []; }
 
   get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peerContexts.concat() : []; }
@@ -38,7 +38,7 @@ export class Network {
   }
 
   open(peerId?: string)
-  open(peerId: string, roomId: string, roomName: string, password: string)
+  open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
     if (this.connection && this.connection.peerContext) {
       console.warn('It is already opened.');

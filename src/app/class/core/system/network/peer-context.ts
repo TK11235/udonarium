@@ -8,12 +8,12 @@ const Base62 = base('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVW
 const roomIdPattern = /^(\w{6})(\w{3})(\w*)-(\w*)/i;
 
 export interface IPeerContext {
-  readonly fullstring: string;
-  readonly id: string;
+  readonly peerId: string;
+  readonly userId: string;
   readonly room: string;
   readonly roomName: string;
   readonly password: string;
-  readonly digestId: string;
+  readonly digestUserId: string;
   readonly digestPassword: string;
   readonly isOpen: boolean;
   readonly isRoom: boolean;
@@ -21,29 +21,29 @@ export interface IPeerContext {
 }
 
 export class PeerContext implements IPeerContext {
-  fullstring: string = '';
-  id: string = '';
+  peerId: string = '';
+  userId: string = '';
   room: string = '';
   roomName: string = '';
   password: string = '';
-  digestId: string = '';
+  digestUserId: string = '';
   digestPassword: string = '';
   isOpen: boolean = false;
 
   get isRoom(): boolean { return 0 < this.room.length; }
   get hasPassword(): boolean { return 0 < this.password.length + this.digestPassword.length; }
 
-  private constructor(fullstring: string) {
-    this.parse(fullstring);
+  private constructor(peerId: string) {
+    this.parse(peerId);
   }
 
-  private parse(fullstring: string) {
+  private parse(peerId: string) {
     try {
-      this.fullstring = fullstring;
-      let regArray = roomIdPattern.exec(fullstring);
+      this.peerId = peerId;
+      let regArray = roomIdPattern.exec(peerId);
       let isRoom = regArray != null;
       if (isRoom) {
-        this.id = regArray[1];
+        this.userId = regArray[1];
         this.room = regArray[2];
         this.roomName = lzbase62.decompress(regArray[3]);
         this.digestPassword = regArray[4];
@@ -52,7 +52,7 @@ export class PeerContext implements IPeerContext {
     } catch (e) {
       console.warn(e);
     }
-    this.digestId = fullstring;
+    this.digestUserId = peerId;
     return;
   }
 
@@ -62,12 +62,12 @@ export class PeerContext implements IPeerContext {
     return isCorrect;
   }
 
-  static parse(fullstring: string): PeerContext {
-    return new PeerContext(fullstring);
+  static parse(peerId: string): PeerContext {
+    return new PeerContext(peerId);
   }
 
-  static create(peerId: string): PeerContext
-  static create(peerId: string, roomId: string, roomName: string, password: string): PeerContext
+  static create(userId: string): PeerContext
+  static create(userId: string, roomId: string, roomName: string, password: string): PeerContext
   static create(...args: any[]): PeerContext {
     if (args.length <= 1) {
       return PeerContext._create.apply(this, args);
@@ -76,19 +76,19 @@ export class PeerContext implements IPeerContext {
     }
   }
 
-  private static _create(peerId: string = '') {
-    let digestPeerId = calcDigestPeerId(peerId);
-    let peerContext = new PeerContext(digestPeerId);
+  private static _create(userId: string = '') {
+    let digestUserId = calcDigestUserId(userId);
+    let peerContext = new PeerContext(digestUserId);
 
-    peerContext.id = peerId;
+    peerContext.userId = userId;
     return peerContext;
   }
 
-  private static _createRoom(peerId: string = '', roomId: string = '', roomName: string = '', password: string = ''): PeerContext {
+  private static _createRoom(userId: string = '', roomId: string = '', roomName: string = '', password: string = ''): PeerContext {
     let digestPassword = calcDigestPassword(roomId, password);
-    let fullstring = `${peerId}${roomId}${lzbase62.compress(roomName)}-${digestPassword}`;
+    let peerId = `${userId}${roomId}${lzbase62.compress(roomName)}-${digestPassword}`;
 
-    let peerContext = new PeerContext(fullstring);
+    let peerContext = new PeerContext(peerId);
     peerContext.password = password;
     return peerContext;
   }
@@ -106,9 +106,9 @@ export class PeerContext implements IPeerContext {
   }
 }
 
-function calcDigestPeerId(peerId: string): string {
-  if (peerId == null) return '';
-  return calcDigest(peerId);
+function calcDigestUserId(userId: string): string {
+  if (userId == null) return '';
+  return calcDigest(userId);
 }
 
 function calcDigestPassword(room: string, password: string): string {

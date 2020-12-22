@@ -109,7 +109,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.cardStack || !object) return;
         if ((this.cardStack === object)
           || (object instanceof ObjectNode && this.cardStack.contains(object))
-          || (object instanceof PeerCursor && object.peerFullstring === this.cardStack.owner)) {
+          || (object instanceof PeerCursor && object.peerId === this.cardStack.owner)) {
           this.changeDetector.markForCheck();
         }
       })

@@ -13,15 +13,15 @@
       </tr>
       <ng-container *ngFor="let room of rooms">
         <tr>
-          <td class="is-small-font">{{room.peers[0]?.room}}</td>
+          <td class="is-small-font">{{room.peerContexts[0]?.room}}</td>
           <td class="room-name">{{room.roomName}}</td>
-          <td *ngIf="room.peers[0].hasPassword">
+          <td *ngIf="room.peerContexts[0].hasPassword">
             <i class="material-icons" style="vertical-align: middle; font-size:0.9rem;">lock</i>
           </td>
-          <td *ngIf="!room.peers[0].hasPassword">-</td>
-          <td>{{room.peers.length}}人</td>
+          <td *ngIf="!room.peerContexts[0].hasPassword">-</td>
+          <td>{{room.peerContexts.length}}人</td>
           <td>
-            <button [disabled]="room.peers[0]?.room === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peers)">接続</button>
+            <button [disabled]="room.peerContexts[0]?.room === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peerContexts)">接続</button>
           </td>
         </tr>
       </ng-container>

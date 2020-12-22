@@ -47,7 +47,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isMine) {
       EventSystem.register(this)
         .on('CURSOR_MOVE', event => {
-          if (event.sendFrom !== this.cursor.peerFullstring) return;
+          if (event.sendFrom !== this.cursor.peerId) return;
           this.tabletopService.addBatch(() => {
             this.stopTransition();
             this.setAnimatedTransition();

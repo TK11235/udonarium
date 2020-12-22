@@ -91,7 +91,7 @@ export class Database {
     // データベースを使用する処理
   }
 
-  addPeerHistory(myPeer: string, otherPeers: string[]) {
+  addPeerHistory(myPeerId: string, otherPeerIds: string[]) {
     this.queue.add((resolve, reject) => {
       console.log('addPeerHistory');
       let transaction = this.db.transaction(['PeerHistory'], 'readwrite');
@@ -108,9 +108,9 @@ export class Database {
       };
 
       let history: PeerHistory = {
-        peerId: myPeer,
+        peerId: myPeerId,
         timestamp: Date.now(),
-        history: otherPeers
+        history: otherPeerIds
       }
 
       store.put(history);
