@@ -10,7 +10,7 @@ const roomIdPattern = /^(\w{6})(\w{3})(\w*)-(\w*)/i;
 export interface IPeerContext {
   readonly peerId: string;
   readonly userId: string;
-  readonly room: string;
+  readonly roomId: string;
   readonly roomName: string;
   readonly password: string;
   readonly digestUserId: string;
@@ -23,14 +23,14 @@ export interface IPeerContext {
 export class PeerContext implements IPeerContext {
   peerId: string = '';
   userId: string = '';
-  room: string = '';
+  roomId: string = '';
   roomName: string = '';
   password: string = '';
   digestUserId: string = '';
   digestPassword: string = '';
   isOpen: boolean = false;
 
-  get isRoom(): boolean { return 0 < this.room.length; }
+  get isRoom(): boolean { return 0 < this.roomId.length; }
   get hasPassword(): boolean { return 0 < this.password.length + this.digestPassword.length; }
 
   private constructor(peerId: string) {
@@ -44,7 +44,7 @@ export class PeerContext implements IPeerContext {
       let isRoom = regArray != null;
       if (isRoom) {
         this.userId = regArray[1];
-        this.room = regArray[2];
+        this.roomId = regArray[2];
         this.roomName = lzbase62.decompress(regArray[3]);
         this.digestPassword = regArray[4];
         return;
@@ -57,7 +57,7 @@ export class PeerContext implements IPeerContext {
   }
 
   verifyPassword(password: string): boolean {
-    let digest = calcDigestPassword(this.room, password);
+    let digest = calcDigestPassword(this.roomId, password);
     let isCorrect = digest === this.digestPassword;
     return isCorrect;
   }
@@ -111,9 +111,9 @@ function calcDigestUserId(userId: string): string {
   return calcDigest(userId);
 }
 
-function calcDigestPassword(room: string, password: string): string {
-  if (room == null || password == null) return '';
-  return 0 < password.length ? calcDigest(room + password, 7) : '';
+function calcDigestPassword(roomId: string, password: string): string {
+  if (roomId == null || password == null) return '';
+  return 0 < password.length ? calcDigest(roomId + password, 7) : '';
 }
 
 function calcDigest(str: string, truncateLength: number = -1): string {

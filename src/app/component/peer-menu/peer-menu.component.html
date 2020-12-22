@@ -15,7 +15,7 @@
 <ng-container *ngIf="networkService.peerContext.isRoom">
   <hr/>
   <div>
-    <span>ルーム名：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.room}}</span></span>
+    <span>ルーム名：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.roomId}}</span></span>
   </div>
   <div>
     <span>パスワード：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>

@@ -72,28 +72,28 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   async connectPeerHistory() {
     this.help = '';
     let conectPeers: PeerContext[] = [];
-    let room: string = '';
+    let roomId: string = '';
 
     for (let peerId of this.appConfigService.peerHistory) {
       let context = PeerContext.parse(peerId);
       if (context.isRoom) {
-        if (room !== context.room) conectPeers = [];
-        room = context.room;
+        if (roomId !== context.roomId) conectPeers = [];
+        roomId = context.roomId;
         conectPeers.push(context);
       } else {
-        if (room !== context.room) conectPeers = [];
+        if (roomId !== context.roomId) conectPeers = [];
         conectPeers.push(context);
       }
     }
 
-    if (room.length) {
-      console.warn('connectPeerRoom <' + room + '>');
+    if (roomId.length) {
+      console.warn('connectPeerRoom <' + roomId + '>');
       let conectPeers: PeerContext[] = [];
       let peerIds = await Network.listAllPeers();
       for (let peerId of peerIds) {
         console.log(peerId);
         let context = PeerContext.parse(peerId);
-        if (context.room === room) {
+        if (context.roomId === roomId) {
           conectPeers.push(context);
         }
       }
@@ -102,7 +102,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
         console.warn('Room is already closed...');
         return;
       }
-      Network.open(PeerContext.generateId(), conectPeers[0].room, conectPeers[0].roomName, conectPeers[0].password);
+      Network.open(PeerContext.generateId(), conectPeers[0].roomId, conectPeers[0].roomName, conectPeers[0].password);
     } else {
       console.warn('connectPeers ' + conectPeers.length);
       Network.open();

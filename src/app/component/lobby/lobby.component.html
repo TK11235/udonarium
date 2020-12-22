@@ -13,7 +13,7 @@
       </tr>
       <ng-container *ngFor="let room of rooms">
         <tr>
-          <td class="is-small-font">{{room.peerContexts[0]?.room}}</td>
+          <td class="is-small-font">{{room.peerContexts[0]?.roomId}}</td>
           <td class="room-name">{{room.roomName}}</td>
           <td *ngIf="room.peerContexts[0].hasPassword">
             <i class="material-icons" style="vertical-align: middle; font-size:0.9rem;">lock</i>

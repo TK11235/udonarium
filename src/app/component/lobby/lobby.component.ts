@@ -22,7 +22,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   help: string = '「一覧を更新」ボタンを押すと接続可能なルーム一覧を表示します。';
 
-  get currentRoom(): string { return Network.peerContext.room };
+  get currentRoom(): string { return Network.peerContext.roomId };
   get peerId(): string { return Network.peerId; }
   get isConnected(): boolean {
     return Network.peerIds.length <= 1 ? false : true;
@@ -47,7 +47,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   private changeTitle() {
     this.modalService.title = this.panelService.title = 'ロビー';
     if (Network.peerContext.roomName.length) {
-      this.modalService.title = this.panelService.title = '＜' + Network.peerContext.roomName + '/' + Network.peerContext.room + '＞'
+      this.modalService.title = this.panelService.title = '＜' + Network.peerContext.roomName + '/' + Network.peerContext.roomId + '＞'
     }
   }
 
@@ -64,7 +64,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
     for (let peerId of peerIds) {
       let context = PeerContext.parse(peerId);
       if (context.isRoom) {
-        let alias = context.room + context.roomName;
+        let alias = context.roomId + context.roomName;
         if (!(alias in peersOfroom)) {
           peersOfroom[alias] = [];
         }
@@ -88,14 +88,14 @@ export class LobbyComponent implements OnInit, OnDestroy {
     let password = '';
 
     if (context.hasPassword) {
-      password = await this.modalService.open<string>(PasswordCheckComponent, { peerId: context.peerId, title: `${context.roomName}/${context.room}` });
+      password = await this.modalService.open<string>(PasswordCheckComponent, { peerId: context.peerId, title: `${context.roomName}/${context.roomId}` });
       if (password == null) password = '';
     }
 
     if (!context.verifyPassword(password)) return;
 
     let userId = Network.peerContext ? Network.peerContext.userId : PeerContext.generateId();
-    Network.open(userId, context.room, context.roomName, password);
+    Network.open(userId, context.roomId, context.roomName, password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let triedPeer: string[] = [];
