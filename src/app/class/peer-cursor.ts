@@ -5,15 +5,18 @@ import { GameObject, ObjectContext } from './core/synchronize-object/game-object
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { EventSystem, Network } from './core/system';
 
+type PeerId = string;
+type ObjectIdentifier = string;
+
 @SyncObject('PeerCursor')
 export class PeerCursor extends GameObject {
-  @SyncVar() userId: string = '';
-  @SyncVar() peerId: string = '';
+  @SyncVar() userId: UserId = '';
+  @SyncVar() peerId: PeerId = '';
   @SyncVar() name: string = '';
   @SyncVar() imageIdentifier: string = '';
 
   static myCursor: PeerCursor = null;
-  private static hash: { [peerId: string]: string } = {};
+  private static peerIdMap: Map<PeerId, ObjectIdentifier> = new Map();
 
   get isMine(): boolean { return (PeerCursor.myCursor && PeerCursor.myCursor === this); }
   get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
@@ -25,7 +28,7 @@ export class PeerCursor extends GameObject {
       EventSystem.register(this)
         .on('DISCONNECT_PEER', -1000, event => {
           if (event.data.peerId !== this.peerId) return;
-          delete PeerCursor.hash[this.peerId];
+          PeerCursor.peerIdMap.delete(this.peerId);
           ObjectStore.instance.remove(this);
         });
     }
@@ -35,16 +38,16 @@ export class PeerCursor extends GameObject {
   onStoreRemoved() {
     super.onStoreRemoved();
     EventSystem.unregister(this);
-    delete PeerCursor.hash[this.peerId];
+    PeerCursor.peerIdMap.delete(this.peerId);
   }
 
-  static find(peerId: string): PeerCursor {
-    let identifier = PeerCursor.hash[peerId];
+  static find(peerId: PeerId): PeerCursor {
+    let identifier = PeerCursor.peerIdMap.get(peerId);
     if (identifier != null && ObjectStore.instance.get(identifier)) return ObjectStore.instance.get<PeerCursor>(identifier);
     let cursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
     for (let cursor of cursors) {
       if (cursor.peerId === peerId) {
-        PeerCursor.hash[peerId] = cursor.identifier;
+        PeerCursor.peerIdMap.set(peerId, cursor.identifier);
         return cursor;
       }
     }
@@ -64,9 +67,10 @@ export class PeerCursor extends GameObject {
 
   // override
   apply(context: ObjectContext) {
-    if (context.syncData['peerId'] !== this.peerId) {
-      PeerCursor.hash[context.syncData['peerId']] = PeerCursor.hash[this.peerId];
-      delete PeerCursor.hash[this.peerId];
+    let peerId = context.syncData['peerId'];
+    if (peerId !== this.peerId) {
+      PeerCursor.peerIdMap.set(peerId, this.identifier);
+      PeerCursor.peerIdMap.delete(this.peerId);
     }
     super.apply(context);
   }
