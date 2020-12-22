@@ -20,7 +20,7 @@ export class CardStack extends TabletopObject {
     let object = PeerCursor.findByUserId(this.owner);
     return object ? object.name : '';
   }
-  get hasOwner(): boolean { return PeerCursor.findByUserId(this.owner) != null; }
+  get hasOwner(): boolean { return 0 < this.owner.length; }
 
   private get cardRoot(): ObjectNode {
     for (let node of this.children) {
