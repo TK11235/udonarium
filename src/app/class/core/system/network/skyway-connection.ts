@@ -43,7 +43,7 @@ export class SkyWayConnection implements Connection {
   private relayingPeerIds: Map<string, string[]> = new Map();
 
   open(peerId: string)
-  open(peerId: string, roomId: string, roomName: string, password: string)
+  open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
     console.log('open', args);
     if (args.length === 0) {
