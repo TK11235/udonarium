@@ -26,7 +26,7 @@ export class ImageSharingSystem {
     EventSystem.register(this)
       .on('CONNECT_PEER', 1, event => {
         if (!event.isSendFromSelf) return;
-        console.log('CONNECT_PEER ImageStorageService !!!', event.data.peer);
+        console.log('CONNECT_PEER ImageStorageService !!!', event.data.peerId);
         ImageStorage.instance.synchronize();
       })
       .on('XML_LOADED', event => {

@@ -24,7 +24,7 @@ export class AudioSharingSystem {
     EventSystem.register(this)
       .on('CONNECT_PEER', -1, event => {
         if (!event.isSendFromSelf) return;
-        console.log('CONNECT_PEER AudioStorageService !!!', event.data.peer);
+        console.log('CONNECT_PEER AudioStorageService !!!', event.data.peerId);
         AudioStorage.instance.synchronize();
       })
       .on('SYNCHRONIZE_AUDIO_LIST', event => {

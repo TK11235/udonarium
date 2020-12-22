@@ -118,20 +118,20 @@ export class EventSystem implements Subject {
     let callback = Network.instance.callback;
 
     callback.onOpen = (peerId) => {
-      this.trigger('OPEN_NETWORK', { peer: peerId });
+      this.trigger('OPEN_NETWORK', { peerId: peerId });
     }
     callback.onClose = (peerId) => {
-      this.trigger('CLOSE_NETWORK', { peer: peerId });
+      this.trigger('CLOSE_NETWORK', { peerId: peerId });
     }
 
     callback.onConnect = (peerId) => {
       this.sendSystemMessage('<' + peerId + '> connect <DataConnection>');
-      this.trigger('CONNECT_PEER', { peer: peerId });
+      this.trigger('CONNECT_PEER', { peerId: peerId });
     }
 
     callback.onDisconnect = (peerId) => {
       this.sendSystemMessage('<' + peerId + '> disconnect <DataConnection>');
-      this.trigger('DISCONNECT_PEER', { peer: peerId });
+      this.trigger('DISCONNECT_PEER', { peerId: peerId });
     }
 
     callback.onData = (peerId, data: EventContext<never>[]) => {

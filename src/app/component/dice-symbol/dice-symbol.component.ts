@@ -136,7 +136,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {
-        if (this.diceSymbol.owner === event.data.peer) this.changeDetector.markForCheck();
+        if (this.diceSymbol.owner === event.data.peerId) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.diceSymbol,

@@ -122,8 +122,8 @@ export class BufferSharingTask<T> {
         }
       })
       .on('DISCONNECT_PEER', event => {
-        if (event.data.peer !== this.sendTo) return;
-        console.warn('送信キャンセル（Peer切断）', this, event.data.peer);
+        if (event.data.peerId !== this.sendTo) return;
+        console.warn('送信キャンセル（Peer切断）', this, event.data.peerId);
         this._cancel();
       })
       .on('CANCEL_TASK_' + this.identifier, event => {
@@ -173,8 +173,8 @@ export class BufferSharingTask<T> {
         }
       })
       .on('DISCONNECT_PEER', event => {
-        if (event.data.peer !== this.sendTo) return;
-        console.warn('受信キャンセル（Peer切断）', this, event.data.peer);
+        if (event.data.peerId !== this.sendTo) return;
+        console.warn('受信キャンセル（Peer切断）', this, event.data.peerId);
         this._cancel();
       })
       .on('CANCEL_TASK_' + this.identifier, event => {

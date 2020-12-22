@@ -101,7 +101,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
     let triedPeer: string[] = [];
     EventSystem.register(triedPeer)
       .on('OPEN_NETWORK', event => {
-        console.log('LobbyComponent OPEN_PEER', event.data.peer);
+        console.log('LobbyComponent OPEN_PEER', event.data.peerId);
         EventSystem.unregister(triedPeer);
         ObjectStore.instance.clearDeleteHistory();
         for (let context of peerContexts) {
@@ -109,8 +109,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
         }
         EventSystem.register(triedPeer)
           .on('CONNECT_PEER', event => {
-            console.log('接続成功！', event.data.peer);
-            triedPeer.push(event.data.peer);
+            console.log('接続成功！', event.data.peerId);
+            triedPeer.push(event.data.peerId);
             console.log('接続成功 ' + triedPeer.length + '/' + peerContexts.length);
             if (peerContexts.length <= triedPeer.length) {
               this.resetNetwork();
@@ -118,8 +118,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
             }
           })
           .on('DISCONNECT_PEER', event => {
-            console.warn('接続失敗', event.data.peer);
-            triedPeer.push(event.data.peer);
+            console.warn('接続失敗', event.data.peerId);
+            triedPeer.push(event.data.peerId);
             console.warn('接続失敗 ' + triedPeer.length + '/' + peerContexts.length);
             if (peerContexts.length <= triedPeer.length) {
               this.resetNetwork();

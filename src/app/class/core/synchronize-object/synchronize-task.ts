@@ -28,7 +28,7 @@ export class SynchronizeTask {
     if (SynchronizeTask.tasksMap.size < 1) {
       EventSystem.register(SynchronizeTask.key)
         .on('DISCONNECT_PEER', event => {
-          SynchronizeTask.onDisconnect(event.data.peer);
+          SynchronizeTask.onDisconnect(event.data.peerId);
         })
         .on('UPDATE_GAME_OBJECT', event => {
           if (event.isSendFromSelf) return;

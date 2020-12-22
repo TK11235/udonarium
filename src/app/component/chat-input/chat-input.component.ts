@@ -118,7 +118,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       })
       .on('DISCONNECT_PEER', event => {
         let object = ObjectStore.instance.get(this.sendTo);
-        if (object instanceof PeerCursor && object.peerId === event.data.peer) {
+        if (object instanceof PeerCursor && object.peerId === event.data.peerId) {
           this.sendTo = '';
         }
       })

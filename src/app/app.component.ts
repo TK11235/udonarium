@@ -149,12 +149,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         this.lazyNgZoneUpdate(false);
       })
       .on('OPEN_NETWORK', event => {
-        console.log('OPEN_NETWORK', event.data.peer);
+        console.log('OPEN_NETWORK', event.data.peerId);
         PeerCursor.myCursor.peerId = Network.peerContext.peerId;
         PeerCursor.myCursor.userId = Network.peerContext.userId;
       })
       .on('CLOSE_NETWORK', event => {
-        console.log('CLOSE_NETWORK', event.data.peer);
+        console.log('CLOSE_NETWORK', event.data.peerId);
         this.ngZone.run(async () => {
           if (1 < Network.peerIds.length) {
             await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'ネットワーク接続に何らかの異常が発生しました。\nこの表示以後、接続が不安定であれば、ページリロードと再接続を試みてください。' });

@@ -98,7 +98,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {
-        if (this.card.owner === event.data.peer) this.changeDetector.markForCheck();
+        if (this.card.owner === event.data.peerId) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.card,

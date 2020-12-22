@@ -24,7 +24,7 @@ export class PeerCursor extends GameObject {
     if (!this.isMine) {
       EventSystem.register(this)
         .on('DISCONNECT_PEER', -1000, event => {
-          if (event.data.peer !== this.peerId) return;
+          if (event.data.peerId !== this.peerId) return;
           delete PeerCursor.hash[this.peerId];
           ObjectStore.instance.remove(this);
         });

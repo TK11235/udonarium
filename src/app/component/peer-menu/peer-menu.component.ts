@@ -112,7 +112,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let listener = EventSystem.register(this);
     listener.on('OPEN_NETWORK', event => {
-      console.log('OPEN_NETWORK', event.data.peer);
+      console.log('OPEN_NETWORK', event.data.peerId);
       EventSystem.unregisterListener(listener);
       ObjectStore.instance.clearDeleteHistory();
       for (let context of conectPeers) {
