@@ -5,6 +5,7 @@ import { GameObject, ObjectContext } from './core/synchronize-object/game-object
 import { ObjectStore } from './core/synchronize-object/object-store';
 import { EventSystem, Network } from './core/system';
 
+type UserId = string;
 type PeerId = string;
 type ObjectIdentifier = string;
 
@@ -16,6 +17,7 @@ export class PeerCursor extends GameObject {
   @SyncVar() imageIdentifier: string = '';
 
   static myCursor: PeerCursor = null;
+  private static userIdMap: Map<UserId, ObjectIdentifier> = new Map();
   private static peerIdMap: Map<PeerId, ObjectIdentifier> = new Map();
 
   get isMine(): boolean { return (PeerCursor.myCursor && PeerCursor.myCursor === this); }
@@ -28,6 +30,7 @@ export class PeerCursor extends GameObject {
       EventSystem.register(this)
         .on('DISCONNECT_PEER', -1000, event => {
           if (event.data.peerId !== this.peerId) return;
+          PeerCursor.userIdMap.delete(this.userId);
           PeerCursor.peerIdMap.delete(this.peerId);
           ObjectStore.instance.remove(this);
         });
@@ -38,7 +41,21 @@ export class PeerCursor extends GameObject {
   onStoreRemoved() {
     super.onStoreRemoved();
     EventSystem.unregister(this);
+    PeerCursor.userIdMap.delete(this.userId);
     PeerCursor.peerIdMap.delete(this.peerId);
+  }
+
+  static findByUserId(userId: UserId): PeerCursor {
+    let identifier = PeerCursor.userIdMap.get(userId);
+    if (identifier != null && ObjectStore.instance.get(identifier)) return ObjectStore.instance.get<PeerCursor>(identifier);
+    let cursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
+    for (let cursor of cursors) {
+      if (cursor.userId === userId) {
+        PeerCursor.userIdMap.set(userId, cursor.identifier);
+        return cursor;
+      }
+    }
+    return null;
   }
 
   static find(peerId: PeerId): PeerCursor {
@@ -67,7 +84,12 @@ export class PeerCursor extends GameObject {
 
   // override
   apply(context: ObjectContext) {
+    let userId = context.syncData['userId'];
     let peerId = context.syncData['peerId'];
+    if (userId !== this.userId) {
+      PeerCursor.userIdMap.set(userId, this.identifier);
+      PeerCursor.userIdMap.delete(this.userId);
+    }
     if (peerId !== this.peerId) {
       PeerCursor.peerIdMap.set(peerId, this.identifier);
       PeerCursor.peerIdMap.delete(this.peerId);
