@@ -123,7 +123,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {
-        let cursor = PeerCursor.find(event.data.peerId);
+        let cursor = PeerCursor.findByPeerId(event.data.peerId);
         if (!cursor || this.cardStack.owner === cursor.userId) this.changeDetector.markForCheck();
       });
     this.movableOption = {

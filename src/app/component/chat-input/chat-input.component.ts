@@ -143,7 +143,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
 
   private updateWritingPeerNames() {
     this.writingPeerNames = Array.from(this.writingPeers.keys()).map(peerId => {
-      let peer = PeerCursor.find(peerId);
+      let peer = PeerCursor.findByPeerId(peerId);
       return peer ? peer.name : '';
     });
   }

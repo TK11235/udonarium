@@ -58,7 +58,7 @@ export class PeerCursor extends GameObject {
     return null;
   }
 
-  static find(peerId: PeerId): PeerCursor {
+  static findByPeerId(peerId: PeerId): PeerCursor {
     let identifier = PeerCursor.peerIdMap.get(peerId);
     if (identifier != null && ObjectStore.instance.get(identifier)) return ObjectStore.instance.get<PeerCursor>(identifier);
     let cursors = ObjectStore.instance.getObjects<PeerCursor>(PeerCursor);
