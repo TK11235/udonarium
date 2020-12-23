@@ -41,6 +41,7 @@ export class SkyWayConnection implements Connection {
   private queue: Promise<any> = Promise.resolve();
 
   private relayingPeerIds: Map<string, string[]> = new Map();
+  private maybeUnavailablePeerIDs: Set<string> = new Set();
 
   open(peerId: string)
   open(userId: string, roomId: string, roomName: string, password: string)
@@ -237,6 +238,7 @@ export class SkyWayConnection implements Connection {
         clearTimeout(timeout);
         timeout = null;
       }
+      this.maybeUnavailablePeerIDs.delete(conn.remoteId);
       if (context) context.isOpen = true;
       this.updatePeerList();
       if (this.callback.onConnect) this.callback.onConnect(conn.remoteId);
@@ -246,6 +248,7 @@ export class SkyWayConnection implements Connection {
         clearTimeout(timeout);
         timeout = null;
       }
+      this.maybeUnavailablePeerIDs.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     });
@@ -254,6 +257,7 @@ export class SkyWayConnection implements Connection {
         clearTimeout(timeout);
         timeout = null;
       }
+      this.maybeUnavailablePeerIDs.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onError) this.callback.onError(conn.remoteId, err);
     });
@@ -350,7 +354,9 @@ export class SkyWayConnection implements Connection {
 
     if (unknownPeerIds.length) {
       for (let peerId of unknownPeerIds) {
-        if (this.connect(peerId)) console.log('auto connect to unknown Peer <' + peerId + '>');
+        if (!this.maybeUnavailablePeerIDs.has(peerId) && this.connect(peerId)) {
+          console.log('auto connect to unknown Peer <' + peerId + '>');
+        }
       }
     }
   }
