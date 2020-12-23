@@ -387,7 +387,7 @@ export class SkyWayConnection implements Connection {
   private getSkyWayErrorMessage(errType: string): string {
     switch (errType) {
       case 'peer-unavailable':
-        return 'そのPeer IDは存在しません。'
+        return 'そのPeer IDは利用できません。'
       case 'invalid-id':
         return 'Peer IDが不正です。'
       case 'invalid-key':
