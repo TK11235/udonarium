@@ -224,39 +224,21 @@ export class SkyWayConnection implements Connection {
     let context: PeerContext = null;
     if (0 <= index) context = this.peerContexts[index];
 
-    let timeout: NodeJS.Timer = setTimeout(() => {
-      timeout = null;
-      this.closeDataConnection(conn);
-      if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
-    }, 15000);
-
     conn.on('data', data => {
       this.onData(conn, data);
     });
     conn.on('open', () => {
-      if (timeout != null) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
       this.maybeUnavailablePeerIDs.delete(conn.remoteId);
       if (context) context.isOpen = true;
       this.updatePeerList();
       if (this.callback.onConnect) this.callback.onConnect(conn.remoteId);
     });
     conn.on('close', () => {
-      if (timeout != null) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
       this.maybeUnavailablePeerIDs.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     });
     conn.on('error', err => {
-      if (timeout != null) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
       this.maybeUnavailablePeerIDs.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onError) this.callback.onError(conn.remoteId, err);

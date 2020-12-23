@@ -27,6 +27,7 @@ interface ReceivedChank {
 export class SkyWayDataConnection extends EventEmitter {
   private chunkSize = 15.5 * 1024;
   private receivedMap: Map<string, ReceivedChank> = new Map();
+  private timeoutTimer: NodeJS.Timer = null;
 
   get open(): boolean { return this.conn.open; }
   get remoteId(): string { return this.conn.remoteId; }
@@ -36,14 +37,24 @@ export class SkyWayDataConnection extends EventEmitter {
     super();
     conn.on('data', data => this.onData(data));
     conn.on('open', () => {
+      this.clearTimeoutTimer();
       exchangeSkyWayImplementation(conn);
       this.emit('open');
     });
-    conn.on('close', () => this.emit('close'));
-    conn.on('error', err => this.emit('error', err));
+    conn.on('close', () => {
+      this.clearTimeoutTimer();
+      this.emit('close');
+    });
+    conn.on('error', err => {
+      this.clearTimeoutTimer();
+      this.emit('error', err);
+    });
+
+    this.setTimeoutTimer();
   }
 
   close() {
+    this.clearTimeoutTimer();
     this.conn.close();
   }
 
@@ -101,6 +112,21 @@ export class SkyWayDataConnection extends EventEmitter {
     let decodedData = MessagePack.decode(uint8Array);
 
     this.emit('data', decodedData);
+  }
+
+  private setTimeoutTimer() {
+    this.clearTimeoutTimer();
+    this.timeoutTimer = setTimeout(() => {
+      console.warn(`timeout ${this.conn.remoteId}`);
+      this.timeoutTimer = null;
+      this.emit('close');
+    }, 15000);
+  }
+
+  private clearTimeoutTimer() {
+    if (this.timeoutTimer == null) return;
+    clearTimeout(this.timeoutTimer);
+    this.timeoutTimer = null;
   }
 }
 
