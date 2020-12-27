@@ -128,6 +128,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
           this.writingPeers.set(event.sendFrom, new ResettableTimeout(() => {
             this.writingPeers.delete(event.sendFrom);
             this.updateWritingPeerNames();
+            this.ngZone.run(() => { });
           }, 2000));
         }
         this.writingPeers.get(event.sendFrom).reset();
