@@ -41,7 +41,7 @@ export class SkyWayConnection implements Connection {
   private queue: Promise<any> = Promise.resolve();
 
   private relayingPeerIds: Map<string, string[]> = new Map();
-  private maybeUnavailablePeerIDs: Set<string> = new Set();
+  private maybeUnavailablePeerIds: Set<string> = new Set();
 
   open(peerId: string)
   open(userId: string, roomId: string, roomName: string, password: string)
@@ -228,18 +228,18 @@ export class SkyWayConnection implements Connection {
       this.onData(conn, data);
     });
     conn.on('open', () => {
-      this.maybeUnavailablePeerIDs.delete(conn.remoteId);
+      this.maybeUnavailablePeerIds.delete(conn.remoteId);
       if (context) context.isOpen = true;
       this.updatePeerList();
       if (this.callback.onConnect) this.callback.onConnect(conn.remoteId);
     });
     conn.on('close', () => {
-      this.maybeUnavailablePeerIDs.add(conn.remoteId);
+      this.maybeUnavailablePeerIds.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     });
     conn.on('error', err => {
-      this.maybeUnavailablePeerIDs.add(conn.remoteId);
+      this.maybeUnavailablePeerIds.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onError) this.callback.onError(conn.remoteId, err);
     });
@@ -336,7 +336,7 @@ export class SkyWayConnection implements Connection {
 
     if (unknownPeerIds.length) {
       for (let peerId of unknownPeerIds) {
-        if (!this.maybeUnavailablePeerIDs.has(peerId) && this.connect(peerId)) {
+        if (!this.maybeUnavailablePeerIds.has(peerId) && this.connect(peerId)) {
           console.log('auto connect to unknown Peer <' + peerId + '>');
         }
       }
