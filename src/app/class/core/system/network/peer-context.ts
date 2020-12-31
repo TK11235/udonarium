@@ -43,7 +43,7 @@ export class PeerContext implements IPeerContext {
       let regArray = roomIdPattern.exec(peerId);
       let isRoom = regArray != null;
       if (isRoom) {
-        this.userId = regArray[1];
+        this.digestUserId = regArray[1];
         this.roomId = regArray[2];
         this.roomName = lzbase62.decompress(regArray[3]);
         this.digestPassword = regArray[4];
@@ -85,10 +85,12 @@ export class PeerContext implements IPeerContext {
   }
 
   private static _createRoom(userId: string = '', roomId: string = '', roomName: string = '', password: string = ''): PeerContext {
+    let digestUserId = this.generateId('******');
     let digestPassword = calcDigestPassword(roomId, password);
-    let peerId = `${userId}${roomId}${lzbase62.compress(roomName)}-${digestPassword}`;
+    let peerId = `${digestUserId}${roomId}${lzbase62.compress(roomName)}-${digestPassword}`;
 
     let peerContext = new PeerContext(peerId);
+    peerContext.userId = userId;
     peerContext.password = password;
     return peerContext;
   }
