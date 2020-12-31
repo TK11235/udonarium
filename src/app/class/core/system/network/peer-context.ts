@@ -95,7 +95,7 @@ export class PeerContext implements IPeerContext {
     return peerContext;
   }
 
-  static generateId(format: string = '******'): string {
+  static generateId(format: string = '********'): string {
     const h: string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     let k: string = format;
