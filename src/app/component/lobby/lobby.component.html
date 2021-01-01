@@ -21,7 +21,7 @@
           <td *ngIf="!room.peerContexts[0].hasPassword">-</td>
           <td>{{room.peerContexts.length}}人</td>
           <td>
-            <button [disabled]="room.peerContexts[0]?.room === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peerContexts)">接続</button>
+            <button [disabled]="room.peerContexts[0]?.roomId === currentRoom" *ngIf="0 < room.alias.length" type="submit" (click)="connect(room.peerContexts)">接続</button>
           </td>
         </tr>
       </ng-container>
