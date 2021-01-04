@@ -251,59 +251,63 @@ export class Arianrhod2e implements VampireBloodFactory {
     /*
      * スキル
      */
-    const skillElement = gameCharacter.createParentElement(
-      'スキル名:レベル/タイミング/判定/対象/射程/コスト'
-    );
+    const skillElement = gameCharacter.createParentElement('スキル');
     // 種族スキル
     const shuzokuSkillName = `《${json.shuzoku_skill_name}》`;
     const shuzokuSkill = [
-      `${shuzokuSkillName}:LV★`,
+      `LV★`,
       json.shuzoku_skill_timing,
       json.shuzoku_skill_hantei,
       json.shuzoku_skill_taisho,
       json.shuzoku_skill_range,
       json.shuzoku_skill_cost,
+      json.shuzoku_skill_page,
+      json.shuzoku_skill_shozoku,
     ].join('/');
-    const shuzokuSkillElm = gameCharacter.createParentElement(
-      shuzokuSkill,
-      skillElement
-    );
-    shuzokuSkillElm.appendChild(
-      Utils.createNoteElement(shuzokuSkillName, json.shuzoku_skill_memo)
+    skillElement.appendChild(
+      Utils.createNoteElement(
+        shuzokuSkillName,
+        `${shuzokuSkill}\n${json.shuzoku_skill_memo}`
+      )
     );
     // メインクラススキル
     const mClsSkillName = `《${json.m_cls_skill_name}》`;
     const mClsSkill = [
-      `${mClsSkillName}:LV${json.mcls_skill_lv}`,
+      `LV${json.mcls_skill_lv}`,
       json.m_cls_skill_timing,
       json.m_cls_skill_hantei,
       json.m_cls_skill_taisho,
       json.m_cls_skill_range,
       json.m_cls_skill_cost,
+      json.m_cls_skill_page,
+      json.m_cls_skill_shozoku,
     ].join('/');
-    const mClsSkillElm = gameCharacter.createParentElement(
-      mClsSkill,
-      skillElement
-    );
-    mClsSkillElm.appendChild(
-      Utils.createNoteElement(mClsSkillName, json.m_cls_skill_memo)
+    skillElement.appendChild(
+      Utils.createNoteElement(
+        mClsSkillName,
+        `${mClsSkill}\n${json.m_cls_skill_memo}`
+      )
     );
     for (let i = 0; i < json.skill_name.length; i++) {
       const name = json.skill_name[i];
       if (!name) {
         continue;
       }
-      const skillHeader = [
-        `《${name}》:LV${json.skill_lv[i]}`,
+      const skill = [
+        `LV${json.skill_lv[i]}`,
         json.skill_timing[i],
         json.skill_hantei[i],
         json.skill_taisho[i],
         json.skill_range[i],
         json.skill_cost[i],
+        json.skill_page[i],
+        json.skill_shozoku[i],
       ].join('/');
-      const elm = gameCharacter.createParentElement(skillHeader, skillElement);
-      elm.appendChild(
-        Utils.createNoteElement(`《${name}》`, json.skill_memo[i])
+      skillElement.appendChild(
+        Utils.createNoteElement(
+          `《${name}》`,
+          `${skill}\n${json.skill_memo[i]}`
+        )
       );
     }
     for (let i = 0; i < json.ippanskill_name.length; i++) {
@@ -311,17 +315,21 @@ export class Arianrhod2e implements VampireBloodFactory {
       if (!name) {
         continue;
       }
-      const skillHeader = [
-        `《${name}》:LV${json.ippanskill_lv[i]}`,
+      const skill = [
+        `LV${json.ippanskill_lv[i]}`,
         json.ippanskill_timing[i],
         json.ippanskill_hantei[i],
         json.ippanskill_taisho[i],
         json.ippanskill_range[i],
         json.ippanskill_cost[i],
+        json.ippanskill_page[i],
+        json.ippanskill_shozoku[i],
       ].join('/');
-      const elm = gameCharacter.createParentElement(skillHeader, skillElement);
-      elm.appendChild(
-        Utils.createNoteElement(`《${name}》`, json.ippanskill_memo[i])
+      skillElement.appendChild(
+        Utils.createNoteElement(
+          `《${name}》`,
+          `${skill}\n${json.ippanskill_memo[i]}`
+        )
       );
     }
 
@@ -542,6 +550,22 @@ export class Arianrhod2e implements VampireBloodFactory {
         '▼レベルアップ時の注意\n　・判定などに記載されている{　}の部分は、数字ではなく計算式を表わしているため、この部分を変更するとチャットパレットからの出力がうまく表示されなくなる可能性があります。'
       )
     );
+
+    /*
+     * バッドステータス
+     */
+    const bsElement = gameCharacter.createParentElement('バッドステータス');
+    bsElement.appendChild(Utils.createResourceElement('威圧', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('逆上', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('スタン', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('スリップ', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('毒', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('ノックバック', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('放心', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('狂戦士化', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('恐怖', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('衰弱', 1, 0));
+    bsElement.appendChild(Utils.createResourceElement('縛鎖', 1, 0));
 
     const domParser: DOMParser = new DOMParser();
     domParser.parseFromString(gameCharacter.toXml(), 'application/xml');
