@@ -239,13 +239,13 @@ export class Satasupe implements AppspotFactory {
     const homeElement = Utils.createDataElement('アジト　', '');
     gameCharacter.detailDataElement.appendChild(homeElement);
     homeElement.appendChild(
-      Utils.createDataElement('トラウマ', json.home.place || '')
+      Utils.createDataElement('場所', json.home.place || '')
     );
     homeElement.appendChild(
-      Utils.createDataElement('中毒', json.home.comfortable || '')
+      Utils.createDataElement('快適度', json.home.comfortable || '')
     );
     homeElement.appendChild(
-      Utils.createDataElement('トリコ', json.home.security || '')
+      Utils.createDataElement('セキュリティ', json.home.security || '')
     );
 
     /*
