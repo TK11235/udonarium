@@ -40,10 +40,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   set stackName(name: string) {
     if (this.isEditable) {
-      const element = this.selectedStack.getElement(
-        'name',
-        this.selectedStack.commonDataElement
-      );
+      const element = this.selectedStack.commonDataElement.getFirstElementByName('name');
       element.value = name;
     }
   }
@@ -128,10 +125,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    const element = this.selectedStack.getElement(
-      'name',
-      this.selectedStack.commonDataElement
-    );
+    const element = this.selectedStack.commonDataElement.getFirstElementByName('name');
     const objectName: string = element ? (element.value as string) : '';
 
     await this.saveDataService.saveGameObjectAsync(

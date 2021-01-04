@@ -87,10 +87,7 @@ export class CharazipComponent implements OnInit {
     }
     this.errorMsg = '';
 
-    const element = gameCharacters[0].getElement(
-      'name',
-      gameCharacters[0].commonDataElement
-    );
+    const element = gameCharacters[0].commonDataElement.getFirstElementByName('name');
     const objectName: string = element ? element.value.toString() : '';
 
     this._saveGameCharactersAsync(gameCharacters, 'xml_' + objectName);

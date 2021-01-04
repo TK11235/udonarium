@@ -30,7 +30,7 @@ export class CardEditorComponent implements OnInit {
   }
 
   async save(): Promise<void> {
-    const element = this.card.getElement('name', this.card.commonDataElement);
+    const element = this.card.commonDataElement.getFirstElementByName('name');
     const objectName: string = element ? (element.value as string) : '';
 
     await this.saveDataService.saveGameObjectAsync(
