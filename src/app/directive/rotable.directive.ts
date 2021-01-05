@@ -1,6 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
+import { BatchService } from 'service/batch.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
 
@@ -62,6 +63,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   constructor(
     private ngZone: NgZone,
     private elementRef: ElementRef,
+    private batchService: BatchService,
     private tabletopService: TabletopService,
   ) { }
 
@@ -78,7 +80,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
       EventSystem.register(this)
         .on('UPDATE_GAME_OBJECT', -1000, event => {
           if ((event.isSendFromSelf && this.input.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
-          this.tabletopService.addBatch(() => {
+          this.batchService.add(() => {
             if (this.input.isGrabbing) {
               this.cancel();
             } else {
@@ -98,7 +100,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.cancel();
     this.input.destroy();
     EventSystem.unregister(this);
-    this.tabletopService.removeBatch(this);
+    this.batchService.remove(this);
   }
 
   cancel() {

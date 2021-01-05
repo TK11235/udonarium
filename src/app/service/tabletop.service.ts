@@ -31,9 +31,6 @@ const skeletonImage: ImageFile = ImageFile.create('./assets/images/skeleton.png'
 export class TabletopService {
   dragAreaElement: HTMLElement = document.body;
 
-  private batchTask: Map<any, Function> = new Map();
-  private batchTaskTimer: NodeJS.Timer = null;
-
   private _emptyTable: GameTable = new GameTable('');
   get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
   get currentTable(): GameTable {
@@ -114,29 +111,6 @@ export class TabletopService {
           ChatTabList.instance.addChatTab(gameObject);
         }
       });
-  }
-
-  addBatch(task: Function, key: any = {}) {
-    this.batchTask.set(key, task);
-    if (this.batchTaskTimer != null) return;
-    this.execBatch();
-    this.batchTaskTimer = setInterval(() => {
-      if (0 < this.batchTask.size) {
-        this.execBatch();
-      } else {
-        clearInterval(this.batchTaskTimer);
-        this.batchTaskTimer = null;
-      }
-    }, 66);
-  }
-
-  removeBatch(key: any = {}) {
-    this.batchTask.delete(key);
-  }
-
-  private execBatch() {
-    this.batchTask.forEach(task => task());
-    this.batchTask.clear();
   }
 
   private findCache(aliasName: string): TabletopCache<any> {

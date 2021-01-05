@@ -4,6 +4,7 @@ import { EventSystem, Network } from '@udonarium/core/system';
 import { ResettableTimeout } from '@udonarium/core/system/util/resettable-timeout';
 import { PeerCursor } from '@udonarium/peer-cursor';
 
+import { BatchService } from 'service/batch.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
 
@@ -39,6 +40,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
+    private batchService: BatchService,
     private tabletopService: TabletopService,
     private ngZone: NgZone
   ) { }
@@ -48,7 +50,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
       EventSystem.register(this)
         .on('CURSOR_MOVE', event => {
           if (event.sendFrom !== this.cursor.peerId) return;
-          this.tabletopService.addBatch(() => {
+          this.batchService.add(() => {
             this.stopTransition();
             this.setAnimatedTransition();
             this.setPosition(event.data[0], event.data[1], event.data[2]);
@@ -77,7 +79,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     document.body.removeEventListener('mousemove', this.callcack);
     document.body.removeEventListener('touchmove', this.callcack);
     EventSystem.unregister(this);
-    this.tabletopService.removeBatch(this);
+    this.batchService.remove(this);
     if (this.fadeOutTimer) this.fadeOutTimer.clear();
   }
 
