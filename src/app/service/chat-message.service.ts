@@ -64,6 +64,7 @@ export class ChatMessageService {
   }
 
   private setIntervalTimer() {
+    if (this.intervalTimer != null) clearTimeout(this.intervalTimer);
     this.intervalTimer = setTimeout(() => {
       this.intervalTimer = null;
       this.calibrateTimeOffset();
