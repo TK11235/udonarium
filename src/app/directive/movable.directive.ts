@@ -126,7 +126,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setCollidableLayer(true);
 
     let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
-    this.pointer3d = this.calcLocalCoordinate(target, this.input.pointer);
+    this.pointer3d = this.tabletopService.calcTabletopLocalCoordinate(this.input.pointer, target);
     this.setPointerEvents(true);
 
     this.pointerOffset3d.x = this.posX - this.pointer3d.x;
@@ -157,7 +157,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
     if (target == null) return;
 
-    this.pointer3d = this.calcLocalCoordinate(target, this.input.pointer);
+    this.pointer3d = this.tabletopService.calcTabletopLocalCoordinate(this.input.pointer, target);
     if (this.pointerPrev3d.x === this.pointer3d.x && this.pointerPrev3d.y === this.pointer3d.y && this.pointerPrev3d.z === this.pointer3d.z) return;
 
     if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);
@@ -205,16 +205,6 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   private callSelectedEvent() {
     if (this.tabletopObject)
       EventSystem.trigger('SELECT_TABLETOP_OBJECT', { identifier: this.tabletopObject.identifier, className: this.tabletopObject.aliasName });
-  }
-
-  private calcLocalCoordinate(target: HTMLElement, coordinate: PointerCoordinate): PointerCoordinate {
-    if (target.contains(this.tabletopService.dragAreaElement)) {
-      coordinate = PointerDeviceService.convertToLocal(coordinate, this.tabletopService.dragAreaElement);
-      coordinate.z = 0;
-    } else {
-      coordinate = PointerDeviceService.convertLocalToLocal(coordinate, target, this.tabletopService.dragAreaElement);
-    }
-    return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
   }
 
   private calcDistanceRatio(start: PointerCoordinate, now: PointerCoordinate): number {

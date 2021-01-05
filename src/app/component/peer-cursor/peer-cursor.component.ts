@@ -5,7 +5,7 @@ import { ResettableTimeout } from '@udonarium/core/system/util/resettable-timeou
 import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { BatchService } from 'service/batch.service';
-import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { PointerCoordinate } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
 
 @Component({
@@ -101,14 +101,8 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private calcLocalCoordinate(x: number, y: number, target: HTMLElement) {
     if (!document.getElementById('app-table-layer').contains(target)) return;
 
-    let dragArea = document.getElementById('app-game-table');
     let coordinate: PointerCoordinate = { x: x, y: y, z: 0 };
-    if (target.contains(dragArea)) {
-      coordinate = PointerDeviceService.convertToLocal(coordinate, dragArea);
-      coordinate.z = 0;
-    } else {
-      coordinate = PointerDeviceService.convertLocalToLocal(coordinate, target, dragArea);
-    }
+    coordinate = this.tabletopService.calcTabletopLocalCoordinate(coordinate, target);
 
     EventSystem.call('CURSOR_MOVE', [coordinate.x, coordinate.y, coordinate.z]);
   }

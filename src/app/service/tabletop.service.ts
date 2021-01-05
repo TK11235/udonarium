@@ -185,11 +185,9 @@ export class TabletopService {
   }
 
   calcTabletopLocalCoordinate(
-    x: number = this.pointerDeviceService.pointers[0].x,
-    y: number = this.pointerDeviceService.pointers[0].y,
+    coordinate: PointerCoordinate = { x: this.pointerDeviceService.pointers[0].x, y: this.pointerDeviceService.pointers[0].y, z: 0 },
     target: HTMLElement = this.pointerDeviceService.targetElement
   ): PointerCoordinate {
-    let coordinate: PointerCoordinate = { x: x, y: y, z: 0 };
     if (target.contains(this.dragAreaElement)) {
       coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
       coordinate.z = 0;
