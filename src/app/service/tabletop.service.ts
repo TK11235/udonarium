@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
 import { ChatTab } from '@udonarium/chat-tab';
@@ -63,7 +63,6 @@ export class TabletopService {
   get peerCursors(): PeerCursor[] { return ObjectStore.instance.getObjects<PeerCursor>(PeerCursor); }
 
   constructor(
-    public ngZone: NgZone,
     private coordinateService: CoordinateService
   ) {
     this.initialize();
