@@ -98,22 +98,19 @@ export class TabletopActionService {
       ImageStorage.instance.add(back);
     }
 
-    let names: string[] = ['c', 'd', 'h', 's'];
+    let suits: string[] = ['c', 'd', 'h', 's'];
+    let trumps: string[] = [];
 
-    for (let name of names) {
+    for (let suit of suits) {
       for (let i = 1; i <= 13; i++) {
-        let trump: string = name + (('00' + i).slice(-2));
-        let url: string = './assets/images/trump/' + trump + '.gif';
-        if (!ImageStorage.instance.get(url)) {
-          ImageStorage.instance.add(url);
-        }
-        let card = Card.create('カード', url, back);
-        cardStack.putOnBottom(card);
+        trumps.push(suit + (('00' + i).slice(-2)));
       }
     }
 
-    for (let i = 1; i <= 2; i++) {
-      let trump: string = 'x' + (('00' + i).slice(-2));
+    trumps.push('x01');
+    trumps.push('x02');
+
+    for (let trump of trumps) {
       let url: string = './assets/images/trump/' + trump + '.gif';
       if (!ImageStorage.instance.get(url)) {
         ImageStorage.instance.add(url);
