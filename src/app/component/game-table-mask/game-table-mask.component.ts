@@ -23,7 +23,7 @@ import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.s
 import { CoordinateService } from 'service/coordinate.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
-import { TabletopService } from 'service/tabletop.service';
+import { TabletopActionService } from 'service/tabletop-action.service';
 
 @Component({
   selector: 'game-table-mask',
@@ -51,7 +51,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
 
   constructor(
     private ngZone: NgZone,
-    private tabletopService: TabletopService,
+    private tabletopActionService: TabletopActionService,
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef<HTMLElement>,
     private panelService: PanelService,
@@ -152,7 +152,7 @@ export class GameTableMaskComponent implements OnInit, OnDestroy, AfterViewInit 
         }
       },
       ContextMenuSeparator,
-      { name: 'オブジェクト作成', action: null, subActions: this.tabletopService.getContextMenuActionsForCreateObject(objectPosition) }
+      { name: 'オブジェクト作成', action: null, subActions: this.tabletopActionService.makeDefaultContextMenuActions(objectPosition) }
     ], this.name);
   }
 
