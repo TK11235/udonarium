@@ -11,12 +11,17 @@ import { MimeType } from './mime-type';
 type MetaData = { percent: number, currentFile: string };
 type UpdateCallback = (metadata: MetaData) => void;
 
+const MEGA_BYTE = 1024 * 1024;
+
 export class FileArchiver {
   private static _instance: FileArchiver
   static get instance(): FileArchiver {
     if (!FileArchiver._instance) FileArchiver._instance = new FileArchiver();
     return FileArchiver._instance;
   }
+
+  private maxImageSize = 2 * MEGA_BYTE;
+  private maxAudioeSize = 10 * MEGA_BYTE;
 
   private callbackOnDragEnter;
   private callbackOnDragOver;
@@ -85,7 +90,7 @@ export class FileArchiver {
 
   private async handleImage(file: File) {
     if (file.type.indexOf('image/') < 0) return;
-    if (2 * 1024 * 1024 < file.size) {
+    if (this.maxImageSize < file.size) {
       console.warn(`File size limit exceeded. -> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
       return;
     }
@@ -95,7 +100,7 @@ export class FileArchiver {
 
   private async handleAudio(file: File) {
     if (file.type.indexOf('audio/') < 0) return;
-    if (10 * 1024 * 1024 < file.size) {
+    if (this.maxAudioeSize < file.size) {
       console.warn(`File size limit exceeded. -> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
       return;
     }
