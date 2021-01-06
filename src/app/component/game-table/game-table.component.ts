@@ -18,6 +18,7 @@ import { TextNote } from '@udonarium/text-note';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
 import { InputHandler } from 'directive/input-handler';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
+import { CoordinateService } from 'service/coordinate.service';
 import { ModalService } from 'service/modal.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopService } from 'service/tabletop.service';
@@ -86,6 +87,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef,
     private pointerDeviceService: PointerDeviceService,
+    private coordinateService: CoordinateService,
     private tabletopService: TabletopService,
     private modalService: ModalService,
   ) { }
@@ -120,7 +122,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.setGameTableGrid(this.currentTable.width, this.currentTable.height, this.currentTable.gridSize, this.currentTable.gridType, this.currentTable.gridColor);
     this.setTransform(0, 0, 0, 0, 0, 0);
-    this.tabletopService.dragAreaElement = this.gameObjects.nativeElement;
+    this.coordinateService.tabletopOriginElement = this.gameObjects.nativeElement;
   }
 
   ngOnDestroy() {
@@ -312,7 +314,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
     let menuPosition = this.pointerDeviceService.pointers[0];
-    let objectPosition = this.tabletopService.calcTabletopLocalCoordinate();
+    let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
     let menuActions: ContextMenuAction[] = [];
 
     Array.prototype.push.apply(menuActions, this.tabletopService.getContextMenuActionsForCreateObject(objectPosition));

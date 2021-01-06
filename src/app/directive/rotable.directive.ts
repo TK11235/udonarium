@@ -2,8 +2,8 @@ import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDe
 import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
+import { CoordinateService } from 'service/coordinate.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
-import { TabletopService } from 'service/tabletop.service';
 
 import { InputHandler } from './input-handler';
 
@@ -64,7 +64,8 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     private ngZone: NgZone,
     private elementRef: ElementRef,
     private batchService: BatchService,
-    private tabletopService: TabletopService,
+    private pointerDeviceService: PointerDeviceService,
+    private coordinateService: CoordinateService,
   ) { }
 
   ngAfterViewInit() {
@@ -115,20 +116,20 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     e.stopPropagation();
     this.onstart.emit(e as PointerEvent);
 
-    let pointer = PointerDeviceService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
+    let pointer = this.coordinateService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
     this.rotateOffset = this.calcRotate(pointer, this.rotate);
     this.setAnimatedTransition(false);
   }
 
   onInputMove(e: MouseEvent | TouchEvent) {
-    if (this.input.isGrabbing && !this.tabletopService.pointerDeviceService.isDragging) {
+    if (this.input.isGrabbing && !this.pointerDeviceService.isDragging) {
       return this.cancel(); // todo
     }
     if (this.isDisable || !this.input.isGrabbing) return this.cancel();
 
     if (e.cancelable) e.preventDefault();
     e.stopPropagation();
-    let pointer3d = PointerDeviceService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
+    let pointer3d = this.coordinateService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
     let angle = this.calcRotate(pointer3d, this.rotateOffset);
 
     if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);

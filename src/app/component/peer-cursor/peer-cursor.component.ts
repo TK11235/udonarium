@@ -5,8 +5,8 @@ import { ResettableTimeout } from '@udonarium/core/system/util/resettable-timeou
 import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { BatchService } from 'service/batch.service';
+import { CoordinateService } from 'service/coordinate.service';
 import { PointerCoordinate } from 'service/pointer-device.service';
-import { TabletopService } from 'service/tabletop.service';
 
 @Component({
   selector: 'peer-cursor, [peer-cursor]',
@@ -41,7 +41,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private batchService: BatchService,
-    private tabletopService: TabletopService,
+    private coordinateService: CoordinateService,
     private ngZone: NgZone
   ) { }
 
@@ -102,7 +102,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!document.getElementById('app-table-layer').contains(target)) return;
 
     let coordinate: PointerCoordinate = { x: x, y: y, z: 0 };
-    coordinate = this.tabletopService.calcTabletopLocalCoordinate(coordinate, target);
+    coordinate = this.coordinateService.calcTabletopLocalCoordinate(coordinate, target);
 
     EventSystem.call('CURSOR_MOVE', [coordinate.x, coordinate.y, coordinate.z]);
   }

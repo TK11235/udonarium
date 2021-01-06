@@ -4,8 +4,8 @@ import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
+import { CoordinateService } from 'service/coordinate.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
-import { TabletopService } from 'service/tabletop.service';
 
 import { InputHandler } from './input-handler';
 
@@ -68,7 +68,8 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     private ngZone: NgZone,
     private elementRef: ElementRef,
     private batchService: BatchService,
-    private tabletopService: TabletopService,
+    private pointerDeviceService: PointerDeviceService,
+    private coordinateService: CoordinateService,
   ) { }
 
   ngAfterViewInit() {
@@ -126,7 +127,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setCollidableLayer(true);
 
     let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
-    this.pointer3d = this.tabletopService.calcTabletopLocalCoordinate(this.input.pointer, target);
+    this.pointer3d = this.coordinateService.calcTabletopLocalCoordinate(this.input.pointer, target);
     this.setPointerEvents(true);
 
     this.pointerOffset3d.x = this.posX - this.pointer3d.x;
@@ -147,7 +148,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   }
 
   onInputMove(e: MouseEvent | TouchEvent) {
-    if (this.input.isGrabbing && !this.tabletopService.pointerDeviceService.isDragging) {
+    if (this.input.isGrabbing && !this.pointerDeviceService.isDragging) {
       return this.cancel(); // todo
     }
     if (this.isDisable || !this.input.isGrabbing) return this.cancel();
@@ -157,7 +158,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     let target = document.elementFromPoint(this.input.pointer.x, this.input.pointer.y) as HTMLElement;
     if (target == null) return;
 
-    this.pointer3d = this.tabletopService.calcTabletopLocalCoordinate(this.input.pointer, target);
+    this.pointer3d = this.coordinateService.calcTabletopLocalCoordinate(this.input.pointer, target);
     if (this.pointerPrev3d.x === this.pointer3d.x && this.pointerPrev3d.y === this.pointer3d.y && this.pointerPrev3d.z === this.pointer3d.z) return;
 
     if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);

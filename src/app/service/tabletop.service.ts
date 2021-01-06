@@ -20,7 +20,8 @@ import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
 
 import { ContextMenuAction } from './context-menu.service';
-import { PointerCoordinate, PointerDeviceService } from './pointer-device.service';
+import { CoordinateService } from './coordinate.service';
+import { PointerCoordinate } from './pointer-device.service';
 
 type ObjectIdentifier = string;
 type LocationName = string;
@@ -29,8 +30,6 @@ const skeletonImage: ImageFile = ImageFile.create('./assets/images/skeleton.png'
 
 @Injectable()
 export class TabletopService {
-  dragAreaElement: HTMLElement = document.body;
-
   private _emptyTable: GameTable = new GameTable('');
   get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
   get currentTable(): GameTable {
@@ -65,7 +64,7 @@ export class TabletopService {
 
   constructor(
     public ngZone: NgZone,
-    public pointerDeviceService: PointerDeviceService,
+    private coordinateService: CoordinateService
   ) {
     this.initialize();
   }
@@ -101,7 +100,7 @@ export class TabletopService {
         // todo:立体地形の上にドロップした時の挙動
         let gameObject = ObjectSerializer.instance.parseXml(xmlElement);
         if (gameObject instanceof TabletopObject) {
-          let pointer = this.calcTabletopLocalCoordinate();
+          let pointer = this.coordinateService.calcTabletopLocalCoordinate();
           gameObject.location.x = pointer.x - 25;
           gameObject.location.y = pointer.y - 25;
           gameObject.posZ = pointer.z;
@@ -182,19 +181,6 @@ export class TabletopService {
 
   getSkeletonImageOr(image: ImageFile) {
     return image && !image.isEmpty ? image : skeletonImage;
-  }
-
-  calcTabletopLocalCoordinate(
-    coordinate: PointerCoordinate = { x: this.pointerDeviceService.pointers[0].x, y: this.pointerDeviceService.pointers[0].y, z: 0 },
-    target: HTMLElement = this.pointerDeviceService.targetElement
-  ): PointerCoordinate {
-    if (target.contains(this.dragAreaElement)) {
-      coordinate = PointerDeviceService.convertToLocal(coordinate, this.dragAreaElement);
-      coordinate.z = 0;
-    } else {
-      coordinate = PointerDeviceService.convertLocalToLocal(coordinate, target, this.dragAreaElement);
-    }
-    return { x: coordinate.x, y: coordinate.y, z: 0 < coordinate.z ? coordinate.z : 0 };
   }
 
   createGameCharacter(position: PointerCoordinate): GameCharacter {
