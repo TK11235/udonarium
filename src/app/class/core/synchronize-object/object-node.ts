@@ -129,7 +129,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     }
   }
 
-  appendChild(child: ObjectNode): ObjectNode {
+  appendChild<T extends ObjectNode>(child: T): T {
     if (child.contains(this)) return null;
     if (child.parent && child.parent !== this) child.parent.removeChild(child);
 
@@ -144,7 +144,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     return child;
   }
 
-  insertBefore(child: ObjectNode, reference: ObjectNode): ObjectNode {
+  insertBefore<T extends ObjectNode>(child: T, reference: ObjectNode): T {
     if (child.contains(this)) return null;
     if (child === reference && child.parent === this) return child;
 
@@ -169,7 +169,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     return child;
   }
 
-  removeChild(child: ObjectNode): ObjectNode {
+  removeChild<T extends ObjectNode>(child: T): T {
     let children = this.children;
     let index: number = children.indexOf(child);
     if (index < 0) return null;
