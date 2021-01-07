@@ -3,7 +3,6 @@ import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
 import { ChatTab } from '@udonarium/chat-tab';
 import { ChatTabList } from '@udonarium/chat-tab-list';
-import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
@@ -22,8 +21,6 @@ import { CoordinateService } from './coordinate.service';
 
 type ObjectIdentifier = string;
 type LocationName = string;
-
-const skeletonImage: ImageFile = ImageFile.create('./assets/images/skeleton.png');
 
 @Injectable()
 export class TabletopService {
@@ -173,10 +170,6 @@ export class TabletopService {
         gameObject.setLocation('table');
         break;
     }
-  }
-
-  getSkeletonImageOr(image: ImageFile) {
-    return image && !image.isEmpty ? image : skeletonImage;
   }
 }
 

@@ -25,9 +25,9 @@ import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
+import { ImageService } from 'service/image.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
-import { TabletopService } from 'service/tabletop.service';
 
 @Component({
   selector: 'card-stack',
@@ -69,7 +69,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
   get ownerName(): string { return this.cardStack.ownerName; }
 
   get topCard(): Card { return this.cardStack.topCard; }
-  get imageFile(): ImageFile { return this.tabletopService.getSkeletonImageOr(this.cardStack.imageFile); }
+  get imageFile(): ImageFile { return this.imageService.getSkeletonOr(this.cardStack.imageFile); }
 
   animeState: string = 'inactive';
 
@@ -92,7 +92,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     private panelService: PanelService,
     private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
-    private tabletopService: TabletopService,
+    private imageService: ImageService,
     private pointerDeviceService: PointerDeviceService
   ) { }
 

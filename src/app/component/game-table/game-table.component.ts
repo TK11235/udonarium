@@ -19,6 +19,7 @@ import { GameTableSettingComponent } from 'component/game-table-setting/game-tab
 import { InputHandler } from 'directive/input-handler';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { CoordinateService } from 'service/coordinate.service';
+import { ImageService } from 'service/image.service';
 import { ModalService } from 'service/modal.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopActionService } from 'service/tabletop-action.service';
@@ -43,7 +44,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get tableImage(): ImageFile {
     let file: ImageFile = ImageStorage.instance.get(this.currentTable.imageIdentifier);
-    return this.tabletopService.getSkeletonImageOr(file);
+    return this.imageService.getSkeletonOr(file);
   }
 
   get backgroundImage(): ImageFile {
@@ -89,6 +90,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private elementRef: ElementRef,
     private pointerDeviceService: PointerDeviceService,
     private coordinateService: CoordinateService,
+    private imageService: ImageService,
     private tabletopService: TabletopService,
     private tabletopActionService: TabletopActionService,
     private modalService: ModalService,
