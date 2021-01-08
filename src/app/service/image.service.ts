@@ -10,7 +10,7 @@ export class ImageService {
 
   constructor() { }
 
-  getSkeletonOr(image: ImageFile) {
+  getSkeletonOr(image: ImageFile): ImageFile {
     return image && !image.isEmpty ? image : skeletonImage;
   }
 }

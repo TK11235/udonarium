@@ -26,21 +26,21 @@ export class EventSystem implements Subject {
     return listener;
   }
 
-  unregister(key: any)
-  unregister(key: any, eventName: string)
-  unregister(key: any, callback: Callback<any>)
-  unregister(key: any, eventName: string, callback: Callback<any>)
-  unregister(...args: any[]) {
+  unregister(key: any): void
+  unregister(key: any, eventName: string): void
+  unregister(key: any, callback: Callback<any>): void
+  unregister(key: any, eventName: string, callback: Callback<any>): void
+  unregister(...args: any[]): void {
     if (args.length === 1) {
-      return this._unregister(args[0], null, null);
+      this._unregister(args[0], null, null);
     } else if (args.length === 2) {
       if (typeof args[1] === 'string') {
-        return this._unregister(args[0], args[1], null);
+        this._unregister(args[0], args[1], null);
       } else {
-        return this._unregister(args[0], null, args[1]);
+        this._unregister(args[0], null, args[1]);
       }
     } else {
-      return this._unregister(args[0], args[1], args[2]);
+      this._unregister(args[0], args[1], args[2]);
     }
   }
 
@@ -74,9 +74,9 @@ export class EventSystem implements Subject {
     return listener;
   }
 
-  call<T>(eventName: string, data: T, sendTo?: string)
-  call<T>(event: Event<T>, sendTo?: string)
-  call<T>(...args: any[]) {
+  call<T>(eventName: string, data: T, sendTo?: string): void
+  call<T>(event: Event<T>, sendTo?: string): void
+  call<T>(...args: any[]): void {
     if (typeof args[0] === 'string') {
       this._call(new Event(args[0], args[1]), args[2]);
     } else {

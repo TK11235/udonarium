@@ -143,7 +143,7 @@ export class TabletopService {
     this.clearMap();
   }
 
-  private shouldRefreshCache(object: TabletopObject) {
+  private shouldRefreshCache(object: TabletopObject): boolean {
     return this.locationMap.get(object.identifier) !== object.location.name || this.parentMap.get(object.identifier) !== object.parentId;
   }
 

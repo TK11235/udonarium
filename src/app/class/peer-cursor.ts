@@ -93,7 +93,7 @@ export class PeerCursor extends GameObject {
     super.apply(context);
   }
 
-  isPeerAUdon() {
+  isPeerAUdon(): boolean {
     return /u.*d.*o.*n/ig.exec(this.peerId) != null;
   }
 }

@@ -76,7 +76,7 @@ export class PeerContext implements IPeerContext {
     }
   }
 
-  private static _create(userId: string = '') {
+  private static _create(userId: string = ''): PeerContext {
     let digestUserId = calcDigestUserId(userId);
     let peerContext = new PeerContext(digestUserId);
 
