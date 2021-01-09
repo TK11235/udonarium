@@ -78,13 +78,15 @@ export class FileArchiver {
   async load(files: File[]): Promise<void>
   async load(files: FileList): Promise<void>
   async load(files: any): Promise<void> {
-    let length = files.length;
-    for (let i = 0; i < length; i++) {
-      await this.handleImage(files[i]);
-      await this.handleAudio(files[i]);
-      await this.handleText(files[i]);
-      await this.handleZip(files[i]);
-      EventSystem.trigger('FILE_LOADED', { file: files[i] });
+    if (!files) return;
+    let loadFiles: File[] = files instanceof FileList ? toArrayOfFileList(files) : files;
+
+    for (let file of loadFiles) {
+      await this.handleImage(file);
+      await this.handleAudio(file);
+      await this.handleText(file);
+      await this.handleZip(file);
+      EventSystem.trigger('FILE_LOADED', { file: file });
     }
   }
 
@@ -145,11 +147,10 @@ export class FileArchiver {
   async saveAsync(files: FileList, zipName: string, updateCallback?: UpdateCallback): Promise<void>
   async saveAsync(files: any, zipName: string, updateCallback?: UpdateCallback): Promise<void> {
     if (!files) return;
+    let saveFiles: File[] = files instanceof FileList ? toArrayOfFileList(files) : files;
 
     let zip = new JSZip();
-    let length = files.length;
-    for (let i = 0; i < length; i++) {
-      let file = files[i]
+    for (let file of saveFiles) {
       zip.file(file.name, file);
     }
 
@@ -162,4 +163,11 @@ export class FileArchiver {
     }, updateCallback);
     saveAs(blob, zipName + '.zip');
   }
+}
+
+function toArrayOfFileList(fileList: FileList): File[] {
+  let files: File[] = [];
+  let length = fileList.length;
+  for (let i = 0; i < length; i++) { files.push(fileList[i]); }
+  return files;
 }
