@@ -64,6 +64,11 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   private collidableElements: HTMLElement[] = [];
   private input: InputHandler = null;
 
+  private get isGridSnap(): boolean {
+    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
+    return tableSelecter ? tableSelecter.gridSnap : false;
+  }
+
   constructor(
     private ngZone: NgZone,
     private elementRef: ElementRef,
@@ -179,8 +184,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   onInputEnd(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
-    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
-    if (tableSelecter.gridSnap && this.input.isDragging) this.snapToGrid();
+    if (this.isGridSnap && this.input.isDragging) this.snapToGrid();
     this.cancel();
     this.onend.emit(e as PointerEvent);
   }
@@ -189,8 +193,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     if (this.isDisable) return this.cancel();
     if (e.cancelable) e.preventDefault();
 
-    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
-    if (tableSelecter.gridSnap && this.input.isDragging) this.snapToGrid();
+    if (this.isGridSnap && this.input.isDragging) this.snapToGrid();
 
     let needsDispatch = this.input.isGrabbing && e.isTrusted;
     this.cancel();
