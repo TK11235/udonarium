@@ -244,8 +244,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   handleFileSelect(event: Event) {
-    let files = (<HTMLInputElement>event.target).files;
+    let input = <HTMLInputElement>event.target;
+    let files = input.files;
     if (files.length) FileArchiver.instance.load(files);
+    input.value = '';
   }
 
   private lazyNgZoneUpdate(isImmediate: boolean) {
