@@ -179,9 +179,9 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   onInputEnd(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
-    this.cancel();
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
-    if (tableSelecter.gridSnap) this.snapToGrid();
+    if (tableSelecter.gridSnap && this.input.isDragging) this.snapToGrid();
+    this.cancel();
     this.onend.emit(e as PointerEvent);
   }
 
@@ -190,7 +190,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     if (e.cancelable) e.preventDefault();
 
     let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
-    if (tableSelecter.gridSnap) this.snapToGrid();
+    if (tableSelecter.gridSnap && this.input.isDragging) this.snapToGrid();
 
     let needsDispatch = this.input.isGrabbing && e.isTrusted;
     this.cancel();
