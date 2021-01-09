@@ -1,5 +1,6 @@
 import { NgZone } from '@angular/core';
 
+type Callback = (srcEvent: TouchEvent | MouseEvent | PointerEvent) => void;
 type OnGestureCallback = (srcEvent: TouchEvent | MouseEvent | PointerEvent) => void;
 type OnTransformCallback = (transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number, event: string, srcEvent: TouchEvent | MouseEvent | PointerEvent) => void;
 
@@ -25,6 +26,8 @@ export class TableTouchGesture {
   private tappedPanTimer: NodeJS.Timer = null;
   private tappedPanCenter: HammerPoint = { x: 0, y: 0 };
 
+  onstart: Callback = null;
+  onend: Callback = null;
   ongesture: OnGestureCallback = null;
   ontransform: OnTransformCallback = null;
 
@@ -88,6 +91,9 @@ export class TableTouchGesture {
       this.deltaHammerRotation = ev.rotation;
       this.deltaHammerDeltaX = ev.deltaX;
       this.deltaHammerDeltaY = ev.deltaY;
+      if (this.onstart) this.onstart(ev.srcEvent);
+    } else if (ev.isFinal) {
+      if (this.onend) this.onend(ev.srcEvent);
     } else {
       this.deltaHammerScale = ev.scale - this.prevHammerScale;
       this.deltaHammerRotation = ev.rotation - this.prevHammerRotation;

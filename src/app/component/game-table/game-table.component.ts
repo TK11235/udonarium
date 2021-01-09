@@ -137,8 +137,18 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   initializeTableTouchGesture() {
     this.gesture = new TableTouchGesture(this.rootElementRef.nativeElement, this.ngZone);
+    this.gesture.onstart = this.onTableTouchStart.bind(this);
+    this.gesture.onend = this.onTableTouchEnd.bind(this);
     this.gesture.ongesture = this.onTableTouchGesture.bind(this);
     this.gesture.ontransform = this.onTableTouchTransform.bind(this);
+  }
+
+  onTableTouchStart() {
+    this.input.cancel();
+  }
+
+  onTableTouchEnd() {
+    this.cancelInput();
   }
 
   onTableTouchGesture() {
