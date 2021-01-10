@@ -60,7 +60,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get backgroundFilterType(): FilterType {
-    return this.currentTable.backgroundFilterType
+    return this.currentTable.backgroundFilterType;
   }
 
   private isTransformMode: boolean = false;
