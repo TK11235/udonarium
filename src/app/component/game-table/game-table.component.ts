@@ -327,6 +327,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         break;
     }
+    let isArrowKey = Keyboard[key] != null;
+    if (isArrowKey) e.preventDefault();
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
 
