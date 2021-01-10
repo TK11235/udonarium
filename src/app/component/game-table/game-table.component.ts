@@ -28,6 +28,13 @@ import { TabletopService } from 'service/tabletop.service';
 import { GridLineRender } from './grid-line-render';
 import { TableTouchGesture, TableTouchGestureEvent } from './table-touch-gesture';
 
+enum Keyboard {
+  ArrowLeft = 'ArrowLeft',
+  ArrowUp = 'ArrowUp',
+  ArrowRight = 'ArrowRight',
+  ArrowDown = 'ArrowDown',
+}
+
 @Component({
   selector: 'game-table',
   templateUrl: './game-table.component.html',
@@ -285,37 +292,40 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let rotateY = 0;
     let rotateZ = 0;
 
-    if (e.keyCode === 37) {//←
-      if (e.shiftKey) {
-        rotateZ = -2;
-      } else {
-        transformX = 10;
-      }
-    }
-    if (e.keyCode === 38) {//↑
-      if (e.shiftKey) {
-        rotateX = -2;
-      } else if (e.ctrlKey) {
-        transformZ = 150;
-      } else {
-        transformY = 10;
-      }
-    }
-    if (e.keyCode === 39) {//→
-      if (e.shiftKey) {
-        rotateZ = 2;
-      } else {
-        transformX = -10;
-      }
-    }
-    if (e.keyCode === 40) {//↓
-      if (e.shiftKey) {
-        rotateX = 2;
-      } else if (e.ctrlKey) {
-        transformZ = -150;
-      } else {
-        transformY = -10;
-      }
+    let key = this.getKeyName(e);
+    switch (key) {
+      case Keyboard.ArrowLeft:
+        if (e.shiftKey) {
+          rotateZ = -2;
+        } else {
+          transformX = 10;
+        }
+        break;
+      case Keyboard.ArrowUp:
+        if (e.shiftKey) {
+          rotateX = -2;
+        } else if (e.ctrlKey) {
+          transformZ = 150;
+        } else {
+          transformY = 10;
+        }
+        break;
+      case Keyboard.ArrowRight:
+        if (e.shiftKey) {
+          rotateZ = 2;
+        } else {
+          transformX = -10;
+        }
+        break;
+      case Keyboard.ArrowDown:
+        if (e.shiftKey) {
+          rotateX = 2;
+        } else if (e.ctrlKey) {
+          transformZ = -150;
+        } else {
+          transformY = -10;
+        }
+        break;
     }
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
   }
@@ -339,6 +349,17 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.contextMenuService.open(menuPosition, menuActions, this.currentTable.name);
+  }
+
+  private getKeyName(keyboard: KeyboardEvent): string {
+    if (keyboard.key) return keyboard.key;
+    switch (keyboard.keyCode) {
+      case 37: return Keyboard.ArrowLeft;
+      case 38: return Keyboard.ArrowUp;
+      case 39: return Keyboard.ArrowRight;
+      case 40: return Keyboard.ArrowDown;
+      default: return '';
+    }
   }
 
   private setTransform(transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number) {
