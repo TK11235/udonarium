@@ -13,9 +13,10 @@
         <div style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{name}}</div>
       </ng-container>
       <ng-container *ngIf="!isTagLocked">
-        <div class="hidden-spacer" style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{name}}</div>
+        <div class="hidden-spacer" style="font-family: Cambria, Georgia; font-size: 0.9rem;">{{name}}</div><button
+          (click)="sendLogMessage(name,value)"><i class="material-icons icon-size">send</i></button>
         <input style="width:100%; min-width:10px; font-family: Cambria, Georgia; font-size: 0.9rem;" size="1"
-          [(ngModel)]="name" placeholder="Value" />
+          [(ngModel)]="name" placeholder="Value" />&nbsp;&nbsp;&nbsp;
       </ng-container>
     </div>
     <div class="table-cell">
@@ -34,7 +35,7 @@
         <ng-container *ngSwitchDefault>
           <!-- size属性がないと小さくならない -->
           <div class="hidden-spacer" style="font-size: 1.0em; font-family: Cambria, Georgia;">{{value}}</div>
-          <input style="width:100%; min-width:10px;" size="1" [(ngModel)]="value" placeholder="Value" />
+          &nbsp;&nbsp;<input style="width:90%; min-width:10px;" size="1" [(ngModel)]="value" placeholder="Value" />
         </ng-container>
       </ng-container>
     </div>

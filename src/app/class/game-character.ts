@@ -57,7 +57,7 @@ export class GameCharacter extends TabletopObject {
     //TEST
     testElement = DataElement.create('能力', '', {}, '能力' + this.identifier);
     this.detailDataElement.appendChild(testElement);
-    testElement.appendChild(DataElement.create('器用度', 24, {}, '器用度' + this.identifier));
+    testElement.appendChild(DataElement.create('器用度', '1d100<30', {}, '器用度' + this.identifier));
     testElement.appendChild(DataElement.create('敏捷度', 24, {}, '敏捷度' + this.identifier));
     testElement.appendChild(DataElement.create('筋力', 24, {}, '筋力' + this.identifier));
     testElement.appendChild(DataElement.create('生命力', 24, {}, '生命力' + this.identifier));
