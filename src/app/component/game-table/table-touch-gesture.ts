@@ -2,7 +2,7 @@ import { NgZone } from '@angular/core';
 
 type Callback = (srcEvent: TouchEvent | MouseEvent | PointerEvent) => void;
 type OnGestureCallback = (srcEvent: TouchEvent | MouseEvent | PointerEvent) => void;
-type OnTransformCallback = (transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number, event: string, srcEvent: TouchEvent | MouseEvent | PointerEvent) => void;
+type OnTransformCallback = (transformX: number, transformY: number, transformZ: number, rotateX: number, rotateY: number, rotateZ: number, event: TableTouchGestureEvent, srcEvent: TouchEvent | MouseEvent | PointerEvent) => void;
 
 export enum TableTouchGestureEvent {
   PAN = 'pan',
