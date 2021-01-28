@@ -77,7 +77,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   get faces(): string[] { return this.diceSymbol.faces; }
   get imageFile(): ImageFile {
     let image = this.diceSymbol.imageFile;
-    return image ? image : this.emptyImage;
+    return image ? image : ImageFile.Empty;
   }
 
   get isMine(): boolean { return this.diceSymbol.isMine; }
@@ -90,7 +90,6 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   private iconHiddenTimer: NodeJS.Timer = null;
   get isIconHidden(): boolean { return this.iconHiddenTimer != null };
 
-  private emptyImage: ImageFile = ImageFile.Empty;
   gridSize: number = 50;
 
   movableOption: MovableOption = {};
