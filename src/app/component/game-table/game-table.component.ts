@@ -69,7 +69,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private viewRotateZ: number = 10;
 
   private mouseGesture: TableMouseGesture = null;
-  private gesture: TableTouchGesture = null;
+  private touchGesture: TableTouchGesture = null;
 
   get characters(): GameCharacter[] { return this.tabletopService.characters; }
   get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
@@ -124,15 +124,15 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     EventSystem.unregister(this);
     this.mouseGesture.destroy();
-    this.gesture.destroy();
+    this.touchGesture.destroy();
   }
 
   initializeTableTouchGesture() {
-    this.gesture = new TableTouchGesture(this.rootElementRef.nativeElement, this.ngZone);
-    this.gesture.onstart = this.onTableTouchStart.bind(this);
-    this.gesture.onend = this.onTableTouchEnd.bind(this);
-    this.gesture.ongesture = this.onTableTouchGesture.bind(this);
-    this.gesture.ontransform = this.onTableTouchTransform.bind(this);
+    this.touchGesture = new TableTouchGesture(this.rootElementRef.nativeElement, this.ngZone);
+    this.touchGesture.onstart = this.onTableTouchStart.bind(this);
+    this.touchGesture.onend = this.onTableTouchEnd.bind(this);
+    this.touchGesture.ongesture = this.onTableTouchGesture.bind(this);
+    this.touchGesture.ontransform = this.onTableTouchTransform.bind(this);
   }
 
   initializeTableMouseGesture() {
