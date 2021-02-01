@@ -3,7 +3,6 @@ import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, 
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { GameObject } from '@udonarium/core/synchronize-object/game-object';
 import { EventSystem } from '@udonarium/core/system';
 import { DiceSymbol } from '@udonarium/dice-symbol';
@@ -43,13 +42,11 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get currentTable(): GameTable { return this.tabletopService.currentTable; }
 
   get tableImage(): ImageFile {
-    let file: ImageFile = ImageStorage.instance.get(this.currentTable.imageIdentifier);
-    return this.imageService.getSkeletonOr(file);
+    return this.imageService.getSkeletonOr(this.currentTable.imageIdentifier);
   }
 
   get backgroundImage(): ImageFile {
-    let file: ImageFile = ImageStorage.instance.get(this.currentTable.backgroundImageIdentifier);
-    return file ? file : ImageFile.Empty;
+    return this.imageService.getEmptyOr(this.currentTable.backgroundImageIdentifier);
   }
 
   get backgroundFilterType(): FilterType {
