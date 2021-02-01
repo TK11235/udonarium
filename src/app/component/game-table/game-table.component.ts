@@ -26,7 +26,7 @@ import { TabletopService } from 'service/tabletop.service';
 
 import { GridLineRender } from './grid-line-render';
 import { TableMouseGesture } from './table-mouse-gesture';
-import { TableTouchGesture, TableTouchGestureEvent } from './table-touch-gesture';
+import { TableTouchGesture } from './table-touch-gesture';
 
 @Component({
   selector: 'game-table',
