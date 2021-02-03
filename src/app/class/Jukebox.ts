@@ -54,7 +54,7 @@ export class Jukebox extends GameObject {
   }
 
   private _stop() {
-    this.unregisterEvent()
+    this.unregisterEvent();
     this.audioPlayer.stop();
   }
 
