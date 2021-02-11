@@ -141,7 +141,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       .on('SYNCHRONIZE_AUDIO_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
       .on('SYNCHRONIZE_FILE_LIST', event => { if (event.isSendFromSelf) this.lazyNgZoneUpdate(false); })
       .on<AppConfig>('LOAD_CONFIG', event => {
-        console.log('LOAD_CONFIG !!!', event.data);
+        console.log('LOAD_CONFIG !!!');
         Network.setApiKey(event.data.webrtc.key);
         Network.open();
       })

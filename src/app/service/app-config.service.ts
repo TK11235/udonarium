@@ -96,7 +96,6 @@ export class AppConfigService {
       let config = await this.loadYaml();
       let obj = yaml.safeLoad(config);
       AppConfigService.applyConfig(obj);
-      console.log(AppConfigService.appConfig);
     } catch (e) {
       console.warn(e);
     }
@@ -112,7 +111,6 @@ export class AppConfigService {
         return;
       }
 
-      console.log('loadYaml ready...', config);
       let configString = config.textContent;
       let url = config.getAttribute('src');
 
