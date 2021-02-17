@@ -1,4 +1,5 @@
-import BCDice, { Info } from 'bcdice';
+import Loader from 'bcdice/lib/loader/loader';
+import { GameSystemInfo } from 'bcdice/lib/bcdice/game_system_list.json';
 
 import { ChatMessage, ChatMessageContext } from './chat-message';
 import { ChatTab } from './chat-tab';
@@ -14,12 +15,35 @@ interface DiceRollResult {
   isSecret: boolean;
 }
 
+// bcdice-js custom loader class
+class WebpackLoader extends Loader {
+  async dynamicImport(className: string): Promise<void> {
+    await import(
+      /* webpackChunkName: "[request]"  */
+      /* webpackInclude: /\.js$/ */
+      `bcdice/lib/bcdice/game_system/${className}`
+    );
+  }
+}
+
 @SyncObject('dice-bot')
 export class DiceBot extends GameObject {
-  private static loadedDiceBots: { [gameType: string]: boolean } = {};
+  private static loader: WebpackLoader = new WebpackLoader();
   private static queue: PromiseQueue = new PromiseQueue('DiceBotQueue');
 
-  public static diceBotInfos: Info[] = BCDice.infoList;
+  static diceBotInfos: GameSystemInfo[] = DiceBot.loader.listAvailableGameSystems().sort(
+    (a, b) => {
+      let aKey: string = a.sortKey;
+      let bKey: string = b.sortKey;
+      if (aKey < bKey) {
+        return -1;
+      }
+      if (aKey > bKey) {
+        return 1;
+      }
+      return 0
+    }
+  );
 
   // GameObject Lifecycle
   onStoreAdded() {
@@ -36,17 +60,15 @@ export class DiceBot extends GameObject {
           let regArray = /^((\d+)?\s+)?([^\s]*)?/ig.exec(text);
           let repeat: number = (regArray[2] != null) ? Number(regArray[2]) : 1;
           let rollText: string = (regArray[3] != null) ? regArray[3] : text;
-
-          let finalResult: DiceRollResult = { result: '', isSecret: false };
-          for (let i = 0; i < repeat && i < 32; i++) {
-            let rollResult = await DiceBot.diceRollAsync(rollText, gameType);
-            if (rollResult.result.length < 1) break;
-
-            finalResult.result += rollResult.result;
-            finalResult.isSecret = finalResult.isSecret || rollResult.isSecret;
-            if (1 < repeat) finalResult.result += ` #${i + 1}`;
+          if (!rollText || repeat < 1) return;
+          // 繰り返しコマンドに変換
+          if (repeat > 1) {
+            rollText = `x${repeat} ${rollText}`
           }
-          this.sendResultMessage(finalResult, chatMessage);
+
+          let rollResult = await DiceBot.diceRollAsync(rollText, gameType);
+          if (!rollResult.result) return;
+          this.sendResultMessage(rollResult, chatMessage);
         } catch (e) {
           console.error(e);
         }
@@ -91,62 +113,32 @@ export class DiceBot extends GameObject {
   }
 
   static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult> {
-    DiceBot.queue.add(DiceBot.loadDiceBotAsync(gameType));
-    return DiceBot.queue.add(() => {
+    return DiceBot.queue.add((async () => {
       try {
-        const bcdice = new BCDice();
-        const result = bcdice.roll(message, gameType);
-        console.log('diceRoll!!!', result);
-        console.log('isSecret!!!', bcdice.cgiDiceBot.isSecret);
-        return { result: result[0], isSecret: bcdice.cgiDiceBot.isSecret };
-      } catch (e) {
-        console.error(e);
-      }
-      return { result: '', isSecret: false };
-    });
-  }
-
-  static getHelpMessage(gameType: string): Promise<string> {
-    DiceBot.queue.add(DiceBot.loadDiceBotAsync(gameType));
-    return DiceBot.queue.add(() => {
-      let help = '';
-      try {
-        const dicebotInfo = BCDice.infoList.find(
-          (info) => info.gameType === gameType
-        );
-        if (dicebotInfo) {
-          help = dicebotInfo.info;
+        const bcdice = await DiceBot.loader.dynamicLoad(gameType);
+        const result = bcdice.eval(message);
+        if (result) {
+          console.log('diceRoll!!!', result.text);
+          console.log('isSecret!!!', result.secret);
+          return { result: result.text, isSecret: result.secret };
         }
       } catch (e) {
         console.error(e);
       }
-      return help;
-    });
+      return { result: '', isSecret: false };
+    })());
   }
 
-  static loadDiceBotAsync(gameType: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      console.log('loadDiceBotAsync');
-
-      if ((!gameType && gameType.length < 1) || DiceBot.loadedDiceBots[gameType]) {
-        console.log(gameType + ' is loaded');
-        resolve();
-        return;
+  static getHelpMessage(gameType: string): Promise<string> {
+    return DiceBot.queue.add((async () => {
+      let help = '';
+      try {
+        const bcdice = await DiceBot.loader.dynamicLoad(gameType);
+        help = bcdice.HELP_MESSAGE;
+      } catch (e) {
+        console.error(e);
       }
-
-      if (!BCDice.infoList.some((info) => info.gameType === gameType)) {
-        console.warn(gameType + ' is unsupported');
-        DiceBot.loadedDiceBots[gameType] = true;
-        resolve();
-        return;
-      }
-
-      DiceBot.loadedDiceBots[gameType] = false;
-
-      import(`bcdice/lib/diceBot/${gameType}`).then(() => {
-        DiceBot.loadedDiceBots[gameType] = true;
-        resolve();
-      });
-    });
+      return help;
+    })());
   }
 }

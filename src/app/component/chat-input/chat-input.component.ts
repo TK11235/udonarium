@@ -205,8 +205,8 @@ export class ChatInputComponent implements OnInit, OnDestroy {
 
       let gameName: string = 'ダイスボット';
       for (let diceBotInfo of DiceBot.diceBotInfos) {
-        if (diceBotInfo.gameType === this.gameType) {
-          gameName = 'ダイスボット<' + diceBotInfo.gameName + '＞'
+        if (diceBotInfo.id === this.gameType) {
+          gameName = 'ダイスボット<' + diceBotInfo.name + '＞'
         }
       }
       gameName += 'の説明';
