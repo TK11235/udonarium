@@ -33,6 +33,7 @@
               "crypto-js/lib-typedarrays.js",
               "file-saver",
               "msgpack-lite",
+              "lzbase62",
               "pako"
             ]
           },

@@ -1,6 +1,6 @@
-import * as lzbase62 from 'lzbase62/lzbase62.min.js';
 import * as CryptoJS from 'crypto-js/core.js';
 import * as SHA256 from 'crypto-js/sha256.js';
+import * as lzbase62 from 'lzbase62';
 
 import { base } from '../util/base-x';
 
