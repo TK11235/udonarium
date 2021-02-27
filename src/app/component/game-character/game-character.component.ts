@@ -141,6 +141,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       {
         name: 'コピーを作る', action: () => {
           let cloneObject = this.gameCharacter.clone();
+
           cloneObject.location.x += this.gridSize;
           cloneObject.location.y += this.gridSize;
           cloneObject.update();
@@ -177,4 +178,5 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
     let component = this.panelService.open<ChatPaletteComponent>(ChatPaletteComponent, option);
     component.character = gameObject;
   }
+
 }
