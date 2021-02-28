@@ -40,6 +40,18 @@
   height: 25px;
 }
 
+.text {
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow:1px 1px 0 #000000, -1px -1px 0 #000000,
+              -1px 1px 0 #000000, 1px -1px 0 #000000,
+              0px 1px 0 #000000,  0-1px 0 #000000,
+              -1px 0 0 #000000, 1px 0 0 #000000;
+}
+
 .is-center {
   position: absolute;
   top: 0;
@@ -58,3 +70,4 @@
   height: 100%;
   width: 100%;
 }
+
