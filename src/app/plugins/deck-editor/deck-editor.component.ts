@@ -17,10 +17,10 @@ import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { ObjectFactory } from '@udonarium/core/synchronize-object/object-factory';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
-import { TabletopService } from 'service/tabletop.service';
 import { ContextMenuService } from 'service/context-menu.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { TabletopActionService } from 'service/tabletop-action.service';
 
 @Component({
   selector: 'app-deck-editor',
@@ -40,7 +40,9 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   set stackName(name: string) {
     if (this.isEditable) {
-      const element = this.selectedStack.commonDataElement.getFirstElementByName('name');
+      const element = this.selectedStack.commonDataElement.getFirstElementByName(
+        'name'
+      );
       element.value = name;
     }
   }
@@ -64,7 +66,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private saveDataService: SaveDataService,
     private modalService: ModalService,
     private pointerDeviceService: PointerDeviceService,
-    private tabletopService: TabletopService,
+    private tabletopActionService: TabletopActionService,
     private ngZone: NgZone
   ) {
     this.ngZone.runOutsideAngular(() => {
@@ -75,7 +77,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
       ObjectStore.instance;
     });
     this.pointerDeviceService.initialize();
-    this.tabletopService.makeDefaultTable();
+    this.tabletopActionService.makeDefaultTable();
     this.createBlankDeck();
     EventSystem.register(this).on<File>('FILE_LOADED', (event) => {
       this.lazyNgZoneUpdate(false);
@@ -98,7 +100,11 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createTrump(): void {
-    this.selectedStack = this.tabletopService.createTrump({ x: 0, y: 0, z: 0 });
+    this.selectedStack = this.tabletopActionService.createTrump({
+      x: 0,
+      y: 0,
+      z: 0,
+    });
     this.selectedStackXml = '';
   }
 
@@ -125,7 +131,9 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    const element = this.selectedStack.commonDataElement.getFirstElementByName('name');
+    const element = this.selectedStack.commonDataElement.getFirstElementByName(
+      'name'
+    );
     const objectName: string = element ? (element.value as string) : '';
 
     await this.saveDataService.saveGameObjectAsync(
@@ -171,7 +179,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * @see TabletopService#createTrump from 'service/tabletop.service';
+   * @see TabletopActionService#createTrump from 'service/tabletop-action.service';
    */
   private static createCard(): Card {
     const back = './assets/images/trump/z02.gif';
