@@ -224,6 +224,7 @@ export class SkyWayConnection implements Connection {
     let context: PeerContext = null;
     if (0 <= index) context = this.peerContexts[index];
 
+    this.maybeUnavailablePeerIds.add(conn.remoteId);
     conn.on('data', data => {
       this.onData(conn, data);
     });
@@ -234,12 +235,10 @@ export class SkyWayConnection implements Connection {
       if (this.callback.onConnect) this.callback.onConnect(conn.remoteId);
     });
     conn.on('close', () => {
-      this.maybeUnavailablePeerIds.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     });
     conn.on('error', err => {
-      this.maybeUnavailablePeerIds.add(conn.remoteId);
       this.closeDataConnection(conn);
       if (this.callback.onError) this.callback.onError(conn.remoteId, err);
     });

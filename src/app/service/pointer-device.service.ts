@@ -33,7 +33,12 @@ export class PointerDeviceService {
   get pointerX(): number { return this.primaryPointer.x; }
   get pointerY(): number { return this.primaryPointer.y; }
 
-  isDragging: boolean = false; // todo
+  private _isDragging: boolean = false; // todo
+  get isDragging(): boolean { return this._isDragging; }
+  set isDragging(isDragging: boolean) {
+    if (isDragging === this._isDragging) return;
+    this.ngZone.run(() => this._isDragging = isDragging);
+  }
 
   constructor(private ngZone: NgZone) { }
 

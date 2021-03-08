@@ -23,6 +23,7 @@ import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
+import { ImageService } from 'service/image.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
@@ -76,8 +77,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get faces(): string[] { return this.diceSymbol.faces; }
   get imageFile(): ImageFile {
-    let image = this.diceSymbol.imageFile;
-    return image ? image : this.emptyImage;
+    return this.imageService.getEmptyOr(this.diceSymbol.imageFile);
   }
 
   get isMine(): boolean { return this.diceSymbol.isMine; }
@@ -90,7 +90,6 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   private iconHiddenTimer: NodeJS.Timer = null;
   get isIconHidden(): boolean { return this.iconHiddenTimer != null };
 
-  private emptyImage: ImageFile = ImageFile.Empty;
   gridSize: number = 50;
 
   movableOption: MovableOption = {};
@@ -107,6 +106,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     private contextMenuService: ContextMenuService,
     private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
+    private imageService: ImageService,
     private pointerDeviceService: PointerDeviceService) { }
 
   ngOnInit() {

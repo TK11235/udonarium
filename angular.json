@@ -29,10 +29,11 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "hammerjs",
-              "crypto-js/sha256.js",
-              "crypto-js/lib-typedarrays.js",
+              "crypto-js/sha256",
+              "crypto-js/lib-typedarrays",
               "file-saver",
               "msgpack-lite",
+              "lzbase62",
               "pako"
             ]
           },

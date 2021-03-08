@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
@@ -9,6 +8,7 @@ import { FilterType, GameTable, GridType } from '@udonarium/game-table';
 import { TableSelecter } from '@udonarium/table-selecter';
 
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ImageService } from 'service/image.service';
 import { ModalService } from 'service/modal.service';
 import { PanelService } from 'service/panel.service';
 import { SaveDataService } from 'service/save-data.service';
@@ -22,15 +22,11 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   minSize: number = 1;
   maxSize: number = 100;
   get tableBackgroundImage(): ImageFile {
-    if (!this.selectedTable) return ImageFile.Empty;
-    let file = ImageStorage.instance.get(this.selectedTable.imageIdentifier);
-    return file ? file : ImageFile.Empty;
+    return this.imageService.getEmptyOr(this.selectedTable ? this.selectedTable.imageIdentifier : null);
   }
 
   get tableDistanceviewImage(): ImageFile {
-    if (!this.selectedTable) return ImageFile.Empty;
-    let file = ImageStorage.instance.get(this.selectedTable.backgroundImageIdentifier);
-    return file ? file : ImageFile.Empty;
+    return this.imageService.getEmptyOr(this.selectedTable ? this.selectedTable.backgroundImageIdentifier : null);
   }
 
   get tableName(): string { return this.selectedTable.name; }
@@ -82,6 +78,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   constructor(
     private modalService: ModalService,
     private saveDataService: SaveDataService,
+    private imageService: ImageService,
     private panelService: PanelService
   ) { }
 
