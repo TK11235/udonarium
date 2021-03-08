@@ -7,6 +7,7 @@
       <span>{{ownerName}}</span>
     </div>
     <img *ngIf="isHand && frontImage" class="card-image thumbnail-transform is-translucent" [src]="frontImage.url | safe: 'resourceUrl'">
+    <span *ngIf="text" class = "card-text" [style.font-size.px]="fontSize + 9">{{text}}</span>
     <ng-container *ngIf="!isIconHidden">
       <div class="rotate-grab of-left-top">
         <i class="material-icons">autorenew</i>

@@ -121,6 +121,23 @@ export class TabletopActionService {
     return cardStack;
   }
 
+  createMessageCard(position: PointerCoordinate) : Card{
+    let frontUrl: string = './assets/images/trump/f01.gif';
+    let backUrl: string = './assets/images/trump/z03.gif';
+    if(! ImageStorage.instance.get(frontUrl)){
+      ImageStorage.instance.add(frontUrl);
+    }
+    if(! ImageStorage.instance.get(backUrl)){
+      ImageStorage.instance.add(backUrl);
+    }
+    let card = Card.createMessageCard('メッセージカード',frontUrl,backUrl,'表面のメッセージを記入',5,'裏面のメッセージは全員に見えます',5);
+    card.location.x = position.x - 25;
+    card.location.y = position.y - 25;
+    card.posZ = position.z;
+
+    return card;
+  }
+
   makeDefaultTable() {
     let tableSelecter = new TableSelecter('tableSelecter');
     tableSelecter.initialize();
@@ -203,6 +220,7 @@ export class TabletopActionService {
       this.getCreateTerrainMenu(position),
       this.getCreateTextNoteMenu(position),
       this.getCreateTrumpMenu(position),
+      this.getCreateMessageCardMenu(position),
       this.getCreateDiceSymbolMenu(position),
     ];
   }
@@ -248,6 +266,15 @@ export class TabletopActionService {
     return {
       name: 'トランプの山札を作成', action: () => {
         this.createTrump(position);
+        SoundEffect.play(PresetSound.cardPut);
+      }
+    }
+  }
+
+  private getCreateMessageCardMenu(position: PointerCoordinate): ContextMenuAction {
+    return {
+      name: 'メッセージカードを作成', action: () => {
+        this.createMessageCard(position);
         SoundEffect.play(PresetSound.cardPut);
       }
     }

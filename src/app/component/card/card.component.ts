@@ -57,6 +57,12 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   get imageFile(): ImageFile { return this.imageService.getSkeletonOr(this.card.imageFile); }
   get frontImage(): ImageFile { return this.imageService.getSkeletonOr(this.card.frontImage); }
   get backImage(): ImageFile { return this.imageService.getSkeletonOr(this.card.backImage); }
+  get text(): string { return this.card.text;}
+  get frontText(): string { return this.card.frontText; }
+  get backText(): string { return this.card.backText; }
+  get fontSize(): number { return this.card.fontSize; }
+  get frontFontSize(): number { return this.card.frontFontSize; }
+  get backFontSize(): number { return this.card.backFontSize; }
 
   private iconHiddenTimer: NodeJS.Timer = null;
   get isIconHidden(): boolean { return this.iconHiddenTimer != null };

@@ -47,6 +47,14 @@
     </div>
   </ng-container>
 
+  <ng-container *ngFor="let element of tabletopObject.getDisplayElements()">
+    <div class="flex-item">
+      <div class="table">
+        <div class="table-row" game-data-element [gameDataElement]="element" [isTagLocked]="true"></div>
+      </div>
+    </div>
+  </ng-container>
+
   <ng-container *ngIf="tabletopObject.detailDataElement">
     <div class="flex-item" *ngFor="let childElement of tabletopObject.detailDataElement.children">
       <div class="table">
