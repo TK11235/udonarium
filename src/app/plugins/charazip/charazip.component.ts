@@ -69,6 +69,9 @@ export class CharazipComponent implements OnInit {
         case 'lhrpg.com':
           gameCharacters = await GameSystemList.generateByLhrpgCharacter(url);
           break;
+        case 'charaeno.sakasin.net':
+          gameCharacters = await GameSystemList.generateByCharaeno(url);
+          break;
         default:
           this.errorMsg =
             'URLが正しくありません。もしくは未対応のキャラクターシートサービスです。';
@@ -87,7 +90,9 @@ export class CharazipComponent implements OnInit {
     }
     this.errorMsg = '';
 
-    const element = gameCharacters[0].commonDataElement.getFirstElementByName('name');
+    const element = gameCharacters[0].commonDataElement.getFirstElementByName(
+      'name'
+    );
     const objectName: string = element ? element.value.toString() : '';
 
     this._saveGameCharactersAsync(gameCharacters, 'xml_' + objectName);

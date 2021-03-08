@@ -160,6 +160,26 @@ export class GameSystemList {
     return LogHorizon.generate(json);
   }
 
+  static async generateByCharaeno(url: URL): Promise<CustomCharacter[]> {
+    let edition = url.pathname.substring(1, url.pathname.lastIndexOf('/'));
+    if (!['6th', '7th'].includes(edition)) {
+      throw new Error('URLが正しくありません。');
+    }
+    const json = await fetch(
+      `https://charaeno.sakasin.net/api/v1${url.pathname}/summary`
+    )
+      .then((response) => response.json())
+      .catch((err): never => {
+        console.error(err);
+        throw new Error('URLが正しくありません。');
+      });
+    switch (edition) {
+      case '6th':
+        return Cthulhu.charaenoFactory().create(json, url.href);
+    }
+    throw new Error('URLが正しくありません。');
+  }
+
   /**
    * @see ImageFile#createThumbnailAsync from @udonarium/core/file-storage/image-file
    */
