@@ -132,7 +132,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     AudioStorage.instance.get(PresetSound.sweep).isHidden = true;
 
     PeerCursor.createMyCursor();
-    PeerCursor.myCursor.name = 'プレイヤー';
+    PeerCursor.myCursor.name = 'プレイヤー' + ('000' + (Math.floor(Math.random() * 1000))).slice(-3);
     PeerCursor.myCursor.imageIdentifier = noneIconImage.identifier;
 
     EventSystem.register(this)
