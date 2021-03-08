@@ -17,7 +17,7 @@
   </div>
 </div>
 <ng-template #visible>
-  <span>{{chatMessage.text}}</span>
+  <span [innerHTML]="escapeHtml(chatMessage.text) | linky:{stripPrefix: false}"></span>
   <button *ngIf="chatMessage.isSecret" (click)="discloseMessage()">結果を公開</button>
 </ng-template>
 <ng-template #secret>
