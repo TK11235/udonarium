@@ -13,6 +13,9 @@ import { BatchService } from 'service/batch.service';
 import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { ModalService } from 'service/modal.service';
+import { PeerCursorComponent } from 'component/peer-cursor/peer-cursor.component';
 
 @Component({
   selector: 'chat-input',
@@ -87,7 +90,8 @@ export class ChatInputComponent implements OnInit, OnDestroy {
     public chatMessageService: ChatMessageService,
     private batchService: BatchService,
     private panelService: PanelService,
-    private pointerDeviceService: PointerDeviceService
+    private pointerDeviceService: PointerDeviceService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -236,6 +240,25 @@ export class ChatInputComponent implements OnInit, OnDestroy {
         + '===================================\n'
         + this.gameHelp;
     });
+  }
+
+  openCharacterImageChange() {
+    let object = ObjectStore.instance.get(this.sendFrom);
+    if(!object) return;
+
+    this.modalService.open<string>(FileSelecterComponent, { isAllowedEmpty: true }).then(value => {
+      if(object instanceof PeerCursor) {
+        if(!object.image || !value) return;
+        object.imageIdentifier = value;
+      }
+      else if(object instanceof GameCharacter) {
+        if(!object.imageDataElement || !value) return;
+        let element = object.imageDataElement.getFirstElementByName('imageIdentifier');
+        if(!element) return;
+        element.value = value;
+      } else return;
+    });
+    
   }
 
   private allowsChat(gameCharacter: GameCharacter): boolean {
