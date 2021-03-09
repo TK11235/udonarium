@@ -120,7 +120,10 @@ export class DiceBot extends GameObject {
         if (result) {
           console.log('diceRoll!!!', result.text);
           console.log('isSecret!!!', result.secret);
-          return { result: result.text, isSecret: result.secret };
+          return {
+            result: `${gameType} : ${result.text}`,
+            isSecret: result.secret,
+          };
         }
       } catch (e) {
         console.error(e);
