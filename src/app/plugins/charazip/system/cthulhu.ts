@@ -9,7 +9,7 @@ export class Cthulhu {
   }
 
   static charaenoFactory() {
-    return new CthulhuCharaeoFactory();
+    return new CthulhuCharaenoFactory();
   }
 }
 
@@ -51,7 +51,7 @@ class CthulhuVampireBloodFactory implements VampireBloodFactory {
     );
 
     /*
-     *情報
+     * 情報
      */
     const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
@@ -68,7 +68,7 @@ class CthulhuVampireBloodFactory implements VampireBloodFactory {
     infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
-     *能力値
+     * 能力値
      */
     const abilityElement = Utils.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
@@ -83,7 +83,7 @@ class CthulhuVampireBloodFactory implements VampireBloodFactory {
     abilityElement.appendChild(Utils.createDataElement('db', json.dmg_bonus));
 
     /*
-     *戦闘技能
+     * 戦闘技能
      */
     const combatElement = Utils.createDataElement('戦闘技能', '');
     gameCharacter.detailDataElement.appendChild(combatElement);
@@ -325,8 +325,8 @@ CC<=({POW}*5)  :POWx5:幸運
  * Charaeno クトゥルフ神話TRPG
  * https://charaeno.sakasin.net/
  */
-class CthulhuCharaeoFactory {
-  create = CthulhuCharaeoFactory.create;
+class CthulhuCharaenoFactory {
+  create = CthulhuCharaenoFactory.create;
 
   private static create(json: Investigator, url: string): CustomCharacter[] {
     const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter(
@@ -365,7 +365,7 @@ class CthulhuCharaeoFactory {
     );
 
     /*
-     *情報
+     * 情報
      */
     const infoElement = Utils.createDataElement('情報', '');
     gameCharacter.detailDataElement.appendChild(infoElement);
@@ -379,7 +379,7 @@ class CthulhuCharaeoFactory {
     infoElement.appendChild(Utils.createNoteElement('URL', url));
 
     /*
-     *能力値
+     * 能力値
      */
     const abilityElement = Utils.createDataElement('能力値', '');
     gameCharacter.detailDataElement.appendChild(abilityElement);
@@ -393,7 +393,7 @@ class CthulhuCharaeoFactory {
     );
 
     /*
-     *戦闘技能
+     * 戦闘技能
      */
     const combatElement = Utils.createDataElement('戦闘技能', '');
     gameCharacter.detailDataElement.appendChild(combatElement);
