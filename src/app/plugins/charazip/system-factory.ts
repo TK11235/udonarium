@@ -173,9 +173,12 @@ export class GameSystemList {
         console.error(err);
         throw new Error('URLが正しくありません。');
       });
+    const sheetUrl = `https://charaeno.sakasin.net${url.pathname}`;
     switch (edition) {
       case '6th':
-        return Cthulhu.charaenoFactory().create(json, url.href);
+        return Cthulhu.charaenoFactory().create(json, sheetUrl);
+      case '7th':
+        return Cthulhu7th.charaenoFactory().create(json, sheetUrl);
     }
     throw new Error('URLが正しくありません。');
   }
