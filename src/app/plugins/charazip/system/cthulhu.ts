@@ -259,43 +259,37 @@ CC<={SAN}  :SANチェック
 
 //-----神話技能
 CC<={神話技能}  :クトゥルフ神話技能
-`;
-    cp += '\n//-----戦闘技能\n';
-    for (const skillName of combatSkillNames) {
-      if (!skillName) {
-        continue;
-      }
-      cp += `CC<={${skillName}}  :${skillName}\n`;
-    }
-    cp += '\n//-----探索技能\n';
-    for (const skillName of exploreSkillNames) {
-      if (!skillName) {
-        continue;
-      }
-      cp += `CC<={${skillName}}  :${skillName}\n`;
-    }
-    cp += '\n//-----行動技能\n';
-    for (const skillName of actionSkillNames) {
-      if (!skillName) {
-        continue;
-      }
-      cp += `CC<={${skillName}}  :${skillName}\n`;
-    }
-    cp += '\n//-----交渉技能\n';
-    for (const skillName of negotiateSkillNames) {
-      if (!skillName) {
-        continue;
-      }
-      cp += `CC<={${skillName}}  :${skillName}\n`;
-    }
-    cp += '\n//-----知識技能\n';
-    for (const skillName of knowledgeSkillNames) {
-      if (!skillName) {
-        continue;
-      }
-      cp += `CC<={${skillName}}  :${skillName}\n`;
-    }
-    cp += `
+
+//-----戦闘技能
+${combatSkillNames
+  .filter((name) => name)
+  .map((name) => `CC<={${name}}  :${name}`)
+  .join('\n')}
+
+//-----探索技能
+${exploreSkillNames
+  .filter((name) => name)
+  .map((name) => `CC<={${name}}  :${name}`)
+  .join('\n')}
+
+//-----行動技能
+${actionSkillNames
+  .filter((name) => name)
+  .map((name) => `CC<={${name}}  :${name}`)
+  .join('\n')}
+
+//-----交渉技能
+${negotiateSkillNames
+  .filter((name) => name)
+  .map((name) => `CC<={${name}}  :${name}`)
+  .join('\n')}
+
+//-----知識技能
+${knowledgeSkillNames
+  .filter((name) => name)
+  .map((name) => `CC<={${name}}  :${name}`)
+  .join('\n')}
+
 //-----能力値×５ロール
 CC<=({STR}*5)  :STRx5
 CC<=({CON}*5)  :CONx5
@@ -555,28 +549,31 @@ CC<={SAN}  :SANチェック
 
 //-----神話技能
 CC<={神話技能}  :クトゥルフ神話技能
-`;
-    cp += '\n//-----戦闘技能\n';
-    for (const skill of combatSkills) {
-      cp += `CC<={${skill.name}}  :${skill.name}\n`;
-    }
-    cp += '\n//-----探索技能\n';
-    for (const skill of exploreSkills) {
-      cp += `CC<={${skill.name}}  :${skill.name}\n`;
-    }
-    cp += '\n//-----行動技能\n';
-    for (const skill of actionSkills) {
-      cp += `CC<={${skill.name}}  :${skill.name}\n`;
-    }
-    cp += '\n//-----交渉技能\n';
-    for (const skill of negotiateSkills) {
-      cp += `CC<={${skill.name}}  :${skill.name}\n`;
-    }
-    cp += '\n//-----知識技能\n';
-    for (const skill of knowledgeSkills) {
-      cp += `CC<={${skill.name}}  :${skill.name}\n`;
-    }
-    cp += `
+
+//-----戦闘技能
+${combatSkills.map((skill) => `CC<={${skill.name}}  :${skill.name}`).join('\n')}
+
+//-----探索技能
+${exploreSkills
+  .map((skill) => `CC<={${skill.name}}  :${skill.name}`)
+  .join('\n')}
+
+//-----行動技能
+${actionSkills.map((skill) => `CC<={${skill.name}}  :${skill.name}`).join('\n')}
+
+//-----交渉技能
+${negotiateSkills
+  .map((skill) => `CC<={${skill.name}}  :${skill.name}`)
+  .join('\n')}
+
+//-----知識技能
+${knowledgeSkills
+  .map((skill) => `CC<={${skill.name}}  :${skill.name}`)
+  .join('\n')}
+
+//-----その他技能
+${otherSkills.map((skill) => `CC<={${skill.name}}  :${skill.name}`).join('\n')}
+
 //-----能力値×５ロール
 CC<=({STR}*5)  :STRx5
 CC<=({CON}*5)  :CONx5
