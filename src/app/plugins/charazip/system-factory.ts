@@ -194,7 +194,7 @@ export class GameSystemList {
         render.drawImage(image, 0, 0);
         canvas.toBlob((blob) => {
           if (blob.size > 2 * 1024 * 1024) {
-            resolve();
+            resolve(ImageFile.Empty);
           }
           resolve(ImageStorage.instance.addAsync(blob));
         });
