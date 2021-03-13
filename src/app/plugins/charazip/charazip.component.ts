@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FileArchiver } from '@udonarium/core/file-storage/file-archiver';
 import { ImageFile, ImageState } from '@udonarium/core/file-storage/image-file';
 import { ImageStorage } from '@udonarium/core/file-storage/image-storage';
@@ -27,7 +28,7 @@ export class CharazipComponent implements OnInit {
     return GameSystemList.appspot;
   }
 
-  constructor() {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   @ViewChild('input', { static: true })
   inputElementRef: ElementRef<HTMLInputElement>;
@@ -35,7 +36,13 @@ export class CharazipComponent implements OnInit {
   url: string = '';
   errorMsg: string = '';
 
-  ngOnInit() {}
+  ngOnInit() {
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    if (queryParams.url) {
+      this.url = queryParams.url;
+      this.createZip();
+    }
+  }
 
   onFocus(): void {
     this.inputElementRef.nativeElement.select();
