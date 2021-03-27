@@ -20,6 +20,7 @@ import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-seri
 import { ContextMenuService } from 'service/context-menu.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
+import { TabletopService } from 'service/tabletop.service';
 import { TabletopActionService } from 'service/tabletop-action.service';
 
 @Component({
@@ -48,7 +49,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get cardStacks(): CardStack[] {
-    return ObjectStore.instance.getObjects(CardStack);
+    return this.tabletopService.cardStacks;
   }
   get isEmpty(): boolean {
     return this.cardStacks.length < 1;
@@ -66,6 +67,7 @@ export class DeckEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private saveDataService: SaveDataService,
     private modalService: ModalService,
     private pointerDeviceService: PointerDeviceService,
+    private tabletopService: TabletopService,
     private tabletopActionService: TabletopActionService,
     private ngZone: NgZone
   ) {
