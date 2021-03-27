@@ -584,10 +584,10 @@ CC<=({INT}*5)  :INTx5:ｱｲﾃﾞｱ
 CC<=({POW}*5)  :POWx5:幸運
 `;
     cp += '\n//-----武器・防具\n';
-    for (const wapon of json.wapons) {
-      const hit = wapon.value === '' ? `{${wapon.name}}` : wapon.value;
-      const damage = wapon.damage.replace('+DB', '{db}');
-      cp += `CCB<=${hit}  :${wapon.name}\n${damage}   :${wapon.name}(ダメージ)\n`;
+    for (const weapon of json.weapons) {
+      const hit = weapon.value === '' ? `{${weapon.name}}` : weapon.value;
+      const damage = weapon.damage.replace('+DB', '{db}');
+      cp += `CCB<=${hit}  :${weapon.name}\n${damage}   :${weapon.name}(ダメージ)\n`;
     }
 
     palette.setPalette(cp);
@@ -654,7 +654,7 @@ interface Investigator {
   };
 
   skills: Array<Skill>;
-  wapons: Array<Wapon>;
+  weapons: Array<Weapon>;
   possessions: Array<Possession>; // 装備と所持品
 
   personalData: {
@@ -687,7 +687,7 @@ interface Skill {
   edited: boolean; // 技能値が編集されているかどうか。技能の合計値が初期値と異なる場合 true となる
 }
 
-interface Wapon {
+interface Weapon {
   name: string; // 名前
   value: string; // 技能値。数値とは限らないことに注意
   damage: string; // ダメージ

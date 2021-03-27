@@ -473,8 +473,10 @@ class Cthulhu7thCharaenoFactory {
      */
     const armsElement = Utils.createDataElement('武器・防具', '');
     gameCharacter.detailDataElement.appendChild(armsElement);
-    json.wapons.forEach((wapon) =>
-      armsElement.appendChild(Utils.createDataElement(wapon.name, wapon.value))
+    json.weapons.forEach((weapon) =>
+      armsElement.appendChild(
+        Utils.createDataElement(weapon.name, weapon.value)
+      )
     );
 
     /*
@@ -570,16 +572,16 @@ ${otherSkills
   .join('\n')}
 `;
     cp += '\n//-----武器・防具\n';
-    for (const wapon of json.wapons) {
-      const malfunction = Number.parseInt(wapon.malfunction, 10);
-      const damage = wapon.damage
+    for (const weapon of json.weapons) {
+      const malfunction = Number.parseInt(weapon.malfunction, 10);
+      const damage = weapon.damage
         .replace(/1\/2DB/gi, 'DB/2')
         .replace(/\+DB/gi, '{DB}');
-      cp += `CC({ボーナス・ペナルティ})<={${wapon.name}} :${wapon.name}/${wapon.range}\n`;
+      cp += `CC({ボーナス・ペナルティ})<={${weapon.name}} :${weapon.name}/${weapon.range}\n`;
       if (!Number.isNaN(malfunction)) {
-        cp += `FAR(1,{${wapon.name}},${malfunction},{ボーナス・ペナルティ}) :${wapon.name}/${wapon.range}/回数${wapon.attacks}/装弾数${wapon.ammo}/故障#${malfunction}\n`;
+        cp += `FAR(1,{${weapon.name}},${malfunction},{ボーナス・ペナルティ}) :${weapon.name}/${weapon.range}/回数${weapon.attacks}/装弾数${weapon.ammo}/故障#${malfunction}\n`;
       }
-      cp += `${damage} :${wapon.name}(ダメージ)\n\n`;
+      cp += `${damage} :${weapon.name}(ダメージ)\n\n`;
     }
 
     cp += `
@@ -653,7 +655,7 @@ interface Investigator {
   };
 
   skills: Array<Skill>;
-  wapons: Array<Wapon>;
+  weapons: Array<Weapon>;
   possessions: Array<Possession>; // 装備と所持品
 
   // 収入と財産
@@ -674,7 +676,7 @@ interface Skill {
   edited: boolean; // 技能値が編集されているかどうか。技能の合計値が初期値と異なる場合 true となる
 }
 
-interface Wapon {
+interface Weapon {
   name: string; // 名前
   value: string; // 技能値。数値とは限らないことに注意
   damage: string; // ダメージ
