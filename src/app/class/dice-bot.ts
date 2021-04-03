@@ -1,4 +1,5 @@
 import Loader from 'bcdice/lib/loader/loader';
+import GameSystemClass from 'bcdice/lib/game_system';
 import { GameSystemInfo } from 'bcdice/lib/bcdice/game_system_list.json';
 
 import { ChatMessage, ChatMessageContext } from './chat-message';
@@ -115,7 +116,7 @@ export class DiceBot extends GameObject {
   static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult> {
     return DiceBot.queue.add((async () => {
       try {
-        const bcdice = await DiceBot.loader.dynamicLoad(gameType);
+        const bcdice = await DiceBot.loadGameSystemAsync(gameType);
         const result = bcdice.eval(message);
         if (result) {
           console.log('diceRoll!!!', result.text);
@@ -133,15 +134,23 @@ export class DiceBot extends GameObject {
   }
 
   static getHelpMessage(gameType: string): Promise<string> {
-    return DiceBot.queue.add((async () => {
+    return DiceBot.queue.add(async (resolve, reject) => {
       let help = '';
       try {
-        const bcdice = await DiceBot.loader.dynamicLoad(gameType);
-        help = bcdice.HELP_MESSAGE;
+        const gameSystem = await DiceBot.loadGameSystemAsync(gameType);
+        help = gameSystem.HELP_MESSAGE;
       } catch (e) {
         console.error(e);
       }
-      return help;
-    })());
+      resolve(help);
+      return;
+    });
+  }
+
+  static loadGameSystemAsync(gameType: string): Promise<GameSystemClass> {
+    const id = this.diceBotInfos.some((info) => info.id === gameType)
+      ? gameType
+      : 'DiceBot';
+    return DiceBot.loader.dynamicLoad(id);
   }
 }
