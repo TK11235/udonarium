@@ -61,13 +61,14 @@ export class DiceBot extends GameObject {
           let regArray = /^((\d+)?\s+)?(.*)?/ig.exec(text);
           let repeat: number = (regArray[2] != null) ? Number(regArray[2]) : 1;
           let rollText: string = (regArray[3] != null) ? regArray[3] : text;
-          if (!rollText || repeat < 1) return;
+          const gameSystem = await DiceBot.loadGameSystemAsync(gameType);
+          if (!rollText || repeat < 1 || !gameSystem.COMMAND_PATTERN.test(rollText)) return;
           // 繰り返しコマンドに変換
           if (repeat > 1) {
             rollText = `x${repeat} ${rollText}`
           }
 
-          let rollResult = await DiceBot.diceRollAsync(rollText, gameType);
+          let rollResult = await DiceBot.diceRollAsync(rollText, gameSystem);
           if (!rollResult.result) return;
           this.sendResultMessage(rollResult, chatMessage);
         } catch (e) {
@@ -113,24 +114,32 @@ export class DiceBot extends GameObject {
     if (chatTab) chatTab.addMessage(diceBotMessage);
   }
 
-  static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult> {
-    return DiceBot.queue.add((async () => {
+  static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult>
+  static diceRollAsync(message: string, gameSystem: GameSystemClass): Promise<DiceRollResult>
+  static diceRollAsync(message: string, arg: any): Promise<DiceRollResult> {
+    return DiceBot.queue.add(async (resolve, reject) => {
       try {
-        const bcdice = await DiceBot.loadGameSystemAsync(gameType);
-        const result = bcdice.eval(message);
+        let gameSystem: GameSystemClass;
+        if (typeof arg === 'string') {
+          gameSystem = await DiceBot.loadGameSystemAsync(arg);
+        } else {
+          gameSystem = arg;
+        }
+        const result = gameSystem.eval(message);
         if (result) {
           console.log('diceRoll!!!', result.text);
           console.log('isSecret!!!', result.secret);
-          return {
-            result: `${gameType} : ${result.text}`,
+          resolve({
+            result: `${gameSystem.ID} : ${result.text}`,
             isSecret: result.secret,
-          };
+          });
+          return;
         }
       } catch (e) {
         console.error(e);
       }
-      return { result: '', isSecret: false };
-    })());
+      resolve({ result: '', isSecret: false });
+    });
   }
 
   static getHelpMessage(gameType: string): Promise<string> {
