@@ -20,6 +20,7 @@ import { TokyoNovaX } from './system/tokyo-nova-x';
 import { TokyoNightmare } from './system/tokyo-nightmare';
 import { Satasupe } from './system/satasupe';
 import { Arianrhod2e } from './system/arianrhod-2e';
+import { StratoShout } from './system/strato-shout';
 
 export interface AppspotFactory {
   gameSystem: string;
@@ -53,6 +54,7 @@ export class GameSystemList {
     Insane.appspotFactory(),
     Satasupe.appspotFactory(),
     Shinobigami.appspotFactory(),
+    StratoShout.appspotFactory(),
     DoubleCross3rd.appspotFactory(),
     DivineCharger.appspotFactory(),
     DeadlineHeroes.appspotFactory(),
