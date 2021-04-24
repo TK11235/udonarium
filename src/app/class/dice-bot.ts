@@ -114,31 +114,22 @@ export class DiceBot extends GameObject {
     if (chatTab) chatTab.addMessage(diceBotMessage);
   }
 
-  static diceRollAsync(message: string, gameType: string): Promise<DiceRollResult>
-  static diceRollAsync(message: string, gameSystem: GameSystemClass): Promise<DiceRollResult>
-  static diceRollAsync(message: string, arg: any): Promise<DiceRollResult> {
-    return DiceBot.queue.add(async (resolve, reject) => {
+  static diceRollAsync(message: string, gameSystem: GameSystemClass): Promise<DiceRollResult> {
+    return DiceBot.queue.add(() => {
       try {
-        let gameSystem: GameSystemClass;
-        if (typeof arg === 'string') {
-          gameSystem = await DiceBot.loadGameSystemAsync(arg);
-        } else {
-          gameSystem = arg;
-        }
         const result = gameSystem.eval(message);
         if (result) {
           console.log('diceRoll!!!', result.text);
           console.log('isSecret!!!', result.secret);
-          resolve({
+          return {
             result: `${gameSystem.ID} : ${result.text}`,
             isSecret: result.secret,
-          });
-          return;
+          };
         }
       } catch (e) {
         console.error(e);
       }
-      resolve({ result: '', isSecret: false });
+      return { result: '', isSecret: false };
     });
   }
 
