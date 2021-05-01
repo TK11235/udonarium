@@ -21,6 +21,7 @@ import { TokyoNightmare } from './system/tokyo-nightmare';
 import { Satasupe } from './system/satasupe';
 import { Arianrhod2e } from './system/arianrhod-2e';
 import { StratoShout } from './system/strato-shout';
+import { Kamigakari } from './system/kamigakari';
 
 export interface AppspotFactory {
   gameSystem: string;
@@ -43,6 +44,7 @@ export interface VampireBloodFactory {
 export class GameSystemList {
   static vampireBlood: VampireBloodFactory[] = [
     Arianrhod2e.vampireBloodFactory(),
+    Kamigakari.vampireBloodFactory(),
     Cthulhu.vampireBloodFactory(),
     Cthulhu7th.vampireBloodFactory(),
     SwordWorld2.vampireBloodFactory(),
