@@ -22,6 +22,7 @@ import { Satasupe } from './system/satasupe';
 import { Arianrhod2e } from './system/arianrhod-2e';
 import { StratoShout } from './system/strato-shout';
 import { Kamigakari } from './system/kamigakari';
+import { StarryDolls } from './system/starry-dolls';
 
 export interface AppspotFactory {
   gameSystem: string;
@@ -56,6 +57,7 @@ export class GameSystemList {
     Insane.appspotFactory(),
     Satasupe.appspotFactory(),
     Shinobigami.appspotFactory(),
+    StarryDolls.appspotFactory(),
     StratoShout.appspotFactory(),
     DoubleCross3rd.appspotFactory(),
     DivineCharger.appspotFactory(),
