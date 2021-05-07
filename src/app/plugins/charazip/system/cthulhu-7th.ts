@@ -389,7 +389,7 @@ class Cthulhu7thCharaenoFactory {
       ['応急手当', '機械修理'].map((name) => findSkill(json, name))
     );
     const art = json.skills.find((skill) =>
-      skill.name.startsWith('芸術／制作')
+      skill.name.startsWith('芸術／製作')
     );
     actionSkills = actionSkills.concat(sliceSkills(json, art.name, '経理'));
     actionSkills = actionSkills.concat(
