@@ -158,17 +158,16 @@ export class ImageFile {
 
   private static createThumbnailAsync(context: ImageContext): Promise<ThumbnailContext> {
     return new Promise((resolve, reject) => {
-      let canvas: HTMLCanvasElement = document.createElement('canvas');
-      let render: CanvasRenderingContext2D = canvas.getContext('2d');
       let image: HTMLImageElement = new Image();
       image.onload = (event) => {
-        let scale: number = 128 / (image.width < image.height ? image.height : image.width);
-        scale = scale < 1 ? scale : 1.0;
-        var dstWidth = image.width * scale;
-        var dstHeight = image.height * scale;
-        canvas.width = image.width;//dstWidth;
-        canvas.height = image.height;//dstHeight;
-        //render.drawImage(image, 0, 0, image.width, image.height, 0, 0, dstWidth, dstHeight);
+        let scale: number = Math.min(128 / Math.max(image.width, image.height), 1.0);
+        let dstWidth = image.width * scale;
+        let dstHeight = image.height * scale;
+
+        let canvas: HTMLCanvasElement = document.createElement('canvas');
+        let render: CanvasRenderingContext2D = canvas.getContext('2d');
+        canvas.width = image.width;
+        canvas.height = image.height;
 
         render.drawImage(image, 0, 0);
         CanvasUtil.resize(canvas, dstWidth, dstHeight, true);
