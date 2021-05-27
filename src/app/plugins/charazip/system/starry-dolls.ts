@@ -21,11 +21,8 @@ export class StarryDolls implements AppspotFactory {
     url: string,
     imageIdentifier: string
   ): CustomCharacter[] {
-    const gameCharacter: CustomCharacter = CustomCharacter.createCustomCharacter(
-      json.base.name,
-      1,
-      imageIdentifier
-    );
+    const gameCharacter: CustomCharacter =
+      CustomCharacter.createCustomCharacter(json.base.name, 1, imageIdentifier);
 
     /*
      * ステータス
@@ -150,9 +147,10 @@ export class StarryDolls implements AppspotFactory {
     const palette: ChatPalette = new ChatPalette(
       'ChatPalette_' + gameCharacter.identifier
     );
-    palette.dicebot = '';
+    palette.dicebot = 'StarryDolls';
     // チャパレ内容
-    let cp = `1D6
+    let cp = `
+1D6
 2D6
 2D6>=
 2D6>=5
@@ -174,22 +172,29 @@ export class StarryDolls implements AppspotFactory {
       .map((item) => `「${item.name}」${item.effect ?? ''}\n`);
 
     cp += `
+//下記のコマンドを使用するには、BCDice 3.3.0 に対応しているユドナリウムでご利用ください。
+//使えるところの例) https://udon-bcdicejsv3.netlify.app/
+BCDiceVersion [BCDiceのバージョン確認]
+
 //---各種表
-choice[${CATEGORIES.join(',')}] ランダム分野表
-↓ランダム星座表(p.177)↓
-choice[おひつじ座,おうし座,ふたご座,かに座,しし座,おとめ座,てんびん座,さそり座,いて座,やぎ座,みずがめ座,うお座] ランダム星座表(p.177)
-1D6 主人関係表(p.186)
-1D6 関係属性表(p.186)
-1D6 奇跡表(p.177)
-1D6 戦果表(p.191)
-2D6 事件表(p.193)
-1D6 遭遇表(p.193)
-1D6 致命傷表(p.184)
-1D6 カタストロフ表(p.198)
-1D6 回想表(p.187)
+RCT ランダム分野表
+RTT ランダム特技決定表
+HOR ランダム星座表(p.177)
+MRT 主人関係表(p.186)
+RAT 関係属性表(p.186)
+MIR 奇跡表(p.177)
+BRT 戦果表(p.191)
+TRO 事件表(p.193)
+ENC 遭遇表(p.193)
+FWT 致命傷表(p.184)
+CAT カタストロフ表(p.198)
+JDSRT 〈魔術師の庭〉回想表(p.187)
+SHRT 〈セブンス・ヘブン〉回想表(p.187)
+BCRT 〈祝福の鐘〉回想表
+ODRT 〈オメガ探偵社〉回想表
 `;
 
-    palette.setPalette(cp);
+    palette.setPalette(cp.trim());
     palette.initialize();
     gameCharacter.appendChild(palette);
 
