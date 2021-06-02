@@ -373,22 +373,25 @@ export class SkyWayConnection implements Connection {
 
   private getSkyWayErrorMessage(errType: string): string {
     switch (errType) {
-      case 'peer-unavailable':
-        return 'そのPeer IDは利用できません。'
-      case 'invalid-id':
-        return 'Peer IDが不正です。'
-      case 'invalid-key':
-        return 'SkyWay APIキーが無効です。';
-      case 'list-error':
-        return 'SkyWay APIキーのREST APIが許可されてません。';
-      case 'server-error':
-        return 'SkyWayのシグナリングサーバからPeer一覧を取得できませんでした。';
-      case 'disconnected':
-        return 'SkyWayのシグナリングサーバに接続されていません。';
-      case 'socket-error':
-        return 'SkyWayのシグナリングサーバとの接続が失われました。';
-      default:
-        return 'SkyWayに関する不明なエラーが発生しました(' + errType + ')';
+      case 'room-error': return 'SkyWay Room API に問題が発生しました。';
+      case 'permission': return '該当の SkyWay Room の利用が許可されてません。';
+      case 'list-error': return 'SkyWay listAllPeers API が Disabled です。';
+      case 'disconnected': return 'SkyWay のシグナリングサーバに接続されていません。';
+      case 'socket-error': return 'SkyWay のシグナリングサーバとの通信で問題が発生しました。';
+      case 'invalid-id': return 'Peer ID が不正です。';
+      case 'unavailable-id': return 'その Peer ID すでに使用されています。';
+      case 'peer-unavailable': return 'その Peer ID は利用できません。';
+      case 'invalid-key': return 'SkyWay API キーが無効です。';
+      case 'invalid-domain': return 'SkyWay API キーには現在のドメインは登録されていません。';
+      case 'authentication': return '認証エラーです。';
+      case 'server-error': return 'SkyWay のシグナリングサーバとの接続中に問題がありました。 少し待って、リトライしてください。';
+      case 'sfu-client-not-supported': return 'このクライアントは SFU の使用をサポートしていません。最新の Google Chrome を使用してください';
+      case 'peer-unavailable': return 'Peer へデータを送信できませんでした。Peer ID が正しいことを確認してください。';
+      case 'signaling-limited': return 'シグナリング回数が無償利用枠を超過しているため、全ての機能が利用できません。（SkyWay Community Edition のみ）';
+      case 'sfu-limited': return 'SFU サーバの利用量が無償利用枠を超過しているため、SFU の機能が利用できません。（SkyWay Community Edition のみ）';
+      case 'turn-limited': return 'TURN サーバの利用量が無償利用枠を超過しているため、TURN の機能が利用できません。（SkyWay Community Edition のみ）\nこの状態では、一部のユーザの接続に問題が発生する可能性があります。';
+      case 'peer-unavailable': return 'そのPeer IDは利用できません。';
+      default: return 'SkyWayに関する不明なエラーが発生しました。';
     }
   }
 }
