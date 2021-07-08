@@ -240,9 +240,8 @@ export class SkyWayConnection implements Connection {
       this.closeDataConnection(conn);
       if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     });
-    conn.on('error', err => {
+    conn.on('error', () => {
       this.closeDataConnection(conn);
-      if (this.callback.onError) this.callback.onError(conn.remoteId, err);
     });
   }
 
