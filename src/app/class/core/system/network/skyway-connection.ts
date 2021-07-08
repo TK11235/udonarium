@@ -208,6 +208,7 @@ export class SkyWayConnection implements Connection {
         case 'authentication':
         case 'server-error':
           if (this.peerContext && this.peerContext.isOpen) {
+            this.close();
             if (this.callback.onClose) this.callback.onClose(this.peerId);
           }
           break;
