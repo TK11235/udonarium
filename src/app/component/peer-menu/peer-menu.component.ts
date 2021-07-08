@@ -64,6 +64,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   connectPeer() {
     let targetUserId = this.targetUserId;
     this.targetUserId = '';
+    if (targetUserId.length < 1) return;
     this.help = '';
     let context = PeerContext.create(targetUserId);
     if (context.isRoom) return;
