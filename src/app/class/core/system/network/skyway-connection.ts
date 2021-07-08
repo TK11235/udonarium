@@ -189,6 +189,14 @@ export class SkyWayConnection implements Connection {
       if (this.callback.onOpen) this.callback.onOpen(this.peerId);
     });
 
+    peer.on('close', () => {
+      console.log('Peer close');
+      if (this.peerContext && this.peerContext.isOpen) {
+        this.peerContext.isOpen = false;
+        if (this.callback.onClose) this.callback.onClose(this.peerId);
+      }
+    });
+
     peer.on('connection', conn => {
       this.openDataConnection(new SkyWayDataConnection(conn));
     });
