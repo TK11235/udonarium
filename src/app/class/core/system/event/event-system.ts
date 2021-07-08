@@ -142,6 +142,7 @@ export class EventSystem implements Subject {
 
     callback.onError = (peerId, errorType, errorMessage, errorObject) => {
       this.sendSystemMessage('<' + peerId + '> ' + errorMessage);
+      this.trigger('NETWORK_ERROR', { peerId: peerId, errorType: errorType, errorMessage: errorMessage, errorObject: errorObject });
     }
   }
 

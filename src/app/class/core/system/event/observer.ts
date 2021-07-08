@@ -6,6 +6,7 @@ export type Callback<T> = (event: Event<T>, listener?: Observer) => void;
 export interface EventMap {
   'OPEN_NETWORK': { peerId: string };
   'CLOSE_NETWORK': { peerId: string };
+  'NETWORK_ERROR': { peerId: string, errorType: string, errorMessage: string, errorObject: any };
   'CONNECT_PEER': { peerId: string };
   'DISCONNECT_PEER': { peerId: string };
   'UPDATE_GAME_OBJECT': {

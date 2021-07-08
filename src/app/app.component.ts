@@ -153,15 +153,22 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         PeerCursor.myCursor.peerId = Network.peerContext.peerId;
         PeerCursor.myCursor.userId = Network.peerContext.userId;
       })
-      .on('CLOSE_NETWORK', event => {
-        console.log('CLOSE_NETWORK', event.data.peerId);
+      .on('NETWORK_ERROR', event => {
+        console.log('NETWORK_ERROR', event.data.peerId);
+        let errorType: string = event.data.errorType;
+        let errorMessage: string = event.data.errorMessage;
+
         this.ngZone.run(async () => {
-          if (1 < Network.peerIds.length) {
-            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'ネットワーク接続に何らかの異常が発生しました。\nこの表示以後、接続が不安定であれば、ページリロードと再接続を試みてください。' });
-          } else {
-            await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: '接続情報が破棄されました。\nこのウィンドウを閉じると再接続を試みます。' });
-            Network.open();
-          }
+          //SKyWayエラーハンドリング
+          let quietErrorTypes = ['peer-unavailable'];
+          let reconnectErrorTypes = ['disconnected', 'socket-error', 'unavailable-id', 'authentication', 'server-error'];
+
+          if (quietErrorTypes.includes(errorType)) return;
+          await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: errorMessage });
+
+          if (!reconnectErrorTypes.includes(errorType)) return;
+          await this.modalService.open(TextViewComponent, { title: 'ネットワークエラー', text: 'このウィンドウを閉じると再接続を試みます。' });
+          Network.open();
         });
       })
       .on('CONNECT_PEER', event => {
