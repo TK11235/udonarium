@@ -199,17 +199,19 @@ export class SkyWayConnection implements Connection {
       errorMessage += ': ' + err.message;
       switch (err.type) {
         case 'peer-unavailable':
-        case 'invalid-id':
-        case 'invalid-key':
-        case 'list-error':
-        case 'server-error':
+          let peerId = /"(.+)"/.exec(err.message)[1];
+          this.disconnect(peerId);
           break;
         case 'disconnected':
         case 'socket-error':
-        default:
+        case 'unavailable-id':
+        case 'authentication':
+        case 'server-error':
           if (this.peerContext && this.peerContext.isOpen) {
             if (this.callback.onClose) this.callback.onClose(this.peerId);
           }
+          break;
+        default:
           break;
       }
       if (this.callback.onError) this.callback.onError(this.peerId, errorMessage);
