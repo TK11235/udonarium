@@ -214,7 +214,7 @@ export class SkyWayConnection implements Connection {
         default:
           break;
       }
-      if (this.callback.onError) this.callback.onError(this.peerId, errorMessage);
+      if (this.callback.onError) this.callback.onError(this.peerId, err.type, errorMessage, err);
     });
     this.peer = peer;
   }

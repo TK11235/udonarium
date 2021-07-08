@@ -136,7 +136,7 @@ export class Network {
     store.callback.onConnect = (peerId) => { if (this.callback.onConnect) this.callback.onConnect(peerId); }
     store.callback.onDisconnect = (peerId) => { if (this.callback.onDisconnect) this.callback.onDisconnect(peerId); }
     store.callback.onData = (peerId, data: any[]) => { if (this.callback.onData) this.callback.onData(peerId, data); }
-    store.callback.onError = (peerId, err) => { if (this.callback.onError) this.callback.onError(peerId, err); }
+    store.callback.onError = (peerId, errorType, errorMessage, errorObject) => { if (this.callback.onError) this.callback.onError(peerId, errorType, errorMessage, errorObject); }
 
     if (0 < this.queue.size && this.sendInterval === null) this.sendInterval = setZeroTimeout(this.sendCallback);
 

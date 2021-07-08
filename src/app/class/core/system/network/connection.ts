@@ -6,7 +6,7 @@ export class ConnectionCallback {
   onConnect: (peerId: string) => void;
   onDisconnect: (peerId: string) => void;
   onData: (peerId: string, data: any) => void;
-  onError: (peerId: string, err: any) => void;
+  onError: (peerId: string, errorType: string, errorMessage: string, errorObject: any) => void;
 }
 
 export interface Connection {

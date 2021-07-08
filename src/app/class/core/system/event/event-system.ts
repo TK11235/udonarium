@@ -140,8 +140,8 @@ export class EventSystem implements Subject {
       }
     }
 
-    callback.onError = (peerId, err) => {
-      this.sendSystemMessage('<' + peerId + '> ' + err);
+    callback.onError = (peerId, errorType, errorMessage, errorObject) => {
+      this.sendSystemMessage('<' + peerId + '> ' + errorMessage);
     }
   }
 
