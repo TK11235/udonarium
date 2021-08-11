@@ -12,7 +12,10 @@
       <div class="images-select">
         <div>
           画像
-          <div (click)="openBgImageModal()">
+          <div *ngIf="!tableBackgroundImage.url">
+            <button (click)="openBgImageModal()" style="height: 120px;" [disabled]="!isEditable">画像を追加</button>
+          </div>
+          <div *ngIf="tableBackgroundImage.url" (click)="openBgImageModal()">
             <img height="120" [src]="tableBackgroundImage.url | safe: 'resourceUrl'">
           </div>
         </div>
