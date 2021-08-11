@@ -58,7 +58,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
   get tableDistanceviewFilter(): FilterType { return this.selectedTable.backgroundFilterType; }
   set tableDistanceviewFilter(filterType: FilterType) { if (this.isEditable) this.selectedTable.backgroundFilterType = filterType; }
 
-  get tableSelecter(): TableSelecter { return ObjectStore.instance.get<TableSelecter>('tableSelecter'); }
+  get tableSelecter(): TableSelecter { return TableSelecter.instance; }
 
   selectedTable: GameTable = null;
   selectedTableXml: string = '';

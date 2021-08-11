@@ -18,6 +18,7 @@ import { DiceBot } from '@udonarium/dice-bot';
 import { Jukebox } from '@udonarium/Jukebox';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
+import { TableSelecter } from '@udonarium/table-selecter';
 
 import { ChatWindowComponent } from 'component/chat-window/chat-window.component';
 import { ContextMenuComponent } from 'component/context-menu/context-menu.component';
@@ -79,6 +80,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.appConfigService.initialize();
     this.pointerDeviceService.initialize();
 
+    TableSelecter.instance.initialize();
     ChatTabList.instance.initialize();
     DataSummarySetting.instance.initialize();
 

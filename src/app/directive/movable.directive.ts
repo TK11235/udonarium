@@ -1,5 +1,4 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output } from '@angular/core';
-import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { TabletopObject } from '@udonarium/tabletop-object';
@@ -64,10 +63,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   private collidableElements: HTMLElement[] = [];
   private input: InputHandler = null;
 
-  private get isGridSnap(): boolean {
-    let tableSelecter = ObjectStore.instance.get<TableSelecter>('tableSelecter');
-    return tableSelecter ? tableSelecter.gridSnap : false;
-  }
+  private get isGridSnap(): boolean { return TableSelecter.instance.gridSnap; }
 
   constructor(
     private ngZone: NgZone,
