@@ -27,35 +27,35 @@
         </div>
       </div>
       <div>Name :
-        <input [(ngModel)]="tableName" placeholder="Name" [attr.disabled]="!isEditable ? '' : null" />
+        <input [(ngModel)]="tableName" placeholder="Name" [disabled]="!isEditable" />
       </div>
       <div>
-        <input [(ngModel)]="tableWidth" type="range" min="{{minSize}}" max="{{maxSize}}" name="tableWidth" [attr.disabled]="!isEditable ? '' : null"
+        <input [(ngModel)]="tableWidth" type="range" min="{{minSize}}" max="{{maxSize}}" name="tableWidth" [disabled]="!isEditable"
         /> Width :
-        <input [(ngModel)]="tableWidth" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;" [attr.disabled]="!isEditable ? '' : null">
+        <input [(ngModel)]="tableWidth" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;" [disabled]="!isEditable">
       </div>
       <div>
-        <input [(ngModel)]="tableHeight" type="range" min="{{minSize}}" max="{{maxSize}}" name="tableHeight" [attr.disabled]="!isEditable ? '' : null"
+        <input [(ngModel)]="tableHeight" type="range" min="{{minSize}}" max="{{maxSize}}" name="tableHeight" [disabled]="!isEditable"
         /> Height :
-        <input [(ngModel)]="tableHeight" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;" [attr.disabled]="!isEditable ? '' : null">
+        <input [(ngModel)]="tableHeight" type="number" min="{{minSize}}" max="{{maxSize}}" style="width: 5em;" [disabled]="!isEditable">
       </div>
       <div>
         グリッド:
-        <select [(ngModel)]="tableGridType" name="tableGridType" [attr.disabled]="!isEditable ? '' : null">
+        <select [(ngModel)]="tableGridType" name="tableGridType" [disabled]="!isEditable">
           <option value="-1">なし</option>
           <option value="0">スクエア</option>
           <option value="1">ヘクス（縦揃え）</option>
           <option value="2">ヘクス（横揃え）</option>
         </select>
         色:
-        <select [(ngModel)]="tableGridColor" name="tableGridColor" [attr.disabled]="!isEditable ? '' : null">
+        <select [(ngModel)]="tableGridColor" name="tableGridColor" [disabled]="!isEditable">
           <option value="#000000e6">黒</option>
           <option value="#dddddde6">白</option>
         </select>
       </div>
       <div>
         背景フィルタ
-        <select [(ngModel)]="tableDistanceviewFilter" name="tableDistanceviewFilter" [attr.disabled]="!isEditable ? '' : null">
+        <select [(ngModel)]="tableDistanceviewFilter" name="tableDistanceviewFilter" [disabled]="!isEditable">
           <option value="">なし</option>
           <option value="white">ホワイト</option>
           <option value="black">ブラック</option>
@@ -76,7 +76,7 @@
               <div *ngIf="isSaveing" class="progress">{{progresPercent}}%</div>
             </div>
           </button>
-          <button class="danger" (click)="delete()" [attr.disabled]="getGameTables().length <= 1 ? '' : null">削除</button>
+          <button class="danger" (click)="delete()" [disabled]="getGameTables().length <= 1">削除</button>
         </ng-container>
         <ng-container *ngIf="isDeleted">
           <button (click)="restore()">元に戻す</button>
