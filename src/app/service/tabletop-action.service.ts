@@ -186,9 +186,9 @@ export class TabletopActionService {
     fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
     fileContext.url = './assets/images/mon_135.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    testCharacter.initialize();
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 13 * 50;
+    testCharacter.initialize();
     testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
   }
 
