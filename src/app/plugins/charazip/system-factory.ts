@@ -172,14 +172,14 @@ export class GameSystemList {
       throw new Error('URLが正しくありません。');
     }
     const json = await fetch(
-      `https://charaeno.sakasin.net/api/v1${url.pathname}/summary`
+      `https://charaeno.com/api/v1${url.pathname}/summary`
     )
       .then((response) => response.json())
       .catch((err): never => {
         console.error(err);
         throw new Error('URLが正しくありません。');
       });
-    const sheetUrl = `https://charaeno.sakasin.net${url.pathname}`;
+    const sheetUrl = `https://charaeno.com${url.pathname}`;
     switch (edition) {
       case '6th':
         return Cthulhu.charaenoFactory().create(json, sheetUrl);

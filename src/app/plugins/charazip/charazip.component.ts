@@ -77,6 +77,7 @@ export class CharazipComponent implements OnInit {
           gameCharacters = await GameSystemList.generateByLhrpgCharacter(url);
           break;
         case 'charaeno.sakasin.net':
+        case 'charaeno.com':
           gameCharacters = await GameSystemList.generateByCharaeno(url);
           break;
         default:
