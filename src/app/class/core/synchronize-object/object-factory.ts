@@ -18,7 +18,7 @@ export class ObjectFactory {
   private constructor() { console.log('ObjectFactory ready...'); };
 
   register<T extends GameObject>(constructor: Type<T>, alias?: string) {
-    if (!alias) alias = constructor.name || constructor.toString().match(/function\s*([^(]*)\(/)[1];
+    if (!alias) alias = constructor.name ?? (constructor.toString().match(/function\s*([^(]*)\(/)?.[1] ?? '');
     if (this.constructorMap.has(alias)) {
       console.error('その alias<' + alias + '> はすでに割り当て済みじゃねー？');
       return;
@@ -43,6 +43,6 @@ export class ObjectFactory {
   }
 
   getAlias<T extends GameObject>(constructor: Type<T>): string {
-    return this.aliasMap.get(constructor);
+    return this.aliasMap.get(constructor) ?? '';
   }
 }
