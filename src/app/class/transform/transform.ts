@@ -164,8 +164,8 @@ export class Transform {
   private fromBorderBox(point: IPoint3D): void {
     point.x += this.paddingLeft;
     point.y += this.paddingTop;
-    point.x += this.marginLeft;
-    point.y += this.marginTop;
+    point.x -= this.marginLeft;
+    point.y -= this.marginTop;
     point.x -= this.borderLeft;
     point.y -= this.borderTop;
   }
@@ -173,8 +173,8 @@ export class Transform {
   private toBorderBox(point: IPoint3D): void {
     point.x -= this.paddingLeft;
     point.y -= this.paddingTop;
-    point.x -= this.marginLeft;
-    point.y -= this.marginTop;
+    point.x += this.marginLeft;
+    point.y += this.marginTop;
     point.x += this.borderLeft;
     point.y += this.borderTop;
   }
