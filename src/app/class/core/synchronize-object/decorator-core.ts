@@ -10,11 +10,11 @@ export function defineSyncObject(alias: string) {
 
 export function defineSyncVariable() {
   return <T extends GameObject>(target: T, key: string | symbol) => {
-    function getter() {
+    function getter(this: any) {
       return this.context.syncData[key];
     }
 
-    function setter(value: any) {
+    function setter(this: any, value: any) {
       this.context.syncData[key] = value;
       this.update();
     }
@@ -30,11 +30,11 @@ export function defineSyncVariable() {
 
 export function defineSyncAttribute() {
   return <T extends ObjectNode>(target: T, key: string | symbol) => {
-    function getter() {
+    function getter(this: any) {
       return this.getAttribute(key);
     }
 
-    function setter(value: any) {
+    function setter(this: any, value: any) {
       this.setAttribute(key, value);
     }
 

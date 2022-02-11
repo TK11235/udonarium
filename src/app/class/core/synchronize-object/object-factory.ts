@@ -32,7 +32,7 @@ export class ObjectFactory {
     this.aliasMap.set(constructor, alias);
   }
 
-  create<T extends GameObject>(alias: string, identifer?: string): T {
+  create<T extends GameObject>(alias: string, identifer?: string): T | null {
     let classConstructor = this.constructorMap.get(alias);
     if (!classConstructor) {
       console.error(alias + 'という名のＧameObjectクラスは定義されていません');
