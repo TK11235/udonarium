@@ -22,15 +22,13 @@
               <div class="back-tag has-length-limit is-3d">{{name}}</div>
             </div>
             <img class="image" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'">
-            <div class="grab-group">
-              <div class="rotate-grab rotate-grab-icon of-top"
-                [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-                <i class="material-icons">autorenew</i>
-              </div>
-              <div class="rotate-grab rotate-grab-icon of-bottom"
-                [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px'}">
-                <i class="material-icons">autorenew</i>
-              </div>
+            <div class="rotate-grab rotate-grab-icon of-top"
+              [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
+              <i class="material-icons">autorenew</i>
+            </div>
+            <div class="rotate-grab rotate-grab-icon of-bottom"
+              [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px'}">
+              <i class="material-icons">autorenew</i>
             </div>
           </div>
         </div>
