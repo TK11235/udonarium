@@ -335,7 +335,7 @@ export class DiceBot extends GameObject {
         let gameType: string = chatMessage.tag;
 
         try {
-          let regArray = /^((\d+)?\s+)?([^\s]*)?/ig.exec(text);
+          let regArray = /^((\d+)?[^\S\n]+)?([\S]*)?/ig.exec(text);
           let repeat: number = (regArray[2] != null) ? Number(regArray[2]) : 1;
           let rollText: string = (regArray[3] != null) ? regArray[3] : text;
 
