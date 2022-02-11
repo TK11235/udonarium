@@ -26,6 +26,15 @@
   position: absolute;
 }
 
+.will-change-transform {
+  /* 
+   * デスクトップChromeにおけるレンダリング速度改善のための定義.
+   * will-changeの使用は可能な限り避けるべきであり、将来的なアップデートでレンダリング速度が改善された場合は削除を検討.
+   */
+  will-change: transform;
+  backface-visibility: visible;
+}
+
 .is-pointer-events-none {
   pointer-events: none;
 }
