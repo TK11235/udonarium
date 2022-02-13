@@ -37,6 +37,8 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   @Output('rotable.ondragend') ondragend: EventEmitter<PointerEvent> = new EventEmitter();
   @Output('rotable.onend') onend: EventEmitter<PointerEvent> = new EventEmitter();
 
+  private get nativeElement(): HTMLElement { return this.elementRef.nativeElement; }
+
   private _rotate: number = 0;
   get rotate(): number { return this._rotate; }
   set rotate(rotate: number) { this._rotate = rotate; this.setUpdateTimer(); }
@@ -44,9 +46,9 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   @Output('rotable.valueChange') valueChange: EventEmitter<number> = new EventEmitter();
 
   private get isAllowedToRotate(): boolean {
-    if (!this.grabbingElement || !this.input.target) return false;
+    if (!this.grabbingElement || !this.nativeElement) return false;
     if (this.grabbingSelecter.length < 1) return true;
-    let elements = this.input.target.querySelectorAll(this.grabbingSelecter);
+    let elements = this.nativeElement.querySelectorAll(this.grabbingSelecter);
     let macth = false;
     for (let i = 0; i < elements.length; i++) {
       macth = elements[i].contains(this.grabbingElement);
@@ -116,7 +118,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     e.stopPropagation();
     this.onstart.emit(e as PointerEvent);
 
-    let pointer = this.coordinateService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
+    let pointer = this.coordinateService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.nativeElement.parentElement);
     this.rotateOffset = this.calcRotate(pointer, this.rotate);
     this.setAnimatedTransition(false);
   }
@@ -129,7 +131,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
 
     if (e.cancelable) e.preventDefault();
     e.stopPropagation();
-    let pointer3d = this.coordinateService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.input.target.parentElement);
+    let pointer3d = this.coordinateService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.nativeElement.parentElement);
     let angle = this.calcRotate(pointer3d, this.rotateOffset);
 
     if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);
@@ -154,8 +156,8 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   }
 
   private calcRotate(pointer: PointerCoordinate, rotateOffset: number): number {
-    let centerX = this.input.target.clientWidth / 2;
-    let centerY = this.input.target.clientHeight / 2;
+    let centerX = this.nativeElement.clientWidth / 2;
+    let centerY = this.nativeElement.clientHeight / 2;
     let x = pointer.x - centerX;
     let y = pointer.y - centerY;
     let rad = Math.atan2(y, x);
@@ -185,8 +187,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   }
 
   private setAnimatedTransition(isEnable: boolean) {
-    if (!this.input) return;
-    this.input.target.style.transition = isEnable ? 'transform 132ms linear' : '';
+    this.nativeElement.style.transition = isEnable ? 'transform 132ms linear' : '';
   }
 
   private shouldTransition(object: RotableTabletopObject): boolean {
@@ -194,12 +195,11 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   }
 
   private stopTransition() {
-    this.input.target.style.transform = window.getComputedStyle(this.input.target).transform;
+    this.nativeElement.style.transform = window.getComputedStyle(this.nativeElement).transform;
   }
 
   private updateTransformCss() {
-    if (!this.input) return;
     let css = this.transformCssOffset + ' rotateZ(' + this.rotate + 'deg)';
-    this.input.target.style.transform = css;
+    this.nativeElement.style.transform = css;
   }
 }

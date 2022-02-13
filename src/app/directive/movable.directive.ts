@@ -39,6 +39,8 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   @Output('movable.ondragend') ondragend: EventEmitter<PointerEvent> = new EventEmitter();
   @Output('movable.onend') onend: EventEmitter<PointerEvent> = new EventEmitter();
 
+  private get nativeElement(): HTMLElement { return this.elementRef.nativeElement; }
+
   private _posX: number = 0;
   private _posY: number = 0;
   private _posZ: number = 0;
@@ -127,8 +129,8 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setAnimatedTransition(false);
     this.setCollidableLayer(true);
 
-    this.width = this.input.target.clientWidth;
-    this.height = this.input.target.clientHeight;
+    this.width = this.nativeElement.clientWidth;
+    this.height = this.nativeElement.clientHeight;
 
     let target3d = {
       x: this.posX + (this.width / 2),
@@ -147,7 +149,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.pointerStart3d.y = target3d.y;
     this.pointerStart3d.z = target3d.z;
 
-    this.targetStartRect = this.input.target.getBoundingClientRect();
+    this.targetStartRect = this.nativeElement.getBoundingClientRect();
 
     this.ratio = 1.0;
   }
@@ -182,7 +184,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);
     this.ondrag.emit(e as PointerEvent);
 
-    let targetRect = this.input.target.getBoundingClientRect();
+    let targetRect = this.nativeElement.getBoundingClientRect();
     let ratio = targetRect.width / this.targetStartRect.width;
     if (ratio < this.ratio) {
       this.ratio += (ratio - this.ratio) * 0.1;
@@ -214,7 +216,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
       // ロングプレスによるタッチ操作でコンテキストメニューを開く場合、イベントを適切なDOMに伝搬させる
       e.stopPropagation();
       let ev = new MouseEvent(e.type, e);
-      this.ngZone.run(() => this.input.target.dispatchEvent(ev));
+      this.ngZone.run(() => this.nativeElement.dispatchEvent(ev));
     }
   }
 
@@ -255,11 +257,11 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
 
   private findCollidableElements() {
     this.collidableElements = [];
-    if (getComputedStyle(this.input.target).pointerEvents !== 'none') {
-      this.collidableElements = [this.input.target];
+    if (getComputedStyle(this.nativeElement).pointerEvents !== 'none') {
+      this.collidableElements = [this.nativeElement];
       return;
     }
-    this.findNestedCollidableElements(this.input.target);
+    this.findNestedCollidableElements(this.nativeElement);
   }
 
   private findNestedCollidableElements(element: HTMLElement) {
@@ -287,8 +289,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   }
 
   private setAnimatedTransition(isEnable: boolean) {
-    if (!this.input) return;
-    this.input.target.style.transition = isEnable ? 'transform 132ms linear' : '';
+    this.nativeElement.style.transition = isEnable ? 'transform 132ms linear' : '';
   }
 
   private shouldTransition(object: TabletopObject): boolean {
@@ -296,13 +297,12 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   }
 
   private stopTransition() {
-    this.input.target.style.transform = window.getComputedStyle(this.input.target).transform;
+    this.nativeElement.style.transform = window.getComputedStyle(this.nativeElement).transform;
   }
 
   private updateTransformCss() {
-    if (!this.input) return;
     let css = this.transformCssOffset + ' translateX(' + this.posX + 'px) translateY(' + this.posY + 'px) translateZ(' + this.posZ + 'px)';
-    this.input.target.style.transform = css;
+    this.nativeElement.style.transform = css;
   }
 
   private setCollidableLayer(isCollidable: boolean) {
