@@ -16,24 +16,26 @@ export class BatchService {
 
   add(task: BatchTask, key: any = {}) {
     this.batchTask.set(key, task);
-    if (this.batchTaskTimer != null) return;
-    setZeroTimeout(() => this.execBatch());
-    this.ngZone.runOutsideAngular(() => this.startTimer());
-  }
-
-  private startTimer() {
-    this.batchTaskTimer = setInterval(() => {
-      if (0 < this.batchTask.size) {
-        this.execBatch();
-      } else {
-        clearInterval(this.batchTaskTimer);
-        this.batchTaskTimer = null;
-      }
-    }, 66);
+    this.startTimer();
   }
 
   remove(key: any = {}) {
     this.batchTask.delete(key);
+  }
+
+  private startTimer() {
+    if (this.batchTaskTimer != null) return;
+    this.ngZone.runOutsideAngular(() => {
+      setZeroTimeout(() => this.execBatch());
+      this.batchTaskTimer = setInterval(() => {
+        if (0 < this.batchTask.size) {
+          this.execBatch();
+        } else {
+          clearInterval(this.batchTaskTimer);
+          this.batchTaskTimer = null;
+        }
+      }, 66);
+    });
   }
 
   private execBatch() {
