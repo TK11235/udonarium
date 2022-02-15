@@ -9,6 +9,7 @@ type BatchTask = () => void;
 export class BatchService {
   private batchTask: Map<any, BatchTask> = new Map();
   private batchTaskTimer: NodeJS.Timer = null;
+  private needsChangeDetection: boolean = false;
 
   constructor(
     private ngZone: NgZone,
@@ -21,6 +22,11 @@ export class BatchService {
 
   remove(key: any = {}) {
     this.batchTask.delete(key);
+  }
+
+  requireChangeDetection() {
+    this.needsChangeDetection = true;
+    this.startTimer();
   }
 
   private startTimer() {
@@ -41,5 +47,9 @@ export class BatchService {
   private execBatch() {
     this.batchTask.forEach(task => task());
     this.batchTask.clear();
+    if (this.needsChangeDetection) {
+      this.needsChangeDetection = false;
+      this.ngZone.run(() => { });
+    }
   }
 }
