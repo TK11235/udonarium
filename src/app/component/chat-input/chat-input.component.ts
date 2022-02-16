@@ -133,7 +133,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
         }
         this.writingPeers.get(event.sendFrom).reset();
         this.updateWritingPeerNames();
-        this.batchService.add(() => this.ngZone.run(() => { }), this);
+        this.batchService.requireChangeDetection();
       });
   }
 
