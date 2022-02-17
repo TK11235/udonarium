@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
-import * as MessagePack from 'msgpack-lite';
 
+import { MessagePack } from '../util/message-pack';
 import { UUID } from '../util/uuid';
 import { setZeroTimeout } from '../util/zero-timeout';
 
@@ -79,7 +79,7 @@ export class SkyWayDataConnection extends EventEmitter {
   }
 
   private onData(data: ArrayBuffer) {
-    let chank: DataChank = MessagePack.decode(new Uint8Array(data));
+    let chank: DataChank = MessagePack.decode(new Uint8Array(data)) as DataChank;
 
     if (chank.id == null) {
       this.emit('data', chank);

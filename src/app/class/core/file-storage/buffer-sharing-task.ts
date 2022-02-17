@@ -1,6 +1,5 @@
-import * as MessagePack from 'msgpack-lite';
-
 import { EventSystem } from '../system';
+import { MessagePack } from '../system/util/message-pack';
 import { ResettableTimeout } from '../system/util/resettable-timeout';
 import { clearZeroTimeout, setZeroTimeout } from '../system/util/zero-timeout';
 
@@ -201,7 +200,7 @@ export class BufferSharingTask<T> {
       pos += chank.byteLength;
     }
 
-    this.data = MessagePack.decode(uint8Array);
+    this.data = MessagePack.decode(uint8Array) as T;
     this.finish();
   }
 

@@ -1,6 +1,5 @@
-import * as MessagePack from 'msgpack-lite';
-
 import { compressAsync, decompressAsync } from '../util/compress';
+import { MessagePack } from '../util/message-pack';
 import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { PeerContext } from './peer-context';
