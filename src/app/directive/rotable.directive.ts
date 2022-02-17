@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
@@ -63,7 +63,6 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   private input: InputHandler = null;
 
   constructor(
-    private ngZone: NgZone,
     private elementRef: ElementRef,
     private batchService: BatchService,
     private pointerDeviceService: PointerDeviceService,
