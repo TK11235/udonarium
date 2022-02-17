@@ -75,10 +75,8 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     private coordinateService: CoordinateService,
   ) { }
 
-  ngAfterViewInit() {
-    this.ngZone.runOutsideAngular(() => {
-      this.input = new InputHandler(this.elementRef.nativeElement);
-    });
+  initialize() {
+    this.input = new InputHandler(this.nativeElement);
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
     this.input.onEnd = this.onInputEnd.bind(this);
@@ -103,12 +101,18 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setPosition(this.tabletopObject);
   }
 
+  ngAfterViewInit() {
+    this.batchService.add(() => this.initialize(), this.elementRef);
+    this.setPosition(this.tabletopObject);
+  }
+
   ngOnDestroy() {
     this.cancel();
     this.input.destroy();
     this.unregister();
     EventSystem.unregister(this);
     this.batchService.remove(this);
+    this.batchService.remove(this.elementRef);
   }
 
   cancel() {

@@ -70,10 +70,8 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     private coordinateService: CoordinateService,
   ) { }
 
-  ngAfterViewInit() {
-    this.ngZone.runOutsideAngular(() => {
-      this.input = new InputHandler(this.elementRef.nativeElement);
-    });
+  initialize() {
+    this.input = new InputHandler(this.nativeElement);
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
     this.input.onEnd = this.onInputEnd.bind(this);
@@ -99,11 +97,21 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit() {
+    this.batchService.add(() => this.initialize(), this.elementRef);
+    if (this.tabletopObject) {
+      this.setRotate(this.tabletopObject);
+    } else {
+      this.updateTransformCss();
+    }
+  }
+
   ngOnDestroy() {
     this.cancel();
     this.input.destroy();
     EventSystem.unregister(this);
     this.batchService.remove(this);
+    this.batchService.remove(this.elementRef);
   }
 
   cancel() {
