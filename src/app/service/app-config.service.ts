@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { EventSystem, Network } from '@udonarium/core/system';
-import { Database } from '@udonarium/database/database';
+import { EventSystem } from '@udonarium/core/system';
 
 import * as yaml from 'js-yaml';
 
@@ -42,52 +41,6 @@ export class AppConfigService {
 
   initialize() {
     this.initAppConfig();
-    this.initDatabase();
-  }
-
-  private async initDatabase() {
-    console.log('initDatabase...');
-    if (!window.indexedDB) {
-      console.warn('このブラウザは安定板の IndexedDB をサポートしていません。IndexedDB の機能は利用できません。');
-      return;
-    }
-
-    let db = new Database();
-
-    let history = await db.getPeerHistory();
-    history.sort((a, b) => {
-      if (a.timestamp < b.timestamp) return 1;
-      if (a.timestamp > b.timestamp) return -1;
-      return 0;
-    });
-
-    for (let i = 1; i < history.length; i++) {
-      db.deletePeerHistory(history[i].peerId);
-    }
-
-    console.log('履歴: ', history);
-
-    this.peerHistory = [];
-    if (history.length) {
-      for (let historyId of history[0].history) {
-        if (historyId !== history[0].peerId) {
-          this.peerHistory.push(historyId);
-        }
-      }
-    }
-    console.log('最終履歴: ', this.peerHistory);
-
-    EventSystem.register(this)
-      .on('CONNECT_PEER', -1000, () => {
-        console.log('AppConfigService CONNECT_PEER', Network.peerIds);
-        if (!this.isOpen) {
-          this.isOpen = true;
-        }
-        db.addPeerHistory(Network.peerId, Network.peerIds);
-      })
-      .on('DISCONNECT_PEER', -1000, () => {
-        console.log('AppConfigService DISCONNECT_PEER', Network.peerIds);
-      });
   }
 
   private async initAppConfig() {

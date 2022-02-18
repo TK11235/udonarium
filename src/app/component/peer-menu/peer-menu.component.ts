@@ -54,13 +54,6 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private resetPeerIfNeeded() {
-    if (Network.peerContexts.length < 1) {
-      Network.open();
-      PeerCursor.myCursor.peerId = Network.peerId;
-    }
-  }
-
   connectPeer() {
     let targetUserId = this.targetUserId;
     this.targetUserId = '';
@@ -70,58 +63,6 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     if (context.isRoom) return;
     ObjectStore.instance.clearDeleteHistory();
     Network.connect(context.peerId);
-  }
-
-  async connectPeerHistory() {
-    this.help = '';
-    let conectPeers: PeerContext[] = [];
-    let roomId: string = '';
-
-    for (let peerId of this.appConfigService.peerHistory) {
-      let context = PeerContext.parse(peerId);
-      if (context.isRoom) {
-        if (roomId !== context.roomId) conectPeers = [];
-        roomId = context.roomId;
-        conectPeers.push(context);
-      } else {
-        if (roomId !== context.roomId) conectPeers = [];
-        conectPeers.push(context);
-      }
-    }
-
-    if (roomId.length) {
-      console.warn('connectPeerRoom <' + roomId + '>');
-      let conectPeers: PeerContext[] = [];
-      let peerIds = await Network.listAllPeers();
-      for (let peerId of peerIds) {
-        console.log(peerId);
-        let context = PeerContext.parse(peerId);
-        if (context.roomId === roomId) {
-          conectPeers.push(context);
-        }
-      }
-      if (conectPeers.length < 1) {
-        this.help = '前回接続していたルームが見つかりませんでした。既に解散しているかもしれません。';
-        console.warn('Room is already closed...');
-        return;
-      }
-      Network.open(PeerContext.generateId(), conectPeers[0].roomId, conectPeers[0].roomName, conectPeers[0].password);
-    } else {
-      console.warn('connectPeers ' + conectPeers.length);
-      Network.open();
-    }
-
-    PeerCursor.myCursor.peerId = Network.peerId;
-
-    let listener = EventSystem.register(this);
-    listener.on('OPEN_NETWORK', event => {
-      console.log('OPEN_NETWORK', event.data.peerId);
-      EventSystem.unregisterListener(listener);
-      ObjectStore.instance.clearDeleteHistory();
-      for (let context of conectPeers) {
-        Network.connect(context.peerId);
-      }
-    });
   }
 
   showLobby() {
