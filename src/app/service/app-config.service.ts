@@ -55,45 +55,22 @@ export class AppConfigService {
     EventSystem.trigger('LOAD_CONFIG', AppConfigService.appConfig);
   }
 
-  private loadYaml(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      let config = document.querySelector('script[type$="yaml"]');
-      if (!config) {
-        console.warn('loadYaml element not found.');
-        resolve('');
-        return;
-      }
+  private async loadYaml(): Promise<string> {
+    let config = document.querySelector('script[type$="yaml"]');
+    if (!config) {
+      console.warn('loadYaml element not found.');
+      return '';
+    }
 
-      let configString = config.textContent;
-      let url = config.getAttribute('src');
+    let url = config.getAttribute('src');
 
-      if (url == null) {
-        console.warn('loadYaml url undefined.');
-        resolve(configString);
-        return;
-      }
+    if (url == null) {
+      console.warn('loadYaml url undefined.');
+      return config.textContent;
+    }
 
-      let http = new XMLHttpRequest();
-      http.open('get', url, true);
-      http.onerror = (event) => {
-        console.error(event);
-        resolve(configString);
-      };
-      http.onreadystatechange = (event) => {
-        if (http.readyState !== 4) {
-          return;
-        }
-        if (http.status === 200) {
-          console.log('loadYaml success!');
-          configString = http.responseText;
-        } else {
-          console.warn('loadYaml fail...? status:' + http.status);
-        }
-        resolve(configString);
-      };
-      console.log('loadYaml start');
-      http.send(null);
-    });
+    let response = await fetch(url);
+    return response.text();
   }
 
   private static applyConfig(config: Object, root: Object = AppConfigService.appConfig): Object {
