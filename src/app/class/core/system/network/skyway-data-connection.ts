@@ -109,9 +109,8 @@ export class SkyWayDataConnection extends EventEmitter {
       pos += c.byteLength;
     }
 
-    let decodedData = MessagePack.decode(uint8Array);
-
-    this.emit('data', decodedData);
+    let decodedChank = MessagePack.decode(uint8Array);
+    this.emit('data', decodedChank);
   }
 
   private setTimeoutTimer() {
