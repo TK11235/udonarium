@@ -17,8 +17,7 @@ export class ChatMessageService {
   private performanceOffset: number = performance.now();
 
   private ntpApiUrls: string[] = [
-    'https://ntp-a1.nict.go.jp/cgi-bin/json',
-    'https://ntp-b1.nict.go.jp/cgi-bin/json',
+    'https://worldtimeapi.org/api/ip',
   ];
 
   gameType: string = '';
@@ -46,7 +45,7 @@ export class ChatMessageService {
         let endTime = performance.now();
         let latency = (endTime - sendTime) / 2;
         let timeobj = jsonObj;
-        let st: number = timeobj.st * 1000;
+        let st: number = new Date(timeobj.utc_datetime).getTime();
         let fixedTime = st + latency;
         this.timeOffset = fixedTime;
         this.performanceOffset = endTime;
