@@ -228,8 +228,8 @@ class ObjectInventory {
     if (sortTag.length < 1) return objects;
 
     objects.sort((a, b) => {
-      let aElm = a.rootDataElement.getFirstElementByName(sortTag);
-      let bElm = b.rootDataElement.getFirstElementByName(sortTag);
+      let aElm = a.rootDataElement?.getFirstElementByName(sortTag);
+      let bElm = b.rootDataElement?.getFirstElementByName(sortTag);
       if (!aElm && !bElm) return 0;
       if (!bElm) return -1;
       if (!aElm) return 1;
