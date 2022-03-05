@@ -3,7 +3,9 @@ import { MessagePack } from '../util/message-pack';
 import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { PeerContext } from './peer-context';
+import { PeerSessionGrade } from './peer-session-state';
 import { SkyWayDataConnection } from './skyway-data-connection';
+import { CandidateType } from './webrtc-stats';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare var Peer;
@@ -249,6 +251,33 @@ export class SkyWayConnection implements Connection {
     });
     conn.on('error', () => {
       this.closeDataConnection(conn);
+    });
+    conn.on('stats', () => {
+      let deltaTime = performance.now() - conn.timestamp;
+      let healthRate = deltaTime <= 10000 ? 1 : 5000 / ((deltaTime - 10000) + 5000);
+      let ping = healthRate < 1 ? deltaTime : conn.ping;
+      let pingRate = 500 / (ping + 500);
+
+      context.session.health = healthRate;
+      context.session.ping = ping;
+      context.session.speed = pingRate * healthRate;
+
+      switch (conn.candidateType) {
+        case CandidateType.HOST:
+          context.session.grade = PeerSessionGrade.HIGH;
+          break;
+        case CandidateType.SRFLX:
+        case CandidateType.PRFLX:
+          context.session.grade = PeerSessionGrade.MIDDLE;
+          break;
+        case CandidateType.RELAY:
+          context.session.grade = PeerSessionGrade.LOW;
+          break;
+        default:
+          context.session.grade = PeerSessionGrade.UNSPECIFIED;
+          break;
+      }
+      context.session.description = conn.candidateType;
     });
   }
 

@@ -3,12 +3,19 @@ import { EventEmitter } from 'events';
 import { MessagePack } from '../util/message-pack';
 import { UUID } from '../util/uuid';
 import { setZeroTimeout } from '../util/zero-timeout';
+import { SkyWayStatsMonitor } from './skyway-stats-monitor';
+import { CandidateType, WebRTCStats } from './webrtc-stats';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare module PeerJs {
   export type Peer = any;
   export type DataConnection = any;
 }
+
+interface Ping {
+  from: string;
+  ping: number;
+};
 
 interface DataChank {
   id: string;
@@ -33,13 +40,29 @@ export class SkyWayDataConnection extends EventEmitter {
   get remoteId(): string { return this.conn.remoteId; }
   get metadata(): any { return this.conn.metadata; }
 
+  private stats: WebRTCStats;
+
+  private _timestamp: number = performance.now();
+  get timestamp(): number { return this._timestamp; }
+  private set timestamp(timestamp: number) { this._timestamp = timestamp };
+
+  private _ping: number = 0;
+  get ping(): number { return this._ping; }
+  private set ping(ping: number) { this._ping = ping };
+
+  private _candidateType: CandidateType = CandidateType.UNKNOWN;
+  get candidateType(): CandidateType { return this._candidateType; }
+  private set candidateType(candidateType: CandidateType) { this._candidateType = candidateType };
+
   constructor(private conn: PeerJs.DataConnection) {
     super();
     conn.on('data', data => this.onData(data));
     conn.on('open', () => {
+      this.stats = new WebRTCStats(this.getPeerConnection());
       this.clearTimeoutTimer();
       exchangeSkyWayImplementation(conn);
       this.emit('open');
+      this.startMonitoring();
     });
     conn.on('close', () => {
       this.clearTimeoutTimer();
@@ -55,6 +78,7 @@ export class SkyWayDataConnection extends EventEmitter {
 
   close() {
     this.clearTimeoutTimer();
+    this.stopMonitoring();
     this.conn.close();
   }
 
@@ -78,11 +102,55 @@ export class SkyWayDataConnection extends EventEmitter {
     }
   }
 
-  private onData(data: ArrayBuffer) {
-    let chank: DataChank = MessagePack.decode(new Uint8Array(data)) as DataChank;
+  getPeerConnection(): RTCPeerConnection {
+    return this.conn.getPeerConnection();
+  }
 
+  private startMonitoring() {
+    SkyWayStatsMonitor.add(this);
+  }
+
+  private stopMonitoring() {
+    SkyWayStatsMonitor.remove(this);
+  }
+
+  async updateStatsAsync() {
+    if (this.stats == null) return;
+    this.sendPing();
+    await this.stats.updateAsync();
+    this.candidateType = this.stats.candidateType;
+    this.emit('stats', this.stats);
+  }
+
+  sendPing() {
+    let encodedData: Uint8Array = MessagePack.encode({ from: this.remoteId, ping: performance.now() });
+    this.conn.send(encodedData);
+  }
+
+  private receivePing(ping: Ping) {
+    if (ping.from === this.remoteId) {
+      let now = performance.now();
+      let rtt = now - ping.ping;
+      this.ping = rtt <= this.ping ? (this.ping * 0.5) + (rtt * 0.5) : rtt;
+    } else {
+      let encodedData = MessagePack.encode(ping);
+      this.conn.send(encodedData);
+    }
+  }
+
+  private onData(data: ArrayBuffer) {
+    this.timestamp = performance.now();
+    let decoded: unknown = MessagePack.decode(new Uint8Array(data));
+
+    let ping: Ping = decoded as Ping;
+    if (ping.ping != null) {
+      this.receivePing(ping);
+      return;
+    }
+
+    let chank: DataChank = decoded as DataChank;
     if (chank.id == null) {
-      this.emit('data', chank);
+      this.emit('data', decoded);
       return;
     }
 
