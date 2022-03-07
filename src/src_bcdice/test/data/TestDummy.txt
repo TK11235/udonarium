@@ -1,5 +1,0 @@
-input:
-2d6>=4
-output:
-DiceBot : (2D6>=4) ＞ 9[6,3] ＞ 9 ＞ 成功
-rand:6/6,3/6

@@ -27,6 +27,7 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
+              "bcdice",
               "hammerjs",
               "crypto-js/sha256",
               "crypto-js/lib-typedarrays",
