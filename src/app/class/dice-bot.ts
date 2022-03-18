@@ -12,6 +12,7 @@ import { PromiseQueue } from './core/system/util/promise-queue';
 import { StringUtil } from './core/system/util/string-util';
 
 interface DiceRollResult {
+  id: string;
   result: string;
   isSecret: boolean;
 }
@@ -61,12 +62,11 @@ export class DiceBot extends GameObject {
   }
 
   private sendResultMessage(rollResult: DiceRollResult, originalMessage: ChatMessage) {
+    let id: string = rollResult.id.split(':')[0];
     let result: string = rollResult.result;
     let isSecret: boolean = rollResult.isSecret;
 
     if (result.length < 1) return;
-
-    result = result.replace(/[＞]/g, s => '→').trim();
 
     let diceBotMessage: ChatMessageContext = {
       identifier: '',
@@ -75,8 +75,8 @@ export class DiceBot extends GameObject {
       from: 'System-BCDice',
       timestamp: originalMessage.timestamp + 1,
       imageIdentifier: '',
-      tag: isSecret ? 'system secret' : 'system',
-      name: isSecret ? '<Secret-BCDice：' + originalMessage.name + '>' : '<BCDice：' + originalMessage.name + '>',
+      tag: `system dicebot${isSecret ? ' secret' : ''}`,
+      name: `${id} : ${originalMessage.name}${isSecret ? ' (Secret)' : ''}`,
       text: result
     };
 
@@ -91,7 +91,7 @@ export class DiceBot extends GameObject {
   }
 
   static async diceRollAsync(message: string, gameType: string): Promise<DiceRollResult> {
-    const empty: DiceRollResult = { result: '', isSecret: false };
+    const empty: DiceRollResult = { id: gameType, result: '', isSecret: false };
     try {
       const gameSystem = await DiceBot.loadGameSystemAsync(gameType);
       if (!gameSystem?.COMMAND_PATTERN.test(message)) return empty;
@@ -101,7 +101,8 @@ export class DiceBot extends GameObject {
         console.log('diceRoll!!!', result.text);
         console.log('isSecret!!!', result.secret);
         return {
-          result: `${gameSystem.ID} : ${result.text}`,
+          id: gameSystem.ID,
+          result: result.text,
           isSecret: result.secret,
         };
       }
