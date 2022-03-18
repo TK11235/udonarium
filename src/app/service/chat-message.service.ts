@@ -20,7 +20,7 @@ export class ChatMessageService {
     'https://worldtimeapi.org/api/ip',
   ];
 
-  gameType: string = 'DiceBot';
+  gameType: string = '';
 
   constructor() { }
 
