@@ -110,25 +110,23 @@ export class DiceBot extends GameObject {
     });
   }
 
-  static getHelpMessage(gameType: string): Promise<string> {
-    return DiceBot.queue.add(async (resolve, reject) => {
-      let help = '';
-      try {
-        const gameSystem = await DiceBot.loadGameSystemAsync(gameType);
-        help = gameSystem.HELP_MESSAGE;
-      } catch (e) {
-        console.error(e);
-      }
-      resolve(help);
-      return;
-    });
+  static async getHelpMessage(gameType: string): Promise<string> {
+    try {
+      const gameSystem = await DiceBot.loadGameSystemAsync(gameType);
+      return gameSystem.HELP_MESSAGE;
+    } catch (e) {
+      console.error(e);
+    }
+    return '';
   }
 
-  static loadGameSystemAsync(gameType: string): Promise<GameSystemClass> {
-    const id = this.diceBotInfos.some((info) => info.id === gameType)
-      ? gameType
-      : 'DiceBot';
-    return DiceBot.loader.dynamicLoad(id);
+  static async loadGameSystemAsync(gameType: string): Promise<GameSystemClass> {
+    return await DiceBot.queue.add(() => {
+      const id = this.diceBotInfos.some((info) => info.id === gameType)
+        ? gameType
+        : 'DiceBot';
+      return DiceBot.loader.dynamicLoad(id);
+    });
   }
 
   private static initializeDiceBotQueue(): PromiseQueue {
