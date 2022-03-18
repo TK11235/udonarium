@@ -86,6 +86,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     let diceBot: DiceBot = new DiceBot('DiceBot');
     diceBot.initialize();
+    DiceBot.getHelpMessage('').then(() => this.lazyNgZoneUpdate(true));
 
     let jukebox: Jukebox = new Jukebox('Jukebox');
     jukebox.initialize();
