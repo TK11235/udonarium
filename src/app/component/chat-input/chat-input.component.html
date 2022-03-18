@@ -18,7 +18,7 @@
       <ng-container *ngIf="0 < diceBotInfos.length">
         <select style="width: 12em;" (change)="loadDiceBot($event.target.value)" [(ngModel)]="gameType"
           [ngModelOptions]="{standalone: true}">
-          <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.id}}">{{diceBotInfo.name}}</option>
+          <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.id}}">{{diceBotInfo.name === "DiceBot" ? "ダイスボット指定なし" : diceBotInfo.name}}</option>
         </select>
       </ng-container>
       <ng-container *ngIf="diceBotInfos.length < 1">
