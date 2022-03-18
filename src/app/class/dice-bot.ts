@@ -1,7 +1,7 @@
-import Loader from 'bcdice/lib/loader/loader';
-import GameSystemClass from 'bcdice/lib/game_system';
 import { GameSystemInfo } from 'bcdice/lib/bcdice/game_system_list.json';
+import GameSystemClass from 'bcdice/lib/game_system';
 
+import BCDiceLoader from './bcdice/bcdice-loader';
 import { ChatMessage, ChatMessageContext } from './chat-message';
 import { ChatTab } from './chat-tab';
 import { SyncObject } from './core/synchronize-object/decorator';
@@ -16,35 +16,12 @@ interface DiceRollResult {
   isSecret: boolean;
 }
 
-// bcdice-js custom loader class
-class WebpackLoader extends Loader {
-  async dynamicImport(className: string): Promise<void> {
-    await import(
-      /* webpackChunkName: "[request]"  */
-      /* webpackInclude: /\.js$/ */
-      `bcdice/lib/bcdice/game_system/${className}`
-    );
-  }
-}
-
 @SyncObject('dice-bot')
 export class DiceBot extends GameObject {
-  private static loader: WebpackLoader = new WebpackLoader();
-  private static queue: PromiseQueue = new PromiseQueue('DiceBotQueue');
+  private static loader: BCDiceLoader;
+  private static queue: PromiseQueue = DiceBot.initializeDiceBotQueue();
 
-  static diceBotInfos: GameSystemInfo[] = DiceBot.loader.listAvailableGameSystems().sort(
-    (a, b) => {
-      let aKey: string = a.sortKey;
-      let bKey: string = b.sortKey;
-      if (aKey < bKey) {
-        return -1;
-      }
-      if (aKey > bKey) {
-        return 1;
-      }
-      return 0
-    }
-  );
+  static diceBotInfos: GameSystemInfo[] = [];
 
   // GameObject Lifecycle
   onStoreAdded() {
@@ -152,5 +129,22 @@ export class DiceBot extends GameObject {
       ? gameType
       : 'DiceBot';
     return DiceBot.loader.dynamicLoad(id);
+  }
+
+  private static initializeDiceBotQueue(): PromiseQueue {
+    let queue = new PromiseQueue('DiceBotQueue');
+    queue.add(async () => {
+      DiceBot.loader = new (await import(
+        /* webpackChunkName: "lib/bcdice/bcdice-loader" */
+        './bcdice/bcdice-loader')
+      ).default();
+      DiceBot.diceBotInfos = DiceBot.loader.listAvailableGameSystems()
+        .sort((a, b) => {
+          if (a.sortKey < b.sortKey) return -1;
+          if (a.sortKey > b.sortKey) return 1;
+          return 0;
+        });
+    });
+    return queue;
   }
 }
