@@ -61,7 +61,7 @@ export class ContextMenuService {
 
     childPanelService.panelComponentRef = panelComponentRef;
     if (actions) {
-      childPanelService.actions = actions;
+      childPanelService.actions = actions.filter(act => act.enabled === undefined || act.enabled);
     }
     if (position) {
       childPanelService.position.x = position.x;
