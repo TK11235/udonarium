@@ -134,4 +134,14 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     const peerCursor = PeerCursor.findByPeerId(peerId);
     return peerCursor ? peerCursor.name : '';
   }
+
+  copyUserIdToClipboard() {
+    var userId = document.querySelector("#userId").textContent;
+    navigator.clipboard.writeText(userId)
+      .then(
+        () => { },
+        (err) => {
+          console.error("Failed to copy userId: ", err);
+        });
+  }
 }
