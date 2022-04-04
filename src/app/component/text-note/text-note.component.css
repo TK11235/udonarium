@@ -38,7 +38,7 @@
   -moz-user-drag: none;
   -webkit-user-drag: none;
 
-  width: 0;
+  width: 1px;
   height:0;
 }
 
