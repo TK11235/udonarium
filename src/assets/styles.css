@@ -1,24 +1,9 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Verdana, Meiryo, "M+ 1p", sans-serif;
 }
-
-h2 { 
-  color: #444;
-  /*font-family: Arial, Helvetica, sans-serif;*/
-  font-weight: lighter;
-}
-body { 
-  margin: 2em; 
-}
-body, input[text], button { 
-  color: #888; 
-  /*font-family: Cambria, Georgia; */
-}
 button {
-  /*font-family: Arial;*/
   background-color: #eee;
   color: #444; 
-  /*border: none;*/
   border: solid 1px #CCC;
   padding: 0.35em 0.7em;
   margin: 0 2px;
@@ -52,11 +37,6 @@ button.danger:disabled {
   color: #eee; 
 }
 /* everywhere else */
-/*
-* { 
-  font-family: Arial, Helvetica, sans-serif; 
-}
-*/
   html,
   body {
     width: 100%;
