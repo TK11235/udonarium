@@ -37,6 +37,7 @@ export class TabletopObject extends ObjectNode {
   get imageDataElement(): DataElement { return this.getElement('image'); }
   get commonDataElement(): DataElement { return this.getElement('common'); }
   get detailDataElement(): DataElement { return this.getElement('detail'); }
+  getDisplayElements(): DataElement[] { return new Array(); }
 
   get imageFile(): ImageFile {
     if (!this.imageDataElement) return this._imageFile;
@@ -72,6 +73,20 @@ export class TabletopObject extends ObjectNode {
       this._dataElements[name] = element ? element.identifier : null;
     }
     return element;
+  }
+
+  protected getElementValue<T extends string | number>(parentElementName: string, elementName: string, defaultValue: T): T {
+    let element = this.getElement(parentElementName);
+    if (!element) return defaultValue;
+    element = this.getElement(elementName,element);
+    if (!element) return defaultValue;
+
+    if (typeof defaultValue === 'number') {
+      let number: number = +element.value;
+      return <T>(Number.isNaN(number) ? defaultValue : number);
+    } else {
+      return <T>(element.value + '');
+    }
   }
 
   protected getCommonValue<T extends string | number>(elementName: string, defaultValue: T): T {
