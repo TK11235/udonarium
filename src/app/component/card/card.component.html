@@ -1,13 +1,13 @@
 <div class="chrome-3d-transform-trick"></div>
 <div class="component is-3d is-pointer-events-none is-grab" [style.width.px]="size * gridSize"
   appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
-  <div class="component-content is-pointer-events-auto"
+  <div class="component-content is-pointer-events-auto is-3d"
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
-    <img *ngIf="imageFile" class="card-image" [src]="(isFront ? frontImage.url : backImage.url) | safe: 'resourceUrl'">
+    <img *ngIf="imageFile" class="card-image chrome-smooth-image-trick" [src]="(isFront ? frontImage.url : backImage.url) | safe: 'resourceUrl'">
     <div *ngIf="!isFront && hasOwner && 0 < ownerName.length" class="name-tag is-nowrap has-length-limit is-black-background" [ngStyle]="{'transform': 'translateY(-75%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
       <span>{{ownerName}}</span>
     </div>
-    <img *ngIf="isHand && frontImage" class="card-image thumbnail-transform is-translucent" [src]="frontImage.url | safe: 'resourceUrl'">
+    <img *ngIf="isHand && frontImage" class="card-image thumbnail-transform is-translucent chrome-smooth-image-trick" [src]="frontImage.url | safe: 'resourceUrl'">
     <ng-container *ngIf="!isIconHidden">
       <div class="rotate-grab of-left-top">
         <i class="material-icons">autorenew</i>
