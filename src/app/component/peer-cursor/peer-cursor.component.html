@@ -1,3 +1,4 @@
+<div *ngIf="!isMine" #chromeTrick class="chrome-3d-transform-trick"></div>
 <div *ngIf="!isMine" #cursor class="component is-3d is-transition is-pointer-events-none">
   <div #opacity class="peer-cursor is-3d is-transition">
     <div class="icon" [style.background-image]="'url(' + iconUrl + ')' | safe: 'style'">
