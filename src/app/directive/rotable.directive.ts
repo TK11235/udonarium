@@ -206,7 +206,7 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
   }
 
   private updateTransformCss() {
-    let css = this.transformCssOffset + ' rotateZ(' + this.rotate + 'deg)';
+    let css = `${this.transformCssOffset} rotateZ(${this.rotate.toFixed(4)}deg)`;
     this.nativeElement.style.transform = css;
   }
 }

@@ -305,7 +305,7 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   }
 
   private updateTransformCss() {
-    let css = this.transformCssOffset + ' translateX(' + this.posX + 'px) translateY(' + this.posY + 'px) translateZ(' + this.posZ + 'px)';
+    let css = `${this.transformCssOffset} translate3d(${this.posX.toFixed(4)}px, ${this.posY.toFixed(4)}px, ${this.posZ.toFixed(4)}px)`;
     this.nativeElement.style.transform = css;
   }
 

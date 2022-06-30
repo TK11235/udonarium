@@ -126,6 +126,6 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setPosition(x: number, y: number, z: number) {
-    this.cursorElement.style.transform = 'translateX(' + x + 'px) translateY(' + y + 'px) translateZ(' + z + 'px)';
+    this.cursorElement.style.transform = `translateX(${x.toFixed(4)}px) translateY(${y.toFixed(4)}px) translateZ(${z.toFixed(4)}px)`;
   }
 }
