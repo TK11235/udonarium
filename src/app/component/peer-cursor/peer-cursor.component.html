@@ -1,10 +1,14 @@
-<div *ngIf="!isMine" #chromeTrick class="chrome-3d-transform-trick"></div>
-<div *ngIf="!isMine" #cursor class="component is-3d is-transition is-pointer-events-none">
-  <div #opacity class="peer-cursor is-3d is-transition">
-    <div class="icon" [style.background-image]="'url(' + iconUrl + ')' | safe: 'style'">
-      <div class="name is-center">
-        <span style="white-space: nowrap;">{{name}}</span>
+<ng-container *ngIf="!isMine">
+  <div #chromeTrick class="chrome-3d-transform-trick"></div>
+  <div #cursor class="component is-3d is-transition is-pointer-events-none">
+    <div #opacity class="upright-transform is-3d is-transition">
+      <div *ngFor="let cssClass of ['is-front', 'is-back']" class="peer-cursor is-front" [ngClass]="cssClass">
+        <div class="icon" [style.background-image]="'url(' + iconUrl + ')' | safe: 'style'">
+          <div class="name is-center">
+            <span style="white-space: nowrap;">{{name}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

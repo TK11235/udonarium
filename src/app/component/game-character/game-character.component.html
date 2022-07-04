@@ -17,11 +17,13 @@
         <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
           appRotable [(rotable.value)]="roll" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
           <div class="rotate-inner is-3d">
-            <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background is-3d"
-              [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-              <div class="fornt-tag has-length-limit is-3d">{{name}}</div>
-              <div class="back-tag has-length-limit is-3d">{{name}}</div>
-            </div>
+            <ng-container *ngIf="0 < name.length">
+              <div *ngFor="let rotateY of ['0', '180deg']"
+                class="name-tag is-nowrap is-black-background"
+                [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px) rotateY(' + rotateY + ')'}">
+                <div class="has-length-limit">{{name}}</div>
+              </div>
+            </ng-container>
             <img class="image chrome-smooth-image-trick" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'">
             <div class="rotate-grab rotate-grab-icon of-top"
               [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">

@@ -152,17 +152,7 @@
 .is-black-background {
   color: #CCC;
   background-color: rgba(30, 30, 30, 0.8);
-}
-
-.fornt-tag {
- backface-visibility: hidden;
-}
-
-.back-tag {
-  position: absolute;
-  top: 3px;
   backface-visibility: hidden;
-  transform: rotateY(-180deg);
 }
 
 .has-length-limit {

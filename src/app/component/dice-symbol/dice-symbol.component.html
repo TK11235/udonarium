@@ -18,14 +18,18 @@
         <div class="upright-transform is-fit-width is-3d">
           <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize">
             <div class="rotate-inner is-3d">
-              <div *ngIf="0 < name.length" class="name-tag is-nowrap is-black-background is-3d" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-                <div class="fornt-tag is-3d">{{name}}:<span *ngIf="isVisible">{{face}}</span><span *ngIf="!isVisible">???</span></div>
-                <div class="back-tag is-3d">{{name}}:<span *ngIf="isVisible">{{face}}</span><span *ngIf="!isVisible">???</span></div>
-              </div>
-              <div *ngIf="hasOwner && 0 < ownerName.length" class="owner-tag is-nowrap is-black-background is-3d" [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
-                <div class="fornt-tag has-length-limit is-3d">{{ownerName}}</div>
-                <div class="back-tag has-length-limit is-3d">{{ownerName}}</div>
-              </div>
+              <ng-container *ngFor="let rotateY of ['0', '180deg']">
+                <div *ngIf="0 < name.length"
+                  class="name-tag is-nowrap is-black-background"
+                  [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px) rotateY(' + rotateY + ')'}">
+                  <div>{{name}}:<span *ngIf="isVisible">{{face}}</span><span *ngIf="!isVisible">???</span></div>
+                </div>
+                <div *ngIf="hasOwner && 0 < ownerName.length"
+                  class="owner-tag is-nowrap is-black-background"
+                  [ngStyle]="{'transform': 'translateX(-50%) translateX(' + size * gridSize / 2 +'px) rotateY(' + rotateY + ')'}">
+                  <div>{{ownerName}}</div>
+                </div>
+              </ng-container>
               <img class="image chrome-smooth-image-trick" *ngIf="0 < imageFile.url.length" [src]="imageFile.url | safe: 'resourceUrl'" [ngClass]="{'is-black-mask': !isVisible, 'is-harf-black-mask': isMine}">
             </div>
           </div>
