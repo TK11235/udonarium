@@ -1,7 +1,7 @@
 import { Network } from '../network/network';
 import { Event, EventContext } from './event';
 import { Listener } from './listener';
-import { Callback } from './observer';
+import { Callback, EventMap } from './observer';
 import { Subject } from './subject';
 
 type EventName = string;
@@ -74,7 +74,8 @@ export class EventSystem implements Subject {
     return listener;
   }
 
-  call<T>(eventName: string, data: T, sendTo?: string): void
+  call<K extends keyof EventMap>(eventName: K, data: EventMap[K], sendTo?: string): void
+  call<T, S extends string>(eventName: Exclude<S, keyof EventMap>, data: T, sendTo?: string): void
   call<T>(event: Event<T>, sendTo?: string): void
   call<T>(...args: any[]): void {
     if (typeof args[0] === 'string') {
@@ -89,7 +90,8 @@ export class EventSystem implements Subject {
     Network.instance.send(context, sendTo);
   }
 
-  trigger<T>(eventName: string, data: T): Event<T>
+  trigger<K extends keyof EventMap>(eventName: K, data: EventMap[K]): Event<EventMap[K]>
+  trigger<T, S extends string>(eventName: Exclude<S, keyof EventMap>, data: T): Event<T>
   trigger<T>(event: Event<T>): Event<T>
   trigger<T>(event: EventContext<T>): Event<T>
   trigger<T>(...args: any[]): Event<T> {
