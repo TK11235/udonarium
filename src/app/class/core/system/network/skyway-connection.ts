@@ -27,7 +27,7 @@ export class SkyWayConnection implements Connection {
   private _peerIds: string[] = [];
   get peerIds(): string[] { return this._peerIds }
 
-  peerContext: PeerContext;
+  peerContext: PeerContext = PeerContext.parse('???');
   readonly peerContexts: PeerContext[] = [];
   readonly callback: ConnectionCallback = new ConnectionCallback();
   bandwidthUsage: number = 0;
@@ -62,7 +62,7 @@ export class SkyWayConnection implements Connection {
     if (this.peer) this.peer.destroy();
     this.disconnectAll();
     this.peer = null;
-    this.peerContext = null;
+    this.peerContext = PeerContext.parse('???');
   }
 
   connect(peerId: string): boolean {
