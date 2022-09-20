@@ -54,7 +54,7 @@ export class ObjectSynchronizer {
           if (object) EventSystem.call('UPDATE_GAME_OBJECT', object.toContext(), event.sendFrom);
         }
       })
-      .on('UPDATE_GAME_OBJECT', event => {
+      .on('UPDATE_GAME_OBJECT', 1000, event => {
         let context: ObjectContext = event.data;
         let object: GameObject = ObjectStore.instance.get(context.identifier);
         if (object) {
@@ -65,7 +65,7 @@ export class ObjectSynchronizer {
           this.createObject(context);
         }
       })
-      .on('DELETE_GAME_OBJECT', event => {
+      .on('DELETE_GAME_OBJECT', 1000, event => {
         let context: ObjectContext = event.data;
         ObjectStore.instance.delete(context.identifier, false);
       });

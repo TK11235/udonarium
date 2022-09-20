@@ -91,7 +91,7 @@ export class ImageSharingSystem {
           console.log('REQUEST_FILE_RESOURE ImageStorageService あぶれた...' + event.data.receiver, randomRequest.length);
         }
       })
-      .on('UPDATE_FILE_RESOURE', event => {
+      .on('UPDATE_FILE_RESOURE', 1000, event => {
         let updateImages: ImageContext[] = event.data.updateImages;
         console.log('UPDATE_FILE_RESOURE ImageStorageService ' + event.sendFrom + ' -> ', updateImages);
         for (let context of updateImages) {

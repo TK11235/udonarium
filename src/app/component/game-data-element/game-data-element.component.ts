@@ -44,13 +44,13 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
     if (this.gameDataElement) this.setValues(this.gameDataElement);
 
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
+      .on('UPDATE_GAME_OBJECT', event => {
         if (this.gameDataElement && event.data.identifier === this.gameDataElement.identifier) {
           this.setValues(this.gameDataElement);
           this.changeDetector.markForCheck();
         }
       })
-      .on('DELETE_GAME_OBJECT', -1000, event => {
+      .on('DELETE_GAME_OBJECT', event => {
         if (this.gameDataElement && this.gameDataElement.identifier === event.data.identifier) {
           this.changeDetector.markForCheck();
         }

@@ -98,13 +98,13 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     EventSystem.register(this)
-      .on('SHUFFLE_CARD_STACK', -1000, event => {
+      .on('SHUFFLE_CARD_STACK', event => {
         if (event.data.identifier === this.cardStack.identifier) {
           this.animeState = 'active';
           this.changeDetector.markForCheck();
         }
       })
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
+      .on('UPDATE_GAME_OBJECT', event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!this.cardStack || !object) return;
         if ((this.cardStack === object)
@@ -119,7 +119,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();
       })
-      .on('UPDATE_FILE_RESOURE', -1000, event => {
+      .on('UPDATE_FILE_RESOURE', event => {
         this.changeDetector.markForCheck();
       })
       .on('DISCONNECT_PEER', event => {

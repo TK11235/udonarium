@@ -59,7 +59,7 @@ export class ChatPaletteComponent implements OnInit, OnDestroy {
     this.chatTabidentifier = this.chatMessageService.chatTabs ? this.chatMessageService.chatTabs[0].identifier : '';
     this.gameType = this.character.chatPalette ? this.character.chatPalette.dicebot : '';
     EventSystem.register(this)
-      .on('DELETE_GAME_OBJECT', -1000, event => {
+      .on('DELETE_GAME_OBJECT', event => {
         if (this.character && this.character.identifier === event.data.identifier) {
           this.panelService.close();
         }

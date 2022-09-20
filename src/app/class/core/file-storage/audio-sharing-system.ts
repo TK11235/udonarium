@@ -89,7 +89,7 @@ export class AudioSharingSystem {
           console.log('REQUEST_FILE_RESOURE AudioStorageService あぶれた...' + event.data.receiver, randomRequest.length);
         }
       })
-      .on('UPDATE_AUDIO_RESOURE', event => {
+      .on('UPDATE_AUDIO_RESOURE', 1000, event => {
         let updateAudios: AudioFileContext[] = event.data;
         console.log('UPDATE_AUDIO_RESOURE AudioStorageService ' + event.sendFrom + ' -> ', updateAudios);
         for (let context of updateAudios) {

@@ -28,7 +28,7 @@ export class PeerCursor extends GameObject {
     super.onStoreAdded();
     if (!this.isMine) {
       EventSystem.register(this)
-        .on('DISCONNECT_PEER', -1000, event => {
+        .on('DISCONNECT_PEER', event => {
           if (event.data.peerId !== this.peerId) return;
           setTimeout(() => {
             if (Network.peerIds.includes(this.peerId)) return;

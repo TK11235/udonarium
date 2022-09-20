@@ -60,7 +60,7 @@ export class Jukebox extends GameObject {
 
   private playAfterFileUpdate() {
     EventSystem.register(this)
-      .on('UPDATE_AUDIO_RESOURE', -100, event => {
+      .on('UPDATE_AUDIO_RESOURE', event => {
         this._play();
       });
   }

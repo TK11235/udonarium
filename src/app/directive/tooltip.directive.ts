@@ -123,7 +123,7 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     });
 
     EventSystem.register(this)
-      .on('DELETE_GAME_OBJECT', -1000, event => {
+      .on('DELETE_GAME_OBJECT', event => {
         if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) this.closeAll();
       });
 

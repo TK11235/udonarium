@@ -33,7 +33,7 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
 
   ngOnInit() {
     EventSystem.register(this)
-      .on('DELETE_GAME_OBJECT', -1000, event => {
+      .on('DELETE_GAME_OBJECT', event => {
         if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) {
           this.panelService.close();
         }

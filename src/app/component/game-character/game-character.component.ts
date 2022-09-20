@@ -71,7 +71,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnInit() {
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
+      .on('UPDATE_GAME_OBJECT', event => {
         let object = ObjectStore.instance.get(event.data.identifier);
         if (!this.gameCharacter || !object) return;
         if (this.gameCharacter === object || (object instanceof ObjectNode && this.gameCharacter.contains(object))) {
@@ -81,7 +81,7 @@ export class GameCharacterComponent implements OnInit, OnDestroy, AfterViewInit 
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();
       })
-      .on('UPDATE_FILE_RESOURE', -1000, event => {
+      .on('UPDATE_FILE_RESOURE', event => {
         this.changeDetector.markForCheck();
       });
     this.movableOption = {

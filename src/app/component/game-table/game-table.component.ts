@@ -90,7 +90,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
+      .on('UPDATE_GAME_OBJECT', event => {
         if (event.data.identifier !== this.currentTable.identifier && event.data.identifier !== this.tableSelecter.identifier) return;
         console.log('UPDATE_GAME_OBJECT GameTableComponent ' + this.currentTable.identifier);
 

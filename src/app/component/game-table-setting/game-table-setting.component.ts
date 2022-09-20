@@ -86,7 +86,7 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
     Promise.resolve().then(() => this.modalService.title = this.panelService.title = 'テーブル設定');
     this.selectedTable = this.tableSelecter.viewTable;
     EventSystem.register(this)
-      .on('DELETE_GAME_OBJECT', 1000, event => {
+      .on('DELETE_GAME_OBJECT', 2000, event => {
         if (!this.selectedTable || event.data.identifier !== this.selectedTable.identifier) return;
         let object = ObjectStore.instance.get(event.data.identifier);
         if (object !== null) {

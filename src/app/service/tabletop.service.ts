@@ -65,7 +65,7 @@ export class TabletopService {
   private initialize() {
     this.refreshCacheAll();
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
+      .on('UPDATE_GAME_OBJECT', event => {
         if (event.data.identifier === this.currentTable.identifier || event.data.identifier === this.tableSelecter.identifier) {
           this.refreshCache(GameTableMask.aliasName);
           this.refreshCache(Terrain.aliasName);
@@ -80,7 +80,7 @@ export class TabletopService {
           this.updateMap(object);
         }
       })
-      .on('DELETE_GAME_OBJECT', -1000, event => {
+      .on('DELETE_GAME_OBJECT', event => {
         let garbage = ObjectStore.instance.get(event.data.identifier);
         if (garbage == null || garbage.aliasName.length < 1) {
           this.refreshCacheAll();

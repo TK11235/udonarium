@@ -103,7 +103,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
           this.updateWritingPeerNames();
         }
       })
-      .on('UPDATE_GAME_OBJECT', -1000, event => {
+      .on('UPDATE_GAME_OBJECT', event => {
         if (event.data.aliasName !== GameCharacter.aliasName) return;
         this.shouldUpdateCharacterList = true;
         if (event.data.identifier !== this.sendFrom) return;
