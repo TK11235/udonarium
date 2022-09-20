@@ -16,6 +16,10 @@ export interface EventMap {
     minorVersion: number;
     syncData: Object;
   };
+  'DELETE_GAME_OBJECT': {
+    aliasName: string;
+    identifier: string;
+  };
 }
 
 export interface Observer {

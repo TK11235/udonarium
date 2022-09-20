@@ -81,11 +81,11 @@ export class TabletopService {
         }
       })
       .on('DELETE_GAME_OBJECT', event => {
-        let garbage = ObjectStore.instance.get(event.data.identifier);
-        if (garbage == null || garbage.aliasName.length < 1) {
+        let aliasName = event.data.aliasName;
+        if (!aliasName) {
           this.refreshCacheAll();
         } else {
-          this.refreshCache(garbage.aliasName);
+          this.refreshCache(aliasName);
         }
       })
       .on('XML_LOADED', event => {
