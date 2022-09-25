@@ -39,7 +39,8 @@ export class SkyWayConnection implements Connection {
   private listAllPeersCache: string[] = [];
   private httpRequestInterval: number = performance.now() + 500;
 
-  private queue: Promise<any> = Promise.resolve();
+  private outboundQueue: Promise<any> = Promise.resolve();
+  private inboundQueue: Promise<any> = Promise.resolve();
 
   private relayingPeerIds: Map<string, string[]> = new Map();
   private maybeUnavailablePeerIds: Set<string> = new Set();
@@ -120,7 +121,7 @@ export class SkyWayConnection implements Connection {
 
     let byteLength = container.data.byteLength;
     this.bandwidthUsage += byteLength;
-    this.queue = this.queue.then(() => new Promise<void>((resolve, reject) => {
+    this.outboundQueue = this.outboundQueue.then(() => new Promise<void>((resolve, reject) => {
       setZeroTimeout(async () => {
         if (1 * 1024 < container.data.byteLength) {
           let compressed = await compressAsync(container.data);
@@ -334,7 +335,7 @@ export class SkyWayConnection implements Connection {
     if (this.callback.onData) {
       let byteLength = container.data.byteLength;
       this.bandwidthUsage += byteLength;
-      this.queue = this.queue.then(() => new Promise<void>((resolve, reject) => {
+      this.inboundQueue = this.inboundQueue.then(() => new Promise<void>((resolve, reject) => {
         setZeroTimeout(async () => {
           let data = container.isCompressed ? await decompressAsync(container.data) : container.data;
           this.callback.onData(conn.remoteId, MessagePack.decode(data));
