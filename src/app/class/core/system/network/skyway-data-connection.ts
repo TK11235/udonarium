@@ -39,6 +39,7 @@ export class SkyWayDataConnection extends EventEmitter {
   get open(): boolean { return this.conn.open; }
   get remoteId(): string { return this.conn.remoteId; }
   get metadata(): any { return this.conn.metadata; }
+  get bufferedAmount(): number { return this.conn._dc?.bufferedAmount ?? 0; }
 
   private stats: WebRTCStats;
 
