@@ -248,7 +248,6 @@ export class SkyWayConnection implements Connection {
     });
     conn.on('close', () => {
       this.closeDataConnection(conn);
-      if (this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
     });
     conn.on('error', () => {
       this.closeDataConnection(conn);
@@ -297,6 +296,8 @@ export class SkyWayConnection implements Connection {
     });
     console.log('<close()> Peer:' + conn.remoteId + ' length:' + this.connections.length + ':' + this.peerContexts.length);
     this.updatePeerList();
+
+    if (0 <= index && this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
   }
 
   private addDataConnection(conn: SkyWayDataConnection): boolean {
