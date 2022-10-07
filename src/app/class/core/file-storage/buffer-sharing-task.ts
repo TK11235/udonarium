@@ -21,6 +21,7 @@ export class BufferSharingTask<T> {
   private sendChankTimer: number;
 
   private sentChankIndex = 0;
+  private bufferingChankRange: number = 4;
   private completedChankIndex = 0;
 
   private startTime = 0;
@@ -142,7 +143,7 @@ export class BufferSharingTask<T> {
     if (this.chanks.length <= index + 1) {
       console.log('バッファ送信完了', this.identifier);
       setZeroTimeout(() => this.finish());
-    } else if (this.completedChankIndex + 4 <= index) {
+    } else if (this.completedChankIndex + this.bufferingChankRange <= index) {
       this.resetTimeout();
     } else {
       this.sendChankTimer = setZeroTimeout(() => { this.sendChank(this.sentChankIndex + 1); });
