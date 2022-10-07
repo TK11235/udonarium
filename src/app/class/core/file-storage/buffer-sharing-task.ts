@@ -116,10 +116,10 @@ export class BufferSharingTask<T> {
       .on<number>('FILE_MORE_CHANK_' + this.identifier, event => {
         if (this.sendTo !== event.sendFrom) return;
         this.completedChankIndex = event.data;
-        if (this.sendChankTimer == null) {
-          this.resetTimeout();
+        if (this.sendChankTimer == null && this.sentChankIndex + 1 < this.chanks.length) {
           this.sendChank(this.sentChankIndex + 1);
         }
+        this.resetTimeout();
       })
       .on('DISCONNECT_PEER', event => {
         if (event.data.peerId !== this.sendTo) return;
@@ -131,6 +131,7 @@ export class BufferSharingTask<T> {
         this._cancel();
       });
     this.sentChankIndex = this.completedChankIndex = 0;
+    this.startTime = performance.now();
     setZeroTimeout(() => this.sendChank(0));
   }
 
@@ -142,6 +143,7 @@ export class BufferSharingTask<T> {
     this.sendChankTimer = null;
     if (this.chanks.length <= index + 1) {
       console.log('バッファ送信完了', this.identifier);
+      this.outputTransferRate(this.uint8Array.byteLength);
       setZeroTimeout(() => this.finish());
     } else if (this.completedChankIndex + this.bufferingChankRange <= index) {
       this.resetTimeout();
@@ -189,10 +191,7 @@ export class BufferSharingTask<T> {
     let sumLength = 0;
     for (let chank of this.chanks) { sumLength += chank.byteLength; }
 
-    let time = performance.now() - this.startTime;
-    let rate = (sumLength / 1024 / 1024) / (time / 1000);
-    console.log(`${(sumLength / 1024).toFixed(2)}KB ${(time / 1000).toFixed(2)}秒 転送速度: ${rate.toFixed(2)}MB/s`);
-
+    this.outputTransferRate(sumLength);
     let uint8Array = new Uint8Array(sumLength);
     let pos = 0;
 
@@ -206,7 +205,13 @@ export class BufferSharingTask<T> {
   }
 
   private resetTimeout() {
-    if (this.timeoutTimer == null) this.timeoutTimer = new ResettableTimeout(() => this.timeout(), 30 * 1000);
+    if (this.timeoutTimer == null) this.timeoutTimer = new ResettableTimeout(() => this.timeout(), 10 * 1000);
     this.timeoutTimer.reset();
+  }
+
+  private outputTransferRate(byteLength: number) {
+    let time = performance.now() - this.startTime;
+    let rate = (byteLength / 1024 / 1024) / (time / 1000);
+    console.log(`${(byteLength / 1024).toFixed(2)}KB ${(time / 1000).toFixed(2)}秒 転送速度: ${rate.toFixed(2)}MB/s`);
   }
 }
