@@ -278,6 +278,10 @@ export class SkyWayConnection implements Connection {
           break;
       }
       context.session.description = conn.candidateType;
+
+      if (context.session.health < 0.2) {
+        this.closeDataConnection(conn);
+      }
     });
   }
 
