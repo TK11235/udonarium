@@ -111,7 +111,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     EventSystem.register(this)
-      .on('ROLL_DICE_SYNBOL', event => {
+      .on('ROLL_DICE_SYMBOL', event => {
         if (event.data.identifier === this.diceSymbol.identifier) {
           this.ngZone.run(() => {
             this.animeState = 'inactive';
@@ -284,7 +284,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   diceRoll(): string {
-    EventSystem.call('ROLL_DICE_SYNBOL', { identifier: this.diceSymbol.identifier });
+    EventSystem.call('ROLL_DICE_SYMBOL', { identifier: this.diceSymbol.identifier });
     SoundEffect.play(PresetSound.diceRoll1);
     return this.diceSymbol.diceRoll();
   }
