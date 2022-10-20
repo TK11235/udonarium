@@ -124,10 +124,12 @@ export class DiceBot extends GameObject {
 
   static async loadGameSystemAsync(gameType: string): Promise<GameSystemClass> {
     return await DiceBot.queue.add(() => {
-      const id = this.diceBotInfos.some((info) => info.id === gameType)
-        ? gameType
-        : 'DiceBot';
-      return DiceBot.loader.dynamicLoad(id);
+      const id = this.diceBotInfos.some(info => info.id === gameType) ? gameType : 'DiceBot';
+      try {
+        return DiceBot.loader.getGameSystemClass(id);
+      } catch {
+        return DiceBot.loader.dynamicLoad(id);
+      }
     });
   }
 
