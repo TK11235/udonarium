@@ -35,6 +35,8 @@ export class UIPanelComponent implements OnInit {
   @Input() set width(width: number) { this.panelService.width = width; }
   @Input() set height(height: number) { this.panelService.height = height; }
 
+  @Input() showTitleButtons: boolean = true;
+
   get title(): string { return this.panelService.title; }
   get left() { return this.panelService.left; }
   get top() { return this.panelService.top; }
