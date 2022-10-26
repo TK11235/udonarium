@@ -130,7 +130,7 @@ export class FileArchiver {
       console.warn(reason);
       return;
     }
-    let zipEntries = [];
+    let zipEntries: JSZip.JSZipObject[] = [];
     zip.forEach((relativePath, zipEntry) => zipEntries.push(zipEntry));
     for (let zipEntry of zipEntries) {
       try {
