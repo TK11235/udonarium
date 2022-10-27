@@ -18,7 +18,14 @@
     <span>ルーム名：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.roomName}}/{{networkService.peerContext.roomId}}</span></span>
   </div>
   <div>
-    <span>パスワード：<span *ngIf="networkService.isOpen" style="font-weight: bold;">{{networkService.peerContext.password}}</span></span>
+    <span>パスワード：<span
+      *ngIf="networkService.peerContext.hasPassword">
+        <span *ngIf="networkService.isOpen" style="font-weight: bold;">{{isPasswordVisible ? networkService.peerContext.password : '●●●●●●●●'}}</span>
+        <button style="padding: 2px; margin-left: 1.0em; font-size: 1.0em;" (click)="togglePasswordVisibility()">
+          <span class="material-icons" style="font-size: 1.0em; vertical-align: text-bottom;">{{isPasswordVisible ? 'visibility' : 'visibility_off'}}</span>
+        </button>
+      </span>
+    </span>
   </div>
 </ng-container>
 <hr/>
