@@ -17,6 +17,7 @@ interface BoxSize {
 export class ResizableDirective implements AfterViewInit, OnDestroy {
   @Input('resizable.disable') isDisable: boolean = false;
   @Input('resizable.bounds') boundsSelector: string = 'body';
+  @Input('resizable.stack') stackSelector: string = '';
   @Input('resizable.minWidth') minWidth: number = 100;
   @Input('resizable.minHeight') minHeight: number = 100
 
@@ -48,6 +49,7 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.initialize();
+    this.setForeground();
   }
 
   ngOnDestroy() {
@@ -78,6 +80,7 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
 
   private onResizeStart(e: MouseEvent | TouchEvent, handle: ResizeHandler) {
     if ((e as MouseEvent).button === 1 || (e as MouseEvent).button === 2) return this.cancel();
+    this.setForeground();
     this.handleMap.forEach(h => {
       if (h !== handle) h.input.cancel();
     });
@@ -205,5 +208,24 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
       width: CSSNumber.relation(css.width, target.parentElement.offsetWidth, target.parentElement.offsetWidth * 0.5),
       height: CSSNumber.relation(css.height, target.parentElement.offsetHeight, target.parentElement.offsetHeight * 0.5),
     };
+  }
+
+  private setForeground() {
+    if (this.stackSelector.length < 1) return;
+    let stacks = this.elementRef.nativeElement.ownerDocument.querySelectorAll<HTMLElement>(this.stackSelector);
+    let topZindex: number = 0;
+    let bottomZindex: number = 99999;
+    stacks.forEach(elm => {
+      let zIndex = parseInt(elm.style.zIndex);
+      if (topZindex < zIndex) topZindex = zIndex;
+      if (zIndex < bottomZindex) bottomZindex = zIndex;
+    });
+
+    if (topZindex <= parseInt(this.elementRef.nativeElement.style.zIndex)) return;
+
+    stacks.forEach(elm => {
+      elm.style.zIndex = (parseInt(elm.style.zIndex) - bottomZindex) + '';
+    });
+    this.elementRef.nativeElement.style.zIndex = (topZindex + 1) + '';
   }
 }
