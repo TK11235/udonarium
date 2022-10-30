@@ -102,7 +102,7 @@ export class DiceBot extends GameObject {
         console.log('isSecret!!!', result.secret);
         return {
           id: gameSystem.ID,
-          result: result.text,
+          result: result.text.replace(/\n?(#\d+)\n/ig, '$1 '), // 繰り返しダイスロールは改行表示を短縮する
           isSecret: result.secret,
         };
       }
