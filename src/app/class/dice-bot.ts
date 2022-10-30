@@ -32,11 +32,11 @@ export class DiceBot extends GameObject {
         let chatMessage = ObjectStore.instance.get<ChatMessage>(event.data.messageIdentifier);
         if (!chatMessage || !chatMessage.isSendFromSelf || chatMessage.isSystem) return;
 
-        let text: string = StringUtil.toHalfWidth(chatMessage.text);
+        let text: string = StringUtil.toHalfWidth(chatMessage.text).trim();
         let gameType: string = chatMessage.tag;
 
         try {
-          let regArray = /^((\d+)?[^\S\n]+)?([\S]*)?/ig.exec(text);
+          let regArray = /^((\d+)?\s+)?(.*)?/ig.exec(text);
           let repeat: number = (regArray[2] != null) ? Number(regArray[2]) : 1;
           let rollText: string = (regArray[3] != null) ? regArray[3] : text;
           if (!rollText || repeat < 1) return;
