@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .draggable-panel {
   box-sizing: border-box;
   overflow: visible;

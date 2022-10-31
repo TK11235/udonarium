@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .component {
   box-sizing: border-box;
   position: absolute;

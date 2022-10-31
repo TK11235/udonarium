@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .component {
   position: absolute;
   max-height: 100%;

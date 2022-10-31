@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .component {
   width: 100%;
 }

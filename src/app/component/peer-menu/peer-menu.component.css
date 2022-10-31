@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .image {
   padding: 0px;
   width: 128px;

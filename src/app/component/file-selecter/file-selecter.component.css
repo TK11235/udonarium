@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .image {
   font-size: 0;
 }

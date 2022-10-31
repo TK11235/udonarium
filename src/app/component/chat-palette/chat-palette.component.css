@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .edit-info {
   width: 100%;
   text-align: center;

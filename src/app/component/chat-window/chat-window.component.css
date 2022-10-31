@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .loop-anime {
   -webkit-animation: anime1 1.3s infinite ease-in-out;
   animation: anime1 1.3s infinite ease-in-out;

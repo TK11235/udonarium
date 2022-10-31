@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .table {
   box-sizing: border-box;
   padding : 5px;
