@@ -1,4 +1,3 @@
-<div class="chrome-3d-transform-trick"></div>
 <div class="component" [ngClass]="{'is-grab': !isLock}"
   [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"
   appMovable [movable.option]="movableOption" [movable.disable]="isLock" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">

@@ -1,5 +1,4 @@
 <ng-container *ngIf="!isMine">
-  <div #chromeTrick class="chrome-3d-transform-trick"></div>
   <div #cursor class="component is-3d is-transition is-pointer-events-none">
     <div #opacity class="upright-transform is-3d is-transition">
       <div *ngFor="let cssClass of ['is-front', 'is-back']" class="peer-cursor is-front" [ngClass]="cssClass">

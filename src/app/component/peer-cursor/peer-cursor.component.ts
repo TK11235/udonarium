@@ -14,7 +14,6 @@ import { PointerCoordinate } from 'service/pointer-device.service';
   styleUrls: ['./peer-cursor.component.css']
 })
 export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('chromeTrick') chromeTrickElementRef: ElementRef; // デスクトップWindows版Chrome 102-103対策
   @ViewChild('cursor') cursorElementRef: ElementRef;
   @ViewChild('opacity') opacityElementRef: ElementRef;
   @Input() cursor: PeerCursor = PeerCursor.myCursor;
@@ -23,7 +22,6 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   get name(): string { return this.cursor.name }
   get isMine(): boolean { return this.cursor.isMine; }
 
-  private chromeTrickElement: HTMLElement = null;
   private cursorElement: HTMLElement = null;
   private opacityElement: HTMLElement = null;
   private fadeOutTimer: ResettableTimeout = null;
@@ -68,7 +66,6 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
         document.body.addEventListener('touchmove', this.callcack);
       });
     } else {
-      this.chromeTrickElement = this.chromeTrickElementRef.nativeElement;
       this.cursorElement = this.cursorElementRef.nativeElement;
       this.opacityElement = this.opacityElementRef.nativeElement;
       this.setAnimatedTransition();
@@ -121,16 +118,13 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private stopTransition() {
     this.cursorElement.style.transform = window.getComputedStyle(this.cursorElement).transform;
-    this.chromeTrickElement.style.transform = this.cursorElement.style.transform;
   }
 
   private setAnimatedTransition() {
     this.cursorElement.style.transition = `transform ${this.delayMs + 33}ms linear, opacity 0.5s ease-out`;
-    this.chromeTrickElement.style.transform = this.cursorElement.style.transform;
   }
 
   private setPosition(x: number, y: number, z: number) {
     this.cursorElement.style.transform = `translateX(${x.toFixed(4)}px) translateY(${y.toFixed(4)}px) translateZ(${z.toFixed(4)}px)`;
-    this.chromeTrickElement.style.transform = this.cursorElement.style.transform;
   }
 }

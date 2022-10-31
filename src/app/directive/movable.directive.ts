@@ -40,7 +40,6 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   @Output('movable.onend') onend: EventEmitter<PointerEvent> = new EventEmitter();
 
   private get nativeElement(): HTMLElement { return this.elementRef.nativeElement; }
-  private chromeTrickElement: HTMLElement; // デスクトップWindows版Chrome 102-103対策
 
   private _posX: number = 0;
   private _posY: number = 0;
@@ -77,8 +76,6 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
   ) { }
 
   ngAfterViewInit() {
-    this.chromeTrickElement = this.nativeElement.parentElement.querySelector('.chrome-3d-transform-trick');
-
     this.batchService.add(() => this.initialize(), this.elementRef);
     this.setPosition(this.tabletopObject);
   }
@@ -305,13 +302,11 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
 
   private stopTransition() {
     this.nativeElement.style.transform = window.getComputedStyle(this.nativeElement).transform;
-    if (this.chromeTrickElement) this.chromeTrickElement.style.transform = this.nativeElement.style.transform;
   }
 
   private updateTransformCss() {
     let css = `${this.transformCssOffset} translate3d(${this.posX.toFixed(4)}px, ${this.posY.toFixed(4)}px, ${this.posZ.toFixed(4)}px)`;
     this.nativeElement.style.transform = css;
-    if (this.chromeTrickElement) this.chromeTrickElement.style.transform = this.nativeElement.style.transform;
   }
 
   private setCollidableLayer(isCollidable: boolean) {
