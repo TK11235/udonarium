@@ -60,7 +60,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.scrollToBottom(true);
+    queueMicrotask(() => this.scrollToBottom(true));
   }
 
   ngOnDestroy() {
