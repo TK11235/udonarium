@@ -15,7 +15,7 @@ export enum CardState {
 export class Card extends TabletopObject {
   @SyncVar() state: CardState = CardState.FRONT;
   @SyncVar() rotate: number = 0;
-  @SyncVar() owner: string = '';
+  @SyncVar() owners: Array<string> = [];
   @SyncVar() zindex: number = 0;
 
   get isVisibleOnTable(): boolean { return this.location.name === 'table' && (!this.parentIsAssigned || this.parentIsDestroyed); }
@@ -29,23 +29,25 @@ export class Card extends TabletopObject {
   get imageFile(): ImageFile { return this.isVisible ? this.frontImage : this.backImage; }
 
   get ownerName(): string {
-    let object = PeerCursor.findByUserId(this.owner);
-    return object ? object.name : '';
+    return this.owners.map(owner => PeerCursor.findByUserId(owner))
+      .filter(peerCursor => peerCursor)
+      .map(peerCursor => peerCursor.name)
+      .join(', ');
   }
 
-  get hasOwner(): boolean { return 0 < this.owner.length; }
-  get isHand(): boolean { return Network.peerContext.userId === this.owner; }
+  get hasOwner(): boolean { return 0 < this.owners.length; }
+  get isHand(): boolean { return this.owners.includes(Network.peerContext.userId); }
   get isFront(): boolean { return this.state === CardState.FRONT; }
   get isVisible(): boolean { return this.isHand || this.isFront; }
 
   faceUp() {
     this.state = CardState.FRONT;
-    this.owner = '';
+    this.owners = [];
   }
 
   faceDown() {
     this.state = CardState.BACK;
-    this.owner = '';
+    this.owners = [];
   }
 
   toTopmost() {

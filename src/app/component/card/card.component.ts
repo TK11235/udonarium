@@ -43,8 +43,8 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   set state(state: CardState) { this.card.state = state; }
   get rotate(): number { return this.card.rotate; }
   set rotate(rotate: number) { this.card.rotate = rotate; }
-  get owner(): string { return this.card.owner; }
-  set owner(owner: string) { this.card.owner = owner; }
+  get owners(): Array<string> { return this.card.owners; }
+  set owners(owners: Array<string>) { this.card.owners = owners; }
   get zindex(): number { return this.card.zindex; }
   get size(): number { return this.adjustMinBounds(this.card.size); }
 
@@ -89,7 +89,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!this.card || !object) return;
         if ((this.card === object)
           || (object instanceof ObjectNode && this.card.contains(object))
-          || (object instanceof PeerCursor && object.userId === this.card.owner)) {
+          || (object instanceof PeerCursor && this.card.owners.includes(object.userId))) {
           this.changeDetector.markForCheck();
         }
       })
@@ -101,7 +101,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       })
       .on('DISCONNECT_PEER', event => {
         let cursor = PeerCursor.findByPeerId(event.data.peerId);
-        if (!cursor || this.card.owner === cursor.userId) this.changeDetector.markForCheck();
+        if (!cursor || this.card.owners.includes(cursor.userId)) this.changeDetector.markForCheck();
       });
     this.movableOption = {
       tabletopObject: this.card,
@@ -173,7 +173,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log('onDoubleClick !!!!');
       if (this.hasOwner && !this.isHand) return;
       this.state = this.isVisible && !this.isHand ? CardState.BACK : CardState.FRONT;
-      this.owner = '';
+      this.owners = [];
       SoundEffect.play(PresetSound.cardDraw);
     }
   }
@@ -213,8 +213,8 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
       ),
       (this.isHand
         ? {
-          name: '裏にする', action: () => {
-            this.card.faceDown();
+          name: '見るのをやめる', action: () => {
+            this.owners = this.owners.filter(owner => owner !== Network.peerContext.userId);
             SoundEffect.play(PresetSound.cardDraw);
           }
         }
@@ -222,9 +222,22 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
           name: '自分だけ見る', action: () => {
             SoundEffect.play(PresetSound.cardDraw);
             this.card.faceDown();
-            this.owner = Network.peerContext.userId;
+            this.owners = [Network.peerContext.userId];
           }
         }),
+      (!this.isHand && this.hasOwner
+        ? {
+          name: '自分も見る', action: () => {
+            SoundEffect.play(PresetSound.cardDraw);
+            let newOwners = this.owners.concat(Network.peerContext.userId);
+            this.card.faceDown();
+            this.owners = newOwners;
+          }
+        }
+        : {
+          name: null, enabled: false
+        }
+      ),
       ContextMenuSeparator,
       {
         name: '重なったカードで山札を作る', action: () => {
