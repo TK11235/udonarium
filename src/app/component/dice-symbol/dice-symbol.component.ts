@@ -223,7 +223,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     }
-    actions.push(ContextMenuSeparator);
+    if (actions.length) actions.push(ContextMenuSeparator);
     if (this.isMine || this.hasOwner) {
       actions.push({
         name: 'ダイスを公開', action: () => {
