@@ -1,4 +1,4 @@
-<div class="component" [ngClass]="{'is-grab': !isLock}"
+<div class="component is-3d" [ngClass]="{'is-grab': !isLock}"
   [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"
   appMovable [movable.option]="movableOption" [movable.disable]="isLock" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
   <div *ngIf="imageFile.url.length < 1; then blackMask; else imageMask"></div>
@@ -6,8 +6,8 @@
     <div class="border is-fit-full" [style.background-color]="'rgba(10, 10, 10,' + opacity +')'"></div>
   </ng-template>
   <ng-template #imageMask>
-    <div class="border is-fit-full">
-      <img class="image is-fit-full" [style.opacity]="opacity" [src]="imageFile.url | safe: 'resourceUrl'">
+    <div class="border is-fit-full chrome-smooth-image-trick">
+      <img class="image is-fit-full chrome-smooth-image-trick" [style.opacity]="opacity" [src]="imageFile.url | safe: 'resourceUrl'">
     </div>
   </ng-template>
   <div *ngIf="isLock" class="lock-icon is-center">

@@ -4,21 +4,21 @@
   <div class="component-content is-3d is-pointer-events-auto" [ngClass]="{'is-grab': !isLocked}"
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()" [rotable.disable]="isLocked">
     <ng-container *ngIf="hasFloor && isVisibleFloor && 0 < floorImage?.url.length">
-      <div class="texture" [ngClass]="{'blinking-animation': !isLocked}" [ngStyle]="{'transform': 'translateZ(' + height * gridSize +'px)'}"
+      <div class="texture chrome-smooth-image-trick" [ngClass]="{'blinking-animation': !isLocked}" [ngStyle]="{'transform': 'translateZ(' + height * gridSize +'px)'}"
         [style.background-image]="'url(' + floorImage.url + ')' | safe: 'style'"></div>
     </ng-container>
     <ng-container *ngIf="hasWall && 0 < wallImage?.url.length">
       <div *ngIf="isVisibleWallTopBottom" [ngClass]="{'blinking-animation': !isLocked}"
-        class="texture of-wall-top" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
+        class="texture of-wall-top chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
         [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"></div>
       <div *ngIf="isVisibleWallTopBottom" [ngClass]="{'blinking-animation': !isLocked}"
-        class="texture of-wall-bottom" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
+        class="texture of-wall-bottom chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
         [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"></div>
       <div *ngIf="isVisibleWallLeftRight" [ngClass]="{'blinking-animation': !isLocked}"
-        class="texture of-wall-left" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
+        class="texture of-wall-left chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
         [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
       <div *ngIf="isVisibleWallLeftRight" [ngClass]="{'blinking-animation': !isLocked}"
-        class="texture of-wall-right" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
+        class="texture of-wall-right chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
         [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
     </ng-container>
     <ng-container *ngIf="!isLocked">

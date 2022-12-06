@@ -19,6 +19,10 @@
   transition: transform 132ms linear;
 }
 
+.is-3d {
+  transform-style: preserve-3d;
+}
+
 .component {
   position: absolute;
   height: 50px;
