@@ -52,6 +52,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   get isFront(): boolean { return this.card.isFront; }
   get isVisible(): boolean { return this.card.isVisible; }
   get hasOwner(): boolean { return this.card.hasOwner; }
+  get ownerIsOnline(): boolean { return this.card.ownerIsOnline; }
   get ownerName(): string { return this.card.ownerName; }
 
   get imageFile(): ImageFile { return this.imageService.getSkeletonOr(this.card.imageFile); }
@@ -171,7 +172,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     let distance = (this.doubleClickPoint.x - this.input.pointer.x) ** 2 + (this.doubleClickPoint.y - this.input.pointer.y) ** 2;
     if (distance < 10 ** 2) {
       console.log('onDoubleClick !!!!');
-      if (this.hasOwner && !this.isHand) return;
+      if (this.ownerIsOnline && !this.isHand) return;
       this.state = this.isVisible && !this.isHand ? CardState.BACK : CardState.FRONT;
       this.owner = '';
       SoundEffect.play(PresetSound.cardDraw);
