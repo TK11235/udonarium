@@ -116,16 +116,17 @@ export class ImageFile {
     if (!this.context.name && context.name) this.context.name = context.name;
     if (!this.context.blob && context.blob) this.context.blob = context.blob;
     if (!this.context.type && context.type) this.context.type = context.type;
-    if (!this.context.url && context.url) {
+    if (this.context.url && context.url) {
       if (this.state !== ImageState.URL) window.URL.revokeObjectURL(this.context.url);
       this.context.url = context.url;
-    }
+    } else if (!this.context.url && context.url) this.context.url = context.url;
     if (!this.context.thumbnail.blob && context.thumbnail.blob) this.context.thumbnail.blob = context.thumbnail.blob;
     if (!this.context.thumbnail.type && context.thumbnail.type) this.context.thumbnail.type = context.thumbnail.type;
-    if (!this.context.thumbnail.url && context.thumbnail.url) {
+    if (this.context.thumbnail.url && context.thumbnail.url) {
       if (this.state !== ImageState.URL) window.URL.revokeObjectURL(this.context.thumbnail.url);
       this.context.thumbnail.url = context.thumbnail.url;
-    }
+    } else if (!this.context.thumbnail.url && context.thumbnail.url) this.context.thumbnail.url = context.thumbnail.url;
+
     this.createURLs();
   }
 
