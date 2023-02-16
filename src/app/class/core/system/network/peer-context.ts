@@ -87,7 +87,7 @@ export class PeerContext implements IPeerContext {
   }
 
   private static _createRoom(userId: string = '', roomId: string = '', roomName: string = '', password: string = ''): PeerContext {
-    let digestUserId = this.generateId('******');
+    let digestUserId = calcDigest(userId, 6);
     let digestPassword = calcDigestPassword(roomId, password);
     let peerId = `${digestUserId}${roomId}${lzbase62.compress(roomName)}-${digestPassword}`;
 
