@@ -59,7 +59,7 @@ export class PeerContext implements IPeerContext {
   }
 
   verifyPassword(password: string): boolean {
-    let digest = calcDigestPassword(this.roomId, password);
+    let digest = calcDigestPassword(this.digestUserId, this.roomId, this.roomName, password);
     let isCorrect = digest === this.digestPassword;
     return isCorrect;
   }
@@ -88,8 +88,9 @@ export class PeerContext implements IPeerContext {
 
   private static _createRoom(userId: string = '', roomId: string = '', roomName: string = '', password: string = ''): PeerContext {
     let digestUserId = calcDigest(userId, 6);
-    let digestPassword = calcDigestPassword(roomId, password);
-    let peerId = `${digestUserId}${roomId}${lzbase62.compress(roomName)}-${digestPassword}`;
+    let checksumedRoomId = calcChecksumedRoomId(roomId, roomName, password);
+    let digestPassword = calcDigestPassword(digestUserId, checksumedRoomId, roomName, password);
+    let peerId = `${digestUserId}${checksumedRoomId}${lzbase62.compress(roomName)}-${digestPassword}`;
 
     let peerContext = new PeerContext(peerId);
     peerContext.userId = userId;
@@ -112,9 +113,15 @@ function calcDigestUserId(userId: string): string {
   return calcDigest(userId);
 }
 
-function calcDigestPassword(roomId: string, password: string): string {
+function calcDigestPassword(digestUserId: string, roomId: string, roomName: string, password: string): string {
   if (roomId == null || password == null) return '';
-  return 0 < password.length ? calcDigest(roomId + password, 7) : '';
+  return 0 < password.length ? calcDigest(digestUserId + roomId + roomName + password, 7) : '';
+}
+
+function calcChecksumedRoomId(roomId: string, roomName: string, password: string): string {
+  if (password.length < 1) return roomId;
+  let salt = roomId.slice(0, 2);
+  return salt + calcDigest(salt + roomName + password, 1);
 }
 
 function calcDigest(str: string, truncateLength: number = -1): string {
