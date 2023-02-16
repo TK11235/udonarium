@@ -61,6 +61,12 @@ export class PeerContext implements IPeerContext {
   verifyPassword(password: string): boolean {
     let digest = calcDigestPassword(this.digestUserId, this.roomId, this.roomName, password);
     let isCorrect = digest === this.digestPassword;
+    return isCorrect && this.verifyRoomId(password);
+  }
+
+  private verifyRoomId(password: string): boolean {
+    let checksumedRoomId = calcChecksumedRoomId(this.roomId, this.roomName, password);
+    let isCorrect = checksumedRoomId === this.roomId;
     return isCorrect;
   }
 
