@@ -71,7 +71,7 @@ export class SkyWayConnection implements Connection {
 
     let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(peerId, {
       serialization: 'none',
-      metadata: { sendFrom: this.peerId }
+      metadata: { sortKey: this.peerContext.userId }
     }));
 
     this.openDataConnection(conn);
@@ -309,7 +309,7 @@ export class SkyWayConnection implements Connection {
     if (existConn !== null) {
       console.log('add() is Fail. ' + conn.remoteId + ' is already connecting.');
       if (existConn !== conn) {
-        if (existConn.metadata.sendFrom < conn.metadata.sendFrom) {
+        if (existConn.metadata.sortKey < conn.metadata.sortKey) {
           this.closeDataConnection(conn);
         } else {
           this.closeDataConnection(existConn);
