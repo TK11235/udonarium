@@ -94,6 +94,11 @@ export class SkyWayConnection implements Connection {
       return false;
     }
 
+    if (!this.peerContext.verifyPeer(peerId)) {
+      console.log('connect() is Fail. <' + peerId + '> is not valid.');
+      return false;
+    }
+
     if (peerId && peerId.length && peerId !== this.peerId) return true;
     return false;
   }
@@ -200,6 +205,11 @@ export class SkyWayConnection implements Connection {
     });
 
     peer.on('connection', conn => {
+      if (!this.peerContext.verifyPeer(conn.remoteId)) {
+        conn.close();
+        console.log('connection is close. <' + conn.remoteId + '> is not valid.');
+        return;
+      }
       this.openDataConnection(new SkyWayDataConnection(conn));
     });
 

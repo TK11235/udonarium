@@ -70,6 +70,25 @@ export class PeerContext implements IPeerContext {
     return isCorrect;
   }
 
+  verifyPeer(peerId: string): boolean {
+    let context = PeerContext.parse(peerId);
+    if (this.roomId != context.roomId || this.roomName != context.roomName || this.hasPassword != context.hasPassword) {
+      return false;
+    }
+
+    if (!this.hasPassword) {
+      return true;
+    }
+
+    if (this.password.length < 1) {
+      console.error('do not know password.');
+      return false;
+    }
+
+    let isValid = context.verifyPassword(this.password);
+    return isValid;
+  }
+
   static parse(peerId: string): PeerContext {
     return new PeerContext(peerId);
   }
