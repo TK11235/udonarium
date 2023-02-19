@@ -37,7 +37,7 @@ export class Network {
     console.log('Network ready...');
   }
 
-  open(peerId?: string)
+  open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
     if (this.connection && this.connection.peerContext) {

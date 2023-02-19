@@ -45,7 +45,7 @@ export class SkyWayConnection implements Connection {
   private relayingPeerIds: Map<string, string[]> = new Map();
   private maybeUnavailablePeerIds: Set<string> = new Set();
 
-  open(peerId: string)
+  open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
     console.log('open', args);

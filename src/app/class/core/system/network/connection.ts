@@ -17,7 +17,7 @@ export interface Connection {
   readonly callback: ConnectionCallback;
   readonly bandwidthUsage: number;
 
-  open(peerId: string)
+  open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   close()
   connect(peerId: string): boolean
