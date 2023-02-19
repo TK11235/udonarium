@@ -20,8 +20,8 @@ export interface Connection {
   open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   close()
-  connect(peerId: string): boolean
-  disconnect(peerId: string): boolean
+  connect(context: IPeerContext): boolean
+  disconnect(context: IPeerContext): boolean
   disconnectAll()
   send(data: any, sendTo?: string)
   setApiKey(key: string);

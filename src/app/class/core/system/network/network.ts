@@ -59,16 +59,16 @@ export class Network {
     console.log('Network close...');
   }
 
-  connect(peerId: string): boolean {
-    if (this.connection) return this.connection.connect(peerId);
+  connect(context: IPeerContext): boolean {
+    if (this.connection) return this.connection.connect(context);
     return false;
   }
 
-  disconnect(peerId: string) {
+  disconnect(context: IPeerContext) {
     if (!this.connection) return;
-    if (this.connection.disconnect(peerId)) {
-      console.log('<disconnectPeer()> Peer:' + peerId);
-      this.disconnect(peerId);
+    if (this.connection.disconnect(context)) {
+      console.log('<disconnectPeer()> Peer:' + context.peerId);
+      this.disconnect(context);
     }
   }
 

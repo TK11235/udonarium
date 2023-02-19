@@ -2,7 +2,7 @@ import { compressAsync, decompressAsync } from '../util/compress';
 import { MessagePack } from '../util/message-pack';
 import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
-import { PeerContext } from './peer-context';
+import { IPeerContext, PeerContext } from './peer-context';
 import { PeerSessionGrade } from './peer-session-state';
 import { SkyWayDataConnection } from './skyway-data-connection';
 import { CandidateType } from './webrtc-stats';
@@ -66,10 +66,10 @@ export class SkyWayConnection implements Connection {
     this.peerContext = PeerContext.parse('???');
   }
 
-  connect(peerId: string): boolean {
-    if (!this.shouldConnect(peerId)) return false;
+  connect(context: IPeerContext): boolean {
+    if (!this.shouldConnect(context.peerId)) return false;
 
-    let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(peerId, {
+    let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(context.peerId, {
       serialization: 'none',
       metadata: { sortKey: this.peerContext.userId }
     }));
@@ -103,8 +103,8 @@ export class SkyWayConnection implements Connection {
     return false;
   }
 
-  disconnect(peerId: string): boolean {
-    let conn = this.findDataConnection(peerId)
+  disconnect(context: IPeerContext): boolean {
+    let conn = this.findDataConnection(context.peerId)
     if (!conn) return false;
     this.closeDataConnection(conn);
     return true;
@@ -219,7 +219,7 @@ export class SkyWayConnection implements Connection {
       switch (err.type) {
         case 'peer-unavailable':
           let peerId = /"(.+)"/.exec(err.message)[1];
-          this.disconnect(peerId);
+          this.disconnect(PeerContext.parse(peerId));
           break;
         case 'disconnected':
         case 'socket-error':
@@ -388,7 +388,7 @@ export class SkyWayConnection implements Connection {
 
     if (unknownPeerIds.length) {
       for (let peerId of unknownPeerIds) {
-        if (!this.maybeUnavailablePeerIds.has(peerId) && this.connect(peerId)) {
+        if (!this.maybeUnavailablePeerIds.has(peerId) && this.connect(PeerContext.parse(peerId))) {
           console.log('auto connect to unknown Peer <' + peerId + '>');
         }
       }

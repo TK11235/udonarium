@@ -63,7 +63,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     let context = PeerContext.create(targetUserId);
     if (context.isRoom) return;
     ObjectStore.instance.clearDeleteHistory();
-    Network.connect(context.peerId);
+    Network.connect(context);
   }
 
   showLobby() {
