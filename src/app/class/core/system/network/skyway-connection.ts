@@ -16,7 +16,7 @@ declare module PeerJs {
 
 interface DataContainer {
   data: Uint8Array;
-  peers?: string[];
+  users?: string[];
   ttl: number;
   isCompressed?: boolean;
 }
@@ -24,8 +24,27 @@ interface DataContainer {
 export class SkyWayConnection implements Connection {
   get peerId(): string { return this.peerContext ? this.peerContext.peerId : '???'; }
 
+  private needsRefreshPeerIds = false;
   private _peerIds: string[] = [];
-  get peerIds(): string[] { return this._peerIds }
+  get peerIds(): string[] {
+    if (this.needsRefreshPeerIds) {
+      this.needsRefreshPeerIds = false;
+      let peerIds: string[] = [];
+      for (let conn of this.connections) {
+        if (conn.open) peerIds.push(conn.remoteId);
+      }
+      peerIds.push(this.peerId);
+      peerIds.sort(function (a, b) {
+        if (a > b) return 1;
+        if (a < b) return -1;
+        return 0;
+      });
+      this._peerIds = peerIds;
+    }
+    return this._peerIds
+  }
+
+  private get userIds(): string[] { return this.peerContexts.map(context => context.userId).filter(userId => 0 < userId.length).concat([this.peerContext.userId]); }
 
   peerContext: PeerContext = PeerContext.parse('???');
 
@@ -66,6 +85,7 @@ export class SkyWayConnection implements Connection {
     } else {
       this.peerContext = PeerContext.create(args[0], args[1], args[2], args[3]);
     }
+    this.needsRefreshPeerIds = true;
     this.openPeer();
   }
 
@@ -352,7 +372,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private onData(conn: SkyWayDataConnection, container: DataContainer) {
-    if (container.peers && 0 < container.peers.length) this.onUpdatePeerList(conn, container);
+    if (container.users && 0 < container.users.length) this.onUpdateUserIds(conn, container.users);
     if (0 < container.ttl) this.onRelay(conn, container);
     if (this.callback.onData) {
       let byteLength = container.data.byteLength;
@@ -374,6 +394,10 @@ export class SkyWayConnection implements Connection {
     let relayingPeerIds: string[] = this.relayingPeerIds.get(conn.remoteId);
     if (relayingPeerIds == null) return;
 
+    if (container.users && 0 < container.users.length) {
+      container.users = this.peerContexts.map(context => context.userId).filter(userId => 0 < userId.length).concat([this.peerContext.userId]);
+    }
+
     for (let peerId of relayingPeerIds) {
       let conn = this.findDataConnection(peerId);
       if (conn && conn.open) {
@@ -383,52 +407,52 @@ export class SkyWayConnection implements Connection {
     }
   }
 
-  private onUpdatePeerList(conn: SkyWayDataConnection, container: DataContainer) {
-    let relayingPeerIds: string[] = [];
-    let unknownPeerIds: string[] = [];
+  private onUpdateUserIds(conn: SkyWayDataConnection, userIds: string[]) {
+    let needsNotifyUserList = false;
+    userIds.forEach(userId => {
+      let context = this.makeFriendPeer(userId);
+      let conn = this.findDataConnection(context.peerId);
+      if (conn && conn.context.userId !== userId) {
+        conn.context.userId = userId;
+        needsNotifyUserList = true;
+      }
+    });
 
-    let diff = diffArray(this._peerIds, container.peers);
-    relayingPeerIds = diff.diff1;
-    unknownPeerIds = diff.diff2;
-    this.relayingPeerIds.set(conn.remoteId, relayingPeerIds);
-    container.peers = container.peers.concat(relayingPeerIds);
+    let diff = diffArray(this.userIds, userIds);
+    let relayingUserIds = diff.diff1;
+    let unknownUserIds = diff.diff2;
+    this.relayingPeerIds.set(conn.remoteId, relayingUserIds.map(userId => this.makeFriendPeer(userId).peerId));
 
-    if (unknownPeerIds.length) {
-      for (let peerId of unknownPeerIds) {
-        if (!this.maybeUnavailablePeerIds.has(peerId) && this.connect(PeerContext.parse(peerId))) {
-          console.log('auto connect to unknown Peer <' + peerId + '>');
+    if (unknownUserIds.length) {
+      for (let userId of unknownUserIds) {
+        let context = this.makeFriendPeer(userId);
+        if (!this.maybeUnavailablePeerIds.has(context.peerId) && this.connect(context)) {
+          console.log('auto connect to unknown Peer <' + context.peerId + '>');
         }
       }
     }
+    if (needsNotifyUserList) this.notifyUserList();
   }
 
-  private updatePeerList(): string[] {
-    let peerIds: string[] = [];
-    for (let conn of this.connections) {
-      if (conn.open) peerIds.push(conn.remoteId);
-    }
-    peerIds.push(this.peerId);
-    peerIds.sort(function (a, b) {
-      if (a > b) return 1;
-      if (a < b) return -1;
-      return 0;
-    });
-
-    this._peerIds = peerIds;
-
-    console.log('<update()>', peerIds);
-    this.notifyPeerList();
-    return peerIds;
+  private updatePeerList() {
+    this.needsRefreshPeerIds = true;
+    this.notifyUserList();
   }
 
-  private notifyPeerList() {
+  private notifyUserList() {
     if (this.connections.length < 1) return;
     let container: DataContainer = {
       data: MessagePack.encode([]),
-      peers: this._peerIds,
+      users: this.userIds,
       ttl: 1
     }
     this.sendBroadcast(container);
+  }
+
+  private makeFriendPeer(userId: string): PeerContext {
+    return this.peerContext.isRoom
+      ? PeerContext.create(userId, this.peerContext.roomId, this.peerContext.roomName, this.peerContext.password)
+      : PeerContext.create(userId);
   }
 
   private getSkyWayErrorMessage(errType: string): string {
