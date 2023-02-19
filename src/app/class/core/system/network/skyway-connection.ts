@@ -28,7 +28,17 @@ export class SkyWayConnection implements Connection {
   get peerIds(): string[] { return this._peerIds }
 
   peerContext: PeerContext = PeerContext.parse('???');
-  readonly peerContexts: PeerContext[] = [];
+
+  private needsRefreshPeerContexts = false;
+  private _peerContexts: PeerContext[] = [];
+  get peerContexts(): PeerContext[] {
+    if (this.needsRefreshPeerContexts) {
+      this.needsRefreshPeerContexts = false;
+      this._peerContexts = this.connections.map(conn => conn.context);
+    }
+    return this._peerContexts;
+  }
+
   readonly callback: ConnectionCallback = new ConnectionCallback();
   bandwidthUsage: number = 0;
 
@@ -72,7 +82,7 @@ export class SkyWayConnection implements Connection {
     let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(context.peerId, {
       serialization: 'none',
       metadata: { sortKey: this.peerContext.digestUserId }
-    }));
+    }), context);
 
     this.openDataConnection(conn);
     return true;
@@ -211,7 +221,8 @@ export class SkyWayConnection implements Connection {
         console.log('connection is close. <' + conn.remoteId + '> is not valid.');
         return;
       }
-      this.openDataConnection(new SkyWayDataConnection(conn));
+      let context = PeerContext.parse(conn.remoteId);
+      this.openDataConnection(new SkyWayDataConnection(conn, context));
     });
 
     peer.on('error', err => {
@@ -243,17 +254,12 @@ export class SkyWayConnection implements Connection {
   private openDataConnection(conn: SkyWayDataConnection) {
     if (this.addDataConnection(conn) === false) return;
 
-    let index = this.connections.indexOf(conn);
-    let context: PeerContext = null;
-    if (0 <= index) context = this.peerContexts[index];
-
     this.maybeUnavailablePeerIds.add(conn.remoteId);
     conn.on('data', data => {
       this.onData(conn, data);
     });
     conn.on('open', () => {
       this.maybeUnavailablePeerIds.delete(conn.remoteId);
-      if (context) context.isOpen = true;
       this.updatePeerList();
       if (this.callback.onConnect) this.callback.onConnect(conn.remoteId);
     });
@@ -269,28 +275,28 @@ export class SkyWayConnection implements Connection {
       let ping = healthRate < 1 ? deltaTime : conn.ping;
       let pingRate = 500 / (ping + 500);
 
-      context.session.health = healthRate;
-      context.session.ping = ping;
-      context.session.speed = pingRate * healthRate;
+      conn.context.session.health = healthRate;
+      conn.context.session.ping = ping;
+      conn.context.session.speed = pingRate * healthRate;
 
       switch (conn.candidateType) {
         case CandidateType.HOST:
-          context.session.grade = PeerSessionGrade.HIGH;
+          conn.context.session.grade = PeerSessionGrade.HIGH;
           break;
         case CandidateType.SRFLX:
         case CandidateType.PRFLX:
-          context.session.grade = PeerSessionGrade.MIDDLE;
+          conn.context.session.grade = PeerSessionGrade.MIDDLE;
           break;
         case CandidateType.RELAY:
-          context.session.grade = PeerSessionGrade.LOW;
+          conn.context.session.grade = PeerSessionGrade.LOW;
           break;
         default:
-          context.session.grade = PeerSessionGrade.UNSPECIFIED;
+          conn.context.session.grade = PeerSessionGrade.UNSPECIFIED;
           break;
       }
-      context.session.description = conn.candidateType;
+      conn.context.session.description = conn.candidateType;
 
-      if (context.session.health < 0.2) {
+      if (conn.context.session.health < 0.2) {
         this.closeDataConnection(conn);
       }
     });
@@ -302,14 +308,14 @@ export class SkyWayConnection implements Connection {
     if (0 <= index) {
       console.log(conn.remoteId + ' is えんいー' + 'index:' + index + ' length:' + this.connections.length);
       this.connections.splice(index, 1);
-      this.peerContexts.splice(index, 1);
+      this.needsRefreshPeerContexts = true;
     }
     this.relayingPeerIds.delete(conn.remoteId);
     this.relayingPeerIds.forEach(peerIds => {
       let index = peerIds.indexOf(conn.remoteId);
       if (0 <= index) peerIds.splice(index, 1);
     });
-    console.log('<close()> Peer:' + conn.remoteId + ' length:' + this.connections.length + ':' + this.peerContexts.length);
+    console.log('<close()> Peer:' + conn.remoteId + ' length:' + this.connections.length);
     this.updatePeerList();
 
     if (0 <= index && this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
@@ -331,7 +337,7 @@ export class SkyWayConnection implements Connection {
       return false;
     }
     this.connections.push(conn);
-    this.peerContexts.push(PeerContext.parse(conn.remoteId));
+    this.needsRefreshPeerContexts = true;
     console.log('<add()> Peer:' + conn.remoteId + ' length:' + this.connections.length);
     return true;
   }
