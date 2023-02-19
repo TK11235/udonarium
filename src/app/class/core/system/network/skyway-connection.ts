@@ -1,3 +1,5 @@
+import * as SHA256 from 'crypto-js/sha256';
+
 import { compressAsync, decompressAsync } from '../util/compress';
 import { MessagePack } from '../util/message-pack';
 import { setZeroTimeout } from '../util/zero-timeout';
@@ -101,7 +103,10 @@ export class SkyWayConnection implements Connection {
 
     let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(context.peerId, {
       serialization: 'none',
-      metadata: { sortKey: this.peerContext.digestUserId }
+      metadata: {
+        sortKey: this.peerContext.digestUserId,
+        token: this.peerContext.isRoom ? '' : calcSHA256Base64(this.peerContext.digestUserId + context.userId)
+      }
     }), context);
 
     this.openDataConnection(conn);
@@ -238,7 +243,14 @@ export class SkyWayConnection implements Connection {
     peer.on('connection', conn => {
       if (!this.peerContext.verifyPeer(conn.remoteId)) {
         conn.close();
-        console.log('connection is close. <' + conn.remoteId + '> is not valid.');
+        conn.on('open', () => conn.close());
+        console.log('connection is close. <' + conn.remoteId + '> is not valid room.');
+        return;
+      }
+      if (!this.peerContext.isRoom && conn.metadata.token !== calcSHA256Base64(conn.metadata.sortKey + this.peerContext.userId)) {
+        conn.close();
+        conn.on('open', () => conn.close());
+        console.log('connection is close. <' + conn.remoteId + '> is not valid token.', conn.metadata.token, calcSHA256Base64(conn.metadata.sortKey + this.peerContext.userId));
         return;
       }
       let context = PeerContext.parse(conn.remoteId);
@@ -497,4 +509,12 @@ function diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
     }
   }
   return { diff1: diff1, diff2: diff2 };
+}
+
+function calcSHA256Base64(str: string): string {
+  if (str == null) return '';
+  let hash = SHA256(str);
+  let arrayBuffer = Uint32Array.from(hash.words).buffer;
+  let base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+  return base64;
 }
