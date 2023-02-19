@@ -188,8 +188,9 @@ export class SkyWayConnection implements Connection {
     let peer = new Peer(this.peerContext.peerId, { key: this.key });// SkyWay
     peer.on('open', id => {
       console.log('My peer ID is: ' + id);
-      if (!this.peerContext || this.peerContext.peerId !== id) {
-        this.peerContext = PeerContext.parse(id);
+      if (this.peerContext.peerId !== id) {
+        console.error('...peer is not me? <' + id + '>', this.peerContext);
+        return;
       }
       this.peerContext.isOpen = true;
       console.log('My peer Context', this.peerContext);
@@ -198,7 +199,7 @@ export class SkyWayConnection implements Connection {
 
     peer.on('close', () => {
       console.log('Peer close');
-      if (this.peerContext && this.peerContext.isOpen) {
+      if (this.peerContext.isOpen) {
         this.peerContext.isOpen = false;
         if (this.callback.onClose) this.callback.onClose(this.peerId);
       }
