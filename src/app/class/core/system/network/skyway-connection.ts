@@ -71,7 +71,7 @@ export class SkyWayConnection implements Connection {
 
     let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(context.peerId, {
       serialization: 'none',
-      metadata: { sortKey: this.peerContext.userId }
+      metadata: { sortKey: this.peerContext.digestUserId }
     }));
 
     this.openDataConnection(conn);
