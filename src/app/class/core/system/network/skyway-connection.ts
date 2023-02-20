@@ -241,16 +241,12 @@ export class SkyWayConnection implements Connection {
     });
 
     peer.on('connection', conn => {
-      if (!this.peerContext.verifyPeer(conn.remoteId)) {
+      let validPeerId = this.peerContext.verifyPeer(conn.remoteId);
+      let validToken = this.peerContext.isRoom || conn.metadata.token === calcSHA256Base64(conn.metadata.sortKey + this.peerContext.userId);
+      if (!validPeerId || !validToken) {
         conn.close();
         conn.on('open', () => conn.close());
-        console.log('connection is close. <' + conn.remoteId + '> is not valid room.');
-        return;
-      }
-      if (!this.peerContext.isRoom && conn.metadata.token !== calcSHA256Base64(conn.metadata.sortKey + this.peerContext.userId)) {
-        conn.close();
-        conn.on('open', () => conn.close());
-        console.log('connection is close. <' + conn.remoteId + '> is not valid token.', conn.metadata.token, calcSHA256Base64(conn.metadata.sortKey + this.peerContext.userId));
+        console.log('connection is close. <' + conn.remoteId + '> is not valid.');
         return;
       }
       let context = PeerContext.parse(conn.remoteId);
