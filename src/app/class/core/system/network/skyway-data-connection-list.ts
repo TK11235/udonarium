@@ -21,6 +21,11 @@ export class SkyWayDataConnectionList implements Iterable<SkyWayDataConnection> 
     if (this.needsRefreshPeerContexts) {
       this.needsRefreshPeerContexts = false;
       this._peerContexts = this.connections.map(conn => conn.context);
+      this._peerContexts.sort((a, b) => {
+        if (a.peerId > b.peerId) return 1;
+        if (a.peerId < b.peerId) return -1;
+        return 0;
+      });
     }
     return this._peerContexts;
   }
