@@ -13,14 +13,13 @@ export class Network {
     if (!Network._instance) Network._instance = new Network();
     return Network._instance;
   }
+  get isOpen(): boolean { return this.connection && this.connection.peerContext ? this.connection.peerContext.isOpen : false; }
 
   get peerId(): string { return this.connection ? this.connection.peerId : unknownContext.peerId; }
   get peerIds(): string[] { return this.connection ? this.connection.peerIds.concat() : []; }
 
-  get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peerContexts.concat() : []; }
   get peerContext(): IPeerContext { return this.connection ? this.connection.peerContext : unknownContext; }
-
-  get isOpen(): boolean { return this.connection && this.connection.peerContext ? this.connection.peerContext.isOpen : false; }
+  get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peerContexts.concat() : []; }
 
   readonly callback: ConnectionCallback = new ConnectionCallback();
   get bandwidthUsage(): number { return this.connection ? this.connection.bandwidthUsage : 0; }
