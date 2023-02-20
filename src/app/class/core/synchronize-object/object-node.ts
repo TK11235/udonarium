@@ -5,6 +5,9 @@ import { GameObject, ObjectContext } from './game-object';
 import { InnerXml, ObjectSerializer, XmlAttributes } from './object-serializer';
 import { ObjectStore } from './object-store';
 
+// 親Nodeの存在が未知の子Node
+const orphanNodes: { [parentIdentifier: string]: ObjectNode[] } = {};
+
 @SyncObject('node')
 export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   @SyncVar() value: number | string = '';
@@ -35,8 +38,6 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     return this._children.concat();
   }
 
-  // TODO 名前　親Nodeの存在が未知の状態であるNode
-  private static unknownNodes: { [identifier: string]: ObjectNode[] } = {};
   private needsSort: boolean = true;
 
   // override
@@ -85,13 +86,13 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   }
 
   private initializeChildren() {
-    if (ObjectNode.unknownNodes[this.identifier] == null) return;
-    let objects = ObjectNode.unknownNodes[this.identifier];
+    if (orphanNodes[this.identifier] == null) return;
+    let objects = orphanNodes[this.identifier];
     for (let object of objects) {
       if (object.parent === this) this.updateChildren(object);
     }
-    if (ObjectNode.unknownNodes[this.identifier]) {
-      delete ObjectNode.unknownNodes[this.identifier];
+    if (orphanNodes[this.identifier]) {
+      delete orphanNodes[this.identifier];
     }
   }
 
@@ -250,10 +251,10 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     if (this.parent) {
       this.parent.updateChildren(this);
     } else if (this.parentIsAssigned) {
-      if (!(this.parentIdentifier in ObjectNode.unknownNodes)) {
-        ObjectNode.unknownNodes[this.parentIdentifier] = [];
+      if (!(this.parentIdentifier in orphanNodes)) {
+        orphanNodes[this.parentIdentifier] = [];
       }
-      ObjectNode.unknownNodes[this.parentIdentifier].push(this);
+      orphanNodes[this.parentIdentifier].push(this);
     }
   }
 }
