@@ -84,18 +84,19 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   async connect(peerContexts: PeerContext[]) {
-    let context = peerContexts[0];
+    let sampleContext = peerContexts[0];
     let password = '';
 
-    if (context.hasPassword) {
-      password = await this.modalService.open<string>(PasswordCheckComponent, { peerId: context.peerId, title: `${context.roomName}/${context.roomId}` });
+    if (peerContexts.find(context => context.hasPassword)) {
+      password = await this.modalService.open<string>(PasswordCheckComponent, { peerContexts: peerContexts, title: `${sampleContext.roomName}/${sampleContext.roomId}` });
       if (password == null) password = '';
     }
 
-    if (!context.verifyPassword(password)) return;
+    let targetContexts = peerContexts.filter(context => context.verifyPassword(password));
+    if (targetContexts.length < 1) return;
 
     let userId = Network.peerContext ? Network.peerContext.userId : PeerContext.generateId();
-    Network.open(userId, context.roomId, context.roomName, password);
+    Network.open(userId, sampleContext.roomId, sampleContext.roomName, password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let triedPeer: string[] = [];
@@ -104,15 +105,15 @@ export class LobbyComponent implements OnInit, OnDestroy {
         console.log('LobbyComponent OPEN_PEER', event.data.peerId);
         EventSystem.unregister(triedPeer);
         ObjectStore.instance.clearDeleteHistory();
-        for (let context of peerContexts) {
+        for (let context of targetContexts) {
           Network.connect(context);
         }
         EventSystem.register(triedPeer)
           .on('CONNECT_PEER', event => {
             console.log('接続成功！', event.data.peerId);
             triedPeer.push(event.data.peerId);
-            console.log('接続成功 ' + triedPeer.length + '/' + peerContexts.length);
-            if (peerContexts.length <= triedPeer.length) {
+            console.log('接続成功 ' + triedPeer.length + '/' + targetContexts.length);
+            if (targetContexts.length <= triedPeer.length) {
               this.resetNetwork();
               EventSystem.unregister(triedPeer);
               this.closeIfConnected();
@@ -121,8 +122,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
           .on('DISCONNECT_PEER', event => {
             console.warn('接続失敗', event.data.peerId);
             triedPeer.push(event.data.peerId);
-            console.warn('接続失敗 ' + triedPeer.length + '/' + peerContexts.length);
-            if (peerContexts.length <= triedPeer.length) {
+            console.warn('接続失敗 ' + triedPeer.length + '/' + targetContexts.length);
+            if (targetContexts.length <= triedPeer.length) {
               this.resetNetwork();
               EventSystem.unregister(triedPeer);
               this.closeIfConnected();
