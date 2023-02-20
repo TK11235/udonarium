@@ -24,9 +24,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   get currentRoom(): string { return Network.peerContext.roomId };
   get peerId(): string { return Network.peerId; }
-  get isConnected(): boolean {
-    return Network.peerIds.length <= 1 ? false : true;
-  }
+  get isConnected(): boolean { return 0 < Network.peerIds.length; }
+
   constructor(
     private panelService: PanelService,
     private modalService: ModalService

@@ -21,7 +21,7 @@ export class RoomSettingComponent implements OnInit, OnDestroy {
   isPrivate: boolean = false;
 
   get peerId(): string { return Network.peerId; }
-  get isConnected(): boolean { return Network.peerIds.length <= 1 ? false : true; }
+  get isConnected(): boolean { return 0 < Network.peerIds.length; }
   validateLength: boolean = false;
 
   constructor(

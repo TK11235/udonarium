@@ -182,7 +182,6 @@ export class AudioSharingSystem {
   private request(request: CatalogItem[], peerId: string) {
     console.log('requestFile() ' + peerId);
     let peerIds = Network.peerIds;
-    peerIds.splice(peerIds.indexOf(Network.peerId), 1);
     EventSystem.call('REQUEST_AUDIO_RESOURE', { identifiers: request, receiver: Network.peerId, candidatePeers: peerIds }, peerId);
   }
 

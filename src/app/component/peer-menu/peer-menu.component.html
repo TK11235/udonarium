@@ -40,7 +40,7 @@
     <input [(ngModel)]="targetUserId" placeholder="接続したい相手のID" name="targetUserId" />
     <button (click)="connectPeer()" [disabled]="!networkService.isOpen">プライベート接続</button><br>
   </ng-container>
-  <button *ngIf="networkService.peerIds.length <= 1" (click)="showLobby()" [disabled]="!networkService.isOpen">ロビー（ルーム一覧）を表示</button>
+  <button *ngIf="networkService.peerIds.length < 1" (click)="showLobby()" [disabled]="!networkService.isOpen">ロビー（ルーム一覧）を表示</button>
 </div>
 <div><span style="font-size: 12px;">{{help}}</span></div>
 <ng-container *ngIf="!networkService.peerContext.isRoom">

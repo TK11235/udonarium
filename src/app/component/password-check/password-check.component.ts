@@ -21,9 +21,7 @@ export class PasswordCheckComponent implements OnInit, AfterViewInit, OnDestroy 
   title: string = '';
 
   get peerId(): string { return Network.peerId; }
-  get isConnected(): boolean {
-    return Network.peerIds.length <= 1 ? false : true;
-  }
+  get isConnected(): boolean { return 0 < Network.peerIds.length; }
 
   constructor(
     private panelService: PanelService,

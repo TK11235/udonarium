@@ -287,7 +287,7 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
       ContextMenuSeparator,
       {
         name: '山札を人数分に分割する', action: () => {
-          this.splitStack(Network.peerIds.length);
+          this.splitStack(Network.peerIds.length + 1);
           SoundEffect.play(PresetSound.cardDraw);
         }
       },

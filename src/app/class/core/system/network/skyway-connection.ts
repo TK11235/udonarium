@@ -28,7 +28,7 @@ export class SkyWayConnection implements Connection {
   private get userIds(): string[] { return this.peerContexts.map(context => context.userId).filter(userId => 0 < userId.length).concat([this.peerContext.userId]); }
 
   get peerId(): string { return this.peerContext.peerId; }
-  get peerIds(): string[] { return [this.peerId].concat(this.connections.peerIds); }
+  get peerIds(): string[] { return this.connections.peerIds; }
 
   peerContext: PeerContext = PeerContext.parse('???');
   get peerContexts(): PeerContext[] { return this.connections.peerContexts; }

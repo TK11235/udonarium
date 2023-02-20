@@ -34,7 +34,7 @@ export class PeerCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private _target: HTMLElement;
 
   get delayMs(): number {
-    let maxDelay = Network.peerIds.length * 16.6;
+    let maxDelay = (Network.peerIds.length + 1) * 16.6;
     return maxDelay < 100 ? 100 : maxDelay;
   }
 
