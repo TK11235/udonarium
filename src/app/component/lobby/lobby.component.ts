@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
-import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { EventSystem, Network } from '@udonarium/core/system';
+import { IRoomInfo } from '@udonarium/core/system/network/room-info';
 import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { PasswordCheckComponent } from 'component/password-check/password-check.component';
@@ -16,7 +16,7 @@ import { PanelService } from 'service/panel.service';
   styleUrls: ['./lobby.component.css'],
 })
 export class LobbyComponent implements OnInit, OnDestroy {
-  rooms: { alias: string, roomName: string, peerContexts: PeerContext[] }[] = [];
+  rooms: IRoomInfo[] = [];
 
   isReloading: boolean = false;
 
@@ -57,45 +57,24 @@ export class LobbyComponent implements OnInit, OnDestroy {
   async reload() {
     this.isReloading = true;
     this.help = '検索中...';
-    this.rooms = [];
-    let peersOfroom: { [room: string]: PeerContext[] } = {};
-    let peerIds = await Network.listAllPeers();
-    for (let peerId of peerIds) {
-      let context = PeerContext.parse(peerId);
-      if (context.isRoom) {
-        let alias = context.roomId + context.roomName;
-        if (!(alias in peersOfroom)) {
-          peersOfroom[alias] = [];
-        }
-        peersOfroom[alias].push(context);
-      }
-    }
-    for (let alias in peersOfroom) {
-      this.rooms.push({ alias: alias, roomName: peersOfroom[alias][0].roomName, peerContexts: peersOfroom[alias] });
-    }
-    this.rooms.sort((a, b) => {
-      if (a.alias < b.alias) return -1;
-      if (a.alias > b.alias) return 1;
-      return 0;
-    });
+    this.rooms = await Network.listAllRooms();
     this.help = '接続可能なルームが見つかりませんでした。「新しいルームを作成する」で新規ルームを作成できます。';
     this.isReloading = false;
   }
 
-  async connect(peerContexts: PeerContext[]) {
-    let sampleContext = peerContexts[0];
+  async connect(room: IRoomInfo) {
     let password = '';
 
-    if (peerContexts.find(context => context.hasPassword)) {
-      password = await this.modalService.open<string>(PasswordCheckComponent, { peerContexts: peerContexts, title: `${sampleContext.roomName}/${sampleContext.roomId}` });
+    if (room.hasPassword) {
+      password = await this.modalService.open<string>(PasswordCheckComponent, { peerContexts: room.peers, title: `${room.name}/${room.id}` });
       if (password == null) password = '';
     }
 
-    let targetContexts = peerContexts.filter(context => context.verifyPassword(password));
+    let targetContexts = room.filterByPassword(password);
     if (targetContexts.length < 1) return;
 
-    let userId = Network.peerContext ? Network.peerContext.userId : PeerContext.generateId();
-    Network.open(userId, sampleContext.roomId, sampleContext.roomName, password);
+    let userId = Network.peerContext.userId;
+    Network.open(userId, room.id, room.name, password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let triedPeer: string[] = [];
