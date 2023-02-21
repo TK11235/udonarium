@@ -1,4 +1,5 @@
 import { IPeerContext } from './peer-context';
+import { IRoomInfo } from './room-info';
 
 export class ConnectionCallback {
   onOpen: (peerId: string) => void;
@@ -26,4 +27,5 @@ export interface Connection {
   send(data: any, sendTo?: string)
   setApiKey(key: string);
   listAllPeers(): Promise<string[]>
+  listAllRooms(): Promise<IRoomInfo[]>
 }

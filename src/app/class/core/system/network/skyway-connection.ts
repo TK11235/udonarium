@@ -6,6 +6,7 @@ import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { IPeerContext, PeerContext } from './peer-context';
 import { PeerSessionGrade } from './peer-session-state';
+import { IRoomInfo, RoomInfo } from './room-info';
 import { SkyWayDataConnection } from './skyway-data-connection';
 import { SkyWayDataConnectionList } from './skyway-data-connection-list';
 import { CandidateType } from './webrtc-stats';
@@ -185,6 +186,11 @@ export class SkyWayConnection implements Connection {
         resolve(list);
       });
     });
+  }
+
+  async listAllRooms(): Promise<IRoomInfo[]> {
+    let allPeerIds = await this.listAllPeers();
+    return RoomInfo.listFrom(allPeerIds);
   }
 
   private openPeer() {

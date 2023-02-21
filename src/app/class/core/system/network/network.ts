@@ -1,6 +1,7 @@
 import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { IPeerContext, PeerContext } from './peer-context';
+import { IRoomInfo } from './room-info';
 import { SkyWayConnection } from './skyway-connection';
 
 type QueueItem = { data: any, sendTo: string };
@@ -124,6 +125,10 @@ export class Network {
 
   listAllPeers(): Promise<string[]> {
     return this.connection ? this.connection.listAllPeers() : Promise.resolve([]);
+  }
+
+  listAllRooms(): Promise<IRoomInfo[]> {
+    return this.connection ? this.connection.listAllRooms() : Promise.resolve([]);
   }
 
   private initializeConnection(): Connection {
