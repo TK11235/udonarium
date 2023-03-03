@@ -15,19 +15,19 @@ export class SkyWayDataConnectionList implements Iterable<SkyWayDataConnection> 
     };
   }
 
-  private needsRefreshPeerContexts = false;
-  private _peerContexts: PeerContext[] = [];
-  get peerContexts(): PeerContext[] {
-    if (this.needsRefreshPeerContexts) {
-      this.needsRefreshPeerContexts = false;
-      this._peerContexts = this.connections.map(conn => conn.context);
-      this._peerContexts.sort((a, b) => {
+  private needsRefreshPeers = false;
+  private _peers: PeerContext[] = [];
+  get peers(): PeerContext[] {
+    if (this.needsRefreshPeers) {
+      this.needsRefreshPeers = false;
+      this._peers = this.connections.map(conn => conn.peer);
+      this._peers.sort((a, b) => {
         if (a.peerId > b.peerId) return 1;
         if (a.peerId < b.peerId) return -1;
         return 0;
       });
     }
-    return this._peerContexts;
+    return this._peers;
   }
 
   private needsRefreshPeerIds = false;
@@ -86,7 +86,7 @@ export class SkyWayDataConnectionList implements Iterable<SkyWayDataConnection> 
   }
 
   refresh() {
-    this.needsRefreshPeerContexts = true;
+    this.needsRefreshPeers = true;
     this.needsRefreshPeerIds = true;
   }
 }

@@ -33,7 +33,7 @@ interface ReceivedChank {
 };
 
 export class SkyWayDataConnection extends EventEmitter {
-  readonly context: PeerContext;
+  readonly peer: PeerContext;
 
   private chunkSize = 15.5 * 1024;
   private receivedMap: Map<string, ReceivedChank> = new Map();
@@ -58,24 +58,24 @@ export class SkyWayDataConnection extends EventEmitter {
   get candidateType(): CandidateType { return this._candidateType; }
   private set candidateType(candidateType: CandidateType) { this._candidateType = candidateType };
 
-  constructor(private conn: PeerJs.DataConnection, context: IPeerContext) {
+  constructor(private conn: PeerJs.DataConnection, peer: IPeerContext) {
     super();
 
-    this.context = PeerContext.parse(context.peerId);
-    this.context.userId = context.userId;
-    this.context.password = context.password;
+    this.peer = PeerContext.parse(peer.peerId);
+    this.peer.userId = peer.userId;
+    this.peer.password = peer.password;
 
     conn.on('data', data => this.onData(data));
     conn.on('open', () => {
       this.stats = new WebRTCStats(this.getPeerConnection());
-      this.context.isOpen = true;
+      this.peer.isOpen = true;
       this.clearTimeoutTimer();
       exchangeSkyWayImplementation(conn);
       this.emit('open');
       this.startMonitoring();
     });
     conn.on('close', () => {
-      this.context.isOpen = false;
+      this.peer.isOpen = false;
       this.clearTimeoutTimer();
       this.emit('close');
     });
@@ -88,7 +88,7 @@ export class SkyWayDataConnection extends EventEmitter {
   }
 
   close() {
-    this.context.isOpen = false;
+    this.peer.isOpen = false;
     this.clearTimeoutTimer();
     this.stopMonitoring();
     this.conn.close();

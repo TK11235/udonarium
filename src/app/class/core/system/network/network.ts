@@ -14,13 +14,13 @@ export class Network {
     if (!Network._instance) Network._instance = new Network();
     return Network._instance;
   }
-  get isOpen(): boolean { return this.connection ? this.connection.peerContext.isOpen : false; }
+  get isOpen(): boolean { return this.connection ? this.connection.peer.isOpen : false; }
 
   get peerId(): string { return this.connection ? this.connection.peerId : unknownContext.peerId; }
   get peerIds(): string[] { return this.connection ? this.connection.peerIds.concat() : []; }
 
-  get peerContext(): IPeerContext { return this.connection ? this.connection.peerContext : unknownContext; }
-  get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peerContexts.concat() : []; }
+  get peerContext(): IPeerContext { return this.connection ? this.connection.peer : unknownContext; }
+  get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peers.concat() : []; }
 
   readonly callback: ConnectionCallback = new ConnectionCallback();
   get bandwidthUsage(): number { return this.connection ? this.connection.bandwidthUsage : 0; }
@@ -40,7 +40,7 @@ export class Network {
   open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
-    if (this.connection && this.connection.peerContext) {
+    if (this.connection && this.connection.peer) {
       console.warn('It is already opened.');
       this.close();
     }

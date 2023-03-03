@@ -13,16 +13,16 @@ export class ConnectionCallback {
 export interface Connection {
   readonly peerId: string;
   readonly peerIds: string[];
-  readonly peerContext: IPeerContext;
-  readonly peerContexts: IPeerContext[];
+  readonly peer: IPeerContext;
+  readonly peers: IPeerContext[];
   readonly callback: ConnectionCallback;
   readonly bandwidthUsage: number;
 
   open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   close()
-  connect(context: IPeerContext): boolean
-  disconnect(context: IPeerContext): boolean
+  connect(peer: IPeerContext): boolean
+  disconnect(peer: IPeerContext): boolean
   disconnectAll()
   send(data: any, sendTo?: string)
   setApiKey(key: string);
