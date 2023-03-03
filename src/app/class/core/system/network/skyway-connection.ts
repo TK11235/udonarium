@@ -38,7 +38,7 @@ export class SkyWayConnection implements Connection {
   bandwidthUsage: number = 0;
 
   private key: string = '';
-  private peer: PeerJs.Peer;
+  private skyWay: PeerJs.Peer;
   private connections: SkyWayDataConnectionList = new SkyWayDataConnectionList();
 
   private listAllPeersCache: string[] = [];
@@ -65,16 +65,16 @@ export class SkyWayConnection implements Connection {
   }
 
   close() {
-    if (this.peer) this.peer.destroy();
+    if (this.skyWay) this.skyWay.destroy();
     this.disconnectAll();
-    this.peer = null;
+    this.skyWay = null;
     this.peerContext = PeerContext.parse('???');
   }
 
   connect(context: IPeerContext): boolean {
     if (!this.shouldConnect(context.peerId)) return false;
 
-    let conn: SkyWayDataConnection = new SkyWayDataConnection(this.peer.connect(context.peerId, {
+    let conn: SkyWayDataConnection = new SkyWayDataConnection(this.skyWay.connect(context.peerId, {
       serialization: 'none',
       metadata: {
         sortKey: this.peerContext.digestUserId,
@@ -87,7 +87,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private shouldConnect(peerId: string): boolean {
-    if (!this.peerContext || !this.peer || !this.peerId) {
+    if (!this.peerContext || !this.skyWay || !this.peerId) {
       console.log('connect() is Fail. IDが割り振られるまで待てや');
       return false;
     }
@@ -173,7 +173,7 @@ export class SkyWayConnection implements Connection {
 
   listAllPeers(): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      if (!this.peer) return resolve([]);
+      if (!this.skyWay) return resolve([]);
       let now = performance.now();
       if (now < this.httpRequestInterval) {
         console.warn('httpRequestInterval... ' + (this.httpRequestInterval - now));
@@ -181,7 +181,7 @@ export class SkyWayConnection implements Connection {
         return;
       }
       this.httpRequestInterval = now + 6000;
-      this.peer.listAllPeers((list) => {
+      this.skyWay.listAllPeers((list) => {
         this.listAllPeersCache = list.concat();
         resolve(list);
       });
@@ -194,7 +194,7 @@ export class SkyWayConnection implements Connection {
   }
 
   private openPeer() {
-    if (this.peer) {
+    if (this.skyWay) {
       console.warn('It is already opened.');
       this.close();
     }
@@ -254,7 +254,7 @@ export class SkyWayConnection implements Connection {
       }
       if (this.callback.onError) this.callback.onError(this.peerId, err.type, errorMessage, err);
     });
-    this.peer = peer;
+    this.skyWay = peer;
   }
 
   private openDataConnection(conn: SkyWayDataConnection) {
