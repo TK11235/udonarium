@@ -1,12 +1,12 @@
 import * as SHA256 from 'crypto-js/sha256';
 
-import { compressAsync, decompressAsync } from '../util/compress';
-import { MessagePack } from '../util/message-pack';
-import { setZeroTimeout } from '../util/zero-timeout';
-import { Connection, ConnectionCallback } from './connection';
-import { IPeerContext, PeerContext } from './peer-context';
-import { PeerSessionGrade } from './peer-session-state';
-import { IRoomInfo, RoomInfo } from './room-info';
+import { compressAsync, decompressAsync } from '../../util/compress';
+import { MessagePack } from '../../util/message-pack';
+import { setZeroTimeout } from '../../util/zero-timeout';
+import { Connection, ConnectionCallback } from '../connection';
+import { IPeerContext, PeerContext } from '../peer-context';
+import { PeerSessionGrade } from '../peer-session-state';
+import { IRoomInfo, RoomInfo } from '../room-info';
 import { SkyWayDataConnection } from './skyway-data-connection';
 import { SkyWayDataConnectionList } from './skyway-data-connection-list';
 import { CandidateType } from './webrtc-stats';

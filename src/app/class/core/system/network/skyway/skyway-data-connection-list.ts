@@ -1,4 +1,4 @@
-import { PeerContext } from './peer-context';
+import { PeerContext } from '../peer-context';
 import { SkyWayDataConnection } from './skyway-data-connection';
 
 export class SkyWayDataConnectionList implements Iterable<SkyWayDataConnection> {

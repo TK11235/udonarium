@@ -1,9 +1,9 @@
 import { EventEmitter } from 'events';
 
-import { MessagePack } from '../util/message-pack';
-import { UUID } from '../util/uuid';
-import { setZeroTimeout } from '../util/zero-timeout';
-import { IPeerContext, PeerContext } from './peer-context';
+import { MessagePack } from '../../util/message-pack';
+import { UUID } from '../../util/uuid';
+import { setZeroTimeout } from '../../util/zero-timeout';
+import { IPeerContext, PeerContext } from '../peer-context';
 import { SkyWayStatsMonitor } from './skyway-stats-monitor';
 import { CandidateType, WebRTCStats } from './webrtc-stats';
 

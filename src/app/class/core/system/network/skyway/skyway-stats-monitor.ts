@@ -1,4 +1,4 @@
-import { ResettableTimeout } from '../util/resettable-timeout';
+import { ResettableTimeout } from '../../util/resettable-timeout';
 import { SkyWayDataConnection } from './skyway-data-connection';
 
 export class SkyWayStatsMonitor {
