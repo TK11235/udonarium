@@ -235,7 +235,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isMine) {
       actions.push({
         name: '自分だけ見る', action: () => {
-          this.owner = Network.peerContext.userId;
+          this.owner = Network.peer.userId;
           SoundEffect.play(PresetSound.lock);
         }
       });

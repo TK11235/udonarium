@@ -250,8 +250,8 @@ export class ChatInputComponent implements OnInit, OnDestroy {
       case 'graveyard':
         return false;
       default:
-        for (const conn of Network.peerContexts) {
-          if (conn.isOpen && gameCharacter.location.name === conn.peerId) {
+        for (const peer of Network.peers) {
+          if (peer.isOpen && gameCharacter.location.name === peer.peerId) {
             return false;
           }
         }

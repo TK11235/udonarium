@@ -153,8 +153,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       })
       .on('OPEN_NETWORK', event => {
         console.log('OPEN_NETWORK', event.data.peerId);
-        PeerCursor.myCursor.peerId = Network.peerContext.peerId;
-        PeerCursor.myCursor.userId = Network.peerContext.userId;
+        PeerCursor.myCursor.peerId = Network.peer.peerId;
+        PeerCursor.myCursor.userId = Network.peer.userId;
       })
       .on('NETWORK_ERROR', event => {
         console.log('NETWORK_ERROR', event.data.peerId);
@@ -240,8 +240,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.isSaveing = true;
     this.progresPercent = 0;
 
-    let roomName = Network.peerContext && 0 < Network.peerContext.roomName.length
-      ? Network.peerContext.roomName
+    let roomName = 0 < Network.peer.roomName.length
+      ? Network.peer.roomName
       : 'ルームデータ';
     await this.saveDataService.saveRoomAsync(roomName, percent => {
       this.progresPercent = percent;

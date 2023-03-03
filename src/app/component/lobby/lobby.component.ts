@@ -22,7 +22,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   help: string = '「一覧を更新」ボタンを押すと接続可能なルーム一覧を表示します。';
 
-  get currentRoom(): string { return Network.peerContext.roomId };
+  get currentRoom(): string { return Network.peer.roomId };
   get peerId(): string { return Network.peerId; }
   get isConnected(): boolean { return 0 < Network.peerIds.length; }
 
@@ -45,8 +45,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   private changeTitle() {
     this.modalService.title = this.panelService.title = 'ロビー';
-    if (Network.peerContext.roomName.length) {
-      this.modalService.title = this.panelService.title = '＜' + Network.peerContext.roomName + '/' + Network.peerContext.roomId + '＞'
+    if (Network.peer.roomName.length) {
+      this.modalService.title = this.panelService.title = '＜' + Network.peer.roomName + '/' + Network.peer.roomId + '＞'
     }
   }
 
@@ -66,14 +66,14 @@ export class LobbyComponent implements OnInit, OnDestroy {
     let password = '';
 
     if (room.hasPassword) {
-      password = await this.modalService.open<string>(PasswordCheckComponent, { peerContexts: room.peers, title: `${room.name}/${room.id}` });
+      password = await this.modalService.open<string>(PasswordCheckComponent, { peers: room.peers, title: `${room.name}/${room.id}` });
       if (password == null) password = '';
     }
 
-    let targetContexts = room.filterByPassword(password);
-    if (targetContexts.length < 1) return;
+    let targetPeers = room.filterByPassword(password);
+    if (targetPeers.length < 1) return;
 
-    let userId = Network.peerContext.userId;
+    let userId = Network.peer.userId;
     Network.open(userId, room.id, room.name, password);
     PeerCursor.myCursor.peerId = Network.peerId;
 
@@ -83,15 +83,15 @@ export class LobbyComponent implements OnInit, OnDestroy {
         console.log('LobbyComponent OPEN_PEER', event.data.peerId);
         EventSystem.unregister(triedPeer);
         ObjectStore.instance.clearDeleteHistory();
-        for (let context of targetContexts) {
-          Network.connect(context);
+        for (let peer of targetPeers) {
+          Network.connect(peer);
         }
         EventSystem.register(triedPeer)
           .on('CONNECT_PEER', event => {
             console.log('接続成功！', event.data.peerId);
             triedPeer.push(event.data.peerId);
-            console.log('接続成功 ' + triedPeer.length + '/' + targetContexts.length);
-            if (targetContexts.length <= triedPeer.length) {
+            console.log('接続成功 ' + triedPeer.length + '/' + targetPeers.length);
+            if (targetPeers.length <= triedPeer.length) {
               this.resetNetwork();
               EventSystem.unregister(triedPeer);
               this.closeIfConnected();
@@ -100,8 +100,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
           .on('DISCONNECT_PEER', event => {
             console.warn('接続失敗', event.data.peerId);
             triedPeer.push(event.data.peerId);
-            console.warn('接続失敗 ' + triedPeer.length + '/' + targetContexts.length);
-            if (targetContexts.length <= triedPeer.length) {
+            console.warn('接続失敗 ' + triedPeer.length + '/' + targetPeers.length);
+            if (targetPeers.length <= triedPeer.length) {
               this.resetNetwork();
               EventSystem.unregister(triedPeer);
               this.closeIfConnected();
@@ -111,14 +111,14 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   private resetNetwork() {
-    if (Network.peerContexts.length < 1) {
+    if (Network.peers.length < 1) {
       Network.open();
       PeerCursor.myCursor.peerId = Network.peerId;
     }
   }
 
   private closeIfConnected() {
-    if (0 < Network.peerContexts.length) this.modalService.resolve();
+    if (0 < Network.peers.length) this.modalService.resolve();
   }
 
   async showRoomSetting() {

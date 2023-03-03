@@ -26,18 +26,18 @@ export class RoomInfo implements IRoomInfo {
   }
 
   static listFrom(peerIds: string[]) {
-    let contexts = peerIds.map(peerId => PeerContext.parse(peerId)).sort((a, b) => {
+    let peers = peerIds.map(peerId => PeerContext.parse(peerId)).sort((a, b) => {
       if (a.peerId > b.peerId) return 1;
       if (a.peerId < b.peerId) return -1;
       return 0;
     });
 
     let roomMap: Map<string, RoomInfo> = new Map();
-    for (let context of contexts) {
-      if (context.isRoom) {
-        let alias = context.roomId + context.roomName;
-        let room = roomMap.get(alias) ?? new RoomInfo(context.roomId, context.roomName);
-        room.peers.push(context);
+    for (let peer of peers) {
+      if (peer.isRoom) {
+        let alias = peer.roomId + peer.roomName;
+        let room = roomMap.get(alias) ?? new RoomInfo(peer.roomId, peer.roomName);
+        room.peers.push(peer);
         roomMap.set(alias, room);
       }
     }

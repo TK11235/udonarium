@@ -17,7 +17,7 @@ export class PasswordCheckComponent implements OnInit, AfterViewInit, OnDestroy 
   password: string = '';
   help: string = '';
 
-  private targetPeerContexts: PeerContext[] = [];
+  private targetPeers: PeerContext[] = [];
   title: string = '';
 
   get peerId(): string { return Network.peerId; }
@@ -27,7 +27,7 @@ export class PasswordCheckComponent implements OnInit, AfterViewInit, OnDestroy 
     private panelService: PanelService,
     private modalService: ModalService
   ) {
-    this.targetPeerContexts = modalService.option.peerContexts ?? [];
+    this.targetPeers = modalService.option.peers ?? [];
     this.title = modalService.option.title ? modalService.option.title : '';
   }
 
@@ -49,7 +49,7 @@ export class PasswordCheckComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   submit() {
-    if (this.targetPeerContexts.find(context => context.verifyPassword(this.password))) this.modalService.resolve(this.password);
+    if (this.targetPeers.find(peer => peer.verifyPassword(this.password))) this.modalService.resolve(this.password);
     this.help = 'パスワードが違います';
   }
 }

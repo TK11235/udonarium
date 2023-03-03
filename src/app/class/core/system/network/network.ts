@@ -6,7 +6,7 @@ import { SkyWayConnection } from './skyway-connection';
 
 type QueueItem = { data: any, sendTo: string };
 
-const unknownContext = PeerContext.parse('???');
+const unknownPeer = PeerContext.parse('???');
 
 export class Network {
   private static _instance: Network
@@ -16,11 +16,11 @@ export class Network {
   }
   get isOpen(): boolean { return this.connection ? this.connection.peer.isOpen : false; }
 
-  get peerId(): string { return this.connection ? this.connection.peerId : unknownContext.peerId; }
+  get peerId(): string { return this.connection ? this.connection.peerId : unknownPeer.peerId; }
   get peerIds(): string[] { return this.connection ? this.connection.peerIds.concat() : []; }
 
-  get peerContext(): IPeerContext { return this.connection ? this.connection.peer : unknownContext; }
-  get peerContexts(): IPeerContext[] { return this.connection ? this.connection.peers.concat() : []; }
+  get peer(): IPeerContext { return this.connection ? this.connection.peer : unknownPeer; }
+  get peers(): IPeerContext[] { return this.connection ? this.connection.peers.concat() : []; }
 
   readonly callback: ConnectionCallback = new ConnectionCallback();
   get bandwidthUsage(): number { return this.connection ? this.connection.bandwidthUsage : 0; }
@@ -59,16 +59,16 @@ export class Network {
     console.log('Network close...');
   }
 
-  connect(context: IPeerContext): boolean {
-    if (this.connection) return this.connection.connect(context);
+  connect(peer: IPeerContext): boolean {
+    if (this.connection) return this.connection.connect(peer);
     return false;
   }
 
-  disconnect(context: IPeerContext) {
+  disconnect(peer: IPeerContext) {
     if (!this.connection) return;
-    if (this.connection.disconnect(context)) {
-      console.log('<disconnectPeer()> Peer:' + context.peerId);
-      this.disconnect(context);
+    if (this.connection.disconnect(peer)) {
+      console.log('<disconnectPeer()> Peer:' + peer.peerId);
+      this.disconnect(peer);
     }
   }
 

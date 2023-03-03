@@ -20,7 +20,7 @@ import { PanelOption, PanelService } from 'service/panel.service';
 export class CardStackListComponent implements OnInit, OnDestroy {
   @Input() cardStack: CardStack = null;
 
-  owner: string = Network.peerContext.userId;
+  owner: string = Network.peer.userId;
 
   constructor(
     private panelService: PanelService,

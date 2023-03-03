@@ -131,8 +131,8 @@ export class GameObjectInventoryService {
 
   private isAnyLocation(location: string): boolean {
     if (location === 'table' || location === Network.peerId || location === 'graveyard') return true;
-    for (let conn of Network.peerContexts) {
-      if (conn.isOpen && location === conn.peerId) {
+    for (let peer of Network.peers) {
+      if (peer.isOpen && location === peer.peerId) {
         return true;
       }
     }

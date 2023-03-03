@@ -56,8 +56,8 @@ export class ChatMessage extends ObjectNode implements ChatMessageContext {
   get image(): ImageFile { return ImageStorage.instance.get(this.imageIdentifier); }
   get index(): number { return this.minorIndex + this.timestamp; }
   get isDirect(): boolean { return 0 < this.sendTo.length ? true : false; }
-  get isSendFromSelf(): boolean { return this.from === Network.peerContext.userId || this.originFrom === Network.peerContext.userId; }
-  get isRelatedToMe(): boolean { return (-1 < this.sendTo.indexOf(Network.peerContext.userId)) || this.isSendFromSelf ? true : false; }
+  get isSendFromSelf(): boolean { return this.from === Network.peer.userId || this.originFrom === Network.peer.userId; }
+  get isRelatedToMe(): boolean { return (-1 < this.sendTo.indexOf(Network.peer.userId)) || this.isSendFromSelf ? true : false; }
   get isDisplayable(): boolean { return this.isDirect ? this.isRelatedToMe : true; }
   get isSystem(): boolean { return -1 < this.tags.indexOf('system') ? true : false; }
   get isDicebot(): boolean { return this.isSystem && this.from === 'System-BCDice' ? true : false; }

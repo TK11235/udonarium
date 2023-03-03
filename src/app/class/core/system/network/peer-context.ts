@@ -71,8 +71,8 @@ export class PeerContext implements IPeerContext {
   }
 
   verifyPeer(peerId: string): boolean {
-    let context = PeerContext.parse(peerId);
-    if (this.roomId != context.roomId || this.roomName != context.roomName || this.hasPassword != context.hasPassword) {
+    let peer = PeerContext.parse(peerId);
+    if (this.roomId != peer.roomId || this.roomName != peer.roomName || this.hasPassword != peer.hasPassword) {
       return false;
     }
 
@@ -85,7 +85,7 @@ export class PeerContext implements IPeerContext {
       return false;
     }
 
-    let isValid = context.verifyPassword(this.password);
+    let isValid = peer.verifyPassword(this.password);
     return isValid;
   }
 
@@ -105,10 +105,10 @@ export class PeerContext implements IPeerContext {
 
   private static _create(userId: string = ''): PeerContext {
     let digestUserId = calcDigestUserId(userId);
-    let peerContext = new PeerContext(digestUserId);
+    let peer = new PeerContext(digestUserId);
 
-    peerContext.userId = userId;
-    return peerContext;
+    peer.userId = userId;
+    return peer;
   }
 
   private static _createRoom(userId: string = '', roomId: string = '', roomName: string = '', password: string = ''): PeerContext {
@@ -117,10 +117,10 @@ export class PeerContext implements IPeerContext {
     let digestPassword = calcDigestPassword(digestUserId, checksumedRoomId, roomName, password);
     let peerId = `${digestUserId}${checksumedRoomId}${lzbase62.compress(roomName)}-${digestPassword}`;
 
-    let peerContext = new PeerContext(peerId);
-    peerContext.userId = userId;
-    peerContext.password = password;
-    return peerContext;
+    let peer = new PeerContext(peerId);
+    peer.userId = userId;
+    peer.password = password;
+    return peer;
   }
 
   static generateId(format: string = '********'): string {

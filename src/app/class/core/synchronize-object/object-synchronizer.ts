@@ -168,18 +168,18 @@ export class ObjectSynchronizer {
   private getTargetPeerId(): PeerId {
     let min = 9999;
     let selectPeerId: PeerId = null;
-    let peerContexts = Network.peerContexts;
+    let peers = Network.peers;
 
-    for (let i = peerContexts.length - 1; 0 <= i; i--) {
+    for (let i = peers.length - 1; 0 <= i; i--) {
       let rand = Math.floor(Math.random() * (i + 1));
-      [peerContexts[i], peerContexts[rand]] = [peerContexts[rand], peerContexts[i]];
+      [peers[i], peers[rand]] = [peers[rand], peers[i]];
     }
 
-    for (let peerContext of peerContexts) {
-      let tasks = this.peerMap.get(peerContext.peerId);
-      if (peerContext.isOpen && tasks && tasks.length < min) {
+    for (let peer of peers) {
+      let tasks = this.peerMap.get(peer.peerId);
+      if (peer.isOpen && tasks && tasks.length < min) {
         min = tasks.length;
-        selectPeerId = peerContext.peerId;
+        selectPeerId = peer.peerId;
       }
     }
     return selectPeerId;
