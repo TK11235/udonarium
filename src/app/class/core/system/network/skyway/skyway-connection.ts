@@ -198,8 +198,8 @@ export class SkyWayConnection implements Connection {
       console.warn('It is already opened.');
       this.close();
     }
-    let peer = new Peer(this.peer.peerId, { key: this.key });// SkyWay
-    peer.on('open', id => {
+    let skyWay = new Peer(this.peer.peerId, { key: this.key });// SkyWay
+    skyWay.on('open', id => {
       console.log('My peer ID is: ' + id);
       if (this.peer.peerId !== id) {
         console.error('...peer is not me? <' + id + '>', this.peer);
@@ -210,7 +210,7 @@ export class SkyWayConnection implements Connection {
       if (this.callback.onOpen) this.callback.onOpen(this.peerId);
     });
 
-    peer.on('close', () => {
+    skyWay.on('close', () => {
       console.log('Peer close');
       if (this.peer.isOpen) {
         this.peer.isOpen = false;
@@ -218,7 +218,7 @@ export class SkyWayConnection implements Connection {
       }
     });
 
-    peer.on('connection', conn => {
+    skyWay.on('connection', conn => {
       let validPeerId = this.peer.verifyPeer(conn.remoteId);
       let validToken = this.peer.isRoom || conn.metadata.token === calcSHA256Base64(conn.metadata.sortKey + this.peer.userId);
       if (!validPeerId || !validToken) {
@@ -231,7 +231,7 @@ export class SkyWayConnection implements Connection {
       this.openDataConnection(new SkyWayDataConnection(conn, peer));
     });
 
-    peer.on('error', err => {
+    skyWay.on('error', err => {
       console.error('<' + this.peerId + '> ' + err.type + ' => ' + err.message);
       let errorMessage = `${this.getSkyWayErrorMessage(err.type)}\n\n${err.type}: ${err.message}`;
       switch (err.type) {
@@ -254,7 +254,7 @@ export class SkyWayConnection implements Connection {
       }
       if (this.callback.onError) this.callback.onError(this.peerId, err.type, errorMessage, err);
     });
-    this.skyWay = peer;
+    this.skyWay = skyWay;
   }
 
   private openDataConnection(conn: SkyWayDataConnection) {
