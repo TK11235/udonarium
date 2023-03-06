@@ -61,7 +61,7 @@ export class SkyWayConnection implements Connection {
     } else {
       this.peer = PeerContext.create(args[0], args[1], args[2], args[3]);
     }
-    this.openPeer();
+    this.openSkyWay();
   }
 
   close() {
@@ -193,7 +193,7 @@ export class SkyWayConnection implements Connection {
     return RoomInfo.listFrom(allPeerIds);
   }
 
-  private openPeer() {
+  private openSkyWay() {
     if (this.skyWay) {
       console.warn('It is already opened.');
       this.close();
