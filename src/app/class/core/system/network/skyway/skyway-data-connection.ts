@@ -4,6 +4,7 @@ import { MessagePack } from '../../util/message-pack';
 import { UUID } from '../../util/uuid';
 import { setZeroTimeout } from '../../util/zero-timeout';
 import { IPeerContext, PeerContext } from '../peer-context';
+import { PeerSessionGrade } from '../peer-session-state';
 import { SkyWayStatsMonitor } from './skyway-stats-monitor';
 import { CandidateType, WebRTCStats } from './webrtc-stats';
 
@@ -131,6 +132,33 @@ export class SkyWayDataConnection extends EventEmitter {
     this.sendPing();
     await this.stats.updateAsync();
     this.candidateType = this.stats.candidateType;
+
+    let deltaTime = performance.now() - this.timestamp;
+    let healthRate = deltaTime <= 10000 ? 1 : 5000 / ((deltaTime - 10000) + 5000);
+    let ping = healthRate < 1 ? deltaTime : this.ping;
+    let pingRate = 500 / (ping + 500);
+
+    this.peer.session.health = healthRate;
+    this.peer.session.ping = ping;
+    this.peer.session.speed = pingRate * healthRate;
+
+    switch (this.candidateType) {
+      case CandidateType.HOST:
+        this.peer.session.grade = PeerSessionGrade.HIGH;
+        break;
+      case CandidateType.SRFLX:
+      case CandidateType.PRFLX:
+        this.peer.session.grade = PeerSessionGrade.MIDDLE;
+        break;
+      case CandidateType.RELAY:
+        this.peer.session.grade = PeerSessionGrade.LOW;
+        break;
+      default:
+        this.peer.session.grade = PeerSessionGrade.UNSPECIFIED;
+        break;
+    }
+    this.peer.session.description = this.candidateType;
+
     this.emit('stats', this.stats);
   }
 

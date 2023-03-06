@@ -5,11 +5,9 @@ import { MessagePack } from '../../util/message-pack';
 import { setZeroTimeout } from '../../util/zero-timeout';
 import { Connection, ConnectionCallback } from '../connection';
 import { IPeerContext, PeerContext } from '../peer-context';
-import { PeerSessionGrade } from '../peer-session-state';
 import { IRoomInfo, RoomInfo } from '../room-info';
 import { SkyWayDataConnection } from './skyway-data-connection';
 import { SkyWayDataConnectionList } from './skyway-data-connection-list';
-import { CandidateType } from './webrtc-stats';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare var Peer;
@@ -276,32 +274,6 @@ export class SkyWayConnection implements Connection {
       this.closeDataConnection(conn);
     });
     conn.on('stats', () => {
-      let deltaTime = performance.now() - conn.timestamp;
-      let healthRate = deltaTime <= 10000 ? 1 : 5000 / ((deltaTime - 10000) + 5000);
-      let ping = healthRate < 1 ? deltaTime : conn.ping;
-      let pingRate = 500 / (ping + 500);
-
-      conn.peer.session.health = healthRate;
-      conn.peer.session.ping = ping;
-      conn.peer.session.speed = pingRate * healthRate;
-
-      switch (conn.candidateType) {
-        case CandidateType.HOST:
-          conn.peer.session.grade = PeerSessionGrade.HIGH;
-          break;
-        case CandidateType.SRFLX:
-        case CandidateType.PRFLX:
-          conn.peer.session.grade = PeerSessionGrade.MIDDLE;
-          break;
-        case CandidateType.RELAY:
-          conn.peer.session.grade = PeerSessionGrade.LOW;
-          break;
-        default:
-          conn.peer.session.grade = PeerSessionGrade.UNSPECIFIED;
-          break;
-      }
-      conn.peer.session.description = conn.candidateType;
-
       if (conn.peer.session.health < 0.2) {
         this.closeDataConnection(conn);
       }
