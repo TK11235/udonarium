@@ -80,7 +80,7 @@ export class ChatMessageService {
       to: this.findId(sendTo),
       name: this.makeMessageName(sendFrom, sendTo),
       imageIdentifier: this.findImageIdentifier(sendFrom),
-      timestamp: this.calcTimeStamp(chatTab),
+      timestamp: this.calcTimeStamp(chatTab) || 0,
       tag: gameType,
       text: text,
     };
@@ -128,7 +128,7 @@ export class ChatMessageService {
 
   private calcTimeStamp(chatTab: ChatTab): number {
     let now = this.getTime();
-    let latest = chatTab.latestTimeStamp;
+    let latest = chatTab.latestTimeStamp||0;
     return now <= latest ? latest + 1 : now;
   }
 }
