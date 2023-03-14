@@ -2,12 +2,12 @@ import { IPeerContext } from './peer-context';
 import { IRoomInfo } from './room-info';
 
 export class ConnectionCallback {
-  onOpen: (peerId: string) => void;
-  onClose: (peerId: string) => void;
-  onConnect: (peerId: string) => void;
-  onDisconnect: (peerId: string) => void;
-  onData: (peerId: string, data: any) => void;
-  onError: (peerId: string, errorType: string, errorMessage: string, errorObject: any) => void;
+  onOpen: (peer: IPeerContext) => void;
+  onClose: (peer: IPeerContext) => void;
+  onConnect: (peer: IPeerContext) => void;
+  onDisconnect: (peer: IPeerContext) => void;
+  onData: (peer: IPeerContext, data: any) => void;
+  onError: (peer: IPeerContext, errorType: string, errorMessage: string, errorObject: any) => void;
 }
 
 export interface Connection {

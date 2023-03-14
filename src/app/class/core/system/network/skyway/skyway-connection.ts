@@ -205,14 +205,14 @@ export class SkyWayConnection implements Connection {
       }
       this.peer.isOpen = true;
       console.log('My peer Context', this.peer);
-      if (this.callback.onOpen) this.callback.onOpen(this.peerId);
+      if (this.callback.onOpen) this.callback.onOpen(this.peer);
     });
 
     skyWay.on('close', () => {
       console.log('Peer close');
       if (this.peer.isOpen) {
         this.peer.isOpen = false;
-        if (this.callback.onClose) this.callback.onClose(this.peerId);
+        if (this.callback.onClose) this.callback.onClose(this.peer);
       }
     });
 
@@ -244,13 +244,13 @@ export class SkyWayConnection implements Connection {
         case 'server-error':
           if (this.peer && this.peer.isOpen) {
             this.close();
-            if (this.callback.onClose) this.callback.onClose(this.peerId);
+            if (this.callback.onClose) this.callback.onClose(this.peer);
           }
           break;
         default:
           break;
       }
-      if (this.callback.onError) this.callback.onError(this.peerId, err.type, errorMessage, err);
+      if (this.callback.onError) this.callback.onError(this.peer, err.type, errorMessage, err);
     });
     this.skyWay = skyWay;
   }
@@ -265,7 +265,7 @@ export class SkyWayConnection implements Connection {
     conn.on('open', () => {
       this.maybeUnavailablePeerIds.delete(conn.remoteId);
       this.notifyUserList();
-      if (this.callback.onConnect) this.callback.onConnect(conn.remoteId);
+      if (this.callback.onConnect) this.callback.onConnect(conn.peer);
     });
     conn.on('close', () => {
       this.closeDataConnection(conn);
@@ -289,7 +289,7 @@ export class SkyWayConnection implements Connection {
       if (0 <= index) peerIds.splice(index, 1);
     });
     this.notifyUserList();
-    if (closed && this.callback.onDisconnect) this.callback.onDisconnect(conn.remoteId);
+    if (closed && this.callback.onDisconnect) this.callback.onDisconnect(conn.peer);
   }
 
   private onData(conn: SkyWayDataConnection, container: DataContainer) {
@@ -301,7 +301,7 @@ export class SkyWayConnection implements Connection {
       this.inboundQueue = this.inboundQueue.then(() => new Promise<void>((resolve, reject) => {
         setZeroTimeout(async () => {
           let data = container.isCompressed ? await decompressAsync(container.data) : container.data;
-          this.callback.onData(conn.remoteId, MessagePack.decode(data));
+          this.callback.onData(conn.peer, MessagePack.decode(data));
           this.bandwidthUsage -= byteLength;
           return resolve();
         });

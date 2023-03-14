@@ -108,7 +108,7 @@ export class Network {
     // 自分自身への送信
     if (this.callback.onData) {
       this.callback.onData(null, broadcast);
-      this.callback.onData(this.peerId, echocast);
+      this.callback.onData(this.peer, echocast);
     }
 
     if (0 < this.queue.size) {
@@ -135,12 +135,12 @@ export class Network {
     let connection = new SkyWayConnection();
     connection.setApiKey(this.key);
 
-    connection.callback.onOpen = (peerId) => { if (this.callback.onOpen) this.callback.onOpen(peerId); }
-    connection.callback.onClose = (peerId) => { if (this.callback.onClose) this.callback.onClose(peerId); }
-    connection.callback.onConnect = (peerId) => { if (this.callback.onConnect) this.callback.onConnect(peerId); }
-    connection.callback.onDisconnect = (peerId) => { if (this.callback.onDisconnect) this.callback.onDisconnect(peerId); }
-    connection.callback.onData = (peerId, data: any[]) => { if (this.callback.onData) this.callback.onData(peerId, data); }
-    connection.callback.onError = (peerId, errorType, errorMessage, errorObject) => { if (this.callback.onError) this.callback.onError(peerId, errorType, errorMessage, errorObject); }
+    connection.callback.onOpen = (peer) => { if (this.callback.onOpen) this.callback.onOpen(peer); }
+    connection.callback.onClose = (peer) => { if (this.callback.onClose) this.callback.onClose(peer); }
+    connection.callback.onConnect = (peer) => { if (this.callback.onConnect) this.callback.onConnect(peer); }
+    connection.callback.onDisconnect = (peer) => { if (this.callback.onDisconnect) this.callback.onDisconnect(peer); }
+    connection.callback.onData = (peer, data: any[]) => { if (this.callback.onData) this.callback.onData(peer, data); }
+    connection.callback.onError = (peer, errorType, errorMessage, errorObject) => { if (this.callback.onError) this.callback.onError(peer, errorType, errorMessage, errorObject); }
 
     if (0 < this.queue.size && this.sendInterval === null) this.sendInterval = setZeroTimeout(this.sendCallback);
 

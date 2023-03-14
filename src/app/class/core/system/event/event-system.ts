@@ -119,32 +119,32 @@ export class EventSystem implements Subject {
   private initializeNetworkEvent() {
     let callback = Network.instance.callback;
 
-    callback.onOpen = (peerId) => {
-      this.trigger('OPEN_NETWORK', { peerId: peerId });
+    callback.onOpen = (peer) => {
+      this.trigger('OPEN_NETWORK', { peerId: peer.peerId });
     }
-    callback.onClose = (peerId) => {
-      this.trigger('CLOSE_NETWORK', { peerId: peerId });
-    }
-
-    callback.onConnect = (peerId) => {
-      this.sendSystemMessage('<' + peerId + '> connect <DataConnection>');
-      this.trigger('CONNECT_PEER', { peerId: peerId });
+    callback.onClose = (peer) => {
+      this.trigger('CLOSE_NETWORK', { peerId: peer.peerId });
     }
 
-    callback.onDisconnect = (peerId) => {
-      this.sendSystemMessage('<' + peerId + '> disconnect <DataConnection>');
-      this.trigger('DISCONNECT_PEER', { peerId: peerId });
+    callback.onConnect = (peer) => {
+      this.sendSystemMessage('<' + peer.userId + '> connect <DataConnection>');
+      this.trigger('CONNECT_PEER', { peerId: peer.peerId });
     }
 
-    callback.onData = (peerId, data: EventContext<never>[]) => {
+    callback.onDisconnect = (peer) => {
+      this.sendSystemMessage('<' + peer.userId + '> disconnect <DataConnection>');
+      this.trigger('DISCONNECT_PEER', { peerId: peer.peerId });
+    }
+
+    callback.onData = (peer, data: EventContext<never>[]) => {
       for (let event of data) {
         this.trigger(event);
       }
     }
 
-    callback.onError = (peerId, errorType, errorMessage, errorObject) => {
-      this.sendSystemMessage('<' + peerId + '> ' + errorMessage);
-      this.trigger('NETWORK_ERROR', { peerId: peerId, errorType: errorType, errorMessage: errorMessage, errorObject: errorObject });
+    callback.onError = (peer, errorType, errorMessage, errorObject) => {
+      this.sendSystemMessage('<' + peer.userId + '> ' + errorMessage);
+      this.trigger('NETWORK_ERROR', { peerId: peer.peerId, errorType: errorType, errorMessage: errorMessage, errorObject: errorObject });
     }
   }
 
