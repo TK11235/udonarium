@@ -27,7 +27,7 @@ export class SkyWayStatsMonitor {
 
   private static calcIntervalTime(): number {
     let ms = 2000 + 1000 * this.monitoringConnections.size;
-    return Math.min(ms, 10000);
+    return Math.min(ms, 8000);
   }
 
   private static async doMonitoringAsync() {
