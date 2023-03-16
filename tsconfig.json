@@ -12,9 +12,10 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "es2020",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
     "lib": [
-      "es2020",
+      "ES2022",
       "dom"
     ],
     "paths": {
@@ -33,7 +34,12 @@
       "service/*": [
         "src/app/service/*"
       ]
-    },
-    "useDefineForClassFields": false
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }
