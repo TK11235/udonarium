@@ -11,7 +11,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "importHelpers": true,
-    "target": "es2017",
+    "target": "ES2022",
     "module": "es2020",
     "lib": [
       "es2020",
@@ -34,5 +34,6 @@
         "src/app/service/*"
       ]
     },
+    "useDefineForClassFields": false
   }
 }
