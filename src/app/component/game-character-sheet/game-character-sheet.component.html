@@ -27,7 +27,7 @@
   </div>
 </button>
 <ng-container *ngIf="tabletopObject.aliasName === 'character'">
-  <select *ngIf="tabletopObject" (change)="setLocation($event.target.value)" [ngModel]="tabletopObject.location.name">
+  <select #select *ngIf="tabletopObject" (change)="setLocation(select.value)" [ngModel]="tabletopObject.location.name">
     <option value="table">テーブル</option>
     <option value="common">共有インベントリ</option>
     <option value="{{networkService.peerId}}">個人インベントリ</option>
@@ -50,7 +50,7 @@
   <ng-container *ngIf="tabletopObject.detailDataElement">
     <div class="flex-item" *ngFor="let childElement of tabletopObject.detailDataElement.children">
       <div class="table">
-        <div class="table-row" game-data-element [gameDataElement]="childElement" [isEdit]="isEdit"></div>
+        <div class="table-row" game-data-element [gameDataElement]="$any(childElement)" [isEdit]="isEdit"></div>
       </div>
     </div>
   </ng-container>

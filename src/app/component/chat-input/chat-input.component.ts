@@ -168,7 +168,7 @@ export class ChatInputComponent implements OnInit, OnDestroy {
     this.calcFitHeight();
   }
 
-  sendChat(event: KeyboardEvent) {
+  sendChat(event: Partial<KeyboardEvent>) {
     if (event) event.preventDefault();
 
     if (!this.text.length) return;

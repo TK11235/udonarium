@@ -3,7 +3,7 @@
     <div>
       <button (click)="createGameTable()">新しいテーブルを作る</button>
     </div>
-    <select style="width: 10em;" size="10" (change)="selectGameTable($event.target.value)" [ngModel]="selectedTable?.identifier">
+    <select #select style="width: 10em;" size="10" (change)="selectGameTable(select.value)" [ngModel]="selectedTable?.identifier">
       <option *ngFor="let gameTable of getGameTables()" value="{{gameTable.identifier}}">{{gameTable.name}}</option>
     </select>
   </div>
