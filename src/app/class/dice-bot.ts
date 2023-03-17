@@ -17,11 +17,11 @@ interface DiceRollResult {
   isSecret: boolean;
 }
 
+let loader: BCDiceLoader;
+let queue: PromiseQueue = initializeDiceBotQueue();
+
 @SyncObject('dice-bot')
 export class DiceBot extends GameObject {
-  private static loader: BCDiceLoader;
-  private static queue: PromiseQueue = DiceBot.initializeDiceBotQueue();
-
   static diceBotInfos: GameSystemInfo[] = [];
 
   // GameObject Lifecycle
@@ -123,30 +123,30 @@ export class DiceBot extends GameObject {
   }
 
   static async loadGameSystemAsync(gameType: string): Promise<GameSystemClass> {
-    return await DiceBot.queue.add(() => {
+    return await queue.add(() => {
       const id = this.diceBotInfos.some(info => info.id === gameType) ? gameType : 'DiceBot';
       try {
-        return DiceBot.loader.getGameSystemClass(id);
+        return loader.getGameSystemClass(id);
       } catch {
-        return DiceBot.loader.dynamicLoad(id);
+        return loader.dynamicLoad(id);
       }
     });
   }
+}
 
-  private static initializeDiceBotQueue(): PromiseQueue {
-    let queue = new PromiseQueue('DiceBotQueue');
-    queue.add(async () => {
-      DiceBot.loader = new (await import(
-        /* webpackChunkName: "lib/bcdice/bcdice-loader" */
-        './bcdice/bcdice-loader')
-      ).default();
-      DiceBot.diceBotInfos = DiceBot.loader.listAvailableGameSystems()
-        .sort((a, b) => {
-          if (a.sortKey < b.sortKey) return -1;
-          if (a.sortKey > b.sortKey) return 1;
-          return 0;
-        });
-    });
-    return queue;
-  }
+function initializeDiceBotQueue(): PromiseQueue {
+  let queue = new PromiseQueue('DiceBotQueue');
+  queue.add(async () => {
+    loader = new (await import(
+      /* webpackChunkName: "lib/bcdice/bcdice-loader" */
+      './bcdice/bcdice-loader')
+    ).default();
+    DiceBot.diceBotInfos = loader.listAvailableGameSystems()
+      .sort((a, b) => {
+        if (a.sortKey < b.sortKey) return -1;
+        if (a.sortKey > b.sortKey) return 1;
+        return 0;
+      });
+  });
+  return queue;
 }
