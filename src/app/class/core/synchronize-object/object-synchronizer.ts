@@ -75,13 +75,14 @@ export class ObjectSynchronizer {
     EventSystem.unregister(this);
   }
 
-  private updateObject(object: GameObject, context: ObjectContext) {
+  private updateObject(object: GameObject, context: ObjectContext): GameObject {
     if (context.majorVersion + context.minorVersion > object.version) {
       object.apply(context);
     }
+    return object;
   }
 
-  private createObject(context: ObjectContext) {
+  private createObject(context: ObjectContext): GameObject {
     let newObject: GameObject = ObjectFactory.instance.create(context.aliasName, context.identifier);
     if (!newObject) {
       console.warn(context.aliasName + ' is Unknown...?', context);
@@ -89,6 +90,7 @@ export class ObjectSynchronizer {
     }
     ObjectStore.instance.add(newObject, false);
     newObject.apply(context);
+    return newObject;
   }
 
   private sendCatalog(sendTo: PeerId) {
