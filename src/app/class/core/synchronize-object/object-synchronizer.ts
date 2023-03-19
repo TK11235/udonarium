@@ -1,5 +1,6 @@
 import { EventSystem, Network } from '../system';
 import { GameObject, ObjectContext } from './game-object';
+import { markForChanged } from './object-event-extension';
 import { ObjectFactory } from './object-factory';
 import { CatalogItem, ObjectStore } from './object-store';
 import { SynchronizeRequest, SynchronizeTask } from './synchronize-task';
@@ -58,11 +59,13 @@ export class ObjectSynchronizer {
         let context: ObjectContext = event.data;
         let object: GameObject = ObjectStore.instance.get(context.identifier);
         if (object) {
-          if (!event.isSendFromSelf) this.updateObject(object, context);
+          if (!event.isSendFromSelf) object = this.updateObject(object, context);
+          markForChanged(object, event.sendFrom);
         } else if (ObjectStore.instance.isDeleted(context.identifier)) {
           EventSystem.call('DELETE_GAME_OBJECT', { aliasName: context.aliasName, identifier: context.identifier }, event.sendFrom);
         } else {
-          this.createObject(context);
+          object = this.createObject(context);
+          markForChanged(object, event.sendFrom);
         }
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {

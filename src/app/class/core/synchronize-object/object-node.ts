@@ -2,6 +2,7 @@ import { XmlUtil } from '../system/util/xml-util';
 import { Attributes } from './attributes';
 import { defineSyncObject as SyncObject, defineSyncVariable as SyncVar } from './decorator-core';
 import { GameObject, ObjectContext } from './game-object';
+import { markForChildrenChanged } from './object-event-extension';
 import { InnerXml, ObjectSerializer, XmlAttributes } from './object-serializer';
 import { ObjectStore } from './object-store';
 
@@ -68,6 +69,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   onChildRemoved(child: ObjectNode) { }
 
   private _onChildAdded(child: ObjectNode) {
+    markForChildrenChanged(this);
     let node: ObjectNode = this;
     while (node) {
       node.onChildAdded(child);
@@ -77,6 +79,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   }
 
   private _onChildRemoved(child: ObjectNode) {
+    markForChildrenChanged(this);
     let node: ObjectNode = this;
     while (node) {
       node.onChildRemoved(child);
