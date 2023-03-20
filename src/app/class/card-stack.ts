@@ -33,14 +33,6 @@ export class CardStack extends TabletopObject {
   get isEmpty(): boolean { return this.cards.length < 1 }
   get imageFile(): ImageFile { return this.topCard ? this.topCard.imageFile : null; }
 
-  // ObjectNode Lifecycle
-  onChildRemoved(child: ObjectNode) {
-    super.onChildRemoved(child);
-    if (child instanceof Card) {
-      EventSystem.trigger('CARD_STACK_DECREASED', { cardStackIdentifier: this.identifier, cardIdentifier: child.identifier });
-    }
-  }
-
   shuffle(): Card[] {
     if (!this.cardRoot) return;
     let length = this.cardRoot.children.length;
