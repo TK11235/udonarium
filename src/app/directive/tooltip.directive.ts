@@ -6,7 +6,6 @@ import {
   Input,
   NgZone,
   OnDestroy,
-  OnInit,
   ViewContainerRef,
 } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
@@ -18,7 +17,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
 @Directive({
   selector: '[appTooltip]'
 })
-export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
+export class TooltipDirective implements AfterViewInit, OnDestroy {
   private static activeTooltips: ComponentRef<OverviewPanelComponent>[] = [];
 
   @Input('appTooltip') tabletopObject: TabletopObject;
@@ -38,8 +37,6 @@ export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
     private componentFactoryResolver: ComponentFactoryResolver,
     private pointerDeviceService: PointerDeviceService
   ) { }
-
-  ngOnInit() { }
 
   ngAfterViewInit() {
     this.addEventListeners(this.viewContainerRef.element.nativeElement);
