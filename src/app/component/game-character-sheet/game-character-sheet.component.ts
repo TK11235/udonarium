@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { EventSystem, Network } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';
@@ -15,7 +15,7 @@ import { SaveDataService } from 'service/save-data.service';
   templateUrl: './game-character-sheet.component.html',
   styleUrls: ['./game-character-sheet.component.css']
 })
-export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterViewInit {
+export class GameCharacterSheetComponent implements OnInit, OnDestroy {
 
   @Input() tabletopObject: TabletopObject = null;
   isEdit: boolean = false;
@@ -38,9 +38,6 @@ export class GameCharacterSheetComponent implements OnInit, OnDestroy, AfterView
           this.panelService.close();
         }
       });
-  }
-
-  ngAfterViewInit() {
   }
 
   ngOnDestroy() {

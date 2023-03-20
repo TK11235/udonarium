@@ -1,5 +1,5 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { ChatMessage } from '@udonarium/chat-message';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
@@ -28,7 +28,7 @@ import { ChatMessageService } from 'service/chat-message.service';
   changeDetection: ChangeDetectionStrategy.Default
 })
 
-export class ChatMessageComponent implements OnInit, AfterViewInit {
+export class ChatMessageComponent implements OnInit {
   @Input() chatMessage: ChatMessage;
   imageFile: ImageFile = ImageFile.Empty;
   animeState: string = 'inactive';
@@ -42,9 +42,6 @@ export class ChatMessageComponent implements OnInit, AfterViewInit {
     if (file) this.imageFile = file;
     let time = this.chatMessageService.getTime();
     if (time - 10 * 1000 < this.chatMessage.timestamp) this.animeState = 'active';
-  }
-
-  ngAfterViewInit() {
   }
 
   discloseMessage() {

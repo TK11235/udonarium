@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectSerializer } from '@udonarium/core/synchronize-object/object-serializer';
@@ -18,7 +18,7 @@ import { SaveDataService } from 'service/save-data.service';
   templateUrl: './game-table-setting.component.html',
   styleUrls: ['./game-table-setting.component.css']
 })
-export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewInit {
+export class GameTableSettingComponent implements OnInit, OnDestroy {
   minSize: number = 1;
   maxSize: number = 100;
   get tableBackgroundImage(): ImageFile {
@@ -94,8 +94,6 @@ export class GameTableSettingComponent implements OnInit, OnDestroy, AfterViewIn
         }
       });
   }
-
-  ngAfterViewInit() { }
 
   ngOnDestroy() {
     EventSystem.unregister(this);

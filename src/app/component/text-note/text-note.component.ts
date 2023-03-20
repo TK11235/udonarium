@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -28,7 +27,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./text-note.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextNoteComponent implements OnChanges, OnDestroy, AfterViewInit {
+export class TextNoteComponent implements OnChanges, OnDestroy {
   @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
 
   @Input() textNote: TextNote = null;
@@ -87,8 +86,6 @@ export class TextNoteComponent implements OnChanges, OnDestroy, AfterViewInit {
       tabletopObject: this.textNote
     };
   }
-
-  ngAfterViewInit() { }
 
   ngOnDestroy() {
     EventSystem.unregister(this);
