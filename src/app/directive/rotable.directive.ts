@@ -79,11 +79,11 @@ export class RotableDirective implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnChanges(): void {
+    EventSystem.unregister(this);
     if (this.tabletopObject) {
-      EventSystem.unregister(this);
       EventSystem.register(this)
         .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
-          if ((event.isSendFromSelf && this.input.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
+          if ((event.isSendFromSelf && this.input && this.input.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
           this.batchService.add(() => {
             if (this.input.isGrabbing) {
               this.cancel();
