@@ -7,13 +7,12 @@ import {
   HostListener,
   Input,
   NgZone,
+  OnChanges,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { Card, CardState } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -34,7 +33,7 @@ import { TabletopService } from 'service/tabletop.service';
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CardComponent implements OnDestroy, OnChanges, AfterViewInit {
   @Input() card: Card = null;
   @Input() is3D: boolean = false;
 
@@ -83,16 +82,20 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     private pointerDeviceService: PointerDeviceService
   ) { }
 
-  ngOnInit() {
+  ngOnChanges(): void {
+    EventSystem.unregister(this);
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (!this.card || !object) return;
-        if ((this.card === object)
-          || (object instanceof ObjectNode && this.card.contains(object))
-          || (object instanceof PeerCursor && object.userId === this.card.owner)) {
+      .on(`UPDATE_GAME_OBJECT/aliasName/${PeerCursor.aliasName}`, event => {
+        let object = ObjectStore.instance.get<PeerCursor>(event.data.identifier);
+        if (this.card && object && object.userId === this.card.owner) {
           this.changeDetector.markForCheck();
         }
+      })
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.card?.identifier}`, event => {
+        this.changeDetector.markForCheck();
+      })
+      .on(`UPDATE_OBJECT_CHILDREN/identifier/${this.card?.identifier}`, event => {
+        this.changeDetector.markForCheck();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();

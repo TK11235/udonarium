@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -16,7 +17,7 @@ import { DataElement } from '@udonarium/data-element';
   styleUrls: ['./game-data-element.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewInit {
+export class GameDataElementComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() gameDataElement: DataElement = null;
   @Input() isEdit: boolean = false;
   @Input() isTagLocked: boolean = false;
@@ -42,13 +43,14 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngOnInit() {
     if (this.gameDataElement) this.setValues(this.gameDataElement);
+  }
 
+  ngOnChanges(): void {
+    EventSystem.unregister(this);
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => {
-        if (this.gameDataElement && event.data.identifier === this.gameDataElement.identifier) {
-          this.setValues(this.gameDataElement);
-          this.changeDetector.markForCheck();
-        }
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.gameDataElement?.identifier}`, event => {
+        this.setValues(this.gameDataElement);
+        this.changeDetector.markForCheck();
       })
       .on('DELETE_GAME_OBJECT', event => {
         if (this.gameDataElement && this.gameDataElement.identifier === event.data.identifier) {

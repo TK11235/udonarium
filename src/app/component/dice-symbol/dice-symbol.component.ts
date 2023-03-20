@@ -8,11 +8,10 @@ import {
   HostListener,
   Input,
   NgZone,
+  OnChanges,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { DiceSymbol } from '@udonarium/dice-symbol';
@@ -60,7 +59,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() diceSymbol: DiceSymbol = null;
   @Input() is3D: boolean = false;
 
@@ -109,7 +108,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     private imageService: ImageService,
     private pointerDeviceService: PointerDeviceService) { }
 
-  ngOnInit() {
+  ngOnChanges(): void {
     EventSystem.register(this)
       .on('ROLL_DICE_SYMBOL', event => {
         if (event.data.identifier === this.diceSymbol.identifier) {
@@ -120,14 +119,17 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }
       })
-      .on('UPDATE_GAME_OBJECT', event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (!this.diceSymbol || !object) return;
-        if ((this.diceSymbol === object)
-          || (object instanceof ObjectNode && this.diceSymbol.contains(object))
-          || (object instanceof PeerCursor && object.userId === this.diceSymbol.owner)) {
+      .on(`UPDATE_GAME_OBJECT/aliasName/${PeerCursor.aliasName}`, event => {
+        let object = ObjectStore.instance.get<PeerCursor>(event.data.identifier);
+        if (this.diceSymbol && object && object.userId === this.diceSymbol.owner) {
           this.changeDetector.markForCheck();
         }
+      })
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.diceSymbol?.identifier}`, event => {
+        this.changeDetector.markForCheck();
+      })
+      .on(`UPDATE_OBJECT_CHILDREN/identifier/${this.diceSymbol?.identifier}`, event => {
+        this.changeDetector.markForCheck();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();

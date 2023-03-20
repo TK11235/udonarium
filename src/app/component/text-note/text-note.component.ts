@@ -1,7 +1,17 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
-import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TextNote } from '@udonarium/text-note';
@@ -18,7 +28,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
   styleUrls: ['./text-note.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TextNoteComponent implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild('textArea', { static: true }) textAreaElementRef: ElementRef;
 
   @Input() textNote: TextNote = null;
@@ -53,14 +63,14 @@ export class TextNoteComponent implements OnInit, OnDestroy, AfterViewInit {
     private pointerDeviceService: PointerDeviceService
   ) { }
 
-  ngOnInit() {
+  ngOnChanges(): void {
+    EventSystem.unregister(this);
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (!this.textNote || !object) return;
-        if (this.textNote === object || (object instanceof ObjectNode && this.textNote.contains(object))) {
-          this.changeDetector.markForCheck();
-        }
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.textNote?.identifier}`, event => {
+        this.changeDetector.markForCheck();
+      })
+      .on(`UPDATE_OBJECT_CHILDREN/identifier/${this.textNote?.identifier}`, event => {
+        this.changeDetector.markForCheck();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();

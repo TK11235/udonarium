@@ -1,4 +1,14 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { TabletopObject } from '@udonarium/tabletop-object';
@@ -18,7 +28,7 @@ export interface MovableOption {
 @Directive({
   selector: '[appMovable]'
 })
-export class MovableDirective implements AfterViewInit, OnDestroy {
+export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
   private static layerHash: { [layerName: string]: MovableDirective[] } = {};
 
   private tabletopObject: TabletopObject;
@@ -80,6 +90,23 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.setPosition(this.tabletopObject);
   }
 
+  ngOnChanges(): void {
+    EventSystem.unregister(this);
+    EventSystem.register(this)
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
+        if ((event.isSendFromSelf && this.input.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
+        this.batchService.add(() => {
+          if (this.input.isGrabbing) {
+            this.cancel();
+          } else {
+            this.setAnimatedTransition(true);
+          }
+          this.stopTransition();
+          this.setPosition(this.tabletopObject);
+        }, this);
+      });
+  }
+
   ngOnDestroy() {
     this.cancel();
     this.input.destroy();
@@ -96,19 +123,6 @@ export class MovableDirective implements AfterViewInit, OnDestroy {
     this.input.onEnd = this.onInputEnd.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
 
-    EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => {
-        if ((event.isSendFromSelf && this.input.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
-        this.batchService.add(() => {
-          if (this.input.isGrabbing) {
-            this.cancel();
-          } else {
-            this.setAnimatedTransition(true);
-          }
-          this.stopTransition();
-          this.setPosition(this.tabletopObject);
-        }, this);
-      });
     if (this.layerName.length < 1 && this.tabletopObject) this.layerName = this.tabletopObject.aliasName;
     this.register();
     this.findCollidableElements();

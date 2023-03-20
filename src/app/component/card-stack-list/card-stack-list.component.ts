@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
-import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
-import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 
@@ -17,7 +15,7 @@ import { PanelOption, PanelService } from 'service/panel.service';
   styleUrls: ['./card-stack-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardStackListComponent implements OnInit, OnDestroy {
+export class CardStackListComponent implements OnChanges, OnDestroy {
   @Input() cardStack: CardStack = null;
 
   owner: string = Network.peer.userId;
@@ -27,19 +25,18 @@ export class CardStackListComponent implements OnInit, OnDestroy {
     private changeDetector: ChangeDetectorRef,
   ) { }
 
-  ngOnInit() {
+  ngOnChanges() {
     Promise.resolve().then(() => this.panelService.title = this.cardStack.name + ' のカード一覧');
+    EventSystem.unregister(this);
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (!this.cardStack || !object) return;
-        if ((this.cardStack === object)
-          || (object instanceof ObjectNode && this.cardStack.contains(object))) {
-          this.changeDetector.markForCheck();
-        }
-        if (event.data.identifier === this.cardStack.identifier && this.cardStack.owner !== this.owner) {
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.cardStack?.identifier}`, event => {
+        this.changeDetector.markForCheck();
+        if (this.cardStack.owner !== this.owner) {
           this.panelService.close();
         }
+      })
+      .on(`UPDATE_OBJECT_CHILDREN/identifier/${this.cardStack?.identifier}`, event => {
+        this.changeDetector.markForCheck();
       })
       .on('DELETE_GAME_OBJECT', event => {
         if (this.cardStack && this.cardStack.identifier === event.data.identifier) {

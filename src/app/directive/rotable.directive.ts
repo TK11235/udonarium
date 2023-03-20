@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
@@ -20,7 +20,7 @@ export interface RotableOption {
 @Directive({
   selector: '[appRotable]'
 })
-export class RotableDirective implements AfterViewInit, OnDestroy {
+export class RotableDirective implements OnChanges, AfterViewInit, OnDestroy {
   protected tabletopObject: RotableTabletopObject;
 
   private transformCssOffset: string = '';
@@ -78,6 +78,25 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     }
   }
 
+  ngOnChanges(): void {
+    if (this.tabletopObject) {
+      EventSystem.unregister(this);
+      EventSystem.register(this)
+        .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
+          if ((event.isSendFromSelf && this.input.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
+          this.batchService.add(() => {
+            if (this.input.isGrabbing) {
+              this.cancel();
+            } else {
+              this.setAnimatedTransition(true);
+            }
+            this.stopTransition();
+            this.setRotate(this.tabletopObject);
+          }, this);
+        });
+    }
+  }
+
   ngOnDestroy() {
     this.cancel();
     this.input.destroy();
@@ -94,19 +113,6 @@ export class RotableDirective implements AfterViewInit, OnDestroy {
     this.input.onContextMenu = this.onContextMenu.bind(this);
 
     if (this.tabletopObject) {
-      EventSystem.register(this)
-        .on('UPDATE_GAME_OBJECT', event => {
-          if ((event.isSendFromSelf && this.input.isGrabbing) || event.data.identifier !== this.tabletopObject.identifier || !this.shouldTransition(this.tabletopObject)) return;
-          this.batchService.add(() => {
-            if (this.input.isGrabbing) {
-              this.cancel();
-            } else {
-              this.setAnimatedTransition(true);
-            }
-            this.stopTransition();
-            this.setRotate(this.tabletopObject);
-          }, this);
-        });
       this.setRotate(this.tabletopObject);
     } else {
       this.updateTransformCss();

@@ -8,13 +8,12 @@ import {
   HostListener,
   Input,
   NgZone,
+  OnChanges,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem, Network } from '@udonarium/core/system';
 import { PeerCursor } from '@udonarium/peer-cursor';
@@ -49,7 +48,7 @@ import { PointerDeviceService } from 'service/pointer-device.service';
     ])
   ]
 })
-export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CardStackComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() cardStack: CardStack = null;
   @Input() is3D: boolean = false;
 
@@ -96,7 +95,8 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
     private pointerDeviceService: PointerDeviceService
   ) { }
 
-  ngOnInit() {
+  ngOnChanges(): void {
+    EventSystem.unregister(this);
     EventSystem.register(this)
       .on('SHUFFLE_CARD_STACK', event => {
         if (event.data.identifier === this.cardStack.identifier) {
@@ -104,17 +104,17 @@ export class CardStackComponent implements OnInit, AfterViewInit, OnDestroy {
           this.changeDetector.markForCheck();
         }
       })
-      .on('UPDATE_GAME_OBJECT', event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (!this.cardStack || !object) return;
-        if ((this.cardStack === object)
-          || (object instanceof ObjectNode && this.cardStack.contains(object))
-          || (object instanceof PeerCursor && object.userId === this.cardStack.owner)) {
+      .on(`UPDATE_GAME_OBJECT/aliasName/${PeerCursor.aliasName}`, event => {
+        let object = ObjectStore.instance.get<PeerCursor>(event.data.identifier);
+        if (this.cardStack && object && object.userId === this.cardStack.owner) {
           this.changeDetector.markForCheck();
         }
       })
-      .on('CARD_STACK_DECREASED', event => {
-        if (event.data.cardStackIdentifier === this.cardStack.identifier && this.cardStack) this.changeDetector.markForCheck();
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.cardStack?.identifier}`, event => {
+        this.changeDetector.markForCheck();
+      })
+      .on(`UPDATE_OBJECT_CHILDREN/identifier/${this.cardStack?.identifier}`, event => {
+        this.changeDetector.markForCheck();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();

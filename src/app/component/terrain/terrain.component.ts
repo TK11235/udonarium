@@ -7,12 +7,10 @@ import {
   HostListener,
   Input,
   NgZone,
+  OnChanges,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
-import { ObjectNode } from '@udonarium/core/synchronize-object/object-node';
-import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
 import { EventSystem } from '@udonarium/core/system';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { Terrain, TerrainViewState } from '@udonarium/terrain';
@@ -33,7 +31,7 @@ import { TabletopActionService } from 'service/tabletop-action.service';
   styleUrls: ['./terrain.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
   @Input() terrain: Terrain = null;
   @Input() is3D: boolean = false;
 
@@ -76,14 +74,14 @@ export class TerrainComponent implements OnInit, OnDestroy, AfterViewInit {
     private coordinateService: CoordinateService,
   ) { }
 
-  ngOnInit() {
+  ngOnChanges(): void {
+    EventSystem.unregister(this);
     EventSystem.register(this)
-      .on('UPDATE_GAME_OBJECT', event => {
-        let object = ObjectStore.instance.get(event.data.identifier);
-        if (!this.terrain || !object) return;
-        if (this.terrain === object || (object instanceof ObjectNode && this.terrain.contains(object))) {
-          this.changeDetector.markForCheck();
-        }
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.terrain?.identifier}`, event => {
+        this.changeDetector.markForCheck();
+      })
+      .on(`UPDATE_OBJECT_CHILDREN/identifier/${this.terrain?.identifier}`, event => {
+        this.changeDetector.markForCheck();
       })
       .on('SYNCHRONIZE_FILE_LIST', event => {
         this.changeDetector.markForCheck();
