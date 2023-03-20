@@ -17,7 +17,6 @@ import { ContextMenuComponent } from 'component/context-menu/context-menu.compon
 import { DiceSymbolComponent } from 'component/dice-symbol/dice-symbol.component';
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';
 import { FileStorageComponent } from 'component/file-storage/file-storage.component';
-import { GameCharacterGeneratorComponent } from 'component/game-character-generator/game-character-generator.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { GameCharacterComponent } from 'component/game-character/game-character.component';
 import { GameDataElementComponent } from 'component/game-data-element/game-data-element.component';
@@ -71,7 +70,6 @@ import { AppComponent } from './app.component';
     ContextMenuComponent,
     FileSelecterComponent,
     FileStorageComponent,
-    GameCharacterGeneratorComponent,
     GameCharacterSheetComponent,
     GameCharacterComponent,
     GameDataElementComponent,

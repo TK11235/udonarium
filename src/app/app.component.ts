@@ -23,7 +23,6 @@ import { TableSelecter } from '@udonarium/table-selecter';
 import { ChatWindowComponent } from 'component/chat-window/chat-window.component';
 import { ContextMenuComponent } from 'component/context-menu/context-menu.component';
 import { FileStorageComponent } from 'component/file-storage/file-storage.component';
-import { GameCharacterGeneratorComponent } from 'component/game-character-generator/game-character-generator.component';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { GameObjectInventoryComponent } from 'component/game-object-inventory/game-object-inventory.component';
 import { GameTableSettingComponent } from 'component/game-table-setting/game-table-setting.component';
@@ -218,10 +217,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         break;
       case 'JukeboxComponent':
         component = JukeboxComponent;
-        break;
-      case 'GameCharacterGeneratorComponent':
-        component = GameCharacterGeneratorComponent;
-        option = { width: 500, height: 300, left: 100 };
         break;
       case 'GameObjectInventoryComponent':
         component = GameObjectInventoryComponent;
