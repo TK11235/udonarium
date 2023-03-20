@@ -32,5 +32,4 @@ export class BadgeComponent implements OnChanges {
   animationShuffleDone(event: any) {
     this.animeState = 'inactive';
   }
-
 }

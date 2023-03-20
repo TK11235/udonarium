@@ -26,5 +26,4 @@ export class TextViewComponent implements OnInit {
       }
     });
   }
-
 }
