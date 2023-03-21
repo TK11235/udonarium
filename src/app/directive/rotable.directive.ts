@@ -111,12 +111,6 @@ export class RotableDirective implements OnChanges, AfterViewInit, OnDestroy {
     this.input.onMove = this.onInputMove.bind(this);
     this.input.onEnd = this.onInputEnd.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
-
-    if (this.tabletopObject) {
-      this.setRotate(this.tabletopObject);
-    } else {
-      this.updateTransformCss();
-    }
   }
 
   cancel() {

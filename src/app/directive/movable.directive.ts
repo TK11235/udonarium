@@ -126,7 +126,6 @@ export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
     if (this.layerName.length < 1 && this.tabletopObject) this.layerName = this.tabletopObject.aliasName;
     this.register();
     this.findCollidableElements();
-    this.setPosition(this.tabletopObject);
   }
 
   cancel() {
