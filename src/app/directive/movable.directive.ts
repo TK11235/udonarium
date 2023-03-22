@@ -37,10 +37,10 @@ export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
   private transformCssOffset: string = '';
 
   @Input('movable.option') set option(option: MovableOption) {
-    this.tabletopObject = option.tabletopObject != null ? option.tabletopObject : this.tabletopObject;
-    this.layerName = option.layerName != null ? option.layerName : this.layerName;
-    this.colideLayers = option.colideLayers != null ? option.colideLayers : this.colideLayers;
-    this.transformCssOffset = option.transformCssOffset != null ? option.transformCssOffset : this.transformCssOffset;
+    this.tabletopObject = option.tabletopObject ?? null;
+    this.layerName = option.layerName ?? '';
+    this.colideLayers = option.colideLayers ?? [];
+    this.transformCssOffset = option.transformCssOffset ?? '';
   }
   @Input('movable.disable') isDisable: boolean = false;
   @Output('movable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();

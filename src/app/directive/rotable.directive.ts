@@ -26,9 +26,9 @@ export class RotableDirective implements OnChanges, AfterViewInit, OnDestroy {
   private transformCssOffset: string = '';
   private grabbingSelecter: string = '.rotate-grab';
   @Input('rotable.option') set option(option: RotableOption) {
-    this.tabletopObject = option.tabletopObject != null ? option.tabletopObject : this.tabletopObject;
-    this.grabbingSelecter = option.grabbingSelecter != null ? option.grabbingSelecter : this.grabbingSelecter;
-    this.transformCssOffset = option.transformCssOffset != null ? option.transformCssOffset : this.transformCssOffset;
+    this.tabletopObject = option.tabletopObject;
+    this.grabbingSelecter = option.grabbingSelecter ?? '.rotate-grab';
+    this.transformCssOffset = option.transformCssOffset ?? '';
   }
   @Input('rotable.disable') isDisable: boolean = false;
   @Output('rotable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
