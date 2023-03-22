@@ -18,6 +18,8 @@ import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.
 
 import { InputHandler } from './input-handler';
 
+type LayerName = string;
+
 export interface MovableOption {
   readonly tabletopObject?: TabletopObject;
   readonly layerName?: string;
@@ -29,7 +31,7 @@ export interface MovableOption {
   selector: '[appMovable]'
 })
 export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
-  private static layerHash: { [layerName: string]: MovableDirective[] } = {};
+  private static layerMap: Map<LayerName, Set<MovableDirective>> = new Map();
 
   private tabletopObject: TabletopObject;
   private layerName: string = '';
@@ -325,28 +327,28 @@ export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
   private setCollidableLayer(isCollidable: boolean) {
     // todo
     let isEnable = isCollidable;
-    for (let layerName in MovableDirective.layerHash) {
-      if (-1 < this.colideLayers.indexOf(layerName)) {
-        isEnable = this.input.isGrabbing ? isCollidable : true;
+    for (let layerName of MovableDirective.layerMap.keys()) {
+      if (this.colideLayers.includes(layerName)) {
+        isEnable = this.input?.isGrabbing ? isCollidable : true;
       } else {
         isEnable = !isCollidable;
       }
-      MovableDirective.layerHash[layerName].forEach(movable => {
-        if (movable === this || movable.input.isGrabbing) return;
+      MovableDirective.layerMap.get(layerName).forEach(movable => {
+        if (movable === this || (movable.input?.isGrabbing)) return;
         movable.setPointerEvents(isEnable);
       });
     }
   }
 
   private register() {
-    if (!(this.layerName in MovableDirective.layerHash)) MovableDirective.layerHash[this.layerName] = [];
-    let index = MovableDirective.layerHash[this.layerName].indexOf(this);
-    if (index < 0) MovableDirective.layerHash[this.layerName].push(this);
+    let layerSet = MovableDirective.layerMap.get(this.layerName) ?? new Set();
+    layerSet.add(this);
+    MovableDirective.layerMap.set(this.layerName, layerSet);
   }
 
   private unregister() {
-    if (!(this.layerName in MovableDirective.layerHash)) return;
-    let index = MovableDirective.layerHash[this.layerName].indexOf(this);
-    if (-1 < index) MovableDirective.layerHash[this.layerName].splice(index, 1);
+    let layerSet = MovableDirective.layerMap.get(this.layerName);
+    if (!layerSet) return;
+    layerSet.delete(this);
   }
 }
