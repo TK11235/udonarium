@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -91,6 +92,11 @@ export class OverviewPanelComponent implements OnChanges, AfterViewInit, OnDestr
 
   ngOnDestroy() {
     EventSystem.unregister(this);
+  }
+
+  @HostListener('document:draggingstate', ['$event'])
+  onChangeDragging(e: Event) {
+    this.changeDetector.markForCheck();
   }
 
   private initPanelPosition() {

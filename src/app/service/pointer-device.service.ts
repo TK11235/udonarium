@@ -37,7 +37,10 @@ export class PointerDeviceService {
   get isDragging(): boolean { return this._isDragging; }
   set isDragging(isDragging: boolean) {
     if (isDragging === this._isDragging) return;
-    this.ngZone.run(() => this._isDragging = isDragging);
+    this.ngZone.run(() => {
+      this._isDragging = isDragging;
+      document.body.dispatchEvent(new CustomEvent('draggingstate', { detail: isDragging, bubbles: true }));
+    });
   }
 
   constructor(private ngZone: NgZone) { }
