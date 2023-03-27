@@ -1,14 +1,4 @@
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { TabletopObject } from '@udonarium/tabletop-object';
@@ -30,7 +20,7 @@ export interface MovableOption {
 @Directive({
   selector: '[appMovable]'
 })
-export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
+export class MovableDirective implements OnChanges, OnDestroy {
   private static layerMap: Map<LayerName, Set<MovableDirective>> = new Map();
 
   private tabletopObject: TabletopObject;
@@ -43,6 +33,8 @@ export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
     this.layerName = option.layerName ?? '';
     this.colideLayers = option.colideLayers ?? [];
     this.transformCssOffset = option.transformCssOffset ?? '';
+
+    if (this.layerName.length < 1 && this.tabletopObject) this.layerName = this.tabletopObject.aliasName;
   }
   @Input('movable.disable') isDisable: boolean = false;
   @Output('movable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
@@ -87,18 +79,14 @@ export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
     private coordinateService: CoordinateService,
   ) { }
 
-  ngAfterViewInit() {
-    this.batchService.add(() => this.initialize(), this.elementRef);
-    this.setPosition(this.tabletopObject);
-  }
-
   ngOnChanges(): void {
-    EventSystem.unregister(this);
+    this.dispose();
+
     EventSystem.register(this)
       .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
-        if ((event.isSendFromSelf && this.input && this.input.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
+        if ((event.isSendFromSelf && this.input?.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
         this.batchService.add(() => {
-          if (this.input.isGrabbing) {
+          if (this.input?.isGrabbing) {
             this.cancel();
           } else {
             this.setAnimatedTransition(true);
@@ -107,15 +95,15 @@ export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
           this.setPosition(this.tabletopObject);
         }, this);
       });
+
+    this.register();
+    this.setPosition(this.tabletopObject);
+    if (!this.input) this.batchService.add(() => this.initialize(), this.elementRef);
   }
 
   ngOnDestroy() {
-    this.cancel();
-    this.input.destroy();
-    this.unregister();
-    EventSystem.unregister(this);
-    this.batchService.remove(this);
-    this.batchService.remove(this.elementRef);
+    this.dispose();
+    this.input?.destroy();
   }
 
   initialize() {
@@ -125,16 +113,21 @@ export class MovableDirective implements OnChanges, AfterViewInit, OnDestroy {
     this.input.onEnd = this.onInputEnd.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
 
-    if (this.layerName.length < 1 && this.tabletopObject) this.layerName = this.tabletopObject.aliasName;
-    this.register();
     this.findCollidableElements();
   }
 
   cancel() {
-    this.input.cancel();
+    this.input?.cancel();
     this.setPointerEvents(true);
     this.setAnimatedTransition(true);
     this.setCollidableLayer(false);
+  }
+
+  dispose() {
+    this.unregister();
+    EventSystem.unregister(this);
+    this.batchService.remove(this);
+    this.batchService.remove(this.elementRef);
   }
 
   onInputStart(e: MouseEvent | TouchEvent) {
