@@ -214,6 +214,11 @@
   opacity: 0;
 }
 
+.component:hover .pedestal-outer {
+  transform-style: preserve-3d;
+  transform: translateZ(0.01px);
+}
+
 .component:hover .rotate-grab {
   opacity: 0.5;
 }
