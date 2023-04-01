@@ -119,7 +119,7 @@ export class RotableDirective implements OnChanges, OnDestroy {
 
   onInputStart(e: MouseEvent | TouchEvent) {
     this.grabbingElement = e.target as HTMLElement;
-    if (this.isDisable || !this.isAllowedToRotate || (e as MouseEvent).button === 1 || (e as MouseEvent).button === 2) return this.cancel();
+    if (this.isDisable || !this.isAllowedToRotate || (e instanceof MouseEvent && e.button !== 0)) return this.cancel();
     e.stopPropagation();
     this.onstart.emit(e as PointerEvent);
 
