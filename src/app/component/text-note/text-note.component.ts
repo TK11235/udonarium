@@ -158,6 +158,7 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
   }
 
   onMove() {
+    this.contextMenuService.close();
     SoundEffect.play(PresetSound.cardPick);
   }
 

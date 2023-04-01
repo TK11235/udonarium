@@ -186,6 +186,7 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
   }
 
   onMove() {
+    this.contextMenuService.close();
     SoundEffect.play(PresetSound.blockPick);
   }
 

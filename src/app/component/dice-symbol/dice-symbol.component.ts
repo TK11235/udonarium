@@ -278,6 +278,7 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
   }
 
   onMove() {
+    this.contextMenuService.close();
     SoundEffect.play(PresetSound.dicePick);
   }
 

@@ -146,6 +146,7 @@ export class GameCharacterComponent implements OnChanges, OnDestroy {
   }
 
   onMove() {
+    this.contextMenuService.close();
     SoundEffect.play(PresetSound.piecePick);
   }
 

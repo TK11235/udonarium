@@ -258,6 +258,7 @@ export class CardComponent implements OnDestroy, OnChanges, AfterViewInit {
 
   onMove() {
     this.input.cancel();
+    this.contextMenuService.close();
     SoundEffect.play(PresetSound.cardPick);
   }
 
