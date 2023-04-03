@@ -41,7 +41,7 @@ export class RotableDirective implements OnChanges, OnDestroy {
 
   private _rotate: number = 0;
   get rotate(): number { return this._rotate; }
-  set rotate(rotate: number) { this._rotate = rotate; this.setUpdateTimer(); }
+  set rotate(rotate: number) { this._rotate = rotate; this.setUpdateBatching(); }
   @Input('rotable.value') set value(value: number) { this._rotate = value; this.updateTransformCss(); }
   @Output('rotable.valueChange') valueChange: EventEmitter<number> = new EventEmitter();
 
@@ -58,7 +58,7 @@ export class RotableDirective implements OnChanges, OnDestroy {
   }
 
   private rotateOffset: number = 0;
-  private updateTimer: NodeJS.Timer = null;
+  private isUpdateBatching: boolean = false;
   private grabbingElement: HTMLElement = null;
   private input: InputHandler = null;
 
@@ -175,13 +175,14 @@ export class RotableDirective implements OnChanges, OnDestroy {
     this.rotate -= (this.rotate) % (360 / polygonal);
   }
 
-  private setUpdateTimer() {
-    if (this.updateTimer === null) {
-      this.updateTimer = setTimeout(() => {
+  private setUpdateBatching() {
+    if (!this.isUpdateBatching) {
+      this.isUpdateBatching = true;
+      this.batchService.add(() => {
         this.valueChange.emit(this.rotate);
         if (this.tabletopObject) this.tabletopObject.rotate = this.rotate;
-        this.updateTimer = null;
-      }, 66);
+        this.isUpdateBatching = false;
+      });
     }
     this.updateTransformCss();
   }

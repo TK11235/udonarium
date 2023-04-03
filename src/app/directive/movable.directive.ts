@@ -50,11 +50,11 @@ export class MovableDirective implements OnChanges, OnDestroy {
   private _posZ: number = 0;
 
   get posX(): number { return this._posX; }
-  set posX(posX: number) { this._posX = posX; this.setUpdateTimer(); }
+  set posX(posX: number) { this._posX = posX; this.setUpdateBatching(); }
   get posY(): number { return this._posY; }
-  set posY(posY: number) { this._posY = posY; this.setUpdateTimer(); }
+  set posY(posY: number) { this._posY = posY; this.setUpdateBatching(); }
   get posZ(): number { return this._posZ; }
-  set posZ(posZ: number) { this._posZ = posZ; this.setUpdateTimer(); }
+  set posZ(posZ: number) { this._posZ = posZ; this.setUpdateBatching(); }
 
   private pointerOffset2d: PointerCoordinate = { x: 0, y: 0, z: 0 };
   private pointerStart3d: PointerCoordinate = { x: 0, y: 0, z: 0 };
@@ -65,7 +65,7 @@ export class MovableDirective implements OnChanges, OnDestroy {
   private width: number = 0;
   private ratio: number = 1.0;
 
-  private updateTimer: NodeJS.Timer = null;
+  private isUpdateBatching: boolean = false;
   private collidableElements: HTMLElement[] = [];
   private input: InputHandler = null;
 
@@ -255,14 +255,15 @@ export class MovableDirective implements OnChanges, OnDestroy {
     this.updateTransformCss();
   }
 
-  private setUpdateTimer() {
-    if (this.updateTimer === null && this.tabletopObject) {
-      this.updateTimer = setTimeout(() => {
+  private setUpdateBatching() {
+    if (!this.isUpdateBatching && this.tabletopObject) {
+      this.isUpdateBatching = true;
+      this.batchService.add(() => {
         this.tabletopObject.location.x = this.posX;
         this.tabletopObject.location.y = this.posY;
         this.tabletopObject.posZ = this.posZ;
-        this.updateTimer = null;
-      }, 66);
+        this.isUpdateBatching = false;
+      });
     }
     this.updateTransformCss();
   }
