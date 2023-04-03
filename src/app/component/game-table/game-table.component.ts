@@ -41,17 +41,9 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
   get currentTable(): GameTable { return this.tabletopService.currentTable; }
 
-  get tableImage(): ImageFile {
-    return this.imageService.getSkeletonOr(this.currentTable.imageIdentifier);
-  }
-
-  get backgroundImage(): ImageFile {
-    return this.imageService.getEmptyOr(this.currentTable.backgroundImageIdentifier);
-  }
-
-  get backgroundFilterType(): FilterType {
-    return this.currentTable.backgroundFilterType;
-  }
+  get tableImage(): ImageFile { return this.imageService.getSkeletonOr(this.currentTable.imageIdentifier); }
+  get backgroundImage(): ImageFile { return this.imageService.getEmptyOr(this.currentTable.backgroundImageIdentifier); }
+  get backgroundFilterType(): FilterType { return this.currentTable.backgroundFilterType; }
 
   private isTableTransformMode: boolean = false;
   private isTableTransformed: boolean = false;
