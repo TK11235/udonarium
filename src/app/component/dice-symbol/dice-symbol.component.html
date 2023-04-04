@@ -3,8 +3,6 @@
   <div class="component-content is-3d" [@bounceInOut]="'in'">
     <div appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()"
       class="component-content is-3d is-pointer-events-auto">
-      <div class="pedestal-inner" [ngClass]="{'is-gray-border': hasOwner}"></div>
-      <div class="pedestal-outer"></div>
       <ng-container *ngIf="!isIconHidden">
       <div class="pedestal-grab rotate-grab">
         <div class="pedestal-grab-border">
@@ -13,6 +11,8 @@
         </div>
       </div>
       </ng-container>
+      <div class="pedestal-inner" [ngClass]="{'is-gray-border': hasOwner}"></div>
+      <div class="pedestal-outer"></div>
       <div class="component-content is-3d" [@diceRoll]="animeState" (@diceRoll.done)="animationShuffleDone($event)">
         <div class="upright-transform is-fit-width is-3d">
           <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize">

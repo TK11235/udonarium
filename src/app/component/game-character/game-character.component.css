@@ -50,7 +50,6 @@
 }
 
 .pedestal-grab {
-  z-index: -1;
   backface-visibility: hidden;
   position: absolute;
   top: -22px;

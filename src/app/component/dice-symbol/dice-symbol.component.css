@@ -50,7 +50,6 @@
 }
 
 .pedestal-grab {
-  z-index: -1;
   backface-visibility: hidden;
   position: absolute;
   top: -22px;
@@ -195,7 +194,6 @@
   cursor: -moz-default;
   cursor: -webkit-default;
   cursor: default;
-  z-index: 1;
   padding: 2px;
   background-color: #CCCCCC;
   border-radius: 100%;
