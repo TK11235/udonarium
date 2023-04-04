@@ -9,10 +9,10 @@ export class ResettableTimeout {
 
   get isActive(): boolean { return this.timeoutTimer != null; }
 
-  constructor(callback: TimerCallback, ms: number) {
+  constructor(callback: TimerCallback, ms: number, activate: boolean = true) {
     this.callback = callback;
     this.timerMilliSecond = ms;
-    this.reset();
+    if (activate) this.reset();
   }
 
   stop() {

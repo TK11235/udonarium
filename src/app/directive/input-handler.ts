@@ -19,8 +19,12 @@ export class InputHandler {
   private callbackOnMenu = this.onMenu.bind(this);
 
   private lastPointers: PointerData[] = [];
+  private firstPointer: PointerData = { x: 0, y: 0, z: 0, identifier: MOUSE_IDENTIFIER }
   private primaryPointer: PointerData = { x: 0, y: 0, z: 0, identifier: MOUSE_IDENTIFIER }
+  get startPointer(): PointerCoordinate { return this.firstPointer; }
   get pointer(): PointerCoordinate { return this.primaryPointer; }
+
+  get magnitude(): number { return this.calcMagnitude(this.firstPointer, this.primaryPointer); }
 
   private _isDragging: boolean = false;
   private _isGrabbing: boolean = false;
@@ -104,6 +108,7 @@ export class InputHandler {
     switch (e.type) {
       case 'mousedown':
       case 'touchstart':
+        this.firstPointer = this.primaryPointer;
         this._isGrabbing = true;
         this._isDragging = false;
         this.addEventListeners();
