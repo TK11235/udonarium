@@ -128,12 +128,15 @@ export class InputHandler {
   private isSyntheticEvent(mosuePointer: PointerData, threshold: number = 15): boolean {
     for (let pointer of this.lastPointers) {
       if (pointer.identifier === mosuePointer.identifier) continue;
-      let distance = (mosuePointer.x - pointer.x) ** 2 + (mosuePointer.y - pointer.y) ** 2;
-      if (distance < threshold ** 2) {
+      if (this.calcMagnitude(mosuePointer, pointer) < threshold ** 2) {
         return true;
       }
     }
     return false;
+  }
+
+  private calcMagnitude(a: PointerCoordinate, b: PointerCoordinate) {
+    return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2;
   }
 
   private addEventListeners() {
