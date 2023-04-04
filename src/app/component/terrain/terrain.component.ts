@@ -121,7 +121,7 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
 
     // TODO:もっと良い方法考える
     if (this.isLocked) {
-      EventSystem.trigger('DRAG_LOCKED_OBJECT', {});
+      EventSystem.trigger('DRAG_LOCKED_OBJECT', { srcEvent: e });
     }
   }
 
