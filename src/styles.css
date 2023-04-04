@@ -45,7 +45,7 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: hsl(0, 0%, 97%);
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 body {
