@@ -43,6 +43,8 @@
   
   -moz-user-drag: none;
   -webkit-user-drag: none;
+
+  backface-visibility: hidden;
 }
 
 .component-content {
