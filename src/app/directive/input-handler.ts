@@ -150,16 +150,16 @@ export class InputHandler {
 
   private updateLastPointer(e: MouseEvent | TouchEvent) {
     let lastPointers: PointerData[] = [];
-    if (e instanceof TouchEvent) {
+    if (e instanceof MouseEvent) {
+      let mosuePointer: PointerData = { x: e.pageX, y: e.pageY, z: 0, identifier: MOUSE_IDENTIFIER };
+      lastPointers.push(mosuePointer);
+    } else {
       let length = e.touches.length;
       for (let i = 0; i < length; i++) {
         let touch = e.touches[i];
         let touchPointer: PointerData = { x: touch.pageX, y: touch.pageY, z: 0, identifier: touch.identifier };
         lastPointers.push(touchPointer);
       }
-    } else {
-      let mosuePointer: PointerData = { x: e.pageX, y: e.pageY, z: 0, identifier: MOUSE_IDENTIFIER };
-      lastPointers.push(mosuePointer);
     }
     this.lastMovePointers = lastPointers;
     if (e.type === 'mousedown' || e.type === 'touchstart') this.lastStartPointers = lastPointers;
