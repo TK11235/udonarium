@@ -91,12 +91,13 @@ export class RotableDirective implements OnChanges, OnDestroy {
       this.stopTransition();
       this.updateTransformCss();
     }
-    if (!this.input) this.batchService.add(() => this.initialize(), this.elementRef);
+    if (!this.input) this.batchService.add(() => this.initialize(), this.onstart);
   }
 
   ngOnDestroy() {
     this.dispose();
     this.input?.destroy();
+    this.batchService.remove(this.onstart);
   }
 
   initialize() {
@@ -117,7 +118,6 @@ export class RotableDirective implements OnChanges, OnDestroy {
   dispose() {
     EventSystem.unregister(this);
     this.batchService.remove(this);
-    this.batchService.remove(this.elementRef);
   }
 
   onInputStart(e: MouseEvent | TouchEvent) {

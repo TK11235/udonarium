@@ -98,12 +98,13 @@ export class MovableDirective implements OnChanges, OnDestroy {
 
     this.register();
     this.setPosition(this.tabletopObject);
-    if (!this.input) this.batchService.add(() => this.initialize(), this.elementRef);
+    if (!this.input) this.batchService.add(() => this.initialize(), this.onstart);
   }
 
   ngOnDestroy() {
     this.dispose();
     this.input?.destroy();
+    this.batchService.remove(this.onstart);
   }
 
   initialize() {
@@ -127,7 +128,6 @@ export class MovableDirective implements OnChanges, OnDestroy {
     this.unregister();
     EventSystem.unregister(this);
     this.batchService.remove(this);
-    this.batchService.remove(this.elementRef);
   }
 
   onInputStart(e: MouseEvent | TouchEvent) {
