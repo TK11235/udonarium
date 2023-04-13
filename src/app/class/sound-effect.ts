@@ -72,4 +72,20 @@ export class SoundEffect extends GameObject {
   private static _play(identifier: string) {
     EventSystem.call('SOUND_EFFECT', identifier);
   }
+
+  static playLocal(identifier: string)
+  static playLocal(audio: AudioFile)
+  static playLocal(arg: any) {
+    let identifier = '';
+    if (typeof arg === 'string') {
+      identifier = arg;
+    } else {
+      identifier = arg.identifier;
+    }
+    SoundEffect._playLocal(identifier);
+  }
+
+  private static _playLocal(identifier: string) {
+    EventSystem.trigger('SOUND_EFFECT', identifier);
+  }
 }
