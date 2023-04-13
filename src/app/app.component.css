@@ -23,6 +23,7 @@ nav ul > li {
   cursor: -moz-pointer;
   cursor: -webkit-pointer;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 nav ul > li:hover {
