@@ -39,10 +39,11 @@ export class RotableDirective implements OnChanges, OnDestroy {
 
   private get nativeElement(): HTMLElement { return this.elementRef.nativeElement; }
 
+  private cssRotate = 0;
   private _rotate: number = 0;
   get rotate(): number { return this._rotate; }
   set rotate(rotate: number) { this._rotate = rotate; this.setUpdateBatching(); }
-  @Input('rotable.value') set value(value: number) { this._rotate = value; this.updateTransformCss(); }
+  @Input('rotable.value') set value(value: number) { this._rotate = value; }
   @Output('rotable.valueChange') valueChange: EventEmitter<number> = new EventEmitter();
 
   private get isAllowedToRotate(): boolean {
@@ -81,12 +82,13 @@ export class RotableDirective implements OnChanges, OnDestroy {
             } else {
               this.setAnimatedTransition(true);
             }
-            this.stopTransition();
+            this.stopTransition(this.tabletopObject.rotate);
             this.setRotate(this.tabletopObject);
           }, this);
         });
       this.setRotate(this.tabletopObject);
     } else {
+      this.stopTransition();
       this.updateTransformCss();
     }
     if (!this.input) this.batchService.add(() => this.initialize(), this.elementRef);
@@ -103,6 +105,7 @@ export class RotableDirective implements OnChanges, OnDestroy {
     this.input.onMove = this.onInputMove.bind(this);
     this.input.onEnd = this.onInputEnd.bind(this);
     this.input.onContextMenu = this.onContextMenu.bind(this);
+    this.setAnimatedTransition(true);
   }
 
   cancel() {
@@ -166,7 +169,22 @@ export class RotableDirective implements OnChanges, OnDestroy {
     let x = pointer.x - centerX;
     let y = pointer.y - centerY;
     let rad = Math.atan2(y, x);
-    return ((rad * 180 / Math.PI) - rotateOffset) % 360;
+    let rotate = ((rad * 180 / Math.PI) - rotateOffset + 720) % 360;
+    return rotate < 180 ? rotate : rotate - 360;
+  }
+
+  private radianFromMatrix(a, b, c, d, e, f) {
+    let radian = 0;
+    if (a !== 0 || b !== 0) {
+      let r = Math.sqrt(a * a + b * b);
+      radian = b > 0 ? Math.acos(a / r) : -Math.acos(a / r);
+    } else if (c !== 0 || d !== 0) {
+      let s = Math.sqrt(c * c + d * d);
+      radian = Math.PI * 0.5 - (d > 0 ? Math.acos(-c / s) : -Math.acos(c / s));
+    } else {
+      // a = b = c = d = 0
+    }
+    return radian;
   }
 
   snapToPolygonal(polygonal: number = 24) {
@@ -200,11 +218,44 @@ export class RotableDirective implements OnChanges, OnDestroy {
     return object.rotate !== this.rotate;
   }
 
-  private stopTransition() {
+  private stopTransition(nextRotate: number = this.rotate) {
+    let cssTransform = window.getComputedStyle(this.nativeElement).transform;
+
+    if (Math.abs(nextRotate - this.cssRotate) < 180) return;
+
+    let regArray = /matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/gi.exec(cssTransform);
+    if (!regArray) return;
+
+    let currentRad = this.radianFromMatrix(
+      Number(regArray[1]), Number(regArray[2]), Number(regArray[3]),
+      Number(regArray[4]), Number(regArray[5]), Number(regArray[6])
+    );
+    let currentRotate = currentRad * 180 / Math.PI;
+    let currentVector = { x: Math.cos(currentRad), y: Math.sin(currentRad) };
+
+    let nextRad = nextRotate * Math.PI / 180;
+    let nextVector = { x: Math.cos(nextRad), y: Math.sin(nextRad) };
+
+    let crossProduct = currentVector.x * nextVector.y - nextVector.x * currentVector.y;
+
+    let diff = Math.abs(nextRotate - currentRotate);
+    if (180 < diff) diff = 360 - diff;
+
+    let expectRotate = nextRotate + (0 < crossProduct ? -diff : diff);
+    if (expectRotate === currentRotate) return;
+
+    let cssTransition = this.nativeElement.style.transition;
+    this.nativeElement.style.transition = '';
+
+    this.cssRotate = expectRotate;
+    this.nativeElement.style.transform = `${this.transformCssOffset} rotateZ(${expectRotate.toFixed(4)}deg)`;
     this.nativeElement.style.transform = window.getComputedStyle(this.nativeElement).transform;
+
+    this.nativeElement.style.transition = cssTransition;
   }
 
   private updateTransformCss() {
+    this.cssRotate = this.rotate;
     let css = `${this.transformCssOffset} rotateZ(${this.rotate.toFixed(4)}deg)`;
     this.nativeElement.style.transform = css;
   }
