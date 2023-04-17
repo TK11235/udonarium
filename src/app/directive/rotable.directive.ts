@@ -7,12 +7,9 @@ import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.
 
 import { InputHandler } from './input-handler';
 
-export interface RotableTabletopObject extends TabletopObject {
-  rotate: number;
-}
-
 export interface RotableOption {
-  readonly tabletopObject?: RotableTabletopObject;
+  readonly tabletopObject?: TabletopObject;
+  readonly targetPropertyName?: string
   readonly grabbingSelecter?: string;
   readonly transformCssOffset?: string;
 }
@@ -21,14 +18,20 @@ export interface RotableOption {
   selector: '[appRotable]'
 })
 export class RotableDirective implements OnChanges, OnDestroy {
-  protected tabletopObject: RotableTabletopObject;
+  protected tabletopObject: TabletopObject;
 
+  private targetPropertyName: string = '';
+  private get targetProperty(): number { return this.tabletopObject[this.targetPropertyName]; }
+  private set targetProperty(value: number) { if (this.targetPropertyName in this.tabletopObject) this.tabletopObject[this.targetPropertyName] = value; }
   private transformCssOffset: string = '';
   private grabbingSelecter: string = '.rotate-grab';
   @Input('rotable.option') set option(option: RotableOption) {
     this.tabletopObject = option.tabletopObject;
+    this.targetPropertyName = option.targetPropertyName ?? '';
     this.grabbingSelecter = option.grabbingSelecter ?? '.rotate-grab';
     this.transformCssOffset = option.transformCssOffset ?? '';
+
+    if (this.targetPropertyName.length < 1 && this.tabletopObject) this.targetPropertyName = 'rotate';
   }
   @Input('rotable.disable') isDisable: boolean = false;
   @Output('rotable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
@@ -42,9 +45,7 @@ export class RotableDirective implements OnChanges, OnDestroy {
   private cssRotate = 0;
   private _rotate: number = 0;
   get rotate(): number { return this._rotate; }
-  set rotate(rotate: number) { this._rotate = rotate; this.setUpdateBatching(); this.valueChange.emit(this._rotate); }
-  @Input('rotable.value') set value(value: number) { this._rotate = value; }
-  @Output('rotable.valueChange') valueChange: EventEmitter<number> = new EventEmitter();
+  set rotate(rotate: number) { this._rotate = rotate; this.setUpdateBatching(); }
 
   private get isAllowedToRotate(): boolean {
     if (!this.grabbingElement || !this.nativeElement) return false;
@@ -72,25 +73,23 @@ export class RotableDirective implements OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     this.dispose();
-    if (this.tabletopObject) {
-      EventSystem.register(this)
-        .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
-          if ((event.isSendFromSelf && this.input?.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
-          this.batchService.add(() => {
-            if (this.input?.isGrabbing) {
-              this.cancel();
-            } else {
-              this.setAnimatedTransition(true);
-            }
-            this.stopTransition(this.tabletopObject.rotate);
-            this.setRotate(this.tabletopObject);
-          }, this);
-        });
-      this.setRotate(this.tabletopObject);
-    } else if (this.cssRotate != this.rotate) {
-      this.stopTransition();
-      this.updateTransformCss();
-    }
+
+    EventSystem.register(this)
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
+        if ((event.isSendFromSelf && this.input?.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
+        this.batchService.add(() => {
+          if (this.input?.isGrabbing) {
+            this.cancel();
+          } else {
+            this.setAnimatedTransition(true);
+          }
+          this.stopTransition(this.targetProperty);
+          this.setRotate(this.tabletopObject);
+        }, this);
+      });
+
+    this.setRotate(this.tabletopObject);
+
     if (!this.input) this.batchService.add(() => this.initialize(), this.onstart);
   }
 
@@ -197,15 +196,15 @@ export class RotableDirective implements OnChanges, OnDestroy {
     if (!this.isUpdateBatching) {
       this.isUpdateBatching = true;
       this.batchService.add(() => {
-        if (this.tabletopObject) this.tabletopObject.rotate = this.rotate;
+        this.targetProperty = this.rotate;
         this.isUpdateBatching = false;
       });
     }
     this.updateTransformCss();
   }
 
-  private setRotate(object: RotableTabletopObject) {
-    if (object) this._rotate = object.rotate;
+  private setRotate(object: TabletopObject) {
+    if (object && this.targetPropertyName in object) this._rotate = object[this.targetPropertyName];
     this.updateTransformCss();
   }
 
@@ -213,8 +212,8 @@ export class RotableDirective implements OnChanges, OnDestroy {
     this.nativeElement.style.transition = isEnable ? 'transform 132ms linear' : '';
   }
 
-  private shouldTransition(object: RotableTabletopObject): boolean {
-    return object.rotate !== this.rotate;
+  private shouldTransition(object: TabletopObject): boolean {
+    return this.targetProperty !== this.rotate;
   }
 
   private stopTransition(nextRotate: number = this.rotate) {

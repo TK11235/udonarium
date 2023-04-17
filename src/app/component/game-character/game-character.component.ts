@@ -58,6 +58,7 @@ export class GameCharacterComponent implements OnChanges, OnDestroy {
 
   movableOption: MovableOption = {};
   rotableOption: RotableOption = {};
+  rollOption: RotableOption = {};
 
   constructor(
     private contextMenuService: ContextMenuService,
@@ -88,6 +89,10 @@ export class GameCharacterComponent implements OnChanges, OnDestroy {
     };
     this.rotableOption = {
       tabletopObject: this.gameCharacter
+    };
+    this.rollOption = {
+      tabletopObject: this.gameCharacter,
+      targetPropertyName: 'roll',
     };
   }
 

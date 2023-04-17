@@ -14,7 +14,7 @@
       <div class="pedestal-outer"></div>
       <div class="upright-transform is-fit-width is-3d">
         <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"
-          appRotable [(rotable.value)]="roll" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
+          appRotable [rotable.option]="rollOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
           <div class="rotate-inner is-3d">
             <ng-container *ngIf="0 < name.length">
               <div *ngFor="let rotateY of ['0', '180deg']"
