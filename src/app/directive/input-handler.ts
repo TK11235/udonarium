@@ -38,18 +38,42 @@ export class InputHandler {
   private _isDestroyed: boolean = false;
   get isDestroyed(): boolean { return this._isDestroyed; }
 
-  private readonly option: InputHandlerOption = null;
+  private readonly target: HTMLElement;
+  private readonly option: InputHandlerOption;
 
-  constructor(readonly target: HTMLElement, option: InputHandlerOption = { capture: false, passive: false, always: false }) {
+  constructor(target: HTMLElement)
+  constructor(target: HTMLElement, activate: boolean)
+  constructor(target: HTMLElement, option: InputHandlerOption)
+  constructor(target: HTMLElement, option: InputHandlerOption, activate: boolean)
+  constructor(...args: any[]) {
+    let target: HTMLElement = args[0];
+    let option: InputHandlerOption = { capture: false, passive: false, always: false };
+    let activate: boolean = true;
+
+    switch (args.length) {
+      case 3:
+        option = args[1];
+        activate = args[2];
+        break;
+      case 2:
+        if (typeof args[1] === 'boolean') {
+          activate = args[1];
+        } else {
+          option = args[1];
+        }
+        break;
+    }
+
+    this.target = target;
     this.option = {
       capture: option.capture === true,
       passive: option.passive === true,
       always: option.always === true
     };
-    this.initialize();
+    if (activate) this.initialize();
   }
 
-  private initialize() {
+  initialize() {
     this.target.addEventListener('mousedown', this.callbackOnMouse, this.option.capture);
     this.target.addEventListener('touchstart', this.callbackOnTouch, this.option.capture);
     if (this.option.always) this.addEventListeners();
