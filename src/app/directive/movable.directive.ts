@@ -44,12 +44,16 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
   get transformCssOffset(): string { return this._transformCssOffset; }
 
   @Input('movable.option') set option(option: MovableOption) {
+    this.unregister();
+
     this._tabletopObject = option.tabletopObject ?? null;
     this._layerName = option.layerName ?? '';
     this._colideLayers = option.colideLayers ?? [];
     this._transformCssOffset = option.transformCssOffset ?? '';
 
     if (this._layerName.length < 1 && this._tabletopObject) this._layerName = this._tabletopObject.aliasName;
+
+    this.register();
   }
   @Input('movable.disable') isDisable: boolean = false;
   @Output('movable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
@@ -115,11 +119,11 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
         }, this);
       });
 
-    this.register();
     this.setPosition(this.tabletopObject);
   }
 
   ngOnDestroy() {
+    this.unregister();
     this.dispose();
     this.input.destroy();
     this.batchService.remove(this.onstart);
