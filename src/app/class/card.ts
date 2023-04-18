@@ -4,7 +4,7 @@ import { Network } from './core/system';
 import { DataElement } from './data-element';
 import { PeerCursor } from './peer-cursor';
 import { TabletopObject } from './tabletop-object';
-import { moveToTopmost } from './tabletop-object-util';
+import { moveToBackmost, moveToTopmost } from './tabletop-object-util';
 
 export enum CardState {
   FRONT,
@@ -51,6 +51,10 @@ export class Card extends TabletopObject {
 
   toTopmost() {
     moveToTopmost(this, ['card-stack']);
+  }
+
+  toBackmost() {
+    moveToBackmost(this, ['card-stack']);
   }
 
   static create(name: string, fornt: string, back: string, size: number = 2, identifier?: string): Card {

@@ -6,7 +6,7 @@ import { EventSystem } from './core/system';
 import { DataElement } from './data-element';
 import { PeerCursor } from './peer-cursor';
 import { TabletopObject } from './tabletop-object';
-import { moveToTopmost } from './tabletop-object-util';
+import { moveToBackmost, moveToTopmost } from './tabletop-object-util';
 
 @SyncObject('card-stack')
 export class CardStack extends TabletopObject {
@@ -132,6 +132,10 @@ export class CardStack extends TabletopObject {
 
   toTopmost() {
     moveToTopmost(this, ['card']);
+  }
+
+  toBackmost() {
+    moveToBackmost(this, ['card']);
   }
 
   // override
