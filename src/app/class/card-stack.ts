@@ -2,7 +2,6 @@ import { Card } from './card';
 import { ImageFile } from './core/file-storage/image-file';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { EventSystem } from './core/system';
 import { DataElement } from './data-element';
 import { PeerCursor } from './peer-cursor';
 import { TabletopObject } from './tabletop-object';
