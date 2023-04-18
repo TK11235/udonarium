@@ -57,10 +57,16 @@ export class InputHandler {
 
   destroy() {
     this.cancel();
+    this.clearLastPointerTimer.clear();
     this._isDestroyed = true;
     this.target.removeEventListener('mousedown', this.callbackOnMouse, this.option.capture);
     this.target.removeEventListener('touchstart', this.callbackOnTouch, this.option.capture);
     this.removeEventListeners();
+
+    this.onStart = null;
+    this.onMove = null;
+    this.onEnd = null;
+    this.onContextMenu = null;
   }
 
   cancel() {
