@@ -18,20 +18,26 @@ export interface RotableOption {
   selector: '[appRotable]'
 })
 export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
-  protected tabletopObject: TabletopObject;
+  private _tabletopObject: TabletopObject;
+  private _targetPropertyName: string = '';
+  private _transformCssOffset: string = '';
+  private _grabbingSelecter: string = '.rotate-grab';
 
-  private targetPropertyName: string = '';
-  private get targetProperty(): number { return this.tabletopObject[this.targetPropertyName]; }
-  private set targetProperty(value: number) { if (this.targetPropertyName in this.tabletopObject) this.tabletopObject[this.targetPropertyName] = value; }
-  private transformCssOffset: string = '';
-  private grabbingSelecter: string = '.rotate-grab';
+  get tabletopObject(): TabletopObject { return this._tabletopObject; }
+  get targetPropertyName(): string { return this._targetPropertyName; }
+  get targetProperty(): number { return this.tabletopObject[this.targetPropertyName]; }
+  set targetProperty(value: number) { if (this.targetPropertyName in this.tabletopObject) this.tabletopObject[this.targetPropertyName] = value; }
+  get transformCssOffset(): string { return this._transformCssOffset; }
+  get grabbingSelecter(): string { return this._grabbingSelecter; }
+
   @Input('rotable.option') set option(option: RotableOption) {
-    this.tabletopObject = option.tabletopObject;
-    this.targetPropertyName = option.targetPropertyName ?? '';
-    this.grabbingSelecter = option.grabbingSelecter ?? '.rotate-grab';
-    this.transformCssOffset = option.transformCssOffset ?? '';
 
-    if (this.targetPropertyName.length < 1 && this.tabletopObject) this.targetPropertyName = 'rotate';
+    this._tabletopObject = option.tabletopObject;
+    this._targetPropertyName = option.targetPropertyName ?? '';
+    this._grabbingSelecter = option.grabbingSelecter ?? '.rotate-grab';
+    this._transformCssOffset = option.transformCssOffset ?? '';
+
+    if (this._targetPropertyName.length < 1 && this._tabletopObject) this._targetPropertyName = 'rotate';
   }
   @Input('rotable.disable') isDisable: boolean = false;
   @Output('rotable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();

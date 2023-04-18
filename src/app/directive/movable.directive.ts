@@ -31,20 +31,25 @@ export interface MovableOption {
   selector: '[appMovable]'
 })
 export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
-  private static layerMap: Map<LayerName, Set<MovableDirective>> = new Map();
+  static readonly layerMap: Map<LayerName, Set<MovableDirective>> = new Map();
 
-  private tabletopObject: TabletopObject;
-  private layerName: string = '';
-  private colideLayers: string[] = [];
-  private transformCssOffset: string = '';
+  private _tabletopObject: TabletopObject;
+  private _layerName: string = '';
+  private _colideLayers: string[] = [];
+  private _transformCssOffset: string = '';
+
+  get tabletopObject(): TabletopObject { return this._tabletopObject; }
+  get layerName(): string { return this._layerName; }
+  get colideLayers(): string[] { return this._colideLayers; }
+  get transformCssOffset(): string { return this._transformCssOffset; }
 
   @Input('movable.option') set option(option: MovableOption) {
-    this.tabletopObject = option.tabletopObject ?? null;
-    this.layerName = option.layerName ?? '';
-    this.colideLayers = option.colideLayers ?? [];
-    this.transformCssOffset = option.transformCssOffset ?? '';
+    this._tabletopObject = option.tabletopObject ?? null;
+    this._layerName = option.layerName ?? '';
+    this._colideLayers = option.colideLayers ?? [];
+    this._transformCssOffset = option.transformCssOffset ?? '';
 
-    if (this.layerName.length < 1 && this.tabletopObject) this.layerName = this.tabletopObject.aliasName;
+    if (this._layerName.length < 1 && this._tabletopObject) this._layerName = this._tabletopObject.aliasName;
   }
   @Input('movable.disable') isDisable: boolean = false;
   @Output('movable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
