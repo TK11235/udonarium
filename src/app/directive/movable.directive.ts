@@ -1,4 +1,14 @@
-import { Directive, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { TabletopObject } from '@udonarium/tabletop-object';
@@ -20,7 +30,7 @@ export interface MovableOption {
 @Directive({
   selector: '[appMovable]'
 })
-export class MovableDirective implements OnChanges, OnDestroy {
+export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
   private static layerMap: Map<LayerName, Set<MovableDirective>> = new Map();
 
   private tabletopObject: TabletopObject;
@@ -67,7 +77,7 @@ export class MovableDirective implements OnChanges, OnDestroy {
 
   private isUpdateBatching: boolean = false;
   private collidableElements: HTMLElement[] = [];
-  private input: InputHandler = null;
+  private input: InputHandler = new InputHandler(this.nativeElement, false);
 
   private get isGridSnap(): boolean { return TableSelecter.instance.gridSnap; }
 
@@ -79,6 +89,10 @@ export class MovableDirective implements OnChanges, OnDestroy {
     private coordinateService: CoordinateService,
   ) { }
 
+  ngAfterViewInit() {
+    this.batchService.add(() => this.initialize(), this.onstart);
+  }
+
   ngOnChanges(): void {
     this.dispose();
 
@@ -86,7 +100,7 @@ export class MovableDirective implements OnChanges, OnDestroy {
       .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
         if ((event.isSendFromSelf && this.input?.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
         this.batchService.add(() => {
-          if (this.input?.isGrabbing) {
+          if (this.input.isGrabbing) {
             this.cancel();
           } else {
             this.setAnimatedTransition(true);
@@ -98,17 +112,16 @@ export class MovableDirective implements OnChanges, OnDestroy {
 
     this.register();
     this.setPosition(this.tabletopObject);
-    if (!this.input) this.batchService.add(() => this.initialize(), this.onstart);
   }
 
   ngOnDestroy() {
     this.dispose();
-    this.input?.destroy();
+    this.input.destroy();
     this.batchService.remove(this.onstart);
   }
 
   initialize() {
-    this.input = new InputHandler(this.nativeElement);
+    this.input.initialize();
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
     this.input.onEnd = this.onInputEnd.bind(this);
@@ -118,7 +131,7 @@ export class MovableDirective implements OnChanges, OnDestroy {
   }
 
   cancel() {
-    this.input?.cancel();
+    this.input.cancel();
     this.setPointerEvents(true);
     this.setAnimatedTransition(true);
     this.setCollidableLayer(false);
@@ -323,7 +336,7 @@ export class MovableDirective implements OnChanges, OnDestroy {
     let isEnable = isCollidable;
     for (let layerName of MovableDirective.layerMap.keys()) {
       if (this.colideLayers.includes(layerName)) {
-        isEnable = this.input?.isGrabbing ? isCollidable : true;
+        isEnable = this.input.isGrabbing ? isCollidable : true;
       } else {
         isEnable = !isCollidable;
       }

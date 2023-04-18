@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
@@ -17,7 +17,7 @@ export interface RotableOption {
 @Directive({
   selector: '[appRotable]'
 })
-export class RotableDirective implements OnChanges, OnDestroy {
+export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
   protected tabletopObject: TabletopObject;
 
   private targetPropertyName: string = '';
@@ -62,7 +62,7 @@ export class RotableDirective implements OnChanges, OnDestroy {
   private rotateOffset: number = 0;
   private isUpdateBatching: boolean = false;
   private grabbingElement: HTMLElement = null;
-  private input: InputHandler = null;
+  private input: InputHandler = new InputHandler(this.nativeElement, false);
 
   constructor(
     private elementRef: ElementRef,
@@ -71,14 +71,18 @@ export class RotableDirective implements OnChanges, OnDestroy {
     private coordinateService: CoordinateService,
   ) { }
 
+  ngAfterViewInit() {
+    this.batchService.add(() => this.initialize(), this.onstart);
+  }
+
   ngOnChanges(): void {
     this.dispose();
 
     EventSystem.register(this)
       .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
-        if ((event.isSendFromSelf && this.input?.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
+        if ((event.isSendFromSelf && this.input.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
         this.batchService.add(() => {
-          if (this.input?.isGrabbing) {
+          if (this.input.isGrabbing) {
             this.cancel();
           } else {
             this.setAnimatedTransition(true);
@@ -89,18 +93,16 @@ export class RotableDirective implements OnChanges, OnDestroy {
       });
 
     this.setRotate(this.tabletopObject);
-
-    if (!this.input) this.batchService.add(() => this.initialize(), this.onstart);
   }
 
   ngOnDestroy() {
     this.dispose();
-    this.input?.destroy();
+    this.input.destroy();
     this.batchService.remove(this.onstart);
   }
 
   initialize() {
-    this.input = new InputHandler(this.nativeElement);
+    this.input.initialize();
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
     this.input.onEnd = this.onInputEnd.bind(this);
@@ -109,7 +111,7 @@ export class RotableDirective implements OnChanges, OnDestroy {
   }
 
   cancel() {
-    this.input?.cancel();
+    this.input.cancel();
     this.grabbingElement = null;
     this.setAnimatedTransition(true);
   }
