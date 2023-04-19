@@ -93,6 +93,8 @@
 .component:hover .rotate-grab {
   display: block;
   opacity: 0.5;
+  transform-style: preserve-3d;
+  transform: translateZ(0.01px);
 }
 
 .component:active .rotate-grab {
