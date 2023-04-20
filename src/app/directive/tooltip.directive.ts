@@ -120,6 +120,9 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
     });
 
     EventSystem.register(this)
+      .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject.identifier}`, event => {
+        if (this.pointerDeviceService.isDragging) this.ngZone.run(() => this.closeAll());
+      })
       .on('DELETE_GAME_OBJECT', event => {
         if (this.tabletopObject && this.tabletopObject.identifier === event.data.identifier) this.closeAll();
       });
