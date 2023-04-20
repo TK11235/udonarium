@@ -6,7 +6,7 @@ import {
   Input,
   NgZone,
   OnDestroy,
-  ViewContainerRef,
+  ViewContainerRef
 } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TabletopObject } from '@udonarium/tabletop-object';
