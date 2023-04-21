@@ -5,6 +5,7 @@ import {
   Directive,
   Input,
   NgZone,
+  OnChanges,
   OnDestroy,
   ViewContainerRef
 } from '@angular/core';
@@ -136,6 +137,13 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
       EventSystem.unregister(this);
     });
     TooltipDirective.activeTooltips.push(this.tooltipComponentRef);
+
+    let onChanges = this.tooltipComponentRef.instance as OnChanges;
+    if (onChanges?.ngOnChanges != null) {
+      queueMicrotask(() => {
+        if (this.tooltipComponentRef.instance) onChanges?.ngOnChanges({});
+      });
+    }
   }
 
   private close() {
