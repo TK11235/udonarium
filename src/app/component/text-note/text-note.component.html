@@ -1,5 +1,5 @@
 <div class="component is-3d is-pointer-events-none"
-  appMovable [movable.option]="movableOption" [movable.disable]="isSelected" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
+  appMovable [movable.option]="movableOption" [movable.disable]="isActive" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
   <div class="is-3d" appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
   <div class="component-content is-3d is-pointer-events-auto"
     [style.width.px]="width * gridSize">
@@ -12,11 +12,14 @@
     <div class="upright-transform is-front is-bg-color is-bg-texture chrome-smooth-image-trick"
       [style.background-image]="'url(' + imageFile?.url + ')' | safe: 'style'" [style.width.px]="width * gridSize" [style.min-height.px]="height * gridSize">
       <div *ngIf="title.length" class="title is-black-background is-pointer-events-none">{{title}}</div>
-      <textarea (input)="calcFitHeight();" #textArea class="textarea" [ngClass]="{'is-pointer-events-none': !isSelected, 'is-pointer-events-auto': isSelected, 'is-outline-text': !isSelected}"
+      <textarea (input)="calcFitHeight();" #textArea class="textarea" [ngClass]="{'is-pointer-events-none': !isActive, 'is-pointer-events-auto': isActive, 'is-outline-text': !isActive}"
         [style.font-size.px]="fontSize + 9" [(ngModel)]="text" spellcheck="false"></textarea>
+      <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
     </div>
     <div class="upright-transform is-back is-bg-color is-bg-texture chrome-smooth-image-trick"
-      [style.background-image]="'url(' + imageFile?.url + ')' | safe: 'style'" [style.width.px]="width * gridSize" [style.min-height.px]="height * gridSize"></div>
+      [style.background-image]="'url(' + imageFile?.url + ')' | safe: 'style'" [style.width.px]="width * gridSize" [style.min-height.px]="height * gridSize">
+      <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
+    </div>
   </div>
 </div>
 </div>

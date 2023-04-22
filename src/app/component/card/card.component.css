@@ -133,6 +133,22 @@
   border-radius: 14px;
 }
 
+.selected-highlight {
+  pointer-events: none;
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 3px;
+  background-color: hsla(200, 100%, 75%, 0.6);
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.selected-highlight.is-magnetic {
+  background-color: hsla(60, 100%, 75%, 0.6);
+}
+
 .border-bg {
   position: absolute;
   box-sizing: border-box;

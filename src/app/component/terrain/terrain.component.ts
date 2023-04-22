@@ -24,6 +24,7 @@ import { ImageService } from 'service/image.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopActionService } from 'service/tabletop-action.service';
+import { SelectionState, TabletopSelectionService } from 'service/tabletop-selection.service';
 
 @Component({
   selector: 'terrain',
@@ -55,6 +56,10 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
   get isVisibleWallTopBottom(): boolean { return 0 < this.width * this.height; }
   get isVisibleWallLeftRight(): boolean { return 0 < this.depth * this.height; }
 
+  get selectionState(): SelectionState { return this.selectionService.state(this.terrain); }
+  get isSelected(): boolean { return this.selectionState !== SelectionState.NONE; }
+  get isMagnetic(): boolean { return this.selectionState === SelectionState.MAGNETIC; }
+
   gridSize: number = 50;
 
   movableOption: MovableOption = {};
@@ -70,6 +75,7 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
     private elementRef: ElementRef<HTMLElement>,
     private panelService: PanelService,
     private changeDetector: ChangeDetectorRef,
+    private selectionService: TabletopSelectionService,
     private pointerDeviceService: PointerDeviceService,
     private coordinateService: CoordinateService,
   ) { }
@@ -87,6 +93,9 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
         this.changeDetector.markForCheck();
       })
       .on('UPDATE_FILE_RESOURE', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on(`UPDATE_SELECTION/identifier/${this.terrain?.identifier}`, event => {
         this.changeDetector.markForCheck();
       });
     this.movableOption = {

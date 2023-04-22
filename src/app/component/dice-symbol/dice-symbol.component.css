@@ -98,6 +98,21 @@
   border-radius: 5px;
 }
 
+.selected-highlight {
+  pointer-events: none;
+  backface-visibility: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: hsla(200, 100%, 75%, 0.6);
+}
+
+.selected-highlight.is-magnetic {
+  background-color: hsla(60, 100%, 75%, 0.6);
+}
+
 .upright-transform {
   position: absolute;
   bottom: 0;

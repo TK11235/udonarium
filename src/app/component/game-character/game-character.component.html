@@ -11,6 +11,7 @@
         </div>
       </div>
       <div class="pedestal-inner"></div>
+      <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
       <div class="pedestal-outer"></div>
       <div class="upright-transform is-fit-width is-3d">
         <div class="rotate-frame is-3d" [style.width.px]="size * gridSize" [style.height.px]="size * gridSize"

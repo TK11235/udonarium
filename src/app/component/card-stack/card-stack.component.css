@@ -70,6 +70,22 @@
   width: 100%;
 }
 
+.selected-highlight {
+  pointer-events: none;
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: hsla(200, 100%, 75%, 0.6);
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+}
+
+.selected-highlight.is-magnetic {
+  background-color: hsla(60, 100%, 75%, 0.6);
+}
+
 .rotate-grab {
   position: absolute;
   width: 28px;

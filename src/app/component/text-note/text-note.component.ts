@@ -20,6 +20,7 @@ import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { SelectionState, TabletopSelectionService } from 'service/tabletop-selection.service';
 
 @Component({
   selector: 'text-note',
@@ -43,7 +44,11 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
   get height(): number { return this.adjustMinBounds(this.textNote.height); }
   get width(): number { return this.adjustMinBounds(this.textNote.width); }
 
-  get isSelected(): boolean { return document.activeElement === this.textAreaElementRef.nativeElement; }
+  get isActive(): boolean { return document.activeElement === this.textAreaElementRef.nativeElement; }
+
+  get selectionState(): SelectionState { return this.selectionService.state(this.textNote); }
+  get isSelected(): boolean { return this.selectionState !== SelectionState.NONE; }
+  get isMagnetic(): boolean { return this.selectionState === SelectionState.MAGNETIC; }
 
   private callbackOnMouseUp = (e) => this.onMouseUp(e);
 
@@ -59,6 +64,7 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
     private contextMenuService: ContextMenuService,
     private panelService: PanelService,
     private changeDetector: ChangeDetectorRef,
+    private selectionService: TabletopSelectionService,
     private pointerDeviceService: PointerDeviceService
   ) { }
 
@@ -75,6 +81,9 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
         this.changeDetector.markForCheck();
       })
       .on('UPDATE_FILE_RESOURE', event => {
+        this.changeDetector.markForCheck();
+      })
+      .on(`UPDATE_SELECTION/identifier/${this.textNote?.identifier}`, event => {
         this.changeDetector.markForCheck();
       });
     this.movableOption = {
@@ -99,7 +108,7 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
-    if (this.isSelected) return;
+    if (this.isActive) return;
     e.preventDefault();
     this.textNote.toTopmost();
 
@@ -130,7 +139,7 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
   @HostListener('contextmenu', ['$event'])
   onContextMenu(e: Event) {
     this.removeMouseEventListeners();
-    if (this.isSelected) return;
+    if (this.isActive) return;
     e.stopPropagation();
     e.preventDefault();
 

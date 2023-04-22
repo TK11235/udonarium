@@ -13,4 +13,5 @@
   <div *ngIf="isLock" class="lock-icon is-center">
     <i class="material-icons">lock</i>
   </div>
+  <div *ngIf="isSelected" class="selected-highlight border" [ngClass]="{'is-magnetic': isMagnetic}"></div>
 </div>

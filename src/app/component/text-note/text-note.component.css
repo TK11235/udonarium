@@ -145,6 +145,22 @@
   #f2f2f2 0px 0px 0.5px;
 }
 
+.selected-highlight {
+  pointer-events: none;
+  backface-visibility: hidden;
+  position: absolute;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: hsla(200, 100%, 75%, 0.6);
+}
+
+.selected-highlight.is-magnetic {
+  background-color: hsla(60, 100%, 75%, 0.6);
+}
+
 .rotate-grab {
   position: absolute;
   width: 42px;

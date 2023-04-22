@@ -66,3 +66,21 @@
   height: 100%;
   width: 100%;
 }
+
+.selected-highlight {
+  pointer-events: none;
+  backface-visibility: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: hsla(200, 100%, 75%, 0.6);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.selected-highlight.is-magnetic {
+  background-color: hsla(60, 100%, 75%, 0.6);
+}

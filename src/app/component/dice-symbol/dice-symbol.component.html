@@ -12,6 +12,7 @@
       </div>
       </ng-container>
       <div class="pedestal-inner" [ngClass]="{'is-gray-border': hasOwner}"></div>
+      <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
       <div class="pedestal-outer"></div>
       <div class="component-content is-3d" [@diceRoll]="animeState" (@diceRoll.done)="animationShuffleDone($event)">
         <div class="upright-transform is-fit-width is-3d">

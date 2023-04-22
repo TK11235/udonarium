@@ -22,5 +22,6 @@
       </div>
       <div class="border-bg is-pointer-events-none"></div>
     </ng-container>
+    <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
   </div>
 </div>

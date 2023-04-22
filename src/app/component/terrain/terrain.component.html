@@ -20,21 +20,31 @@
     </ng-container>
     <ng-container *ngIf="hasFloor && isVisibleFloor && 0 < floorImage?.url.length">
       <div class="texture chrome-smooth-image-trick" [ngClass]="{'blinking-animation': !isLocked}" [ngStyle]="{'transform': 'translateZ(' + height * gridSize +'px)'}"
-        [style.background-image]="'url(' + floorImage.url + ')' | safe: 'style'"></div>
+        [style.background-image]="'url(' + floorImage.url + ')' | safe: 'style'">
+        <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
+      </div>
     </ng-container>
     <ng-container *ngIf="hasWall && 0 < wallImage?.url.length">
       <div *ngIf="isVisibleWallTopBottom" [ngClass]="{'blinking-animation': !isLocked}"
         class="texture of-wall-top chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"></div>
+        [style.width.px]="width * gridSize" [style.height.px]="height * gridSize">
+        <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
+      </div>
       <div *ngIf="isVisibleWallTopBottom" [ngClass]="{'blinking-animation': !isLocked}"
         class="texture of-wall-bottom chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="width * gridSize" [style.height.px]="height * gridSize"></div>
+        [style.width.px]="width * gridSize" [style.height.px]="height * gridSize">
+        <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
+      </div>
       <div *ngIf="isVisibleWallLeftRight" [ngClass]="{'blinking-animation': !isLocked}"
         class="texture of-wall-left chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
+        [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize">
+        <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
+      </div>
       <div *ngIf="isVisibleWallLeftRight" [ngClass]="{'blinking-animation': !isLocked}"
         class="texture of-wall-right chrome-smooth-image-trick" [style.background-image]="'url(' + wallImage.url + ')' | safe: 'style'"
-        [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize"></div>
+        [style.width.px]="depth * gridSize" [style.height.px]="height * gridSize">
+        <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
+      </div>
     </ng-container>
   </div>
 </div>

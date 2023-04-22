@@ -27,5 +27,6 @@
     <div *ngIf="hasOwner" class="name-tag has-length-limit is-nowrap is-black-background" [ngStyle]="{'transform': 'translateY(50%) translateX(-50%) translateX(' + size * gridSize / 2 +'px)'}">
       <span>{{ownerName}} が確認中</span>
     </div>
+    <div *ngIf="isSelected" class="selected-highlight" [ngClass]="{'is-magnetic': isMagnetic}"></div>
   </div>
 </div>
