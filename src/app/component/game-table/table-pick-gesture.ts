@@ -98,6 +98,7 @@ export class TablePickGesture {
           if (target.contains(this.gameObjectsElement)) {
             this.selection.excludeElement = document.body;
           } else {
+            this.isKeepSelection = true;
             this.selection.excludeElement = null;
             this.pickObject(e);
           }
