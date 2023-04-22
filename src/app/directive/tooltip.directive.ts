@@ -26,6 +26,7 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
   private callbackOnMouseEnter = (e) => this.onMouseEnter(e);
   private callbackOnMouseLeave = (e) => this.onMouseLeave(e);
   private callbackOnMouseDown = (e) => this.onMouseDown(e);
+  private callbackOnPick = (e) => this.ngZone.run(() => this.closeAll());
 
   private openTooltipTimer: NodeJS.Timer;
   private closeTooltipTimer: NodeJS.Timer;
@@ -118,10 +119,16 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       document.body.addEventListener('touchstart', this.callbackOnMouseDown, true);
       document.body.addEventListener('mousedown', this.callbackOnMouseDown, true);
+      document.addEventListener('pickstart', this.callbackOnPick, true);
+      document.addEventListener('pickobject', this.callbackOnPick, true);
+      document.addEventListener('pickregion', this.callbackOnPick, true);
     });
 
     EventSystem.register(this)
       .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject.identifier}`, event => {
+        if (this.pointerDeviceService.isDragging) this.ngZone.run(() => this.closeAll());
+      })
+      .on('UPDATE_SELECTION', event => {
         if (this.pointerDeviceService.isDragging) this.ngZone.run(() => this.closeAll());
       })
       .on('DELETE_GAME_OBJECT', event => {
@@ -132,6 +139,9 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
       this.removeEventListeners(this.tooltipComponentRef.location.nativeElement);
       document.body.removeEventListener('touchstart', this.callbackOnMouseDown, true);
       document.body.removeEventListener('mousedown', this.callbackOnMouseDown, true);
+      document.removeEventListener('pickstart', this.callbackOnPick, true);
+      document.removeEventListener('pickobject', this.callbackOnPick, true);
+      document.removeEventListener('pickregion', this.callbackOnPick, true);
       this.clearTimer();
       this.tooltipComponentRef = null;
       EventSystem.unregister(this);
