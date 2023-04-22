@@ -23,7 +23,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private callbackOnOutsideClick = (e) => this.onOutsideClick(e);
 
-  get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging; }
+  get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging || this.pointerDeviceService.isTablePickGesture; }
 
   constructor(
     private elementRef: ElementRef<HTMLElement>,

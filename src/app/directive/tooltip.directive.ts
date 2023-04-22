@@ -101,7 +101,7 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
 
   private open() {
     this.closeAll();
-    if (this.pointerDeviceService.isDragging) return;
+    if (this.pointerDeviceService.isDragging || this.pointerDeviceService.isTablePickGesture) return;
 
     let parentViewContainerRef = ContextMenuService.defaultParentViewContainerRef;
 
