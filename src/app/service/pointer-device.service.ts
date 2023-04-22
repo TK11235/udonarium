@@ -43,6 +43,8 @@ export class PointerDeviceService {
     });
   }
 
+  isTablePickGesture = false;
+
   constructor(private ngZone: NgZone) { }
 
   initialize() {

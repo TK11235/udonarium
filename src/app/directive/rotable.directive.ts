@@ -4,8 +4,10 @@ import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
 import { CoordinateService } from 'service/coordinate.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { SelectionState, TabletopSelectionService } from 'service/tabletop-selection.service';
 
 import { InputHandler } from './input-handler';
+import { RotableSelectionSynchronizer } from './rotable-selection-synchronizer';
 
 export interface RotableOption {
   readonly tabletopObject?: TabletopObject;
@@ -31,6 +33,7 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
   get grabbingSelecter(): string { return this._grabbingSelecter; }
 
   @Input('rotable.option') set option(option: RotableOption) {
+    this.synchronizer.unregister();
 
     this._tabletopObject = option.tabletopObject;
     this._targetPropertyName = option.targetPropertyName ?? '';
@@ -38,6 +41,8 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
     this._transformCssOffset = option.transformCssOffset ?? '';
 
     if (this._targetPropertyName.length < 1 && this._tabletopObject) this._targetPropertyName = 'rotate';
+
+    this.synchronizer.register();
   }
   @Input('rotable.disable') isDisable: boolean = false;
   @Output('rotable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
@@ -70,11 +75,15 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
   private grabbingElement: HTMLElement = null;
   private input: InputHandler = new InputHandler(this.nativeElement, false);
 
+  private synchronizer: RotableSelectionSynchronizer = new RotableSelectionSynchronizer(this, this.selectionService);
+  get state(): SelectionState { return this.selectionService.state(this.tabletopObject); }
+
   constructor(
     private elementRef: ElementRef,
     private batchService: BatchService,
     private pointerDeviceService: PointerDeviceService,
     private coordinateService: CoordinateService,
+    private selectionService: TabletopSelectionService,
   ) { }
 
   ngAfterViewInit() {
@@ -86,7 +95,7 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
 
     EventSystem.register(this)
       .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
-        if ((event.isSendFromSelf && this.input.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
+        if ((event.isSendFromSelf && (this.input.isGrabbing || this.state !== SelectionState.NONE)) || !this.shouldTransition(this.tabletopObject)) return;
         this.batchService.add(() => {
           if (this.input.isGrabbing) {
             this.cancel();
@@ -103,11 +112,13 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.dispose();
+    this.synchronizer.destroy();
     this.input.destroy();
     this.batchService.remove(this.onstart);
   }
 
   initialize() {
+    this.synchronizer.initialize();
     this.input.initialize();
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
@@ -129,13 +140,17 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
 
   onInputStart(e: MouseEvent | TouchEvent) {
     this.grabbingElement = e.target as HTMLElement;
-    if (this.isDisable || !this.isAllowedToRotate || (e instanceof MouseEvent && e.button !== 0)) return this.cancel();
+    if (this.isDisable || !this.isAllowedToRotate || (e instanceof MouseEvent && (e.button !== 0 || e.ctrlKey || e.shiftKey))) {
+      this.cancel();
+      return;
+    }
     e.stopPropagation();
     this.onstart.emit(e as PointerEvent);
 
     let pointer = this.coordinateService.convertLocalToLocal(this.input.pointer, this.grabbingElement, this.nativeElement.parentElement);
     this.rotateOffset = this.calcRotate(pointer, this.rotate);
     this.setAnimatedTransition(false);
+    this.synchronizer.prepareRotate();
   }
 
   onInputMove(e: MouseEvent | TouchEvent) {
@@ -152,6 +167,7 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
     if (!this.input.isDragging) this.ondragstart.emit(e as PointerEvent);
     this.ondrag.emit(e as PointerEvent);
     this.rotate = angle;
+    this.synchronizer.updateRotate();
   }
 
   onInputEnd(e: MouseEvent | TouchEvent) {
@@ -160,6 +176,7 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
     this.cancel();
     this.snapToPolygonal();
+    this.synchronizer.finishRotate();
     this.onend.emit(e as PointerEvent);
   }
 
@@ -216,7 +233,7 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.updateTransformCss();
   }
 
-  private setAnimatedTransition(isEnable: boolean) {
+  setAnimatedTransition(isEnable: boolean) {
     this.nativeElement.style.transition = isEnable ? 'transform 132ms linear' : '';
   }
 
@@ -224,7 +241,7 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
     return this.targetProperty !== this.rotate;
   }
 
-  private stopTransition(nextRotate: number = this.rotate) {
+  stopTransition(nextRotate: number = this.rotate) {
     let cssTransform = window.getComputedStyle(this.nativeElement).transform;
 
     if (Math.abs(nextRotate - this.cssRotate) < 180) return;

@@ -15,8 +15,10 @@ import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
 import { CoordinateService } from 'service/coordinate.service';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
+import { SelectionState, TabletopSelectionService } from 'service/tabletop-selection.service';
 
 import { InputHandler } from './input-handler';
+import { MovableSelectionSynchronizer } from './movable-selection-synchronizer';
 
 type LayerName = string;
 
@@ -45,6 +47,7 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
 
   @Input('movable.option') set option(option: MovableOption) {
     this.unregister();
+    this.synchronizer.unregister();
 
     this._tabletopObject = option.tabletopObject ?? null;
     this._layerName = option.layerName ?? '';
@@ -54,6 +57,7 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
     if (this._layerName.length < 1 && this._tabletopObject) this._layerName = this._tabletopObject.aliasName;
 
     this.register();
+    this.synchronizer.register();
   }
   @Input('movable.disable') isDisable: boolean = false;
   @Output('movable.onstart') onstart: EventEmitter<PointerEvent> = new EventEmitter();
@@ -62,7 +66,7 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
   @Output('movable.ondragend') ondragend: EventEmitter<PointerEvent> = new EventEmitter();
   @Output('movable.onend') onend: EventEmitter<PointerEvent> = new EventEmitter();
 
-  private get nativeElement(): HTMLElement { return this.elementRef.nativeElement; }
+  get nativeElement(): HTMLElement { return this.elementRef.nativeElement; }
 
   private _posX: number = 0;
   private _posY: number = 0;
@@ -80,13 +84,17 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
 
   private targetStartRect: DOMRect;
 
-  private height: number = 0;
-  private width: number = 0;
+  height: number = -1;
+  width: number = -1;
   private ratio: number = 1.0;
 
   private isUpdateBatching: boolean = false;
   private collidableElements: HTMLElement[] = [];
   private input: InputHandler = new InputHandler(this.nativeElement, false);
+
+  private synchronizer: MovableSelectionSynchronizer = new MovableSelectionSynchronizer(this, this.selectionService, this.pointerDeviceService);
+  get state(): SelectionState { return this.selectionService.state(this.tabletopObject); }
+  set state(state: SelectionState) { this.selectionService.add(this.tabletopObject, state); }
 
   private get isGridSnap(): boolean { return TableSelecter.instance.gridSnap; }
 
@@ -96,6 +104,7 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
     private batchService: BatchService,
     private pointerDeviceService: PointerDeviceService,
     private coordinateService: CoordinateService,
+    private selectionService: TabletopSelectionService,
   ) { }
 
   ngAfterViewInit() {
@@ -107,29 +116,33 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
 
     EventSystem.register(this)
       .on(`UPDATE_GAME_OBJECT/identifier/${this.tabletopObject?.identifier}`, event => {
-        if ((event.isSendFromSelf && this.input?.isGrabbing) || !this.shouldTransition(this.tabletopObject)) return;
+        if ((event.isSendFromSelf && (this.input.isGrabbing || this.state !== SelectionState.NONE)) || !this.shouldTransition(this.tabletopObject)) return;
         this.batchService.add(() => {
           if (this.input.isGrabbing) {
             this.cancel();
           } else {
             this.setAnimatedTransition(true);
           }
+          this.state = SelectionState.NONE;
           this.stopTransition();
           this.setPosition(this.tabletopObject);
         }, this);
       });
 
+    if (this.isDisable && this.state !== SelectionState.NONE) this.state = SelectionState.NONE;
     this.setPosition(this.tabletopObject);
   }
 
   ngOnDestroy() {
     this.unregister();
     this.dispose();
+    this.synchronizer.destroy();
     this.input.destroy();
     this.batchService.remove(this.onstart);
   }
 
   initialize() {
+    this.synchronizer.initialize();
     this.input.initialize();
     this.input.onStart = this.onInputStart.bind(this);
     this.input.onMove = this.onInputMove.bind(this);
@@ -155,7 +168,11 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.callSelectedEvent();
     if (this.collidableElements.length < 1) this.findCollidableElements(); // 稀にcollidableElementsの取得に失敗している
 
-    if (this.isDisable || (e instanceof MouseEvent && e.button !== 0)) return this.cancel();
+    if (this.isDisable || (e instanceof MouseEvent && (e.button !== 0 || e.ctrlKey || e.shiftKey))) {
+      this.cancel();
+      return;
+    }
+
     this.onstart.emit(e as PointerEvent);
 
     this.setPointerEvents(false);
@@ -185,6 +202,8 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.targetStartRect = this.nativeElement.getBoundingClientRect();
 
     this.ratio = 1.0;
+
+    this.synchronizer.prepareMove();
   }
 
   onInputMove(e: MouseEvent | TouchEvent) {
@@ -223,15 +242,39 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
       this.ratio += (ratio - this.ratio) * 0.1;
     }
 
+    let delta = {
+      x: pointer3d.x - this.posX,
+      y: pointer3d.y - this.posY,
+      z: pointer3d.z - this.posZ,
+    };
+
     this.posX = pointer3d.x;
     this.posY = pointer3d.y;
     this.posZ = pointer3d.z;
+
+    this.synchronizer.updateMove(delta);
   }
 
   onInputEnd(e: MouseEvent | TouchEvent) {
     if (this.isDisable) return this.cancel();
     if (this.input.isDragging) this.ondragend.emit(e as PointerEvent);
+
+    let prev = {
+      x: this.posX,
+      y: this.posY,
+      z: this.posZ,
+    };
+
     if (this.isGridSnap && this.input.isDragging) this.snapToGrid();
+
+    let delta = {
+      x: this.posX - prev.x,
+      y: this.posY - prev.y,
+      z: this.posZ - prev.z,
+    };
+
+    this.synchronizer.finishMove(delta);
+
     this.cancel();
     this.onend.emit(e as PointerEvent);
   }
@@ -317,12 +360,12 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  private setPointerEvents(isEnable: boolean) {
+  setPointerEvents(isEnable: boolean) {
     let css = isEnable ? 'auto' : 'none';
     this.collidableElements.forEach(element => element.style.pointerEvents = css);
   }
 
-  private setAnimatedTransition(isEnable: boolean) {
+  setAnimatedTransition(isEnable: boolean) {
     this.nativeElement.style.transition = isEnable ? 'transform 132ms linear' : '';
   }
 
@@ -330,7 +373,7 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
     return object.location.x !== this.posX || object.location.y !== this.posY || object.posZ !== this.posZ;
   }
 
-  private stopTransition() {
+  stopTransition() {
     this.nativeElement.style.transform = window.getComputedStyle(this.nativeElement).transform;
   }
 
@@ -365,5 +408,6 @@ export class MovableDirective implements AfterViewInit, OnChanges, OnDestroy {
     let layerSet = MovableDirective.layerMap.get(this.layerName);
     if (!layerSet) return;
     layerSet.delete(this);
+    if (layerSet.size < 1) MovableDirective.layerMap.delete(this.layerName);
   }
 }

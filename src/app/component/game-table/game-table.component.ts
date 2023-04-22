@@ -10,6 +10,7 @@ import { GameCharacter } from '@udonarium/game-character';
 import { FilterType, GameTable, GridType } from '@udonarium/game-table';
 import { GameTableMask } from '@udonarium/game-table-mask';
 import { PeerCursor } from '@udonarium/peer-cursor';
+import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { TableSelecter } from '@udonarium/table-selecter';
 import { Terrain } from '@udonarium/terrain';
 import { TextNote } from '@udonarium/text-note';
@@ -21,10 +22,12 @@ import { ImageService } from 'service/image.service';
 import { ModalService } from 'service/modal.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopActionService } from 'service/tabletop-action.service';
+import { TabletopSelectionService } from 'service/tabletop-selection.service';
 import { TabletopService } from 'service/tabletop.service';
 
 import { GridLineRender } from './grid-line-render';
 import { TableMouseGesture } from './table-mouse-gesture';
+import { TablePickGesture } from './table-pick-gesture';
 import { TableTouchGesture } from './table-touch-gesture';
 
 @Component({
@@ -37,6 +40,8 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('gameTable', { static: true }) gameTable: ElementRef<HTMLElement>;
   @ViewChild('gameObjects', { static: true }) gameObjects: ElementRef<HTMLElement>;
   @ViewChild('gridCanvas', { static: true }) gridCanvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild('pickArea', { static: true }) pickArea: ElementRef<HTMLElement>;
+  @ViewChild('pickCursor', { static: true }) pickCursor: ElementRef<HTMLElement>;
 
   get tableSelecter(): TableSelecter { return this.tabletopService.tableSelecter; }
   get currentTable(): GameTable { return this.tabletopService.currentTable; }
@@ -60,6 +65,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private mouseGesture: TableMouseGesture = null;
   private touchGesture: TableTouchGesture = null;
+  private pickGesture: TablePickGesture = null;
 
   get characters(): GameCharacter[] { return this.tabletopService.characters; }
   get tableMasks(): GameTableMask[] { return this.tabletopService.tableMasks; }
@@ -78,6 +84,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private imageService: ImageService,
     private tabletopService: TabletopService,
     private tabletopActionService: TabletopActionService,
+    private selectionService: TabletopSelectionService,
     private modalService: ModalService,
   ) { }
 
@@ -103,6 +110,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ngZone.runOutsideAngular(() => {
       this.initializeTableTouchGesture();
       this.initializeTableMouseGesture();
+      this.initializeTablePickGesture();
     });
     this.cancelInput();
 
@@ -115,6 +123,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     EventSystem.unregister(this);
     this.mouseGesture.destroy();
     this.touchGesture.destroy();
+    this.pickGesture.destroy();
   }
 
   initializeTableTouchGesture() {
@@ -130,6 +139,22 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mouseGesture.onstart = this.onTableMouseStart.bind(this);
     this.mouseGesture.onend = this.onTableMouseEnd.bind(this);
     this.mouseGesture.ontransform = this.onTableMouseTransform.bind(this);
+  }
+
+  initializeTablePickGesture() {
+    this.pickGesture = new TablePickGesture(
+      this.rootElementRef.nativeElement,
+      this.gameObjects.nativeElement,
+      this.pickCursor.nativeElement,
+      this.pickArea.nativeElement,
+      this.pointerDeviceService,
+      this.selectionService,
+    );
+
+    this.pickGesture.onstart = this.onTablePickStart.bind(this);
+    this.pickGesture.onend = this.onTablePickEnd.bind(this);
+    this.pickGesture.oncancelifneeded = this.onTablePickCancelIfNeeded.bind(this);
+    this.pickGesture.onpick = this.onTablePick.bind(this);
   }
 
   onTableTouchStart() {
@@ -200,6 +225,35 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.setTransform(transformX, transformY, transformZ, rotateX, rotateY, rotateZ);
     this.isTableTransformed = true;
+  }
+
+  onTablePickStart() {
+    this.isTableTransformMode = false;
+    SoundEffect.playLocal(PresetSound.selection);
+
+    if (this.pickGesture.isStrokeMode) {
+      let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
+      this.gridCanvas.nativeElement.style.opacity = opacity + '';
+    }
+  }
+
+  onTablePickEnd() {
+    if (this.pickGesture.isKeepSelection) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!this.contextMenuService.isShow) this.selectionService.clear();
+      });
+    });
+  }
+
+  onTablePickCancelIfNeeded(): boolean {
+    return this.isTableTransformMode;
+  }
+
+  onTablePick() {
+    if (!this.pointerDeviceService.isAllowedToOpenContextMenu && this.contextMenuService.isShow) {
+      this.ngZone.run(() => this.contextMenuService.close());
+    }
   }
 
   cancelInput() {
