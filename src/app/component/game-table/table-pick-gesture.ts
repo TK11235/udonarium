@@ -104,7 +104,6 @@ export class TablePickGesture {
           }
         }
       } else {
-        if ((e as TouchEvent).touches) this.pickCursor.scale(3.5);
         let target = e.target as HTMLElement;
         if (this.gameObjectsElement.contains(target)) {
           this.target = target;
@@ -119,6 +118,7 @@ export class TablePickGesture {
 
         this.setActivateTimer();
         this.setKeyDownTimer();
+        if ((e as TouchEvent).touches) this.pickCursor.scale(3.5);
       }
     } else {
       this.cancel();
