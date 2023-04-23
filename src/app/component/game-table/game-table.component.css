@@ -167,15 +167,15 @@
 
 @keyframes circle-fill {
   0% {
-    fill: transparent;
+    opacity: 0;
   }
 
   45% {
-    fill: transparent;
+    opacity: 0;
   }
 
   99.9%,
   to {
-    fill: hsla(200, 100%, 95%, .7);
+    opacity: 1;
   }
 }
