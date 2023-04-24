@@ -3,10 +3,12 @@
   appMovable [movable.option]="movableOption" (movable.ondragstart)="onMove()" (movable.ondragend)="onMoved()">
   <div class="component-content is-pointer-events-auto is-grab is-3d"
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
-    <img *ngIf="topCard && imageFile" [@shuffle]="animeState" 
-      (@shuffle.start)="animationShuffleStarted($event)" (@shuffle.done)="animationShuffleDone($event)"
-      class="card-image chrome-smooth-image-trick"
-      [ngStyle]="{'transform': 'rotateZ(' + topCard.rotate +'deg)'}" [src]="imageFile.url | safe: 'resourceUrl'">
+    <div [@shuffle]="animeState"
+      (@shuffle.start)="animationShuffleStarted($event)"
+      (@shuffle.done)="animationShuffleDone($event)">
+      <img *ngIf="topCard && imageFile" class="card-image chrome-smooth-image-trick"
+        [ngStyle]="{'transform': 'rotateZ(' + topCard.rotate +'deg)'}" [src]="imageFile.url | safe: 'resourceUrl'">
+    </div>
     <ng-container *ngIf="!isIconHidden">
       <div class="rotate-grab of-left-top">
         <i class="material-icons">autorenew</i>
