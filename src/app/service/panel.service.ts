@@ -73,8 +73,8 @@ export class PanelService {
     let bodyOnChanges = bodyComponentRef.instance as OnChanges;
     if (panelOnChanges?.ngOnChanges != null || bodyOnChanges?.ngOnChanges != null) {
       queueMicrotask(() => {
-        if (bodyComponentRef) bodyOnChanges?.ngOnChanges({});
-        if (panelComponentRef) panelOnChanges?.ngOnChanges({});
+        if (bodyComponentRef && bodyOnChanges?.ngOnChanges != null) bodyOnChanges?.ngOnChanges({});
+        if (panelComponentRef && panelOnChanges?.ngOnChanges != null) panelOnChanges?.ngOnChanges({});
       });
     }
 
