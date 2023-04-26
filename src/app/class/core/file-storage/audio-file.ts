@@ -96,10 +96,8 @@ export class AudioFile {
     if (context.name) this.context.name = context.name;
     if (!this.context.blob && context.blob) this.context.blob = context.blob;
     if (!this.context.type && context.type) this.context.type = context.type;
-    if (!this.context.url && context.url) {
-      if (this.state !== AudioState.URL) window.URL.revokeObjectURL(this.context.url);
-      this.context.url = context.url;
-    }
+    if (!this.context.url && context.url) this.context.url = context.url;
+
     this.createURLs();
   }
 
