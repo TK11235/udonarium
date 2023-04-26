@@ -18,7 +18,7 @@ import { GameCharacterSheetComponent } from 'component/game-character-sheet/game
 import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { CoordinateService } from 'service/coordinate.service';
 import { ImageService } from 'service/image.service';
 import { PanelOption, PanelService } from 'service/panel.service';
@@ -142,56 +142,11 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
 
     let menuPosition = this.pointerDeviceService.pointers[0];
-    let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
-    this.contextMenuService.open(menuPosition, [
-      (this.isLocked
-        ? {
-          name: '固定解除', action: () => {
-            this.isLocked = false;
-            SoundEffect.play(PresetSound.unlock);
-          }
-        } : {
-          name: '固定する', action: () => {
-            this.isLocked = true;
-            SoundEffect.play(PresetSound.lock);
-          }
-        }),
-      ContextMenuSeparator,
-      (this.hasWall
-        ? {
-          name: '壁を非表示', action: () => {
-            this.mode = TerrainViewState.FLOOR;
-            if (this.depth * this.width === 0) {
-              this.terrain.width = this.width <= 0 ? 1 : this.width;
-              this.terrain.depth = this.depth <= 0 ? 1 : this.depth;
-            }
-          }
-        } : {
-          name: '壁を表示', action: () => {
-            this.mode = TerrainViewState.ALL;
-          }
-        }),
-      ContextMenuSeparator,
-      { name: '地形設定を編集', action: () => { this.showDetail(this.terrain); } },
-      {
-        name: 'コピーを作る', action: () => {
-          let cloneObject = this.terrain.clone();
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.isLocked = false;
-          if (this.terrain.parent) this.terrain.parent.appendChild(cloneObject);
-          SoundEffect.play(PresetSound.blockPut);
-        }
-      },
-      {
-        name: '削除する', action: () => {
-          this.terrain.destroy();
-          SoundEffect.play(PresetSound.sweep);
-        }
-      },
-      ContextMenuSeparator,
-      { name: 'オブジェクト作成', action: null, subActions: this.tabletopActionService.makeDefaultContextMenuActions(objectPosition) }
-    ], this.name);
+    let menuActions: ContextMenuAction[] = [];
+    menuActions = menuActions.concat(this.makeSelectionContextMenu());
+    menuActions = menuActions.concat(this.makeContextMenu());
+
+    this.contextMenuService.open(menuPosition, menuActions, this.name);
   }
 
   onMove() {
@@ -201,6 +156,101 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
 
   onMoved() {
     SoundEffect.play(PresetSound.blockPut);
+  }
+
+  private makeSelectionContextMenu(): ContextMenuAction[] {
+    let actions: ContextMenuAction[] = [];
+
+    if (this.selectionService.objects.length) {
+      let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
+      actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
+    }
+
+    if (this.isSelected) {
+      let selectedGameTableMasks = () => this.selectionService.objects.filter(object => object.aliasName === this.terrain.aliasName) as Terrain[];
+      actions.push(
+        {
+          name: '選択した地形', action: null, subActions: [
+            {
+              name: 'すべて固定する', action: () => {
+                selectedGameTableMasks().forEach(terrain => terrain.isLocked = true);
+                SoundEffect.play(PresetSound.lock);
+              }
+            },
+            {
+              name: 'すべてのコピーを作る', action: () => {
+                selectedGameTableMasks().forEach(terrain => {
+                  let cloneObject = terrain.clone();
+                  cloneObject.location.x += this.gridSize;
+                  cloneObject.location.y += this.gridSize;
+                  cloneObject.isLocked = false;
+                  if (terrain.parent) terrain.parent.appendChild(cloneObject);
+                });
+                SoundEffect.play(PresetSound.blockPut);
+              }
+            }
+          ]
+        }
+      );
+    }
+    if (this.selectionService.objects.length) {
+      actions.push(ContextMenuSeparator);
+    }
+    return actions;
+  }
+
+  private makeContextMenu(): ContextMenuAction[] {
+    let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
+    let actions: ContextMenuAction[] = [];
+
+    actions.push((this.isLocked
+      ? {
+        name: '固定解除', action: () => {
+          this.isLocked = false;
+          SoundEffect.play(PresetSound.unlock);
+        }
+      } : {
+        name: '固定する', action: () => {
+          this.isLocked = true;
+          SoundEffect.play(PresetSound.lock);
+        }
+      }));
+    actions.push(ContextMenuSeparator);
+    actions.push((this.hasWall
+      ? {
+        name: '壁を非表示', action: () => {
+          this.mode = TerrainViewState.FLOOR;
+          if (this.depth * this.width === 0) {
+            this.terrain.width = this.width <= 0 ? 1 : this.width;
+            this.terrain.depth = this.depth <= 0 ? 1 : this.depth;
+          }
+        }
+      } : {
+        name: '壁を表示', action: () => {
+          this.mode = TerrainViewState.ALL;
+        }
+      }));
+    actions.push(ContextMenuSeparator);
+    actions.push({ name: '地形設定を編集', action: () => { this.showDetail(this.terrain); } });
+    actions.push({
+      name: 'コピーを作る', action: () => {
+        let cloneObject = this.terrain.clone();
+        cloneObject.location.x += this.gridSize;
+        cloneObject.location.y += this.gridSize;
+        cloneObject.isLocked = false;
+        if (this.terrain.parent) this.terrain.parent.appendChild(cloneObject);
+        SoundEffect.play(PresetSound.blockPut);
+      }
+    });
+    actions.push({
+      name: '削除する', action: () => {
+        this.terrain.destroy();
+        SoundEffect.play(PresetSound.sweep);
+      }
+    });
+    actions.push(ContextMenuSeparator);
+    actions.push({ name: 'オブジェクト作成', action: null, subActions: this.tabletopActionService.makeDefaultContextMenuActions(objectPosition) });
+    return actions;
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

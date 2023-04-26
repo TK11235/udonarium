@@ -275,6 +275,15 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
     let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
     let menuActions: ContextMenuAction[] = [];
 
+    if (0 < this.selectionService.size) {
+      menuActions.push({
+        name: 'ここに集める', action: () => {
+          this.selectionService.congregate(objectPosition);
+        },
+        enabled: 0 < this.selectionService.size
+      });
+      menuActions.push(ContextMenuSeparator);
+    }
     Array.prototype.push.apply(menuActions, this.tabletopActionService.makeDefaultContextMenuActions(objectPosition));
     menuActions.push(ContextMenuSeparator);
     menuActions.push({

@@ -17,7 +17,7 @@ import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { InputHandler } from 'directive/input-handler';
 import { MovableOption } from 'directive/movable.directive';
-import { ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { CoordinateService } from 'service/coordinate.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
@@ -123,44 +123,12 @@ export class GameTableMaskComponent implements OnChanges, OnDestroy, AfterViewIn
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let menuPosition = this.pointerDeviceService.pointers[0];
-    let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
-    this.contextMenuService.open(menuPosition, [
-      (this.isLock
-        ? {
-          name: '固定解除', action: () => {
-            this.isLock = false;
-            SoundEffect.play(PresetSound.unlock);
-          }
-        }
-        : {
-          name: '固定する', action: () => {
-            this.isLock = true;
-            SoundEffect.play(PresetSound.lock);
-          }
-        }
-      ),
-      ContextMenuSeparator,
-      { name: 'マップマスクを編集', action: () => { this.showDetail(this.gameTableMask); } },
-      {
-        name: 'コピーを作る', action: () => {
-          let cloneObject = this.gameTableMask.clone();
-          console.log('コピー', cloneObject);
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.isLock = false;
-          if (this.gameTableMask.parent) this.gameTableMask.parent.appendChild(cloneObject);
-          SoundEffect.play(PresetSound.cardPut);
-        }
-      },
-      {
-        name: '削除する', action: () => {
-          this.gameTableMask.destroy();
-          SoundEffect.play(PresetSound.sweep);
-        }
-      },
-      ContextMenuSeparator,
-      { name: 'オブジェクト作成', action: null, subActions: this.tabletopActionService.makeDefaultContextMenuActions(objectPosition) }
-    ], this.name);
+
+    let menuActions: ContextMenuAction[] = [];
+    menuActions = menuActions.concat(this.makeSelectionContextMenu());
+    menuActions = menuActions.concat(this.makeContextMenu());
+
+    this.contextMenuService.open(menuPosition, menuActions, this.name);
   }
 
   onMove() {
@@ -170,6 +138,89 @@ export class GameTableMaskComponent implements OnChanges, OnDestroy, AfterViewIn
 
   onMoved() {
     SoundEffect.play(PresetSound.cardPut);
+  }
+
+  private makeSelectionContextMenu(): ContextMenuAction[] {
+    let actions: ContextMenuAction[] = [];
+
+    if (this.selectionService.objects.length) {
+      let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
+      actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
+    }
+
+    if (this.isSelected) {
+      let selectedGameTableMasks = () => this.selectionService.objects.filter(object => object.aliasName === this.gameTableMask.aliasName) as GameTableMask[];
+      actions.push(
+        {
+          name: '選択したマップマスク', action: null, subActions: [
+            {
+              name: 'すべて固定する', action: () => {
+                selectedGameTableMasks().forEach(gameTableMask => gameTableMask.isLock = true);
+                SoundEffect.play(PresetSound.lock);
+              }
+            },
+            {
+              name: 'すべてのコピーを作る', action: () => {
+                selectedGameTableMasks().forEach(gameTableMask => {
+                  let cloneObject = gameTableMask.clone();
+                  console.log('コピー', cloneObject);
+                  cloneObject.location.x += this.gridSize;
+                  cloneObject.location.y += this.gridSize;
+                  cloneObject.isLock = false;
+                  if (gameTableMask.parent) gameTableMask.parent.appendChild(cloneObject);
+                });
+                SoundEffect.play(PresetSound.cardPut);
+              }
+            },
+          ]
+        }
+      );
+    }
+    if (this.selectionService.objects.length) {
+      actions.push(ContextMenuSeparator);
+    }
+    return actions;
+  }
+
+  private makeContextMenu(): ContextMenuAction[] {
+    let objectPosition = this.coordinateService.calcTabletopLocalCoordinate();
+    let actions: ContextMenuAction[] = [];
+    actions.push((this.isLock
+      ? {
+        name: '固定解除', action: () => {
+          this.isLock = false;
+          SoundEffect.play(PresetSound.unlock);
+        }
+      }
+      : {
+        name: '固定する', action: () => {
+          this.isLock = true;
+          SoundEffect.play(PresetSound.lock);
+        }
+      }
+    ));
+    actions.push(ContextMenuSeparator);
+    actions.push({ name: 'マップマスクを編集', action: () => { this.showDetail(this.gameTableMask); } });
+    actions.push({
+      name: 'コピーを作る', action: () => {
+        let cloneObject = this.gameTableMask.clone();
+        console.log('コピー', cloneObject);
+        cloneObject.location.x += this.gridSize;
+        cloneObject.location.y += this.gridSize;
+        cloneObject.isLock = false;
+        if (this.gameTableMask.parent) this.gameTableMask.parent.appendChild(cloneObject);
+        SoundEffect.play(PresetSound.cardPut);
+      }
+    });
+    actions.push({
+      name: '削除する', action: () => {
+        this.gameTableMask.destroy();
+        SoundEffect.play(PresetSound.sweep);
+      }
+    });
+    actions.push(ContextMenuSeparator);
+    actions.push({ name: 'オブジェクト作成', action: null, subActions: this.tabletopActionService.makeDefaultContextMenuActions(objectPosition) });
+    return actions;
   }
 
   private adjustMinBounds(value: number, min: number = 0): number {

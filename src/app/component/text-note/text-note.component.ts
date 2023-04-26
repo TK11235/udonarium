@@ -17,7 +17,7 @@ import { TextNote } from '@udonarium/text-note';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
-import { ContextMenuService } from 'service/context-menu.service';
+import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 import { SelectionState, TabletopSelectionService } from 'service/tabletop-selection.service';
@@ -145,25 +145,12 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
 
     if (!this.pointerDeviceService.isAllowedToOpenContextMenu) return;
     let position = this.pointerDeviceService.pointers[0];
-    this.contextMenuService.open(position, [
-      { name: 'メモを編集', action: () => { this.showDetail(this.textNote); } },
-      {
-        name: 'コピーを作る', action: () => {
-          let cloneObject = this.textNote.clone();
-          console.log('コピー', cloneObject);
-          cloneObject.location.x += this.gridSize;
-          cloneObject.location.y += this.gridSize;
-          cloneObject.toTopmost();
-          SoundEffect.play(PresetSound.cardPut);
-        }
-      },
-      {
-        name: '削除する', action: () => {
-          this.textNote.destroy();
-          SoundEffect.play(PresetSound.sweep);
-        }
-      },
-    ], this.title);
+
+    let menuActions: ContextMenuAction[] = [];
+    menuActions = menuActions.concat(this.makeSelectionContextMenu());
+    menuActions = menuActions.concat(this.makeContextMenu());
+
+    this.contextMenuService.open(position, menuActions, this.title);
   }
 
   onMove() {
@@ -173,6 +160,44 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
 
   onMoved() {
     SoundEffect.play(PresetSound.cardPut);
+  }
+
+  private makeSelectionContextMenu(): ContextMenuAction[] {
+    let actions: ContextMenuAction[] = [];
+
+    if (this.selectionService.objects.length) {
+      let objectPosition = { x: this.textNote.location.x, y: this.textNote.location.y, z: this.textNote.posZ };
+      actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
+    }
+
+    if (this.selectionService.objects.length) {
+      actions.push(ContextMenuSeparator);
+    }
+    return actions;
+  }
+
+  private makeContextMenu(): ContextMenuAction[] {
+    let actions: ContextMenuAction[] = [];
+
+    actions.push({ name: 'メモを編集', action: () => { this.showDetail(this.textNote); } });
+    actions.push({
+      name: 'コピーを作る', action: () => {
+        let cloneObject = this.textNote.clone();
+        console.log('コピー', cloneObject);
+        cloneObject.location.x += this.gridSize;
+        cloneObject.location.y += this.gridSize;
+        cloneObject.toTopmost();
+        SoundEffect.play(PresetSound.cardPut);
+      }
+    });
+    actions.push({
+      name: '削除する', action: () => {
+        this.textNote.destroy();
+        SoundEffect.play(PresetSound.sweep);
+      }
+    });
+
+    return actions;
   }
 
   calcFitHeightIfNeeded() {

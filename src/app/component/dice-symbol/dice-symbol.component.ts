@@ -228,6 +228,67 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
 
     let actions: ContextMenuAction[] = [];
 
+    actions = actions.concat(this.makeSelectionContextMenu());
+    actions = actions.concat(this.makeContextMenu());
+
+    this.contextMenuService.open(position, actions, this.name);
+  }
+
+  private makeSelectionContextMenu(): ContextMenuAction[] {
+    let actions: ContextMenuAction[] = [];
+
+    if (this.selectionService.objects.length) {
+      let objectPosition = {
+        x: this.diceSymbol.location.x + (this.diceSymbol.size * this.gridSize) / 2,
+        y: this.diceSymbol.location.y + (this.diceSymbol.size * this.gridSize) / 2,
+        z: this.diceSymbol.posZ
+      };
+      actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
+    }
+
+    if (this.isSelected) {
+      let selectedDiceSymbols = () => this.selectionService.objects.filter(object => object.aliasName === this.diceSymbol.aliasName) as DiceSymbol[];
+      actions.push(
+        {
+          name: '選択したダイス', action: null, subActions: [
+            {
+              name: 'すべて振る', action: () => {
+                let needsSound = false;
+                selectedDiceSymbols().forEach(diceSymbol => {
+                  if (diceSymbol.isVisible) {
+                    needsSound = true;
+                    EventSystem.call('ROLL_DICE_SYMBOL', { identifier: diceSymbol.identifier });
+                    diceSymbol.diceRoll();
+                  }
+                });
+                if (needsSound) SoundEffect.play(PresetSound.diceRoll1);
+              }
+            },
+            {
+              name: 'すべて公開', action: () => {
+                selectedDiceSymbols().forEach(diceSymbol => diceSymbol.owner = '');
+                SoundEffect.play(PresetSound.unlock);
+              }
+            },
+            {
+              name: 'すべて自分だけ見る', action: () => {
+                selectedDiceSymbols().forEach(diceSymbol => diceSymbol.owner = Network.peer.userId);
+                SoundEffect.play(PresetSound.lock);
+              }
+            },
+          ]
+        }
+      );
+    }
+    if (this.selectionService.objects.length) {
+      actions.push(ContextMenuSeparator);
+    }
+    return actions;
+  }
+
+  private makeContextMenu(): ContextMenuAction[] {
+    let actions: ContextMenuAction[] = [];
+
     if (this.isVisible) {
       actions.push({
         name: 'ダイスを振る', action: () => {
@@ -284,7 +345,7 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
         SoundEffect.play(PresetSound.sweep);
       }
     });
-    this.contextMenuService.open(position, actions, this.name);
+    return actions;
   }
 
   onMove() {
