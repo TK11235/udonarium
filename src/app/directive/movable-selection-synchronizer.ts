@@ -146,7 +146,7 @@ export class MovableSelectionSynchronizer {
       let zindexB = (b.tabletopObject as Stackable).zindex;
       if (zindexA == null || zindexB == null) return 0;
       return zindexA - zindexB;
-    }).filter(a => a.state === SelectionState.MAGNETIC);
+    }).filter(movable => movable.state === SelectionState.MAGNETIC && movable !== this.movable);
 
     let polygonal = 360 / movables.length;
     let angle = Math.random() * 360;
