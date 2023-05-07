@@ -141,16 +141,16 @@ export class GameCharacterComponent implements OnChanges, OnDestroy {
   }
 
   private makeSelectionContextMenu(): ContextMenuAction[] {
+    if (this.selectionService.objects.length < 1) return [];
+
     let actions: ContextMenuAction[] = [];
 
-    if (this.selectionService.objects.length) {
-      let objectPosition = {
-        x: this.gameCharacter.location.x + (this.gameCharacter.size * this.gridSize) / 2,
-        y: this.gameCharacter.location.y + (this.gameCharacter.size * this.gridSize) / 2,
-        z: this.gameCharacter.posZ
-      };
-      actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
-    }
+    let objectPosition = {
+      x: this.gameCharacter.location.x + (this.gameCharacter.size * this.gridSize) / 2,
+      y: this.gameCharacter.location.y + (this.gameCharacter.size * this.gridSize) / 2,
+      z: this.gameCharacter.posZ
+    };
+    actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
 
     if (this.isSelected) {
       let selectedCharacter = () => this.selectionService.objects.filter(object => object.aliasName === this.gameCharacter.aliasName) as GameCharacter[];
@@ -188,9 +188,7 @@ export class GameCharacterComponent implements OnChanges, OnDestroy {
         }
       );
     }
-    if (this.selectionService.objects.length) {
-      actions.push(ContextMenuSeparator);
-    }
+    actions.push(ContextMenuSeparator);
     return actions;
   }
 

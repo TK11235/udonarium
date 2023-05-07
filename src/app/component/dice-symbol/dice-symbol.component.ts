@@ -235,16 +235,16 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
   }
 
   private makeSelectionContextMenu(): ContextMenuAction[] {
+    if (this.selectionService.objects.length < 1) return [];
+
     let actions: ContextMenuAction[] = [];
 
-    if (this.selectionService.objects.length) {
-      let objectPosition = {
-        x: this.diceSymbol.location.x + (this.diceSymbol.size * this.gridSize) / 2,
-        y: this.diceSymbol.location.y + (this.diceSymbol.size * this.gridSize) / 2,
-        z: this.diceSymbol.posZ
-      };
-      actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
-    }
+    let objectPosition = {
+      x: this.diceSymbol.location.x + (this.diceSymbol.size * this.gridSize) / 2,
+      y: this.diceSymbol.location.y + (this.diceSymbol.size * this.gridSize) / 2,
+      z: this.diceSymbol.posZ
+    };
+    actions.push({ name: 'ここに集める', action: () => this.selectionService.congregate(objectPosition) });
 
     if (this.isSelected) {
       let selectedDiceSymbols = () => this.selectionService.objects.filter(object => object.aliasName === this.diceSymbol.aliasName) as DiceSymbol[];
@@ -280,9 +280,7 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
         }
       );
     }
-    if (this.selectionService.objects.length) {
-      actions.push(ContextMenuSeparator);
-    }
+    actions.push(ContextMenuSeparator);
     return actions;
   }
 
