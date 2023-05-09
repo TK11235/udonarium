@@ -1,7 +1,7 @@
 import * as lzbase62 from 'lzbase62';
 import * as SHA256 from 'crypto-js/sha256';
 
-import { base } from '../util/base-x';
+import * as base from 'base-x';
 import { MutablePeerSessionState, PeerSessionGrade, PeerSessionState } from './peer-session-state';
 
 const Base62 = base('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
