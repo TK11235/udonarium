@@ -36,7 +36,10 @@
               "file-saver",
               "msgpack-lite",
               "lzbase62",
-              "pako"
+              "pako",
+              "base-x",
+              "jszip",
+              "vkbeautify"
             ]
           },
           "configurations": {
