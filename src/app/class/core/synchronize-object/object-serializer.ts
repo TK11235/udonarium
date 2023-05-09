@@ -34,8 +34,8 @@ export class ObjectSerializer {
 
     let attrStr = '';
     for (let name in attributes) {
+      if (attributes[name] === undefined) continue;
       let attribute = XmlUtil.encodeEntityReference(attributes[name] + '');
-      if (attribute == null) continue;
       attrStr += ' ' + name + '="' + attribute + '"';
     }
     xml += `<${tagName + attrStr}>`;
@@ -51,7 +51,7 @@ export class ObjectSerializer {
       let key = syncVar;
       let childAttr = ObjectSerializer.make2Attributes(item, key);
       for (let name in childAttr) {
-        attributes[name] = childAttr[name];
+        if (childAttr[name] !== undefined) attributes[name] = childAttr[name];
       }
     }
     return attributes;
@@ -62,15 +62,15 @@ export class ObjectSerializer {
     if (Array.isArray(item)) {
       let arrayAttributes = ObjectSerializer.array2attributes(item, key);
       for (let name in arrayAttributes) {
-        attributes[name] = arrayAttributes[name];
+        if (arrayAttributes[name] !== undefined) attributes[name] = arrayAttributes[name];
       }
     } else if (typeof item === 'object') {
       let objAttributes = ObjectSerializer.object2attributes(item, key);
       for (let name in objAttributes) {
-        attributes[name] = objAttributes[name];
+        if (objAttributes[name] !== undefined) attributes[name] = objAttributes[name];
       }
     } else {
-      attributes[key] = item;
+      if (item !== undefined) attributes[key] = item;
     }
     return attributes;
   }
@@ -82,7 +82,7 @@ export class ObjectSerializer {
       let key = rootKey + '.' + objKey;
       let childAttr = ObjectSerializer.make2Attributes(item, key);
       for (let name in childAttr) {
-        attributes[name] = childAttr[name];
+        if (childAttr[name] !== undefined) attributes[name] = childAttr[name];
       }
     }
     return attributes;
@@ -96,7 +96,7 @@ export class ObjectSerializer {
       let key = rootKey + '.' + i;
       let childAttr = ObjectSerializer.make2Attributes(item, key);
       for (let name in childAttr) {
-        attributes[name] = childAttr[name];
+        if (childAttr[name] !== undefined) attributes[name] = childAttr[name];
       }
     }
     return attributes;

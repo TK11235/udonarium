@@ -90,7 +90,7 @@ function redefineProperties(
           enumerable: true,
           configurable: true
         });
-        target[key] = value;
+        if (value !== undefined) target[key] = value;
       }
     }
     source = Object.getPrototypeOf(source);
