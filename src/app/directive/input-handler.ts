@@ -13,12 +13,14 @@ export class InputHandler {
   onStart: (ev: MouseEvent | TouchEvent) => void;
   onMove: (ev: MouseEvent | TouchEvent) => void;
   onEnd: (ev: MouseEvent | TouchEvent) => void;
+  onTap: (ev: MouseEvent | TouchEvent) => void;
   onContextMenu: (ev: MouseEvent | TouchEvent) => void;
 
   private callbackOnMouse = this.onMouse.bind(this);
   private callbackOnTouch = this.onTouch.bind(this);
   private callbackOnMenu = this.onMenu.bind(this);
 
+  private startTime = -1000;
   private clearLastPointerTimer = new ResettableTimeout(this.clearLastPointer.bind(this), 2000, false);
 
   private firstPointer: PointerData = { x: 0, y: 0, z: 0, identifier: MOUSE_IDENTIFIER }
@@ -32,8 +34,10 @@ export class InputHandler {
 
   private _isDragging: boolean = false;
   private _isGrabbing: boolean = false;
+  private _isPointerMoved: boolean = false;
   get isDragging(): boolean { return this._isDragging; }
   get isGrabbing(): boolean { return this._isGrabbing; }
+  get isPointerMoved(): boolean { return this._isPointerMoved; }
 
   private _isDestroyed: boolean = false;
   get isDestroyed(): boolean { return this._isDestroyed; }
@@ -141,10 +145,12 @@ export class InputHandler {
     switch (e.type) {
       case 'mousedown':
       case 'touchstart':
+        if (this.onTap) this.startTime = performance.now();
         this.clearLastPointerTimer.stop();
         this.firstPointer = this.primaryPointer;
         this._isGrabbing = true;
         this._isDragging = false;
+        this._isPointerMoved = false;
         this.addEventListeners();
         if (this.onStart) this.onStart(e);
         break;
@@ -152,9 +158,11 @@ export class InputHandler {
       case 'touchmove':
         if (this.onMove) this.onMove(e);
         this._isDragging = this._isGrabbing;
+        this._isPointerMoved = this._isPointerMoved || (e instanceof MouseEvent ? 3 : 12) ** 2 < this.calcMagnitude(this.firstPointer, this.primaryPointer);
         break;
       default:
         if (this.onEnd) this.onEnd(e);
+        if (this.onTap && performance.now() - this.startTime < 250 && !this._isPointerMoved) this.onTap(e);
         this.cancel();
         break;
     }
