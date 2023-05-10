@@ -43,7 +43,8 @@ export class MovableSelectionSynchronizer {
 
   private onPickStart(e: CustomEvent) {
     if (this.movable.tabletopObject == null || this.movable.isDisable) return;
-    this.movable.state = SelectionState.MAGNETIC;
+    this.movable.state = e.detail.isMagnetic ? SelectionState.MAGNETIC : SelectionState.SELECTED;
+    this.prepareMove();
   }
 
   private onPickObject(e: CustomEvent) {
@@ -81,24 +82,26 @@ export class MovableSelectionSynchronizer {
   }
 
   prepareMove() {
-    if (1 < this.selection.size && this.movable.state !== SelectionState.NONE) {
-      this.movable.state = SelectionState.SELECTED;
-      for (let movable of this.selectedMovables) {
-        if (movable === this.movable) continue;
-        if (movable.isDisable) {
-          movable.state = SelectionState.NONE;
-        } else {
-          movable.state = SelectionState.SELECTED;
-          movable.setPointerEvents(false);
-          movable.setAnimatedTransition(false);
-        }
+    if (!this.shouldSynchronize()) return;
+
+    for (let movable of this.selectedMovables) {
+      if (movable === this.movable) continue;
+      if (movable.isDisable) {
+        movable.state = SelectionState.NONE;
+      } else {
+        movable.state = SelectionState.SELECTED;
+        movable.setPointerEvents(false);
+        movable.setAnimatedTransition(false);
       }
-    } else {
-      this.selection.clear();
     }
   }
 
   updateMove(delta: PointerCoordinate) {
+    if (!this.shouldSynchronize()) {
+      if (this.movable.isPointerMoved) this.selection.clear();
+      return;
+    }
+
     if (this.movable.state === SelectionState.MAGNETIC) {
       let layer = MovableDirective.layerMap.get(this.movable.layerName);
       if (layer) {
@@ -134,6 +137,11 @@ export class MovableSelectionSynchronizer {
   }
 
   finishMove(delta: PointerCoordinate) {
+    if (!this.shouldSynchronize()) {
+      this.selection.clear();
+      return;
+    }
+
     for (let movable of this.selectedMovables) {
       if (movable === this.movable) continue;
       movable.posX += delta.x;
@@ -163,11 +171,16 @@ export class MovableSelectionSynchronizer {
       movable.posY = center.y + distance * Math.cos(rad) - (movable.height / 2);
     }
 
-    if (this.selection.size <= 1 && this.movable.state !== SelectionState.NONE) {
+    if (this.movable.state === SelectionState.MAGNETIC && this.selection.size <= 1) {
       this.selection.clear();
     } else {
       this.refreshState();
     }
+  }
+
+  private shouldSynchronize(): boolean {
+    let isSynchronize = this.movable.state !== SelectionState.NONE;
+    return isSynchronize;
   }
 
   private refreshState() {
