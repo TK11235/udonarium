@@ -9,6 +9,8 @@ export class TablePickGesture {
   readonly pickCursor: PickCursor;
   readonly pickArea: PickArea;
 
+  private pickCursorScale = 1.0;
+
   private input: InputHandler = null;
   private activateTimer: NodeJS.Timer = null;
   private keydownTimer: NodeJS.Timer = null;
@@ -118,7 +120,8 @@ export class TablePickGesture {
 
         this.setActivateTimer();
         this.setKeyDownTimer();
-        if ((e as TouchEvent).touches) this.pickCursor.scale(3.5);
+        this.pickCursorScale = (e as TouchEvent).touches ? 4.5 : 1.0;
+        this.pickCursor.scale(this.pickCursorScale);
       }
     } else {
       this.cancel();
@@ -244,7 +247,7 @@ export class TablePickGesture {
 
     this.activateTimer = setTimeout(() => {
       this.activateTimer = null;
-      this.pickCursor.scale(0.6);
+      this.pickCursor.scale(this.pickCursorScale * 0.6);
       this.isActive = true;
 
       this.pickStart();
