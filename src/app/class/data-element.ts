@@ -1,6 +1,7 @@
 import { Attributes } from './core/synchronize-object/attributes';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
+import { CompareOption, StringUtil } from './core/system/util/string-util';
 
 @SyncObject('data')
 export class DataElement extends ObjectNode {
@@ -26,33 +27,33 @@ export class DataElement extends ObjectNode {
     return dataElement;
   }
 
-  getElementsByName(name: string): DataElement[] {
+  getElementsByName(name: string, option: CompareOption = CompareOption.None): DataElement[] {
     let children: DataElement[] = [];
     for (let child of this.children) {
       if (child instanceof DataElement) {
-        if (child.getAttribute('name') === name) children.push(child);
-        Array.prototype.push.apply(children, child.getElementsByName(name));
+        if (StringUtil.equals(child.getAttribute('name'), name, option)) children.push(child);
+        Array.prototype.push.apply(children, child.getElementsByName(name, option));
       }
     }
     return children;
   }
 
-  getElementsByType(type: string): DataElement[] {
+  getElementsByType(type: string, option: CompareOption = CompareOption.None): DataElement[] {
     let children: DataElement[] = [];
     for (let child of this.children) {
       if (child instanceof DataElement) {
-        if (child.getAttribute('type') === type) children.push(child);
-        Array.prototype.push.apply(children, child.getElementsByType(type));
+        if (StringUtil.equals(child.getAttribute('type'), type, option)) children.push(child);
+        Array.prototype.push.apply(children, child.getElementsByType(type, option));
       }
     }
     return children;
   }
 
-  getFirstElementByName(name: string): DataElement {
+  getFirstElementByName(name: string, option: CompareOption = CompareOption.None): DataElement {
     for (let child of this.children) {
       if (child instanceof DataElement) {
-        if (child.getAttribute('name') === name) return child;
-        let match = child.getFirstElementByName(name);
+        if (StringUtil.equals(child.getAttribute('name'), name, option)) return child;
+        let match = child.getFirstElementByName(name, option);
         if (match) return match;
       }
     }
