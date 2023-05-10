@@ -1,7 +1,7 @@
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectContext } from './core/synchronize-object/game-object';
 import { ObjectNode } from './core/synchronize-object/object-node';
-import { StringUtil } from './core/system/util/string-util';
+import { CompareOption, StringUtil } from './core/system/util/string-util';
 import { DataElement } from './data-element';
 
 export interface PaletteLine {
@@ -68,7 +68,7 @@ export class ChatPalette extends ObjectNode {
           if (variable.name == name) return variable.value;
         }
         if (extendVariables) {
-          let element = extendVariables.getFirstElementByName(name);
+          let element = extendVariables.getFirstElementByName(name, CompareOption.IgnoreWidth);
           if (element) return element.isNumberResource ? element.currentValue + '' : element.value + '';
         }
         return '';
