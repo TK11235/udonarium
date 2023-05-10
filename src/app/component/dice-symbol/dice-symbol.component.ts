@@ -18,7 +18,7 @@ import { DiceSymbol } from '@udonarium/dice-symbol';
 import { PeerCursor } from '@udonarium/peer-cursor';
 import { PresetSound, SoundEffect } from '@udonarium/sound-effect';
 import { GameCharacterSheetComponent } from 'component/game-character-sheet/game-character-sheet.component';
-import { InputHandler } from 'directive/input-handler';
+import { ObjectInteractGesture } from 'component/game-table/object-interact-gesture';
 import { MovableOption } from 'directive/movable.directive';
 import { RotableOption } from 'directive/rotable.directive';
 import { ContextMenuAction, ContextMenuSeparator, ContextMenuService } from 'service/context-menu.service';
@@ -99,10 +99,7 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
   movableOption: MovableOption = {};
   rotableOption: RotableOption = {};
 
-  private doubleClickTimer: NodeJS.Timer = null;
-  private doubleClickPoint = { x: 0, y: 0 };
-
-  private input: InputHandler = null;
+  private interactGesture: ObjectInteractGesture = null;
 
   constructor(
     private ngZone: NgZone,
@@ -162,13 +159,15 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
 
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
-      this.input = new InputHandler(this.elementRef.nativeElement);
+      this.interactGesture = new ObjectInteractGesture(this.elementRef.nativeElement);
     });
-    this.input.onStart = e => this.ngZone.run(() => this.onInputStart(e));
+
+    this.interactGesture.onstart = this.onInputStart.bind(this);
+    this.interactGesture.oninteract = this.onDoubleClick.bind(this);
   }
 
   ngOnDestroy() {
-    this.input.destroy();
+    this.interactGesture.destroy();
     EventSystem.unregister(this);
   }
 
@@ -184,38 +183,12 @@ export class DiceSymbolComponent implements OnChanges, AfterViewInit, OnDestroy 
   }
 
   onInputStart(e: MouseEvent | TouchEvent) {
-    if (e instanceof MouseEvent && (e.button !== 0 || e.ctrlKey || e.shiftKey)) return;
-    this.startDoubleClickTimer(e);
-    this.startIconHiddenTimer();
-  }
-
-  startDoubleClickTimer(e) {
-    if (!this.doubleClickTimer) {
-      this.stopDoubleClickTimer();
-      this.doubleClickTimer = setTimeout(() => this.stopDoubleClickTimer(), e.touches ? 500 : 300);
-      this.doubleClickPoint = this.input.pointer;
-      return;
-    }
-
-    if (e.touches) {
-      this.input.onEnd = this.onDoubleClick.bind(this);
-    } else {
-      this.onDoubleClick();
-    }
-  }
-
-  stopDoubleClickTimer() {
-    clearTimeout(this.doubleClickTimer);
-    this.doubleClickTimer = null;
-    this.input.onEnd = null;
+    this.ngZone.run(() => this.startIconHiddenTimer());
   }
 
   onDoubleClick() {
-    this.stopDoubleClickTimer();
-    let distance = (this.doubleClickPoint.x - this.input.pointer.x) ** 2 + (this.doubleClickPoint.y - this.input.pointer.y) ** 2;
-    if (distance < 10 ** 2) {
-      if (this.isVisible) this.diceRoll();
-    }
+    if (!this.isVisible) return;
+    this.ngZone.run(() => this.diceRoll());
   }
 
   @HostListener('contextmenu', ['$event'])
