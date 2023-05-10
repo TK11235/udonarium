@@ -229,7 +229,6 @@ export class CardComponent implements OnDestroy, OnChanges, AfterViewInit {
   }
 
   private dispatchCardDropEvent() {
-    console.log('dispatchCardDropEvent');
     let element: HTMLElement = this.elementRef.nativeElement;
     let parent = element.parentElement;
     let children = parent.children;
