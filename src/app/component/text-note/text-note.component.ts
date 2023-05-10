@@ -181,7 +181,6 @@ export class TextNoteComponent implements OnChanges, OnDestroy {
     actions.push({
       name: 'コピーを作る', action: () => {
         let cloneObject = this.textNote.clone();
-        console.log('コピー', cloneObject);
         cloneObject.location.x += this.gridSize;
         cloneObject.location.y += this.gridSize;
         cloneObject.toTopmost();
