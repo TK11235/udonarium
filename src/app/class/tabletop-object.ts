@@ -3,6 +3,7 @@ import { ImageStorage } from './core/file-storage/image-storage';
 import { SyncObject, SyncVar } from './core/synchronize-object/decorator';
 import { ObjectNode } from './core/synchronize-object/object-node';
 import { ObjectStore } from './core/synchronize-object/object-store';
+import { MathUtil } from './core/system/util/math-util';
 import { DataElement } from './data-element';
 
 export interface TabletopLocation {
@@ -46,6 +47,12 @@ export class TabletopObject extends ObjectNode {
       this._imageFile = file ? file : ImageFile.Empty;
     }
     return this._imageFile;
+  }
+
+  calcSqrDistance(other: TabletopObject): number {
+    let pos1 = { x: this.location.x, y: this.location.y, z: this.posZ };
+    let pos2 = { x: other.location.x, y: other.location.y, z: other.posZ };
+    return MathUtil.sqrMagnitude(pos1, pos2);
   }
 
   protected createDataElements() {

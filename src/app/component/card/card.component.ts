@@ -148,7 +148,7 @@ export class CardComponent implements OnDestroy, OnChanges, AfterViewInit {
 
     if (e.detail instanceof CardStack) {
       let cardStack: CardStack = e.detail;
-      let distance: number = (cardStack.location.x - this.card.location.x) ** 2 + (cardStack.location.y - this.card.location.y) ** 2 + (cardStack.posZ - this.card.posZ) ** 2;
+      let distance: number = this.card.calcSqrDistance(cardStack);
       if (distance < 25 ** 2) {
         cardStack.location.x = this.card.location.x;
         cardStack.location.y = this.card.location.y;
@@ -214,7 +214,7 @@ export class CardComponent implements OnDestroy, OnChanges, AfterViewInit {
     cardStack.zindex = this.card.zindex;
 
     let cards: Card[] = this.tabletopService.cards.filter(card => {
-      let distance: number = (card.location.x - this.card.location.x) ** 2 + (card.location.y - this.card.location.y) ** 2 + (card.posZ - this.card.posZ) ** 2;
+      let distance: number = this.card.calcSqrDistance(card);
       return distance < 100 ** 2;
     });
 
