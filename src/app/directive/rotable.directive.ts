@@ -1,5 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
+import { MathUtil } from '@udonarium/core/system/util/math-util';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { BatchService } from 'service/batch.service';
 import { CoordinateService } from 'service/coordinate.service';
@@ -193,7 +194,7 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
     let x = pointer.x - centerX;
     let y = pointer.y - centerY;
     let rad = Math.atan2(y, x);
-    let rotate = ((rad * 180 / Math.PI) - rotateOffset + 720) % 360;
+    let rotate = (MathUtil.degrees(rad) - rotateOffset + 720) % 360;
     return rotate < 180 ? rotate : rotate - 360;
   }
 
@@ -253,10 +254,10 @@ export class RotableDirective implements AfterViewInit, OnChanges, OnDestroy {
       Number(regArray[1]), Number(regArray[2]), Number(regArray[3]),
       Number(regArray[4]), Number(regArray[5]), Number(regArray[6])
     );
-    let currentRotate = currentRad * 180 / Math.PI;
+    let currentRotate = MathUtil.degrees(currentRad);
     let currentVector = { x: Math.cos(currentRad), y: Math.sin(currentRad) };
 
-    let nextRad = nextRotate * Math.PI / 180;
+    let nextRad = MathUtil.radians(nextRotate);
     let nextVector = { x: Math.cos(nextRad), y: Math.sin(nextRad) };
 
     let crossProduct = currentVector.x * nextVector.y - nextVector.x * currentVector.y;

@@ -1,3 +1,4 @@
+import { MathUtil } from '@udonarium/core/system/util/math-util';
 import { ResettableTimeout } from '@udonarium/core/system/util/resettable-timeout';
 import { PointerCoordinate, PointerData } from 'service/pointer-device.service';
 
@@ -30,7 +31,7 @@ export class InputHandler {
   get startPointer(): PointerCoordinate { return this.firstPointer; }
   get pointer(): PointerCoordinate { return this.primaryPointer; }
 
-  get magnitude(): number { return this.calcMagnitude(this.firstPointer, this.primaryPointer); }
+  get magnitude(): number { return MathUtil.sqrMagnitude(this.firstPointer, this.primaryPointer); }
 
   private _isDragging: boolean = false;
   private _isGrabbing: boolean = false;
@@ -158,7 +159,7 @@ export class InputHandler {
       case 'touchmove':
         if (this.onMove) this.onMove(e);
         this._isDragging = this._isGrabbing;
-        this._isPointerMoved = this._isPointerMoved || (e instanceof MouseEvent ? 3 : 12) ** 2 < this.calcMagnitude(this.firstPointer, this.primaryPointer);
+        this._isPointerMoved = this._isPointerMoved || (e instanceof MouseEvent ? 3 : 12) ** 2 < MathUtil.sqrMagnitude(this.firstPointer, this.primaryPointer);
         break;
       default:
         if (this.onEnd) this.onEnd(e);
@@ -179,7 +180,7 @@ export class InputHandler {
 
     for (let pointer of lastPointers) {
       if (pointer.identifier === mosuePointer.identifier) continue;
-      if (this.calcMagnitude(mosuePointer, pointer) < threshold ** 2) {
+      if (MathUtil.sqrMagnitude(mosuePointer, pointer) < threshold ** 2) {
         return true;
       }
     }
@@ -207,10 +208,6 @@ export class InputHandler {
     this.clearLastPointerTimer.stop();
     this.lastStartPointers = [];
     this.lastMovePointers = [];
-  }
-
-  private calcMagnitude(a: PointerCoordinate, b: PointerCoordinate) {
-    return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2;
   }
 
   private addEventListeners() {

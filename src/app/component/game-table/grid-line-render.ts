@@ -1,3 +1,4 @@
+import { MathUtil } from '@udonarium/core/system/util/math-util';
 import { GridType } from '@udonarium/game-table';
 
 type StrokeGridFunc = (w: number, h: number, gridSize: number) => GridPosition;
@@ -79,7 +80,7 @@ export class GridLineRender {
     context.beginPath();
     for (let i = 0; i < 6; i++) {
       deg += 60;
-      let radian = Math.PI / 180 * deg;
+      let radian = MathUtil.radians(deg);
       let x = Math.cos(radian) * radius + cx;
       let y = Math.sin(radian) * radius + cy;
       context.lineTo(x, y);

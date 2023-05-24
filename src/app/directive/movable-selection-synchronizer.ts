@@ -1,3 +1,4 @@
+import { MathUtil } from '@udonarium/core/system/util/math-util';
 import { TabletopObject } from '@udonarium/tabletop-object';
 import { Stackable } from '@udonarium/tabletop-object-util';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
@@ -166,7 +167,7 @@ export class MovableSelectionSynchronizer {
       //movable.ondragend.emit(e as PointerEvent);
       //movable.onend.emit(e as PointerEvent);
       angle += polygonal;
-      let rad = angle * (Math.PI / 180);
+      let rad = MathUtil.radians(angle);
       movable.posX = center.x + distance * Math.sin(rad) - (movable.width / 2);
       movable.posY = center.y + distance * Math.cos(rad) - (movable.height / 2);
     }
@@ -193,13 +194,19 @@ export class MovableSelectionSynchronizer {
     }
   }
 
-  private calcDistance(a: MovableDirective, b: MovableDirective = this.movable): number {
-    return ((a.posX + a.width / 2) - (b.posX + b.width / 2)) ** 2 + ((a.posY + a.height / 2) - (b.posY + b.height / 2)) ** 2 + (a.posZ - b.posZ) ** 2;
-  }
-
   private isProximity(a: MovableDirective, b: MovableDirective = this.movable): boolean {
     let range = Math.max((((a.width + b.width) / 4) + ((a.height + b.height) / 4)) * 0.95, 25) ** 2;
-    let distance = this.calcDistance(a, b);
+    let posA = {
+      x: a.posX + a.width / 2,
+      y: a.posY + a.height / 2,
+      z: a.posZ
+    };
+    let posB = {
+      x: b.posX + b.width / 2,
+      y: b.posY + b.height / 2,
+      z: b.posZ
+    };
+    let distance = MathUtil.sqrMagnitude(posA, posB);
     return distance < range;
   }
 
@@ -248,7 +255,7 @@ export class MovableSelectionSynchronizer {
         if (movable.width < 0) movable.width = movable.nativeElement.clientWidth;
         if (movable.height < 0) movable.height = movable.nativeElement.clientHeight;
         angle += polygonal;
-        let rad = angle * (Math.PI / 180);
+        let rad = MathUtil.radians(angle);
         movable.posX = center.x + distance * Math.sin(rad) - (movable.width / 2);
         movable.posY = center.y + distance * Math.cos(rad) - (movable.height / 2);
         movable.posZ = center.z;

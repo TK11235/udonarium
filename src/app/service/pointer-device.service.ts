@@ -1,4 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
+import { MathUtil } from '@udonarium/core/system/util/math-util';
 
 export interface PointerCoordinate {
   x: number;
@@ -103,14 +104,14 @@ export class PointerDeviceService {
   }
 
   private preventContextMenuIfNeeded(pointer: PointerCoordinate, threshold: number = 3) {
-    let distance = (pointer.x - this.startPostion.x) ** 2 + (pointer.y - this.startPostion.y) ** 2;
+    let distance = MathUtil.sqrMagnitude(pointer, this.startPostion);
     if (threshold ** 2 < distance) this._isAllowedToOpenContextMenu = false;
   }
 
   private isSyntheticEvent(mosuePointer: PointerData, threshold: number = 15): boolean {
     for (let pointer of this.pointers) {
       if (pointer.identifier === mosuePointer.identifier) continue;
-      let distance = (mosuePointer.x - pointer.x) ** 2 + (mosuePointer.y - pointer.y) ** 2;
+      let distance = MathUtil.sqrMagnitude(mosuePointer, pointer);
       if (distance < threshold ** 2) return true;
     }
     return false;

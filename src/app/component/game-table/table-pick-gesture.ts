@@ -1,3 +1,4 @@
+import { MathUtil } from '@udonarium/core/system/util/math-util';
 import { InputHandler } from 'directive/input-handler';
 import { PointerCoordinate, PointerDeviceService } from 'service/pointer-device.service';
 import { TabletopSelectionService } from 'service/tabletop-selection.service';
@@ -128,7 +129,7 @@ export class TablePickGesture {
           this.target = target;
         }
 
-        this.isMagneticMode = this.target != null && this.pointerDevice.isDragging && this.tappedTimer != null && this.calcMagnitude(this.tappedPointer, this.input.pointer) < 25 ** 2;
+        this.isMagneticMode = this.target != null && this.pointerDevice.isDragging && this.tappedTimer != null && MathUtil.sqrMagnitude(this.tappedPointer, this.input.pointer) < 25 ** 2;
         this.isPickObjectMode = this.target != null && this.pointerDevice.isDragging && !this.isMagneticMode;
         this.isPickRegionMode = this.target == null || (!this.isPickObjectMode && !this.isMagneticMode);
 
@@ -323,10 +324,6 @@ export class TablePickGesture {
       clearTimeout(this.tappedTimer);
       this.tappedTimer = null;
     }
-  }
-
-  private calcMagnitude(a: PointerCoordinate, b: PointerCoordinate) {
-    return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2;
   }
 }
 
