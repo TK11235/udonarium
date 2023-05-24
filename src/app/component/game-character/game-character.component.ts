@@ -6,7 +6,7 @@ import {
   HostListener,
   Input,
   OnChanges,
-  OnDestroy,
+  OnDestroy
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { EventSystem, Network } from '@udonarium/core/system';

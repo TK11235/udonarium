@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';
-import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { EventSystem, Network } from '@udonarium/core/system';
+import { PeerContext } from '@udonarium/core/system/network/peer-context';
 import { PeerCursor } from '@udonarium/peer-cursor';
 
 import { FileSelecterComponent } from 'component/file-selecter/file-selecter.component';

@@ -1,5 +1,5 @@
-import * as lzbase62 from 'lzbase62';
 import * as SHA256 from 'crypto-js/sha256';
+import * as lzbase62 from 'lzbase62';
 
 import * as base from 'base-x';
 import { MutablePeerSessionState, PeerSessionGrade, PeerSessionState } from './peer-session-state';

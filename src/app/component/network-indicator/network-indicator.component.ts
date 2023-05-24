@@ -11,7 +11,7 @@ export class NetworkIndicatorComponent implements AfterViewInit, OnDestroy {
   private timer: NodeJS.Timer = null;
   private needRepeat = false;
 
-  constructor(private elementRef: ElementRef, ) { }
+  constructor(private elementRef: ElementRef) { }
 
   ngAfterViewInit() {
     let repeatFunc = () => {

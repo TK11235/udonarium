@@ -8,7 +8,7 @@ import {
   Input,
   NgZone,
   OnChanges,
-  OnDestroy,
+  OnDestroy
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { EventSystem } from '@udonarium/core/system';

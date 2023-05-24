@@ -8,7 +8,7 @@ import {
   NgZone,
   OnChanges,
   OnDestroy,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { EventSystem } from '@udonarium/core/system';

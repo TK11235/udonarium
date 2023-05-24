@@ -7,7 +7,7 @@ import {
   NgZone,
   OnChanges,
   OnDestroy,
-  Output,
+  Output
 } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { TableSelecter } from '@udonarium/table-selecter';

@@ -9,7 +9,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { EventSystem } from '@udonarium/core/system';
 import { DataElement } from '@udonarium/data-element';

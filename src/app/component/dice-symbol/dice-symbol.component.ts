@@ -9,7 +9,7 @@ import {
   Input,
   NgZone,
   OnChanges,
-  OnDestroy,
+  OnDestroy
 } from '@angular/core';
 import { ImageFile } from '@udonarium/core/file-storage/image-file';
 import { ObjectStore } from '@udonarium/core/synchronize-object/object-store';

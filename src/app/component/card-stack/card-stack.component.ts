@@ -9,7 +9,7 @@ import {
   Input,
   NgZone,
   OnChanges,
-  OnDestroy,
+  OnDestroy
 } from '@angular/core';
 import { Card } from '@udonarium/card';
 import { CardStack } from '@udonarium/card-stack';
