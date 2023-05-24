@@ -99,52 +99,16 @@ export class TablePickGesture {
     this.clearActivateTimer();
     this.pickCursor.update(this.input.pointer);
 
-    if ((e instanceof MouseEvent && e.button === 0) || (e as TouchEvent).touches) {
-      this.isStrokeMode = (e instanceof MouseEvent && e.button === 0 && e.ctrlKey);
-      let isQuickActivate = (e instanceof MouseEvent && e.button === 0 && e.shiftKey);
+    let isMainButton = (e instanceof MouseEvent && e.button === 0) || (e as TouchEvent).touches;
+    if (!isMainButton) return this.cancel();
 
-      if (this.isStrokeMode || isQuickActivate) {
-        this.isActive = true;
-        this.pickCursor.active();
-        this.pickCursor.disableAnimation();
-        this.pickCursor.scale(1.0);
-        requestAnimationFrame(() => this.pickCursor.scale(0.6));
+    this.isStrokeMode = (e instanceof MouseEvent && e.button === 0 && e.ctrlKey);
+    let isQuickActivate = (e instanceof MouseEvent && e.button === 0 && e.shiftKey);
 
-        this.pointerDevice.isDragging = false;
-        this.pickStart();
-
-        if (this.isStrokeMode) {
-          let target = e.target as HTMLElement;
-          if (target.contains(this.gameObjectsElement)) {
-            this.selection.excludeElement = document.body;
-          } else {
-            this.isKeepSelection = true;
-            this.selection.excludeElement = null;
-            this.pickObject(e);
-          }
-        }
-      } else {
-        let target = e.target as HTMLElement;
-        if (!target.contains(this.gameObjectsElement)) {
-          this.target = target;
-        }
-
-        this.isMagneticMode = this.target != null && this.pointerDevice.isDragging && this.tappedTimer != null && MathUtil.sqrMagnitude(this.tappedPointer, this.input.pointer) < 25 ** 2;
-        this.isPickObjectMode = this.target != null && this.pointerDevice.isDragging && !this.isMagneticMode;
-        this.isPickRegionMode = this.target == null || (!this.isPickObjectMode && !this.isMagneticMode);
-
-        if (this.isPickObjectMode) return;
-
-        this.setActivateTimer();
-        this.setKeyDownTimer();
-
-        this.pickCursorScale = (e as TouchEvent).touches ? 4.5 : 1.0;
-        this.pickCursor.active();
-        this.pickCursor.scale(this.pickCursorScale);
-        if (this.isMagneticMode) this.pickCursor.color(CursorColor.MAGNETIC, CursorColor.MAGNETIC_FILL);
-      }
+    if (this.isStrokeMode || isQuickActivate) {
+      this.startQuickCursor(e);
     } else {
-      this.cancel();
+      this.startLongPressCursor(e);
     }
   }
 
@@ -223,6 +187,49 @@ export class TablePickGesture {
         this.pickStart();
         break;
     }
+  }
+
+  private startQuickCursor(e: MouseEvent | TouchEvent) {
+    this.isActive = true;
+    this.pickCursor.active();
+    this.pickCursor.disableAnimation();
+    this.pickCursor.scale(1.0);
+    requestAnimationFrame(() => this.pickCursor.scale(0.6));
+
+    this.pointerDevice.isDragging = false;
+    this.pickStart();
+
+    if (this.isStrokeMode) {
+      let target = e.target as HTMLElement;
+      if (target.contains(this.gameObjectsElement)) {
+        this.selection.excludeElement = document.body;
+      } else {
+        this.isKeepSelection = true;
+        this.selection.excludeElement = null;
+        this.pickObject(e);
+      }
+    }
+  }
+
+  private startLongPressCursor(e: MouseEvent | TouchEvent) {
+    let target = e.target as HTMLElement;
+    if (!target.contains(this.gameObjectsElement)) {
+      this.target = target;
+    }
+
+    this.isMagneticMode = this.target != null && this.pointerDevice.isDragging && this.tappedTimer != null && MathUtil.sqrMagnitude(this.tappedPointer, this.input.pointer) < 25 ** 2;
+    this.isPickObjectMode = this.target != null && this.pointerDevice.isDragging && !this.isMagneticMode;
+    this.isPickRegionMode = this.target == null || (!this.isPickObjectMode && !this.isMagneticMode);
+
+    if (this.isPickObjectMode) return;
+
+    this.setActivateTimer();
+    this.setKeyDownTimer();
+
+    this.pickCursorScale = (e as TouchEvent).touches ? 4.5 : 1.0;
+    this.pickCursor.active();
+    this.pickCursor.scale(this.pickCursorScale);
+    if (this.isMagneticMode) this.pickCursor.color(CursorColor.MAGNETIC, CursorColor.MAGNETIC_FILL);
   }
 
   private pickStart() {
