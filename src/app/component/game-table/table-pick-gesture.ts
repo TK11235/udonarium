@@ -21,9 +21,9 @@ export class TablePickGesture {
   private get isActive(): boolean { return this.pointerDevice.isTablePickGesture; }
   private set isActive(isActive: boolean) { this.pointerDevice.isTablePickGesture = isActive; }
 
-  private isPickObjectMode = false;
-  private isPickRegionMode = false;
-  private isMagneticMode = false;
+  isPickObjectMode = false;
+  isPickRegionMode = false;
+  isMagneticMode = false;
   isStrokeMode = false;
   isKeepSelection = false;
   private isObjectDragging = false;
@@ -188,6 +188,10 @@ export class TablePickGesture {
     this.pickCursor.disableAnimation();
     this.pickCursor.scale(1.0);
     requestAnimationFrame(() => this.pickCursor.scale(0.6));
+
+    this.isMagneticMode = false;
+    this.isPickObjectMode = this.isStrokeMode;
+    this.isPickRegionMode = !this.isStrokeMode;
 
     this.pointerDevice.isDragging = false;
     this.pickStart();
