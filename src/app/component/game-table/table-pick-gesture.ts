@@ -130,16 +130,9 @@ export class TablePickGesture {
     this.pickCursor.update(this.input.pointer);
     this.pickCursor.scale(0);
 
-    if (this.isStrokeMode) {
-      if (e instanceof MouseEvent && e.ctrlKey) {
-        let target = e.target as HTMLElement;
-        if (target.contains(this.gameObjectsElement)) {
-          this.selection.excludeElement = document.body;
-        } else {
-          this.pickObject(e);
-        }
-      }
-    } else if (this.isPointerMoved && !this.isMagneticMode) {
+    if (this.isPickObjectMode && e instanceof MouseEvent && e.ctrlKey) {
+      this.pickObject(e);
+    } else if (this.isPointerMoved && this.isPickRegionMode) {
       this.pickRegion(e);
     }
 
@@ -199,15 +192,9 @@ export class TablePickGesture {
     this.pointerDevice.isDragging = false;
     this.pickStart();
 
-    if (this.isStrokeMode) {
-      let target = e.target as HTMLElement;
-      if (target.contains(this.gameObjectsElement)) {
-        this.selection.excludeElement = document.body;
-      } else {
-        this.isKeepSelection = true;
-        this.selection.excludeElement = null;
-        this.pickObject(e);
-      }
+    if (this.isPickObjectMode) {
+      this.selection.excludeElement = null;
+      this.pickObject(e);
     }
   }
 
@@ -252,13 +239,18 @@ export class TablePickGesture {
 
   private pickObject(srcEvent: Event) {
     let target = srcEvent.target as HTMLElement;
-    let event = new CustomEvent(
-      'pickobject',
-      {
-        detail: { srcEvent: srcEvent, first: this.input.startPointer, last: this.input.pointer },
-        bubbles: true
-      });
-    target.dispatchEvent(event);
+    if (target.contains(this.gameObjectsElement)) {
+      this.selection.excludeElement = document.body;
+    } else {
+      this.isKeepSelection = true;
+      let event = new CustomEvent(
+        'pickobject',
+        {
+          detail: { srcEvent: srcEvent, first: this.input.startPointer, last: this.input.pointer },
+          bubbles: true
+        });
+      target.dispatchEvent(event);
+    }
   }
 
   private pickRegion(srcEvent: Event) {
