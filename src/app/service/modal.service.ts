@@ -1,10 +1,4 @@
-import { ComponentFactoryResolver, ComponentRef, Injectable, Injector, OnChanges, ViewContainerRef } from '@angular/core';
-
-/*
-thanks
-http://qiita.com/Quramy/items/ccfcfa0e45dd9e43f041
-http://qiita.com/alclimb/items/1c740a432c10b6dc700a
-*/
+import { ComponentRef, Injectable, Injector, OnChanges, ViewContainerRef } from '@angular/core';
 
 class ModalContext {
   constructor(
@@ -33,10 +27,6 @@ export class ModalService {
   /* Todo */
   static defaultParentViewContainerRef: ViewContainerRef;
   static ModalComponentClass: { new(...args: any[]): any } = null;
-
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) { }
 
   get option(): any {
     return this.modalContext ? this.modalContext.option : null;
@@ -68,16 +58,14 @@ export class ModalService {
         }
       };
 
-      const childModalService: ModalService = new ModalService(this.componentFactoryResolver);
+      const childModalService: ModalService = new ModalService();
       childModalService.modalContext = new ModalContext(_resolve, _reject, option);
 
-      const parentInjector = parentViewContainerRef.injector;//parentViewContainerRef.parentInjector;
-      const injector = Injector.create([{ provide: ModalService, useValue: childModalService }], parentInjector);
+      const parentInjector = parentViewContainerRef.injector;
+      const injector = Injector.create({ providers: [{ provide: ModalService, useValue: childModalService }], parent: parentInjector });
 
-      const panelComponentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalService.ModalComponentClass);
-      const bodyComponentFactory = this.componentFactoryResolver.resolveComponentFactory(childComponent);
-      let panelComponentRef: ComponentRef<any> = parentViewContainerRef.createComponent(panelComponentFactory, parentViewContainerRef.length, injector);
-      let bodyComponentRef: ComponentRef<any> = panelComponentRef.instance.content.createComponent(bodyComponentFactory);
+      let panelComponentRef: ComponentRef<any> = parentViewContainerRef.createComponent(ModalService.ModalComponentClass, { index: parentViewContainerRef.length, injector: injector });
+      let bodyComponentRef: ComponentRef<any> = panelComponentRef.instance.content.createComponent(childComponent);
 
       panelComponentRef.onDestroy(() => {
         panelComponentRef = null;
