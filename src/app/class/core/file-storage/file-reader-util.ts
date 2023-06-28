@@ -1,5 +1,4 @@
-import * as WordArray from 'crypto-js/lib-typedarrays';
-import * as SHA256 from 'crypto-js/sha256';
+import { CryptoUtil } from '../system/util/crypto-util';
 
 export namespace FileReaderUtil {
   export function readAsArrayBufferAsync(blob: Blob): Promise<ArrayBuffer> {
@@ -24,18 +23,9 @@ export namespace FileReaderUtil {
   export async function calcSHA256Async(blob: Blob): Promise<string>
   export async function calcSHA256Async(arg: any): Promise<string> {
     if (arg instanceof Blob) {
-      return _calcSHA256Async(arg);
+      return CryptoUtil.sha256Hex(await FileReaderUtil.readAsArrayBufferAsync(arg));
     } else {
-      return _calcSHA256(arg);
+      return CryptoUtil.sha256Hex(arg);
     }
-  }
-
-  async function _calcSHA256Async(blob: Blob): Promise<string> {
-    return _calcSHA256(await FileReaderUtil.readAsArrayBufferAsync(blob));
-  }
-
-  function _calcSHA256(arrayBuffer: ArrayBuffer): string {
-    let wordArray = WordArray.create(arrayBuffer as any);
-    return SHA256(wordArray).toString();
   }
 }

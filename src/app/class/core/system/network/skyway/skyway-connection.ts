@@ -1,6 +1,5 @@
-import * as SHA256 from 'crypto-js/sha256';
-
 import { compressAsync, decompressAsync } from '../../util/compress';
+import { CryptoUtil } from '../../util/crypto-util';
 import { MessagePack } from '../../util/message-pack';
 import { setZeroTimeout } from '../../util/zero-timeout';
 import { Connection, ConnectionCallback } from '../connection';
@@ -76,7 +75,7 @@ export class SkyWayConnection implements Connection {
       serialization: 'none',
       metadata: {
         sortKey: this.peer.digestUserId,
-        token: this.peer.isRoom ? '' : calcSHA256Base64(this.peer.digestUserId + peer.userId)
+        token: this.peer.isRoom ? '' : CryptoUtil.sha256Base64Url(this.peer.digestUserId + peer.userId)
       }
     }), peer);
 
@@ -218,7 +217,7 @@ export class SkyWayConnection implements Connection {
 
     skyWay.on('connection', conn => {
       let validPeerId = this.peer.verifyPeer(conn.remoteId);
-      let validToken = this.peer.isRoom || conn.metadata.token === calcSHA256Base64(conn.metadata.sortKey + this.peer.userId);
+      let validToken = this.peer.isRoom || conn.metadata.token === CryptoUtil.sha256Base64Url(conn.metadata.sortKey + this.peer.userId);
       if (!validPeerId || !validToken) {
         conn.close();
         conn.on('open', () => conn.close());
@@ -414,10 +413,3 @@ function diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
   return { diff1: diff1, diff2: diff2 };
 }
 
-function calcSHA256Base64(str: string): string {
-  if (str == null) return '';
-  let hash = SHA256(str);
-  let arrayBuffer = Uint32Array.from(hash.words).buffer;
-  let base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
-  return base64;
-}
