@@ -1,3 +1,4 @@
+import { ArrayUtil } from '../../util/array-util';
 import { compressAsync, decompressAsync } from '../../util/compress';
 import { CryptoUtil } from '../../util/crypto-util';
 import { MessagePack } from '../../util/message-pack';
@@ -338,7 +339,7 @@ export class SkyWayConnection implements Connection {
       }
     });
 
-    let diff = diffArray(this.userIds, userIds);
+    let diff = ArrayUtil.diff(this.userIds, userIds);
     let relayingUserIds = diff.diff1;
     let unknownUserIds = diff.diff2;
     this.relayingPeerIds.set(conn.remoteId, relayingUserIds.map(userId => this.makeFriendPeer(userId).peerId));
@@ -393,23 +394,3 @@ export class SkyWayConnection implements Connection {
     }
   }
 }
-
-function diffArray<T>(array1: T[], array2: T[]): { diff1: T[], diff2: T[] } {
-  let diff1: T[] = [];
-  let diff2: T[] = [];
-
-  let includesInArray1: boolean = false;
-  let includesInArray2: boolean = false;
-
-  for (let item of array1.concat(array2)) {
-    includesInArray1 = array1.includes(item);
-    includesInArray2 = array2.includes(item);
-    if (includesInArray1 && !includesInArray2) {
-      diff1.push(item);
-    } else if (!includesInArray1 && includesInArray2) {
-      diff2.push(item);
-    }
-  }
-  return { diff1: diff1, diff2: diff2 };
-}
-
