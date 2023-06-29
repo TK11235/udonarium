@@ -1,19 +1,23 @@
 import { ResettableTimeout } from '../../util/resettable-timeout';
-import { SkyWayDataConnection } from './skyway-data-connection';
 
-export class SkyWayStatsMonitor {
+export interface WebRTCConnection {
+  open: boolean;
+  updateStatsAsync(): Promise<void>;
+}
+
+export class WebRTCStatsMonitor {
   private static updateWebRTCStatsTimer: ResettableTimeout = null;
-  private static monitoringConnections: Set<SkyWayDataConnection> = new Set();
+  private static monitoringConnections: Set<WebRTCConnection> = new Set();
 
   private constructor() { }
 
-  static add(connection: SkyWayDataConnection) {
+  static add(connection: WebRTCConnection) {
     this.monitoringConnections.add(connection);
     connection.updateStatsAsync();
     this.restart();
   }
 
-  static remove(connection: SkyWayDataConnection) {
+  static remove(connection: WebRTCConnection) {
     this.monitoringConnections.delete(connection);
   }
 

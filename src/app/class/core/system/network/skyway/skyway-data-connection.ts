@@ -5,8 +5,8 @@ import { UUID } from '../../util/uuid';
 import { setZeroTimeout } from '../../util/zero-timeout';
 import { IPeerContext, PeerContext } from '../peer-context';
 import { PeerSessionGrade } from '../peer-session-state';
-import { SkyWayStatsMonitor } from './skyway-stats-monitor';
-import { CandidateType, WebRTCStats } from './webrtc-stats';
+import { CandidateType, WebRTCStats } from '../webrtc/webrtc-stats';
+import { WebRTCConnection, WebRTCStatsMonitor } from '../webrtc/webrtc-stats-monitor';
 
 // @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
 declare module PeerJs {
@@ -33,7 +33,7 @@ interface ReceivedChank {
   byteLength: number;
 };
 
-export class SkyWayDataConnection extends EventEmitter {
+export class SkyWayDataConnection extends EventEmitter implements WebRTCConnection {
   readonly peer: PeerContext;
 
   private chunkSize = 15.5 * 1024;
@@ -120,11 +120,11 @@ export class SkyWayDataConnection extends EventEmitter {
   }
 
   private startMonitoring() {
-    SkyWayStatsMonitor.add(this);
+    WebRTCStatsMonitor.add(this);
   }
 
   private stopMonitoring() {
-    SkyWayStatsMonitor.remove(this);
+    WebRTCStatsMonitor.remove(this);
   }
 
   async updateStatsAsync() {
