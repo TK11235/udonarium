@@ -125,16 +125,20 @@ export class ObjectSynchronizer {
   }
 
   private synchronize() {
-    while (0 < this.requestMap.size && this.tasks.length < 32) this.runSynchronizeTask();
+    let isContinue = true;
+    while (0 < this.requestMap.size && this.tasks.length < 32 && isContinue) {
+      isContinue = this.runSynchronizeTask();
+    };
   }
 
   private runSynchronizeTask() {
     let targetPeerId = this.getTargetPeerId();
+    if (targetPeerId.length < 1) return false;
     let requests: SynchronizeRequest[] = this.makeRequestList(targetPeerId);
 
     if (requests.length < 1) {
       this.removePeerMap(targetPeerId);
-      return;
+      return 0 < this.peerMap.size;
     }
     let task = SynchronizeTask.create(targetPeerId, requests);
     this.tasks.push(task);
@@ -153,6 +157,8 @@ export class ObjectSynchronizer {
       console.log('GameObject synchronize タイムアウト');
       remainedRequests.forEach(request => this.requestMap.set(request.identifier, request));
     }
+
+    return true;
   }
 
   private makeRequestList(targetPeerId: PeerId, maxRequest: number = 32): SynchronizeRequest[] {
@@ -172,7 +178,7 @@ export class ObjectSynchronizer {
 
   private getTargetPeerId(): PeerId {
     let min = 9999;
-    let selectPeerId: PeerId = null;
+    let selectPeerId: PeerId = '';
     let peers = Network.peers;
 
     for (let i = peers.length - 1; 0 <= i; i--) {
