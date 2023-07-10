@@ -78,6 +78,27 @@ export class LobbyComponent implements OnInit, OnDestroy {
     PeerCursor.myCursor.peerId = Network.peerId;
 
     let triedPeer: string[] = [];
+
+    let onTried = () => {
+      if (triedPeer.length < targetPeers.length) return false;
+      this.resetNetwork();
+      EventSystem.unregister(triedPeer);
+      this.closeIfConnected();
+      return true;
+    }
+    let onConnect = (peerId) => {
+      console.log('接続成功！', peerId);
+      triedPeer.push(peerId);
+      console.log('接続成功 ' + triedPeer.length + '/' + targetPeers.length);
+      return onTried();
+    }
+    let onDisconnect = (peerId) => {
+      console.warn('接続失敗', peerId);
+      triedPeer.push(peerId);
+      console.warn('接続失敗 ' + triedPeer.length + '/' + targetPeers.length);
+      return onTried();
+    }
+
     EventSystem.register(triedPeer)
       .on('OPEN_NETWORK', event => {
         console.log('LobbyComponent OPEN_PEER', event.data.peerId);
@@ -87,26 +108,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
           Network.connect(peer);
         }
         EventSystem.register(triedPeer)
-          .on('CONNECT_PEER', event => {
-            console.log('接続成功！', event.data.peerId);
-            triedPeer.push(event.data.peerId);
-            console.log('接続成功 ' + triedPeer.length + '/' + targetPeers.length);
-            if (targetPeers.length <= triedPeer.length) {
-              this.resetNetwork();
-              EventSystem.unregister(triedPeer);
-              this.closeIfConnected();
-            }
-          })
-          .on('DISCONNECT_PEER', event => {
-            console.warn('接続失敗', event.data.peerId);
-            triedPeer.push(event.data.peerId);
-            console.warn('接続失敗 ' + triedPeer.length + '/' + targetPeers.length);
-            if (targetPeers.length <= triedPeer.length) {
-              this.resetNetwork();
-              EventSystem.unregister(triedPeer);
-              this.closeIfConnected();
-            }
-          });
+          .on('CONNECT_PEER', event => onConnect(event.data.peerId))
+          .on('DISCONNECT_PEER', event => onDisconnect(event.data.peerId));
       });
   }
 
