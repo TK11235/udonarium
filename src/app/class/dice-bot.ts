@@ -140,7 +140,7 @@ function initializeDiceBotQueue(): PromiseQueue {
     loader = new (await import(
       /* webpackChunkName: "lib/bcdice/bcdice-loader" */
       './bcdice/bcdice-loader')
-    ).default();
+    ).default;
     DiceBot.diceBotInfos = loader.listAvailableGameSystems()
       .sort((a, b) => {
         if (a.sortKey < b.sortKey) return -1;
