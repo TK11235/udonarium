@@ -105,7 +105,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
         EventSystem.unregister(triedPeer);
         ObjectStore.instance.clearDeleteHistory();
         for (let peer of targetPeers) {
-          Network.connect(peer);
+          if (!Network.connect(peer) && onDisconnect(peer.peerId)) return;
         }
         EventSystem.register(triedPeer)
           .on('CONNECT_PEER', event => onConnect(event.data.peerId))
