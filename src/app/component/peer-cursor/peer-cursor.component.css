@@ -21,6 +21,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  transform: rotateX(-90deg);
 }
 
 .peer-cursor {
@@ -38,11 +39,11 @@
 }
 
 .is-front {
-  transform: translateX(-100%) translateY(-100%) rotateX(-90deg) rotateZ(45deg);
+  transform: translateX(-100%) translateY(-100%) rotateZ(45deg);
 }
 
 .is-back {
-  transform: translateX(-100%) translateY(-100%) rotateX(-90deg) rotateY(180deg) rotateZ(45deg);
+  transform: translateX(-100%) translateY(-100%) rotateY(180deg) rotateZ(45deg);
 }
 
 .icon {
