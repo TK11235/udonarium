@@ -274,8 +274,10 @@ export class SkyWayConnection implements Connection {
       this.closeDataConnection(conn);
     });
     conn.on('stats', () => {
-      if (conn.peer.session.health < 0.2) {
+      if (conn.peer.session.health < 0.35 || (conn.peer.session.grade < 1 && conn.peer.session.health < 0.7)) {
+        console.log(`reconnecting... ${conn.peer.peerId}`);
         this.closeDataConnection(conn);
+        this.connect(conn.peer);
       }
     });
   }
