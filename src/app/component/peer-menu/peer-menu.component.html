@@ -30,9 +30,16 @@
 </ng-container>
 <hr/>
 <div *ngFor="let peer of networkService.peers">
-  <div>
+  <div class="peer-info">
     <span *ngIf="!peer.isOpen">[接続中]</span>
     <span>他の参加者：{{findUserId(peer.peerId)}} [{{findPeerName(peer.peerId)}}]</span>
+    <div class="session-info">
+      <span>接続状態
+        Grade:{{stringFromSessionGrade(peer.session.grade)}} ({{peer.session.description}})
+        Health:{{(peer.session.health * 100).toFixed(0)}}%
+        Speed:{{(peer.session.speed * 100).toFixed(0)}}%
+        Ping:{{peer.session.ping.toFixed(1)}}ms</span>
+    </div>
   </div>
 </div>
 <div>

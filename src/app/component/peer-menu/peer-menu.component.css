@@ -23,3 +23,24 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.peer-info {
+  position: relative;
+}
+
+.session-info {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: -110%;
+  padding: 0.2rem 0.4rem;
+  font-size: 12px;
+  color: #444;
+  background: linear-gradient(-30deg, rgba(240, 218, 189, 1.0), rgba(255, 244, 232, 1.0));
+  border: solid 1px #999;
+  border-left: solid 4px #555;
+}
+
+.peer-info:hover .session-info {
+  visibility: visible;
+}
