@@ -39,7 +39,7 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     return this._children.concat();
   }
 
-  private needsSort: boolean = true;
+  private needsSort: boolean = false;
 
   // override
   destroy() {
