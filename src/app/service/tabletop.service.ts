@@ -20,6 +20,7 @@ import { TextNote } from '@udonarium/text-note';
 import { CoordinateService } from './coordinate.service';
 
 type ObjectIdentifier = string;
+type ObjecNodeIndex = number;
 type LocationName = string;
 
 @Injectable()
@@ -33,6 +34,7 @@ export class TabletopService {
 
   private locationMap: Map<ObjectIdentifier, LocationName> = new Map();
   private parentMap: Map<ObjectIdentifier, ObjectIdentifier> = new Map();
+  private indexMap: Map<ObjectIdentifier, ObjecNodeIndex> = new Map();
   private characterCache = new TabletopCache<GameCharacter>(() => ObjectStore.instance.getObjects(GameCharacter).filter(obj => obj.isVisibleOnTable));
   private cardCache = new TabletopCache<Card>(() => ObjectStore.instance.getObjects(Card).filter(obj => obj.isVisibleOnTable));
   private cardStackCache = new TabletopCache<CardStack>(() => ObjectStore.instance.getObjects(CardStack).filter(obj => obj.isVisibleOnTable));
@@ -144,17 +146,21 @@ export class TabletopService {
   }
 
   private shouldRefreshCache(object: TabletopObject): boolean {
-    return this.locationMap.get(object.identifier) !== object.location.name || this.parentMap.get(object.identifier) !== object.parentId;
+    return this.locationMap.get(object.identifier) !== object.location.name
+      || this.parentMap.get(object.identifier) !== object.parentId
+      || (object.isVisibleOnTable && this.indexMap.get(object.identifier) !== object.index);
   }
 
   private updateMap(object: TabletopObject) {
     this.locationMap.set(object.identifier, object.location.name);
     this.parentMap.set(object.identifier, object.parentId);
+    this.indexMap.set(object.identifier, object.index);
   }
 
   private clearMap() {
     this.locationMap.clear();
     this.parentMap.clear();
+    this.indexMap.clear();
   }
 
   private placeToTabletop(gameObject: TabletopObject) {
