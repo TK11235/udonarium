@@ -197,6 +197,21 @@ export class GameTableMaskComponent implements OnChanges, OnDestroy, AfterViewIn
         }
       }
     ));
+    if (!this.isLock) {
+      actions.push(ContextMenuSeparator);
+      actions.push({
+        name: '重なり順を一番上に', action: () => {
+          let parent = this.gameTableMask.parent;
+          if (parent) parent.appendChild(this.gameTableMask);
+        }
+      });
+      actions.push({
+        name: '重なり順を一番下に', action: () => {
+          let parent = this.gameTableMask.parent;
+          if (parent) parent.prependChild(this.gameTableMask);
+        }
+      });
+    }
     actions.push(ContextMenuSeparator);
     actions.push({ name: 'マップマスクを編集', action: () => { this.showDetail(this.gameTableMask); } });
     actions.push({

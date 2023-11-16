@@ -229,6 +229,21 @@ export class TerrainComponent implements OnChanges, OnDestroy, AfterViewInit {
           this.mode = TerrainViewState.ALL;
         }
       }));
+    if (!this.isLocked) {
+      actions.push(ContextMenuSeparator);
+      actions.push({
+        name: '重なり順を一番上に', action: () => {
+          let parent = this.terrain.parent;
+          if (parent) parent.appendChild(this.terrain);
+        }
+      });
+      actions.push({
+        name: '重なり順を一番下に', action: () => {
+          let parent = this.terrain.parent;
+          if (parent) parent.prependChild(this.terrain);
+        }
+      });
+    }
     actions.push(ContextMenuSeparator);
     actions.push({ name: '地形設定を編集', action: () => { this.showDetail(this.terrain); } });
     actions.push({
