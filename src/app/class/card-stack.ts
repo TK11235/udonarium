@@ -115,7 +115,7 @@ export class CardStack extends TabletopObject {
     if (180 < delta) delta = 360 - delta;
     card.rotate = delta <= 90 ? 0 : 180;
     this.setSamePositionFor(card);
-    return this.cardRoot.insertBefore(card, this.topCard);
+    return this.cardRoot.prependChild(card);
   }
 
   putOnBottom(card: Card): Card {

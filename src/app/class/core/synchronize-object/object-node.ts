@@ -148,6 +148,10 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
     return child;
   }
 
+  prependChild<T extends ObjectNode>(child: T): T {
+    return this._children.length < 1 ? this.appendChild(child) : this.insertBefore(child, this.children[0]);
+  }
+
   insertBefore<T extends ObjectNode>(child: T, reference: ObjectNode): T {
     if (child.contains(this)) return null;
     if (child === reference && child.parent === this) return child;
