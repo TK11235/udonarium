@@ -5,7 +5,8 @@
     appRotable [rotable.option]="rotableOption" (rotable.ondragstart)="onMove()" (rotable.ondragend)="onMoved()">
     <div [@shuffle]="animeState"
       (@shuffle.start)="animationShuffleStarted($event)"
-      (@shuffle.done)="animationShuffleDone($event)">
+      (@shuffle.done)="animationShuffleDone($event)"
+      class="is-backface-hidden chrome-smooth-image-trick">
       <img *ngIf="topCard && imageFile" class="card-image chrome-smooth-image-trick"
         [ngStyle]="{'transform': 'rotateZ(' + topCard.rotate +'deg)'}" [src]="imageFile.url | safe: 'resourceUrl'">
     </div>

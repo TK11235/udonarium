@@ -62,6 +62,7 @@
   margin: auto;
   height: auto;
   width: 100%;
+  backface-visibility: hidden;
 }
 
 .thumbnail-transform {

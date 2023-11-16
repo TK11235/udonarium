@@ -37,6 +37,10 @@
   width: 100px;
 }
 
+.is-backface-hidden {
+  backface-visibility: hidden;
+}
+
 .component {
   position: absolute;
   backface-visibility: hidden;
@@ -68,6 +72,7 @@
   margin: auto;
   height: auto;
   width: 100%;
+  backface-visibility: hidden;
 }
 
 .selected-highlight {
@@ -148,7 +153,8 @@
   padding: 3px 9px;
   border-radius: 24px;
   position: absolute;
-  top: 50%
+  top: 50%;
+  backface-visibility: hidden;
 }
 
 .has-length-limit {
