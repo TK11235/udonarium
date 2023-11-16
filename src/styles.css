@@ -180,10 +180,11 @@ body {
 }
 
 /*
- * デスクトップWindows版Chrome 102-103におけるレンダリング改善のための定義.
+ * デスクトップWindows版Chrome 119におけるレンダリング改善のための定義.
  * 3D表示している画像にこのCSSクラスを付与すると至近距離で表示した時の解像度が鮮明になる.
- * 将来的なChromeのアップデートでレンダリング速度が改善された場合は削除を検討.
+ * 将来的なChromeのアップデートでレンダリングが改善された場合は削除を検討.
  */
 .chrome-smooth-image-trick {
   transform-style: inherit;
+  overflow: visible;
 }
