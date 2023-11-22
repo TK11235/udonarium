@@ -24,7 +24,7 @@ export class TableTouchGesture {
   private prevHammerScale: number = 0;
   private prevHammerRotation: number = 0;
 
-  private tappedPanTimer: NodeJS.Timer = null;
+  private tappedPanTimer: NodeJS.Timeout = null;
   private tappedPanCenter: HammerPoint = { x: 0, y: 0 };
 
   onstart: Callback = null;

@@ -95,7 +95,7 @@ export class ChatTabComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   private scrollEventShortTimer: ResettableTimeout = null;
   private scrollEventLongTimer: ResettableTimeout = null;
-  private addMessageEventTimer: NodeJS.Timer = null;
+  private addMessageEventTimer: NodeJS.Timeout = null;
 
   private callbackOnScroll: any = () => this.onScroll();
   private callbackOnScrollToBottom: any = () => this.resetMessages();

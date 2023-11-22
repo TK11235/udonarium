@@ -77,7 +77,7 @@ export class CardStackComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   animeState: string = 'inactive';
 
-  private iconHiddenTimer: NodeJS.Timer = null;
+  private iconHiddenTimer: NodeJS.Timeout = null;
   get isIconHidden(): boolean { return this.iconHiddenTimer != null };
 
   gridSize: number = 50;

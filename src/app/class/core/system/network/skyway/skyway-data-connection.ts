@@ -38,7 +38,7 @@ export class SkyWayDataConnection extends EventEmitter implements WebRTCConnecti
 
   private chunkSize = 15.5 * 1024;
   private receivedMap: Map<string, ReceivedChank> = new Map();
-  private timeoutTimer: NodeJS.Timer = null;
+  private timeoutTimer: NodeJS.Timeout = null;
 
   get open(): boolean { return this.conn.open; }
   get remoteId(): string { return this.conn.remoteId; }

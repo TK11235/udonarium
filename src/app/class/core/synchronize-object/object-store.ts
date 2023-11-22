@@ -22,7 +22,7 @@ export class ObjectStore {
 
   private queueMap: Map<ObjectIdentifier, ObjectContext> = new Map();
   private updateInterval: number = null;
-  private garbageCollectionInterval: NodeJS.Timer = null;
+  private garbageCollectionInterval: NodeJS.Timeout = null;
   private updateCallback = () => { this.updateQueue(); }
 
   private constructor() { console.log('ObjectStore ready...'); };

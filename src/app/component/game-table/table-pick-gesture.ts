@@ -13,9 +13,9 @@ export class TablePickGesture {
   private pickCursorScale = 1.0;
 
   private input: InputHandler = null;
-  private activateTimer: NodeJS.Timer = null;
-  private keydownTimer: NodeJS.Timer = null;
-  private tappedTimer: NodeJS.Timer = null;
+  private activateTimer: NodeJS.Timeout = null;
+  private keydownTimer: NodeJS.Timeout = null;
+  private tappedTimer: NodeJS.Timeout = null;
   private tappedPointer: PointerCoordinate = { x: 0, y: 0, z: 0 };
 
   private get isActive(): boolean { return this.pointerDevice.isTablePickGesture; }

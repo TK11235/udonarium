@@ -12,7 +12,7 @@ const HOURS = 60 * 60 * 1000;
 
 @Injectable()
 export class ChatMessageService {
-  private intervalTimer: NodeJS.Timer = null;
+  private intervalTimer: NodeJS.Timeout = null;
   private timeOffset: number = Date.now();
   private performanceOffset: number = performance.now();
 

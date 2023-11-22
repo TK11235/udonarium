@@ -64,7 +64,7 @@ export class CardComponent implements OnDestroy, OnChanges, AfterViewInit {
   get isSelected(): boolean { return this.selectionState !== SelectionState.NONE; }
   get isMagnetic(): boolean { return this.selectionState === SelectionState.MAGNETIC; }
 
-  private iconHiddenTimer: NodeJS.Timer = null;
+  private iconHiddenTimer: NodeJS.Timeout = null;
   get isIconHidden(): boolean { return this.iconHiddenTimer != null };
 
   gridSize: number = 50;

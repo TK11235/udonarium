@@ -25,7 +25,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   help: string = '';
   isPasswordVisible = false;
 
-  private interval: NodeJS.Timer;
+  private interval: NodeJS.Timeout;
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }
 
   constructor(

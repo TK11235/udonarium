@@ -46,7 +46,6 @@
     "@types/js-yaml": "^4.0.5",
     "@types/lzbase62": "^2.0.0",
     "@types/msgpack-lite": "^0.1.8",
-    "@types/node": "^12.11.1",
     "@types/pako": "^2.0.0",
     "@types/vkbeautify": "^0.99.2",
     "jasmine-core": "~5.1.0",

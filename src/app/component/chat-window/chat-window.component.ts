@@ -33,7 +33,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get chatTab(): ChatTab { return ObjectStore.instance.get<ChatTab>(this.chatTabidentifier); }
   isAutoScroll: boolean = true;
-  scrollToBottomTimer: NodeJS.Timer = null;
+  scrollToBottomTimer: NodeJS.Timeout = null;
 
   constructor(
     public chatMessageService: ChatMessageService,
