@@ -9,7 +9,7 @@
 ## クイックスタート
 
 今すぐ試したり利用したりできる公開サーバを用意しています。  
-推奨ブラウザはデスクトップ版Google Chromeです。
+推奨ブラウザはデスクトップ版Google Chrome、またはデスクトップ版Mozilla Firefoxです。
 
 [**ユドナリウムをはじめる**][1]
 
@@ -23,6 +23,7 @@
 - [License](#license)
 
 ## 機能
+
 - **ブラウザ間通信**
   - WebRTCを利用したブラウザ間通信を実現しています。  
     サーバサイドを介さずに全ての機能をWebブラウザ上で完結させることを目指しています。
@@ -34,7 +35,7 @@
   - 立体地形
   - コマ、カード、共有メモ
   - チャット送受信、チャットパレット
-  - ダイスボット（[BCDice](https://github.com/bcdice/BCDice)を[Opal](http://opalrb.com/)でJavaScriptにトランスパイル）
+  - ダイスボット（[BCDice](https://github.com/bcdice/bcdice-js)）
   - 画像ファイル共有
   - BGM再生
   - セーブデータ生成（ZIP形式）
@@ -45,11 +46,13 @@
 
 1. [リリース版（**udonarium.zip**）](../../releases/latest)をダウンロードして解凍し、Webサーバに配置してください。  
 **開発者向けのソースコードをダウンロードしないように注意して下さい。**
-1. [SkyWay](https://webrtc.ecl.ntt.com/)のAPIキーを取得し、APIキー情報を`assets/config.yaml`に記述します。
+1. [旧SkyWay](https://support.skyway.io/hc/)のAPIキーを`assets/config.yaml`に記述します。  
+    - [旧SkyWay](https://support.skyway.io/hc/)のCommunity Edition(無料版)の新規登録は終了しています。
+    - [新SkyWay](https://skyway.ntt.com/)への対応はユドナリウム 1.16.0時点では実装途中です。
 1. サーバに配置したユドナリウムの`index.html`にアクセスして動作することを確認してみてください。  
 上手く動作しない時は付属の`上手くサーバで動かない時Q&A.txt`を参照してください。
 
-ユドナリウムはサーバーサイドの処理を持たないので、CGIやデータベースは必要はありません。
+ユドナリウムはサーバーサイドの処理を持たないためCGIやデータベースは必要はありません。
 
 ## 開発者クイックスタート
 
@@ -57,6 +60,7 @@
 開発環境を用意してビルドする必要があります。
 
 ### 開発環境
+
 [Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)が必要です。  
 
 言語はTypeScriptを用い、[Angular](https://angular.io/)で実装されています。  
@@ -69,7 +73,7 @@
 リポジトリからソースコードをダウンロードした後、初回起動時のコマンドは以下のようになります。
 
 ```bash
-cd ソースコードを展開したディレクトリの場所
+cd "ソースコードを展開したディレクトリの場所"
 npm install
 ng serve
 ```
@@ -78,14 +82,22 @@ ng serve
 いずれかのソースコードを変更すると、アプリケーションは自動的にリロードされます。
 
 `ng build`でプロジェクトのビルドを実行します。ビルド成果物は`dist/`ディレクトリに格納されます。  
-`ng build --prod`を使用すると、最適化された本番環境向けビルドが生成されます。
 
-#### SkyWay
+#### 旧SkyWay
+
+**[旧SkyWay](https://support.skyway.io/hc/)のCommunity Edition(無料版)の新規登録は終了しています。**
 
 このアプリケーションは通信処理にWebRTCを使用しています。  
-WebRTC向けのシグナリングサーバとして[SkyWay](https://webrtc.ecl.ntt.com/)を利用しているため、動作確認のためにSkyWayのAPIキーが必要です。
+WebRTC向けのシグナリングサーバとして[旧SkyWay](https://support.skyway.io/hc/ja)を利用しているため、動作確認のために旧SkyWayのAPIキーが必要です。
 
 取得したAPIキーの情報は`src/assets/config.yaml`に記述します。
+
+#### 新SkyWay
+
+**[新SkyWay](https://skyway.ntt.com/)を使用した通信処理はユドナリウム 1.16.0時点では実装途中です。**
+
+開発者向けのプレビュー版機能として実装しています。本番環境では使用しないでください。  
+開発者自身でコード修正やセキュリティ対応を実施してプライベートな動作確認を行う場合のみ、commit: 1bf7d866d97b791d226dc9b8c23de0357bf478b4 を参考にコードを書き替えてビルドを行ってください。
 
 ## 開発に寄与する
 
