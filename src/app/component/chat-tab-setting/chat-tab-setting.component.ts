@@ -87,6 +87,18 @@ export class ChatTabSettingComponent implements OnInit, OnDestroy {
     }
   }
 
+  allMessageClear() {
+    this.chatTabs.map(function(nowTab) {
+      let chatTab = new ChatTab();
+      chatTab.name = nowTab.name;
+      
+      nowTab.destroy();
+      chatTab.initialize();
+    });
+
+    this.selectedTab = null;
+  }
+
   restore() {
     if (this.selectedTab && this.selectedTabXml) {
       let restoreTable = <ChatTab>ObjectSerializer.instance.parseXml(this.selectedTabXml);
