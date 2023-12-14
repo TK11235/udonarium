@@ -324,9 +324,141 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private setGameTableGrid(width: number, height: number, gridSize: number = 50, gridType: GridType = GridType.SQUARE, gridColor: string = '#000000e6') {
     this.gameTable.nativeElement.style.width = width * gridSize + 'px';
     this.gameTable.nativeElement.style.height = height * gridSize + 'px';
+    let canvasElement: HTMLCanvasElement = this.gridCanvas.nativeElement;
+    canvasElement.width = width * gridSize;
+    canvasElement.height = height * gridSize;
+    let context: CanvasRenderingContext2D = canvasElement.getContext('2d');
+    context.strokeStyle = gridColor;
+    context.fillStyle = context.strokeStyle;
+    context.lineWidth = 1;
+
+    // 座標描画用font設定
+    let fontSize: number = Math.floor(gridSize / 5);
+    context.font = 'bold ' + fontSize + 'px sans-serif';
+    context.textBaseline = 'top';
+    context.textAlign = 'center';
+
+    let gx: number; // グリッド用Rect描画開始位置(x)
+    let gy: number; // 同上(y)
+
+    let calcGridPosition: { (w: number, h: number): void };
+
+
+    //REF: https://greentec.github.io/hexagonal-map-en/#introduction
+    function HexCell(x, y, z) {
+      this._x = x;
+      this._y = y;
+      this._z = z;
+    }
+
+    function initGrid(mapSizeWidth, mapSizeHeight) {
+      mapSizeWidth = Math.max(1, Math.floor(mapSizeWidth / 2));
+      mapSizeHeight = Math.max(1, Math.floor(mapSizeHeight / 2));
+      let mapSizeZ = 10;
+      mapSizeZ = Math.max(1, Math.max(mapSizeHeight, mapSizeWidth));
+      let gridArray = [];
+      let cnt = 0;
+
+      for (let i = -mapSizeWidth; i < mapSizeWidth + 1; i += 1) {
+        for (let j = -mapSizeHeight; j < mapSizeHeight + 1; j += 1) {
+          for (let k = -mapSizeZ; k < mapSizeZ + 1; k += 1) {
+            if (i + j + k == 0) {
+              gridArray.push(new HexCell(i, j, k));
+              cnt += 1;
+            }
+          }
+        }
+      }
+
+      return gridArray;
+    }
+
+    function drawGrid(gridArray) {
+      let edgeLength = gridSize;
+      let edgeW = edgeLength * 3 / 2;
+      let edgeH = edgeLength * Math.sqrt(3) / 2;
+
+      canvasElement.width = width * gridSize;
+      canvasElement.height = height * gridSize;
+      context.strokeStyle = gridColor;
+      context.fillStyle = "rgba(255, 255, 255, 0.0)";
+      context.lineWidth = 3;
+      let x, y, z;
+      let posX, posY;
+      let centerX = canvasElement.width / 2;
+      let centerY = canvasElement.height / 2;
+
+      for (let i = 0; i < gridArray.length; i++) {
+        [x, y, z] = [gridArray[i]._x, gridArray[i]._y, gridArray[i]._z];
+        posX = x * edgeW + centerX;
+        posY = (-y + z) * edgeH + centerY;
+
+        context.moveTo(posX + Math.cos(0) * edgeLength,
+          posY + Math.sin(0) * edgeLength);
+        for (let j = 1; j <= 6; j++) {
+          context.lineTo(posX + Math.cos(j / 6 * (Math.PI * 2)) * edgeLength,
+            posY + Math.sin(j / 6 * (Math.PI * 2)) * edgeLength);
+        }
+        context.fill();
+        context.stroke();
+      }
+    }
+
+    //REF END
+
+
+
+    switch (gridType) {
+      case GridType.HEX_ZETETIC:
+        let hexGrid = initGrid(width, height);
+        drawGrid(hexGrid);
+        break;
+      case GridType.HEX_VERTICAL: // ヘクス縦揃え
+        calcGridPosition = (w, h) => {
+          if ((w % 2) === 1) {
+            gx = w * gridSize;
+            gy = h * gridSize;
+          } else {
+            gx = w * gridSize;
+            gy = h * gridSize + (gridSize / 2);
+          }
+        }
+        break;
+      case GridType.HEX_HORIZONTAL: // ヘクス横揃え(どどんとふ互換)
+        calcGridPosition = (w, h) => {
+          if ((h % 2) === 1) {
+            gx = w * gridSize;
+            gy = h * gridSize;
+          } else {
+            gx = w * gridSize + (gridSize / 2);
+            gy = h * gridSize;
+          }
+        }
+        break;
+      default: // スクエア(default)
+        calcGridPosition = (w, h) => {
+          gx = w * gridSize;
+          gy = h * gridSize;
+        }
+        break;
+    }
+
+    if (0 <= gridType && gridType !== 3) {
+      for (let h = 0; h <= height; h++) {
+        for (let w = 0; w <= width; w++) {
+          calcGridPosition(w, h);
+          context.beginPath();
+          context.strokeRect(gx, gy, gridSize, gridSize);
+          context.fillText((w + 1).toString() + '-' + (h + 1).toString(), gx + (gridSize / 2), gy + (gridSize / 2));
+        }
+      }
+    }
 
     let render = new GridLineRender(this.gridCanvas.nativeElement);
     render.render(width, height, gridSize, gridType, gridColor);
+
+
+
 
     let opacity: number = this.tableSelecter.gridShow ? 1.0 : 0.0;
     this.gridCanvas.nativeElement.style.opacity = opacity + '';
