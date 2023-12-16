@@ -2,9 +2,9 @@ import * as WordArray from 'crypto-js/lib-typedarrays';
 import * as SHA256 from 'crypto-js/sha256';
 
 export namespace CryptoUtil {
-  export function sha256(arrayBuffer: ArrayBuffer): ArrayBuffer
-  export function sha256(str: string): ArrayBuffer
-  export function sha256(arg: any): ArrayBuffer {
+  export function sha256(arrayBuffer: ArrayBuffer): Uint8Array
+  export function sha256(str: string): Uint8Array
+  export function sha256(arg: any): Uint8Array {
     let hash: WordArray;
     if (arg instanceof ArrayBuffer) {
       let wordArray = WordArray.create(arg as any);
@@ -12,7 +12,7 @@ export namespace CryptoUtil {
     } else {
       hash = SHA256(arg);
     }
-    return Uint32Array.from(hash.words).buffer;
+    return toUint8Array(hash);
   }
 
   export function sha256Hex(arrayBuffer: ArrayBuffer): string
@@ -29,8 +29,20 @@ export namespace CryptoUtil {
   export function sha256Base64Url(str: string): string {
     if (str == null) return '';
     let hash = SHA256(str);
-    let arrayBuffer = Uint32Array.from(hash.words).buffer;
-    let base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '');
+    let uint8Array = toUint8Array(hash);
+    let base64 = btoa(String.fromCharCode(...uint8Array)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '');
     return base64;
+  }
+
+  function toUint8Array(wordArray: WordArray) {
+    let uint8Array = new Uint8Array(wordArray.words.length << 2);
+    let offset = 0;
+    for (let word of wordArray.words) {
+      uint8Array[offset++] = (word & 0xff000000) >>> 24;
+      uint8Array[offset++] = (word & 0x00ff0000) >>> 16;
+      uint8Array[offset++] = (word & 0x0000ff00) >>> 8;
+      uint8Array[offset++] = (word & 0x000000ff);
+    }
+    return uint8Array;
   }
 }
