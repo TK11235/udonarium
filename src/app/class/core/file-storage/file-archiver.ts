@@ -1,5 +1,5 @@
 import { saveAs } from 'file-saver';
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 
 import { EventSystem } from '../system';
 import { XmlUtil } from '../system/util/xml-util';

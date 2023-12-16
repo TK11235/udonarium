@@ -1,4 +1,4 @@
-import * as msgpacklite from 'msgpack-lite';
+import msgpacklite from 'msgpack-lite';
 
 export namespace MessagePack {
   export function encode(object: unknown): Uint8Array {

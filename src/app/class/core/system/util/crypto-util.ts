@@ -1,5 +1,5 @@
-import * as WordArray from 'crypto-js/lib-typedarrays';
-import * as SHA256 from 'crypto-js/sha256';
+import WordArray from 'crypto-js/lib-typedarrays';
+import SHA256 from 'crypto-js/sha256';
 
 export namespace CryptoUtil {
   export function sha256(arrayBuffer: ArrayBuffer): Uint8Array

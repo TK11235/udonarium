@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { EventSystem } from '@udonarium/core/system';
 
-import * as yaml from 'js-yaml';
+import yaml from 'js-yaml';
 
 export interface AppConfig {
   webrtc: {

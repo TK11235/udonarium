@@ -11,7 +11,7 @@ import { XmlUtil } from '@udonarium/core/system/util/xml-util';
 import { DataSummarySetting } from '@udonarium/data-summary-setting';
 import { Room } from '@udonarium/room';
 
-import * as Beautify from 'vkbeautify';
+import Beautify from 'vkbeautify';
 
 type UpdateCallback = (percent: number) => void;
 

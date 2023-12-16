@@ -1,4 +1,4 @@
-import * as Pako from 'pako';
+import Pako from 'pako';
 
 import { setZeroTimeout } from './zero-timeout';
 

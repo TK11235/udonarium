@@ -1,6 +1,6 @@
-import * as lzbase62 from 'lzbase62';
+import base from 'base-x';
+import lzbase62 from 'lzbase62';
 
-import * as base from 'base-x';
 import { CryptoUtil } from '../util/crypto-util';
 import { MutablePeerSessionState, PeerSessionGrade, PeerSessionState } from './peer-session-state';
 
