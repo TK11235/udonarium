@@ -1,7 +1,7 @@
-import * as SHA256 from 'crypto-js/sha256';
 import * as lzbase62 from 'lzbase62';
 
 import * as base from 'base-x';
+import { CryptoUtil } from '../util/crypto-util';
 import { MutablePeerSessionState, PeerSessionGrade, PeerSessionState } from './peer-session-state';
 
 const Base62 = base('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -151,8 +151,7 @@ function calcChecksumedRoomId(roomId: string, roomName: string, password: string
 
 function calcDigest(str: string, truncateLength: number = -1): string {
   if (str == null) return '';
-  let hash = SHA256(str);
-  let array = new Uint8Array(Uint32Array.from(hash.words).buffer);
+  let array = CryptoUtil.sha256(str);
   let base62 = Base62.encode(array);
 
   if (truncateLength < 0) truncateLength = base62.length;
