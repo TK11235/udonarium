@@ -79,8 +79,12 @@ export class InputHandler {
   }
 
   initialize() {
-    this.target.addEventListener('mousedown', this.callbackOnMouse, this.option.capture);
-    this.target.addEventListener('touchstart', this.callbackOnTouch, this.option.capture);
+    let option: AddEventListenerOptions = {
+      capture: this.option.capture,
+      passive: this.option.passive
+    }
+    this.target.addEventListener('mousedown', this.callbackOnMouse, option);
+    this.target.addEventListener('touchstart', this.callbackOnTouch, option);
     if (this.option.always) this.addEventListeners();
   }
 
@@ -88,8 +92,11 @@ export class InputHandler {
     this.cancel();
     this.clearLastPointerTimer.clear();
     this._isDestroyed = true;
-    this.target.removeEventListener('mousedown', this.callbackOnMouse, this.option.capture);
-    this.target.removeEventListener('touchstart', this.callbackOnTouch, this.option.capture);
+    let option: EventListenerOptions = {
+      capture: this.option.capture
+    }
+    this.target.removeEventListener('mousedown', this.callbackOnMouse, option);
+    this.target.removeEventListener('touchstart', this.callbackOnTouch, option);
     this.removeEventListeners();
 
     this.onStart = null;
