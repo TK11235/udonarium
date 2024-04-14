@@ -31,6 +31,7 @@
     "msgpack-lite": "^0.1.26",
     "pako": "^2.1.0",
     "rxjs": "~7.8.0",
+    "skyway-js": "^4.4.5",
     "tslib": "^2.3.0",
     "vkbeautify": "^0.99.3",
     "zone.js": "~0.14.2"

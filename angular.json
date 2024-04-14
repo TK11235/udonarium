@@ -39,6 +39,7 @@
               "lzbase62",
               "msgpack-lite",
               "pako",
+              "skyway-js",
               "vkbeautify"
             ]
           },

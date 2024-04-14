@@ -1,3 +1,4 @@
+import Peer from 'skyway-js';
 import { ArrayUtil } from '../../util/array-util';
 import { compressAsync, decompressAsync } from '../../util/compress';
 import { CryptoUtil } from '../../util/crypto-util';
@@ -8,13 +9,6 @@ import { IPeerContext, PeerContext } from '../peer-context';
 import { IRoomInfo, RoomInfo } from '../room-info';
 import { SkyWayDataConnection } from './skyway-data-connection';
 import { SkyWayDataConnectionList } from './skyway-data-connection-list';
-
-// @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
-declare var Peer;
-declare module PeerJs {
-  export type Peer = any;
-  export type DataConnection = any;
-}
 
 interface DataContainer {
   data: Uint8Array;
@@ -36,7 +30,7 @@ export class SkyWayConnection implements Connection {
   bandwidthUsage: number = 0;
 
   private key: string = '';
-  private skyWay: PeerJs.Peer;
+  private skyWay: Peer;
   private connections: SkyWayDataConnectionList = new SkyWayDataConnectionList();
 
   private listAllPeersCache: string[] = [];

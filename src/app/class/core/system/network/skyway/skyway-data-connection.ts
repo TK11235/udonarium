@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import { DataConnection } from 'skyway-js';
 
 import { MessagePack } from '../../util/message-pack';
 import { UUID } from '../../util/uuid';
@@ -7,12 +8,6 @@ import { IPeerContext, PeerContext } from '../peer-context';
 import { PeerSessionGrade } from '../peer-session-state';
 import { CandidateType, WebRTCStats } from '../webrtc/webrtc-stats';
 import { WebRTCConnection, WebRTCStatsMonitor } from '../webrtc/webrtc-stats-monitor';
-
-// @types/skywayを使用すると@types/webrtcが定義エラーになるので代替定義
-declare module PeerJs {
-  export type Peer = any;
-  export type DataConnection = any;
-}
 
 interface Ping {
   from: string;
@@ -43,7 +38,7 @@ export class SkyWayDataConnection extends EventEmitter implements WebRTCConnecti
   get open(): boolean { return this.conn.open; }
   get remoteId(): string { return this.conn.remoteId; }
   get metadata(): any { return this.conn.metadata; }
-  get bufferedAmount(): number { return this.conn._dc?.bufferedAmount ?? 0; }
+  get bufferedAmount(): number { return (this.conn as any)._dc?.bufferedAmount ?? 0; }
 
   private stats: WebRTCStats;
 
@@ -59,7 +54,7 @@ export class SkyWayDataConnection extends EventEmitter implements WebRTCConnecti
   get candidateType(): CandidateType { return this._candidateType; }
   private set candidateType(candidateType: CandidateType) { this._candidateType = candidateType };
 
-  constructor(private conn: PeerJs.DataConnection, peer: IPeerContext) {
+  constructor(private conn: DataConnection, peer: IPeerContext) {
     super();
 
     this.peer = PeerContext.parse(peer.peerId);
@@ -243,7 +238,7 @@ setInterval() に由来する遅延を解消するが skyway-js-sdk の更新次
 
 https://github.com/skyway/skyway-js-sdk/blob/master/src/peer/dataConnection.js
 */
-function exchangeSkyWayImplementation(conn: PeerJs.DataConnection) {
+function exchangeSkyWayImplementation(conn: any) {
   if (conn._dc && conn._sendBuffer) {
     conn._startSendLoop = startSendLoopZeroTimeout;
   }
