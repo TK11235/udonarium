@@ -79,7 +79,7 @@
 .scrollable-panel {
   box-sizing: border-box;
   overflow: auto;
-  max-height: calc(100vh - 41px);
+  max-height: calc(100% - 41px);
   width: 100%;
   padding: 8px;
 }
