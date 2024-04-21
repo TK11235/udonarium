@@ -42,6 +42,9 @@ export class SkyWayConnection implements Connection {
 
   private readonly trustedPeerIds: Set<PeerId> = new Set();
 
+  configure(config: any) {
+  }
+
   open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
@@ -157,11 +160,6 @@ export class SkyWayConnection implements Connection {
     for (let stream of this.streams) {
       if (stream.open) stream.send(container);
     }
-  }
-
-  setApiKey(key: string) {
-    console.warn('Method not implemented. set hard code value.');
-    this.skyWay.appId = this.appId;
   }
 
   async listAllPeers(): Promise<string[]> {

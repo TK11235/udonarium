@@ -147,7 +147,7 @@ export class Network {
 
   private initializeConnection(): Connection {
     let connection = new this.connectionClass();
-    connection.setApiKey(this.config?.webrtc?.key);
+    connection.configure(this.config);
 
     connection.callback.onOpen = (peer) => { if (this.callback.onOpen) this.callback.onOpen(peer); }
     connection.callback.onClose = (peer) => { if (this.callback.onClose) this.callback.onClose(peer); }

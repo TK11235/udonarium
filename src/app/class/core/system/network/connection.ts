@@ -18,6 +18,7 @@ export interface Connection {
   readonly callback: ConnectionCallback;
   readonly bandwidthUsage: number;
 
+  configure(config: any)
   open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   close()
@@ -25,7 +26,6 @@ export interface Connection {
   disconnect(peer: IPeerContext): boolean
   disconnectAll()
   send(data: any, sendTo?: string)
-  setApiKey(key: string);
   listAllPeers(): Promise<string[]>
   listAllRooms(): Promise<IRoomInfo[]>
 }

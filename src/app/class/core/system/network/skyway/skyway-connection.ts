@@ -42,6 +42,11 @@ export class SkyWayConnection implements Connection {
   private relayingPeerIds: Map<string, string[]> = new Map();
   private maybeUnavailablePeerIds: Set<string> = new Set();
 
+  configure(config: any) {
+    if (this.key !== config?.webrtc?.key) console.log('Key Change');
+    this.key = config?.webrtc?.key ?? '';
+  }
+
   open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
@@ -156,11 +161,6 @@ export class SkyWayConnection implements Connection {
     for (let conn of this.connections) {
       if (conn.open) conn.send(container);
     }
-  }
-
-  setApiKey(key: string) {
-    if (this.key !== key) console.log('Key Change');
-    this.key = key;
   }
 
   listAllPeers(): Promise<string[]> {
