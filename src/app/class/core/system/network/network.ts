@@ -2,9 +2,9 @@ import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { IPeerContext, PeerContext } from './peer-context';
 import { IRoomInfo } from './room-info';
-import { SkyWayConnection } from './skyway/skyway-connection';
 
 type QueueItem = { data: any, sendTo: string };
+type ConnectionClass = new (...args: any[]) => Connection;
 
 const unknownPeer = PeerContext.parse('???');
 
@@ -25,7 +25,9 @@ export class Network {
   readonly callback: ConnectionCallback = new ConnectionCallback();
   get bandwidthUsage(): number { return this.connection ? this.connection.bandwidthUsage : 0; }
 
-  private key: string = '';
+  private config: any = {}
+  private connectionClassPromise: Promise<ConnectionClass>;
+  private connectionClass: ConnectionClass;
   private connection: Connection;
 
   private queue: Set<QueueItem> = new Set();
@@ -37,12 +39,28 @@ export class Network {
     console.log('Network ready...');
   }
 
+  configure(config: any) {
+    this.config = config;
+  }
+
   open(userId?: string)
   open(userId: string, roomId: string, roomName: string, password: string)
   open(...args: any[]) {
-    if (this.connection && this.connection.peer) {
+    if (this.connectionClassPromise) {
       console.warn('It is already opened.');
       this.close();
+    }
+
+    this.openAsync.apply(this, args);
+  }
+
+  private async openAsync(...args: any[]) {
+    let promise = this.dynamicImport(this.config?.backend?.mode);
+    this.connectionClassPromise = promise;
+    this.connectionClass = await promise;
+    if (this.connectionClassPromise != promise) {
+      // Promiseがresolveするまでに違うPromiseオブジェクトに置き換わっているならclose()済み
+      return;
     }
 
     console.log('Network open...', args);
@@ -55,6 +73,7 @@ export class Network {
   private close() {
     if (this.connection) this.connection.close();
     this.connection = null;
+    this.connectionClassPromise = null;
     window.removeEventListener('unload', this.callbackUnload, false);
     console.log('Network close...');
   }
@@ -118,11 +137,6 @@ export class Network {
     }
   }
 
-  setApiKey(key: string) {
-    if (this.key !== key) console.log('Key Change');
-    this.key = key;
-  }
-
   listAllPeers(): Promise<string[]> {
     return this.connection ? this.connection.listAllPeers() : Promise.resolve([]);
   }
@@ -132,8 +146,8 @@ export class Network {
   }
 
   private initializeConnection(): Connection {
-    let connection = new SkyWayConnection();
-    connection.setApiKey(this.key);
+    let connection = new this.connectionClass();
+    connection.setApiKey(this.config?.webrtc?.key);
 
     connection.callback.onOpen = (peer) => { if (this.callback.onOpen) this.callback.onOpen(peer); }
     connection.callback.onClose = (peer) => { if (this.callback.onClose) this.callback.onClose(peer); }
@@ -145,5 +159,20 @@ export class Network {
     if (0 < this.queue.size && this.sendInterval === null) this.sendInterval = setZeroTimeout(this.sendCallback);
 
     return connection;
+  }
+
+  private async dynamicImport(mode: string = ''): Promise<ConnectionClass> {
+    switch (mode) {
+      case 'skyway2023':
+        return (await import(
+          /* webpackChunkName: "lib/backend/skyway2023/skyway-connection" */
+          './skyway2023/skyway-connection')
+        ).SkyWayConnection;
+      default:
+        return (await import(
+          /* webpackChunkName: "lib/backend/skyway/skyway-connection" */
+          './skyway/skyway-connection')
+        ).SkyWayConnection;
+    }
   }
 }
