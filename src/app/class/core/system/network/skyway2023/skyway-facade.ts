@@ -17,7 +17,7 @@ import { IPeerContext, PeerContext } from "../peer-context";
 import { SkyWayBackend } from './skyway-backend';
 
 export class SkyWayFacade {
-  appId = '';
+  url = '';
   context: SkyWayContext;
   private lobby: Channel;
   private lobbyPerson: LocalPerson;
@@ -81,11 +81,26 @@ export class SkyWayFacade {
     await this.disposeContext();
     if (this.isDestroyed) return;
 
+    let backend = new SkyWayBackend(this.url);
     let channelName = CryptoUtil.sha256Base64Url(this.peer.roomId + this.peer.roomName + this.peer.password);
-    let context = await SkyWayContext.Create(await SkyWayBackend.createSkyWayAuthToken(this.appId, channelName, this.peer.peerId));
+
+    let authToken = await backend.createSkyWayAuthToken(channelName, this.peer.peerId);
+    if (authToken.length < 1) {
+      let message = `APIバックエンド< ${backend.url} >にアクセスできませんでした。`
+      if (this.onFatalError) this.onFatalError(this.peer, 'server-error', message, new Error(message));
+      return;
+    }
+
+    let context = await SkyWayContext.Create(authToken);
     context.onTokenUpdateReminder.add(async () => {
       console.log(`skyWay onTokenUpdateReminder ${new Date().toISOString()}`);
-      context.updateAuthToken(await SkyWayBackend.createSkyWayAuthToken(this.appId, channelName, this.peer.peerId));
+      let authToken = await backend.createSkyWayAuthToken(channelName, this.peer.peerId);
+      if (authToken.length < 1) {
+        let message = `APIバックエンド< ${backend.url} >にアクセスできませんでした。`
+        if (this.onFatalError) this.onFatalError(this.peer, 'server-error', message, new Error(message));
+        return;
+      }
+      context.updateAuthToken(authToken);
     });
 
     context.onTokenExpired.add(() => {
@@ -382,7 +397,7 @@ export class SkyWayFacade {
         lobbys.push(lobby);
       } catch (error) {
         if (error instanceof SkyWayError) {
-          console.log(`${error.name} ${error.message}`);
+          if (error.name != 'channelNotFound') console.error(`${error.name} ${error.message}`);
         } else {
           console.error(error);
         }

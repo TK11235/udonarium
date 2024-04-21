@@ -30,7 +30,6 @@ export class SkyWayConnection implements Connection {
   readonly callback: ConnectionCallback = new ConnectionCallback();
   bandwidthUsage: number = 0;
 
-  private appId = '';
   private readonly skyWay: SkyWayFacade = new SkyWayFacade();
   private readonly streams: SkyWayDataStreamList = new SkyWayDataStreamList();
 
@@ -43,6 +42,7 @@ export class SkyWayConnection implements Connection {
   private readonly trustedPeerIds: Set<PeerId> = new Set();
 
   configure(config: any) {
+    this.skyWay.url = config?.backend?.url ?? '';
   }
 
   open(userId?: string)
