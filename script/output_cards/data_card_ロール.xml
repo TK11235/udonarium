@@ -1,0 +1,60 @@
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/ロール/犯人サイド.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/ロール.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/ロール/探偵.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/ロール.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/ロール/犯人.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/ロール.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/ロール/探偵サイド.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/ロール.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>

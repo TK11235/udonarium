@@ -8,12 +8,12 @@ export namespace SkyWayBackend {
 
 /**
  * SkyWayAuthTokenを生成するモック実装.
- * 
+ *
  * **シークレットキーはフロントエンドでは秘匿されている必要があります. この実装を本番環境で運用しないでください.**
- * 
+ *
  * サーバを構築せずにフロントエンドでSkyWayAuthTokenを生成した場合、
  * シークレットキーをエンドユーザが取得できるため、誰でも任意のChannelやRoomを生成して参加できる等のセキュリティ上の問題が発生します.
- * 
+ *
  * @param appId アプリケーションID
  * @param channelName 接続するチャンネルの名称
  * @param peerId PeerId

@@ -1,0 +1,75 @@
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/死因/窒息死.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/死因.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/死因/失血死.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/死因.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/死因/外傷死.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/死因.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/死因/焼死・中毒死.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/死因.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/死因/事故死.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/死因.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>

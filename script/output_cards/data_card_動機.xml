@@ -1,0 +1,75 @@
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/動機/「正義へのCredulity」.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/動機.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/動機/「想いのInsanity」.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/動機.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/動機/「衝動的なAccident」.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/動機.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/動機/「打算的Logic」.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/動機.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>
+
+  <card state="0" rotate="0" owner="" zindex="3" location.name="table" location.x="32.269790923578796" location.y="-601.512589734447" posZ="0">
+    <data name="card">
+      <data name="image">
+        <data type="image" name="imageIdentifier"></data>
+        <data type="image" name="front">../assets/images/card_factory/動機/「純然たるMurderous」.html.png</data>
+        <data type="image" name="back">../assets/images/裏面/動機.jpg</data>
+      </data>
+      <data name="common">
+        <data name="name">カード</data>
+        <data name="size">2</data>
+      </data>
+      <data name="detail"></data>
+    </data>
+  </card>

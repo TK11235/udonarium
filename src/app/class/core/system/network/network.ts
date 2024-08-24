@@ -2,7 +2,7 @@ import { setZeroTimeout } from '../util/zero-timeout';
 import { Connection, ConnectionCallback } from './connection';
 import { IPeerContext, PeerContext } from './peer-context';
 import { IRoomInfo } from './room-info';
-import { SkyWayConnection } from './skyway/skyway-connection';
+import { SkyWayConnection } from './skyway2023/skyway-connection';
 
 type QueueItem = { data: any, sendTo: string };
 
