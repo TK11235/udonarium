@@ -1,4 +1,5 @@
 import { ChannelScope, nowInSec, SkyWayAuthToken, uuidV4 } from '@skyway-sdk/core';
+import { environment } from 'src/environments/environment';
 
 export namespace SkyWayBackend {
   export async function createSkyWayAuthToken(appId: string, channelName: string, peerId: string): Promise<string> {
@@ -22,8 +23,11 @@ export namespace SkyWayBackend {
 async function createSkyWayAuthTokenMock(appId: string, channelName: string, peerId: string): Promise<string> {
   // モック実装のため、アプリケーションIDとシークレットキーは固定値
   // 本番環境ではシークレットキーをサーバなどに置いて秘匿する
-  const _appId = process.env.SKYWAY_APP_ID;
-  const _secret = process.env.SKYWAY_SECRET;
+  console.log(`Hello ${environment.SKYWAY_APP_ID}`)
+  console.log(`Hello ${environment.SKYWAY_SECRET}`)
+
+  const _appId = `${environment.SKYWAY_APP_ID}`;
+  const _secret = `${environment.SKYWAY_SECRET}`;
 
   const _lobbySize = 4;
 

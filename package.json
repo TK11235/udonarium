@@ -7,8 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "envstart": "dotenvx run -f .env.local -- ng serve"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -20,8 +19,6 @@
     "@angular/platform-browser": "^17.0.3",
     "@angular/platform-browser-dynamic": "^17.0.3",
     "@angular/router": "^17.0.3",
-    "@dotenvx/dotenvx": "^1.10.2",
-    "chalk": "^5.3.0",
     "@skyway-sdk/core": "^1.4.1",
     "base-x": "^4.0.0",
     "bcdice": "^4.4.0",
