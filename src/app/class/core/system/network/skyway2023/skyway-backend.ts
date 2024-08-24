@@ -1,3 +1,4 @@
+import { defineAuth, secret } from '@aws-amplify/backend';
 import { ChannelScope, nowInSec, SkyWayAuthToken, uuidV4 } from '@skyway-sdk/core';
 
 export namespace SkyWayBackend {
@@ -22,8 +23,8 @@ export namespace SkyWayBackend {
 async function createSkyWayAuthTokenMock(appId: string, channelName: string, peerId: string): Promise<string> {
   // モック実装のため、アプリケーションIDとシークレットキーは固定値
   // 本番環境ではシークレットキーをサーバなどに置いて秘匿する
-  const _appId = '<SkyWay2023 Application ID>';
-  const _secret = '<SkyWay2023 Secret key>';
+  const _appId = secret('SKYWAY_APP_ID');
+  const _secret = secret('SKYWAY_SECRET');
 
   const _lobbySize = 4;
 
