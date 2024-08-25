@@ -3,6 +3,7 @@
 # Src
 src/environments/
 src/assets/images/card_factory/*.html
+script/output_cards/data_card_*.xml
 
 # Compiled output
 /dist
