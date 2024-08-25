@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
+TARGET_DIR="${1:-*}"
 
 SCRIPT_DIR=$(dirname "$0")
 cd "${SCRIPT_DIR}"
@@ -13,7 +14,7 @@ node generate_html.js
 OUTPUT_HTML_DIR_PATH="app/v1/card_html";
 OUTPUT_IMAGE_DIR_PATH="../src/assets/images/card_factory";
 
-for dir in ${OUTPUT_HTML_DIR_PATH}/*;
+for dir in ${OUTPUT_HTML_DIR_PATH}/${TARGET_DIR};
 do
   for html in ${dir}/*.html;
   do

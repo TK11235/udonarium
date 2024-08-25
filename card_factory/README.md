@@ -1,3 +1,27 @@
+# Card factory
+
+## geenrate html
+
+```bash
+npm install
+npm run build
+```
+
+### 指定のフォルダにのみ作成する場合
+
+```bash
+npm run build -- アリバイ
+```
+
+### 指定の画像のみ作成する場合
+
+`npm run build`のログを参考に、指定ファイルでのpupperteer.jsの実行を手動でおこなってください
+
+e.g.
+```bash
+node app/v1/js/pupperteer.js /home/masui_hi/git/udonarium/card_factory/app/v1/card_html/アリバイ/寝室.html ../src/assets/images/card_factory/アリバイ/寝室.png
+```
+
 # Missmatch and Strife Guarding Kit
 コンセンサス共有サービス MSGK
 
