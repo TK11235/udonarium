@@ -2,6 +2,7 @@
 
 # Src
 src/environments/
+src/assets/images/card_factory/*.html
 
 # Compiled output
 /dist
