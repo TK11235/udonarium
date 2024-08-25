@@ -1,0 +1,94 @@
+@charset "utf-8";
+* {
+	box-sizing: border-box;
+	font-family: "BIZ UDPGothic", Verdana, Roboto, "Droid Sans", "游ゴシック", YuGothic, "メイリオ", Meiryo, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック", sans-serif;
+    margin:0px;
+}
+
+body {
+    padding:8px;
+}
+
+.output-cards {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px;
+    background-color: transparent;
+}
+
+.output .card {
+    padding: 8px;
+    width: 400px;
+    height: 646px;
+    margin-left: 8px;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-image: url("../img/consenfox_card.png");
+    border: 2px gray inset;
+    border-radius: 8px;
+    position: relative;
+}
+
+.output .ng-card {
+    background-color: rgba(255,240,240,0.4);
+    background-blend-mode: color;
+}
+
+.output .ok-card {
+    background-color: rgba(240,240,255,0.4);
+    background-blend-mode: color;
+}
+
+.output .card .title {
+    position: relative;
+    top: 8px;
+    left: 4px;
+    right: 4px;
+    font-size: 3em;
+}
+
+.output .card .content {
+    position: relative;
+    margin: auto;
+    top: 5%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 1.3em;
+}
+
+.output .card .detail {
+    position: absolute;
+    bottom: 8px;
+    left: 4px;
+    right: 4px;
+    font-size: 0.7em;
+}
+
+.output .card .stump {
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 4px;
+    right: 4px;
+    font-size: 7em;
+    opacity: 0.2;
+    text-align: center;
+    transform: rotate(30deg);
+}
+
+.output .ng-card .stump::after {
+    content: "NG";
+    color: red;
+    -webkit-text-stroke: 3px crimson;
+    text-stroke: 3px crimson;
+}
+
+.output .ok-card .stump::after {
+    content: "OK";
+    color: blue;
+    -webkit-text-stroke: 3px navy;
+    text-stroke: 3px navy;
+}

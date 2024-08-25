@@ -1,0 +1,14 @@
+{
+  "name": "card_factory",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "./generate.sh",
+    "build_html": "node generate_html.js",
+    "test": "echo no test"
+  },
+  "private": true,
+  "dependencies": {
+    "csv-parser": "^3.0.0"
+  }
+}

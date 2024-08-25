@@ -1,0 +1,43 @@
+@charset "utf-8";
+* {
+	box-sizing: border-box;
+	font-family: "BIZ UDPGothic", Verdana, Roboto, "Droid Sans", "游ゴシック", YuGothic, "メイリオ", Meiryo, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック", sans-serif;
+    margin:0px;
+}
+
+body {
+    padding:8px;
+}
+
+.input {
+    padding: 8px;
+    display:inline-block;
+}
+
+.consensus-contents td {
+    text-align:center;
+}
+
+.consensus-contents input,
+.consensus-contents select {
+    width: 98%;
+    height: 100%;
+}
+
+.consensus-contents .consensus-contents-content-note {
+    width: 320px;
+}
+
+.input-append {
+    margin-top: 4px;
+    padding: 4px;
+    text-align: center;
+    border: gray 2px outset;
+    background-color: gray;
+    opacity: 0.5;
+}
+
+.input-append:hover {
+    opacity: 1;
+}
+
