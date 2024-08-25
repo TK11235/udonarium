@@ -23,8 +23,8 @@ export namespace SkyWayBackend {
 async function createSkyWayAuthTokenMock(appId: string, channelName: string, peerId: string): Promise<string> {
   // モック実装のため、アプリケーションIDとシークレットキーは固定値
   // 本番環境ではシークレットキーをサーバなどに置いて秘匿する
-  const _appId = `${environment.SKYWAY_APP_ID}`;
-  const _secret = `${environment.SKYWAY_SECRET}`;
+  const _appId = environment.SKYWAY_APP_ID;
+  const _secret = environment.SKYWAY_SECRET;
 
   const _lobbySize = 4;
 
