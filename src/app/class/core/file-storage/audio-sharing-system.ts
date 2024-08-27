@@ -148,9 +148,9 @@ export class AudioSharingSystem {
     let task = BufferSharingTask.createReceiveTask<AudioFileContext>(identifier);
     this.receiveTaskMap.set(identifier, task);
 
-    task.onprogress = (task, loded, total) => {
+    task.onprogress = (task, loaded, total) => {
       let context = audio.toContext();
-      context.name = (loded * 100 / total).toFixed(1) + '%';
+      context.name = (loaded * 100 / total).toFixed(1) + '%';
       audio.apply(context);
     }
     task.onfinish = (task, data) => {

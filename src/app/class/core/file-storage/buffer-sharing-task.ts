@@ -28,7 +28,7 @@ export class BufferSharingTask<T> {
   private isCanceled = false;
 
   private onstart: () => void;
-  onprogress: (task: BufferSharingTask<T>, loded: number, total: number) => void;
+  onprogress: (task: BufferSharingTask<T>, loaded: number, total: number) => void;
   onfinish: (task: BufferSharingTask<T>, data: T) => void;
   ontimeout: (task: BufferSharingTask<T>) => void;
   oncancel: (task: BufferSharingTask<T>) => void;
@@ -63,8 +63,8 @@ export class BufferSharingTask<T> {
     this.onstart = null;
   }
 
-  private progress(loded: number, total: number) {
-    if (this.onprogress) this.onprogress(this, loded, total);
+  private progress(loaded: number, total: number) {
+    if (this.onprogress) this.onprogress(this, loaded, total);
   }
 
   private finish() {
