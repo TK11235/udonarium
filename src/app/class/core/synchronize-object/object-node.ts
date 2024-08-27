@@ -191,13 +191,15 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
   }
 
   contains(child: ObjectNode): boolean {
+    let identifiers = new Set<string>();
     let parent = child.parent;
     while (parent) {
-      if (parent === child) {
+      if (identifiers.has(parent.identifier)) {
         console.error('あ やっべ、循環参照', child);
         return false;
       }
       if (parent === this) return true;
+      identifiers.add(parent.identifier);
       parent = parent.parent;
     }
     return false;
