@@ -35,7 +35,6 @@
               "crypto-js/sha256",
               "file-saver",
               "hammerjs",
-              "jszip",
               "lzbase62",
               "msgpack-lite",
               "skyway-js",

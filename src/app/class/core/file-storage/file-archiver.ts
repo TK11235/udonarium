@@ -1,5 +1,5 @@
+import { BlobReader, BlobWriter, ZipReader, ZipWriter } from '@zip.js/zip.js';
 import { saveAs } from 'file-saver';
-import JSZip from 'jszip';
 
 import { EventSystem } from '../system';
 import { XmlUtil } from '../system/util/xml-util';
@@ -123,20 +123,15 @@ export class FileArchiver {
 
   private async handleZip(file: File) {
     if (!(0 <= file.type.indexOf('application/') || file.type.length < 1)) return;
-    let zip = new JSZip();
-    try {
-      zip = await zip.loadAsync(file);
-    } catch (reason) {
-      console.warn(reason);
-      return;
-    }
-    let zipEntries: JSZip.JSZipObject[] = [];
-    zip.forEach((relativePath, zipEntry) => zipEntries.push(zipEntry));
-    for (let zipEntry of zipEntries) {
+
+    let zipReader = new ZipReader(new BlobReader(file));
+    let entries = await zipReader.getEntries();
+
+    for (let entry of entries) {
       try {
-        let arraybuffer = await zipEntry.async('arraybuffer');
-        console.log(zipEntry.name + ' 解凍...');
-        await this.load([new File([arraybuffer], zipEntry.name, { type: MimeType.type(zipEntry.name) })]);
+        let blob = await entry.getData(new BlobWriter());
+        console.log(entry.filename + ' 解凍...');
+        await this.load([new File([blob], entry.filename, { type: MimeType.type(entry.filename) })]);
       } catch (reason) {
         console.warn(reason);
       }
@@ -149,19 +144,24 @@ export class FileArchiver {
     if (!files) return;
     let saveFiles: File[] = files instanceof FileList ? toArrayOfFileList(files) : files;
 
-    let zip = new JSZip();
-    for (let file of saveFiles) {
-      zip.file(file.name, file);
-    }
+    let zipWriter = new ZipWriter(new BlobWriter('application/zip'), { bufferedWrite: true });
 
-    let blob = await zip.generateAsync({
-      type: 'blob',
-      compression: 'DEFLATE',
-      compressionOptions: {
-        level: 6
-      }
-    }, updateCallback);
-    saveAs(blob, zipName + '.zip');
+    let sumProgress = 0;
+    let sumTotal = 0;
+    await Promise.all(Array.from(saveFiles).map(async file => {
+      let prevProgress = 0;
+      sumTotal += file.size;
+      zipWriter.add(file.name, new BlobReader(file), {
+        async onprogress(progress, total) {
+          sumProgress += progress - prevProgress;
+          prevProgress = progress;
+          let percent = sumProgress * 100 / sumTotal;
+          updateCallback({ percent: percent, currentFile: file.name });
+        }
+      });
+    }));
+
+    saveAs(await zipWriter.close(), zipName + '.zip');
   }
 }
 
