@@ -70,21 +70,25 @@ export class ObjectNode extends GameObject implements XmlAttributes, InnerXml {
 
   private _onChildAdded(child: ObjectNode) {
     markForChildrenChanged(this);
+    let identifiers = new Set<string>();
     let node: ObjectNode = this;
     while (node) {
+      if (identifiers.has(node.identifier)) break;
+      identifiers.add(node.identifier);
       node.onChildAdded(child);
       node = node.parent;
-      if (node === this) break;
     }
   }
 
   private _onChildRemoved(child: ObjectNode) {
     markForChildrenChanged(this);
+    let identifiers = new Set<string>();
     let node: ObjectNode = this;
     while (node) {
+      if (identifiers.has(node.identifier)) break;
+      identifiers.add(node.identifier);
       node.onChildRemoved(child);
       node = node.parent;
-      if (node === this) break;
     }
   }
 
