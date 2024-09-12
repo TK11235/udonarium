@@ -155,18 +155,6 @@ export class SkyWayFacade {
       if (lobby !== joinLobby) lobby.dispose();
     });
 
-    joinLobby.onMemberJoined.add(event => {
-      console.log(`lobby<${joinLobby.name}> onMemberJoined: ${event.member.name}`);
-    });
-
-    joinLobby.onMemberLeft.add(event => {
-      console.log(`lobby<${joinLobby.name}> onMemberLeft: ${event.member.name}`);
-    });
-
-    joinLobby.onMemberListChanged.add(() => {
-      console.log(`lobby<${joinLobby.name}> onMemberListChanged`);
-    });
-
     joinLobby.onClosed.add(() => {
       console.log(`lobby<${joinLobby.name}> onClosed`);
       this.joinLobby();
@@ -213,28 +201,6 @@ export class SkyWayFacade {
     });
     console.log(`FindOrCreate<${roomName}>`);
 
-    room.onMemberJoined.add(event => {
-      console.log(`room<${room.name}> onMemberJoined: ${event.member.name}`);
-    });
-
-    room.onMemberLeft.add(event => {
-      console.log(`room<${room.name}> onMemberLeft: ${event.member.name}`);
-    });
-
-    room.onMemberListChanged.add(() => {
-      console.log(`room<${room.name}> onMemberListChanged`);
-    });
-
-    room.onStreamPublished.add(event => {
-      if (event.publication.contentType === 'data'
-        && event.publication.metadata === 'udonarium-data-stream'
-        && 0 < event.publication.publisher.name?.length) {
-        console.log(`room<${room.name}> onStreamPublished: ${event.publication.publisher.name} <${event.publication.metadata}>`);
-        let peer = PeerContext.parse(event.publication.publisher.name);
-        if (this.onDataStreamPublished && peer.peerId !== this.peer.peerId) this.onDataStreamPublished(peer, event.publication);
-      }
-    });
-
     room.onClosed.add(async () => {
       console.log(`room<${room.name}> onClosed`);
       await this.joinRoom();
@@ -254,9 +220,6 @@ export class SkyWayFacade {
     });
 
     console.log(`roomPerson join <${this.room.name}>`);
-    roomPerson.onLeft.add(() => {
-      console.log(`roomPerson onClosed`);
-    });
 
     roomPerson.onFatalError.add(err => {
       console.error('roomPerson onFatalError', err);
@@ -303,10 +266,6 @@ export class SkyWayFacade {
 
       let peer = PeerContext.parse(event.subscription.subscriber.name);
       if (this.onUnsubscribed) this.onUnsubscribed(peer, event.subscription);
-    });
-
-    publication.onCanceled.add(() => {
-      console.log(`publication onCanceled`);
     });
 
     this.publication = publication;

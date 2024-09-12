@@ -248,25 +248,14 @@ export class SkyWayConnection implements Connection {
 
     this.skyWay.onUnsubscribed = (peer, subscription) => {
       console.log(`skyWay onUnsubscribed ${peer.peerId}`);
-      let stream = this.streams.find(peer.peerId);
-      if (stream == null) return;
-
-      this.unsubscribe(stream.peer);
+      this.unsubscribe(peer);
     }
 
-    this.skyWay.onDataStreamPublished = (peer, publication) => {
-      console.log(`skyWay onDataStreamPublished ${peer.peerId}`);
-      let stream = this.streams.find(peer.peerId);
-      if (stream == null || stream.open) return;
-      stream.subscribe();
-      //this.connect(peer);
-    }
-
-    this.skyWay.onRoomRestore = (peer) => {
+    this.skyWay.onRoomRestore = async (peer) => {
       for (let peerId of this.trustedPeerIds) {
         let peer = PeerContext.parse(peerId);
-        this.unsubscribe(peer);
-        this.connect(peer);
+        await this.unsubscribe(peer);
+        await this.subscribe(peer);
       }
     }
 
@@ -275,6 +264,8 @@ export class SkyWayConnection implements Connection {
   }
 
   private async subscribe(peer: IPeerContext) {
+    if (!this.shouldConnect(peer.peerId)) return;
+
     if (this.streams.find(peer.peerId)) {
       console.log(`${peer.peerId} is already subscribed`);
       return;
