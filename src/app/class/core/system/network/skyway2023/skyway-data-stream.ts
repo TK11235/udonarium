@@ -72,7 +72,7 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
     let member = this.member;
     let publication = member.publications.find(publication => publication.metadata === 'udonarium-data-stream');
 
-    console.log(`subscription ready ${publication.id}`);
+    console.log(`subscription ready ${member.name}`);
     let { subscription, stream } = await this.skyWay.roomPerson.subscribe<RemoteDataStream>(publication.id);
 
     subscription.onCanceled.add(() => {

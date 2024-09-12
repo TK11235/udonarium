@@ -207,7 +207,7 @@ export class SkyWayConnection implements Connection {
     };
 
     this.skyWay.onConnectionStateChanged = (peer, state) => {
-      console.log(`publication onConnectionStateChanged ${peer.peerId} -> ${state}`);
+      console.log(`skyWay onConnectionStateChanged ${peer.peerId} -> ${state}`);
       let stream = this.streams.find(peer.peerId);
       if (!stream) return;
       switch (state) {
@@ -235,7 +235,7 @@ export class SkyWayConnection implements Connection {
     }
 
     this.skyWay.onSubscribed = (peer, subscription) => {
-      console.log(`publication onSubscribed ${peer.peerId}`);
+      console.log(`skyWay onSubscribed ${peer.peerId}`);
 
       let validPeerId = this.peer.verifyPeer(peer.peerId);
       if (!validPeerId) {
@@ -249,7 +249,7 @@ export class SkyWayConnection implements Connection {
     }
 
     this.skyWay.onUnsubscribed = (peer, subscription) => {
-      console.log(`publication onUnsubscribed ${peer.peerId}`);
+      console.log(`skyWay onUnsubscribed ${peer.peerId}`);
       let stream = this.streams.find(peer.peerId);
       if (stream == null) return;
 
@@ -257,6 +257,7 @@ export class SkyWayConnection implements Connection {
     }
 
     this.skyWay.onDataStreamPublished = (peer, publication) => {
+      console.log(`skyWay onDataStreamPublished ${peer.peerId}`);
       let stream = this.streams.find(peer.peerId);
       if (stream == null || stream.open) return;
       stream.subscribe();
@@ -280,6 +281,7 @@ export class SkyWayConnection implements Connection {
       console.log(`${peer.peerId} is already subscribed`);
       return;
     }
+    console.log(`subscribe ${peer.peerId}`);
     let stream = new SkyWayDataStream(this.skyWay, peer);
 
     stream.on('data', data => {
