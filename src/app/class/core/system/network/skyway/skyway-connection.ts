@@ -100,7 +100,7 @@ export class SkyWayConnection implements Connection {
     }
 
     if (!this.peer.verifyPeer(peerId)) {
-      console.log('connect() is Fail. <' + peerId + '> is not valid.');
+      console.log('connect() is Fail. <' + peerId + '> is invalid.');
       return false;
     }
 
@@ -216,7 +216,7 @@ export class SkyWayConnection implements Connection {
       if (!validPeerId || !validToken) {
         conn.close();
         conn.on('open', () => conn.close());
-        console.log('connection is close. <' + conn.remoteId + '> is not valid.');
+        console.log('connection is close. <' + conn.remoteId + '> is invalid.');
         return;
       }
       let peer = PeerContext.parse(conn.remoteId);
