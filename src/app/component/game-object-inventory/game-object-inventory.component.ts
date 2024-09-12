@@ -40,7 +40,7 @@ export class GameObjectInventoryComponent implements OnInit, OnDestroy {
 
   get sortOrderName(): string { return this.sortOrder === SortOrder.ASC ? '昇順' : '降順'; }
 
-  get newLineString(): string { return this.inventoryService.newLineString; }
+  get newLineDataElement(): DataElement { return this.inventoryService.newLineDataElement; }
 
   constructor(
     private changeDetector: ChangeDetectorRef,

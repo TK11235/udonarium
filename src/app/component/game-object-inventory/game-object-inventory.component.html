@@ -71,8 +71,8 @@
   </div>
 </ng-template>
 <ng-template #dataElmTag let-dataElm="dataElm">
-  <ng-container *ngIf="dataElm?.name === newLineString"><br></ng-container>
-  <div *ngIf="dataElm && dataElm.name !== newLineString" class="object-tag">
+  <ng-container *ngIf="dataElm === newLineDataElement"><br></ng-container>
+  <div *ngIf="dataElm && dataElm !== newLineDataElement" class="object-tag">
     <ng-container [ngSwitch]="dataElm.attributes['type']">
       <ng-container *ngSwitchCase="'numberResource'">
         <div class="resource-tag">

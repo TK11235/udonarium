@@ -53,7 +53,7 @@ export class OverviewPanelComponent implements OnChanges, AfterViewInit, OnDestr
   get dataElms(): DataElement[] { return this.tabletopObject && this.tabletopObject.detailDataElement ? this.tabletopObject.detailDataElement.children as DataElement[] : []; }
   get hasDataElms(): boolean { return 0 < this.dataElms.length; }
 
-  get newLineString(): string { return this.inventoryService.newLineString; }
+  get newLineDataElement(): DataElement { return this.inventoryService.newLineDataElement; }
   get isPointerDragging(): boolean { return this.pointerDeviceService.isDragging || this.pointerDeviceService.isTablePickGesture; }
 
   get pointerEventsStyle(): any { return { 'is-pointer-events-auto': !this.isPointerDragging, 'pointer-events-none': this.isPointerDragging }; }

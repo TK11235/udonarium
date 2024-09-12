@@ -90,7 +90,7 @@
       <div class="grid-container-root" *ngIf="hasDataElms">
         <!--<ng-container *ngFor="let dataElm of dataElms">-->
         <ng-container *ngFor="let dataElm of inventoryDataElms">
-          <ng-container *ngIf="dataElm && dataElm.name !== newLineString">
+          <ng-container *ngIf="dataElm && dataElm !== newLineDataElement">
             <div class="grid-container">
               <ng-container *ngTemplateOutlet="dataElement; context: { dataElm: dataElm }"></ng-container>
             </div>
@@ -129,7 +129,7 @@
       <div class="grid-container-root" *ngIf="hasDataElms && dice.isVisible">
         <div class="grid-container">
           <ng-container *ngFor="let dataElm of dataElms">
-            <ng-container *ngIf="dataElm && dataElm.name !== newLineString">
+            <ng-container *ngIf="dataElm && dataElm !== newLineDataElement">
               <ng-container *ngTemplateOutlet="dataElement; context: { dataElm: dataElm }"></ng-container>
             </ng-container>
           </ng-container>
