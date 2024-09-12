@@ -150,6 +150,7 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
 
     // RTCDataChannelのイベントリスナーを更新
     if (this.publicationDataChannel) {
+      this.publicationDataChannel.binaryType = 'arraybuffer';
       this.publicationDataChannel.onopen = event => {
         console.log(`peer ${member?.name} publicationDataChannel is open`);
         this.refresh();
@@ -168,6 +169,7 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
     }
 
     if (this.subscriptionDataChannel) {
+      this.subscriptionDataChannel.binaryType = 'arraybuffer';
       this.subscriptionDataChannel.onopen = event => {
         console.log(`peer ${member?.name} subscriptionDataChannel is open`);
         this.refresh();
