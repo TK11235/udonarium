@@ -210,23 +210,21 @@ export class SkyWayConnection implements Connection {
       console.log(`skyWay onConnectionStateChanged ${peer.peerId} -> ${state}`);
       let stream = this.streams.find(peer.peerId);
       if (!stream) return;
+      stream.refresh();
       switch (state) {
         case 'new':
           break;
         case 'connecting':
-          stream.peer.isOpen = false;
           break;
         case 'connected':
-          if (this.skyWay.isConnectedDataStream(stream.member)) {
+          if (stream.open) {
             console.log(`onConnect ${stream.peer.peerId}`);
-            stream.refresh();
             this.trustedPeerIds.add(stream.peer.peerId);
             this.notifyUserList();
             if (this.callback.onConnect) this.callback.onConnect(stream.peer);
           }
           break;
         case 'reconnecting':
-          stream.peer.isOpen = false;
           break;
         case 'disconnected':
           this.unsubscribe(stream.peer);
@@ -288,9 +286,10 @@ export class SkyWayConnection implements Connection {
       this.onData(stream, data);
     });
     stream.on('open', () => {
-      if (this.skyWay.isConnectedDataStream(stream.member)) {
-        console.log(`onConnect ${stream.peer.peerId}`);
-        stream.refresh();
+      console.log(`stream open ${stream.peer.peerId}`);
+      stream.refresh();
+      if (stream.open) {
+        console.log(`stream onConnect ${stream.peer.peerId}`);
         this.trustedPeerIds.add(stream.peer.peerId);
         this.notifyUserList();
         if (this.callback.onConnect) this.callback.onConnect(stream.peer);

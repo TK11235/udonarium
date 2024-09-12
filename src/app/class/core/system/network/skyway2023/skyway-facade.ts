@@ -4,7 +4,6 @@ import {
   LocalPerson,
   Logger,
   Publication,
-  RemoteMember,
   SkyWayChannel,
   SkyWayContext,
   SkyWayError,
@@ -420,19 +419,5 @@ export class SkyWayFacade {
       if (lobbyName.startsWith('udonarium-lobby-')) lobbyNames.push(lobbyName);
     }
     return lobbyNames;
-  }
-
-  isConnectedDataStream(remote: RemoteMember, local: LocalPerson = this.roomPerson): boolean {
-    if (!remote || !local) return false;
-    let isReadyForSend = local.publications.find(publication =>
-      publication.metadata === 'udonarium-data-stream' && publication.getConnectionState(remote.id) === 'connected') != null;
-
-    let isReadyForReceive = local.subscriptions.find(subscription =>
-      subscription.publication.metadata === 'udonarium-data-stream'
-      && subscription.publication.publisher.name === remote.name
-      && (subscription.stream?._getConnectionState() === 'connected' || (subscription.stream as any)?._datachannel?.readyState === 'open')) != null;
-
-    console.log('isConnected', isReadyForSend, isReadyForReceive);
-    return isReadyForReceive && isReadyForSend;
   }
 }
