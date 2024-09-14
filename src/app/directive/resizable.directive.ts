@@ -163,6 +163,9 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
     this.elementRef.nativeElement.style.height = trans.height + this.startPosition.height + 'px';
 
     this.prevTrans = trans;
+
+    this.removeSelectionRanges();
+    this.removeFocus();
     if (e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
@@ -227,5 +230,18 @@ export class ResizableDirective implements AfterViewInit, OnDestroy {
       elm.style.zIndex = (parseInt(elm.style.zIndex) - bottomZindex) + '';
     });
     this.elementRef.nativeElement.style.zIndex = (topZindex + 1) + '';
+  }
+
+  private removeSelectionRanges() {
+    let selection = window.getSelection();
+    if (!selection.isCollapsed) {
+      selection.removeAllRanges();
+    }
+  }
+
+  private removeFocus() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }
 }

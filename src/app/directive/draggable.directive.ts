@@ -109,6 +109,9 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
     this.elementRef.nativeElement.style.top = trans.y + this.startPosition.y + 'px';
 
     this.prevTrans = trans;
+
+    this.removeSelectionRanges();
+    this.removeFocus();
     if (e.cancelable) e.preventDefault();
     e.stopPropagation();
   }
@@ -229,5 +232,18 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
       elm.style.zIndex = (parseInt(elm.style.zIndex) - bottomZindex) + '';
     });
     this.elementRef.nativeElement.style.zIndex = (topZindex + 1) + '';
+  }
+
+  private removeSelectionRanges() {
+    let selection = window.getSelection();
+    if (!selection.isCollapsed) {
+      selection.removeAllRanges();
+    }
+  }
+
+  private removeFocus() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }
 }
