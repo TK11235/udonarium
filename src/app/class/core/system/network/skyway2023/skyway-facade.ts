@@ -9,9 +9,9 @@ import {
   SkyWayError,
   SkyWayStreamFactory,
   Subscription
-} from "@skyway-sdk/core";
+} from '@skyway-sdk/core';
 import { CryptoUtil } from '../../util/crypto-util';
-import { IPeerContext, PeerContext } from "../peer-context";
+import { IPeerContext, PeerContext } from '../peer-context';
 import { SkyWayBackend } from './skyway-backend';
 
 export class SkyWayFacade {

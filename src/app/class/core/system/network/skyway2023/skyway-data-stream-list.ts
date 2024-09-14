@@ -1,5 +1,5 @@
-import { PeerContext } from "../peer-context";
-import { SkyWayDataStream } from "./skyway-data-stream";
+import { PeerContext } from '../peer-context';
+import { SkyWayDataStream } from './skyway-data-stream';
 
 export class SkyWayDataStreamList implements Iterable<SkyWayDataStream> {
   private streams: SkyWayDataStream[] = [];
