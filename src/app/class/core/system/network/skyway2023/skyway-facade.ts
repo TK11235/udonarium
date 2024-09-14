@@ -8,8 +8,7 @@ import {
   SkyWayContext,
   SkyWayError,
   SkyWayStreamFactory,
-  Subscription,
-  TransportConnectionState
+  Subscription
 } from "@skyway-sdk/core";
 import { CryptoUtil } from '../../util/crypto-util';
 import { IPeerContext, PeerContext } from "../peer-context";
@@ -32,10 +31,7 @@ export class SkyWayFacade {
   onOpen: (peer: IPeerContext) => void;
   onClose: (peer: IPeerContext) => void;
   onFatalError: (peer: IPeerContext, errorType: string, errorMessage: string, errorObject: any) => void;
-  onConnectionStateChanged: (peer: IPeerContext, state: TransportConnectionState) => void;
   onSubscribed: (peer: IPeerContext, subscription: Subscription) => void;
-  onUnsubscribed: (peer: IPeerContext, subscription: Subscription) => void;
-  onDataStreamPublished: (peer: IPeerContext, publication: Publication) => void;
   onRoomRestore: (peer: IPeerContext) => void;
 
   async open(peer: IPeerContext) {
@@ -238,15 +234,6 @@ export class SkyWayFacade {
     let dataStream = await SkyWayStreamFactory.createDataStream();
     let publication = await this.roomPerson.publish(dataStream, { metadata: 'udonarium-data-stream' });
 
-    publication.onConnectionStateChanged.add(event => {
-      console.log(`publication onConnectionStateChanged ${event.remoteMember.name} -> ${event.state}`);
-      let peerId = event.remoteMember.name;
-      if (peerId == null) return;
-
-      let peer = PeerContext.parse(peerId);
-      if (this.onConnectionStateChanged) this.onConnectionStateChanged(peer, event.state);
-    });
-
     publication.onSubscribed.add(event => {
       console.log(`publication onSubscribed ${event.subscription.subscriber.name}`);
       let peerId = event.subscription.subscriber.name;
@@ -257,15 +244,6 @@ export class SkyWayFacade {
 
       let peer = PeerContext.parse(event.subscription.subscriber.name);
       if (this.onSubscribed) this.onSubscribed(peer, event.subscription);
-    });
-
-    publication.onUnsubscribed.add(event => {
-      console.log(`publication onUnsubscribed ${event.subscription.subscriber.name}`);
-      let peerId = event.subscription.subscriber.name;
-      if (peerId == null) return;
-
-      let peer = PeerContext.parse(event.subscription.subscriber.name);
-      if (this.onUnsubscribed) this.onUnsubscribed(peer, event.subscription);
     });
 
     this.publication = publication;
@@ -372,11 +350,11 @@ export class SkyWayFacade {
   }
 
   private getLobbyNames(): string[] {
-    let lobbyNames: string[] = [];
-    for (let channel of this.context?.authToken.scope.app.channels ?? []) {
-      let lobbyName = channel.name ?? '';
-      if (lobbyName.startsWith('udonarium-lobby-')) lobbyNames.push(lobbyName);
-    }
+    let lobbyBaseName = this.context?.authToken.scope.app.channels?.find(channel => channel.name.startsWith('udonarium-lobby-'))?.name ?? '';
+    let regArray = /of-(\d+)$/.exec(lobbyBaseName);
+    let lobbySize = Number(regArray[1]);
+    if (isNaN(lobbySize)) lobbySize = 0;
+    let lobbyNames = [...Array(lobbySize)].map((value, index) => `udonarium-lobby-${index + 1}-of-${lobbySize}`);
     return lobbyNames;
   }
 }

@@ -68,24 +68,22 @@ async function createSkyWayAuthTokenMock(channelName: string, peerId: string): P
   const _lobbySize = 4;
 
   let lobbyChannels: ChannelScope[] = [];
-  for (let index = 0; index < _lobbySize; index++) {
-    lobbyChannels.push({
-      name: `udonarium-lobby-${index}`,
-      actions: ['read', 'create'],
-      members: [
-        {
-          name: peerId,
-          actions: ['write'],
-          publication: {
-            actions: [],
-          },
-          subscription: {
-            actions: [],
-          },
+  lobbyChannels.push({
+    name: `udonarium-lobby-\*-of-${_lobbySize}`,
+    actions: ['read', 'create'],
+    members: [
+      {
+        name: peerId,
+        actions: ['write'],
+        publication: {
+          actions: [],
         },
-      ],
-    });
-  }
+        subscription: {
+          actions: [],
+        },
+      },
+    ],
+  });
 
   let roomChannels: ChannelScope[] = [];
   roomChannels.push({
@@ -127,6 +125,7 @@ async function createSkyWayAuthTokenMock(channelName: string, peerId: string): P
         channels: lobbyChannels.concat(roomChannels),
       },
     },
+    version: 2,
   }).encode(_secret);
 
   return token;

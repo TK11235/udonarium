@@ -1,4 +1,4 @@
-import { P2PConnection, RemoteDataStream, RemoteMember, Subscription } from "@skyway-sdk/core";
+import { LocalDataStream, P2PConnection, Publication, RemoteDataStream, RemoteMember, Subscription, TransportConnectionState } from "@skyway-sdk/core";
 import { EventEmitter } from "events";
 import { MessagePack } from "../../util/message-pack";
 import { UUID } from "../../util/uuid";
@@ -39,13 +39,8 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
   get open(): boolean { return this.peer.isOpen; }
   get member(): RemoteMember { return this.skyWay.room?.members.find(member => member.name === this.peer.peerId); }
 
-  private subscription: Subscription<RemoteDataStream>;
-  private publicationDataChannel: RTCDataChannel;
-  private subscriptionDataChannel: RTCDataChannel;
-
   private isQueuing = false;
   private sendQueue: Set<Uint8Array> = new Set();
-  private reciveQueue: Set<MessageEvent> = new Set();
 
   private _timestamp: number = performance.now();
   get timestamp(): number { return this._timestamp; }
@@ -59,7 +54,30 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
   get candidateType(): CandidateType { return this._candidateType; }
   private set candidateType(candidateType: CandidateType) { this._candidateType = candidateType };
 
-  constructor(readonly skyWay: SkyWayFacade, peer: IPeerContext) {
+  sortKey = '';
+  isPublication = false;
+  private isCanceled = false;
+  private isRejected = false;
+  private isOpend = false;
+
+  private state: TransportConnectionState = 'new';
+  private subscription: Subscription<RemoteDataStream>;
+  private dataChannel: RTCDataChannel;
+
+  private onStreamAdded: { removeListener: () => void };
+  private onStreamPublished: { removeListener: () => void };
+  private onConnectionStateChanged: { removeListener: () => void };
+
+  private onopen = () => {
+    console.log(`peer ${this.peer.peerId} dataChannel is open`);
+    this.refresh();
+  }
+
+  private onmessage = (event: MessageEvent<any>) => {
+    this.onData(event.data as ArrayBuffer);
+  }
+
+  private constructor(readonly skyWay: SkyWayFacade, peer: IPeerContext) {
     super();
 
     this.peer = PeerContext.parse(peer.peerId);
@@ -67,121 +85,219 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
     this.peer.password = peer.password;
   }
 
-  async subscribe() {
-    if (!this.shouldSubscribe()) return;
+  static createPublication(skyWay: SkyWayFacade, peer: IPeerContext): SkyWayDataStream {
+    let instance = new SkyWayDataStream(skyWay, peer);
+    instance.sortKey = instance.skyWay.peer.peerId;
+    instance.isPublication = true;
+    return instance;
+  }
 
-    let member = this.member;
-    let publication = member.publications.find(publication => publication.metadata === 'udonarium-data-stream');
+  static createSubscription(skyWay: SkyWayFacade, peer: IPeerContext): SkyWayDataStream {
+    let instance = new SkyWayDataStream(skyWay, peer);
+    instance.sortKey = instance.peer.peerId;
+    instance.isPublication = false;
+    return instance;
+  }
 
-    console.log(`subscription ready ${member.name}`);
-    let { subscription, stream } = await this.skyWay.roomPerson.subscribe<RemoteDataStream>(publication.id);
-
-    if (this.subscription == null) {
-      subscription.onCanceled.add(() => {
-        console.log(`subscription onCanceled ${member.name}`);
-        this.subscription = null;
-      });
-
-      subscription.onStreamAttached.add(() => {
-        console.log(`subscription onStreamAttached ${member.name}`);
-      });
-
-      subscription.onConnectionStateChanged.add(state => {
-        console.log(`subscription onConnectionStateChanged ${member.name} -> ${state}`);
-        this.refresh();
-      });
-
-      console.log(`subscription done ${member.name} ${publication.id}`);
-      this.subscription = subscription;
+  connect() {
+    console.log(`connect ${this.peer.peerId}, isPublication: ${this.isPublication}`);
+    if (this.isPublication) {
+      return this.initializePublication();
+    } else {
+      return this.initializeSubscription();
     }
+  }
+
+  disconnect() {
+    console.log(`disconnect ${this.peer.peerId}, isPublication: ${this.isPublication}`);
+    this.isCanceled = true;
+    if (this.isOpend) {
+      this.dispose();
+    } else {
+      this.refresh();
+    }
+  }
+
+  reject() {
+    console.log(`reject ${this.peer.peerId}, isPublication: ${this.isPublication}`);
+    this.isRejected = true;
     this.refresh();
   }
 
-  private shouldSubscribe(): boolean {
-    if (!this.skyWay.roomPerson) {
-      console.log('roomPerson is null');
-      return false;
-    }
-
-    let member = this.member;
-    if (!member) {
-      console.log(`connect member is not found`);
-      return false;
-    }
-
-    console.log(`member.publications ${member.name}`, member.publications);
-    let publication = member.publications.find(publication => publication.metadata === 'udonarium-data-stream');
-    if (!publication) {
-      console.log(`'udonarium-data-stream' is not found`);
-      return false;
-    }
-
-    if (this.skyWay.roomPerson.subscriptions.find(subscription => subscription.publication.id === publication.id)) {
-      console.log(`'udonarium-data-stream' is already subscribed.`);
-      return false;
-    }
-    return true;
-  }
-
-  async unsubscribe() {
-    await this.subscription?.cancel();
-    this.subscription = null;
+  private dispose() {
+    console.log(`dispose ${this.peer.peerId}, isPublication: ${this.isPublication}`);
     this.peer.isOpen = false;
     this.stopMonitoring();
+    this.removeAllListeners();
+
+    if (this.onStreamAdded) this.onStreamAdded.removeListener();
+    if (this.onStreamPublished) this.onStreamPublished.removeListener();
+    if (this.onConnectionStateChanged) this.onConnectionStateChanged.removeListener();
+    this.onStreamAdded = null;
+    this.onStreamPublished = null;
+    this.onConnectionStateChanged = null;
+
+    this.subscription = null
+
+    this.dataChannel?.removeEventListener('open', this.onopen);
+    this.dataChannel?.removeEventListener('message', this.onmessage);
+    this.dataChannel?.close();
+    this.dataChannel = null;
+  }
+
+  private initializePublication() {
+    //
+    let member = this.member;
+    let subscription = member?.subscriptions.find(subscription => subscription.publication.contentType === 'data'
+      && subscription.publication.metadata === 'udonarium-data-stream'
+      && subscription.publication.publisher.name === this.skyWay.peer.peerId) as Subscription<RemoteDataStream>;
+
+    //
+    if (!subscription) {
+      console.error(`subscription is not found ${this.peer.peerId}`);
+    }
+
+    //
+    if (this.onConnectionStateChanged) this.onConnectionStateChanged.removeListener();
+    this.skyWay.publication.onConnectionStateChanged.add(event => {
+      if (event.remoteMember.name !== this.peer.peerId) return;
+      this.onStateChanged(event.state);
+    });
+
+    //
+    console.log(`initializePublication ${member.name} ${subscription.id}`);
+    this.subscription = subscription;
     this.refresh();
   }
 
-  refresh() {
-    // 現在のオブジェクトを取得
+  private async initializeSubscription() {
+    //
     let member = this.member;
-    let dataStream = this.skyWay.roomPerson?.subscriptions.find(
-      subscription => subscription.publication.metadata === 'udonarium-data-stream'
-        && subscription.publication.publisher.name === member?.name)?.stream as RemoteDataStream;
+    let publication = member.publications.find(publication => publication.contentType === 'data' && publication.metadata === 'udonarium-data-stream');
 
-    let connection = (member as any)?._getConnection(this.skyWay.roomPerson?.id) as P2PConnection;
-    this.publicationDataChannel = connection?.sender.datachannels[this.skyWay.publication?.id];
-    this.subscriptionDataChannel = dataStream?._datachannel;
+    //
+    if (!publication) {
+      if (this.onStreamPublished) this.onStreamPublished.removeListener();
+      this.onStreamPublished = this.skyWay.room.onStreamPublished.add(event => {
+        let isMatch = event.publication.contentType === 'data' && event.publication.metadata === 'udonarium-data-stream' && event.publication.publisher.name === this.peer.peerId;
+        if (!isMatch) return;
 
-    // 接続状況確認
-    let isConnected = this.publicationDataChannel?.readyState === 'open' && this.subscriptionDataChannel?.readyState === 'open';
-    console.log(`peer ${member?.name} isConnected: ${isConnected}, `
-      + `publication: ${this.publicationDataChannel?.readyState}, `
-      + `subscription: ${this.subscriptionDataChannel?.readyState} (dataStream: ${dataStream?.id})`);
-
-    // RTCDataChannelのイベントリスナーを更新
-    if (this.publicationDataChannel) {
-      this.publicationDataChannel.binaryType = 'arraybuffer';
-      this.publicationDataChannel.onopen = event => {
-        console.log(`peer ${member?.name} publicationDataChannel is open`);
-        this.refresh();
-      }
-      if (isConnected) {
-        this.publicationDataChannel.onmessage = event => {
-          this.onData(event.data as ArrayBuffer);
-        }
-      } else {
-        this.publicationDataChannel.onmessage = event => {
-          console.log(`onmessage reciveQueue`);
-          this.reciveQueue.add(event);
-          this.refresh();
-        }
-      }
+        console.log(`onStreamPublished: ${event.publication.publisher.name} <${event.publication.metadata}>`);
+        if (this.onStreamPublished) this.onStreamPublished.removeListener();
+        this.initializeSubscription();
+      });
+      return;
     }
 
-    if (this.subscriptionDataChannel) {
-      this.subscriptionDataChannel.binaryType = 'arraybuffer';
-      this.subscriptionDataChannel.onopen = event => {
-        console.log(`peer ${member?.name} subscriptionDataChannel is open`);
-        this.refresh();
+    //
+    this.refresh();
+    console.log(`initializeSubscription ready ${member.name}`);
+    try {
+      let { subscription, stream } = await this.skyWay.roomPerson.subscribe<RemoteDataStream>(publication.id);
+
+      //
+      if (this.onConnectionStateChanged) this.onConnectionStateChanged.removeListener();
+      subscription.onConnectionStateChanged.add(state => {
+        this.onStateChanged(state);
+      });
+
+      //
+      console.log(`initializeSubscription done ${member.name} ${publication.id}`);
+      this.subscription = subscription;
+
+      this.refresh();
+    } catch (e) {
+      if (e instanceof Error) {
+        console.log(`${e.name}: ${e.message}`);
+      } else {
+        console.error(e);
       }
+
+      this.subscription = null;
+      this.state = 'disconnected';
+      this.emit('close');
+    }
+  }
+
+  private onStateChanged(state: TransportConnectionState) {
+    console.log(`onStateChanged isPublication: ${this.isPublication}, ${this.peer.peerId} ${this.state} -> ${state}`);
+    switch (state) {
+      case 'new': break;
+      case 'connecting': break;
+      case 'connected':
+        if (this.state == 'reconnecting') this.peer.isOpen = false;
+        break;
+      case 'reconnecting': break;
+      case 'disconnected':
+        this.subscription = null;
+        this.emit('close');
+        return;
+    }
+    this.refresh();
+    this.state = state;
+  }
+
+  private refresh() {
+    // 現在のオブジェクトを取得
+    let member = this.member;
+
+    let p2pconnection = (member as any)?._getOrCreateConnection((this.skyWay.roomPerson as any)?._impl) as P2PConnection;
+    let publication = member?.publications.find(publication => publication.metadata === 'udonarium-data-stream');
+
+    let dataChannel = this.isPublication
+      ? p2pconnection?.sender.datachannels[this.skyWay.publication?.id]
+      : (p2pconnection?.receiver.streams[publication?.id] as RemoteDataStream)?._datachannel;
+
+    // 接続状況確認
+    let isOpen = dataChannel?.readyState === 'open';
+    console.log(`refresh ${member?.name}, isPublication: ${this.isPublication}, isOpen: ${isOpen}, dataChannel: ${dataChannel?.readyState}`);
+
+    // cancelまたはrejectされているときは接続解除
+    if (dataChannel && (this.isCanceled && isOpen || this.isRejected)) {
+      dataChannel.close();
+      this.dispose();
+      this.state = 'disconnected';
+      this.emit('close');
+      return;
+    }
+
+    // RTCDataChannelを更新
+    if (dataChannel && this.dataChannel && dataChannel !== this.dataChannel) {
+      console.warn(`dataChannel is change: ${this.dataChannel?.id} -> ${dataChannel.id}`);
+      this.peer.isOpen = false;
+    }
+
+    if (this.dataChannel) {
+      this.dataChannel.removeEventListener('open', this.onopen);
+      this.dataChannel.removeEventListener('message', this.onmessage);
+    }
+    if (dataChannel) {
+      dataChannel.binaryType = 'arraybuffer';
+      dataChannel.addEventListener('open', this.onopen);
+      dataChannel.addEventListener('message', this.onmessage);
+    }
+    this.dataChannel = dataChannel;
+
+    // P2PConnectionを更新
+    console.log(`p2pconnection: ${p2pconnection?.id}`);
+    if (this.onStreamAdded) this.onStreamAdded.removeListener();
+    if (p2pconnection && !dataChannel) {
+      this.onStreamAdded = p2pconnection?.receiver.onStreamAdded.add(event => {
+        console.log(`receiver.onStreamAdded: ${event.stream.id} ${(event.stream as RemoteDataStream)?._datachannel?.readyState}`);
+        this.refresh();
+      });
     }
 
     // open or close
-    if (isConnected !== this.peer.isOpen) {
-      this.peer.isOpen = isConnected;
-      if (isConnected) {
+    if (isOpen !== this.peer.isOpen) {
+      this.peer.isOpen = isOpen;
+      if (isOpen) {
+        this.isOpend = true;
+        this.state = 'connected';
         this.emit('open');
       } else {
+        this.subscription = null;
+        this.state = 'disconnected';
         this.emit('close');
       }
     }
@@ -190,23 +306,11 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
     let peerConnection = this.getPeerConnection();
     this.stats = peerConnection ? new WebRTCStats(peerConnection) : null;
 
-    if (isConnected) {
+    if (isOpen) {
       this.startMonitoring();
       if (!this.isQueuing) this.execQueue();
     } else {
       this.stopMonitoring();
-    }
-
-    // 接続が確立する前に受信済みだったデータを処理
-    if (this.publicationDataChannel && isConnected && this.reciveQueue.size) {
-      console.log(`peer ${member?.name} reciveQueue ${this.reciveQueue.size}`);
-
-      let events = Array.from(this.reciveQueue.values());
-      this.reciveQueue.clear();
-
-      for (let event of events) {
-        this.onData(event.data as ArrayBuffer);
-      }
     }
   }
 
@@ -236,17 +340,14 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
   }
 
   private execQueue = () => {
-    // subscriptionDataChannelからデータを送信する。
-    // これはSkyWayのPub/Subモデル的には"逆流"する動作になるが、
-    // Pub/SubのRTCDataChannelにアクセスできるようになるタイミングの都合から、このようにしないと接続初期の通信がパケットロスするかのような動作になるパターンがある。
-    if (!this.subscriptionDataChannel || this.subscriptionDataChannel.readyState !== 'open') {
-      console.warn(`peer Connection not open; queueing; ${this.subscriptionDataChannel?.readyState} -> ${this.member.name}`);
+    if (!this.dataChannel || this.dataChannel.readyState !== 'open') {
+      if (this.sendQueue.size) console.warn(`peer Connection not open; queueing; ${this.dataChannel?.readyState} -> ${this.member.name} `);
       this.isQueuing = false;
       return;
     }
     for (let data of this.sendQueue) {
       try {
-        this.subscriptionDataChannel.send(data);
+        this.dataChannel.send(data);
         this.sendQueue.delete(data);
       } catch (err) {
         console.error(err);
@@ -258,7 +359,11 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
   }
 
   getPeerConnection(): RTCPeerConnection {
-    return this.subscription?.stream?._getRTCPeerConnection();
+    if (this.isPublication) {
+      return (this.subscription?.publication as Publication<LocalDataStream>)?.stream?._getRTCPeerConnection(this.member);
+    } else {
+      return this.subscription?.stream?._getRTCPeerConnection();
+    }
   }
 
   private startMonitoring() {
