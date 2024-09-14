@@ -39,8 +39,8 @@ export class SkyWayConnection implements Connection {
   private outboundQueue: Promise<any> = Promise.resolve();
   private inboundQueue: Promise<any> = Promise.resolve();
 
-  private relayingPeerIds: Map<string, string[]> = new Map();
-  private maybeUnavailablePeerIds: Set<string> = new Set();
+  private readonly relayingPeerIds: Map<string, string[]> = new Map();
+  private readonly maybeUnavailablePeerIds: Set<string> = new Set();
 
   configure(config: any) {
     if (this.key !== config?.webrtc?.key) console.log('Key Change');
