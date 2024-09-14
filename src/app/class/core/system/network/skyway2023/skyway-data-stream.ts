@@ -410,12 +410,12 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
   }
 
   sendPing() {
-    let encodedData: Uint8Array = MessagePack.encode({ from: this.peer.peerId, ping: performance.now() });
+    let encodedData: Uint8Array = MessagePack.encode({ from: this.skyWay.peer.peerId, ping: performance.now() });
     this.addSendQueue(encodedData);
   }
 
   private receivePing(ping: Ping) {
-    if (ping.from === this.peer.peerId) {
+    if (ping.from === this.skyWay.peer.peerId) {
       let now = performance.now();
       let rtt = now - ping.ping;
       this.ping = rtt <= this.ping ? (this.ping * 0.5) + (rtt * 0.5) : rtt;
