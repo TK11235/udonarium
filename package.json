@@ -19,7 +19,7 @@
     "@angular/platform-browser": "^17.0.8",
     "@angular/platform-browser-dynamic": "^17.0.8",
     "@angular/router": "^17.0.8",
-    "@skyway-sdk/core": "^1.6.1",
+    "@skyway-sdk/core": "^1.9.2",
     "@zip.js/zip.js": "^2.7.52",
     "base-x": "^4.0.0",
     "bcdice": "^4.5.0",
