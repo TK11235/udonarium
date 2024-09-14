@@ -59,13 +59,17 @@ export class ObjectSynchronizer {
         let context: ObjectContext = event.data;
         let object: GameObject = ObjectStore.instance.get(context.identifier);
         if (object) {
-          if (!event.isSendFromSelf) object = this.updateObject(object, context);
-          markForChanged(object, event.sendFrom);
+          let updateObject = event.isSendFromSelf ? object : this.updateObject(object, context);
+          if (updateObject) {
+            markForChanged(updateObject, event.sendFrom);
+          } else if (!event.isSendFromSelf) {
+            EventSystem.call('UPDATE_GAME_OBJECT', object.toContext(), event.sendFrom);
+          }
         } else if (ObjectStore.instance.isDeleted(context.identifier)) {
           EventSystem.call('DELETE_GAME_OBJECT', { aliasName: context.aliasName, identifier: context.identifier }, event.sendFrom);
         } else {
-          object = this.createObject(context);
-          markForChanged(object, event.sendFrom);
+          let newObject = this.createObject(context);
+          if (newObject) markForChanged(newObject, event.sendFrom);
         }
       })
       .on('DELETE_GAME_OBJECT', 1000, event => {
@@ -79,8 +83,11 @@ export class ObjectSynchronizer {
   }
 
   private updateObject(object: GameObject, context: ObjectContext): GameObject {
-    if (context.majorVersion + context.minorVersion > object.version) {
+    let version = context.majorVersion + context.minorVersion;
+    if (object.version < version) {
       object.apply(context);
+    } else if (version < object.version) {
+      return null;
     }
     return object;
   }
