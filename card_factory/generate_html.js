@@ -49,7 +49,7 @@ fs.readdir(parentCsvDirPath, (err, files) => {
         }
 
         // HTMLテンプレートの置換
-        let outputHtml = htmlTemplate.replace(/{名前}/g, cardName).replace(/{コンテンツ}/g, content);
+        let outputHtml = htmlTemplate.replace(/{カードタイプ}/g, outputFileName).replace(/{名前}/g, cardName).replace(/{コンテンツ}/g, content);
 
         // 出力HTMLファイルパスを生成
         const outputHtmlPath = path.join(outputFilePath, `${cardName}.html`);

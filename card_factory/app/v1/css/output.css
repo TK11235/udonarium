@@ -17,18 +17,57 @@ body {
 }
 
 .output .card {
-    padding: 8px;
-    width: 400px;
-    height: 646px;
-    margin-left: 8px;
-    margin-right: 8px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-image: url("../img/consenfox_card.png");
-    border: 2px gray inset;
-    border-radius: 8px;
-    position: relative;
+  padding: 8px;
+  width: 400px;
+  height: 600px;
+  margin-left: 8px;
+  margin-right: 8px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  border: 2px gray inset;
+  border-radius: 8px;
+  position: relative;
+}
+
+.output .アリバイ {
+  background-image: url("../img/アリバイ.png");
+}
+
+.output .キャラクター {
+  background-image: url("../img/キャラクター.png");
+}
+
+.output .ページ {
+  background-image: url("../img/ページ.png");
+}
+
+.output .ロール {
+  background-image: url("../img/ロール.png");
+}
+
+.output .関係性 {
+  background-image: url("../img/関係性.png");
+}
+
+.output .結末 {
+  background-image: url("../img/結末.png");
+}
+
+.output .死因 {
+  background-image: url("../img/死因.png");
+}
+
+.output .所持品 {
+  background-image: url("../img/所持品.png");
+}
+
+.output .動機 {
+  background-image: url("../img/動機.png");
+}
+
+.output .所持品 {
+  background-image: url("../img/所持品.png");
 }
 
 .output .ng-card {
