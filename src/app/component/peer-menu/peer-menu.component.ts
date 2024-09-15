@@ -29,7 +29,7 @@ export class PeerMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   get myPeer(): PeerCursor { return PeerCursor.myCursor; }
 
   get config(): AppConfig { return AppConfigService.appConfig; }
-  get canUsePrivateSession(): boolean { return this.config.backend.mode != 'skyway2023'; }
+  get canUsePrivateSession(): boolean { return this.config.backend.mode == 'skyway'; }
 
   constructor(
     private ngZone: NgZone,
