@@ -1,17 +1,17 @@
 # ユドナリウム
 
-[ユドナリウム（Udonarium）][1]はWebブラウザで動作するボードゲームオンラインセッション支援ツールです。
+[ユドナリウム（Udonarium）][udonarium-url]はWebブラウザで動作するボードゲームオンラインセッション支援ツールです。
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/TK11235/udonarium/blob/master/LICENSE)
 
-[![Udonarium](docs/images/ss.jpg "スクリーンショット")][1]
+[![Udonarium](docs/images/ss.jpg "スクリーンショット")][udonarium-url]
 
 ## クイックスタート
 
-今すぐ試したり利用したりできる公開サーバを用意しています。  
+今すぐ試して利用できる公開サーバを用意しています。  
 推奨ブラウザはデスクトップ版Google Chrome、またはデスクトップ版Mozilla Firefoxです。
 
-[**ユドナリウムをはじめる**][1]
+[**ユドナリウムをはじめる**][udonarium-url]
 
 ## 目次
 
@@ -24,15 +24,10 @@
 
 ## 機能
 
-- **ブラウザ間通信**
-  - WebRTCを利用したブラウザ間通信を実現しています。  
-    サーバサイドを介さずに全ての機能をWebブラウザ上で完結させることを目指しています。
-- **軽量 & リアルタイム**
-  - 軽量で快適に動作し、ユーザの操作は他のユーザにリアルタイムに反映されます。
-- **遊ぶ機能**
+- **オンラインセッション**
   - ルーム機能
-  - 複数テーブル管理、テーブルマスク
-  - 立体地形
+  - 複数テーブル管理
+  - テーブルマスク、立体地形
   - コマ、カード、共有メモ
   - チャット送受信、チャットパレット
   - ダイスボット（[BCDice](https://github.com/bcdice/bcdice-js)）
@@ -40,71 +35,106 @@
   - BGM再生
   - セーブデータ生成（ZIP形式）
 
+- **ブラウザ間通信**
+  - WebRTCを利用したブラウザ間通信を実現しています。  
+    ユーザ間で通信接続した後の全ての処理をWebブラウザ上で完結させることを目指しています。
+
+- **軽量&リアルタイム**
+  - 軽量で快適に動作し、ユーザの操作は別のユーザにリアルタイムに反映されます。
+
 ## サーバ設置
 
-ユーザ自身でWebサーバを用意し、そのサーバにユドナリウムを設置して利用することができます。  
+ユーザ自身でWebサーバを用意してユドナリウムを利用することができます。
 
-1. [リリース版（**udonarium.zip**）](../../releases/latest)をダウンロードして解凍し、Webサーバに配置してください。  
-**開発者向けのソースコードをダウンロードしないように注意して下さい。**
-1. [旧SkyWay](https://support.skyway.io/hc/)のAPIキーを`assets/config.yaml`に記述します。  
-    - [旧SkyWay](https://support.skyway.io/hc/)のCommunity Edition(無料版)の新規登録は終了しています。
-    - [新SkyWay](https://skyway.ntt.com/)への対応はユドナリウム 1.16.0時点では実装途中です。
-1. サーバに配置したユドナリウムの`index.html`にアクセスして動作することを確認してみてください。  
+#### 1. Webサーバにコンテンツを配置
+
+ユドナリウムの[リリース版（**udonarium.zip**）](../../releases/latest)をダウンロードして展開し、`index.html`などコンテンツ一式をWebサーバに配置します。  
+必ず**HTTPS環境のWebサーバ**に配置してください。
+
+#### 2. ユドナリウムバックエンドの配置
+
+[ユドナリウムバックエンド][udonarium-backend-repo]のサーバを準備します。  
+詳細はユドナリウムバックエンドのリポジトリの`README.md`を参照してください。
+
+#### 3. ユドナリウムの設定ファイル変更
+
+Webサーバに配置したユドナリウムの`assets/config.yaml`を編集して、`backend.url`にユドナリウムバックエンドのURLを記述します。
+
+```yaml
+backend:
+  mode: skyway2023
+  url: https://your-udonarium-backend-url/ #Your Backend API URL
+...
+```
+
+Webブラウザからユドナリウムの`index.html`にアクセスしてエラーが発生していなければ完了です。  
 上手く動作しない時は付属の`上手くサーバで動かない時Q&A.txt`を参照してください。
-
-ユドナリウムはサーバーサイドの処理を持たないためCGIやデータベースは必要はありません。
 
 ## 開発者クイックスタート
 
-ソースコードはそのままでは実行できません。  
-開発環境を用意してビルドする必要があります。
+開発環境を用意するとソースコードの修正や機能追加を行うことができます。
 
 ### 開発環境
 
-[Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)が必要です。  
+[Node.js](https://nodejs.org/)と[npm](https://www.npmjs.com/)が必要です。
 
-言語はTypeScriptを用い、[Angular](https://angular.io/)で実装されています。  
-開発を効率化するCLIツールとして[Angular CLI](https://github.com/angular/angular-cli)を利用しています。
-
-インストール手順は[Angular公式ページのセットアップ](https://angular.jp/guide/setup-local)が参考になります。
+開発言語はTypeScriptを使用し、[Angular](https://angular.jp/)のフレームワークを使用して実装されています。  
+環境構築の手順は[Angular公式ページのチュートリアル](https://angular.jp/tutorials/first-app)を参考にしてください。
 
 #### Angular CLI
 
-リポジトリからソースコードをダウンロードした後、初回起動時のコマンドは以下のようになります。
+開発を効率化するCLIツールとして[Angular CLI](https://github.com/angular/angular-cli)を利用しています。  
+`ng`コマンドを使用するのに必要です。
+
+#### SkyWay
+
+ユドナリウムはWebRTCを使用しており、WebRTC向けのサービスとして[SkyWay][SkyWay-url]を利用しています。  
+SkyWayのアカウントとアプリケーション情報が必要です。
+
+#### ユドナリウムバックエンド
+
+ [SkyWay][SkyWay-url]を利用するには認証トークン（SkyWay Auth Token）を都度作成する必要がありますが、Webブラウザ側で認証トークンを作成するのはセキュリティ上の観点から望ましくありません。  
+そこで、Webブラウザ側で実行できない処理は[ユドナリウムバックエンド][udonarium-backend-repo]のWeb APIとして実行します。
+
+ローカル環境で開発を行う際には、ユドナリウムバックエンドの開発用ローカルサーバを使用することをおすすめします。
+
+### ユドナリウムの実行
+
+リポジトリをダウンロードした後、初回はリポジトリのディレクトリで以下のコマンドを実行してください。
 
 ```bash
-cd "ソースコードを展開したディレクトリの場所"
-npm install
-ng serve
+npm i
 ```
 
-`ng serve`を実行すると`http://localhost:4200/`で開発用サーバが起動します。  
-いずれかのソースコードを変更すると、アプリケーションは自動的にリロードされます。
+#### 開発用ローカルサーバ
 
-`ng build`でプロジェクトのビルドを実行します。ビルド成果物は`dist/`ディレクトリに格納されます。  
+開発作業を行う際には、`src/assets/config.yaml`を編集して`backend.url`にユドナリウムバックエンドのURLを記述してください。
 
-#### 旧SkyWay
+以下のコマンドを実行すると`https://localhost:4200/`でユドナリウムの開発用ローカルサーバが起動します。  
+必ず`--ssl`オプションを使用してHTTPSのサーバを起動してください。SkyWayの一部の機能はHTTPS環境でしか実行できません。
 
-**[旧SkyWay](https://support.skyway.io/hc/)のCommunity Edition(無料版)の新規登録は終了しています。**
+```bash
+ng serve --ssl
+```
 
-このアプリケーションは通信処理にWebRTCを使用しています。  
-WebRTC向けのシグナリングサーバとして[旧SkyWay](https://support.skyway.io/hc/ja)を利用しているため、動作確認のために旧SkyWayのAPIキーが必要です。
+開発用ローカルサーバが起動している状態でソースコードを変更すると、アプリケーション全体が自動的にホットリロードされます。
 
-取得したAPIキーの情報は`src/assets/config.yaml`に記述します。
+#### 本番環境向けビルド
 
-#### 新SkyWay
+以下のコマンドでソースコード全体のビルドを実行します。ビルド成果物は`dist`ディレクトリ配下に格納されます。
 
-**[新SkyWay](https://skyway.ntt.com/)を使用した通信処理はユドナリウム 1.16.0時点では実装途中です。**
-
-開発者向けのプレビュー版機能として実装しています。本番環境では使用しないでください。  
-開発者自身でコード修正やセキュリティ対応を実施してプライベートな動作確認を行う場合のみ、[commit: 1bf7d86](https://github.com/TK11235/udonarium/commit/1bf7d866d97b791d226dc9b8c23de0357bf478b4) を参考にコードを書き替えてビルドを行ってください。
+```bash
+ng build
+```
 
 ## 開発に寄与する
 
 バグを報告したり、ドキュメントを改善したり、開発の手助けをしたりしたいですか？
 
-報告や要望の窓口として[GitHubのIssue](https://github.com/TK11235/udonarium/issues)、または[Twitter](https://twitter.com/TK11235)を利用できます。  
+報告や要望の窓口として[GitHubのIssue](https://github.com/TK11235/udonarium/issues)、または[X（Twitter）](https://x.com/TK11235)を利用できます。  
 コードの[Pull Request](https://github.com/TK11235/udonarium/pulls)も歓迎です。
+
+ただ、難易度や優先度の都合によりそっとしたままになる可能性があります。
 
 ### 報告
 
@@ -113,27 +143,19 @@ WebRTC向けのシグナリングサーバとして[旧SkyWay](https://support.s
 
 ### 要望
 
-機能要望では「何故それが必要なのか」について説明があると良いです。  
-ただ、難易度や優先度の都合によりそっとしたままになる可能性があります。
+機能要望では「何故それが必要なのか」について説明があると良いです。
 
 ### Pull Request
 
-作成したコードやドキュメントをこのリポジトリに反映させたい時はPull Request（PR）を送ってください。  
+作成したコードやドキュメントをこのリポジトリに反映させたい時はPull Request（PR）を送ってください。
 
 PRのコードが完全ではない場合でも作業中PRとして送ることができます。  
 その場合、作業中である旨をPRタイトルか説明文に付け加えてください。
-
-## 今後の開発
-
-最低限必要となる機能は実装されていますが、作業すべき課題が残されています。
-
-- UIデザインおよび操作性の改善
-- モバイル向け対応
-- 機能追加
-- ドキュメント整備
 
 ## License
 
 [MIT License](https://github.com/TK11235/udonarium/blob/master/LICENSE)
 
-[1]: https://udonarium.app/
+[udonarium-url]: https://udonarium.app/
+[udonarium-backend-repo]: https://github.com/TK11235/udonarium-backend
+[SkyWay-url]: https://skyway.ntt.com/
