@@ -27,7 +27,7 @@ export class DiceSymbol extends TabletopObject {
   get size(): number { return this.getCommonValue('size', 1); }
   set size(size: number) { this.setCommonValue('size', size); }
 
-  get faces(): string[] { return this.imageDataElement.children.map(element => (element as DataElement).name); }
+  get faces(): string[] { return this.imageDataElement?.children.map(element => (element as DataElement).name) ?? []; }
   get imageFile(): ImageFile {
     return this.isVisible ?
       this.getImageFile(this.face)
