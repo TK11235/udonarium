@@ -49,7 +49,9 @@
 .title-text {
   align-self: center;
   flex-grow: 1;
-  padding: 5px;
+  padding: 0 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .title-button {
