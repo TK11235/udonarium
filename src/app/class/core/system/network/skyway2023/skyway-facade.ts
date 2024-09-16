@@ -350,11 +350,16 @@ export class SkyWayFacade {
   }
 
   private getLobbyNames(): string[] {
-    let lobbyBaseName = this.context?.authToken.scope.app.channels?.find(channel => channel.name.startsWith('udonarium-lobby-'))?.name ?? '';
-    let regArray = /of-(\d+)$/.exec(lobbyBaseName);
-    let lobbySize = Number(regArray[1]);
-    if (isNaN(lobbySize)) lobbySize = 0;
-    let lobbyNames = [...Array(lobbySize)].map((value, index) => `udonarium-lobby-${index + 1}-of-${lobbySize}`);
-    return lobbyNames;
+    try {
+      let lobbyBaseName = this.context?.authToken.scope.app.channels?.find(channel => channel.name.startsWith('udonarium-lobby-'))?.name ?? '';
+      let regArray = /of-(\d+)$/.exec(lobbyBaseName);
+      let lobbySize = Number(regArray[1]);
+      if (isNaN(lobbySize)) lobbySize = 0;
+      let lobbyNames = [...Array(lobbySize)].map((value, index) => `udonarium-lobby-${index + 1}-of-${lobbySize}`);
+      return lobbyNames;
+    } catch (e) {
+      console.warn(e);
+    }
+    return [];
   }
 }
