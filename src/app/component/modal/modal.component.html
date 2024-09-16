@@ -2,10 +2,10 @@
   <div [@bgInOut]="'in'" class="modal-background" (click)="clickBackground($event)"></div>
   <div [@flyInOut]="'in'" class="modal-panel">
     <div class="title">
+      <div class="title-text">{{modalService.title}}</div>
       <div class="title-button">
         <button (click)="resolve()"><i class="material-icons" style="font-size: 14px;">close</i></button>
       </div>
-      {{modalService.title}}
     </div>
     <div class="scrollable-panel">
       <ng-content></ng-content>
