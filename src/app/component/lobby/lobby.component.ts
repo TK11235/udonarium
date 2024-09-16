@@ -125,8 +125,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   async showRoomSetting() {
-    await this.modalService.open(RoomSettingComponent, { width: 700, height: 400, left: 0, top: 400 });
-    this.modalService.resolve();
+    let isCreate = await this.modalService.open(RoomSettingComponent, { width: 700, height: 400, left: 0, top: 400 });
+    if (isCreate) this.modalService.resolve();
     this.help = '「一覧を更新」ボタンを押すと接続可能なルーム一覧を表示します。';
   }
 }
