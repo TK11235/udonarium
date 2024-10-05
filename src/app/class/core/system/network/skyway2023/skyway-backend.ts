@@ -15,8 +15,16 @@ export class SkyWayBackend {
 
 async function fetchStatus(url: string): Promise<boolean> {
   try {
-    let api = new URL('/v1/status', url);
-    let response = await fetch(api);
+    const api = new URL('/v1/status', url);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Origin': window.location.origin,
+      },
+    }
+    const response = await fetch(api, options);
 
     return response.status === 200
   } catch (err) {
@@ -27,19 +35,29 @@ async function fetchStatus(url: string): Promise<boolean> {
 
 async function fetchSkyWayAuthToken(url: string, channelName: string, peerId: string): Promise<string> {
   try {
-    let api = new URL('/v1/skyway2023/token', url);
+    const api = new URL('/v1/skyway2023/token', url);
 
-    let body = JSON.stringify({
+    const body = JSON.stringify({
       formatVersion: 1,
       channelName: channelName,
       peerId: peerId,
     });
 
-    let response = await fetch(api, { method: 'POST', body: body });
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Origin': window.location.origin,
+      },
+      body,
+    }
+
+    const response = await fetch(api, options);
 
     if (response.status !== 200) return '';
 
-    let jsonObj = await response.json();
+    const jsonObj = await response.json();
     return jsonObj.token ?? '';
   } catch (err) {
     console.error(err);
@@ -49,12 +67,12 @@ async function fetchSkyWayAuthToken(url: string, channelName: string, peerId: st
 
 /**
  * SkyWayAuthTokenを生成するモック実装.
- * 
+ *
  * **シークレットキーはフロントエンドでは秘匿されている必要があります. この実装を本番環境で運用しないでください.**
- * 
+ *
  * サーバを構築せずにフロントエンドでSkyWayAuthTokenを生成した場合、
  * シークレットキーをエンドユーザが取得できるため、誰でも任意のChannelやRoomを生成して参加できる等のセキュリティ上の問題が発生します.
- * 
+ *
  * @param channelName 接続するチャンネルの名称
  * @param peerId PeerId
  * @returns JWT
