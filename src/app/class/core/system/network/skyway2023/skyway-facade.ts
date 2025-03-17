@@ -77,7 +77,9 @@ export class SkyWayFacade {
     if (this.isDestroyed) return;
 
     let backend = new SkyWayBackend(this.url);
-    let channelName = CryptoUtil.sha256Base64Url(this.peer.roomId + this.peer.roomName + this.peer.password);
+    let channelName = this.peer.isRoom
+      ? CryptoUtil.sha256Base64Url(this.peer.roomId + this.peer.roomName + this.peer.password)
+      : this.peer.peerId;
 
     let authToken = await backend.createSkyWayAuthToken(channelName, this.peer.peerId);
     if (authToken.length < 1) {
