@@ -121,7 +121,7 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
   reject() {
     console.log(`reject ${this.peer.peerId}, isPublication: ${this.isPublication}`);
     this.isRejected = true;
-    this.refresh();
+    this.connect();
   }
 
   private dispose() {

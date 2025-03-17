@@ -219,7 +219,6 @@ export class SkyWayConnection implements Connection {
       if (!this.peer.verifyPeer(stream.peer.peerId)) {
         console.warn('stream is closing. <' + stream.peer.peerId + '> is invalid.');
         stream.reject();
-        stream.connect();
         return;
       }
       this.connectStream(stream);
