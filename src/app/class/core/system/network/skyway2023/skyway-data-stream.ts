@@ -130,9 +130,9 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
     this.stopMonitoring();
     this.removeAllListeners();
 
-    if (this.onStreamAdded) this.onStreamAdded.removeListener();
-    if (this.onStreamPublished) this.onStreamPublished.removeListener();
-    if (this.onConnectionStateChanged) this.onConnectionStateChanged.removeListener();
+    this.onStreamAdded?.removeListener();
+    this.onStreamPublished?.removeListener();
+    this.onConnectionStateChanged?.removeListener();
     this.onStreamAdded = null;
     this.onStreamPublished = null;
     this.onConnectionStateChanged = null;
@@ -158,8 +158,8 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
     }
 
     //
-    if (this.onConnectionStateChanged) this.onConnectionStateChanged.removeListener();
-    this.skyWay.publication.onConnectionStateChanged.add(event => {
+    this.onConnectionStateChanged?.removeListener();
+    this.onConnectionStateChanged = this.skyWay.publication.onConnectionStateChanged.add(event => {
       if (event.remoteMember.name !== this.peer.peerId) return;
       this.onStateChanged(event.state);
     });
@@ -177,13 +177,13 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
 
     //
     if (!publication) {
-      if (this.onStreamPublished) this.onStreamPublished.removeListener();
+      this.onStreamPublished?.removeListener();
       this.onStreamPublished = this.skyWay.room.onStreamPublished.add(event => {
         let isMatch = event.publication.contentType === 'data' && event.publication.metadata === 'udonarium-data-stream' && event.publication.publisher.name === this.peer.peerId;
         if (!isMatch) return;
 
         console.log(`onStreamPublished: ${event.publication.publisher.name} <${event.publication.metadata}>`);
-        if (this.onStreamPublished) this.onStreamPublished.removeListener();
+        this.onStreamPublished?.removeListener();
         this.initializeSubscription();
       });
       return;
@@ -196,8 +196,8 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
       let { subscription, stream } = await this.skyWay.roomPerson.subscribe<RemoteDataStream>(publication.id);
 
       //
-      if (this.onConnectionStateChanged) this.onConnectionStateChanged.removeListener();
-      subscription.onConnectionStateChanged.add(state => {
+      this.onConnectionStateChanged?.removeListener();
+      this.onConnectionStateChanged = subscription.onConnectionStateChanged.add(state => {
         this.onStateChanged(state);
       });
 
@@ -267,20 +267,18 @@ export class SkyWayDataStream extends EventEmitter implements WebRTCConnection {
       this.peer.isOpen = false;
     }
 
-    if (this.dataChannel) {
-      this.dataChannel.removeEventListener('open', this.onopen);
-      this.dataChannel.removeEventListener('message', this.onmessage);
-    }
-    if (dataChannel) {
-      dataChannel.binaryType = 'arraybuffer';
-      dataChannel.addEventListener('open', this.onopen);
-      dataChannel.addEventListener('message', this.onmessage);
-    }
+    this.dataChannel?.removeEventListener('open', this.onopen);
+    this.dataChannel?.removeEventListener('message', this.onmessage);
+
+    if (dataChannel) dataChannel.binaryType = 'arraybuffer';
+    dataChannel?.addEventListener('open', this.onopen);
+    dataChannel?.addEventListener('message', this.onmessage);
+
     this.dataChannel = dataChannel;
 
     // P2PConnectionを更新
     console.log(`p2pconnection: ${p2pconnection?.id}`);
-    if (this.onStreamAdded) this.onStreamAdded.removeListener();
+    this.onStreamAdded?.removeListener();
     if (p2pconnection && !dataChannel) {
       this.onStreamAdded = p2pconnection?.receiver.onStreamAdded.add(event => {
         console.log(`receiver.onStreamAdded: ${event.stream.id} ${(event.stream as RemoteDataStream)?._datachannel?.readyState}`);
