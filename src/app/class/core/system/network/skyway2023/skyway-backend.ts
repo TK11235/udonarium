@@ -1,4 +1,4 @@
-import { ChannelScope, nowInSec, SkyWayAuthToken, uuidV4 } from '@skyway-sdk/core';
+import { AuthToken, ChannelScope, nowInSec, SkyWayAuthToken, uuidV4 } from '@skyway-sdk/core';
 
 export class SkyWayBackend {
   constructor(readonly url: string) { }
@@ -65,30 +65,18 @@ async function createSkyWayAuthTokenMock(channelName: string, peerId: string): P
   const _appId = '<SkyWay2023 Application ID>';
   const _secret = '<SkyWay2023 Secret key>';
 
-  const _lobbySize = 4;
+  const lobbySize = 4;
 
-  let lobbyChannels: ChannelScope[] = [];
-  lobbyChannels.push({
-    name: `udonarium-lobby-\*-of-${_lobbySize}`,
-    actions: ['read', 'create'],
-    members: [
-      {
-        name: peerId,
-        actions: ['write'],
-        publication: {
-          actions: [],
-        },
-        subscription: {
-          actions: [],
-        },
-      },
-    ],
-  });
+  if (channelName.startsWith('udonarium-lobby-') || channelName.includes('*') || peerId.includes('*')) {
+    throw new Error('Invalid Argument');
+  }
 
-  let roomChannels: ChannelScope[] = [];
-  roomChannels.push({
+  const channelMap: Map<string, ChannelScope> = new Map();
+  const isPrivateRoom = channelName === peerId;
+
+  channelMap.set(channelName, {
     name: channelName,
-    actions: ['read', 'create'],
+    actions: isPrivateRoom ? ['read', 'create', 'updateMetadata'] : ['read', 'create'],
     members: [
       {
         name: peerId,
@@ -103,17 +91,23 @@ async function createSkyWayAuthTokenMock(channelName: string, peerId: string): P
       {
         name: '*',
         actions: ['signal'],
-        publication: {
-          actions: [],
-        },
-        subscription: {
-          actions: [],
-        },
       },
     ],
   });
 
-  let token = new SkyWayAuthToken({
+  const lobbyName = `udonarium-lobby-*-of-${lobbySize}`;
+  channelMap.set(lobbyName, {
+    name: lobbyName,
+    actions: ['read', 'create'],
+    members: [
+      {
+        name: peerId,
+        actions: ['write'],
+      },
+    ],
+  });
+
+  let props: AuthToken = {
     jti: uuidV4(),
     iat: nowInSec(),
     exp: nowInSec() + 60 * 60 * 24,
@@ -122,11 +116,13 @@ async function createSkyWayAuthTokenMock(channelName: string, peerId: string): P
         id: _appId,
         turn: false,
         actions: ['read'],
-        channels: lobbyChannels.concat(roomChannels),
+        channels: Array.from(channelMap.values()),
       },
     },
     version: 2,
-  }).encode(_secret);
+  };
+
+  const token = new SkyWayAuthToken(props).encode(_secret);
 
   return token;
 }
