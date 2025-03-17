@@ -5,16 +5,16 @@
   <ng-container *ngIf="rooms.length">
     <table class="room-list">
       <tr>
-        <th>ルームID</th>
-        <th class="room-name">ルーム名</th>
-        <th>パスワード</th>
-        <th>参加者</th>
-        <th></th>
+        <th class="is-0-width is-small-font">ルームID</th>
+        <th class="is-small-font">ルーム名</th>
+        <th class="is-0-width is-small-font">パスワード</th>
+        <th class="is-0-width is-small-font">参加者</th>
+        <th class="is-0-width is-small-font"></th>
       </tr>
       <ng-container *ngFor="let room of rooms">
         <tr>
-          <td class="is-small-font">{{room.id}}</td>
-          <td class="room-name">{{room.name}}</td>
+          <td class="room-id">{{room.id}}</td>
+          <td class="room-name"><div class="room-name-text">{{room.name}}</div></td>
           <td *ngIf="room.hasPassword">
             <i class="material-icons" style="vertical-align: middle; font-size:0.9rem;">lock</i>
           </td>
