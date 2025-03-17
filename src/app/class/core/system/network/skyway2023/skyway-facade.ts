@@ -350,16 +350,42 @@ export class SkyWayFacade {
   }
 
   private getLobbyNames(): string[] {
-    try {
-      let lobbyBaseName = this.context?.authToken.scope.app.channels?.find(channel => channel.name.startsWith('udonarium-lobby-'))?.name ?? '';
-      let regArray = /of-(\d+)$/.exec(lobbyBaseName);
-      let lobbySize = Number(regArray[1]);
-      if (isNaN(lobbySize)) lobbySize = 0;
-      let lobbyNames = [...Array(lobbySize)].map((value, index) => `udonarium-lobby-${index + 1}-of-${lobbySize}`);
-      return lobbyNames;
-    } catch (e) {
-      console.warn(e);
+    let names: Set<string> = new Set();
+    let wildcards: Set<string> = new Set();
+    let maxLobbySize = 0;
+
+    // udonarium-lobby-* -> udonarium-lobby-1, udonarium-lobby-2, ...
+    // udonarium-lobby-*-of-4 -> udonarium-lobby-1-of-4, udonarium-lobby-2-of-4, ...
+    for (let channel of this.context?.authToken.scope.app.channels ?? []) {
+      let name = channel.name ?? '';
+      if (name.startsWith('udonarium-lobby-')) {
+        if (name.includes('*')) {
+          wildcards.add(name);
+        } else {
+          names.add(name);
+        }
+        try {
+          let regArray = /-(\d+)$/.exec(name);
+          console.log(regArray);
+          let lobbySize = regArray && 1 < regArray.length ? Number(regArray[1]) : 0;
+          if (isNaN(lobbySize)) lobbySize = 0;
+          if (maxLobbySize < lobbySize) maxLobbySize = lobbySize;
+        } catch (e) {
+          console.warn(e);
+        }
+      }
     }
-    return [];
+
+    for (let wildcard of wildcards) {
+      [...Array(maxLobbySize)].map((value, index) => names.add(wildcard.replace('*', `${index + 1}`)));
+    }
+
+    let sorted = Array.from(names).sort((a, b) => {
+      let aIndex = a.replace(/\d+/g, m => m.padStart(10, '0'));
+      let bIndex = b.replace(/\d+/g, m => m.padStart(10, '0'));
+      return aIndex < bIndex ? -1 : aIndex > bIndex ? 1 : 0;
+    });
+
+    return sorted;
   }
 }
