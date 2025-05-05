@@ -25,6 +25,9 @@ export class GameObjectInventoryService {
   set dataTag(dataTag: string) { this.summarySetting.dataTag = dataTag; }
   get dataTags(): string[] { return this.summarySetting.dataTags; }
 
+  get gameType(): string { return this.summarySetting.gameType; }
+  set gameType(gameType: string) {this.summarySetting.gameType = gameType; }
+  
   tableInventory: ObjectInventory = new ObjectInventory(object => { return object.location.name === 'table'; });
   commonInventory: ObjectInventory = new ObjectInventory(object => { return !this.isAnyLocation(object.location.name); });
   privateInventory: ObjectInventory = new ObjectInventory(object => { return object.location.name === Network.peerId; });
