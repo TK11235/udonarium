@@ -32,6 +32,11 @@
     </div>
     <div style="font-size: 12px; padding-top: 6px;">表示項目</div>
     <input style="width: 100%; box-sizing: border-box;" [(ngModel)]="dataTag" placeholder="スペース区切りでタグ名 スラッシュで改行 ex.「HP MP / メモ」" />
+    <div style="font-size: 12px; padding-top: 6px;">標準ダイスボット</div>
+    <select style="width: 12em;" (change)="onChangeGameType($event.target.value)" [(ngModel)]="gameType" [ngModelOptions]="{standalone: true}">
+      <option value="">ダイスボット指定なし</option>
+      <option *ngFor="let diceBotInfo of diceBotInfos" value="{{diceBotInfo.script}}">{{diceBotInfo.game}}</option>
+    </select>
     <div style="padding-top: 6px;">
       <button class="tab-setting small-font" (click)="toggleEdit()"><i class="material-icons small-font">settings</i>完了</button>
     </div>

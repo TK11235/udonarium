@@ -8,6 +8,7 @@ import { ChatTabSettingComponent } from 'component/chat-tab-setting/chat-tab-set
 import { ChatMessageService } from 'service/chat-message.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
+import { GameObjectInventoryService} from 'service/game-object-inventory.service';
 
 @Component({
   selector: 'chat-window',
@@ -38,12 +39,14 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public chatMessageService: ChatMessageService,
     private panelService: PanelService,
-    private pointerDeviceService: PointerDeviceService
+    private pointerDeviceService: PointerDeviceService,
+    private inventoryService: GameObjectInventoryService
   ) { }
 
   ngOnInit() {
     this.sendFrom = PeerCursor.myCursor.identifier;
     this._chatTabidentifier = 0 < this.chatMessageService.chatTabs.length ? this.chatMessageService.chatTabs[0].identifier : '';
+    this.gameType = this.inventoryService.gameType;
 
     EventSystem.register(this)
       .on('MESSAGE_ADDED', event => {
