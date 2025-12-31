@@ -9,6 +9,7 @@ export enum GridType {
   SQUARE = 0,
   HEX_VERTICAL = 1,
   HEX_HORIZONTAL = 2,
+  HEX_ZETETIC = 3,
 }
 
 export enum FilterType {
